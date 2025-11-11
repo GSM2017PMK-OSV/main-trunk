@@ -14,7 +14,6 @@ class GameState:
 
 class StockmanProof:
 
-
     def __init__(self, game_graph: Dict[str, List[str]]):
 
         self.game_graph = game_graph
@@ -26,7 +25,7 @@ class StockmanProof:
             self.states[state_id] = GameState(state_id=state_id)
 
     def is_terminal(self, state_id: str) -> bool:
-     
+
         return state_id not in self.game_graph or not self.game_graph[state_id]
 
     def get_player(self, state_id: str) -> Player:
@@ -35,7 +34,7 @@ class StockmanProof:
         return Player.MAX if depth % 2 == 0 else Player.MIN
 
     def evaluate_terminal(self, state_id: str) -> float:
-  
+
         if "win" in state_id:
             return 1.0
         elif "lose" in state_id:
@@ -54,7 +53,7 @@ class StockmanProof:
         alpha: float = -float("inf"),
         beta: float = float("inf"),
     ) -> float:
- 
+
         state = self.states[state_id]
 
         if self.is_terminal(state_id):
@@ -166,7 +165,7 @@ class StockmanProof:
         return True
 
     def generate_proof_report(self) -> str:
-      
+
         for state_id, move in self.optimal_strategy.items():
             report.append(
                 f"{state_id} -> {move} (value: {self.states[state_id].value})")
